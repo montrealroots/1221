@@ -7,7 +7,7 @@ persistence and world mechanics that matrix has no row for. Each carries the swe
 code, by a test the gate runs, by playing the built app), the commit, the evidence and what was found. Only Verified and Fixed And
 Verified count as done, out of every row not Deferred. Not Tested is the honest default: nothing is counted done for having a row.
 
-**Coverage:** 1125 of 1126 in scope Verified or Fixed And Verified (99.9%); 1118 Verified, 7 Fixed And Verified, 0 Failed, 1 Blocked, 20 Deferred, 0 Not Tested. By inspection 1146, automated 1145, interactive 34.
+**Coverage:** 1125 of 1151 in scope Verified or Fixed And Verified (97.7%); 1118 Verified, 7 Fixed And Verified, 0 Failed, 1 Blocked, 20 Deferred, 25 Not Tested. By inspection 1146, automated 1145, interactive 34.
 
 ## Totals
 
@@ -19,11 +19,11 @@ Verified count as done, out of every row not Deferred. Not Tested is the honest 
 | money | 161 | 156 | 5 |  |  |  |  | 161 | 161 |  |
 | benefits | 77 | 63 |  |  |  | 14 |  | 77 | 77 |  |
 | papers | 103 | 97 |  |  |  | 6 |  | 103 | 103 |  |
-| life | 84 | 84 |  |  |  |  |  | 84 | 84 |  |
-| career | 89 | 89 |  |  |  |  |  | 89 | 89 |  |
-| guide | 63 | 63 |  |  |  |  |  | 63 | 63 | 25 |
+| life | 87 | 84 |  |  |  |  | 3 | 84 | 84 |  |
+| career | 104 | 89 |  |  |  |  | 15 | 89 | 89 |  |
+| guide | 70 | 63 |  |  |  |  | 7 | 63 | 63 | 25 |
 | persistence | 12 | 11 | 1 |  |  |  |  | 12 | 12 | 9 |
-| **All** | **1146** | **1118** | **7** | **0** | **1** | **20** | **0** | **1146** | **1145** | **34** |
+| **All** | **1171** | **1118** | **7** | **0** | **1** | **20** | **25** | **1146** | **1145** | **34** |
 
 ## Creation
 
@@ -993,6 +993,9 @@ Verified count as done, out of every row not Deferred. Not Tested is the honest 
 | `look.condition` | look | An injury or a long-term condition, from the person look and How You Are; wellbeing.tsx. | Implemented And Verified | Verified | inspection, automated | 27369727 | tests/b20-life-looks.test.ts; tests/looks.test.ts; tests/attributes-phase-2b.test.ts; tests/language-injury.test.ts; src/ui/looks/wellbeing.tsx:536-595 an injury or a long-term condition: when it mends, what it keeps th… |  |
 | `notice.core/simulation#top` | notice | What Needs You and Home’s notices: “Something Didn’t Go Through” or “<label> Didn’t Go Through”, sent from core/simulat… | Implemented, Verification Incomplete | Verified | inspection, automated | 27369727 | tests/simulation.test.ts; src/engine/core/simulation.ts:466-485 a scheduled handler that fails: missed, said in the player’s words, a refusal kept as the reason; src/engine/core/simulation.ts:566-574 a command raised mi… |  |
 | `notice.systems/injury#mayHurt` | notice | What Needs You and Home’s notices, the injury’s label as its title, sent by mayHurt (systems/injury.ts) when a workout,… | Implemented And Verified | Verified | inspection, automated | 27369727 | tests/evidence-g04-life.test.ts; tests/evidence-g07-life.test.ts; tests/evidence-g09-life.test.ts; tests/language-injury.test.ts; src/engine/systems/injury.ts:114-166 an injury drawn once, its care billed or compensatio… |  |
+| `notice.systems/contracts#air` | notice | Home's notices, sent by air (systems/contracts.ts) when an episode with the player's work in it is on: its first teleca… | Implemented And Verified | Not Tested |  |  |  |  |
+| `notice.systems/contracts#settleResidual` | notice | Home's notices, sent by settleResidual (systems/contracts.ts) when a rerun's residual is paid. | Implemented And Verified | Not Tested |  |  |  |  |
+| `notice.systems/contracts#payPerDiem` | notice | Home's notices, sent by payPerDiem (systems/contracts.ts) when the player is home from a trip for SAG-AFTRA work. | Implemented And Verified | Not Tested |  |  |  |  |
 | `promise.body.how>body.sleep` | promise | src/engine/content/guide/body.ts | Implemented And Verified | Verified | inspection, automated | 27369727 | tests/b20-life-bite.test.ts; tests/wellbeing-bites.test.ts; src/engine/content/guide/body.ts:96-175 the entry; src/engine/systems/life.ts:200-233 the waking hours; src/engine/systems/life.ts:297-335 readiness and the su… |  |
 | `promise.body.how>body.look-after` | promise | src/engine/content/guide/body.ts | Implemented And Verified | Verified | inspection, automated | 27369727 | tests/b20-life-bite.test.ts; tests/looking-after.test.ts; src/engine/content/guide/body.ts:96-175 the entry; src/engine/systems/life.ts:200-233 the waking hours; src/engine/systems/life.ts:297-335 readiness and the summ… |  |
 | `promise.body.how>coursework.class` | promise | src/engine/content/guide/body.ts | Implemented And Verified | Verified | inspection, automated | 27369727 | tests/evidence-g01-life.test.ts; src/engine/content/guide/body.ts:96-175 the entry; src/engine/systems/life.ts:200-233 the waking hours; src/engine/systems/life.ts:297-335 readiness and the summary; src/engine/systems/i… |  |
@@ -1095,6 +1098,19 @@ Verified count as done, out of every row not Deferred. Not Tested is the honest 
 | `notice.systems/proshowcase#beginShowcase` | notice | What Needs You, at the final term's start. | Implemented And Verified | Verified | inspection, automated | 9018cc4e | tests/pro-showcase.test.ts; src/engine/systems/proshowcase.ts:346-375 the showcase begun: the calls, the notice, an older save decided at once; tests/pro-showcase.test.ts; tests/pro-core.test.ts the career’s 32 test fil… |  |
 | `notice.systems/proshowcase#decide` | notice | What Needs You, at the fourth week's end. | Implemented And Verified | Verified | inspection, automated | 9018cc4e | tests/pro-showcase.test.ts; src/engine/systems/proshowcase.ts:431-455 decide: out with an Incomplete, else in, the faculty choosing where the student didn’t; tests/pro-showcase.test.ts; tests/pro-core.test.ts the career… |  |
 | `pro.agent_reply` | scheduled | The clock: the agent's office answers an approach on its own day at its answer hour (`AGENT_TIMES.replyDays`, or `after… | Implemented And Verified | Verified | inspection, automated | 9018cc4e | tests/journey-agent.test.ts; tests/pro-agent.test.ts; tests/b20-career-saveload.test.ts; tests/b20-career-skill.test.ts; tests/b20-career-history.test.ts; src/engine/systems/proagent.ts:1162-1169 the answer to the appro… |  |
+| `pro.apply_work_visa` | command | Career, Work: Apply For The Visa on a booking abroad, grayed with visaRefusal's words. | Implemented And Verified | Not Tested |  |  |  |  |
+| `pro.visa_decision` | scheduled | The clock, the game's assumed ten days after the application (`VISA_KIND`). | Implemented And Verified | Not Tested |  |  |  |  |
+| `pro.trip_depart` | scheduled | The clock, at each leg's departure (`DEPART_KIND`); the first leg of each way stops the clock for the player. | Implemented And Verified | Not Tested |  |  |  |  |
+| `pro.trip_arrive` | scheduled | The clock, at each leg's arrival (`ARRIVE_KIND`). | Implemented And Verified | Not Tested |  |  |  |  |
+| `pro.ask_pay` | command | Career, Work: Ask About It under a payment that's Overdue, grayed with askRefusal's words. | Implemented And Verified | Not Tested |  |  |  |  |
+| `pro.series` | reactor | The clock, at the first stop after each May 15 from 2030 (`onPassage`): the network's word on The Calloway Files, as a … | Implemented And Verified | Not Tested |  |  |  |  |
+| `pro.work_choice` | command | Career, Work: How The Work Is Done, a button for each option of each choice the work asks, grayed with choiceRefusal's … | Implemented And Verified | Not Tested |  |  |  |  |
+| `pro.pages` | reactor | The clock, at the first stop after 6:00 PM the evening before each work day of a format that revises its pages (`onPass… | Implemented And Verified | Not Tested |  |  |  |  |
+| `pro.loop` | scheduled | The clock, at a looping session the production recalled the player to after a screen wrap (`LOOP_KIND`). | Implemented And Verified | Not Tested |  |  |  |  |
+| `pro.invite` | scheduled | The clock, 240 days after an anthology's wrap whose work was judged Strong or better (`INVITE_KIND`). | Implemented And Verified | Not Tested |  |  |  |  |
+| `pro.award_enter` | command | Career, Charts And Awards: Your Recognition, Enter Yourself under each television part eligible and not entered, grayed… | Implemented And Verified | Not Tested |  |  |  |  |
+| `pro.watch_ceremony` | command | Career, Charts And Awards: Your Recognition, Watch The Ceremony under a nominated entry, grayed with watchRefusal's wor… | Implemented And Verified | Not Tested |  |  |  |  |
+| `pro.awards` | reactor | The clock, at every stop (`onPassage`): each television credit's Emmy year and each film's Sundance year, step by step. | Implemented And Verified | Not Tested |  |  |  |  |
 | `promise.career.overview>career.headshots` | promise | src/engine/content/guide/career.ts | Implemented And Verified | Verified | inspection, automated | 9018cc4e | tests/pro-screen.test.ts; src/engine/systems/pro.ts:742-779 pathwayOf and profileOf, worked out from the record and never stored; tests/pro-screen.test.ts; tests/pro-core.test.ts the career’s 32 test files, 423 tests, r… |  |
 | `promise.career.overview>documents.work` | promise | src/engine/content/guide/career.ts | Implemented And Verified | Verified | inspection, automated | 9018cc4e | tests/pro-core.test.ts; tests/pro-screen.test.ts; src/engine/systems/pro.ts:742-779 pathwayOf and profileOf, worked out from the record and never stored; tests/pro-screen.test.ts; tests/pro-core.test.ts the career’s 32 … |  |
 | `promise.career.profile>career.resume` | promise | src/engine/content/guide/career.ts | Implemented And Verified | Verified | inspection, automated | 9018cc4e | tests/pro-core.test.ts; src/engine/systems/pro.ts:621-779 trainingOf, schoolCreditsOf, skillsOf, unionsOf, eligibilityOf, availabilityOf, profileOf; tests/pro-screen.test.ts; tests/pro-core.test.ts the career’s 32 test … |  |
@@ -1135,6 +1151,8 @@ Verified count as done, out of every row not Deferred. Not Tested is the honest 
 | `promise.coursework.showcase>coursework.feedback` | promise | src/engine/content/guide/showcase.ts | Implemented And Verified | Verified | inspection, automated | bd7b9d02 | tests/pro-showcase.test.ts; src/engine/systems/proshowcase.ts:346-375 beginShowcase: the calls booked, the notice, an older save decided at once; src/engine/systems/proshowcase.ts:378-392 choiceRefusal; src/engine/syste… |  |
 | `promise.coursework.showcase>school.repeat` | promise | src/engine/content/guide/showcase.ts | Implemented And Verified | Verified | inspection, automated | bd7b9d02 | tests/pro-showcase.test.ts; src/engine/systems/proshowcase.ts:346-375 beginShowcase: the calls booked, the notice, an older save decided at once; src/engine/systems/proshowcase.ts:378-392 choiceRefusal; src/engine/syste… |  |
 | `promise.coursework.showcase>career.overview` | promise | src/engine/content/guide/showcase.ts | Implemented And Verified | Verified | inspection, automated | bd7b9d02 | tests/pro-showcase.test.ts; src/engine/systems/proshowcase.ts:346-375 beginShowcase: the calls booked, the notice, an older save decided at once; src/engine/systems/proshowcase.ts:378-392 choiceRefusal; src/engine/syste… |  |
+| `promise.career.work-abroad>documents.work` | promise | src/engine/content/guide/career.ts | Implemented And Verified | Not Tested |  |  |  |  |
+| `promise.career.work-abroad>career.offers` | promise | src/engine/content/guide/career.ts | Implemented And Verified | Not Tested |  |  |  |  |
 
 ## Guide
 
@@ -1195,6 +1213,13 @@ Verified count as done, out of every row not Deferred. Not Tested is the honest 
 | `promise.start.guide>day.clock` | promise | src/engine/content/guide/start.ts | Implemented And Verified | Verified | inspection, automated | 691556f0 | tests/b20-guide-promises.test.ts; tests/tutorial.test.ts; src/engine/content/guide/start.ts:61-108 The Guide: the clock starts paused with the guide and The Clock opens Play; src/ui/shell/TimeControls.tsx:147-154; src/e… |  |
 | `promise.start.find>start.guide` | promise | src/engine/content/guide/start.ts | Implemented And Verified | Verified | inspection, automated | 691556f0 | tests/b20-guide-promises.test.ts; src/engine/content/guide/start.ts:109-150 Finding Your Way: a place joins the menu once its chapter is read; src/ui/shell/destinations.ts:40-101 the menu’s groups and each entry’s featu… |  |
 | `promise.start.find>day.needs` | promise | src/engine/content/guide/start.ts | Implemented And Verified | Verified | inspection, automated | 691556f0 | tests/b20-guide-promises.test.ts; tests/b20-guide-screens.test.ts; src/engine/content/guide/start.ts:109-150 Finding Your Way: Go There on a notice takes you to its screen, and to its tab where the notice names one; src… |  |
+| `promise.career.contracts>career.pay` | promise | src/engine/content/guide/career.ts | Implemented And Verified | Not Tested |  |  |  |  |
+| `promise.career.contracts>career.offers` | promise | src/engine/content/guide/career.ts | Implemented And Verified | Not Tested |  |  |  |  |
+| `promise.career.contracts>career.unions` | promise | src/engine/content/guide/career.ts | Implemented And Verified | Not Tested |  |  |  |  |
+| `promise.career.workflows>career.contracts` | promise | src/engine/content/guide/career.ts | Implemented And Verified | Not Tested |  |  |  |  |
+| `promise.career.workflows>career.pay` | promise | src/engine/content/guide/career.ts | Implemented And Verified | Not Tested |  |  |  |  |
+| `promise.career.awards>career.workflows` | promise | src/engine/content/guide/career.ts | Implemented And Verified | Not Tested |  |  |  |  |
+| `promise.career.awards>career.offers` | promise | src/engine/content/guide/career.ts | Implemented And Verified | Not Tested |  |  |  |  |
 | `route./home` | route | Home: the rail’s top, the brand, H (src/app/game-context.tsx) | — | Verified | inspection, automated, interactive | 691556f0 | src/ui/workspaces/WorkspaceRouter.tsx:31-39 a route opens its screen once its chapter is read, Locked (src/ui/workspaces/WorkspaceRouter.tsx:41-54) until then, and an address no screen has says so (src/ui/workspaces/Wor… |  |
 | `route./workspace/profile` | route | Player Profile: the menu (src/ui/shell/destinations.ts) | — | Verified | inspection, automated, interactive | 691556f0 | src/ui/workspaces/WorkspaceRouter.tsx:31-39 a route opens its screen once its chapter is read, Locked (src/ui/workspaces/WorkspaceRouter.tsx:41-54) until then, and an address no screen has says so (src/ui/workspaces/Wor… |  |
 | `route./workspace/calendar` | route | Calendar: from Home alone, with Back To Home (src/ui/shell/destinations.ts) | — | Verified | inspection, automated, interactive | 691556f0 | src/ui/workspaces/WorkspaceRouter.tsx:31-39 a route opens its screen once its chapter is read, Locked (src/ui/workspaces/WorkspaceRouter.tsx:41-54) until then, and an address no screen has says so (src/ui/workspaces/Wor… |  |

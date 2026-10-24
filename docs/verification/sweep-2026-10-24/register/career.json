@@ -346,6 +346,12 @@
    "tests/pro-core.test.ts the career’s 32 test files, 423 tests, run on this commit: all green"
   ]
  },
+ "pro.apply_work_visa": {
+  "status": "Not Tested"
+ },
+ "pro.ask_pay": {
+  "status": "Not Tested"
+ },
  "pro.ask_referral": {
   "status": "Verified",
   "by": [
@@ -394,6 +400,12 @@
    "tests/pro-work.test.ts",
    "tests/pro-core.test.ts the career’s 32 test files, 423 tests, run on this commit: all green"
   ]
+ },
+ "pro.award_enter": {
+  "status": "Not Tested"
+ },
+ "pro.awards": {
+  "status": "Not Tested"
  },
  "pro.casting_decision": {
   "status": "Verified",
@@ -511,6 +523,9 @@
    "tests/pro-core.test.ts the career’s 32 test files, 423 tests, run on this commit: all green"
   ]
  },
+ "pro.invite": {
+  "status": "Not Tested"
+ },
  "pro.join_sag": {
   "status": "Verified",
   "by": [
@@ -526,6 +541,9 @@
    "tests/journey-career.test.ts",
    "tests/pro-core.test.ts the career’s 32 test files, 423 tests, run on this commit: all green"
   ]
+ },
+ "pro.loop": {
+  "status": "Not Tested"
  },
  "pro.move_audition": {
   "status": "Verified",
@@ -555,6 +573,9 @@
    "tests/pro-work.test.ts",
    "tests/pro-core.test.ts the career’s 32 test files, 423 tests, run on this commit: all green"
   ]
+ },
+ "pro.pages": {
+  "status": "Not Tested"
  },
  "pro.postings": {
   "status": "Verified",
@@ -669,6 +690,9 @@
    "tests/pro-core.test.ts the career’s 32 test files, 423 tests, run on this commit: all green"
   ]
  },
+ "pro.series": {
+  "status": "Not Tested"
+ },
  "pro.set_name": {
   "status": "Verified",
   "by": [
@@ -747,6 +771,12 @@
    "tests/pro-core.test.ts the career’s 32 test files, 423 tests, run on this commit: all green"
   ]
  },
+ "pro.trip_arrive": {
+  "status": "Not Tested"
+ },
+ "pro.trip_depart": {
+  "status": "Not Tested"
+ },
  "pro.update_resume": {
   "status": "Verified",
   "by": [
@@ -763,6 +793,15 @@
    "tests/resume-town.test.ts",
    "tests/pro-core.test.ts the career’s 32 test files, 423 tests, run on this commit: all green"
   ]
+ },
+ "pro.visa_decision": {
+  "status": "Not Tested"
+ },
+ "pro.watch_ceremony": {
+  "status": "Not Tested"
+ },
+ "pro.work_choice": {
+  "status": "Not Tested"
  },
  "pro.work_day": {
   "status": "Verified",
@@ -1323,6 +1362,12 @@
    "tests/propay.test.ts",
    "tests/pro-core.test.ts the career’s 32 test files, 423 tests, run on this commit: all green"
   ]
+ },
+ "promise.career.work-abroad>career.offers": {
+  "status": "Not Tested"
+ },
+ "promise.career.work-abroad>documents.work": {
+  "status": "Not Tested"
  },
  "promise.coursework.showcase>career.overview": {
   "status": "Verified",

@@ -372,11 +372,19 @@ describe('A4: what counts as a day with work, from the record', () => {
   const day = (e: Partial<Engagement>): Engagement => ({ id: 'e', opportunityId: 'o', projectId: 'eastview', role: 'Robin', status: 'booked', days: [], pay: [], history: [], counts: {}, ...e }) as Engagement;
   const span = (from: number, n: number, hours: number) => Array.from({ length: n }, (_, i) => ({ from: addDays(from, i, NY), to: addDays(from, i, NY) + hours * MS_HOUR, label: 'Work' }));
 
-  it('every engagement the game offers averages at least 20 hours a week over its span; a run of 10 weeks 25.6, a two-day shoot 22', () => {
+  it('every engagement the game offers averages at least 20 hours a week over its span but a recurring part’s and spread-out sessions’; a run of 10 weeks 25.6, a two-day shoot 22', () => {
+    // A recurring part's episodes are three weeks apart (from 2026-10-24, brief 25's Module 4), so its two guaranteed
+    // episodes average under 20 hours a week, and on their own aren't employment for OPT (`employmentSpan`). So do the
+    // booth's sessions and the capture stage's days of Module 5, spread over weeks or months, and a narration's three
+    // four-hour sessions.
+    const under = new Set(['calloway-files-whitlock', 'lantern-row', 'kite-and-crow', 'iron-meridian', 'tidewater-narrator']);
     for (const t of PROJECTS) {
       const days = datesOf({ projectId: t.id, postedAt: at(2027, 1, 4, 12) });
-      expect(weeklyHours({ days }), t.id).toBeGreaterThanOrEqual(20);
+      if (under.has(t.id)) expect(weeklyHours({ days }), t.id).toBeLessThan(20);
+      else expect(weeklyHours({ days }), t.id).toBeGreaterThanOrEqual(20);
     }
+    const whitlock = { ...day({}), days: datesOf({ projectId: 'calloway-files-whitlock', postedAt: at(2027, 1, 4, 12) }), log: [{ day: 0, at: at(2027, 2, 15, 7), status: 'worked' as const }] };
+    expect(employmentSpan(whitlock)).toBeUndefined();
     expect(weeklyHours({ days: datesOf({ projectId: 'calder-street', postedAt: at(2027, 1, 4, 12) }) })).toBeCloseTo(25.6, 1);
     expect(weeklyHours({ days: datesOf({ projectId: 'eastview', postedAt: at(2027, 1, 4, 12) }) })).toBe(22);
   });

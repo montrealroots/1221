@@ -1,0 +1,933 @@
+{
+ "src/engine/content/awards.ts#EMMY_CATEGORIES": {
+  "status": "Rewritten",
+  "hash": "8215e4f065df",
+  "on": "2026-10-24",
+  "evidence": "Written for brief 25's Module 6 (the published charts as dated imports, the game's own box office, the awards and festivals inventory, the Emmy Awards by the 78th's rules and Sundance by its 2027 festival's) to docs/STYLE.md and docs/GLOSSARY.md, every rule the read sources' own and every invention said as the game's; read where the player meets it in tests/career-awards-screen.test.ts (the Charts And Awards tab and the Portfolio drawn before the work, after the wrap, after the entry, at the nominations and after the ceremony, through the clock and a reload at each stage) and tests/career-awards.test.ts (each refusal, notice, recap and festival word), with tools/voice-check.mjs, tools/tics.mjs and tools/title-case.mjs clean.",
+  "first": "Pending"
+ },
+ "src/engine/content/awards.ts#INSTITUTIONS [aacta]": {
+  "status": "Rewritten",
+  "hash": "0641ceff3cc1",
+  "on": "2026-10-24",
+  "evidence": "Written for brief 25's Module 6 (the published charts as dated imports, the game's own box office, the awards and festivals inventory, the Emmy Awards by the 78th's rules and Sundance by its 2027 festival's) to docs/STYLE.md and docs/GLOSSARY.md, every rule the read sources' own and every invention said as the game's; read where the player meets it in tests/career-awards-screen.test.ts (the Charts And Awards tab and the Portfolio drawn before the work, after the wrap, after the entry, at the nominations and after the ceremony, through the clock and a reload at each stage) and tests/career-awards.test.ts (each refusal, notice, recap and festival word), with tools/voice-check.mjs, tools/tics.mjs and tools/title-case.mjs clean.",
+  "first": "Pending"
+ },
+ "src/engine/content/awards.ts#INSTITUTIONS [actor-awards]": {
+  "status": "Rewritten",
+  "hash": "24c36aa717b3",
+  "on": "2026-10-24",
+  "evidence": "Written for brief 25's Module 6 (the published charts as dated imports, the game's own box office, the awards and festivals inventory, the Emmy Awards by the 78th's rules and Sundance by its 2027 festival's) to docs/STYLE.md and docs/GLOSSARY.md, every rule the read sources' own and every invention said as the game's; read where the player meets it in tests/career-awards-screen.test.ts (the Charts And Awards tab and the Portfolio drawn before the work, after the wrap, after the entry, at the nominations and after the ceremony, through the clock and a reload at each stage) and tests/career-awards.test.ts (each refusal, notice, recap and festival word), with tools/voice-check.mjs, tools/tics.mjs and tools/title-case.mjs clean.",
+  "first": "Pending"
+ },
+ "src/engine/content/awards.ts#INSTITUTIONS [annecy]": {
+  "status": "Rewritten",
+  "hash": "99e717d29333",
+  "on": "2026-10-24",
+  "evidence": "Written for brief 25's Module 6 (the published charts as dated imports, the game's own box office, the awards and festivals inventory, the Emmy Awards by the 78th's rules and Sundance by its 2027 festival's) to docs/STYLE.md and docs/GLOSSARY.md, every rule the read sources' own and every invention said as the game's; read where the player meets it in tests/career-awards-screen.test.ts (the Charts And Awards tab and the Portfolio drawn before the work, after the wrap, after the entry, at the nominations and after the ceremony, through the clock and a reload at each stage) and tests/career-awards.test.ts (each refusal, notice, recap and festival word), with tools/voice-check.mjs, tools/tics.mjs and tools/title-case.mjs clean.",
+  "first": "Pending"
+ },
+ "src/engine/content/awards.ts#INSTITUTIONS [annie]": {
+  "status": "Rewritten",
+  "hash": "7834086d63ed",
+  "on": "2026-10-24",
+  "evidence": "Written for brief 25's Module 6 (the published charts as dated imports, the game's own box office, the awards and festivals inventory, the Emmy Awards by the 78th's rules and Sundance by its 2027 festival's) to docs/STYLE.md and docs/GLOSSARY.md, every rule the read sources' own and every invention said as the game's; read where the player meets it in tests/career-awards-screen.test.ts (the Charts And Awards tab and the Portfolio drawn before the work, after the wrap, after the entry, at the nominations and after the ceremony, through the clock and a reload at each stage) and tests/career-awards.test.ts (each refusal, notice, recap and festival word), with tools/voice-check.mjs, tools/tics.mjs and tools/title-case.mjs clean.",
+  "first": "Pending"
+ },
+ "src/engine/content/awards.ts#INSTITUTIONS [bafta]": {
+  "status": "Rewritten",
+  "hash": "6a8a1694fb7b",
+  "on": "2026-10-24",
+  "evidence": "Written for brief 25's Module 6 (the published charts as dated imports, the game's own box office, the awards and festivals inventory, the Emmy Awards by the 78th's rules and Sundance by its 2027 festival's) to docs/STYLE.md and docs/GLOSSARY.md, every rule the read sources' own and every invention said as the game's; read where the player meets it in tests/career-awards-screen.test.ts (the Charts And Awards tab and the Portfolio drawn before the work, after the wrap, after the entry, at the nominations and after the ceremony, through the clock and a reload at each stage) and tests/career-awards.test.ts (each refusal, notice, recap and festival word), with tools/voice-check.mjs, tools/tics.mjs and tools/title-case.mjs clean.",
+  "first": "Pending"
+ },
+ "src/engine/content/awards.ts#INSTITUTIONS [berlinale]": {
+  "status": "Rewritten",
+  "hash": "00ecf7bcf8ea",
+  "on": "2026-10-24",
+  "evidence": "Written for brief 25's Module 6 (the published charts as dated imports, the game's own box office, the awards and festivals inventory, the Emmy Awards by the 78th's rules and Sundance by its 2027 festival's) to docs/STYLE.md and docs/GLOSSARY.md, every rule the read sources' own and every invention said as the game's; read where the player meets it in tests/career-awards-screen.test.ts (the Charts And Awards tab and the Portfolio drawn before the work, after the wrap, after the entry, at the nominations and after the ceremony, through the clock and a reload at each stage) and tests/career-awards.test.ts (each refusal, notice, recap and festival word), with tools/voice-check.mjs, tools/tics.mjs and tools/title-case.mjs clean.",
+  "first": "Pending"
+ },
+ "src/engine/content/awards.ts#INSTITUTIONS [busan]": {
+  "status": "Rewritten",
+  "hash": "38f288f468f8",
+  "on": "2026-10-24",
+  "evidence": "Written for brief 25's Module 6 (the published charts as dated imports, the game's own box office, the awards and festivals inventory, the Emmy Awards by the 78th's rules and Sundance by its 2027 festival's) to docs/STYLE.md and docs/GLOSSARY.md, every rule the read sources' own and every invention said as the game's; read where the player meets it in tests/career-awards-screen.test.ts (the Charts And Awards tab and the Portfolio drawn before the work, after the wrap, after the entry, at the nominations and after the ceremony, through the clock and a reload at each stage) and tests/career-awards.test.ts (each refusal, notice, recap and festival word), with tools/voice-check.mjs, tools/tics.mjs and tools/title-case.mjs clean.",
+  "first": "Pending"
+ },
+ "src/engine/content/awards.ts#INSTITUTIONS [cannes]": {
+  "status": "Rewritten",
+  "hash": "deee23f490c3",
+  "on": "2026-10-24",
+  "evidence": "Written for brief 25's Module 6 (the published charts as dated imports, the game's own box office, the awards and festivals inventory, the Emmy Awards by the 78th's rules and Sundance by its 2027 festival's) to docs/STYLE.md and docs/GLOSSARY.md, every rule the read sources' own and every invention said as the game's; read where the player meets it in tests/career-awards-screen.test.ts (the Charts And Awards tab and the Portfolio drawn before the work, after the wrap, after the entry, at the nominations and after the ceremony, through the clock and a reload at each stage) and tests/career-awards.test.ts (each refusal, notice, recap and festival word), with tools/voice-check.mjs, tools/tics.mjs and tools/title-case.mjs clean.",
+  "first": "Pending"
+ },
+ "src/engine/content/awards.ts#INSTITUTIONS [cesar]": {
+  "status": "Rewritten",
+  "hash": "6cc986629ea9",
+  "on": "2026-10-24",
+  "evidence": "Written for brief 25's Module 6 (the published charts as dated imports, the game's own box office, the awards and festivals inventory, the Emmy Awards by the 78th's rules and Sundance by its 2027 festival's) to docs/STYLE.md and docs/GLOSSARY.md, every rule the read sources' own and every invention said as the game's; read where the player meets it in tests/career-awards-screen.test.ts (the Charts And Awards tab and the Portfolio drawn before the work, after the wrap, after the entry, at the nominations and after the ceremony, through the clock and a reload at each stage) and tests/career-awards.test.ts (each refusal, notice, recap and festival word), with tools/voice-check.mjs, tools/tics.mjs and tools/title-case.mjs clean.",
+  "first": "Pending"
+ },
+ "src/engine/content/awards.ts#INSTITUTIONS [critics-choice]": {
+  "status": "Rewritten",
+  "hash": "9506d1047085",
+  "on": "2026-10-24",
+  "evidence": "Written for brief 25's Module 6 (the published charts as dated imports, the game's own box office, the awards and festivals inventory, the Emmy Awards by the 78th's rules and Sundance by its 2027 festival's) to docs/STYLE.md and docs/GLOSSARY.md, every rule the read sources' own and every invention said as the game's; read where the player meets it in tests/career-awards-screen.test.ts (the Charts And Awards tab and the Portfolio drawn before the work, after the wrap, after the entry, at the nominations and after the ceremony, through the clock and a reload at each stage) and tests/career-awards.test.ts (each refusal, notice, recap and festival word), with tools/voice-check.mjs, tools/tics.mjs and tools/title-case.mjs clean.",
+  "first": "Pending"
+ },
+ "src/engine/content/awards.ts#INSTITUTIONS [emmys]": {
+  "status": "Rewritten",
+  "hash": "f2a93b454b8d",
+  "on": "2026-10-24",
+  "evidence": "Written for brief 25's Module 6 (the published charts as dated imports, the game's own box office, the awards and festivals inventory, the Emmy Awards by the 78th's rules and Sundance by its 2027 festival's) to docs/STYLE.md and docs/GLOSSARY.md, every rule the read sources' own and every invention said as the game's; read where the player meets it in tests/career-awards-screen.test.ts (the Charts And Awards tab and the Portfolio drawn before the work, after the wrap, after the entry, at the nominations and after the ceremony, through the clock and a reload at each stage) and tests/career-awards.test.ts (each refusal, notice, recap and festival word), with tools/voice-check.mjs, tools/tics.mjs and tools/title-case.mjs clean.",
+  "first": "Pending"
+ },
+ "src/engine/content/awards.ts#INSTITUTIONS [golden-globes]": {
+  "status": "Rewritten",
+  "hash": "1be0924465b4",
+  "on": "2026-10-24",
+  "evidence": "Written for brief 25's Module 6 (the published charts as dated imports, the game's own box office, the awards and festivals inventory, the Emmy Awards by the 78th's rules and Sundance by its 2027 festival's) to docs/STYLE.md and docs/GLOSSARY.md, every rule the read sources' own and every invention said as the game's; read where the player meets it in tests/career-awards-screen.test.ts (the Charts And Awards tab and the Portfolio drawn before the work, after the wrap, after the entry, at the nominations and after the ceremony, through the clock and a reload at each stage) and tests/career-awards.test.ts (each refusal, notice, recap and festival word), with tools/voice-check.mjs, tools/tics.mjs and tools/title-case.mjs clean.",
+  "first": "Pending"
+ },
+ "src/engine/content/awards.ts#INSTITUTIONS [gotham]": {
+  "status": "Rewritten",
+  "hash": "ed83eae83298",
+  "on": "2026-10-24",
+  "evidence": "Written for brief 25's Module 6 (the published charts as dated imports, the game's own box office, the awards and festivals inventory, the Emmy Awards by the 78th's rules and Sundance by its 2027 festival's) to docs/STYLE.md and docs/GLOSSARY.md, every rule the read sources' own and every invention said as the game's; read where the player meets it in tests/career-awards-screen.test.ts (the Charts And Awards tab and the Portfolio drawn before the work, after the wrap, after the entry, at the nominations and after the ceremony, through the clock and a reload at each stage) and tests/career-awards.test.ts (each refusal, notice, recap and festival word), with tools/voice-check.mjs, tools/tics.mjs and tools/title-case.mjs clean.",
+  "first": "Pending"
+ },
+ "src/engine/content/awards.ts#INSTITUTIONS [goya]": {
+  "status": "Rewritten",
+  "hash": "b87f9b68408d",
+  "on": "2026-10-24",
+  "evidence": "Written for brief 25's Module 6 (the published charts as dated imports, the game's own box office, the awards and festivals inventory, the Emmy Awards by the 78th's rules and Sundance by its 2027 festival's) to docs/STYLE.md and docs/GLOSSARY.md, every rule the read sources' own and every invention said as the game's; read where the player meets it in tests/career-awards-screen.test.ts (the Charts And Awards tab and the Portfolio drawn before the work, after the wrap, after the entry, at the nominations and after the ceremony, through the clock and a reload at each stage) and tests/career-awards.test.ts (each refusal, notice, recap and festival word), with tools/voice-check.mjs, tools/tics.mjs and tools/title-case.mjs clean.",
+  "first": "Pending"
+ },
+ "src/engine/content/awards.ts#INSTITUTIONS [idfa]": {
+  "status": "Rewritten",
+  "hash": "3c666cfa0022",
+  "on": "2026-10-24",
+  "evidence": "Written for brief 25's Module 6 (the published charts as dated imports, the game's own box office, the awards and festivals inventory, the Emmy Awards by the 78th's rules and Sundance by its 2027 festival's) to docs/STYLE.md and docs/GLOSSARY.md, every rule the read sources' own and every invention said as the game's; read where the player meets it in tests/career-awards-screen.test.ts (the Charts And Awards tab and the Portfolio drawn before the work, after the wrap, after the entry, at the nominations and after the ceremony, through the clock and a reload at each stage) and tests/career-awards.test.ts (each refusal, notice, recap and festival word), with tools/voice-check.mjs, tools/tics.mjs and tools/title-case.mjs clean.",
+  "first": "Pending"
+ },
+ "src/engine/content/awards.ts#INSTITUTIONS [iemmys]": {
+  "status": "Rewritten",
+  "hash": "0fc9cfb30b2c",
+  "on": "2026-10-24",
+  "evidence": "Written for brief 25's Module 6 (the published charts as dated imports, the game's own box office, the awards and festivals inventory, the Emmy Awards by the 78th's rules and Sundance by its 2027 festival's) to docs/STYLE.md and docs/GLOSSARY.md, every rule the read sources' own and every invention said as the game's; read where the player meets it in tests/career-awards-screen.test.ts (the Charts And Awards tab and the Portfolio drawn before the work, after the wrap, after the entry, at the nominations and after the ceremony, through the clock and a reload at each stage) and tests/career-awards.test.ts (each refusal, notice, recap and festival word), with tools/voice-check.mjs, tools/tics.mjs and tools/title-case.mjs clean.",
+  "first": "Pending"
+ },
+ "src/engine/content/awards.ts#INSTITUTIONS [natas]": {
+  "status": "Rewritten",
+  "hash": "497d622e1b58",
+  "on": "2026-10-24",
+  "evidence": "Written for brief 25's Module 6 (the published charts as dated imports, the game's own box office, the awards and festivals inventory, the Emmy Awards by the 78th's rules and Sundance by its 2027 festival's) to docs/STYLE.md and docs/GLOSSARY.md, every rule the read sources' own and every invention said as the game's; read where the player meets it in tests/career-awards-screen.test.ts (the Charts And Awards tab and the Portfolio drawn before the work, after the wrap, after the entry, at the nominations and after the ceremony, through the clock and a reload at each stage) and tests/career-awards.test.ts (each refusal, notice, recap and festival word), with tools/voice-check.mjs, tools/tics.mjs and tools/title-case.mjs clean.",
+  "first": "Pending"
+ },
+ "src/engine/content/awards.ts#INSTITUTIONS [oscars]": {
+  "status": "Rewritten",
+  "hash": "538b47feafd1",
+  "on": "2026-10-24",
+  "evidence": "Written for brief 25's Module 6 (the published charts as dated imports, the game's own box office, the awards and festivals inventory, the Emmy Awards by the 78th's rules and Sundance by its 2027 festival's) to docs/STYLE.md and docs/GLOSSARY.md, every rule the read sources' own and every invention said as the game's; read where the player meets it in tests/career-awards-screen.test.ts (the Charts And Awards tab and the Portfolio drawn before the work, after the wrap, after the entry, at the nominations and after the ceremony, through the clock and a reload at each stage) and tests/career-awards.test.ts (each refusal, notice, recap and festival word), with tools/voice-check.mjs, tools/tics.mjs and tools/title-case.mjs clean.",
+  "first": "Pending"
+ },
+ "src/engine/content/awards.ts#INSTITUTIONS [spirit]": {
+  "status": "Rewritten",
+  "hash": "a625b79cdac0",
+  "on": "2026-10-24",
+  "evidence": "Written for brief 25's Module 6 (the published charts as dated imports, the game's own box office, the awards and festivals inventory, the Emmy Awards by the 78th's rules and Sundance by its 2027 festival's) to docs/STYLE.md and docs/GLOSSARY.md, every rule the read sources' own and every invention said as the game's; read where the player meets it in tests/career-awards-screen.test.ts (the Charts And Awards tab and the Portfolio drawn before the work, after the wrap, after the entry, at the nominations and after the ceremony, through the clock and a reload at each stage) and tests/career-awards.test.ts (each refusal, notice, recap and festival word), with tools/voice-check.mjs, tools/tics.mjs and tools/title-case.mjs clean.",
+  "first": "Pending"
+ },
+ "src/engine/content/awards.ts#INSTITUTIONS [sundance]": {
+  "status": "Rewritten",
+  "hash": "a69a9713ae46",
+  "on": "2026-10-24",
+  "evidence": "Written for brief 25's Module 6 (the published charts as dated imports, the game's own box office, the awards and festivals inventory, the Emmy Awards by the 78th's rules and Sundance by its 2027 festival's) to docs/STYLE.md and docs/GLOSSARY.md, every rule the read sources' own and every invention said as the game's; read where the player meets it in tests/career-awards-screen.test.ts (the Charts And Awards tab and the Portfolio drawn before the work, after the wrap, after the entry, at the nominations and after the ceremony, through the clock and a reload at each stage) and tests/career-awards.test.ts (each refusal, notice, recap and festival word), with tools/voice-check.mjs, tools/tics.mjs and tools/title-case.mjs clean.",
+  "first": "Pending"
+ },
+ "src/engine/content/awards.ts#INSTITUTIONS [tiff]": {
+  "status": "Rewritten",
+  "hash": "7331d6d4ac86",
+  "on": "2026-10-24",
+  "evidence": "Written for brief 25's Module 6 (the published charts as dated imports, the game's own box office, the awards and festivals inventory, the Emmy Awards by the 78th's rules and Sundance by its 2027 festival's) to docs/STYLE.md and docs/GLOSSARY.md, every rule the read sources' own and every invention said as the game's; read where the player meets it in tests/career-awards-screen.test.ts (the Charts And Awards tab and the Portfolio drawn before the work, after the wrap, after the entry, at the nominations and after the ceremony, through the clock and a reload at each stage) and tests/career-awards.test.ts (each refusal, notice, recap and festival word), with tools/voice-check.mjs, tools/tics.mjs and tools/title-case.mjs clean.",
+  "first": "Pending"
+ },
+ "src/engine/content/awards.ts#INSTITUTIONS [venice]": {
+  "status": "Rewritten",
+  "hash": "a42ba04692a2",
+  "on": "2026-10-24",
+  "evidence": "Written for brief 25's Module 6 (the published charts as dated imports, the game's own box office, the awards and festivals inventory, the Emmy Awards by the 78th's rules and Sundance by its 2027 festival's) to docs/STYLE.md and docs/GLOSSARY.md, every rule the read sources' own and every invention said as the game's; read where the player meets it in tests/career-awards-screen.test.ts (the Charts And Awards tab and the Portfolio drawn before the work, after the wrap, after the entry, at the nominations and after the ceremony, through the clock and a reload at each stage) and tests/career-awards.test.ts (each refusal, notice, recap and festival word), with tools/voice-check.mjs, tools/tics.mjs and tools/title-case.mjs clean.",
+  "first": "Pending"
+ },
+ "src/engine/content/awards.ts#SUNDANCE_2027": {
+  "status": "Rewritten",
+  "hash": "2337cad91fbb",
+  "on": "2026-10-24",
+  "evidence": "Written for brief 25's Module 6 (the published charts as dated imports, the game's own box office, the awards and festivals inventory, the Emmy Awards by the 78th's rules and Sundance by its 2027 festival's) to docs/STYLE.md and docs/GLOSSARY.md, every rule the read sources' own and every invention said as the game's; read where the player meets it in tests/career-awards-screen.test.ts (the Charts And Awards tab and the Portfolio drawn before the work, after the wrap, after the entry, at the nominations and after the ceremony, through the clock and a reload at each stage) and tests/career-awards.test.ts (each refusal, notice, recap and festival word), with tools/voice-check.mjs, tools/tics.mjs and tools/title-case.mjs clean.",
+  "first": "Pending"
+ },
+ "src/engine/content/awards.ts#SUNDANCE_CATEGORY_NAME": {
+  "status": "Rewritten",
+  "hash": "5591880f49ef",
+  "on": "2026-10-24",
+  "evidence": "Written for brief 25's Module 6 (the published charts as dated imports, the game's own box office, the awards and festivals inventory, the Emmy Awards by the 78th's rules and Sundance by its 2027 festival's) to docs/STYLE.md and docs/GLOSSARY.md, every rule the read sources' own and every invention said as the game's; read where the player meets it in tests/career-awards-screen.test.ts (the Charts And Awards tab and the Portfolio drawn before the work, after the wrap, after the entry, at the nominations and after the ceremony, through the clock and a reload at each stage) and tests/career-awards.test.ts (each refusal, notice, recap and festival word), with tools/voice-check.mjs, tools/tics.mjs and tools/title-case.mjs clean.",
+  "first": "Pending"
+ },
+ "src/engine/content/catalog.ts#COMPANIES [20th-television]": {
+  "status": "Retained",
+  "hash": "9ad262373c17",
+  "on": "2026-10-23",
+  "reason": "Each line is a production page’s own words, quoted exactly as the register recorded them on October 23, 2026, or a company’s name as its page prints it; tests/career-catalog.test.ts holds every one to sources.json, so rewriting them would break the record they prove.",
+  "first": "Pending"
+ },
+ "src/engine/content/catalog.ts#COMPANIES [amazon-mgm-studios]": {
+  "status": "Retained",
+  "hash": "14008901411d",
+  "on": "2026-10-23",
+  "reason": "Each line is a production page’s own words, quoted exactly as the register recorded them on October 23, 2026, or a company’s name as its page prints it; tests/career-catalog.test.ts holds every one to sources.json, so rewriting them would break the record they prove.",
+  "first": "Pending"
+ },
+ "src/engine/content/catalog.ts#COMPANIES [apple-tv]": {
+  "status": "Retained",
+  "hash": "4b1d5768bf02",
+  "on": "2026-10-23",
+  "reason": "Each line is a production page’s own words, quoted exactly as the register recorded them on October 23, 2026, or a company’s name as its page prints it; tests/career-catalog.test.ts holds every one to sources.json, so rewriting them would break the record they prove.",
+  "first": "Pending"
+ },
+ "src/engine/content/catalog.ts#COMPANIES [baha-productions]": {
+  "status": "Retained",
+  "hash": "64829715313e",
+  "on": "2026-10-23",
+  "reason": "Each line is a production page’s own words, quoted exactly as the register recorded them on October 23, 2026, or a company’s name as its page prints it; tests/career-catalog.test.ts holds every one to sources.json, so rewriting them would break the record they prove.",
+  "first": "Pending"
+ },
+ "src/engine/content/catalog.ts#COMPANIES [brad-falchuk-teley-vision]": {
+  "status": "Retained",
+  "hash": "7c6ff7c09741",
+  "on": "2026-10-23",
+  "reason": "Each line is a production page’s own words, quoted exactly as the register recorded them on October 23, 2026, or a company’s name as its page prints it; tests/career-catalog.test.ts holds every one to sources.json, so rewriting them would break the record they prove.",
+  "first": "Pending"
+ },
+ "src/engine/content/catalog.ts#COMPANIES [fireside-films]": {
+  "status": "Retained",
+  "hash": "906902c15dbd",
+  "on": "2026-10-23",
+  "reason": "Each line is a production page’s own words, quoted exactly as the register recorded them on October 23, 2026, or a company’s name as its page prints it; tests/career-catalog.test.ts holds every one to sources.json, so rewriting them would break the record they prove.",
+  "first": "Pending"
+ },
+ "src/engine/content/catalog.ts#COMPANIES [hulu]": {
+  "status": "Retained",
+  "hash": "3bf0b3699bbd",
+  "on": "2026-10-23",
+  "reason": "Each line is a production page’s own words, quoted exactly as the register recorded them on October 23, 2026, or a company’s name as its page prints it; tests/career-catalog.test.ts holds every one to sources.json, so rewriting them would break the record they prove.",
+  "first": "Pending"
+ },
+ "src/engine/content/catalog.ts#COMPANIES [orion-pictures]": {
+  "status": "Retained",
+  "hash": "7c7bcc454990",
+  "on": "2026-10-23",
+  "reason": "Each line is a production page’s own words, quoted exactly as the register recorded them on October 23, 2026, or a company’s name as its page prints it; tests/career-catalog.test.ts holds every one to sources.json, so rewriting them would break the record they prove.",
+  "first": "Pending"
+ },
+ "src/engine/content/catalog.ts#COMPANIES [ryan-murphy-television]": {
+  "status": "Retained",
+  "hash": "5e0eb7fdf967",
+  "on": "2026-10-23",
+  "reason": "Each line is a production page’s own words, quoted exactly as the register recorded them on October 23, 2026, or a company’s name as its page prints it; tests/career-catalog.test.ts holds every one to sources.json, so rewriting them would break the record they prove.",
+  "first": "Pending"
+ },
+ "src/engine/content/catalog.ts#COMPANIES [see-saw-films]": {
+  "status": "Retained",
+  "hash": "bebab3b5c65b",
+  "on": "2026-10-23",
+  "reason": "Each line is a production page’s own words, quoted exactly as the register recorded them on October 23, 2026, or a company’s name as its page prints it; tests/career-catalog.test.ts holds every one to sources.json, so rewriting them would break the record they prove.",
+  "first": "Pending"
+ },
+ "src/engine/content/catalog.ts#COMPANIES [united-artists]": {
+  "status": "Retained",
+  "hash": "d97faa8de0f2",
+  "on": "2026-10-23",
+  "reason": "Each line is a production page’s own words, quoted exactly as the register recorded them on October 23, 2026, or a company’s name as its page prints it; tests/career-catalog.test.ts holds every one to sources.json, so rewriting them would break the record they prove.",
+  "first": "Pending"
+ },
+ "src/engine/content/catalog.ts#COMPANIES [warner-bros-television]": {
+  "status": "Retained",
+  "hash": "8bf1668e3e20",
+  "on": "2026-10-23",
+  "reason": "Each line is a production page’s own words, quoted exactly as the register recorded them on October 23, 2026, or a company’s name as its page prints it; tests/career-catalog.test.ts holds every one to sources.json, so rewriting them would break the record they prove.",
+  "first": "Pending"
+ },
+ "src/engine/content/catalog.ts#FILMS": {
+  "status": "Rewritten",
+  "hash": "81e82e096abe",
+  "on": "2026-10-23",
+  "evidence": "Written for brief 25's Module 2 (the reference catalog and the parts drawn from it) to docs/STYLE.md and docs/GLOSSARY.md; read where the player meets it in tests/career-drawn.test.ts (the role card, the offer, the Work tab and the trip to Los Angeles drawn over a played journey) and tests/career-catalog.test.ts (productionWords and CATALOG.md), with tools/voice-check.mjs, tools/tics.mjs, tools/title-case.mjs, tools/plural-check.mjs and tools/spelling.mjs passing",
+  "first": "Pending"
+ },
+ "src/engine/content/catalog.ts#FILMS [conflict]": {
+  "status": "Rewritten",
+  "hash": "13dfab35f1bd",
+  "on": "2026-10-23",
+  "evidence": "Written for brief 25's Module 2 (the reference catalog and the parts drawn from it) to docs/STYLE.md and docs/GLOSSARY.md; read where the player meets it in tests/career-drawn.test.ts (the role card, the offer, the Work tab and the trip to Los Angeles drawn over a played journey) and tests/career-catalog.test.ts (productionWords and CATALOG.md), with tools/voice-check.mjs, tools/tics.mjs, tools/title-case.mjs, tools/plural-check.mjs and tools/spelling.mjs passing",
+  "first": "Pending"
+ },
+ "src/engine/content/catalog.ts#NO_FILMING": {
+  "status": "Rewritten",
+  "hash": "92091201150a",
+  "on": "2026-10-23",
+  "evidence": "Written for brief 25's Module 2 (the reference catalog and the parts drawn from it) to docs/STYLE.md and docs/GLOSSARY.md; read where the player meets it in tests/career-drawn.test.ts (the role card, the offer, the Work tab and the trip to Los Angeles drawn over a played journey) and tests/career-catalog.test.ts (productionWords and CATALOG.md), with tools/voice-check.mjs, tools/tics.mjs, tools/title-case.mjs, tools/plural-check.mjs and tools/spelling.mjs passing",
+  "first": "Pending"
+ },
+ "src/engine/content/catalog.ts#NO_LANGUAGE": {
+  "status": "Rewritten",
+  "hash": "b63fa73f09f2",
+  "on": "2026-10-23",
+  "evidence": "Written for brief 25's Module 2 (the reference catalog and the parts drawn from it) to docs/STYLE.md and docs/GLOSSARY.md; read where the player meets it in tests/career-drawn.test.ts (the role card, the offer, the Work tab and the trip to Los Angeles drawn over a played journey) and tests/career-catalog.test.ts (productionWords and CATALOG.md), with tools/voice-check.mjs, tools/tics.mjs, tools/title-case.mjs, tools/plural-check.mjs and tools/spelling.mjs passing",
+  "first": "Pending"
+ },
+ "src/engine/content/catalog.ts#NO_RUNTIME": {
+  "status": "Rewritten",
+  "hash": "254901fbaca8",
+  "on": "2026-10-23",
+  "evidence": "Written for brief 25's Module 2 (the reference catalog and the parts drawn from it) to docs/STYLE.md and docs/GLOSSARY.md; read where the player meets it in tests/career-drawn.test.ts (the role card, the offer, the Work tab and the trip to Los Angeles drawn over a played journey) and tests/career-catalog.test.ts (productionWords and CATALOG.md), with tools/voice-check.mjs, tools/tics.mjs, tools/title-case.mjs, tools/plural-check.mjs and tools/spelling.mjs passing",
+  "first": "Pending"
+ },
+ "src/engine/content/catalog.ts#PAGES_READ": {
+  "status": "Rewritten",
+  "hash": "9510eee976c6",
+  "on": "2026-10-23",
+  "evidence": "Written for brief 25's Module 2 (the reference catalog and the parts drawn from it) to docs/STYLE.md and docs/GLOSSARY.md; read where the player meets it in tests/career-drawn.test.ts (the role card, the offer, the Work tab and the trip to Los Angeles drawn over a played journey) and tests/career-catalog.test.ts (productionWords and CATALOG.md), with tools/voice-check.mjs, tools/tics.mjs, tools/title-case.mjs, tools/plural-check.mjs and tools/spelling.mjs passing",
+  "first": "Pending"
+ },
+ "src/engine/content/catalog.ts#productionWords": {
+  "status": "Rewritten",
+  "hash": "8893b745d883",
+  "on": "2026-10-23",
+  "evidence": "Written for brief 25's Module 2 (the reference catalog and the parts drawn from it) to docs/STYLE.md and docs/GLOSSARY.md; read where the player meets it in tests/career-drawn.test.ts (the role card, the offer, the Work tab and the trip to Los Angeles drawn over a played journey) and tests/career-catalog.test.ts (productionWords and CATALOG.md), with tools/voice-check.mjs, tools/tics.mjs, tools/title-case.mjs, tools/plural-check.mjs and tools/spelling.mjs passing",
+  "first": "Pending"
+ },
+ "src/engine/content/catalog.ts#ROCKY_MAKERS": {
+  "status": "Retained",
+  "hash": "afefe123a219",
+  "on": "2026-10-23",
+  "reason": "Each line is a production page’s own words, quoted exactly as the register recorded them on October 23, 2026, or a company’s name as its page prints it; tests/career-catalog.test.ts holds every one to sources.json, so rewriting them would break the record they prove.",
+  "first": "Pending"
+ },
+ "src/engine/content/catalog.ts#ROCKY_RELEASE": {
+  "status": "Retained",
+  "hash": "14b7781f0379",
+  "on": "2026-10-23",
+  "reason": "Each line is a production page’s own words, quoted exactly as the register recorded them on October 23, 2026, or a company’s name as its page prints it; tests/career-catalog.test.ts holds every one to sources.json, so rewriting them would break the record they prove.",
+  "first": "Pending"
+ },
+ "src/engine/content/catalog.ts#S109_CAST": {
+  "status": "Retained",
+  "hash": "aec6a3d0374a",
+  "on": "2026-10-23",
+  "reason": "Each line is a production page’s own words, quoted exactly as the register recorded them on October 23, 2026, or a company’s name as its page prints it; tests/career-catalog.test.ts holds every one to sources.json, so rewriting them would break the record they prove.",
+  "first": "Pending"
+ },
+ "src/engine/content/catalog.ts#S79_ENSEMBLE": {
+  "status": "Retained",
+  "hash": "c17361265145",
+  "on": "2026-10-23",
+  "reason": "Each line is a production page’s own words, quoted exactly as the register recorded them on October 23, 2026, or a company’s name as its page prints it; tests/career-catalog.test.ts holds every one to sources.json, so rewriting them would break the record they prove.",
+  "first": "Pending"
+ },
+ "src/engine/content/catalog.ts#S80_CAST": {
+  "status": "Retained",
+  "hash": "49e0387430b4",
+  "on": "2026-10-23",
+  "reason": "Each line is a production page’s own words, quoted exactly as the register recorded them on October 23, 2026, or a company’s name as its page prints it; tests/career-catalog.test.ts holds every one to sources.json, so rewriting them would break the record they prove.",
+  "first": "Pending"
+ },
+ "src/engine/content/catalog.ts#S85_CAST": {
+  "status": "Retained",
+  "hash": "c5ee72c0e1c4",
+  "on": "2026-10-23",
+  "reason": "Each line is a production page’s own words, quoted exactly as the register recorded them on October 23, 2026, or a company’s name as its page prints it; tests/career-catalog.test.ts holds every one to sources.json, so rewriting them would break the record they prove.",
+  "first": "Pending"
+ },
+ "src/engine/content/catalog.ts#SERIES [abbott-elementary]": {
+  "status": "Rewritten",
+  "hash": "591fe9d119a0",
+  "on": "2026-10-23",
+  "evidence": "Written for brief 25's Module 2 (the reference catalog and the parts drawn from it) to docs/STYLE.md and docs/GLOSSARY.md; read where the player meets it in tests/career-drawn.test.ts (the role card, the offer, the Work tab and the trip to Los Angeles drawn over a played journey) and tests/career-catalog.test.ts (productionWords and CATALOG.md), with tools/voice-check.mjs, tools/tics.mjs, tools/title-case.mjs, tools/plural-check.mjs and tools/spelling.mjs passing",
+  "first": "Pending"
+ },
+ "src/engine/content/catalog.ts#SERIES [nine-one-one]": {
+  "status": "Rewritten",
+  "hash": "37ca439d5d3b",
+  "on": "2026-10-23",
+  "evidence": "Written for brief 25's Module 2 (the reference catalog and the parts drawn from it) to docs/STYLE.md and docs/GLOSSARY.md; read where the player meets it in tests/career-drawn.test.ts (the role card, the offer, the Work tab and the trip to Los Angeles drawn over a played journey) and tests/career-catalog.test.ts (productionWords and CATALOG.md), with tools/voice-check.mjs, tools/tics.mjs, tools/title-case.mjs, tools/plural-check.mjs and tools/spelling.mjs passing",
+  "first": "Pending"
+ },
+ "src/engine/content/catalog.ts#SERIES [severance]": {
+  "status": "Rewritten",
+  "hash": "1e78998fb218",
+  "on": "2026-10-23",
+  "evidence": "Written for brief 25's Module 2 (the reference catalog and the parts drawn from it) to docs/STYLE.md and docs/GLOSSARY.md; read where the player meets it in tests/career-drawn.test.ts (the role card, the offer, the Work tab and the trip to Los Angeles drawn over a played journey) and tests/career-catalog.test.ts (productionWords and CATALOG.md), with tools/voice-check.mjs, tools/tics.mjs, tools/title-case.mjs, tools/plural-check.mjs and tools/spelling.mjs passing",
+  "first": "Pending"
+ },
+ "src/engine/content/catalog.ts#SERIES [slow-horses]": {
+  "status": "Rewritten",
+  "hash": "cdd882e1a4bf",
+  "on": "2026-10-23",
+  "evidence": "Written for brief 25's Module 2 (the reference catalog and the parts drawn from it) to docs/STYLE.md and docs/GLOSSARY.md; read where the player meets it in tests/career-drawn.test.ts (the role card, the offer, the Work tab and the trip to Los Angeles drawn over a played journey) and tests/career-catalog.test.ts (productionWords and CATALOG.md), with tools/voice-check.mjs, tools/tics.mjs, tools/title-case.mjs, tools/plural-check.mjs and tools/spelling.mjs passing",
+  "first": "Pending"
+ },
+ "src/engine/content/catalog.ts#slate": {
+  "status": "Rewritten",
+  "hash": "e88339377b7b",
+  "on": "2026-10-23",
+  "evidence": "Written for brief 25's Module 2 (the reference catalog and the parts drawn from it) to docs/STYLE.md and docs/GLOSSARY.md; read where the player meets it in tests/career-drawn.test.ts (the role card, the offer, the Work tab and the trip to Los Angeles drawn over a played journey) and tests/career-catalog.test.ts (productionWords and CATALOG.md), with tools/voice-check.mjs, tools/tics.mjs, tools/title-case.mjs, tools/plural-check.mjs and tools/spelling.mjs passing",
+  "first": "Pending"
+ },
+ "src/engine/content/catalog.ts#stars": {
+  "status": "Rewritten",
+  "hash": "f85778c40730",
+  "on": "2026-10-23",
+  "evidence": "Written for brief 25's Module 2 (the reference catalog and the parts drawn from it) to docs/STYLE.md and docs/GLOSSARY.md; read where the player meets it in tests/career-drawn.test.ts (the role card, the offer, the Work tab and the trip to Los Angeles drawn over a played journey) and tests/career-catalog.test.ts (productionWords and CATALOG.md), with tools/voice-check.mjs, tools/tics.mjs, tools/title-case.mjs, tools/plural-check.mjs and tools/spelling.mjs passing",
+  "first": "Pending"
+ },
+ "src/engine/content/catalog.ts#W": {
+  "status": "Retained",
+  "hash": "c2228a2ba8a1",
+  "on": "2026-10-23",
+  "reason": "Each line is a production page’s own words, quoted exactly as the register recorded them on October 23, 2026, or a company’s name as its page prints it; tests/career-catalog.test.ts holds every one to sources.json, so rewriting them would break the record they prove.",
+  "first": "Pending"
+ },
+ "src/engine/content/charts.ts#CHARTS [bom-domestic-weekly]": {
+  "status": "Rewritten",
+  "hash": "6917f2083814",
+  "on": "2026-10-24",
+  "evidence": "Written for brief 25's Module 6 (the published charts as dated imports, the game's own box office, the awards and festivals inventory, the Emmy Awards by the 78th's rules and Sundance by its 2027 festival's) to docs/STYLE.md and docs/GLOSSARY.md, every rule the read sources' own and every invention said as the game's; read where the player meets it in tests/career-awards-screen.test.ts (the Charts And Awards tab and the Portfolio drawn before the work, after the wrap, after the entry, at the nominations and after the ceremony, through the clock and a reload at each stage) and tests/career-awards.test.ts (each refusal, notice, recap and festival word), with tools/voice-check.mjs, tools/tics.mjs and tools/title-case.mjs clean.",
+  "first": "Pending"
+ },
+ "src/engine/content/charts.ts#CHARTS [netflix-films-english]": {
+  "status": "Rewritten",
+  "hash": "c51c463bf8c7",
+  "on": "2026-10-24",
+  "evidence": "Written for brief 25's Module 6 (the published charts as dated imports, the game's own box office, the awards and festivals inventory, the Emmy Awards by the 78th's rules and Sundance by its 2027 festival's) to docs/STYLE.md and docs/GLOSSARY.md, every rule the read sources' own and every invention said as the game's; read where the player meets it in tests/career-awards-screen.test.ts (the Charts And Awards tab and the Portfolio drawn before the work, after the wrap, after the entry, at the nominations and after the ceremony, through the clock and a reload at each stage) and tests/career-awards.test.ts (each refusal, notice, recap and festival word), with tools/voice-check.mjs, tools/tics.mjs and tools/title-case.mjs clean.",
+  "first": "Pending"
+ },
+ "src/engine/content/charts.ts#CHARTS [netflix-films-other]": {
+  "status": "Rewritten",
+  "hash": "7a3af1c58c2c",
+  "on": "2026-10-24",
+  "evidence": "Written for brief 25's Module 6 (the published charts as dated imports, the game's own box office, the awards and festivals inventory, the Emmy Awards by the 78th's rules and Sundance by its 2027 festival's) to docs/STYLE.md and docs/GLOSSARY.md, every rule the read sources' own and every invention said as the game's; read where the player meets it in tests/career-awards-screen.test.ts (the Charts And Awards tab and the Portfolio drawn before the work, after the wrap, after the entry, at the nominations and after the ceremony, through the clock and a reload at each stage) and tests/career-awards.test.ts (each refusal, notice, recap and festival word), with tools/voice-check.mjs, tools/tics.mjs and tools/title-case.mjs clean.",
+  "first": "Pending"
+ },
+ "src/engine/content/charts.ts#CHARTS [netflix-tv-english]": {
+  "status": "Rewritten",
+  "hash": "3ad7dcc666b7",
+  "on": "2026-10-24",
+  "evidence": "Written for brief 25's Module 6 (the published charts as dated imports, the game's own box office, the awards and festivals inventory, the Emmy Awards by the 78th's rules and Sundance by its 2027 festival's) to docs/STYLE.md and docs/GLOSSARY.md, every rule the read sources' own and every invention said as the game's; read where the player meets it in tests/career-awards-screen.test.ts (the Charts And Awards tab and the Portfolio drawn before the work, after the wrap, after the entry, at the nominations and after the ceremony, through the clock and a reload at each stage) and tests/career-awards.test.ts (each refusal, notice, recap and festival word), with tools/voice-check.mjs, tools/tics.mjs and tools/title-case.mjs clean.",
+  "first": "Pending"
+ },
+ "src/engine/content/charts.ts#CHARTS [netflix-tv-other]": {
+  "status": "Rewritten",
+  "hash": "ce8c3a81085a",
+  "on": "2026-10-24",
+  "evidence": "Written for brief 25's Module 6 (the published charts as dated imports, the game's own box office, the awards and festivals inventory, the Emmy Awards by the 78th's rules and Sundance by its 2027 festival's) to docs/STYLE.md and docs/GLOSSARY.md, every rule the read sources' own and every invention said as the game's; read where the player meets it in tests/career-awards-screen.test.ts (the Charts And Awards tab and the Portfolio drawn before the work, after the wrap, after the entry, at the nominations and after the ceremony, through the clock and a reload at each stage) and tests/career-awards.test.ts (each refusal, notice, recap and festival word), with tools/voice-check.mjs, tools/tics.mjs and tools/title-case.mjs clean.",
+  "first": "Pending"
+ },
+ "src/engine/content/charts.ts#CHARTS [nielsen-streaming-overall]": {
+  "status": "Rewritten",
+  "hash": "952487f2afa4",
+  "on": "2026-10-24",
+  "evidence": "Written for brief 25's Module 6 (the published charts as dated imports, the game's own box office, the awards and festivals inventory, the Emmy Awards by the 78th's rules and Sundance by its 2027 festival's) to docs/STYLE.md and docs/GLOSSARY.md, every rule the read sources' own and every invention said as the game's; read where the player meets it in tests/career-awards-screen.test.ts (the Charts And Awards tab and the Portfolio drawn before the work, after the wrap, after the entry, at the nominations and after the ceremony, through the clock and a reload at each stage) and tests/career-awards.test.ts (each refusal, notice, recap and festival word), with tools/voice-check.mjs, tools/tics.mjs and tools/title-case.mjs clean.",
+  "first": "Pending"
+ },
+ "src/engine/content/charts.ts#SNAPSHOTS": {
+  "status": "Rewritten",
+  "hash": "d38474220097",
+  "on": "2026-10-24",
+  "evidence": "Written for brief 25's Module 6 (the published charts as dated imports, the game's own box office, the awards and festivals inventory, the Emmy Awards by the 78th's rules and Sundance by its 2027 festival's) to docs/STYLE.md and docs/GLOSSARY.md, every rule the read sources' own and every invention said as the game's; read where the player meets it in tests/career-awards-screen.test.ts (the Charts And Awards tab and the Portfolio drawn before the work, after the wrap, after the entry, at the nominations and after the ceremony, through the clock and a reload at each stage) and tests/career-awards.test.ts (each refusal, notice, recap and festival word), with tools/voice-check.mjs, tools/tics.mjs and tools/title-case.mjs clean.",
+  "first": "Pending"
+ },
+ "src/engine/content/jurisdictions.ts#AU_408": {
+  "status": "Rewritten",
+  "hash": "00d6a69add1b",
+  "on": "2026-10-23",
+  "evidence": "Written for brief 25's work abroad (Module 1) to docs/STYLE.md and docs/GLOSSARY.md; read where the player meets it in tests/career-world-sydney.test.ts (the journey, the release, the missed flight and the Work tab drawn at each stage) and tests/career-world-countries.test.ts, with tools/voice-check.mjs, tools/tics.mjs, tools/title-case.mjs and tools/plural-check.mjs passing",
+  "first": "Pending"
+ },
+ "src/engine/content/jurisdictions.ts#AU_408 [category]": {
+  "status": "Rewritten",
+  "hash": "571245fd689b",
+  "on": "2026-10-23",
+  "evidence": "Written for brief 25's work abroad (Module 1) to docs/STYLE.md and docs/GLOSSARY.md; read where the player meets it in tests/career-world-sydney.test.ts (the journey, the release, the missed flight and the Work tab drawn at each stage) and tests/career-world-countries.test.ts, with tools/voice-check.mjs, tools/tics.mjs, tools/title-case.mjs and tools/plural-check.mjs passing",
+  "first": "Pending"
+ },
+ "src/engine/content/jurisdictions.ts#AU_408 [charge]": {
+  "status": "Rewritten",
+  "hash": "3218cb92d7f4",
+  "on": "2026-10-23",
+  "evidence": "Written for brief 25's work abroad (Module 1) to docs/STYLE.md and docs/GLOSSARY.md; read where the player meets it in tests/career-world-sydney.test.ts (the journey, the release, the missed flight and the Work tab drawn at each stage) and tests/career-world-countries.test.ts, with tools/voice-check.mjs, tools/tics.mjs, tools/title-case.mjs and tools/plural-check.mjs passing",
+  "first": "Pending"
+ },
+ "src/engine/content/jurisdictions.ts#AU_408 [contract]": {
+  "status": "Rewritten",
+  "hash": "0132985d0fc1",
+  "on": "2026-10-23",
+  "evidence": "Written for brief 25's work abroad (Module 1) to docs/STYLE.md and docs/GLOSSARY.md; read where the player meets it in tests/career-world-sydney.test.ts (the journey, the release, the missed flight and the Work tab drawn at each stage) and tests/career-world-countries.test.ts, with tools/voice-check.mjs, tools/tics.mjs, tools/title-case.mjs and tools/plural-check.mjs passing",
+  "first": "Pending"
+ },
+ "src/engine/content/jurisdictions.ts#AU_408 [decision]": {
+  "status": "Rewritten",
+  "hash": "92bd679c2093",
+  "on": "2026-10-23",
+  "evidence": "Written for brief 25's work abroad (Module 1) to docs/STYLE.md and docs/GLOSSARY.md; read where the player meets it in tests/career-world-sydney.test.ts (the journey, the release, the missed flight and the Work tab drawn at each stage) and tests/career-world-countries.test.ts, with tools/voice-check.mjs, tools/tics.mjs, tools/title-case.mjs and tools/plural-check.mjs passing",
+  "first": "Pending"
+ },
+ "src/engine/content/jurisdictions.ts#AU_408 [funds]": {
+  "status": "Rewritten",
+  "hash": "a403ae73c4da",
+  "on": "2026-10-23",
+  "evidence": "Written for brief 25's work abroad (Module 1) to docs/STYLE.md and docs/GLOSSARY.md; read where the player meets it in tests/career-world-sydney.test.ts (the journey, the release, the missed flight and the Work tab drawn at each stage) and tests/career-world-countries.test.ts, with tools/voice-check.mjs, tools/tics.mjs, tools/title-case.mjs and tools/plural-check.mjs passing",
+  "first": "Pending"
+ },
+ "src/engine/content/jurisdictions.ts#AU_408 [itinerary]": {
+  "status": "Rewritten",
+  "hash": "4f7cf2e733a8",
+  "on": "2026-10-23",
+  "evidence": "Written for brief 25's work abroad (Module 1) to docs/STYLE.md and docs/GLOSSARY.md; read where the player meets it in tests/career-world-sydney.test.ts (the journey, the release, the missed flight and the Work tab drawn at each stage) and tests/career-world-countries.test.ts, with tools/voice-check.mjs, tools/tics.mjs, tools/title-case.mjs and tools/plural-check.mjs passing",
+  "first": "Pending"
+ },
+ "src/engine/content/jurisdictions.ts#AU_408 [passport]": {
+  "status": "Rewritten",
+  "hash": "fde8a012f66c",
+  "on": "2026-10-23",
+  "evidence": "Written for brief 25's work abroad (Module 1) to docs/STYLE.md and docs/GLOSSARY.md; read where the player meets it in tests/career-world-sydney.test.ts (the journey, the release, the missed flight and the Work tab drawn at each stage) and tests/career-world-countries.test.ts, with tools/voice-check.mjs, tools/tics.mjs, tools/title-case.mjs and tools/plural-check.mjs passing",
+  "first": "Pending"
+ },
+ "src/engine/content/jurisdictions.ts#AU_408 [stops]": {
+  "status": "Rewritten",
+  "hash": "b267820fb932",
+  "on": "2026-10-23",
+  "evidence": "Written for brief 25's work abroad (Module 1) to docs/STYLE.md and docs/GLOSSARY.md; read where the player meets it in tests/career-world-sydney.test.ts (the journey, the release, the missed flight and the Work tab drawn at each stage) and tests/career-world-countries.test.ts, with tools/voice-check.mjs, tools/tics.mjs, tools/title-case.mjs and tools/plural-check.mjs passing",
+  "first": "Pending"
+ },
+ "src/engine/content/jurisdictions.ts#AU_408 [supporter]": {
+  "status": "Rewritten",
+  "hash": "9874de322180",
+  "on": "2026-10-23",
+  "evidence": "Written for brief 25's work abroad (Module 1) to docs/STYLE.md and docs/GLOSSARY.md; read where the player meets it in tests/career-world-sydney.test.ts (the journey, the release, the missed flight and the Work tab drawn at each stage) and tests/career-world-countries.test.ts, with tools/voice-check.mjs, tools/tics.mjs, tools/title-case.mjs and tools/plural-check.mjs passing",
+  "first": "Pending"
+ },
+ "src/engine/content/jurisdictions.ts#AU_408 [union-arts]": {
+  "status": "Rewritten",
+  "hash": "042d7f5ae66b",
+  "on": "2026-10-23",
+  "evidence": "Written for brief 25's work abroad (Module 1) to docs/STYLE.md and docs/GLOSSARY.md; read where the player meets it in tests/career-world-sydney.test.ts (the journey, the release, the missed flight and the Work tab drawn at each stage) and tests/career-world-countries.test.ts, with tools/voice-check.mjs, tools/tics.mjs, tools/title-case.mjs and tools/plural-check.mjs passing",
+  "first": "Pending"
+ },
+ "src/engine/content/jurisdictions.ts#AU_444": {
+  "status": "Rewritten",
+  "hash": "5d56ab96d119",
+  "on": "2026-10-23",
+  "evidence": "Written for brief 25's work abroad (Module 1) to docs/STYLE.md and docs/GLOSSARY.md; read where the player meets it in tests/career-world-sydney.test.ts (the journey, the release, the missed flight and the Work tab drawn at each stage) and tests/career-world-countries.test.ts, with tools/voice-check.mjs, tools/tics.mjs, tools/title-case.mjs and tools/plural-check.mjs passing",
+  "first": "Pending"
+ },
+ "src/engine/content/jurisdictions.ts#AU_444 [passport]": {
+  "status": "Rewritten",
+  "hash": "fc7acbcbc851",
+  "on": "2026-10-23",
+  "evidence": "Written for brief 25's work abroad (Module 1) to docs/STYLE.md and docs/GLOSSARY.md; read where the player meets it in tests/career-world-sydney.test.ts (the journey, the release, the missed flight and the Work tab drawn at each stage) and tests/career-world-countries.test.ts, with tools/voice-check.mjs, tools/tics.mjs, tools/title-case.mjs and tools/plural-check.mjs passing",
+  "first": "Pending"
+ },
+ "src/engine/content/jurisdictions.ts#AU_444 [work]": {
+  "status": "Rewritten",
+  "hash": "d13e91df8a08",
+  "on": "2026-10-23",
+  "evidence": "Written for brief 25's work abroad (Module 1) to docs/STYLE.md and docs/GLOSSARY.md; read where the player meets it in tests/career-world-sydney.test.ts (the journey, the release, the missed flight and the Work tab drawn at each stage) and tests/career-world-countries.test.ts, with tools/voice-check.mjs, tools/tics.mjs, tools/title-case.mjs and tools/plural-check.mjs passing",
+  "first": "Pending"
+ },
+ "src/engine/content/jurisdictions.ts#gapWords": {
+  "status": "Rewritten",
+  "hash": "b0c4bf6098ff",
+  "on": "2026-10-23",
+  "evidence": "Written for brief 25's work abroad (Module 1) to docs/STYLE.md and docs/GLOSSARY.md; read where the player meets it in tests/career-world-sydney.test.ts (the journey, the release, the missed flight and the Work tab drawn at each stage) and tests/career-world-countries.test.ts, with tools/voice-check.mjs, tools/tics.mjs, tools/title-case.mjs and tools/plural-check.mjs passing",
+  "first": "Pending"
+ },
+ "src/engine/content/jurisdictions.ts#jurisdictionOf": {
+  "status": "Rewritten",
+  "hash": "535cebbadf46",
+  "on": "2026-10-23",
+  "evidence": "Written for brief 25's work abroad (Module 1) to docs/STYLE.md and docs/GLOSSARY.md; read where the player meets it in tests/career-world-sydney.test.ts (the journey, the release, the missed flight and the Work tab drawn at each stage) and tests/career-world-countries.test.ts, with tools/voice-check.mjs, tools/tics.mjs, tools/title-case.mjs and tools/plural-check.mjs passing",
+  "first": "Pending"
+ },
+ "src/engine/content/jurisdictions.ts#JURISDICTIONS": {
+  "status": "Rewritten",
+  "hash": "5184aa18ad9b",
+  "on": "2026-10-23",
+  "evidence": "Written for brief 25's work abroad (Module 1) to docs/STYLE.md and docs/GLOSSARY.md; read where the player meets it in tests/career-world-sydney.test.ts (the journey, the release, the missed flight and the Work tab drawn at each stage) and tests/career-world-countries.test.ts, with tools/voice-check.mjs, tools/tics.mjs, tools/title-case.mjs and tools/plural-check.mjs passing",
+  "first": "Pending"
+ },
+ "src/engine/systems/awards.ts#ceremonyLines": {
+  "status": "Rewritten",
+  "hash": "c5f5c65cf63b",
+  "on": "2026-10-24",
+  "evidence": "Written for brief 25's Module 6 (the published charts as dated imports, the game's own box office, the awards and festivals inventory, the Emmy Awards by the 78th's rules and Sundance by its 2027 festival's) to docs/STYLE.md and docs/GLOSSARY.md, every rule the read sources' own and every invention said as the game's; read where the player meets it in tests/career-awards-screen.test.ts (the Charts And Awards tab and the Portfolio drawn before the work, after the wrap, after the entry, at the nominations and after the ceremony, through the clock and a reload at each stage) and tests/career-awards.test.ts (each refusal, notice, recap and festival word), with tools/voice-check.mjs, tools/tics.mjs and tools/title-case.mjs clean.",
+  "first": "Pending"
+ },
+ "src/engine/systems/awards.ts#deadlineOf": {
+  "status": "Rewritten",
+  "hash": "c5095924a41a",
+  "on": "2026-10-24",
+  "evidence": "Written for brief 25's Module 6 to docs/STYLE.md: the entry deadline on the Academy's clock, said to the player as its day in the refusal tests/career-awards.test.ts reads ('The entry deadline for the 79th Emmy Awards was May 7, 2027, as the game projects it.'), with tools/voice-check.mjs clean.",
+  "first": "Pending"
+ },
+ "src/engine/systems/awards.ts#eligibleWords": {
+  "status": "Rewritten",
+  "hash": "a10b292fa372",
+  "on": "2026-10-24",
+  "evidence": "Written for brief 25's Module 6 (the published charts as dated imports, the game's own box office, the awards and festivals inventory, the Emmy Awards by the 78th's rules and Sundance by its 2027 festival's) to docs/STYLE.md and docs/GLOSSARY.md, every rule the read sources' own and every invention said as the game's; read where the player meets it in tests/career-awards-screen.test.ts (the Charts And Awards tab and the Portfolio drawn before the work, after the wrap, after the entry, at the nominations and after the ceremony, through the clock and a reload at each stage) and tests/career-awards.test.ts (each refusal, notice, recap and festival word), with tools/voice-check.mjs, tools/tics.mjs and tools/title-case.mjs clean.",
+  "first": "Pending"
+ },
+ "src/engine/systems/awards.ts#emmyCheck": {
+  "status": "Rewritten",
+  "hash": "fbe51ffa306d",
+  "on": "2026-10-24",
+  "evidence": "Written for brief 25's Module 6 (the published charts as dated imports, the game's own box office, the awards and festivals inventory, the Emmy Awards by the 78th's rules and Sundance by its 2027 festival's) to docs/STYLE.md and docs/GLOSSARY.md, every rule the read sources' own and every invention said as the game's; read where the player meets it in tests/career-awards-screen.test.ts (the Charts And Awards tab and the Portfolio drawn before the work, after the wrap, after the entry, at the nominations and after the ceremony, through the clock and a reload at each stage) and tests/career-awards.test.ts (each refusal, notice, recap and festival word), with tools/voice-check.mjs, tools/tics.mjs and tools/title-case.mjs clean.",
+  "first": "Pending"
+ },
+ "src/engine/systems/awards.ts#emmyStep": {
+  "status": "Rewritten",
+  "hash": "57d6886b0704",
+  "on": "2026-10-24",
+  "evidence": "Written for brief 25's Module 6 (the published charts as dated imports, the game's own box office, the awards and festivals inventory, the Emmy Awards by the 78th's rules and Sundance by its 2027 festival's) to docs/STYLE.md and docs/GLOSSARY.md, every rule the read sources' own and every invention said as the game's; read where the player meets it in tests/career-awards-screen.test.ts (the Charts And Awards tab and the Portfolio drawn before the work, after the wrap, after the entry, at the nominations and after the ceremony, through the clock and a reload at each stage) and tests/career-awards.test.ts (each refusal, notice, recap and festival word), with tools/voice-check.mjs, tools/tics.mjs and tools/title-case.mjs clean.",
+  "first": "Pending"
+ },
+ "src/engine/systems/awards.ts#enterAward": {
+  "status": "Rewritten",
+  "hash": "6bb1ce707c0b",
+  "on": "2026-10-24",
+  "evidence": "Written for brief 25's Module 6 (the published charts as dated imports, the game's own box office, the awards and festivals inventory, the Emmy Awards by the 78th's rules and Sundance by its 2027 festival's) to docs/STYLE.md and docs/GLOSSARY.md, every rule the read sources' own and every invention said as the game's; read where the player meets it in tests/career-awards-screen.test.ts (the Charts And Awards tab and the Portfolio drawn before the work, after the wrap, after the entry, at the nominations and after the ceremony, through the clock and a reload at each stage) and tests/career-awards.test.ts (each refusal, notice, recap and festival word), with tools/voice-check.mjs, tools/tics.mjs and tools/title-case.mjs clean.",
+  "first": "Pending"
+ },
+ "src/engine/systems/awards.ts#entryRefusal": {
+  "status": "Rewritten",
+  "hash": "e600e3aaedc1",
+  "on": "2026-10-24",
+  "evidence": "Written for brief 25's Module 6 (the published charts as dated imports, the game's own box office, the awards and festivals inventory, the Emmy Awards by the 78th's rules and Sundance by its 2027 festival's) to docs/STYLE.md and docs/GLOSSARY.md, every rule the read sources' own and every invention said as the game's; read where the player meets it in tests/career-awards-screen.test.ts (the Charts And Awards tab and the Portfolio drawn before the work, after the wrap, after the entry, at the nominations and after the ceremony, through the clock and a reload at each stage) and tests/career-awards.test.ts (each refusal, notice, recap and festival word), with tools/voice-check.mjs, tools/tics.mjs and tools/title-case.mjs clean.",
+  "first": "Pending"
+ },
+ "src/engine/systems/awards.ts#festivalCheck": {
+  "status": "Rewritten",
+  "hash": "00555c3193ca",
+  "on": "2026-10-24",
+  "evidence": "Written for brief 25's Module 6 (the published charts as dated imports, the game's own box office, the awards and festivals inventory, the Emmy Awards by the 78th's rules and Sundance by its 2027 festival's) to docs/STYLE.md and docs/GLOSSARY.md, every rule the read sources' own and every invention said as the game's; read where the player meets it in tests/career-awards-screen.test.ts (the Charts And Awards tab and the Portfolio drawn before the work, after the wrap, after the entry, at the nominations and after the ceremony, through the clock and a reload at each stage) and tests/career-awards.test.ts (each refusal, notice, recap and festival word), with tools/voice-check.mjs, tools/tics.mjs and tools/title-case.mjs clean.",
+  "first": "Pending"
+ },
+ "src/engine/systems/awards.ts#festivalCheckWords": {
+  "status": "Rewritten",
+  "hash": "f65bedc28821",
+  "on": "2026-10-24",
+  "evidence": "Written for brief 25's Module 6 (the published charts as dated imports, the game's own box office, the awards and festivals inventory, the Emmy Awards by the 78th's rules and Sundance by its 2027 festival's) to docs/STYLE.md and docs/GLOSSARY.md, every rule the read sources' own and every invention said as the game's; read where the player meets it in tests/career-awards-screen.test.ts (the Charts And Awards tab and the Portfolio drawn before the work, after the wrap, after the entry, at the nominations and after the ceremony, through the clock and a reload at each stage) and tests/career-awards.test.ts (each refusal, notice, recap and festival word), with tools/voice-check.mjs, tools/tics.mjs and tools/title-case.mjs clean.",
+  "first": "Pending"
+ },
+ "src/engine/systems/awards.ts#festivalStep": {
+  "status": "Rewritten",
+  "hash": "41fe4fe44ecd",
+  "on": "2026-10-24",
+  "evidence": "Written for brief 25's Module 6 (the published charts as dated imports, the game's own box office, the awards and festivals inventory, the Emmy Awards by the 78th's rules and Sundance by its 2027 festival's) to docs/STYLE.md and docs/GLOSSARY.md, every rule the read sources' own and every invention said as the game's; read where the player meets it in tests/career-awards-screen.test.ts (the Charts And Awards tab and the Portfolio drawn before the work, after the wrap, after the entry, at the nominations and after the ceremony, through the clock and a reload at each stage) and tests/career-awards.test.ts (each refusal, notice, recap and festival word), with tools/voice-check.mjs, tools/tics.mjs and tools/title-case.mjs clean.",
+  "first": "Pending"
+ },
+ "src/engine/systems/awards.ts#festivalWords": {
+  "status": "Rewritten",
+  "hash": "1582d684e0c9",
+  "on": "2026-10-24",
+  "evidence": "Written for brief 25's Module 6 (the published charts as dated imports, the game's own box office, the awards and festivals inventory, the Emmy Awards by the 78th's rules and Sundance by its 2027 festival's) to docs/STYLE.md and docs/GLOSSARY.md, every rule the read sources' own and every invention said as the game's; read where the player meets it in tests/career-awards-screen.test.ts (the Charts And Awards tab and the Portfolio drawn before the work, after the wrap, after the entry, at the nominations and after the ceremony, through the clock and a reload at each stage) and tests/career-awards.test.ts (each refusal, notice, recap and festival word), with tools/voice-check.mjs, tools/tics.mjs and tools/title-case.mjs clean.",
+  "first": "Pending"
+ },
+ "src/engine/systems/awards.ts#internationalWhy": {
+  "status": "Rewritten",
+  "hash": "e3ae7c8d9f27",
+  "on": "2026-10-24",
+  "evidence": "Written for brief 25's Module 6 (the published charts as dated imports, the game's own box office, the awards and festivals inventory, the Emmy Awards by the 78th's rules and Sundance by its 2027 festival's) to docs/STYLE.md and docs/GLOSSARY.md, every rule the read sources' own and every invention said as the game's; read where the player meets it in tests/career-awards-screen.test.ts (the Charts And Awards tab and the Portfolio drawn before the work, after the wrap, after the entry, at the nominations and after the ceremony, through the clock and a reload at each stage) and tests/career-awards.test.ts (each refusal, notice, recap and festival word), with tools/voice-check.mjs, tools/tics.mjs and tools/title-case.mjs clean.",
+  "first": "Pending"
+ },
+ "src/engine/systems/awards.ts#NY": {
+  "status": "Rewritten",
+  "hash": "91a5e4a639ea",
+  "on": "2026-10-24",
+  "evidence": "Written for brief 25's Module 6 (the published charts as dated imports, the game's own box office, the awards and festivals inventory, the Emmy Awards by the 78th's rules and Sundance by its 2027 festival's) to docs/STYLE.md and docs/GLOSSARY.md, every rule the read sources' own and every invention said as the game's; read where the player meets it in tests/career-awards-screen.test.ts (the Charts And Awards tab and the Portfolio drawn before the work, after the wrap, after the entry, at the nominations and after the ceremony, through the clock and a reload at each stage) and tests/career-awards.test.ts (each refusal, notice, recap and festival word), with tools/voice-check.mjs, tools/tics.mjs and tools/title-case.mjs clean.",
+  "first": "Pending"
+ },
+ "src/engine/systems/awards.ts#recapWords": {
+  "status": "Rewritten",
+  "hash": "c1b845ce7666",
+  "on": "2026-10-24",
+  "evidence": "Written for brief 25's Module 6 (the published charts as dated imports, the game's own box office, the awards and festivals inventory, the Emmy Awards by the 78th's rules and Sundance by its 2027 festival's) to docs/STYLE.md and docs/GLOSSARY.md, every rule the read sources' own and every invention said as the game's; read where the player meets it in tests/career-awards-screen.test.ts (the Charts And Awards tab and the Portfolio drawn before the work, after the wrap, after the entry, at the nominations and after the ceremony, through the clock and a reload at each stage) and tests/career-awards.test.ts (each refusal, notice, recap and festival word), with tools/voice-check.mjs, tools/tics.mjs and tools/title-case.mjs clean.",
+  "first": "Pending"
+ },
+ "src/engine/systems/awards.ts#resultStep": {
+  "status": "Rewritten",
+  "hash": "8a8633dc1581",
+  "on": "2026-10-24",
+  "evidence": "Written for brief 25's Module 6 (the published charts as dated imports, the game's own box office, the awards and festivals inventory, the Emmy Awards by the 78th's rules and Sundance by its 2027 festival's) to docs/STYLE.md and docs/GLOSSARY.md, every rule the read sources' own and every invention said as the game's; read where the player meets it in tests/career-awards-screen.test.ts (the Charts And Awards tab and the Portfolio drawn before the work, after the wrap, after the entry, at the nominations and after the ceremony, through the clock and a reload at each stage) and tests/career-awards.test.ts (each refusal, notice, recap and festival word), with tools/voice-check.mjs, tools/tics.mjs and tools/title-case.mjs clean.",
+  "first": "Pending"
+ },
+ "src/engine/systems/awards.ts#watchRefusal": {
+  "status": "Rewritten",
+  "hash": "0c09a6102240",
+  "on": "2026-10-24",
+  "evidence": "Written for brief 25's Module 6 (the published charts as dated imports, the game's own box office, the awards and festivals inventory, the Emmy Awards by the 78th's rules and Sundance by its 2027 festival's) to docs/STYLE.md and docs/GLOSSARY.md, every rule the read sources' own and every invention said as the game's; read where the player meets it in tests/career-awards-screen.test.ts (the Charts And Awards tab and the Portfolio drawn before the work, after the wrap, after the entry, at the nominations and after the ceremony, through the clock and a reload at each stage) and tests/career-awards.test.ts (each refusal, notice, recap and festival word), with tools/voice-check.mjs, tools/tics.mjs and tools/title-case.mjs clean.",
+  "first": "Pending"
+ },
+ "src/engine/systems/charts.ts#figureWords": {
+  "status": "Rewritten",
+  "hash": "6dacdc9e8b33",
+  "on": "2026-10-24",
+  "evidence": "Written for brief 25's Module 6 (the published charts as dated imports, the game's own box office, the awards and festivals inventory, the Emmy Awards by the 78th's rules and Sundance by its 2027 festival's) to docs/STYLE.md and docs/GLOSSARY.md, every rule the read sources' own and every invention said as the game's; read where the player meets it in tests/career-awards-screen.test.ts (the Charts And Awards tab and the Portfolio drawn before the work, after the wrap, after the entry, at the nominations and after the ceremony, through the clock and a reload at each stage) and tests/career-awards.test.ts (each refusal, notice, recap and festival word), with tools/voice-check.mjs, tools/tics.mjs and tools/title-case.mjs clean.",
+  "first": "Pending"
+ },
+ "src/engine/systems/charts.ts#longDate": {
+  "status": "Rewritten",
+  "hash": "27c857d61c2b",
+  "on": "2026-10-24",
+  "evidence": "Written for brief 25's Module 6 (the published charts as dated imports, the game's own box office, the awards and festivals inventory, the Emmy Awards by the 78th's rules and Sundance by its 2027 festival's) to docs/STYLE.md and docs/GLOSSARY.md, every rule the read sources' own and every invention said as the game's; read where the player meets it in tests/career-awards-screen.test.ts (the Charts And Awards tab and the Portfolio drawn before the work, after the wrap, after the entry, at the nominations and after the ceremony, through the clock and a reload at each stage) and tests/career-awards.test.ts (each refusal, notice, recap and festival word), with tools/voice-check.mjs, tools/tics.mjs and tools/title-case.mjs clean.",
+  "first": "Pending"
+ },
+ "src/engine/systems/charts.ts#movementWords": {
+  "status": "Rewritten",
+  "hash": "679257806128",
+  "on": "2026-10-24",
+  "evidence": "Written for brief 25's Module 6 (the published charts as dated imports, the game's own box office, the awards and festivals inventory, the Emmy Awards by the 78th's rules and Sundance by its 2027 festival's) to docs/STYLE.md and docs/GLOSSARY.md, every rule the read sources' own and every invention said as the game's; read where the player meets it in tests/career-awards-screen.test.ts (the Charts And Awards tab and the Portfolio drawn before the work, after the wrap, after the entry, at the nominations and after the ceremony, through the clock and a reload at each stage) and tests/career-awards.test.ts (each refusal, notice, recap and festival word), with tools/voice-check.mjs, tools/tics.mjs and tools/title-case.mjs clean.",
+  "first": "Pending"
+ },
+ "src/engine/systems/charts.ts#NY": {
+  "status": "Rewritten",
+  "hash": "91a5e4a639ea",
+  "on": "2026-10-24",
+  "evidence": "Written for brief 25's Module 6 (the published charts as dated imports, the game's own box office, the awards and festivals inventory, the Emmy Awards by the 78th's rules and Sundance by its 2027 festival's) to docs/STYLE.md and docs/GLOSSARY.md, every rule the read sources' own and every invention said as the game's; read where the player meets it in tests/career-awards-screen.test.ts (the Charts And Awards tab and the Portfolio drawn before the work, after the wrap, after the entry, at the nominations and after the ceremony, through the clock and a reload at each stage) and tests/career-awards.test.ts (each refusal, notice, recap and festival word), with tools/voice-check.mjs, tools/tics.mjs and tools/title-case.mjs clean.",
+  "first": "Pending"
+ },
+ "src/engine/systems/charts.ts#snapshotProblem": {
+  "status": "Rewritten",
+  "hash": "957abcc1b1d5",
+  "on": "2026-10-24",
+  "evidence": "Written for brief 25's Module 6 (the published charts as dated imports, the game's own box office, the awards and festivals inventory, the Emmy Awards by the 78th's rules and Sundance by its 2027 festival's) to docs/STYLE.md and docs/GLOSSARY.md, every rule the read sources' own and every invention said as the game's; read where the player meets it in tests/career-awards-screen.test.ts (the Charts And Awards tab and the Portfolio drawn before the work, after the wrap, after the entry, at the nominations and after the ceremony, through the clock and a reload at each stage) and tests/career-awards.test.ts (each refusal, notice, recap and festival word), with tools/voice-check.mjs, tools/tics.mjs and tools/title-case.mjs clean.",
+  "first": "Pending"
+ },
+ "src/engine/systems/charts.ts#unitNoun": {
+  "status": "Rewritten",
+  "hash": "f42214b22ecf",
+  "on": "2026-10-24",
+  "evidence": "Written for brief 25's Module 6 (the published charts as dated imports, the game's own box office, the awards and festivals inventory, the Emmy Awards by the 78th's rules and Sundance by its 2027 festival's) to docs/STYLE.md and docs/GLOSSARY.md, every rule the read sources' own and every invention said as the game's; read where the player meets it in tests/career-awards-screen.test.ts (the Charts And Awards tab and the Portfolio drawn before the work, after the wrap, after the entry, at the nominations and after the ceremony, through the clock and a reload at each stage) and tests/career-awards.test.ts (each refusal, notice, recap and festival word), with tools/voice-check.mjs, tools/tics.mjs and tools/title-case.mjs clean.",
+  "first": "Pending"
+ },
+ "src/engine/systems/worktrip.ts#abroadRead": {
+  "status": "Rewritten",
+  "hash": "4dfd47ff7f3a",
+  "on": "2026-10-23",
+  "evidence": "Written for brief 25's work abroad (Module 1) to docs/STYLE.md and docs/GLOSSARY.md; read where the player meets it in tests/career-world-sydney.test.ts (the journey, the release, the missed flight and the Work tab drawn at each stage) and tests/career-world-countries.test.ts, with tools/voice-check.mjs, tools/tics.mjs, tools/title-case.mjs and tools/plural-check.mjs passing",
+  "first": "Pending"
+ },
+ "src/engine/systems/worktrip.ts#airportOf": {
+  "status": "Rewritten",
+  "hash": "c5f0d48c124d",
+  "on": "2026-10-23",
+  "evidence": "Written for brief 25's work abroad (Module 1) to docs/STYLE.md and docs/GLOSSARY.md; read where the player meets it in tests/career-world-sydney.test.ts (the journey, the release, the missed flight and the Work tab drawn at each stage) and tests/career-world-countries.test.ts, with tools/voice-check.mjs, tools/tics.mjs, tools/title-case.mjs and tools/plural-check.mjs passing",
+  "first": "Pending"
+ },
+ "src/engine/systems/worktrip.ts#AIRPORTS": {
+  "status": "Rewritten",
+  "hash": "cb874c1a1d92",
+  "on": "2026-10-23",
+  "evidence": "Written for brief 25's work abroad (Module 1) to docs/STYLE.md and docs/GLOSSARY.md; read where the player meets it in tests/career-world-sydney.test.ts (the journey, the release, the missed flight and the Work tab drawn at each stage) and tests/career-world-countries.test.ts, with tools/voice-check.mjs, tools/tics.mjs, tools/title-case.mjs and tools/plural-check.mjs passing",
+  "first": "Pending"
+ },
+ "src/engine/systems/worktrip.ts#applyVisa": {
+  "status": "Rewritten",
+  "hash": "a8616274684d",
+  "on": "2026-10-23",
+  "evidence": "Written for brief 25's Module 2 (the reference catalog and the parts drawn from it) to docs/STYLE.md and docs/GLOSSARY.md; read where the player meets it in tests/career-drawn.test.ts (the role card, the offer, the Work tab and the trip to Los Angeles drawn over a played journey) and tests/career-catalog.test.ts (productionWords and CATALOG.md), with tools/voice-check.mjs, tools/tics.mjs, tools/title-case.mjs, tools/plural-check.mjs and tools/spelling.mjs passing",
+  "first": "Pending"
+ },
+ "src/engine/systems/worktrip.ts#applyVisa [visa-applied]": {
+  "status": "Rewritten",
+  "hash": "64de7989b993",
+  "on": "2026-10-23",
+  "evidence": "Written for brief 25's Module 2 (the reference catalog and the parts drawn from it) to docs/STYLE.md and docs/GLOSSARY.md; read where the player meets it in tests/career-drawn.test.ts (the role card, the offer, the Work tab and the trip to Los Angeles drawn over a played journey) and tests/career-catalog.test.ts (productionWords and CATALOG.md), with tools/voice-check.mjs, tools/tics.mjs, tools/title-case.mjs, tools/plural-check.mjs and tools/spelling.mjs passing",
+  "first": "Pending"
+ },
+ "src/engine/systems/worktrip.ts#callWords": {
+  "status": "Rewritten",
+  "hash": "0b3107744b3b",
+  "on": "2026-10-23",
+  "evidence": "Written for brief 25's work abroad (Module 1) to docs/STYLE.md and docs/GLOSSARY.md; read where the player meets it in tests/career-world-sydney.test.ts (the journey, the release, the missed flight and the Work tab drawn at each stage) and tests/career-world-countries.test.ts, with tools/voice-check.mjs, tools/tics.mjs, tools/title-case.mjs and tools/plural-check.mjs passing",
+  "first": "Pending"
+ },
+ "src/engine/systems/worktrip.ts#departureWords": {
+  "status": "Rewritten",
+  "hash": "9aad8b3991a5",
+  "on": "2026-10-23",
+  "evidence": "Written for brief 25's work abroad (Module 1) to docs/STYLE.md and docs/GLOSSARY.md; read where the player meets it in tests/career-world-sydney.test.ts (the journey, the release, the missed flight and the Work tab drawn at each stage) and tests/career-world-countries.test.ts, with tools/voice-check.mjs, tools/tics.mjs, tools/title-case.mjs and tools/plural-check.mjs passing",
+  "first": "Pending"
+ },
+ "src/engine/systems/worktrip.ts#grantVisa [visa-granted]": {
+  "status": "Rewritten",
+  "hash": "56de8d59f6d4",
+  "on": "2026-10-23",
+  "evidence": "Written for brief 25's work abroad (Module 1) to docs/STYLE.md and docs/GLOSSARY.md; read where the player meets it in tests/career-world-sydney.test.ts (the journey, the release, the missed flight and the Work tab drawn at each stage) and tests/career-world-countries.test.ts, with tools/voice-check.mjs, tools/tics.mjs, tools/title-case.mjs and tools/plural-check.mjs passing",
+  "first": "Pending"
+ },
+ "src/engine/systems/worktrip.ts#legPhrase": {
+  "status": "Rewritten",
+  "hash": "e3b2e1278d55",
+  "on": "2026-10-23",
+  "evidence": "Written for brief 25's work abroad (Module 1) to docs/STYLE.md and docs/GLOSSARY.md; read where the player meets it in tests/career-world-sydney.test.ts (the journey, the release, the missed flight and the Work tab drawn at each stage) and tests/career-world-countries.test.ts, with tools/voice-check.mjs, tools/tics.mjs, tools/title-case.mjs and tools/plural-check.mjs passing",
+  "first": "Pending"
+ },
+ "src/engine/systems/worktrip.ts#legWords": {
+  "status": "Rewritten",
+  "hash": "e1e7e7ed05b6",
+  "on": "2026-10-23",
+  "evidence": "Written for brief 25's work abroad (Module 1) to docs/STYLE.md and docs/GLOSSARY.md; read where the player meets it in tests/career-world-sydney.test.ts (the journey, the release, the missed flight and the Work tab drawn at each stage) and tests/career-world-countries.test.ts, with tools/voice-check.mjs, tools/tics.mjs, tools/title-case.mjs and tools/plural-check.mjs passing",
+  "first": "Pending"
+ },
+ "src/engine/systems/worktrip.ts#registerWorkTrips": {
+  "status": "Rewritten",
+  "hash": "42d537f4ea23",
+  "on": "2026-10-23",
+  "evidence": "Written for brief 25's work abroad (Module 1) to docs/STYLE.md and docs/GLOSSARY.md; read where the player meets it in tests/career-world-sydney.test.ts (the journey, the release, the missed flight and the Work tab drawn at each stage) and tests/career-world-countries.test.ts, with tools/voice-check.mjs, tools/tics.mjs, tools/title-case.mjs and tools/plural-check.mjs passing",
+  "first": "Pending"
+ },
+ "src/engine/systems/worktrip.ts#registerWorkTrips [arrived]": {
+  "status": "Rewritten",
+  "hash": "e02199e87068",
+  "on": "2026-10-23",
+  "evidence": "Written for brief 25's work abroad (Module 1) to docs/STYLE.md and docs/GLOSSARY.md; read where the player meets it in tests/career-world-sydney.test.ts (the journey, the release, the missed flight and the Work tab drawn at each stage) and tests/career-world-countries.test.ts, with tools/voice-check.mjs, tools/tics.mjs, tools/title-case.mjs and tools/plural-check.mjs passing",
+  "first": "Pending"
+ },
+ "src/engine/systems/worktrip.ts#registerWorkTrips [checked-in]": {
+  "status": "Rewritten",
+  "hash": "5e636e0e57b5",
+  "on": "2026-10-23",
+  "evidence": "Written for brief 25's work abroad (Module 1) to docs/STYLE.md and docs/GLOSSARY.md; read where the player meets it in tests/career-world-sydney.test.ts (the journey, the release, the missed flight and the Work tab drawn at each stage) and tests/career-world-countries.test.ts, with tools/voice-check.mjs, tools/tics.mjs, tools/title-case.mjs and tools/plural-check.mjs passing",
+  "first": "Pending"
+ },
+ "src/engine/systems/worktrip.ts#registerWorkTrips [checked-out]": {
+  "status": "Rewritten",
+  "hash": "b0d77781eab9",
+  "on": "2026-10-23",
+  "evidence": "Written for brief 25's work abroad (Module 1) to docs/STYLE.md and docs/GLOSSARY.md; read where the player meets it in tests/career-world-sydney.test.ts (the journey, the release, the missed flight and the Work tab drawn at each stage) and tests/career-world-countries.test.ts, with tools/voice-check.mjs, tools/tics.mjs, tools/title-case.mjs and tools/plural-check.mjs passing",
+  "first": "Pending"
+ },
+ "src/engine/systems/worktrip.ts#registerWorkTrips [departed]": {
+  "status": "Rewritten",
+  "hash": "c79556d8e682",
+  "on": "2026-10-23",
+  "evidence": "Written for brief 25's work abroad (Module 1) to docs/STYLE.md and docs/GLOSSARY.md; read where the player meets it in tests/career-world-sydney.test.ts (the journey, the release, the missed flight and the Work tab drawn at each stage) and tests/career-world-countries.test.ts, with tools/voice-check.mjs, tools/tics.mjs, tools/title-case.mjs and tools/plural-check.mjs passing",
+  "first": "Pending"
+ },
+ "src/engine/systems/worktrip.ts#registerWorkTrips [home]": {
+  "status": "Rewritten",
+  "hash": "94bb6ed347a8",
+  "on": "2026-10-23",
+  "evidence": "Written for brief 25's work abroad (Module 1) to docs/STYLE.md and docs/GLOSSARY.md; read where the player meets it in tests/career-world-sydney.test.ts (the journey, the release, the missed flight and the Work tab drawn at each stage) and tests/career-world-countries.test.ts, with tools/voice-check.mjs, tools/tics.mjs, tools/title-case.mjs and tools/plural-check.mjs passing",
+  "first": "Pending"
+ },
+ "src/engine/systems/worktrip.ts#registerWorkTrips [missed-flight]": {
+  "status": "Rewritten",
+  "hash": "5b5f653b63aa",
+  "on": "2026-10-23",
+  "evidence": "Written for brief 25's work abroad (Module 1) to docs/STYLE.md and docs/GLOSSARY.md; read where the player meets it in tests/career-world-sydney.test.ts (the journey, the release, the missed flight and the Work tab drawn at each stage) and tests/career-world-countries.test.ts, with tools/voice-check.mjs, tools/tics.mjs, tools/title-case.mjs and tools/plural-check.mjs passing",
+  "first": "Pending"
+ },
+ "src/engine/systems/worktrip.ts#routeSourceWords": {
+  "status": "Rewritten",
+  "hash": "09acd081e06a",
+  "on": "2026-10-23",
+  "evidence": "Written for brief 25's work abroad (Module 1) to docs/STYLE.md and docs/GLOSSARY.md; read where the player meets it in tests/career-world-sydney.test.ts (the journey, the release, the missed flight and the Work tab drawn at each stage) and tests/career-world-countries.test.ts, with tools/voice-check.mjs, tools/tics.mjs, tools/title-case.mjs and tools/plural-check.mjs passing",
+  "first": "Pending"
+ },
+ "src/engine/systems/worktrip.ts#SCHEDULE_WORDS": {
+  "status": "Rewritten",
+  "hash": "e10d012029a2",
+  "on": "2026-10-23",
+  "evidence": "Written for brief 25's work abroad (Module 1) to docs/STYLE.md and docs/GLOSSARY.md; read where the player meets it in tests/career-world-sydney.test.ts (the journey, the release, the missed flight and the Work tab drawn at each stage) and tests/career-world-countries.test.ts, with tools/voice-check.mjs, tools/tics.mjs, tools/title-case.mjs and tools/plural-check.mjs passing",
+  "first": "Pending"
+ },
+ "src/engine/systems/worktrip.ts#tripSpans": {
+  "status": "Rewritten",
+  "hash": "4db523b6eb94",
+  "on": "2026-10-23",
+  "evidence": "Written for brief 25's work abroad (Module 1) to docs/STYLE.md and docs/GLOSSARY.md; read where the player meets it in tests/career-world-sydney.test.ts (the journey, the release, the missed flight and the Work tab drawn at each stage) and tests/career-world-countries.test.ts, with tools/voice-check.mjs, tools/tics.mjs, tools/title-case.mjs and tools/plural-check.mjs passing",
+  "first": "Pending"
+ },
+ "src/engine/systems/worktrip.ts#visaRefusal": {
+  "status": "Rewritten",
+  "hash": "b653025e1e5e",
+  "on": "2026-10-23",
+  "evidence": "Written for brief 25's Module 2 (the reference catalog and the parts drawn from it) to docs/STYLE.md and docs/GLOSSARY.md; read where the player meets it in tests/career-drawn.test.ts (the role card, the offer, the Work tab and the trip to Los Angeles drawn over a played journey) and tests/career-catalog.test.ts (productionWords and CATALOG.md), with tools/voice-check.mjs, tools/tics.mjs, tools/title-case.mjs, tools/plural-check.mjs and tools/spelling.mjs passing",
+  "first": "Pending"
+ },
+ "src/engine/systems/worktrip.ts#way": {
+  "status": "Rewritten",
+  "hash": "6a6b8d122f22",
+  "on": "2026-10-23",
+  "evidence": "Written for brief 25's work abroad (Module 1) to docs/STYLE.md and docs/GLOSSARY.md; read where the player meets it in tests/career-world-sydney.test.ts (the journey, the release, the missed flight and the Work tab drawn at each stage) and tests/career-world-countries.test.ts, with tools/voice-check.mjs, tools/tics.mjs, tools/title-case.mjs and tools/plural-check.mjs passing",
+  "first": "Pending"
+ },
+ "src/engine/systems/worktrip.ts#whereWords": {
+  "status": "Rewritten",
+  "hash": "3e1f01b0454a",
+  "on": "2026-10-23",
+  "evidence": "Written for brief 25's work abroad (Module 1) to docs/STYLE.md and docs/GLOSSARY.md; read where the player meets it in tests/career-world-sydney.test.ts (the journey, the release, the missed flight and the Work tab drawn at each stage) and tests/career-world-countries.test.ts, with tools/voice-check.mjs, tools/tics.mjs, tools/title-case.mjs and tools/plural-check.mjs passing",
+  "first": "Pending"
+ },
+ "src/ui/career/IndustryPane.tsx#BoxOfficePanel": {
+  "status": "Rewritten",
+  "hash": "9d0f72381ebe",
+  "on": "2026-10-24",
+  "evidence": "Written for brief 25's Module 6 (the published charts as dated imports, the game's own box office, the awards and festivals inventory, the Emmy Awards by the 78th's rules and Sundance by its 2027 festival's) to docs/STYLE.md and docs/GLOSSARY.md, every rule the read sources' own and every invention said as the game's; read where the player meets it in tests/career-awards-screen.test.ts (the Charts And Awards tab and the Portfolio drawn before the work, after the wrap, after the entry, at the nominations and after the ceremony, through the clock and a reload at each stage) and tests/career-awards.test.ts (each refusal, notice, recap and festival word), with tools/voice-check.mjs, tools/tics.mjs and tools/title-case.mjs clean.",
+  "first": "Pending"
+ },
+ "src/ui/career/IndustryPane.tsx#ChartsPanel": {
+  "status": "Rewritten",
+  "hash": "eae99de47c9e",
+  "on": "2026-10-24",
+  "evidence": "Written for brief 25's Module 6 (the published charts as dated imports, the game's own box office, the awards and festivals inventory, the Emmy Awards by the 78th's rules and Sundance by its 2027 festival's) to docs/STYLE.md and docs/GLOSSARY.md, every rule the read sources' own and every invention said as the game's; read where the player meets it in tests/career-awards-screen.test.ts (the Charts And Awards tab and the Portfolio drawn before the work, after the wrap, after the entry, at the nominations and after the ceremony, through the clock and a reload at each stage) and tests/career-awards.test.ts (each refusal, notice, recap and festival word), with tools/voice-check.mjs, tools/tics.mjs and tools/title-case.mjs clean.",
+  "first": "Pending"
+ },
+ "src/ui/career/IndustryPane.tsx#COVERAGE_WORDS": {
+  "status": "Rewritten",
+  "hash": "c52bf2b9081b",
+  "on": "2026-10-24",
+  "evidence": "Written for brief 25's Module 6 (the published charts as dated imports, the game's own box office, the awards and festivals inventory, the Emmy Awards by the 78th's rules and Sundance by its 2027 festival's) to docs/STYLE.md and docs/GLOSSARY.md, every rule the read sources' own and every invention said as the game's; read where the player meets it in tests/career-awards-screen.test.ts (the Charts And Awards tab and the Portfolio drawn before the work, after the wrap, after the entry, at the nominations and after the ceremony, through the clock and a reload at each stage) and tests/career-awards.test.ts (each refusal, notice, recap and festival word), with tools/voice-check.mjs, tools/tics.mjs and tools/title-case.mjs clean.",
+  "first": "Pending"
+ },
+ "src/ui/career/IndustryPane.tsx#EmmyCredit": {
+  "status": "Rewritten",
+  "hash": "00a0db416a54",
+  "on": "2026-10-24",
+  "evidence": "Written for brief 25's Module 6 (the published charts as dated imports, the game's own box office, the awards and festivals inventory, the Emmy Awards by the 78th's rules and Sundance by its 2027 festival's) to docs/STYLE.md and docs/GLOSSARY.md, every rule the read sources' own and every invention said as the game's; read where the player meets it in tests/career-awards-screen.test.ts (the Charts And Awards tab and the Portfolio drawn before the work, after the wrap, after the entry, at the nominations and after the ceremony, through the clock and a reload at each stage) and tests/career-awards.test.ts (each refusal, notice, recap and festival word), with tools/voice-check.mjs, tools/tics.mjs and tools/title-case.mjs clean.",
+  "first": "Pending"
+ },
+ "src/ui/career/IndustryPane.tsx#extraWords": {
+  "status": "Rewritten",
+  "hash": "80c5b39a0074",
+  "on": "2026-10-24",
+  "evidence": "Written for brief 25's Module 6 (the published charts as dated imports, the game's own box office, the awards and festivals inventory, the Emmy Awards by the 78th's rules and Sundance by its 2027 festival's) to docs/STYLE.md and docs/GLOSSARY.md, every rule the read sources' own and every invention said as the game's; read where the player meets it in tests/career-awards-screen.test.ts (the Charts And Awards tab and the Portfolio drawn before the work, after the wrap, after the entry, at the nominations and after the ceremony, through the clock and a reload at each stage) and tests/career-awards.test.ts (each refusal, notice, recap and festival word), with tools/voice-check.mjs, tools/tics.mjs and tools/title-case.mjs clean.",
+  "first": "Pending"
+ },
+ "src/ui/career/IndustryPane.tsx#InventoryPanel": {
+  "status": "Rewritten",
+  "hash": "6422fd5005dc",
+  "on": "2026-10-24",
+  "evidence": "Written for brief 25's Module 6 (the published charts as dated imports, the game's own box office, the awards and festivals inventory, the Emmy Awards by the 78th's rules and Sundance by its 2027 festival's) to docs/STYLE.md and docs/GLOSSARY.md, every rule the read sources' own and every invention said as the game's; read where the player meets it in tests/career-awards-screen.test.ts (the Charts And Awards tab and the Portfolio drawn before the work, after the wrap, after the entry, at the nominations and after the ceremony, through the clock and a reload at each stage) and tests/career-awards.test.ts (each refusal, notice, recap and festival word), with tools/voice-check.mjs, tools/tics.mjs and tools/title-case.mjs clean.",
+  "first": "Pending"
+ },
+ "src/ui/career/IndustryPane.tsx#RecognitionPanel": {
+  "status": "Rewritten",
+  "hash": "1bf50fd7f2d9",
+  "on": "2026-10-24",
+  "evidence": "Written for brief 25's Module 6 (the published charts as dated imports, the game's own box office, the awards and festivals inventory, the Emmy Awards by the 78th's rules and Sundance by its 2027 festival's) to docs/STYLE.md and docs/GLOSSARY.md, every rule the read sources' own and every invention said as the game's; read where the player meets it in tests/career-awards-screen.test.ts (the Charts And Awards tab and the Portfolio drawn before the work, after the wrap, after the entry, at the nominations and after the ceremony, through the clock and a reload at each stage) and tests/career-awards.test.ts (each refusal, notice, recap and festival word), with tools/voice-check.mjs, tools/tics.mjs and tools/title-case.mjs clean.",
+  "first": "Pending"
+ }
+}

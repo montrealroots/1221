@@ -34,17 +34,28 @@ import { BAND_LABEL } from '../../systems/coursework';
 import { ESTIMATE } from '../../systems/school';
 import { PAY, sagJoinUsd } from '../../systems/propay';
 import { OUTSIDE_WORK, WORK } from '../../systems/projobs';
+import { TRIP, routeSourceWords } from '../../systems/worktrip';
+import { CONTRIBUTION, LATE, OPTION_RAISE, PER_DIEM, RERUN_CEILING, RESIDUALS, contributionRate, overtimeOf } from '../../systems/contracts';
+import { SERIES } from '../series';
+import { AFTER_WRAP, STUNT, VOICE, WORKFLOWS } from '../workflows';
+import { JURISDICTIONS } from '../jurisdictions';
 import { BRIEF } from '../../systems/briefs';
+import { EMMY_RULES, SUNDANCE_2027 } from '../awards';
+import { VISIBILITY } from '../../systems/awards';
 import type { GuideEntry } from './types';
 
 const CAREER = '/workspace/career';
 /** A Career section's id: a parameter typed by its literals would read to `tools/title-case.mjs` as a label. */
-type Section = 'overview' | 'portfolio' | 'representation' | 'opportunities' | 'work';
+type Section = 'overview' | 'portfolio' | 'representation' | 'opportunities' | 'work' | 'industry';
 const on = (section: Section, label: string) => ({ route: CAREER, tab: section, label });
 
 const CHAPTER = CHAPTER_FOR['ui.career']!.title;
 /** The work loop's chapter (from 2026-10-21, brief 19's J1 to J5 and A3). */
 const WORK_CHAPTER = CHAPTER_FOR['pro.submit']!.title;
+/** Australia's 408, the route the Work Abroad entry teaches (`content/jurisdictions.ts`). */
+const AU = JURISDICTIONS.au!.routes.find((r) => r.id === 'au-408-entertainment')!;
+/** How long before the first call the flight out lands, at least: the trip's own rule (`TRIP`). */
+const AHEAD = TRIP.arriveBeforeHours % 24 === 12 ? `${TRIP.arriveBeforeHours === 36 ? 'a day and a half' : `${(TRIP.arriveBeforeHours - 12) / 24} and a half days`}` : `${TRIP.arriveBeforeHours} hours`;
 const STEPS = `${BRIEF.steps.read.label}, ${BRIEF.steps.lines.label} and ${BRIEF.steps.rehearse.label}`;
 const WORDS = ['no', 'one', 'two', 'three', 'four', 'five', 'six', 'seven', 'eight', 'nine'];
 const word = (n: number): string => WORDS[n] ?? String(n);
@@ -54,6 +65,9 @@ const andList = (items: readonly string[]): string => (items.length < 2 ? items.
 const SKILLS = andList(SPECIAL_SKILLS.map((s) => SKILL_WORDS[s]));
 const AGENT = AGENTS[0]!;
 const AGENCY = agencyOf(AGENT);
+/** The real agents beside the game's own (from 2026-10-24, brief 25's Module 3), and their office. */
+const REAL = AGENTS.filter((a) => a.real);
+const REAL_OFFICE = agencyOf(REAL[0]!);
 const REP_CHAPTER = CHAPTER_FOR['pro.agent_notice']!.title;
 const weeks = (days: number): string => `${word(days / 7)} ${days === 7 ? 'week' : 'weeks'}`;
 const BAR = BAND_LABEL[REFERRAL_BAND];
@@ -66,6 +80,9 @@ const FIVE = pct(AGREEMENT.equityLowTier.rate);
 const LOW = usd(AGREEMENT.equityLowTier.weeklyAtOrBelow);
 const TRUST_DAYS = word(PAY.trustBusinessDays);
 const JOIN = usd(sagJoinUsd());
+const MONTHS = ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'];
+/** A provider's ISO date as its day and month. */
+const longDayOf = (iso: string): string => `${MONTHS[Number(iso.slice(5, 7)) - 1]} ${Number(iso.slice(8, 10))}`;
 const SAG_DAYS = UNIONS.sagAftra.joinWithinDays;
 
 export const CAREER_GUIDE: readonly GuideEntry[] = [
@@ -289,19 +306,20 @@ export const CAREER_GUIDE: readonly GuideEntry[] = [
   },
   {
     id: 'career.agent',
-    title: 'The Agent And How To Reach Him',
+    title: 'Agents And How To Reach One',
     goal: 'career',
     covers: ['pro.agent_notice', 'pro.agent_check', 'pro.ask_referral', 'pro.send_materials'],
-    synonyms: ['agent', 'representation', AGENT.name, AGENCY.name, 'referral', 'send my materials', 'unsolicited submission'],
+    synonyms: ['agent', 'representation', AGENT.name, AGENCY.name, REAL_OFFICE.name, ...REAL.map((a) => a.name), 'agencies', 'referral', 'send my materials', 'unsolicited submission'],
     questions: ['How do I get an agent?', 'Why was my submission refused?', 'How do I get a referral?'],
     where: on('representation', 'Career, Representation'),
     available: `From the guide’s chapter “${REP_CHAPTER}”.`,
-    short: `The Representation tab holds the game’s one agent, ${AGENT.name}, an agent in ${AGENCY.name}’s ${AGENCY.office.city} ${AGENCY.department.called.toLowerCase()} department. He and the agency are invented for the game: his panel says so first, before anything else.\n\n${AGENCY.policy.words} It takes your materials only through the School’s follow-up after the showcase, or a referral from someone you’ve worked with. He never gets in touch first.`,
+    short: `The Representation tab holds the agents in the game. ${AGENT.name}, an agent in ${AGENCY.name}’s ${AGENCY.office.city} ${AGENCY.department.called.toLowerCase()} department, is invented for the game, as his agency is. ${andList(REAL.map((a) => a.name))} are real theatrical agents at ${REAL_OFFICE.name}’s ${REAL_OFFICE.office.city} office, as its own page names them, and whatever happens between you and them is the game’s invention. Each agent’s panel says which first, before anything else. Agents lists them all, and Show opens one.\n\n${AGENCY.policy.words} It takes your materials only through the School’s follow-up after the showcase, or a referral from someone you’ve worked with. ${REAL_OFFICE.name}’s office takes no unsolicited submissions, so there a referral is the one way in. No agent gets in touch first.`,
     steps: [
       'Open Career, then the Representation tab.',
-      'Read the notice at the top of his panel, then press I’ve Read This.',
-      'Under Your Materials For Him, press Check Your Materials. If something’s missing, the line under it says what, and where to make it.',
-      'Under How To Reach Him, press Ask For A Referral beside a finished job, or wait for the School’s follow-up after the showcase.',
+      'Under Agents, press Show beside the agent you want.',
+      'Read the notice at the top of the agent’s panel, then press I’ve Read This.',
+      'Press Check Your Materials. If something’s missing, the line under it says what, and where to make it.',
+      `Under How To Reach, press Ask For A Referral beside a finished job. For ${AGENT.name}, the School’s follow-up after the showcase is a way in too.`,
       'Press Send Your Materials.',
     ],
     needs: [
@@ -312,51 +330,53 @@ export const CAREER_GUIDE: readonly GuideEntry[] = [
     ],
     costs: [{ label: 'Time', value: 'None' }, { label: 'Money', value: 'None' }],
     reads: [
-      { label: 'Your Materials For Him', value: 'Your headshots, résumé and reel, checked as a submission would be' },
+      { label: 'Your Materials', value: 'Your headshots, résumé and reel, checked as a submission would be' },
       { label: 'A Referral', value: `A finished job’s work, judged ${BAR} or better`, estimate: true },
       { label: 'An Answer', value: `Usually within ${TIME_WORDS.reply}; no answer in ${TIME_WORDS.silence} counts as no`, estimate: true },
     ],
-    now: ['Sending moves Where You Stand With Him to Materials Sent, and his office’s answer is on the way.'],
+    now: ['Sending moves Where You Stand to Materials Sent, and the office’s answer is on the way.'],
     later: [
-      `His office answers in about ${TIME_WORDS.reply}: a request for more, a meeting or a pass, each as a notice. Or no answer comes, and after ${TIME_WORDS.silence} that counts as no.`,
-      `After a pass, his office looks again only after ${COOLDOWN_WORDS.pass}; after no answer or a declined offer, ${COOLDOWN_WORDS.silence}. Then it looks only at something new: a new credit, a better reel or a referral.`,
+      `The office answers in about ${TIME_WORDS.reply}: a request for more, a meeting or a pass, each as a notice. Or no answer comes, and after ${TIME_WORDS.silence} that counts as no.`,
+      `After a pass, the office looks again only after ${COOLDOWN_WORDS.pass}; after no answer or a declined offer, ${COOLDOWN_WORDS.silence}. Then it looks only at something new: a new credit, a better reel or a referral.`,
     ],
     interpret: [
-      'Where You Stand With Him names the step you’re at, and What’s Next says what to do about it.',
-      'A referral comes from the casting office of a job you’ve finished, never from him, and he never writes to you first.',
+      'Where You Stand names the step you’re at, and What’s Next says what to do about it.',
+      'A referral comes from the casting office of a job you’ve finished, never from the agent, and no agent writes to you first.',
+      `The Agencies panel says what each agency brief 25 names says of itself on its own pages: how an actor reaches it, the agents it names, and what the game does with it.`,
     ],
     unavailable: [
       `${AGENCY.policy.words} It sees your materials only through the School’s follow-up after the showcase, or a referral from someone you’ve worked with.`,
+      `${REAL_OFFICE.policy.words} It sees your materials only through a referral from someone you’ve worked with.`,
       'Check your materials first: a referral passes them on.',
       `A referral needs work judged ${BAR} or better in the game.`,
       'In the game a new approach needs something new for it to consider: a new credit, a better reel or a referral.',
     ],
-    mistakes: ['Sending again too soon after a pass. The refusal says the date his office looks again from, and what it would look at.'],
-    next: ['Keep your materials current while you wait: his office may ask for more.'],
+    mistakes: ['Sending again too soon after a pass. The refusal says the date the office looks again from, and what it would look at.'],
+    next: ['Keep your materials current while you wait: the office may ask for more.'],
     related: ['career.agent-answers', 'career.reasons', 'career.agreement', 'career.headshots', 'career.resume'],
     connections: [
       { to: 'career.headshots', kind: 'prerequisite', why: 'A check refuses an approach with no headshots, since every submission starts with one.' },
-      { to: 'career.resume', kind: 'prerequisite', why: 'A check refuses an approach with no résumé, and a résumé behind your record is one thing his office can ask for.' },
-      { to: 'career.agent-answers', kind: 'scheduled', why: `Sending your materials puts his office’s answer on the way, about ${TIME_WORDS.reply} on.` },
+      { to: 'career.resume', kind: 'prerequisite', why: 'A check refuses an approach with no résumé, and a résumé behind your record is one thing an office can ask for.' },
+      { to: 'career.agent-answers', kind: 'scheduled', why: `Sending your materials puts the office’s answer on the way, about ${TIME_WORDS.reply} on.` },
     ],
     example: {
       setup: `A graduate with headshots and a résumé, and a finished job judged ${BAR}.`,
       steps: ['Press I’ve Read This, then Check Your Materials.', 'Press Ask For A Referral beside the job.', 'Press Send Your Materials.'],
-      result: `The job’s casting office refers you, your materials go to his office, and its answer comes about ${TIME_WORDS.reply} later.`,
+      result: `The job’s casting office refers you, your materials go to the agent’s office, and its answer comes about ${TIME_WORDS.reply} later.`,
     },
   },
   {
     id: 'career.agent-answers',
-    title: 'His Office’s Answers And The Meeting',
+    title: 'An Office’s Answers And The Meeting',
     goal: 'career',
     covers: ['pro.supply_material', 'pro.ask_to_move'],
     synonyms: ['agent meeting', 'move the meeting', 'asked for more', 'send what was asked', 'no answer', 'pass'],
     questions: ['What happens after I send my materials?', 'Can I move the meeting?', 'What if I miss the meeting?'],
     where: on('representation', 'Career, Representation, The Meeting'),
     available: `From the guide’s chapter “${REP_CHAPTER}”.`,
-    short: `His office answers an approach in one of four ways: it asks for more, asks to meet, passes, or doesn’t answer. Each answer comes as a notice, and History With His Office keeps every step.\n\nA meeting is on your calendar at ${clockWords(AGENT_TIMES.meetingHour)}, at the agency’s ${AGENCY.office.city} office or by video, and the clock stops at it like any commitment. You can move it once, ${TIME_WORDS.move} on.`,
+    short: `An agent’s office answers an approach in one of four ways: it asks for more, asks to meet, passes, or doesn’t answer. Each answer comes as a notice, and the agent’s History panel keeps every step.\n\nA meeting is on your calendar at ${clockWords(AGENT_TIMES.meetingHour)}, at the agency’s ${AGENCY.office.city} office or by video, and the clock stops at it like any commitment. You can move it once, ${TIME_WORDS.move} on.`,
     steps: [
-      'When his office asks for more, make what it asked for on the Portfolio tab, then press Send What His Office Asked For.',
+      'When the office asks for more, make what it asked for on the Portfolio tab, then press Send What His Office Asked For, or, for a real agent, Send What The Office Asked For.',
       'When it asks to meet, be there: press Go when the clock stops at it.',
       'If you can’t make it, press Ask To Move on the Representation tab, or at the stop.',
     ],
@@ -366,8 +386,8 @@ export const CAREER_GUIDE: readonly GuideEntry[] = [
       { label: 'A Request', value: `What’s missing: a reel, newer headshots or a résumé brought up to date, due in ${TIME_WORDS.request}`, estimate: true },
       { label: 'A Move', value: `Once, ${TIME_WORDS.move} on`, estimate: true },
     ],
-    now: [`What you send goes to his office, and its answer comes about ${TIME_WORDS.afterSupply} later.`, 'A moved meeting is on your calendar at its new time.'],
-    later: [`After a meeting you keep, his office tells you its decision ${word(AGENT_TIMES.decisionDays)} days later: an offer or a pass.`, 'A meeting you miss closes the approach, since a meeting comes before an offer in the game.'],
+    now: [`What you send goes to the office, and its answer comes about ${TIME_WORDS.afterSupply} later.`, 'A moved meeting is on your calendar at its new time.'],
+    later: [`After a meeting you keep, the office tells you its decision ${word(AGENT_TIMES.decisionDays)} days later: an offer or a pass.`, 'A meeting you miss closes the approach, since a meeting comes before an offer in the game.'],
     interpret: ['Material sent when asked, and meetings kept, count for you under Reliability; a missed one counts against you.'],
     unavailable: ['His office hasn’t asked you for anything.', 'You haven’t cut a reel yet.', 'In the game his office moves a meeting once.'],
     mistakes: ['Sleeping through the meeting. A commitment slept through is missed.'],
@@ -378,7 +398,7 @@ export const CAREER_GUIDE: readonly GuideEntry[] = [
       { to: 'day.clock', kind: 'scheduled', why: 'A meeting stops the clock like any commitment, and offers Ask To Move at the stop.' },
     ],
     example: {
-      setup: 'His office asked for a reel, and you have a self-tape to cut one from.',
+      setup: `${AGENT.name}’s office asked for a reel, and you have a self-tape to cut one from.`,
       steps: ['Cut a reel on the Portfolio tab.', 'Press Send What His Office Asked For.'],
       result: `The reel goes to his office, and its answer comes about ${TIME_WORDS.afterSupply} later, as a notice.`,
     },
@@ -389,28 +409,28 @@ export const CAREER_GUIDE: readonly GuideEntry[] = [
     goal: 'career',
     covers: ['ui.career-reasons'],
     synonyms: ['why did the agent pass', 'agent decision', 'factors', 'room on his list', 'reliability'],
-    questions: ['Why did his office pass?', 'What does his office consider?', 'Does better work guarantee an agent?'],
+    questions: ['Why did the agent’s office pass?', 'What does an agent’s office consider?', 'Does better work guarantee an agent?'],
     where: on('representation', 'Career, Representation, Why It Went This Way'),
     available: `From the guide’s chapter “${REP_CHAPTER}”.`,
-    short: `Why It Went This Way gives the game’s reasons for his office’s last decision, and where they stand now. There are seven, each set apart: your work, stage and screen, training and experience, fit with his department, availability, room on his list, and reliability. Each is short of a bar the game sets, near it, at it or beyond it.\n\nAn approach goes further only with ${word(GATE)} of them at the bar or beyond, and then against the year’s other actors. Better work raises the chance, and nothing makes it certain.`,
+    short: `Why It Went This Way gives the game’s reasons for the office’s last decision, and where they stand now. For ${AGENT.name} there are seven, each set apart: your work, stage and screen, training and experience, fit with his department, availability, room on his list, and reliability. A real agent’s list isn’t known, so for one there are six, without room on the list. Each is short of a bar the game sets, near it, at it or beyond it.\n\nAn approach goes further only with ${word(GATE)} of them at the bar or beyond, and then against the year’s other actors. Better work raises the chance, and nothing makes it certain.`,
     steps: ['Open Career, then the Representation tab.', 'Under Why It Went This Way, press Show The Reasons.'],
     needs: ['The notice read.'],
     costs: [{ label: 'Time', value: 'None: reading it moves no clock' }, { label: 'Money', value: 'None' }],
     reads: [
-      { label: 'Your Work', value: 'The best judged band of the work his office has: your showcase scenes once the School follows them up, your reel, a referring job' },
-      { label: 'Room On His List', value: 'One to three openings a year, by billing and age, drawn for each year', estimate: true },
-      { label: 'The Bar', value: `${word(GATE)} of the seven at it or beyond`, estimate: true },
+      { label: 'Your Work', value: 'The best judged band of the work the office has: your showcase scenes once the School follows them up, your reel, a referring job' },
+      { label: 'Room On His List', value: `For ${AGENT.name}, one to three openings a year, by billing and age, drawn for each year`, estimate: true },
+      { label: 'The Bar', value: `${word(GATE)} of the factors at it or beyond`, estimate: true },
     ],
     now: ['The table opens, and closes with Hide The Reasons.'],
     later: ['As Things Stand Now changes with your record: a new credit, a better reel, the degree, a meeting kept.'],
-    interpret: ['None of it is his. The bar and the chances are the game’s own, and Room On His List is assumed.', 'At The Last Decision is kept as it was, so it reads the same after your record moves on.'],
-    unavailable: ['The reasons are there once you’ve read the notice about him.'],
+    interpret: ['None of it is the agent’s own. The bar and the chances are the game’s, and Room On His List is assumed. For a real agent, how likely the office is to take you further is one assumption for every real agent in the game.', 'At The Last Decision is kept as it was, so it reads the same after your record moves on.'],
+    unavailable: ['The reasons are there once you’ve read the notice about the agent.'],
     mistakes: ['Reading one factor as the decision. It takes enough of them at the bar, and then the competition.'],
     next: ['Work on what’s short: a reel, newer work, a credit.'],
     related: ['career.agent', 'career.agent-answers', 'career.reel'],
     connections: [
       { to: 'career.reel', kind: 'evaluation', why: 'Your reel’s best band is part of Your Work, and a reel is part of Stage And Screen.' },
-      { to: 'career.agent', kind: 'history', why: 'Each answer his office gives keeps its reasons here.' },
+      { to: 'career.agent', kind: 'history', why: 'Each answer an office gives keeps its reasons here.' },
     ],
     example: {
       setup: `A graduate with one job judged ${BAR} and no reel.`,
@@ -424,10 +444,10 @@ export const CAREER_GUIDE: readonly GuideEntry[] = [
     goal: 'career',
     covers: ['pro.accept_agreement', 'pro.decline_agreement', 'pro.end_agreement'],
     synonyms: ['agency agreement', 'sign with an agent', 'commission', 'end representation', 'terminate the agreement'],
-    questions: ['What does the agreement say?', 'How much commission does he take?', 'How do I end the agreement?'],
+    questions: ['What does the agreement say?', 'How much commission does an agent take?', 'How do I end the agreement?', 'Can I have two agents?'],
     where: on('representation', 'Career, Representation, The Agreement'),
     available: `From the guide’s chapter “${REP_CHAPTER}”.`,
-    short: `When he offers to represent you, The Agreement shows every term before you answer, each marked A Published Rule or The Game’s Own Term. It runs a year from the day you sign it, and the offer stands ${word(AGREEMENT.offerStandsDays / 7)} weeks.\n\nSigning changes nothing at the School and gives no permission to work. It can end by agreement at any time, or under Equity’s or SAG-AFTRA’s rules, or when its year is up.`,
+    short: `When an agent offers to represent you, The Agreement shows every term before you answer, each marked A Published Rule or The Game’s Own Term. It runs a year from the day you sign it, and the offer stands ${word(AGREEMENT.offerStandsDays / 7)} weeks.\n\nSigning changes nothing at the School and gives no permission to work. It can end by agreement at any time, or under Equity’s or SAG-AFTRA’s rules, or when its year is up. You have one agent at a time: another agent’s agreement can’t start while one runs.`,
     steps: [
       'Read every term under The Agreement.',
       'Press Accept The Agreement, or Decline The Agreement.',
@@ -435,7 +455,7 @@ export const CAREER_GUIDE: readonly GuideEntry[] = [
     ],
     needs: [
       'For Accept or Decline, an offer still standing.',
-      `For ${NO_OFFER}, ${AGREEMENT.noOfferDays} days with no real offer of covered work through him, the days you’re employed on covered work not counted, and not while you’re working.`,
+      `For ${NO_OFFER}, ${AGREEMENT.noOfferDays} days with no real offer of covered work through the agent, the days you’re employed on covered work not counted, and not while you’re working.`,
       `For ${TOO_LITTLE}, ${AGREEMENT.sag.waitDays} days from signing, and fewer than ${TEN} days of covered work in the last ${AGREEMENT.sag.windowDays}.`,
     ],
     costs: [{ label: 'Time', value: 'None' }, { label: 'Money', value: `Commission on covered work: ${Math.round(AGREEMENT.commission * 100)}% of gross pay, or ${Math.round(AGREEMENT.equityLowTier.rate * 100)}% on an Equity contract paying ${usd(AGREEMENT.equityLowTier.weeklyAtOrBelow)} a week or less` }],
@@ -443,21 +463,21 @@ export const CAREER_GUIDE: readonly GuideEntry[] = [
       { label: 'How Long', value: 'One year from signing', estimate: true },
       { label: 'Ending It', value: `Equity’s ${AGREEMENT.noOfferDays} days and SAG-AFTRA’s ${AGREEMENT.sag.waitDays} and ${AGREEMENT.sag.windowDays} days, from their published rules` },
     ],
-    now: ['Accepting makes him your agent from today. Declining closes the approach.'],
+    now: ['Accepting makes the agent yours from today. Declining closes the approach.'],
     later: [`An offer you don’t answer lapses after its ${weeks(AGREEMENT.offerStandsDays)}.`, 'When it ends, commission stays owed on contracts you made while it ran, and The Agreement says which.'],
-    interpret: ['A Published Rule follows the unions’ or New York’s published rules. The Game’s Own Term is the game’s: his own agreement isn’t published.'],
-    unavailable: ['He hasn’t offered you an agreement.', 'You’re not represented by him.', `Equity’s rule lets you end it once ${AGREEMENT.noOfferDays} days go by with no real offer of covered work through him.`],
+    interpret: ['A Published Rule follows the unions’ or New York’s published rules. The Game’s Own Term is the game’s: an agent’s own agreement isn’t published.'],
+    unavailable: ['He hasn’t offered you an agreement.', 'You’re not represented by him.', `Equity’s rule lets you end it once ${AGREEMENT.noOfferDays} days go by with no real offer of covered work through him.`, 'In the game you have one agent at a time, so this agreement can’t start while that one runs.'],
     mistakes: ['Ending it while a contract made in the term is still to be paid, and expecting no commission. It stays owed.'],
-    next: ['Keep your availability and your materials current: covered work comes through him.'],
+    next: ['Keep your availability and your materials current: covered work comes through the agent.'],
     related: ['career.agent', 'career.reasons', 'documents.work'],
     connections: [
-      { to: 'documents.work', kind: 'optional', why: 'Signing with him gives no permission to work: Papers, under Permission To Work, still says what you may do.' },
-      { to: 'career.agent', kind: 'history', why: 'Accepting, declining and the agreement’s end each go in History With His Office.' },
+      { to: 'documents.work', kind: 'optional', why: 'Signing with an agent gives no permission to work: Papers, under Permission To Work, still says what you may do.' },
+      { to: 'career.agent', kind: 'history', why: 'Accepting, declining and the agreement’s end each go in the agent’s History panel.' },
     ],
     example: {
       setup: 'An offer standing, read in full.',
       steps: ['Press Accept The Agreement.'],
-      result: 'Where You Stand With Him reads Represented, and The Agreement gives the day it ends and the three ways to end it sooner.',
+      result: 'Where You Stand reads Represented, and The Agreement gives the day it ends and the three ways to end it sooner.',
     },
   },
   {
@@ -494,7 +514,8 @@ export const CAREER_GUIDE: readonly GuideEntry[] = [
       'Each payment counts on your tax return as wages, with what was withheld, the commission and the dues.',
     ],
     interpret: [
-      'Promised means it’s owed and not yet paid. In Trust means the production has paid and your agency holds it. Received gives the figures as they were posted.',
+      // Until 2026-10-24 (brief 25's Module 4) a payment not yet paid read Promised, whatever its days and its payday.
+      'Estimated, Earned and Due mean it’s owed and not yet paid: its days still to come, worked, or its payday today. Held For You means the production has paid and your agency holds it. Settled gives the figures as they were posted.',
       'Deferred pay is shown and never paid: a student film pays its actors only if it earns money later, and no film in the game does.',
       'On an F-1 while you’re a student, outside acting work isn’t open to you: Yale grants CPT only for training the whole program requires, and Acting has none. On OPT after your degree, every day from a job’s first day to its last counts as a day with work, and the days before a booked job begins count as days without work. If your permission to work ends with work still booked, the company releases you: the days you worked are still paid, and the rest are called off.',
     ],
@@ -626,7 +647,7 @@ export const CAREER_GUIDE: readonly GuideEntry[] = [
     questions: ['How do I find acting work?', 'How do I submit for a role?', 'Why can’t I submit for this role?'],
     where: on('opportunities', 'Career, Opportunities, Open Calls'),
     available: `From the guide’s chapter “${WORK_CHAPTER}”.`,
-    short: `The Opportunities tab lists the roles you can be seen for, every project, company and casting office invented for the game. New roles go up each Monday morning and take submissions for ${word(WORK.submitDays)} days.\n\nPress Submit Yourself on an open role to send your headshots and résumé, and a reel where casting asks for one. Some casting offices take actors only through an agent, and their roles reach you only while one represents you.`,
+    short: `The Opportunities tab lists the roles you can be seen for. Their projects, companies and casting offices are invented for the game, except a few parts drawn from real productions, which say so. New roles go up each Monday morning and take submissions for ${word(WORK.submitDays)} days.\n\nPress Submit Yourself on an open role to send your headshots and résumé, and a reel where casting asks for one. Some casting offices take actors only through an agent, and their roles reach you only while one represents you.`,
     steps: [
       'Open Career, then the Opportunities tab.',
       'Under Open Calls, read a role: the project, the part, who it’s written for, what it asks, its dates and place, its pay and whether you can be seen for it. Each part is written for an actor, an actress or either, and you’re posted only the ones written for you or for either.',
@@ -646,7 +667,7 @@ export const CAREER_GUIDE: readonly GuideEntry[] = [
     later: [`${word(WORK.replyDays).charAt(0).toUpperCase()}${word(WORK.replyDays).slice(1)} days on, the casting office answers with an audition in person or a self-tape, and a notice says when and where.`],
     interpret: [
       'Open Calls are roles you can submit yourself for. Through An Agent shows the roles an agent brought, which only the agent submits.',
-      'Each role says it’s fictional: no real production is casting.',
+      'Each role says it’s fictional, or, for a part drawn from a real production, that the part is the game’s own: no real production is casting.',
       'A part comes round again only once the work it was cast for is over, as a new casting of the part, and its card says what came of it the last time. A part you’ve been booked for doesn’t come round again.',
     ],
     unavailable: [
@@ -820,6 +841,228 @@ export const CAREER_GUIDE: readonly GuideEntry[] = [
       setup: 'A first-year in good standing, and a two-day shoot in October posted five weeks ahead.',
       steps: ['Press Ask The School on the role.', 'A week later, read the dean’s answer.'],
       result: 'The chair recommends it and the dean approves it: two working days, asked well ahead, a paid professional role, no School call and at most two class days. Those class days are excused.',
+    },
+  },
+  // From 2026-10-24 (the owner's brief 25, Module 4): the contract, each payment's state, the money beside the wages, and
+  // a recurring part's season (`systems/contracts.ts`, `systems/series.ts`). Every figure is the rules' own, imported.
+  {
+    id: 'career.contracts',
+    title: 'Contracts, Residuals And A Series’ Seasons',
+    goal: 'career',
+    covers: ['pro.ask_pay'],
+    synonyms: ['contract', 'overtime', 'residuals', 'rerun', 'per diem', 'pension and health', 'option', 'renewal', 'canceled series', 'overdue pay', 'episode guarantee'],
+    questions: ['What does my contract say?', 'Why is my pay more than the day rate?', 'What are residuals?', 'Is the series coming back?', 'Why wasn’t I paid for every episode?', 'What do I do if pay is late?'],
+    where: on('work', 'Career, Work, The Contract'),
+    available: `From the guide’s chapter “${WORK_CHAPTER}”, once you’ve accepted work.`,
+    short: `Accepting work makes its contract: the part, the dates, the pay and only the terms that apply. Its estimated pay is gross, before tax, commission and dues, and none of it is in your accounts until it’s paid.\n\nEach payment says where it stands: Estimated before its days, Earned once they’re worked, Due on its payday, Held For You in your agency’s trust account, Settled once it reaches you. A payment past its payday is Overdue: press Ask About It, and it’s Disputed until it’s paid.`,
+    steps: [
+      'Open Career, then Work, and open The Contract on an engagement.',
+      'Read its terms: overtime, residuals, the producer’s pension and health contribution, a per diem, a recurring part’s episodes and its option, where each applies.',
+      'Under Pay, read each payment’s state. If one is Overdue, press Ask About It.',
+    ],
+    needs: ['Work you’ve accepted. Ask About It needs a payment past its payday and still unpaid.'],
+    costs: [
+      { label: 'Overtime', value: `On a SAG-AFTRA day, the ninth and tenth hours of work at time and one-half: ${usd(overtimeOf(1_283_00))} a day on the $1,283 minimum` },
+      { label: 'Pension And Health', value: `The producer pays ${pct(contributionRate(Date.UTC(2027, 0, 1)))} of SAG-AFTRA pay on top of it, ${pct(CONTRIBUTION.rate)} before September 6, 2026. Your pay keeps all of it` },
+      { label: 'Per Diem', value: `${usd(PER_DIEM.perDay)} a day for meals on a trip for SAG-AFTRA work, paid when you’re home, apart from your wages` },
+      { label: 'A Rerun', value: `All your pay for the time you worked, overtime at straight time, up to ${usd(RERUN_CEILING.hour)} for an hour’s program or ${usd(RERUN_CEILING['half-hour'])} for a half-hour’s, paid within ${RESIDUALS.payWithinDays} days` },
+    ],
+    reads: [
+      { label: 'The Agreement', value: 'The union contract the work is under, which sets which terms apply' },
+      { label: 'The Days Worked', value: 'What each payment is for: a day not worked is a day not paid' },
+      { label: 'How The Work Went', value: 'Whether a production calls a recurring part for more episodes and takes up its option', estimate: true },
+    ],
+    now: ['Accepting puts the contract under The Contract and each payment under Pay as Estimated. Your accounts don’t change.'],
+    later: [
+      'Each payment moves to Earned, Due and Settled as its days and its payday come.',
+      `Television work under SAG-AFTRA carries residuals: its first telecast is paid for by your pay, and a network rerun in prime time pays again, within ${RESIDUALS.payWithinDays} days of it.`,
+      `${SERIES[0]!.title} shoots each season from mid-July to May. From May 2030 the network says each May whether there’s another season. A canceled series stops that day: casting for it closes, and work not yet done is called off with nothing owed. It can come back years later.`,
+      `A recurring part guarantees some episodes and is expected in more: a further episode is paid only if the production calls you for it. The option on the next season, at ${Math.round(OPTION_RAISE * 100)}% more a day, is taken up or let go by June 30, once.`,
+    ],
+    interpret: [
+      'The overtime, the contribution’s rates, the per diem and the rerun’s share and ceiling are SAG-AFTRA’s agreements’ own, as AMPTP publishes them. The eleven-hour shoot day’s hour for lunch is estimated.',
+      `When an episode is on the air, whether it’s rerun, the series’ seasons and how late a non-union producer pays, ${Math.round(LATE.chance * 10)} times in ten, by one to four weeks, are the game’s own.`,
+      'A renewal brings no contract by itself: a part in a renewed series comes only through its option or a new casting.',
+    ],
+    unavailable: ['“You can ask about a payment once it’s past its payday and unpaid.”'],
+    mistakes: [
+      'Counting a contract’s estimated pay as money you have.',
+      'Counting every episode of a season as paid: only those the contract guarantees, and those you’re called for.',
+    ],
+    next: ['Read Your Unions: SAG-AFTRA work from the thirtieth day after your first job under it needs you to join.'],
+    related: ['career.pay', 'career.commission', 'career.unions', 'career.offers'],
+    connections: [
+      { to: 'career.pay', kind: 'scheduled', why: 'Each payment the contract promised is paid on its payday, and its state says where it stands.' },
+      { to: 'career.offers', kind: 'prerequisite', why: 'Accepting an offer makes its contract.' },
+      { to: 'career.unions', kind: 'prerequisite', why: 'A further episode or an option taken up past SAG-AFTRA’s thirty days needs you to be a member.' },
+    ],
+    example: {
+      setup: 'A graduate accepts Assistant DA Whitlock in The Calloway Files at the $1,283 minimum, guaranteed two episodes of its season.',
+      steps: ['Open The Contract and read its episodes and its option.', 'Work the four shoot days, and join SAG-AFTRA after the first.', 'Read each further episode’s word as it comes.'],
+      result: `Each day pays ${usd(1_283_00 + overtimeOf(1_283_00))} with its overtime, a further episode is paid only if you’re called for it, and by June 30 the production takes up its option or lets it go.`,
+    },
+  },
+  // From 2026-10-24 (the owner's brief 25, Part 8): how each kind of work is done, its days, its preparation, its choices
+  // and what it leaves (`content/workflows.ts`, `systems/workflow.ts`). Every figure is the workflows' own, imported.
+  {
+    id: 'career.workflows',
+    title: 'How Each Kind Of Work Is Done',
+    goal: 'career',
+    covers: ['pro.work_choice'],
+    synonyms: ['takes', 'another take', 'voice session', 'booth', 'dubbing', 'loop', 'looping', 'motion capture', 'performance capture', 'narration', 'reenactment', 'multicam', 'studio audience', 'musical', 'mark it', 'stunt', 'stunt double', 'intimacy coordinator', 'consent', 'revised pages', 'scene cut'],
+    questions: ['Why were my scenes shot out of order?', 'Should I ask for another take?', 'What is a tape night?', 'Why is my voice strained?', 'Do I have to do my own stunts?', 'Do I have to do the intimate scene?', 'Why was a scene of mine cut?', 'Why was I called back to loop?'],
+    where: on('work', 'Career, Work, How The Work Is Done'),
+    available: `From the guide’s chapter “${WORK_CHAPTER}”, once you’ve accepted work.`,
+    short: `Each kind of work is done its own way. A film or a single-camera series shoots your scenes out of the script’s order, each in takes, and prints the best. A multicamera comedy rehearses for a week and tapes before a studio audience. Voice work, a dub and a narration are sessions in a booth, and they strain the voice. Performance capture is a suit and markers and no set. A musical has its music rehearsals and choreography. An action film rehearses its fights with the stunt coordinator before the stunts.\n\nEach engagement says how its work is done, the choices it asks of you, and each day’s report once it’s worked.`,
+    steps: [
+      'Open Career, then Work, and open How The Work Is Done on an engagement.',
+      'Read its days and what each asks, then make its choices: another take, the studio audience, the stunts, the intimate scene, and the rest the work offers.',
+      'Prepare as the work asks: Find The Voice for a booth, Watch The Original for a dub, Work On The Movement for capture, on Career, Opportunities, under the booked work.',
+      'After each day, read its report: what was shot and in what order, the takes, and how it went.',
+    ],
+    needs: ['Work you’ve accepted. A choice about the intimate scene can’t be changed once the scene is shot.'],
+    costs: [
+      { label: 'Another Take', value: 'Energy for the takes you ask for beyond the scene’s own, as many as the production allows in a day' },
+      { label: 'A Strained Voice', value: `Voice work raises it and rest eases it, ${VOICE.restPerHour} points of 100 an hour. A strained voice holds back what voice work asks of it`, estimate: true },
+      { label: 'A Stunt Yourself', value: `A chance of an injury, about ${Math.round(STUNT.rehearsed * 100)}% for a stunt with the fight rehearsed and up to ${Math.round(STUNT.cold * 100)}% without, less for a strong body; the double carries none of it`, estimate: true },
+    ],
+    reads: [
+      { label: 'Your Preparation', value: 'The breakdown, the lines, rehearsal, and the work’s own preparation where it has one' },
+      { label: 'Your Choices', value: 'What each day puts first, and who does what a double can do' },
+      { label: 'Your Voice', value: 'Its strain, on voice work alone', estimate: true },
+    ],
+    now: ['A choice is kept on the engagement and read by each day after it.'],
+    later: [
+      'Each judged day plays its scenes, loops, chapters or sequences in takes, the best printed, and leaves a report.',
+      'Pages revised the night before change some of your lines, and Learn The Lines that evening puts them back.',
+      `After a screen wrap, the production may recall you to loop: a four-hour session paid half a day. When the work comes out, the edit may cut one of your scenes, about ${Math.round(AFTER_WRAP.cut * 10)} times in ten; the part stays on your credits with its pay.`,
+    ],
+    interpret: [
+      'A dub’s pay by its characters and lines, a recall to loop at half a day for four hours, a stunt only with your consent and a coordinator there, and an intimate scene only with your written consent are the SAG-AFTRA agreements’ rules. The takes, the strain, the stunt’s risk and how often pages change are the game’s.',
+      `There are ${Object.keys(WORKFLOWS).length} ways of working in the game: a stage play, single camera, multicamera, the booth, dubbing, performance capture, narration, reenactment, a musical and action.`,
+      'Declining an intimate scene costs you nothing: a body double does it, and the part, the pay and the casting are as they were.',
+    ],
+    unavailable: ['“The scene is already shot. Consent given for what’s on film can’t be taken back, and nothing is shot of it again.”'],
+    mistakes: [
+      'Asking for another take on every scene of a long day: each one costs energy the next scenes need.',
+      'Booking voice sessions back to back on a strained voice.',
+    ],
+    next: ['Read Contracts, Residuals And A Series’ Seasons: the rules a workflow carries are in its contract.'],
+    related: ['career.contracts', 'career.offers', 'career.pay'],
+    connections: [
+      { to: 'career.contracts', kind: 'prerequisite', why: 'The agreements’ rules for a dub, a stunt, an intimate scene and a recall to loop are in the contract.' },
+      { to: 'career.pay', kind: 'scheduled', why: 'A looping session is paid half a day, on the work’s pay.' },
+    ],
+    example: {
+      setup: 'A graduate books The Getaway Driver in Breakwater, an action feature.',
+      steps: ['Work the two days of fight rehearsal with the stunt coordinator.', 'Choose Use The Double or Do It Yourself for the stunts.', 'Read each shoot day’s report.'],
+      result: 'With the double, the stunts carry no risk and the shots are less your own; done yourself, the shots are all yours, and the rehearsal and your body set the chance of an injury.',
+    },
+  },
+  // From 2026-10-24 (the owner's brief 25, Parts 10 to 12): the charts, the Emmy Awards and Sundance (`systems/charts.ts`,
+  // `systems/awards.ts`). The fees, the categories' rules and the festival's dates are the rules' own, imported.
+  {
+    id: 'career.awards',
+    title: 'Charts, Festivals And Awards',
+    goal: 'career',
+    covers: ['pro.award_enter', 'pro.watch_ceremony'],
+    synonyms: ['emmy', 'emmys', 'award', 'awards', 'nomination', 'nominated', 'ceremony', 'festival', 'sundance', 'box office', 'gross', 'chart', 'charts', 'top 10', 'netflix', 'nielsen', 'recognition'],
+    questions: ['Can I be nominated for an Emmy?', 'How do I enter for an award?', 'Why isn’t my part eligible?', 'Will my film go to Sundance?', 'Does a hit film pay me more?', 'What do the charts show?', 'Does skipping the ceremony change anything?'],
+    where: on('industry', 'Career, Charts And Awards'),
+    available: `From the guide’s chapter “${WORK_CHAPTER}”, once you’ve accepted work.`,
+    short: `A part on television can be entered for an Emmy, by you or by its production, if it meets the Television Academy’s rules: a guest part is in under half the season’s episodes, and every part needs ${Math.round(EMMY_RULES.leastShare * 100)}% of the running time. A film goes to the Sundance Film Festival only if its production submits it. A nomination, a win or a selection makes casting likelier to choose you for a while, and pays nothing.
+
+The tab also shows the game’s own box office for your films, and the weekly charts Box Office Mojo, Netflix and Nielsen publish, as they published them.`,
+    steps: [
+      'Open Career, then Charts And Awards, and read what each of your parts on television is eligible for, or why not.',
+      `Press Enter Yourself before the entry deadline: ${usd(EMMY_RULES.fees.processing + EMMY_RULES.fees.perEntrant)}, paid from your bank.`,
+      'Read the nominations when they’re announced, and when your award is presented, press Watch The Ceremony, or just read the result.',
+      'For a film, read whether it’s eligible for Sundance and what its production did.',
+    ],
+    needs: ['A part on television that’s on the air, or due on it, in the Emmy year: June 1 to May 31.'],
+    costs: [
+      { label: 'An Emmy Entry', value: `${usd(EMMY_RULES.fees.processing)} for processing and ${usd(EMMY_RULES.fees.perEntrant)} for the entry, the Television Academy’s fees for a performer who isn’t a member` },
+    ],
+    reads: [
+      { label: 'Your Part', value: 'Its episodes against the season’s, and its scenes kept in the edit against an episode’s', estimate: true },
+      { label: 'How It Went', value: 'The best your days on it were judged', estimate: true },
+      { label: 'Your Recognition', value: 'Nominations, wins and festival selections before it', estimate: true },
+    ],
+    now: ['Entering puts the part under Your Recognition as entered, and the fee is taken from your bank.'],
+    later: [
+      `At the nominations, each category has its own field of entries, and the Academy’s table sets how many are nominated: ${EMMY_RULES.nominationsBySubmissions.map(([n, k]) => `${k} from ${n} entries`).join(', ')}.`,
+      'The winner is settled when the final round of voting ends, and you learn it when the award is presented: guest and voice-over awards at the Creative Arts Emmys, the others at the telecast.',
+      `A festival’s answer comes about ${longDayOf(SUNDANCE_2027.notice)} for its ${SUNDANCE_2027.year} festival, in ${SUNDANCE_2027.place}.`,
+    ],
+    interpret: [
+      'The eligibility year, the fees, the guest rule, the share of the running time and the nomination table are the 78th Emmy Awards’ rules. Sundance’s categories, deadlines and premiere rule are its 2027 festival’s. A later year carries them forward, and says so.',
+      'How many enter a category, how the votes go, whether a production enters you or submits its film, and whether the festival selects it are the game’s, and no other nominee is ever named.',
+      'A film’s box office is the production’s, not your pay, and how well your part went doesn’t move it. The published charts are the providers’ own figures, each in its own unit and week.',
+      `Recognition makes casting a little likelier to choose you, fading over three years, and at most ${Math.round(VISIBILITY.most * 100)}% better. It never changes a contract.`,
+    ],
+    unavailable: ['“Performers in documentary and nonfiction programs aren’t eligible in any performer category.”', '“You weren’t nominated, so there’s no ceremony of yours to watch.”'],
+    mistakes: [
+      'Waiting for the production to enter you: it may not, and after the deadline nobody can.',
+      'Expecting a hit film to pay more: the pay is the contract’s.',
+    ],
+    next: ['Read How Each Kind Of Work Is Done: a scene cut in the edit can take a part below the share of the running time it needs.'],
+    related: ['career.workflows', 'career.offers', 'career.contracts'],
+    connections: [
+      { to: 'career.workflows', kind: 'evaluation', why: 'How a part’s days were judged, and its scenes kept in the edit, are what its entry reads.' },
+      { to: 'career.offers', kind: 'optional', why: 'Recognition makes casting likelier to choose you for a while.' },
+    ],
+    example: {
+      setup: 'A graduate plays a guest part in two episodes of a drama series’ ten, on the air in March.',
+      steps: ['Open Charts And Awards and read the part’s eligibility.', 'Press Enter Yourself before the entry deadline in May.', 'Read the nominations in July, and press Watch The Ceremony in September.'],
+      result: `The part is entered as a guest part in a drama series, for ${usd(EMMY_RULES.fees.processing + EMMY_RULES.fees.perEntrant)}. The vote decides the nomination; the ceremony shows the result settled at the final round, and watching it or not changes nothing.`,
+    },
+  },
+  // From 2026-10-23 (the owner's brief 25): work abroad, Sydney first, its visa and its trip (`systems/worktrip.ts`).
+  {
+    id: 'career.work-abroad',
+    title: 'Work Abroad',
+    goal: 'career',
+    covers: ['pro.apply_work_visa'],
+    synonyms: ['work abroad', 'work visa', '408 visa', 'filming overseas', 'flight to sydney', 'travel for work'],
+    questions: ['Can I take work in another country?', 'How do I get a visa to work in Australia?', 'What happens if my visa isn’t ready?'],
+    where: on('work', 'Career, Work, Your Engagements'),
+    available: `From the guide’s chapter “${WORK_CHAPTER}”, once you’ve accepted work in another country.`,
+    short: `Some roles are abroad: Harbor Line shoots in Sydney. Accepting one is the contract, not permission to work there. Work in Australia needs ${AU.name}, which the production supports and you apply for once you’ve accepted. Press Apply For The Visa on the engagement under Career, Work.\n\nThe production books your flights, the cars and a hotel. You land ${AHEAD} or more before your first call and home the day after your last.`,
+    steps: [
+      'Accept the offer, after reading what it says about the visa and the dates you’d be away.',
+      'Open Career, then Work, and press Apply For The Visa on the engagement.',
+      'When the clock stops for the car to the airport, press Go.',
+    ],
+    needs: [
+      'A booking in another country whose rules are in the game: so far, Australia.',
+      'A passport in force until you’re home. Papers shows yours.',
+      'Not an Australian or a New Zealand citizen: an Australian needs no visa, and a New Zealander is granted one on arrival.',
+    ],
+    costs: [{ label: 'Time', value: `${AU.decisionDays} days for the department’s decision`, estimate: true }, { label: 'Money', value: 'None. The visa’s charge isn’t in the department’s page, and the production pays for the trip.', estimate: true }],
+    reads: [
+      { label: 'The Contract', value: 'The booking you’ve accepted' },
+      { label: 'Your Supporter', value: 'The production’s company in Australia' },
+      { label: 'Your Passport', value: 'In force until you’re home' },
+    ],
+    now: ['The visa is pending in Papers, under Permission To Work, tied to this work.'],
+    later: [`${AU.decisionDays} days on, the department grants it, to ${AU.graceDays} days after your last work day. At the first flight, without it, you don’t go, and the production releases you with nothing owed.`],
+    interpret: [`The 408’s conditions come from the department’s page: ${routeSourceWords(AU).replace(/^From the department’s page as /, '').replace(/\.$/, '')}. Its ${word(AU.decisionDays ?? 0)} days and the hotel paid by the production are estimated, and so are the flight times, from the distances.`],
+    unavailable: [
+      'You’ve applied already.',
+      'You need a passport in force until you’re home.',
+      'The rules for working there aren’t in the game.',
+    ],
+    mistakes: [`Applying too late. The decision takes ${word(AU.decisionDays ?? 0)} days, and you land ${AHEAD} or more before the first call.`],
+    next: ['Prepare the part under Booked Work, and be awake for the car to the airport.'],
+    related: ['career.offers', 'documents.work'],
+    connections: [
+      { to: 'documents.work', kind: 'immediate', why: 'The visa is a permission to work in Papers, pending until the department decides.' },
+      { to: 'career.offers', kind: 'prerequisite', why: 'You apply for it once you’ve accepted the work abroad.' },
+    ],
+    example: {
+      setup: 'An American graduate accepts Dana Kell in Harbor Line, eight shoot days in Sydney.',
+      steps: ['Press Apply For The Visa on the engagement.', `Read the department’s answer when it comes, ${word(AU.decisionDays ?? 0)} days later, then press Go for the car to the airport.`],
+      result: 'The visa is granted, the flights go through Los Angeles, and two calendar days after leaving New York the car takes you to the hotel in Sydney. The eight shoot days are paid as wages earned in Australia, with no commission.',
     },
   },
 ];

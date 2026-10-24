@@ -1,10 +1,136 @@
 {
+ "src/engine/content/series.ts#NY": {
+  "status": "Rewritten",
+  "hash": "91a5e4a639ea",
+  "on": "2026-10-24",
+  "evidence": "Written for brief 25's Module 4 (contracts, pay states, overtime, the producer's contribution, residuals, the per diem, a recurring part's season and a series' seasons) to docs/STYLE.md and docs/GLOSSARY.md, every rule's figure the agreements' own and every invention said as the game's; read where the player meets it in tests/career-contracts.test.ts (the offer, the contract, each payment's state, the notices of each episode, option, decision, telecast, rerun, residual and per diem, through a played recurring part), with tools/voice-check.mjs, tools/tics.mjs and tools/title-case.mjs clean.",
+  "first": "Pending"
+ },
+ "src/engine/content/series.ts#SERIES [calloway-files]": {
+  "status": "Rewritten",
+  "hash": "c600124fc6bf",
+  "on": "2026-10-24",
+  "evidence": "Written for brief 25's Module 4 (contracts, pay states, overtime, the producer's contribution, residuals, the per diem, a recurring part's season and a series' seasons) to docs/STYLE.md and docs/GLOSSARY.md, every rule's figure the agreements' own and every invention said as the game's; read where the player meets it in tests/career-contracts.test.ts (the offer, the contract, each payment's state, the notices of each episode, option, decision, telecast, rerun, residual and per diem, through a played recurring part), with tools/voice-check.mjs, tools/tics.mjs and tools/title-case.mjs clean.",
+  "first": "Pending"
+ },
+ "src/engine/systems/contracts.ts#air": {
+  "status": "Rewritten",
+  "hash": "6c688d871a0c",
+  "on": "2026-10-24",
+  "evidence": "Written for brief 25's Module 4 (contracts, pay states, overtime, the producer's contribution, residuals, the per diem, a recurring part's season and a series' seasons) to docs/STYLE.md and docs/GLOSSARY.md, every rule's figure the agreements' own and every invention said as the game's; read where the player meets it in tests/career-contracts.test.ts (the offer, the contract, each payment's state, the notices of each episode, option, decision, telecast, rerun, residual and per diem, through a played recurring part), with tools/voice-check.mjs, tools/tics.mjs and tools/title-case.mjs clean.",
+  "first": "Pending"
+ },
+ "src/engine/systems/contracts.ts#air [success]": {
+  "status": "Rewritten",
+  "hash": "22eff3b3dc5a",
+  "on": "2026-10-24",
+  "evidence": "Written for brief 25's Module 4 (contracts, pay states, overtime, the producer's contribution, residuals, the per diem, a recurring part's season and a series' seasons) to docs/STYLE.md and docs/GLOSSARY.md, every rule's figure the agreements' own and every invention said as the game's; read where the player meets it in tests/career-contracts.test.ts (the offer, the contract, each payment's state, the notices of each episode, option, decision, telecast, rerun, residual and per diem, through a played recurring part), with tools/voice-check.mjs, tools/tics.mjs and tools/title-case.mjs clean.",
+  "first": "Pending"
+ },
+ "src/engine/systems/contracts.ts#askRefusal": {
+  "status": "Rewritten",
+  "hash": "a14026406546",
+  "on": "2026-10-24",
+  "evidence": "Written for brief 25's Module 4 (contracts, pay states, overtime, the producer's contribution, residuals, the per diem, a recurring part's season and a series' seasons) to docs/STYLE.md and docs/GLOSSARY.md, every rule's figure the agreements' own and every invention said as the game's; read where the player meets it in tests/career-contracts.test.ts (the offer, the contract, each payment's state, the notices of each episode, option, decision, telecast, rerun, residual and per diem, through a played recurring part), with tools/voice-check.mjs, tools/tics.mjs and tools/title-case.mjs clean.",
+  "first": "Pending"
+ },
+ "src/engine/systems/contracts.ts#BILLING": {
+  "status": "Rewritten",
+  "hash": "7e226a9d30db",
+  "on": "2026-10-24",
+  "evidence": "Written for brief 25's Module 4 (contracts, pay states, overtime, the producer's contribution, residuals, the per diem, a recurring part's season and a series' seasons) to docs/STYLE.md and docs/GLOSSARY.md, every rule's figure the agreements' own and every invention said as the game's; read where the player meets it in tests/career-contracts.test.ts (the offer, the contract, each payment's state, the notices of each episode, option, decision, telecast, rerun, residual and per diem, through a played recurring part), with tools/voice-check.mjs, tools/tics.mjs and tools/title-case.mjs clean.",
+  "first": "Pending"
+ },
+ "src/engine/systems/contracts.ts#calculationWords": {
+  "status": "Rewritten",
+  "hash": "813681e00df6",
+  "on": "2026-10-24",
+  "evidence": "Written for brief 25's Module 4 (contracts, pay states, overtime, the producer's contribution, residuals, the per diem, a recurring part's season and a series' seasons) to docs/STYLE.md and docs/GLOSSARY.md, every rule's figure the agreements' own and every invention said as the game's; read where the player meets it in tests/career-contracts.test.ts (the offer, the contract, each payment's state, the notices of each episode, option, decision, telecast, rerun, residual and per diem, through a played recurring part), with tools/voice-check.mjs, tools/tics.mjs and tools/title-case.mjs clean.",
+  "first": "Pending"
+ },
+ "src/engine/systems/contracts.ts#entitle [success]": {
+  "status": "Rewritten",
+  "hash": "ee10f27c1512",
+  "on": "2026-10-24",
+  "evidence": "Written for brief 25's Module 4 (contracts, pay states, overtime, the producer's contribution, residuals, the per diem, a recurring part's season and a series' seasons) to docs/STYLE.md and docs/GLOSSARY.md, every rule's figure the agreements' own and every invention said as the game's; read where the player meets it in tests/career-contracts.test.ts (the offer, the contract, each payment's state, the notices of each episode, option, decision, telecast, rerun, residual and per diem, through a played recurring part), with tools/voice-check.mjs, tools/tics.mjs and tools/title-case.mjs clean.",
+  "first": "Pending"
+ },
+ "src/engine/systems/contracts.ts#NY": {
+  "status": "Rewritten",
+  "hash": "91a5e4a639ea",
+  "on": "2026-10-24",
+  "evidence": "Written for brief 25's Module 4 (contracts, pay states, overtime, the producer's contribution, residuals, the per diem, a recurring part's season and a series' seasons) to docs/STYLE.md and docs/GLOSSARY.md, every rule's figure the agreements' own and every invention said as the game's; read where the player meets it in tests/career-contracts.test.ts (the offer, the contract, each payment's state, the notices of each episode, option, decision, telecast, rerun, residual and per diem, through a played recurring part), with tools/voice-check.mjs, tools/tics.mjs and tools/title-case.mjs clean.",
+  "first": "Pending"
+ },
+ "src/engine/systems/contracts.ts#payPerDiem": {
+  "status": "Rewritten",
+  "hash": "727136bde8f1",
+  "on": "2026-10-24",
+  "evidence": "Written for brief 25's Module 4 (contracts, pay states, overtime, the producer's contribution, residuals, the per diem, a recurring part's season and a series' seasons) to docs/STYLE.md and docs/GLOSSARY.md, every rule's figure the agreements' own and every invention said as the game's; read where the player meets it in tests/career-contracts.test.ts (the offer, the contract, each payment's state, the notices of each episode, option, decision, telecast, rerun, residual and per diem, through a played recurring part), with tools/voice-check.mjs, tools/tics.mjs and tools/title-case.mjs clean.",
+  "first": "Pending"
+ },
+ "src/engine/systems/contracts.ts#payPerDiem [paid]": {
+  "status": "Rewritten",
+  "hash": "4abc9e47f83e",
+  "on": "2026-10-24",
+  "evidence": "Written for brief 25's Module 4 (contracts, pay states, overtime, the producer's contribution, residuals, the per diem, a recurring part's season and a series' seasons) to docs/STYLE.md and docs/GLOSSARY.md, every rule's figure the agreements' own and every invention said as the game's; read where the player meets it in tests/career-contracts.test.ts (the offer, the contract, each payment's state, the notices of each episode, option, decision, telecast, rerun, residual and per diem, through a played recurring part), with tools/voice-check.mjs, tools/tics.mjs and tools/title-case.mjs clean.",
+  "first": "Pending"
+ },
+ "src/engine/systems/contracts.ts#programWords": {
+  "status": "Rewritten",
+  "hash": "90335b649ade",
+  "on": "2026-10-24",
+  "evidence": "Written for brief 25's Module 4 (contracts, pay states, overtime, the producer's contribution, residuals, the per diem, a recurring part's season and a series' seasons) to docs/STYLE.md and docs/GLOSSARY.md, every rule's figure the agreements' own and every invention said as the game's; read where the player meets it in tests/career-contracts.test.ts (the offer, the contract, each payment's state, the notices of each episode, option, decision, telecast, rerun, residual and per diem, through a played recurring part), with tools/voice-check.mjs, tools/tics.mjs and tools/title-case.mjs clean.",
+  "first": "Pending"
+ },
+ "src/engine/systems/contracts.ts#registerContracts [problem]": {
+  "status": "Rewritten",
+  "hash": "ef8d686ff3e4",
+  "on": "2026-10-24",
+  "evidence": "Written for brief 25's Module 4 (contracts, pay states, overtime, the producer's contribution, residuals, the per diem, a recurring part's season and a series' seasons) to docs/STYLE.md and docs/GLOSSARY.md, every rule's figure the agreements' own and every invention said as the game's; read where the player meets it in tests/career-contracts.test.ts (the offer, the contract, each payment's state, the notices of each episode, option, decision, telecast, rerun, residual and per diem, through a played recurring part), with tools/voice-check.mjs, tools/tics.mjs and tools/title-case.mjs clean.",
+  "first": "Pending"
+ },
+ "src/engine/systems/contracts.ts#RESIDUALS_UNREAD": {
+  "status": "Rewritten",
+  "hash": "8c34574f83f9",
+  "on": "2026-10-24",
+  "evidence": "Written for brief 25's Module 5 (the ways of working: the booth, the dub, narration, multicamera, performance capture, reenactment, the musical and action; a shoot's order and takes, revised pages, a recall to loop and a scene cut) to docs/STYLE.md and docs/GLOSSARY.md, every rule the agreements' own and every invention said as the game's; read where the player meets it in tests/career-workflows-screen.test.ts (the Work and Opportunities tabs drawn for a voice session, a multicamera week and an action shoot, through the clock and a reload at each stage) and tests/career-workflows.test.ts (each workflow's days, choices, reports and notices), with tools/voice-check.mjs, tools/tics.mjs and tools/title-case.mjs clean.",
+  "first": "Pending"
+ },
+ "src/engine/systems/contracts.ts#scheduleAir": {
+  "status": "Rewritten",
+  "hash": "c5a1733a4fb2",
+  "on": "2026-10-24",
+  "evidence": "Written for brief 25's Module 4 (contracts, pay states, overtime, the producer's contribution, residuals, the per diem, a recurring part's season and a series' seasons) to docs/STYLE.md and docs/GLOSSARY.md, every rule's figure the agreements' own and every invention said as the game's; read where the player meets it in tests/career-contracts.test.ts (the offer, the contract, each payment's state, the notices of each episode, option, decision, telecast, rerun, residual and per diem, through a played recurring part), with tools/voice-check.mjs, tools/tics.mjs and tools/title-case.mjs clean.",
+  "first": "Pending"
+ },
+ "src/engine/systems/contracts.ts#settleResidual": {
+  "status": "Rewritten",
+  "hash": "3c67ecf2df16",
+  "on": "2026-10-24",
+  "evidence": "Written for brief 25's Module 4 (contracts, pay states, overtime, the producer's contribution, residuals, the per diem, a recurring part's season and a series' seasons) to docs/STYLE.md and docs/GLOSSARY.md, every rule's figure the agreements' own and every invention said as the game's; read where the player meets it in tests/career-contracts.test.ts (the offer, the contract, each payment's state, the notices of each episode, option, decision, telecast, rerun, residual and per diem, through a played recurring part), with tools/voice-check.mjs, tools/tics.mjs and tools/title-case.mjs clean.",
+  "first": "Pending"
+ },
+ "src/engine/systems/contracts.ts#settleResidual [paid]": {
+  "status": "Rewritten",
+  "hash": "0d6dd7fbf506",
+  "on": "2026-10-24",
+  "evidence": "Written for brief 25's Module 4 (contracts, pay states, overtime, the producer's contribution, residuals, the per diem, a recurring part's season and a series' seasons) to docs/STYLE.md and docs/GLOSSARY.md, every rule's figure the agreements' own and every invention said as the game's; read where the player meets it in tests/career-contracts.test.ts (the offer, the contract, each payment's state, the notices of each episode, option, decision, telecast, rerun, residual and per diem, through a played recurring part), with tools/voice-check.mjs, tools/tics.mjs and tools/title-case.mjs clean.",
+  "first": "Pending"
+ },
+ "src/engine/systems/contracts.ts#workflowRules [rule]": {
+  "status": "Rewritten",
+  "hash": "581bf05b495b",
+  "on": "2026-10-24",
+  "evidence": "Written for brief 25's Module 5 (the ways of working: the booth, the dub, narration, multicamera, performance capture, reenactment, the musical and action; a shoot's order and takes, revised pages, a recall to loop and a scene cut) to docs/STYLE.md and docs/GLOSSARY.md, every rule the agreements' own and every invention said as the game's; read where the player meets it in tests/career-workflows-screen.test.ts (the Work and Opportunities tabs drawn for a voice session, a multicamera week and an action shoot, through the clock and a reload at each stage) and tests/career-workflows.test.ts (each workflow's days, choices, reports and notices), with tools/voice-check.mjs, tools/tics.mjs and tools/title-case.mjs clean.",
+  "first": "Pending"
+ },
  "src/engine/systems/propay.ts#commissionOn": {
   "status": "Rewritten",
-  "hash": "47ffb40d5da5",
-  "on": "2026-10-21",
-  "evidence": "Read on the built app's Work tab before and after pay at 1440 and 390 (docs/verification/career-2026-10-20/app/walk/) and in one played life's order (app/make-saves.log): the commission over scale no longer says its amount twice, the Equity down payment's name no longer carries the amount its line gives, and the SAG-AFTRA panel says where you stand while the line under Join SAG-AFTRA says what it takes, where both had said the same sentence. Held by tests/propay-screen.test.ts and tests/propay.test.ts",
-  "first": "Rewritten And Verified"
+  "hash": "712517d69157",
+  "on": "2026-10-24",
+  "evidence": "Written for brief 25's Module 5 (the ways of working: the booth, the dub, narration, multicamera, performance capture, reenactment, the musical and action; a shoot's order and takes, revised pages, a recall to loop and a scene cut) to docs/STYLE.md and docs/GLOSSARY.md, every rule the agreements' own and every invention said as the game's; read where the player meets it in tests/career-workflows-screen.test.ts (the Work and Opportunities tabs drawn for a voice session, a multicamera week and an action shoot, through the clock and a reload at each stage) and tests/career-workflows.test.ts (each workflow's days, choices, reports and notices), with tools/voice-check.mjs, tools/tics.mjs and tools/title-case.mjs clean.",
+  "first": "Pending"
  },
  "src/engine/systems/propay.ts#duesBill": {
   "status": "Rewritten",
@@ -15,9 +141,9 @@
  },
  "src/engine/systems/propay.ts#eligibilityRead": {
   "status": "Rewritten",
-  "hash": "5468ef548603",
-  "on": "2026-10-22",
-  "evidence": "tests/b22-authorization.test.ts (the rule the line says: a job's days with work from its first) and tests/propay.test.ts (eligibilityRead on OPT, basis opt)",
+  "hash": "64cae420c09e",
+  "on": "2026-10-24",
+  "evidence": "Written for brief 25's Module 4 (contracts, pay states, overtime, the producer's contribution, residuals, the per diem, a recurring part's season and a series' seasons) to docs/STYLE.md and docs/GLOSSARY.md, every rule's figure the agreements' own and every invention said as the game's; read where the player meets it in tests/career-contracts.test.ts (the offer, the contract, each payment's state, the notices of each episode, option, decision, telecast, rerun, residual and per diem, through a played recurring part), with tools/voice-check.mjs, tools/tics.mjs and tools/title-case.mjs clean. The permission line for work under OPT's twenty hours a week, read in tests/b22-authorization.test.ts.",
   "first": "Pending"
  },
  "src/engine/systems/propay.ts#equityJoined": {
@@ -153,12 +279,82 @@
   "evidence": "Read where the player meets each line in tests/propay.test.ts and tests/propay-screen.test.ts, and on the built app in docs/verification/career-2026-10-20/pay/screens/work-paid-1440.txt and played.txt",
   "first": "Rewritten And Verified"
  },
+ "src/engine/systems/series.ts#decisionWords": {
+  "status": "Rewritten",
+  "hash": "c2abd4e45a35",
+  "on": "2026-10-24",
+  "evidence": "Written for brief 25's Module 4 (contracts, pay states, overtime, the producer's contribution, residuals, the per diem, a recurring part's season and a series' seasons) to docs/STYLE.md and docs/GLOSSARY.md, every rule's figure the agreements' own and every invention said as the game's; read where the player meets it in tests/career-contracts.test.ts (the offer, the contract, each payment's state, the notices of each episode, option, decision, telecast, rerun, residual and per diem, through a played recurring part), with tools/voice-check.mjs, tools/tics.mjs and tools/title-case.mjs clean.",
+  "first": "Pending"
+ },
+ "src/engine/systems/series.ts#NY": {
+  "status": "Rewritten",
+  "hash": "91a5e4a639ea",
+  "on": "2026-10-24",
+  "evidence": "Written for brief 25's Module 4 (contracts, pay states, overtime, the producer's contribution, residuals, the per diem, a recurring part's season and a series' seasons) to docs/STYLE.md and docs/GLOSSARY.md, every rule's figure the agreements' own and every invention said as the game's; read where the player meets it in tests/career-contracts.test.ts (the offer, the contract, each payment's state, the notices of each episode, option, decision, telecast, rerun, residual and per diem, through a played recurring part), with tools/voice-check.mjs, tools/tics.mjs and tools/title-case.mjs clean.",
+  "first": "Pending"
+ },
+ "src/engine/systems/series.ts#registerSeries": {
+  "status": "Rewritten",
+  "hash": "9422592c43b6",
+  "on": "2026-10-24",
+  "evidence": "Written for brief 25's Module 4 (contracts, pay states, overtime, the producer's contribution, residuals, the per diem, a recurring part's season and a series' seasons) to docs/STYLE.md and docs/GLOSSARY.md, every rule's figure the agreements' own and every invention said as the game's; read where the player meets it in tests/career-contracts.test.ts (the offer, the contract, each payment's state, the notices of each episode, option, decision, telecast, rerun, residual and per diem, through a played recurring part), with tools/voice-check.mjs, tools/tics.mjs and tools/title-case.mjs clean.",
+  "first": "Pending"
+ },
+ "src/engine/systems/series.ts#registerSeries [booked]": {
+  "status": "Rewritten",
+  "hash": "c887a9e62e89",
+  "on": "2026-10-24",
+  "evidence": "Written for brief 25's Module 4 (contracts, pay states, overtime, the producer's contribution, residuals, the per diem, a recurring part's season and a series' seasons) to docs/STYLE.md and docs/GLOSSARY.md, every rule's figure the agreements' own and every invention said as the game's; read where the player meets it in tests/career-contracts.test.ts (the offer, the contract, each payment's state, the notices of each episode, option, decision, telecast, rerun, residual and per diem, through a played recurring part), with tools/voice-check.mjs, tools/tics.mjs and tools/title-case.mjs clean.",
+  "first": "Pending"
+ },
+ "src/engine/systems/series.ts#registerSeries [problem]": {
+  "status": "Rewritten",
+  "hash": "9d259b47c75a",
+  "on": "2026-10-24",
+  "evidence": "Written for brief 25's Module 4 (contracts, pay states, overtime, the producer's contribution, residuals, the per diem, a recurring part's season and a series' seasons) to docs/STYLE.md and docs/GLOSSARY.md, every rule's figure the agreements' own and every invention said as the game's; read where the player meets it in tests/career-contracts.test.ts (the offer, the contract, each payment's state, the notices of each episode, option, decision, telecast, rerun, residual and per diem, through a played recurring part), with tools/voice-check.mjs, tools/tics.mjs and tools/title-case.mjs clean.",
+  "first": "Pending"
+ },
+ "src/engine/systems/series.ts#registerSeries <pro.series>": {
+  "status": "Rewritten",
+  "hash": "6d887bc1d2d0",
+  "on": "2026-10-24",
+  "evidence": "Written for brief 25's Module 4 (contracts, pay states, overtime, the producer's contribution, residuals, the per diem, a recurring part's season and a series' seasons) to docs/STYLE.md and docs/GLOSSARY.md, every rule's figure the agreements' own and every invention said as the game's; read where the player meets it in tests/career-contracts.test.ts (the offer, the contract, each payment's state, the notices of each episode, option, decision, telecast, rerun, residual and per diem, through a played recurring part), with tools/voice-check.mjs, tools/tics.mjs and tools/title-case.mjs clean.",
+  "first": "Pending"
+ },
+ "src/engine/systems/series.ts#scheduleSeason": {
+  "status": "Rewritten",
+  "hash": "7f1f29c914e7",
+  "on": "2026-10-24",
+  "evidence": "Written for brief 25's Module 4 (contracts, pay states, overtime, the producer's contribution, residuals, the per diem, a recurring part's season and a series' seasons) to docs/STYLE.md and docs/GLOSSARY.md, every rule's figure the agreements' own and every invention said as the game's; read where the player meets it in tests/career-contracts.test.ts (the offer, the contract, each payment's state, the notices of each episode, option, decision, telecast, rerun, residual and per diem, through a played recurring part), with tools/voice-check.mjs, tools/tics.mjs and tools/title-case.mjs clean.",
+  "first": "Pending"
+ },
+ "src/ui/career/WorkPane.tsx#BASIS": {
+  "status": "Rewritten",
+  "hash": "003815862aec",
+  "on": "2026-10-24",
+  "evidence": "Written for brief 25's Module 4 (contracts, pay states, overtime, the producer's contribution, residuals, the per diem, a recurring part's season and a series' seasons) to docs/STYLE.md and docs/GLOSSARY.md, every rule's figure the agreements' own and every invention said as the game's; read where the player meets it in tests/career-contracts.test.ts (the offer, the contract, each payment's state, the notices of each episode, option, decision, telecast, rerun, residual and per diem, through a played recurring part), with tools/voice-check.mjs, tools/tics.mjs and tools/title-case.mjs clean.",
+  "first": "Pending"
+ },
  "src/ui/career/WorkPane.tsx#billWords": {
   "status": "Rewritten",
   "hash": "e7c3ff279924",
   "on": "2026-10-21",
   "evidence": "Read where the player meets each line in tests/propay.test.ts and tests/propay-screen.test.ts, and on the built app in docs/verification/career-2026-10-20/pay/screens/work-paid-1440.txt and played.txt",
   "first": "Rewritten And Verified"
+ },
+ "src/ui/career/WorkPane.tsx#clauseWords": {
+  "status": "Rewritten",
+  "hash": "de89227382db",
+  "on": "2026-10-24",
+  "evidence": "Written for brief 25's Module 5 (the ways of working: the booth, the dub, narration, multicamera, performance capture, reenactment, the musical and action; a shoot's order and takes, revised pages, a recall to loop and a scene cut) to docs/STYLE.md and docs/GLOSSARY.md, every rule the agreements' own and every invention said as the game's; read where the player meets it in tests/career-workflows-screen.test.ts (the Work and Opportunities tabs drawn for a voice session, a multicamera week and an action shoot, through the clock and a reload at each stage) and tests/career-workflows.test.ts (each workflow's days, choices, reports and notices), with tools/voice-check.mjs, tools/tics.mjs and tools/title-case.mjs clean.",
+  "first": "Pending"
+ },
+ "src/ui/career/WorkPane.tsx#ContractFacts": {
+  "status": "Rewritten",
+  "hash": "93d7d8e816f9",
+  "on": "2026-10-24",
+  "evidence": "Written for brief 25's Module 4 (contracts, pay states, overtime, the producer's contribution, residuals, the per diem, a recurring part's season and a series' seasons) to docs/STYLE.md and docs/GLOSSARY.md, every rule's figure the agreements' own and every invention said as the game's; read where the player meets it in tests/career-contracts.test.ts (the offer, the contract, each payment's state, the notices of each episode, option, decision, telecast, rerun, residual and per diem, through a played recurring part), with tools/voice-check.mjs, tools/tics.mjs and tools/title-case.mjs clean.",
+  "first": "Pending"
  },
  "src/ui/career/WorkPane.tsx#datesWords": {
   "status": "Rewritten",
@@ -169,16 +365,16 @@
  },
  "src/ui/career/WorkPane.tsx#EngagementPay": {
   "status": "Rewritten",
-  "hash": "b60604d84be9",
-  "on": "2026-10-23",
-  "evidence": "Read against docs/STYLE.md for brief 23; the engagement and its pay table rendered by tests/propay-screen.test.ts, and walked by docs/verification/ui-2026-10-23/app/capture.mjs",
+  "hash": "638ed7ff86cb",
+  "on": "2026-10-24",
+  "evidence": "Written for brief 25's Module 4 (contracts, pay states, overtime, the producer's contribution, residuals, the per diem, a recurring part's season and a series' seasons) to docs/STYLE.md and docs/GLOSSARY.md, every rule's figure the agreements' own and every invention said as the game's; read where the player meets it in tests/career-contracts.test.ts (the offer, the contract, each payment's state, the notices of each episode, option, decision, telecast, rerun, residual and per diem, through a played recurring part), with tools/voice-check.mjs, tools/tics.mjs and tools/title-case.mjs clean.",
   "first": "Pending"
  },
  "src/ui/career/WorkPane.tsx#EngagementView": {
   "status": "Rewritten",
-  "hash": "7754bd6bea9c",
-  "on": "2026-10-23",
-  "evidence": "Read against docs/STYLE.md for brief 23; the engagement and its pay table rendered by tests/propay-screen.test.ts, and walked by docs/verification/ui-2026-10-23/app/capture.mjs",
+  "hash": "338152f5654f",
+  "on": "2026-10-24",
+  "evidence": "Written for brief 25's Module 5 (the ways of working: the booth, the dub, narration, multicamera, performance capture, reenactment, the musical and action; a shoot's order and takes, revised pages, a recall to loop and a scene cut) to docs/STYLE.md and docs/GLOSSARY.md, every rule the agreements' own and every invention said as the game's; read where the player meets it in tests/career-workflows-screen.test.ts (the Work and Opportunities tabs drawn for a voice session, a multicamera week and an action shoot, through the clock and a reload at each stage) and tests/career-workflows.test.ts (each workflow's days, choices, reports and notices), with tools/voice-check.mjs, tools/tics.mjs and tools/title-case.mjs clean.",
   "first": "Pending"
  },
  "src/ui/career/WorkPane.tsx#payLine": {
@@ -190,9 +386,23 @@
  },
  "src/ui/career/WorkPane.tsx#paymentRow": {
   "status": "Rewritten",
-  "hash": "74b52a92a548",
-  "on": "2026-10-23",
-  "evidence": "Read again against docs/STYLE.md on 2026-10-23 for brief 23, after the deferred and promised rows were reworded; the engagement and its pay table rendered by tests/propay-screen.test.ts, which reads both rows",
+  "hash": "55cc789c3ac3",
+  "on": "2026-10-24",
+  "evidence": "tests/propay-screen.test.ts reads the Where It Stands words on the rendered Work tab, without the State column's word again (2026-10-24).",
+  "first": "Pending"
+ },
+ "src/ui/career/WorkPane.tsx#ResidualView": {
+  "status": "Rewritten",
+  "hash": "dff29c2ad943",
+  "on": "2026-10-24",
+  "evidence": "Written for brief 25's Module 4 (contracts, pay states, overtime, the producer's contribution, residuals, the per diem, a recurring part's season and a series' seasons) to docs/STYLE.md and docs/GLOSSARY.md, every rule's figure the agreements' own and every invention said as the game's; read where the player meets it in tests/career-contracts.test.ts (the offer, the contract, each payment's state, the notices of each episode, option, decision, telecast, rerun, residual and per diem, through a played recurring part), with tools/voice-check.mjs, tools/tics.mjs and tools/title-case.mjs clean.",
+  "first": "Pending"
+ },
+ "src/ui/career/WorkPane.tsx#STATE_WORDS": {
+  "status": "Rewritten",
+  "hash": "ed3b80908ea6",
+  "on": "2026-10-24",
+  "evidence": "Written for brief 25's Module 4 (contracts, pay states, overtime, the producer's contribution, residuals, the per diem, a recurring part's season and a series' seasons) to docs/STYLE.md and docs/GLOSSARY.md, every rule's figure the agreements' own and every invention said as the game's; read where the player meets it in tests/career-contracts.test.ts (the offer, the contract, each payment's state, the notices of each episode, option, decision, telecast, rerun, residual and per diem, through a played recurring part), with tools/voice-check.mjs, tools/tics.mjs and tools/title-case.mjs clean.",
   "first": "Pending"
  },
  "src/ui/career/WorkPane.tsx#STATUS": {
@@ -202,12 +412,26 @@
   "evidence": "Read where the player meets each line in tests/propay.test.ts and tests/propay-screen.test.ts, and on the built app in docs/verification/career-2026-10-20/pay/screens/work-paid-1440.txt and played.txt",
   "first": "Rewritten And Verified"
  },
+ "src/ui/career/WorkPane.tsx#TripView": {
+  "status": "Rewritten",
+  "hash": "96dcc31d0108",
+  "on": "2026-10-23",
+  "evidence": "Written for brief 25's Module 2 (the reference catalog and the parts drawn from it) to docs/STYLE.md and docs/GLOSSARY.md; read where the player meets it in tests/career-drawn.test.ts (the role card, the offer, the Work tab and the trip to Los Angeles drawn over a played journey) and tests/career-catalog.test.ts (productionWords and CATALOG.md), with tools/voice-check.mjs, tools/tics.mjs, tools/title-case.mjs, tools/plural-check.mjs and tools/spelling.mjs passing",
+  "first": "Pending"
+ },
  "src/ui/career/WorkPane.tsx#UnionsPanel": {
   "status": "Rewritten",
   "hash": "e98575d22f95",
   "on": "2026-10-21",
   "evidence": "Read on the built app's Work tab before and after pay at 1440 and 390 (docs/verification/career-2026-10-20/app/walk/) and in one played life's order (app/make-saves.log): the commission over scale no longer says its amount twice, the Equity down payment's name no longer carries the amount its line gives, and the SAG-AFTRA panel says where you stand while the line under Join SAG-AFTRA says what it takes, where both had said the same sentence. Held by tests/propay-screen.test.ts and tests/propay.test.ts",
   "first": "Rewritten And Verified"
+ },
+ "src/ui/career/WorkPane.tsx#WorkflowView": {
+  "status": "Rewritten",
+  "hash": "aad45b21b67e",
+  "on": "2026-10-24",
+  "evidence": "Written for brief 25's Module 5 (the ways of working: the booth, the dub, narration, multicamera, performance capture, reenactment, the musical and action; a shoot's order and takes, revised pages, a recall to loop and a scene cut) to docs/STYLE.md and docs/GLOSSARY.md, every rule the agreements' own and every invention said as the game's; read where the player meets it in tests/career-workflows-screen.test.ts (the Work and Opportunities tabs drawn for a voice session, a multicamera week and an action shoot, through the clock and a reload at each stage) and tests/career-workflows.test.ts (each workflow's days, choices, reports and notices), with tools/voice-check.mjs, tools/tics.mjs and tools/title-case.mjs clean.",
+  "first": "Pending"
  },
  "src/ui/career/WorkPane.tsx#WorkPane": {
   "status": "Rewritten",

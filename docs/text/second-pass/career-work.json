@@ -1,16 +1,492 @@
 {
+ "src/engine/content/workflows.ts#ALTS": {
+  "status": "Rewritten",
+  "hash": "5d4bb89efccc",
+  "on": "2026-10-24",
+  "evidence": "Written for brief 25's Module 5 (the ways of working: the booth, the dub, narration, multicamera, performance capture, reenactment, the musical and action; a shoot's order and takes, revised pages, a recall to loop and a scene cut) to docs/STYLE.md and docs/GLOSSARY.md, every rule the agreements' own and every invention said as the game's; read where the player meets it in tests/career-workflows-screen.test.ts (the Work and Opportunities tabs drawn for a voice session, a multicamera week and an action shoot, through the clock and a reload at each stage) and tests/career-workflows.test.ts (each workflow's days, choices, reports and notices), with tools/voice-check.mjs, tools/tics.mjs and tools/title-case.mjs clean.",
+  "first": "Pending"
+ },
+ "src/engine/content/workflows.ts#ALTS [alts]": {
+  "status": "Rewritten",
+  "hash": "470e57b5761f",
+  "on": "2026-10-24",
+  "evidence": "Written for brief 25's Module 5 (the ways of working: the booth, the dub, narration, multicamera, performance capture, reenactment, the musical and action; a shoot's order and takes, revised pages, a recall to loop and a scene cut) to docs/STYLE.md and docs/GLOSSARY.md, every rule the agreements' own and every invention said as the game's; read where the player meets it in tests/career-workflows-screen.test.ts (the Work and Opportunities tabs drawn for a voice session, a multicamera week and an action shoot, through the clock and a reload at each stage) and tests/career-workflows.test.ts (each workflow's days, choices, reports and notices), with tools/voice-check.mjs, tools/tics.mjs and tools/title-case.mjs clean.",
+  "first": "Pending"
+ },
+ "src/engine/content/workflows.ts#ALTS [as-written]": {
+  "status": "Rewritten",
+  "hash": "4f56f3d8f161",
+  "on": "2026-10-24",
+  "evidence": "Written for brief 25's Module 5 (the ways of working: the booth, the dub, narration, multicamera, performance capture, reenactment, the musical and action; a shoot's order and takes, revised pages, a recall to loop and a scene cut) to docs/STYLE.md and docs/GLOSSARY.md, every rule the agreements' own and every invention said as the game's; read where the player meets it in tests/career-workflows-screen.test.ts (the Work and Opportunities tabs drawn for a voice session, a multicamera week and an action shoot, through the clock and a reload at each stage) and tests/career-workflows.test.ts (each workflow's days, choices, reports and notices), with tools/voice-check.mjs, tools/tics.mjs and tools/title-case.mjs clean.",
+  "first": "Pending"
+ },
+ "src/engine/content/workflows.ts#AUDIENCE": {
+  "status": "Rewritten",
+  "hash": "adfad7b8c324",
+  "on": "2026-10-24",
+  "evidence": "Written for brief 25's Module 5 (the ways of working: the booth, the dub, narration, multicamera, performance capture, reenactment, the musical and action; a shoot's order and takes, revised pages, a recall to loop and a scene cut) to docs/STYLE.md and docs/GLOSSARY.md, every rule the agreements' own and every invention said as the game's; read where the player meets it in tests/career-workflows-screen.test.ts (the Work and Opportunities tabs drawn for a voice session, a multicamera week and an action shoot, through the clock and a reload at each stage) and tests/career-workflows.test.ts (each workflow's days, choices, reports and notices), with tools/voice-check.mjs, tools/tics.mjs and tools/title-case.mjs clean.",
+  "first": "Pending"
+ },
+ "src/engine/content/workflows.ts#AUDIENCE [both]": {
+  "status": "Rewritten",
+  "hash": "4e87edbaf7a5",
+  "on": "2026-10-24",
+  "evidence": "Written for brief 25's Module 5 (the ways of working: the booth, the dub, narration, multicamera, performance capture, reenactment, the musical and action; a shoot's order and takes, revised pages, a recall to loop and a scene cut) to docs/STYLE.md and docs/GLOSSARY.md, every rule the agreements' own and every invention said as the game's; read where the player meets it in tests/career-workflows-screen.test.ts (the Work and Opportunities tabs drawn for a voice session, a multicamera week and an action shoot, through the clock and a reload at each stage) and tests/career-workflows.test.ts (each workflow's days, choices, reports and notices), with tools/voice-check.mjs, tools/tics.mjs and tools/title-case.mjs clean.",
+  "first": "Pending"
+ },
+ "src/engine/content/workflows.ts#AUDIENCE [cameras]": {
+  "status": "Rewritten",
+  "hash": "0209fbea9704",
+  "on": "2026-10-24",
+  "evidence": "Written for brief 25's Module 5 (the ways of working: the booth, the dub, narration, multicamera, performance capture, reenactment, the musical and action; a shoot's order and takes, revised pages, a recall to loop and a scene cut) to docs/STYLE.md and docs/GLOSSARY.md, every rule the agreements' own and every invention said as the game's; read where the player meets it in tests/career-workflows-screen.test.ts (the Work and Opportunities tabs drawn for a voice session, a multicamera week and an action shoot, through the clock and a reload at each stage) and tests/career-workflows.test.ts (each workflow's days, choices, reports and notices), with tools/voice-check.mjs, tools/tics.mjs and tools/title-case.mjs clean.",
+  "first": "Pending"
+ },
+ "src/engine/content/workflows.ts#AUDIENCE [house]": {
+  "status": "Rewritten",
+  "hash": "8ceb8f7bbc34",
+  "on": "2026-10-24",
+  "evidence": "Written for brief 25's Module 5 (the ways of working: the booth, the dub, narration, multicamera, performance capture, reenactment, the musical and action; a shoot's order and takes, revised pages, a recall to loop and a scene cut) to docs/STYLE.md and docs/GLOSSARY.md, every rule the agreements' own and every invention said as the game's; read where the player meets it in tests/career-workflows-screen.test.ts (the Work and Opportunities tabs drawn for a voice session, a multicamera week and an action shoot, through the clock and a reload at each stage) and tests/career-workflows.test.ts (each workflow's days, choices, reports and notices), with tools/voice-check.mjs, tools/tics.mjs and tools/title-case.mjs clean.",
+  "first": "Pending"
+ },
+ "src/engine/content/workflows.ts#CONSENT": {
+  "status": "Rewritten",
+  "hash": "72c97406b78a",
+  "on": "2026-10-24",
+  "evidence": "Written for brief 25's Module 5 (the ways of working: the booth, the dub, narration, multicamera, performance capture, reenactment, the musical and action; a shoot's order and takes, revised pages, a recall to loop and a scene cut) to docs/STYLE.md and docs/GLOSSARY.md, every rule the agreements' own and every invention said as the game's; read where the player meets it in tests/career-workflows-screen.test.ts (the Work and Opportunities tabs drawn for a voice session, a multicamera week and an action shoot, through the clock and a reload at each stage) and tests/career-workflows.test.ts (each workflow's days, choices, reports and notices), with tools/voice-check.mjs, tools/tics.mjs and tools/title-case.mjs clean.",
+  "first": "Pending"
+ },
+ "src/engine/content/workflows.ts#CONSENT [declined]": {
+  "status": "Rewritten",
+  "hash": "f687eb4e8967",
+  "on": "2026-10-24",
+  "evidence": "Written for brief 25's Module 5 (the ways of working: the booth, the dub, narration, multicamera, performance capture, reenactment, the musical and action; a shoot's order and takes, revised pages, a recall to loop and a scene cut) to docs/STYLE.md and docs/GLOSSARY.md, every rule the agreements' own and every invention said as the game's; read where the player meets it in tests/career-workflows-screen.test.ts (the Work and Opportunities tabs drawn for a voice session, a multicamera week and an action shoot, through the clock and a reload at each stage) and tests/career-workflows.test.ts (each workflow's days, choices, reports and notices), with tools/voice-check.mjs, tools/tics.mjs and tools/title-case.mjs clean.",
+  "first": "Pending"
+ },
+ "src/engine/content/workflows.ts#CONSENT [given]": {
+  "status": "Rewritten",
+  "hash": "3ab598d651cb",
+  "on": "2026-10-24",
+  "evidence": "Written for brief 25's Module 5 (the ways of working: the booth, the dub, narration, multicamera, performance capture, reenactment, the musical and action; a shoot's order and takes, revised pages, a recall to loop and a scene cut) to docs/STYLE.md and docs/GLOSSARY.md, every rule the agreements' own and every invention said as the game's; read where the player meets it in tests/career-workflows-screen.test.ts (the Work and Opportunities tabs drawn for a voice session, a multicamera week and an action shoot, through the clock and a reload at each stage) and tests/career-workflows.test.ts (each workflow's days, choices, reports and notices), with tools/voice-check.mjs, tools/tics.mjs and tools/title-case.mjs clean.",
+  "first": "Pending"
+ },
+ "src/engine/content/workflows.ts#FORMATS [action-feature]": {
+  "status": "Rewritten",
+  "hash": "eb7f5d4eb8ed",
+  "on": "2026-10-24",
+  "evidence": "Written for brief 25's Module 5 (the ways of working: the booth, the dub, narration, multicamera, performance capture, reenactment, the musical and action; a shoot's order and takes, revised pages, a recall to loop and a scene cut) to docs/STYLE.md and docs/GLOSSARY.md, every rule the agreements' own and every invention said as the game's; read where the player meets it in tests/career-workflows-screen.test.ts (the Work and Opportunities tabs drawn for a voice session, a multicamera week and an action shoot, through the clock and a reload at each stage) and tests/career-workflows.test.ts (each workflow's days, choices, reports and notices), with tools/voice-check.mjs, tools/tics.mjs and tools/title-case.mjs clean.",
+  "first": "Pending"
+ },
+ "src/engine/content/workflows.ts#FORMATS [animated-feature]": {
+  "status": "Rewritten",
+  "hash": "dd7a984d9fc2",
+  "on": "2026-10-24",
+  "evidence": "Written for brief 25's Module 5 (the ways of working: the booth, the dub, narration, multicamera, performance capture, reenactment, the musical and action; a shoot's order and takes, revised pages, a recall to loop and a scene cut) to docs/STYLE.md and docs/GLOSSARY.md, every rule the agreements' own and every invention said as the game's; read where the player meets it in tests/career-workflows-screen.test.ts (the Work and Opportunities tabs drawn for a voice session, a multicamera week and an action shoot, through the clock and a reload at each stage) and tests/career-workflows.test.ts (each workflow's days, choices, reports and notices), with tools/voice-check.mjs, tools/tics.mjs and tools/title-case.mjs clean.",
+  "first": "Pending"
+ },
+ "src/engine/content/workflows.ts#FORMATS [animated-series]": {
+  "status": "Rewritten",
+  "hash": "55c43bc54101",
+  "on": "2026-10-24",
+  "evidence": "Written for brief 25's Module 5 (the ways of working: the booth, the dub, narration, multicamera, performance capture, reenactment, the musical and action; a shoot's order and takes, revised pages, a recall to loop and a scene cut) to docs/STYLE.md and docs/GLOSSARY.md, every rule the agreements' own and every invention said as the game's; read where the player meets it in tests/career-workflows-screen.test.ts (the Work and Opportunities tabs drawn for a voice session, a multicamera week and an action shoot, through the clock and a reload at each stage) and tests/career-workflows.test.ts (each workflow's days, choices, reports and notices), with tools/voice-check.mjs, tools/tics.mjs and tools/title-case.mjs clean.",
+  "first": "Pending"
+ },
+ "src/engine/content/workflows.ts#FORMATS [anthology]": {
+  "status": "Rewritten",
+  "hash": "8a9e0ed2db9c",
+  "on": "2026-10-24",
+  "evidence": "Written for brief 25's Module 5 (the ways of working: the booth, the dub, narration, multicamera, performance capture, reenactment, the musical and action; a shoot's order and takes, revised pages, a recall to loop and a scene cut) to docs/STYLE.md and docs/GLOSSARY.md, every rule the agreements' own and every invention said as the game's; read where the player meets it in tests/career-workflows-screen.test.ts (the Work and Opportunities tabs drawn for a voice session, a multicamera week and an action shoot, through the clock and a reload at each stage) and tests/career-workflows.test.ts (each workflow's days, choices, reports and notices), with tools/voice-check.mjs, tools/tics.mjs and tools/title-case.mjs clean.",
+  "first": "Pending"
+ },
+ "src/engine/content/workflows.ts#FORMATS [capture]": {
+  "status": "Rewritten",
+  "hash": "0489219adddf",
+  "on": "2026-10-24",
+  "evidence": "Written for brief 25's Module 5 (the ways of working: the booth, the dub, narration, multicamera, performance capture, reenactment, the musical and action; a shoot's order and takes, revised pages, a recall to loop and a scene cut) to docs/STYLE.md and docs/GLOSSARY.md, every rule the agreements' own and every invention said as the game's; read where the player meets it in tests/career-workflows-screen.test.ts (the Work and Opportunities tabs drawn for a voice session, a multicamera week and an action shoot, through the clock and a reload at each stage) and tests/career-workflows.test.ts (each workflow's days, choices, reports and notices), with tools/voice-check.mjs, tools/tics.mjs and tools/title-case.mjs clean.",
+  "first": "Pending"
+ },
+ "src/engine/content/workflows.ts#FORMATS [dub]": {
+  "status": "Rewritten",
+  "hash": "e39584c41159",
+  "on": "2026-10-24",
+  "evidence": "Written for brief 25's Module 5 (the ways of working: the booth, the dub, narration, multicamera, performance capture, reenactment, the musical and action; a shoot's order and takes, revised pages, a recall to loop and a scene cut) to docs/STYLE.md and docs/GLOSSARY.md, every rule the agreements' own and every invention said as the game's; read where the player meets it in tests/career-workflows-screen.test.ts (the Work and Opportunities tabs drawn for a voice session, a multicamera week and an action shoot, through the clock and a reload at each stage) and tests/career-workflows.test.ts (each workflow's days, choices, reports and notices), with tools/voice-check.mjs, tools/tics.mjs and tools/title-case.mjs clean.",
+  "first": "Pending"
+ },
+ "src/engine/content/workflows.ts#FORMATS [independent-feature]": {
+  "status": "Rewritten",
+  "hash": "5e5ca00c717d",
+  "on": "2026-10-24",
+  "evidence": "Written for brief 25's Module 5 (the ways of working: the booth, the dub, narration, multicamera, performance capture, reenactment, the musical and action; a shoot's order and takes, revised pages, a recall to loop and a scene cut) to docs/STYLE.md and docs/GLOSSARY.md, every rule the agreements' own and every invention said as the game's; read where the player meets it in tests/career-workflows-screen.test.ts (the Work and Opportunities tabs drawn for a voice session, a multicamera week and an action shoot, through the clock and a reload at each stage) and tests/career-workflows.test.ts (each workflow's days, choices, reports and notices), with tools/voice-check.mjs, tools/tics.mjs and tools/title-case.mjs clean.",
+  "first": "Pending"
+ },
+ "src/engine/content/workflows.ts#FORMATS [limited-series]": {
+  "status": "Rewritten",
+  "hash": "8135be386eeb",
+  "on": "2026-10-24",
+  "evidence": "Written for brief 25's Module 5 (the ways of working: the booth, the dub, narration, multicamera, performance capture, reenactment, the musical and action; a shoot's order and takes, revised pages, a recall to loop and a scene cut) to docs/STYLE.md and docs/GLOSSARY.md, every rule the agreements' own and every invention said as the game's; read where the player meets it in tests/career-workflows-screen.test.ts (the Work and Opportunities tabs drawn for a voice session, a multicamera week and an action shoot, through the clock and a reload at each stage) and tests/career-workflows.test.ts (each workflow's days, choices, reports and notices), with tools/voice-check.mjs, tools/tics.mjs and tools/title-case.mjs clean.",
+  "first": "Pending"
+ },
+ "src/engine/content/workflows.ts#FORMATS [multicam-comedy]": {
+  "status": "Rewritten",
+  "hash": "595518e5e78d",
+  "on": "2026-10-24",
+  "evidence": "Written for brief 25's Module 5 (the ways of working: the booth, the dub, narration, multicamera, performance capture, reenactment, the musical and action; a shoot's order and takes, revised pages, a recall to loop and a scene cut) to docs/STYLE.md and docs/GLOSSARY.md, every rule the agreements' own and every invention said as the game's; read where the player meets it in tests/career-workflows-screen.test.ts (the Work and Opportunities tabs drawn for a voice session, a multicamera week and an action shoot, through the clock and a reload at each stage) and tests/career-workflows.test.ts (each workflow's days, choices, reports and notices), with tools/voice-check.mjs, tools/tics.mjs and tools/title-case.mjs clean.",
+  "first": "Pending"
+ },
+ "src/engine/content/workflows.ts#FORMATS [musical]": {
+  "status": "Rewritten",
+  "hash": "10626d60be97",
+  "on": "2026-10-24",
+  "evidence": "Written for brief 25's Module 5 (the ways of working: the booth, the dub, narration, multicamera, performance capture, reenactment, the musical and action; a shoot's order and takes, revised pages, a recall to loop and a scene cut) to docs/STYLE.md and docs/GLOSSARY.md, every rule the agreements' own and every invention said as the game's; read where the player meets it in tests/career-workflows-screen.test.ts (the Work and Opportunities tabs drawn for a voice session, a multicamera week and an action shoot, through the clock and a reload at each stage) and tests/career-workflows.test.ts (each workflow's days, choices, reports and notices), with tools/voice-check.mjs, tools/tics.mjs and tools/title-case.mjs clean.",
+  "first": "Pending"
+ },
+ "src/engine/content/workflows.ts#FORMATS [narration]": {
+  "status": "Rewritten",
+  "hash": "6295ddbe4862",
+  "on": "2026-10-24",
+  "evidence": "Written for brief 25's Module 5 (the ways of working: the booth, the dub, narration, multicamera, performance capture, reenactment, the musical and action; a shoot's order and takes, revised pages, a recall to loop and a scene cut) to docs/STYLE.md and docs/GLOSSARY.md, every rule the agreements' own and every invention said as the game's; read where the player meets it in tests/career-workflows-screen.test.ts (the Work and Opportunities tabs drawn for a voice session, a multicamera week and an action shoot, through the clock and a reload at each stage) and tests/career-workflows.test.ts (each workflow's days, choices, reports and notices), with tools/voice-check.mjs, tools/tics.mjs and tools/title-case.mjs clean.",
+  "first": "Pending"
+ },
+ "src/engine/content/workflows.ts#FORMATS [play]": {
+  "status": "Rewritten",
+  "hash": "13592d7fe3a7",
+  "on": "2026-10-24",
+  "evidence": "Written for brief 25's Module 5 (the ways of working: the booth, the dub, narration, multicamera, performance capture, reenactment, the musical and action; a shoot's order and takes, revised pages, a recall to loop and a scene cut) to docs/STYLE.md and docs/GLOSSARY.md, every rule the agreements' own and every invention said as the game's; read where the player meets it in tests/career-workflows-screen.test.ts (the Work and Opportunities tabs drawn for a voice session, a multicamera week and an action shoot, through the clock and a reload at each stage) and tests/career-workflows.test.ts (each workflow's days, choices, reports and notices), with tools/voice-check.mjs, tools/tics.mjs and tools/title-case.mjs clean.",
+  "first": "Pending"
+ },
+ "src/engine/content/workflows.ts#FORMATS [procedural]": {
+  "status": "Rewritten",
+  "hash": "bb5664c93286",
+  "on": "2026-10-24",
+  "evidence": "Written for brief 25's Module 5 (the ways of working: the booth, the dub, narration, multicamera, performance capture, reenactment, the musical and action; a shoot's order and takes, revised pages, a recall to loop and a scene cut) to docs/STYLE.md and docs/GLOSSARY.md, every rule the agreements' own and every invention said as the game's; read where the player meets it in tests/career-workflows-screen.test.ts (the Work and Opportunities tabs drawn for a voice session, a multicamera week and an action shoot, through the clock and a reload at each stage) and tests/career-workflows.test.ts (each workflow's days, choices, reports and notices), with tools/voice-check.mjs, tools/tics.mjs and tools/title-case.mjs clean.",
+  "first": "Pending"
+ },
+ "src/engine/content/workflows.ts#FORMATS [reenactment]": {
+  "status": "Rewritten",
+  "hash": "8d301e4ad4f7",
+  "on": "2026-10-24",
+  "evidence": "Written for brief 25's Module 5 (the ways of working: the booth, the dub, narration, multicamera, performance capture, reenactment, the musical and action; a shoot's order and takes, revised pages, a recall to loop and a scene cut) to docs/STYLE.md and docs/GLOSSARY.md, every rule the agreements' own and every invention said as the game's; read where the player meets it in tests/career-workflows-screen.test.ts (the Work and Opportunities tabs drawn for a voice session, a multicamera week and an action shoot, through the clock and a reload at each stage) and tests/career-workflows.test.ts (each workflow's days, choices, reports and notices), with tools/voice-check.mjs, tools/tics.mjs and tools/title-case.mjs clean.",
+  "first": "Pending"
+ },
+ "src/engine/content/workflows.ts#FORMATS [serialized-comedy]": {
+  "status": "Rewritten",
+  "hash": "cbe7bfa380a1",
+  "on": "2026-10-24",
+  "evidence": "Written for brief 25's Module 5 (the ways of working: the booth, the dub, narration, multicamera, performance capture, reenactment, the musical and action; a shoot's order and takes, revised pages, a recall to loop and a scene cut) to docs/STYLE.md and docs/GLOSSARY.md, every rule the agreements' own and every invention said as the game's; read where the player meets it in tests/career-workflows-screen.test.ts (the Work and Opportunities tabs drawn for a voice session, a multicamera week and an action shoot, through the clock and a reload at each stage) and tests/career-workflows.test.ts (each workflow's days, choices, reports and notices), with tools/voice-check.mjs, tools/tics.mjs and tools/title-case.mjs clean.",
+  "first": "Pending"
+ },
+ "src/engine/content/workflows.ts#FORMATS [serialized-drama]": {
+  "status": "Rewritten",
+  "hash": "78bba0734594",
+  "on": "2026-10-24",
+  "evidence": "Written for brief 25's Module 5 (the ways of working: the booth, the dub, narration, multicamera, performance capture, reenactment, the musical and action; a shoot's order and takes, revised pages, a recall to loop and a scene cut) to docs/STYLE.md and docs/GLOSSARY.md, every rule the agreements' own and every invention said as the game's; read where the player meets it in tests/career-workflows-screen.test.ts (the Work and Opportunities tabs drawn for a voice session, a multicamera week and an action shoot, through the clock and a reload at each stage) and tests/career-workflows.test.ts (each workflow's days, choices, reports and notices), with tools/voice-check.mjs, tools/tics.mjs and tools/title-case.mjs clean.",
+  "first": "Pending"
+ },
+ "src/engine/content/workflows.ts#FORMATS [short]": {
+  "status": "Rewritten",
+  "hash": "95ec6073e8f3",
+  "on": "2026-10-24",
+  "evidence": "Written for brief 25's Module 5 (the ways of working: the booth, the dub, narration, multicamera, performance capture, reenactment, the musical and action; a shoot's order and takes, revised pages, a recall to loop and a scene cut) to docs/STYLE.md and docs/GLOSSARY.md, every rule the agreements' own and every invention said as the game's; read where the player meets it in tests/career-workflows-screen.test.ts (the Work and Opportunities tabs drawn for a voice session, a multicamera week and an action shoot, through the clock and a reload at each stage) and tests/career-workflows.test.ts (each workflow's days, choices, reports and notices), with tools/voice-check.mjs, tools/tics.mjs and tools/title-case.mjs clean.",
+  "first": "Pending"
+ },
+ "src/engine/content/workflows.ts#FORMATS [single-camera-comedy]": {
+  "status": "Rewritten",
+  "hash": "e0e5e60c915d",
+  "on": "2026-10-24",
+  "evidence": "Written for brief 25's Module 5 (the ways of working: the booth, the dub, narration, multicamera, performance capture, reenactment, the musical and action; a shoot's order and takes, revised pages, a recall to loop and a scene cut) to docs/STYLE.md and docs/GLOSSARY.md, every rule the agreements' own and every invention said as the game's; read where the player meets it in tests/career-workflows-screen.test.ts (the Work and Opportunities tabs drawn for a voice session, a multicamera week and an action shoot, through the clock and a reload at each stage) and tests/career-workflows.test.ts (each workflow's days, choices, reports and notices), with tools/voice-check.mjs, tools/tics.mjs and tools/title-case.mjs clean.",
+  "first": "Pending"
+ },
+ "src/engine/content/workflows.ts#FORMATS [student-film]": {
+  "status": "Rewritten",
+  "hash": "c3c4220ff3ad",
+  "on": "2026-10-24",
+  "evidence": "Written for brief 25's Module 5 (the ways of working: the booth, the dub, narration, multicamera, performance capture, reenactment, the musical and action; a shoot's order and takes, revised pages, a recall to loop and a scene cut) to docs/STYLE.md and docs/GLOSSARY.md, every rule the agreements' own and every invention said as the game's; read where the player meets it in tests/career-workflows-screen.test.ts (the Work and Opportunities tabs drawn for a voice session, a multicamera week and an action shoot, through the clock and a reload at each stage) and tests/career-workflows.test.ts (each workflow's days, choices, reports and notices), with tools/voice-check.mjs, tools/tics.mjs and tools/title-case.mjs clean.",
+  "first": "Pending"
+ },
+ "src/engine/content/workflows.ts#FORMATS [studio-feature]": {
+  "status": "Rewritten",
+  "hash": "a66bae5d66b0",
+  "on": "2026-10-24",
+  "evidence": "Written for brief 25's Module 5 (the ways of working: the booth, the dub, narration, multicamera, performance capture, reenactment, the musical and action; a shoot's order and takes, revised pages, a recall to loop and a scene cut) to docs/STYLE.md and docs/GLOSSARY.md, every rule the agreements' own and every invention said as the game's; read where the player meets it in tests/career-workflows-screen.test.ts (the Work and Opportunities tabs drawn for a voice session, a multicamera week and an action shoot, through the clock and a reload at each stage) and tests/career-workflows.test.ts (each workflow's days, choices, reports and notices), with tools/voice-check.mjs, tools/tics.mjs and tools/title-case.mjs clean.",
+  "first": "Pending"
+ },
+ "src/engine/content/workflows.ts#FORMATS [tv-movie]": {
+  "status": "Rewritten",
+  "hash": "f54a98558ef4",
+  "on": "2026-10-24",
+  "evidence": "Written for brief 25's Module 5 (the ways of working: the booth, the dub, narration, multicamera, performance capture, reenactment, the musical and action; a shoot's order and takes, revised pages, a recall to loop and a scene cut) to docs/STYLE.md and docs/GLOSSARY.md, every rule the agreements' own and every invention said as the game's; read where the player meets it in tests/career-workflows-screen.test.ts (the Work and Opportunities tabs drawn for a voice session, a multicamera week and an action shoot, through the clock and a reload at each stage) and tests/career-workflows.test.ts (each workflow's days, choices, reports and notices), with tools/voice-check.mjs, tools/tics.mjs and tools/title-case.mjs clean.",
+  "first": "Pending"
+ },
+ "src/engine/content/workflows.ts#MARKING": {
+  "status": "Rewritten",
+  "hash": "084b34543d55",
+  "on": "2026-10-24",
+  "evidence": "Written for brief 25's Module 5 (the ways of working: the booth, the dub, narration, multicamera, performance capture, reenactment, the musical and action; a shoot's order and takes, revised pages, a recall to loop and a scene cut) to docs/STYLE.md and docs/GLOSSARY.md, every rule the agreements' own and every invention said as the game's; read where the player meets it in tests/career-workflows-screen.test.ts (the Work and Opportunities tabs drawn for a voice session, a multicamera week and an action shoot, through the clock and a reload at each stage) and tests/career-workflows.test.ts (each workflow's days, choices, reports and notices), with tools/voice-check.mjs, tools/tics.mjs and tools/title-case.mjs clean.",
+  "first": "Pending"
+ },
+ "src/engine/content/workflows.ts#MARKING [full]": {
+  "status": "Rewritten",
+  "hash": "162f77493a9f",
+  "on": "2026-10-24",
+  "evidence": "Written for brief 25's Module 5 (the ways of working: the booth, the dub, narration, multicamera, performance capture, reenactment, the musical and action; a shoot's order and takes, revised pages, a recall to loop and a scene cut) to docs/STYLE.md and docs/GLOSSARY.md, every rule the agreements' own and every invention said as the game's; read where the player meets it in tests/career-workflows-screen.test.ts (the Work and Opportunities tabs drawn for a voice session, a multicamera week and an action shoot, through the clock and a reload at each stage) and tests/career-workflows.test.ts (each workflow's days, choices, reports and notices), with tools/voice-check.mjs, tools/tics.mjs and tools/title-case.mjs clean.",
+  "first": "Pending"
+ },
+ "src/engine/content/workflows.ts#MARKING [mark]": {
+  "status": "Rewritten",
+  "hash": "5f67f860e8c3",
+  "on": "2026-10-24",
+  "evidence": "Written for brief 25's Module 5 (the ways of working: the booth, the dub, narration, multicamera, performance capture, reenactment, the musical and action; a shoot's order and takes, revised pages, a recall to loop and a scene cut) to docs/STYLE.md and docs/GLOSSARY.md, every rule the agreements' own and every invention said as the game's; read where the player meets it in tests/career-workflows-screen.test.ts (the Work and Opportunities tabs drawn for a voice session, a multicamera week and an action shoot, through the clock and a reload at each stage) and tests/career-workflows.test.ts (each workflow's days, choices, reports and notices), with tools/voice-check.mjs, tools/tics.mjs and tools/title-case.mjs clean.",
+  "first": "Pending"
+ },
+ "src/engine/content/workflows.ts#PACE": {
+  "status": "Rewritten",
+  "hash": "ffdc155ef38c",
+  "on": "2026-10-24",
+  "evidence": "Written for brief 25's Module 5 (the ways of working: the booth, the dub, narration, multicamera, performance capture, reenactment, the musical and action; a shoot's order and takes, revised pages, a recall to loop and a scene cut) to docs/STYLE.md and docs/GLOSSARY.md, every rule the agreements' own and every invention said as the game's; read where the player meets it in tests/career-workflows-screen.test.ts (the Work and Opportunities tabs drawn for a voice session, a multicamera week and an action shoot, through the clock and a reload at each stage) and tests/career-workflows.test.ts (each workflow's days, choices, reports and notices), with tools/voice-check.mjs, tools/tics.mjs and tools/title-case.mjs clean.",
+  "first": "Pending"
+ },
+ "src/engine/content/workflows.ts#PACE [breaks]": {
+  "status": "Rewritten",
+  "hash": "91a20dcbafa9",
+  "on": "2026-10-24",
+  "evidence": "Written for brief 25's Module 5 (the ways of working: the booth, the dub, narration, multicamera, performance capture, reenactment, the musical and action; a shoot's order and takes, revised pages, a recall to loop and a scene cut) to docs/STYLE.md and docs/GLOSSARY.md, every rule the agreements' own and every invention said as the game's; read where the player meets it in tests/career-workflows-screen.test.ts (the Work and Opportunities tabs drawn for a voice session, a multicamera week and an action shoot, through the clock and a reload at each stage) and tests/career-workflows.test.ts (each workflow's days, choices, reports and notices), with tools/voice-check.mjs, tools/tics.mjs and tools/title-case.mjs clean.",
+  "first": "Pending"
+ },
+ "src/engine/content/workflows.ts#PACE [straight]": {
+  "status": "Rewritten",
+  "hash": "c5af0d48d3fa",
+  "on": "2026-10-24",
+  "evidence": "Written for brief 25's Module 5 (the ways of working: the booth, the dub, narration, multicamera, performance capture, reenactment, the musical and action; a shoot's order and takes, revised pages, a recall to loop and a scene cut) to docs/STYLE.md and docs/GLOSSARY.md, every rule the agreements' own and every invention said as the game's; read where the player meets it in tests/career-workflows-screen.test.ts (the Work and Opportunities tabs drawn for a voice session, a multicamera week and an action shoot, through the clock and a reload at each stage) and tests/career-workflows.test.ts (each workflow's days, choices, reports and notices), with tools/voice-check.mjs, tools/tics.mjs and tools/title-case.mjs clean.",
+  "first": "Pending"
+ },
+ "src/engine/content/workflows.ts#PERIOD": {
+  "status": "Rewritten",
+  "hash": "5cb150a275fc",
+  "on": "2026-10-24",
+  "evidence": "Written for brief 25's Module 5 (the ways of working: the booth, the dub, narration, multicamera, performance capture, reenactment, the musical and action; a shoot's order and takes, revised pages, a recall to loop and a scene cut) to docs/STYLE.md and docs/GLOSSARY.md, every rule the agreements' own and every invention said as the game's; read where the player meets it in tests/career-workflows-screen.test.ts (the Work and Opportunities tabs drawn for a voice session, a multicamera week and an action shoot, through the clock and a reload at each stage) and tests/career-workflows.test.ts (each workflow's days, choices, reports and notices), with tools/voice-check.mjs, tools/tics.mjs and tools/title-case.mjs clean.",
+  "first": "Pending"
+ },
+ "src/engine/content/workflows.ts#PERIOD [between]": {
+  "status": "Rewritten",
+  "hash": "8ec469e56873",
+  "on": "2026-10-24",
+  "evidence": "Written for brief 25's Module 5 (the ways of working: the booth, the dub, narration, multicamera, performance capture, reenactment, the musical and action; a shoot's order and takes, revised pages, a recall to loop and a scene cut) to docs/STYLE.md and docs/GLOSSARY.md, every rule the agreements' own and every invention said as the game's; read where the player meets it in tests/career-workflows-screen.test.ts (the Work and Opportunities tabs drawn for a voice session, a multicamera week and an action shoot, through the clock and a reload at each stage) and tests/career-workflows.test.ts (each workflow's days, choices, reports and notices), with tools/voice-check.mjs, tools/tics.mjs and tools/title-case.mjs clean.",
+  "first": "Pending"
+ },
+ "src/engine/content/workflows.ts#PERIOD [free]": {
+  "status": "Rewritten",
+  "hash": "e43085110f8b",
+  "on": "2026-10-24",
+  "evidence": "Written for brief 25's Module 5 (the ways of working: the booth, the dub, narration, multicamera, performance capture, reenactment, the musical and action; a shoot's order and takes, revised pages, a recall to loop and a scene cut) to docs/STYLE.md and docs/GLOSSARY.md, every rule the agreements' own and every invention said as the game's; read where the player meets it in tests/career-workflows-screen.test.ts (the Work and Opportunities tabs drawn for a voice session, a multicamera week and an action shoot, through the clock and a reload at each stage) and tests/career-workflows.test.ts (each workflow's days, choices, reports and notices), with tools/voice-check.mjs, tools/tics.mjs and tools/title-case.mjs clean.",
+  "first": "Pending"
+ },
+ "src/engine/content/workflows.ts#PERIOD [historian]": {
+  "status": "Rewritten",
+  "hash": "2d56d12e6ec2",
+  "on": "2026-10-24",
+  "evidence": "Written for brief 25's Module 5 (the ways of working: the booth, the dub, narration, multicamera, performance capture, reenactment, the musical and action; a shoot's order and takes, revised pages, a recall to loop and a scene cut) to docs/STYLE.md and docs/GLOSSARY.md, every rule the agreements' own and every invention said as the game's; read where the player meets it in tests/career-workflows-screen.test.ts (the Work and Opportunities tabs drawn for a voice session, a multicamera week and an action shoot, through the clock and a reload at each stage) and tests/career-workflows.test.ts (each workflow's days, choices, reports and notices), with tools/voice-check.mjs, tools/tics.mjs and tools/title-case.mjs clean.",
+  "first": "Pending"
+ },
+ "src/engine/content/workflows.ts#PLAYBACK": {
+  "status": "Rewritten",
+  "hash": "c8e308704911",
+  "on": "2026-10-24",
+  "evidence": "Written for brief 25's Module 5 (the ways of working: the booth, the dub, narration, multicamera, performance capture, reenactment, the musical and action; a shoot's order and takes, revised pages, a recall to loop and a scene cut) to docs/STYLE.md and docs/GLOSSARY.md, every rule the agreements' own and every invention said as the game's; read where the player meets it in tests/career-workflows-screen.test.ts (the Work and Opportunities tabs drawn for a voice session, a multicamera week and an action shoot, through the clock and a reload at each stage) and tests/career-workflows.test.ts (each workflow's days, choices, reports and notices), with tools/voice-check.mjs, tools/tics.mjs and tools/title-case.mjs clean.",
+  "first": "Pending"
+ },
+ "src/engine/content/workflows.ts#PLAYBACK [keep-going]": {
+  "status": "Rewritten",
+  "hash": "105092cea155",
+  "on": "2026-10-24",
+  "evidence": "Written for brief 25's Module 5 (the ways of working: the booth, the dub, narration, multicamera, performance capture, reenactment, the musical and action; a shoot's order and takes, revised pages, a recall to loop and a scene cut) to docs/STYLE.md and docs/GLOSSARY.md, every rule the agreements' own and every invention said as the game's; read where the player meets it in tests/career-workflows-screen.test.ts (the Work and Opportunities tabs drawn for a voice session, a multicamera week and an action shoot, through the clock and a reload at each stage) and tests/career-workflows.test.ts (each workflow's days, choices, reports and notices), with tools/voice-check.mjs, tools/tics.mjs and tools/title-case.mjs clean.",
+  "first": "Pending"
+ },
+ "src/engine/content/workflows.ts#PLAYBACK [playback]": {
+  "status": "Rewritten",
+  "hash": "c9d5cbb76d11",
+  "on": "2026-10-24",
+  "evidence": "Written for brief 25's Module 5 (the ways of working: the booth, the dub, narration, multicamera, performance capture, reenactment, the musical and action; a shoot's order and takes, revised pages, a recall to loop and a scene cut) to docs/STYLE.md and docs/GLOSSARY.md, every rule the agreements' own and every invention said as the game's; read where the player meets it in tests/career-workflows-screen.test.ts (the Work and Opportunities tabs drawn for a voice session, a multicamera week and an action shoot, through the clock and a reload at each stage) and tests/career-workflows.test.ts (each workflow's days, choices, reports and notices), with tools/voice-check.mjs, tools/tics.mjs and tools/title-case.mjs clean.",
+  "first": "Pending"
+ },
+ "src/engine/content/workflows.ts#RELEASED": {
+  "status": "Rewritten",
+  "hash": "7024e6cc6214",
+  "on": "2026-10-24",
+  "evidence": "Written for brief 25's Module 5 to docs/STYLE.md and docs/GLOSSARY.md: how the release notice says the work came out, by its format (in cinemas, on the air, streaming, at its film school), read where the player meets it in tests/career-workflows.test.ts (T46's release notice, 'The Calloway Files is on the air') and tests/pro-work.test.ts (Paper Moons screened at its film school), with tools/voice-check.mjs and tools/tics.mjs clean.",
+  "first": "Pending"
+ },
+ "src/engine/content/workflows.ts#STRESSFUL": {
+  "status": "Rewritten",
+  "hash": "a1fda675bbd2",
+  "on": "2026-10-24",
+  "evidence": "Written for brief 25's Module 5 (the ways of working: the booth, the dub, narration, multicamera, performance capture, reenactment, the musical and action; a shoot's order and takes, revised pages, a recall to loop and a scene cut) to docs/STYLE.md and docs/GLOSSARY.md, every rule the agreements' own and every invention said as the game's; read where the player meets it in tests/career-workflows-screen.test.ts (the Work and Opportunities tabs drawn for a voice session, a multicamera week and an action shoot, through the clock and a reload at each stage) and tests/career-workflows.test.ts (each workflow's days, choices, reports and notices), with tools/voice-check.mjs, tools/tics.mjs and tools/title-case.mjs clean.",
+  "first": "Pending"
+ },
+ "src/engine/content/workflows.ts#STRESSFUL [record]": {
+  "status": "Rewritten",
+  "hash": "ba04316bc258",
+  "on": "2026-10-24",
+  "evidence": "Written for brief 25's Module 5 (the ways of working: the booth, the dub, narration, multicamera, performance capture, reenactment, the musical and action; a shoot's order and takes, revised pages, a recall to loop and a scene cut) to docs/STYLE.md and docs/GLOSSARY.md, every rule the agreements' own and every invention said as the game's; read where the player meets it in tests/career-workflows-screen.test.ts (the Work and Opportunities tabs drawn for a voice session, a multicamera week and an action shoot, through the clock and a reload at each stage) and tests/career-workflows.test.ts (each workflow's days, choices, reports and notices), with tools/voice-check.mjs, tools/tics.mjs and tools/title-case.mjs clean.",
+  "first": "Pending"
+ },
+ "src/engine/content/workflows.ts#STRESSFUL [refuse]": {
+  "status": "Rewritten",
+  "hash": "d0149bafcc45",
+  "on": "2026-10-24",
+  "evidence": "Written for brief 25's Module 5 (the ways of working: the booth, the dub, narration, multicamera, performance capture, reenactment, the musical and action; a shoot's order and takes, revised pages, a recall to loop and a scene cut) to docs/STYLE.md and docs/GLOSSARY.md, every rule the agreements' own and every invention said as the game's; read where the player meets it in tests/career-workflows-screen.test.ts (the Work and Opportunities tabs drawn for a voice session, a multicamera week and an action shoot, through the clock and a reload at each stage) and tests/career-workflows.test.ts (each workflow's days, choices, reports and notices), with tools/voice-check.mjs, tools/tics.mjs and tools/title-case.mjs clean.",
+  "first": "Pending"
+ },
+ "src/engine/content/workflows.ts#STUNTS": {
+  "status": "Rewritten",
+  "hash": "25bddd312be6",
+  "on": "2026-10-24",
+  "evidence": "Written for brief 25's Module 5 (the ways of working: the booth, the dub, narration, multicamera, performance capture, reenactment, the musical and action; a shoot's order and takes, revised pages, a recall to loop and a scene cut) to docs/STYLE.md and docs/GLOSSARY.md, every rule the agreements' own and every invention said as the game's; read where the player meets it in tests/career-workflows-screen.test.ts (the Work and Opportunities tabs drawn for a voice session, a multicamera week and an action shoot, through the clock and a reload at each stage) and tests/career-workflows.test.ts (each workflow's days, choices, reports and notices), with tools/voice-check.mjs, tools/tics.mjs and tools/title-case.mjs clean.",
+  "first": "Pending"
+ },
+ "src/engine/content/workflows.ts#STUNTS [double]": {
+  "status": "Rewritten",
+  "hash": "02bb812f1b8b",
+  "on": "2026-10-24",
+  "evidence": "Written for brief 25's Module 5 (the ways of working: the booth, the dub, narration, multicamera, performance capture, reenactment, the musical and action; a shoot's order and takes, revised pages, a recall to loop and a scene cut) to docs/STYLE.md and docs/GLOSSARY.md, every rule the agreements' own and every invention said as the game's; read where the player meets it in tests/career-workflows-screen.test.ts (the Work and Opportunities tabs drawn for a voice session, a multicamera week and an action shoot, through the clock and a reload at each stage) and tests/career-workflows.test.ts (each workflow's days, choices, reports and notices), with tools/voice-check.mjs, tools/tics.mjs and tools/title-case.mjs clean.",
+  "first": "Pending"
+ },
+ "src/engine/content/workflows.ts#STUNTS [yourself]": {
+  "status": "Rewritten",
+  "hash": "644aa4124770",
+  "on": "2026-10-24",
+  "evidence": "Written for brief 25's Module 5 (the ways of working: the booth, the dub, narration, multicamera, performance capture, reenactment, the musical and action; a shoot's order and takes, revised pages, a recall to loop and a scene cut) to docs/STYLE.md and docs/GLOSSARY.md, every rule the agreements' own and every invention said as the game's; read where the player meets it in tests/career-workflows-screen.test.ts (the Work and Opportunities tabs drawn for a voice session, a multicamera week and an action shoot, through the clock and a reload at each stage) and tests/career-workflows.test.ts (each workflow's days, choices, reports and notices), with tools/voice-check.mjs, tools/tics.mjs and tools/title-case.mjs clean.",
+  "first": "Pending"
+ },
+ "src/engine/content/workflows.ts#SYNC": {
+  "status": "Rewritten",
+  "hash": "69bb500b7dd3",
+  "on": "2026-10-24",
+  "evidence": "Written for brief 25's Module 5 (the ways of working: the booth, the dub, narration, multicamera, performance capture, reenactment, the musical and action; a shoot's order and takes, revised pages, a recall to loop and a scene cut) to docs/STYLE.md and docs/GLOSSARY.md, every rule the agreements' own and every invention said as the game's; read where the player meets it in tests/career-workflows-screen.test.ts (the Work and Opportunities tabs drawn for a voice session, a multicamera week and an action shoot, through the clock and a reload at each stage) and tests/career-workflows.test.ts (each workflow's days, choices, reports and notices), with tools/voice-check.mjs, tools/tics.mjs and tools/title-case.mjs clean.",
+  "first": "Pending"
+ },
+ "src/engine/content/workflows.ts#SYNC [between]": {
+  "status": "Rewritten",
+  "hash": "3ab589d6c9bb",
+  "on": "2026-10-24",
+  "evidence": "Written for brief 25's Module 5 (the ways of working: the booth, the dub, narration, multicamera, performance capture, reenactment, the musical and action; a shoot's order and takes, revised pages, a recall to loop and a scene cut) to docs/STYLE.md and docs/GLOSSARY.md, every rule the agreements' own and every invention said as the game's; read where the player meets it in tests/career-workflows-screen.test.ts (the Work and Opportunities tabs drawn for a voice session, a multicamera week and an action shoot, through the clock and a reload at each stage) and tests/career-workflows.test.ts (each workflow's days, choices, reports and notices), with tools/voice-check.mjs, tools/tics.mjs and tools/title-case.mjs clean.",
+  "first": "Pending"
+ },
+ "src/engine/content/workflows.ts#SYNC [match]": {
+  "status": "Rewritten",
+  "hash": "7baa7f42c100",
+  "on": "2026-10-24",
+  "evidence": "Written for brief 25's Module 5 (the ways of working: the booth, the dub, narration, multicamera, performance capture, reenactment, the musical and action; a shoot's order and takes, revised pages, a recall to loop and a scene cut) to docs/STYLE.md and docs/GLOSSARY.md, every rule the agreements' own and every invention said as the game's; read where the player meets it in tests/career-workflows-screen.test.ts (the Work and Opportunities tabs drawn for a voice session, a multicamera week and an action shoot, through the clock and a reload at each stage) and tests/career-workflows.test.ts (each workflow's days, choices, reports and notices), with tools/voice-check.mjs, tools/tics.mjs and tools/title-case.mjs clean.",
+  "first": "Pending"
+ },
+ "src/engine/content/workflows.ts#SYNC [own]": {
+  "status": "Rewritten",
+  "hash": "24ced168f8eb",
+  "on": "2026-10-24",
+  "evidence": "Written for brief 25's Module 5 (the ways of working: the booth, the dub, narration, multicamera, performance capture, reenactment, the musical and action; a shoot's order and takes, revised pages, a recall to loop and a scene cut) to docs/STYLE.md and docs/GLOSSARY.md, every rule the agreements' own and every invention said as the game's; read where the player meets it in tests/career-workflows-screen.test.ts (the Work and Opportunities tabs drawn for a voice session, a multicamera week and an action shoot, through the clock and a reload at each stage) and tests/career-workflows.test.ts (each workflow's days, choices, reports and notices), with tools/voice-check.mjs, tools/tics.mjs and tools/title-case.mjs clean.",
+  "first": "Pending"
+ },
+ "src/engine/content/workflows.ts#TAKES": {
+  "status": "Rewritten",
+  "hash": "0696dc175904",
+  "on": "2026-10-24",
+  "evidence": "Written for brief 25's Module 5 (the ways of working: the booth, the dub, narration, multicamera, performance capture, reenactment, the musical and action; a shoot's order and takes, revised pages, a recall to loop and a scene cut) to docs/STYLE.md and docs/GLOSSARY.md, every rule the agreements' own and every invention said as the game's; read where the player meets it in tests/career-workflows-screen.test.ts (the Work and Opportunities tabs drawn for a voice session, a multicamera week and an action shoot, through the clock and a reload at each stage) and tests/career-workflows.test.ts (each workflow's days, choices, reports and notices), with tools/voice-check.mjs, tools/tics.mjs and tools/title-case.mjs clean.",
+  "first": "Pending"
+ },
+ "src/engine/content/workflows.ts#TAKES [as-directed]": {
+  "status": "Rewritten",
+  "hash": "ab5d04244fc7",
+  "on": "2026-10-24",
+  "evidence": "Written for brief 25's Module 5 (the ways of working: the booth, the dub, narration, multicamera, performance capture, reenactment, the musical and action; a shoot's order and takes, revised pages, a recall to loop and a scene cut) to docs/STYLE.md and docs/GLOSSARY.md, every rule the agreements' own and every invention said as the game's; read where the player meets it in tests/career-workflows-screen.test.ts (the Work and Opportunities tabs drawn for a voice session, a multicamera week and an action shoot, through the clock and a reload at each stage) and tests/career-workflows.test.ts (each workflow's days, choices, reports and notices), with tools/voice-check.mjs, tools/tics.mjs and tools/title-case.mjs clean.",
+  "first": "Pending"
+ },
+ "src/engine/content/workflows.ts#TAKES [ask]": {
+  "status": "Rewritten",
+  "hash": "9bed2797b487",
+  "on": "2026-10-24",
+  "evidence": "Written for brief 25's Module 5 (the ways of working: the booth, the dub, narration, multicamera, performance capture, reenactment, the musical and action; a shoot's order and takes, revised pages, a recall to loop and a scene cut) to docs/STYLE.md and docs/GLOSSARY.md, every rule the agreements' own and every invention said as the game's; read where the player meets it in tests/career-workflows-screen.test.ts (the Work and Opportunities tabs drawn for a voice session, a multicamera week and an action shoot, through the clock and a reload at each stage) and tests/career-workflows.test.ts (each workflow's days, choices, reports and notices), with tools/voice-check.mjs, tools/tics.mjs and tools/title-case.mjs clean.",
+  "first": "Pending"
+ },
+ "src/engine/content/workflows.ts#WORKFLOWS [action]": {
+  "status": "Rewritten",
+  "hash": "29d668db7073",
+  "on": "2026-10-24",
+  "evidence": "Written for brief 25's Module 5 (the ways of working: the booth, the dub, narration, multicamera, performance capture, reenactment, the musical and action; a shoot's order and takes, revised pages, a recall to loop and a scene cut) to docs/STYLE.md and docs/GLOSSARY.md, every rule the agreements' own and every invention said as the game's; read where the player meets it in tests/career-workflows-screen.test.ts (the Work and Opportunities tabs drawn for a voice session, a multicamera week and an action shoot, through the clock and a reload at each stage) and tests/career-workflows.test.ts (each workflow's days, choices, reports and notices), with tools/voice-check.mjs, tools/tics.mjs and tools/title-case.mjs clean.",
+  "first": "Pending"
+ },
+ "src/engine/content/workflows.ts#WORKFLOWS [capture]": {
+  "status": "Rewritten",
+  "hash": "16abad84d115",
+  "on": "2026-10-24",
+  "evidence": "Written for brief 25's Module 5 (the ways of working: the booth, the dub, narration, multicamera, performance capture, reenactment, the musical and action; a shoot's order and takes, revised pages, a recall to loop and a scene cut) to docs/STYLE.md and docs/GLOSSARY.md, every rule the agreements' own and every invention said as the game's; read where the player meets it in tests/career-workflows-screen.test.ts (the Work and Opportunities tabs drawn for a voice session, a multicamera week and an action shoot, through the clock and a reload at each stage) and tests/career-workflows.test.ts (each workflow's days, choices, reports and notices), with tools/voice-check.mjs, tools/tics.mjs and tools/title-case.mjs clean.",
+  "first": "Pending"
+ },
+ "src/engine/content/workflows.ts#WORKFLOWS [dubbing]": {
+  "status": "Rewritten",
+  "hash": "d1e3baa2870e",
+  "on": "2026-10-24",
+  "evidence": "Written for brief 25's Module 5 (the ways of working: the booth, the dub, narration, multicamera, performance capture, reenactment, the musical and action; a shoot's order and takes, revised pages, a recall to loop and a scene cut) to docs/STYLE.md and docs/GLOSSARY.md, every rule the agreements' own and every invention said as the game's; read where the player meets it in tests/career-workflows-screen.test.ts (the Work and Opportunities tabs drawn for a voice session, a multicamera week and an action shoot, through the clock and a reload at each stage) and tests/career-workflows.test.ts (each workflow's days, choices, reports and notices), with tools/voice-check.mjs, tools/tics.mjs and tools/title-case.mjs clean.",
+  "first": "Pending"
+ },
+ "src/engine/content/workflows.ts#WORKFLOWS [multicam]": {
+  "status": "Rewritten",
+  "hash": "ae9d521df82e",
+  "on": "2026-10-24",
+  "evidence": "Written for brief 25's Module 5 (the ways of working: the booth, the dub, narration, multicamera, performance capture, reenactment, the musical and action; a shoot's order and takes, revised pages, a recall to loop and a scene cut) to docs/STYLE.md and docs/GLOSSARY.md, every rule the agreements' own and every invention said as the game's; read where the player meets it in tests/career-workflows-screen.test.ts (the Work and Opportunities tabs drawn for a voice session, a multicamera week and an action shoot, through the clock and a reload at each stage) and tests/career-workflows.test.ts (each workflow's days, choices, reports and notices), with tools/voice-check.mjs, tools/tics.mjs and tools/title-case.mjs clean.",
+  "first": "Pending"
+ },
+ "src/engine/content/workflows.ts#WORKFLOWS [musical]": {
+  "status": "Rewritten",
+  "hash": "67ad30b04a12",
+  "on": "2026-10-24",
+  "evidence": "Written for brief 25's Module 5 (the ways of working: the booth, the dub, narration, multicamera, performance capture, reenactment, the musical and action; a shoot's order and takes, revised pages, a recall to loop and a scene cut) to docs/STYLE.md and docs/GLOSSARY.md, every rule the agreements' own and every invention said as the game's; read where the player meets it in tests/career-workflows-screen.test.ts (the Work and Opportunities tabs drawn for a voice session, a multicamera week and an action shoot, through the clock and a reload at each stage) and tests/career-workflows.test.ts (each workflow's days, choices, reports and notices), with tools/voice-check.mjs, tools/tics.mjs and tools/title-case.mjs clean.",
+  "first": "Pending"
+ },
+ "src/engine/content/workflows.ts#WORKFLOWS [narration]": {
+  "status": "Rewritten",
+  "hash": "a9d424bfcbc4",
+  "on": "2026-10-24",
+  "evidence": "Written for brief 25's Module 5 (the ways of working: the booth, the dub, narration, multicamera, performance capture, reenactment, the musical and action; a shoot's order and takes, revised pages, a recall to loop and a scene cut) to docs/STYLE.md and docs/GLOSSARY.md, every rule the agreements' own and every invention said as the game's; read where the player meets it in tests/career-workflows-screen.test.ts (the Work and Opportunities tabs drawn for a voice session, a multicamera week and an action shoot, through the clock and a reload at each stage) and tests/career-workflows.test.ts (each workflow's days, choices, reports and notices), with tools/voice-check.mjs, tools/tics.mjs and tools/title-case.mjs clean.",
+  "first": "Pending"
+ },
+ "src/engine/content/workflows.ts#WORKFLOWS [reenactment]": {
+  "status": "Rewritten",
+  "hash": "500d8a52e90d",
+  "on": "2026-10-24",
+  "evidence": "Written for brief 25's Module 5 (the ways of working: the booth, the dub, narration, multicamera, performance capture, reenactment, the musical and action; a shoot's order and takes, revised pages, a recall to loop and a scene cut) to docs/STYLE.md and docs/GLOSSARY.md, every rule the agreements' own and every invention said as the game's; read where the player meets it in tests/career-workflows-screen.test.ts (the Work and Opportunities tabs drawn for a voice session, a multicamera week and an action shoot, through the clock and a reload at each stage) and tests/career-workflows.test.ts (each workflow's days, choices, reports and notices), with tools/voice-check.mjs, tools/tics.mjs and tools/title-case.mjs clean.",
+  "first": "Pending"
+ },
+ "src/engine/content/workflows.ts#WORKFLOWS [single-camera]": {
+  "status": "Rewritten",
+  "hash": "544f340d703a",
+  "on": "2026-10-24",
+  "evidence": "Written for brief 25's Module 5 (the ways of working: the booth, the dub, narration, multicamera, performance capture, reenactment, the musical and action; a shoot's order and takes, revised pages, a recall to loop and a scene cut) to docs/STYLE.md and docs/GLOSSARY.md, every rule the agreements' own and every invention said as the game's; read where the player meets it in tests/career-workflows-screen.test.ts (the Work and Opportunities tabs drawn for a voice session, a multicamera week and an action shoot, through the clock and a reload at each stage) and tests/career-workflows.test.ts (each workflow's days, choices, reports and notices), with tools/voice-check.mjs, tools/tics.mjs and tools/title-case.mjs clean.",
+  "first": "Pending"
+ },
+ "src/engine/content/workflows.ts#WORKFLOWS [stage]": {
+  "status": "Rewritten",
+  "hash": "f6518947d83c",
+  "on": "2026-10-24",
+  "evidence": "Written for brief 25's Module 5 (the ways of working: the booth, the dub, narration, multicamera, performance capture, reenactment, the musical and action; a shoot's order and takes, revised pages, a recall to loop and a scene cut) to docs/STYLE.md and docs/GLOSSARY.md, every rule the agreements' own and every invention said as the game's; read where the player meets it in tests/career-workflows-screen.test.ts (the Work and Opportunities tabs drawn for a voice session, a multicamera week and an action shoot, through the clock and a reload at each stage) and tests/career-workflows.test.ts (each workflow's days, choices, reports and notices), with tools/voice-check.mjs, tools/tics.mjs and tools/title-case.mjs clean.",
+  "first": "Pending"
+ },
+ "src/engine/content/workflows.ts#WORKFLOWS [voice]": {
+  "status": "Rewritten",
+  "hash": "6871774ef042",
+  "on": "2026-10-24",
+  "evidence": "Written for brief 25's Module 5 (the ways of working: the booth, the dub, narration, multicamera, performance capture, reenactment, the musical and action; a shoot's order and takes, revised pages, a recall to loop and a scene cut) to docs/STYLE.md and docs/GLOSSARY.md, every rule the agreements' own and every invention said as the game's; read where the player meets it in tests/career-workflows-screen.test.ts (the Work and Opportunities tabs drawn for a voice session, a multicamera week and an action shoot, through the clock and a reload at each stage) and tests/career-workflows.test.ts (each workflow's days, choices, reports and notices), with tools/voice-check.mjs, tools/tics.mjs and tools/title-case.mjs clean.",
+  "first": "Pending"
+ },
+ "src/engine/systems/projobs.ts#abroadWarning": {
+  "status": "Rewritten",
+  "hash": "bf838bb40899",
+  "on": "2026-10-23",
+  "evidence": "Written for brief 25's Module 2 (the reference catalog and the parts drawn from it) to docs/STYLE.md and docs/GLOSSARY.md; read where the player meets it in tests/career-drawn.test.ts (the role card, the offer, the Work tab and the trip to Los Angeles drawn over a played journey) and tests/career-catalog.test.ts (productionWords and CATALOG.md), with tools/voice-check.mjs, tools/tics.mjs, tools/title-case.mjs, tools/plural-check.mjs and tools/spelling.mjs passing",
+  "first": "Pending"
+ },
  "src/engine/systems/projobs.ts#acceptRefusal": {
   "status": "Rewritten",
-  "hash": "52ec8763c4eb",
-  "on": "2026-10-21",
-  "evidence": "Written for brief 19's work loop to docs/STYLE.md and docs/GLOSSARY.md; read where the player meets it in tests/pro-work.test.ts and tests/pro-opportunities-screen.test.ts, with tools/voice-check.mjs, tools/tics.mjs and tools/title-case.mjs passing",
-  "first": "Rewritten And Verified"
- },
- "src/engine/systems/projobs.ts#acceptWarning": {
-  "status": "Rewritten",
-  "hash": "4ea5abca35eb",
-  "on": "2026-10-22",
-  "evidence": "tests/b22-authorization.test.ts (the acceptance warning and Released As Hester Vane, Nell and Robin word for word) and tests/pro-work.test.ts (Replaced As, paid on its payday)",
+  "hash": "1127a6e337c3",
+  "on": "2026-10-23",
+  "evidence": "Written for brief 25's work abroad (Module 1) to docs/STYLE.md and docs/GLOSSARY.md; read where the player meets it in tests/career-world-sydney.test.ts (the journey, the release, the missed flight and the Work tab drawn at each stage) and tests/career-world-countries.test.ts, with tools/voice-check.mjs, tools/tics.mjs, tools/title-case.mjs and tools/plural-check.mjs passing",
   "first": "Pending"
  },
  "src/engine/systems/projobs.ts#againWords": {
@@ -36,10 +512,17 @@
  },
  "src/engine/systems/projobs.ts#awayAt": {
   "status": "Rewritten",
-  "hash": "52de3160222a",
-  "on": "2026-10-21",
-  "evidence": "tests/pro-work.test.ts, V12's GUARD: a student at a meeting with an agent's office in term is away, labelled as the meeting's calendar entry is (Meeting At Stewart Talent), from nine to two, and the School counts the day's classes missed; read on 2026-10-21 by brief 19's playthroughs",
-  "first": "Rewritten And Verified"
+  "hash": "bf0c82c95501",
+  "on": "2026-10-23",
+  "evidence": "Written for brief 25's work abroad (Module 1) to docs/STYLE.md and docs/GLOSSARY.md; read where the player meets it in tests/career-world-sydney.test.ts (the journey, the release, the missed flight and the Work tab drawn at each stage) and tests/career-world-countries.test.ts, with tools/voice-check.mjs, tools/tics.mjs, tools/title-case.mjs and tools/plural-check.mjs passing",
+  "first": "Pending"
+ },
+ "src/engine/systems/projobs.ts#callOff": {
+  "status": "Rewritten",
+  "hash": "ace5c87e13e4",
+  "on": "2026-10-24",
+  "evidence": "Written for brief 25's Module 4 (contracts, pay states, overtime, the producer's contribution, residuals, the per diem, a recurring part's season and a series' seasons) to docs/STYLE.md and docs/GLOSSARY.md, every rule's figure the agreements' own and every invention said as the game's; read where the player meets it in tests/career-contracts.test.ts (the offer, the contract, each payment's state, the notices of each episode, option, decision, telecast, rerun, residual and per diem, through a played recurring part), with tools/voice-check.mjs, tools/tics.mjs and tools/title-case.mjs clean.",
+  "first": "Pending"
  },
  "src/engine/systems/projobs.ts#chanceWords": {
   "status": "Rewritten",
@@ -97,12 +580,12 @@
   "evidence": "Written for brief 19's work loop to docs/STYLE.md and docs/GLOSSARY.md; read where the player meets it in tests/pro-work.test.ts and tests/pro-opportunities-screen.test.ts, with tools/voice-check.mjs, tools/tics.mjs and tools/title-case.mjs passing",
   "first": "Rewritten And Verified"
  },
- "src/engine/systems/projobs.ts#datesOf [shoot]": {
+ "src/engine/systems/projobs.ts#datesOf": {
   "status": "Rewritten",
-  "hash": "f9de4e12b3c0",
-  "on": "2026-10-21",
-  "evidence": "Written for brief 19's work loop to docs/STYLE.md and docs/GLOSSARY.md; read where the player meets it in tests/pro-work.test.ts and tests/pro-opportunities-screen.test.ts, with tools/voice-check.mjs, tools/tics.mjs and tools/title-case.mjs passing",
-  "first": "Rewritten And Verified"
+  "hash": "3f3fb1163c7b",
+  "on": "2026-10-24",
+  "evidence": "Written for brief 25's Module 5 (the ways of working: the booth, the dub, narration, multicamera, performance capture, reenactment, the musical and action; a shoot's order and takes, revised pages, a recall to loop and a scene cut) to docs/STYLE.md and docs/GLOSSARY.md, every rule the agreements' own and every invention said as the game's; read where the player meets it in tests/career-workflows-screen.test.ts (the Work and Opportunities tabs drawn for a voice session, a multicamera week and an action shoot, through the clock and a reload at each stage) and tests/career-workflows.test.ts (each workflow's days, choices, reports and notices), with tools/voice-check.mjs, tools/tics.mjs and tools/title-case.mjs clean.",
+  "first": "Pending"
  },
  "src/engine/systems/projobs.ts#DEFERRED_WHY": {
   "status": "Rewritten",
@@ -118,6 +601,13 @@
   "evidence": "Rewritten on 2026-10-21 after the built app's walk read each technique with its level in a clause, four things for two; read where the player meets it in tests/pro-opportunities-screen.test.ts (What It Asks), with tools/voice-check.mjs, tools/tics.mjs and tools/title-case.mjs passing",
   "first": "Rewritten And Verified"
  },
+ "src/engine/systems/projobs.ts#drawnWords": {
+  "status": "Rewritten",
+  "hash": "64752ecf061b",
+  "on": "2026-10-23",
+  "evidence": "Written for brief 25's Module 2 (the reference catalog and the parts drawn from it) to docs/STYLE.md and docs/GLOSSARY.md; read where the player meets it in tests/career-drawn.test.ts (the role card, the offer, the Work tab and the trip to Los Angeles drawn over a played journey) and tests/career-catalog.test.ts (productionWords and CATALOG.md), with tools/voice-check.mjs, tools/tics.mjs, tools/title-case.mjs, tools/plural-check.mjs and tools/spelling.mjs passing",
+  "first": "Pending"
+ },
  "src/engine/systems/projobs.ts#eligibilityProblems": {
   "status": "Rewritten",
   "hash": "8e57de4a0dbe",
@@ -125,19 +615,26 @@
   "evidence": "Written for brief 19's work loop to docs/STYLE.md and docs/GLOSSARY.md; read where the player meets it in tests/pro-work.test.ts and tests/pro-opportunities-screen.test.ts, with tools/voice-check.mjs, tools/tics.mjs and tools/title-case.mjs passing",
   "first": "Rewritten And Verified"
  },
+ "src/engine/systems/projobs.ts#episodeOn": {
+  "status": "Rewritten",
+  "hash": "81f720132eb8",
+  "on": "2026-10-24",
+  "evidence": "Written for brief 25's Module 4 (contracts, pay states, overtime, the producer's contribution, residuals, the per diem, a recurring part's season and a series' seasons) to docs/STYLE.md and docs/GLOSSARY.md, every rule's figure the agreements' own and every invention said as the game's; read where the player meets it in tests/career-contracts.test.ts (the offer, the contract, each payment's state, the notices of each episode, option, decision, telecast, rerun, residual and per diem, through a played recurring part), with tools/voice-check.mjs, tools/tics.mjs and tools/title-case.mjs clean.",
+  "first": "Pending"
+ },
  "src/engine/systems/projobs.ts#FIELD_WORDS": {
   "status": "Rewritten",
-  "hash": "9bf1427ad4c7",
-  "on": "2026-10-21",
-  "evidence": "Written for brief 19's work loop to docs/STYLE.md and docs/GLOSSARY.md; read where the player meets it in tests/pro-work.test.ts and tests/pro-opportunities-screen.test.ts, with tools/voice-check.mjs, tools/tics.mjs and tools/title-case.mjs passing",
-  "first": "Rewritten And Verified"
+  "hash": "df65bb3935b6",
+  "on": "2026-10-24",
+  "evidence": "Written for brief 25's Module 5 (the ways of working: the booth, the dub, narration, multicamera, performance capture, reenactment, the musical and action; a shoot's order and takes, revised pages, a recall to loop and a scene cut) to docs/STYLE.md and docs/GLOSSARY.md, every rule the agreements' own and every invention said as the game's; read where the player meets it in tests/career-workflows-screen.test.ts (the Work and Opportunities tabs drawn for a voice session, a multicamera week and an action shoot, through the clock and a reload at each stage) and tests/career-workflows.test.ts (each workflow's days, choices, reports and notices), with tools/voice-check.mjs, tools/tics.mjs and tools/title-case.mjs clean.",
+  "first": "Pending"
  },
  "src/engine/systems/projobs.ts#finish": {
   "status": "Rewritten",
-  "hash": "0ca30aa3858c",
-  "on": "2026-10-21",
-  "evidence": "Written for brief 19's work loop to docs/STYLE.md and docs/GLOSSARY.md; read where the player meets it in tests/pro-work.test.ts and tests/pro-opportunities-screen.test.ts, with tools/voice-check.mjs, tools/tics.mjs and tools/title-case.mjs passing",
-  "first": "Rewritten And Verified"
+  "hash": "f67ce1bce385",
+  "on": "2026-10-24",
+  "evidence": "Written for brief 25's Module 5 (the ways of working: the booth, the dub, narration, multicamera, performance capture, reenactment, the musical and action; a shoot's order and takes, revised pages, a recall to loop and a scene cut) to docs/STYLE.md and docs/GLOSSARY.md, every rule the agreements' own and every invention said as the game's; read where the player meets it in tests/career-workflows-screen.test.ts (the Work and Opportunities tabs drawn for a voice session, a multicamera week and an action shoot, through the clock and a reload at each stage) and tests/career-workflows.test.ts (each workflow's days, choices, reports and notices), with tools/voice-check.mjs, tools/tics.mjs and tools/title-case.mjs clean.",
+  "first": "Pending"
  },
  "src/engine/systems/projobs.ts#finish [success]": {
   "status": "Rewritten",
@@ -167,6 +664,13 @@
   "evidence": "Written for brief 19's work loop to docs/STYLE.md and docs/GLOSSARY.md; read where the player meets it in tests/pro-work.test.ts and tests/pro-opportunities-screen.test.ts, with tools/voice-check.mjs, tools/tics.mjs and tools/title-case.mjs passing",
   "first": "Rewritten And Verified"
  },
+ "src/engine/systems/projobs.ts#intimacyWords": {
+  "status": "Rewritten",
+  "hash": "08fe2161b2af",
+  "on": "2026-10-24",
+  "evidence": "Written for brief 25's Module 5 (the ways of working: the booth, the dub, narration, multicamera, performance capture, reenactment, the musical and action; a shoot's order and takes, revised pages, a recall to loop and a scene cut) to docs/STYLE.md and docs/GLOSSARY.md, every rule the agreements' own and every invention said as the game's; read where the player meets it in tests/career-workflows-screen.test.ts (the Work and Opportunities tabs drawn for a voice session, a multicamera week and an action shoot, through the clock and a reload at each stage) and tests/career-workflows.test.ts (each workflow's days, choices, reports and notices), with tools/voice-check.mjs, tools/tics.mjs and tools/title-case.mjs clean.",
+  "first": "Pending"
+ },
  "src/engine/systems/projobs.ts#keptWords": {
   "status": "Rewritten",
   "hash": "2123b1b08995",
@@ -176,10 +680,17 @@
  },
  "src/engine/systems/projobs.ts#KIND_WORDS": {
   "status": "Rewritten",
-  "hash": "66419602c475",
-  "on": "2026-10-21",
-  "evidence": "Written for brief 19's work loop to docs/STYLE.md and docs/GLOSSARY.md; read where the player meets it in tests/pro-work.test.ts and tests/pro-opportunities-screen.test.ts, with tools/voice-check.mjs, tools/tics.mjs and tools/title-case.mjs passing",
-  "first": "Rewritten And Verified"
+  "hash": "0cb8e418f4ea",
+  "on": "2026-10-24",
+  "evidence": "Written for brief 25's Module 5 (the ways of working: the booth, the dub, narration, multicamera, performance capture, reenactment, the musical and action; a shoot's order and takes, revised pages, a recall to loop and a scene cut) to docs/STYLE.md and docs/GLOSSARY.md, every rule the agreements' own and every invention said as the game's; read where the player meets it in tests/career-workflows-screen.test.ts (the Work and Opportunities tabs drawn for a voice session, a multicamera week and an action shoot, through the clock and a reload at each stage) and tests/career-workflows.test.ts (each workflow's days, choices, reports and notices), with tools/voice-check.mjs, tools/tics.mjs and tools/title-case.mjs clean.",
+  "first": "Pending"
+ },
+ "src/engine/systems/projobs.ts#kindPhrase": {
+  "status": "Rewritten",
+  "hash": "827e3e90b41f",
+  "on": "2026-10-23",
+  "evidence": "Written for brief 25's Module 2 (the reference catalog and the parts drawn from it) to docs/STYLE.md and docs/GLOSSARY.md; read where the player meets it in tests/career-drawn.test.ts (the role card, the offer, the Work tab and the trip to Los Angeles drawn over a played journey) and tests/career-catalog.test.ts (productionWords and CATALOG.md), with tools/voice-check.mjs, tools/tics.mjs, tools/title-case.mjs, tools/plural-check.mjs and tools/spelling.mjs passing",
+  "first": "Pending"
  },
  "src/engine/systems/projobs.ts#lastPostingOf": {
   "status": "Rewritten",
@@ -197,17 +708,17 @@
  },
  "src/engine/systems/projobs.ts#makeOffer": {
   "status": "Rewritten",
-  "hash": "cc63b4aca539",
-  "on": "2026-10-21",
-  "evidence": "Read in one played life's order (docs/verification/career-2026-10-20/app/make-saves.log) and on the built app's Opportunities tab and History With His Office at 1440 and 390 (app/walk/): the history now says the casting office asked and offered, in the past, among lines that said submitted and was Working, while the notice and the question keep saying it as it comes; one week's promised pay is said as one week. Held by tests/pro-work.test.ts and tests/pro-opportunities-screen.test.ts",
-  "first": "Rewritten And Verified"
+  "hash": "cf67e328165d",
+  "on": "2026-10-24",
+  "evidence": "Written for brief 25's Module 4 (contracts, pay states, overtime, the producer's contribution, residuals, the per diem, a recurring part's season and a series' seasons) to docs/STYLE.md and docs/GLOSSARY.md, every rule's figure the agreements' own and every invention said as the game's; read where the player meets it in tests/career-contracts.test.ts (the offer, the contract, each payment's state, the notices of each episode, option, decision, telecast, rerun, residual and per diem, through a played recurring part), with tools/voice-check.mjs, tools/tics.mjs and tools/title-case.mjs clean.",
+  "first": "Pending"
  },
  "src/engine/systems/projobs.ts#makeOffer [offer]": {
   "status": "Rewritten",
-  "hash": "91bd0effa816",
-  "on": "2026-10-21",
-  "evidence": "Read in one played life's order (docs/verification/career-2026-10-20/app/make-saves.log) and on the built app's Opportunities tab and History With His Office at 1440 and 390 (app/walk/): the history now says the casting office asked and offered, in the past, among lines that said submitted and was Working, while the notice and the question keep saying it as it comes; one week's promised pay is said as one week. Held by tests/pro-work.test.ts and tests/pro-opportunities-screen.test.ts",
-  "first": "Rewritten And Verified"
+  "hash": "033169d7417a",
+  "on": "2026-10-24",
+  "evidence": "Written for brief 25's Module 4 (contracts, pay states, overtime, the producer's contribution, residuals, the per diem, a recurring part's season and a series' seasons) to docs/STYLE.md and docs/GLOSSARY.md, every rule's figure the agreements' own and every invention said as the game's; read where the player meets it in tests/career-contracts.test.ts (the offer, the contract, each payment's state, the notices of each episode, option, decision, telecast, rerun, residual and per diem, through a played recurring part), with tools/voice-check.mjs, tools/tics.mjs and tools/title-case.mjs clean.",
+  "first": "Pending"
  },
  "src/engine/systems/projobs.ts#materialProblems": {
   "status": "Rewritten",
@@ -218,10 +729,10 @@
  },
  "src/engine/systems/projobs.ts#missDay": {
   "status": "Rewritten",
-  "hash": "72d5f12afc70",
-  "on": "2026-10-21",
-  "evidence": "Written for brief 19's work loop to docs/STYLE.md and docs/GLOSSARY.md; read where the player meets it in tests/pro-work.test.ts and tests/pro-opportunities-screen.test.ts, with tools/voice-check.mjs, tools/tics.mjs and tools/title-case.mjs passing",
-  "first": "Rewritten And Verified"
+  "hash": "5b6a82158b6b",
+  "on": "2026-10-24",
+  "evidence": "Written for brief 25's Module 5 (the ways of working: the booth, the dub, narration, multicamera, performance capture, reenactment, the musical and action; a shoot's order and takes, revised pages, a recall to loop and a scene cut) to docs/STYLE.md and docs/GLOSSARY.md, every rule the agreements' own and every invention said as the game's; read where the player meets it in tests/career-workflows-screen.test.ts (the Work and Opportunities tabs drawn for a voice session, a multicamera week and an action shoot, through the clock and a reload at each stage) and tests/career-workflows.test.ts (each workflow's days, choices, reports and notices), with tools/voice-check.mjs, tools/tics.mjs and tools/title-case.mjs clean.",
+  "first": "Pending"
  },
  "src/engine/systems/projobs.ts#missDay [problem]": {
   "status": "Rewritten",
@@ -232,10 +743,10 @@
  },
  "src/engine/systems/projobs.ts#missRound": {
   "status": "Rewritten",
-  "hash": "61116adf4d94",
-  "on": "2026-10-21",
-  "evidence": "Rewritten 2026-10-21 so a round or a meeting missed for another career commitment says where the actor was (the app's third walk), to docs/STYLE.md; read in tests/pro-work.test.ts ('two auditions in person whose trips meet…' and 'a meeting at the agent’s office and an audition…')",
-  "first": "Rewritten And Verified"
+  "hash": "bff0f0ca4f55",
+  "on": "2026-10-23",
+  "evidence": "Written for brief 25's work abroad (Module 1) to docs/STYLE.md and docs/GLOSSARY.md; read where the player meets it in tests/career-world-sydney.test.ts (the journey, the release, the missed flight and the Work tab drawn at each stage) and tests/career-world-countries.test.ts, with tools/voice-check.mjs, tools/tics.mjs, tools/title-case.mjs and tools/plural-check.mjs passing",
+  "first": "Pending"
  },
  "src/engine/systems/projobs.ts#moveRefusal": {
   "status": "Rewritten",
@@ -274,31 +785,45 @@
  },
  "src/engine/systems/projobs.ts#post": {
   "status": "Rewritten",
-  "hash": "a28720469422",
-  "on": "2026-10-21",
-  "evidence": "Written for brief 20's D4 to docs/STYLE.md and docs/GLOSSARY.md; read where the player meets it in tests/b20-career-history.test.ts (the record's line, the card's line and his notice) and tests/pro-work.test.ts",
-  "first": "Rewritten And Verified"
+  "hash": "c2b730d4009b",
+  "on": "2026-10-24",
+  "evidence": "Written for brief 25's Module 3 (real agencies and agents) to docs/STYLE.md and docs/GLOSSARY.md, with no pronoun for a real agent and the game's own agent's words unchanged; read where the player meets it in tests/career-agents.test.ts (the Representation tab drawn with Dan Patack chosen, the notices and history of a played referral, meeting, offer and signing) and in tests/pro-representation-screen.test.ts, tests/journey-agent.test.ts and tests/pro-agent.test.ts for Thomas Ashgrove, with tools/voice-check.mjs, tools/tics.mjs, tools/title-case.mjs, tools/plural-check.mjs and tools/spelling.mjs passing",
+  "first": "Pending"
  },
  "src/engine/systems/projobs.ts#post [opportunity]": {
   "status": "Rewritten",
-  "hash": "07808f5bb0eb",
-  "on": "2026-10-21",
-  "evidence": "Written for brief 20's D4 to docs/STYLE.md and docs/GLOSSARY.md; read where the player meets it in tests/b20-career-history.test.ts (the record's line, the card's line and his notice) and tests/pro-work.test.ts",
-  "first": "Rewritten And Verified"
+  "hash": "56e0f233f468",
+  "on": "2026-10-24",
+  "evidence": "Written for brief 25's Module 3 (real agencies and agents) to docs/STYLE.md and docs/GLOSSARY.md, with no pronoun for a real agent and the game's own agent's words unchanged; read where the player meets it in tests/career-agents.test.ts (the Representation tab drawn with Dan Patack chosen, the notices and history of a played referral, meeting, offer and signing) and in tests/pro-representation-screen.test.ts, tests/journey-agent.test.ts and tests/pro-agent.test.ts for Thomas Ashgrove, with tools/voice-check.mjs, tools/tics.mjs, tools/title-case.mjs, tools/plural-check.mjs and tools/spelling.mjs passing",
+  "first": "Pending"
  },
  "src/engine/systems/projobs.ts#prepareRefusal": {
   "status": "Rewritten",
-  "hash": "5053f2988973",
-  "on": "2026-10-21",
-  "evidence": "Written for brief 19's work loop to docs/STYLE.md and docs/GLOSSARY.md; read where the player meets it in tests/pro-work.test.ts and tests/pro-opportunities-screen.test.ts, with tools/voice-check.mjs, tools/tics.mjs and tools/title-case.mjs passing",
-  "first": "Rewritten And Verified"
+  "hash": "22b1e16e931e",
+  "on": "2026-10-24",
+  "evidence": "Written for brief 25's Module 5 (the ways of working: the booth, the dub, narration, multicamera, performance capture, reenactment, the musical and action; a shoot's order and takes, revised pages, a recall to loop and a scene cut) to docs/STYLE.md and docs/GLOSSARY.md, every rule the agreements' own and every invention said as the game's; read where the player meets it in tests/career-workflows-screen.test.ts (the Work and Opportunities tabs drawn for a voice session, a multicamera week and an action shoot, through the clock and a reload at each stage) and tests/career-workflows.test.ts (each workflow's days, choices, reports and notices), with tools/voice-check.mjs, tools/tics.mjs and tools/title-case.mjs clean.",
+  "first": "Pending"
+ },
+ "src/engine/systems/projobs.ts#reachWords": {
+  "status": "Rewritten",
+  "hash": "781967b079fa",
+  "on": "2026-10-23",
+  "evidence": "Written for brief 25's Module 2 (the reference catalog and the parts drawn from it) to docs/STYLE.md and docs/GLOSSARY.md; read where the player meets it in tests/career-drawn.test.ts (the role card, the offer, the Work tab and the trip to Los Angeles drawn over a played journey) and tests/career-catalog.test.ts (productionWords and CATALOG.md), with tools/voice-check.mjs, tools/tics.mjs, tools/title-case.mjs, tools/plural-check.mjs and tools/spelling.mjs passing",
+  "first": "Pending"
  },
  "src/engine/systems/projobs.ts#registerProJobs": {
   "status": "Rewritten",
-  "hash": "eef664082053",
-  "on": "2026-10-21",
-  "evidence": "Written for brief 19's work loop to docs/STYLE.md and docs/GLOSSARY.md; read where the player meets it in tests/pro-work.test.ts and tests/pro-opportunities-screen.test.ts, with tools/voice-check.mjs, tools/tics.mjs and tools/title-case.mjs passing",
-  "first": "Rewritten And Verified"
+  "hash": "73be5ee7072d",
+  "on": "2026-10-24",
+  "evidence": "Written for brief 25's Module 5 to docs/STYLE.md and docs/GLOSSARY.md: how the release notice says the work came out, by its format (in cinemas, on the air, streaming, at its film school), read where the player meets it in tests/career-workflows.test.ts (T46's release notice, 'The Calloway Files is on the air') and tests/pro-work.test.ts (Paper Moons screened at its film school), with tools/voice-check.mjs and tools/tics.mjs clean.",
+  "first": "Pending"
+ },
+ "src/engine/systems/projobs.ts#registerProJobs [problem]": {
+  "status": "Rewritten",
+  "hash": "dcb7ab9331bd",
+  "on": "2026-10-24",
+  "evidence": "Written for brief 25's Module 5 (the ways of working: the booth, the dub, narration, multicamera, performance capture, reenactment, the musical and action; a shoot's order and takes, revised pages, a recall to loop and a scene cut) to docs/STYLE.md and docs/GLOSSARY.md, every rule the agreements' own and every invention said as the game's; read where the player meets it in tests/career-workflows-screen.test.ts (the Work and Opportunities tabs drawn for a voice session, a multicamera week and an action shoot, through the clock and a reload at each stage) and tests/career-workflows.test.ts (each workflow's days, choices, reports and notices), with tools/voice-check.mjs, tools/tics.mjs and tools/title-case.mjs clean.",
+  "first": "Pending"
  },
  "src/engine/systems/projobs.ts#registerProJobs [requested]": {
   "status": "Rewritten",
@@ -370,6 +895,13 @@
   "evidence": "tests/b22-authorization.test.ts (A1: the run's history line, released as Hester Vane, word for word)",
   "first": "Rewritten And Verified"
  },
+ "src/engine/systems/projobs.ts#renewFromOption": {
+  "status": "Rewritten",
+  "hash": "dc8cae3a1e7c",
+  "on": "2026-10-24",
+  "evidence": "Written for brief 25's Module 4 (contracts, pay states, overtime, the producer's contribution, residuals, the per diem, a recurring part's season and a series' seasons) to docs/STYLE.md and docs/GLOSSARY.md, every rule's figure the agreements' own and every invention said as the game's; read where the player meets it in tests/career-contracts.test.ts (the offer, the contract, each payment's state, the notices of each episode, option, decision, telecast, rerun, residual and per diem, through a played recurring part), with tools/voice-check.mjs, tools/tics.mjs and tools/title-case.mjs clean.",
+  "first": "Pending"
+ },
  "src/engine/systems/projobs.ts#replace": {
   "status": "Rewritten",
   "hash": "73519243ecea",
@@ -405,12 +937,19 @@
   "evidence": "Written for brief 19's work loop to docs/STYLE.md and docs/GLOSSARY.md; read where the player meets it in tests/pro-work.test.ts and tests/pro-opportunities-screen.test.ts, with tools/voice-check.mjs, tools/tics.mjs and tools/title-case.mjs passing",
   "first": "Rewritten And Verified"
  },
- "src/engine/systems/projobs.ts#roleWords": {
+ "src/engine/systems/projobs.ts#schoolWarning": {
   "status": "Rewritten",
-  "hash": "57bab5c99428",
-  "on": "2026-10-21",
-  "evidence": "Written for brief 19's work loop to docs/STYLE.md and docs/GLOSSARY.md; read where the player meets it in tests/pro-work.test.ts and tests/pro-opportunities-screen.test.ts, with tools/voice-check.mjs, tools/tics.mjs and tools/title-case.mjs passing",
-  "first": "Rewritten And Verified"
+  "hash": "4ea5abca35eb",
+  "on": "2026-10-23",
+  "evidence": "Written for brief 25's work abroad (Module 1) to docs/STYLE.md and docs/GLOSSARY.md; read where the player meets it in tests/career-world-sydney.test.ts (the journey, the release, the missed flight and the Work tab drawn at each stage) and tests/career-world-countries.test.ts, with tools/voice-check.mjs, tools/tics.mjs, tools/title-case.mjs and tools/plural-check.mjs passing",
+  "first": "Pending"
+ },
+ "src/engine/systems/projobs.ts#SEASON_HOOKS": {
+  "status": "Rewritten",
+  "hash": "0df4ec2ad238",
+  "on": "2026-10-24",
+  "evidence": "Written for brief 25's Module 4 (contracts, pay states, overtime, the producer's contribution, residuals, the per diem, a recurring part's season and a series' seasons) to docs/STYLE.md and docs/GLOSSARY.md, every rule's figure the agreements' own and every invention said as the game's; read where the player meets it in tests/career-contracts.test.ts (the offer, the contract, each payment's state, the notices of each episode, option, decision, telecast, rerun, residual and per diem, through a played recurring part), with tools/voice-check.mjs, tools/tics.mjs and tools/title-case.mjs clean.",
+  "first": "Pending"
  },
  "src/engine/systems/projobs.ts#setRound": {
   "status": "Rewritten",
@@ -418,6 +957,20 @@
   "on": "2026-10-21",
   "evidence": "Read in one played life's order (docs/verification/career-2026-10-20/app/make-saves.log) and on the built app's Opportunities tab and History With His Office at 1440 and 390 (app/walk/): the history now says the casting office asked and offered, in the past, among lines that said submitted and was Working, while the notice and the question keep saying it as it comes; one week's promised pay is said as one week. Held by tests/pro-work.test.ts and tests/pro-opportunities-screen.test.ts",
   "first": "Rewritten And Verified"
+ },
+ "src/engine/systems/projobs.ts#spansOf": {
+  "status": "Rewritten",
+  "hash": "705aae9d0951",
+  "on": "2026-10-23",
+  "evidence": "Written for brief 25's work abroad (Module 1) to docs/STYLE.md and docs/GLOSSARY.md; read where the player meets it in tests/career-world-sydney.test.ts (the journey, the release, the missed flight and the Work tab drawn at each stage) and tests/career-world-countries.test.ts, with tools/voice-check.mjs, tools/tics.mjs, tools/title-case.mjs and tools/plural-check.mjs passing",
+  "first": "Pending"
+ },
+ "src/engine/systems/projobs.ts#specialOn": {
+  "status": "Rewritten",
+  "hash": "10884fcfe45d",
+  "on": "2026-10-24",
+  "evidence": "Written for brief 25's Module 5 (the ways of working: the booth, the dub, narration, multicamera, performance capture, reenactment, the musical and action; a shoot's order and takes, revised pages, a recall to loop and a scene cut) to docs/STYLE.md and docs/GLOSSARY.md, every rule the agreements' own and every invention said as the game's; read where the player meets it in tests/career-workflows-screen.test.ts (the Work and Opportunities tabs drawn for a voice session, a multicamera week and an action shoot, through the clock and a reload at each stage) and tests/career-workflows.test.ts (each workflow's days, choices, reports and notices), with tools/voice-check.mjs, tools/tics.mjs and tools/title-case.mjs clean.",
+  "first": "Pending"
  },
  "src/engine/systems/projobs.ts#submit": {
   "status": "Rewritten",
@@ -440,6 +993,20 @@
   "evidence": "Written for brief 19's work loop to docs/STYLE.md and docs/GLOSSARY.md; read where the player meets it in tests/pro-work.test.ts and tests/pro-opportunities-screen.test.ts, with tools/voice-check.mjs, tools/tics.mjs and tools/title-case.mjs passing",
   "first": "Rewritten And Verified"
  },
+ "src/engine/systems/projobs.ts#termsWords": {
+  "status": "Rewritten",
+  "hash": "0e4e192a3591",
+  "on": "2026-10-24",
+  "evidence": "Written for brief 25's Module 5 (the ways of working: the booth, the dub, narration, multicamera, performance capture, reenactment, the musical and action; a shoot's order and takes, revised pages, a recall to loop and a scene cut) to docs/STYLE.md and docs/GLOSSARY.md, every rule the agreements' own and every invention said as the game's; read where the player meets it in tests/career-workflows-screen.test.ts (the Work and Opportunities tabs drawn for a voice session, a multicamera week and an action shoot, through the clock and a reload at each stage) and tests/career-workflows.test.ts (each workflow's days, choices, reports and notices), with tools/voice-check.mjs, tools/tics.mjs and tools/title-case.mjs clean.",
+  "first": "Pending"
+ },
+ "src/engine/systems/projobs.ts#WORKFLOW_HOOKS [opportunity]": {
+  "status": "Rewritten",
+  "hash": "72cc2d69e0a6",
+  "on": "2026-10-24",
+  "evidence": "Written for brief 25's Module 5 (the ways of working: the booth, the dub, narration, multicamera, performance capture, reenactment, the musical and action; a shoot's order and takes, revised pages, a recall to loop and a scene cut) to docs/STYLE.md and docs/GLOSSARY.md, every rule the agreements' own and every invention said as the game's; read where the player meets it in tests/career-workflows-screen.test.ts (the Work and Opportunities tabs drawn for a voice session, a multicamera week and an action shoot, through the clock and a reload at each stage) and tests/career-workflows.test.ts (each workflow's days, choices, reports and notices), with tools/voice-check.mjs, tools/tics.mjs and tools/title-case.mjs clean.",
+  "first": "Pending"
+ },
  "src/engine/systems/projobs.ts#writtenForWords": {
   "status": "Rewritten",
   "hash": "2bf6b0e3cb9a",
@@ -447,12 +1014,117 @@
   "evidence": "Written 2026-10-21 at the owner's word (parts for an actor, an actress or either) to docs/STYLE.md and docs/GLOSSARY.md; read where the player meets it in tests/pro-opportunities-screen.test.ts and tests/pro-core.test.ts ('writes each part for an actor, an actress or either…'), with tools/voice-check.mjs, tools/tics.mjs and tools/title-case.mjs passing",
   "first": "Rewritten And Verified"
  },
+ "src/engine/systems/workflow.ts#afterWrap": {
+  "status": "Rewritten",
+  "hash": "ae84c8f9003a",
+  "on": "2026-10-24",
+  "evidence": "Written for brief 25's Module 5 (the ways of working: the booth, the dub, narration, multicamera, performance capture, reenactment, the musical and action; a shoot's order and takes, revised pages, a recall to loop and a scene cut) to docs/STYLE.md and docs/GLOSSARY.md, every rule the agreements' own and every invention said as the game's; read where the player meets it in tests/career-workflows-screen.test.ts (the Work and Opportunities tabs drawn for a voice session, a multicamera week and an action shoot, through the clock and a reload at each stage) and tests/career-workflows.test.ts (each workflow's days, choices, reports and notices), with tools/voice-check.mjs, tools/tics.mjs and tools/title-case.mjs clean.",
+  "first": "Pending"
+ },
+ "src/engine/systems/workflow.ts#afterWrap [success]": {
+  "status": "Rewritten",
+  "hash": "016da8467b99",
+  "on": "2026-10-24",
+  "evidence": "Written for brief 25's Module 5 (the ways of working: the booth, the dub, narration, multicamera, performance capture, reenactment, the musical and action; a shoot's order and takes, revised pages, a recall to loop and a scene cut) to docs/STYLE.md and docs/GLOSSARY.md, every rule the agreements' own and every invention said as the game's; read where the player meets it in tests/career-workflows-screen.test.ts (the Work and Opportunities tabs drawn for a voice session, a multicamera week and an action shoot, through the clock and a reload at each stage) and tests/career-workflows.test.ts (each workflow's days, choices, reports and notices), with tools/voice-check.mjs, tools/tics.mjs and tools/title-case.mjs clean.",
+  "first": "Pending"
+ },
+ "src/engine/systems/workflow.ts#choiceRefusal": {
+  "status": "Rewritten",
+  "hash": "3f318f9647f2",
+  "on": "2026-10-24",
+  "evidence": "Written for brief 25's Module 5 (the ways of working: the booth, the dub, narration, multicamera, performance capture, reenactment, the musical and action; a shoot's order and takes, revised pages, a recall to loop and a scene cut) to docs/STYLE.md and docs/GLOSSARY.md, every rule the agreements' own and every invention said as the game's; read where the player meets it in tests/career-workflows-screen.test.ts (the Work and Opportunities tabs drawn for a voice session, a multicamera week and an action shoot, through the clock and a reload at each stage) and tests/career-workflows.test.ts (each workflow's days, choices, reports and notices), with tools/voice-check.mjs, tools/tics.mjs and tools/title-case.mjs clean.",
+  "first": "Pending"
+ },
+ "src/engine/systems/workflow.ts#choose [worked]": {
+  "status": "Rewritten",
+  "hash": "c82b0322aafc",
+  "on": "2026-10-24",
+  "evidence": "Written for brief 25's Module 5 (the ways of working: the booth, the dub, narration, multicamera, performance capture, reenactment, the musical and action; a shoot's order and takes, revised pages, a recall to loop and a scene cut) to docs/STYLE.md and docs/GLOSSARY.md, every rule the agreements' own and every invention said as the game's; read where the player meets it in tests/career-workflows-screen.test.ts (the Work and Opportunities tabs drawn for a voice session, a multicamera week and an action shoot, through the clock and a reload at each stage) and tests/career-workflows.test.ts (each workflow's days, choices, reports and notices), with tools/voice-check.mjs, tools/tics.mjs and tools/title-case.mjs clean.",
+  "first": "Pending"
+ },
+ "src/engine/systems/workflow.ts#loopSession": {
+  "status": "Rewritten",
+  "hash": "8f397f8f8679",
+  "on": "2026-10-24",
+  "evidence": "Written for brief 25's Module 5 (the ways of working: the booth, the dub, narration, multicamera, performance capture, reenactment, the musical and action; a shoot's order and takes, revised pages, a recall to loop and a scene cut) to docs/STYLE.md and docs/GLOSSARY.md, every rule the agreements' own and every invention said as the game's; read where the player meets it in tests/career-workflows-screen.test.ts (the Work and Opportunities tabs drawn for a voice session, a multicamera week and an action shoot, through the clock and a reload at each stage) and tests/career-workflows.test.ts (each workflow's days, choices, reports and notices), with tools/voice-check.mjs, tools/tics.mjs and tools/title-case.mjs clean.",
+  "first": "Pending"
+ },
+ "src/engine/systems/workflow.ts#loopSession [problem]": {
+  "status": "Rewritten",
+  "hash": "f5f19d76a53c",
+  "on": "2026-10-24",
+  "evidence": "Written for brief 25's Module 5 (the ways of working: the booth, the dub, narration, multicamera, performance capture, reenactment, the musical and action; a shoot's order and takes, revised pages, a recall to loop and a scene cut) to docs/STYLE.md and docs/GLOSSARY.md, every rule the agreements' own and every invention said as the game's; read where the player meets it in tests/career-workflows-screen.test.ts (the Work and Opportunities tabs drawn for a voice session, a multicamera week and an action shoot, through the clock and a reload at each stage) and tests/career-workflows.test.ts (each workflow's days, choices, reports and notices), with tools/voice-check.mjs, tools/tics.mjs and tools/title-case.mjs clean.",
+  "first": "Pending"
+ },
+ "src/engine/systems/workflow.ts#loopSession [worked]": {
+  "status": "Rewritten",
+  "hash": "4ba2b7445744",
+  "on": "2026-10-24",
+  "evidence": "Written for brief 25's Module 5 (the ways of working: the booth, the dub, narration, multicamera, performance capture, reenactment, the musical and action; a shoot's order and takes, revised pages, a recall to loop and a scene cut) to docs/STYLE.md and docs/GLOSSARY.md, every rule the agreements' own and every invention said as the game's; read where the player meets it in tests/career-workflows-screen.test.ts (the Work and Opportunities tabs drawn for a voice session, a multicamera week and an action shoot, through the clock and a reload at each stage) and tests/career-workflows.test.ts (each workflow's days, choices, reports and notices), with tools/voice-check.mjs, tools/tics.mjs and tools/title-case.mjs clean.",
+  "first": "Pending"
+ },
+ "src/engine/systems/workflow.ts#NY": {
+  "status": "Rewritten",
+  "hash": "91a5e4a639ea",
+  "on": "2026-10-24",
+  "evidence": "Written for brief 25's Module 5 (the ways of working: the booth, the dub, narration, multicamera, performance capture, reenactment, the musical and action; a shoot's order and takes, revised pages, a recall to loop and a scene cut) to docs/STYLE.md and docs/GLOSSARY.md, every rule the agreements' own and every invention said as the game's; read where the player meets it in tests/career-workflows-screen.test.ts (the Work and Opportunities tabs drawn for a voice session, a multicamera week and an action shoot, through the clock and a reload at each stage) and tests/career-workflows.test.ts (each workflow's days, choices, reports and notices), with tools/voice-check.mjs, tools/tics.mjs and tools/title-case.mjs clean.",
+  "first": "Pending"
+ },
+ "src/engine/systems/workflow.ts#reportWords": {
+  "status": "Rewritten",
+  "hash": "fb404f04c3da",
+  "on": "2026-10-24",
+  "evidence": "Written for brief 25's Module 5 (the ways of working: the booth, the dub, narration, multicamera, performance capture, reenactment, the musical and action; a shoot's order and takes, revised pages, a recall to loop and a scene cut) to docs/STYLE.md and docs/GLOSSARY.md, every rule the agreements' own and every invention said as the game's; read where the player meets it in tests/career-workflows-screen.test.ts (the Work and Opportunities tabs drawn for a voice session, a multicamera week and an action shoot, through the clock and a reload at each stage) and tests/career-workflows.test.ts (each workflow's days, choices, reports and notices), with tools/voice-check.mjs, tools/tics.mjs and tools/title-case.mjs clean.",
+  "first": "Pending"
+ },
+ "src/engine/systems/workflow.ts#revisePages": {
+  "status": "Rewritten",
+  "hash": "7903a74a1b13",
+  "on": "2026-10-24",
+  "evidence": "Written for brief 25's Module 5 (the ways of working: the booth, the dub, narration, multicamera, performance capture, reenactment, the musical and action; a shoot's order and takes, revised pages, a recall to loop and a scene cut) to docs/STYLE.md and docs/GLOSSARY.md, every rule the agreements' own and every invention said as the game's; read where the player meets it in tests/career-workflows-screen.test.ts (the Work and Opportunities tabs drawn for a voice session, a multicamera week and an action shoot, through the clock and a reload at each stage) and tests/career-workflows.test.ts (each workflow's days, choices, reports and notices), with tools/voice-check.mjs, tools/tics.mjs and tools/title-case.mjs clean.",
+  "first": "Pending"
+ },
+ "src/engine/systems/workflow.ts#STEP_LABEL": {
+  "status": "Rewritten",
+  "hash": "5aea8aea00a2",
+  "on": "2026-10-24",
+  "evidence": "Written for brief 25's Module 5 (the ways of working: the booth, the dub, narration, multicamera, performance capture, reenactment, the musical and action; a shoot's order and takes, revised pages, a recall to loop and a scene cut) to docs/STYLE.md and docs/GLOSSARY.md, every rule the agreements' own and every invention said as the game's; read where the player meets it in tests/career-workflows-screen.test.ts (the Work and Opportunities tabs drawn for a voice session, a multicamera week and an action shoot, through the clock and a reload at each stage) and tests/career-workflows.test.ts (each workflow's days, choices, reports and notices), with tools/voice-check.mjs, tools/tics.mjs and tools/title-case.mjs clean.",
+  "first": "Pending"
+ },
+ "src/engine/systems/workflow.ts#STEP_WORDS": {
+  "status": "Rewritten",
+  "hash": "0c4598911540",
+  "on": "2026-10-24",
+  "evidence": "Written for brief 25's Module 5 (the ways of working: the booth, the dub, narration, multicamera, performance capture, reenactment, the musical and action; a shoot's order and takes, revised pages, a recall to loop and a scene cut) to docs/STYLE.md and docs/GLOSSARY.md, every rule the agreements' own and every invention said as the game's; read where the player meets it in tests/career-workflows-screen.test.ts (the Work and Opportunities tabs drawn for a voice session, a multicamera week and an action shoot, through the clock and a reload at each stage) and tests/career-workflows.test.ts (each workflow's days, choices, reports and notices), with tools/voice-check.mjs, tools/tics.mjs and tools/title-case.mjs clean.",
+  "first": "Pending"
+ },
+ "src/engine/systems/workflow.ts#takeCount": {
+  "status": "Rewritten",
+  "hash": "feef57a63435",
+  "on": "2026-10-24",
+  "evidence": "Written for brief 25's Module 5 (the ways of working: the booth, the dub, narration, multicamera, performance capture, reenactment, the musical and action; a shoot's order and takes, revised pages, a recall to loop and a scene cut) to docs/STYLE.md and docs/GLOSSARY.md, every rule the agreements' own and every invention said as the game's; read where the player meets it in tests/career-workflows-screen.test.ts (the Work and Opportunities tabs drawn for a voice session, a multicamera week and an action shoot, through the clock and a reload at each stage) and tests/career-workflows.test.ts (each workflow's days, choices, reports and notices), with tools/voice-check.mjs, tools/tics.mjs and tools/title-case.mjs clean.",
+  "first": "Pending"
+ },
+ "src/engine/systems/workflow.ts#unitName": {
+  "status": "Rewritten",
+  "hash": "1b0c3fc67f1b",
+  "on": "2026-10-24",
+  "evidence": "Written for brief 25's Module 5 (the ways of working: the booth, the dub, narration, multicamera, performance capture, reenactment, the musical and action; a shoot's order and takes, revised pages, a recall to loop and a scene cut) to docs/STYLE.md and docs/GLOSSARY.md, every rule the agreements' own and every invention said as the game's; read where the player meets it in tests/career-workflows-screen.test.ts (the Work and Opportunities tabs drawn for a voice session, a multicamera week and an action shoot, through the clock and a reload at each stage) and tests/career-workflows.test.ts (each workflow's days, choices, reports and notices), with tools/voice-check.mjs, tools/tics.mjs and tools/title-case.mjs clean.",
+  "first": "Pending"
+ },
  "src/ui/career/OpportunitiesPane.tsx#BookedCard": {
   "status": "Rewritten",
   "hash": "01269ca10bf8",
   "on": "2026-10-21",
   "evidence": "Rewritten 2026-10-21 so deferred pay is said one way (the app's second walk), to docs/STYLE.md; read where the player meets it in tests/pro-opportunities-screen.test.ts ('a student film accepted, Booked Work says why…'), tests/propay-screen.test.ts ('a student film’s week reads deferred…') and tests/pro-work.test.ts (the offer), with tools/voice-check.mjs and tools/tics.mjs passing",
   "first": "Rewritten And Verified"
+ },
+ "src/ui/career/OpportunitiesPane.tsx#daysWords": {
+  "status": "Rewritten",
+  "hash": "e4c3f138ef99",
+  "on": "2026-10-24",
+  "evidence": "Written for brief 25's Module 5 (the ways of working: the booth, the dub, narration, multicamera, performance capture, reenactment, the musical and action; a shoot's order and takes, revised pages, a recall to loop and a scene cut) to docs/STYLE.md and docs/GLOSSARY.md, every rule the agreements' own and every invention said as the game's; read where the player meets it in tests/career-workflows-screen.test.ts (the Work and Opportunities tabs drawn for a voice session, a multicamera week and an action shoot, through the clock and a reload at each stage) and tests/career-workflows.test.ts (each workflow's days, choices, reports and notices), with tools/voice-check.mjs, tools/tics.mjs and tools/title-case.mjs clean.",
+  "first": "Pending"
  },
  "src/ui/career/OpportunitiesPane.tsx#History": {
   "status": "Rewritten",
@@ -491,23 +1163,23 @@
  },
  "src/ui/career/OpportunitiesPane.tsx#OpportunitiesPane": {
   "status": "Rewritten",
-  "hash": "c8aa043a1efc",
+  "hash": "ff5cde196808",
   "on": "2026-10-23",
-  "evidence": "Read against docs/STYLE.md for brief 23; the offer card rendered on the walk's offer save by docs/verification/ui-2026-10-23/app/capture.mjs and tests/navigation.test.ts",
+  "evidence": "Corrected on 2026-10-24 where it said every project, company and casting office was invented for the game, untrue once parts were drawn from real productions (brief 25's Module 2); read to docs/STYLE.md where the player meets it in tests/pro-opportunities-screen.test.ts, tests/propay-screen.test.ts, tests/pro-agent.test.ts, tests/b20-guide-chapters.test.ts and tests/career-drawn.test.ts, with tools/voice-check.mjs, tools/tics.mjs, tools/title-case.mjs, tools/plural-check.mjs and tools/spelling.mjs passing",
   "first": "Pending"
  },
  "src/ui/career/OpportunitiesPane.tsx#Prepare": {
   "status": "Rewritten",
-  "hash": "61a7366346ce",
-  "on": "2026-10-21",
-  "evidence": "Written for brief 19's work loop to docs/STYLE.md and docs/GLOSSARY.md; read where the player meets it in tests/pro-work.test.ts and tests/pro-opportunities-screen.test.ts, with tools/voice-check.mjs, tools/tics.mjs and tools/title-case.mjs passing",
-  "first": "Rewritten And Verified"
+  "hash": "82efdd926e8d",
+  "on": "2026-10-24",
+  "evidence": "Written for brief 25's Module 5 (the ways of working: the booth, the dub, narration, multicamera, performance capture, reenactment, the musical and action; a shoot's order and takes, revised pages, a recall to loop and a scene cut) to docs/STYLE.md and docs/GLOSSARY.md, every rule the agreements' own and every invention said as the game's; read where the player meets it in tests/career-workflows-screen.test.ts (the Work and Opportunities tabs drawn for a voice session, a multicamera week and an action shoot, through the clock and a reload at each stage) and tests/career-workflows.test.ts (each workflow's days, choices, reports and notices), with tools/voice-check.mjs, tools/tics.mjs and tools/title-case.mjs clean.",
+  "first": "Pending"
  },
  "src/ui/career/OpportunitiesPane.tsx#RoleFacts": {
   "status": "Rewritten",
-  "hash": "4f2f844589b1",
-  "on": "2026-10-22",
-  "evidence": "Rewritten 2026-10-22 (the owner's brief 22): What It Asks says the part's genres in words (requirementWords: 'Domestic Drama', 'Mostly Farce, with some Romantic Comedy'), never the project's tags as listed nor a weight; read where the player meets it in tests/pro-opportunities-screen.test.ts ('a first-year’s tab lists the open roles posted…': 'What It Asks Psychological Horror. …'), with tools/voice-check.mjs, tools/tics.mjs and tools/title-case.mjs passing",
+  "hash": "4a5843f9d1e2",
+  "on": "2026-10-24",
+  "evidence": "Written for brief 25's Module 5 (the ways of working: the booth, the dub, narration, multicamera, performance capture, reenactment, the musical and action; a shoot's order and takes, revised pages, a recall to loop and a scene cut) to docs/STYLE.md and docs/GLOSSARY.md, every rule the agreements' own and every invention said as the game's; read where the player meets it in tests/career-workflows-screen.test.ts (the Work and Opportunities tabs drawn for a voice session, a multicamera week and an action shoot, through the clock and a reload at each stage) and tests/career-workflows.test.ts (each workflow's days, choices, reports and notices), with tools/voice-check.mjs, tools/tics.mjs and tools/title-case.mjs clean.",
   "first": "Pending"
  },
  "src/ui/career/OpportunitiesPane.tsx#SchoolRule": {

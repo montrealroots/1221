@@ -63,8 +63,11 @@ describe('D3: five shoot days in a row, a 7 AM call two hours away', () => {
       expect(d.readiness).toBeGreaterThan(90);
       expect(d.tired).toBe(false);
     }
-    // The fifth day is judged as the first was, within the draw's own spread.
-    expect(Math.abs(days[4]!.overall! - days[0]!.overall!)).toBeLessThan(1);
+    // Rested is rested: a twin in bed an hour earlier each night is judged the same each day, within the draw's own
+    // spread. Until 2026-10-24 this held the fifth day to the first; since brief 25's Module 5 each day shoots its own
+    // scenes, some before what leads into them, so the days differ by the scenes and not by the nights.
+    const earlier = play(reload(base), END, atHour(19));
+    for (const [i, d] of days.entries()) expect(Math.abs(d.overall! - earlier[i]!.overall!), `day ${i + 1}`).toBeLessThan(1);
   });
 
   it('a player in bed at eleven takes the five hours the dialog offers then, and wears down a day at a time, judged tired by the fourth', () => {

@@ -18,23 +18,77 @@ import { useKept } from '@/ui/kept';
 import { formatDate, formatDateTime } from '@/engine/core/time';
 import { AGREEMENT } from '@/engine/content/careerwork';
 import { AGENTS, FIELD_LABEL, agencyOf, type Agent } from '@/engine/content/agents';
+import { AGENCY_RECORDS, fieldWords } from '@/engine/content/agencies';
 import { spokenList } from '@/engine/core/text';
 import { materialsCheck } from '@/engine/systems/pro';
 import { BAND_LABEL } from '@/engine/systems/coursework';
 import { countWords } from '@/engine/systems/school';
 import {
-  COOLDOWN_WORDS, GATE, LEVEL_LABEL, REFERRAL_BAND, STAGE_LABEL, TEN, TIME_WORDS, agreementInForce, answerRefusal, checkRefusal, endRefusal, historyOf, interestOf, meetingOf, moveRefusal,
-  nextStep, noticeRefusal, offeredAgreement, referralRefusal, referrersOf, relationOf, sendRefusal, stillOwed, supplyRefusal,
+  COOLDOWN_WORDS, GATE, LEVEL_LABEL, REAL_CHANCE_WORDS, REFERRAL_BAND, STAGE_LABEL, TEN, TIME_WORDS, agreementInForce, answerRefusal, checkRefusal, endRefusal, himTitle, historyOf, interestOf, meetingOf, moveRefusal,
+  nextStep, noticeRefusal, offeredAgreement, officeTitle, referralRefusal, referrersOf, relationOf, sendRefusal, signRefusal, stillOwed, supplyRefusal,
   type EndHow, type Level,
 } from '@/engine/systems/proagent';
 
 const LEVEL_TONE: Readonly<Record<Level, string>> = { short: 'chip chip-negative', near: 'chip chip-warning', at: 'chip chip-info', beyond: 'chip chip-positive' };
 
+// The stages an approach is under way at, which the chooser opens on before the first agent.
+const UNDER_WAY = new Set(['sent', 'waiting', 'requested', 'meeting', 'deciding', 'offered', 'represented']);
+
+/**
+ * The tab: the agents, one shown at a time, and the agencies as their own pages had them (from 2026-10-24, brief 25's
+ * Module 3). Until then it drew every agent's panels one after another, which with one agent was the whole tab. It
+ * opens on the agent who represents you, or one an approach is under way with, or the first; the choice is kept while
+ * you're elsewhere, never in the save.
+ */
 export function RepresentationPane() {
+  const person = useWorld((s) => s.player);
+  const busy = AGENTS.find((a) => relationOf(person, a.id)?.stage === 'represented') ?? AGENTS.find((a) => UNDER_WAY.has(relationOf(person, a.id)?.stage ?? ''));
+  const [chosen, choose] = useKept<string>('representation:agent', (busy ?? AGENTS[0]!).id);
+  const agent = AGENTS.find((a) => a.id === chosen) ?? AGENTS[0]!;
   return (
     <div className="col gap-5">
-      {AGENTS.map((agent) => <AgentPanels key={agent.id} agent={agent} />)}
+      <Panel title="Agents" help="career.agent">
+        <div className="col gap-3">
+          <ul className="col gap-3" style={{ margin: 0, padding: 0, listStyle: 'none' }}>
+            {AGENTS.map((a) => (
+              <li key={a.id} className="row gap-3" style={{ flexWrap: 'wrap', alignItems: 'center', justifyContent: 'space-between' }}>
+                <div className="col gap-1">
+                  <span className="small strong">{a.name}</span>
+                  <span className="xs dim">{`${a.role}, ${agencyOf(a).name}, ${agencyOf(a).office.city}. ${a.real ? 'A real agent.' : 'Invented for the game.'} ${STAGE_LABEL[relationOf(person, a.id)?.stage ?? 'none']}.`}</span>
+                </div>
+                <button type="button" className="btn btn-sm" aria-pressed={a.id === agent.id} disabled={a.id === agent.id} onClick={() => choose(a.id)}>{a.id === agent.id ? 'Shown Below' : 'Show'}</button>
+              </li>
+            ))}
+          </ul>
+          <Fine>The real agents are the theatrical agents Stewart Talent’s New York office names on its own page, as the game read it. What they’d say or do with you is the game’s invention, and nothing reaches them.</Fine>
+        </div>
+      </Panel>
+      <AgentPanels key={agent.id} agent={agent} />
+      <AgenciesPanel />
     </div>
+  );
+}
+
+/** The agencies, each as its own pages had it: what it does for actors, each office's way in, and what the game does with it. */
+function AgenciesPanel() {
+  return (
+    <Panel title="Agencies" help="career.agent">
+      <div className="col gap-3">
+        {AGENCY_RECORDS.map((r) => (
+          <details key={r.id} className="section-fold">
+            <summary>{r.name}</summary>
+            <dl className="facts small">
+              <div><dt>About</dt><dd>{fieldWords(r.about)}</dd></div>
+              {r.offices.map((o, i) => (
+                <div key={o.city ?? i}><dt>{o.city ?? 'Its Offices'}</dt><dd>{`Way in: ${unstopped(fieldWords(o.route))}${o.agents.kind === 'unknown' ? '' : `. Agents named for acting: ${fieldWords(o.agents)}`}.`}</dd></div>
+              ))}
+              <div><dt>In The Game</dt><dd>{r.inGame}</dd></div>
+            </dl>
+          </details>
+        ))}
+        <Fine>Each agency is as its own pages had it when the game read them, on October 23 and 24, 2026, and what they don’t say isn’t known to the game. The game ranks no agency.</Fine>
+      </div>
+    </Panel>
   );
 }
 
@@ -77,16 +131,16 @@ function AgentPanel({ agent }: { agent: Agent }) {
         ) : (
           <div className="callout callout-accent small col gap-2" role="note">
             <p style={{ margin: 0 }}>{agent.notice}</p>
-            <div><Gated feature="pro.agent_notice" className="btn btn-sm" disabled={!!no} title={no} onClick={() => { const r = run('pro.agent_notice', { agentId: agent.id }); if (r.ok) toast('The notice stays on his panel, under Read The Notice Again.', 'positive'); }}>I’ve Read This</Gated></div>
+            <div><Gated feature="pro.agent_notice" className="btn btn-sm" disabled={!!no} title={no} onClick={() => { const r = run('pro.agent_notice', { agentId: agent.id }); if (r.ok) toast(`The notice stays on ${agent.words.his} panel, under Read The Notice Again.`, 'positive'); }}>I’ve Read This</Gated></div>
           </div>
         )}
         <dl className="col gap-2 small" style={{ margin: 0 }}>
           <div><dt className="strong">Department</dt><dd style={{ margin: 0 }}>{`${agency.department.called}, also called ${agency.department.alsoCalled}: ${spokenList(agency.department.fields.map((f) => FIELD_LABEL[f]))}`}</dd></div>
           <div><dt className="strong">Submissions</dt><dd style={{ margin: 0 }}>{agency.policy.words}</dd></div>
-          <div><dt className="strong">Where You Stand With Him</dt><dd style={{ margin: 0 }}>{STAGE_LABEL[rel?.stage ?? 'none']}</dd></div>
+          <div><dt className="strong">{`Where You Stand With ${himTitle(agent)}`}</dt><dd style={{ margin: 0 }}>{STAGE_LABEL[rel?.stage ?? 'none']}</dd></div>
           <div><dt className="strong">What’s Next</dt><dd style={{ margin: 0 }}>{nextStep(sim, person, agent)}</dd></div>
         </dl>
-        <Fine>{`${agent.name} and ${agency.name} are invented for the game. How his office takes submissions and reaches an actor is the game’s own rule, kept from how a real New York legit department publishes its own.`}</Fine>
+        <Fine>{agent.real ? `${agent.name}’s name and role, and the office’s way of taking submissions, are as Stewart Talent’s own page had them on ${formatDate(Date.parse(`${agent.real.read}T16:00:00Z`), sim.zone)}. The game knows nothing else about ${agent.name}, so it says nothing of a list, clients or preferences, and whatever happens between you here is its invention.` : `${agent.name} and ${agency.name} are invented for the game. How ${agent.words.office} takes submissions and reaches an actor is the game’s own rule, kept from how a real New York legit department publishes its own.`}</Fine>
       </div>
     </Panel>
   );
@@ -100,9 +154,9 @@ function ReachPanel({ agent }: { agent: Agent }) {
   const jobs = referrersOf(sim, person, agent);
   const via = rel?.via;
   return (
-    <Panel title="How To Reach Him" help="career.agent">
+    <Panel title={`How To Reach ${himTitle(agent)}`} help="career.agent">
       <div className="col gap-3">
-        <p className="small" style={{ margin: 0 }}>His office takes your materials two ways in the game: through the School’s follow-up after the showcase, or a referral from someone you’ve worked with on a finished job.</p>
+        <p className="small" style={{ margin: 0 }}>{agent.routes.includes('showcase') ? `${capital(agent.words.office)} takes your materials two ways in the game: through the School’s follow-up after the showcase, or a referral from someone you’ve worked with on a finished job.` : `${capital(agent.words.office)} takes your materials one way in the game: a referral from someone you’ve worked with on a finished job. The game reads a referral as not unsolicited.`}</p>
         {via && <p className="small" style={{ margin: 0 }}>{via.route === 'showcase' ? `The School’s follow-up introduced you on ${formatDate(via.at, sim.zone)}.` : `${capital(via.by ?? 'A referral')} referred you on ${formatDate(via.at, sim.zone)}.`}</p>}
         <div className="col gap-2">
           <h3 className="eyebrow" style={{ margin: 0 }}>People You’ve Worked With</h3>
@@ -114,7 +168,7 @@ function ReachPanel({ agent }: { agent: Agent }) {
                 return (
                   <li key={j.engagementId} className="col gap-1">
                     <span>{`${capital(j.by)}, from your work as ${j.job}${j.band ? `, judged ${BAND_LABEL[j.band]}` : ', not judged'}`}</span>
-                    <div><Gated feature="pro.ask_referral" className="btn btn-sm" disabled={!!no} title={no} onClick={() => { const r = run<{ by: string }>('pro.ask_referral', { agentId: agent.id, engagementId: j.engagementId }); if (r.ok) toast(`${capital(r.value!.by)} referred you to his office.`, 'positive'); }}>{label}</Gated></div>
+                    <div><Gated feature="pro.ask_referral" className="btn btn-sm" disabled={!!no} title={no} onClick={() => { const r = run<{ by: string }>('pro.ask_referral', { agentId: agent.id, engagementId: j.engagementId }); if (r.ok) toast(`${capital(r.value!.by)} referred you to ${agent.words.office}.`, 'positive'); }}>{label}</Gated></div>
                     <WhyNot reasons={[[label, no]]} />
                   </li>
                 );
@@ -139,25 +193,25 @@ function MaterialsPanel({ agent }: { agent: Agent }) {
   const supplyNo = supplyRefusal(sim, person, agent);
   const asked = rel?.stage === 'requested' && rel.request;
   return (
-    <Panel title="Your Materials For Him" help="career.agent">
+    <Panel title={`Your Materials For ${himTitle(agent)}`} help="career.agent">
       <div className="col gap-3">
         {problems.length
           ? <ul className="small" style={{ margin: 0, paddingLeft: '1.1rem' }}>{problems.map((p) => <li key={`${p.kind}:${p.problem}`}>{p.words}</li>)}</ul>
           : <p className="small" style={{ margin: 0 }}>Your headshots, résumé and reel are all current.</p>}
         <div className="row gap-2" style={{ flexWrap: 'wrap' }}>
           <Gated feature="pro.agent_check" className="btn btn-sm" disabled={!!checkNo} title={checkNo} onClick={() => { const r = run('pro.agent_check', { agentId: agent.id }); if (r.ok) toast('Your materials have what an approach needs.', 'positive'); }}>Check Your Materials</Gated>
-          <Gated feature="pro.send_materials" className="btn btn-sm" disabled={!!sendNo} title={sendNo} onClick={() => { const r = run('pro.send_materials', { agentId: agent.id }); if (r.ok) toast('Your materials went to his office.', 'positive'); }}>Send Your Materials</Gated>
+          <Gated feature="pro.send_materials" className="btn btn-sm" disabled={!!sendNo} title={sendNo} onClick={() => { const r = run('pro.send_materials', { agentId: agent.id }); if (r.ok) toast(`Your materials went to ${agent.words.office}.`, 'positive'); }}>Send Your Materials</Gated>
         </div>
         <WhyNot reasons={[['Check Your Materials', checkNo], ['Send Your Materials', sendNo]]} />
         {asked && (
           <div className="col gap-2">
-            <h3 className="eyebrow" style={{ margin: 0 }}>What His Office Asked For</h3>
+            <h3 className="eyebrow" style={{ margin: 0 }}>{`What ${officeTitle(agent)} Asked For`}</h3>
             <p className="small" style={{ margin: 0 }}>{nextStep(sim, person, agent)}</p>
-            <div><Gated feature="pro.supply_material" className="btn btn-sm" disabled={!!supplyNo} title={supplyNo} onClick={() => { const r = run('pro.supply_material', { agentId: agent.id }); if (r.ok) toast('What his office asked for went to it.', 'positive'); }}>Send What His Office Asked For</Gated></div>
-            <WhyNot reasons={[['Send What His Office Asked For', supplyNo]]} />
+            <div><Gated feature="pro.supply_material" className="btn btn-sm" disabled={!!supplyNo} title={supplyNo} onClick={() => { const r = run('pro.supply_material', { agentId: agent.id }); if (r.ok) toast(`What ${agent.words.office} asked for went to it.`, 'positive'); }}>{`Send What ${officeTitle(agent)} Asked For`}</Gated></div>
+            <WhyNot reasons={[[`Send What ${officeTitle(agent)} Asked For`, supplyNo]]} />
           </div>
         )}
-        <Fine>{`How long his office takes to answer (usually ${TIME_WORDS.reply}), and that no answer in ${TIME_WORDS.silence} counts as no, are assumed in the game. So is the wait before it looks again, ${COOLDOWN_WORDS.pass} after a pass and ${COOLDOWN_WORDS.silence} after no answer or a declined offer, and that it then looks only at something new.`}</Fine>
+        <Fine>{`How long ${agent.words.office} takes to answer (usually ${TIME_WORDS.reply}), and that no answer in ${TIME_WORDS.silence} counts as no, are assumed in the game. So is the wait before it looks again, ${COOLDOWN_WORDS.pass} after a pass and ${COOLDOWN_WORDS.silence} after no answer or a declined offer, and that it then looks only at something new.`}</Fine>
       </div>
     </Panel>
   );
@@ -179,7 +233,7 @@ function MeetingPanel({ agent }: { agent: Agent }) {
           <div><dt className="strong">Where</dt><dd style={{ margin: 0 }}>{m.where === 'office' ? `At ${agencyOf(agent).name}’s ${agencyOf(agent).office.city} office` : 'By video'}</dd></div>
           <div><dt className="strong">Moved</dt><dd style={{ margin: 0 }}>{m.moved ? 'Once already, so it can’t be moved again' : 'Not yet: it can be moved once'}</dd></div>
         </dl>
-        <div><Gated feature="pro.ask_to_move" className="btn btn-sm" disabled={!!no} title={no} onClick={() => { const r = run<{ at: number }>('pro.ask_to_move', { meetingId: m.id }); if (r.ok) toast(`His office moved the meeting to ${formatDateTime(r.value!.at, sim.zone)}.`, 'positive'); }}>Ask To Move</Gated></div>
+        <div><Gated feature="pro.ask_to_move" className="btn btn-sm" disabled={!!no} title={no} onClick={() => { const r = run<{ at: number }>('pro.ask_to_move', { meetingId: m.id }); if (r.ok) toast(`${capital(agent.words.office)} moved the meeting to ${formatDateTime(r.value!.at, sim.zone)}.`, 'positive'); }}>Ask To Move</Gated></div>
         <WhyNot reasons={[['Ask To Move', no]]} />
         <Fine>{`Missing it closes your approach, since a meeting comes before an offer in the game. That a meeting can be moved once, ${TIME_WORDS.move} on, is assumed, and so is the trip’s time.`}</Fine>
       </div>
@@ -214,7 +268,7 @@ function WhyPanel({ agent }: { agent: Agent }) {
   return (
     <Panel title="Why It Went This Way" help="career.reasons">
       <div className="col gap-3">
-        <p className="small" style={{ margin: 0 }}>{why ? `His office’s last decision was on ${formatDate(why.at, sim.zone)}. The game’s reasons for it are seven separate factors, each against a bar the game sets.` : 'His office hasn’t decided anything yet. The game’s reasons for a decision are seven separate factors, each against a bar the game sets.'}</p>
+        <p className="small" style={{ margin: 0 }}>{why ? `${capital(agent.words.office)}’s last decision was on ${formatDate(why.at, sim.zone)}. The game’s reasons for it are ${countWords(now.factors.length)} separate factors, each against a bar the game sets.` : `${capital(agent.words.office)} hasn’t decided anything yet. The game’s reasons for a decision are ${countWords(now.factors.length)} separate factors, each against a bar the game sets.`}</p>
         <div><Gated feature="ui.career-reasons" className="btn btn-sm" aria-expanded={open} onClick={() => setOpen((v) => !v)}>{open ? 'Hide The Reasons' : 'Show The Reasons'}</Gated></div>
         {open && (
           <div className="col gap-4">
@@ -222,17 +276,17 @@ function WhyPanel({ agent }: { agent: Agent }) {
               <div className="col gap-2">
                 <h3 className="eyebrow" style={{ margin: 0 }}>At The Last Decision</h3>
                 {rows(why.factors)}
-                <p className="small" style={{ margin: 0 }}>{`${ofSeven(why.atOrBeyond)} were at the bar or beyond, and an approach needs ${countWords(why.needed)}.${why.chance !== undefined ? ` Against the year’s other actors, the game gave ${why.step === 'decision' ? 'an offer' : 'it'} about a ${Math.round(why.chance * 100)}% chance.` : ''}`}</p>
+                <p className="small" style={{ margin: 0 }}>{`${ofAll(why.atOrBeyond, why.factors.length)} were at the bar or beyond, and an approach needs ${countWords(why.needed)}.${why.chance !== undefined ? ` Against the year’s other actors, the game gave ${why.step === 'decision' ? 'an offer' : 'it'} about a ${Math.round(why.chance * 100)}% chance.` : ''}`}</p>
               </div>
             )}
             <div className="col gap-2">
               <h3 className="eyebrow" style={{ margin: 0 }}>As Things Stand Now</h3>
               {rows(now.factors)}
-              <p className="small" style={{ margin: 0 }}>{`${ofSeven(now.atOrBeyond)} are at the bar or beyond, and an approach needs ${countWords(now.needed)}.${now.gate ? ` Against the year’s other actors, the game would give it about a ${Math.round(now.chance * 100)}% chance.` : ''}`}</p>
+              <p className="small" style={{ margin: 0 }}>{`${ofAll(now.atOrBeyond, now.factors.length)} are at the bar or beyond, and an approach needs ${countWords(now.needed)}.${now.gate ? ` Against the year’s other actors, the game would give it about a ${Math.round(now.chance * 100)}% chance.` : ''}`}</p>
             </div>
           </div>
         )}
-        <Fine>{`The bar, the ${countWords(GATE)} factors an approach needs and the chances are all the game’s own, none of them his. Better work raises the chance, and the game never makes it certain. Room On His List is drawn for each year and assumed.`}</Fine>
+        <Fine>{`The bar, the ${countWords(GATE)} factors an approach needs and the chances are all the game’s own, none of them ${agent.words.his}. Better work raises the chance, and the game never makes it certain. ${agent.roster ? 'Room On His List is drawn for each year and assumed.' : REAL_CHANCE_WORDS}`}</Fine>
       </div>
     </Panel>
   );
@@ -247,12 +301,14 @@ function AgreementPanel({ agent }: { agent: Agent }) {
   const ended = [...(person.pro?.agreements ?? [])].filter((a) => a.agentId === agent.id && a.status === 'ended').sort((a, b) => (b.endedAt ?? 0) - (a.endedAt ?? 0))[0];
   const shown = offered ?? inForce;
   const answerNo = answerRefusal(sim, person, agent);
+  // Accepting reads one agent at a time too (from 2026-10-24); declining never waits on another agreement.
+  const signNo = signRefusal(sim, person, agent);
   const ends: readonly [EndHow, string][] = [['agreement', 'End It By Agreement'], ['no-offer', `End It: No Offer In ${AGREEMENT.noOfferDays} Days`], ['too-little-work', `End It: Under ${capital(TEN)} Days’ Work`]];
   if (!shown && !ended) return null;
   return (
     <Panel title="The Agreement" help="career.agreement">
       <div className="col gap-3">
-        {offered && <p className="small" style={{ margin: 0 }}>{`He offered it on ${formatDate(offered.offeredAt, sim.zone)}, and the offer stands until ${formatDate(offered.standsUntil, sim.zone)}. Read every term before you answer.`}</p>}
+        {offered && <p className="small" style={{ margin: 0 }}>{`${capital(agent.words.he)} offered it on ${formatDate(offered.offeredAt, sim.zone)}, and the offer stands until ${formatDate(offered.standsUntil, sim.zone)}. Read every term before you answer.`}</p>}
         {inForce && <p className="small" style={{ margin: 0 }}>{`You signed it on ${formatDate(inForce.signedAt!, sim.zone)}. It runs until ${formatDate(inForce.endsAt!, sim.zone)}.`}</p>}
         {!shown && ended && <p className="small" style={{ margin: 0 }}>{`It ended on ${formatDate(ended.endedAt!, sim.zone)}. ${stillOwed(person, ended)}`}</p>}
         {shown && (
@@ -268,10 +324,10 @@ function AgreementPanel({ agent }: { agent: Agent }) {
         {offered && (
           <>
             <div className="row gap-2" style={{ flexWrap: 'wrap' }}>
-              <Gated feature="pro.accept_agreement" className="btn btn-sm" disabled={!!answerNo} title={answerNo} onClick={() => { const r = run('pro.accept_agreement', { agentId: agent.id }); if (r.ok) toast(`${agent.name} represents you from today.`, 'positive'); }}>Accept The Agreement</Gated>
+              <Gated feature="pro.accept_agreement" className="btn btn-sm" disabled={!!signNo} title={signNo} onClick={() => { const r = run('pro.accept_agreement', { agentId: agent.id }); if (r.ok) toast(`${agent.name} represents you from today.`, 'positive'); }}>Accept The Agreement</Gated>
               <Gated feature="pro.decline_agreement" className="btn btn-sm" disabled={!!answerNo} title={answerNo} onClick={() => { const r = run('pro.decline_agreement', { agentId: agent.id }); if (r.ok) toast('You declined the agreement.', 'neutral'); }}>Decline The Agreement</Gated>
             </div>
-            <WhyNot reasons={[['Accept The Agreement', answerNo], ['Decline The Agreement', answerNo]]} />
+            <WhyNot reasons={[['Accept The Agreement', signNo], ['Decline The Agreement', answerNo]]} />
           </>
         )}
         {inForce && (
@@ -285,7 +341,7 @@ function AgreementPanel({ agent }: { agent: Agent }) {
             <WhyNot reasons={ends.map(([how, label]) => [label, endRefusal(sim, person, agent, how)] as const)} />
           </>
         )}
-        <Fine>Each term marked A Published Rule follows the unions’ and New York’s published rules, with their sources in the game’s research. A term marked The Game’s Own Term is the game’s, and nothing here is his own agreement, which isn’t published.</Fine>
+        <Fine>Each term marked A Published Rule follows the unions’ and New York’s published rules, with their sources in the game’s research. {`A term marked The Game’s Own Term is the game’s, and nothing here is ${agent.words.his} own agreement, which isn’t published.`}</Fine>
       </div>
     </Panel>
   );
@@ -297,7 +353,7 @@ function HistoryPanel({ agent }: { agent: Agent }) {
   const person = useWorld((s) => s.player);
   const events = historyOf(person, agent);
   return (
-    <Panel title="History With His Office" help="career.agent-answers">
+    <Panel title={`History With ${officeTitle(agent)}`} help="career.agent-answers">
       {events.length
         ? <ul className="small" style={{ margin: 0, paddingLeft: '1.1rem' }}>{events.map((e) => <li key={e.id}>{`${formatDate(e.at, sim.zone)}: ${e.words}`}</li>)}</ul>
         : <p className="small" style={{ margin: 0 }}>None yet.</p>}
@@ -306,5 +362,10 @@ function HistoryPanel({ agent }: { agent: Agent }) {
 }
 
 const capital = (s: string): string => s.charAt(0).toUpperCase() + s.slice(1);
-/** How many of the seven factors, as a sentence opens on it: "None of the seven", "Four of the seven", "All seven". */
-const ofSeven = (n: number): string => (n >= 7 ? 'All seven' : n === 0 ? 'None of the seven' : `${capital(countWords(n))} of the seven`);
+/** A sentence without its full stop, to go on inside another. */
+const unstopped = (s: string): string => s.replace(/\.$/, '');
+/**
+ * How many of the factors, as a sentence opens on it: "None of the seven", "Four of the seven", "All seven". Seven for
+ * the game's own agent, six for a real one, whose list isn't a factor (from 2026-10-24; until then always seven).
+ */
+const ofAll = (n: number, of: number): string => (n >= of ? `All ${countWords(of)}` : n === 0 ? `None of the ${countWords(of)}` : `${capital(countWords(n))} of the ${countWords(of)}`);

@@ -173,5 +173,199 @@
     "ref": "tests/propay-screen.test.ts: 'PLAYER JOURNEY: a graduate with no work booked reads that work appears here, Equity’s bills and SAG-AFTRA’s first step, with Join SAG-AFTRA grayed and why under it'"
    }
   ]
+ },
+ {
+  "surface": "Career, Work: The Contract, its facts and its clauses, each only where it applies, and the series' seasons under it",
+  "where": "Career, the Work tab, an engagement's The Contract",
+  "sources": [
+   "src/ui/career/WorkPane.tsx#ContractFacts",
+   "src/ui/career/WorkPane.tsx#clauseWords",
+   "src/ui/career/WorkPane.tsx#BASIS",
+   "src/engine/systems/contracts.ts#BILLING",
+   "src/engine/systems/contracts.ts#NY",
+   "src/engine/content/series.ts#*",
+   "src/engine/systems/series.ts#NY",
+   "src/engine/systems/series.ts#decisionWords"
+  ],
+  "states": [
+   "first use",
+   "details",
+   "explanation",
+   "history"
+  ],
+  "outcome": "Revised",
+  "why": "New with brief 25's Module 4: each engagement's contract, made at acceptance, said in full, its estimate said as gross and never as cash, and only the clauses that apply.",
+  "changes": "The fold was The Agreement, the company and the venue; it's The Contract now, with when it was made, the part and its terms, the format and the season, the service dates, the pay and its basis, the estimated gross (“before withholding, commission and dues: an estimate of what you’ll earn, not money in your accounts”), each clause in a sentence, and the series' word on its seasons so far.",
+  "evidence": [
+   {
+    "kind": "test",
+    "ref": "tests/career-contracts.test.ts: 'makes each kind of work’s contract at acceptance, its estimate never cash'"
+   },
+   {
+    "kind": "test",
+    "ref": "tests/career-contracts.test.ts: 'pays the guaranteed episodes, never the season’s order, and a further episode only where it’s called for'"
+   }
+  ]
+ },
+ {
+  "surface": "Career, Work: each payment's State, Ask About It on an overdue one, and the per diem beside the wages",
+  "where": "Career, the Work tab, an engagement's Pay",
+  "sources": [
+   "src/ui/career/WorkPane.tsx#STATE_WORDS",
+   "src/engine/systems/contracts.ts#askRefusal",
+   "src/engine/systems/contracts.ts#registerContracts [problem]",
+   "src/engine/systems/contracts.ts#payPerDiem",
+   "src/engine/systems/contracts.ts#payPerDiem [paid]"
+  ],
+  "states": [
+   "ordinary",
+   "overdue",
+   "unavailable",
+   "confirmation",
+   "notification",
+   "details"
+  ],
+  "outcome": "Revised",
+  "why": "New with brief 25's Module 4: a payment's state read from its record and the clock, and the money a contract brings beside the wages.",
+  "changes": "Every payment not yet paid read “Promised. It comes into your accounts on the day it’s due.” until 2026-10-24; now a State column (Estimated, Earned, Due, Overdue, Disputed, Held For You, Settled, Deferred) with its words, the overtime it includes, the producer's contribution beside a paid one, Ask About It under an overdue one with its refusal said, the payments the work no longer owes in a line, and the per diem as its own line and notice.",
+  "evidence": [
+   {
+    "kind": "test",
+    "ref": "tests/career-contracts.test.ts: 'reads estimated, earned, due and settled from the record and the clock, and keeps the contribution off the player’s money'"
+   },
+   {
+    "kind": "test",
+    "ref": "tests/career-contracts.test.ts: 'marks a non-union producer’s late payment overdue, disputed once asked, and pays it once by the answer'"
+   },
+   {
+    "kind": "test",
+    "ref": "tests/career-contracts.test.ts: 'pays $60 a day away once home, with nothing withheld, not as wages, and not in a residual’s base'"
+   }
+  ]
+ },
+ {
+  "surface": "Career, Work: Residuals, and the notices of a telecast, a rerun and its residual",
+  "where": "Career, the Work tab, an engagement's Residuals; Home's notices",
+  "sources": [
+   "src/ui/career/WorkPane.tsx#ResidualView",
+   "src/engine/systems/contracts.ts#entitle [success]",
+   "src/engine/systems/contracts.ts#scheduleAir",
+   "src/engine/systems/contracts.ts#programWords",
+   "src/engine/systems/contracts.ts#calculationWords",
+   "src/engine/systems/contracts.ts#air",
+   "src/engine/systems/contracts.ts#air [success]",
+   "src/engine/systems/contracts.ts#settleResidual",
+   "src/engine/systems/contracts.ts#settleResidual [paid]"
+  ],
+  "states": [
+   "notification",
+   "success",
+   "details",
+   "explanation",
+   "history"
+  ],
+  "outcome": "Revised",
+  "why": "New with brief 25's Module 4: residuals in their four records, the first telecast paid by the salary and a rerun's residual paid once.",
+  "changes": "Written new: the entitlement's line, each telecast with its calculation and its settlement, the fine print saying which parts are the game's and which the agreement's, and the notices: “Your pay for the work covers its first telecast, so it pays nothing more.”, the rerun's residual worked out in the player's words, and its payment.",
+  "evidence": [
+   {
+    "kind": "test",
+    "ref": "tests/career-contracts.test.ts: 'makes the entitlement when the work is done, pays nothing for the first telecast, and pays a rerun’s residual once by its key'"
+   }
+  ]
+ },
+ {
+  "surface": "Home's notices: a recurring part's further episodes and its option, and the network's word on its series",
+  "where": "Home's notices; Career, the Work tab, What Happened",
+  "sources": [
+   "src/engine/systems/series.ts#scheduleSeason",
+   "src/engine/systems/series.ts#registerSeries <pro.series>",
+   "src/engine/systems/series.ts#registerSeries [problem]",
+   "src/engine/systems/series.ts#registerSeries",
+   "src/engine/systems/series.ts#registerSeries [booked]",
+   "src/engine/systems/projobs.ts#renewFromOption",
+   "src/engine/systems/projobs.ts#SEASON_HOOKS",
+   "src/engine/systems/projobs.ts#callOff"
+  ],
+  "states": [
+   "notification",
+   "success",
+   "setback",
+   "failure",
+   "history",
+   "explanation"
+  ],
+  "outcome": "Revised",
+  "why": "New with brief 25's Module 4: each turn of a season said when it comes, and why where the work doesn't come.",
+  "changes": "Written new: Called For Episode and Not In Episode (“An episode you aren’t called for isn’t paid: your contract guarantees only the episodes it names.”), the option taken up into the next version of the contract or let go, and the network's word: renewed (“That doesn’t bring you back by itself”), canceled with the casting closed and the work called off, and back.",
+  "evidence": [
+   {
+    "kind": "test",
+    "ref": "tests/career-contracts.test.ts: 'T89 and T90: takes up its option into the next version of the contract, or lets it lapse once'"
+   },
+   {
+    "kind": "test",
+    "ref": "tests/career-contracts.test.ts: 'T10, T91, T90, T59, T93, T100: canceled, it closes a casting, calls off work not yet done, keeps what was earned, lapses the option once; revived, it casts again with the old work as it was'"
+   },
+   {
+    "kind": "test",
+    "ref": "tests/career-contracts.test.ts: 'T62 and T85: a renewal brings no engagement by itself'"
+   }
+  ]
+ },
+ {
+  "surface": "Career, Opportunities and What Needs You: an offer's terms said with its pay, and a recurring part's episodes on the calendar",
+  "where": "Career, the Opportunities tab, an offer; What Needs You on Home; the calendar",
+  "sources": [
+   "src/engine/systems/projobs.ts#termsWords",
+   "src/engine/systems/projobs.ts#episodeOn"
+  ],
+  "states": [
+   "first use",
+   "details",
+   "recommendation"
+  ],
+  "outcome": "Revised",
+  "why": "New with brief 25's Module 4: what a contract adds to the pay, said in the offer before it's accepted.",
+  "changes": "Written new: a day performer's overtime (“Each shoot day runs eleven hours with an hour for lunch, so its last two hours of work are overtime at time and one-half”), and a recurring part's guarantee, further episodes and option; each episode's shoot days named with the episode on the calendar.",
+  "evidence": [
+   {
+    "kind": "test",
+    "ref": "tests/career-contracts.test.ts: 'pays the ninth and tenth hours of each eleven-hour day at time and one-half, an hour an eighth of the day, as the agreement’s own example'"
+   },
+   {
+    "kind": "test",
+    "ref": "tests/career-contracts.test.ts: 'PLAYER JOURNEY: put up by the agent, offered the part with its terms, accepted, worked with overtime, called or not for more, paid less commission, its option decided, its episode on the air; saved and loaded at each stage'"
+   }
+  ]
+ },
+ {
+  "surface": "Career, Work: The Contract's rules for how the work is done, and the residuals the game doesn't read",
+  "where": "Career, the Work tab, an engagement's The Contract",
+  "sources": [
+   "src/engine/systems/contracts.ts#workflowRules [rule]",
+   "src/engine/systems/contracts.ts#RESIDUALS_UNREAD"
+  ],
+  "states": [
+   "details",
+   "explanation"
+  ],
+  "outcome": "Revised",
+  "why": "New with brief 25's Module 5: each rule a kind of work carries is said in the contract in the agreement's terms, last among the clauses, the game's assumption said as its own (the dub's rule on vocally stressful lines applied to animation); a residual the game doesn't follow says so, never zero said as a figure.",
+  "changes": "The clauses gained the workflow's rules: the multicamera week paid from the first rehearsal, the dub's days by characters and lines, the stressful lines, the days-only capture and animated feature, the stunts, the intimate scene, the recall to loop and voice-over outside an agent's agreement.",
+  "evidence": [
+   {
+    "kind": "test",
+    "ref": "tests/career-workflows-screen.test.ts: 'WF-21, WF-24, CONT-01, PLAYER JOURNEY: a voice session, a multicamera week and an action shoot'"
+   },
+   {
+    "kind": "test",
+    "ref": "tests/career-workflows.test.ts: 'WF-13: a dub day’s pay by its characters and lines'"
+   },
+   {
+    "kind": "test",
+    "ref": "tests/career-workflows.test.ts: 'WF-10: a table read, three days of rehearsal and camera blocking and a tape night'"
+   }
+  ]
  }
 ]

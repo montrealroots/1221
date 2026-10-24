@@ -86,9 +86,12 @@ const pct = (x: number): string => `${+(x * 100).toFixed(2)}%`;
 const andList = (items: readonly string[]): string => (items.length < 2 ? items.join('') : `${items.slice(0, -1).join(', ')} and ${items[items.length - 1]}`);
 /** A month and day, month first, the way the game writes a date: [4, 30] is April 30. */
 const monthDay = ([month, day]: readonly [number, number]): string => `${MONTH_NAMES[month - 1]} ${day}`;
-/** The agent the Representation chapter names, and his agency: `AGENTS`' one entry (brief 19). */
+/** The agent the Representation chapter names first, and his agency: `AGENTS`' first entry, the game's own (brief 19). */
 const PRO_AGENT = AGENTS[0]!;
 const PRO_AGENCY = agencyOf(PRO_AGENT);
+/** The real agents beside him, and their office (from 2026-10-24, brief 25's Module 3). */
+const PRO_REAL = AGENTS.filter((a) => a.real);
+const PRO_REAL_OFFICE = agencyOf(PRO_REAL[0]!);
 const PRO_BAR = BAND_LABEL[REFERRAL_BAND];
 /** The banks whose card plan costs nothing for its life when made while the introductory rate runs. */
 const PLAN_FREE_AT = [...PLAN_FREE_IN_INTRO].map((id) => bankById(id)?.name ?? id);
@@ -485,17 +488,17 @@ export const CHAPTERS: readonly Chapter[] = [
   {
     id: 'representation',
     title: 'Representation',
-    lead: 'The agent, how to reach him, why his office decides as it does, and the agreement.',
+    lead: 'The agents, how to reach one, why an office decides as it does, and the agreement.',
     body: [
-      `Career’s Representation tab holds the game’s one agent, ${PRO_AGENT.name}, at ${PRO_AGENCY.name} in ${PRO_AGENCY.office.city}. He and the agency are invented for the game. His panel opens with a notice that says so: read it, then press I’ve Read This. Read The Notice Again shows it whenever you want it.`,
-      `His office takes no submissions it hasn’t asked for. It takes your materials only through the School’s follow-up after the showcase, or a referral from someone you’ve worked with. He never gets in touch first.`,
+      `Career’s Representation tab lists the agents under Agents, and Show opens one. ${PRO_AGENT.name}, at ${PRO_AGENCY.name} in ${PRO_AGENCY.office.city}, is invented for the game, as his agency is. ${andList(PRO_REAL.map((a) => a.name))} are real theatrical agents at ${PRO_REAL_OFFICE.name}’s ${PRO_REAL_OFFICE.office.city} office, as its own page names them, and what happens between you and them is the game’s invention. Each agent’s panel opens with a notice that says which: read it, then press I’ve Read This. Read The Notice Again shows it whenever you want it.`,
+      `${PRO_AGENT.name}’s office takes no submissions it hasn’t asked for: it takes your materials only through the School’s follow-up after the showcase, or a referral from someone you’ve worked with. ${PRO_REAL_OFFICE.name}’s office takes no unsolicited submissions, so a referral is the one way in there. No agent gets in touch first. Agencies, at the foot of the tab, says what the other agencies’ own pages say, and why no one there is in the game.`,
       'Press Check Your Materials first. If your headshots or your résumé are missing, it says so and where to make them, and nothing can be sent until they exist.',
-      `For a referral, press Ask For A Referral beside a finished job under How To Reach Him: its work has to be judged ${PRO_BAR} or better. After the showcase, the School follows up on its own, and its notice says whether his office asked to meet you.`,
-      `Then press Send Your Materials. His office answers in about ${counted(PRO_TIMES.replyDays / 7, 'week')}: it asks for more, asks to meet, passes, or doesn’t answer at all, which after ${counted(PRO_TIMES.silenceDays / 7, 'week')} counts as no. Each answer comes as a notice, and History With His Office keeps every step.`,
-      `When it asks for more, make what it asked for on the Portfolio tab and press Send What His Office Asked For by its date. A meeting goes on your calendar, and the clock stops at it. If you can’t make it, Ask To Move moves it ${PRO_TIMES.moveDays === 7 ? 'a week' : plural(PRO_TIMES.moveDays, 'day')}, once. A meeting missed closes the approach.`,
-      `Why It Went This Way gives the game’s reasons for each decision, seven separate factors against a bar the game sets: your work, stage and screen, training, fit with his department, availability, room on his list and reliability. An approach needs ${word(PRO_GATE)} at the bar or beyond, then a chance against the year’s other actors. Better work raises it, and it’s never certain.`,
-      `After a pass, his office looks again only after ${PRO_HOLDS.pass}, and after no answer or a declined offer ${PRO_HOLDS.silence}, and then only at something new: a new credit, a better reel or a referral.`,
-      'If he offers to represent you, The Agreement shows every term first, each marked A Published Rule or The Game’s Own Term. Press Accept The Agreement or Decline The Agreement before the offer lapses. Signing doesn’t change your place at the School or your permission to work.',
+      `For a referral, press Ask For A Referral beside a finished job under How To Reach: its work has to be judged ${PRO_BAR} or better. After the showcase, the School follows up on its own, and its notice says whether ${PRO_AGENT.name}’s office asked to meet you.`,
+      `Then press Send Your Materials. The office answers in about ${counted(PRO_TIMES.replyDays / 7, 'week')}: it asks for more, asks to meet, passes, or doesn’t answer at all, which after ${counted(PRO_TIMES.silenceDays / 7, 'week')} counts as no. Each answer comes as a notice, and the agent’s History panel keeps every step.`,
+      `When it asks for more, make what it asked for on the Portfolio tab and press Send What His Office Asked For, or Send What The Office Asked For for a real agent, by its date. A meeting goes on your calendar, and the clock stops at it. If you can’t make it, Ask To Move moves it ${PRO_TIMES.moveDays === 7 ? 'a week' : plural(PRO_TIMES.moveDays, 'day')}, once. A meeting missed closes the approach.`,
+      `Why It Went This Way gives the game’s reasons for each decision, factor by factor, each against a bar the game sets: your work, stage and screen, training, fit with the department, availability and reliability, and for ${PRO_AGENT.name} the room on his list, which the game assumes. An approach needs ${word(PRO_GATE)} at the bar or beyond, then a chance against the year’s other actors. Better work raises it, and it’s never certain.`,
+      `After a pass, the office looks again only after ${PRO_HOLDS.pass}, and after no answer or a declined offer ${PRO_HOLDS.silence}, and then only at something new: a new credit, a better reel or a referral.`,
+      'If an agent offers to represent you, The Agreement shows every term first, each marked A Published Rule or The Game’s Own Term. Press Accept The Agreement or Decline The Agreement before the offer lapses. Signing doesn’t change your place at the School or your permission to work, and you have one agent at a time: another’s agreement can’t start while one runs.',
       `While it runs, End It By Agreement ends it at once. End It: No Offer In ${PRO_AGREEMENT.noOfferDays} Days and End It: Under ${PRO_TEN.charAt(0).toUpperCase()}${PRO_TEN.slice(1)} Days’ Work follow Equity’s and SAG-AFTRA’s rules, and each grayed button says when it can. When it ends, commission stays owed on contracts made while it ran.`,
       // Until 2026-10-21's merge of the work loop this sent the player to Papers' chapter; “Finding Work” comes between.
       'Read “Finding Work” next. It opens the Opportunities tab: the roles you can be seen for, auditions and offers.',
@@ -514,7 +517,7 @@ export const CHAPTERS: readonly Chapter[] = [
     title: 'Finding Work',
     lead: 'Roles to be seen for, submissions, auditions, offers and the work itself, with or without an agent.',
     body: [
-      `The Career screen’s Opportunities tab lists the roles you can be seen for. Every project, company and casting office on it is invented for the game. New roles go up each Monday morning, and each takes submissions for ${counted(PRO_WORK.submitDays, 'day')}.`,
+      `The Career screen’s Opportunities tab lists the roles you can be seen for. Their projects, companies and casting offices are invented for the game, except a few parts drawn from real productions, which say so. New roles go up each Monday morning, and each takes submissions for ${counted(PRO_WORK.submitDays, 'day')}.`,
       'Each role says its project, the part, what it asks, its dates and place, the pay, and whether you can be seen for it. Some casting offices take actors only through an agent: those roles reach you only while an agent represents you, and the agent submits you for them.',
       'To put yourself up for an open role, press Submit Yourself. A submission sends your headshots and résumé, and a reel where casting asks for one. If something’s missing, the line under the button says what, and where to make it.',
       `${counted(PRO_WORK.replyDays, 'day').replace(/^./, (c) => c.toUpperCase())} later the casting office answers with an audition: in person in ${PRO_AUDITION_TOWNS} at a set time, with the trip there, or a self-tape due by an evening. An audition in person goes on your calendar.`,
@@ -525,6 +528,13 @@ export const CHAPTERS: readonly Chapter[] = [
       'Prepare the part under Booked Work. Each work day stops the clock: press Go to be there. Each day is judged, and the part goes on your professional credits. Miss a shoot day, or a second day of a run, and the production replaces you.',
       `While you’re at the School, work in term needs its approval. Press Ask The School at least ${counted(PRO_OUTSIDE.aheadDays / 7, 'week')} before the first day, and the dean decides a week later. Short, professional work that takes no School call and ${counted(PRO_OUTSIDE.mostClassDays, 'class day')} at most is approved. Work taken in term without approval brings an academic warning, and a second time dismissal.`,
       'On an F-1 you can’t accept work outside the School while you’re a student, and the School can’t authorize it. Summer and the winter break are yours, unless the School holds you for one of its calls.',
+      'Some roles are abroad. Accepting one is the contract, not permission to work there: for work in Australia, press Apply For The Visa on the engagement under Work, and be awake for the car to the airport when the clock stops for it.',
+      // From 2026-10-24 (brief 25's Module 4): the contract, each payment's state and a recurring part's season.
+      'Each engagement on the Work tab has its contract under The Contract: the part, the dates, the pay and only the terms that apply, such as overtime, residuals or an option. Its estimated pay isn’t money in your accounts. Each payment says where it stands, from Estimated to Settled. If one is overdue, press Ask About It.',
+      // From 2026-10-24 (brief 25's Module 5): how each kind of work is done.
+      'Each kind of work is done its own way, and How The Work Is Done on the engagement says how: its days, its preparation and the choices it asks of you, such as Ask For Another Take on a shoot day or Use The Double for a stunt. After each day it keeps that day’s report.',
+      // From 2026-10-24 (brief 25's Module 6): the charts, the Emmy Awards and Sundance.
+      'Charts And Awards, on the Career screen, says what each part on television is eligible for at the Emmy Awards. Press Enter Yourself before the entry deadline to enter it, or the production may. A film goes to Sundance only if its production submits it. When an award you’re nominated for is presented, press Watch The Ceremony, or just read the result. The tab also shows your films’ weeks in cinemas and the weekly charts Box Office Mojo, Netflix and Nielsen publish.',
       'Read “Cover, Benefits And Returns” next. It opens Papers: your health cover, benefits and tax returns.',
     ],
     more: [
@@ -532,8 +542,8 @@ export const CHAPTERS: readonly Chapter[] = [
       `The School’s rule is its Bulletin’s. Asking ${PRO_OUTSIDE.aheadDays} days ahead, ${PRO_OUTSIDE.mostDays} working days at most, ${counted(PRO_OUTSIDE.mostClassDays, 'class day')} at most, a student film not counting as professional work, and the dean’s week are the game’s readings of its words.`,
       'An agent represents you only under an agreement you accept. While it’s in force the agent submits you for the roles a casting office releases to agents, asks for scale plus ten on SAG-AFTRA work at the minimum, and passes on every answer and offer.',
     ],
-    names: ['Opportunities', 'Submit Yourself', `${PRO_STEPS}`, 'Tape It', 'Ask For Another Time', 'Accept The Offer and Decline The Offer', 'Ask The School'],
-    opens: ['pro.submit', 'pro.prepare', 'pro.tape_audition', 'pro.move_audition', 'pro.accept_offer', 'pro.decline_offer', 'pro.request_outside_work'],
+    names: ['Opportunities', 'Submit Yourself', `${PRO_STEPS}`, 'Tape It', 'Ask For Another Time', 'Accept The Offer and Decline The Offer', 'Ask The School', 'Apply For The Visa', 'Ask About It', 'Ask For Another Take', 'Use The Double', 'Enter Yourself', 'Watch The Ceremony'],
+    opens: ['pro.submit', 'pro.prepare', 'pro.tape_audition', 'pro.move_audition', 'pro.accept_offer', 'pro.decline_offer', 'pro.request_outside_work', 'pro.apply_work_visa', 'pro.ask_pay', 'pro.work_choice', 'pro.award_enter', 'pro.watch_ceremony'],
   },
   // Until 2026-10-12 this chapter opened enrollment only after Yale Health had ended, with a gap before the new cover,
   // and counted a plan dropped or left unpaid as cover lost (`mayEnroll`, `healthMonth`); offered Mexico City's Seguro de

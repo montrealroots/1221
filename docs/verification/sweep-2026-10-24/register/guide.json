@@ -411,6 +411,27 @@
    "tests/time-controls.test.ts the shell’s, the guide’s and the decisions’ 55 test files, run on 86890e43: all green; tests/b26-needs-repeats.test.ts, a question raised twice, answered and dismissed twice, marked read twice, left to its date and reloaded, green"
   ]
  },
+ "promise.career.awards>career.offers": {
+  "status": "Not Tested"
+ },
+ "promise.career.awards>career.workflows": {
+  "status": "Not Tested"
+ },
+ "promise.career.contracts>career.offers": {
+  "status": "Not Tested"
+ },
+ "promise.career.contracts>career.pay": {
+  "status": "Not Tested"
+ },
+ "promise.career.contracts>career.unions": {
+  "status": "Not Tested"
+ },
+ "promise.career.workflows>career.contracts": {
+  "status": "Not Tested"
+ },
+ "promise.career.workflows>career.pay": {
+  "status": "Not Tested"
+ },
  "promise.start.find>day.needs": {
   "status": "Verified",
   "by": [

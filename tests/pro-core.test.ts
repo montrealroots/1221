@@ -413,9 +413,10 @@ describe('the history and the bounds', () => {
 });
 
 describe('the agent and the work, as data', () => {
-  it('holds one fictional agent and agency, the game’s rule on submissions, the routes it allows and the notice that says they’re invented', () => {
+  it('holds the game’s own agent and agency, the game’s rule on submissions, the routes it allows and the notice that says they’re invented', () => {
     // Until 2026-10-21 the agent was a real person, held only as published and quoted; the owner chose a fictional one.
-    expect(AGENTS).toHaveLength(1);
+    // Until 2026-10-24 he was the only agent; brief 25's Module 3 put the real ones beside him (tests/career-agents.test.ts).
+    expect(AGENTS.filter((a) => !a.real).map((a) => a.id)).toEqual(['thomas-ashgrove']);
     const agent = agentById('thomas-ashgrove')!;
     const agency = agencyOf(agent);
     expect([agent.name, agency.name, agency.office.city, agency.department.called]).toEqual(['Thomas Ashgrove', 'Halberd Talent', 'New York', 'Legit']);
@@ -423,13 +424,15 @@ describe('the agent and the work, as data', () => {
     expect(agency.policy.words).toBe('His office takes no submissions it hasn’t asked for.');
     expect(agency.policy.unsolicited).toBe('refused');
     expect(agent.routes).toEqual(['showcase', 'referral']);
-    expect(agent.notice).toBe('Thomas Ashgrove and Halberd Talent are invented for the game, as every agency, project and casting office in it is. His office takes no submissions it hasn’t asked for: it sees your materials through the School’s follow-up after the showcase, or a referral from someone you’ve worked with. He never gets in touch first.');
-    expect(agent.roster.basis).toBe('assumption');
+    expect(agent.notice).toBe('Thomas Ashgrove and Halberd Talent are invented for the game. His office takes no submissions it hasn’t asked for: it sees your materials through the School’s follow-up after the showcase, or a referral from someone you’ve worked with. He never gets in touch first.');
+    expect(agent.roster!.basis).toBe('assumption');
     // Nothing private: no contact detail of any kind in the agent's or the agency's data.
     const text = JSON.stringify([AGENTS, AGENCIES]);
     expect(text).not.toMatch(/@|\bphone\b|\(\d{3}\) ?\d{3}-\d{4}|\b\d{3}[-.]\d{3}[-.]\d{4}\b|\bStreet\b|\bAvenue\b|\bclients?\b/i);
-    // Nor the real agent's or agency's names, nor their pages (the research keeps them, as history).
-    expect(text).not.toMatch(/Parente|Stewart Talent|stewarttalent|https?:/);
+    // Nor the real agent brief 19 depicted, nor the agency's pages (the research keeps them, as history).
+    // Until 2026-10-24 Stewart Talent couldn't appear either; from then its New York office and four of its agents do, at
+    // the owner's word ("Use real agents."), and Jordan Parente still doesn't (tests/career-agents.test.ts).
+    expect(text).not.toMatch(/Parente|stewarttalent|https?:/);
   });
 
   it('prices each SAG-AFTRA day rate by its contract year, Low Budget at 65% and Ultra Low Budget at 20% of the day performer’s, and holds the rest at the figure on file', () => {
@@ -462,14 +465,21 @@ describe('the agent and the work, as data', () => {
     expect(files.filter((f) => /Parente|jordan-parente|Stewart Talent|Ashgrove|thomas-ashgrove|Halberd/.test(readFileSync(f, 'utf8')))).toEqual([]);
   });
 
-  it('writes each part for an actor, an actress or either, three for either and four for each, so an actor and an actress each have a part in all seven projects, of every size and kind as often (the owner’s word, 2026-10-21)', () => {
+  it('writes each part for an actor, an actress or either, six for either and five for each, so an actor and an actress each have a part in all ten projects, of every size and kind as often (the owner’s word, 2026-10-21)', () => {
     const forWhom = (title: 'actor' | 'actress') => PROJECTS.filter((p) => p.role.for === 'either' || p.role.for === title);
-    expect(PROJECTS.map((p) => p.role.for).sort()).toEqual([...Array(3).fill('either'), ...Array(4).fill('actor'), ...Array(4).fill('actress')].sort());
+    // Four for each until 2026-10-23, when brief 25's Sydney feature, Harbor Line, brought a part for each; three for
+    // either until its Module 2 drew a part for either from each of two real series, and five until its Module 4 brought
+    // a recurring part in The Calloway Files, for either, and six until its Module 5 brought fifteen parts in thirteen
+    // projects, one or more for each way of working, every one for either.
+    expect(PROJECTS.map((p) => p.role.for).sort()).toEqual([...Array(21).fill('either'), ...Array(5).fill('actor'), ...Array(5).fill('actress')].sort());
     const actor = forWhom('actor');
     const actress = forWhom('actress');
     // Each sees every project once, and the same kinds, sizes, ways in and pay: the counterpart is the same work for the other.
-    for (const seen of [actor, actress]) expect(seen.map((p) => p.project).sort()).toEqual([...new Set(PROJECTS.map((p) => p.project))].sort());
-    const shape = (p: (typeof PROJECTS)[number]) => JSON.stringify([p.project, p.kind, p.role.size, p.role.task, p.role.stakes, p.access, p.pay, p.stages, p.schedule, p.place]);
+    // Every project at least once: The Calloway Files twice from 2026-10-24, its recurring part beside the co-star's, both
+    // for either.
+    for (const seen of [actor, actress]) expect([...new Set(seen.map((p) => p.project))].sort()).toEqual([...new Set(PROJECTS.map((p) => p.project))].sort());
+    expect(new Set(PROJECTS.map((p) => p.project)).size).toBe(23);
+    const shape = (p: (typeof PROJECTS)[number]) => JSON.stringify([p.project, p.kind, p.role.size, p.role.stakes, p.access, p.pay, p.stages, p.schedule, p.place]);
     expect(actor.map(shape).sort()).toEqual(actress.map(shape).sort());
     // A part written for one is its own person, not the other renamed: its own name and its own breakdown.
     for (const p of PROJECTS.filter((x) => x.role.for !== 'either')) {
@@ -484,31 +494,47 @@ describe('the agent and the work, as data', () => {
 
   it('names no part as the School names a classmate, so an audition’s notice can’t read as a classmate’s (Theo, Felix since, and Owen, Callum since, until the app’s walks found them, 2026-10-21)', () => {
     const given = new Set([...GIVEN_ACTOR, ...GIVEN_ACTRESS]);
-    expect(PROJECTS.map((p) => p.role.part.split(' ')[0]!).filter((first) => given.has(first))).toEqual([]);
+    // A part named for what it is ("The Upstairs Neighbor", "An Oyster Tonger Of 1890", from 2026-10-24, brief 25's
+    // Module 5) is read from the word after its article: "The" is nobody's name, though "Theo" begins with it.
+    const firstOf = (part: string): string => { const words = part.split(' '); return /^(The|An|A)$/.test(words[0]!) ? words[1]! : words[0]!; };
+    expect(PROJECTS.map((p) => firstOf(p.role.part)).filter((first) => given.has(first))).toEqual([]);
     // Nor as the short form of one, or one as the short form of a part (from 2026-10-21, brief 20: Sam, Robin since, and
     // the classmate Samuel, whose notices read "Samuel: A Request For Help" beside "A Self-Tape For Sam").
-    const near = PROJECTS.map((p) => p.role.part.split(' ')[0]!).filter((first) => [...given].some((g) => g.startsWith(first) || first.startsWith(g)));
+    const near = PROJECTS.map((p) => firstOf(p.role.part)).filter((first) => [...given].some((g) => g.startsWith(first) || first.startsWith(g)));
     expect(near).toEqual([]);
   });
 
   it('says Equity’s 90 days one way in the agreement’s Ending It term, the button’s refusal, the ending’s record and the guide: no real offer of covered work through him', () => {
-    expect(AGREEMENT_TERMS.find((t) => t.id === 'termination')!.words).toContain('if 90 days pass with no real offer of covered work through him,');
-    expect(readFileSync('src/engine/systems/proagent.ts', 'utf8').match(/no real offer of covered work[^`’,.]*/g)!.map((x) => x.trim())).toEqual(Array(2).fill('no real offer of covered work through him'));
-    expect(readFileSync('src/engine/content/guide/career.ts', 'utf8').match(/no real offer of covered work[^`’,.]*/g)!.map((x) => x.trim())).toEqual(Array(2).fill('no real offer of covered work through him'));
+    // The term is every agent's, so it names none (from 2026-10-24, brief 25's Module 3; until then "through him").
+    expect(AGREEMENT_TERMS.find((t) => t.id === 'termination')!.words).toContain('if 90 days pass with no real offer of covered work through the agent,');
+    // The engine's two say it in the agent's words (from 2026-10-24): "through him" for the game's own agent, the name for
+    // a real one, which tests/career-agents.test.ts holds.
+    expect(readFileSync('src/engine/systems/proagent.ts', 'utf8').match(/no real offer of covered work[^`’,.]*/g)!.map((x) => x.trim())).toEqual(Array(2).fill('no real offer of covered work through ${agent'));
+    // The guide says the rule of any agent, and quotes the game's own words to Thomas Ashgrove's client (from 2026-10-24).
+    expect(readFileSync('src/engine/content/guide/career.ts', 'utf8').match(/no real offer of covered work[^`’,.]*/g)!.map((x) => x.trim())).toEqual(['no real offer of covered work through the agent', 'no real offer of covered work through him']);
   });
 
-  it('gives every project a fictional company and casting office, the game’s genres, a rate that is verified or assumed, and every agreement term a basis', () => {
-    // Seven projects, one of each kind, some with a part for each (from 2026-10-21): the kinds read once a project.
-    expect([...new Set(PROJECTS.map((p) => p.kind))]).toEqual(['off-broadway', 'lort', 'network-drama', 'low-budget', 'ultra-low-budget', 'student-film', 'non-union-short']);
-    expect(new Set(PROJECTS.map((p) => p.project)).size).toBe(7);
+  it('gives every project a fictional company and casting office but a part drawn from a real production, the game’s genres, a rate that is verified or assumed, and every agreement term a basis', () => {
+    // Ten projects, some with a part for each (from 2026-10-21): the kinds read once a project. Seven until 2026-10-23,
+    // when brief 25 added the Sydney feature, and eight until its Module 2 drew parts from 9-1-1 and Abbott Elementary,
+    // the second of them the first network comedy; ten until its Module 5 brought a project for each way of working.
+    expect([...new Set(PROJECTS.map((p) => p.kind))]).toEqual([
+      'off-broadway', 'lort', 'network-drama', 'low-budget', 'ultra-low-budget', 'student-film', 'non-union-short', 'overseas-feature',
+      'multicam-comedy', 'animated-series', 'animated-feature', 'dub', 'capture-feature', 'documentary', 'musical', 'action-feature', 'limited-series',
+      'serialized-drama', 'serialized-comedy', 'anthology', 'tv-movie', 'network-comedy',
+    ]);
+    expect(new Set(PROJECTS.map((p) => p.project)).size).toBe(23);
     for (const p of PROJECTS) {
-      expect(p.fictional).toBe(true);
+      // A drawn part's production and company are real, and it says the part is the game's (tests/career-drawn.test.ts).
+      expect(p.fictional).toBe(!p.drawn);
       const rate = RATES[p.pay];
       expect(['verified', 'assumption']).toContain(rate.basis);
       if (rate.basis === 'verified') expect(rate.source).toBeDefined();
       else expect(rate.words).toMatch(/estimated/);
     }
-    expect([...new Set(PROJECTS.filter((p) => p.access.open).map((p) => p.kind))]).toEqual(['lort', 'ultra-low-budget', 'student-film', 'non-union-short']);
+    // The Sydney feature takes self-tapes from anyone in the US (from 2026-10-23, brief 25): outside an agent's agreement.
+    // And from Module 5 the voice-over work an agent's agreement leaves out, a documentary's reenactment and a musical's Equity call.
+    expect([...new Set(PROJECTS.filter((p) => p.access.open).map((p) => p.kind))]).toEqual(['lort', 'ultra-low-budget', 'student-film', 'non-union-short', 'overseas-feature', 'animated-series', 'animated-feature', 'dub', 'documentary', 'musical']);
     for (const t of AGREEMENT_TERMS) expect(['verified', 'simulation']).toContain(t.basis);
     expect(AGREEMENT_TERMS.filter((t) => t.basis === 'verified').every((t) => (t.sources ?? []).length > 0)).toBe(true);
   });

@@ -150,6 +150,21 @@ export const agentsOpen = (): readonly Agent[] => AGENTS;
 /** His office, as a sentence names it: his name and his agency's, "<name>’s office at <agency>". */
 export const officeOf = (agent: Agent): string => `${agent.name}’s office at ${agencyOf(agent).name}`;
 
+/**
+ * The agent in the player's words (from 2026-10-24, brief 25's Module 3, A7): the game's own agent by his pronouns
+ * (`agent.words`), a real one, whose pronouns the pages don't give, by name: "Dan Patack has offered", "How To Reach Dan
+ * Patack", "Send What The Office Asked For". Until then every sentence here said "he" and "his office" of the one agent.
+ */
+const hasDone = (agent: Agent): string => (agent.real ? `${agent.name} has` : 'He’s');
+/**
+ * The ways in an agent's office takes, in words: the School's follow-up and a referral for the game's own agent, a
+ * referral alone for a real one, which of the showcase's audience the pages don't say (Module 3, A4).
+ */
+const shows = (agent: Agent): boolean => agent.routes.includes('showcase');
+export const routesWords = (agent: Agent): string => (shows(agent) ? 'the School’s follow-up after the showcase, or a referral from someone you’ve worked with' : 'a referral from someone you’ve worked with');
+export const himTitle = (agent: Agent): string => (agent.real ? agent.name : 'Him');
+export const officeTitle = (agent: Agent): string => (agent.real ? 'The Office' : 'His Office');
+
 /** The relation with an agent, where there is one. */
 export const relationOf = (person: Person, agentId: AgentId): AgentRelation | undefined => person.pro?.relations[agentId];
 
@@ -214,6 +229,15 @@ export const FACTOR_LABEL: Readonly<Record<FactorId, string>> = {
   work: 'Your Work', relevance: 'Stage And Screen', training: 'Training And Experience', fit: 'Fit With His Department',
   availability: 'Availability', roster: 'Room On His List (Assumed)', reliability: 'Reliability',
 };
+/** A factor's label for an agent: a real one's department is "the department", and a real one has no room assumed. */
+export const factorLabel = (agent: Agent, id: FactorId): string => (agent.real && id === 'fit' ? 'Fit With The Department' : FACTOR_LABEL[id]);
+
+/**
+ * ASSUMPTION, the game's, and the same for every real agent, never a fact about one: with no list known, the chances
+ * read room as at the bar (`CHANCE.room.at`), and the room isn't a factor (from 2026-10-24, brief 25's Module 3, A5).
+ */
+export const REAL_ROOM: Level = 'at';
+export const REAL_CHANCE_WORDS = 'How likely an office is to take you further is the game’s assumption, the same for every real agent in it: it isn’t a fact about this one, whose list the game doesn’t know.';
 
 export interface Interest {
   factors: Factor[];
@@ -253,7 +277,10 @@ function workSeen(person: Person, rel: AgentRelation | undefined, reelId?: ProId
 
 /** The field of his department a project's kind is in. */
 const FIELD_OF: Readonly<Record<ProjectKind, AgentField>> = {
-  'off-broadway': 'off-broadway', lort: 'regional', 'network-drama': 'television', 'low-budget': 'film', 'ultra-low-budget': 'film', 'student-film': 'film', 'non-union-short': 'film',
+  'off-broadway': 'off-broadway', lort: 'regional', 'network-drama': 'television', 'low-budget': 'film', 'ultra-low-budget': 'film', 'student-film': 'film', 'non-union-short': 'film', 'overseas-feature': 'film', 'network-comedy': 'television',
+  // From 2026-10-24 (brief 25's Module 5), the kinds the workflows brought, by their medium, a musical as a regional theater's.
+  'multicam-comedy': 'television', 'animated-series': 'television', 'animated-feature': 'film', dub: 'television', 'capture-feature': 'film', documentary: 'television',
+  musical: 'regional', 'action-feature': 'film', 'limited-series': 'television', 'serialized-drama': 'television', 'serialized-comedy': 'television', anthology: 'television', 'tv-movie': 'television',
 };
 
 /** The billing the record shows the player in: the biggest part among the School's credits and the jobs, a featured one with none. */
@@ -271,12 +298,15 @@ const BILLING_WORDS: Readonly<Record<PartSize, string>> = { lead: 'a lead', supp
  * agent and the year (decider `pro.roster`). The game's assumption, never his (`agent.roster.words`).
  */
 export function rosterFor(sim: Simulation, agent: Agent, year: number): RosterOpening[] {
+  const roster = agent.roster;
+  // A real agent's list isn't known, so there's nothing to draw (Module 3, REP-10).
+  if (!roster) return [];
   const rng = sim.rng('pro.agent', agent.id, 'roster', year);
-  const [least, most] = agent.roster.openingsPerYear;
+  const [least, most] = roster.openingsPerYear;
   const n = least + Math.floor(rng.next() * (most - least + 1));
   const counts = new Map<number, number>();
-  for (let i = 0; i < n; i += 1) { const k = Math.floor(rng.next() * agent.roster.types.length); counts.set(k, (counts.get(k) ?? 0) + 1); }
-  return [...counts.entries()].sort((a, b) => a[0] - b[0]).map(([k, count]) => ({ year, type: agent.roster.types[k]!, count }));
+  for (let i = 0; i < n; i += 1) { const k = Math.floor(rng.next() * roster.types.length); counts.set(k, (counts.get(k) ?? 0) + 1); }
+  return [...counts.entries()].sort((a, b) => a[0] - b[0]).map(([k, count]) => ({ year, type: roster.types[k]!, count }));
 }
 
 /** An opening in words: "one lead aged 22 to 30". */
@@ -310,15 +340,15 @@ export function interestOf(sim: Simulation, person: Person, agent: Agent, at: In
   const agency = agencyOf(agent);
   const zone = officeZone(agent);
   const factors: Factor[] = [];
-  const add = (id: FactorId, level: Level, words: string) => factors.push({ id, label: FACTOR_LABEL[id], level, words });
+  const add = (id: FactorId, level: Level, words: string) => factors.push({ id, label: factorLabel(agent, id), level, words });
 
   // 1. The work his office has to go on, by its best band.
   const seen = workSeen(person, rel, reelId);
   const band = bestBand(seen.map((s) => s.band));
   const said = seen.map((s) => `${s.what}${s.band ? `, at best ${BAND_LABEL[s.band]}` : ', not judged'}`);
-  add('work', ofBand(band), seen.length === 1 ? `His office has ${said[0]}.`
-    : seen.length ? `His office has ${countWords(seen.length)} things to go on: ${said.slice(0, -1).join('; ')}; and ${said.at(-1)}.`
-      : 'His office has none of your work to go on yet. A reel, the School’s follow-up after the showcase or a referral would give it some.');
+  add('work', ofBand(band), seen.length === 1 ? `${capital(agent.words.office)} has ${said[0]}.`
+    : seen.length ? `${capital(agent.words.office)} has ${countWords(seen.length)} things to go on: ${said.slice(0, -1).join('; ')}; and ${said.at(-1)}.`
+      : `${capital(agent.words.office)} has none of your work to go on yet. ${shows(agent) ? 'A reel, the School’s follow-up after the showcase or a referral would give it some.' : 'A reel or a referral would give it some.'}`);
 
   // 2. Stage and screen: how much of his department's two sides the record shows.
   const credits = pro?.credits ?? [];
@@ -326,9 +356,9 @@ export function interestOf(sim: Simulation, person: Person, agent: Agent, at: In
   const stage = seen.some((s) => s.medium === 'stage') || (person.school?.credits?.length ?? 0) > 0 || credits.some((c) => c.medium === 'stage');
   const screen = seen.some((s) => s.medium === 'screen') || credits.some((c) => c.medium !== 'stage');
   add('relevance', stage && screen ? (professional.length ? 'beyond' : 'at') : stage || screen ? 'near' : 'short',
-    stage && screen ? `Your record shows stage and screen work${professional.length ? ', with professional credits' : ''}: both sides of his department.`
-      : stage ? 'Your record shows stage work so far. Recorded screen work on a reel would show the other side of his department.'
-        : screen ? 'Your record shows screen work so far. Stage work would show the other side of his department.'
+    stage && screen ? `Your record shows stage and screen work${professional.length ? ', with professional credits' : ''}: both sides of ${agent.words.department}.`
+      : stage ? `Your record shows stage work so far. Recorded screen work on a reel would show the other side of ${agent.words.department}.`
+        : screen ? `Your record shows screen work so far. Stage work would show the other side of ${agent.words.department}.`
           : 'Your record shows no stage or screen work yet.');
 
   // 3. Training and experience: the degree as the record has it, raised a level for each professional credit.
@@ -347,10 +377,10 @@ export function interestOf(sim: Simulation, person: Person, agent: Agent, at: In
   const voiceOnly = tapes.length > 0 && tapes.every((m) => m !== 'camera') && !person.school && !credits.length;
   const fieldsSaid = spokenList(fields.map((f) => FIELD_LABEL[f]));
   add('fit', inFields.length ? 'beyond' : person.school ? 'at' : voiceOnly ? 'short' : 'near',
-    inFields.length ? `You have professional work in his department’s fields (${fieldsSaid}).`
-      : person.school ? `Your training as an actor is for the fields his department covers: ${fieldsSaid}.`
-        : voiceOnly ? 'Your recorded work is voice work, which his department doesn’t cover.'
-          : `His department covers ${fieldsSaid}, and your record has no work in them yet.`);
+    inFields.length ? `You have professional work in ${agent.words.department}’s fields (${fieldsSaid}).`
+      : person.school ? `Your training as an actor is for the fields ${agent.words.department} covers: ${fieldsSaid}.`
+        : voiceOnly ? `Your recorded work is voice work, which ${agent.words.department} doesn’t cover.`
+          : `${capital(agent.words.department)} covers ${fieldsSaid}, and your record has no work in them yet.`);
 
   // 5. Availability: at the School until the degree or free, permission to work, and where you're based.
   const free = availabilityOf(person, at);
@@ -361,17 +391,18 @@ export function interestOf(sim: Simulation, person: Person, agent: Agent, at: In
   const near = TRAVEL_MINUTES[based] !== undefined;
   const availability: Level = !permit.authorized ? (free.inSchool && !finalMonths ? 'short' : 'near') : !free.inSchool ? (near ? 'beyond' : 'at') : finalMonths ? 'at' : 'near';
   const where = CITIES.get(based)?.name ?? 'somewhere else';
-  add('availability', availability, `${free.words} ${permit.words} You’re based in ${where}${near ? `, within reach of his office in ${agency.office.city}` : `, away from his office in ${agency.office.city}`}.`);
+  add('availability', availability, `${free.words} ${permit.words} You’re based in ${where}${near ? `, within reach of ${agent.words.office} in ${agency.office.city}` : `, away from ${agent.words.office} in ${agency.office.city}`}.`);
 
-  // 6. Room on his list: this year's openings, as the game assumes them, against your billing and age.
+  // 6. Room on his list: this year's openings, as the game assumes them, against your billing and age. A real agent's
+  // list isn't known, so for one it's no factor and the chances read `REAL_ROOM`.
   const year = zonedParts(at, zone).year;
   const openings = rosterFor(sim, agent, year);
   const age = Math.floor(yearsSince(person.birthInstant, at));
   const billing = billingOf(person);
   const ages = (o: RosterOpening) => age >= o.type.ages[0] && age <= o.type.ages[1];
   const fits = openings.filter((o) => ages(o) && o.type.billing === billing).reduce((n, o) => n + o.count, 0);
-  const roster = roomLevel(openings, age, billing);
-  add('roster', roster, `Assumed for ${year}: room for ${spokenList(openings.map(openingWords))}. Your record shows you as ${BILLING_WORDS[billing]}, aged ${age}, so ${fits ? `${fits === 1 ? 'one opening fits' : `${countWords(fits)} openings fit`}` : openings.some(ages) ? 'an opening fits your age but not your billing' : 'none of them fits'}. ${agent.roster.words}`);
+  const roster = agent.roster ? roomLevel(openings, age, billing) : REAL_ROOM;
+  if (agent.roster) add('roster', roster, `Assumed for ${year}: room for ${spokenList(openings.map(openingWords))}. Your record shows you as ${BILLING_WORDS[billing]}, aged ${age}, so ${fits ? `${fits === 1 ? 'one opening fits' : `${countWords(fits)} openings fit`}` : openings.some(ages) ? 'an opening fits your age but not your billing' : 'none of them fits'}. ${agent.roster.words}`);
 
   // 7. Reliability, from real events: meetings kept or missed, material sent when asked, auditions he set up and missed,
   // problems on a job. Until 2026-10-21 `late` counted every `problem` on the relationship, where the work loop also
@@ -386,11 +417,11 @@ export function interestOf(sim: Simulation, person: Person, agent: Agent, at: In
   const against = missed + late + auditions + onJobs;
   const reliability: Level = against >= 2 ? 'short' : against === 1 ? 'near' : kept + supplied > 0 ? 'beyond' : 'at';
   const events = [
-    kept ? `kept ${counted(kept, 'meeting')} with his office` : '', missed ? `missed ${counted(missed, 'meeting')}` : '',
+    kept ? `kept ${counted(kept, 'meeting')} with ${agent.words.office}` : '', missed ? `missed ${counted(missed, 'meeting')}` : '',
     supplied ? `sent what it asked for ${supplied === 1 ? 'once' : counted(supplied, 'time')}, on time` : '', late ? `didn’t send what it asked for ${late === 1 ? 'once' : counted(late, 'time')}` : '',
-    auditions ? `missed ${counted(auditions, 'audition')} he set up` : '', onJobs ? `had ${counted(onJobs, 'problem')} on a job` : '',
+    auditions ? `missed ${counted(auditions, 'audition')} ${agent.words.he} set up` : '', onJobs ? `had ${counted(onJobs, 'problem')} on a job` : '',
   ].filter(Boolean);
-  add('reliability', reliability, events.length ? `You ${spokenList(events)}.` : 'You haven’t had a meeting or a request from his office yet, and your record has no problems on a job.');
+  add('reliability', reliability, events.length ? `You ${spokenList(events)}.` : `You haven’t had a meeting or a request from ${agent.words.office} yet, and your record has no problems on a job.`);
 
   const atOrBeyond = factors.filter((f) => LEVEL_RANK[f.level] >= LEVEL_RANK.at).length;
   return { factors, atOrBeyond, needed: GATE, gate: atOrBeyond >= GATE, ...(band ? { band } : {}), ...chancesFor(band, roster) };
@@ -496,7 +527,7 @@ function closeApproach(sim: Simulation, person: Person, rel: AgentRelation, stag
 // The refusals: each said under its control before it's pressed, and thrown in the same words by its command
 // ---------------------------------------------------------------------------------------------------------------------
 
-const mustRead = (agent: Agent) => `Read the notice about ${agent.name} first: it’s at the top of his panel.`;
+const mustRead = (agent: Agent) => `Read the notice about ${agent.name} first: it’s at the top of ${agent.words.his} panel.`;
 
 /** Why the notice can't be marked read: it already is. */
 export function noticeRefusal(sim: Simulation, person: Person, agent: Agent): string | undefined {
@@ -508,30 +539,32 @@ export function noticeRefusal(sim: Simulation, person: Person, agent: Agent): st
 function underWay(sim: Simulation, agent: Agent, rel: AgentRelation): string | undefined {
   const z = sim.zone;
   if (rel.stage === 'represented') return `${agent.name} represents you already.`;
-  if (rel.stage === 'sent' || rel.stage === 'waiting') return `Your materials went to his office on ${formatDate(rel.stageAt, z)}, and its answer is still to come.`;
-  if (rel.stage === 'requested') return 'His office has asked for more. Send What His Office Asked For sends it.';
-  if (rel.stage === 'meeting') return 'His office has a meeting set with you.';
-  if (rel.stage === 'deciding') return 'His office is deciding, after your meeting.';
-  if (rel.stage === 'offered') return 'He’s offered you an agreement. Read it under The Agreement.';
+  if (rel.stage === 'sent' || rel.stage === 'waiting') return `Your materials went to ${agent.words.office} on ${formatDate(rel.stageAt, z)}, and its answer is still to come.`;
+  if (rel.stage === 'requested') return `${capital(agent.words.office)} has asked for more. Send What ${officeTitle(agent)} Asked For sends it.`;
+  if (rel.stage === 'meeting') return `${capital(agent.words.office)} has a meeting set with you.`;
+  if (rel.stage === 'deciding') return `${capital(agent.words.office)} is deciding, after your meeting.`;
+  if (rel.stage === 'offered') return `${hasDone(agent)} offered you an agreement. Read it under The Agreement.`;
   return undefined;
 }
 
 /** The cooling-off time still to run, in words, or nothing. */
 function tooSoon(sim: Simulation, rel: AgentRelation): string | undefined {
+  const agent = agentById(rel.agentId)!;
   const c = rel.cooldown;
   if (!c || sim.now >= c.until) return undefined;
   const z = sim.zone;
   const lapsed = rel.history.some((e) => e.kind === 'lapsed' && e.at >= rel.stageAt);
-  const what = c.why === 'pass' ? `His office passed on ${formatDate(rel.stageAt, z)}`
-    : c.why === 'silence' ? `His office didn’t answer your last approach, and the ${SILENCE_WORDS} ran out on ${formatDate(rel.stageAt, z)}`
-      : lapsed ? `You let his offer lapse on ${formatDate(rel.stageAt, z)}` : `You declined his offer on ${formatDate(rel.stageAt, z)}`;
-  return `${what}. In the game his office looks again only after ${COOLDOWN_WORDS[c.why]}, from ${formatDate(c.until, z)}, and then only at something new.`;
+  const what = c.why === 'pass' ? `${capital(agent.words.office)} passed on ${formatDate(rel.stageAt, z)}`
+    : c.why === 'silence' ? `${capital(agent.words.office)} didn’t answer your last approach, and the ${SILENCE_WORDS} ran out on ${formatDate(rel.stageAt, z)}`
+      : lapsed ? `You let ${agent.words.his} offer lapse on ${formatDate(rel.stageAt, z)}` : `You declined ${agent.words.his} offer on ${formatDate(rel.stageAt, z)}`;
+  return `${what}. In the game ${agent.words.office} looks again only after ${COOLDOWN_WORDS[c.why]}, from ${formatDate(c.until, z)}, and then only at something new.`;
 }
 
 /** Nothing new since the last decision, in words, or nothing. */
 function nothingNew(sim: Simulation, person: Person, rel: AgentRelation): string | undefined {
   if (!rel.considered || newSince(person, rel).length) return undefined;
-  return `His office already looked at everything on your record, on ${formatDate(rel.considered.at, sim.zone)}. In the game a new approach needs something new for it to consider: a new credit, a better reel or a referral.`;
+  const agent = agentById(rel.agentId)!;
+  return `${capital(agent.words.office)} already looked at everything on your record, on ${formatDate(rel.considered.at, sim.zone)}. In the game a new approach needs something new for it to consider: a new credit, a better reel or a referral.`;
 }
 
 const blocking = (person: Person, at: Instant): string | undefined => {
@@ -603,7 +636,7 @@ export function sendRefusal(sim: Simulation, person: Person, agent: Agent): stri
   if (busy) return busy;
   if (!rel.via) {
     const agency = agencyOf(agent);
-    return `${agency.policy.words} It sees your materials only through the School’s follow-up after the showcase, or a referral from someone you’ve worked with.`;
+    return `${agency.policy.words} It sees your materials only through ${routesWords(agent)}.`;
   }
   if (!countOf(rel, 'checked')) return 'Check your materials first. Check Your Materials says whether an approach has what it needs.';
   // No materials check here either, for the referral's reason: a send needs a passed check, and nothing takes the
@@ -615,7 +648,7 @@ export function sendRefusal(sim: Simulation, person: Person, agent: Agent): stri
 export function supplyRefusal(sim: Simulation, person: Person, agent: Agent): string | undefined {
   const rel = relationOf(person, agent.id);
   const r = rel?.request;
-  if (!rel || rel.stage !== 'requested' || !r) return 'His office hasn’t asked you for anything.';
+  if (!rel || rel.stage !== 'requested' || !r) return `${capital(agent.words.office)} hasn’t asked you for anything.`;
   const pro = person.pro;
   const short: string[] = [];
   for (const kind of r.what) {
@@ -638,9 +671,9 @@ export function meetingOf(sim: Simulation, person: Person, agent: Agent): { meet
 export function moveRefusal(sim: Simulation, person: Person, meetingId: string): string | undefined {
   const agent = AGENTS.find((a) => relationOf(person, a.id)?.meeting?.id === meetingId);
   const found = agent ? meetingOf(sim, person, agent) : undefined;
-  if (!agent || !found || found.meeting.status !== 'set') return 'There’s no meeting with his office to move.';
+  if (!agent || !found || found.meeting.status !== 'set') return `There’s no meeting with ${agent?.words.office ?? 'an agent’s office'} to move.`;
   if (!found.item) return 'That meeting has already happened.';
-  if (found.meeting.moved >= AGENT_TIMES.movesAllowed) return `You moved this meeting once already. In the game his office moves a meeting once, and it stays on ${formatDateTime(found.meeting.at, sim.zone)}.`;
+  if (found.meeting.moved >= AGENT_TIMES.movesAllowed) return `You moved this meeting once already. In the game ${agent.words.office} moves a meeting once, and it stays on ${formatDateTime(found.meeting.at, sim.zone)}.`;
   return undefined;
 }
 
@@ -657,9 +690,24 @@ export const agreementInForce = (person: Person, agent: Agent, at: Instant): Agr
 /** Why the offered agreement can't be accepted or declined now, or nothing. */
 export function answerRefusal(sim: Simulation, person: Person, agent: Agent): string | undefined {
   const a = offeredAgreement(person, agent);
-  if (!a) return 'He hasn’t offered you an agreement.';
+  if (!a) return `${capital(agent.words.he)} hasn’t offered you an agreement.`;
   if (sim.now >= a.standsUntil) return `The offer stood until ${formatDate(a.standsUntil, sim.zone)}.`;
   return undefined;
+}
+
+/**
+ * Why the offered agreement can't be signed now, or nothing: the answer's own refusal, then one agent at a time (from
+ * 2026-10-24, brief 25's Module 3, A6, REP-11). Every agent in the game covers the same fields from New York, so two
+ * agreements in force would both claim commission on the same work; the work loop and the pay read one
+ * (`activeAgreement`), and this keeps it one. Declining it is never held up by another.
+ */
+export function signRefusal(sim: Simulation, person: Person, agent: Agent): string | undefined {
+  const no = answerRefusal(sim, person, agent);
+  if (no) return no;
+  const a = activeAgreement(person, sim.now);
+  if (!a || a.agentId === agent.id) return undefined;
+  const other = agentById(a.agentId);
+  return `${other ? `${other.name} at ${agencyOf(other).name}` : 'Another agent'} represents you until ${formatDate(a.endsAt!, sim.zone)}, for the same kinds of work. In the game you have one agent at a time, so this agreement can’t start while that one runs. You can decline it, or end the other first.`;
 }
 
 /** The last bona fide offer of covered work through him in the agreement's term, from the work's record. */
@@ -734,7 +782,7 @@ export type EndHow = Exclude<EndedHow, 'term'>;
  */
 export function endRefusal(sim: Simulation, person: Person, agent: Agent, how: EndHow): string | undefined {
   const a = agreementInForce(person, agent, sim.now);
-  if (!a) return 'You’re not represented by him.';
+  if (!a) return `You’re not represented by ${agent.words.him}.`;
   const z = sim.zone;
   const zone = officeZone(agent);
   if (how === 'no-offer') {
@@ -743,7 +791,7 @@ export function endRefusal(sim: Simulation, person: Person, agent: Agent, how: E
     const since = last ?? a.signedAt!;
     const employed = employedDays(person, a, since, sim.now, zone);
     const from = addDays(since, AGREEMENT.noOfferDays + employed, zone);
-    if (sim.now < from) return `Equity’s rule lets you end it once ${AGREEMENT.noOfferDays} days go by with no real offer of covered work through him. ${last ? `His last came on ${formatDate(last, z)}` : `You signed on ${formatDate(a.signedAt!, z)}`}${employed ? `, and the ${counted(employed, 'day')} you were employed on covered work since don’t count toward them` : ''}, so that’s from ${formatDate(from, z)}.`;
+    if (sim.now < from) return `Equity’s rule lets you end it once ${AGREEMENT.noOfferDays} days go by with no real offer of covered work through ${agent.words.him}. ${last ? `${capital(agent.words.his)} last came on ${formatDate(last, z)}` : `You signed on ${formatDate(a.signedAt!, z)}`}${employed ? `, and the ${counted(employed, 'day')} you were employed on covered work since don’t count toward them` : ''}, so that’s from ${formatDate(from, z)}.`;
   }
   if (how === 'too-little-work') {
     const from = addDays(a.signedAt!, AGREEMENT.sag.waitDays, zone);
@@ -756,21 +804,22 @@ export function endRefusal(sim: Simulation, person: Person, agent: Agent, how: E
 
 /** What an ended agreement leaves owed, in words (the pay's system computes the figures from the engagement's agreement). */
 export function stillOwed(person: Person, agreement: Agreement): string {
+  const agent = agentById(agreement.agentId)!;
   const live = (person.pro?.engagements ?? []).filter((e) => e.agreementId === agreement.id && e.pay.some((p) => !p.received && !p.deferred));
   const owed = live.length
     ? `Commission stays owed on the pay still to come from contracts you made while it ran: ${spokenList(live.map((e) => `${e.role} in ${projectById(e.projectId)?.project ?? 'a project'}`))}. It comes out of that pay when it’s paid.`
     : 'No pay is still to come from contracts you made while it ran, so no commission is still owed on them.';
-  return `${owed} An offer he passed on while it ran that you accept within ${AGREEMENT.tailDays} days after it ended owes commission too.`;
+  return `${owed} An offer ${agent.words.he} passed on while it ran that you accept within ${AGREEMENT.tailDays} days after it ended owes commission too.`;
 }
 
 /** SAG-AFTRA's fewer than ten days, in words. */
 export const TEN = AGREEMENT.sag.fewerThanDays === 10 ? 'ten' : countWords(AGREEMENT.sag.fewerThanDays);
-const ENDED_WORDS: Readonly<Record<EndedHow, string>> = {
+const endedWords = (agent: Agent): Readonly<Record<EndedHow, string>> => ({
   term: 'at the end of its year',
   agreement: 'by agreement',
-  'no-offer': `by you, under Equity’s rule, after ${AGREEMENT.noOfferDays} days with no real offer of covered work through him`,
+  'no-offer': `by you, under Equity’s rule, after ${AGREEMENT.noOfferDays} days with no real offer of covered work through ${agent.words.him}`,
   'too-little-work': `by you, under SAG-AFTRA’s rule, with fewer than ${TEN} days of covered work in the last ${AGREEMENT.sag.windowDays}`,
-};
+});
 
 // ---------------------------------------------------------------------------------------------------------------------
 // Where it stands, in words, for the panel
@@ -792,30 +841,30 @@ function silenceDate(sim: Simulation, rel: AgentRelation): Instant | undefined {
 export function nextStep(sim: Simulation, person: Person, agent: Agent): string {
   const rel = relationOf(person, agent.id);
   const z = sim.zone;
-  if (rel?.noticeShownAt === undefined) return 'Read the notice at the top of his panel, then press I’ve Read This.';
+  if (rel?.noticeShownAt === undefined) return `Read the notice at the top of ${agent.words.his} panel, then press I’ve Read This.`;
   const asked = askedToMeet(person, agent, sim.now);
   switch (rel.stage) {
     case 'discovered': return 'Press Check Your Materials. It says whether an approach has what it needs.';
     case 'checked':
     case 'introduced':
-      if (!rel.via) return 'His office takes materials only through the School’s follow-up after the showcase or a referral. Under How To Reach Him, ask someone you’ve worked with for a referral.';
-      return asked ? `His office asked the School to pass on a request to meet you. Press Send Your Materials by ${formatDate(asked, z)}, and his office sets a time.` : 'Press Send Your Materials.';
+      if (!rel.via) return `${capital(agent.words.office)} takes materials only through ${shows(agent) ? 'the School’s follow-up after the showcase or a referral' : 'a referral'}. Under How To Reach ${himTitle(agent)}, ask someone you’ve worked with for a referral.`;
+      return asked ? `${capital(agent.words.office)} asked the School to pass on a request to meet you. Press Send Your Materials by ${formatDate(asked, z)}, and ${agent.words.office} sets a time.` : 'Press Send Your Materials.';
     case 'sent':
     case 'waiting': {
       const by = silenceDate(sim, rel);
-      return `${rel.stage === 'sent' ? `His office usually answers within ${REPLY_WORDS}.` : `His office hasn’t answered in the usual ${REPLY_WORDS}.`}${by ? ` If there’s no answer by ${formatDate(by, z)}, that’s a no.` : ''} Both times are assumed in the game.`;
+      return `${rel.stage === 'sent' ? `${capital(agent.words.office)} usually answers within ${REPLY_WORDS}.` : `${capital(agent.words.office)} hasn’t answered in the usual ${REPLY_WORDS}.`}${by ? ` If there’s no answer by ${formatDate(by, z)}, that’s a no.` : ''} Both times are assumed in the game.`;
     }
-    case 'requested': return `His office asked for ${spokenList(rel.request!.what.map((k) => KIND_WORDS[k]))} by ${formatDate(rel.request!.by, z)}. Make it on the Portfolio tab, then press Send What His Office Asked For.`;
+    case 'requested': return `${capital(agent.words.office)} asked for ${spokenList(rel.request!.what.map((k) => KIND_WORDS[k]))} by ${formatDate(rel.request!.by, z)}. Make it on the Portfolio tab, then press Send What ${officeTitle(agent)} Asked For.`;
     case 'meeting': return `Be at the meeting on ${formatDateTime(rel.meeting!.at, z)}.${rel.meeting!.moved < AGENT_TIMES.movesAllowed ? ` If you can’t, Ask To Move moves it ${MOVE_WORDS}, once.` : ''}`;
     case 'deciding': {
       const d = sim.universe.scheduled.find((i) => i.kind === DECISION_KIND && i.status === 'pending' && i.refId === agent.id);
-      return d ? `His office tells you its decision on ${formatDate(d.at, z)}.` : 'His office is deciding.';
+      return d ? `${capital(agent.words.office)} tells you its decision on ${formatDate(d.at, z)}.` : `${capital(agent.words.office)} is deciding.`;
     }
     case 'offered': { const a = offeredAgreement(person, agent); return a ? `Read the agreement under The Agreement, then accept or decline it by ${formatDate(a.standsUntil, z)}.` : 'Read the agreement under The Agreement.'; }
-    case 'represented': { const a = agreementInForce(person, agent, sim.now); return a ? `He represents you until ${formatDate(a.endsAt!, z)}. The Agreement says how it can end sooner.` : 'He represents you.'; }
+    case 'represented': { const a = agreementInForce(person, agent, sim.now); return a ? `${capital(agent.words.he)} represents you until ${formatDate(a.endsAt!, z)}. The Agreement says how it can end sooner.` : `${capital(agent.words.he)} represents you.`; }
     default: {
       const held = tooSoon(sim, rel) ?? nothingNew(sim, person, rel);
-      return held ?? 'You can approach his office again: press Send Your Materials.';
+      return held ?? `You can approach ${agent.words.office} again: press Send Your Materials.`;
     }
   }
 }
@@ -843,9 +892,9 @@ function answer(sim: Simulation, person: Person, agent: Agent, rel: AgentRelatio
     rel.request = { id: sim.nextId('pro'), at: sim.now, what, by };
     setStage(sim, rel, 'requested');
     const words = spokenList(what.map((k) => KIND_WORDS[k]));
-    note(sim, rel, 'requested', key, `His office asked for ${words} by ${formatDate(by, z)}.`, rel.request.id);
+    note(sim, rel, 'requested', key, `${capital(agent.words.office)} asked for ${words} by ${formatDate(by, z)}.`, rel.request.id);
     sim.schedule({ at: by, kind: REQUEST_DUE_KIND, label: `Material Due At ${agencyOf(agent).name}`, category: 'career', priority: 40, refType: 'pro-agent', refId: agent.id, payload: { personId: person.id, agentId: agent.id, requestId: rel.request.id, approach: p.approach, reelId: p.reelId ?? null, silenceAt: p.silenceAt } });
-    tell(sim, person, agent, `${whose(agent)} Asked For More`, `${capital(office)} has asked for ${words} by ${formatDate(by, z)}. Make ${what.length === 1 ? 'it' : 'them'} on the Career screen’s Portfolio tab, then press Send What His Office Asked For on the Representation tab. If ${what.length === 1 ? 'it doesn’t' : 'they don’t'} come by then, his office decides on what it has.`);
+    tell(sim, person, agent, `${whose(agent)} Asked For More`, `${capital(office)} has asked for ${words} by ${formatDate(by, z)}. Make ${what.length === 1 ? 'it' : 'them'} on the Career screen’s Portfolio tab, then press Send What ${officeTitle(agent)} Asked For on the Representation tab. If ${what.length === 1 ? 'it doesn’t' : 'they don’t'} come by then, ${agent.words.office} decides on what it has.`);
     return;
   }
   if (outcome === 'meeting') {
@@ -855,14 +904,14 @@ function answer(sim: Simulation, person: Person, agent: Agent, rel: AgentRelatio
     setStage(sim, rel, 'meeting');
     scheduleMeeting(sim, person, agent, rel);
     const place = where === 'office' ? `at ${agencyOf(agent).name}’s ${agencyOf(agent).office.city} office` : 'by video';
-    note(sim, rel, 'meeting-set', key, `His office ${p.asked ? 'set the meeting it asked for' : 'asked to meet you'}: ${formatWeekdayDate(at, z)} at ${formatTime(at, z)}, ${place}.`, rel.meeting.id);
+    note(sim, rel, 'meeting-set', key, `${capital(agent.words.office)} ${p.asked ? 'set the meeting it asked for' : 'asked to meet you'}: ${formatWeekdayDate(at, z)} at ${formatTime(at, z)}, ${place}.`, rel.meeting.id);
     const trip = where === 'office' ? ` It’s on your calendar with ${tripWords(TRAVEL_MINUTES[person.currentLocationId]!)} to get there from ${CITIES.get(person.currentLocationId)?.name ?? 'where you are'}, a time the game assumes.` : ' It’s on your calendar.';
     tell(sim, person, agent, p.asked ? `A Meeting Is Set At ${atAgency(agent)}` : `${whose(agent)} Asked To Meet You`, `${capital(office)} ${p.asked ? 'has set the meeting it asked the School to pass on' : 'has asked to meet you'}: ${formatWeekdayDate(at, z)} at ${formatTime(at, z)}, ${place}.${trip} If you can’t make it, Ask To Move on the Representation tab moves it ${MOVE_WORDS}, once.`, 70);
     return;
   }
   if (outcome === 'pass') {
     closeApproach(sim, person, rel, 'passed', 'pass');
-    note(sim, rel, 'passed', key, `His office passed${p.step === 'request-missed' ? ', deciding on what it had' : ''}.`);
+    note(sim, rel, 'passed', key, `${capital(agent.words.office)} passed${p.step === 'request-missed' ? ', deciding on what it had' : ''}.`);
     tell(sim, person, agent, `${whose(agent)} Passed`, `${capital(office)} has passed on representing you, on ${formatDate(sim.now, z)}. In the game it looks again only after a year, from ${formatDate(rel.cooldown!.until, z)}, and then only at something new: a new credit, a better reel or a referral. Why It Went This Way, on the Representation tab, gives the game’s reasons.`);
     return;
   }
@@ -900,9 +949,9 @@ export function agreementBefore(sim: Simulation, person: Person, agent: Agent): 
   const z = sim.zone;
   const before = (person.pro?.agreements ?? []).filter((a) => a.agentId === agent.id && a.status !== 'offered').sort((a, b) => b.offeredAt - a.offeredAt)[0];
   if (!before) return undefined;
-  if (before.status === 'declined') return `He offered you one before, on ${formatDate(before.offeredAt, z)}, and you declined it.`;
-  if (before.status === 'lapsed') return `He offered you one before, on ${formatDate(before.offeredAt, z)}, and you let it lapse.`;
-  if (before.signedAt !== undefined) return `He represented you before, from ${formatDate(before.signedAt, z)}${before.endedAt !== undefined ? ` until ${formatDate(before.endedAt, z)}` : ''}.`;
+  if (before.status === 'declined') return `${capital(agent.words.he)} offered you one before, on ${formatDate(before.offeredAt, z)}, and you declined it.`;
+  if (before.status === 'lapsed') return `${capital(agent.words.he)} offered you one before, on ${formatDate(before.offeredAt, z)}, and you let it lapse.`;
+  if (before.signedAt !== undefined) return `${capital(agent.words.he)} represented you before, from ${formatDate(before.signedAt, z)}${before.endedAt !== undefined ? ` until ${formatDate(before.endedAt, z)}` : ''}.`;
   return undefined;
 }
 
@@ -917,7 +966,7 @@ function offerAgreement(sim: Simulation, person: Person, agent: Agent, rel: Agen
   };
   ensurePro(sim, person).agreements.push(agreement);
   setStage(sim, rel, 'offered');
-  note(sim, rel, 'offer', key, `He offered you representation${before ? ' again' : ''}: an agreement for one year, standing until ${formatDate(agreement.standsUntil, z)}.${before ? ` ${before}` : ''}`, agreement.id);
+  note(sim, rel, 'offer', key, `${capital(agent.words.he)} offered you representation${before ? ' again' : ''}: an agreement for one year, standing until ${formatDate(agreement.standsUntil, z)}.${before ? ` ${before}` : ''}`, agreement.id);
   sim.schedule({ at: agreement.standsUntil, kind: OFFER_LAPSE_KIND, label: `Last Day Of The Offer From ${agencyOf(agent).name}`, category: 'career', priority: 40, refType: 'pro-agreement', refId: agreement.id, payload: { personId: person.id, agentId: agent.id, agreementId: agreement.id } });
   tell(sim, person, agent, `${agent.name} Offered You Representation${before ? ' Again' : ''}`, `${agent.name} has offered to represent you at ${agencyOf(agent).name}: an agreement for one year.${before ? ` ${before}` : ''} Every term is under The Agreement on the Career screen’s Representation tab, each marked as a published rule or the game’s own. The offer stands until ${formatDate(agreement.standsUntil, z)}.`, 75);
   return agreement;
@@ -953,14 +1002,14 @@ function followUp(sim: Simulation, person: Person): void {
     const rel = ensureRelation(sim, person, agent, 'introduced');
     const unread = rel.noticeShownAt === undefined;
     rel.noticeShownAt ??= sim.now;
-    note(sim, rel, 'discovered', 'discovered', 'You first heard of him through the School’s follow-up after the showcase.');
+    note(sim, rel, 'discovered', 'discovered', `You first heard of ${agent.words.him} through the School’s follow-up after the showcase.`);
     const held = underWay(sim, agent, rel) ?? tooSoon(sim, rel);
     const key = `follow-up:${showcase.term}`;
     const office = officeOf(agent);
     const intro = unread ? ` ${agent.notice}` : '';
-    const how = 'In the game agencies follow the showcase up through the School. The School publishes the showcase’s dates and places, not who comes, and the game doesn’t say he was there.';
+    const how = `In the game agencies follow the showcase up through the School. The School publishes the showcase’s dates and places, not who comes, and the game doesn’t say ${agent.words.he} was there.`;
     if (held) {
-      note(sim, rel, 'introduced', key, 'The School followed up on your showcase. Where you stood with his office didn’t change.');
+      note(sim, rel, 'introduced', key, `The School followed up on your showcase. Where you stood with ${agent.words.office} didn’t change.`);
       tell(sim, person, agent, 'The School’s Follow-Up After The Showcase', `The School passed your showcase on to the agencies it follows up with. Where you stand with ${office} doesn’t change: ${held}${intro} ${how}`);
       continue;
     }
@@ -973,9 +1022,9 @@ function followUp(sim: Simulation, person: Person): void {
     if (asks) showcase.followUp.agents.push(agent.id);
     const until = addDays(sim.now, AGENT_TIMES.askedStandsDays, officeZone(agent));
     if (asks) sim.schedule({ at: until, kind: ASK_LAPSE_KIND, label: `Last Day Of The Request To Meet From ${agencyOf(agent).name}`, category: 'career', priority: 40, refType: 'pro-agent', refId: agent.id, payload: { personId: person.id, agentId: agent.id } });
-    note(sim, rel, 'introduced', key, asks ? `The School passed on a request from his office to meet you, standing until ${formatDate(until, z)}.` : 'The School’s follow-up introduced you to his office. It sent no request to meet.');
+    note(sim, rel, 'introduced', key, asks ? `The School passed on a request from ${agent.words.office} to meet you, standing until ${formatDate(until, z)}.` : `The School’s follow-up introduced you to ${agent.words.office}. It sent no request to meet.`);
     tell(sim, person, agent, 'The School’s Follow-Up After The Showcase', asks
-      ? `The School passed your showcase on to the agencies it follows up with, and ${office} asked the School to pass on a request to meet you. Press Send Your Materials on the Career screen’s Representation tab by ${formatDate(until, z)}, and his office sets a time.${intro} ${how}`
+      ? `The School passed your showcase on to the agencies it follows up with, and ${office} asked the School to pass on a request to meet you. Press Send Your Materials on the Career screen’s Representation tab by ${formatDate(until, z)}, and ${agent.words.office} sets a time.${intro} ${how}`
       : `The School passed your showcase on to the agencies it follows up with. ${capital(office)} sent no request to meet, but the follow-up is an introduction: you can send it your materials from the Career screen’s Representation tab.${intro} ${how}`, asks ? 70 : 55);
   }
 }
@@ -989,9 +1038,10 @@ defineStop(MEETING_KIND, [{
   command: 'pro.ask_to_move',
   payload: (item) => ({ meetingId: item.payload.meetingId }),
   then: 'carry-on',
-  does: `asks his office to move the meeting ${MOVE_WORDS} on, which it does once`,
+  // The stop's words are one for every agent, so they name none (from 2026-10-24; until then "his office").
+  does: `asks the agent’s office to move the meeting ${MOVE_WORDS} on, which it does once`,
   ahead: 'ask an agent’s office to move a meeting, once',
-  done: `His office moved the meeting ${MOVE_WORDS} on.`,
+  done: `The office moved the meeting ${MOVE_WORDS} on.`,
 }]);
 
 // ---------------------------------------------------------------------------------------------------------------------
@@ -1014,7 +1064,7 @@ export function registerProAgent(sim: Simulation): void {
     if (no) throw new CommandError(no);
     const rel = ensureRelation(s, person, agent, 'discovered');
     rel.noticeShownAt = s.now;
-    note(s, rel, 'discovered', 'discovered', `You read the notice about him and ${agencyOf(agent).name}.`);
+    note(s, rel, 'discovered', 'discovered', `You read the notice about ${agent.words.him} and ${agencyOf(agent).name}.`);
     return { at: s.now };
   });
 
@@ -1045,9 +1095,11 @@ export function registerProAgent(sim: Simulation): void {
     (rel.referrals ??= []).push({ engagementId, by: job.by, job: job.job, at: s.now, ...(job.band ? { band: job.band } : {}) });
     rel.via = { route: 'referral', at: s.now, by: job.by };
     setStage(s, rel, 'introduced');
-    note(s, rel, 'referred', `referral:${engagementId}`, `${capital(job.by)} referred you to his office, from your work as ${job.job}.`);
+    note(s, rel, 'referred', `referral:${engagementId}`, `${capital(job.by)} referred you to ${agent.words.office}, from your work as ${job.job}.`);
     // From the person who made it, never from him: he never seeks the player out (the module's note).
-    if (person.id === s.universe.playerId) s.notify({ category: 'career', title: `${titled(job.by)} Referred You`, body: `${capital(job.by)} has referred you to ${officeOf(agent)}, from your work as ${job.job}. You can send your materials now, from the Career screen’s Representation tab.`, importance: 60, route: REPRESENTATION_ROUTE, refType: 'pro-referral', refId: engagementId });
+    // A production's producers referring you take a plural verb (from 2026-10-24, brief 25's Module 5, when a documentary's
+    // producers first did: "The film’s producers has referred you").
+    if (person.id === s.universe.playerId) s.notify({ category: 'career', title: `${titled(job.by)} Referred You`, body: `${capital(job.by)} ${/\bproducers$/i.test(job.by) ? 'have' : 'has'} referred you to ${officeOf(agent)}, from your work as ${job.job}. You can send your materials now, from the Career screen’s Representation tab.`, importance: 60, route: REPRESENTATION_ROUTE, refType: 'pro-referral', refId: engagementId });
     return { by: job.by };
   });
 
@@ -1068,7 +1120,7 @@ export function registerProAgent(sim: Simulation): void {
     setStage(s, rel, 'sent');
     const sent = spokenList(['your headshots', 'your résumé', ...(reel ? ['your reel'] : [])]);
     const via = rel.via!.route === 'showcase' ? 'after the School’s follow-up' : `on ${rel.via!.by}’s referral`;
-    note(s, rel, 'sent', `sent:${n}`, `You sent ${sent} to his office, ${via}${asked ? ', answering its request to meet' : ''}.`, reel?.id);
+    note(s, rel, 'sent', `sent:${n}`, `You sent ${sent} to ${agent.words.office}, ${via}${asked ? ', answering its request to meet' : ''}.`, reel?.id);
     const at = onDayAt(s.now, asked ? AGENT_TIMES.afterSupplyDays : AGENT_TIMES.replyDays, AGENT_TIMES.answerHour, zone);
     s.schedule({ at, kind: REPLY_KIND, label: 'An Answer', category: 'system', priority: 40, refType: 'pro-agent', refId: agent.id, payload: { personId: person.id, agentId: agent.id, approach: n, step: 'first', asked, reelId: reel?.id ?? null, from: s.now, silenceAt } });
     return { approach: n, silenceAt };
@@ -1085,7 +1137,7 @@ export function registerProAgent(sim: Simulation): void {
     if (due) s.timeline.cancel(due.id, s.now);
     const reel = currentOf(person.pro, 'reel');
     rel.considered = { at: s.now, keys: caseKeys(person, rel) };
-    note(s, rel, 'supplied', `supplied:${r.id}`, `You sent ${spokenList(r.what.map((k) => KIND_WORDS[k]))}, as his office asked, by ${formatDate(r.by, s.zone)}.`, reel?.id);
+    note(s, rel, 'supplied', `supplied:${r.id}`, `You sent ${spokenList(r.what.map((k) => KIND_WORDS[k]))}, as ${agent.words.office} asked, by ${formatDate(r.by, s.zone)}.`, reel?.id);
     delete rel.request;
     setStage(s, rel, 'sent');
     const zone = officeZone(agent);
@@ -1106,14 +1158,14 @@ export function registerProAgent(sim: Simulation): void {
     meeting.at = addDays(was, AGENT_TIMES.moveDays, officeZone(agent));
     meeting.moved += 1;
     s.timeline.reschedule(item!.id, meeting.at);
-    note(s, rel, 'meeting-moved', `meeting:${meeting.id}:moved`, `You asked to move the meeting from ${formatDateTime(was, s.zone)}, and his office moved it to ${formatDateTime(meeting.at, s.zone)}.`, meeting.id);
+    note(s, rel, 'meeting-moved', `meeting:${meeting.id}:moved`, `You asked to move the meeting from ${formatDateTime(was, s.zone)}, and ${agent.words.office} moved it to ${formatDateTime(meeting.at, s.zone)}.`, meeting.id);
     return { at: meeting.at };
   });
 
   sim.onCommand<{ agentId?: string }, { id: ProId; endsAt: Instant }>('pro.accept_agreement', (p, { sim: s }) => {
     const person = s.player;
     const agent = agentIn(p);
-    const no = answerRefusal(s, person, agent);
+    const no = signRefusal(s, person, agent);
     if (no) throw new CommandError(no);
     const rel = relationOf(person, agent.id)!;
     const a = offeredAgreement(person, agent)!;
@@ -1123,8 +1175,8 @@ export function registerProAgent(sim: Simulation): void {
     s.timeline.cancelFor('pro-agreement', a.id, s.now);
     rel.agreementId = a.id;
     setStage(s, rel, 'represented');
-    note(s, rel, 'accepted', `agreement:${a.id}:accepted`, 'You accepted his agreement.', a.id);
-    note(s, rel, 'represented', `represented:${a.id}`, `He represents you from ${formatDate(s.now, s.zone)} until ${formatDate(a.endsAt, s.zone)}.`, a.id);
+    note(s, rel, 'accepted', `agreement:${a.id}:accepted`, `You accepted ${agent.words.his} agreement.`, a.id);
+    note(s, rel, 'represented', `represented:${a.id}`, `${capital(agent.words.he)} represents you from ${formatDate(s.now, s.zone)} until ${formatDate(a.endsAt, s.zone)}.`, a.id);
     s.schedule({ at: a.endsAt, kind: TERM_END_KIND, label: `Your Agreement With ${agencyOf(agent).name} Ends`, category: 'career', priority: 40, refType: 'pro-agreement', refId: a.id, payload: { personId: person.id, agentId: agent.id, agreementId: a.id } });
     return { id: a.id, endsAt: a.endsAt };
   });
@@ -1139,7 +1191,7 @@ export function registerProAgent(sim: Simulation): void {
     a.status = 'declined';
     s.timeline.cancelFor('pro-agreement', a.id, s.now);
     closeApproach(s, person, rel, 'declined', 'declined');
-    note(s, rel, 'declined', `agreement:${a.id}:declined`, 'You declined his agreement.', a.id);
+    note(s, rel, 'declined', `agreement:${a.id}:declined`, `You declined ${agent.words.his} agreement.`, a.id);
     return { id: a.id };
   });
 
@@ -1175,8 +1227,8 @@ export function registerProAgent(sim: Simulation): void {
     // Answered already (materials sent), or reached him some other way since: the request has nothing left to lapse.
     if (!person || !agent || !rel || rel.via?.route !== 'showcase' || approachesOf(rel) > 0) return;
     const z = s.zone;
-    note(s, rel, 'ask-lapsed', `ask-lapsed:${agent.id}`, `His office’s request to meet, passed on by the School, lapsed on ${formatDate(item.at, z)}: no materials came.`);
-    tell(s, person, agent, `The Request To Meet From ${atAgency(agent)} Lapsed`, `You didn’t send your materials to ${officeOf(agent)} by ${formatDate(item.at, z)}, so the request to meet that it passed on through the School after the showcase has lapsed. You can still send them from the Representation tab. It’s then an ordinary approach, which his office answers in its usual time.`);
+    note(s, rel, 'ask-lapsed', `ask-lapsed:${agent.id}`, `${capital(agent.words.office)}’s request to meet, passed on by the School, lapsed on ${formatDate(item.at, z)}: no materials came.`);
+    tell(s, person, agent, `The Request To Meet From ${atAgency(agent)} Lapsed`, `You didn’t send your materials to ${officeOf(agent)} by ${formatDate(item.at, z)}, so the request to meet that it passed on through the School after the showcase has lapsed. You can still send them from the Representation tab. It’s then an ordinary approach, which ${agent.words.office} answers in its usual time.`);
   });
 
   sim.onSchedule(REQUEST_DUE_KIND, (item, s) => {
@@ -1185,7 +1237,7 @@ export function registerProAgent(sim: Simulation): void {
     const rel = person && agent ? relationOf(person, agent.id) : undefined;
     const r = rel?.request;
     if (!person || !agent || !rel || !r || rel.stage !== 'requested' || r.id !== item.payload.requestId) return;
-    note(s, rel, 'request-missed', `request-missed:${r.id}`, `What his office asked for by ${formatDate(r.by, s.zone)} didn’t come: ${spokenList(r.what.map((k) => KIND_WORDS[k]))}.`);
+    note(s, rel, 'request-missed', `request-missed:${r.id}`, `What ${agent.words.office} asked for by ${formatDate(r.by, s.zone)} didn’t come: ${spokenList(r.what.map((k) => KIND_WORDS[k]))}.`);
     setStage(s, rel, 'sent');
     answer(s, person, agent, rel, { approach: Number(item.payload.approach), step: 'request-missed', ...(typeof item.payload.reelId === 'string' ? { reelId: item.payload.reelId } : {}), from: s.now, silenceAt: Number(item.payload.silenceAt) });
   });
@@ -1196,8 +1248,8 @@ export function registerProAgent(sim: Simulation): void {
     const rel = person && agent ? relationOf(person, agent.id) : undefined;
     if (!person || !agent || !rel || rel.stage !== 'waiting' || approachesOf(rel) !== item.payload.approach) return;
     closeApproach(s, person, rel, 'unanswered', 'silence');
-    note(s, rel, 'silence', `silence:${item.payload.approach}`, `${capital(SILENCE_WORDS)} went by with no answer from his office, and in the game that counts as no.`);
-    tell(s, person, agent, `No Answer From ${whose(agent)}`, `${capital(SILENCE_WORDS)} have gone by since you sent your materials to ${officeOf(agent)}, with no answer. In the game no answer by then means no. A new approach can come from ${formatDate(rel.cooldown!.until, s.zone)}, with something new for his office to consider.`);
+    note(s, rel, 'silence', `silence:${item.payload.approach}`, `${capital(SILENCE_WORDS)} went by with no answer from ${agent.words.office}, and in the game that counts as no.`);
+    tell(s, person, agent, `No Answer From ${whose(agent)}`, `${capital(SILENCE_WORDS)} have gone by since you sent your materials to ${officeOf(agent)}, with no answer. In the game no answer by then means no. A new approach can come from ${formatDate(rel.cooldown!.until, s.zone)}, with something new for ${agent.words.office} to consider.`);
   });
 
   sim.onSchedule(MEETING_KIND, (item, s) => {
@@ -1214,19 +1266,19 @@ export function registerProAgent(sim: Simulation): void {
     if (present(person, item.at) && !elsewhere) {
       m.status = 'kept';
       setStage(s, rel, 'deciding');
-      note(s, rel, 'meeting-kept', `meeting:${m.id}:kept`, `You kept the meeting with his office, ${m.where === 'office' ? `at ${agencyOf(agent).name}’s ${agencyOf(agent).office.city} office` : 'by video'}.`, m.id);
+      note(s, rel, 'meeting-kept', `meeting:${m.id}:kept`, `You kept the meeting with ${agent.words.office}, ${m.where === 'office' ? `at ${agencyOf(agent).name}’s ${agencyOf(agent).office.city} office` : 'by video'}.`, m.id);
       const at = onDayAt(s.now, AGENT_TIMES.decisionDays, AGENT_TIMES.answerHour, officeZone(agent), true);
       s.schedule({ at, kind: DECISION_KIND, label: 'A Decision', category: 'system', priority: 40, refType: 'pro-agent', refId: agent.id, payload: { personId: person.id, agentId: agent.id, meetingId: m.id, approach: approachesOf(rel) } });
       tell(s, person, agent, `You Met ${whose(agent)}`, `You met ${officeOf(agent)} on ${formatDate(item.at, z)}. It tells you its decision by ${formatDate(at, z)}.`, 50);
       return;
     }
     m.status = 'missed';
-    note(s, rel, 'meeting-missed', `meeting:${m.id}:missed`, `${elsewhere ? `You were at ${elsewhere}, so you missed` : 'You missed'} the meeting with his office at ${formatTime(item.at, z)} on ${formatDate(item.at, z)}.`, m.id);
+    note(s, rel, 'meeting-missed', `meeting:${m.id}:missed`, `${elsewhere ? `You were at ${elsewhere}, so you missed` : 'You missed'} the meeting with ${agent.words.office} at ${formatTime(item.at, z)} on ${formatDate(item.at, z)}.`, m.id);
     const interest = interestOf(s, person, agent, s.now);
     keepWhy(s, rel, 'meeting-missed', 'pass', interest);
     closeApproach(s, person, rel, 'passed', 'pass');
-    note(s, rel, 'passed', `decision:${m.id}:passed`, 'His office closed your approach after the missed meeting.');
-    tell(s, person, agent, `You Missed The Meeting At ${atAgency(agent)}`, `${elsewhere ? `You were at ${elsewhere}, so you missed` : 'You missed'} the meeting with ${officeOf(agent)} at ${formatTime(item.at, z)} on ${formatDate(item.at, z)}. In the game a meeting comes before an offer, so his office closed your approach. It looks again only after a year, from ${formatDate(rel.cooldown!.until, z)}, and then only at something new.`, 70);
+    note(s, rel, 'passed', `decision:${m.id}:passed`, `${capital(agent.words.office)} closed your approach after the missed meeting.`);
+    tell(s, person, agent, `You Missed The Meeting At ${atAgency(agent)}`, `${elsewhere ? `You were at ${elsewhere}, so you missed` : 'You missed'} the meeting with ${officeOf(agent)} at ${formatTime(item.at, z)} on ${formatDate(item.at, z)}. In the game a meeting comes before an offer, so ${agent.words.office} closed your approach. It looks again only after a year, from ${formatDate(rel.cooldown!.until, z)}, and then only at something new.`, 70);
   });
 
   sim.onSchedule(DECISION_KIND, (item, s) => {
@@ -1240,7 +1292,7 @@ export function registerProAgent(sim: Simulation): void {
     keepWhy(s, rel, 'decision', outcome, interest);
     if (outcome === 'offer') { offerAgreement(s, person, agent, rel, `decision:${m.id}:offer`); return; }
     closeApproach(s, person, rel, 'passed', 'pass');
-    note(s, rel, 'passed', `decision:${m.id}:passed`, 'After the meeting, his office passed.');
+    note(s, rel, 'passed', `decision:${m.id}:passed`, `After the meeting, ${agent.words.office} passed.`);
     tell(s, person, agent, `${whose(agent)} Passed`, `After your meeting, ${officeOf(agent)} has passed on representing you, on ${formatDate(s.now, s.zone)}. In the game it looks again only after a year, from ${formatDate(rel.cooldown!.until, s.zone)}, and then only at something new. Why It Went This Way, on the Representation tab, gives the game’s reasons.`);
   });
 
@@ -1252,8 +1304,8 @@ export function registerProAgent(sim: Simulation): void {
     if (!person || !agent || !rel || !a || a.status !== 'offered') return;
     a.status = 'lapsed';
     closeApproach(s, person, rel, 'declined', 'declined');
-    note(s, rel, 'lapsed', `agreement:${a.id}:lapsed`, 'His offer lapsed, unanswered.', a.id);
-    tell(s, person, agent, `${agent.name}’s Offer Lapsed`, `The agreement ${agent.name} offered stood until today, and it lapsed unanswered. In the game his office looks again only after six months, from ${formatDate(rel.cooldown!.until, s.zone)}, and then only at something new.`);
+    note(s, rel, 'lapsed', `agreement:${a.id}:lapsed`, `${capital(agent.words.his)} offer lapsed, unanswered.`, a.id);
+    tell(s, person, agent, `${agent.name}’s Offer Lapsed`, `The agreement ${agent.name} offered stood until today, and it lapsed unanswered. In the game ${agent.words.office} looks again only after six months, from ${formatDate(rel.cooldown!.until, s.zone)}, and then only at something new.`);
   });
 
   sim.onSchedule(TERM_END_KIND, (item, s) => {
@@ -1274,8 +1326,8 @@ function endAgreement(sim: Simulation, person: Person, agent: Agent, rel: AgentR
   sim.timeline.cancelFor('pro-agreement', a.id, sim.now);
   closeApproach(sim, person, rel, 'ended', undefined);
   delete rel.cooldown;
-  note(sim, rel, 'ended', `ended:${a.id}`, `Your agreement ended on ${formatDate(a.endedAt, sim.zone)}, ${ENDED_WORDS[how]}.`, a.id);
-  tell(sim, person, agent, `Your Agreement With ${agent.name} Ended`, `Your agreement with ${agent.name} at ${agencyOf(agent).name} ended on ${formatDate(a.endedAt, sim.zone)}, ${ENDED_WORDS[how]}. ${stillOwed(person, a)}`, 65);
+  note(sim, rel, 'ended', `ended:${a.id}`, `Your agreement ended on ${formatDate(a.endedAt, sim.zone)}, ${endedWords(agent)[how]}.`, a.id);
+  tell(sim, person, agent, `Your Agreement With ${agent.name} Ended`, `Your agreement with ${agent.name} at ${agencyOf(agent).name} ended on ${formatDate(a.endedAt, sim.zone)}, ${endedWords(agent)[how]}. ${stillOwed(person, a)}`, 65);
 }
 
 /** A referrer's name as a notice's title has it: every word capitalised. */

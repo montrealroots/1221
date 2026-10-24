@@ -522,14 +522,16 @@ describe('p-traits-line', () => {
 const TIRED: Readonly<Record<string, readonly string[]>> = {
   'Emotional Depth': ['believability'],
   Presence: ['connection'],
-  'Listening And Responsiveness': ['connection', 'responsiveness'],
+  // From 2026-10-24 (brief 25's Module 5) a dub's execution reads listening, a booth's and a dub's believability the voice
+  // and a reenactment's believability the body, where fatigue reaches each; until then these three said less.
+  'Listening And Responsiveness': ['connection', 'responsiveness', 'execution'],
   Imagination: ['believability'],
   Focus: ['execution', 'consistency'],
   Memory: ['execution'],
   Adaptability: ['responsiveness'],
   Composure: ['consistency'],
-  'Vocal Expression': ['execution', 'consistency'],
-  'Physical Expression': ['execution'],
+  'Vocal Expression': ['execution', 'consistency', 'believability'],
+  'Physical Expression': ['execution', 'believability'],
   Discipline: ['consistency', 'execution'],
   // From 2026-10-17 (brief 11, A4) stamina is read in a task judged in parts as the drain on every dimension tiring
   // reaches (`abilityReaders`, systems/material.ts); until then this said consistency, the input a piece in parts takes out.

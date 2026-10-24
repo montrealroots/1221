@@ -1,0 +1,3138 @@
+{
+ "brief": 25,
+ "note": "The dossier’s source register (S01 to S110), parsed from the brief as given, with what this build has itself retrieved. dossier-located: listed by the dossier, not yet read here. read: retrieved here, its facts quoted. blocked: refused here, each attempt kept. unreadable: retrieved here, but its words load only in a browser, so its text holds none of them. N01 on: pages this build found that the register didn’t list. excerpt: only an indexed excerpt seen.",
+ "sources": [
+  {
+   "id": "S01",
+   "title": "Australia Temporary Activity 408: Entertainment Activities",
+   "url": "https://immi.homeaffairs.gov.au/visas/getting-a-visa/visa-listing/temporary-activity-408/entertainment-activities",
+   "status": "read",
+   "dossier": "Listed in the dossier’s register; access date 23 October 2026 unless noted.",
+   "retrieved": "2026-10-23",
+   "published": "2026-09-24",
+   "effective": "The page as last updated 24/09/2026 2:16 PM (Canberra time).",
+   "territory": "AU",
+   "attempts": [
+    {
+     "at": "2026-10-23",
+     "how": "WebFetch",
+     "result": "HTTP 403"
+    },
+    {
+     "at": "2026-10-23",
+     "how": "curl with a browser user agent",
+     "result": "HTTP 200, 1,409,915 bytes; the content is in the page’s embedded JSON"
+    }
+   ],
+   "facts": [
+    {
+     "field": "stay",
+     "value": "Up to 2 years",
+     "quote": "Stay in Australia for up to 2 years with members of the family unit"
+    },
+    {
+     "field": "where-to-apply",
+     "value": "In or outside Australia, not in immigration clearance",
+     "quote": "Apply for the visa in or outside Australia but not in immigration clearance"
+    },
+    {
+     "field": "supporter",
+     "value": "Outside Australia and staying less than 3 months: a supporter, no sponsor",
+     "quote": "You don’t need a sponsor to apply for this visa if you: apply outside Australia, and intend to stay in Australia for less than 3 months You must have a supporter to apply for this visa."
+    },
+    {
+     "field": "sponsor",
+     "value": "In Australia, or outside it and staying more than 3 months: a sponsor",
+     "quote": "You need a sponsor to apply for this visa if you: apply in Australia, or apply outside Australia and intend to stay for more than 3 months"
+    },
+    {
+     "field": "contract",
+     "value": "A contract for the performance or work in Australia",
+     "quote": "You must have a contract for your performance or work in Australia."
+    },
+    {
+     "field": "funds",
+     "value": "Enough money to support yourself during the stay",
+     "quote": "You must have enough money during your stay in Australia to support yourself and any dependent family members who travel to Australia with you."
+    },
+    {
+     "field": "film-tv-category",
+     "value": "Performing in a film or television production, subsidised by government or not",
+     "quote": "performing in a film or television production subsidised by government / performing in a film or television production not subsidised by government"
+    },
+    {
+     "field": "union-and-arts-certificate",
+     "value": "The sponsor or supporter consults the relevant union and obtains an Arts certificate",
+     "quote": "Your sponsor or supporter must consult with the relevant union or unions before engaging you. They must also obtain an Arts certificate from the Department of Communications and the Arts."
+    },
+    {
+     "field": "itinerary",
+     "value": "Times and places of engagements in the application can’t change without the Department’s permission",
+     "quote": "You must not change the times and places of engagements specified in the application. If you need to do so, you must ask the Secretary of the Department of Home Affairs for permission before you make any changes."
+    },
+    {
+     "field": "stops-work",
+     "value": "If the sponsor or supporter stops the work: a new visa if eligible, or leave within 28 days",
+     "quote": "leave Australia within 28 days of stopping work for your sponsor/supporter, or earlier if your visa is expiring"
+    },
+    {
+     "field": "travel",
+     "value": "Travel in and out while valid; time outside doesn’t extend it",
+     "quote": "You can travel outside Australia and return as many times as you want while the visa is valid. The time you spend outside Australia does not extend the visa."
+    },
+    {
+     "field": "label",
+     "value": "Digitally linked to the passport, no label",
+     "quote": "We will digitally link your visa to your passport. You will not get a label in your passport."
+    },
+    {
+     "field": "cost",
+     "value": "Unknown: the page loads the price from the Visa Pricing Estimator, and the retrieved page holds no figure",
+     "quote": "The visa costs   for the main applicant."
+    },
+    {
+     "field": "processing",
+     "value": "Unknown: the page points to the processing time guide tool",
+     "quote": "For an indication of processing times for this visa, use the visa processing time guide tool."
+    }
+   ]
+  },
+  {
+   "id": "S02",
+   "title": "UK Creative Worker Visa",
+   "url": "https://www.gov.uk/creative-worker-visa",
+   "status": "dossier-located",
+   "dossier": "Listed in the dossier’s register; access date 23 October 2026 unless noted.",
+   "retrieved": null,
+   "published": null,
+   "effective": null,
+   "territory": null,
+   "attempts": [],
+   "facts": []
+  },
+  {
+   "id": "S03",
+   "title": "New Zealand Entertainers Work Visa",
+   "url": "https://immigration.govt.nz/visas/entertainers-work-visa",
+   "status": "dossier-located",
+   "dossier": "Listed in the dossier’s register; access date 23 October 2026 unless noted.",
+   "retrieved": null,
+   "published": null,
+   "effective": null,
+   "territory": null,
+   "attempts": [],
+   "facts": []
+  },
+  {
+   "id": "S04",
+   "title": "New Zealand: Support an Entertainers Work Visa Candidate",
+   "url": "https://immigration.govt.nz/visas/entertainers-work-visa-eo",
+   "status": "dossier-located",
+   "dossier": "Listed in the dossier’s register; access date 23 October 2026 unless noted.",
+   "retrieved": null,
+   "published": null,
+   "effective": null,
+   "territory": null,
+   "attempts": [],
+   "facts": []
+  },
+  {
+   "id": "S05",
+   "title": "USCIS O-1",
+   "url": "https://www.uscis.gov/working-in-the-united-states/temporary-workers/o-1-visa-individuals-with-extraordinary-ability-or-achievement",
+   "status": "dossier-located",
+   "dossier": "Listed in the dossier’s register; access date 23 October 2026 unless noted.",
+   "retrieved": null,
+   "published": null,
+   "effective": null,
+   "territory": null,
+   "attempts": [],
+   "facts": []
+  },
+  {
+   "id": "S06",
+   "title": "USCIS Policy Manual: O-1 Beneficiaries",
+   "url": "https://www.uscis.gov/policy-manual/volume-2-part-m-chapter-4",
+   "status": "dossier-located",
+   "dossier": "Listed in the dossier’s register; access date 23 October 2026 unless noted.",
+   "retrieved": null,
+   "published": null,
+   "effective": null,
+   "territory": null,
+   "attempts": [],
+   "facts": []
+  },
+  {
+   "id": "S07",
+   "title": "Canada: Who Can Work Without a Work Permit",
+   "url": "https://www.canada.ca/en/immigration-refugees-citizenship/services/work-canada/work-without-permit.html",
+   "status": "dossier-located",
+   "dossier": "Listed in the dossier’s register; access date 23 October 2026 unless noted.",
+   "retrieved": null,
+   "published": null,
+   "effective": null,
+   "territory": null,
+   "attempts": [],
+   "facts": []
+  },
+  {
+   "id": "S08",
+   "title": "France-Visas: International Talents",
+   "url": "https://france-visas.gouv.fr/en/talents-internationaux-et-attractivite-economique",
+   "status": "dossier-located",
+   "dossier": "Listed in the dossier’s register; access date 23 October 2026 unless noted.",
+   "retrieved": null,
+   "published": null,
+   "effective": null,
+   "territory": null,
+   "attempts": [],
+   "facts": []
+  },
+  {
+   "id": "S09",
+   "title": "France-Visas: Salaried Employment",
+   "url": "https://www.france-visas.gouv.fr/en/activite-salariee",
+   "status": "dossier-located",
+   "dossier": "Listed in the dossier’s register; access date 23 October 2026 unless noted.",
+   "retrieved": null,
+   "published": null,
+   "effective": null,
+   "territory": null,
+   "attempts": [],
+   "facts": []
+  },
+  {
+   "id": "S10",
+   "title": "Japan: Entertainer Working Visa",
+   "url": "https://www.mofa.go.jp/j_info/visit/visa/long/visa3.html",
+   "status": "dossier-located",
+   "dossier": "Listed in the dossier’s register; access date 23 October 2026 unless noted.",
+   "retrieved": null,
+   "published": null,
+   "effective": null,
+   "territory": null,
+   "attempts": [],
+   "facts": []
+  },
+  {
+   "id": "S11",
+   "title": "India Cine Hub: Film Visa",
+   "url": "https://indiacinehub.gov.in/applying-for-film-visa",
+   "status": "dossier-located",
+   "dossier": "Listed in the dossier’s register; access date 23 October 2026 unless noted.",
+   "retrieved": null,
+   "published": null,
+   "effective": null,
+   "territory": null,
+   "attempts": [],
+   "facts": []
+  },
+  {
+   "id": "S12",
+   "title": "India: Documentary Filming",
+   "url": "https://www.mea.gov.in/documentary-filming-in-india",
+   "status": "dossier-located",
+   "dossier": "Listed in the dossier’s register; access date 23 October 2026 unless noted.",
+   "retrieved": null,
+   "published": null,
+   "effective": null,
+   "territory": null,
+   "attempts": [],
+   "facts": []
+  },
+  {
+   "id": "S13",
+   "title": "MEAA Resources",
+   "url": "https://www.meaa.org/resources/",
+   "status": "dossier-located",
+   "dossier": "Listed in the dossier’s register; access date 23 October 2026 unless noted.",
+   "retrieved": null,
+   "published": null,
+   "effective": null,
+   "territory": null,
+   "attempts": [],
+   "facts": []
+  },
+  {
+   "id": "S14",
+   "title": "MEAA Performer Resources",
+   "url": "https://www.meaa.org/public/Hub/Contents/Portal/Resources.aspx?hkey=e938710c-a2d7-452d-b59c-b1a1cccba2eb&section=Equity",
+   "status": "dossier-located",
+   "dossier": "Listed in the dossier’s register; access date 23 October 2026 unless noted.",
+   "retrieved": null,
+   "published": null,
+   "effective": null,
+   "territory": null,
+   "attempts": [],
+   "facts": []
+  },
+  {
+   "id": "S15",
+   "title": "ACTRA Independent Production Agreement",
+   "url": "https://www.actra.ca/agreements/ipa/",
+   "status": "dossier-located",
+   "dossier": "Listed in the dossier’s register; access date 23 October 2026 unless noted.",
+   "retrieved": null,
+   "published": null,
+   "effective": null,
+   "territory": null,
+   "attempts": [],
+   "facts": []
+  },
+  {
+   "id": "S16",
+   "title": "ACTRA 2025–2027 IPA",
+   "url": "https://www.actra.ca/wp-content/uploads/2025/06/ACTRA-CMPA-AQPM-Independent-Production-Agreement-2025-2027_OFFICIAL-COPY.pdf",
+   "status": "dossier-located",
+   "dossier": "Listed in the dossier’s register; access date 23 October 2026 unless noted.",
+   "retrieved": null,
+   "published": null,
+   "effective": null,
+   "territory": null,
+   "attempts": [],
+   "facts": []
+  },
+  {
+   "id": "S17",
+   "title": "Pact: Contracting On-Screen Talent",
+   "url": "https://www.pact.co.uk/resource-hub/contracting-on-screen-talent.html",
+   "status": "dossier-located",
+   "dossier": "Listed in the dossier’s register; access date 23 October 2026 unless noted.",
+   "retrieved": null,
+   "published": null,
+   "effective": null,
+   "territory": null,
+   "attempts": [],
+   "facts": []
+  },
+  {
+   "id": "S18",
+   "title": "Pact/Equity Television Rates 2024–2026",
+   "url": "https://www.pact.co.uk/static/5ba494d5-7e25-4185-a6aaf2d71f000ff7/Pact-Equity-TV-Agreement-rate-card-2024-to-2026.pdf",
+   "status": "dossier-located",
+   "dossier": "Listed in the dossier’s register; access date 23 October 2026 unless noted.",
+   "retrieved": null,
+   "published": null,
+   "effective": null,
+   "territory": null,
+   "attempts": [],
+   "facts": []
+  },
+  {
+   "id": "S19",
+   "title": "Equity Rates and Agreements",
+   "url": "https://www.equity.org.uk/advice-and-support/rates-and-agreements",
+   "status": "dossier-located",
+   "dossier": "Listed in the dossier’s register; access date 23 October 2026 unless noted.",
+   "retrieved": null,
+   "published": null,
+   "effective": null,
+   "territory": null,
+   "attempts": [],
+   "facts": []
+  },
+  {
+   "id": "S20",
+   "title": "SAG-AFTRA 2026 Ratification Announcement",
+   "url": "https://www.sagaftra.org/sag-aftra-members-approve-2026-tvtheatrical-contracts-tentative-agreement",
+   "status": "dossier-located",
+   "dossier": "Listed in the dossier’s register; access date 23 October 2026 unless noted.",
+   "retrieved": null,
+   "published": null,
+   "effective": null,
+   "territory": null,
+   "attempts": [],
+   "facts": []
+  },
+  {
+   "id": "S21",
+   "title": "SAG-AFTRA 2026 TV/Theatrical Contracts",
+   "url": "https://www.sagaftra.org/contracts-industry-resources/contracts/2026-tvtheatrical-contracts",
+   "status": "blocked",
+   "dossier": "Listed in the dossier’s register; access date 23 October 2026 unless noted.",
+   "retrieved": null,
+   "published": null,
+   "effective": null,
+   "territory": null,
+   "attempts": [
+    {
+     "at": "2026-10-24",
+     "how": "curl with a browser user agent",
+     "result": "HTTP 403"
+    }
+   ],
+   "facts": []
+  },
+  {
+   "id": "S22",
+   "title": "SAG-AFTRA Self-Tape Guidelines",
+   "url": "https://www.sagaftra.org/self-tape-guidelines-members",
+   "status": "dossier-located",
+   "dossier": "Listed in the dossier’s register; access date 23 October 2026 unless noted.",
+   "retrieved": null,
+   "published": null,
+   "effective": null,
+   "territory": null,
+   "attempts": [],
+   "facts": []
+  },
+  {
+   "id": "S23",
+   "title": "SAG-AFTRA Self-Tape Bulletin",
+   "url": "https://www.sagaftra.org/sites/default/files/sa_documents/Contract%20Bulletin%20-%20Self%20Tapes.pdf",
+   "status": "dossier-located",
+   "dossier": "Listed in the dossier’s register; access date 23 October 2026 unless noted.",
+   "retrieved": null,
+   "published": null,
+   "effective": null,
+   "territory": null,
+   "attempts": [],
+   "facts": []
+  },
+  {
+   "id": "S24",
+   "title": "SAG-AFTRA Los Angeles Commission Guidance",
+   "url": "https://www.sagaftra.org/agency-bulletin-la-commission-limitations",
+   "status": "blocked",
+   "dossier": "Listed in the dossier’s register; access date 23 October 2026 unless noted.",
+   "retrieved": null,
+   "published": null,
+   "effective": null,
+   "territory": null,
+   "attempts": [
+    {
+     "at": "2026-10-23",
+     "how": "curl with a browser user agent",
+     "result": "HTTP 403"
+    }
+   ],
+   "facts": []
+  },
+  {
+   "id": "S25",
+   "title": "Screen Safe Australia",
+   "url": "https://www.screensafety.com.au/safety-guidelines",
+   "status": "dossier-located",
+   "dossier": "Listed in the dossier’s register; access date 23 October 2026 unless noted.",
+   "retrieved": null,
+   "published": null,
+   "effective": null,
+   "territory": null,
+   "attempts": [],
+   "facts": []
+  },
+  {
+   "id": "S26",
+   "title": "Screen NSW Filming Regulations",
+   "url": "https://www.screen.nsw.gov.au/make-it-in-nsw/filming-regulations-resources",
+   "status": "dossier-located",
+   "dossier": "Listed in the dossier’s register; access date 23 October 2026 unless noted.",
+   "retrieved": null,
+   "published": null,
+   "effective": null,
+   "territory": null,
+   "attempts": [],
+   "facts": []
+  },
+  {
+   "id": "S27",
+   "title": "City of Sydney Filming Permit",
+   "url": "https://www.cityofsydney.nsw.gov.au/business-permits-approvals-tenders/apply-for-filming-or-photography-permit",
+   "status": "dossier-located",
+   "dossier": "Listed in the dossier’s register; access date 23 October 2026 unless noted.",
+   "retrieved": null,
+   "published": null,
+   "effective": null,
+   "territory": null,
+   "attempts": [],
+   "facts": []
+  },
+  {
+   "id": "S28",
+   "title": "ATO Foreign-Resident Withholding",
+   "url": "https://www.ato.gov.au/individuals-and-families/coming-to-australia-or-going-overseas/australian-income-of-foreign-residents/foreign-resident-payg-withholding-individual-entities",
+   "status": "blocked",
+   "dossier": "Listed in the dossier’s register; access date 23 October 2026 unless noted.",
+   "retrieved": null,
+   "published": null,
+   "effective": null,
+   "territory": "AU",
+   "attempts": [
+    {
+     "at": "2026-10-23",
+     "how": "curl with a browser user agent",
+     "result": "HTTP 403"
+    },
+    {
+     "at": "2026-10-23",
+     "how": "WebFetch, and the ATO’s public content API",
+     "result": "HTTP 403"
+    },
+    {
+     "at": "2026-10-23",
+     "how": "web search restricted to ato.gov.au",
+     "result": "an indexed summary only: an individual’s entertainment or sports payments are withheld at the foreign-resident tax rates; the weekly foreign-resident scale starts at 30 cents in the dollar to $2,595; a Schedule 3 table for actors applies to payments from 1 July 2026, and isn’t for foreign-resident contractors"
+    }
+   ],
+   "facts": []
+  },
+  {
+   "id": "S29",
+   "title": "UK Foreign Entertainer Tax",
+   "url": "https://www.gov.uk/guidance/pay-tax-in-the-uk-as-a-foreign-performer",
+   "status": "dossier-located",
+   "dossier": "Listed in the dossier’s register; access date 23 October 2026 unless noted.",
+   "retrieved": null,
+   "published": null,
+   "effective": null,
+   "territory": null,
+   "attempts": [],
+   "facts": []
+  },
+  {
+   "id": "S30",
+   "title": "IRS Foreign Artists and Athletes Withholding",
+   "url": "https://www.irs.gov/individuals/international-taxpayers/withholding-tax-on-payments-to-foreign-artists-and-athletes",
+   "status": "dossier-located",
+   "dossier": "Listed in the dossier’s register; access date 23 October 2026 unless noted.",
+   "retrieved": null,
+   "published": null,
+   "effective": null,
+   "territory": null,
+   "attempts": [],
+   "facts": []
+  },
+  {
+   "id": "S31",
+   "title": "Yale F-1 Employment",
+   "url": "https://oiss.yale.edu/employment-taxes/employment-for-international-students/employment-for-f-1-students",
+   "status": "dossier-located",
+   "dossier": "Listed in the dossier’s register; access date 23 October 2026 unless noted.",
+   "retrieved": null,
+   "published": null,
+   "effective": null,
+   "territory": null,
+   "attempts": [],
+   "facts": []
+  },
+  {
+   "id": "S32",
+   "title": "Yale CPT",
+   "url": "https://oiss.yale.edu/employment-taxes/employment-for-international-students/f-1-students/f-1-curricular-practical-training",
+   "status": "dossier-located",
+   "dossier": "Listed in the dossier’s register; access date 23 October 2026 unless noted.",
+   "retrieved": null,
+   "published": null,
+   "effective": null,
+   "territory": null,
+   "attempts": [],
+   "facts": []
+  },
+  {
+   "id": "S33",
+   "title": "IANA Time Zones",
+   "url": "https://www.iana.org/time-zones",
+   "status": "dossier-located",
+   "dossier": "Listed in the dossier’s register; access date 23 October 2026 unless noted.",
+   "retrieved": null,
+   "published": null,
+   "effective": null,
+   "territory": null,
+   "attempts": [],
+   "facts": []
+  },
+  {
+   "id": "S34",
+   "title": "Australian Bureau of Meteorology Climate Data",
+   "url": "https://www.bom.gov.au/climate/data/",
+   "status": "dossier-located",
+   "dossier": "Listed in the dossier’s register; access date 23 October 2026 unless noted.",
+   "retrieved": null,
+   "published": null,
+   "effective": null,
+   "territory": null,
+   "attempts": [],
+   "facts": []
+  },
+  {
+   "id": "S35",
+   "title": "Australian Bureau of Meteorology Daily Observations",
+   "url": "https://www.bom.gov.au/climate/dwo/",
+   "status": "dossier-located",
+   "dossier": "Listed in the dossier’s register; access date 23 October 2026 unless noted.",
+   "retrieved": null,
+   "published": null,
+   "effective": null,
+   "territory": null,
+   "attempts": [],
+   "facts": []
+  },
+  {
+   "id": "S36",
+   "title": "Australian Classification Ratings",
+   "url": "https://www.classification.gov.au/classification-ratings/what-are-ratings",
+   "status": "dossier-located",
+   "dossier": "Listed in the dossier’s register; access date 23 October 2026 unless noted.",
+   "retrieved": null,
+   "published": null,
+   "effective": null,
+   "territory": null,
+   "attempts": [],
+   "facts": []
+  },
+  {
+   "id": "S37",
+   "title": "Nielsen Top Ten",
+   "url": "https://www.nielsen.com/data-center/top-ten/",
+   "status": "dossier-located",
+   "dossier": "Listed in the dossier’s register; access date 23 October 2026 unless noted.",
+   "retrieved": null,
+   "published": null,
+   "effective": null,
+   "territory": null,
+   "attempts": [],
+   "facts": []
+  },
+  {
+   "id": "S38",
+   "title": "Nielsen 2026 Streaming Delivery Announcement",
+   "url": "https://www.nielsen.com/news-center/2026/nielsen-accelerates-streaming-data-delivery-with-enhancements-to-streaming-content-ratings/",
+   "status": "dossier-located",
+   "dossier": "Listed in the dossier’s register; access date 23 October 2026 unless noted.",
+   "retrieved": null,
+   "published": null,
+   "effective": null,
+   "territory": null,
+   "attempts": [],
+   "facts": []
+  },
+  {
+   "id": "S39",
+   "title": "Netflix Top Ten Background",
+   "url": "https://about.netflix.com/en/news/top-10-things-about-netflix-top-10",
+   "status": "dossier-located",
+   "dossier": "Listed in the dossier’s register; access date 23 October 2026 unless noted.",
+   "retrieved": null,
+   "published": null,
+   "effective": null,
+   "territory": null,
+   "attempts": [],
+   "facts": []
+  },
+  {
+   "id": "S40",
+   "title": "Netflix Television Top Ten",
+   "url": "https://www.netflix.com/tudum/top10/tv",
+   "status": "dossier-located",
+   "dossier": "Listed in the dossier’s register; access date 23 October 2026 unless noted.",
+   "retrieved": null,
+   "published": null,
+   "effective": null,
+   "territory": null,
+   "attempts": [],
+   "facts": []
+  },
+  {
+   "id": "S41",
+   "title": "SAG-AFTRA Residuals",
+   "url": "https://www.sagaftra.org/membership-benefits/residuals",
+   "status": "blocked",
+   "dossier": "Listed in the dossier’s register; access date 23 October 2026 unless noted.",
+   "retrieved": null,
+   "published": null,
+   "effective": null,
+   "territory": null,
+   "attempts": [
+    {
+     "at": "2026-10-24",
+     "how": "curl with a browser user agent",
+     "result": "HTTP 403"
+    }
+   ],
+   "facts": []
+  },
+  {
+   "id": "S42",
+   "title": "Oscars Rules and Eligibility",
+   "url": "https://www.oscars.org/oscars/rules-eligibility",
+   "status": "dossier-located",
+   "dossier": "Listed in the dossier’s register; access date 23 October 2026 unless noted.",
+   "retrieved": null,
+   "published": null,
+   "effective": null,
+   "territory": null,
+   "attempts": [],
+   "facts": []
+  },
+  {
+   "id": "S43",
+   "title": "99th Oscars Rule Changes",
+   "url": "https://press.oscars.org/news/awards-rules-and-campaign-promotional-regulations-approved-99th-oscarsr",
+   "status": "dossier-located",
+   "dossier": "Listed in the dossier’s register; access date 23 October 2026 unless noted.",
+   "retrieved": null,
+   "published": null,
+   "effective": null,
+   "territory": null,
+   "attempts": [],
+   "facts": []
+  },
+  {
+   "id": "S44",
+   "title": "99th and 100th Oscars Dates",
+   "url": "https://press.oscars.org/news/academy-and-abc-announce-show-dates-99th-and-100th-oscarsr",
+   "status": "dossier-located",
+   "dossier": "Listed in the dossier’s register; access date 23 October 2026 unless noted.",
+   "retrieved": null,
+   "published": null,
+   "effective": null,
+   "territory": null,
+   "attempts": [],
+   "facts": []
+  },
+  {
+   "id": "S45",
+   "title": "Television Academy 2026 Rules, Version 4",
+   "url": "https://www.televisionacademy.com/files/assets/Downloads/2026-rules-procedures-v4.pdf",
+   "status": "dossier-located",
+   "dossier": "Listed in the dossier’s register; access date 23 October 2026 unless noted.",
+   "retrieved": null,
+   "published": null,
+   "effective": null,
+   "territory": null,
+   "attempts": [],
+   "facts": []
+  },
+  {
+   "id": "S46",
+   "title": "BAFTA Film Awards Information",
+   "url": "https://www.bafta.org/awards/awards-information/film/",
+   "status": "dossier-located",
+   "dossier": "Listed in the dossier’s register; access date 23 October 2026 unless noted.",
+   "retrieved": null,
+   "published": null,
+   "effective": null,
+   "territory": null,
+   "attempts": [],
+   "facts": []
+  },
+  {
+   "id": "S47",
+   "title": "BAFTA Film Rules",
+   "url": "https://www.bafta.org/awards/film-rules/",
+   "status": "dossier-located",
+   "dossier": "Listed in the dossier’s register; access date 23 October 2026 unless noted.",
+   "retrieved": null,
+   "published": null,
+   "effective": null,
+   "territory": null,
+   "attempts": [],
+   "facts": []
+  },
+  {
+   "id": "S48",
+   "title": "33rd Actor Awards Rules",
+   "url": "https://www.actorawards.org/sites/default/files/33rd%20Annual%20Actor%20Awards%20Presented%20by%20SAG-AFTRA%20Rules%20%26%20Regulations.pdf",
+   "status": "dossier-located",
+   "dossier": "Listed in the dossier’s register; access date 23 October 2026 unless noted.",
+   "retrieved": null,
+   "published": null,
+   "effective": null,
+   "territory": null,
+   "attempts": [],
+   "facts": []
+  },
+  {
+   "id": "S49",
+   "title": "84th Golden Globes Rules",
+   "url": "https://goldenglobes.com/wp-content/uploads/2026/08/FINAL_84th-ANNUAL-GOLDEN-GLOBES-ELIGIBILITY-AND-CONSIDERATION-RULES_8_3_2026.pdf",
+   "status": "dossier-located",
+   "dossier": "Listed in the dossier’s register; access date 23 October 2026 unless noted.",
+   "retrieved": null,
+   "published": null,
+   "effective": null,
+   "territory": null,
+   "attempts": [],
+   "facts": []
+  },
+  {
+   "id": "S50",
+   "title": "84th Golden Globes Calendar and Guidelines",
+   "url": "https://goldenglobes.com/articles/the-84th-annual-golden-globes-timetable-eligibility-rules-and-campaign-guidelines-announced/",
+   "status": "dossier-located",
+   "dossier": "Listed in the dossier’s register; access date 23 October 2026 unless noted.",
+   "retrieved": null,
+   "published": null,
+   "effective": null,
+   "territory": null,
+   "attempts": [],
+   "facts": []
+  },
+  {
+   "id": "S51",
+   "title": "2026 International Emmy Rules",
+   "url": "https://www.iemmys.tv/wp-content/uploads/2025/11/2026-International-Emmy-Awards-Rules-Regulations-.pdf",
+   "status": "dossier-located",
+   "dossier": "Listed in the dossier’s register; access date 23 October 2026 unless noted.",
+   "retrieved": null,
+   "published": null,
+   "effective": null,
+   "territory": null,
+   "attempts": [],
+   "facts": []
+  },
+  {
+   "id": "S52",
+   "title": "International Emmy Judging",
+   "url": "https://www.iemmys.tv/entries-judging/judging-process/",
+   "status": "dossier-located",
+   "dossier": "Listed in the dossier’s register; access date 23 October 2026 unless noted.",
+   "retrieved": null,
+   "published": null,
+   "effective": null,
+   "territory": null,
+   "attempts": [],
+   "facts": []
+  },
+  {
+   "id": "S53",
+   "title": "Spirit Awards FAQ",
+   "url": "https://www.filmindependent.org/spirit-awards/faq/",
+   "status": "dossier-located",
+   "dossier": "Listed in the dossier’s register; access date 23 October 2026 unless noted.",
+   "retrieved": null,
+   "published": null,
+   "effective": null,
+   "territory": null,
+   "attempts": [],
+   "facts": []
+  },
+  {
+   "id": "S54",
+   "title": "Spirit Awards Submissions",
+   "url": "https://www.filmindependent.org/spirit-awards/submissions/",
+   "status": "dossier-located",
+   "dossier": "Listed in the dossier’s register; access date 23 October 2026 unless noted.",
+   "retrieved": null,
+   "published": null,
+   "effective": null,
+   "territory": null,
+   "attempts": [],
+   "facts": []
+  },
+  {
+   "id": "S55",
+   "title": "AACTA 2027 Voting",
+   "url": "https://www.aacta.org/aacta-awards/voting-2027/",
+   "status": "dossier-located",
+   "dossier": "Listed in the dossier’s register; access date 23 October 2026 unless noted.",
+   "retrieved": null,
+   "published": null,
+   "effective": null,
+   "territory": null,
+   "attempts": [],
+   "facts": []
+  },
+  {
+   "id": "S56",
+   "title": "AACTA 2027 Rulebook",
+   "url": "https://s3-ap-southeast-2.amazonaws.com/aacta-org-assets/Uploads/2027-AACTA-Awards-Rule-Book.pdf",
+   "status": "dossier-located",
+   "dossier": "Listed in the dossier’s register; access date 23 October 2026 unless noted.",
+   "retrieved": null,
+   "published": null,
+   "effective": null,
+   "territory": null,
+   "attempts": [],
+   "facts": []
+  },
+  {
+   "id": "S57",
+   "title": "Critics Choice Categories and Submissions",
+   "url": "https://www.criticschoice.com/critics-choice-awards-submissions-and-categories/",
+   "status": "dossier-located",
+   "dossier": "Listed in the dossier’s register; access date 23 October 2026 unless noted.",
+   "retrieved": null,
+   "published": null,
+   "effective": null,
+   "territory": null,
+   "attempts": [],
+   "facts": []
+  },
+  {
+   "id": "S58",
+   "title": "Gotham Film Criteria",
+   "url": "https://awards.thegotham.org/criteria/",
+   "status": "dossier-located",
+   "dossier": "Listed in the dossier’s register; access date 23 October 2026 unless noted.",
+   "retrieved": null,
+   "published": null,
+   "effective": null,
+   "territory": null,
+   "attempts": [],
+   "facts": []
+  },
+  {
+   "id": "S59",
+   "title": "Gotham Television Criteria",
+   "url": "https://televisionawards.thegotham.org/criteria/",
+   "status": "dossier-located",
+   "dossier": "Listed in the dossier’s register; access date 23 October 2026 unless noted.",
+   "retrieved": null,
+   "published": null,
+   "effective": null,
+   "territory": null,
+   "attempts": [],
+   "facts": []
+  },
+  {
+   "id": "S60",
+   "title": "NATAS Rules",
+   "url": "https://theemmys.tv/rules/",
+   "status": "dossier-located",
+   "dossier": "Listed in the dossier’s register; access date 23 October 2026 unless noted.",
+   "retrieved": null,
+   "published": null,
+   "effective": null,
+   "territory": null,
+   "attempts": [],
+   "facts": []
+  },
+  {
+   "id": "S61",
+   "title": "César Regulations",
+   "url": "https://www.academie-cinema.org/lacademie/reglement/",
+   "status": "dossier-located",
+   "dossier": "Listed in the dossier’s register; access date 23 October 2026 unless noted.",
+   "retrieved": null,
+   "published": null,
+   "effective": null,
+   "territory": null,
+   "attempts": [],
+   "facts": []
+  },
+  {
+   "id": "S62",
+   "title": "César Voting",
+   "url": "https://www.academie-cinema.org/le-vote/",
+   "status": "dossier-located",
+   "dossier": "Listed in the dossier’s register; access date 23 October 2026 unless noted.",
+   "retrieved": null,
+   "published": null,
+   "effective": null,
+   "territory": null,
+   "attempts": [],
+   "facts": []
+  },
+  {
+   "id": "S63",
+   "title": "Goya Bases",
+   "url": "https://www.premiosgoya.com/bases/",
+   "status": "dossier-located",
+   "dossier": "Listed in the dossier’s register; access date 23 October 2026 unless noted.",
+   "retrieved": null,
+   "published": null,
+   "effective": null,
+   "territory": null,
+   "attempts": [],
+   "facts": []
+  },
+  {
+   "id": "S64",
+   "title": "Annie Awards",
+   "url": "https://annieawards.org/",
+   "status": "dossier-located",
+   "dossier": "Listed in the dossier’s register; access date 23 October 2026 unless noted.",
+   "retrieved": null,
+   "published": null,
+   "effective": null,
+   "territory": null,
+   "attempts": [],
+   "facts": []
+  },
+  {
+   "id": "S65",
+   "title": "Cannes Submission Rules",
+   "url": "https://www.festival-cannes.com/en/take-part/submit-a-film/",
+   "status": "dossier-located",
+   "dossier": "Listed in the dossier’s register; access date 23 October 2026 unless noted.",
+   "retrieved": null,
+   "published": null,
+   "effective": null,
+   "territory": null,
+   "attempts": [],
+   "facts": []
+  },
+  {
+   "id": "S66",
+   "title": "Venice 2026 Regulations",
+   "url": "https://www.labiennale.org/en/cinema/2026/regulations",
+   "status": "dossier-located",
+   "dossier": "Listed in the dossier’s register; access date 23 October 2026 unless noted.",
+   "retrieved": null,
+   "published": null,
+   "effective": null,
+   "territory": null,
+   "attempts": [],
+   "facts": []
+  },
+  {
+   "id": "S67",
+   "title": "Berlin General Guidelines",
+   "url": "https://www.berlinale.de/en/film-entry/guidelines/general-guidelines.html",
+   "status": "dossier-located",
+   "dossier": "Listed in the dossier’s register; access date 23 October 2026 unless noted.",
+   "retrieved": null,
+   "published": null,
+   "effective": null,
+   "territory": null,
+   "attempts": [],
+   "facts": []
+  },
+  {
+   "id": "S68",
+   "title": "Berlin Film Entry",
+   "url": "https://www.berlinale.de/en/film-entry/submission/start.html",
+   "status": "dossier-located",
+   "dossier": "Listed in the dossier’s register; access date 23 October 2026 unless noted.",
+   "retrieved": null,
+   "published": null,
+   "effective": null,
+   "territory": null,
+   "attempts": [],
+   "facts": []
+  },
+  {
+   "id": "S69",
+   "title": "Sundance Submissions",
+   "url": "https://www.sundance.org/festivals/sundance-film-festival/submit/",
+   "status": "dossier-located",
+   "dossier": "Listed in the dossier’s register; access date 23 October 2026 unless noted.",
+   "retrieved": null,
+   "published": null,
+   "effective": null,
+   "territory": null,
+   "attempts": [],
+   "facts": []
+  },
+  {
+   "id": "S70",
+   "title": "Sundance 2027 Submission FAQ",
+   "url": "https://www.sundance.org/wp-content/uploads/2026/06/2027_Submissions_FAQ.pdf",
+   "status": "dossier-located",
+   "dossier": "Listed in the dossier’s register; access date 23 October 2026 unless noted.",
+   "retrieved": null,
+   "published": null,
+   "effective": null,
+   "territory": null,
+   "attempts": [],
+   "facts": []
+  },
+  {
+   "id": "S71",
+   "title": "Sundance 2027 Boulder Announcement",
+   "url": "https://www.sundance.org/blogs/2027-sundance-film-festival-to-take-place-january-21-31-in-boulder-colorado/",
+   "status": "dossier-located",
+   "dossier": "Listed in the dossier’s register; access date 23 October 2026 unless noted.",
+   "retrieved": null,
+   "published": null,
+   "effective": null,
+   "territory": null,
+   "attempts": [],
+   "facts": []
+  },
+  {
+   "id": "S72",
+   "title": "TIFF Submissions",
+   "url": "https://tiff.net/submissions",
+   "status": "dossier-located",
+   "dossier": "Listed in the dossier’s register; access date 23 October 2026 unless noted.",
+   "retrieved": null,
+   "published": null,
+   "effective": null,
+   "territory": null,
+   "attempts": [],
+   "facts": []
+  },
+  {
+   "id": "S73",
+   "title": "Annecy Film Submissions",
+   "url": "https://www.annecyfestival.com/en/take-part/submit-film",
+   "status": "dossier-located",
+   "dossier": "Listed in the dossier’s register; access date 23 October 2026 unless noted.",
+   "retrieved": null,
+   "published": null,
+   "effective": null,
+   "territory": null,
+   "attempts": [],
+   "facts": []
+  },
+  {
+   "id": "S74",
+   "title": "Annecy Category Regulations",
+   "url": "https://helpdesk.annecyfestival.com/en/article/please-read-the-category-regulations-before-submitting-an-animation-film-1e4l5ur/",
+   "status": "dossier-located",
+   "dossier": "Listed in the dossier’s register; access date 23 October 2026 unless noted.",
+   "retrieved": null,
+   "published": null,
+   "effective": null,
+   "territory": null,
+   "attempts": [],
+   "facts": []
+  },
+  {
+   "id": "S75",
+   "title": "IDFA 2026 Entry Regulations",
+   "url": "https://professionals.idfa.nl/program/festival-entries/festival-entry-regulations/",
+   "status": "dossier-located",
+   "dossier": "Listed in the dossier’s register; access date 23 October 2026 unless noted.",
+   "retrieved": null,
+   "published": null,
+   "effective": null,
+   "territory": null,
+   "attempts": [],
+   "facts": []
+  },
+  {
+   "id": "S76",
+   "title": "IDFA Festival Entries",
+   "url": "https://professionals.idfa.nl/program/festival-entries/",
+   "status": "dossier-located",
+   "dossier": "Listed in the dossier’s register; access date 23 October 2026 unless noted.",
+   "retrieved": null,
+   "published": null,
+   "effective": null,
+   "territory": null,
+   "attempts": [],
+   "facts": []
+  },
+  {
+   "id": "S77",
+   "title": "Busan International Film Festival",
+   "url": "https://www.biff.kr/",
+   "status": "dossier-located",
+   "dossier": "Listed in the dossier’s register; access date 23 October 2026 unless noted.",
+   "retrieved": null,
+   "published": null,
+   "effective": null,
+   "territory": null,
+   "attempts": [],
+   "facts": []
+  },
+  {
+   "id": "S78",
+   "title": "Slow Horses: Apple Press",
+   "url": "https://www.apple.com/tv-pr/originals/slow-horses/",
+   "status": "read",
+   "dossier": "Listed in the dossier’s register; access date 23 October 2026 unless noted.",
+   "retrieved": "2026-10-23",
+   "published": null,
+   "effective": null,
+   "territory": "US",
+   "attempts": [
+    {
+     "at": "2026-10-23",
+     "how": "curl with a browser user agent",
+     "result": "HTTP 200"
+    }
+   ],
+   "facts": [
+    {
+     "field": "rating",
+     "value": "TV-MA",
+     "quote": "Rated TV-MA"
+    },
+    {
+     "field": "genres",
+     "value": "Thriller, Drama",
+     "quote": "Thriller, Drama"
+    },
+    {
+     "field": "season-6-release",
+     "value": "September 16, 2026",
+     "quote": "Season 6 Release Date: September 16, 2026"
+    },
+    {
+     "field": "lead",
+     "value": "Gary Oldman plays Jackson Lamb",
+     "quote": "the notorious Jackson Lamb (Academy Award winner Sir Gary Oldman)"
+    },
+    {
+     "field": "premise",
+     "value": "British intelligence agents in a dumping-ground department of MI5",
+     "quote": "follows a team of British intelligence agents who serve in a dumping ground department of MI5"
+    }
+   ]
+  },
+  {
+   "id": "S79",
+   "title": "Slow Horses Season-Six Announcement",
+   "url": "https://www.apple.com/tv-pr/news/2026/08/apple-tv-debuts-enthralling-trailer-for-season-six-of-emmy-and-bafta-award-winning-espionage-drama-slow-horses-starring-academy-award-winner-sir-gary-oldman/",
+   "status": "read",
+   "dossier": "Listed in the dossier’s register; access date 23 October 2026 unless noted.",
+   "retrieved": "2026-10-23",
+   "published": "2026-08-18",
+   "effective": null,
+   "territory": "global",
+   "attempts": [
+    {
+     "at": "2026-10-23",
+     "how": "curl with a browser user agent",
+     "result": "HTTP 200"
+    }
+   ],
+   "facts": [
+    {
+     "field": "season-6-episodes",
+     "value": "Six episodes, weekly from September 16 to October 21, 2026",
+     "quote": "six-episode sixth season will premiere globally on Wednesday, September 16, 2026 with the first episode, followed by one episode weekly until October 21, 2026"
+    },
+    {
+     "field": "source-novels",
+     "value": "Adapted from the sixth and seventh Slough House novels",
+     "quote": "Adapted from “Joe Country” and “Slough House,” the sixth and seventh novels in Mick Herron’s"
+    },
+    {
+     "field": "season-6-ensemble",
+     "value": "The season six ensemble",
+     "quote": "The ensemble cast includes Academy Award nominee Kristin Scott Thomas, Emmy Award nominee Jack Lowden, Saskia Reeves, BAFTA TV Award nominee Christopher Chung, Aimee-Ffion Edwards, Rosalind Eleazar, Joanna Scanlan, BAFTA Award nominee Samuel West, Ruth Bradley, Tom Brooke, Academy Award nominee Jonathan Pryce and Hugo Weaving, alongside new addition, BAFTA TV Award winner Lenny Rush."
+    },
+    {
+     "field": "sid-baker",
+     "value": "Olivia Cooke as Sidonie “Sid” Baker in season six",
+     "quote": "Olivia Cooke will reprise her role as Sidonie “Sid” Baker in the sixth season."
+    },
+    {
+     "field": "producer",
+     "value": "Produced for Apple TV by See-Saw Films",
+     "quote": "The series is produced for Apple TV by See-Saw Films"
+    },
+    {
+     "field": "season-6-writer-director",
+     "value": "Gaby Chiappe adapts season six; Adam Randall directs",
+     "quote": "Season six is adapted for television by co-executive producer Gaby Chiappe, with Randall returning to direct."
+    },
+    {
+     "field": "seasons-streaming",
+     "value": "Seasons one to five stream on Apple TV",
+     "quote": "The complete first five seasons of “ Slow Horses ” are now streaming on Apple TV."
+    }
+   ]
+  },
+  {
+   "id": "S80",
+   "title": "9-1-1: ABC Press",
+   "url": "https://www.detpress.com/abc/shows/9-1-1/",
+   "status": "read",
+   "dossier": "Listed in the dossier’s register; access date 23 October 2026 unless noted.",
+   "retrieved": "2026-10-23",
+   "published": null,
+   "effective": null,
+   "territory": "US",
+   "attempts": [
+    {
+     "at": "2026-10-23",
+     "how": "curl with a browser user agent",
+     "result": "HTTP 200"
+    }
+   ],
+   "facts": [
+    {
+     "field": "season-10-premiere",
+     "value": "Season 10 premieres October 15, 2026",
+     "quote": "Season 10 premieres October 15, 2026."
+    },
+    {
+     "field": "creators",
+     "value": "Created by Ryan Murphy, Brad Falchuk and Tim Minear",
+     "quote": "Created by executive producers Ryan Murphy, Brad Falchuk and Tim Minear"
+    },
+    {
+     "field": "genre",
+     "value": "A procedural drama",
+     "quote": "reimagine the procedural drama"
+    },
+    {
+     "field": "cast",
+     "value": "The series cast and their characters",
+     "quote": "The series stars Angela Bassett as Athena Grant, Jennifer Love Hewitt as Maddie Han, Oliver Stark as Evan “Buck” Buckley, Kenneth Choi as Howie “Chimney” Han, Aisha Hinds as Henrietta “Hen” Wilson, Ryan Guzman as Eddie Diaz, Gavin McHugh as Christopher Diaz, Corinne Messiah as May Grant and Elijah M. Cooper as Harry Grant."
+    },
+    {
+     "field": "producers",
+     "value": "Produced by 20th Television with Ryan Murphy Television and Brad Falchuk Teley-Vision",
+     "quote": "“9-1-1” is produced by 20th Television in association with Ryan Murphy Television and Brad Falchuk Teley-Vision."
+    },
+    {
+     "field": "showrunner",
+     "value": "Tim Minear is showrunner",
+     "quote": "Minear serves as showrunner."
+    }
+   ]
+  },
+  {
+   "id": "S81",
+   "title": "9-1-1 Season Ten: Disney+",
+   "url": "https://www.disneyplus.com/explore/articles/911-season-10",
+   "status": "read",
+   "dossier": "Listed in the dossier’s register; access date 23 October 2026 unless noted.",
+   "retrieved": "2026-10-23",
+   "published": null,
+   "effective": null,
+   "territory": "US",
+   "attempts": [
+    {
+     "at": "2026-10-23",
+     "how": "curl with a browser user agent",
+     "result": "HTTP 200"
+    }
+   ],
+   "facts": [
+    {
+     "field": "airs",
+     "value": "Airs on ABC and streams on Hulu",
+     "quote": "The season premiere aired on ABC on October 15 and is streaming on Hulu and Hulu on Disney+ for bundle subscribers as of October 16 ."
+    },
+    {
+     "field": "schedule",
+     "value": "Thursdays on ABC, Fridays on Hulu",
+     "quote": "New episodes air Thursdays on ABC and stream Fridays on Hulu and Hulu on Disney+ for bundle subscribers."
+    }
+   ]
+  },
+  {
+   "id": "S82",
+   "title": "Amazon MGM Film Slate",
+   "url": "https://www.aboutamazon.com/news/entertainment/amazon-mgm-studios-films",
+   "status": "read",
+   "dossier": "Listed in the dossier’s register; access date 23 October 2026 unless noted.",
+   "retrieved": "2026-10-23",
+   "published": "2026-04-16",
+   "effective": null,
+   "territory": "US",
+   "attempts": [
+    {
+     "at": "2026-10-23",
+     "how": "curl with a browser user agent",
+     "result": "HTTP 200"
+    }
+   ],
+   "facts": [
+    {
+     "field": "slate",
+     "value": "At least 15 theatrical films a year",
+     "quote": "Our commitment to release at least 15 films every year into your theaters is on schedule."
+    },
+    {
+     "field": "the-sheep-detectives",
+     "value": "May 8, 2026; Hugh Jackman",
+     "quote": "The Sheep Detectives (May 8, 2026): In this witty, new breed of mystery , a shepherd (Hugh Jackman)"
+    },
+    {
+     "field": "masters-of-the-universe",
+     "value": "June 5, 2026; Travis Knight",
+     "quote": "Masters of the Universe (June 5, 2026): Director Travis Knight brings the world of Eternia to life on a massive scale with stars Nicholas Galitzine, Camila Mendes, and Idris Elba."
+    },
+    {
+     "field": "how-to-rob-a-bank",
+     "value": "September 4, 2026; David Leitch",
+     "quote": "How to Rob a Bank (September 4, 2026): Director David Leitch teams with Nicholas Hoult, Zoë Kravitz, Anna Sawai, Pete Davidson, and John C. Reilly"
+    },
+    {
+     "field": "verity",
+     "value": "October 2, 2026",
+     "quote": "Verity (October 2, 2026):"
+    },
+    {
+     "field": "i-play-rocky",
+     "value": "November 20, 2026; Peter Farrelly",
+     "quote": "I Play Rocky (November 20, 2026): Director Peter Farrelly"
+    },
+    {
+     "field": "the-beekeeper-2",
+     "value": "January 15, 2027; Jason Statham",
+     "quote": "The Beekeeper 2 (January 15, 2027): Jason Statham returns"
+    },
+    {
+     "field": "the-thomas-crown-affair",
+     "value": "March 5, 2027; Michael B. Jordan",
+     "quote": "The Thomas Crown Affair (March 5, 2027): A reimagining of the 1968 film, directed by and starring Academy Award winner Michael B. Jordan alongside Adria Arjona"
+    },
+    {
+     "field": "spaceballs-the-new-one",
+     "value": "April 23, 2027; Josh Greenbaum",
+     "quote": "Spaceballs: The New One (April 23, 2027): Director Josh Greenbaum"
+    },
+    {
+     "field": "the-chosen-crucifixion",
+     "value": "2027",
+     "quote": "The Chosen: Crucifixion (2027)"
+    },
+    {
+     "field": "a-colt-is-my-passport",
+     "value": "Orion Pictures; Gareth Evans",
+     "quote": "A Colt Is My Passport (Orion Pictures): Director Gareth Evans"
+    },
+    {
+     "field": "highlander",
+     "value": "United Artists; Henry Cavill",
+     "quote": "Highlander (United Artists): Henry Cavill stars"
+    },
+    {
+     "field": "your-mother-your-mother-your-mother",
+     "value": "Orion Pictures; Bassam Tariq",
+     "quote": "Your Mother Your Mother Your Mother (Orion Pictures) : Director Bassam Tariq and Mahershala Ali"
+    }
+   ]
+  },
+  {
+   "id": "S83",
+   "title": "Universal Upcoming Films",
+   "url": "https://www.universalpictures.com/movies/",
+   "status": "unreadable",
+   "dossier": "Listed in the dossier’s register; access date 23 October 2026 unless noted.",
+   "retrieved": null,
+   "published": null,
+   "effective": null,
+   "territory": null,
+   "attempts": [
+    {
+     "at": "2026-10-23",
+     "how": "curl with a browser user agent",
+     "result": "HTTP 200, but the page loads its films in the browser: its text holds no titles"
+    }
+   ],
+   "facts": []
+  },
+  {
+   "id": "S84",
+   "title": "Amazon MGM Press",
+   "url": "https://press.amazonmgmstudios.com/",
+   "status": "dossier-located",
+   "dossier": "Listed in the dossier’s register; access date 23 October 2026 unless noted.",
+   "retrieved": null,
+   "published": null,
+   "effective": null,
+   "territory": null,
+   "attempts": [],
+   "facts": []
+  },
+  {
+   "id": "S85",
+   "title": "Severance Cast and Crew",
+   "url": "https://www.apple.com/tv-pr/originals/severance/cast-crew/",
+   "status": "read",
+   "dossier": "Listed in the dossier’s register; access date 23 October 2026 unless noted.",
+   "retrieved": "2026-10-23",
+   "published": null,
+   "effective": null,
+   "territory": "US",
+   "attempts": [
+    {
+     "at": "2026-10-23",
+     "how": "curl with a browser user agent",
+     "result": "HTTP 200"
+    }
+   ],
+   "facts": [
+    {
+     "field": "season-2-cast",
+     "value": "Season two’s cast, without their characters",
+     "quote": "Season 2 Adam Scott as Patricia Arquette as Britt Lower as Tramell Tillman as Zach Cherry as Jen Tullock as Michael Chernus as Dichen Lachman as Sarah Bock as John Turturro as Christopher Walken as"
+    }
+   ]
+  },
+  {
+   "id": "S86",
+   "title": "Abbott Elementary Cast",
+   "url": "https://abc.com/show/e4f28254-2fc4-4cc1-b9bb-eee0564c178e/cast",
+   "status": "unreadable",
+   "dossier": "Listed in the dossier’s register; access date 23 October 2026 unless noted.",
+   "retrieved": null,
+   "published": null,
+   "effective": null,
+   "territory": null,
+   "attempts": [
+    {
+     "at": "2026-10-23",
+     "how": "curl with a browser user agent",
+     "result": "HTTP 200, but the cast loads in the browser: the text holds none of it"
+    }
+   ],
+   "facts": []
+  },
+  {
+   "id": "S87",
+   "title": "The Bear: Hulu Press",
+   "url": "https://press.hulu.com/shows/the-bear/",
+   "status": "dossier-located",
+   "dossier": "Listed in the dossier’s register; access date 23 October 2026 unless noted.",
+   "retrieved": null,
+   "published": null,
+   "effective": null,
+   "territory": null,
+   "attempts": [],
+   "facts": []
+  },
+  {
+   "id": "S88",
+   "title": "9-1-1 Cast",
+   "url": "https://abc.com/show/42bb0821-68c2-4543-8d0f-51ca8e7dbcf4/cast",
+   "status": "unreadable",
+   "dossier": "Listed in the dossier’s register; access date 23 October 2026 unless noted.",
+   "retrieved": null,
+   "published": null,
+   "effective": null,
+   "territory": null,
+   "attempts": [
+    {
+     "at": "2026-10-23",
+     "how": "curl with a browser user agent",
+     "result": "HTTP 200, but the cast loads in the browser: the text holds none of it"
+    }
+   ],
+   "facts": []
+  },
+  {
+   "id": "S89",
+   "title": "CAA Motion Pictures",
+   "url": "https://www.caa.com/entertainmenttalent/motion-pictures",
+   "status": "read",
+   "dossier": "Listed in the dossier’s register; access date 23 October 2026 unless noted.",
+   "retrieved": "2026-10-23",
+   "published": null,
+   "effective": null,
+   "territory": "US",
+   "attempts": [
+    {
+     "at": "2026-10-23",
+     "how": "curl with a browser user agent",
+     "result": "HTTP 200"
+    }
+   ],
+   "facts": [
+    {
+     "field": "department",
+     "value": "CAA Motion Pictures represents actors, directors, writers and producers",
+     "quote": "CAA represents the world's premier actors, directors, writers, and producers."
+    }
+   ]
+  },
+  {
+   "id": "S90",
+   "title": "UTA Talent",
+   "url": "https://www.unitedtalent.com/talent",
+   "status": "unreadable",
+   "dossier": "Listed in the dossier’s register; access date 23 October 2026 unless noted.",
+   "retrieved": null,
+   "published": null,
+   "effective": null,
+   "territory": null,
+   "attempts": [
+    {
+     "at": "2026-10-23",
+     "how": "curl with a browser user agent",
+     "result": "HTTP 200, but the page loads in the browser: its text holds nothing"
+    }
+   ],
+   "facts": []
+  },
+  {
+   "id": "S91",
+   "title": "WME Acting Talent",
+   "url": "https://www.wmeagency.com/expertise/acting-talent/",
+   "status": "read",
+   "dossier": "Listed in the dossier’s register; access date 23 October 2026 unless noted.",
+   "retrieved": "2026-10-23",
+   "published": null,
+   "effective": null,
+   "territory": "US",
+   "attempts": [
+    {
+     "at": "2026-10-23",
+     "how": "curl with a browser user agent",
+     "result": "HTTP 200"
+    }
+   ],
+   "facts": [
+    {
+     "field": "department",
+     "value": "WME represents actors on screen and in voice work",
+     "quote": "WME represents generations of actors who routinely garner major awards."
+    }
+   ]
+  },
+  {
+   "id": "S92",
+   "title": "Complete 99th Oscars Rules",
+   "url": "https://www.oscars.org/sites/oscars/files/2026-05/99th_oscars_complete_rules.pdf?VersionId=84FilOcTNI7wpFAxl56.8xesZyP5.UWl",
+   "status": "dossier-located",
+   "dossier": "Listed in the dossier’s register; access date 23 October 2026 unless noted.",
+   "retrieved": null,
+   "published": null,
+   "effective": null,
+   "territory": null,
+   "attempts": [],
+   "facts": []
+  },
+  {
+   "id": "S93",
+   "title": "Box Office Mojo: 2026 Week 42",
+   "url": "https://www.boxofficemojo.com/weekly/2026W42/?ref_=bo_wly_table_1",
+   "status": "dossier-located",
+   "dossier": "Recorded measurement period: 16–22 October 2026.",
+   "retrieved": null,
+   "published": null,
+   "effective": null,
+   "territory": null,
+   "attempts": [],
+   "facts": []
+  },
+  {
+   "id": "S94",
+   "title": "Netflix Global Movie Top Ten",
+   "url": "https://www.netflix.com/tudum/top10",
+   "status": "dossier-located",
+   "dossier": "Recorded table period: 12–18 October 2026. Dynamic page: retain a dated snapshot.",
+   "retrieved": null,
+   "published": null,
+   "effective": null,
+   "territory": null,
+   "attempts": [],
+   "facts": []
+  },
+  {
+   "id": "S95",
+   "title": "SAG-AFTRA Standard Television",
+   "url": "https://www.sagaftra.org/industry-resources/rates-agreements/standard-television",
+   "status": "blocked",
+   "dossier": "High-level overview, not a universal current rate card.",
+   "retrieved": null,
+   "published": null,
+   "effective": null,
+   "territory": null,
+   "attempts": [
+    {
+     "at": "2026-10-24",
+     "how": "curl with a browser user agent",
+     "result": "HTTP 403"
+    }
+   ],
+   "facts": []
+  },
+  {
+   "id": "S96",
+   "title": "SAG-AFTRA Residuals Quick Guide",
+   "url": "https://www.sagaftra.org/sag-aftra-tv-and-theatrical-residuals-quick-guide",
+   "status": "blocked",
+   "dossier": "Published 28 January 2021. Conceptual background only; current agreement controls.",
+   "retrieved": null,
+   "published": null,
+   "effective": null,
+   "territory": null,
+   "attempts": [
+    {
+     "at": "2026-10-24",
+     "how": "curl with a browser user agent and WebFetch",
+     "result": "HTTP 403"
+    }
+   ],
+   "facts": []
+  },
+  {
+   "id": "S97",
+   "title": "SAG-AFTRA 2026 Theatrical–Television Memorandum",
+   "url": "https://www.sagaftra.org/sites/default/files/2026-05/2026%20Theatrical-Television%20MOA.pdf",
+   "status": "dossier-located",
+   "dossier": "Targeted extraction source; not fully clause-validated in this dossier.",
+   "retrieved": null,
+   "published": null,
+   "effective": null,
+   "territory": null,
+   "attempts": [],
+   "facts": []
+  },
+  {
+   "id": "S98",
+   "title": "United Agents Roster",
+   "url": "https://www.unitedagents.co.uk/agents/",
+   "status": "read",
+   "dossier": "Listed in the dossier’s register; access date 23 October 2026 unless noted.",
+   "retrieved": "2026-10-23",
+   "published": null,
+   "effective": null,
+   "territory": "UK",
+   "attempts": [
+    {
+     "at": "2026-10-23",
+     "how": "curl with a browser user agent",
+     "result": "HTTP 200"
+    }
+   ],
+   "facts": [
+    {
+     "field": "actors",
+     "value": "The Actors department’s agents, each with a title",
+     "quote": "Agents Actors Jess Alford Agent Sophie Austin Agent Joshua Baumring-Gledhill Associate Agent Ellie Blackford Agent Alex Campbell Agent Gabriella Capisani Agent Olivia Carlile Agent Charlotte Davies Agent Lorna Fallowfield Agent Sean Gascoine Agent Duncan Hayes Agent Olivia Homan Agent John Hyslop Agent Ellie James Associate Agent Joel Keating Agent Lindy King Agent Kitty Laing Agent Donovan Mathews Associate Agent Stephanie Moore Agent Cat Palethorpe Associate Agent Lucia Pallaris Agent Carly Peters Agent Alexandra Rae Associate Agent Sarah Roberts Agent Helen Robinson Agent Tessa Schiller Associate Agent Dallas Smith Agent Isaac Storm Agent Maureen Vincent Agent Kirk Whelan-Foran Agent Ruth Young Agent Books"
+    },
+    {
+     "field": "office",
+     "value": "12-26 Lexington Street, London W1F 0LE",
+     "quote": "12-26 Lexington Street, London W1F 0LE"
+    }
+   ]
+  },
+  {
+   "id": "S99",
+   "title": "United Agents Submissions",
+   "url": "https://www.unitedagents.co.uk/submission-guidelines/",
+   "status": "read",
+   "dossier": "Listed in the dossier’s register; access date 23 October 2026 unless noted.",
+   "retrieved": "2026-10-23",
+   "published": null,
+   "effective": null,
+   "territory": "UK",
+   "attempts": [
+    {
+     "at": "2026-10-23",
+     "how": "curl with a browser user agent",
+     "result": "HTTP 200"
+    }
+   ],
+   "facts": [
+    {
+     "field": "actors-route",
+     "value": "An actor emails a CV, headshot and showreel to one agent; no reply in four to six weeks means unsuccessful",
+     "quote": "To submit your work as an Actor, email your CV, headshot and showreel to one agent only. Contact details can be found on their individual pages. If you have not received a reply within 4-6 weeks, your application has been unsuccessful. We do not accept submission enquiries over the telephone."
+    }
+   ]
+  },
+  {
+   "id": "S100",
+   "title": "United Agents: Lindy King",
+   "url": "https://www.unitedagents.co.uk/agent/lindy-king/",
+   "status": "read",
+   "dossier": "Listed in the dossier’s register; access date 23 October 2026 unless noted.",
+   "retrieved": "2026-10-23",
+   "published": null,
+   "effective": null,
+   "territory": "UK",
+   "attempts": [
+    {
+     "at": "2026-10-23",
+     "how": "curl with a browser user agent",
+     "result": "HTTP 200"
+    }
+   ],
+   "facts": [
+    {
+     "field": "role",
+     "value": "Lindy King, Agent",
+     "quote": "Lindy King Agent"
+    }
+   ]
+  },
+  {
+   "id": "S101",
+   "title": "Stewart Talent About",
+   "url": "https://print.stewarttalent.com/about",
+   "status": "read",
+   "dossier": "Listed in the dossier’s register; access date 23 October 2026 unless noted.",
+   "retrieved": "2026-10-23",
+   "published": null,
+   "effective": null,
+   "territory": "US",
+   "attempts": [
+    {
+     "at": "2026-10-23",
+     "how": "curl with a browser user agent",
+     "result": "HTTP 200"
+    }
+   ],
+   "facts": [
+    {
+     "field": "founded",
+     "value": "Founded in Chicago in 1984; offices in Atlanta, Los Angeles and New York",
+     "quote": "Founded in Chicago in 1984, and now with offices in Atlanta, Los Angeles, and New York."
+    }
+   ]
+  },
+  {
+   "id": "S102",
+   "title": "Stewart Talent Print Submissions",
+   "url": "https://print.stewarttalent.com/submissions",
+   "status": "read",
+   "dossier": "Listed in the dossier’s register; access date 23 October 2026 unless noted.",
+   "retrieved": "2026-10-23",
+   "published": null,
+   "effective": null,
+   "territory": "US",
+   "attempts": [
+    {
+     "at": "2026-10-23",
+     "how": "curl with a browser user agent",
+     "result": "HTTP 200"
+    }
+   ],
+   "facts": [
+    {
+     "field": "print-route",
+     "value": "The print division’s online form: images and measurements",
+     "quote": "The quickest & easiest way is to send your images to us via this page."
+    }
+   ]
+  },
+  {
+   "id": "S103",
+   "title": "Curtis Brown UK Actor Submissions",
+   "url": "https://www.curtisbrown.co.uk/page/actors-becoming-a-client",
+   "status": "unreadable",
+   "dossier": "Indexed official excerpt consulted; direct retrieval was blocked.",
+   "retrieved": null,
+   "published": null,
+   "effective": null,
+   "territory": null,
+   "attempts": [
+    {
+     "at": "2026-10-23",
+     "how": "curl with a browser user agent",
+     "result": "HTTP 200, but the page loads in the browser: its text holds only its template"
+    }
+   ],
+   "facts": []
+  },
+  {
+   "id": "S104",
+   "title": "UK Creative Worker Eligibility",
+   "url": "https://www.gov.uk/creative-worker-visa/eligibility",
+   "status": "dossier-located",
+   "dossier": "Listed in the dossier’s register; access date 23 October 2026 unless noted.",
+   "retrieved": null,
+   "published": null,
+   "effective": null,
+   "territory": null,
+   "attempts": [],
+   "facts": []
+  },
+  {
+   "id": "S105",
+   "title": "Canada Employer-Specific Work Permits",
+   "url": "https://www.canada.ca/en/immigration-refugees-citizenship/services/work-canada/employer-specific.html",
+   "status": "dossier-located",
+   "dossier": "Listed in the dossier’s register; access date 23 October 2026 unless noted.",
+   "retrieved": null,
+   "published": null,
+   "effective": null,
+   "territory": null,
+   "attempts": [],
+   "facts": []
+  },
+  {
+   "id": "S106",
+   "title": "99th Oscars Key Dates",
+   "url": "https://www.oscars.org/99th-oscars-and-academy-key-dates",
+   "status": "dossier-located",
+   "dossier": "Listed in the dossier’s register; access date 23 October 2026 unless noted.",
+   "retrieved": null,
+   "published": null,
+   "effective": null,
+   "territory": null,
+   "attempts": [],
+   "facts": []
+  },
+  {
+   "id": "S107",
+   "title": "SAG-AFTRA 2026 Low Budget Theatrical Rate Sheet",
+   "url": "https://www.sagaftra.org/sites/default/files/2026-06/Current%20Low%20Budget%20Agreement%20%28LBA%29%20Rate%20Sheet.pdf",
+   "status": "dossier-located",
+   "dossier": "Relevant rate rows and notes inspected.",
+   "retrieved": null,
+   "published": null,
+   "effective": null,
+   "territory": null,
+   "attempts": [],
+   "facts": []
+  },
+  {
+   "id": "S108",
+   "title": "IMDb: Box Office Mojo FAQ",
+   "url": "https://help.imdb.com/article/imdbpro/industry-research/box-office-mojo-by-imdbpro-faq/GCWTV4MQKGWRAUAP",
+   "status": "dossier-located",
+   "dossier": "Listed in the dossier’s register; access date 23 October 2026 unless noted.",
+   "retrieved": null,
+   "published": null,
+   "effective": null,
+   "territory": null,
+   "attempts": [],
+   "facts": []
+  },
+  {
+   "id": "S109",
+   "title": "Abbott Elementary: ABC Press",
+   "url": "https://www.detpress.com/abc/shows/abbott-elementary/",
+   "status": "read",
+   "dossier": "Listed in the dossier’s register; access date 23 October 2026 unless noted.",
+   "retrieved": "2026-10-23",
+   "published": null,
+   "effective": null,
+   "territory": "US",
+   "attempts": [
+    {
+     "at": "2026-10-23",
+     "how": "curl with a browser user agent",
+     "result": "HTTP 200"
+    }
+   ],
+   "facts": [
+    {
+     "field": "airs",
+     "value": "Wednesdays on ABC; streams on Hulu",
+     "quote": "Wednesdays, 8:30-9:02 p.m. ET/PT, on ABC; Streams on Hulu"
+    },
+    {
+     "field": "genre",
+     "value": "A workplace comedy",
+     "quote": "In this workplace comedy"
+    },
+    {
+     "field": "cast",
+     "value": "The series cast and their characters",
+     "quote": "“Abbott Elementary” stars Emmy® Award winner Quinta Brunson as Janine Teagues, Tyler James Williams as Gregory Eddie, Janelle James as Ava Coleman, Chris Perfetti as Jacob Hill, Lisa Ann Walter as Melissa Schemmenti, William Stanford Davis as Mr. Johnson and Emmy Award winner Sheryl Lee Ralph as Barbara Howard."
+    },
+    {
+     "field": "creator",
+     "value": "Created by Quinta Brunson",
+     "quote": "Quinta Brunson created the series and serves as executive producer"
+    },
+    {
+     "field": "producers",
+     "value": "Produced by Warner Bros. Television and 20th Television",
+     "quote": "The series is produced by Warner Bros. Television and 20th Television, a part of Disney Television Studios."
+    }
+   ]
+  },
+  {
+   "id": "S110",
+   "title": "Amazon: I Play Rocky",
+   "url": "https://www.aboutamazon.com/news/entertainment/i-play-rocky-trailer-cast-release-date-amazon-mgm-studios",
+   "status": "read",
+   "dossier": "Article updated 22 October 2026.",
+   "retrieved": "2026-10-23",
+   "published": "2026-10-22",
+   "effective": null,
+   "territory": "US",
+   "attempts": [
+    {
+     "at": "2026-10-23",
+     "how": "curl with a browser user agent",
+     "result": "HTTP 200"
+    }
+   ],
+   "facts": [
+    {
+     "field": "release",
+     "value": "Select theaters November 6, 2026; everywhere later in November",
+     "quote": "The film releases in select theaters on November 6, 2026, and everywhere later in November"
+    },
+    {
+     "field": "lead",
+     "value": "Anthony Ippolito as a young Sylvester Stallone",
+     "quote": "Anthony Ippolito ( The Offer ) stars as a young Sylvester Stallone."
+    },
+    {
+     "field": "cast",
+     "value": "The rest of the cast",
+     "quote": "The cast also includes Matt Dillon, AnnaSophia Robb, P.J. Byrne, Toby Kebbell, Tracy Letts, Jay Duplass, Stephan James, Kiki Seto, Robert Morgan, Saul Stein, Trevor St. John, Erik Palladino, and Rob Demery."
+    },
+    {
+     "field": "makers",
+     "value": "Written by Peter Gamble; produced from Fireside Films and Baha Productions",
+     "quote": "Farrelly directs from a script by Peter Gamble. Toby Emmerich, Christian Baha, and Farrelly produce the film from Fireside Films and Baha Productions."
+    }
+   ]
+  },
+  {
+   "id": "N01",
+   "title": "AMPTP: 2026–30 SAG-AFTRA Rates (v.4, 27 May 2026)",
+   "url": "https://amptp.org/wp-content/themes/amptp/assets/pdf/SAG-AFTRA/2026-30%20SAG-AFTRA%20Rates_2026-05-27%204931-9242-3576%20v.4.pdf",
+   "status": "read",
+   "dossier": "Not in the dossier; brief 19 read it as work.md S30 for the day rates.",
+   "retrieved": "2026-10-23",
+   "published": "2026-05-27",
+   "effective": "Each column from 1 July: 2025–26 to 2029–30.",
+   "territory": "US",
+   "attempts": [
+    {
+     "at": "2026-10-23",
+     "how": "curl",
+     "result": "HTTP 200, 606,770 bytes, read with pdftotext"
+    }
+   ],
+   "facts": [
+    {
+     "field": "theatrical weekly performer (B 354)",
+     "value": "$4,326 from 2025-07-01; $4,456 from 2026-07-01; $4,590 from 2027-07-01; $4,728 from 2028-07-01; $4,870 from 2029-07-01",
+     "quote": "B   354        Performer                                                  $4,326       $4,456          $4,590          $4,728          $4,870"
+    },
+    {
+     "field": "theatrical day performer (A 299)",
+     "value": "$1,246; $1,283; $1,321; $1,361; $1,402",
+     "quote": "A     299     Performer                                                  $1,246       $1,283          $1,321          $1,361          $1,402"
+    },
+    {
+     "field": "television weekly performer (TV 5)",
+     "value": "$4,326; $4,456; $4,590; $4,728; $4,870",
+     "quote": "TV    5      Performer                                                    $4,326    $4,456          $4,590           $4,728          $4,870"
+    }
+   ]
+  },
+  {
+   "id": "N02",
+   "title": "Home Affairs: Special Category visa (subclass 444)",
+   "url": "https://immi.homeaffairs.gov.au/visas/getting-a-visa/visa-listing/special-category-visa-subclass-444",
+   "status": "read",
+   "dossier": "Not in the dossier.",
+   "retrieved": "2026-10-23",
+   "published": "2026-09-08",
+   "effective": "The page as last updated 8/09/2026 9:59 AM.",
+   "territory": "AU",
+   "attempts": [
+    {
+     "at": "2026-10-23",
+     "how": "curl with a browser user agent",
+     "result": "HTTP 200, 1,330,653 bytes; content in the embedded JSON"
+    }
+   ],
+   "facts": [
+    {
+     "field": "work",
+     "value": "A New Zealand citizen may visit, work and study in Australia",
+     "quote": "visit, work and study in Australia"
+    },
+    {
+     "field": "passport",
+     "value": "Granted to a holder of a valid New Zealand passport, on arrival",
+     "quote": "You must have a valid New Zealand passport to be granted this visa."
+    },
+    {
+     "field": "stay",
+     "value": "For as long as they remain a New Zealand citizen",
+     "quote": "enter and stay in Australia for as long as you are and continue to remain a New Zealand citizen"
+    }
+   ]
+  },
+  {
+   "id": "N03",
+   "title": "Apple TV Press: Severance",
+   "url": "https://www.apple.com/tv-pr/originals/severance/",
+   "status": "read",
+   "dossier": "Not in the dossier.",
+   "retrieved": "2026-10-23",
+   "published": null,
+   "effective": null,
+   "territory": "US",
+   "attempts": [
+    {
+     "at": "2026-10-23",
+     "how": "curl with a browser user agent",
+     "result": "HTTP 200"
+    }
+   ],
+   "facts": [
+    {
+     "field": "rating",
+     "value": "TV-MA",
+     "quote": "Rated TV-MA"
+    },
+    {
+     "field": "genre",
+     "value": "Thriller",
+     "quote": "Rated TV-MA Thriller Severance"
+    },
+    {
+     "field": "season-2-release",
+     "value": "January 17, 2025",
+     "quote": "Season 2 Release Date: January 17, 2025"
+    },
+    {
+     "field": "lead",
+     "value": "Adam Scott plays Mark Scout",
+     "quote": "Mark Scout (Adam Scott) leads a team at Lumon Industries"
+    }
+   ]
+  },
+  {
+   "id": "N04",
+   "title": "Apple TV Press: Slow Horses Cast And Crew",
+   "url": "https://www.apple.com/tv-pr/originals/slow-horses/cast-crew/",
+   "status": "read",
+   "dossier": "Not in the dossier.",
+   "retrieved": "2026-10-23",
+   "published": null,
+   "effective": null,
+   "territory": "US",
+   "attempts": [
+    {
+     "at": "2026-10-23",
+     "how": "curl with a browser user agent",
+     "result": "HTTP 200"
+    }
+   ],
+   "facts": [
+    {
+     "field": "seasons-listed",
+     "value": "The page lists seasons one to five, season five’s actors without their characters",
+     "quote": "Season 5 Season 4 Season 3 Season 2 Season 1 Season 5 Sir Gary Oldman as Kristin Scott Thomas as Jack Lowden as"
+    }
+   ]
+  },
+  {
+   "id": "N05",
+   "title": "Stewart Talent: Contact, New York",
+   "url": "https://www.stewarttalent.com/site/contact_new_york",
+   "status": "read",
+   "dossier": "Found by this build; not in the dossier’s register.",
+   "retrieved": "2026-10-24",
+   "published": null,
+   "effective": null,
+   "territory": "US",
+   "attempts": [
+    {
+     "at": "2026-10-24",
+     "how": "curl with a browser user agent",
+     "result": "HTTP 200"
+    }
+   ],
+   "facts": [
+    {
+     "field": "office",
+     "value": "1430 Broadway Suite 601, New York, NY 10018",
+     "quote": "NEW YORK 1430 Broadway Suite 601 , New York, NY 10018"
+    },
+    {
+     "field": "route",
+     "value": "Legit and commercial: no unsolicited submissions",
+     "quote": "Submissions Legit / Commercial We do not accept unsolicited submissions at this time."
+    },
+    {
+     "field": "agent",
+     "value": "Dan Patack, Theatrical Agent",
+     "quote": "Dan Patack Theatrical Agent"
+    },
+    {
+     "field": "agent",
+     "value": "Jay Schachter, Theatrical Agent",
+     "quote": "Jay Schachter Theatrical Agent"
+    },
+    {
+     "field": "agent",
+     "value": "Rachel Grandizio, Theatrical Agent",
+     "quote": "Rachel Grandizio Theatrical Agent"
+    },
+    {
+     "field": "agent",
+     "value": "Tim Marshall, Theatrical Agent",
+     "quote": "Tim Marshall Theatrical Agent"
+    },
+    {
+     "field": "agent",
+     "value": "Jordan Parente, Theatrical Agent (not depicted: the owner, 2026-10-21)",
+     "quote": "Jordan Parente Theatrical Agent"
+    },
+    {
+     "field": "director",
+     "value": "Don Birge, Director",
+     "quote": "Don Birge Director"
+    }
+   ]
+  },
+  {
+   "id": "N06",
+   "title": "Stewart Talent: Contact, Los Angeles",
+   "url": "https://www.stewarttalent.com/site/contact_los_angeles",
+   "status": "read",
+   "dossier": "Found by this build; not in the dossier’s register.",
+   "retrieved": "2026-10-24",
+   "published": null,
+   "effective": null,
+   "territory": "US",
+   "attempts": [
+    {
+     "at": "2026-10-24",
+     "how": "curl with a browser user agent",
+     "result": "HTTP 200"
+    }
+   ],
+   "facts": [
+    {
+     "field": "office",
+     "value": "5700 Wilshire Blvd Suite 470, Los Angeles, California 90036",
+     "quote": "LOS ANGELES 5700 Wilshire BLVD Suite 470, Los Angeles, California 90036"
+    },
+    {
+     "field": "route",
+     "value": "Theatrical and commercial: no unsolicited submissions",
+     "quote": "Submissions Theatrical / Commercial We do not accept unsolicited submissions at this time."
+    },
+    {
+     "field": "agents",
+     "value": "Its theatrical agents",
+     "quote": "Daniel Ortega Theatrical Agent"
+    }
+   ]
+  },
+  {
+   "id": "N07",
+   "title": "Stewart Talent: Contact, Chicago",
+   "url": "https://www.stewarttalent.com/contact",
+   "status": "read",
+   "dossier": "Found by this build; not in the dossier’s register.",
+   "retrieved": "2026-10-24",
+   "published": null,
+   "effective": null,
+   "territory": "US",
+   "attempts": [
+    {
+     "at": "2026-10-24",
+     "how": "curl with a browser user agent",
+     "result": "HTTP 200"
+    }
+   ],
+   "facts": [
+    {
+     "field": "office",
+     "value": "400 N. Michigan Ave Suite 700, Chicago, IL 60611",
+     "quote": "CHICAGO 400 N. Michigan Ave Suite 700 , Chicago , IL 60611"
+    },
+    {
+     "field": "route",
+     "value": "Film/TV/Theatre: a picture, a résumé and a reel if you have one, by mail or email",
+     "quote": "Stewart Talent Chicago's Film/TV/Theatre division represents actors from ages 8 to 100. For consideration, please submit a picture, resume and reel (if you have one) via mail or email."
+    }
+   ]
+  },
+  {
+   "id": "N08",
+   "title": "Stewart Talent: Contact, Atlanta",
+   "url": "https://www.stewarttalent.com/site/contact_atlanta",
+   "status": "read",
+   "dossier": "Found by this build; not in the dossier’s register.",
+   "retrieved": "2026-10-24",
+   "published": null,
+   "effective": null,
+   "territory": "US",
+   "attempts": [
+    {
+     "at": "2026-10-24",
+     "how": "curl with a browser user agent",
+     "result": "HTTP 200"
+    }
+   ],
+   "facts": [
+    {
+     "field": "route",
+     "value": "Referrals only",
+     "quote": "Stewart Talent Atlanta is now only accepting talent submissions via referrals."
+    }
+   ]
+  },
+  {
+   "id": "N09",
+   "title": "Stewart Talent: Talent Submission",
+   "url": "https://www.stewarttalent.com/scouting",
+   "status": "read",
+   "dossier": "Found by this build; not in the dossier’s register.",
+   "retrieved": "2026-10-24",
+   "published": null,
+   "effective": null,
+   "territory": "US",
+   "attempts": [
+    {
+     "at": "2026-10-24",
+     "how": "curl with a browser user agent",
+     "result": "HTTP 200"
+    }
+   ],
+   "facts": [
+    {
+     "field": "route-ny",
+     "value": "New York legit: no unsolicited submissions",
+     "quote": "New York Legit We do not accept unsolicited submissions at this time."
+    },
+    {
+     "field": "route-atlanta",
+     "value": "Atlanta Film/TV/Theatre: by email only, full-time residents of the Southeast (against the Atlanta contact page, N08)",
+     "quote": "Stewart Talent Atlanta's Film/TV/Theatre division accepts submissions only via email."
+    }
+   ]
+  },
+  {
+   "id": "N10",
+   "title": "WME: Terms Of Use",
+   "url": "https://www.wmeagency.com/terms",
+   "status": "read",
+   "dossier": "Found by this build; not in the dossier’s register.",
+   "retrieved": "2026-10-24",
+   "published": null,
+   "effective": null,
+   "territory": "US",
+   "attempts": [
+    {
+     "at": "2026-10-24",
+     "how": "curl with a browser user agent",
+     "result": "HTTP 200"
+    }
+   ],
+   "facts": [
+    {
+     "field": "route",
+     "value": "No submissions of any kind",
+     "quote": "WME does not accept submissions of any kind through the Website, email, or otherwise"
+    }
+   ]
+  },
+  {
+   "id": "N11",
+   "title": "Stewart Talent: New York",
+   "url": "https://www.stewarttalent.com/section/new-york",
+   "status": "read",
+   "dossier": "Found by this build; not in the dossier’s register.",
+   "retrieved": "2026-10-24",
+   "published": null,
+   "effective": null,
+   "territory": "US",
+   "attempts": [
+    {
+     "at": "2026-10-24",
+     "how": "curl with a browser user agent",
+     "result": "HTTP 200"
+    }
+   ],
+   "facts": [
+    {
+     "field": "departments",
+     "value": "The New York office’s sections: film/tv/theatre, voiceover, commercial, comedy and others",
+     "quote": "film/tv/theatre voiceover commercial comedy"
+    }
+   ]
+  },
+  {
+   "id": "N12",
+   "title": "AMPTP: 2026 SAG-AFTRA Memorandum Of Agreement (fully executed 27 May 2026)",
+   "url": "https://amptp.org/wp-content/themes/amptp/assets/pdf/SAG-AFTRA/2026%20SAG-AFTRA%20Memorandum%20of%20Agreement%20FULLY%20EXECUTED%202026-05-27.pdf",
+   "status": "read",
+   "dossier": "Found by this build; not in the dossier’s register.",
+   "retrieved": "2026-10-24",
+   "published": "2026-05-27",
+   "effective": null,
+   "territory": "US",
+   "attempts": [
+    {
+     "at": "2026-10-24",
+     "how": "curl with a browser user agent, then pdftotext",
+     "result": "HTTP 200"
+    }
+   ],
+   "facts": [
+    {
+     "field": "rerun-ceilings",
+     "value": "The network prime time rerun ceilings kept as they were",
+     "quote": "Stet the network prime time rerun ceilings in Section 18(b)(l)b) of the Television"
+    },
+    {
+     "field": "health-plan",
+     "value": "The Health Plan contribution rate up one percent, from July 1, 2026 or the first Sunday ninety days after ratification notice, whichever is later",
+     "quote": "Increase the contribution rate to the SAG-AFTRA Health Plan by one percent (1.0%) effective on [July 1, 2026 or the first Sunday that is ninety (90) days following the business day on which the AMPTP receives notice of ratification, whichever is later]"
+    },
+    {
+     "field": "allowances",
+     "value": "Allowances kept as they were",
+     "quote": "Stet all allowances and adjustments in the SAG-AFTRA Codified Basic"
+    },
+    {
+     "field": "minimums",
+     "value": "Minimums up 3% a year, compounded",
+     "quote": "Increase the minimum salary rates in the 2023 SAG-AFTRA Codified Basic Agreement and the 2023 SAG-AFTRA Television Agreement by three percent (3%)"
+    },
+    {
+     "field": "sideletter-k",
+     "value": "The Health Plan increase isn’t applied to Sideletter K’s rate for pilots and a new series’ first two seasons",
+     "quote": "the increase described in the preceding sentence shall not apply to the contribution rate under Sideletter K"
+    }
+   ]
+  },
+  {
+   "id": "N13",
+   "title": "AMPTP: 2014 SAG-AFTRA Codified Basic Agreement",
+   "url": "https://amptp.org/wp-content/themes/amptp/assets/pdf/SAG-AFTRA/2014%20Codified%20Basic%20Agreement%20(%E2%80%9CCBA%E2%80%9D).pdf",
+   "status": "read",
+   "dossier": "Found by this build; not in the dossier’s register.",
+   "retrieved": "2026-10-24",
+   "published": null,
+   "effective": null,
+   "territory": "US",
+   "attempts": [
+    {
+     "at": "2026-10-24",
+     "how": "curl with a browser user agent, then pdftotext",
+     "result": "HTTP 200"
+    }
+   ],
+   "facts": [
+    {
+     "field": "overtime",
+     "value": "A day performer: time and one-half for the ninth and tenth hours of work time",
+     "quote": "A day performer shall receive time and one-half for the ninth and tenth hours of work time, and double time thereafter"
+    },
+    {
+     "field": "overtime-example",
+     "value": "The worked example: a day performer at $880 a day, eleven hours of work time after an hour for lunch, paid two hours at time and one-half ($330) and one at double time ($220), an hour an eighth of the day rate",
+     "quote": "(1) Two hours at time and one-half..... $330.00"
+    },
+    {
+     "field": "per-diem",
+     "value": "A per diem for meals on overnight locations: $60 a day",
+     "quote": "All performers shall be entitled to a basic per diem allowance for meals on overnight locations"
+    },
+    {
+     "field": "per-diem-total",
+     "value": "Breakfast $12, lunch $18, dinner $30",
+     "quote": "TOTAL: $60.00"
+    },
+    {
+     "field": "pension-health-2014",
+     "value": "Pension and health contributions in 2014: 17% of gross compensation",
+     "quote": "seventeen percent (17.0%) of all gross compensation"
+    },
+    {
+     "field": "multicam-rehearsal",
+     "value": "Schedule A §21.E: rehearsal doesn’t start a day performer’s consecutive days of employment, except on a half-hour multicamera series, where it does",
+     "quote": "Rehearsal shall not start the consecutive days of employment for a day performer (other than on a one-half hour multi-camera series)"
+    },
+    {
+     "field": "animated-voice-over",
+     "value": "Schedule A §21: consecutive employment doesn’t apply to voice-over work on animated theatrical motion pictures",
+     "quote": "to performers employed to perform voice-over work on animated theatrical motion pictures"
+    },
+    {
+     "field": "looping",
+     "value": "Schedule A §28.A: a recall to loop after principal photography pays half the pro rata daily salary for a four-hour session, a full day past four hours; retakes within four months, six for theatrical films, pilots and long-form television including multi-part closed-end series, at the daily rate",
+     "quote": "Performer may be recalled to loop (record sound track) after completion of principal photography at one-half (½) of the performer's pro rata daily salary for a four (4) hour looping session."
+    },
+    {
+     "field": "dialogue-replacement",
+     "value": "Schedule A §37.A: a day’s pay covers unlimited non-synchronized lines and up to five synchronized lines for each of up to three characters, a day more for any part of more than five and each further set of up to three",
+     "quote": "a maximum of five (5) synchronized lines for each of up to three (3) characters"
+    },
+    {
+     "field": "dialogue-replacement-single",
+     "value": "Schedule A §37.E(1): a single character’s synchronized lines, any number, for the minimum",
+     "quote": "Producer may employ a performer to speak an unlimited number of synchronized lines for a single character, for which Producer shall pay performer the applicable minimum compensation."
+    },
+    {
+     "field": "vocally-stressful",
+     "value": "Schedule A §37.C: the producer says before a dialogue replacement session whether vocally stressful work is planned, and if not the performer may refuse it",
+     "quote": "If the performer is not informed of vocally stressful work prior to the session, the performer may refuse to do such work."
+    },
+    {
+     "field": "stunt-coordinator",
+     "value": "General Provisions §28.B(1): a person qualified in the stunt engaged and on the set, and the performer’s chance to consult them first",
+     "quote": "an individual qualified by training and/or experience in the planning, setting up and/or performance of the type of stunt involved shall be engaged and present on the set"
+    },
+    {
+     "field": "stunt-consent",
+     "value": "General Provisions §28.B(4): the performer’s consent is a precondition of a stunt, limited to the stunt described; violation is $900 in liquidated damages",
+     "quote": "The performer's consent shall be a requisite precondition to performing stunts or other hazardous activity."
+    },
+    {
+     "field": "nudity-notice",
+     "value": "General Provisions §43.A: nudity or sex acts expected in a role are notified before the first interview or audition",
+     "quote": "notify the performer (or his representative) of any nudity or sex acts expected in the role (if known by management at the time) prior to the first interview or audition"
+    },
+    {
+     "field": "nudity-closed-set",
+     "value": "General Provisions §43.B: the set closed during nudity or sex scenes",
+     "quote": "the set shall be closed to all persons having no business purpose in connection with the production"
+    },
+    {
+     "field": "nudity-consent",
+     "value": "General Provisions §43.D: prior written consent describing the scene; withdrawn, the producer may double, and consent can’t be withdrawn for film already shot",
+     "quote": "If a performer has agreed to appear in such scenes and then withdraws his or her consent, Producer shall have the right to double, but consent may not be withdrawn as to film already photographed."
+    }
+   ]
+  },
+  {
+   "id": "N14",
+   "title": "AMPTP: 2014 SAG-AFTRA Television Agreement",
+   "url": "https://amptp.org/wp-content/themes/amptp/assets/pdf/SAG-AFTRA/2014%20Television%20Agreement%20(%E2%80%9CTVA%E2%80%9D).pdf",
+   "status": "read",
+   "dossier": "Found by this build; not in the dossier’s register.",
+   "retrieved": "2026-10-24",
+   "published": null,
+   "effective": null,
+   "territory": "US",
+   "attempts": [
+    {
+     "at": "2026-10-24",
+     "how": "curl with a browser user agent, then pdftotext",
+     "result": "HTTP 200"
+    }
+   ],
+   "facts": [
+    {
+     "field": "first-run",
+     "value": "The salary pays for the first telecast",
+     "quote": "The salary paid to the performer for his services in a television motion picture shall constitute payment in full for the telecasting of such motion picture once"
+    },
+    {
+     "field": "prime-time-rerun",
+     "value": "A network prime-time rerun: 100% of total actual compensation, up to the ceiling",
+     "quote": "Performer shall be paid one hundred percent (100%) of his “total actual compensation” for each such rerun, not exceeding the ceilings"
+    },
+    {
+     "field": "ceiling-half-hour",
+     "value": "The half-hour ceiling, $2,578 from July 1, 2016",
+     "quote": "½ hour program $2,477 $2,527 $2,578"
+    },
+    {
+     "field": "ceiling-hour",
+     "value": "The one-hour ceiling, $3,668 from July 1, 2016",
+     "quote": "1 hour program 3,525 3,596 3,668"
+    },
+    {
+     "field": "rerun-due",
+     "value": "A network rerun is paid within thirty days of its telecast",
+     "quote": "the Producer shall make the appropriate rerun payment not later than thirty (30) days after the telecast of such rerun"
+    },
+    {
+     "field": "total-actual-compensation",
+     "value": "Total actual compensation: pay for time worked or guaranteed, overtime hours at straight time without their premium, and no penalties or allowances",
+     "quote": "including overtime hours worked, but excluding any premium portions of pay for such overtime hours and (ii) excluding also all penalties and allowances"
+    }
+   ]
+  },
+  {
+   "id": "N15",
+   "title": "AMPTP: 2017 SAG-AFTRA CBA And TVA Memorandum Of Agreement",
+   "url": "https://amptp.org/wp-content/themes/amptp/assets/pdf/SAG-AFTRA/2017%20CBA%20and%20TVA%20Memorandum%20of%20Agreement%20(%E2%80%9CMOA%E2%80%9D).pdf",
+   "status": "read",
+   "dossier": "Found by this build; not in the dossier’s register.",
+   "retrieved": "2026-10-24",
+   "published": null,
+   "effective": null,
+   "territory": "US",
+   "attempts": [
+    {
+     "at": "2026-10-24",
+     "how": "curl with a browser user agent, then pdftotext",
+     "result": "HTTP 200"
+    }
+   ],
+   "facts": [
+    {
+     "field": "rerun-ceilings",
+     "value": "The network prime time rerun ceilings frozen",
+     "quote": "Freeze the network prime time rerun ceilings in Section 18(b)(1)b) of the Television Agreement."
+    },
+    {
+     "field": "pension-health",
+     "value": "17% to 17.5% from July 1, 2017",
+     "quote": "total aggregate pension and health contribution rate increases from seventeen percent (17%) to seventeen and one-half percent (17.5%)"
+    }
+   ]
+  },
+  {
+   "id": "N16",
+   "title": "AMPTP: 2020 SAG-AFTRA CBA And TVA Memorandum Of Agreement",
+   "url": "https://amptp.org/wp-content/themes/amptp/assets/pdf/SAG-AFTRA/2020%20CBA%20and%20TVA%20MOA.pdf",
+   "status": "read",
+   "dossier": "Found by this build; not in the dossier’s register.",
+   "retrieved": "2026-10-24",
+   "published": null,
+   "effective": null,
+   "territory": "US",
+   "attempts": [
+    {
+     "at": "2026-10-24",
+     "how": "curl with a browser user agent, then pdftotext",
+     "result": "HTTP 200"
+    }
+   ],
+   "facts": [
+    {
+     "field": "rerun-ceilings",
+     "value": "The network prime time rerun ceilings frozen",
+     "quote": "Freeze the network prime time rerun ceilings in Section 18(b)(l)b) of the Television Agreement."
+    },
+    {
+     "field": "pension-health",
+     "value": "18.5% to 19.5% from July 1, 2020",
+     "quote": "pension and health contribution rate increases from eighteen and one-half percent (18.5%) to nineteen and one-half percent (19.5%)"
+    },
+    {
+     "field": "allowances",
+     "value": "Allowances frozen",
+     "quote": "Freeze all allowances and adjustments in the SAG-AFTRA Codified Basic Agreement and Television Agreement."
+    }
+   ]
+  },
+  {
+   "id": "N17",
+   "title": "AMPTP: 2023 SAG-AFTRA CBA And TVA Memorandum Of Agreement",
+   "url": "https://amptp.org/wp-content/themes/amptp/assets/pdf/SAG-AFTRA/2023%20CBA%20and%20TVA%20MOA.pdf",
+   "status": "read",
+   "dossier": "Found by this build; not in the dossier’s register.",
+   "retrieved": "2026-10-24",
+   "published": null,
+   "effective": null,
+   "territory": "US",
+   "attempts": [
+    {
+     "at": "2026-10-24",
+     "how": "curl with a browser user agent, then pdftotext",
+     "result": "HTTP 200"
+    }
+   ],
+   "facts": [
+    {
+     "field": "rerun-ceilings",
+     "value": "The network prime time rerun ceilings frozen",
+     "quote": "Freeze the network prime time rerun ceilings in Section 1 8(b)(l)b) of the Television Agreement."
+    },
+    {
+     "field": "allowances",
+     "value": "Allowances frozen",
+     "quote": "Freeze all allowances and adjustments in the SAG-AFTRA Codified Basic Agreement and Television Agreement"
+    },
+    {
+     "field": "contribution-ceiling",
+     "value": "The one-hour contribution ceiling, $35,000, from July 1, 2024",
+     "quote": "One-hour television motion picture or covered new media program 36-65 minutes in length: $35,000."
+    },
+    {
+     "field": "performance-capture",
+     "value": "Performance capture: covered by Schedules A, B, C or F; consecutive employment doesn’t apply; unlimited drops and pickups; more than one character a day at no additional pay",
+     "quote": "Consecutive employment rules shall not apply."
+    },
+    {
+     "field": "capture-characters",
+     "value": "A performance capture actor may play more than one character in a day at no additional pay",
+     "quote": "to render services for more than one character on the same day and, if so required, shall not be entitled to any additional compensation for such services"
+    }
+   ]
+  },
+  {
+   "id": "N18",
+   "title": "Press reports of the 2026 ratification vote (LA Magazine, Senal News), by web search",
+   "url": "https://lamag.com/arts-and-entertainment/sag-aftra-approves-amptp-deal-with-expanded-ai-protections-in-landslide-vote/",
+   "status": "excerpt",
+   "dossier": "Found by this build; not in the dossier’s register.",
+   "retrieved": "2026-10-24",
+   "published": null,
+   "effective": null,
+   "territory": "US",
+   "attempts": [
+    {
+     "at": "2026-10-24",
+     "how": "web search; the page itself not opened",
+     "result": "HTTP 200"
+    }
+   ],
+   "facts": [
+    {
+     "field": "ratified",
+     "value": "Members ratified the 2026 TV/Theatrical agreement in a national vote that closed on June 4, 2026",
+     "quote": "The national vote closed on June 4, 2026"
+    }
+   ]
+  },
+  {
+   "id": "N19",
+   "title": "Box Office Mojo by IMDbPro: Domestic Weekly Box Office, 2026 week 42 (October 16 to 22) and the weekly index",
+   "url": "https://www.boxofficemojo.com/weekly/2026W42/",
+   "status": "read",
+   "dossier": "Found by this build; not in the dossier’s register.",
+   "retrieved": "2026-10-24",
+   "published": null,
+   "effective": null,
+   "territory": "US",
+   "attempts": [
+    {
+     "at": "2026-10-24",
+     "how": "fetched by this build",
+     "result": "HTTP 200"
+    },
+    {
+     "at": "2026-10-24",
+     "how": "the weekly index, https://www.boxofficemojo.com/weekly/",
+     "result": "HTTP 200"
+    }
+   ],
+   "facts": [
+    {
+     "field": "week-42-first",
+     "value": "Street Fighter, No. 1, $38,338,634, 3,575 theaters, its first week",
+     "quote": "Street Fighter $38,338,634 3,575"
+    },
+    {
+     "field": "revision",
+     "value": "The dossier’s reading of 2026-10-23 (S93) gave Street Fighter $37,177,832 for the same week; this build’s of 2026-10-24 gives $38,338,634, kept as a revision",
+     "quote": "$38,338,634"
+    }
+   ]
+  },
+  {
+   "id": "N20",
+   "title": "Box Office Mojo by IMDbPro: Domestic Weekly Box Office, 2026 week 41 (October 9 to 15)",
+   "url": "https://www.boxofficemojo.com/weekly/2026W41/",
+   "status": "read",
+   "dossier": "Found by this build; not in the dossier’s register.",
+   "retrieved": "2026-10-24",
+   "published": null,
+   "effective": null,
+   "territory": "US",
+   "attempts": [
+    {
+     "at": "2026-10-24",
+     "how": "fetched by this build",
+     "result": "HTTP 200"
+    }
+   ],
+   "facts": [
+    {
+     "field": "week-41-first",
+     "value": "Other Mommy, No. 1, $36,504,440, 3,365 theaters, its first week",
+     "quote": "Other Mommy $36,504,440 3,365"
+    }
+   ]
+  },
+  {
+   "id": "N21",
+   "title": "Netflix Top 10: the all-weeks global file",
+   "url": "https://www.netflix.com/tudum/top10/data/all-weeks-global.tsv",
+   "status": "read",
+   "dossier": "Found by this build; not in the dossier’s register.",
+   "retrieved": "2026-10-24",
+   "published": null,
+   "effective": null,
+   "territory": "worldwide",
+   "attempts": [
+    {
+     "at": "2026-10-24",
+     "how": "fetched by this build",
+     "result": "HTTP 200"
+    },
+    {
+     "at": "2026-10-24",
+     "how": "the Top 10 pages, https://www.netflix.com/tudum/top10",
+     "result": "HTTP 200"
+    }
+   ],
+   "facts": [
+    {
+     "field": "columns",
+     "value": "Each row a week (ending Sunday), a list, a rank, the title and season, hours viewed, runtime, views and weeks in the Top 10",
+     "quote": "week\tcategory\tweekly_rank\tshow_title\tseason_title\tweekly_hours_viewed\truntime\tweekly_views\tcumulative_weeks_in_top_10"
+    },
+    {
+     "field": "week-ending-2026-10-18",
+     "value": "Films (English), No. 1: Animals, 30,800,000 views, 55,400,000 hours",
+     "quote": "2026-10-18\tFilms (English)\t1\tAnimals\tN/A\t55400000\t1.8\t30800000\t2"
+    },
+    {
+     "field": "runtime-zero",
+     "value": "Where the Mask Ends: Season 1 has a runtime of 0 in the file, which the game holds as not reported",
+     "quote": "Where the Mask Ends: Season 1\t12200000\t0\t1600000\t1"
+    }
+   ]
+  },
+  {
+   "id": "N22",
+   "title": "Nielsen: Streaming TV Top 10, Overall",
+   "url": "https://www.nielsen.com/data-center/top-ten/",
+   "status": "read",
+   "dossier": "Found by this build; not in the dossier’s register.",
+   "retrieved": "2026-10-24",
+   "published": null,
+   "effective": null,
+   "territory": "US",
+   "attempts": [
+    {
+     "at": "2026-10-24",
+     "how": "fetched by this build",
+     "result": "HTTP 200"
+    }
+   ],
+   "facts": [
+    {
+     "field": "metric",
+     "value": "Ranked by total minutes viewed by persons 2+, in the U.S.",
+     "quote": "Ranked by total minutes viewed by persons 2+."
+    },
+    {
+     "field": "week",
+     "value": "October 5 to 11, 2026: No. 1 Carrie (2026), 1,264 million minutes, 8 episodes, Prime Video",
+     "quote": "Oct. 05 – Oct. 11, 2026"
+    }
+   ]
+  },
+  {
+   "id": "N23",
+   "title": "The Television Academy: 78th Emmy Awards Rules And Procedures, version 4 (April 7, 2026)",
+   "url": "https://www.televisionacademy.com/rules",
+   "status": "read",
+   "dossier": "Found by this build; not in the dossier’s register.",
+   "retrieved": "2026-10-24",
+   "published": "2026-04-07",
+   "effective": "2025-06-01",
+   "territory": "US",
+   "attempts": [
+    {
+     "at": "2026-10-24",
+     "how": "fetched by this build",
+     "result": "HTTP 200 (a PDF)"
+    },
+    {
+     "at": "2026-10-24",
+     "how": "the downloads page, https://www.televisionacademy.com/downloads",
+     "result": "HTTP 200"
+    }
+   ],
+   "facts": [
+    {
+     "field": "eligibility-year",
+     "value": "June 1, 2025 to May 31, 2026",
+     "quote": "June 1, 2025 - May 31, 2026"
+    },
+    {
+     "field": "fees",
+     "value": "$125 processing per individual submission and $100 per entrant",
+     "quote": "Individual achievement entries have a processing charge of $125 per submission. In addition to the $125 processing charge, each entrant is charged a $100 entry fee"
+    },
+    {
+     "field": "guest",
+     "value": "Guest categories only for performers in less than 50% of the eligible episodes",
+     "quote": "only performers appearing in less than 50% of the eligible episodes can submit in the Guest Performer categories"
+    },
+    {
+     "field": "screen-time",
+     "value": "5% of the submitted episode (guest), or of the movie or complete limited series or anthology part (supporting in those)",
+     "quote": "The minimum stand-alone and contiguous-screen time (performer has an ongoing engagement in the scene, on or off camera) for eligibility is 5% of the total running time of the submitted episode."
+    },
+    {
+     "field": "nominations",
+     "value": "20–80 submissions 5, 81–160 6, 161–240 7, over 240 8; 8–19 a quarter; parity between actor and actress categories",
+     "quote": "20 – 80 submissions = 5 nominations"
+    },
+    {
+     "field": "ties",
+     "value": "The count closest to the target prevails; one away breaks higher, two away lower, three away to the Awards Committee",
+     "quote": "Ties that include the possibility of the total number of nominations being 1 number from the target number of nominations break in favor of the higher possibility"
+    },
+    {
+     "field": "guest-after-principal",
+     "value": "Nominated in lead or supporting, a performer can’t enter guest for the same role later",
+     "quote": "If a performer has been nominated or has won in a Lead or Supporting Performer category, the performer will not be eligible to submit in a Guest Performer category in a subsequent Emmy year for playing the same role in the same series."
+    },
+    {
+     "field": "foreign",
+     "value": "A foreign production is ineligible unless a U.S. co-production; a foreign acquisition can’t be made eligible by a new soundtrack",
+     "quote": "Foreign television production is ineligible unless it is the result of a co-production"
+    },
+    {
+     "field": "documentary",
+     "value": "Documentary and nonfiction performers aren’t eligible",
+     "quote": "Performers in documentary/nonfiction programs are not eligible in any performer category."
+    },
+    {
+     "field": "nominations-date",
+     "value": "July 8, 2026",
+     "quote": "Nominees will be announced live on July 8, 2026"
+    }
+   ]
+  },
+  {
+   "id": "N24",
+   "title": "The International Academy: 2026 International Emmy Awards Rules And Regulations",
+   "url": "https://www.iemmys.tv/wp-content/uploads/2025/11/2026-International-Emmy-Awards-Rules-Regulations-.pdf",
+   "status": "read",
+   "dossier": "Found by this build; not in the dossier’s register.",
+   "retrieved": "2026-10-24",
+   "published": null,
+   "effective": null,
+   "territory": "international",
+   "attempts": [
+    {
+     "at": "2026-10-24",
+     "how": "fetched by this build",
+     "result": "HTTP 200 (a PDF)"
+    },
+    {
+     "at": "2026-10-24",
+     "how": "the judging page, https://www.iemmys.tv/entries-judging/judging-process/",
+     "result": "HTTP 200"
+    }
+   ],
+   "facts": [
+    {
+     "field": "scope",
+     "value": "Programs mainly produced outside the U.S., first broadcast outside the U.S. in 2025",
+     "quote": "Rules & Regulations below pertain to submissions mainly produced outside of the U.S."
+    }
+   ]
+  },
+  {
+   "id": "N25",
+   "title": "Sundance Institute: Submit to the 2027 Sundance Film Festival",
+   "url": "https://www.sundance.org/festivals/sundance-film-festival/submit/",
+   "status": "read",
+   "dossier": "Found by this build; not in the dossier’s register.",
+   "retrieved": "2026-10-24",
+   "published": null,
+   "effective": null,
+   "territory": "US",
+   "attempts": [
+    {
+     "at": "2026-10-24",
+     "how": "fetched by this build",
+     "result": "HTTP 200"
+    }
+   ],
+   "facts": [
+    {
+     "field": "feature",
+     "value": "U.S. narrative and documentary features of 50 minutes or more, half their financing from the U.S., keeping world premiere status; not if public before February 1, 2027",
+     "quote": "Completed projects that have been or will have been exhibited theatrically or otherwise made available to the general public, either for free or for purchase prior to February 1, 2027 are not eligible to submit to this category."
+    },
+    {
+     "field": "short",
+     "value": "Under 50 minutes including credits; completed after December 31, 2025 eligible regardless of premiere",
+     "quote": "Projects completed after December 31, 2025 are still eligible to submit to the Festival, regardless of premiere status."
+    },
+    {
+     "field": "deadlines",
+     "value": "Features late deadline September 21 ($125), shorts August 31 ($95)",
+     "quote": "Feature Films Jul 27 $80 Aug 28 $100 Sept 21 $125 Short Films Jul 13 $55 Aug 3 $75 Aug 31 $95"
+    }
+   ]
+  },
+  {
+   "id": "N26",
+   "title": "Sundance Institute: 2027 Sundance Film Festival To Take Place January 21–31 in Boulder, Colorado",
+   "url": "https://www.sundance.org/blogs/2027-sundance-film-festival-to-take-place-january-21-31-in-boulder-colorado/",
+   "status": "read",
+   "dossier": "Found by this build; not in the dossier’s register.",
+   "retrieved": "2026-10-24",
+   "published": "2026-02-24",
+   "effective": null,
+   "territory": "US",
+   "attempts": [
+    {
+     "at": "2026-10-24",
+     "how": "fetched by this build",
+     "result": "HTTP 200"
+    }
+   ],
+   "facts": [
+    {
+     "field": "dates",
+     "value": "January 21 to 31, 2027, Boulder, Colorado",
+     "quote": "the 2027 edition will make its Boulder, Colorado debut on January 21–31, 2027"
+    }
+   ]
+  },
+  {
+   "id": "N27",
+   "title": "NATAS: the Emmy competitions’ rules page",
+   "url": "https://theemmys.tv/rules/",
+   "status": "excerpt",
+   "dossier": "Found by this build; not in the dossier’s register.",
+   "retrieved": "2026-10-24",
+   "published": null,
+   "effective": null,
+   "territory": "US",
+   "attempts": [
+    {
+     "at": "2026-10-24",
+     "how": "fetched by this build",
+     "result": "HTTP 200"
+    }
+   ],
+   "facts": [
+    {
+     "field": "competitions",
+     "value": "Daytime, Children’s, News And Documentary and Sports, each with its own rules",
+     "quote": "Daytime Children’s News & Documentary Sports"
+    }
+   ]
+  },
+  {
+   "id": "N28",
+   "title": "Rules pages that refused this build or weren’t there: the Academy Awards, BAFTA, the Actor Awards, the Golden Globes, the Gotham Awards, the Annie Awards, AACTA, TIFF and Annecy",
+   "url": "https://www.oscars.org/oscars/rules-eligibility",
+   "status": "blocked",
+   "dossier": "Found by this build; not in the dossier’s register.",
+   "retrieved": "2026-10-24",
+   "published": null,
+   "effective": null,
+   "territory": "various",
+   "attempts": [
+    {
+     "at": "2026-10-24",
+     "how": "fetched by this build",
+     "result": "HTTP 403"
+    },
+    {
+     "at": "2026-10-24",
+     "how": "https://www.oscars.org/sites/oscars/files/2026-05/99th_oscars_complete_rules.pdf",
+     "result": "HTTP 403"
+    },
+    {
+     "at": "2026-10-24",
+     "how": "https://www.oscars.org/99th-oscars-and-academy-key-dates",
+     "result": "HTTP 403"
+    },
+    {
+     "at": "2026-10-24",
+     "how": "https://www.bafta.org/awards/film-rules/",
+     "result": "HTTP 403"
+    },
+    {
+     "at": "2026-10-24",
+     "how": "https://www.sagawards.org/rules-eligibility",
+     "result": "HTTP 404"
+    },
+    {
+     "at": "2026-10-24",
+     "how": "https://goldenglobes.com/rules/",
+     "result": "HTTP 404"
+    },
+    {
+     "at": "2026-10-24",
+     "how": "https://thegotham.org/awards/",
+     "result": "HTTP 404"
+    },
+    {
+     "at": "2026-10-24",
+     "how": "https://annieawards.org/rules",
+     "result": "HTTP 404"
+    },
+    {
+     "at": "2026-10-24",
+     "how": "https://www.aacta.org/",
+     "result": "not reached: the proxy’s tunnel failed (502)"
+    },
+    {
+     "at": "2026-10-24",
+     "how": "https://tiff.net/submissions",
+     "result": "HTTP 202 with an empty body, a check this build couldn’t pass"
+    },
+    {
+     "at": "2026-10-24",
+     "how": "https://www.annecyfestival.com/en/take-part/submit-film",
+     "result": "not reached"
+    }
+   ],
+   "facts": []
+  },
+  {
+   "id": "N29",
+   "title": "Home pages read without their rules: the Spirit Awards, the Critics Choice Awards, the César, the Goya Awards, the Busan International Film Festival",
+   "url": "https://www.filmindependent.org/spirit-awards/",
+   "status": "excerpt",
+   "dossier": "Found by this build; not in the dossier’s register.",
+   "retrieved": "2026-10-24",
+   "published": null,
+   "effective": null,
+   "territory": "various",
+   "attempts": [
+    {
+     "at": "2026-10-24",
+     "how": "fetched by this build",
+     "result": "HTTP 200"
+    },
+    {
+     "at": "2026-10-24",
+     "how": "https://www.criticschoice.com/",
+     "result": "HTTP 200"
+    },
+    {
+     "at": "2026-10-24",
+     "how": "https://www.academie-cinema.org/",
+     "result": "HTTP 200"
+    },
+    {
+     "at": "2026-10-24",
+     "how": "https://www.premiosgoya.com/",
+     "result": "HTTP 200"
+    },
+    {
+     "at": "2026-10-24",
+     "how": "https://www.biff.kr/",
+     "result": "HTTP 200"
+    }
+   ],
+   "facts": [
+    {
+     "field": "spirit-ceremony",
+     "value": "The next Spirit Awards, March 6, 2027",
+     "quote": "March 6 2027"
+    }
+   ]
+  },
+  {
+   "id": "N30",
+   "title": "Festival regulations read in part: Cannes, Venice, the Berlinale and IDFA",
+   "url": "https://www.festival-cannes.com/en/take-part/submit-a-film/",
+   "status": "excerpt",
+   "dossier": "Found by this build; not in the dossier’s register.",
+   "retrieved": "2026-10-24",
+   "published": null,
+   "effective": null,
+   "territory": "various",
+   "attempts": [
+    {
+     "at": "2026-10-24",
+     "how": "fetched by this build",
+     "result": "HTTP 200"
+    },
+    {
+     "at": "2026-10-24",
+     "how": "https://www.labiennale.org/en/cinema/2026/regulations",
+     "result": "HTTP 200"
+    },
+    {
+     "at": "2026-10-24",
+     "how": "https://www.berlinale.de/en/film-entry/guidelines/general-guidelines.html",
+     "result": "HTTP 200"
+    },
+    {
+     "at": "2026-10-24",
+     "how": "https://professionals.idfa.nl/program/festival-entries/festival-entry-regulations/",
+     "result": "HTTP 200"
+    }
+   ],
+   "facts": [
+    {
+     "field": "cannes",
+     "value": "Features registered by March 13, 2026, shorts by March 2, 2026; a film in another festival’s international section becomes ineligible",
+     "quote": "If the film has been selected for an international section (competitive or not) of a festival, it becomes ineligible for the Festival de Cannes."
+    },
+    {
+     "field": "venice",
+     "value": "The 83rd edition on the Lido, September 2 to 12, 2026; world premieres; at most 21 films in competition",
+     "quote": "will be held on the Lido di Venezia from 2 to 12 September 2026"
+    },
+    {
+     "field": "berlinale",
+     "value": "World premieres preferred; a film on television, online or VOD not eligible",
+     "quote": "Films that have been broadcasted on television or presented on the internet/on VOD are not eligible."
+    },
+    {
+     "field": "idfa",
+     "value": "The 39th festival, November 12 to 22, 2026; early entry deadline April 23, 2026",
+     "quote": "takes place November 12 to 22, 2026"
+    }
+   ]
+  }
+ ]
+}

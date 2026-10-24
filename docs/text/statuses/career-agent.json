@@ -47,12 +47,6 @@
   "on": "2026-10-21",
   "evidence": "Read where the player meets them in one played life: his notices in the order they came (docs/verification/career-2026-10-20/app/make-saves.log) and History With His Office on the built app at 1440 and 390 (app/walk/, the Representation surfaces). Titles now name whose office, since What Needs You sets them among the School's notices and a classmate can be called Jordan; the check's history says what it found, not the instructions it gave; a refusal after its button's name takes one colon; a date the history line gives isn't said twice. Held by tests/journey-agent.test.ts and tests/pro-agent.test.ts"
  },
- "src/engine/systems/proagent.ts#ENDED_WORDS": {
-  "status": "Rewritten And Verified",
-  "hash": "c48da79af02b",
-  "on": "2026-10-21",
-  "evidence": "Rewritten 2026-10-21 to say 'through him' as the refusal and the guide say it (the app's second walk), to docs/STYLE.md; read in tests/pro-core.test.ts ('says Equity’s 90 days one way…') and tests/journey-agent.test.ts (the ending's notice)"
- },
  "src/engine/systems/proagent.ts#endRefusal": {
   "status": "Rewritten And Verified",
   "hash": "93388ab143d1",
@@ -320,12 +314,6 @@
  "src/ui/career/RepresentationPane.tsx#MeetingPanel": {
   "status": "Rewritten And Verified",
   "hash": "eb901a72f363",
-  "on": "2026-10-21",
-  "evidence": "Written for brief 19 to docs/STYLE.md and docs/GLOSSARY.md; read where the player meets it in tests/journey-agent.test.ts, tests/pro-agent.test.ts and tests/pro-representation-screen.test.ts, and on the built app at 1440 and 390 (docs/verification/career-2026-10-20/agent/screens/), with tools/voice-check.mjs, tools/tics.mjs and tools/title-case.mjs passing"
- },
- "src/ui/career/RepresentationPane.tsx#ofSeven": {
-  "status": "Rewritten And Verified",
-  "hash": "7511c16f9807",
   "on": "2026-10-21",
   "evidence": "Written for brief 19 to docs/STYLE.md and docs/GLOSSARY.md; read where the player meets it in tests/journey-agent.test.ts, tests/pro-agent.test.ts and tests/pro-representation-screen.test.ts, and on the built app at 1440 and 390 (docs/verification/career-2026-10-20/agent/screens/), with tools/voice-check.mjs, tools/tics.mjs and tools/title-case.mjs passing"
  },

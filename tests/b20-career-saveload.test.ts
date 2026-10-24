@@ -10,8 +10,8 @@
  *
  * TEST SETUP, said where it's done: the graduate made by the School's own handlers brought forward; the body tended as
  * the clock moves; the work life at the top of every ability and technique and knowing the projects' genres, so it's
- * offered a part (seed b20-skill-2 of tests/b20-career-skill.test.ts's fixed list, offered Robin in Last Bus To Eastview:
- * a success-path fixture); an agreement signed with him once the offer stands, so the pay goes through the trust account
+ * offered a part (seed b20-skill-1 of tests/b20-career-skill.test.ts's fixed list, offered Robin in Last Bus To Eastview:
+ * a success-path fixture; b20-skill-2 until 2026-10-23, when casting's draw came to be keyed by the posting, brief 25); an agreement signed with him once the offer stands, so the pay goes through the trust account
  * with its commission; for his office, a finished job's referral and a seed read from his own draw (`seedWhere`); the
  * showcase's performances, as the showcase's system records them (tests/pro-agent.test.ts's `performed`).
  */
@@ -52,7 +52,7 @@ function heldThrough(start: Simulation, steps: readonly { name: string; step: (s
 
 describe('saved and opened in the middle of the career’s obligations, nothing dropped or done twice', () => {
   it('PLAYER JOURNEY: a part from its submission to its pay held in trust and passed on, saved and opened before each step, ends as the life played straight through', () => {
-    const sim = graduate('b20-skill-2');
+    const sim = graduate('b20-skill-1');
     setSkill(sim, 100);
     for (const t of PROJECTS) for (const g of t.genres) genreState(sim.player, g).familiarity = 95;
     portfolio(sim);

@@ -1,6 +1,13 @@
-# Read First: Brief 26, The Complete Game Connectivity, Logic And Functionality Sweep, Complete, 2026-10-24
+# Read First: Brief 27, The Foundation's Four Limits And The Connected Career Universe, In Progress, 2026-10-24
 
-**This section is the current status, and where a new session starts.** The owner gave brief 26
+**This section is the current status, and where a new session starts.** (Written at the reconciliation; brought up to
+date at each milestone.)
+
+**Completion, by the matrix:** 549 of 663 rows in scope Implemented And Verified (82.8%); 110 Implemented, Verification Incomplete, 0 Partially Implemented, 0 Not Implemented, 0 Blocked Externally, 4 Decision Required, 41 Explicitly Deferred.
+
+# Brief 26, The Complete Game Connectivity, Logic And Functionality Sweep, Complete And Merged (#64), 2026-10-24
+
+**This was the current status until brief 27 began; kept as it stood.** The owner gave brief 26
 (`docs/verification/briefs-2026-10-16/26-complete-game-connectivity-logic-and-functionality-sweep.txt`, kept as sent) in
 a new session on 2026-10-24, after an account of #62's changes in that session, with "We’re going to work on everything
 here plus starting with fix of whatever and all thats stale" and the instruction to work with one agent and no subagents.
@@ -113,9 +120,144 @@ nothing here builds on it.
   stays on `claude/peaceful-hamilton-59zdbb`, unmerged and not built on.
 - **Not merged, not deployed.** The schema stays 94.
 
+# Brief 25, The Master Career Build, Modules 1 To 6 (Work Abroad, The Real Catalog, Real Agents, Contracts, The Ways Of Working, Charts And Awards) Done, 2026-10-24
+
+**This was brief 25's branch's current status until brief 27 merged the branch on 2026-10-24; kept as it stood.** The owner gave brief 25, "SLATE — Master
+Career Build Command", with its research dossier (Sections 1 to 29), on `main` after #63. It is kept verbatim at
+`docs/verification/briefs-2026-10-16/25-master-career-build-command-and-global-acting-career-research-dossier.txt`. It
+is worked on `claude/peaceful-hamilton-59zdbb` from `b46ee301`, pushed and never force-pushed. Nothing is merged to
+`main` or deployed for it. There is no stash and one worktree. The brief asks for one primary coding agent unless the
+owner says otherwise, no contact with real people, no purchased data, and none of housing, vehicles, shopping, other
+occupations or parental leave.
+
+**Completion, by the matrix:** 549 of 663 rows in scope Implemented And Verified (82.8%); 110 Implemented, Verification Incomplete, 0 Partially Implemented, 0 Not Implemented, 0 Blocked Externally, 4 Decision Required, 41 Explicitly Deferred.
+
+  (634 at brief 24's close, 588 at Module 4's. The 46 rows brief 22's final runs measured fall behind whenever
+  `src/engine` changes, as they did through briefs 23 and 24, and are held again by playing those runs on the brief's last
+  tested commit; Module 5 changed the judge's own files (`evaluation.ts`, `content/tasks.ts`, the genre weights), so 39
+  more measured rows, the genre signatures, the advice baselines and the stamina and judging runs among them, fall behind
+  until the brief's final runs play them again, as Module 7 does; the
+  659th row is work abroad's capability, the 660th Module 4's contracts and the 661st Module 5's ways of working, each
+  Implemented, its verified layer Partial, as every row added after the review of 2026-10-13 is; the 662nd and 663rd are
+  Module 6's two commands, Enter Yourself and Watch The Ceremony, the same.)
+
+- **Read first:** `docs/verification/career-world-2026-10-23/CHECKPOINT.md` (where the work is, module by module, and the
+  blockers met), `criteria.md` (each module's checks, written before its code), `REGISTER.md` (290 rows: the brief's
+  requirements and the dossier's T01 to T100, held to the code by `node tools/career-register.mjs --check`, the gate's
+  twenty-third check) and `sources.json` (S01 to S110 and what this build itself read or was refused).
+- **Module 0** (`f341b3b1`): the starting point, the audit, the register and its checker, the sources.
+- **Module 1, work abroad, Sydney first:** a country registry (Australia verified from the department's pages; six
+  countries partly researched; the other 244 unsupported, which never grant permission), `COUNTRIES.md` generated from
+  it; a fictional feature shooting in Sydney; the 408 visa applied for from the engagement, in Papers; the production's
+  flights, cars and hotel as legs in each town's own time; where the player is, from the legs; work days at 7 AM Sydney
+  time under Australia's rule; pay recorded as income earned in Australia, without commission; Australian tax shown as
+  not in the game (S28 refused); the trip's steps in the engagement's history; each stage saved and loaded.
+- **Defects found and fixed on the way:** Papers read the US rule for the work in Sydney; after a missed flight out the
+  legs home still ran and told the player they were back; a missed flight's history lowercased place names; and
+  SAG-AFTRA eligibility was announced at a first day never worked (since brief 19, local work too), now read from the
+  first day worked. Adding the project shifted life A's opportunity ids and so casting's keyed draws: the career
+  journey now has her paid for Jess in Static On Route 9 in August 2029, before The Calloway Files, and says why.
+- **Measured:** the full suite on `6261883e`: 488 of 490 test files, 5,629 of 5,632 tests. The three failures were the
+  new project's: Harbor Line had no stated genre weights (brief 22's rule that every project states its own), and a test's
+  premise said every project is in New York, where what it needs is that none is in Oregon. Both are fixed in the commit
+  after it, whose changed tests and the gate's 23 checks pass. The whole gate runs again in a clean clone at the next
+  module's end.
+- **Module 2, the real catalog and parts drawn from it:** `content/catalog.ts` holds what thirteen official pages said
+  on 2026-10-23, field by field (a reading held to its page's words, a conflict with both kept, the game's assumption,
+  or unknown with why), for 9-1-1, Slow Horses, Severance, Abbott Elementary and Amazon MGM Studios' twelve-film slate,
+  with each company named by its role; `CATALOG.md` is generated from it. Two parts are drawn from it, Reese Pike in
+  9-1-1 and Casey Marlow in Abbott Elementary: new characters, through an agent only, at SAG-AFTRA's day minimum, a trip
+  to Los Angeles under the US rule, and the game's own wherever they're shown. Casting's draw is keyed by the posting,
+  so a part added moves no other; the seeded career journeys moved once with it and say so.
+- **A defect found reading the text, and fixed:** the Opportunities tab, its agent-only list, the agreement's Who line,
+  the guide, the tutorial and the agent's notice said every project, company and casting office was invented, untrue
+  once parts came from real series.
+- **Measured (Module 2):** the full gate in the Module 2 clone: 491 of 492 test files and 5,648 of 5,649 tests passed.
+  The one failure was the guide's wiring readings, whose handler lines the text fix's comments had moved down six lines
+  in `projobs.ts`; recomputed, its two test files pass (44 tests), and so do the gate's 23 checks, which the failure had
+  stopped.
+- **Module 3, real agencies and agents** (the commit after `de50c6e0`): at the owner's word on 2026-10-24 ("Use
+  real agents."), Stewart Talent's New York theatrical agents Dan Patack, Jay Schachter, Rachel Grandizio and Tim
+  Marshall are in the game beside Thomas Ashgrove, reached by a referral, named and never given a pronoun, with nothing
+  said of a list, clients or preferences; Jordan Parente is left out, as the owner chose on 2026-10-21. Agencies, on the
+  Representation tab, gives the six agencies the brief names as their own pages had them, office by office. One agent at
+  a time: a second agreement can't start while one runs.
+- **Defects found on the way and fixed:** Ashgrove's notice said "as every agency in it is"; the agreement's Ending It
+  term said "through him" for every agent; a drawn part's breakdown read "The production’s casting office’s breakdown".
+- **Measured (Module 3):** the full gate in the clone: 492 of 493 test files and 5,659 of 5,660 tests passed. The one
+  failure was the guide's wiring readings again, whose handler lines the breakdown sentence's fix had moved three lines
+  down in `projobs.ts`; recomputed, its two test files pass (44 tests), and so do the gate's 23 checks, which the
+  failure had stopped. The new tests/career-agents.test.ts (11 tests) holds four mutations: the real room read as near,
+  one agent at a time removed, a real agent given pronouns, and the showcase route said for every agent; each fails it.
+- **Module 4, contracts and pay, a recurring part and a series' seasons:** every engagement carries its contract from
+  acceptance (`systems/contracts.ts`), with only the clauses that apply, its estimate said as gross and never cash; each
+  payment's state, Estimated to Settled, Overdue and Disputed where a non-union producer pays late, with Ask About It; a
+  SAG-AFTRA day's overtime (the eleven-hour day's ninth and tenth hours, N13 Schedule A §9); the producer's pension and
+  health contribution shown and never posted (19.5%, 20.5% from September 6, 2026); a trip's per diem, $60 a day, apart
+  from wages; residuals as four records, a rerun paying 100% of total actual compensation up to $3,668 or $2,578 within
+  thirty days, once. The Calloway Files has seasons (ordered through 2029's, then the network's keyed word each May) and a
+  recurring part, Assistant DA Whitlock: two episodes guaranteed, more called or not, and an option on the next season
+  taken up into the contract's next version or let go once. The rules are the AMPTP-published agreements (N12 to N17);
+  SAG-AFTRA's pages refused this build.
+- **Moved with it:** the seeded career journey's Desk Clerk now pays its overtime ($4,241.06 where it paid $3,084.40);
+  the series casts nothing for work in its hiatus, June to mid-July; a recurring part's episodes average under twenty
+  hours a week, so alone they aren't OPT employment, and the Work tab says so.
+- **Measured (Module 4):** the full gate, exit 0: 494 of 494 test files, 5,691 of 5,691 tests, the 23 checks. On the way,
+  brief 19's pay test learned that a non-union producer can pay late, the Work tab's pay table stopped saying a
+  payment's state twice, and `pro.ask_pay` was traced and its capability given its builder's review.
+- **Module 5, the ways of working** (`content/workflows.ts`, `systems/workflow.ts`): ten workflows and twenty-one
+  formats, every project naming one, each with its own days, preparation and own step, choices (`pro.work_choice`, a
+  button for each option on the Work tab), judging and reports. A shoot's scenes are planned at booking and shot out of
+  the script's order by location, kept to each episode's days for a procedural, two episodes cross-boarded for a
+  serialized show, in the story's order on a tape night; each in takes, the best printed, Ask For Another Take within
+  the format's allowance. Revised pages the evening before take a share of what was learned. The booth, the dub and a
+  narration strain the voice (`health.voice`), which rest eases and which holds back the work that uses it. A multicamera
+  week is paid from its table read; a dub by characters and lines; capture and an animated feature by the day called;
+  a stunt is the double's unless the player consents; an intimate scene is said before the audition and done by a double
+  without written consent, costing nothing. After a screen wrap, a recall to loop paid half a day; at the release, a
+  scene may be cut, the credit's band the best of what's kept; an anthology invites strong work back. Fifteen new parts in
+  thirteen fictional projects, five new deciders (`pro.board`, `pro.stress`, `pro.pages`, `pro.loop`, `pro.cut`). The
+  rules are N13's and N17's, each cited in `criteria.md`, Module 5, W1 to W13.
+- **Defects found on the way and fixed:** a procedural's scenes dealt across all its episodes' days; `FormatSpec.after`
+  read by nothing (the release notice reads it now) and `closedEnd` read by nothing (gone); the dub format's words giving
+  a rule the code doesn't keep; a day's report saying "it worked on the blocking and fight rehearsal"; the new projects
+  stating no genres; the ability test holding no piece of the eight new tasks.
+- **Moved with it:** the older graduate's journey (V16) now has its referral from the producers of a documentary her
+  reenactment in was judged Strong, where it was the director of a student film; the role facts' task line gave way to How
+  The Work Is Done; Listening is read in a dub's execution and Vocal and Physical Expression in believability, so Today's
+  rows for them say more.
+- **Measured (Module 5):** the full gate, exit 0: 496 of 496 test files, 5,727 of 5,727 tests, the 23 checks. The
+  suite's first run failed 11 tests, each written before the rule it reads moved, and each was moved with it.
+- **Register:** 101 of 290 rows Implemented And Verified (73 at Module 4's end, 52 at Module 3's, 43 at Module 2's, 24 at
+  Module 1's); WF-19, short films, is Partially Implemented until Module 6 gives it festivals.
+- **Module 6, charts, festivals and awards** (`content/charts.ts`, `systems/charts.ts`, `content/awards.ts`,
+  `systems/awards.ts`, `ui/career/IndustryPane.tsx`): Career's Charts And Awards tab. The published charts are dated
+  imports (Box Office Mojo's weeks 41 and 42, the second read twice and kept as a revision; Netflix's four lists for two
+  weeks; Nielsen's one), never fetched, each in its own unit and week, with movement only between consecutive weeks and
+  how old the latest is. A released film of the player's has a run in the game's own box office, the production's and
+  never pay. Fourteen awards and eight festivals, each with what was read; the Emmy Awards by the 78th's rules (Enter
+  Yourself, `pro.award_enter`, at $225; an anonymous field; the table and tie rules; the final round; Watch The Ceremony,
+  `pro.watch_ceremony`, which changes nothing) and Sundance by its 2027 festival's (only the production submits). A
+  nomination, a win or a selection stays on the Portfolio and lifts casting's chance for three years, at most 30%. Six
+  new deciders (`charts.gross`, `awards.entry`, `awards.field`, `awards.final`, `festival.submit`, `festival.select`);
+  sources N19 to N30; criteria X1 to X16.
+- **Defects found on the way and fixed:** the 5% screen-time rule held to every category (it's the guest's and the
+  limited series' supporting performer's); a guest part kept a guest after a supporting nomination; a dub refused for a
+  reason the rules don't give; every short finished before the festival's window refused, so no short reached Sundance;
+  votes in whole points tying at the nomination line half the time; two Raw episodes under one title id; the entry
+  deadline ending at midnight in New York, not on the Academy's clock in Los Angeles; the new files' text filed under
+  health by the text inventory.
+- **Measured (Module 6):** the gate: tsc, eslint, 497 of 498 test files and 5,766 of 5,767 tests. The one failure was the
+  guide's wiring list, which still named the lines Enter Yourself and Watch The Ceremony were registered at before the
+  entry deadline's helper moved them nine lines down; regenerated, its file passed (7 of 7), and the 23 checks then passed.
+- **Register:** 163 of 290 rows Implemented And Verified (101 at Module 5's end); CHART-01, CHART-04, AWD-08, T48 and T69
+  Partially Implemented, each with why.
+- **Next:** Module 7, the time loop's deadlines, drill-downs and tutorials, balance over a hundred seeds, playthroughs, the
+  final runs again and the final gate, each in the checkpoint's table.
+
 # Earlier: Brief 24, UI Alignment, Home Spacing And Navigation Cleanup, Merged, 2026-10-23
 
-**This section was the current status until brief 26 (2026-10-24).** The owner gave brief 24
+**This section was the current status until briefs 25 and 26 began (2026-10-23 and 2026-10-24).** The owner gave brief 24
 (`docs/verification/briefs-2026-10-16/24-finish-slates-ui-alignment-home-spacing-and-navigation-cleanup.txt`, kept
 verbatim) on brief 23's line, before it was merged. It was worked on `claude/peaceful-hamilton-59zdbb` from `113765a6`,
 pushed and never force-pushed. Until the owner's word it was kept out of `main` ("Keep the changes reviewable. Do not

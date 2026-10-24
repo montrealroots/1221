@@ -610,6 +610,15 @@
    "tests/b20-life-time.test.ts the life area’s 55 test files, run on 27369727: all green; tests/b26-life-repeats.test.ts, the plans called off and skipped, the retried hour and the night’s refusals on a New Haven life, green"
   ]
  },
+ "notice.systems/contracts#air": {
+  "status": "Not Tested"
+ },
+ "notice.systems/contracts#payPerDiem": {
+  "status": "Not Tested"
+ },
+ "notice.systems/contracts#settleResidual": {
+  "status": "Not Tested"
+ },
  "notice.systems/injury#mayHurt": {
   "status": "Verified",
   "by": [

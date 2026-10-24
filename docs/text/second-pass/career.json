@@ -6,18 +6,46 @@
   "evidence": "Read again on 2026-10-21 when the owner chose a fictional agent in the real one's place (Thomas Ashgrove of Halberd Talent, for Jordan Parente of Stewart Talent): the notice says he and the agency are invented, the policy is the game's own rule, and no message carries the real agent's line any more; read where the player meets it in tests/pro-agent.test.ts, tests/pro-representation-screen.test.ts, tests/journey-agent.test.ts and tests/pro-work.test.ts, with tools/voice-check.mjs, tools/tics.mjs and tools/title-case.mjs passing",
   "first": "Rewritten And Verified"
  },
+ "src/engine/content/agents.ts#AGENCIES [stewart-talent-new-york]": {
+  "status": "Rewritten",
+  "hash": "aae8f19db20f",
+  "on": "2026-10-24",
+  "evidence": "Written for brief 25's Module 3 (real agencies and agents) to docs/STYLE.md and docs/GLOSSARY.md, with no pronoun for a real agent and the game's own agent's words unchanged; read where the player meets it in tests/career-agents.test.ts (the Representation tab drawn with Dan Patack chosen, the notices and history of a played referral, meeting, offer and signing) and in tests/pro-representation-screen.test.ts, tests/journey-agent.test.ts and tests/pro-agent.test.ts for Thomas Ashgrove, with tools/voice-check.mjs, tools/tics.mjs, tools/title-case.mjs, tools/plural-check.mjs and tools/spelling.mjs passing",
+  "first": "Pending"
+ },
+ "src/engine/content/agents.ts#AGENTS": {
+  "status": "Rewritten",
+  "hash": "e75e7069a4fe",
+  "on": "2026-10-24",
+  "evidence": "Written for brief 25's Module 3 (real agencies and agents) to docs/STYLE.md and docs/GLOSSARY.md, with no pronoun for a real agent and the game's own agent's words unchanged; read where the player meets it in tests/career-agents.test.ts (the Representation tab drawn with Dan Patack chosen, the notices and history of a played referral, meeting, offer and signing) and in tests/pro-representation-screen.test.ts, tests/journey-agent.test.ts and tests/pro-agent.test.ts for Thomas Ashgrove, with tools/voice-check.mjs, tools/tics.mjs, tools/title-case.mjs, tools/plural-check.mjs and tools/spelling.mjs passing",
+  "first": "Pending"
+ },
  "src/engine/content/agents.ts#AGENTS [thomas-ashgrove]": {
   "status": "Rewritten",
-  "hash": "62b670800d33",
-  "on": "2026-10-21",
-  "evidence": "Read again on 2026-10-21 when the owner chose a fictional agent in the real one's place (Thomas Ashgrove of Halberd Talent, for Jordan Parente of Stewart Talent): the notice says he and the agency are invented, the policy is the game's own rule, and no message carries the real agent's line any more; read where the player meets it in tests/pro-agent.test.ts, tests/pro-representation-screen.test.ts, tests/journey-agent.test.ts and tests/pro-work.test.ts, with tools/voice-check.mjs, tools/tics.mjs and tools/title-case.mjs passing",
-  "first": "Rewritten And Verified"
+  "hash": "4f1339a70f4d",
+  "on": "2026-10-24",
+  "evidence": "Written for brief 25's Module 3 (real agencies and agents) to docs/STYLE.md and docs/GLOSSARY.md, with no pronoun for a real agent and the game's own agent's words unchanged; read where the player meets it in tests/career-agents.test.ts (the Representation tab drawn with Dan Patack chosen, the notices and history of a played referral, meeting, offer and signing) and in tests/pro-representation-screen.test.ts, tests/journey-agent.test.ts and tests/pro-agent.test.ts for Thomas Ashgrove, with tools/voice-check.mjs, tools/tics.mjs, tools/title-case.mjs, tools/plural-check.mjs and tools/spelling.mjs passing",
+  "first": "Pending"
  },
  "src/engine/content/agents.ts#FIELD_LABEL": {
   "status": "Rewritten",
   "hash": "d32eede28438",
   "on": "2026-10-21",
   "evidence": "Written for brief 19 to docs/STYLE.md and docs/GLOSSARY.md; read where the player meets it in tests/pro-screen.test.ts and tests/pro-core.test.ts, with tools/voice-check.mjs, tools/tics.mjs and tools/title-case.mjs passing",
+  "first": "Pending"
+ },
+ "src/engine/content/agents.ts#HIS": {
+  "status": "Rewritten",
+  "hash": "dd5c015ba989",
+  "on": "2026-10-24",
+  "evidence": "Written for brief 25's Module 3 (real agencies and agents) to docs/STYLE.md and docs/GLOSSARY.md, with no pronoun for a real agent and the game's own agent's words unchanged; read where the player meets it in tests/career-agents.test.ts (the Representation tab drawn with Dan Patack chosen, the notices and history of a played referral, meeting, offer and signing) and in tests/pro-representation-screen.test.ts, tests/journey-agent.test.ts and tests/pro-agent.test.ts for Thomas Ashgrove, with tools/voice-check.mjs, tools/tics.mjs, tools/title-case.mjs, tools/plural-check.mjs and tools/spelling.mjs passing",
+  "first": "Pending"
+ },
+ "src/engine/content/agents.ts#stewart": {
+  "status": "Rewritten",
+  "hash": "77a1a210fdc2",
+  "on": "2026-10-24",
+  "evidence": "Written for brief 25's Module 3 (real agencies and agents) to docs/STYLE.md and docs/GLOSSARY.md, with no pronoun for a real agent and the game's own agent's words unchanged; read where the player meets it in tests/career-agents.test.ts (the Representation tab drawn with Dan Patack chosen, the notices and history of a played referral, meeting, offer and signing) and in tests/pro-representation-screen.test.ts, tests/journey-agent.test.ts and tests/pro-agent.test.ts for Thomas Ashgrove, with tools/voice-check.mjs, tools/tics.mjs, tools/title-case.mjs, tools/plural-check.mjs and tools/spelling.mjs passing",
   "first": "Pending"
  },
  "src/engine/content/careerwork.ts#AGENT_ROLE": {
@@ -106,10 +134,10 @@
  },
  "src/engine/content/careerwork.ts#AGREEMENT_TERMS [termination]": {
   "status": "Rewritten",
-  "hash": "25042794eda5",
-  "on": "2026-10-21",
-  "evidence": "Rewritten 2026-10-21 to say 'through him' as the refusal and the guide say it (the app's second walk), to docs/STYLE.md; read in tests/pro-core.test.ts ('says Equity’s 90 days one way…') and tests/journey-agent.test.ts (the ending's notice)",
-  "first": "Rewritten And Verified"
+  "hash": "9ed28626b56b",
+  "on": "2026-10-24",
+  "evidence": "Written for brief 25's Module 3 (real agencies and agents) to docs/STYLE.md and docs/GLOSSARY.md, with no pronoun for a real agent and the game's own agent's words unchanged; read where the player meets it in tests/career-agents.test.ts (the Representation tab drawn with Dan Patack chosen, the notices and history of a played referral, meeting, offer and signing) and in tests/pro-representation-screen.test.ts, tests/journey-agent.test.ts and tests/pro-agent.test.ts for Thomas Ashgrove, with tools/voice-check.mjs, tools/tics.mjs, tools/title-case.mjs, tools/plural-check.mjs and tools/spelling.mjs passing",
+  "first": "Pending"
  },
  "src/engine/content/careerwork.ts#AGREEMENT_TERMS [territory]": {
   "status": "Rewritten",
@@ -174,96 +202,229 @@
   "reason": "A published source’s own words and its page’s title, kept exactly as the page has them, so a quotation stays its source’s and the game’s words around it stay the game’s",
   "first": "Rewritten And Verified"
  },
- "src/engine/content/careerwork.ts#PROJECTS [calder-street-callum]": {
+ "src/engine/content/careerwork.ts#PROJECTS [abbott-guest]": {
+  "status": "Retained",
+  "hash": "44294646ccc2",
+  "on": "2026-10-24",
+  "reason": "Each part's line says who the character is and what they hide or want, in one plain sentence a player can cast themselves from; the task line beneath it went in Module 5, when How The Work Is Done took its place.",
+  "first": "Pending"
+ },
+ "src/engine/content/careerwork.ts#PROJECTS [breakwater]": {
   "status": "Rewritten",
-  "hash": "28e0b0aa235d",
-  "on": "2026-10-21",
-  "evidence": "Written 2026-10-21 at the owner's word (parts for an actor, an actress or either) to docs/STYLE.md and docs/GLOSSARY.md; read where the player meets it in tests/pro-opportunities-screen.test.ts and tests/pro-core.test.ts ('writes each part for an actor, an actress or either…'), with tools/voice-check.mjs, tools/tics.mjs and tools/title-case.mjs passing",
-  "first": "Rewritten And Verified"
+  "hash": "27076292e755",
+  "on": "2026-10-24",
+  "evidence": "Written for brief 25's Module 5 (the ways of working: the booth, the dub, narration, multicamera, performance capture, reenactment, the musical and action; a shoot's order and takes, revised pages, a recall to loop and a scene cut) to docs/STYLE.md and docs/GLOSSARY.md, every rule the agreements' own and every invention said as the game's; read where the player meets it in tests/career-workflows-screen.test.ts (the Work and Opportunities tabs drawn for a voice session, a multicamera week and an action shoot, through the clock and a reload at each stage) and tests/career-workflows.test.ts (each workflow's days, choices, reports and notices), with tools/voice-check.mjs, tools/tics.mjs and tools/title-case.mjs clean.",
+  "first": "Pending"
+ },
+ "src/engine/content/careerwork.ts#PROJECTS [calder-street-callum]": {
+  "status": "Retained",
+  "hash": "5f49d0884258",
+  "on": "2026-10-24",
+  "reason": "Each part's line says who the character is and what they hide or want, in one plain sentence a player can cast themselves from; the task line beneath it went in Module 5, when How The Work Is Done took its place.",
+  "first": "Pending"
  },
  "src/engine/content/careerwork.ts#PROJECTS [calder-street]": {
-  "status": "Rewritten",
-  "hash": "28e0b0aa235d",
-  "on": "2026-10-21",
-  "evidence": "Written for brief 19 to docs/STYLE.md and docs/GLOSSARY.md; read where the player meets it in tests/pro-screen.test.ts and tests/pro-core.test.ts, with tools/voice-check.mjs, tools/tics.mjs and tools/title-case.mjs passing",
+  "status": "Retained",
+  "hash": "c5fe616011ef",
+  "on": "2026-10-24",
+  "reason": "Each part's line says who the character is and what they hide or want, in one plain sentence a player can cast themselves from; the task line beneath it went in Module 5, when How The Work Is Done took its place.",
+  "first": "Pending"
+ },
+ "src/engine/content/careerwork.ts#PROJECTS [calloway-files-whitlock]": {
+  "status": "Retained",
+  "hash": "d965aff34608",
+  "on": "2026-10-24",
+  "reason": "Each part's line says who the character is and what they hide or want, in one plain sentence a player can cast themselves from; the task line beneath it went in Module 5, when How The Work Is Done took its place.",
   "first": "Pending"
  },
  "src/engine/content/careerwork.ts#PROJECTS [calloway-files]": {
-  "status": "Rewritten",
-  "hash": "13104f541646",
-  "on": "2026-10-21",
-  "evidence": "Written for brief 19 to docs/STYLE.md and docs/GLOSSARY.md; read where the player meets it in tests/pro-screen.test.ts and tests/pro-core.test.ts, with tools/voice-check.mjs, tools/tics.mjs and tools/title-case.mjs passing",
+  "status": "Retained",
+  "hash": "f4853ccd3494",
+  "on": "2026-10-24",
+  "reason": "Each part's line says who the character is and what they hide or want, in one plain sentence a player can cast themselves from; the task line beneath it went in Module 5, when How The Work Is Done took its place.",
   "first": "Pending"
  },
- "src/engine/content/careerwork.ts#PROJECTS [camera]": {
-  "status": "Rewritten",
-  "hash": "6e3f94b53b5e",
-  "on": "2026-10-21",
-  "evidence": "Written for brief 20 to docs/STYLE.md and docs/GLOSSARY.md; the part Sam renamed Robin, read in tests/pro-core.test.ts, tests/pro-opportunities-screen.test.ts and tests/propay-screen.test.ts; the guide's line on parts posted again read against tests/b20-career-history.test.ts",
-  "first": "Rewritten And Verified"
- },
  "src/engine/content/careerwork.ts#PROJECTS [eastview]": {
+  "status": "Retained",
+  "hash": "fd133a9655ed",
+  "on": "2026-10-24",
+  "reason": "Each part's line says who the character is and what they hide or want, in one plain sentence a player can cast themselves from; the task line beneath it went in Module 5, when How The Work Is Done took its place.",
+  "first": "Pending"
+ },
+ "src/engine/content/careerwork.ts#PROJECTS [glass-orchard]": {
   "status": "Rewritten",
-  "hash": "b62c30ae4255",
-  "on": "2026-10-21",
-  "evidence": "Written for brief 19 to docs/STYLE.md and docs/GLOSSARY.md; read where the player meets it in tests/pro-screen.test.ts and tests/pro-core.test.ts, with tools/voice-check.mjs, tools/tics.mjs and tools/title-case.mjs passing",
+  "hash": "6fccf4535841",
+  "on": "2026-10-24",
+  "evidence": "Written for brief 25's Module 5 (the ways of working: the booth, the dub, narration, multicamera, performance capture, reenactment, the musical and action; a shoot's order and takes, revised pages, a recall to loop and a scene cut) to docs/STYLE.md and docs/GLOSSARY.md, every rule the agreements' own and every invention said as the game's; read where the player meets it in tests/career-workflows-screen.test.ts (the Work and Opportunities tabs drawn for a voice session, a multicamera week and an action shoot, through the clock and a reload at each stage) and tests/career-workflows.test.ts (each workflow's days, choices, reports and notices), with tools/voice-check.mjs, tools/tics.mjs and tools/title-case.mjs clean.",
   "first": "Pending"
  },
  "src/engine/content/careerwork.ts#PROJECTS [gull-season-ferris]": {
-  "status": "Rewritten",
-  "hash": "ecd839d334f4",
-  "on": "2026-10-21",
-  "evidence": "Written 2026-10-21 at the owner's word (parts for an actor, an actress or either) to docs/STYLE.md and docs/GLOSSARY.md; read where the player meets it in tests/pro-opportunities-screen.test.ts and tests/pro-core.test.ts ('writes each part for an actor, an actress or either…'), with tools/voice-check.mjs, tools/tics.mjs and tools/title-case.mjs passing",
-  "first": "Rewritten And Verified"
+  "status": "Retained",
+  "hash": "fdd79a3e7830",
+  "on": "2026-10-24",
+  "reason": "Each part's line says who the character is and what they hide or want, in one plain sentence a player can cast themselves from; the task line beneath it went in Module 5, when How The Work Is Done took its place.",
+  "first": "Pending"
  },
  "src/engine/content/careerwork.ts#PROJECTS [gull-season]": {
+  "status": "Retained",
+  "hash": "d7289156eeeb",
+  "on": "2026-10-24",
+  "reason": "Each part's line says who the character is and what they hide or want, in one plain sentence a player can cast themselves from; the task line beneath it went in Module 5, when How The Work Is Done took its place.",
+  "first": "Pending"
+ },
+ "src/engine/content/careerwork.ts#PROJECTS [half-past-normal]": {
   "status": "Rewritten",
-  "hash": "ecd839d334f4",
-  "on": "2026-10-21",
-  "evidence": "Written for brief 19 to docs/STYLE.md and docs/GLOSSARY.md; read where the player meets it in tests/pro-screen.test.ts and tests/pro-core.test.ts, with tools/voice-check.mjs, tools/tics.mjs and tools/title-case.mjs passing",
+  "hash": "f452138387a4",
+  "on": "2026-10-24",
+  "evidence": "Written for brief 25's Module 5 (the ways of working: the booth, the dub, narration, multicamera, performance capture, reenactment, the musical and action; a shoot's order and takes, revised pages, a recall to loop and a scene cut) to docs/STYLE.md and docs/GLOSSARY.md, every rule the agreements' own and every invention said as the game's; read where the player meets it in tests/career-workflows-screen.test.ts (the Work and Opportunities tabs drawn for a voice session, a multicamera week and an action shoot, through the clock and a reload at each stage) and tests/career-workflows.test.ts (each workflow's days, choices, reports and notices), with tools/voice-check.mjs, tools/tics.mjs and tools/title-case.mjs clean.",
+  "first": "Pending"
+ },
+ "src/engine/content/careerwork.ts#PROJECTS [harbor-line-arden]": {
+  "status": "Retained",
+  "hash": "d05384b961ee",
+  "on": "2026-10-24",
+  "reason": "Each part's line says who the character is and what they hide or want, in one plain sentence a player can cast themselves from; the task line beneath it went in Module 5, when How The Work Is Done took its place.",
+  "first": "Pending"
+ },
+ "src/engine/content/careerwork.ts#PROJECTS [harbor-line]": {
+  "status": "Retained",
+  "hash": "109de6ea473b",
+  "on": "2026-10-24",
+  "reason": "Each part's line says who the character is and what they hide or want, in one plain sentence a player can cast themselves from; the task line beneath it went in Module 5, when How The Work Is Done took its place.",
+  "first": "Pending"
+ },
+ "src/engine/content/careerwork.ts#PROJECTS [iron-meridian]": {
+  "status": "Rewritten",
+  "hash": "81e82d63f76f",
+  "on": "2026-10-24",
+  "evidence": "Written for brief 25's Module 5 (the ways of working: the booth, the dub, narration, multicamera, performance capture, reenactment, the musical and action; a shoot's order and takes, revised pages, a recall to loop and a scene cut) to docs/STYLE.md and docs/GLOSSARY.md, every rule the agreements' own and every invention said as the game's; read where the player meets it in tests/career-workflows-screen.test.ts (the Work and Opportunities tabs drawn for a voice session, a multicamera week and an action shoot, through the clock and a reload at each stage) and tests/career-workflows.test.ts (each workflow's days, choices, reports and notices), with tools/voice-check.mjs, tools/tics.mjs and tools/title-case.mjs clean.",
+  "first": "Pending"
+ },
+ "src/engine/content/careerwork.ts#PROJECTS [kite-and-crow]": {
+  "status": "Rewritten",
+  "hash": "1d183afb83f3",
+  "on": "2026-10-24",
+  "evidence": "Written for brief 25's Module 5 (the ways of working: the booth, the dub, narration, multicamera, performance capture, reenactment, the musical and action; a shoot's order and takes, revised pages, a recall to loop and a scene cut) to docs/STYLE.md and docs/GLOSSARY.md, every rule the agreements' own and every invention said as the game's; read where the player meets it in tests/career-workflows-screen.test.ts (the Work and Opportunities tabs drawn for a voice session, a multicamera week and an action shoot, through the clock and a reload at each stage) and tests/career-workflows.test.ts (each workflow's days, choices, reports and notices), with tools/voice-check.mjs, tools/tics.mjs and tools/title-case.mjs clean.",
+  "first": "Pending"
+ },
+ "src/engine/content/careerwork.ts#PROJECTS [lamplighters]": {
+  "status": "Rewritten",
+  "hash": "c37b5830d382",
+  "on": "2026-10-24",
+  "evidence": "Written for brief 25's Module 5 (the ways of working: the booth, the dub, narration, multicamera, performance capture, reenactment, the musical and action; a shoot's order and takes, revised pages, a recall to loop and a scene cut) to docs/STYLE.md and docs/GLOSSARY.md, every rule the agreements' own and every invention said as the game's; read where the player meets it in tests/career-workflows-screen.test.ts (the Work and Opportunities tabs drawn for a voice session, a multicamera week and an action shoot, through the clock and a reload at each stage) and tests/career-workflows.test.ts (each workflow's days, choices, reports and notices), with tools/voice-check.mjs, tools/tics.mjs and tools/title-case.mjs clean.",
+  "first": "Pending"
+ },
+ "src/engine/content/careerwork.ts#PROJECTS [lantern-row]": {
+  "status": "Rewritten",
+  "hash": "a012bc9177c6",
+  "on": "2026-10-24",
+  "evidence": "Written for brief 25's Module 5 (the ways of working: the booth, the dub, narration, multicamera, performance capture, reenactment, the musical and action; a shoot's order and takes, revised pages, a recall to loop and a scene cut) to docs/STYLE.md and docs/GLOSSARY.md, every rule the agreements' own and every invention said as the game's; read where the player meets it in tests/career-workflows-screen.test.ts (the Work and Opportunities tabs drawn for a voice session, a multicamera week and an action shoot, through the clock and a reload at each stage) and tests/career-workflows.test.ts (each workflow's days, choices, reports and notices), with tools/voice-check.mjs, tools/tics.mjs and tools/title-case.mjs clean.",
+  "first": "Pending"
+ },
+ "src/engine/content/careerwork.ts#PROJECTS [nine-one-one-guest]": {
+  "status": "Retained",
+  "hash": "5b44342f7f09",
+  "on": "2026-10-24",
+  "reason": "Each part's line says who the character is and what they hide or want, in one plain sentence a player can cast themselves from; the task line beneath it went in Module 5, when How The Work Is Done took its place.",
+  "first": "Pending"
+ },
+ "src/engine/content/careerwork.ts#PROJECTS [northern-line]": {
+  "status": "Rewritten",
+  "hash": "58991bf15fc6",
+  "on": "2026-10-24",
+  "evidence": "Written for brief 25's Module 5 (the ways of working: the booth, the dub, narration, multicamera, performance capture, reenactment, the musical and action; a shoot's order and takes, revised pages, a recall to loop and a scene cut) to docs/STYLE.md and docs/GLOSSARY.md, every rule the agreements' own and every invention said as the game's; read where the player meets it in tests/career-workflows-screen.test.ts (the Work and Opportunities tabs drawn for a voice session, a multicamera week and an action shoot, through the clock and a reload at each stage) and tests/career-workflows.test.ts (each workflow's days, choices, reports and notices), with tools/voice-check.mjs, tools/tics.mjs and tools/title-case.mjs clean.",
   "first": "Pending"
  },
  "src/engine/content/careerwork.ts#PROJECTS [paper-moons-ivy]": {
-  "status": "Rewritten",
-  "hash": "1ea6c461efbe",
-  "on": "2026-10-21",
-  "evidence": "Written 2026-10-21 at the owner's word (parts for an actor, an actress or either) to docs/STYLE.md and docs/GLOSSARY.md; read where the player meets it in tests/pro-opportunities-screen.test.ts and tests/pro-core.test.ts ('writes each part for an actor, an actress or either…'), with tools/voice-check.mjs, tools/tics.mjs and tools/title-case.mjs passing",
-  "first": "Rewritten And Verified"
- },
- "src/engine/content/careerwork.ts#PROJECTS [paper-moons]": {
-  "status": "Rewritten",
-  "hash": "1ea6c461efbe",
-  "on": "2026-10-21",
-  "evidence": "Written for brief 19 to docs/STYLE.md and docs/GLOSSARY.md; read where the player meets it in tests/pro-screen.test.ts and tests/pro-core.test.ts, with tools/voice-check.mjs, tools/tics.mjs and tools/title-case.mjs passing",
+  "status": "Retained",
+  "hash": "bbb355f4c842",
+  "on": "2026-10-24",
+  "reason": "Each part's line says who the character is and what they hide or want, in one plain sentence a player can cast themselves from; the task line beneath it went in Module 5, when How The Work Is Done took its place.",
   "first": "Pending"
  },
- "src/engine/content/careerwork.ts#PROJECTS [performance]": {
+ "src/engine/content/careerwork.ts#PROJECTS [paper-moons]": {
+  "status": "Retained",
+  "hash": "93d00dccd3bb",
+  "on": "2026-10-24",
+  "reason": "Each part's line says who the character is and what they hide or want, in one plain sentence a player can cast themselves from; the task line beneath it went in Module 5, when How The Work Is Done took its place.",
+  "first": "Pending"
+ },
+ "src/engine/content/careerwork.ts#PROJECTS [pell-street]": {
   "status": "Rewritten",
-  "hash": "c6b14128900e",
-  "on": "2026-10-21",
-  "evidence": "Written 2026-10-21 at the owner's word (parts for an actor, an actress or either) to docs/STYLE.md and docs/GLOSSARY.md; read where the player meets it in tests/pro-opportunities-screen.test.ts and tests/pro-core.test.ts ('writes each part for an actor, an actress or either…'), with tools/voice-check.mjs, tools/tics.mjs and tools/title-case.mjs passing",
-  "first": "Rewritten And Verified"
+  "hash": "c70d0c34560f",
+  "on": "2026-10-24",
+  "evidence": "Written for brief 25's Module 5 (the ways of working: the booth, the dub, narration, multicamera, performance capture, reenactment, the musical and action; a shoot's order and takes, revised pages, a recall to loop and a scene cut) to docs/STYLE.md and docs/GLOSSARY.md, every rule the agreements' own and every invention said as the game's; read where the player meets it in tests/career-workflows-screen.test.ts (the Work and Opportunities tabs drawn for a voice session, a multicamera week and an action shoot, through the clock and a reload at each stage) and tests/career-workflows.test.ts (each workflow's days, choices, reports and notices), with tools/voice-check.mjs, tools/tics.mjs and tools/title-case.mjs clean.",
+  "first": "Pending"
  },
  "src/engine/content/careerwork.ts#PROJECTS [route-nine]": {
+  "status": "Retained",
+  "hash": "258f8d734ed3",
+  "on": "2026-10-24",
+  "reason": "Each part's line says who the character is and what they hide or want, in one plain sentence a player can cast themselves from; the task line beneath it went in Module 5, when How The Work Is Done took its place.",
+  "first": "Pending"
+ },
+ "src/engine/content/careerwork.ts#PROJECTS [salt-road]": {
   "status": "Rewritten",
-  "hash": "1b56c69418be",
-  "on": "2026-10-21",
-  "evidence": "Written for brief 19 to docs/STYLE.md and docs/GLOSSARY.md; read where the player meets it in tests/pro-screen.test.ts and tests/pro-core.test.ts, with tools/voice-check.mjs, tools/tics.mjs and tools/title-case.mjs passing",
+  "hash": "83a7968d8b18",
+  "on": "2026-10-24",
+  "evidence": "Written for brief 25's Module 5 (the ways of working: the booth, the dub, narration, multicamera, performance capture, reenactment, the musical and action; a shoot's order and takes, revised pages, a recall to loop and a scene cut) to docs/STYLE.md and docs/GLOSSARY.md, every rule the agreements' own and every invention said as the game's; read where the player meets it in tests/career-workflows-screen.test.ts (the Work and Opportunities tabs drawn for a voice session, a multicamera week and an action shoot, through the clock and a reload at each stage) and tests/career-workflows.test.ts (each workflow's days, choices, reports and notices), with tools/voice-check.mjs, tools/tics.mjs and tools/title-case.mjs clean.",
+  "first": "Pending"
+ },
+ "src/engine/content/careerwork.ts#PROJECTS [second-shift]": {
+  "status": "Rewritten",
+  "hash": "58631b872c05",
+  "on": "2026-10-24",
+  "evidence": "Written for brief 25's Module 5 (the ways of working: the booth, the dub, narration, multicamera, performance capture, reenactment, the musical and action; a shoot's order and takes, revised pages, a recall to loop and a scene cut) to docs/STYLE.md and docs/GLOSSARY.md, every rule the agreements' own and every invention said as the game's; read where the player meets it in tests/career-workflows-screen.test.ts (the Work and Opportunities tabs drawn for a voice session, a multicamera week and an action shoot, through the clock and a reload at each stage) and tests/career-workflows.test.ts (each workflow's days, choices, reports and notices), with tools/voice-check.mjs, tools/tics.mjs and tools/title-case.mjs clean.",
+  "first": "Pending"
+ },
+ "src/engine/content/careerwork.ts#PROJECTS [six-rooms-return]": {
+  "status": "Rewritten",
+  "hash": "5028b811156d",
+  "on": "2026-10-24",
+  "evidence": "Written for brief 25's Module 5 (the ways of working: the booth, the dub, narration, multicamera, performance capture, reenactment, the musical and action; a shoot's order and takes, revised pages, a recall to loop and a scene cut) to docs/STYLE.md and docs/GLOSSARY.md, every rule the agreements' own and every invention said as the game's; read where the player meets it in tests/career-workflows-screen.test.ts (the Work and Opportunities tabs drawn for a voice session, a multicamera week and an action shoot, through the clock and a reload at each stage) and tests/career-workflows.test.ts (each workflow's days, choices, reports and notices), with tools/voice-check.mjs, tools/tics.mjs and tools/title-case.mjs clean.",
+  "first": "Pending"
+ },
+ "src/engine/content/careerwork.ts#PROJECTS [six-rooms]": {
+  "status": "Rewritten",
+  "hash": "e752a5e805a4",
+  "on": "2026-10-24",
+  "evidence": "Written for brief 25's Module 5 (the ways of working: the booth, the dub, narration, multicamera, performance capture, reenactment, the musical and action; a shoot's order and takes, revised pages, a recall to loop and a scene cut) to docs/STYLE.md and docs/GLOSSARY.md, every rule the agreements' own and every invention said as the game's; read where the player meets it in tests/career-workflows-screen.test.ts (the Work and Opportunities tabs drawn for a voice session, a multicamera week and an action shoot, through the clock and a reload at each stage) and tests/career-workflows.test.ts (each workflow's days, choices, reports and notices), with tools/voice-check.mjs, tools/tics.mjs and tools/title-case.mjs clean.",
+  "first": "Pending"
+ },
+ "src/engine/content/careerwork.ts#PROJECTS [tidewater-narrator]": {
+  "status": "Rewritten",
+  "hash": "e33785ed8ed1",
+  "on": "2026-10-24",
+  "evidence": "Written for brief 25's Module 5 (the ways of working: the booth, the dub, narration, multicamera, performance capture, reenactment, the musical and action; a shoot's order and takes, revised pages, a recall to loop and a scene cut) to docs/STYLE.md and docs/GLOSSARY.md, every rule the agreements' own and every invention said as the game's; read where the player meets it in tests/career-workflows-screen.test.ts (the Work and Opportunities tabs drawn for a voice session, a multicamera week and an action shoot, through the clock and a reload at each stage) and tests/career-workflows.test.ts (each workflow's days, choices, reports and notices), with tools/voice-check.mjs, tools/tics.mjs and tools/title-case.mjs clean.",
+  "first": "Pending"
+ },
+ "src/engine/content/careerwork.ts#PROJECTS [tidewater-reenactment]": {
+  "status": "Rewritten",
+  "hash": "d8df042c4e8e",
+  "on": "2026-10-24",
+  "evidence": "Written for brief 25's Module 5 (the ways of working: the booth, the dub, narration, multicamera, performance capture, reenactment, the musical and action; a shoot's order and takes, revised pages, a recall to loop and a scene cut) to docs/STYLE.md and docs/GLOSSARY.md, every rule the agreements' own and every invention said as the game's; read where the player meets it in tests/career-workflows-screen.test.ts (the Work and Opportunities tabs drawn for a voice session, a multicamera week and an action shoot, through the clock and a reload at each stage) and tests/career-workflows.test.ts (each workflow's days, choices, reports and notices), with tools/voice-check.mjs, tools/tics.mjs and tools/title-case.mjs clean.",
   "first": "Pending"
  },
  "src/engine/content/careerwork.ts#PROJECTS [winter-ledger-hester]": {
-  "status": "Rewritten",
-  "hash": "6340861f8b86",
-  "on": "2026-10-21",
-  "evidence": "Written 2026-10-21 at the owner's word (parts for an actor, an actress or either) to docs/STYLE.md and docs/GLOSSARY.md; read where the player meets it in tests/pro-opportunities-screen.test.ts and tests/pro-core.test.ts ('writes each part for an actor, an actress or either…'), with tools/voice-check.mjs, tools/tics.mjs and tools/title-case.mjs passing",
-  "first": "Rewritten And Verified"
+  "status": "Retained",
+  "hash": "7599b088206f",
+  "on": "2026-10-24",
+  "reason": "Each part's line says who the character is and what they hide or want, in one plain sentence a player can cast themselves from; the task line beneath it went in Module 5, when How The Work Is Done took its place.",
+  "first": "Pending"
  },
  "src/engine/content/careerwork.ts#PROJECTS [winter-ledger]": {
+  "status": "Retained",
+  "hash": "a010d62c2679",
+  "on": "2026-10-24",
+  "reason": "Each part's line says who the character is and what they hide or want, in one plain sentence a player can cast themselves from; the task line beneath it went in Module 5, when How The Work Is Done took its place.",
+  "first": "Pending"
+ },
+ "src/engine/content/careerwork.ts#RATES [animation-session]": {
   "status": "Rewritten",
-  "hash": "6340861f8b86",
-  "on": "2026-10-21",
-  "evidence": "Read in the tool output of docs/verification/career-2026-10-20/integration/hudson-text.ts (its .txt beside it), 2026-10-21, against docs/STYLE.md: the regional company moved from Providence, which the gazetteer doesn't hold, to Hudson, New York, and the help names the audition towns from the projects",
-  "first": "Rewritten And Verified"
+  "hash": "394d05c773dd",
+  "on": "2026-10-24",
+  "evidence": "Written for brief 25's Module 5 (the ways of working: the booth, the dub, narration, multicamera, performance capture, reenactment, the musical and action; a shoot's order and takes, revised pages, a recall to loop and a scene cut) to docs/STYLE.md and docs/GLOSSARY.md, every rule the agreements' own and every invention said as the game's; read where the player meets it in tests/career-workflows-screen.test.ts (the Work and Opportunities tabs drawn for a voice session, a multicamera week and an action shoot, through the clock and a reload at each stage) and tests/career-workflows.test.ts (each workflow's days, choices, reports and notices), with tools/voice-check.mjs, tools/tics.mjs and tools/title-case.mjs clean.",
+  "first": "Pending"
  },
  "src/engine/content/careerwork.ts#RATES [lort-b]": {
   "status": "Rewritten",
@@ -405,26 +566,33 @@
   "evidence": "Written for brief 19 to docs/STYLE.md and docs/GLOSSARY.md; read where the player meets it in tests/pro-screen.test.ts and tests/pro-core.test.ts, with tools/voice-check.mjs, tools/tics.mjs and tools/title-case.mjs passing",
   "first": "Pending"
  },
+ "src/engine/content/guide/career.ts#AHEAD": {
+  "status": "Rewritten",
+  "hash": "0e21652cc770",
+  "on": "2026-10-23",
+  "evidence": "Written for brief 25's work abroad (Module 1) to docs/STYLE.md and docs/GLOSSARY.md; read where the player meets it in tests/career-world-sydney.test.ts (the journey, the release, the missed flight and the Work tab drawn at each stage) and tests/career-world-countries.test.ts, with tools/voice-check.mjs, tools/tics.mjs, tools/title-case.mjs and tools/plural-check.mjs passing",
+  "first": "Pending"
+ },
  "src/engine/content/guide/career.ts#CAREER_GUIDE [career.agent-answers]": {
   "status": "Rewritten",
-  "hash": "e0d1d7ef8710",
-  "on": "2026-10-21",
-  "evidence": "Written for brief 19 to docs/STYLE.md and docs/GLOSSARY.md; read where the player meets it in tests/journey-agent.test.ts, tests/pro-agent.test.ts, tests/pro-representation-screen.test.ts and tests/guide.test.ts, with tools/voice-check.mjs, tools/tics.mjs, tools/title-case.mjs and tools/guide-quotes.mjs passing",
-  "first": "Rewritten And Verified"
+  "hash": "7cdc863e3167",
+  "on": "2026-10-24",
+  "evidence": "Written for brief 25's Module 3 (real agencies and agents) to docs/STYLE.md and docs/GLOSSARY.md, with no pronoun for a real agent and the game's own agent's words unchanged; read where the player meets it in tests/career-agents.test.ts (the Representation tab drawn with Dan Patack chosen, the notices and history of a played referral, meeting, offer and signing) and in tests/pro-representation-screen.test.ts, tests/journey-agent.test.ts and tests/pro-agent.test.ts for Thomas Ashgrove, with tools/voice-check.mjs, tools/tics.mjs, tools/title-case.mjs, tools/plural-check.mjs and tools/spelling.mjs passing",
+  "first": "Pending"
  },
  "src/engine/content/guide/career.ts#CAREER_GUIDE [career.agent]": {
   "status": "Rewritten",
-  "hash": "cbe311f7afcf",
-  "on": "2026-10-21",
-  "evidence": "Read again on 2026-10-21 when the owner chose a fictional agent in the real one's place (Thomas Ashgrove of Halberd Talent, for Jordan Parente of Stewart Talent): the notice says he and the agency are invented, the policy is the game's own rule, and no message carries the real agent's line any more; read where the player meets it in tests/pro-agent.test.ts, tests/pro-representation-screen.test.ts, tests/journey-agent.test.ts and tests/pro-work.test.ts, with tools/voice-check.mjs, tools/tics.mjs and tools/title-case.mjs passing",
-  "first": "Rewritten And Verified"
+  "hash": "2d614c5625ad",
+  "on": "2026-10-24",
+  "evidence": "Written for brief 25's Module 3 (real agencies and agents) to docs/STYLE.md and docs/GLOSSARY.md, with no pronoun for a real agent and the game's own agent's words unchanged; read where the player meets it in tests/career-agents.test.ts (the Representation tab drawn with Dan Patack chosen, the notices and history of a played referral, meeting, offer and signing) and in tests/pro-representation-screen.test.ts, tests/journey-agent.test.ts and tests/pro-agent.test.ts for Thomas Ashgrove, with tools/voice-check.mjs, tools/tics.mjs, tools/title-case.mjs, tools/plural-check.mjs and tools/spelling.mjs passing",
+  "first": "Pending"
  },
  "src/engine/content/guide/career.ts#CAREER_GUIDE [career.agreement]": {
   "status": "Rewritten",
-  "hash": "ad9935ffe579",
-  "on": "2026-10-21",
-  "evidence": "Read again on 2026-10-21: the agreement's needs say the days employed on covered work aren't counted toward Equity's 90, as endRefusal now counts them; read in tests/guide.test.ts and against tests/journey-agent.test.ts's refusal, with tools/voice-check.mjs, tools/tics.mjs and tools/title-case.mjs passing",
-  "first": "Rewritten And Verified"
+  "hash": "88269d7f2e5d",
+  "on": "2026-10-24",
+  "evidence": "Written for brief 25's Module 3 (real agencies and agents) to docs/STYLE.md and docs/GLOSSARY.md, with no pronoun for a real agent and the game's own agent's words unchanged; read where the player meets it in tests/career-agents.test.ts (the Representation tab drawn with Dan Patack chosen, the notices and history of a played referral, meeting, offer and signing) and in tests/pro-representation-screen.test.ts, tests/journey-agent.test.ts and tests/pro-agent.test.ts for Thomas Ashgrove, with tools/voice-check.mjs, tools/tics.mjs, tools/title-case.mjs, tools/plural-check.mjs and tools/spelling.mjs passing",
+  "first": "Pending"
  },
  "src/engine/content/guide/career.ts#CAREER_GUIDE [career.auditions]": {
   "status": "Rewritten",
@@ -433,12 +601,26 @@
   "evidence": "Said again for brief 21 (2026-10-22) to docs/STYLE.md and docs/GLOSSARY.md: a work's several genres, each by its share, and where knowing them counts; the mechanics it names played in tests/b20-career-effects.test.ts, tests/evidence-g20-school.test.ts, tests/evidence-g23-school.test.ts and tests/guide-examples-*.test.ts, with tools/voice-check.mjs, tools/tics.mjs, tools/title-case.mjs, tools/spelling.mjs and tools/plural-check.mjs passing",
   "first": "Pending"
  },
+ "src/engine/content/guide/career.ts#CAREER_GUIDE [career.awards]": {
+  "status": "Rewritten",
+  "hash": "4726b57d4d5d",
+  "on": "2026-10-24",
+  "evidence": "Written for brief 25's Module 6 to docs/STYLE.md and docs/GLOSSARY.md: the guide's chapter on charts, festivals and awards and its links to the ways of working and to offers, each link's promise read against the code by tools/effects.mjs and each quote by tools/guide-quotes.mjs, the chapter's commands issued by tests/career-awards-screen.test.ts, with tools/voice-check.mjs and tools/tics.mjs clean.",
+  "first": "Pending"
+ },
  "src/engine/content/guide/career.ts#CAREER_GUIDE [career.commission]": {
   "status": "Rewritten",
   "hash": "636bfa774038",
   "on": "2026-10-21",
   "evidence": "tests/guide.test.ts and tools/guide-quotes.mjs read the entries; the figures they quote are held by tests/propay.test.ts (the $256.60 commission, Equity's bills, the 30 days)",
   "first": "Rewritten And Verified"
+ },
+ "src/engine/content/guide/career.ts#CAREER_GUIDE [career.contracts]": {
+  "status": "Rewritten",
+  "hash": "09b2a5a01272",
+  "on": "2026-10-24",
+  "evidence": "Written for brief 25's Module 4 (contracts, pay states, overtime, the producer's contribution, residuals, the per diem, a recurring part's season and a series' seasons) to docs/STYLE.md and docs/GLOSSARY.md, every rule's figure the agreements' own and every invention said as the game's; read where the player meets it in tests/career-contracts.test.ts (the offer, the contract, each payment's state, the notices of each episode, option, decision, telecast, rerun, residual and per diem, through a played recurring part), with tools/voice-check.mjs, tools/tics.mjs and tools/title-case.mjs clean.",
+  "first": "Pending"
  },
  "src/engine/content/guide/career.ts#CAREER_GUIDE [career.headshots]": {
   "status": "Rewritten",
@@ -456,10 +638,10 @@
  },
  "src/engine/content/guide/career.ts#CAREER_GUIDE [career.opportunities]": {
   "status": "Rewritten",
-  "hash": "8ab248f85195",
-  "on": "2026-10-21",
-  "evidence": "Written for brief 20 to docs/STYLE.md and docs/GLOSSARY.md; the part Sam renamed Robin, read in tests/pro-core.test.ts, tests/pro-opportunities-screen.test.ts and tests/propay-screen.test.ts; the guide's line on parts posted again read against tests/b20-career-history.test.ts",
-  "first": "Rewritten And Verified"
+  "hash": "06afe50b92da",
+  "on": "2026-10-23",
+  "evidence": "Corrected on 2026-10-24 where it said every project, company and casting office was invented for the game, untrue once parts were drawn from real productions (brief 25's Module 2); read to docs/STYLE.md where the player meets it in tests/pro-opportunities-screen.test.ts, tests/propay-screen.test.ts, tests/pro-agent.test.ts, tests/b20-guide-chapters.test.ts and tests/career-drawn.test.ts, with tools/voice-check.mjs, tools/tics.mjs, tools/title-case.mjs, tools/plural-check.mjs and tools/spelling.mjs passing",
+  "first": "Pending"
  },
  "src/engine/content/guide/career.ts#CAREER_GUIDE [career.outside-work]": {
   "status": "Rewritten",
@@ -477,9 +659,9 @@
  },
  "src/engine/content/guide/career.ts#CAREER_GUIDE [career.pay]": {
   "status": "Rewritten",
-  "hash": "9e952a73d8a5",
-  "on": "2026-10-22",
-  "evidence": "tests/b22-authorization.test.ts (the rule the entry says: a booking counted as days without work, released work paid for the days worked)",
+  "hash": "bceb8f102d54",
+  "on": "2026-10-24",
+  "evidence": "Written for brief 25's Module 4 (contracts, pay states, overtime, the producer's contribution, residuals, the per diem, a recurring part's season and a series' seasons) to docs/STYLE.md and docs/GLOSSARY.md, every rule's figure the agreements' own and every invention said as the game's; read where the player meets it in tests/career-contracts.test.ts (the offer, the contract, each payment's state, the notices of each episode, option, decision, telecast, rerun, residual and per diem, through a played recurring part), with tools/voice-check.mjs, tools/tics.mjs and tools/title-case.mjs clean.",
   "first": "Pending"
  },
  "src/engine/content/guide/career.ts#CAREER_GUIDE [career.profile]": {
@@ -491,10 +673,10 @@
  },
  "src/engine/content/guide/career.ts#CAREER_GUIDE [career.reasons]": {
   "status": "Rewritten",
-  "hash": "bdaf0d5fb74b",
-  "on": "2026-10-21",
-  "evidence": "Written for brief 19 to docs/STYLE.md and docs/GLOSSARY.md; read where the player meets it in tests/journey-agent.test.ts, tests/pro-agent.test.ts, tests/pro-representation-screen.test.ts and tests/guide.test.ts, with tools/voice-check.mjs, tools/tics.mjs, tools/title-case.mjs and tools/guide-quotes.mjs passing",
-  "first": "Rewritten And Verified"
+  "hash": "120830512fb2",
+  "on": "2026-10-24",
+  "evidence": "Written for brief 25's Module 3 (real agencies and agents) to docs/STYLE.md and docs/GLOSSARY.md, with no pronoun for a real agent and the game's own agent's words unchanged; read where the player meets it in tests/career-agents.test.ts (the Representation tab drawn with Dan Patack chosen, the notices and history of a played referral, meeting, offer and signing) and in tests/pro-representation-screen.test.ts, tests/journey-agent.test.ts and tests/pro-agent.test.ts for Thomas Ashgrove, with tools/voice-check.mjs, tools/tics.mjs, tools/title-case.mjs, tools/plural-check.mjs and tools/spelling.mjs passing",
+  "first": "Pending"
  },
  "src/engine/content/guide/career.ts#CAREER_GUIDE [career.reel]": {
   "status": "Rewritten",
@@ -517,53 +699,74 @@
   "evidence": "Written for brief 20 to docs/STYLE.md and docs/GLOSSARY.md: Equity joined by a first day under an Equity contract as by the degree, read against tests/b20-career-defects.test.ts, which plays it",
   "first": "Rewritten And Verified"
  },
+ "src/engine/content/guide/career.ts#CAREER_GUIDE [career.work-abroad]": {
+  "status": "Rewritten",
+  "hash": "f45f42346d53",
+  "on": "2026-10-23",
+  "evidence": "Written for brief 25's work abroad (Module 1) to docs/STYLE.md and docs/GLOSSARY.md; read where the player meets it in tests/career-world-sydney.test.ts (the journey, the release, the missed flight and the Work tab drawn at each stage) and tests/career-world-countries.test.ts, with tools/voice-check.mjs, tools/tics.mjs, tools/title-case.mjs and tools/plural-check.mjs passing",
+  "first": "Pending"
+ },
+ "src/engine/content/guide/career.ts#CAREER_GUIDE [career.workflows]": {
+  "status": "Rewritten",
+  "hash": "3235da1a8dc8",
+  "on": "2026-10-24",
+  "evidence": "Written for brief 25's Module 5 to docs/STYLE.md and docs/GLOSSARY.md: the guide's chapter on how each kind of work is done and its links to Contracts and Pay, each link's promise read against the code by tools/effects.mjs and each quote by tools/guide-quotes.mjs, the chapter's command opened by tests/career-workflows-screen.test.ts, with tools/voice-check.mjs and tools/tics.mjs clean.",
+  "first": "Pending"
+ },
  "src/engine/content/guide/career.ts#CAREER_GUIDE [evaluation]": {
   "status": "Rewritten",
-  "hash": "1cb2b1f9f7d1",
-  "on": "2026-10-21",
-  "evidence": "Read in the tool output of docs/verification/career-2026-10-20/integration/merged-career-text.ts (its .txt beside it) at the work loop's merge, 2026-10-21, against docs/STYLE.md: the agent's, the pay's and the work loop's lines, each read by its builder, joined; the chapters read in their order, Your Career, Representation, Finding Work, Papers",
-  "first": "Rewritten And Verified"
+  "hash": "a5315052e5a0",
+  "on": "2026-10-24",
+  "evidence": "Written for brief 25's Module 6 to docs/STYLE.md and docs/GLOSSARY.md: the guide's chapter on charts, festivals and awards and its links to the ways of working and to offers, each link's promise read against the code by tools/effects.mjs and each quote by tools/guide-quotes.mjs, the chapter's commands issued by tests/career-awards-screen.test.ts, with tools/voice-check.mjs and tools/tics.mjs clean.",
+  "first": "Pending"
  },
  "src/engine/content/guide/career.ts#CAREER_GUIDE [history]": {
   "status": "Rewritten",
-  "hash": "23a27c6d4c27",
-  "on": "2026-10-21",
-  "evidence": "Read in the tool output of docs/verification/career-2026-10-20/integration/merged-career-text.ts (its .txt beside it) at the work loop's merge, 2026-10-21, against docs/STYLE.md: the agent's, the pay's and the work loop's lines, each read by its builder, joined; the chapters read in their order, Your Career, Representation, Finding Work, Papers",
-  "first": "Rewritten And Verified"
+  "hash": "af8430d75361",
+  "on": "2026-10-24",
+  "evidence": "Written for brief 25's Module 3 (real agencies and agents) to docs/STYLE.md and docs/GLOSSARY.md, with no pronoun for a real agent and the game's own agent's words unchanged; read where the player meets it in tests/career-agents.test.ts (the Representation tab drawn with Dan Patack chosen, the notices and history of a played referral, meeting, offer and signing) and in tests/pro-representation-screen.test.ts, tests/journey-agent.test.ts and tests/pro-agent.test.ts for Thomas Ashgrove, with tools/voice-check.mjs, tools/tics.mjs, tools/title-case.mjs, tools/plural-check.mjs and tools/spelling.mjs passing",
+  "first": "Pending"
  },
  "src/engine/content/guide/career.ts#CAREER_GUIDE [immediate]": {
   "status": "Rewritten",
-  "hash": "78328b01ef5f",
-  "on": "2026-10-21",
-  "evidence": "Read in the tool output of docs/verification/career-2026-10-20/integration/merged-career-text.ts (its .txt beside it) at the work loop's merge, 2026-10-21, against docs/STYLE.md: the agent's, the pay's and the work loop's lines, each read by its builder, joined; the chapters read in their order, Your Career, Representation, Finding Work, Papers",
-  "first": "Rewritten And Verified"
+  "hash": "fa5648cca220",
+  "on": "2026-10-23",
+  "evidence": "Written for brief 25's work abroad (Module 1) to docs/STYLE.md and docs/GLOSSARY.md; read where the player meets it in tests/career-world-sydney.test.ts (the journey, the release, the missed flight and the Work tab drawn at each stage) and tests/career-world-countries.test.ts, with tools/voice-check.mjs, tools/tics.mjs, tools/title-case.mjs and tools/plural-check.mjs passing",
+  "first": "Pending"
  },
  "src/engine/content/guide/career.ts#CAREER_GUIDE [optional]": {
   "status": "Rewritten",
-  "hash": "b1b5c27e6171",
-  "on": "2026-10-21",
-  "evidence": "Written for brief 19 to docs/STYLE.md and docs/GLOSSARY.md; read where the player meets it in tests/journey-agent.test.ts, tests/pro-agent.test.ts, tests/pro-representation-screen.test.ts and tests/guide.test.ts, with tools/voice-check.mjs, tools/tics.mjs, tools/title-case.mjs and tools/guide-quotes.mjs passing",
-  "first": "Rewritten And Verified"
+  "hash": "7a801fe50843",
+  "on": "2026-10-24",
+  "evidence": "Written for brief 25's Module 6 to docs/STYLE.md and docs/GLOSSARY.md: the guide's chapter on charts, festivals and awards and its links to the ways of working and to offers, each link's promise read against the code by tools/effects.mjs and each quote by tools/guide-quotes.mjs, the chapter's commands issued by tests/career-awards-screen.test.ts, with tools/voice-check.mjs and tools/tics.mjs clean.",
+  "first": "Pending"
  },
  "src/engine/content/guide/career.ts#CAREER_GUIDE [prerequisite]": {
   "status": "Rewritten",
-  "hash": "b5621a820a2a",
-  "on": "2026-10-21",
-  "evidence": "Read in the tool output of docs/verification/career-2026-10-20/integration/merged-career-text.ts (its .txt beside it) at the work loop's merge, 2026-10-21, against docs/STYLE.md: the agent's, the pay's and the work loop's lines, each read by its builder, joined; the chapters read in their order, Your Career, Representation, Finding Work, Papers",
-  "first": "Rewritten And Verified"
+  "hash": "df2fbe293649",
+  "on": "2026-10-24",
+  "evidence": "Written for brief 25's Module 5 to docs/STYLE.md and docs/GLOSSARY.md: the guide's chapter on how each kind of work is done and its links to Contracts and Pay, each link's promise read against the code by tools/effects.mjs and each quote by tools/guide-quotes.mjs, the chapter's command opened by tests/career-workflows-screen.test.ts, with tools/voice-check.mjs and tools/tics.mjs clean.",
+  "first": "Pending"
  },
  "src/engine/content/guide/career.ts#CAREER_GUIDE [scheduled]": {
   "status": "Rewritten",
-  "hash": "37799d8e75ad",
-  "on": "2026-10-21",
-  "evidence": "Read in the tool output of docs/verification/career-2026-10-20/integration/merged-career-text.ts (its .txt beside it) at the work loop's merge, 2026-10-21, against docs/STYLE.md: the agent's, the pay's and the work loop's lines, each read by its builder, joined; the chapters read in their order, Your Career, Representation, Finding Work, Papers",
-  "first": "Rewritten And Verified"
+  "hash": "d1016ca3c9a7",
+  "on": "2026-10-24",
+  "evidence": "Written for brief 25's Module 5 to docs/STYLE.md and docs/GLOSSARY.md: the guide's chapter on how each kind of work is done and its links to Contracts and Pay, each link's promise read against the code by tools/effects.mjs and each quote by tools/guide-quotes.mjs, the chapter's command opened by tests/career-workflows-screen.test.ts, with tools/voice-check.mjs and tools/tics.mjs clean.",
+  "first": "Pending"
  },
  "src/engine/content/guide/career.ts#hours": {
   "status": "Rewritten",
   "hash": "90335b649ade",
   "on": "2026-10-21",
   "evidence": "Written for brief 19 to docs/STYLE.md and docs/GLOSSARY.md; read where the player meets it in tests/pro-screen.test.ts and tests/pro-core.test.ts, with tools/voice-check.mjs, tools/tics.mjs and tools/title-case.mjs passing",
+  "first": "Pending"
+ },
+ "src/engine/content/guide/career.ts#MONTHS": {
+  "status": "Rewritten",
+  "hash": "27c857d61c2b",
+  "on": "2026-10-24",
+  "evidence": "Written for brief 25's Module 6 to docs/STYLE.md and docs/GLOSSARY.md: the guide's chapter on charts, festivals and awards and its links to the ways of working and to offers, each link's promise read against the code by tools/effects.mjs and each quote by tools/guide-quotes.mjs, the chapter's commands issued by tests/career-awards-screen.test.ts, with tools/voice-check.mjs and tools/tics.mjs clean.",
   "first": "Pending"
  },
  "src/engine/content/guide/career.ts#NO_OFFER": {
@@ -673,9 +876,9 @@
  },
  "src/engine/systems/pro.ts#reelSources": {
   "status": "Rewritten",
-  "hash": "d8be3bd43635",
-  "on": "2026-10-21",
-  "evidence": "Written for brief 19 to docs/STYLE.md and docs/GLOSSARY.md; read where the player meets it in tests/pro-screen.test.ts and tests/pro-core.test.ts, with tools/voice-check.mjs, tools/tics.mjs and tools/title-case.mjs passing",
+  "hash": "1b1c70d2f192",
+  "on": "2026-10-24",
+  "evidence": "Written for brief 25's Module 5 (the ways of working: the booth, the dub, narration, multicamera, performance capture, reenactment, the musical and action; a shoot's order and takes, revised pages, a recall to loop and a scene cut) to docs/STYLE.md and docs/GLOSSARY.md, every rule the agreements' own and every invention said as the game's; read where the player meets it in tests/career-workflows-screen.test.ts (the Work and Opportunities tabs drawn for a voice session, a multicamera week and an action shoot, through the clock and a reload at each stage) and tests/career-workflows.test.ts (each workflow's days, choices, reports and notices), with tools/voice-check.mjs, tools/tics.mjs and tools/title-case.mjs clean.",
   "first": "Pending"
  },
  "src/engine/systems/pro.ts#registerPro [headshot]": {
@@ -785,9 +988,9 @@
  },
  "src/ui/workspaces/CareerWorkspace.tsx#ProfilePanel": {
   "status": "Rewritten",
-  "hash": "2fa73c43bb1f",
-  "on": "2026-10-21",
-  "evidence": "Written for brief 19 to docs/STYLE.md and docs/GLOSSARY.md; read where the player meets it in tests/pro-screen.test.ts and tests/pro-core.test.ts, with tools/voice-check.mjs, tools/tics.mjs and tools/title-case.mjs passing",
+  "hash": "e58db547c159",
+  "on": "2026-10-24",
+  "evidence": "Written for brief 25's Module 6 (the published charts as dated imports, the game's own box office, the awards and festivals inventory, the Emmy Awards by the 78th's rules and Sundance by its 2027 festival's) to docs/STYLE.md and docs/GLOSSARY.md, every rule the read sources' own and every invention said as the game's; read where the player meets it in tests/career-awards-screen.test.ts (the Charts And Awards tab and the Portfolio drawn before the work, after the wrap, after the entry, at the nominations and after the ceremony, through the clock and a reload at each stage) and tests/career-awards.test.ts (each refusal, notice, recap and festival word), with tools/voice-check.mjs, tools/tics.mjs and tools/title-case.mjs clean.",
   "first": "Pending"
  },
  "src/ui/workspaces/CareerWorkspace.tsx#ReelPanel": {

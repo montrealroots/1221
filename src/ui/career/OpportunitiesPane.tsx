@@ -4,26 +4,31 @@
  * booked work and what was settled, each read from the record as it's drawn.
  *
  * Every control runs a command through `run`, behind its guide chapter (`<Gated>`), with the command's own refusal said
- * under it before it's pressed (`WhyNot`). Every project, company and casting office is fictional, and the tab says so
- * at its head. The figures that are the game's estimates say so under Sources And Estimates.
+ * under it before it's pressed (`WhyNot`). Every project, company and casting office is fictional but a part drawn from
+ * a real production, and the tab says so at its head; until 2026-10-23 (brief 25's Module 2) every one was, and the
+ * head said so of all of them. The figures that are the game's estimates say so under Sources And Estimates.
  */
 
 import { useGame, useWorld } from '@/app/game-context';
 import { Panel, Fine, WhyNot, SectionHead } from '@/ui/components/primitives';
 import { Gated } from '@/ui/guide/Guide';
 import { formatMoney } from '@/engine/core/money';
+import { spokenList } from '@/engine/core/text';
 import { formatDate, formatTime, formatWeekdayDate } from '@/engine/core/time';
 import { PROJECTS, projectById, type ProjectTemplate } from '@/engine/content/careerwork';
 import { agentById } from '@/engine/content/agents';
 import { BAND_LABEL } from '@/engine/systems/coursework';
 import { BRIEF, type BriefStep } from '@/engine/systems/briefs';
+import { FORMATS } from '@/engine/content/workflows';
+import { STEP_WORDS, stepOf, workflowOf } from '@/engine/systems/workflow';
 import { activeAgreement, type Engagement, type Opportunity } from '@/engine/systems/pro';
 import {
-  DEFERRED_WHY, FIELD_WORDS, KIND_WORDS, MISSES, OUTSIDE_WORK, acceptRefusal, acceptWarning, againWords, agrees, castingAs, chanceWords, conditionsFor, counted, datesOf, decidesAt,
+  DEFERRED_WHY, FIELD_WORDS, MISSES, OUTSIDE_WORK, acceptRefusal, acceptWarning, againWords, agrees, castingAs, chanceWords, conditionsFor, counted, datesOf, decidesAt, drawnWords, kindPhrase, reachWords,
   demandsWords, eligibilityProblems, fitOf, fitWords, inSessionAny, materialProblems, moveRefusal, payTermsOf, payWords, prepMinutes,
-  prepareRefusal, projectGenresOf, projectOf, requestFor, requestRefusal, roundToCome, submitRefusal, tapeRefusal, tripMinutes, writtenFor, writtenForWords,
+  prepareRefusal, projectGenresOf, projectOf, requestFor, requestRefusal, roundToCome, submitRefusal, tapeRefusal, writtenFor, writtenForWords, intimacyWords,
 } from '@/engine/systems/projobs';
 import { requirementWords } from '@/engine/systems/engagement';
+import { productionById, productionWords } from '@/engine/content/catalog';
 
 const NY = 'America/New_York';
 const STEPS: readonly BriefStep[] = ['read', 'lines', 'rehearse'];
@@ -38,19 +43,40 @@ function spanWords(days: readonly { from: number }[]): string {
   return days.length === 1 ? `on ${first}` : `from ${first} to ${last}`;
 }
 
+/**
+ * The work's days in a phrase: a run's weeks, a multicamera week, a booth's sessions, an action shoot's fight rehearsals
+ * before its shoot days, or a shoot's days (the workflows' from 2026-10-24, brief 25's Module 5; until then a run's or
+ * "shoot days").
+ */
+function daysWords(t: ProjectTemplate, n: number): string {
+  const s = t.schedule;
+  if (s.kind === 'run') return `${counted(s.rehearsalWeeks, 'week')} of rehearsal and ${counted(s.performanceWeeks, 'week')} of performances`;
+  if (s.kind === 'week') return `${counted(s.weeks, 'week')} of a table read, rehearsal, camera blocking and a tape night`;
+  if (s.kind === 'sessions') return counted(s.sessions, STEP_WORDS[stepOf(t, 0)].replace(/^an? /, ''));
+  if (s.kind === 'shoot' && s.rehearsalDays) return `${counted(s.rehearsalDays, 'day')} of fight rehearsal and ${counted(s.days, 'shoot day')}`;
+  return counted(n, 'shoot day');
+}
+
 /** What the role is, in the lines a casting notice gives. */
 function RoleFacts({ t, o }: { t: ProjectTemplate; o: Pick<Opportunity, 'projectId' | 'postedAt'> & Partial<Pick<Opportunity, 'offer'>> }) {
   const person = useWorld((s) => s.player);
   const days = datesOf(o);
-  const trip = tripMinutes(person.currentLocationId, t.place.cityId);
   return (
     <dl className="col gap-2 small" style={{ margin: 0 }}>
-      <div><dt className="strong">The Project</dt><dd style={{ margin: 0 }}>{`${t.project}, a fictional ${KIND_WORDS[t.kind]} by ${t.company}, cast by ${t.casting}. ${t.contract}.`}</dd></div>
+      <div><dt className="strong">The Project</dt><dd style={{ margin: 0 }}>{`${t.project}, ${kindPhrase(t)}, by ${t.company}, cast by ${t.casting}. ${t.contract}.`}</dd></div>
+      {/* A part drawn from a real production says so before anything else about it (from 2026-10-23, brief 25's Module 2, C8). */}
+      {t.drawn && <div><dt className="strong">The Game’s Own Part</dt><dd style={{ margin: 0 }}>{drawnWords(t)}</dd></div>}
+      {t.drawn && productionById(t.drawn.production) && (
+        <div><dt className="strong">{`${t.project}, As Its Pages Had It`}</dt><dd style={{ margin: 0 }}>{productionWords(productionById(t.drawn.production)!).join(' ')}</dd></div>
+      )}
       <div><dt className="strong">The Part</dt><dd style={{ margin: 0 }}>{`${t.role.part}: ${t.role.about}`}</dd></div>
+      {/* How the work is done, and an intimate scene said before the audition (from 2026-10-24, brief 25's Module 5; N13 §43.A). */}
+      <div><dt className="strong">How The Work Is Done</dt><dd style={{ margin: 0 }}>{`${FORMATS[t.format].label}. ${FORMATS[t.format].words}`}</dd></div>
+      {t.intimacy && <div><dt className="strong">An Intimate Scene</dt><dd style={{ margin: 0 }}>{intimacyWords(t)}</dd></div>}
       {/* What the part asks of the genres, in words (`requirementWords`, from 2026-10-22, the owner's brief 22): until then
           its project's tags, a broad genre beside its own kind ("Domestic Drama, Drama"), the order deciding nothing said. */}
       <div><dt className="strong">What It Asks</dt><dd style={{ margin: 0 }}>{`${requirementWords(projectGenresOf(t)) ?? 'No genre the game names'}. ${writtenForWords(t)} Playing ages ${t.requirements.ages[0]} to ${t.requirements.ages[1]}. ${demandsWords(person, t)}`}</dd></div>
-      <div><dt className="strong">When And Where</dt><dd style={{ margin: 0 }}>{`${cap(t.schedule.kind === 'run' ? `${counted(t.schedule.rehearsalWeeks, 'week')} of rehearsal and ${counted(t.schedule.performanceWeeks, 'week')} of performances` : counted(days.length, 'shoot day'))} ${spanWords(days)}, at ${t.place.venue} in ${t.place.city}. Getting there takes about ${counted(Math.round(trip / 60), 'hour')} each way from where you live.`}</dd></div>
+      <div><dt className="strong">When And Where</dt><dd style={{ margin: 0 }}>{`${cap(daysWords(t, days.length))} ${spanWords(days)}, at ${t.place.venue} in ${t.place.city}. ${reachWords(person, t, days)}`}</dd></div>
       <div><dt className="strong">Pay</dt><dd style={{ margin: 0 }}>{payWords(payTermsOf(o), o.offer?.amount)}</dd></div>
       <div><dt className="strong">The Audition</dt><dd style={{ margin: 0 }}>{`${t.stages.audition === 'in-person' ? 'In person' : 'A self-tape'}${t.stages.callback ? ', then a callback for those casting wants to see again' : ''}.`}</dd></div>
     </dl>
@@ -152,19 +178,26 @@ function Prepare({ target, prep, what }: { target: { opportunityId: string } | {
   const eng = 'engagementId' in target ? person.pro?.engagements.find((x) => x.id === target.engagementId) : undefined;
   const x = opp ? { opportunity: opp } : eng ? { engagement: eng } : undefined;
   const p = prep ?? { interpretation: 0, memorization: 0, rehearsal: 0 };
-  const reasons = STEPS.map((step) => {
+  // A booked part prepares as its work does (from 2026-10-24, brief 25's Module 5): only the steps it reads, and its own.
+  const flow = eng ? workflowOf(projectById(eng.projectId)!) : undefined;
+  const steps = STEPS.filter((step) => !flow || flow.prep.steps.includes(step));
+  const special = flow?.prep.special;
+  const reasons = steps.map((step) => {
     const s = BRIEF.steps[step];
     return [`${s.label} (${counted(x ? prepMinutes(x, step) : s.minutes, 'Minute')})`, prepareRefusal(sim, person, x, step)] as const;
   });
+  const own = special ? [`${special.label}${special.minutes ? ` (${counted(special.minutes, 'Minute')})` : ''}`, prepareRefusal(sim, person, x, 'special')] as const : undefined;
+  const parts = [...(steps.includes('read') ? [`the breakdown ${pct(p.interpretation)}`] : []), ...(steps.includes('lines') ? [`the lines ${pct(p.memorization)}`] : []), ...(steps.includes('rehearse') ? [`rehearsal on your feet ${pct(p.rehearsal)}`] : []), ...(special ? [`${special.label.toLowerCase()} ${pct(eng?.prep?.special ?? 0)}`] : [])];
   return (
     <div className="col gap-2">
-      <p className="small" style={{ margin: 0 }}>{`Preparing ${what}: the breakdown ${pct(p.interpretation)}, the lines ${pct(p.memorization)}, rehearsal on your feet ${pct(p.rehearsal)}.`}</p>
+      <p className="small" style={{ margin: 0 }}>{`Preparing ${what}: ${parts.join(', ')}.`}</p>
       <div className="row gap-2" style={{ flexWrap: 'wrap' }}>
-        {STEPS.map((step, i) => (
+        {steps.map((step, i) => (
           <Gated key={step} feature="pro.prepare" className="btn btn-sm" disabled={!!reasons[i]![1]} title={reasons[i]![1]} onClick={() => { const r = run<{ minutes: number }>('pro.prepare', { ...target, step }); if (r.ok) toast(`${BRIEF.steps[step].label}: done.`, 'positive'); }}>{reasons[i]![0]}</Gated>
         ))}
+        {own && special && <Gated feature="pro.prepare" className="btn btn-sm" disabled={!!own[1]} title={own[1]} onClick={() => { const r = run<{ minutes: number }>('pro.prepare', { ...target, step: 'special' }); if (r.ok) toast(`${special.label}: done.`, 'positive'); }}>{own[0]}</Gated>}
       </div>
-      <WhyNot reasons={reasons} />
+      <WhyNot reasons={own ? [...reasons, own] : reasons} />
     </div>
   );
 }
@@ -282,7 +315,7 @@ export function OpportunitiesPane() {
   const agentOnly = PROJECTS.filter((t) => !t.access.open && writtenFor(t, person));
   return (
     <div className="col gap-5">
-      <p className="small" style={{ margin: 0 }}>Every project, company and casting office here is invented for the game: no real production is casting. New roles go up each Monday morning.</p>
+      <p className="small" style={{ margin: 0 }}>The projects, companies and casting offices here are invented for the game, except a few parts drawn from real productions, and those say so. No real production is casting. New roles go up each Monday morning.</p>
       {/* An offer waiting on an answer first, its deadline the nearest thing on the tab (from 2026-10-23, brief 23): until
           then it was fourth, under Open Calls, Through An Agent and In Progress, and below the fold at 1440 by 900. With
           none, the tab says so where it always did, after In Progress. */}
@@ -300,7 +333,7 @@ export function OpportunitiesPane() {
         <div className="col gap-3">
           {agent
             ? <p className="small" style={{ margin: 0 }}>{`${agent.name} represents you, and submits you for the roles casting offices release to agents, where they suit you and your materials are ready.`}</p>
-            : <p className="small" style={{ margin: 0 }}>{`Some casting offices release their roles to agents only, so without an agent you can’t be seen for them: ${agentOnly.map((t) => `${t.casting} for ${t.project}`).join(', ')}, all invented for the game.`}</p>}
+            : <p className="small" style={{ margin: 0 }}>{`Some casting offices release their roles to agents only, so without an agent you can’t be seen for them: ${agentOnly.filter((t) => t.fictional).map((t) => `${t.casting} for ${t.project}`).join(', ')}, all invented for the game${agentOnly.some((t) => !t.fictional) ? `, and the game’s own parts in ${spokenList(agentOnly.filter((t) => !t.fictional).map((t) => t.project))}` : ''}.`}</p>}
           {through.map((o) => {
             const t = projectOf(o);
             return (
@@ -334,7 +367,7 @@ export function OpportunitiesPane() {
           <ul className="small col gap-2" style={{ margin: 0, paddingLeft: '1.1rem' }}>{settled.map((o) => <Settled key={o.id} o={o} />)}</ul>
         </Panel>
       )}
-      <Fine>{`Every project is fictional. A casting office’s timings, the trip from where you live, casting’s chance for each audition and fit, and the field each kind of work draws are estimated. The pay is each union’s published minimum. Off-Broadway’s and a non-union short’s aren’t published, so the game estimates them. The School’s rule is its Bulletin’s; asking ${OUTSIDE_WORK.aheadDays} days ahead, ${OUTSIDE_WORK.mostDays} working days and ${counted(OUTSIDE_WORK.mostClassDays, 'class day')} at most, and the dean’s week are the game’s readings of it.`}</Fine>
+      <Fine>{`Every project is fictional except a part drawn from a real production, which says so: the production is real, and the part, its dates and its place are the game’s. A casting office’s timings, the trip from where you live, casting’s chance for each audition and fit, and the field each kind of work draws are estimated. The pay is each union’s published minimum. Off-Broadway’s and a non-union short’s aren’t published, so the game estimates them. The School’s rule is its Bulletin’s; asking ${OUTSIDE_WORK.aheadDays} days ahead, ${OUTSIDE_WORK.mostDays} working days and ${counted(OUTSIDE_WORK.mostClassDays, 'class day')} at most, and the dean’s week are the game’s readings of it.`}</Fine>
     </div>
   );
 }

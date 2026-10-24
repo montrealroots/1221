@@ -148,7 +148,9 @@
   "where": "Career, the Representation tab, Why It Went This Way, Show The Reasons",
   "sources": [
    "src/ui/career/RepresentationPane.tsx#WhyPanel",
-   "src/ui/career/RepresentationPane.tsx#ofSeven",
+   "src/ui/career/RepresentationPane.tsx#ofAll",
+   "src/engine/systems/proagent.ts#factorLabel",
+   "src/engine/systems/proagent.ts#REAL_CHANCE_WORDS",
    "src/engine/systems/proagent.ts#interestOf",
    "src/engine/systems/proagent.ts#LEVEL_LABEL",
    "src/engine/systems/proagent.ts#FACTOR_LABEL",
@@ -185,7 +187,8 @@
    "src/engine/systems/proagent.ts#answerRefusal",
    "src/engine/systems/proagent.ts#endRefusal",
    "src/engine/systems/proagent.ts#stillOwed",
-   "src/engine/systems/proagent.ts#ENDED_WORDS",
+   "src/engine/systems/proagent.ts#endedWords",
+   "src/engine/systems/proagent.ts#signRefusal",
    "src/engine/systems/proagent.ts#offerAgreement",
    "src/engine/systems/proagent.ts#endAgreement",
    "src/engine/systems/proagent.ts#registerProAgent <pro.accept_agreement>",
@@ -312,6 +315,43 @@
    {
     "kind": "test",
     "ref": "tests/pro-representation-screen.test.ts: 'PLAYER JOURNEY: in a guided life, the agent’s controls stay Locked until “Representation” is read, and open with it'"
+   }
+  ]
+ },
+ {
+  "surface": "Career, Representation: Agents (the chooser), a real agent’s panel, and Agencies, each as its own pages had it",
+  "where": "Career, the Representation tab: Agents, the chosen agent’s panels, and Agencies at the foot",
+  "sources": [
+   "src/ui/career/RepresentationPane.tsx#RepresentationPane",
+   "src/ui/career/RepresentationPane.tsx#AgenciesPanel",
+   "src/engine/content/agencies.ts#*",
+   "src/engine/systems/proagent.ts#hasDone",
+   "src/engine/systems/proagent.ts#routesWords",
+   "src/engine/systems/proagent.ts#himTitle",
+   "src/engine/systems/proagent.ts#officeTitle",
+   "src/engine/systems/proagent.ts#signRefusal"
+  ],
+  "states": [
+   "first use",
+   "details",
+   "explanation",
+   "unavailable"
+  ],
+  "outcome": "Revised",
+  "why": "New with brief 25's Module 3, at the owner's word (“Use real agents.”): four real New York theatrical agents beside the game’s own, each named, never given a pronoun, with nothing said of them the office’s page doesn’t give; and the six agencies the brief names, each as its own pages had it.",
+  "changes": "Written new: the Agents list (“Dan Patack Theatrical Agent, Stewart Talent, New York. A real agent.”), each real agent’s notice and fine print, the office’s refusal of unsolicited submissions in its own words, the referral as the one way in, and Agencies with each office’s way in, the agents it names and what the game does with it. The agent’s words became the agent’s own: “his office” for Thomas Ashgrove, “the office” and the name for a real agent.",
+  "evidence": [
+   {
+    "kind": "test",
+    "ref": "tests/career-agents.test.ts: 'draws the Representation tab with Dan Patack chosen: the notice, the name in every heading, the office as “the office”, and no pronoun'"
+   },
+   {
+    "kind": "test",
+    "ref": "tests/career-agents.test.ts: 'PLAYER JOURNEY: referred to Dan Patack from a finished job, materials sent, met, offered, signed, and put up for work by the office; saved and loaded on the way'"
+   },
+   {
+    "kind": "test",
+    "ref": "tests/career-agents.test.ts: 'refuses an approach to a real New York agent without a referral in the office’s own words, and offers no showcase route'"
    }
   ]
  }

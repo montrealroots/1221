@@ -1589,6 +1589,99 @@
    "purpose": "Tells the player the injury, the day it mends, what it keeps them from and what its care costs or that work’s compensation pays.",
    "readBy": "life",
    "readAt": "12c04ee1, with this branch’s changes"
+  },
+  {
+   "id": "notice.systems/contracts#air",
+   "kind": "notice",
+   "area": "life",
+   "mechanic": false,
+   "seeded": false,
+   "where": "Home's notices, sent by air (systems/contracts.ts) when an episode with the player's work in it is on: its first telecast, and a network rerun.",
+   "prerequisites": "SAG-AFTRA television work done (the residual entitlement), and the telecast's evening.",
+   "reads": "The residual record, its exploitations and calculations.",
+   "changes": "A notice (the telecast's record and the rerun's residual are air's mechanic).",
+   "consumers": [],
+   "experienced": "The notice the evening it airs, with what it pays: nothing for the first telecast, a residual for a rerun.",
+   "saveLoad": "The notice is in the save; an exploitation aired is never aired again, so a reload sends it no second time.",
+   "evidence": {
+    "tests": [
+     "tests/career-contracts.test.ts"
+    ],
+    "comparisons": [],
+    "mutations": [],
+    "journeys": [
+     "tests/career-contracts.test.ts"
+    ]
+   },
+   "missing": "None found.",
+   "status": "Implemented And Verified",
+   "why": "",
+   "prior": null,
+   "purpose": "Tells the player their episode is on and whether it pays them, the first telecast covered by their pay and a rerun owing a residual.",
+   "readBy": "career",
+   "readAt": "brief 25"
+  },
+  {
+   "id": "notice.systems/contracts#settleResidual",
+   "kind": "notice",
+   "area": "life",
+   "mechanic": false,
+   "seeded": false,
+   "where": "Home's notices, sent by settleResidual (systems/contracts.ts) when a rerun's residual is paid.",
+   "prerequisites": "A rerun aired and its thirty days come.",
+   "reads": "The settlement, its withholding and the account it went into.",
+   "changes": "A notice (the payment is settleResidual's mechanic).",
+   "consumers": [],
+   "experienced": "The notice the day it's paid, with the gross, the tax withheld and what reached the account.",
+   "saveLoad": "The notice is in the save; a settlement paid is never paid again.",
+   "evidence": {
+    "tests": [
+     "tests/career-contracts.test.ts"
+    ],
+    "comparisons": [],
+    "mutations": [],
+    "journeys": [
+     "tests/career-contracts.test.ts"
+    ]
+   },
+   "missing": "None found.",
+   "status": "Implemented And Verified",
+   "why": "",
+   "prior": null,
+   "purpose": "Tells the player a residual came and what reached them.",
+   "readBy": "career",
+   "readAt": "brief 25"
+  },
+  {
+   "id": "notice.systems/contracts#payPerDiem",
+   "kind": "notice",
+   "area": "life",
+   "mechanic": false,
+   "seeded": false,
+   "where": "Home's notices, sent by payPerDiem (systems/contracts.ts) when the player is home from a trip for SAG-AFTRA work.",
+   "prerequisites": "A contract with a per diem, and the arrival home.",
+   "reads": "The trip's legs, the clause's rate.",
+   "changes": "A notice (the payment is payPerDiem's mechanic).",
+   "consumers": [],
+   "experienced": "The notice on arriving home, with the days, the rate and what went into the account, said as no wages.",
+   "saveLoad": "The notice is in the save; a per diem paid is kept by its key and never paid again.",
+   "evidence": {
+    "tests": [
+     "tests/career-contracts.test.ts"
+    ],
+    "comparisons": [],
+    "mutations": [],
+    "journeys": [
+     "tests/career-contracts.test.ts"
+    ]
+   },
+   "missing": "None found.",
+   "status": "Implemented And Verified",
+   "why": "",
+   "prior": null,
+   "purpose": "Tells the player their per diem came, apart from their wages.",
+   "readBy": "career",
+   "readAt": "brief 25"
   }
  ],
  "promises": [

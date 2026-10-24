@@ -2464,10 +2464,10 @@
   "first": "Pending"
  },
  "src/engine/content/genre-weights.ts#PROJECT_GENRES": {
-  "status": "Retained",
-  "hash": "e1946fd36e70",
-  "on": "2026-10-22",
-  "reason": "Not shown to the player: SLATE's reason for each stated genre weight (PROJECT_GENRES), a design choice read from the material, kept beside it so the weights can be reviewed, and written out in docs/verification/career-genre-2026-10-22/genre-weights.md; the player sees what a work asks in words (requirementWords), never these",
+  "status": "Rewritten",
+  "hash": "021d6119c99e",
+  "on": "2026-10-24",
+  "evidence": "Written for brief 25's Module 5 to docs/STYLE.md: each new project's genres and why, in the words its story gives, read where the player meets them on a role's genre in tests/b22-genre-weights.test.ts (every project stating its own, each reason held), with tools/voice-check.mjs and tools/tics.mjs clean.",
   "first": "Pending"
  },
  "src/engine/content/genre-weights.ts#SCENE_GENRES": {

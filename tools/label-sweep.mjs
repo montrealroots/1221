@@ -43,6 +43,8 @@ const REAL_NAMES_AS_WRITTEN = new Set([
   'Pick n Pay',         // South African grocer; the n is lowercase on the sign.
   'iRobot Roomba j9+',  // Product name as the manufacturer writes it.
   'Arion banki',        // Icelandic bank; banki is lowercase in its own name and signage.
+  // Australia's Department of Home Affairs writes its visas this way (from 2026-10-23, brief 25: content/jurisdictions.ts).
+  'Special Category visa (subclass 444)',
   // parkrun writes its own name lowercase, and each event as '<Place> parkrun' (`content/clubs.ts`).
   // hi sonrisa, the Mexico City dental clinic, writes its name in lower case (from 2026-10-03).
   'hi sonrisa',

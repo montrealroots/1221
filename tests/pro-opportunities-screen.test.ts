@@ -89,11 +89,13 @@ function offered(sim: Simulation, projectId: string, posted: number): Opportunit
 describe('the Opportunities tab', () => {
   it('PLAYER JOURNEY: a first-year’s tab lists the open roles posted, each fictional with its facts, Submit Yourself grayed with what’s missing under it, and the School’s conditions for work in term', () => {
     const sim = student('opps-first-year');
-    untilOpen(sim, (x) => PROJECTS.find((t) => t.id === x.projectId)!.access.open === 'anyone');
+    untilOpen(sim, (x) => PROJECTS.find((t) => t.id === x.projectId)!.access.open === 'anyone' && !PROJECTS.find((t) => t.id === x.projectId)!.trip);
     const { html, shown } = drawn(sim);
     expect(html).toContain('aria-selected="true" aria-controls="career-pane-opportunities"');
-    expect(shown).toContain('Every project, company and casting office here is invented for the game: no real production is casting.');
-    const open = sim.player.pro!.opportunities.filter((o) => o.status === 'open' && o.via === 'open' && PROJECTS.find((t) => t.id === o.projectId)!.access.open === 'anyone');
+    // Until 2026-10-24 the head said every project, company and casting office was invented, untrue once parts were drawn
+    // from real productions (brief 25's Module 2).
+    expect(shown).toContain('The projects, companies and casting offices here are invented for the game, except a few parts drawn from real productions, and those say so. No real production is casting.');
+    const open = sim.player.pro!.opportunities.filter((o) => o.status === 'open' && o.via === 'open' && PROJECTS.find((t) => t.id === o.projectId)!.access.open === 'anyone' && !PROJECTS.find((t) => t.id === o.projectId)!.trip);
     expect(open.length).toBeGreaterThan(0);
     const t = PROJECTS.find((x) => x.id === open[0]!.projectId)!;
     expect(shown).toContain(`${t.role.part}, ${t.project}`);
@@ -122,6 +124,10 @@ describe('the Opportunities tab', () => {
     // Each office once, though Calder Street and Gull Season have a part for each (from 2026-10-21).
     expect(shown.match(/Pennick Casting for A House On Calder Street/g)).toHaveLength(1);
     expect(shown.match(/Quillon Casting for Gull Season/g)).toHaveLength(1);
+    // The drawn parts' office is a real production's, so it isn't among the invented (from 2026-10-24; until then the
+    // list called "the production’s casting office for 9-1-1" invented for the game).
+    expect(shown).toContain(', all invented for the game, and the game’s own parts in 9-1-1 and Abbott Elementary.');
+    expect(shown).not.toContain('the production’s casting office for');
     expect(shown).toContain('Sources And Estimates');
   });
 
@@ -130,7 +136,7 @@ describe('the Opportunities tab', () => {
     tended(sim, at(2026, 8, 30, 10));
     sim.must({ kind: 'pro.headshots', payload: {} });
     sim.must({ kind: 'pro.update_resume', payload: {} });
-    const o = untilOpen(sim, (x) => PROJECTS.find((t) => t.id === x.projectId)!.access.open === 'anyone');
+    const o = untilOpen(sim, (x) => PROJECTS.find((t) => t.id === x.projectId)!.access.open === 'anyone' && !PROJECTS.find((t) => t.id === x.projectId)!.trip);
     sim.must({ kind: 'pro.submit', payload: { opportunityId: o.id } });
     expect(drawn(sim).shown).toMatch(/Submitted\. .+ answers? soon\./);
     tended(sim, sim.now + 3 * MS_DAY);

@@ -270,7 +270,7 @@
   "evidence": [
    {
     "kind": "test",
-    "ref": "tests/pro-core.test.ts: 'holds one fictional agent and agency, the game’s rule on submissions, the routes it allows and the notice that says they’re invented'"
+    "ref": "tests/pro-core.test.ts: 'holds the game’s own agent and agency, the game’s rule on submissions, the routes it allows and the notice that says they’re invented'"
    }
   ]
  },
@@ -291,7 +291,7 @@
   "evidence": [
    {
     "kind": "test",
-    "ref": "tests/pro-core.test.ts: 'gives every project a fictional company and casting office, the game’s genres, a rate that is verified or assumed, and every agreement term a basis'"
+    "ref": "tests/pro-core.test.ts: 'gives every project a fictional company and casting office but a part drawn from a real production, the game’s genres, a rate that is verified or assumed, and every agreement term a basis'"
    }
   ]
  }

@@ -3189,6 +3189,197 @@
         "verified": "Partial"
       },
       "limits": "Built on 2026-10-21 for brief 19 and read the same day against 7bbab80f by a reader who wrote none of it, and again against a483247d once V1’s journeys had landed (docs/verification/career-2026-10-20/audit/REPORT.md). docs/GAMEPLAY-COVERAGE.md calls pro.submit, pro.tape_audition, pro.move_audition, pro.accept_offer, pro.decline_offer and pro.request_outside_work verified, each played through its command and the clock on an unsigned life (tests/pro-work.test.ts): roles posted each Monday, a submission refused in materialsCheck’s words and then answered with an audition, a self-tape judged and casting deciding on it, an audition moved clear of a plan, an offer accepted to its work days, each judged, its credit and, since the merge with the pay that day, its pay received, an offer declined and one let lapse, and the dean’s approval read at acceptance with the class days excused, unapproved work bringing the warning and then dismissal. It calls pro.prepare verified: twins from the same moments of a played life (tests/journey-career.test.ts), the sides prepared through the command against taped cold and the booked part against not at all, come out higher and a band higher, the tape and each shoot day; P1 and P2, run again scoped to their twins, each failed its twin’s expectation. Until a483247d it was partial: no test compared a prepared audition or work day with an unprepared one, a work day reading none of the part’s preparation (P2) survived every test, and an audition reading none of the sides’ (P1) failed only through outcomes found over lists of seeds. The agent’s part (his breakdowns, his submission with her portfolio, the offer he conveys at scale plus ten) is played since a483247d on an agreement accepted through the command (tests/journey-career.test.ts); his holding a submission for missing materials is still played only on an agreement written by hand (career-representation). Until 2026-10-21 these limits said the promised pay would be posted by the pay’s system once wired at integration; pro.accept_offer puts it on the clock through schedulePay since the merge that day. It isn’t called Verified because tools/capabilities.mjs and tools/coverage.mjs count a command’s row as read only by the review of 2026-10-13, and its rows were added on 2026-10-21, as brief 09’s capabilities stand. The projects are fictional, and a casting office’s timings, the chances, the trips, the lead time and the School rule’s figures are the game’s estimates, said so"
+    },
+    {
+      "id": "career-world",
+      "goal": "Work abroad: a role in Sydney found, auditioned for on tape and accepted as a contract; the 408 visa it needs applied for and granted; the production's flights, cars and hotel; the work there, paid as wages earned in Australia; and the trip home",
+      "entry": "Career, Opportunities (the offer's warning before Accept); Career, Work, the engagement abroad, The Trip To Sydney (Apply For The Visa, the legs, the hotel, What The 408 Visa Asks); Papers, Permission To Work (the visa); Home's notices",
+      "entities": [
+        "WorkTrip",
+        "TripLeg",
+        "WorkStay",
+        "PersonDocument (permit)",
+        "Jurisdiction",
+        "WorkRoute"
+      ],
+      "state": "src/engine/systems/worktrip.ts",
+      "preconditions": "An engagement abroad accepted, not already applied for or granted, the visa's route the one the player's citizenship gives (none for an Australian, on arrival for a New Zealander), and a passport in force until home (visaRefusal); at the first flight out, permission for every work day and the passport, or no flight and a release",
+      "commands": [
+        "pro.apply_work_visa"
+      ],
+      "effects": "Accepting books the trip (bookTrip): a car to the airport, the flights by the hub, the car to the hotel and the same home, each a scheduled leg, the hotel a stay; applying writes a pending permit in Papers tied to the engagement and the department's decision ten days on (pro.visa_decision); at the first leg out the permission and the passport are read, and without them the production releases the actor (pro.trip_depart); each leg moves where the player is (whereAt), the arrival checks in, the last leg home ends the stay (pro.trip_arrive); each work day reads Australia's permission and the player's presence in Sydney; pay is the existing payroll's, recorded as foreign income with no commission. Every flight time, the decision's ten days, the charge of nothing and the hotel paid by the production are the game's assumptions, said so",
+      "persists": "Person.pro.trips (legs and their statuses, the stay, the history), the engagement's tripId, the permit in Person.documents with its bookingId, and the year's foreign income",
+      "readers": [
+        "abroadRead: the offer's warning, acceptance, the first flight and each work day",
+        "whereAt and awayOn: the School's present(), an audition in person, a work day's presence",
+        "tripSpans: bookedClash, so another booking in the trip is refused",
+        "recordWages: the pay as income earned in Australia"
+      ],
+      "looks": [],
+      "routes": [
+        "/workspace/career"
+      ],
+      "saveLoad": "tests/career-world-sydney.test.ts",
+      "provenance": "docs/verification/career-world-2026-10-23/sources.json (S01, the 408's page read 2026-10-23; N02, the 444's; N01, the AMPTP rate sheet for the SAG-AFTRA weekly minimum); the countries' states in src/engine/content/jurisdictions.ts and COUNTRIES.md; the project is fictional, and the flights, the decision's time, the charge and the hotel are the game's estimates, said so",
+      "tests": [
+        "tests/career-world-sydney.test.ts",
+        "tests/career-world-countries.test.ts"
+      ],
+      "manual": "",
+      "status": "Implemented",
+      "layers": {
+        "schema": "Implemented",
+        "content": "Implemented",
+        "interaction": "Implemented",
+        "verified": "Partial"
+      },
+      "limits": "Built on 2026-10-23 for brief 25's first module. pro.apply_work_visa is played through its command and the clock (tests/career-world-sydney.test.ts): the visa applied for from the engagement, refused a second time, granted ten days on, the trip flown, the work done in Sydney and paid, the trip home, each stage saved and loaded; and without it, the release at the flight. It isn’t called Verified because tools/capabilities.mjs and tools/coverage.mjs count a command’s row as read only by the review of 2026-10-13. Flight delays, missed connections, a stay extended, weather on the day, Australian tax and jet lag aren’t in the game. Allowances weren’t either until 2026-10-24, when brief 25's Module 4 brought a SAG-AFTRA trip's per diem (the career-contracts row)"
+    },
+    {
+      "id": "career-contracts",
+      "goal": "Contracts and the money they bring: each engagement's contract made at acceptance with only the clauses that apply, each payment's state from estimated to settled, a day performer's overtime, the producer's pension and health contribution kept off the player's money, a trip's per diem apart from wages, residuals in four records paid once, a non-union producer's late pay asked about, and a recurring part's season in a series renewed, canceled and revived by the world",
+      "entry": "Career, Opportunities (the offer's terms); Career, Work, an engagement's The Contract, Pay (each payment's State, Ask About It on an overdue one, the per diem) and Residuals; Home's notices (a further episode called or not, the option, the network's word, a telecast, a rerun, a residual, a per diem)",
+      "entities": [
+        "Contract",
+        "ContractClause",
+        "Residual",
+        "Allowance",
+        "ProPayment (overtime, contribution, late, asked)",
+        "SeriesTemplate",
+        "SeasonDecision"
+      ],
+      "state": "src/engine/systems/contracts.ts",
+      "preconditions": "A contract is made by pro.accept_offer for every offer accepted, and by an option taken up for the next season; Ask About It needs a payment past its payday and unpaid (askRefusal); a further episode or an option taken up needs permission to work, SAG-AFTRA membership from its thirtieth day and no clash (the season hooks' refusal)",
+      "commands": [
+        "pro.ask_pay"
+      ],
+      "effects": "Accepting writes the contract (contractFor) and, for a recurring part, the production's word on each further episode and the option's last day on the clock (scheduleSeason); promisedPay adds a SAG-AFTRA day's two hours of overtime; paying records the producer's contribution on the payment and posts none of it; a trip home pays the per diem once (payPerDiem); television work done makes the residual entitlement and its first telecast (entitle), whose airing pays nothing and draws a rerun (pro.residual.air), and the rerun's residual is paid once within thirty days (pro.residual.pay); a non-union payment drawn late is on the clock days after its due, and pro.ask_pay moves it up to the answer; each May after the order the network's word (pro.series, a passage reactor) closes castings, calls off work and lapses options of a canceled series, and a revived one is cast again; a further episode called adds its days and pay (pro.series.episode); an option taken up books the next season's engagement through the same agreement (pro.series.option). The rules are the AMPTP agreements' (N12 to N17); the telecasts, the rerun's chance, the seasons, the series' chances, the option's raise and the late pay are the game's assumptions, said so",
+      "persists": "Person.pro.engagements[].contract, .allowances and .pay[].overtime, .contribution, .late, .asked; Person.pro.residuals; the opportunity an option makes; nothing of the series' seasons, which are worked out from the seed",
+      "readers": [
+        "payState: the Work tab's State column and Where It Stands",
+        "notOwed: the Work tab's line for payments the work no longer owes",
+        "clauseOf: overtime in the offer's words, residuals at the wrap, the per diem at home, episodes and the option in the season's handlers and the wrap's wait",
+        "contributionOn: the payment's record, the Work tab's line beside the pay",
+        "inProduction and seriesPosts: the week's postings of a series part",
+        "totalActualCompensation: the residual's base"
+      ],
+      "looks": [],
+      "routes": [
+        "/workspace/career"
+      ],
+      "saveLoad": "tests/career-contracts.test.ts",
+      "provenance": "docs/verification/career-world-2026-10-23/sources.json (N12, the 2026 memorandum; N13, the 2014 Codified Basic Agreement; N14, the 2014 Television Agreement; N15 to N17, the 2017, 2020 and 2023 memoranda; N18, the ratification's date as reported); criteria.md, Module 4, D1 to D9; the series, its network and its parts are fictional, said so",
+      "tests": [
+        "tests/career-contracts.test.ts"
+      ],
+      "manual": "",
+      "status": "Implemented",
+      "layers": {
+        "schema": "Implemented",
+        "content": "Implemented",
+        "interaction": "Implemented",
+        "verified": "Partial"
+      },
+      "limits": "Built on 2026-10-24 for brief 25's Module 4. pro.ask_pay and the rest are played through the commands and the clock (tests/career-contracts.test.ts), each stage saved and loaded. It isn’t called Verified because tools/capabilities.mjs and tools/coverage.mjs count a command’s row as read only by the review of 2026-10-13. Syndication and streaming residuals, a weekly performer’s and the Low Budget agreements’ overtime, the contribution under SAGindie’s agreements and Equity’s, residuals on stage and film work, and profit participation aren’t in the game: no participation is invented"
+    },
+    {
+      "id": "career-workflows",
+      "goal": "Each kind of acting work done its own way: a shoot's scenes out of the script's order in takes with the best printed, revised pages the night before, a multicamera week taped before a studio audience, voice work, a dub and a narration in a booth that strain the voice, performance capture called in by the day, a documentary reenactment with no lines, a musical's music rehearsals and choreography, an action film's fight rehearsal and stunts done only with consent, an intimate scene only with written consent, a recall to loop after a screen wrap, a scene cut in the edit and an anthology's invitation back",
+      "entry": "Career, Opportunities (a role's How The Work Is Done and An Intimate Scene, Prepare's own step for the work); Career, Work, an engagement's How The Work Is Done (its choices, a button for each option), Each Day's Report and The Contract's rules; Home's notices (revised pages, a recall to loop, the session, an invitation, a scene cut)",
+      "entities": [
+        "FormatSpec",
+        "WorkflowSpec",
+        "Decision",
+        "WorkUnit",
+        "WorkReport",
+        "Engagement (units, reports, choices, script, loop)",
+        "HealthRecord.voice",
+        "ProCredit (voice, cut)"
+      ],
+      "state": "src/engine/systems/workflow.ts",
+      "preconditions": "pro.work_choice needs work booked and not finished, a choice its format asks and one of its options; consent to an intimate scene can't be withdrawn once the scene is shot (choiceRefusal); a looping session needs permission to work on its day and the player there; an anthology's invitation needs work in its last story judged Strong or better",
+      "commands": [
+        "pro.work_choice"
+      ],
+      "effects": "Accepting plans the work's units, their places in the script and the order each day shoots them (planWork, decider pro.board); each judged day plays its units in takes, the best printed, reading the choices in force (workTheDay), strains the voice where the work is voice work (strain), puts a stunt to the double or to the player who consented, and an intimate scene without consent to a body double, unjudged; a build day (a table read, blocking, music rehearsal, choreography, fight rehearsal) builds the preparation; revised pages the evening before take a share of what was learned (pro.pages, decider pro.pages); after a screen wrap a recall to loop is on the clock (pro.loop, decider pro.loop) and paid half a day; at the release a scene may be cut (decider pro.cut), the credit's band the best of the scenes kept; an anthology's strong work brings an invitation 240 days on (pro.invite). The rules are the AMPTP agreements' (N13, N17); the takes, the strain, the stunt's risk, the pages' chances, the loop's and the cut's are the game's assumptions, said so",
+      "persists": "Person.pro.engagements[].units, .reports, .choices, .script and .loop; Person.health.voice; ProCredit.voice and .cut; the pending pro.loop and pro.invite items",
+      "readers": [
+        "evaluate: a day's judging leans on the choices and reads the voice's strain as a condition",
+        "payUnitsOf and promisedPay: a dub day's pay by its characters and lines, overtime by the day's hours",
+        "contractFor: the workflow's rules among the clauses (workflowRules)",
+        "reelSources: a voice credit can't go on a reel",
+        "coveredWork: voice-over outside an agent's agreement, no commission",
+        "the Work tab: How The Work Is Done, the choices and Each Day's Report"
+      ],
+      "looks": [],
+      "routes": [
+        "/workspace/career"
+      ],
+      "saveLoad": "tests/career-workflows-screen.test.ts",
+      "provenance": "docs/verification/career-world-2026-10-23/sources.json (N13, the 2014 Codified Basic Agreement: Schedule A §21.E, §21 exception (4), §28.A, §37, General Provisions §28.B and §43; N17, the 2023 memorandum's performance capture terms); criteria.md, Module 5, W1 to W13; every project, company and casting office is fictional, said so",
+      "tests": [
+        "tests/career-workflows.test.ts",
+        "tests/career-workflows-screen.test.ts"
+      ],
+      "manual": "",
+      "status": "Implemented",
+      "layers": {
+        "schema": "Implemented",
+        "content": "Implemented",
+        "interaction": "Implemented",
+        "verified": "Partial"
+      },
+      "limits": "Built on 2026-10-24 for brief 25's Module 5. pro.work_choice and the rest are played through the commands and the clock (tests/career-workflows.test.ts, tests/career-workflows-screen.test.ts, which draws the Work and Opportunities tabs), each stage saved and loaded. It isn’t called Verified because tools/capabilities.mjs and tools/coverage.mjs count a command’s row as read only by the review of 2026-10-13. A director who overrules the actor, a stunt's pay adjustment, Equity's musical-specific rules beyond LORT's, the Television Animation Agreement's own rates and residuals, and looping abroad aren't in the game"
+    },
+    {
+      "id": "career-awards",
+      "goal": "The published weekly charts read as dated imports, each in its own unit, territory and week; the game's own box office for the player's films, a simulation and never pay; every award and festival the brief names with what this build read of it; the Emmy Awards by the 78th's rules (eligibility, an entry and its fee, an anonymous field, the nominations by its table and tie rules, the final round and the ceremony) and Sundance by its 2027 festival's (a production's submission, the festival's word and the screening); recognition kept on the Portfolio and lifting casting's chance for a while",
+      "entry": "Career, Charts And Awards (Your Recognition with Enter Yourself and Watch The Ceremony; Your Films In Cinemas; Published Charts; Awards And Festivals); Career, Portfolio, Recognition; Home's notices (an entry by the production, the nominations, the night an award is presented, a disqualification, a festival's submission and word)",
+      "entities": [
+        "ChartSnapshot",
+        "HeldWeek",
+        "ChartStore",
+        "SimRun",
+        "AwardEntry",
+        "FestivalEntry",
+        "Institution",
+        "EmmyEdition",
+        "SundanceEdition",
+        "ProCredit (run)",
+        "ProRecord (awards, festivals)"
+      ],
+      "state": "src/engine/systems/awards.ts",
+      "preconditions": "pro.award_enter needs a television credit eligible by the 78th's rules, not entered for its year, before the entry deadline, and a bank that can pay the fee (entryRefusal); pro.watch_ceremony needs a nomination and the clock at its ceremony (watchRefusal)",
+      "commands": [
+        "pro.award_enter",
+        "pro.watch_ceremony"
+      ],
+      "effects": "Entering pays the $125 processing charge and the $100 entry fee and keeps an entry; at the deadline the production enters a performance the player didn't, or doesn't (decider awards.entry); at the nominations each category's anonymous field is drawn (decider awards.field) and nominated by the 78th's table and tie rules; at the final round's end the winner is settled (decider awards.final) and given at the ceremony; watching shows it and changes nothing; an entry whose scenes were all cut is disqualified; a film's production submits it to Sundance or doesn't (decider festival.submit), the festival selects it or doesn't (decider festival.select), and a selection screens; a released film in cinemas has a run in the game's own chart (decider charts.gross); recognition lifts casting's chance, fading over three years (visibilityOf)",
+      "persists": "Person.pro.awards and .festivals; ProCredit.run",
+      "readers": [
+        "castingDraw: casting's chance lifted by the player's visibility, within its ceiling",
+        "recognitionOf: the Portfolio's Recognition",
+        "the Charts And Awards tab: Your Recognition, Your Films In Cinemas, Published Charts and Awards And Festivals"
+      ],
+      "looks": [],
+      "routes": [
+        "/workspace/career"
+      ],
+      "saveLoad": "tests/career-awards-screen.test.ts",
+      "provenance": "docs/verification/career-world-2026-10-23/sources.json (N19 to N22, the charts as read on 2026-10-24; N23, the 78th Emmy Awards' Rules And Procedures, version 4; N24, the 2026 International Emmy Awards' rules; N25 and N26, the 2027 Sundance Film Festival's submissions page and dates; N27 to N30, what was read, refused or not reached of the rest); criteria.md, Module 6, X1 to X16; every project and every other entrant is the game's, never named",
+      "tests": [
+        "tests/career-awards.test.ts",
+        "tests/career-awards-screen.test.ts"
+      ],
+      "manual": "",
+      "status": "Implemented",
+      "layers": {
+        "schema": "Implemented",
+        "content": "Implemented",
+        "interaction": "Implemented",
+        "verified": "Partial"
+      },
+      "limits": "Built on 2026-10-24 for brief 25's Module 6. pro.award_enter and pro.watch_ceremony are played through the commands and the clock (tests/career-awards.test.ts, tests/career-awards-screen.test.ts, which draws the Charts And Awards tab and the Portfolio), each stage saved and loaded. It isn’t called Verified because tools/capabilities.mjs and tools/coverage.mjs count a command’s row as read only by the review of 2026-10-13. No other award or festival decides anything, their rules unread or refused; no chart is fetched or updated by the game; a performer's choice of category is the game's"
     }
   ]
 }

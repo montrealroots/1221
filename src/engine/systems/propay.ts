@@ -31,7 +31,9 @@
  * - **Continuing:** owed on a contract made during the term, whoever represents the player when it's paid, after the
  *   agreement ends (Equity, S29: "entered into by the Actor prior to the effective date"); and on an offer the agent
  *   conveyed in the term and the player accepted within sixty days of it after the term (Equity's form, S30 ¶4).
- *   Renewals aren't a thing an engagement does in the game, so their rule has nothing to read.
+ *   Renewals were nothing an engagement did in the game until 2026-10-24 (brief 25's Module 4): an option taken up on a
+ *   recurring part makes the next season's engagement through the same agreement (`renewFromOption`, `systems/projobs.ts`),
+ *   so its commission is owed as the first's.
  *
  * **Wages, as wages.** Union work is W-2 employment (`work.md` S22: "Union actors are not independent contractors; they
  * are employees of the production"), and the game pays non-union work the same way, its producers using a payroll
@@ -100,7 +102,10 @@ import { payeeAccount } from './cash';
 import { homeOf, recordWages, stateOf, yearOf } from './earnings';
 import { nonresidentFor, connecticutTax } from './taxreturn';
 import { inTheBank, owe, payFromBank } from './spending';
-import { businessDaysOn, f1Of, usWorkAuthorized } from './permission';
+import { contributionOn, lateDays } from './contracts';
+import { voiceOnly } from './workflow';
+import { businessDaysOn, f1Of, usWorkAuthorized, weeklyHours } from './permission';
+import { WORK_RULES } from '../content/workrules';
 import { addYears, citizenOf, documentsOf } from './documents';
 import { residenceIn } from './residence';
 import { schoolEnded } from './school';
@@ -117,6 +122,8 @@ export const RELEASE_KIND = 'pro.pay.release';
 export const DUES_KIND = 'pro.pay.dues';
 /** The first day of a first SAG-AFTRA principal job: eligible to join from it. */
 export const SAG_ELIGIBLE_KIND = 'pro.pay.sag_eligible';
+/** After a work day's own handler (`WORK_DAY_KIND`, 38) at the same instant: lower runs first. */
+const SAG_ELIGIBLE_PRIORITY = 39;
 /**
  * Said by the School when the degree makes the actor a member of Equity (`setStanding`), and by the work loop when an
  * Equity contract's first day does (`unionsFrom`, `systems/projobs.ts`, from 2026-10-21), so its fee is charged then.
@@ -143,7 +150,7 @@ export const BILLS_KEPT = 12;
  * The SAG-AFTRA work that makes an actor eligible: a principal role under the TV/Theatrical or the Low Budget agreement
  * (S22's Taft-Hartley reports). Ultra Low Budget and student films don't (S20, a search engine's copy).
  */
-export const SAG_QUALIFIES: readonly ProjectKind[] = ['network-drama', 'low-budget'];
+export const SAG_QUALIFIES: readonly ProjectKind[] = ['network-drama', 'network-comedy', 'low-budget', 'overseas-feature'];
 
 /** What an agreement's scope covers: stage, film and television (`AGREEMENT_TERMS`, a simulation term), in the US. */
 export const COVERED_MEDIA: readonly ProMedium[] = ['stage', 'film', 'television'];
@@ -231,7 +238,9 @@ export function eligibilityRead(person: Person, days: readonly { from: Instant; 
   if (opt && (opt.issuedAt ?? Infinity) <= (dates[0] ?? at) + 12 * MS_HOUR) {
     // What counts for OPT said as it's counted (from 2026-10-22, the owner's brief 22): until then "Each day of this work
     // counts as a day worked", whether or not the work began.
-    if (refused === undefined) return { ...base, basis: 'opt', words: `On OPT you can work in the US until ${formatDate(opt.expiresAt!, zone)}. Once this work begins, every day to its last counts as a day with work, not one of OPT’s days without work.` };
+    // Work under OPT's twenty hours a week isn't employment for it (`employmentSpan`, from 2026-10-24, brief 25's Module 4):
+    // a recurring part's episodes three weeks apart average under fourteen, and until then this said every day counted.
+    if (refused === undefined) return { ...base, basis: 'opt', words: weeklyHours({ days }) < WORK_RULES.opt.weeklyHours ? `On OPT you can work in the US until ${formatDate(opt.expiresAt!, zone)}. This work averages under ${WORK_RULES.opt.weeklyHours} hours a week, so on its own its days don’t count as days with work for OPT.` : `On OPT you can work in the US until ${formatDate(opt.expiresAt!, zone)}. Once this work begins, every day to its last counts as a day with work, not one of OPT’s days without work.` };
     return { ...base, basis: 'opt', words: `This work runs to ${formatDate(last ?? refused, zone)}, past the end of your OPT on ${formatDate(opt.expiresAt ?? refused, zone)}.` };
   }
   const studying = person.school !== undefined && !schoolEnded(person.school.standing);
@@ -277,9 +286,14 @@ export function owedAgreement(person: Person, e: Engagement): { agreement: Agree
   return tail ? { agreement: tail, how: 'tail' } : undefined;
 }
 
-/** Whether an agreement covers a project's work: stage, film and television, in the United States. */
-export const coveredWork = (project: Pick<ProjectTemplate, 'medium' | 'place'>): boolean =>
-  COVERED_MEDIA.includes(project.medium) && (CITIES.get(project.place.cityId)?.countryId ?? (project.place.cityId.startsWith('us-') ? 'us' : '')) === 'us';
+/**
+ * Whether an agreement covers a project's work: stage, film and television, in the United States, and from 2026-10-24
+ * (brief 25's Module 5) not voice-over, which the agreement's What It Leaves Out says an agency handles in another
+ * department (`AGREEMENT_TERMS`): an animated part, a dub, a narration.
+ */
+export const coveredWork = (project: Pick<ProjectTemplate, 'medium' | 'place'> & Partial<Pick<ProjectTemplate, 'format'>>): boolean =>
+  COVERED_MEDIA.includes(project.medium) && (CITIES.get(project.place.cityId)?.countryId ?? (project.place.cityId.startsWith('us-') ? 'us' : '')) === 'us'
+  && !(project.format && voiceOnly({ format: project.format }));
 
 export interface Commission {
   /** The agreement it's owed under, and the agency's name, where it's owed. */
@@ -342,7 +356,7 @@ export function commissionOn(sim: Simulation, person: Person, e: Engagement, p: 
   if (!owed || !project) return { how: 'unrepresented', rule: 'none', amount: 0, rate: 0, words: 'No commission: you weren’t represented when you made this contract.' };
   const agent = agentById(owed.agreement.agentId);
   const agency = agent ? agencyOf(agent).name : 'your agency';
-  if (!coveredWork(project)) return { agreement: owed.agreement, agency, how: 'uncovered', rule: 'none', amount: 0, rate: 0, words: `No commission: your agreement with ${agency} covers stage, film and television work in the US, and this isn’t that.` };
+  if (!coveredWork(project)) return { agreement: owed.agreement, agency, how: 'uncovered', rule: 'none', amount: 0, rate: 0, words: voiceOnly(project) ? `No commission: your agreement with ${agency} leaves out voice-over work, and this is that.` : `No commission: your agreement with ${agency} covers stage, film and television work in the US, and this isn’t that.` };
   const how = owed.how === 'tail' ? 'tail' : termEnd(owed.agreement) <= at ? 'continuing' : 'term';
   const still = how === 'continuing' ? ` It’s still owed after your agreement with ${agency} ended, because you made the contract while it ran.` : how === 'tail' ? ` It’s owed after your agreement ended, because ${agency} passed on the offer while it ran and you accepted it within ${AGREEMENT.tailDays} days.` : '';
   const ten = AGREEMENT.commission;
@@ -487,6 +501,10 @@ function payDue(s: Simulation, person: Person, e: Engagement, p: ProPayment, pro
   const dues = duesOn(person, project, gross, s.now);
   const w = withholdingOn(s, person, gross, s.now, project.place.cityId);
   const kept = gross - w.total - dues.amount;
+  // The producer's pension and health contribution, on top of the pay and never from it (`contributionOn`,
+  // `systems/contracts.ts`, from 2026-10-24, brief 25's Module 4, D4): kept on the payment, posted to nobody's account here.
+  const contribution = contributionOn(project, s.now, gross);
+  if (contribution) p.contribution = contribution;
   const week = weekOf(p, workZone);
   const days = engagementDaysIn(e, week.from, week.to, workZone);
   const hours = days ? `, ${days * PAY.hoursPerDay} hours` : '';
@@ -562,13 +580,17 @@ export function schedulePay(sim: Simulation, person: Person, e: Engagement): { s
   for (const p of e.pay) {
     if (p.deferred) { deferred += 1; continue; }
     if (p.received || p.inTrust || scheduledFor(sim, PAY_KIND, p.key)) continue;
-    sim.schedule({ at: Math.max(p.due, sim.now + 60_000), kind: PAY_KIND, label: `Payday: ${project?.project ?? 'Your Work'}`, category: 'home', priority: 30, refType: 'engagement', refId: e.id, payload: { personId: person.id, engagementId: e.id, key: p.key } });
+    // A non-union producer pays late at times (`lateDays`, `systems/contracts.ts`, from 2026-10-24, brief 25's Module 4,
+    // D2): the payday comes that many days after its due, and the payment reads overdue in between.
+    if (project?.union === 'none' && p.late === undefined) { const days = lateDays(sim, p.key); if (days) p.late = { days }; }
+    const at = p.due + (p.late?.days ?? 0) * MS_DAY;
+    sim.schedule({ at: Math.max(at, sim.now + 60_000), kind: PAY_KIND, label: `Payday: ${project?.project ?? 'Your Work'}`, category: 'home', priority: 30, refType: 'engagement', refId: e.id, payload: { personId: person.id, engagementId: e.id, key: p.key } });
     scheduled += 1;
   }
   const pro = ensurePro(sim, person);
   const first = e.days[0]?.from;
   if (project && SAG_QUALIFIES.includes(project.kind) && first !== undefined && pro.sag?.eligibleSince === undefined && pro.sag?.memberSince === undefined && !scheduledFor(sim, SAG_ELIGIBLE_KIND, e.id)) {
-    sim.schedule({ at: Math.max(first, sim.now + 60_000), kind: SAG_ELIGIBLE_KIND, label: 'SAG-AFTRA Eligibility', category: 'system', priority: 30, refType: 'engagement', refId: e.id, payload: { personId: person.id, engagementId: e.id, key: e.id } });
+    sim.schedule({ at: Math.max(first, sim.now + 60_000), kind: SAG_ELIGIBLE_KIND, label: 'SAG-AFTRA Eligibility', category: 'system', priority: SAG_ELIGIBLE_PRIORITY, refType: 'engagement', refId: e.id, payload: { personId: person.id, engagementId: e.id, key: e.id } });
   }
   return { scheduled, deferred };
 }
@@ -761,16 +783,30 @@ export function registerProPay(sim: Simulation): void {
     if (person && bill) settle(s, person, bill);
   });
 
+  // Eligible from the first day worked, read after that day's own handler at the same instant (from 2026-10-23, brief 25,
+  // found by the missed-flight test): until then this ran first, at the first day's start, and told a player who slept
+  // through the car to the airport, and was replaced for it, that the job had begun and they could join. A first day
+  // missed waits for a later one worked; an item an older save holds, which still runs first, looks again a minute on.
   sim.onSchedule(SAG_ELIGIBLE_KIND, (item, s) => {
     const person = s.universe.people[String(item.payload.personId)];
     const e = person?.pro?.engagements.find((x) => x.id === item.payload.engagementId);
     const pro = person?.pro;
-    if (!person || !pro || !e || e.status === 'canceled' || pro.sag?.eligibleSince !== undefined || pro.sag?.memberSince !== undefined) return;
-    pro.sag = { ...pro.sag, eligibleSince: item.at };
+    if (!person || !pro || !e || e.status === 'canceled' || pro.sag?.memberSince !== undefined) return;
+    const began = e.log?.find((l) => l.status === 'worked');
+    if (!began) {
+      const today = e.days.findIndex((d) => d.from === item.at);
+      const next = today >= 0 && !e.log?.some((l) => l.day === today) ? item.at + 60_000 : e.days.find((d) => d.from > item.at)?.from;
+      if (next !== undefined && e.status !== 'finished') s.schedule({ at: next, kind: SAG_ELIGIBLE_KIND, label: item.label, category: 'system', priority: SAG_ELIGIBLE_PRIORITY, refType: 'engagement', refId: e.id, payload: item.payload });
+      return;
+    }
+    // Another job worked first made the actor eligible already; this one's day set it (`unionsFrom`) and is told here.
+    if (pro.sag?.eligibleSince !== undefined && pro.sag.eligibleSince < began.at) return;
+    if (e.history.some((h) => h.key === `sag-eligible:${e.id}`)) return;
+    pro.sag = { ...pro.sag, eligibleSince: began.at };
     const project = projectOf(e);
     const from = sagMembershipFrom(person)!;
     const cur = saveCurrency(s.universe);
-    noteEvent(s, e, { kind: 'success', key: `sag-eligible:${e.id}`, words: `With your first SAG-AFTRA principal job begun, you can join SAG-AFTRA from ${formatDate(item.at, s.zone)}.`, ref: e.id });
+    noteEvent(s, e, { kind: 'success', key: `sag-eligible:${e.id}`, words: `With your first SAG-AFTRA principal job begun, you can join SAG-AFTRA from ${formatDate(began.at, s.zone)}.`, ref: e.id });
     if (person.id === s.universe.playerId) s.notify({ category: 'career', title: 'You Can Join SAG-AFTRA', body: `Your part in ${project?.project ?? 'this work'} is a SAG-AFTRA principal role, so you can join SAG-AFTRA from today. A union contract can require you to be a member from the 30th day after your first job under it began, so SAG-AFTRA work from ${formatDate(from, s.zone)} needs you to join first. Joining costs about ${formatMoney(usdIn(s, sagJoinUsd()), cur)}: press Join SAG-AFTRA on the Career screen’s Work tab.`, importance: 65, route: '/workspace/career?tab=work' });
   });
 

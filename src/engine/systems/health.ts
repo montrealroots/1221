@@ -179,6 +179,12 @@ export interface HealthRecord {
   deductible: Record<string, Money>;
   bills: MedicalBill[];
   /**
+   * The voice's strain, 0 to 100, as it was last raised, and when (from 2026-10-24, brief 25's Module 5, W4): rest eases
+   * it from then (`strainOf`, `systems/workflow.ts`). Distinct from being tired and from being ill, and read only by work
+   * whose instrument is the voice.
+   */
+  voice?: { strain: number; at: Instant };
+  /**
    * Care had, what it was, what their share was and the bill it went on, the latest 60 (from 2026-10-10): a change of
    * cover back in time bills it again as the cover then was (`repriceCare`). Yale Health's $0 share makes no bill, so
    * without it a cancellation back to a term's start had nothing to reckon.

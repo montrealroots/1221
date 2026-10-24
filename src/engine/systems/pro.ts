@@ -40,6 +40,8 @@
  * headshot session, a résumé or a reel's edit.
  */
 
+import type { SimRun } from './charts';
+import type { AwardEntry, FestivalEntry } from './awards';
 import type { Simulation } from '../core/simulation';
 import { CommandError } from '../core/simulation';
 import type { Person } from '../domain/model';
@@ -86,7 +88,10 @@ export type ProEventKind =
   | 'request-missed'
   // His office's request to meet, passed on by the School, gone by with no materials sent (from 2026-10-22, brief 20's
   // journeys, F10): until then it passed its date with nothing said and nothing kept.
-  | 'ask-lapsed';
+  | 'ask-lapsed'
+  // A trip for work abroad, step by step (from 2026-10-23, the owner's brief 25, `systems/worktrip.ts`), and its work
+  // visa applied for and decided.
+  | 'departed' | 'arrived' | 'checked-in' | 'checked-out' | 'home' | 'missed-flight' | 'visa-applied' | 'visa-granted';
 
 /** One event in a history: a stable id, when, what, its words as the player reads them, and what it's about. */
 export interface ProEvent {
@@ -132,6 +137,12 @@ export interface ProCredit {
   releasedAt?: Instant;
   /** The best band its work was judged at, where it was judged. */
   band?: Band;
+  /** Your voice alone, with no picture of you (from 2026-10-24, Module 5): a reel can't use it. */
+  voice?: true;
+  /** Scenes of yours cut in the edit (Module 5, T46): the credit kept, the reel only what's left. */
+  cut?: number;
+  /** A film's run in the game's own weekly chart, from its release (from 2026-10-24, Module 6, X5): the game's simulation. */
+  run?: SimRun;
 }
 
 export type MaterialKind = 'headshot' | 'resume' | 'reel';
@@ -265,7 +276,12 @@ export interface Opportunity extends HasHistory {
 }
 
 /** How far the sides or the part stand, in a practice brief's three parts (`systems/briefs.ts`), each 0 to 1. */
-export interface PartPrep { interpretation: number; memorization: number; rehearsal: number }
+/**
+ * A part's preparation: the breakdown, the lines and rehearsal, and from 2026-10-24 (brief 25's Module 5) the workflow's
+ * own where it has one (`SpecialStep`, `content/workflows.ts`): finding the voice, watching the original, the movement,
+ * the pronunciations, the period's movement, the choreography, the fight rehearsal.
+ */
+export interface PartPrep { interpretation: number; memorization: number; rehearsal: number; special?: number }
 
 /** One audition round (`systems/projobs.ts`): in person at a time, or a self-tape due by one. */
 export interface AuditionRound {
@@ -301,6 +317,17 @@ export interface ProPayment {
    * week doesn't match.
    */
   week?: { from: Instant; to: Instant };
+  /**
+   * The part of `promised` that's overtime, in its currency (from 2026-10-24, brief 25's Module 4, D3): two hours at time
+   * and one-half on each day of a SAG-AFTRA day performer's week (`systems/contracts.ts`). A residual reads it to take the
+   * overtime hours at straight time.
+   */
+  overtime?: Money;
+  /** The producer's pension and health contribution on it, worked out when it's paid: shown, never posted to the player (D4). */
+  contribution?: { rate: number; amount: Money };
+  /** How many days late a non-union producer pays it (D2), and when the player asked about it, with the answer given. */
+  late?: { days: number };
+  asked?: { at: Instant; answer: Instant };
   /** `dues`: the union's working dues taken from it, where it's union work and they're a member (`systems/propay.ts`). */
   received?: { at: Instant; gross: Money; withheld: Money; commission: Money; net: Money; via: 'trust' | 'direct'; txnId?: string; dues?: Money };
   /**
@@ -318,7 +345,13 @@ export interface ProPayment {
 export interface EligibilityRead {
   at: Instant;
   authorized: boolean;
-  basis: 'citizen' | 'green-card' | 'opt' | 'student' | 'none';
+  /**
+   * The US's grounds, or, for work abroad (from 2026-10-23, the owner's brief 25), the country's: a citizen of it, a
+   * route held or one granted on arrival, one that has to be applied for, or a country whose rules aren't in the game.
+   */
+  basis: 'citizen' | 'green-card' | 'opt' | 'student' | 'none' | 'abroad-citizen' | 'abroad-route' | 'abroad-needed' | 'abroad-unsupported';
+  /** Work abroad: the country, by the gazetteer's id. */
+  country?: string;
   words: string;
   /** The first of its dates permission didn't cover, where one wasn't. */
   refusedFrom?: Instant;
@@ -358,6 +391,181 @@ export interface Engagement extends HasHistory {
   log?: { day: number; at: Instant; status: 'worked' | 'missed'; band?: Band; overall?: number }[];
   /** Work in term at the School: approved by the dean, taken without approval, or taken without it and found by the School. */
   school?: 'approved' | 'unapproved' | 'reported';
+  /** Work abroad: its trip (`systems/worktrip.ts`, from 2026-10-23, the owner's brief 25). */
+  tripId?: ProId;
+  /** The contract made when it was accepted (`systems/contracts.ts`, from 2026-10-24, brief 25's Module 4, D1). */
+  contract?: Contract;
+  /** Money paid beside the wages, each once by its key: a per diem (D6). */
+  allowances?: Allowance[];
+  /**
+   * The part's units in its workflow (from 2026-10-24, brief 25's Module 5, `systems/workflow.ts`): each judged day's
+   * scenes, loops, chapters or sequences, their place in the script and the order they were shot in, and the takes.
+   */
+  units?: WorkUnit[];
+  /** Each day's report, as it was worked. */
+  reports?: WorkReport[];
+  /** The player's choices in the work, by decision (`content/workflows.ts`'s `Decision`). */
+  choices?: Partial<Record<import('../content/workflows').DecisionId, string>>;
+  /** The script's version and the days whose pages were revised, with how much of the lines changed. */
+  script?: { version: number; drawn: number[]; revised: { day: number; share: number; at: Instant }[] };
+  /** A recall to loop after the wrap (N13 Schedule A §28.A): when, and how it went. */
+  loop?: { at: Instant; status: 'set' | 'done' | 'missed'; overall?: number; units?: WorkUnit[] };
+}
+
+/** One unit of a part's work (`systems/workflow.ts`): a scene, a loop, a chapter or a sequence. */
+export interface WorkUnit {
+  id: string;
+  /** The work day it's on, by index, or -1 for a looping session's. */
+  day: number;
+  /** Its place in the script, which the story puts in order. */
+  scene: number;
+  /** Its place in the day's shooting. */
+  order: number;
+  episode?: number;
+  /** Another character, on a dub's or a capture day's (N13 Schedule A §37; N17 item 27). */
+  character?: string;
+  /** The script's version it was shot from. */
+  version?: number;
+  stunt?: true;
+  intimate?: true;
+  /** Screamed lines in it, announced before the session or not (N13 Schedule A §37.C). */
+  stressful?: 'announced' | 'unannounced';
+  /** Each take's whole, to a tenth, in the order taken. */
+  takes?: number[];
+  /** The printed take's whole, with a double's insert taken from it. */
+  best?: number;
+  /** The takes asked for beyond the format's. */
+  extra?: number;
+  /** The last take a pickup. */
+  pickup?: true;
+  /** Who did it: you, a double, or nobody where you refused it. */
+  by?: 'you' | 'double' | 'refused';
+  /** Cut in the edit (`cutInEdit`). */
+  cut?: true;
+}
+
+/** A day's report (`systems/workflow.ts`, `reportWords`): what it was, what was shot and how, and what it left. */
+export interface WorkReport {
+  day: number;
+  at: Instant;
+  step: import('../content/workflows').StepId;
+  units: string[];
+  choices: Record<string, string>;
+  /** The pages revised for it: the share of the lines changed. */
+  revised?: number;
+  /** What an unjudged day built, each part after it. */
+  built?: Partial<Record<keyof PartPrep, number>>;
+  overall?: number;
+  band?: Band;
+  strain?: { before: number; after: number };
+  energy?: { before: number; after: number };
+  injury?: string;
+}
+
+/**
+ * A contract's clauses, each only where it applies (`systems/contracts.ts`, from 2026-10-24, brief 25's Module 4, D1):
+ * deferred pay; a day performer's overtime; residuals; the producer's pension and health contribution; the trip and its
+ * per diem; a recurring part's episodes, guaranteed and further; and an option on the next season.
+ */
+export type ContractClause =
+  | { kind: 'deferred' }
+  | { kind: 'overtime'; hourly: Money; hours: number; premium: number; perDay: Money }
+  | { kind: 'residuals'; program: 'hour' | 'half-hour'; ceiling: Money }
+  | { kind: 'contributions'; rate: number }
+  | { kind: 'trip'; words: string }
+  | { kind: 'per-diem'; perDay: Money; days: number }
+  | { kind: 'episodes'; ordered: number; guaranteed: number; expected: number; daysEach: number; numbers: number[]; further: { n: number; status: 'pending' | 'called' | 'not-called' | 'off'; at?: Instant }[] }
+  | { kind: 'option'; season: number; year: number; by: Instant; raise: number; status: 'open' | 'exercised' | 'expired'; settled?: { at: Instant; why: string; engagementId?: ProId } }
+  // A workflow's rule (from 2026-10-24, brief 25's Module 5, `workflowRules`, `systems/contracts.ts`): its words.
+  | { kind: 'rule'; id: 'rehearsal-paid' | 'dubbing' | 'stressful' | 'days-only' | 'stunts' | 'intimacy' | 'looping' | 'voice-over' | 'residuals-unread'; words: string };
+
+/** An engagement's contract (D1), its money in US cents as the offer's: a gross estimate, never cash. */
+export interface Contract {
+  /** 1, and one more for each season an option carried it into. */
+  version: number;
+  madeAt: Instant;
+  classification: string;
+  billing: string;
+  format: string;
+  agreement: string;
+  service: { from: Instant; to: Instant };
+  place: string;
+  basis: 'day' | 'week' | 'episode' | 'deferred';
+  rate?: Money;
+  per: 'day' | 'week';
+  units: number;
+  /** The gross it promised when it was made: before withholding, commission and dues. */
+  estimate: Money;
+  /** Every payment it promised, by key: one gone from the engagement is one the work no longer owes. */
+  payKeys: string[];
+  series?: { id: string; year: number; season: number };
+  /** The engagement whose option made it. */
+  renews?: ProId;
+  clauses: ContractClause[];
+}
+
+/** A per diem, paid once (D6): for how many days, at what a day, how much, when, and its transaction. */
+export interface Allowance { key: string; kind: 'per-diem'; days: number; perDay: Money; amount: Money; at: Instant; txnId: string }
+
+/**
+ * Residuals for one engagement (D5), four records kept apart: the entitlement (this record's own fields, made when the
+ * work was done), each exploitation (a telecast the game imagines), each calculation, and each settlement, paid once.
+ */
+export interface Residual {
+  id: ProId;
+  engagementId: ProId;
+  projectId: string;
+  role: string;
+  at: Instant;
+  program: 'hour' | 'half-hour';
+  /** In US cents: the rerun's ceiling, and the work's total actual compensation. */
+  ceiling: Money;
+  base: Money;
+  exploitations: { key: string; kind: 'first-telecast' | 'network-rerun'; at: Instant; status: 'planned' | 'aired' }[];
+  calculations: { key: string; at: Instant; base: Money; share: number; ceiling: Money; amount: Money }[];
+  settlements: { key: string; due: Instant; amount: Money; paid?: { at: Instant; gross: Money; withheld: Money; net: Money; txnId: string } }[];
+}
+
+/**
+ * One leg of a trip for work abroad (`systems/worktrip.ts`, from 2026-10-23, the owner's brief 25): by car or by air,
+ * from one town to the next, departing and arriving at instants (shown in each town's own zone), the game's schedule
+ * and not a real flight's. `booked` until it leaves, `en-route` on the way, `done` once it's arrived; `missed` where the
+ * player wasn't there to leave, and `canceled` where an earlier leg was missed or the work went.
+ */
+export interface TripLeg {
+  id: ProId;
+  mode: 'car' | 'flight';
+  /** The gazetteer's town ids. */
+  from: string;
+  to: string;
+  departs: Instant;
+  arrives: Instant;
+  label: string;
+  status: 'booked' | 'en-route' | 'done' | 'missed' | 'canceled';
+  /** Which way: out to the work, or back home from it. */
+  way: 'out' | 'back';
+}
+
+/** Where a production puts the actor up while the work is abroad: the town, the place, from and to, and who pays. */
+export interface WorkStay {
+  cityId: string;
+  place: string;
+  from: Instant;
+  to: Instant;
+  payer: 'production';
+  status: 'booked' | 'in' | 'out' | 'canceled';
+}
+
+/** A trip for work abroad: its legs out and back, the stay, and its history. Kept with the engagement it's for. */
+export interface WorkTrip extends HasHistory {
+  id: ProId;
+  engagementId: ProId;
+  /** The country of the work and its town, by the gazetteer's ids. */
+  country: string;
+  cityId: string;
+  legs: TripLeg[];
+  stay: WorkStay;
+  status: 'booked' | 'out' | 'there' | 'back' | 'home' | 'canceled';
 }
 
 /**
@@ -415,6 +623,8 @@ export interface ProRecord {
   opportunities: Opportunity[];
   /** Live, and the last `ENGAGEMENTS_KEPT` finished. Their credits stay. */
   engagements: Engagement[];
+  /** Trips for work abroad (`systems/worktrip.ts`, from 2026-10-23, the owner's brief 25), each its engagement's. */
+  trips?: WorkTrip[];
   showcase?: ShowcaseRecord;
   outsideWork?: OutsideWorkRequest[];
   /** In-session work done without the School's approval. */
@@ -424,6 +634,12 @@ export interface ProRecord {
   sag?: { eligibleSince?: Instant; memberSince?: Instant };
   /** The unions' bills, each charged once (`systems/propay.ts`): the unsettled, and the last `BILLS_KEPT` settled. */
   unionBills?: UnionBill[];
+  /** Residuals, one record for each piece of television work that carries them (`systems/contracts.ts`, from 2026-10-24). */
+  residuals?: Residual[];
+  /** The player's Emmy entries, one for each performance and year, and what came of each (`systems/awards.ts`, from 2026-10-24, Module 6). */
+  awards?: AwardEntry[];
+  /** Each film's Sundance year: the production's submission and the festival's word (Module 6). */
+  festivals?: FestivalEntry[];
   // `trimmed`, how many resolved opportunities and finished engagements the bounds had dropped, went on 2026-10-21
   // (brief 20's D1, a value written and read by nothing but a test). What a dropped posting said that matters later is
   // kept in `lastPosted`. A save that has it keeps it, unread.
@@ -848,6 +1064,9 @@ export function reelSources(person: Person, at: Instant): ReelSource[] {
   }
   for (const c of person.pro?.credits ?? []) {
     if (c.medium === 'stage' || c.status !== 'released' || c.releasedAt === undefined) continue;
+    // A voice part is heard and not seen (from 2026-10-24, brief 25's Module 5): listed, as a voice brief is, as one that
+    // can't go on a reel.
+    if (c.voice) { out.push({ ref: `footage:${c.id}`, from: 'footage', title: `${c.role}, ${c.project}`, at: c.releasedAt, ...(c.band ? { band: c.band } : {}), usable: false, why: 'It’s your voice with no picture of you, so it can’t go on a reel.' }); continue; }
     out.push({ ref: `footage:${c.id}`, from: 'footage', title: `${c.role}, ${c.project}`, at: c.releasedAt, ...(c.band ? { band: c.band } : {}), usable: true });
   }
   return out.sort((a, b) => b.at - a.at);

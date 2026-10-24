@@ -112,7 +112,8 @@ describe('the Representation tab', () => {
     expect(first.shown).toContain('Thomas Ashgrove Agent, Legit Department, Halberd Talent, New York');
     // Until 2026-10-21 a line under his name said a real agent's words and decisions were invented.
     expect(first.shown).not.toContain('Fictional:');
-    expect(first.html).toMatch(/<div class="callout callout-accent small col gap-2" role="note"><p[^>]*>Thomas Ashgrove and Halberd Talent are invented for the game,/);
+    // Until 2026-10-24 the notice went on ", as every agency in it is", untrue once real agents came in (brief 25's Module 3).
+    expect(first.html).toMatch(/<div class="callout callout-accent small col gap-2" role="note"><p[^>]*>Thomas Ashgrove and Halberd Talent are invented for the game\. /);
     expect(first.shown).toContain('Thomas Ashgrove and Halberd Talent are invented for the game. How his office takes submissions and reaches an actor is the game’s own rule');
     expect(button(first.html, 'I’ve Read This')).toEqual([{ disabled: false, title: undefined, locked: false }]);
     expect(first.shown).toContain('Where You Stand With Him Not In Touch');

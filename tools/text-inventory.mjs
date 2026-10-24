@@ -73,7 +73,9 @@ const SUBSYSTEMS = [
   // From 2026-10-20 (the owner's brief 19): the professional record, the agent and the work, and their screen and help,
   // ahead of the controls' rule so the Career screen is the career's.
   // The Actor Showcase's help joins them from 2026-10-21 (brief 19's showcase): its system and its panel already match.
-  ['career', 'The Professional Career: Profile, Portfolio, Representation And Work', [/^src\/engine\/systems\/pro\w*\.ts$/, /^src\/engine\/content\/(agents|careerwork)\.ts$/, /^src\/engine\/content\/guide\/(career|showcase)\.ts$/, /^src\/ui\/workspaces\/Career\w*\.tsx$/, /^src\/ui\/career\//]],
+  // Work abroad joins them from 2026-10-23 (brief 25, Module 1): the work trip and the countries' rules for screen work.
+  // The ways of working join them from 2026-10-24 (brief 25, Module 5); until then the catch-all filed both under health.
+  ['career', 'The Professional Career: Profile, Portfolio, Representation And Work', [/^src\/engine\/systems\/(pro\w*|worktrip|contracts|series|workflow|awards|charts)\.ts$/, /^src\/engine\/content\/workflows\.ts$/, /^src\/engine\/content\/(jurisdictions|catalog|series|awards|charts)\.ts$/, /^src\/engine\/content\/(agents|agencies|careerwork)\.ts$/, /^src\/engine\/content\/guide\/(career|showcase)\.ts$/, /^src\/ui\/workspaces\/Career\w*\.tsx$/, /^src\/ui\/career\//]],
   ['health', 'Health, Treatment, Coverage, Stamina, Energy And Recovery', [/^src\/ui\/looks\/(wellbeing|health|body)[\w-]*\.tsx?$/, /^src\/ui\/workspaces\/(health|life|body)[\w-]*\.tsx?$/, /^src\/engine\/systems\/(health\w*|body|injury|illness|therapy|appointments?|insurance|coverage|stamina|workload|energy|sleep|mortality|condition|pharmacy|prescriptions?|dental|hospital|care)\.ts$/, /^src\/engine\/content\/(health\w*|illness\w*|conditions?|insurance|clinics?|medic\w*|body)[\w-]*\.ts$/, /^src\/engine\/content\/guide\/body\.ts$/, /^src\/engine\/systems\/clinics\.ts$/, /^src\/engine\/content\/(carevisits|injury|lifespan)\.ts$/]],
   ['calendar', 'Calendar, Schedules, Time Advancement And Reminders', [/^src\/ui\/workspaces\/CalendarWorkspace\.tsx$/, /^src\/ui\/looks\/plans\.tsx$/, /^src\/ui\/looks\/(day|calendar|time|weather|place)[\w-]*\.tsx?$/, /^src\/engine\/systems\/(calendar|plans?|weather|time|day)\.ts$/, /^src\/engine\/world\/plans\.ts$/, /^src\/engine\/core\/(time|scheduler|sun|realclock)\.ts$/, /^src\/engine\/content\/guide\/day\.ts$/, /^src\/engine\/systems\/(seasons|birthdays)\.ts$/, /^src\/engine\/content\/(holidays|holiday-data|climate|thunder)\.ts$/]],
   ['notifications', 'Notifications, Invitations, Feedback And Generated Messages', [/^src\/ui\/looks\/(attention|notice\w*|news)[\w-]*\.tsx?$/, /^src\/engine\/world\//, /^src\/engine\/core\/(events|simulation|text)\.ts$/]],
@@ -97,13 +99,21 @@ const AREAS2 = [
   ['career-showcase', [/^src\/engine\/systems\/proshowcase\.ts$/, /^src\/engine\/content\/guide\/showcase\.ts$/, /^src\/ui\/career\/SchoolShowcase\.tsx$/]],
   // From 2026-10-21 (brief 19's second wave): each career builder reads its own sources, so the agent's system and its
   // tab are the career area's part `career-agent`, marked and claimed apart from the core's `career`.
-  ['career-agent', [/^src\/engine\/systems\/proagent\.ts$/, /^src\/ui\/career\/RepresentationPane\.tsx$/]],
+  // From 2026-10-24 (brief 25, Module 3) the agencies' own records too, read by the module that wrote them.
+  ['career-agent', [/^src\/engine\/systems\/proagent\.ts$/, /^src\/ui\/career\/RepresentationPane\.tsx$/, /^src\/engine\/content\/agencies\.ts$/]],
   // From 2026-10-21 (brief 19's pay): its files, the pay system and the Career screen's Work tab, are its own builder's to
   // mark, apart from the core's career files, so the wave's builders working apart write their own second-pass files.
-  ['career-pay', [/^src\/engine\/systems\/propay\.ts$/, /^src\/ui\/career\/WorkPane\.tsx$/]],
+  // From 2026-10-24 (brief 25, Module 4) a contract's own sources too, and a series' seasons, read by the module that wrote them.
+  ['career-pay', [/^src\/engine\/systems\/(propay|contracts|series)\.ts$/, /^src\/engine\/content\/series\.ts$/, /^src\/ui\/career\/WorkPane\.tsx$/]],
   // From 2026-10-21 (brief 19's work loop): the work loop's own sources, read by the area that built them, apart from the
   // career core's, so the builders working at once each keep their own status files.
-  ['career-work', [/^src\/engine\/systems\/projobs\.ts$/, /^src\/ui\/career\/OpportunitiesPane\.tsx$/]],
+  // From 2026-10-24 (brief 25, Module 5) the ways of working too, the work loop's own, read by the module that wrote them.
+  ['career-work', [/^src\/engine\/systems\/(projobs|workflow)\.ts$/, /^src\/engine\/content\/workflows\.ts$/, /^src\/ui\/career\/OpportunitiesPane\.tsx$/]],
+  // From 2026-10-23 (brief 25, Module 1): work abroad's own sources, the trip and the countries' rules, read by the module
+  // that wrote them.
+  // From 2026-10-24 (brief 25, Module 6) the charts, the awards and festivals and their tab too: the industry's world,
+  // read by the module that wrote them. Until they were named here they fell to the health area, the fallback's.
+  ['career-world', [/^src\/engine\/systems\/(worktrip|awards|charts)\.ts$/, /^src\/engine\/content\/(jurisdictions|catalog|awards|charts)\.ts$/, /^src\/ui\/career\/IndustryPane\.tsx$/]],
 ];
 const BY_SUBSYSTEM = { start: 'frame', home: 'frame', calendar: 'frame', notifications: 'frame', controls: 'frame', tutorial: 'tutorial', profile: 'profile', school: 'school', money: 'money', papers: 'papers', career: 'career', health: 'health', world: 'health', material: 'material-a' };
 const areaOf2 = (file) => AREAS2.find(([, rules]) => rules.some((r) => r.test(file)))?.[0] ?? BY_SUBSYSTEM[subsystemOf(file)] ?? 'frame';

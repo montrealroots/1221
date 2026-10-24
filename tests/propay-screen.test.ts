@@ -82,7 +82,9 @@ describe('the Work tab', () => {
     schedulePay(sim, sim.player, e);
     const promised = drawn(sim).shown;
     expect(promised).toContain('Desk Clerk, The Calloway Files');
-    expect(promised).toContain('Who Bright Harbor Television, SAG-AFTRA TV/Theatrical. Fictional, as every project in the game is.');
+    // Until 2026-10-24 it said "Fictional, as every project in the game is", untrue once parts were drawn from real
+    // productions (brief 25's Module 2), whose agreement says no such thing (tests/career-drawn.test.ts).
+    expect(promised).toContain('Who Bright Harbor Television, SAG-AFTRA TV/Theatrical. Fictional, invented for the game.');
     // Permission to work now, and what it said when the work was accepted, apart (from 2026-10-23, brief 23: until then
     // “Permission To Work Read September 3, 2026: …”, the reading at acceptance alone, under its own label).
     expect(promised).toContain('Permission To Work Now. You’re a US citizen, so you can work for any employer in the US.');
@@ -91,7 +93,9 @@ describe('the Work tab', () => {
     expect(promised).toContain('Dates September 21, 2026 to September 22, 2026, two days of work.');
     // A row a week, from 2026-10-23 (brief 23): until then a paragraph each, “The week of September 20, 2026: $2,822.60
     // promised by Bright Harbor Television, due October 1, 2026. …” and “Commission expected: $256.60. …”.
-    expect(promised).toContain('Paid by Bright Harbor Television, a payment for each week. Week Of Promised Due Where It Stands Commission September 20, 2026 $2,822.60 October 1, 2026 Promised. It comes into your accounts on the day it’s due. $256.60 expected');
+    // Its state its own column from 2026-10-24 (brief 25's Module 4): until then every payment not yet paid read “Promised.
+    // It comes into your accounts on the day it’s due.”, before its days and after them alike.
+    expect(promised).toContain('Paid by Bright Harbor Television, a payment for each week. Week Of Promised Due State Where It Stands Commission September 20, 2026 $2,822.60 October 1, 2026 Estimated Its days are still to come. $256.60 expected');
     // The amount said once (from 2026-10-21: until then "$256.60. $256.60, what’s paid over scale"), and the why once
     // under the table.
     expect(promised).toContain('Commission: What’s paid over scale ($2,566.00), so you keep scale.');
@@ -120,7 +124,7 @@ describe('the Work tab', () => {
     expect(shown).toContain('Ivy, Paper Moons');
     // A row a week from 2026-10-23 (brief 23): until then “The week of September 20, 2026: deferred by a graduate film
     // program’s thesis production. …”.
-    expect(shown).toContain(`Deferred by a graduate film program’s thesis production: nothing is paid for this work. Week Of Promised Due Where It Stands Commission September 20, 2026 Deferred Never SAG-AFTRA’s Student Film Agreement defers the pay: ${DEFERRED_WHY}, so nothing is paid for it. None`);
+    expect(shown).toContain(`Deferred by a graduate film program’s thesis production: nothing is paid for this work. Week Of Promised Due State Where It Stands Commission September 20, 2026 Deferred Never Deferred SAG-AFTRA’s Student Film Agreement defers the pay: ${DEFERRED_WHY}, so nothing is paid for it. None`);
     expect(shown).not.toContain('Paid by a graduate film');
     expect(shown).not.toMatch(/never paid|\$0\.00 promised/);
   });

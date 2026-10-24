@@ -1182,5 +1182,36 @@
     "ref": "src/engine/systems/identity.ts"
    }
   ]
+ },
+ {
+  "surface": "A judged work day's look: the kind of task it was and what it rested on, for the booth, the dub, narration, capture, reenactment, a tape night, a stunt scene and a musical's night",
+  "where": "Career, the Work tab, a day's judged work, and the work's look",
+  "sources": [
+   "src/engine/content/tasks.ts#TASK_PROFILES [booth]",
+   "src/engine/content/tasks.ts#TASK_PROFILES [dub]",
+   "src/engine/content/tasks.ts#TASK_PROFILES [narration]",
+   "src/engine/content/tasks.ts#TASK_PROFILES [capture]",
+   "src/engine/content/tasks.ts#TASK_PROFILES [reenactment]",
+   "src/engine/content/tasks.ts#TASK_PROFILES [multicam]",
+   "src/engine/content/tasks.ts#TASK_PROFILES [stunt]",
+   "src/engine/content/tasks.ts#TASK_PROFILES [musicalNight]"
+  ],
+  "states": [
+   "details",
+   "explanation"
+  ],
+  "outcome": "Revised",
+  "why": "New with brief 25's Module 5: each kind of judged work is named as the player knows it (A Session In The Booth, A Dubbing Session, A Tape Night) with a sentence of what it is, and its preparation parts in the words the Prepare buttons use.",
+  "changes": "Eight new task kinds, each with its name, its one sentence and its preparation parts; none of the existing kinds' words changed.",
+  "evidence": [
+   {
+    "kind": "test",
+    "ref": "tests/career-workflows.test.ts: 'WF-12, WF-26: an animated series’ sessions'"
+   },
+   {
+    "kind": "test",
+    "ref": "tests/career-workflows.test.ts: 'WF-17: music rehearsals and choreography build the songs and the steps'"
+   }
+  ]
  }
 ]

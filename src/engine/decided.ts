@@ -47,6 +47,13 @@ import { AGENTS } from './content/agents';
 import { GATE, LEVELS, chancesFor, drawOf, offerOutcome, replyOutcome, rosterFor } from './systems/proagent';
 import { castingDraw, postingsAt } from './systems/projobs';
 import { PROJECTS } from './content/careerwork';
+import { SERIES } from './content/series';
+import { decisionsTo, episodeDrawn, optionDrawn } from './systems/series';
+import { lateDays, rerunDrawn } from './systems/contracts';
+import { cutDrawn, loopDrawn, pagesDrawn, planWork, stressDrawn } from './systems/workflow';
+import { simulateRun } from './systems/charts';
+import { fieldDrawn, finalDrawn, festivalSelects, festivalSubmits, nominationsFor, productionEnters } from './systems/awards';
+import type { Engagement } from './systems/pro';
 
 // ---------------------------------------------------------------------------
 // The sky
@@ -648,6 +655,225 @@ defineDecider<{ sim: Simulation; band: number; fit: number; kind: number }, stri
   sample: (seed) => ({ sim: atYale(seed), band: seed % 4, fit: (seed % 5) / 4, kind: seed % PROJECTS.length }),
   decide: ({ sim, band, fit, kind }) => {
     const b = (['unready', 'working', 'strong', 'exceptional'] as const)[band]!;
-    return (['callback', 'final'] as const).map((round) => Array.from({ length: 40 }, (_, n) => (castingDraw(sim, { id: `o${n}`, projectId: PROJECTS[kind]!.id }, round, b, fit).yes ? '1' : '0')).join('')).join(' ');
+    return (['callback', 'final'] as const).map((round) => Array.from({ length: 40 }, (_, n) => (castingDraw(sim, { postedAt: sim.now + n * 7 * 86_400_000, projectId: PROJECTS[kind]!.id }, round, b, fit).yes ? '1' : '0')).join('')).join(' ');
   },
+});
+
+// ---------------------------------------------------------------------------------------------------------------------
+// A series' seasons and what a contract brings (from 2026-10-24, brief 25's Module 4, `systems/series.ts`,
+// `systems/contracts.ts`)
+// ---------------------------------------------------------------------------------------------------------------------
+
+/** TEST SETUP for the sweep: an engagement judged at a band on its one day worked, or with none worked. */
+const judged = (id: string, band: number): Engagement => ({
+  id, opportunityId: `o-${id}`, projectId: 'calloway-files-whitlock', role: 'Assistant DA Whitlock', status: 'working', days: [], pay: [], history: [], counts: {},
+  log: band < 0 ? [] : [{ day: 0, at: 0, status: 'worked', band: (['unready', 'working', 'strong', 'exceptional'] as const)[band]! }],
+});
+
+defineDecider<{ sim: Simulation; year: number; renew: number }, string>({
+  id: 'pro.series',
+  decides: 'The network’s word on a series each May after its order runs out: another season, no more, or a canceled one back, by the series and the year, at its chances.',
+  drawnIn: 'src/engine/systems/series.ts',
+  reads: {
+    // How far on: each May adds its own word.
+    year: (o, t) => ({ ...o, year: 2030 + Math.round(t * 15) }),
+    // The network's chance of another season.
+    renew: (o, t) => ({ ...o, renew: t }),
+    world: (o, t) => ({ ...o, sim: atYale(Math.round(t * 20)) }),
+  },
+  sample: (seed) => ({ sim: atYale(seed), year: 2034 + (seed % 6), renew: SERIES[0]!.chance.renew }),
+  decide: ({ sim, year, renew }) => decisionsTo(sim, { ...SERIES[0]!, chance: { ...SERIES[0]!.chance, renew } }, year).map((d) => `${d.year}:${d.what}`).join(' '),
+});
+
+defineDecider<{ sim: Simulation; band: number }, string>({
+  id: 'pro.episode',
+  decides: 'A recurring part called for a further episode or not: its chance by the best the work was judged at, and a draw by the engagement and the episode.',
+  drawnIn: 'src/engine/systems/series.ts',
+  reads: {
+    // The best band so far, or none worked: a part that plays well is written for again.
+    band: (o, t) => ({ ...o, band: Math.round(t * 4) - 1 }),
+    world: (o, t) => ({ ...o, sim: atYale(Math.round(t * 20)) }),
+  },
+  sample: (seed) => ({ sim: atYale(seed), band: (seed % 5) - 1 }),
+  decide: ({ sim, band }) => Array.from({ length: 40 }, (_, n) => (episodeDrawn(sim, judged(`e${n}`, band), 5 + (n % 8)) ? '1' : '0')).join(''),
+});
+
+defineDecider<{ sim: Simulation; band: number }, string>({
+  id: 'pro.option',
+  decides: 'An option on a recurring part for the next season, taken up or let go: its chance by the best the work was judged at, and a draw by the engagement.',
+  drawnIn: 'src/engine/systems/series.ts',
+  reads: {
+    band: (o, t) => ({ ...o, band: Math.round(t * 4) - 1 }),
+    world: (o, t) => ({ ...o, sim: atYale(Math.round(t * 20)) }),
+  },
+  sample: (seed) => ({ sim: atYale(seed), band: (seed % 5) - 1 }),
+  decide: ({ sim, band }) => Array.from({ length: 40 }, (_, n) => (optionDrawn(sim, judged(`e${n}`, band)) ? '1' : '0')).join(''),
+});
+
+defineDecider<{ sim: Simulation; first: number }, string>({
+  id: 'pro.rerun',
+  decides: 'A network rerun of an episode with the player’s work in it, which pays a residual: half the time, by the engagement.',
+  drawnIn: 'src/engine/systems/contracts.ts',
+  reads: {
+    // Which engagements: each its own draw.
+    first: (o, t) => ({ ...o, first: Math.round(t * 100) }),
+    world: (o, t) => ({ ...o, sim: atYale(Math.round(t * 20)) }),
+  },
+  sample: (seed) => ({ sim: atYale(seed), first: seed * 7 }),
+  decide: ({ sim, first }) => Array.from({ length: 40 }, (_, n) => (rerunDrawn(sim, `e${first + n}`) ? '1' : '0')).join(''),
+});
+
+// The workflows' draws (from 2026-10-24, brief 25's Module 5, `systems/workflow.ts`), each keyed by the work, its project
+// and its first day, never the engagement's id.
+
+defineDecider<{ sim: Simulation; first: number }, string>({
+  id: 'pro.board',
+  decides: 'A booked part’s scenes, their places in the script and the order each day shoots them, by the work.',
+  drawnIn: 'src/engine/systems/workflow.ts',
+  reads: {
+    first: (o, t) => ({ ...o, first: Math.round(t * 100) }),
+    world: (o, t) => ({ ...o, sim: atYale(Math.round(t * 20)) }),
+  },
+  sample: (seed) => ({ sim: atYale(seed), first: seed * 7 }),
+  decide: ({ sim, first }) => {
+    const t = PROJECTS.find((p) => p.id === 'gull-season')!;
+    const e = { id: 'e', projectId: t.id, days: Array.from({ length: 6 }, (_, k) => ({ from: (first + k) * 86_400_000, to: (first + k) * 86_400_000 + 3_600_000, label: `${t.project}: Shoot Day ${k + 1}` })) } as unknown as Engagement;
+    planWork(sim, e, t);
+    return (e.units ?? []).map((u) => `${u.day}:${u.scene}`).join(',');
+  },
+});
+
+defineDecider<{ sim: Simulation; first: number }, string>({
+  id: 'pro.stress',
+  decides: 'Screamed lines in a booth’s or a dub’s session: in about a third of them, on one unit, announced three times in four.',
+  drawnIn: 'src/engine/systems/workflow.ts',
+  reads: {
+    first: (o, t) => ({ ...o, first: Math.round(t * 100) }),
+    world: (o, t) => ({ ...o, sim: atYale(Math.round(t * 20)) }),
+  },
+  sample: (seed) => ({ sim: atYale(seed), first: seed * 7 }),
+  decide: ({ sim, first }) => Array.from({ length: 40 }, (_, n) => { const d = stressDrawn(sim, `w${first + n}`, 0, 4); return d ? `${d.unit}${d.announced ? 'a' : 'u'}` : '-'; }).join(','),
+});
+
+defineDecider<{ sim: Simulation; first: number }, string>({
+  id: 'pro.pages',
+  decides: 'Revised pages for a work day, at its format’s chance, and the share of the lines they change.',
+  drawnIn: 'src/engine/systems/workflow.ts',
+  reads: {
+    first: (o, t) => ({ ...o, first: Math.round(t * 100) }),
+    world: (o, t) => ({ ...o, sim: atYale(Math.round(t * 20)) }),
+  },
+  sample: (seed) => ({ sim: atYale(seed), first: seed * 7 }),
+  decide: ({ sim, first }) => Array.from({ length: 40 }, (_, n) => pagesDrawn(sim, `w${first + n}`, 0, 0.35) ?? '-').join(','),
+});
+
+defineDecider<{ sim: Simulation; first: number }, string>({
+  id: 'pro.loop',
+  decides: 'A recall to loop after a screen wrap, about a third of the time, and the days on it’s asked for.',
+  drawnIn: 'src/engine/systems/workflow.ts',
+  reads: {
+    first: (o, t) => ({ ...o, first: Math.round(t * 100) }),
+    world: (o, t) => ({ ...o, sim: atYale(Math.round(t * 20)) }),
+  },
+  sample: (seed) => ({ sim: atYale(seed), first: seed * 7 }),
+  decide: ({ sim, first }) => Array.from({ length: 40 }, (_, n) => loopDrawn(sim, `w${first + n}`) ?? '-').join(','),
+});
+
+defineDecider<{ sim: Simulation; first: number }, string>({
+  id: 'pro.cut',
+  decides: 'A scene of the player’s cut in the edit at the release, two times in ten, by the work.',
+  drawnIn: 'src/engine/systems/workflow.ts',
+  reads: {
+    first: (o, t) => ({ ...o, first: Math.round(t * 100) }),
+    world: (o, t) => ({ ...o, sim: atYale(Math.round(t * 20)) }),
+  },
+  sample: (seed) => ({ sim: atYale(seed), first: seed * 7 }),
+  decide: ({ sim, first }) => Array.from({ length: 40 }, (_, n) => (cutDrawn(sim, `w${first + n}`) ? '1' : '0')).join(''),
+});
+
+defineDecider<{ sim: Simulation; first: number }, string>({
+  id: 'pro.late_pay',
+  decides: 'How many days late a non-union producer pays a payment, none seven times in ten, by the payment.',
+  drawnIn: 'src/engine/systems/contracts.ts',
+  reads: {
+    first: (o, t) => ({ ...o, first: Math.round(t * 100) }),
+    world: (o, t) => ({ ...o, sim: atYale(Math.round(t * 20)) }),
+  },
+  sample: (seed) => ({ sim: atYale(seed), first: seed * 7 }),
+  decide: ({ sim, first }) => Array.from({ length: 40 }, (_, n) => lateDays(sim, `e${first + n}:1`)).join(','),
+});
+
+// The charts' and the awards' draws (from 2026-10-24, brief 25's Module 6, `systems/charts.ts` and `systems/awards.ts`),
+// each keyed by the film, the year or the category, never an id.
+
+defineDecider<{ sim: Simulation; first: number }, string>({
+  id: 'charts.gross',
+  decides: 'A film’s run in the game’s own weekly chart: its opening, how it falls each week, and its rank among the game’s own unnamed releases.',
+  drawnIn: 'src/engine/systems/charts.ts',
+  reads: {
+    first: (o, t) => ({ ...o, first: Math.round(t * 100) }),
+    world: (o, t) => ({ ...o, sim: atYale(Math.round(t * 20)) }),
+  },
+  sample: (seed) => ({ sim: atYale(seed), first: seed * 7 }),
+  decide: ({ sim, first }) => Array.from({ length: 12 }, (_, n) => { const run = simulateRun(sim, `film-${first + n}`, 'low-budget', (first + n) * 7 * 86_400_000); return run ? `${run.weeks[0]!.gross}:${run.weeks.length}:${run.weeks[0]!.rank}` : '-'; }).join(','),
+});
+
+defineDecider<{ sim: Simulation; first: number }, string>({
+  id: 'awards.entry',
+  decides: 'Whether a production enters a performance the player didn’t: half the time for strong work, a tenth otherwise.',
+  drawnIn: 'src/engine/systems/awards.ts',
+  reads: {
+    first: (o, t) => ({ ...o, first: Math.round(t * 100) }),
+    world: (o, t) => ({ ...o, sim: atYale(Math.round(t * 20)) }),
+  },
+  sample: (seed) => ({ sim: atYale(seed), first: seed * 7 }),
+  decide: ({ sim, first }) => Array.from({ length: 40 }, (_, n) => (productionEnters(sim, 2027 + (n % 3), `p${first + n}`, 'r', n % 2 === 0) ? '1' : '0')).join(''),
+});
+
+defineDecider<{ sim: Simulation; first: number }, string>({
+  id: 'awards.field',
+  decides: 'A category’s anonymous field for a year: how many entered, each entrant’s standing, and so the nominations the rules give it.',
+  drawnIn: 'src/engine/systems/awards.ts',
+  reads: {
+    first: (o, t) => ({ ...o, first: Math.round(t * 100) }),
+    world: (o, t) => ({ ...o, sim: atYale(Math.round(t * 20)) }),
+  },
+  sample: (seed) => ({ sim: atYale(seed), first: seed * 7 }),
+  decide: ({ sim, first }) => Array.from({ length: 8 }, (_, n) => { const f = fieldDrawn(sim, 2027 + n, `c${first}`); return `${f.submissions}:${nominationsFor(f.submissions)}:${Math.max(...f.others.map((o) => o.votes))}`; }).join(','),
+});
+
+defineDecider<{ sim: Simulation; first: number }, string>({
+  id: 'awards.final',
+  decides: 'The final round’s peer vote: which nominee wins, each standing as the nominations left it, with the round’s own draw.',
+  drawnIn: 'src/engine/systems/awards.ts',
+  reads: {
+    first: (o, t) => ({ ...o, first: Math.round(t * 100) }),
+    world: (o, t) => ({ ...o, sim: atYale(Math.round(t * 20)) }),
+  },
+  sample: (seed) => ({ sim: atYale(seed), first: seed * 7 }),
+  decide: ({ sim, first }) => Array.from({ length: 20 }, (_, n) => finalDrawn(sim, 2027 + n, `c${first}`, ['you', 'a', 'b', 'c', 'd'], { you: 70, a: 68, b: 66, c: 64, d: 62 })).join(','),
+});
+
+defineDecider<{ sim: Simulation; first: number }, string>({
+  id: 'festival.submit',
+  decides: 'Whether a production submits its film to Sundance, eight times in ten.',
+  drawnIn: 'src/engine/systems/awards.ts',
+  reads: {
+    first: (o, t) => ({ ...o, first: Math.round(t * 100) }),
+    world: (o, t) => ({ ...o, sim: atYale(Math.round(t * 20)) }),
+  },
+  sample: (seed) => ({ sim: atYale(seed), first: seed * 7 }),
+  decide: ({ sim, first }) => Array.from({ length: 40 }, (_, n) => (festivalSubmits(sim, 2027 + (n % 3), `p${first + n}`) ? '1' : '0')).join(''),
+});
+
+defineDecider<{ sim: Simulation; first: number }, string>({
+  id: 'festival.select',
+  decides: 'Whether Sundance selects a submitted film, at a chance its band sets, from a field the game doesn’t name.',
+  drawnIn: 'src/engine/systems/awards.ts',
+  reads: {
+    first: (o, t) => ({ ...o, first: Math.round(t * 100) }),
+    world: (o, t) => ({ ...o, sim: atYale(Math.round(t * 20)) }),
+  },
+  sample: (seed) => ({ sim: atYale(seed), first: seed * 7 }),
+  decide: ({ sim, first }) => Array.from({ length: 60 }, (_, n) => (festivalSelects(sim, 2027, 'us-short', `p${first + n}`, 'exceptional') ? '1' : '0')).join(''),
 });

@@ -1,6 +1,6 @@
 # Every Touched Feature, Traced
 
-Written by `tools/trace.ts` from the guide's registry and the tests; don't edit it by hand. 44 entries in the four
+Written by `tools/trace.ts` from the guide's registry and the tests; don't edit it by hand. 48 entries in the four
 areas the connected-journey pass of 2026-10-12 rebuilt, and from 2026-10-20 the career's (brief 19), each traced Action →
 Preconditions → Costs → State → Consumer → Feedback → History → Later consequence. The words are the guide's own, which
 carry the rules' figures; the four areas' entries' claims were checked against the engine by a second reader when they
@@ -16,7 +16,7 @@ Home, how the guide and this help work, and finding your way around.
 
 ### Home And Where You Are (`start.home`)
 
-- **Action:** `ui.where`, `look.day`, `look.place`, `look.region`, `look.country`, `look.currency`, `look.season`, `look.daylight`, at Home, The Where You Are Panel (`/home`). Opens: From the guide’s first chapter, “Your Life, Hour By Hour”.
+- **Action:** `ui.where`, `look.day`, `look.place`, `look.region`, `look.country`, `look.currency`, `look.season`, `look.daylight`, at Home, The Line Under The Greeting (`/home`). Opens: From the guide’s first chapter, “Your Life, Hour By Hour”.
 - **Preconditions:**
   - Home is there from your first moment in the game.
   - The Guide And This Help first: A word becomes a link once you’ve read the guide chapter that covers it.
@@ -28,7 +28,7 @@ Home, how the guide and this help work, and finding your way around.
 - **Consumer (what reads it):**
   - The Clock: Play And Pause, immediate: The local time is the game’s clock, so it moves when the clock does.
 - **Feedback (how to read what comes back):**
-  - The line under your town says it’s your home, and how many people live there.
+  - Your town, pressed, says it’s your home, and how many people live there.
   - Daylight gives today’s sunrise and sunset, and how many hours of daylight that makes.
 - **History (kept in the record):**
   - (none)
@@ -74,7 +74,7 @@ Home, how the guide and this help work, and finding your way around.
 - **Consumer (what reads it):**
   - (none)
 - **Feedback (how to read what comes back):**
-  - The number beside Home is the notices and questions waiting in What Needs You.
+  - The number beside Home is the questions waiting in What Needs You. Recent Updates, on Home, says how many notices you haven’t read.
 - **History (kept in the record):**
   - (none)
 - **Later consequence:**
@@ -440,7 +440,7 @@ Being cast, learning a part, the director’s notes, how you’ll play a part, t
 - **Feedback (how to read what comes back):**
   - The read decides it: a higher fit can lose a lead to a balance of 4 points between a lead last time and a featured part.
   - Delivered at 100% means every night came fully prepared, on a good enough day: tiredness, the flu, an injury or a concussion that day count as less delivered. Tiring late in the play, and a slip carried into the next movement, don’t, since the fit and the night’s luck already count them. A night missed without an excuse (not in hospital, laid up or called in sick) counts as nothing delivered.
-  - Fit uses the same abilities a night does, so the work that grows them raises it. Who you are as an actor plays no part in it.
+  - Fit uses the same abilities a night does, so the work that grows them raises it, and so does knowing the play’s genres. Who you are as an actor plays no part in it.
   - A part called In The Company means no part written for you was left when your read came up.
   - Why This Cast shows the production you’re in; Around The Class shows the whole class, the Rep’s company included.
 - **History (kept in the record):**
@@ -629,7 +629,7 @@ Being cast, learning a part, the director’s notes, how you’ll play a part, t
   - Learning A Part, immediate: Each show has its own rehearsal process, lines, blocking and notes, under its panel.
   - The Nights, evaluation: Each show is a night judged like any other, kept on the run and in your work.
   - Casting, evaluation: A Cabaret or Summer run counts 50% of a School production’s in what the chair reads you delivered.
-  - Your Affairs And What You’re Worth, scheduled: The summer stipend lands in your account each Friday at five, $375 a week before tax.
+  - What You’re Worth, scheduled: The summer stipend lands in your account each Friday at five, $375 a week before tax.
   - Your Tax Return, history: The summer stipend is wages on the year’s tax return, with its tax already withheld.
 - **Feedback (how to read what comes back):**
   - Performed counts the Cabaret shows played out of 5, with the calls still ahead beside it.
@@ -762,12 +762,13 @@ Your Player Profile, practice, genres, practice briefs from preparing to taping,
 - **Consumer (what reads it):**
   - Taping A Brief, evaluation: Knowing the genre is part of a take’s preparation: it counts toward the take’s interpretation, and is complete at 90%.
   - Preparing Coursework, immediate: A scene from a play of a kind you know is prepared faster, by the better of Familiarity and Work In It.
+  - Auditions And Callbacks, evaluation: Knowing the project’s genres is part of an audition’s and a self-tape’s preparation, complete at 90%, and half of how well casting thinks you suit the role.
   - Learning A Part, immediate: A part in a play of a kind you know is learned faster.
   - Your Work So Far, history: The genres you’ve worked in are counted in Range.
 - **Feedback (how to read what comes back):**
   - It Asks For names each technique with your level against mastery, or says the research didn’t establish one: “Not established: the research holds it with low confidence”, or “No more than any self-tape asks”.
   - A genre’s look gives Familiarity, Work In It and Preparation: how much faster the better of the two makes a scene or a part from a play of its kind, where a brief’s steps speed up with material you’ve met before instead. It gives what the research found the genre asks, and how sure it is.
-  - Knowing The Genre, inside a brief, is the better of the first two against the 90% that completes it.
+  - Knowing The Genre, inside a brief, is the better of the first two against the 90% that completes it. Every brief is in one genre.
   - The Genre Asks, inside a brief, names each of its genre’s concerns: what it asks, what a self-tape in it is judged more on and calls on, and which part of preparation answers it. A tape held back most by an ability one of those concerns asks for says so: “Your … held back … by … points: …’s … asks for it.”, as when your Composure held back Consistency by 4.2 points and Nordic Noir’s Feeling Held In asks for it.
   - “You love it” on a genre’s look means a day of its work is a better day: loving it doesn’t make the work faster or limit it.
 - **History (kept in the record):**
@@ -1074,7 +1075,7 @@ The Career screen, your professional profile and name, headshots, your résumé 
   - The Nights: A School production’s part goes on your résumé once its run has closed.
 - **Later consequence:**
   - A part played, a skill grown, a new name, the degree or a union makes it behind, and What’s Missing names what’s new.
-- **Tested by:** `pro.update_resume`: `tests/b20-agent-ask-lapse.test.ts`, `tests/b20-career-effects.test.ts`, `tests/b20-career-history.test.ts`, `tests/b20-career-skill.test.ts`, `tests/b20-guide-chapters.test.ts`, `tests/journey-agent.test.ts`, `tests/journey-career.test.ts`, `tests/pro-agent.test.ts`, `tests/pro-app.test.ts`, `tests/pro-core.test.ts`, `tests/pro-opportunities-screen.test.ts`, `tests/pro-representation-screen.test.ts`, `tests/pro-screen.test.ts`, `tests/pro-work.test.ts`
+- **Tested by:** `pro.update_resume`: `tests/b20-agent-ask-lapse.test.ts`, `tests/b20-career-effects.test.ts`, `tests/b20-career-history.test.ts`, `tests/b20-career-skill.test.ts`, `tests/b20-guide-chapters.test.ts`, `tests/career-agents.test.ts`, `tests/journey-agent.test.ts`, `tests/journey-career.test.ts`, `tests/pro-agent.test.ts`, `tests/pro-app.test.ts`, `tests/pro-core.test.ts`, `tests/pro-opportunities-screen.test.ts`, `tests/pro-representation-screen.test.ts`, `tests/pro-screen.test.ts`, `tests/pro-work.test.ts`
 
 ### Your Reel (`career.reel`)
 
@@ -1101,7 +1102,7 @@ The Career screen, your professional profile and name, headshots, your résumé 
   - New recorded work after it shows under What’s Missing as worth adding.
 - **Tested by:** `pro.cut_reel`: `tests/b20-career-effects.test.ts`, `tests/journey-agent.test.ts`, `tests/journey-career.test.ts`, `tests/pro-core.test.ts`, `tests/pro-representation-screen.test.ts`
 
-### The Agent And How To Reach Him (`career.agent`)
+### Agents And How To Reach One (`career.agent`)
 
 - **Action:** `pro.agent_notice`, `pro.agent_check`, `pro.ask_referral`, `pro.send_materials`, at Career, Representation (`/workspace/career?tab=representation`). Opens: From the guide’s chapter “Representation”.
 - **Preconditions:**
@@ -1110,27 +1111,28 @@ The Career screen, your professional profile and name, headshots, your résumé 
   - For a referral, a finished professional job whose work was judged Strong or better, once for each job.
   - For a send, an introduction: the School’s follow-up or a referral.
   - Headshots first: A check refuses an approach with no headshots, since every submission starts with one.
-  - Your Résumé first: A check refuses an approach with no résumé, and a résumé behind your record is one thing his office can ask for.
+  - Your Résumé first: A check refuses an approach with no résumé, and a résumé behind your record is one thing an office can ask for.
 - **Costs:**
   - Time: None
   - Money: None
 - **State (what changes at once):**
-  - Sending moves Where You Stand With Him to Materials Sent, and his office’s answer is on the way.
+  - Sending moves Where You Stand to Materials Sent, and the office’s answer is on the way.
 - **Consumer (what reads it):**
-  - His Office’s Answers And The Meeting, scheduled: Sending your materials puts his office’s answer on the way, about two weeks on.
-  - Why It Went This Way reads it, history: Each answer his office gives keeps its reasons here.
-  - The Agreement reads it, history: Accepting, declining and the agreement’s end each go in History With His Office.
+  - An Office’s Answers And The Meeting, scheduled: Sending your materials puts the office’s answer on the way, about two weeks on.
+  - Why It Went This Way reads it, history: Each answer an office gives keeps its reasons here.
+  - The Agreement reads it, history: Accepting, declining and the agreement’s end each go in the agent’s History panel.
 - **Feedback (how to read what comes back):**
-  - Where You Stand With Him names the step you’re at, and What’s Next says what to do about it.
-  - A referral comes from the casting office of a job you’ve finished, never from him, and he never writes to you first.
+  - Where You Stand names the step you’re at, and What’s Next says what to do about it.
+  - A referral comes from the casting office of a job you’ve finished, never from the agent, and no agent writes to you first.
+  - The Agencies panel says what each agency brief 25 names says of itself on its own pages: how an actor reaches it, the agents it names, and what the game does with it.
 - **History (kept in the record):**
   - (none)
 - **Later consequence:**
-  - His office answers in about two weeks: a request for more, a meeting or a pass, each as a notice. Or no answer comes, and after six weeks that counts as no.
-  - After a pass, his office looks again only after a year; after no answer or a declined offer, six months. Then it looks only at something new: a new credit, a better reel or a referral.
-- **Tested by:** `pro.agent_notice`: `tests/b20-career-effects.test.ts`, `tests/b20-career-skill.test.ts`, `tests/b20-guide-chapters.test.ts`, `tests/journey-agent.test.ts`, `tests/journey-career-older.test.ts`, `tests/pro-agent.test.ts`, `tests/pro-representation-screen.test.ts`; `pro.agent_check`: `tests/b20-agent-ask-lapse.test.ts`, `tests/b20-career-effects.test.ts`, `tests/b20-career-skill.test.ts`, `tests/b20-guide-chapters.test.ts`, `tests/journey-agent.test.ts`, `tests/journey-career-older.test.ts`, `tests/journey-career.test.ts`, `tests/pro-agent.test.ts`, `tests/pro-representation-screen.test.ts`; `pro.ask_referral`: `tests/b20-career-effects.test.ts`, `tests/b20-career-skill.test.ts`, `tests/journey-agent.test.ts`, `tests/journey-career-older.test.ts`, `tests/pro-agent.test.ts`, `tests/pro-representation-screen.test.ts`; `pro.send_materials`: `tests/b20-agent-ask-lapse.test.ts`, `tests/b20-career-effects.test.ts`, `tests/b20-career-history.test.ts`, `tests/b20-career-saveload.test.ts`, `tests/b20-career-skill.test.ts`, `tests/b20-guide-chapters.test.ts`, `tests/journey-agent.test.ts`, `tests/journey-career-older.test.ts`, `tests/journey-career.test.ts`, `tests/pro-agent.test.ts`, `tests/pro-representation-screen.test.ts`
+  - The office answers in about two weeks: a request for more, a meeting or a pass, each as a notice. Or no answer comes, and after six weeks that counts as no.
+  - After a pass, the office looks again only after a year; after no answer or a declined offer, six months. Then it looks only at something new: a new credit, a better reel or a referral.
+- **Tested by:** `pro.agent_notice`: `tests/b20-career-effects.test.ts`, `tests/b20-career-skill.test.ts`, `tests/b20-guide-chapters.test.ts`, `tests/career-agents.test.ts`, `tests/journey-agent.test.ts`, `tests/journey-career-older.test.ts`, `tests/pro-agent.test.ts`, `tests/pro-representation-screen.test.ts`; `pro.agent_check`: `tests/b20-agent-ask-lapse.test.ts`, `tests/b20-career-effects.test.ts`, `tests/b20-career-skill.test.ts`, `tests/b20-guide-chapters.test.ts`, `tests/career-agents.test.ts`, `tests/journey-agent.test.ts`, `tests/journey-career-older.test.ts`, `tests/journey-career.test.ts`, `tests/pro-agent.test.ts`, `tests/pro-representation-screen.test.ts`; `pro.ask_referral`: `tests/b20-career-effects.test.ts`, `tests/b20-career-skill.test.ts`, `tests/career-agents.test.ts`, `tests/journey-agent.test.ts`, `tests/journey-career-older.test.ts`, `tests/pro-agent.test.ts`, `tests/pro-representation-screen.test.ts`; `pro.send_materials`: `tests/b20-agent-ask-lapse.test.ts`, `tests/b20-career-effects.test.ts`, `tests/b20-career-history.test.ts`, `tests/b20-career-saveload.test.ts`, `tests/b20-career-skill.test.ts`, `tests/b20-guide-chapters.test.ts`, `tests/career-agents.test.ts`, `tests/journey-agent.test.ts`, `tests/journey-career-older.test.ts`, `tests/journey-career.test.ts`, `tests/pro-agent.test.ts`, `tests/pro-representation-screen.test.ts`
 
-### His Office’s Answers And The Meeting (`career.agent-answers`)
+### An Office’s Answers And The Meeting (`career.agent-answers`)
 
 - **Action:** `pro.supply_material`, `pro.ask_to_move`, at Career, Representation, The Meeting (`/workspace/career?tab=representation`). Opens: From the guide’s chapter “Representation”.
 - **Preconditions:**
@@ -1140,7 +1142,7 @@ The Career screen, your professional profile and name, headshots, your résumé 
   - Time: The meeting’s hour, and the trip: two hours from New Haven (an estimate)
   - Money: None
 - **State (what changes at once):**
-  - What you send goes to his office, and its answer comes about a week later.
+  - What you send goes to the office, and its answer comes about a week later.
   - A moved meeting is on your calendar at its new time.
 - **Consumer (what reads it):**
   - Why It Went This Way, evaluation: A meeting kept or missed, and material sent when asked, are read under Reliability.
@@ -1150,7 +1152,7 @@ The Career screen, your professional profile and name, headshots, your résumé 
 - **History (kept in the record):**
   - (none)
 - **Later consequence:**
-  - After a meeting you keep, his office tells you its decision five days later: an offer or a pass.
+  - After a meeting you keep, the office tells you its decision five days later: an offer or a pass.
   - A meeting you miss closes the approach, since a meeting comes before an offer in the game.
 - **Tested by:** `pro.supply_material`: `tests/journey-agent.test.ts`, `tests/journey-career.test.ts`; `pro.ask_to_move`: `tests/journey-agent.test.ts`, `tests/journey-career.test.ts`, `tests/pro-representation-screen.test.ts`
 
@@ -1166,13 +1168,13 @@ The Career screen, your professional profile and name, headshots, your résumé 
   - The table opens, and closes with Hide The Reasons.
 - **Consumer (what reads it):**
   - Your Reel, evaluation: Your reel’s best band is part of Your Work, and a reel is part of Stage And Screen.
-  - The Agent And How To Reach Him, history: Each answer his office gives keeps its reasons here.
-  - His Office’s Answers And The Meeting reads it, evaluation: A meeting kept or missed, and material sent when asked, are read under Reliability.
+  - Agents And How To Reach One, history: Each answer an office gives keeps its reasons here.
+  - An Office’s Answers And The Meeting reads it, evaluation: A meeting kept or missed, and material sent when asked, are read under Reliability.
 - **Feedback (how to read what comes back):**
-  - None of it is his. The bar and the chances are the game’s own, and Room On His List is assumed.
+  - None of it is the agent’s own. The bar and the chances are the game’s, and Room On His List is assumed. For a real agent, how likely the office is to take you further is one assumption for every real agent in the game.
   - At The Last Decision is kept as it was, so it reads the same after your record moves on.
 - **History (kept in the record):**
-  - The Agent And How To Reach Him: Each answer his office gives keeps its reasons here.
+  - Agents And How To Reach One: Each answer an office gives keeps its reasons here.
 - **Later consequence:**
   - As Things Stand Now changes with your record: a new credit, a better reel, the degree, a meeting kept.
 - **Tested by:** a screen or a look; the UI journeys (`tools/acceptance-ui.mjs`)
@@ -1182,23 +1184,23 @@ The Career screen, your professional profile and name, headshots, your résumé 
 - **Action:** `pro.accept_agreement`, `pro.decline_agreement`, `pro.end_agreement`, at Career, Representation, The Agreement (`/workspace/career?tab=representation`). Opens: From the guide’s chapter “Representation”.
 - **Preconditions:**
   - For Accept or Decline, an offer still standing.
-  - For End It: No Offer In 90 Days, 90 days with no real offer of covered work through him, the days you’re employed on covered work not counted, and not while you’re working.
+  - For End It: No Offer In 90 Days, 90 days with no real offer of covered work through the agent, the days you’re employed on covered work not counted, and not while you’re working.
   - For End It: Under Ten Days’ Work, 151 days from signing, and fewer than ten days of covered work in the last 91.
 - **Costs:**
   - Time: None
   - Money: Commission on covered work: 10% of gross pay, or 5% on an Equity contract paying $525.00 a week or less
 - **State (what changes at once):**
-  - Accepting makes him your agent from today. Declining closes the approach.
+  - Accepting makes the agent yours from today. Declining closes the approach.
 - **Consumer (what reads it):**
-  - The Agent And How To Reach Him, history: Accepting, declining and the agreement’s end each go in History With His Office.
+  - Agents And How To Reach One, history: Accepting, declining and the agreement’s end each go in the agent’s History panel.
 - **Feedback (how to read what comes back):**
-  - A Published Rule follows the unions’ or New York’s published rules. The Game’s Own Term is the game’s: his own agreement isn’t published.
+  - A Published Rule follows the unions’ or New York’s published rules. The Game’s Own Term is the game’s: an agent’s own agreement isn’t published.
 - **History (kept in the record):**
-  - The Agent And How To Reach Him: Accepting, declining and the agreement’s end each go in History With His Office.
+  - Agents And How To Reach One: Accepting, declining and the agreement’s end each go in the agent’s History panel.
 - **Later consequence:**
   - An offer you don’t answer lapses after its two weeks.
   - When it ends, commission stays owed on contracts you made while it ran, and The Agreement says which.
-- **Tested by:** `pro.accept_agreement`: `tests/b20-career-effects.test.ts`, `tests/b20-career-saveload.test.ts`, `tests/journey-agent.test.ts`, `tests/journey-career.test.ts`, `tests/pro-representation-screen.test.ts`; `pro.decline_agreement`: `tests/b20-career-effects.test.ts`, `tests/b20-career-history.test.ts`, `tests/journey-agent.test.ts`, `tests/journey-career.test.ts`; `pro.end_agreement`: `tests/journey-agent.test.ts`, `tests/journey-career.test.ts`, `tests/pro-representation-screen.test.ts`
+- **Tested by:** `pro.accept_agreement`: `tests/b20-career-effects.test.ts`, `tests/b20-career-saveload.test.ts`, `tests/career-agents.test.ts`, `tests/journey-agent.test.ts`, `tests/journey-career.test.ts`, `tests/pro-representation-screen.test.ts`; `pro.decline_agreement`: `tests/b20-career-effects.test.ts`, `tests/b20-career-history.test.ts`, `tests/journey-agent.test.ts`, `tests/journey-career.test.ts`; `pro.end_agreement`: `tests/journey-agent.test.ts`, `tests/journey-career.test.ts`, `tests/pro-representation-screen.test.ts`
 
 ### Your Work And Its Pay (`career.pay`)
 
@@ -1216,9 +1218,9 @@ The Career screen, your professional profile and name, headshots, your résumé 
   - Your Accounts, scheduled: Each payment lands in your account on its payday, or from your agency’s trust account a few business days later.
   - Your Tax Return, evaluation: Your tax return reads each payment’s wages, withholding, commission, dues and the town the work was done in.
 - **Feedback (how to read what comes back):**
-  - Promised means it’s owed and not yet paid. In Trust means the production has paid and your agency holds it. Received gives the figures as they were posted.
+  - Estimated, Earned and Due mean it’s owed and not yet paid: its days still to come, worked, or its payday today. Held For You means the production has paid and your agency holds it. Settled gives the figures as they were posted.
   - Deferred pay is shown and never paid: a student film pays its actors only if it earns money later, and no film in the game does.
-  - On an F-1 while you’re a student, outside acting work isn’t open to you: Yale grants CPT only for training the whole program requires, and Acting has none. On OPT after your degree, each day of an engagement counts as a day worked.
+  - On an F-1 while you’re a student, outside acting work isn’t open to you: Yale grants CPT only for training the whole program requires, and Acting has none. On OPT after your degree, every day from a job’s first day to its last counts as a day with work, and the days before a booked job begins count as days without work. If your permission to work ends with work still booked, the company releases you: the days you worked are still paid, and the rest are called off.
 - **History (kept in the record):**
   - (none)
 - **Later consequence:**
@@ -1275,7 +1277,7 @@ The Career screen, your professional profile and name, headshots, your résumé 
 - **Later consequence:**
   - Each union bill is taken from your bank on its day. If the bank can’t cover it, it’s owed under Bills Owed and paid off the first day there’s money.
   - Union pay has its working dues taken before it reaches you.
-- **Tested by:** `pro.join_sag`: `tests/journey-career.test.ts`, `tests/propay-screen.test.ts`, `tests/propay.test.ts`
+- **Tested by:** `pro.join_sag`: `tests/career-contracts.test.ts`, `tests/journey-career.test.ts`, `tests/propay-screen.test.ts`, `tests/propay.test.ts`
 
 ### Finding Work And Submitting (`career.opportunities`)
 
@@ -1294,13 +1296,13 @@ The Career screen, your professional profile and name, headshots, your résumé 
   - Auditions And Callbacks, scheduled: A submission puts the casting office’s answer on the clock, and the answer sets an audition.
 - **Feedback (how to read what comes back):**
   - Open Calls are roles you can submit yourself for. Through An Agent shows the roles an agent brought, which only the agent submits.
-  - Each role says it’s fictional: no real production is casting.
+  - Each role says it’s fictional, or, for a part drawn from a real production, that the part is the game’s own: no real production is casting.
   - A part comes round again only once the work it was cast for is over, as a new casting of the part, and its card says what came of it the last time. A part you’ve been booked for doesn’t come round again.
 - **History (kept in the record):**
   - (none)
 - **Later consequence:**
   - Two days on, the casting office answers with an audition in person or a self-tape, and a notice says when and where.
-- **Tested by:** `pro.submit`: `tests/b20-guide-chapters.test.ts`, `tests/pro-app.test.ts`, `tests/pro-opportunities-screen.test.ts`, `tests/pro-work.test.ts`
+- **Tested by:** `pro.submit`: `tests/b20-guide-chapters.test.ts`, `tests/career-world-sydney.test.ts`, `tests/pro-app.test.ts`, `tests/pro-opportunities-screen.test.ts`, `tests/pro-work.test.ts`
 
 ### Auditions And Callbacks (`career.auditions`)
 
@@ -1317,6 +1319,7 @@ The Career screen, your professional profile and name, headshots, your résumé 
 - **Consumer (what reads it):**
   - Offers And Booked Work, evaluation: Casting reads your audition’s band, with the role’s fit and the field, when it decides whether to offer you the role.
   - The Calendar, scheduled: An audition in person goes on your calendar with its trip, and stops the clock when it comes.
+  - Genres reads it, evaluation: Knowing the project’s genres is part of an audition’s and a self-tape’s preparation, complete at 90%, and half of how well casting thinks you suit the role.
 - **Feedback (how to read what comes back):**
   - The band says how good the audition was. Casting’s chance reads the band, the fit and the field together, and even the best audition doesn’t make it certain.
   - Why It Went This Way, under a settled role, shows each part of it.
@@ -1324,7 +1327,7 @@ The Career screen, your professional profile and name, headshots, your résumé 
   - (none)
 - **Later consequence:**
   - A day after a first audition casting decides whether to call you back, and three days after the last whether to offer you the role. A notice says which.
-- **Tested by:** `pro.prepare`: `tests/journey-career.test.ts`, `tests/pro-work.test.ts`; `pro.tape_audition`: `tests/journey-career.test.ts`, `tests/pro-work.test.ts`; `pro.move_audition`: `tests/pro-work.test.ts`
+- **Tested by:** `pro.prepare`: `tests/career-awards-screen.test.ts`, `tests/career-awards.test.ts`, `tests/career-workflows-screen.test.ts`, `tests/career-workflows.test.ts`, `tests/journey-career.test.ts`, `tests/pro-work.test.ts`; `pro.tape_audition`: `tests/journey-career.test.ts`, `tests/pro-work.test.ts`; `pro.move_audition`: `tests/pro-work.test.ts`
 
 ### Offers And Booked Work (`career.offers`)
 
@@ -1350,7 +1353,7 @@ The Career screen, your professional profile and name, headshots, your résumé 
 - **Later consequence:**
   - A stage part goes on your credits at its first night; a screen part when it’s shot, and as released once it comes out, when its footage can go on a reel.
   - Miss a shoot day, or a second day of a run, and the production replaces you.
-- **Tested by:** `pro.accept_offer`: `tests/b20-benefits-safetynet.test.ts`, `tests/b20-benefits-tax.test.ts`, `tests/b20-benefits-unemployment.test.ts`, `tests/b20-career-defects.test.ts`, `tests/b20-career-effects.test.ts`, `tests/b20-career-history.test.ts`, `tests/b20-career-skill.test.ts`, `tests/b20-guide-screens.test.ts`, `tests/b20-life-fatigue.test.ts`, `tests/b20-papers-work.test.ts`, `tests/pro-opportunities-screen.test.ts`, `tests/pro-work.test.ts`; `pro.decline_offer`: `tests/b20-career-effects.test.ts`, `tests/b20-career-history.test.ts`, `tests/b20-guide-screens.test.ts`, `tests/pro-work.test.ts`
+- **Tested by:** `pro.accept_offer`: `tests/b20-benefits-safetynet.test.ts`, `tests/b20-benefits-tax.test.ts`, `tests/b20-benefits-unemployment.test.ts`, `tests/b20-career-defects.test.ts`, `tests/b20-career-effects.test.ts`, `tests/b20-career-history.test.ts`, `tests/b20-career-skill.test.ts`, `tests/b20-guide-screens.test.ts`, `tests/b20-life-fatigue.test.ts`, `tests/b20-papers-work.test.ts`, `tests/b21-genre-proof.test.ts`, `tests/b22-authorization.test.ts`, `tests/career-awards-screen.test.ts`, `tests/career-awards.test.ts`, `tests/career-contracts.test.ts`, `tests/career-drawn.test.ts`, `tests/career-workflows-screen.test.ts`, `tests/career-workflows.test.ts`, `tests/career-world-sydney.test.ts`, `tests/pro-opportunities-screen.test.ts`, `tests/pro-work.test.ts`; `pro.decline_offer`: `tests/b20-career-effects.test.ts`, `tests/b20-career-history.test.ts`, `tests/b20-guide-screens.test.ts`, `tests/pro-work.test.ts`
 
 ### Work While You’re At The School (`career.outside-work`)
 
@@ -1374,3 +1377,106 @@ The Career screen, your professional profile and name, headshots, your résumé 
 - **Later consequence:**
   - A week on, the dean approves or refuses it, and the notice says each condition. Approved, the class days it takes are excused.
 - **Tested by:** `pro.request_outside_work`: `tests/pro-work.test.ts`
+
+### Contracts, Residuals And A Series’ Seasons (`career.contracts`)
+
+- **Action:** `pro.ask_pay`, at Career, Work, The Contract (`/workspace/career?tab=work`). Opens: From the guide’s chapter “Finding Work”, once you’ve accepted work.
+- **Preconditions:**
+  - Work you’ve accepted. Ask About It needs a payment past its payday and still unpaid.
+  - Offers And Booked Work first: Accepting an offer makes its contract.
+  - Your Unions first: A further episode or an option taken up past SAG-AFTRA’s thirty days needs you to be a member.
+- **Costs:**
+  - Overtime: On a SAG-AFTRA day, the ninth and tenth hours of work at time and one-half: $481.13 a day on the $1,283 minimum
+  - Pension And Health: The producer pays 20.5% of SAG-AFTRA pay on top of it, 19.5% before September 6, 2026. Your pay keeps all of it
+  - Per Diem: $60.00 a day for meals on a trip for SAG-AFTRA work, paid when you’re home, apart from your wages
+  - A Rerun: All your pay for the time you worked, overtime at straight time, up to $3,668.00 for an hour’s program or $2,578.00 for a half-hour’s, paid within 30 days
+- **State (what changes at once):**
+  - Accepting puts the contract under The Contract and each payment under Pay as Estimated. Your accounts don’t change.
+- **Consumer (what reads it):**
+  - Your Work And Its Pay, scheduled: Each payment the contract promised is paid on its payday, and its state says where it stands.
+- **Feedback (how to read what comes back):**
+  - The overtime, the contribution’s rates, the per diem and the rerun’s share and ceiling are SAG-AFTRA’s agreements’ own, as AMPTP publishes them. The eleven-hour shoot day’s hour for lunch is estimated.
+  - When an episode is on the air, whether it’s rerun, the series’ seasons and how late a non-union producer pays, 3 times in ten, by one to four weeks, are the game’s own.
+  - A renewal brings no contract by itself: a part in a renewed series comes only through its option or a new casting.
+- **History (kept in the record):**
+  - (none)
+- **Later consequence:**
+  - Each payment moves to Earned, Due and Settled as its days and its payday come.
+  - Television work under SAG-AFTRA carries residuals: its first telecast is paid for by your pay, and a network rerun in prime time pays again, within 30 days of it.
+  - The Calloway Files shoots each season from mid-July to May. From May 2030 the network says each May whether there’s another season. A canceled series stops that day: casting for it closes, and work not yet done is called off with nothing owed. It can come back years later.
+  - A recurring part guarantees some episodes and is expected in more: a further episode is paid only if the production calls you for it. The option on the next season, at 5% more a day, is taken up or let go by June 30, once.
+- **Tested by:** `pro.ask_pay`: `tests/career-contracts.test.ts`
+
+### How Each Kind Of Work Is Done (`career.workflows`)
+
+- **Action:** `pro.work_choice`, at Career, Work, How The Work Is Done (`/workspace/career?tab=work`). Opens: From the guide’s chapter “Finding Work”, once you’ve accepted work.
+- **Preconditions:**
+  - Work you’ve accepted. A choice about the intimate scene can’t be changed once the scene is shot.
+  - Contracts, Residuals And A Series’ Seasons first: The agreements’ rules for a dub, a stunt, an intimate scene and a recall to loop are in the contract.
+- **Costs:**
+  - Another Take: Energy for the takes you ask for beyond the scene’s own, as many as the production allows in a day
+  - A Strained Voice: Voice work raises it and rest eases it, 2 points of 100 an hour. A strained voice holds back what voice work asks of it (an estimate)
+  - A Stunt Yourself: A chance of an injury, about 3% for a stunt with the fight rehearsed and up to 15% without, less for a strong body; the double carries none of it (an estimate)
+- **State (what changes at once):**
+  - A choice is kept on the engagement and read by each day after it.
+- **Consumer (what reads it):**
+  - Your Work And Its Pay, scheduled: A looping session is paid half a day, on the work’s pay.
+  - Charts, Festivals And Awards reads it, evaluation: How a part’s days were judged, and its scenes kept in the edit, are what its entry reads.
+- **Feedback (how to read what comes back):**
+  - A dub’s pay by its characters and lines, a recall to loop at half a day for four hours, a stunt only with your consent and a coordinator there, and an intimate scene only with your written consent are the SAG-AFTRA agreements’ rules. The takes, the strain, the stunt’s risk and how often pages change are the game’s.
+  - There are 10 ways of working in the game: a stage play, single camera, multicamera, the booth, dubbing, performance capture, narration, reenactment, a musical and action.
+  - Declining an intimate scene costs you nothing: a body double does it, and the part, the pay and the casting are as they were.
+- **History (kept in the record):**
+  - (none)
+- **Later consequence:**
+  - Each judged day plays its scenes, loops, chapters or sequences in takes, the best printed, and leaves a report.
+  - Pages revised the night before change some of your lines, and Learn The Lines that evening puts them back.
+  - After a screen wrap, the production may recall you to loop: a four-hour session paid half a day. When the work comes out, the edit may cut one of your scenes, about 2 times in ten; the part stays on your credits with its pay.
+- **Tested by:** `pro.work_choice`: `tests/career-workflows-screen.test.ts`, `tests/career-workflows.test.ts`
+
+### Charts, Festivals And Awards (`career.awards`)
+
+- **Action:** `pro.award_enter`, `pro.watch_ceremony`, at Career, Charts And Awards (`/workspace/career?tab=industry`). Opens: From the guide’s chapter “Finding Work”, once you’ve accepted work.
+- **Preconditions:**
+  - A part on television that’s on the air, or due on it, in the Emmy year: June 1 to May 31.
+- **Costs:**
+  - An Emmy Entry: $125.00 for processing and $100.00 for the entry, the Television Academy’s fees for a performer who isn’t a member
+- **State (what changes at once):**
+  - Entering puts the part under Your Recognition as entered, and the fee is taken from your bank.
+- **Consumer (what reads it):**
+  - How Each Kind Of Work Is Done, evaluation: How a part’s days were judged, and its scenes kept in the edit, are what its entry reads.
+- **Feedback (how to read what comes back):**
+  - The eligibility year, the fees, the guest rule, the share of the running time and the nomination table are the 78th Emmy Awards’ rules. Sundance’s categories, deadlines and premiere rule are its 2027 festival’s. A later year carries them forward, and says so.
+  - How many enter a category, how the votes go, whether a production enters you or submits its film, and whether the festival selects it are the game’s, and no other nominee is ever named.
+  - A film’s box office is the production’s, not your pay, and how well your part went doesn’t move it. The published charts are the providers’ own figures, each in its own unit and week.
+  - Recognition makes casting a little likelier to choose you, fading over three years, and at most 30% better. It never changes a contract.
+- **History (kept in the record):**
+  - (none)
+- **Later consequence:**
+  - At the nominations, each category has its own field of entries, and the Academy’s table sets how many are nominated: 5 from 20 entries, 6 from 81 entries, 7 from 161 entries, 8 from 241 entries.
+  - The winner is settled when the final round of voting ends, and you learn it when the award is presented: guest and voice-over awards at the Creative Arts Emmys, the others at the telecast.
+  - A festival’s answer comes about December 1 for its 2027 festival, in Boulder, Colorado.
+- **Tested by:** `pro.award_enter`: `tests/career-awards-screen.test.ts`, `tests/career-awards.test.ts`; `pro.watch_ceremony`: `tests/career-awards-screen.test.ts`, `tests/career-awards.test.ts`
+
+### Work Abroad (`career.work-abroad`)
+
+- **Action:** `pro.apply_work_visa`, at Career, Work, Your Engagements (`/workspace/career?tab=work`). Opens: From the guide’s chapter “Finding Work”, once you’ve accepted work in another country.
+- **Preconditions:**
+  - A booking in another country whose rules are in the game: so far, Australia.
+  - A passport in force until you’re home. Papers shows yours.
+  - Not an Australian or a New Zealand citizen: an Australian needs no visa, and a New Zealander is granted one on arrival.
+  - Offers And Booked Work first: You apply for it once you’ve accepted the work abroad.
+- **Costs:**
+  - Time: 10 days for the department’s decision (an estimate)
+  - Money: None. The visa’s charge isn’t in the department’s page, and the production pays for the trip. (an estimate)
+- **State (what changes at once):**
+  - The visa is pending in Papers, under Permission To Work, tied to this work.
+- **Consumer (what reads it):**
+  - Permission To Work, immediate: The visa is a permission to work in Papers, pending until the department decides.
+- **Feedback (how to read what comes back):**
+  - The 408’s conditions come from the department’s page: the game read it on October 23, 2026, last updated September 24, 2026. Its 10 days and the hotel paid by the production are estimated, and so are the flight times, from the distances.
+- **History (kept in the record):**
+  - (none)
+- **Later consequence:**
+  - 10 days on, the department grants it, to 28 days after your last work day. At the first flight, without it, you don’t go, and the production releases you with nothing owed.
+- **Tested by:** `pro.apply_work_visa`: `tests/career-world-sydney.test.ts`

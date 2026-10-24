@@ -158,9 +158,10 @@ describe('tax.lien_dispute: a lien in error is one their own return left nothing
 });
 
 describe('tax.request_waiver, not reached', () => {
-  it('only Oregon charges the three-year penalty, every project is in New York, and a played life stays where the School is', () => {
+  // Every project was in New York until brief 25 (2026-10-23) put one in Sydney; none is in Oregon, which is what holds.
+  it('only Oregon charges the three-year penalty, no project is in Oregon, and a played life stays where the School is', () => {
     expect(Object.entries(STATE_TAX).filter(([, rules]) => rules.threeYear).map(([state]) => state)).toEqual(['us-or']);
-    expect([...new Set(PROJECTS.map((t) => stateOf(t.place.cityId)))]).toEqual(['us-ny']);
+    expect(PROJECTS.filter((t) => stateOf(t.place.cityId) === 'us-or')).toEqual([]);
     const sim = graduate('b20-reach-oregon');
     worked(sim, 'winter-ledger');
     expect([sim.player.currentLocationId, Object.keys(sim.player.earnings!.years['2026']!.byResidence)]).toEqual(['us-ct-newhaven', ['us-ct-newhaven']]);

@@ -2004,6 +2004,600 @@
    "seeded": false,
    "readBy": "coordinator",
    "readAt": "1fb67173"
+  },
+  {
+   "id": "pro.apply_work_visa",
+   "kind": "command",
+   "area": "career",
+   "mechanic": true,
+   "seeded": false,
+   "readBy": "career",
+   "readAt": "brief 25",
+   "where": "Career, Work: Apply For The Visa on a booking abroad, grayed with visaRefusal's words.",
+   "prerequisites": "A booking abroad not over; a country whose route is applied for ahead (Australia's 408); not applied for or held already; a passport in force until the trip home (`visaRefusal`).",
+   "reads": "The booking, the country's route (`content/jurisdictions.ts`), the player's citizenships and passports.",
+   "changes": "A pending permit in Papers tied to the booking (`bookingId`), and the department's decision on the clock, the game's assumed ten days on. Nothing charged: the page holds no charge.",
+   "consumers": [
+    {
+     "what": "the permit read for each work day and at the first flight",
+     "at": "src/engine/systems/worktrip.ts:240"
+    },
+    {
+     "what": "the first departure checks it and releases the actor without it",
+     "at": "src/engine/systems/worktrip.ts:402"
+    }
+   ],
+   "experienced": "Papers lists it as pending under Permission To Work; the decision is a notice; at the first flight, without it, the production releases the actor in words.",
+   "saveLoad": "The professional record (`person.pro`, its `trips` and each engagement's `tripId`), the permit in `person.documents` and the calendar's pending `pro.*` items are in the save; each handler reads the leg's, the trip's or the permit's own status before acting, so a load runs nothing twice. Held across a save and a load at the visa, before the flight and after it by tests/career-world-sydney.test.ts.",
+   "evidence": {
+    "tests": [
+     "tests/career-world-sydney.test.ts"
+    ],
+    "comparisons": [],
+    "mutations": [],
+    "journeys": [
+     "tests/career-world-sydney.test.ts"
+    ]
+   },
+   "missing": "The visa's charge and processing time are the department's tools', not the page's: the charge is none and the time is assumed, each said. A refusal by the department isn't modeled.",
+   "status": "Implemented And Verified",
+   "why": "",
+   "prior": null
+  },
+  {
+   "id": "pro.visa_decision",
+   "kind": "scheduled",
+   "area": "career",
+   "mechanic": true,
+   "seeded": false,
+   "readBy": "career",
+   "readAt": "brief 25",
+   "where": "The clock, the game's assumed ten days after the application (`VISA_KIND`).",
+   "prerequisites": "The permit pending.",
+   "reads": "The booking's last work day and the route's days past it.",
+   "changes": "The permit valid, issued now, running to the last work day and the route's 28 days.",
+   "consumers": [
+    {
+     "what": "each work day reads it in force (`abroadRead`)",
+     "at": "src/engine/systems/worktrip.ts:241"
+    },
+    {
+     "what": "a work day without it releases the actor",
+     "at": "src/engine/systems/projobs.ts:1583"
+    }
+   ],
+   "experienced": "A notice that the visa was granted and to when; Papers shows it valid.",
+   "saveLoad": "The professional record (`person.pro`, its `trips` and each engagement's `tripId`), the permit in `person.documents` and the calendar's pending `pro.*` items are in the save; each handler reads the leg's, the trip's or the permit's own status before acting, so a load runs nothing twice. Held across a save and a load at the visa, before the flight and after it by tests/career-world-sydney.test.ts.",
+   "evidence": {
+    "tests": [
+     "tests/career-world-sydney.test.ts"
+    ],
+    "comparisons": [],
+    "mutations": [],
+    "journeys": [
+     "tests/career-world-sydney.test.ts"
+    ]
+   },
+   "missing": "None found within the module's scope.",
+   "status": "Implemented And Verified",
+   "why": "",
+   "prior": null
+  },
+  {
+   "id": "pro.trip_depart",
+   "kind": "scheduled",
+   "area": "career",
+   "mechanic": true,
+   "seeded": false,
+   "readBy": "career",
+   "readAt": "brief 25",
+   "where": "The clock, at each leg's departure (`DEPART_KIND`); the first leg of each way stops the clock for the player.",
+   "prerequisites": "The leg booked; the leg before it arrived; at the first departure out, permission to work for the booking and a passport in force to the trip's end.",
+   "reads": "The trip's legs, the permit, the passport, whether the player is awake and well.",
+   "changes": "The leg on its way, or missed (the rest of that way canceled; the way home booked a day later); at the first departure out without permission, the trip canceled and the booking released.",
+   "consumers": [
+    {
+     "what": "where the player is, for the School and the casting offices",
+     "at": "src/engine/systems/projobs.ts:582"
+    },
+    {
+     "what": "an audition at home while away is missed",
+     "at": "src/engine/systems/projobs.ts:1521"
+    },
+    {
+     "what": "a booking in the trip's days is refused",
+     "at": "src/engine/systems/projobs.ts:758"
+    }
+   ],
+   "experienced": "The stop at the car to the airport; Home, the School and the calendar read the player as away; a missed flight or a release is a notice.",
+   "saveLoad": "The professional record (`person.pro`, its `trips` and each engagement's `tripId`), the permit in `person.documents` and the calendar's pending `pro.*` items are in the save; each handler reads the leg's, the trip's or the permit's own status before acting, so a load runs nothing twice. Held across a save and a load at the visa, before the flight and after it by tests/career-world-sydney.test.ts.",
+   "evidence": {
+    "tests": [
+     "tests/career-world-sydney.test.ts"
+    ],
+    "comparisons": [],
+    "mutations": [],
+    "journeys": [
+     "tests/career-world-sydney.test.ts"
+    ]
+   },
+   "missing": "Flight delays and missed connections aren't modeled (T24, T25).",
+   "status": "Implemented And Verified",
+   "why": "",
+   "prior": null
+  },
+  {
+   "id": "pro.trip_arrive",
+   "kind": "scheduled",
+   "area": "career",
+   "mechanic": true,
+   "seeded": false,
+   "readBy": "career",
+   "readAt": "brief 25",
+   "where": "The clock, at each leg's arrival (`ARRIVE_KIND`).",
+   "prerequisites": "The leg on its way.",
+   "reads": "The trip's legs and the booking's first call.",
+   "changes": "The leg done; out, the stay begun and the trip there; home, the trip over.",
+   "consumers": [
+    {
+     "what": "the stay checked in",
+     "at": "src/engine/systems/worktrip.ts:449"
+    },
+    {
+     "what": "a work day reads the player there",
+     "at": "src/engine/systems/projobs.ts:1583"
+    },
+    {
+     "what": "the trip over frees its days",
+     "at": "src/engine/systems/worktrip.ts:454"
+    }
+   ],
+   "experienced": "You've Arrived In Sydney, with the first call in both towns' times; You're Home From Sydney.",
+   "saveLoad": "The professional record (`person.pro`, its `trips` and each engagement's `tripId`), the permit in `person.documents` and the calendar's pending `pro.*` items are in the save; each handler reads the leg's, the trip's or the permit's own status before acting, so a load runs nothing twice. Held across a save and a load at the visa, before the flight and after it by tests/career-world-sydney.test.ts.",
+   "evidence": {
+    "tests": [
+     "tests/career-world-sydney.test.ts"
+    ],
+    "comparisons": [],
+    "mutations": [],
+    "journeys": [
+     "tests/career-world-sydney.test.ts"
+    ]
+   },
+   "missing": "None found within the module's scope.",
+   "status": "Implemented And Verified",
+   "why": "",
+   "prior": null
+  },
+  {
+   "id": "pro.ask_pay",
+   "kind": "command",
+   "area": "career",
+   "mechanic": true,
+   "seeded": false,
+   "readBy": "career",
+   "readAt": "brief 25",
+   "where": "Career, Work: Ask About It under a payment that's Overdue, grayed with askRefusal's words.",
+   "prerequisites": "A payment past its payday and unpaid, not asked about already (`askRefusal`).",
+   "reads": "The payment's due, its record (received, in trust) and whether it was asked about.",
+   "changes": "The payment marked asked, with the answer: paid within three business days (the game's assumption); its payday moved up to the answer where it was later; a line in the engagement's history.",
+   "consumers": [
+    {
+     "what": "the payment's state reads Disputed",
+     "at": "src/engine/systems/contracts.ts:220"
+    },
+    {
+     "what": "the Work tab says who was asked and when it'll pay",
+     "at": "src/ui/career/WorkPane.tsx:100"
+    },
+    {
+     "what": "the payroll pays it at the moved payday, once",
+     "at": "src/engine/systems/propay.ts:764"
+    }
+   ],
+   "experienced": "The row's state turns Disputed with the answer's date, and the pay lands on that day.",
+   "saveLoad": "The professional record (`person.pro`: each engagement's `contract`, `allowances` and payments, and `residuals`) and the calendar's pending `pro.*` items are in the save; every handler reads its record's own state (a status, a key, a paid settlement) before acting, so a load runs nothing twice; the series' seasons are worked out from the seed, so a reload decides them the same. Held across a save and a load at each stage by tests/career-contracts.test.ts.",
+   "evidence": {
+    "tests": [
+     "tests/career-contracts.test.ts"
+    ],
+    "comparisons": [],
+    "mutations": [],
+    "journeys": [
+     "tests/career-contracts.test.ts"
+    ]
+   },
+   "missing": "A producer who never pays, a claim with the state's labor department and a lawyer's letter aren't modeled.",
+   "status": "Implemented And Verified",
+   "why": "",
+   "prior": null
+  },
+  {
+   "id": "pro.series",
+   "kind": "reactor",
+   "area": "career",
+   "mechanic": true,
+   "seeded": false,
+   "readBy": "career",
+   "readAt": "brief 25",
+   "where": "The clock, at the first stop after each May 15 from 2030 (`onPassage`): the network's word on The Calloway Files, as a notice and on the Work tab.",
+   "prerequisites": "The player's life; a decision moment passed since the last stop; the series' order run out (seasons through the one beginning in 2029 are ordered).",
+   "reads": "The series' decisions worked out from the seed (`decisionsTo`, decider `pro.series`), the player's castings, bookings and options in it.",
+   "changes": "Canceled: castings in it closed as withdrawn, work booked for days not yet done called off with nothing owed, an option on its next season lapsed once; renewed or revived: nothing booked, the player told where they've worked in it, an open option's contract noting it.",
+   "consumers": [
+    {
+     "what": "the week's postings cast a series part only while a season is made",
+     "at": "src/engine/systems/projobs.ts:522"
+    },
+    {
+     "what": "a casting closed",
+     "at": "src/engine/systems/series.ts:217"
+    },
+    {
+     "what": "work called off, its days worked still paid",
+     "at": "src/engine/systems/series.ts:221"
+    },
+    {
+     "what": "the option lapses with the series",
+     "at": "src/engine/systems/series.ts:226"
+    },
+    {
+     "what": "the contract's fold says the series' word so far",
+     "at": "src/ui/career/WorkPane.tsx:280"
+    }
+   ],
+   "experienced": "A notice the day the network speaks (“The Calloway Files Is Canceled”, “Is Renewed”, “Is Back”); a casting closed and booked work called off with the reason; the series' seasons under The Contract.",
+   "saveLoad": "The professional record (`person.pro`: each engagement's `contract`, `allowances` and payments, and `residuals`) and the calendar's pending `pro.*` items are in the save; every handler reads its record's own state (a status, a key, a paid settlement) before acting, so a load runs nothing twice; the series' seasons are worked out from the seed, so a reload decides them the same. Held across a save and a load at each stage by tests/career-contracts.test.ts.",
+   "evidence": {
+    "tests": [
+     "tests/career-contracts.test.ts"
+    ],
+    "comparisons": [],
+    "mutations": [],
+    "journeys": [
+     "tests/career-contracts.test.ts"
+    ]
+   },
+   "missing": "A real series' renewals aren't simulated: 9-1-1's and Abbott Elementary's parts are guest parts in seasons the game imagines.",
+   "status": "Implemented And Verified",
+   "why": "",
+   "prior": null
+  },
+  {
+   "id": "pro.work_choice",
+   "kind": "command",
+   "area": "career",
+   "mechanic": true,
+   "seeded": false,
+   "readBy": "career",
+   "readAt": "brief 25",
+   "where": "Career, Work: How The Work Is Done, a button for each option of each choice the work asks, grayed with choiceRefusal's words.",
+   "prerequisites": "Work booked and not finished; a choice its format asks; consent to an intimate scene withdrawn only before the day it's shot (`choiceRefusal`).",
+   "reads": "The engagement, its part's format and whether it has an intimate scene (`decisionsFor`).",
+   "changes": "The option kept on the engagement (`choices`), in force from the next day worked; a line in its history.",
+   "consumers": [
+    {
+     "what": "the day's judging leans on the option's dimensions",
+     "at": "src/engine/systems/workflow.ts:248"
+    },
+    {
+     "what": "the takes a scene gets",
+     "at": "src/engine/systems/workflow.ts:343"
+    },
+    {
+     "what": "an intimate scene without consent goes to a body double",
+     "at": "src/engine/systems/workflow.ts:395"
+    },
+    {
+     "what": "the looping session's sync choice",
+     "at": "src/engine/systems/workflow.ts:585"
+    },
+    {
+     "what": "the Work tab shows the option in force",
+     "at": "src/ui/career/WorkPane.tsx:286"
+    }
+   ],
+   "experienced": "The pressed option says now beside it; the next day's report reads its effect (more takes, a strain spared, the stunt by the double or by you).",
+   "saveLoad": "The professional record (`person.pro`: each engagement's `units`, `reports`, `choices`, `script` and `loop`, and `person.health.voice`) and the calendar's pending `pro.*` items are in the save; every handler reads its record's own state (a day reported, a page drawn, a loop's status, an engagement for the next story) before acting, so a load runs nothing twice; every draw is keyed by the work, never by an id, so a reload decides it the same. Held across a save and a load at each stage by tests/career-workflows.test.ts and tests/career-workflows-screen.test.ts.",
+   "evidence": {
+    "tests": [
+     "tests/career-workflows.test.ts",
+     "tests/career-workflows-screen.test.ts"
+    ],
+    "comparisons": [],
+    "mutations": [],
+    "journeys": [
+     "tests/career-workflows-screen.test.ts"
+    ]
+   },
+   "missing": "A director who overrules the actor, and a negotiation over a stunt's pay adjustment, aren't modeled.",
+   "status": "Implemented And Verified",
+   "why": "",
+   "prior": null
+  },
+  {
+   "id": "pro.pages",
+   "kind": "reactor",
+   "area": "career",
+   "mechanic": true,
+   "seeded": false,
+   "readBy": "career",
+   "readAt": "brief 25",
+   "where": "The clock, at the first stop after 6:00 PM the evening before each work day of a format that revises its pages (`onPassage`).",
+   "prerequisites": "Work booked and not finished, its format revising pages; the day not drawn already.",
+   "reads": "The engagement's days and script, the format's share of revisions (decider `pro.pages`, keyed by the work).",
+   "changes": "The script's version up by one for the day and the days after; that share of what was learned of the lines (or of the breakdown, where there are none) taken off; a line in the history; a notice.",
+   "consumers": [
+    {
+     "what": "the units shot that day carry the new version",
+     "at": "src/engine/systems/workflow.ts:655"
+    },
+    {
+     "what": "what was learned falls by the share",
+     "at": "src/engine/systems/workflow.ts:658"
+    },
+    {
+     "what": "the day's report says the pages were revised",
+     "at": "src/engine/systems/workflow.ts:361"
+    },
+    {
+     "what": "the Work tab's report reads it",
+     "at": "src/engine/systems/workflow.ts:473"
+    }
+   ],
+   "experienced": "Revised Pages For Half Past Normal, the evening before, with the share changed and Learn The Lines to put it back.",
+   "saveLoad": "The professional record (`person.pro`: each engagement's `units`, `reports`, `choices`, `script` and `loop`, and `person.health.voice`) and the calendar's pending `pro.*` items are in the save; every handler reads its record's own state (a day reported, a page drawn, a loop's status, an engagement for the next story) before acting, so a load runs nothing twice; every draw is keyed by the work, never by an id, so a reload decides it the same. Held across a save and a load at each stage by tests/career-workflows.test.ts and tests/career-workflows-screen.test.ts.",
+   "evidence": {
+    "tests": [
+     "tests/career-workflows.test.ts",
+     "tests/career-workflows-screen.test.ts"
+    ],
+    "comparisons": [],
+    "mutations": [],
+    "journeys": [
+     "tests/career-workflows-screen.test.ts"
+    ]
+   },
+   "missing": "None found within the module's scope.",
+   "status": "Implemented And Verified",
+   "why": "",
+   "prior": null
+  },
+  {
+   "id": "pro.loop",
+   "kind": "scheduled",
+   "area": "career",
+   "mechanic": true,
+   "seeded": false,
+   "readBy": "career",
+   "readAt": "brief 25",
+   "where": "The clock, at a looping session the production recalled the player to after a screen wrap (`LOOP_KIND`).",
+   "prerequisites": "The loop set, not missed or done; permission to work on the day; the player there.",
+   "reads": "The engagement's contract rate, its loops and the sync choice.",
+   "changes": "The loops judged as a booth's, half a day's pay among the payments and on the clock; missed or not permitted, another actor loops it and nothing is paid.",
+   "consumers": [
+    {
+     "what": "the half day's pay",
+     "at": "src/engine/systems/workflow.ts:598"
+    },
+    {
+     "what": "the payroll pays it on its Thursday",
+     "at": "src/engine/systems/workflow.ts:600"
+    },
+    {
+     "what": "the loop's status read before acting, so it's worked once",
+     "at": "src/engine/systems/workflow.ts:570"
+    }
+   ],
+   "experienced": "A looping session on the calendar and a line in the history: You looped your part, its lines re-recorded, paid half a day.",
+   "saveLoad": "The professional record (`person.pro`: each engagement's `units`, `reports`, `choices`, `script` and `loop`, and `person.health.voice`) and the calendar's pending `pro.*` items are in the save; every handler reads its record's own state (a day reported, a page drawn, a loop's status, an engagement for the next story) before acting, so a load runs nothing twice; every draw is keyed by the work, never by an id, so a reload decides it the same. Held across a save and a load at each stage by tests/career-workflows.test.ts and tests/career-workflows-screen.test.ts.",
+   "evidence": {
+    "tests": [
+     "tests/career-workflows.test.ts",
+     "tests/career-workflows-screen.test.ts"
+    ],
+    "comparisons": [],
+    "mutations": [],
+    "journeys": [
+     "tests/career-workflows-screen.test.ts"
+    ]
+   },
+   "missing": "A recall abroad, and looping over more than one session, aren't modeled.",
+   "status": "Implemented And Verified",
+   "why": "",
+   "prior": null
+  },
+  {
+   "id": "pro.invite",
+   "kind": "scheduled",
+   "area": "career",
+   "mechanic": true,
+   "seeded": false,
+   "readBy": "career",
+   "readAt": "brief 25",
+   "where": "The clock, 240 days after an anthology's wrap whose work was judged Strong or better (`INVITE_KIND`).",
+   "prerequisites": "The anthology has a next story (`invitedFrom`); the player not already in it.",
+   "reads": "The next story's part and the work it follows.",
+   "changes": "The next story's part posted to the player and offered at once, without an audition; a line in the opportunity's history.",
+   "consumers": [
+    {
+     "what": "the part posted and offered",
+     "at": "src/engine/systems/projobs.ts:1851"
+    },
+    {
+     "what": "the offer's line says why",
+     "at": "src/engine/systems/projobs.ts:1854"
+    }
+   ],
+   "experienced": "An offer on the Opportunities tab: the company invited you back into its next story for your work, without an audition.",
+   "saveLoad": "The professional record (`person.pro`: each engagement's `units`, `reports`, `choices`, `script` and `loop`, and `person.health.voice`) and the calendar's pending `pro.*` items are in the save; every handler reads its record's own state (a day reported, a page drawn, a loop's status, an engagement for the next story) before acting, so a load runs nothing twice; every draw is keyed by the work, never by an id, so a reload decides it the same. Held across a save and a load at each stage by tests/career-workflows.test.ts and tests/career-workflows-screen.test.ts.",
+   "evidence": {
+    "tests": [
+     "tests/career-workflows.test.ts",
+     "tests/career-workflows-screen.test.ts"
+    ],
+    "comparisons": [],
+    "mutations": [],
+    "journeys": [
+     "tests/career-workflows-screen.test.ts"
+    ]
+   },
+   "missing": "An anthology's whole company returning, and an invitation declined for a conflict before it's made, aren't modeled.",
+   "status": "Implemented And Verified",
+   "why": "",
+   "prior": null
+  },
+  {
+   "id": "pro.award_enter",
+   "kind": "command",
+   "area": "career",
+   "mechanic": true,
+   "seeded": false,
+   "readBy": "career",
+   "readAt": "brief 25",
+   "where": "Career, Charts And Awards: Your Recognition, Enter Yourself under each television part eligible and not entered, grayed with entryRefusal's words.",
+   "prerequisites": "A television credit eligible by the 78th's rules (`emmyCheck`: on the air or due on it, its kind, its episodes and its share of the running time), not yet entered for its year, before its edition's entry deadline, and a bank that can pay the $125 processing charge and the $100 entry fee (`entryRefusal`).",
+   "reads": "The credit, its engagement's scenes kept in the edit and their episodes, the release on the clock, the edition's dates and fees.",
+   "changes": "The fee spent from the bank (`spend`, `career`); an entry kept on the record, entered by you, in its category and year.",
+   "consumers": [
+    {
+     "what": "the fee paid from the bank",
+     "at": "src/engine/systems/awards.ts:226"
+    },
+    {
+     "what": "the nominations read only an entered performance",
+     "at": "src/engine/systems/awards.ts:453"
+    },
+    {
+     "what": "the field is drawn and the nominations made for it",
+     "at": "src/engine/systems/awards.ts:455"
+    },
+    {
+     "what": "Your Recognition says where it stands",
+     "at": "src/ui/career/IndustryPane.tsx:101"
+    }
+   ],
+   "experienced": "Entered for Outstanding Guest Actress In A Drama Series at the 79th Emmy Awards; the nominations are announced on July 8, 2027. The fee is in the bank's history.",
+   "saveLoad": "The professional record (`person.pro`: `awards`, one entry for each performance and Emmy year with its field, nominees, winner and ceremony; `festivals`; each credit's `run`) is in the save; every step reads its record's own state before acting (an entry's field drawn, its winner settled, a festival's word given), so a load runs nothing twice; every draw is keyed by the year, the category or the work, never by an id, so a reload decides it the same. Held across a save and a load at each stage by tests/career-awards.test.ts and tests/career-awards-screen.test.ts.",
+   "evidence": {
+    "tests": [
+     "tests/career-awards.test.ts",
+     "tests/career-awards-screen.test.ts"
+    ],
+    "comparisons": [],
+    "mutations": [],
+    "journeys": [
+     "tests/career-awards-screen.test.ts"
+    ]
+   },
+   "missing": "A performer's choice of category, which the rules leave to the entrant, is the game's (a part in under half the episodes enters as a guest).",
+   "status": "Implemented And Verified",
+   "why": "",
+   "prior": null
+  },
+  {
+   "id": "pro.watch_ceremony",
+   "kind": "command",
+   "area": "career",
+   "mechanic": true,
+   "seeded": false,
+   "readBy": "career",
+   "readAt": "brief 25",
+   "where": "Career, Charts And Awards: Your Recognition, Watch The Ceremony under a nominated entry, grayed with watchRefusal's words until the award is presented.",
+   "prerequisites": "A nomination, and the clock at its ceremony (`watchRefusal`).",
+   "reads": "The entry's result, settled at the final round (`field.winner`).",
+   "changes": "Nothing of the result: the day it was watched (`watchedAt`), and the ceremony's lines shown.",
+   "consumers": [
+    {
+     "what": "the ceremony's lines, read from the settled result",
+     "at": "src/engine/systems/awards.ts:522"
+    },
+    {
+     "what": "the entry keeps the day it was watched",
+     "at": "src/engine/systems/awards.ts:611"
+    },
+    {
+     "what": "Your Recognition shows the lines once watched",
+     "at": "src/ui/career/IndustryPane.tsx:103"
+    }
+   ],
+   "experienced": "The nominees read, the envelope opened, and the result: you won, or you didn't and your nomination stands. A twin who skipped it has the same result.",
+   "saveLoad": "The professional record (`person.pro`: `awards`, one entry for each performance and Emmy year with its field, nominees, winner and ceremony; `festivals`; each credit's `run`) is in the save; every step reads its record's own state before acting (an entry's field drawn, its winner settled, a festival's word given), so a load runs nothing twice; every draw is keyed by the year, the category or the work, never by an id, so a reload decides it the same. Held across a save and a load at each stage by tests/career-awards.test.ts and tests/career-awards-screen.test.ts.",
+   "evidence": {
+    "tests": [
+     "tests/career-awards.test.ts",
+     "tests/career-awards-screen.test.ts"
+    ],
+    "comparisons": [],
+    "mutations": [],
+    "journeys": [
+     "tests/career-awards-screen.test.ts"
+    ]
+   },
+   "missing": "None found within the module's scope.",
+   "status": "Implemented And Verified",
+   "why": "",
+   "prior": null
+  },
+  {
+   "id": "pro.awards",
+   "kind": "reactor",
+   "area": "career",
+   "mechanic": true,
+   "seeded": false,
+   "readBy": "career",
+   "readAt": "brief 25",
+   "where": "The clock, at every stop (`onPassage`): each television credit's Emmy year and each film's Sundance year, step by step.",
+   "prerequisites": "A professional credit; for an Emmy step, its eligibility and its edition's dates; for Sundance, its category, its deadline and its premiere.",
+   "reads": "The credits, their eligibility (`emmyCheck`, `festivalCheck`), the editions' dates, the deciders awards.entry, awards.field, awards.final, festival.submit and festival.select, keyed by the year, the category and the work.",
+   "changes": "At the deadline, the production's entry or not; at the nominations, the field and the nominees; at the final round's end, the winner; at the ceremony, won or lost; a disqualification where the work no longer meets the rules; the festival's submission, its word and the screening; notices for each.",
+   "consumers": [
+    {
+     "what": "an entry whose work no longer meets the rules is disqualified",
+     "at": "src/engine/systems/awards.ts:437"
+    },
+    {
+     "what": "the winner settled at the final round's end",
+     "at": "src/engine/systems/awards.ts:474"
+    },
+    {
+     "what": "the result given at the ceremony",
+     "at": "src/engine/systems/awards.ts:476"
+    },
+    {
+     "what": "the production submits its film",
+     "at": "src/engine/systems/awards.ts:489"
+    },
+    {
+     "what": "the festival selects it or doesn't",
+     "at": "src/engine/systems/awards.ts:497"
+    },
+    {
+     "what": "casting reads the recognition it leaves",
+     "at": "src/engine/systems/projobs.ts:1933"
+    },
+    {
+     "what": "the Portfolio keeps what was recognized",
+     "at": "src/ui/workspaces/CareerWorkspace.tsx:143"
+    }
+   ],
+   "experienced": "You’re Nominated For An Emmy; The Creative Arts Emmys Tonight; Last Bus To Eastview Is Selected For Sundance; the Portfolio's Recognition; a casting decision's chance a little higher afterward.",
+   "saveLoad": "The professional record (`person.pro`: `awards`, one entry for each performance and Emmy year with its field, nominees, winner and ceremony; `festivals`; each credit's `run`) is in the save; every step reads its record's own state before acting (an entry's field drawn, its winner settled, a festival's word given), so a load runs nothing twice; every draw is keyed by the year, the category or the work, never by an id, so a reload decides it the same. Held across a save and a load at each stage by tests/career-awards.test.ts and tests/career-awards-screen.test.ts.",
+   "evidence": {
+    "tests": [
+     "tests/career-awards.test.ts",
+     "tests/career-awards-screen.test.ts"
+    ],
+    "comparisons": [],
+    "mutations": [],
+    "journeys": [
+     "tests/career-awards-screen.test.ts"
+    ]
+   },
+   "missing": "No other award or festival is decided; their rules weren't read, and the inventory says so.",
+   "status": "Implemented And Verified",
+   "why": "",
+   "prior": null
   }
  ],
  "promises": [
@@ -2864,6 +3458,46 @@
    "seeded": false,
    "readBy": "career",
    "readAt": "e0b60f74"
+  },
+  {
+   "id": "promise.career.work-abroad>documents.work",
+   "kind": "immediate",
+   "claim": "The visa is a permission to work in Papers, pending until the department decides.",
+   "entryFile": "src/engine/content/guide/career.ts",
+   "holds": "`applyVisa` writes a permit, pending and tied to the engagement (src/engine/systems/worktrip.ts:294), and Papers' Permission To Work lists permits (`DocumentList`, src/ui/papers/Documents.tsx:297); the journey draws it there after applying.",
+   "tests": [
+    "tests/career-world-sydney.test.ts"
+   ],
+   "evidence": {
+    "tests": [
+     "tests/career-world-sydney.test.ts"
+    ]
+   },
+   "status": "Implemented And Verified",
+   "why": "",
+   "seeded": false,
+   "readBy": "career-world",
+   "readAt": "f341b3b1"
+  },
+  {
+   "id": "promise.career.work-abroad>career.offers",
+   "kind": "prerequisite",
+   "claim": "You apply for it once you’ve accepted the work abroad.",
+   "entryFile": "src/engine/content/guide/career.ts",
+   "holds": "`visaRefusal` refuses without an engagement abroad (src/engine/systems/worktrip.ts:267); the journey's Apply For The Visa before Accept is refused in those words.",
+   "tests": [
+    "tests/career-world-sydney.test.ts"
+   ],
+   "evidence": {
+    "tests": [
+     "tests/career-world-sydney.test.ts"
+    ]
+   },
+   "status": "Implemented And Verified",
+   "why": "",
+   "seeded": false,
+   "readBy": "career-world",
+   "readAt": "f341b3b1"
   }
  ]
 }

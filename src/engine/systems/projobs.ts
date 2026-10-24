@@ -49,7 +49,8 @@
  *
  * **Every number here is the game's estimate unless it cites a source**: the timings of a casting office, the chances,
  * the trips and the lead time are ASSUMPTIONS, said so on the screen. The rates are the unions' (`RATES`). Every
- * project, company and casting office is fictional, and each says so where it's first shown.
+ * project, company and casting office is fictional but a part drawn from a real production (from 2026-10-23, brief 25's
+ * Module 2), and each says which it is where it's first shown. Until then every one was fictional.
  */
 
 import type { Simulation } from '../core/simulation';
@@ -69,7 +70,7 @@ import { PROJECTS, RATES, minimumOn, projectById, type ProjectKind, type Project
 import { agencyOf, agentById, type AgentField } from '../content/agents';
 import { IN_TOWN_MINUTES } from '../world/calendar';
 import {
-  activeAgreement, addCredit, currentOf, eligibilityOf, ensurePro, keepBounded, materialsCheck, noteEvent, reelSources, releaseScreenCredit, resolved,
+  activeAgreement, addCredit, currentOf, eligibilityOf, ensurePro, finished, keepBounded, materialsCheck, noteEvent, reelSources, releaseScreenCredit, resolved,
   type Agreement, type AuditionRound, type Engagement, type MaterialProblem, type Opportunity, type OutsideWorkRequest, type PartPrep,
   type ProEventKind, type ProPayment,
 } from './pro';
@@ -88,9 +89,18 @@ import {
   termOf, termStart,
 } from './school';
 import { OPT_ZONE, PERMISSION_ENDED, f1Of, optRunsOut, settleOpt, usWorkAuthorized, workAuthorizedFor } from './permission';
-import { documentsOf } from './documents';
-import { EQUITY_JOINED, dropPaydays, negotiatedAmount, sagWorkRefusal, schedulePay } from './propay';
+import { documentsOf, passportOf } from './documents';
+import { EQUITY_JOINED, SAG_QUALIFIES, dropPaydays, eligibilityRead, negotiatedAmount, sagWorkRefusal, schedulePay } from './propay';
+import { TRIP, US_RULES, abroadRead, awayOn, bookTrip, needsTrip, planTrip, registerWorkTrips, tripSpans, whereAt, whereWords, windowOf as tripWindow } from './worktrip';
 import { AGENT_TIMES, MEETING_KIND, TRAVEL_MINUTES } from './proagent';
+import { companiesAs, productionById } from '../content/catalog';
+import { episodeDays, episodesFrom, seasonYearAt, seriesById } from '../content/series';
+import { clauseOf, contractFor, entitle, overtimeOf, paysOvertime, OPTION_RAISE } from './contracts';
+import { inProduction, registerSeries, scheduleSeason, seasonOf } from './series';
+import { STEP_LABEL, STEP_WORDS, afterWrap, dubDaysOf, cutInEdit, formatOf, keptBand, payUnitsOf, planWork, registerWorkflows, sessionDays, stepOf, voiceOnly, workHoursOf, workTheDay, workflowOf } from './workflow';
+import { RELEASED } from '../content/workflows';
+import { registerAwards, visibilityOf } from './awards';
+import { simulateRun } from './charts';
 
 // ---------------------------------------------------------------------------------------------------------------------
 // The rules: each a published one with its source, or the game's ASSUMPTION
@@ -118,6 +128,12 @@ export const WORK = {
   offerDays: 3, offerHour: 17,
   leadDays: 35,
   shoot: { hour: 7, minutes: 660 }, rehearsal: { hour: 10, minutes: 480 }, performance: { hour: 20, minutes: 150 },
+  /**
+   * The workflows' days (from 2026-10-24, brief 25's Module 5), ASSUMPTION each: a multicamera table read from ten for
+   * four hours, its tape night from two for eight, the camera run before the audience comes in; a fight rehearsal from
+   * ten for six.
+   */
+  tableRead: { hour: 10, minutes: 240 }, tapeNight: { hour: 14, minutes: 480 }, fightRehearsal: { hour: 10, minutes: 360 },
   /** Asking for another time: once, at least a day ahead, the casting office's other times (eleven, two and five) in the next three weekdays. */
   moveAheadHours: 24, movesAllowed: 1, moveSlots: [11, 14, 17] as readonly number[], moveDays: 3,
   /** A step on the whole part takes twice its time on the sides; the part starts from half the sides' preparation. */
@@ -133,8 +149,13 @@ export const WORK = {
  * project's breakdown reaches a represented actor's agent in one. ASSUMPTION: the game's, for a steady trickle.
  */
 export const POSTING = {
-  open: { 'student-film': 0.3, 'non-union-short': 0.25, 'ultra-low-budget': 0.15, lort: 0.12 } as Readonly<Partial<Record<ProjectKind, number>>>,
+  open: { 'student-film': 0.3, 'non-union-short': 0.25, 'ultra-low-budget': 0.15, lort: 0.12, 'overseas-feature': 0.1, 'animated-series': 0.08, 'animated-feature': 0.06, dub: 0.08, documentary: 0.08, musical: 0.08 } as Readonly<Partial<Record<ProjectKind, number>>>,
   agent: 0.2,
+  /**
+   * The chance a breakdown of a kind added with the workflows reaches the agent in a week (from 2026-10-24, brief 25's
+   * Module 5), where it isn't `agent`: rarer work for an emerging actor, so nine kinds more don't post nine times as often.
+   */
+  agentKind: { 'multicam-comedy': 0.08, 'capture-feature': 0.05, musical: 0.08, 'action-feature': 0.06, 'limited-series': 0.06, 'serialized-drama': 0.07, 'serialized-comedy': 0.07, anthology: 0.06, 'tv-movie': 0.06 } as Readonly<Partial<Record<ProjectKind, number>>>,
   /**
    * A project casts its role once a cycle: posted again only ten weeks after its last posting to the actor, and only once
    * the work that posting cast is over, as a new casting of the part (`againWords`). The second half from 2026-10-21
@@ -154,7 +175,11 @@ export const CASTING = {
   final: { unready: 0.04, working: 0.18, strong: 0.38, exceptional: 0.58 } as Readonly<Record<Band, number>>,
   callback: { unready: 0.1, working: 0.45, strong: 0.78, exceptional: 0.9 } as Readonly<Record<Band, number>>,
   fitFloor: 0.4,
-  field: { 'off-broadway': 0.8, lort: 0.85, 'network-drama': 0.75, 'low-budget': 0.85, 'ultra-low-budget': 1, 'student-film': 1.25, 'non-union-short': 1.2 } as Readonly<Record<ProjectKind, number>>,
+  field: {
+    'off-broadway': 0.8, lort: 0.85, 'network-drama': 0.75, 'low-budget': 0.85, 'ultra-low-budget': 1, 'student-film': 1.25, 'non-union-short': 1.2, 'overseas-feature': 0.8, 'network-comedy': 0.75,
+    'multicam-comedy': 0.75, 'animated-series': 0.9, 'animated-feature': 0.8, dub: 1.1, 'capture-feature': 0.9, documentary: 1.1, musical: 0.85, 'action-feature': 0.8,
+    'limited-series': 0.8, 'serialized-drama': 0.8, 'serialized-comedy': 0.8, anthology: 0.85, 'tv-movie': 0.9,
+  } as Readonly<Record<ProjectKind, number>>,
   least: 0.01, most: 0.8,
   /** An actor plays three years either side of their own age. */
   playingSpread: 3,
@@ -169,6 +194,21 @@ export const FIELD_WORDS: Readonly<Record<ProjectKind, string>> = {
   'ultra-low-budget': 'a middling field',
   'student-film': 'a small field: a student film sees fewer actors',
   'non-union-short': 'a small field',
+  'overseas-feature': 'a large field: a studio feature shooting abroad sees tapes from actors in more than one country',
+  'network-comedy': 'the largest field: a network co-star is seen by the most actors',
+  'multicam-comedy': 'the largest field: a network co-star is seen by the most actors',
+  'animated-series': 'a large field: voice casting hears actors from everywhere',
+  'animated-feature': 'a large field: an animated feature hears actors from everywhere',
+  dub: 'a middling field: dubbing casts from the voice actors it knows',
+  'capture-feature': 'a large field',
+  documentary: 'a middling field',
+  musical: 'a large field: a regional musical casts from New York',
+  'action-feature': 'a large field',
+  'limited-series': 'a large field',
+  'serialized-drama': 'a large field',
+  'serialized-comedy': 'a large field',
+  anthology: 'a large field',
+  'tv-movie': 'a large field',
 };
 
 /** Missed work days a project allows before replacing the actor: the stage's understudy covers one, a shoot can't wait. ASSUMPTION. */
@@ -176,7 +216,9 @@ export const MISSES = { stage: 1, screen: 0 } as const;
 
 /** How long after it's shot a screen project comes out, so its footage can go on a reel. ASSUMPTION, by kind. */
 export const RELEASE_DAYS: Readonly<Partial<Record<ProjectKind, number>>> = {
-  'network-drama': 120, 'low-budget': 365, 'ultra-low-budget': 300, 'student-film': 180, 'non-union-short': 150,
+  'network-drama': 120, 'low-budget': 365, 'ultra-low-budget': 300, 'student-film': 180, 'non-union-short': 150, 'overseas-feature': 365, 'network-comedy': 120,
+  'multicam-comedy': 60, 'animated-series': 240, 'animated-feature': 540, dub: 90, 'capture-feature': 450, documentary: 200, 'action-feature': 365,
+  'limited-series': 240, 'serialized-drama': 200, 'serialized-comedy': 180, anthology: 200, 'tv-movie': 120,
 };
 
 /** The School's rule on outside work in term: the design's ASSUMPTIONS for the Bulletin's words (this file's header). */
@@ -235,11 +277,15 @@ function weekdayFrom(t: Instant, hour: number, zone: string = NY): Instant {
 export const KIND_WORDS: Readonly<Record<ProjectKind, string>> = {
   'off-broadway': 'Off-Broadway play', lort: 'play in a regional theater’s season', 'network-drama': 'network television drama',
   'low-budget': 'low-budget feature film', 'ultra-low-budget': 'ultra-low-budget feature film', 'student-film': 'student film',
-  'non-union-short': 'non-union short film',
+  'non-union-short': 'non-union short film', 'overseas-feature': 'studio feature film shooting abroad', 'network-comedy': 'network television comedy',
+  'multicam-comedy': 'multicamera television comedy', 'animated-series': 'animated television series', 'animated-feature': 'animated feature film',
+  dub: 'English dub of a series from abroad', 'capture-feature': 'feature film’s performance capture', documentary: 'documentary', musical: 'musical in a regional theater’s season',
+  'action-feature': 'studio action feature', 'limited-series': 'limited series', 'serialized-drama': 'serialized television drama',
+  'serialized-comedy': 'serialized television comedy', anthology: 'anthology series', 'tv-movie': 'television movie',
 };
 
 /** One work day: when, its label on the calendar, and what it is. */
-export interface WorkDay { from: Instant; to: Instant; label: string; kind: 'rehearsal' | 'performance' | 'shoot' }
+export interface WorkDay { from: Instant; to: Instant; label: string; kind: 'rehearsal' | 'performance' | 'shoot' | 'session' }
 
 /**
  * The work's days, worked out from the posting and the project's schedule (`content/careerwork.ts`): a shoot's days on
@@ -250,20 +296,50 @@ export interface WorkDay { from: Instant; to: Instant; label: string; kind: 'reh
 export function datesOf(o: Pick<Opportunity, 'projectId' | 'postedAt'>): WorkDay[] {
   const t = projectOf(o);
   const zone = zoneOf(t.place.cityId);
-  const start = addDays(dayAt(o.postedAt, 12, zone), WORK.leadDays, zone);
+  const start = addDays(dayAt(o.postedAt, 12, zone), t.leadDays ?? WORK.leadDays, zone);
   const at = (d: Instant, s: { hour: number; minutes: number }) => { const from = dayAt(d, s.hour, zone); return { from, to: from + s.minutes * MIN }; };
   const out: WorkDay[] = [];
+  if (t.schedule.kind === 'episodes') return episodeWorkDays(t, start, t.schedule.guaranteed);
   if (t.schedule.kind === 'shoot') {
-    for (let d = start; out.length < t.schedule.days; d = addDays(d, 1, zone)) {
+    // An action shoot's fight rehearsal days first (from 2026-10-24, brief 25's Module 5), with the stunt coordinator.
+    const before = t.schedule.rehearsalDays ?? 0;
+    const total = t.schedule.days + before;
+    let shot = 0;
+    for (let d = start; out.length < total; d = addDays(d, 1, zone)) {
       const wd = weekdayOf(d, zone);
-      if (wd >= 1 && wd <= 5) out.push({ ...at(d, WORK.shoot), label: `${t.project}: Shoot Day ${out.length + 1}`, kind: 'shoot' });
+      if (wd < 1 || wd > 5) continue;
+      if (out.length < before) { out.push({ ...at(d, WORK.fightRehearsal), label: `${t.project}: ${STEP_LABEL['stunt-rehearsal']} ${out.length + 1}`, kind: 'shoot' }); continue; }
+      shot += 1;
+      const step = stepOf(t, out.length);
+      const day = step === 'stunt-day' ? STEP_LABEL['stunt-day'].replace('Shoot Day', `Shoot Day ${shot}`) : step === 'reenactment' ? `${STEP_LABEL.reenactment} ${shot}` : `Shoot Day ${shot}`;
+      out.push({ ...at(d, WORK.shoot), label: `${t.project}: ${day}`, kind: 'shoot' });
     }
     return out;
+  }
+  // A multicamera episode's week from its first Monday (Module 5): the table read Monday morning, rehearsal and camera
+  // blocking Tuesday to Thursday, and the tape night Friday before a studio audience.
+  if (t.schedule.kind === 'week') {
+    let monday = start;
+    while (weekdayOf(monday, zone) !== 1) monday = addDays(monday, 1, zone);
+    for (let w = 0; w < t.schedule.weeks; w += 1) {
+      for (let k = 0; k < 5; k += 1) {
+        const day = addDays(monday, w * 7 + k, zone);
+        const step = stepOf(t, w * 5 + k);
+        out.push({ ...at(day, step === 'table-read' ? WORK.tableRead : step === 'tape-night' ? WORK.tapeNight : WORK.rehearsal), label: `${t.project}: ${STEP_LABEL[step]}`, kind: 'shoot' });
+      }
+    }
+    return out;
+  }
+  // Sessions on weekdays (Module 5): the booth, the dub, narration, the capture stage.
+  if (t.schedule.kind === 'sessions') {
+    const step = stepOf(t, 0);
+    return sessionDays(t, start, zone).map((d, k) => ({ ...d, label: `${t.project}: ${STEP_LABEL[step]} ${k + 1}`, kind: step === 'capture' ? 'shoot' as const : 'session' as const }));
   }
   let tuesday = start;
   while (weekdayOf(tuesday, zone) !== 2) tuesday = addDays(tuesday, 1, zone);
   for (let w = 0; w < t.schedule.rehearsalWeeks; w += 1) {
-    for (let k = 0; k < 5; k += 1) out.push({ ...at(addDays(tuesday, w * 7 + k, zone), WORK.rehearsal), label: `${t.project}: Rehearsal`, kind: 'rehearsal' });
+    // A musical's music rehearsals and choreography come first (Module 5): each day named for what it is.
+    for (let k = 0; k < 5; k += 1) out.push({ ...at(addDays(tuesday, w * 7 + k, zone), WORK.rehearsal), label: `${t.project}: ${STEP_LABEL[stepOf(t, w * 5 + k)]}`, kind: 'rehearsal' });
   }
   const opening = addDays(tuesday, t.schedule.rehearsalWeeks * 7, zone);
   for (let w = 0; w < t.schedule.performanceWeeks; w += 1) {
@@ -272,9 +348,33 @@ export function datesOf(o: Pick<Opportunity, 'projectId' | 'postedAt'>): WorkDay
   return out;
 }
 
+/**
+ * A recurring part's guaranteed episodes from a day on (from 2026-10-24, brief 25's Module 4, D7): the season's next
+ * episodes from then, in the season whose window holds it or, in the hiatus, the one beginning that August, each episode's
+ * shoot days as a shoot's. Fewer than asked where the season has fewer left, and the posting waits for the next.
+ */
+export function episodeWorkDays(t: ProjectTemplate, from: Instant, count: number, year?: number): WorkDay[] {
+  const s = t.series ? seriesById(t.series) : undefined;
+  if (!s) return [];
+  const y = year ?? seasonYearAt(s, from) ?? zonedParts(from, NY).year;
+  return episodesFrom(s, y, from).slice(0, count).flatMap((n) => episodeOn(t, y, n));
+}
+
+/** One episode's shoot days, each labeled with the episode. */
+export function episodeOn(t: ProjectTemplate, year: number, n: number): WorkDay[] {
+  const s = seriesById(t.series!)!;
+  return episodeDays(s, year, n).map((d, k) => ({ from: d, to: d + WORK.shoot.minutes * MIN, label: `${t.project}: Episode ${n}, Shoot Day ${k + 1}`, kind: 'shoot' as const }));
+}
+
+/** The episode a booked day is in, read from its label, where it's a recurring part's. */
+export const episodeOfDay = (d: { label: string }): number | undefined => { const m = /: Episode (\d+),/.exec(d.label); return m ? Number(m[1]) : undefined; };
+
 /** A booked day's kind, read from where it falls in the project's schedule: a run's rehearsals come first. */
 export function dayKindOf(t: ProjectTemplate, index: number): WorkDay['kind'] {
-  if (t.schedule.kind === 'shoot') return 'shoot';
+  // A recurring part's episodes are shoot days (from 2026-10-24): until then a schedule was a run's or a shoot's. A booth's
+  // session is its own from Module 5; a multicamera week's days and an action shoot's rehearsals are a screen production's.
+  if (t.schedule.kind === 'sessions') return stepOf(t, index) === 'capture' ? 'shoot' : 'session';
+  if (t.schedule.kind !== 'run') return 'shoot';
   return index < t.schedule.rehearsalWeeks * 5 ? 'rehearsal' : 'performance';
 }
 
@@ -322,8 +422,10 @@ export function payWords(terms: PayTerms, amount: Money | undefined = terms.each
 /** The department field a project falls in, by the agent's published list (`content/agents.ts`). */
 export function fieldOf(t: ProjectTemplate): AgentField {
   if (t.kind === 'off-broadway') return 'off-broadway';
-  if (t.kind === 'lort') return 'regional';
-  if (t.kind === 'network-drama') return 'television';
+  if (t.kind === 'lort' || t.kind === 'musical') return 'regional';
+  // By the medium (from 2026-10-23, brief 25's Module 2): until then by the one television kind, network drama, so the
+  // network comedy it added would have been filed under film.
+  if (t.medium === 'television') return 'television';
   return 'film';
 }
 
@@ -482,20 +584,46 @@ export function postingsAt(sim: Simulation, person: Person, at: Instant): { proj
     // and could be booked and credited a second time (two Desk Clerks in The Calloway Files, found by the playthroughs).
     // Read from the engagements, live or kept, and from the credits, which are kept for good where finished engagements are
     // trimmed.
-    if (person.pro?.engagements.some((e) => e.projectId === t.id && e.status !== 'canceled') || person.pro?.credits.some((c) => c.project === t.project && c.role === t.role.part)) continue;
-    const chance = via === 'agent' ? POSTING.agent : POSTING.open[t.kind] ?? 0;
+    // A part in a series is cast again for a later season (from 2026-10-24, brief 25's Module 4, D8): booked in this one,
+    // or booked and not yet done, it isn't posted.
+    if (t.series) {
+      const days = datesOf({ projectId: t.id, postedAt: at });
+      if (!seriesPosts(sim, t, days, at)) continue;
+      const season = seriesSeasonOf(t, days[0]!.from);
+      if (person.pro?.engagements.some((e) => e.projectId === t.id && e.status !== 'canceled' && (!finished(e) || seriesSeasonOf(t, e.days[0]?.from ?? 0) === season))) continue;
+    } else if (person.pro?.engagements.some((e) => e.projectId === t.id && e.status !== 'canceled') || person.pro?.credits.some((c) => c.project === t.project && c.role === t.role.part)) continue;
+    const chance = via === 'agent' ? POSTING.agentKind[t.kind] ?? POSTING.agent : POSTING.open[t.kind] ?? 0;
     if (sim.rng('pro.posting', week, t.id, via).next() < chance) out.push({ project: t, via });
   }
   return out;
 }
 
+/** The season a day of a series part falls in, by the year it began. */
+const seriesSeasonOf = (t: ProjectTemplate, at: Instant): number | undefined => { const s = t.series ? seriesById(t.series) : undefined; return s ? seasonYearAt(s, at) : undefined; };
+
+/**
+ * Whether a part in a series is cast for work on these days (from 2026-10-24, brief 25's Module 4, D8): each day in a
+ * season being made (`inProduction`, `systems/series.ts`), and a recurring part only with its guaranteed episodes all left
+ * in the season.
+ */
+export function seriesPosts(sim: Simulation, t: ProjectTemplate, days: readonly WorkDay[], at: Instant): boolean {
+  if (!t.series) return true;
+  if (t.schedule.kind === 'episodes' && days.length < t.schedule.guaranteed * (seriesById(t.series)?.daysEach ?? 0)) return false;
+  return days.length > 0 && inProduction(sim, t.series, days, at);
+}
+
 /**
  * Casting's decision on a round (the decider `pro.casting`): the chance the band, the fit and the field give, and a draw
- * for the field of other actors, keyed by the opportunity and the round so a reload decides the same.
+ * for the field of other actors, keyed by the posting (its project and when it was posted) and the round, so a reload
+ * decides the same. Until 2026-10-23 (brief 25, criteria C11) it was keyed by the opportunity's id, its place in the
+ * save's numbering, so a project added to the game took an id ahead of later postings and changed their casting: brief
+ * 25's eighth project moved a played life's (tests/journey-career.test.ts) first booking from December to June.
  */
-export function castingDraw(sim: Simulation, o: Pick<Opportunity, 'id' | 'projectId'>, round: 'callback' | 'final', band: Band, fit: number): { chance: number; yes: boolean } {
-  const chance = chanceOf(band, fit, projectOf(o).kind, round);
-  return { chance, yes: sim.rng('pro.casting', o.id, round).next() < chance };
+export function castingDraw(sim: Simulation, o: Pick<Opportunity, 'projectId' | 'postedAt'>, round: 'callback' | 'final', band: Band, fit: number, lift = 0): { chance: number; yes: boolean } {
+  // The player's visibility lifts the chance (from 2026-10-24, brief 25's Module 6, X13: `visibilityOf`), within casting's
+  // own ceiling, and never past it.
+  const chance = r3(Math.min(CASTING.most, chanceOf(band, fit, projectOf(o).kind, round) * (1 + lift)));
+  return { chance, yes: sim.rng('pro.casting', o.projectId, o.postedAt, round).next() < chance };
 }
 
 // ---------------------------------------------------------------------------------------------------------------------
@@ -522,6 +650,26 @@ export function inSessionAt(person: Person, when: Instant): boolean {
 /** Whether any of the work falls in term. */
 export const inSessionAny = (person: Person, days: readonly { from: Instant }[]): boolean => days.some((d) => inSessionAt(person, d.from));
 
+/** The country of a project's town, by the gazetteer's id. */
+export const countryOfProject = (t: Pick<ProjectTemplate, 'place'>): string => CITIES.get(t.place.cityId)?.countryId ?? (t.place.cityId.startsWith('us-') ? 'us' : '');
+/** Whether a project's work is reached by a trip from home, abroad or in the US (`systems/worktrip.ts`, from 2026-10-23, the owner's brief 25). */
+export const travels = (person: Person, t: ProjectTemplate): boolean => t.trip !== undefined && needsTrip(person.currentLocationId, t.place.cityId);
+/** Whether that trip is abroad, so the work reads the country's permission. Until Module 2 (2026-10-23) every trip was. */
+export const abroad = (person: Person, t: ProjectTemplate): boolean => travels(person, t) && countryOfProject(t) !== US_RULES;
+
+/**
+ * The time a booking takes the actor away for: its work days, or, for work abroad, every day from the trip's first leg to
+ * its last, whole, since nothing at home can be gone to while away (W8). From 2026-10-23, the owner's brief 25.
+ */
+export function spansOf(person: Person, t: ProjectTemplate, days: readonly WorkDay[] | readonly { from: Instant; to: Instant; label: string }[]): { from: Instant; to: Instant; label: string }[] {
+  if (!travels(person, t)) return [...days];
+  const span = tripWindow(planTrip(person.currentLocationId, t.place.cityId, days)?.legs ?? []);
+  if (!span) return [...days];
+  const out: { from: Instant; to: Instant; label: string }[] = [];
+  for (let d = dayAt(span.from, 0); d < span.to; d = addDays(d, 1, NY)) out.push({ from: Math.max(d, span.from), to: Math.min(addDays(d, 1, NY), span.to), label: `${t.project}: Away In ${t.place.city}` });
+  return out;
+}
+
 /**
  * The School's own calls (a production's, the Cabaret's, a shift, the showcase's) pending on the work's days, with the
  * trip each way: a kind of the School's, or any the School files under its category. The day's classes name no person,
@@ -536,7 +684,7 @@ export function schoolCallsOn(sim: Simulation, person: Person, days: readonly { 
 }
 
 /** The class days the work takes: a day of the timetable with a course in it, inside the work's hours and the trip. */
-export function classDaysIn(person: Person, days: readonly WorkDay[], cityId: string): number {
+export function classDaysIn(person: Person, days: readonly { from: Instant; to: Instant }[], cityId: string): number {
   const school = person.school;
   if (!school || schoolEnded(school.standing)) return 0;
   const away = tripMinutes(person.currentLocationId, cityId) * MIN;
@@ -557,6 +705,14 @@ export function classDaysIn(person: Person, days: readonly WorkDay[], cityId: st
 export function awayAt(person: Person, when: Instant): { label: string; approved: boolean } | undefined {
   const pro = person.pro;
   if (!pro) return undefined;
+  // Away on a trip for work abroad (from 2026-10-23, the owner's brief 25, W8): from the first leg out to the last leg
+  // home, wherever the trip has got to.
+  const w = awayOn(person, when);
+  if (w?.trip) {
+    const e = pro.engagements.find((x) => x.id === w.trip!.engagementId);
+    const t = e ? projectById(e.projectId) : undefined;
+    return { label: `${t?.project ?? 'Work'}: Away In ${CITIES.get(w.trip.cityId)?.name ?? 'Another Country'}`, approved: e?.school === 'approved' };
+  }
   for (const e of pro.engagements) {
     const t = projectById(e.projectId);
     if (!t) continue;
@@ -693,8 +849,10 @@ export function conditionsFor(sim: Simulation, person: Person, o: Opportunity, a
   const days = datesOf(o);
   const first = days[0]!.from;
   const ahead = Math.floor((first - askedAt) / MS_DAY);
-  const calls = schoolCallsOn(sim, person, days, t.place.cityId).filter((i) => i.kind === CALL_KIND);
-  const classes = classDaysIn(person, days, t.place.cityId);
+  // Abroad, the whole trip is away from the School (from 2026-10-23, the owner's brief 25, W8): its class days and calls.
+  const away = spansOf(person, t, days);
+  const calls = schoolCallsOn(sim, person, away, t.place.cityId).filter((i) => i.kind === CALL_KIND);
+  const classes = classDaysIn(person, away, t.place.cityId);
   const standing = person.school?.standing;
   return [
     { id: 'standing', holds: standing === 'good', words: standing === 'good' ? 'You’re in good standing, as a request needs.' : 'Only a student in good standing may ask, and you aren’t in good standing now.' },
@@ -717,12 +875,18 @@ export const engagementOf = (person: Person, id: unknown): Engagement | undefine
 
 const live = (e: Engagement) => e.status !== 'finished' && e.status !== 'canceled';
 
+/** Whether a recurring part still waits on the production's word on a further episode, so its work isn't over at its last day booked. */
+export const episodesPending = (e: Engagement): boolean => clauseOf(e.contract, 'episodes')?.further.some((f) => f.status === 'pending') ?? false;
+
 /** Another booking on the same days: a live engagement with a day inside the work's span. */
 export function bookedClash(person: Person, days: readonly { from: Instant; to: Instant }[], except?: string): { label: string; from: Instant } | undefined {
   for (const e of person.pro?.engagements ?? []) {
     if (!live(e) || e.opportunityId === except) continue;
     for (const x of e.days) if (days.some((d) => x.from < d.to && x.to > d.from)) return { label: x.label, from: x.from };
   }
+  // A trip abroad holds every day from its first leg to its last (from 2026-10-23, the owner's brief 25, W8).
+  const exceptEngagement = person.pro?.engagements.find((e) => e.opportunityId === except)?.id;
+  for (const x of tripSpans(person, exceptEngagement)) if (days.some((d) => x.from < d.to && x.to > d.from)) return { label: x.label, from: x.from };
   return undefined;
 }
 
@@ -737,8 +901,12 @@ export function eligibilityProblems(person: Person, o: Opportunity, at: Instant)
   for (const [s, level] of Object.entries(t.requirements.skills ?? {}) as [Skill, number][]) {
     if ((person.craft?.[s] ?? 0) < level) out.push(`The part needs ${TECHNIQUE_LABEL[s].toLowerCase()} at ${level}, and yours is at ${Math.round(person.craft?.[s] ?? 0)}.`);
   }
-  const clash = bookedClash(person, datesOf(o), o.id);
+  const clash = bookedClash(person, spansOf(person, t, datesOf(o)), o.id);
   if (clash) out.push(`You’re booked for ${clash.label} on ${formatDate(clash.from, NY)}, one of the same days.`);
+  if (abroad(person, t)) {
+    const read = abroadRead(person, countryOfProject(t), datesOf(o), undefined, at);
+    if (read.basis === 'abroad-unsupported') out.push(read.words);
+  }
   return out;
 }
 
@@ -785,6 +953,25 @@ export function prepareRefusal(sim: Simulation, person: Person, x: PrepTarget | 
   if (!x) return 'There’s nothing to prepare for that.';
   if ('opportunity' in x && (!roundToCome(x.opportunity) || (x.opportunity.status !== 'audition' && x.opportunity.status !== 'callback'))) return 'There are no sides yet: casting sends them with an audition.';
   if ('engagement' in x && !live(x.engagement)) return 'That work is over.';
+  // A booked part prepares as its workflow does (from 2026-10-24, brief 25's Module 5): its own step, and only the
+  // three it reads, so a voice part has no lines to learn by heart.
+  if ('engagement' in x) {
+    const flow = workflowOf(projectById(x.engagement.projectId)!);
+    if (step === 'special') {
+      const sp = flow.prep.special;
+      if (!sp) return 'This work has no preparation of its own beyond the part.';
+      if (sp.onlyWithCrew) return `${sp.label} happens only on the work’s own rehearsal days, with the stunt coordinator, never alone.`;
+      if ((x.engagement.prep?.special ?? 0) >= 0.97) return 'You’ve done all this step can do.';
+      if (person.awakeSince !== undefined && person.awakeSince > sim.now) return 'You’re asleep.';
+      if (sp.feet) {
+        if (person.wellbeing.energy < SPENT) return 'You’re too tired to work on your feet. Sleep first.';
+        const hurt = trainingRefusal(person, sim.now);
+        if (hurt) return hurt;
+      }
+      return startRefusal(sim, person, sp.minutes, true);
+    }
+    if (BRIEF.steps[step as BriefStep] && !flow.prep.steps.includes(step as BriefStep)) return step !== 'lines' ? 'This work doesn’t ask for that step.' : voiceOnly(projectById(x.engagement.projectId)!) ? 'There are no lines to learn by heart: the script is on the stand in the booth.' : 'This part has no lines to learn.';
+  }
   const s = BRIEF.steps[step as BriefStep];
   if (!s) return 'That isn’t a step of preparation.';
   const prep = prepOfTarget(x);
@@ -859,24 +1046,35 @@ export function acceptRefusal(sim: Simulation, person: Person, o: Opportunity | 
   if (!o || o.status !== 'offered' || !o.offer) return 'There’s no offer to accept.';
   if (sim.now >= o.offer.until) return `The offer lapsed on ${formatDate(o.offer.until, NY)}.`;
   const days = datesOf(o);
-  // Permission to work for every one of its days (`usWorkAuthorized`, brief 19's D8): read, never worked out here. Each
-  // day whole, its start and its end, as the work day reads it when it comes (`workAuthorizedFor`, from 2026-10-22, the
-  // owner's brief 22): until then its start alone.
-  const bad = days.find((d) => !workAuthorizedFor(person, d));
-  if (bad) return `${eligibilityOf(person, bad.from).words} That rules out work on ${formatDate(bad.from, NY)}.`;
+  const t = projectOf(o);
+  if (abroad(person, t)) {
+    // Work abroad reads the country's permission (from 2026-10-23, the owner's brief 25, W2 and W4): a country whose
+    // rules aren't in the game refuses it; one whose visa is applied for once the contract exists lets the contract be
+    // made, and the visa is checked again at the first departure. US permission isn't asked: the work isn't in the US.
+    const read = abroadRead(person, countryOfProject(t), days, undefined, sim.now);
+    if (read.basis === 'abroad-unsupported') return read.words;
+    if (!passportOf(person, tripWindow(planTrip(person.currentLocationId, t.place.cityId, days)?.legs ?? [])?.to ?? days[days.length - 1]!.to)) return `Work in ${t.place.city} needs a passport in force until you’re home. Papers shows yours.`;
+  } else {
+    // Permission to work for every one of its days (`usWorkAuthorized`, brief 19's D8): read, never worked out here. Each
+    // day whole, its start and its end, as the work day reads it when it comes (`workAuthorizedFor`, from 2026-10-22, the
+    // owner's brief 22): until then its start alone.
+    const bad = days.find((d) => !workAuthorizedFor(person, d));
+    if (bad) return `${eligibilityOf(person, bad.from).words} That rules out work on ${formatDate(bad.from, NY)}.`;
+  }
   // And SAG-AFTRA's membership from the 30th day after a first job of its (the pay's `sagWorkRefusal`, wired at the merge,
   // 2026-10-21). The pay's `workEligibilityRefusal` was wired here too and came out the same day: it refuses where a date
   // fails `usWorkAuthorized`, the check just above, so it never refused (its mutation survived); what it reads is kept
   // on the engagement by `schedulePay`.
-  if (projectOf(o).union === 'sag-aftra') {
+  if (t.union === 'sag-aftra') {
     const sag = sagWorkRefusal(person, days, NY);
     if (sag) return sag;
   }
-  const clash = bookedClash(person, days, o.id);
+  const away = spansOf(person, t, days);
+  const clash = bookedClash(person, away, o.id);
   if (clash) return `You’re booked for ${clash.label} on ${formatDate(clash.from, NY)}, so you can’t take this as well.`;
   // Out of term the work is yours, unless the School holds you for one of its calls on those days.
-  if (!inSessionAny(person, days)) {
-    const held = schoolCallsOn(sim, person, days, projectOf(o).place.cityId)[0];
+  if (!inSessionAny(person, away)) {
+    const held = schoolCallsOn(sim, person, away, t.place.cityId)[0];
     if (held) return `The School holds you for ${held.label} on ${formatDate(held.at, NY)}, so you can’t take work then.`;
   }
   return undefined;
@@ -885,19 +1083,44 @@ export function acceptRefusal(sim: Simulation, person: Person, o: Opportunity | 
 /** What accepting would bring with the School, said before it's pressed: work in term without approval, and the class days. */
 export function acceptWarning(sim: Simulation, person: Person, o: Opportunity): string | undefined {
   const days = datesOf(o);
+  const school = schoolWarning(sim, person, o, days);
+  const trip = abroadWarning(sim, person, o, days);
+  return [trip, school].filter(Boolean).join(' ') || undefined;
+}
+
+/**
+ * What accepting work abroad brings, said before it's pressed (from 2026-10-23, the owner's brief 25, W4): the dates
+ * away, the production's arrangements, and the permission the work needs, which accepting doesn't give.
+ */
+function abroadWarning(sim: Simulation, person: Person, o: Opportunity, days: readonly WorkDay[]): string | undefined {
+  const t = projectOf(o);
+  if (!travels(person, t)) return undefined;
+  const span = tripWindow(planTrip(person.currentLocationId, t.place.cityId, days)?.legs ?? []);
+  const away = span ? `You’d be away from ${formatDate(span.from, NY)} to ${formatDate(span.to, NY)}. ` : '';
+  // A trip in the US (Module 2, C10) says the days away and the production's arrangements; its permission is the US rule
+  // acceptance already reads, so there's no permit to warn of.
+  if (!abroad(person, t)) return `This work is in ${t.place.city}. ${away}${t.trip!.words}`;
+  const read = abroadRead(person, countryOfProject(t), days, undefined, sim.now);
+  const permit = read.basis === 'abroad-needed' ? `${read.words} Accepting is the contract, not permission to work: without the visa in force at your first flight, you can’t go, and the production releases you.` : read.words;
+  return `This work is in ${t.place.city}. ${away}${t.trip!.words} ${permit}`;
+}
+
+/** What accepting would bring with the School and OPT, said before it's pressed. */
+function schoolWarning(sim: Simulation, person: Person, o: Opportunity, days: readonly WorkDay[]): string | undefined {
   // OPT's days without work running out before the work begins (from 2026-10-22, the owner's brief 22): a booking
   // isn't employment until its first day (`employmentSpan`), so the days waiting for it count against OPT. Said before
   // Accept is pressed, as the School's rule below is; the work system releases the part if it comes to that.
   const runsOut = optRunsOut(person);
   if (runsOut !== undefined && days[0] && runsOut <= days[0].from) return `Your OPT’s ${WORK_RULES.opt.unemploymentDays} days without work run out on ${formatDate(runsOut - 1, OPT_ZONE)}, before this work begins on ${formatDate(days[0].from, NY)}, and a job counts as work only from its first day. Unless other work begins first, your OPT ends then, and with it this part.`;
-  if (!inSessionAny(person, days)) return undefined;
+  const t = projectOf(o);
+  const away = spansOf(person, t, days);
+  if (!inSessionAny(person, away)) return undefined;
   const req = requestFor(person, o);
   if (req?.status === 'approved') return 'The dean approved this work in term, so its class days are excused.';
-  const t = projectOf(o);
-  const classes = classDaysIn(person, days, t.place.cityId);
+  const classes = classDaysIn(person, away, t.place.cityId);
   // Any call of the School's the work takes, a showcase's as much as a production's (the dean's condition reads the
   // production calls alone, as the Bulletin ranks them).
-  const call = schoolCallsOn(sim, person, days, t.place.cityId)[0];
+  const call = schoolCallsOn(sim, person, away, t.place.cityId)[0];
   const misses = [classes ? counted(classes, 'class day') : '', call ? `${call.label} on ${formatDate(call.at, NY)}` : ''].filter(Boolean);
   const asked = req?.status === 'pending' ? ` Your request is with the dean, who decides on ${formatDate(decidesAt(req), NY)}.` : req?.status === 'refused' ? ' The dean refused your request.' : '';
   return `This work falls in term, and the School hasn’t approved it.${asked}${misses.length ? ` You’d miss ${spokenList(misses)}.` : ''} Working in term without approval brings an academic warning the first time and dismissal the second, as the game reads the Bulletin’s “may lead to academic warning or dismissal”.`;
@@ -939,12 +1162,45 @@ function tell(sim: Simulation, person: Person, title: string, body: string, impo
   sim.notify({ category: 'career', title, body, importance, route: '/workspace/career' });
 }
 
+/**
+ * What a project is, said in a phrase: "a fictional Off-Broadway play", or, for a part drawn from a real production
+ * (from 2026-10-23, brief 25's Module 2, C8), "a network television drama on ABC, in a part the game made up".
+ */
+export function kindPhrase(t: ProjectTemplate): string {
+  if (!t.drawn) return `a fictional ${KIND_WORDS[t.kind]}`;
+  const p = productionById(t.drawn.production);
+  const on = p ? companiesAs(p, 'broadcaster')[0] ?? companiesAs(p, 'streaming-platform')[0] : undefined;
+  return `a ${KIND_WORDS[t.kind]}${on ? ` on ${on}` : ''}, in a part the game made up`;
+}
+
+/**
+ * A drawn part's notice (Module 2, C8), said on the role, the offer and the engagement: the game's own, not a casting
+ * notice. Until the text pass of 2026-10-24 it said "the game's own part, for a season after its tenth of 9-1-1 as the
+ * game imagines it", which the role's card had just called "a part the game made up", and the season came before its
+ * series.
+ */
+export const drawnWords = (t: ProjectTemplate): string | undefined => (t.drawn
+  ? `${t.role.part} is the game’s own character, in ${t.drawn.season}. It isn’t a real casting notice, and no one at the real production is casting it. ${t.drawn.placeWhy}`
+  : undefined);
+
 /** The role as a sentence names it: "Nell in A House On Calder Street, a fictional Off-Broadway play". */
-export const roleWords = (t: ProjectTemplate): string => `${t.role.part} in ${t.project}, a fictional ${KIND_WORDS[t.kind]}`;
+export const roleWords = (t: ProjectTemplate): string => `${t.role.part} in ${t.project}, ${kindPhrase(t)}`;
+
+/**
+ * How the work is reached, in a sentence: a day's travel each way, or the trip the production books, door to door (from
+ * 2026-10-23, brief 25's Module 2: until then the role's notice gave a day's travel for any work, "about 3 hours each
+ * way" to Sydney).
+ */
+export function reachWords(person: Person, t: ProjectTemplate, days: readonly { from: Instant; to: Instant }[]): string {
+  if (!travels(person, t)) return `Getting there takes about ${counted(Math.round(tripMinutes(person.currentLocationId, t.place.cityId) / 60), 'hour')} each way from where you live.`;
+  const out = planTrip(person.currentLocationId, t.place.cityId, days)?.legs.filter((l) => l.way === 'out') ?? [];
+  const hours = out.length ? Math.round((out[out.length - 1]!.arrives - out[0]!.departs) / MS_HOUR) : 0;
+  return `It’s a trip the production books: about ${counted(hours, 'hour')} door to door each way, by car and by air, landing at least ${TRIP.arriveBeforeHours} hours before the first call.`;
+}
 
 /** The casting office as a sentence's subject: capitalized to start one ("The producers"), and its verb agreeing with it. */
 export const castingAs = (t: ProjectTemplate): string => t.casting.charAt(0).toUpperCase() + t.casting.slice(1);
-export const agrees = (t: ProjectTemplate, one: string, many: string): string => (/^the producers\b/i.test(t.casting) ? many : one);
+export const agrees = (t: ProjectTemplate, one: string, many: string): string => (/\bproducers$/i.test(t.casting) ? many : one);
 
 // ---------------------------------------------------------------------------------------------------------------------
 // The loop's steps
@@ -967,7 +1223,10 @@ function post(sim: Simulation, person: Person, t: ProjectTemplate, at: Instant, 
   (pro.lastPosted ??= {})[t.id] = { id: o.id, postedAt: at, status: 'open' };
   const agent = agentFor(o);
   const again = o.again ? ` again, a new casting of the part. ${lastTimeWords(o.again)}` : '.';
-  note(sim, person, o, { kind: 'opportunity', key: 'posted', words: agent ? `${castingAs(t)}’s breakdown for ${t.role.part} in ${t.project} came to ${agent.name}${again}` : `${castingAs(t)} posted ${t.role.part} in ${t.project}${again}` });
+  // A casting office named by its role ("the production’s casting office", a part drawn from a real production) takes no
+  // second possessive: until 2026-10-24 it read "The production’s casting office’s breakdown for Reese Pike".
+  const breakdown = t.casting.startsWith('the ') ? `The breakdown for ${t.role.part} in ${t.project}, from ${t.casting},` : `${castingAs(t)}’s breakdown for ${t.role.part} in ${t.project}`;
+  note(sim, person, o, { kind: 'opportunity', key: 'posted', words: agent ? `${breakdown} came to ${agent.name}${again}` : `${castingAs(t)} posted ${t.role.part} in ${t.project}${again}` });
   return o;
 }
 
@@ -1112,7 +1371,7 @@ function missRound(sim: Simulation, person: Person, o: Opportunity, r: AuditionR
   const words = r.form === 'self-tape'
     ? `Your self-tape for ${t.role.part} wasn’t in by ${formatDate(r.at, NY)} at ${formatTime(r.at, NY)}, so ${t.casting} moved on without it.`
     : elsewhere
-      ? `You were at ${elsewhere}, so you missed the ${r.round} for ${t.role.part} on ${formatDate(r.at, NY)} at ${formatTime(r.at, NY)}, and ${t.casting} moved on without you.`
+      ? `You were ${/^(in|on) /.test(elsewhere) ? '' : 'at '}${elsewhere}, so you missed the ${r.round} for ${t.role.part} on ${formatDate(r.at, NY)} at ${formatTime(r.at, NY)}, and ${t.casting} moved on without you.`
       : `You missed the ${r.round} for ${t.role.part} on ${formatDate(r.at, NY)} at ${formatTime(r.at, NY)}, so ${t.casting} moved on without you.`;
   note(sim, person, o, { kind: 'problem', key: `${r.round}:missed`, words });
   settle(sim, person, o, 'lapsed', words);
@@ -1144,9 +1403,13 @@ function makeOffer(sim: Simulation, person: Person, o: Opportunity): void {
   if (o.offer.amount !== undefined) o.offer.amount = negotiatedAmount(o.offer.amount, t.union, o.agreementId !== undefined);
   const days = datesOf(o);
   const span = `${days.length === 1 ? `on ${formatDate(days[0]!.from, NY)}` : `from ${formatDate(days[0]!.from, NY)} to ${formatDate(days[days.length - 1]!.from, NY)}`}, in ${t.place.city}`;
-  const words = `${castingAs(t)} ${agrees(t, 'offers', 'offer')} you ${roleWords(t)}. ${payWords(terms, o.offer.amount)} The work is ${span}. The offer stands until ${formatDate(until, NY)} at ${formatTime(until, NY)}.`;
+  const drawn = drawnWords(t);
+  // What the contract adds to the pay, said with it (from 2026-10-24, brief 25's Module 4): a day's overtime, and a
+  // recurring part's episodes and option.
+  const more = termsWords(t, o.offer.amount, days);
+  const words = `${castingAs(t)} ${agrees(t, 'offers', 'offer')} you ${roleWords(t)}. ${payWords(terms, o.offer.amount)}${more} The work is ${span}. The offer stands until ${formatDate(until, NY)} at ${formatTime(until, NY)}.${drawn ? ` ${drawn}` : ''}`;
   // In the history, past (from 2026-10-21, as the rounds' lines): the offer stood until its day, whatever came of it.
-  note(sim, person, o, { kind: 'offer', key: 'offer', words: `${castingAs(t)} offered you ${roleWords(t)}. ${payWords(terms, o.offer.amount)} The work was ${span}, and the offer stood until ${formatDate(until, NY)} at ${formatTime(until, NY)}.` });
+  note(sim, person, o, { kind: 'offer', key: 'offer', words: `${castingAs(t)} offered you ${roleWords(t)}. ${payWords(terms, o.offer.amount)}${more} The work was ${span}, and the offer stood until ${formatDate(until, NY)} at ${formatTime(until, NY)}.` });
   sim.schedule({ at: until, kind: OFFER_KIND, label: `The Offer For ${t.role.part} Lapses`, category: 'career', priority: 40, refType: 'pro.offer', refId: o.id, payload: { personId: person.id, opportunityId: o.id } });
   if (person.id !== sim.universe.playerId) return;
   const agent = agentFor(o);
@@ -1162,6 +1425,35 @@ function makeOffer(sim: Simulation, person: Person, o: Opportunity): void {
 }
 
 /**
+ * What a contract adds to an offer's pay, in sentences after it (from 2026-10-24, brief 25's Module 4, D3 and D7): a day
+ * performer's overtime on each eleven-hour day, and a recurring part's guaranteed and expected episodes and its option.
+ */
+// The days' lengths are the schedule's whenever it's posted, so the words read the same without a posting's own.
+export function termsWords(t: ProjectTemplate, amount: Money | undefined, days: readonly WorkDay[] = datesOf({ projectId: t.id, postedAt: 0 })): string {
+  const out: string[] = [];
+  // Overtime only where the days run long enough for it (from 2026-10-24, brief 25's Module 5): a booth's sessions carry none.
+  const ot = Math.max(0, ...days.map((d) => overtimeHours(d)));
+  if (amount !== undefined && paysOvertime(t.pay) && ot === 2) out.push(`Each shoot day runs eleven hours with an hour for lunch, so its last two hours of work are overtime at time and one-half, ${formatMoney(overtimeOf(amount), 'USD')} more a day.`);
+  else if (amount !== undefined && paysOvertime(t.pay) && ot > 0) out.push(`Each day runs ten hours with an hour for lunch, so its last hour of work is overtime at time and one-half, ${formatMoney(overtimeOf(amount, ot), 'USD')} more a day.`);
+  // How the work is done (Module 5), and what it asks before anyone's cast: an intimate scene.
+  out.push(formatOf(t).words);
+  if (t.dub) out.push(`The dub’s pay follows the agreement’s rule for replacing another actor’s lines: its ${counted(t.dub.length, 'session')} pay ${spokenList(t.dub.map((d) => counted(dubDaysOf(d), 'day')))} in turn.`);
+  if (t.intimacy) out.push(intimacyWords(t));
+  const s = t.series ? seriesById(t.series) : undefined;
+  if (s && t.schedule.kind === 'episodes') {
+    out.push(`The contract guarantees ${counted(t.schedule.guaranteed, 'episode')} of the season’s ${counted(s.episodes, 'episode')}, ${counted(s.daysEach, 'shoot day')} each, and expects you in up to ${countWords(t.schedule.expected)}: a further episode is paid the same if the production calls you for it, and one it doesn’t call you for isn’t paid.`);
+    out.push(`It gives the production an option on you for next season at ${Math.round(OPTION_RAISE * 100)}% more a day, taken up or let go by June 30.`);
+  }
+  return out.length ? ` ${out.join(' ')}` : '';
+}
+
+/**
+ * What an intimate scene asks, said before the audition and with the offer (N13 §43.A): what it is, the closed set and the
+ * coordinator, and that consent is the actor's to give or not without any cost to them.
+ */
+export const intimacyWords = (t: ProjectTemplate): string => (t.intimacy ? `The part has ${t.intimacy.words}, shot on a closed set with an intimacy coordinator and only with your written consent. A body double can do it instead, and declining it costs you nothing in the casting.` : '');
+
+/**
  * The promised pay, one entry for each week of work: a run's by its weeks, a shoot's by the calendar week (Sunday to
  * Saturday), each due the Thursday after the week's last day of work, at noon (ASSUMPTION, after SAG-AFTRA's "Payment is
  * due on Thursday… for work performed through the previous Saturday", representation.md S5, for every kind of work).
@@ -1169,19 +1461,30 @@ function makeOffer(sim: Simulation, person: Person, o: Opportunity): void {
  * `<engagement>:<week>`, the week counted from 1 (counted from 0 until 2026-10-21, when the pay's part said it reads
  * from 1), `promisedAt` the moment the offer was accepted, the contract date its commission reads.
  */
-export function promisedPay(sim: Simulation, e: Engagement, o: Opportunity): ProPayment[] {
+export function promisedPay(sim: Simulation, e: Engagement, o: Opportunity, from?: number): ProPayment[] {
   const offer = o.offer!;
   const t = projectOf(o);
-  const groups = payGroups(e, t);
+  // From a day on (an episode called for later, `systems/series.ts`): only its weeks, keyed after those already promised.
+  const all = payGroups(e, t);
+  const groups = from === undefined ? all : all.filter((g) => g[0]! >= from);
+  const first = from === undefined ? 0 : all.length - groups.length;
   return groups.map((g, w) => {
     const last = e.days[g[g.length - 1]!]!.from;
     const due = addDays(dayAt(last, 12), (4 - weekdayOf(last) + 7) % 7 || 7, NY);
-    const promised = offer.amount === undefined ? 0 : offer.per === 'week' ? offer.amount : offer.amount * g.length;
+    // A day performer's two hours of overtime on each day (`systems/contracts.ts`, from 2026-10-24, brief 25's Module 4,
+    // D3): until then a SAG-AFTRA day was paid its day rate for eleven hours on set.
+    // Overtime on each day long enough for it (from 2026-10-24, brief 25's Module 5): a booth's four hours carry none, a
+    // capture day's nine one hour, a shoot day's ten two. And a dub day's pay in days by N13 Schedule A §37 (`payUnitsOf`).
+    const overtime = offer.amount !== undefined && offer.per === 'day' && paysOvertime(offer.rate) ? g.reduce((n, i) => n + overtimeOf(offer.amount!, overtimeHours(e.days[i]!)), 0) : 0;
+    const promised = (offer.amount === undefined ? 0 : offer.per === 'week' ? offer.amount : offer.amount * g.reduce((n, i) => n + payUnitsOf(t, i), 0)) + overtime;
     // The days it pays for go on it, so the pay reads this week, not the calendar week before its payday (from 2026-10-21).
     const week = { from: e.days[g[0]!]!.from, to: e.days[g[g.length - 1]!]!.to };
-    return { id: sim.nextId('pro'), key: `${e.id}:${w + 1}`, promised, currency: 'USD', promisedAt: sim.now, due, week, ...(offer.amount === undefined ? { deferred: true as const } : {}) };
+    return { id: sim.nextId('pro'), key: `${e.id}:${w + 1 + (first ?? 0)}`, promised, currency: 'USD', promisedAt: sim.now, due, week, ...(overtime ? { overtime } : {}), ...(offer.amount === undefined ? { deferred: true as const } : {}) };
   });
 }
+
+/** A day's overtime hours: those past eight of its work time, up to the two at time and one-half (`OVERTIME`). */
+export const overtimeHours = (d: { from: Instant; to: Instant }): number => Math.max(0, Math.min(2, workHoursOf(d) - 8));
 
 /** The days in each paid week, by their indexes: a run's weeks from its first Tuesday; a shoot's calendar weeks. */
 export function payGroups(e: Pick<Engagement, 'days'>, t: ProjectTemplate): number[][] {
@@ -1194,11 +1497,12 @@ export function payGroups(e: Pick<Engagement, 'days'>, t: ProjectTemplate): numb
   return [...out.values()];
 }
 
-/** The work days booked on the calendar, each wanting the player, with its trip. */
-function bookDays(sim: Simulation, person: Person, e: Engagement, t: ProjectTemplate): void {
-  const trip = tripMinutes(person.currentLocationId, t.place.cityId);
+/** The work days booked on the calendar, each wanting the player, with its trip: from a day on, for an episode called for later. */
+function bookDays(sim: Simulation, person: Person, e: Engagement, t: ProjectTemplate, from = 0): void {
+  // Abroad, the day starts at the hotel (from 2026-10-23, the owner's brief 25, W10): the set is a short drive.
+  const trip = travels(person, t) ? TRIP.hotelMinutes : tripMinutes(person.currentLocationId, t.place.cityId);
   e.days.forEach((d, i) => {
-    if (d.from <= sim.now) return;
+    if (i < from || d.from <= sim.now) return;
     sim.schedule({
       at: d.from, kind: WORK_DAY_KIND, label: d.label, category: 'career', priority: 38, requiresPlayer: true, durationMinutes: (d.to - d.from) / MIN,
       travelMinutes: trip, locationId: t.place.cityId, refType: 'pro.engagement', refId: e.id, payload: { personId: person.id, engagementId: e.id, day: i, kind: dayKindOf(t, i) },
@@ -1245,6 +1549,8 @@ function finish(sim: Simulation, person: Person, e: Engagement, t: ProjectTempla
     const c = addCredit(sim, person, {
       kind: t.kind === 'student-film' ? 'student-film' : 'screen', project: t.project, role: t.role.part, company: t.company,
       year: zonedParts(worked.at, NY).year, medium: t.medium, status: 'shot', ...(t.union !== 'none' ? { union: t.union } : {}), engagementId: e.id, at: worked.at, ...(best ? { band: best } : {}),
+      // Voice work is heard, not seen (from 2026-10-24, brief 25's Module 5): its credit can't go on a reel.
+      ...(voiceOnly(t) ? { voice: true as const } : {}),
     });
     e.creditId = c.id;
     const days = RELEASE_DAYS[t.kind];
@@ -1254,11 +1560,19 @@ function finish(sim: Simulation, person: Person, e: Engagement, t: ProjectTempla
     if (c) c.band = best;
   }
   noteEvent(sim, e, { kind: 'worked', key: 'finished', words: `${t.medium === 'stage' ? 'The run' : 'The shoot'} of ${t.project} finished, with ${counted(e.log!.filter((l) => l.status === 'worked').length, 'day')} worked.` });
+  // Television work under SAG-AFTRA carries residuals from the day it's done (`entitle`, `systems/contracts.ts`, from
+  // 2026-10-24, brief 25's Module 4, D5).
+  entitle(sim, person, e, t);
+  // A recall to loop, and an anthology's invitation for strong work (from 2026-10-24, brief 25's Module 5, `afterWrap`).
+  if (t.medium !== 'stage') afterWrap(sim, person, e, t, best, (title, body) => tell(sim, person, title, body, 70));
   const rel = e.agentId ? person.pro?.relations[e.agentId] : undefined;
   if (rel) noteEvent(sim, rel, { kind: 'success', key: `eng:${e.id}:finished`, words: `You finished ${t.role.part} in ${t.project}.`, ref: e.id });
   keepBounded(ensurePro(sim, person));
-  tell(sim, person, t.medium === 'stage' ? `${t.project} Closed` : `You Wrapped ${t.project}`, `${t.medium === 'stage' ? `The run of ${t.project} is over` : `${t.project} wrapped`}, and ${t.role.part} is on your professional credits${t.medium === 'stage' ? '' : `, not yet released. Its footage can go on a reel once it comes out${RELEASE_DAYS[t.kind] ? `, about ${counted(Math.round(RELEASE_DAYS[t.kind]! / 30), 'month')} on, estimated` : ''}`}. Update your résumé on the Portfolio tab to add it.`, 70);
+  tell(sim, person, t.medium === 'stage' ? `${t.project} Closed` : `You Wrapped ${t.project}`, `${t.medium === 'stage' ? `The run of ${t.project} is over` : `${t.project} wrapped`}, and ${t.role.part} is on your professional credits${t.medium === 'stage' ? '' : voiceOnly(t) ? `, not yet released. It’s your voice with no picture of you, so a reel can’t use it${RELEASE_DAYS[t.kind] ? `; it comes out about ${counted(Math.round(RELEASE_DAYS[t.kind]! / 30), 'month')} on, estimated` : ''}` : `, not yet released. Its footage can go on a reel once it comes out${RELEASE_DAYS[t.kind] ? `, about ${counted(Math.round(RELEASE_DAYS[t.kind]! / 30), 'month')} on, estimated` : ''}`}. Update your résumé on the Portfolio tab to add it.`, 70);
 }
+
+/** A unit as a sentence names it: "scene 14". */
+const unitWord = (t: ProjectTemplate, u: { scene: number }): string => `${workflowOf(t).judged[stepOf(t, t.schedule.kind === 'shoot' ? t.schedule.rehearsalDays ?? 0 : 0)]?.unit.one ?? 'scene'} ${u.scene}`;
 
 /** A missed work day: the project's consequence, said. The stage's understudy covers one; a second, or a shoot day, and you're replaced. */
 function missDay(sim: Simulation, person: Person, e: Engagement, t: ProjectTemplate, i: number, at: Instant): void {
@@ -1266,7 +1580,8 @@ function missDay(sim: Simulation, person: Person, e: Engagement, t: ProjectTempl
   const misses = e.log.filter((l) => l.status === 'missed').length;
   const allowed = t.medium === 'stage' ? MISSES.stage : MISSES.screen;
   const kind = dayKindOf(t, i);
-  const what = kind === 'shoot' ? 'a shoot day' : kind === 'rehearsal' ? 'a rehearsal' : 'a performance';
+  // The day named for what it was (from 2026-10-24, brief 25's Module 5): a tape night, a recording session.
+  const what = STEP_WORDS[stepOf(t, i)];
   noteEvent(sim, e, { kind: 'problem', key: `missed:${i}`, words: `You missed ${what} of ${t.project} on ${formatDate(at, NY)}.` });
   const rel = e.agentId ? person.pro?.relations[e.agentId] : undefined;
   if (rel) noteEvent(sim, rel, { kind: 'problem', key: `eng:${e.id}:missed:${i}`, words: `You missed ${what} of ${t.project}.`, ref: e.id });
@@ -1295,11 +1610,21 @@ function callOff(sim: Simulation, e: Engagement, t: ProjectTemplate): Set<number
     const days = groups[Number(p.key.slice(p.key.lastIndexOf(':') + 1)) - 1] ?? [];
     const done = days.filter((d) => worked.has(d)).length;
     if (!done) return false;
-    if (t.schedule.kind === 'shoot' && days.length) p.promised = Math.round((p.promised / days.length) * done);
+    // A recurring part's episodes are paid by the day as a shoot is (from 2026-10-24), and the overtime goes with its days.
+    if (t.schedule.kind !== 'run' && days.length) {
+      p.promised = Math.round((p.promised / days.length) * done);
+      if (p.overtime) p.overtime = Math.round((p.overtime / days.length) * done);
+    }
     return true;
   });
   // The paydays of the weeks dropped come off the clock with them (`dropPaydays`): until 2026-10-22 they stayed on it.
   dropPaydays(sim, e);
+  // A recurring part's further episodes and its option go with the work (from 2026-10-24, brief 25's Module 4, D7):
+  // their times came off the clock with its other calls above.
+  const episodes = clauseOf(e.contract, 'episodes');
+  for (const f of episodes?.further ?? []) if (f.status === 'pending') { f.status = 'off'; f.at = sim.now; }
+  const option = clauseOf(e.contract, 'option');
+  if (option?.status === 'open') { option.status = 'expired'; option.settled = { at: sim.now, why: 'The work was called off, and the option with it.' }; }
   return worked;
 }
 
@@ -1336,8 +1661,7 @@ function permissionWords(person: Person, at: Instant): string {
  * Until that day nothing read permission after acceptance, and b20-4 played 47 days of The Winter Ledger after its OPT
  * ended (docs/verification/career-genre-2026-10-22/before/b20-4/).
  */
-export function release(sim: Simulation, person: Person, e: Engagement, t: ProjectTemplate, at: Instant): void {
-  const why = permissionWords(person, at);
+export function release(sim: Simulation, person: Person, e: Engagement, t: ProjectTemplate, at: Instant, why: string = permissionWords(person, at)): void {
   const begun = (e.log ?? []).some((l) => l.status === 'worked');
   const worked = callOff(sim, e, t);
   noteEvent(sim, e, { kind: 'problem', key: 'released', words: `${t.company} released you as ${t.role.part} on ${formatDate(sim.now, NY)}: ${why.charAt(0).toLowerCase()}${why.slice(1)}.` });
@@ -1372,7 +1696,7 @@ function unionsFrom(sim: Simulation, person: Person, t: ProjectTemplate, at: Ins
     pro.equity = { since: at, how: 'contract' };
     sim.emit(EQUITY_JOINED, { personId: person.id });
   }
-  if (t.union === 'sag-aftra' && (t.kind === 'network-drama' || t.kind === 'low-budget') && !pro.sag?.eligibleSince && !pro.sag?.memberSince) pro.sag = { ...(pro.sag ?? {}), eligibleSince: at };
+  if (t.union === 'sag-aftra' && SAG_QUALIFIES.includes(t.kind) && !pro.sag?.eligibleSince && !pro.sag?.memberSince) pro.sag = { ...(pro.sag ?? {}), eligibleSince: at };
 }
 
 // ---------------------------------------------------------------------------------------------------------------------
@@ -1384,7 +1708,8 @@ function unionsFrom(sim: Simulation, person: Person, t: ProjectTemplate, at: Ins
  * in `systems/briefs.ts`): its time on the clock, its part moved by its gain at the hour's focus, halved for each time
  * the same step was done today, by the ability it's practice in and the way you prepare, of what's left.
  */
-export function prepareOn(sim: Simulation, person: Person, x: PrepTarget, step: BriefStep): { moved: number; part: keyof PartPrep; minutes: number } {
+export function prepareOn(sim: Simulation, person: Person, x: PrepTarget, step: BriefStep | 'special'): { moved: number; part: keyof PartPrep; minutes: number } {
+  if (step === 'special') return specialOn(sim, person, x as { engagement: Engagement });
   const s = BRIEF.steps[step];
   const minutes = prepMinutes(x, step);
   const prep: PartPrep = 'opportunity' in x ? (x.opportunity.prep ??= { ...ZERO }) : (x.engagement.prep ??= { ...ZERO });
@@ -1400,6 +1725,110 @@ export function prepareOn(sim: Simulation, person: Person, x: PrepTarget, step: 
   return { moved: r3(prep[s.part] - before), part: s.part, minutes };
 }
 
+/**
+ * A workflow's own preparation on a booked part (from 2026-10-24, brief 25's Module 5): its step's time, the body's cost
+ * where it's on your feet, and the part brought toward complete at its gain, halved again on each repeat that day, as a
+ * brief's steps are.
+ */
+function specialOn(sim: Simulation, person: Person, x: { engagement: Engagement }): { moved: number; part: keyof PartPrep; minutes: number } {
+  const sp = workflowOf(projectById(x.engagement.projectId)!).prep.special!;
+  const prep = (x.engagement.prep ??= { ...ZERO });
+  const focus = focusAt(sim, person, sim.now);
+  const n = repeatsToday(sim, person, `pro:${x.engagement.id}<special`);
+  sim.advanceTo(sim.now + sp.minutes * MIN);
+  exerts(person, sp.feet ? BRIEF.met.feet : BRIEF.met.desk, sp.minutes / 60);
+  const before = prep.special ?? 0;
+  const able = sp.trains ? stepSpeed(sim, person, sp.trains) : 1;
+  prep.special = r3(clamp(before + sp.gain * clamp(focus, 0.5, 1.1) * 0.5 ** n * able * (1 - before), 0, 1));
+  if (sp.trains && prep.special > before) ordinary(sim, person, sp.trains, focus, BRIEF.trainingWeight, 'pro:special');
+  return { moved: r3(prep.special - before), part: 'special', minutes: sp.minutes };
+}
+
+// ---------------------------------------------------------------------------------------------------------------------
+// A season's turns (from 2026-10-24, brief 25's Module 4, D7 and D8, `systems/series.ts`)
+// ---------------------------------------------------------------------------------------------------------------------
+
+/**
+ * The next season's engagement, from an option taken up: the contract's next version, at the option's raise on the
+ * last season's day rate and never under the new season's scale plus ten where an agent's negotiating, for the season's
+ * first guaranteed episodes. Through the same agreement as the last, so its commission is owed as a renewal of a contract
+ * made in the agreement's term (`AGREEMENT_TERMS`' What You Still Owe After It Ends).
+ */
+function renewFromOption(sim: Simulation, person: Person, e: Engagement, t: ProjectTemplate, days: readonly WorkDay[]): Engagement {
+  const pro = ensurePro(sim, person);
+  const old = opportunityOf(person, e.opportunityId);
+  const scale = rateOn(RATES[t.pay], days[0]!.from) ?? 0;
+  const amount = Math.max(Math.round((old?.offer?.amount ?? scale) * (1 + OPTION_RAISE)), negotiatedAmount(scale, t.union, e.agreementId !== undefined));
+  const words = `${t.company} took up its option on you as ${t.role.part}: ${counted(days.length, 'shoot day')} from ${formatDate(days[0]!.from, NY)}, at ${formatMoney(amount, 'USD')} a day.`;
+  const o: Opportunity = {
+    id: sim.nextId('pro'), projectId: t.id, via: old?.via ?? 'agent', status: 'booked', postedAt: sim.now, submitBy: sim.now, history: [], counts: {},
+    offer: { at: sim.now, until: sim.now, rate: t.pay, amount, per: 'day', units: days.length }, resolvedAt: sim.now, outcome: words,
+    ...(e.agentId ? { agentId: e.agentId } : {}), ...(e.agreementId ? { agreementId: e.agreementId } : {}),
+  };
+  pro.opportunities.push(o);
+  const next: Engagement = {
+    id: sim.nextId('pro'), opportunityId: o.id, projectId: t.id, role: t.role.part, status: 'booked', days: days.map(({ from, to, label }) => ({ from, to, label })),
+    ...(e.agreementId ? { agreementId: e.agreementId, agentId: e.agentId } : {}), pay: [], history: [], counts: {},
+    // The part is known from the last season.
+    prep: { ...(e.prep ?? ZERO) },
+  };
+  pro.engagements.push(next);
+  o.engagementId = next.id;
+  next.eligibility = eligibilityRead(person, next.days, sim.now);
+  next.pay = promisedPay(sim, next, o);
+  schedulePay(sim, person, next);
+  bookDays(sim, person, next, t);
+  next.contract = contractFor(sim, next, o.offer!, t, undefined, { ...seasonOf(t, next), version: (e.contract?.version ?? 1) + 1, renews: e.id });
+  scheduleSeason(sim, person, next);
+  noteEvent(sim, next, { kind: 'booked', key: 'booked', words });
+  keepBounded(pro);
+  tell(sim, person, `${t.company} Takes Up Its Option`, `${words} It’s the next version of your contract, for the season beginning in July, and it guarantees ${counted(clauseOf(next.contract, 'episodes')?.numbers.length ?? 0, 'episode')} again. The Work tab has it.`, 80);
+  return next;
+}
+
+/** The work loop's steps lent to the seasons (`registerSeries`). */
+const SEASON_HOOKS = {
+  tell,
+  close: (sim: Simulation, person: Person, o: Opportunity, outcome: string) => {
+    sim.timeline.cancelFor('pro.opportunity', o.id, sim.now);
+    sim.timeline.cancelFor('pro.offer', o.id, sim.now);
+    note(sim, person, o, { kind: 'problem', key: 'series:canceled', words: outcome });
+    settle(sim, person, o, 'withdrawn', outcome);
+  },
+  callOff: (sim: Simulation, person: Person, e: Engagement, t: ProjectTemplate, why: string) => {
+    const worked = callOff(sim, e, t);
+    noteEvent(sim, e, { kind: 'problem', key: 'series:canceled', words: why });
+    keepBounded(ensurePro(sim, person));
+    tell(sim, person, `${t.project} Is Canceled`, `${why} So your work as ${t.role.part} is called off. ${keptWords(e, worked)}`, 85);
+  },
+  addDays: (sim: Simulation, person: Person, e: Engagement, t: ProjectTemplate, days: readonly WorkDay[]) => {
+    const from = e.days.length;
+    e.days.push(...days.map(({ from: f, to, label }) => ({ from: f, to, label })));
+    bookDays(sim, person, e, t, from);
+    planWork(sim, e, t, from);
+    const o = opportunityOf(person, e.opportunityId);
+    if (!o?.offer) return;
+    const more = promisedPay(sim, e, o, from);
+    e.pay.push(...more);
+    if (e.contract) {
+      e.contract.payKeys.push(...more.map((p) => p.key));
+      e.contract.estimate += more.reduce((n, p) => n + p.promised, 0);
+      e.contract.service.to = e.days[e.days.length - 1]!.to;
+    }
+    schedulePay(sim, person, e);
+  },
+  finish: (sim: Simulation, person: Person, e: Engagement, t: ProjectTemplate) => finish(sim, person, e, t),
+  renew: renewFromOption,
+  refusal: (person: Person, days: readonly WorkDay[], except: string): string | undefined => {
+    const bad = days.find((d) => !workAuthorizedFor(person, d));
+    if (bad) return `${eligibilityOf(person, bad.from).words} That rules out work on ${formatDate(bad.from, NY)}.`;
+    const sag = sagWorkRefusal(person, days, NY);
+    if (sag) return sag;
+    const clash = bookedClash(person, days, engagementOf(person, except)?.opportunityId);
+    return clash ? `You’re booked for ${clash.label} on ${formatDate(clash.from, NY)}.` : undefined;
+  },
+};
+
 // ---------------------------------------------------------------------------------------------------------------------
 // Registration: the postings as the clock passes, the casting office's steps on the clock, and the commands
 // ---------------------------------------------------------------------------------------------------------------------
@@ -1410,7 +1839,36 @@ const located = (sim: Simulation, item: ScheduledItem): { person: Person; o: Opp
   return person && o ? { person, o } : undefined;
 };
 
+/** What the workflows' clock and command borrow from here (`registerWorkflows`). */
+const WORKFLOW_HOOKS = {
+  tell: (sim: Simulation, person: Person, title: string, body: string) => tell(sim, person, title, body, 70),
+  there: (person: Person, at: Instant) => there(person, at),
+  genre: (person: Person, t: ProjectTemplate) => fitOf(person, t).genre * BRIEF.complete.genre,
+  // An anthology's next story, offered without an audition to an actor whose work in its last was strong (Module 5).
+  offerInvite: (sim: Simulation, person: Person, projectId: string, from: Engagement) => {
+    const t = projectById(projectId);
+    if (!t || person.pro?.engagements.some((x) => x.projectId === projectId)) return;
+    const o = post(sim, person, t, sim.now, 'open');
+    if (!o) return;
+    const last = projectById(from.projectId)!;
+    note(sim, person, o, { kind: 'opportunity', key: 'invited', words: `${t.company} invited you back into ${t.project}’s next story for your work as ${last.role.part}, without an audition.` });
+    makeOffer(sim, person, o);
+  },
+};
+
 export function registerProJobs(sim: Simulation): void {
+  // The workflows' revised pages, looping sessions, invitations and choices (from 2026-10-24, brief 25's Module 5).
+  registerWorkflows(sim, WORKFLOW_HOOKS);
+  // The awards and festivals (from 2026-10-24, brief 25's Module 6).
+  registerAwards(sim, (s, person, title, body) => tell(s, person, title, body, 65));
+  // Work abroad's trips and visas (from 2026-10-23, the owner's brief 25): their handlers, lent what they need from here.
+  registerWorkTrips(sim, {
+    engagementOf, projectOf: (e) => projectById(e.projectId), there,
+    release: (s, person, e, t, at, why) => release(s, person, e, t, at, why), tell,
+  });
+  // A series' seasons (from 2026-10-24, brief 25's Module 4): the network's word each May, a recurring part's further
+  // episodes and its option, each through the loop's own steps.
+  registerSeries(sim, SEASON_HOOKS);
   // The week's postings, at each Monday the clock passes; a window passed closes; and the agent tries a submission his
   // breakdown brought, as soon as the role suits and the materials pass.
   sim.onPassage('pro.postings', (s, from) => {
@@ -1442,6 +1900,9 @@ export function registerProJobs(sim: Simulation): void {
     // Asleep, ill or at a booked day's work (`workDayAt`), the round is missed; and at another audition or a meeting
     // whose trip meets this one's (`attendedAcross`), missed with where they were.
     if (!there(at.person, item.at) || workDayAt(at.person, item.at)) { missRound(s, at.person, at.o, r); return; }
+    // Away on a trip for work abroad (from 2026-10-23, the owner's brief 25, W8): an audition in person at home can't be gone to.
+    const w = awayOn(at.person, item.at);
+    if (w) { missRound(s, at.person, at.o, r, whereWords(w)); return; }
     const trip = (item.travelMinutes ?? 0) * MIN;
     const elsewhere = attendedAcross(at.person, item.at - trip, item.at + WORK.auditionMinutes * MIN + trip, at.o.id);
     if (elsewhere) { missRound(s, at.person, at.o, r, elsewhere); return; }
@@ -1469,7 +1930,7 @@ export function registerProJobs(sim: Simulation): void {
       pass(s, person, o, `You’re booked for ${clash.label} on ${formatDate(clash.from, NY)}, so ${t.casting} cast another actor as ${t.role.part}.`);
       return;
     }
-    const d = castingDraw(s, o, cut ? 'callback' : 'final', r.band!, f.fit);
+    const d = castingDraw(s, o, cut ? 'callback' : 'final', r.band!, f.fit, visibilityOf(person, s.now));
     r.casting = { at: s.now, chance: d.chance, fit: f.fit, yes: d.yes };
     if (!d.yes) { pass(s, person, o, cut ? `${castingAs(t)} didn’t call you back for ${t.role.part}.` : `${castingAs(t)} cast another actor as ${t.role.part}.`); return; }
     if (cut) { setRound(s, person, o, 'callback'); return; }
@@ -1498,14 +1959,28 @@ export function registerProJobs(sim: Simulation): void {
     // Until then permission was read at acceptance alone.
     settleOpt(s, person, item.at);
     if (!live(e)) return;
-    if (!workAuthorizedFor(person, e.days[i]!)) {
+    if (abroad(person, t)) {
+      // Abroad (from 2026-10-23, the owner's brief 25, W10): the country's permission for the day, and the actor there.
+      const read = abroadRead(person, countryOfProject(t), [e.days[i]!], e.id, s.now);
+      if (!read.authorized) { release(s, person, e, t, item.at, read.words.replace(/\.$/, '')); return; }
+      if (whereAt(person, item.at).cityId !== t.place.cityId) {
+        missDay(s, person, e, t, i, item.at);
+        if (i === e.days.length - 1 && live(e) && !episodesPending(e)) finish(s, person, e, t);
+        return;
+      }
+    } else if (!workAuthorizedFor(person, e.days[i]!)) {
       release(s, person, e, t, item.at);
+      return;
+    } else if (travels(person, t) && whereAt(person, item.at).cityId !== t.place.cityId) {
+      // A trip in the US (Module 2, C10): the US rule above, and the actor there.
+      missDay(s, person, e, t, i, item.at);
+      if (i === e.days.length - 1 && live(e) && !episodesPending(e)) finish(s, person, e, t);
       return;
     }
     if (!there(person, item.at)) {
       missDay(s, person, e, t, i, item.at);
       // The last day missed, with the work still on: it ends there.
-      if (i === e.days.length - 1 && live(e)) finish(s, person, e, t);
+      if (i === e.days.length - 1 && live(e) && !episodesPending(e)) finish(s, person, e, t);
       return;
     }
     e.status = 'working';
@@ -1513,7 +1988,19 @@ export function registerProJobs(sim: Simulation): void {
     unionsFrom(s, person, t, item.at);
     const kind = dayKindOf(t, i);
     exerts(person, WORK.met, (e.days[i]!.to - e.days[i]!.from) / MS_HOUR);
-    if (kind === 'rehearsal') {
+    if (workflowOf(t).id !== 'stage') {
+      // The part worked the way its production works (from 2026-10-24, the owner's brief 25, Part 8, `workTheDay`): an
+      // unjudged day builds the part, a judged one plays its units in takes with the player's choices read, and either
+      // leaves a report. Until then every screen day was one take judged as a self-tape, whatever the work.
+      const done = workTheDay(s, person, e, t, i, item.at, fitOf(person, t).genre * BRIEF.complete.genre, () => rehearseDay(person, e, t));
+      practiceGenres(s, person, projectGenresOf(t));
+      (e.log ??= []).push({ day: i, at: item.at, status: 'worked', ...(done.band ? { band: done.band, overall: done.overall! } : {}) });
+      // A musical's stage credit, from its first night, as a play's.
+      if (t.medium === 'stage' && done.band && !e.creditId) {
+        const c = addCredit(s, person, { kind: 'stage', project: t.project, role: t.role.part, company: t.company, year: zonedParts(item.at, NY).year, medium: 'stage', status: 'performed', ...(t.union !== 'none' ? { union: t.union } : {}), engagementId: e.id, at: item.at, band: done.band });
+        e.creditId = c.id;
+      }
+    } else if (kind === 'rehearsal') {
       rehearseDay(person, e, t);
       // A rehearsal day is work in the project's genres, as a School call is (from 2026-10-22, the owner's brief 21).
       practiceGenres(s, person, projectGenresOf(t));
@@ -1552,7 +2039,7 @@ export function registerProJobs(sim: Simulation): void {
     // takes these eight on top of its own.
     person.wellbeing.energy = clamp(person.wellbeing.energy - ESTIMATE.energy.rehearsal, 0, 100);
     if (e.log.filter((l) => l.status === 'worked').length === 1) noteEvent(s, e, { kind: 'worked', key: 'first', words: `Your first day as ${t.role.part} in ${t.project}.` });
-    if (i === e.days.length - 1 && e.status === 'working') finish(s, person, e, t);
+    if (i === e.days.length - 1 && e.status === 'working' && !episodesPending(e)) finish(s, person, e, t);
   });
 
   // Permission to work ended (from 2026-10-22, the owner's brief 22): every engagement with a day still to come past the
@@ -1569,8 +2056,26 @@ export function registerProJobs(sim: Simulation): void {
 
   sim.onSchedule(RELEASE_KIND, (item, s) => {
     const person = s.universe.people[String(item.payload.personId)];
+    // A scene of yours cut in the edit (from 2026-10-24, brief 25's Module 5, T46): the credit and the pay stay, and the
+    // credit's band is the best of the days on the scenes kept, which a reel cut from it shows.
+    const pre = person?.pro?.credits.find((x) => x.id === String(item.payload.creditId));
+    const e = pre?.engagementId ? engagementOf(person!, pre.engagementId) : undefined;
+    const cut = e ? cutInEdit(s, e) : undefined;
     const c = person && releaseScreenCredit(s, person, String(item.payload.creditId));
-    if (person && c) tell(s, person, `${c.project} Is Released`, `${c.project} is out, so ${c.role} shows as released on your credits, and its footage can go on your reel. Cut A Reel on the Portfolio tab lists it.`, 60);
+    if (!person || !c) return;
+    const t = e ? projectById(e.projectId) : undefined;
+    if (cut && e && t) {
+      c.cut = (c.cut ?? 0) + 1;
+      const kept = keptBand(e);
+      if (kept) c.band = kept;
+      noteEvent(s, e, { kind: 'problem', key: 'cut', words: `The edit cut your ${unitWord(t, cut)} from ${t.project}. ${c.role} stays on your credits, and the pay is yours.` });
+    }
+    // A film in cinemas enters the game's own weekly chart (from 2026-10-24, brief 25's Module 6, X5), its run drawn now
+    // and read by the clock: the game's simulation, never a published figure, and never pay.
+    if (t && formatOf(t).after === 'theatrical') c.run ??= simulateRun(s, t.id, t.kind, c.releasedAt ?? s.now);
+    const out = t ? RELEASED[formatOf(t).after] : 'is out';
+    const words = c.voice ? `${c.project} ${out}, so ${c.role} shows as released on your credits. It’s your voice with no picture of you, so it can’t go on a reel.` : `${c.project} ${out}, so ${c.role} shows as released on your credits, and its footage can go on your reel. Cut A Reel on the Portfolio tab lists it.`;
+    tell(s, person, `${c.project} Is Released`, cut && t ? `${words} The edit cut one of your scenes, ${unitWord(t, cut)}: the part stays on your credits with the pay, and the reel can use only the scenes kept.` : words, 60);
   });
 
   sim.onSchedule(SCHOOL_ANSWER_KIND, (item, s) => {
@@ -1608,7 +2113,7 @@ export function registerProJobs(sim: Simulation): void {
     const x: PrepTarget | undefined = o ? { opportunity: o } : e ? { engagement: e } : undefined;
     const no = prepareRefusal(s, person, x, String(p?.step));
     if (no) throw new CommandError(no);
-    return prepareOn(s, person, x!, p.step as BriefStep);
+    return prepareOn(s, person, x!, p.step as BriefStep | 'special');
   });
 
   sim.onCommand<{ opportunityId: string }, { band: Band; overall: number }>('pro.tape_audition', (p, { sim: s }) => {
@@ -1659,14 +2164,25 @@ export function registerProJobs(sim: Simulation): void {
       ...(agreement ? { agreementId: agreement.id, agentId: agreement.agentId } : {}), pay: [], history: [], counts: {},
       // The sides are part of the script: the part starts from half of what they had.
       prep: { interpretation: r3((o!.prep?.interpretation ?? 0) * WORK.sidesKept), memorization: r3((o!.prep?.memorization ?? 0) * WORK.sidesKept), rehearsal: r3((o!.prep?.rehearsal ?? 0) * WORK.sidesKept) },
-      ...(inSessionAny(person, days) ? { school: req?.status === 'approved' ? 'approved' as const : 'unapproved' as const } : {}),
+      ...(inSessionAny(person, spansOf(person, t, days)) ? { school: req?.status === 'approved' ? 'approved' as const : 'unapproved' as const } : {}),
     };
     pro.engagements.push(e);
+    // What permission read when it was booked, the country's for work abroad (from 2026-10-23, the owner's brief 25).
+    if (abroad(person, t)) e.eligibility = abroadRead(person, countryOfProject(t), e.days, e.id, s.now);
     e.pay = promisedPay(s, e, o!);
     // Each week's pay on the clock for its payday (`schedulePay`, `systems/propay.ts`), wired at the work loop's merge on
     // 2026-10-21: promised here, paid once when it comes.
     schedulePay(s, person, e);
     bookDays(s, person, e, t);
+    // Work a long way from home books its trip (from 2026-10-23, the owner's brief 25, W6; in the US too from Module 2):
+    // the flights, the cars and the hotel.
+    const trip = bookTrip(s, person, e, t);
+    // The contract, made now (from 2026-10-24, brief 25's Module 4, D1), and a recurring part's season on the clock: the
+    // production's word on each further episode, and its option on the next season (`systems/series.ts`).
+    e.contract = contractFor(s, e, o!.offer!, t, trip, seasonOf(t, e));
+    scheduleSeason(s, person, e);
+    // The part's scenes and the order they're shot in (from 2026-10-24, brief 25's Module 5, `planWork`).
+    planWork(s, e, t);
     s.timeline.cancelFor('pro.offer', o!.id, s.now);
     const words = `You accepted ${t.role.part} in ${t.project}: ${counted(days.length, 'work day')}, from ${formatDate(days[0]!.from, NY)}.`;
     noteEvent(s, e, { kind: 'booked', key: 'booked', words });
