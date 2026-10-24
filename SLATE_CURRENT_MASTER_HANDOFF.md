@@ -5,7 +5,8 @@
 a new session on 2026-10-24, after an account of #62's changes in that session, with "We’re going to work on everything
 here plus starting with fix of whatever and all thats stale" and the instruction to work with one agent and no subagents.
 It was worked on `claude/connectivity-sweep`, from `main` at `b46ee301` (#63), in twelve milestones, complete on
-2026-10-24 at `§FILL-FINAL§`, pushed after each and never force-pushed, and kept out of `main` until the owner's word
+2026-10-24 at `28a8f3f1` (the commit after it holds that commit's gate receipt and changes documents alone), pushed
+after each and never force-pushed, and kept out of `main` until the owner's word
 ("Do not merge to main or deploy without my explicit instruction."). Nothing is deployed. There is no stash and one worktree. `claude/peaceful-hamilton-59zdbb` holds brief 25, the other account's
 career expansion, eight commits past `main` on 2026-10-24, unmerged; brief 26 says not to begin that expansion, and
 nothing here builds on it.
@@ -104,7 +105,8 @@ nothing here builds on it.
   the runs as committed at `b46ee301`, every number the same, only each lane's record and the real-time walks' pictures
   differing (`docs/verification/career-genre-2026-10-22/final-runs/runs/README.md`). Folded, 633 of 658 (`82b644aa`);
   the gate in a clean clone of it, its exit read from its file: exit 0; 494 of 494 test files, 5,638 of 5,638 tests, none skipped, all 23 checks, the matrix at 633 before its own row (`docs/verification/sweep-2026-10-24/final-runs/gate.txt`). Its figure folded, 634 of 658; the gate
-  again on the commit that holds it: §FILL-GATE2-H§. The receipt's last section is the report brief 26's §13 asks for.
+  again on the commit that holds it: exit 0, the same counts, the matrix at 634
+    (`docs/verification/sweep-2026-10-24/final-runs/gate-receipt.txt`). The receipt's last section is the report brief 26's §13 asks for.
 - **What waits on the owner:** the merge of `claude/connectivity-sweep` to `main`; a deployment of the functions after
   the gate (`base44/shared/guard.js`'s reported size, M11); `create.livesWhereBorn` (Blocked since brief 20); the next
   brief. The 20 Deferred rows and the matrix's 41 stay as the owner's scope reset left them; brief 25's career expansion

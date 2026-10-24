@@ -437,7 +437,8 @@ checked out, `npm run gate` with its output and npm's exit written to files befo
   (`final-runs/gate.txt`, `final-runs/gate-exit.txt`; the same receipt at
   `../career-genre-2026-10-22/final-runs/runs/gate.txt`, where the runs' `figures.py` reads it; brief 24's, on
   `859bacdb`, stood there until then and is in git). Its figure folded in after it, the matrix moved from 633 to 634.
-- **On the commit that holds that fold, `§FILL-FINAL§`:** run again after these records were written: §FILL-GATE2§
+- **On the commit that holds that fold, `28a8f3f1`:** run again after these records were written: exit 0; 494 of 494 test files and 5,638 of 5,638 tests, none
+  skipped, in 1,247 seconds; all 23 checks, the completion matrix at 634
   (`final-runs/gate-receipt.txt`, `final-runs/gate-receipt-exit.txt`). Only that receipt was written after it.
 - **Brief 26 added:** 6 test files and 22 tests to the baseline's 488 and 5,616: the six `b26-*` probes (21 tests) and
   the guard's accented case. The gate's twenty-third check, the register's, was added by M2.
@@ -445,8 +446,8 @@ checked out, `npm run gate` with its output and npm's exit written to files befo
 ### The Report Brief 26's §13 Asks For
 
 **Starting and final commits.** `main` at `b46ee301` (#63), `src` as #62's head left it; the sweep on
-`claude/connectivity-sweep`, §FILL-COMMITS§ commits to `§FILL-FINAL§`, pushed after each milestone and never
-force-pushed, not merged to `main` and not deployed (the owner's word on both). The schema stays 94.
+`claude/connectivity-sweep`, fifteen commits, the last the gate ran on `28a8f3f1` (the commit after it holds that gate's
+receipt and changes documents alone), pushed after each milestone and never force-pushed, not merged to `main` and not deployed (the owner's word on both). The schema stays 94.
 
 **Features audited and coverage.** 1,146 features in the register (`REGISTER.md`): the 1,145 `tools/sweep.mjs` found in
 the code at M2 and the notice M6's fix added. Every one has a status read from the code and the tests, none Not Tested:
@@ -514,7 +515,8 @@ content bound of eleven parts; `openSlot`'s explicit backup on Base44, spent twi
 `docs/UNWIRED.json` reads 2, as at the start; `docs/UNBITTEN.md` is unchanged.
 
 **Test commands, results, counts and evidence.**
-- The gate, in a clean clone, its exit read from its file: `npm run gate` → exit 0 on `82b644aa`, 494 of 494 files, 5,638 of 5,638 tests, all 23 checks; and again on `§FILL-FINAL§`, §FILL-GATE2-SHORT§ (`final-runs/gate.txt`,
+- The gate, in a clean clone, its exit read from its file: `npm run gate` → exit 0 on `82b644aa`, 494 of 494 files, 5,638 of 5,638 tests, all 23 checks; and again on `28a8f3f1`, exit 0, the same counts, the matrix at 634
+  (`final-runs/gate-receipt.txt`, `final-runs/gate-receipt-exit.txt`) (`final-runs/gate.txt`,
   `final-runs/gate-exit.txt`); the baseline on `b46ee301`: exit 0, 488 files, 5,616 tests, 22 checks
   (`baseline/gate.txt`).
 - The sweep's own probes, `npx vitest run tests/b26-*.test.ts`: 6 files, 21 tests (creation-genres 2,

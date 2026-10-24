@@ -103,7 +103,8 @@ each milestone's end, with the branch, the commit, what's covered, what remains 
   at `b46ee301`, every number the same, only each lane's own record and the real-time walks' pictures differing
   (`../career-genre-2026-10-22/final-runs/runs/README.md`, `final-runs/compare.py`); folded, the matrix back to 633
   before the gate's own row (`82b644aa`). The gate in a clean clone of `82b644aa`, its exit read from its file:
-  exit 0, 494 of 494 test files, 5,638 of 5,638 tests, none skipped, in 1,246 seconds, all 23 checks (`final-runs/gate.txt`, `final-runs/gate-exit.txt`). Its figure folded, 634 of 658; the gate again on the commit that holds it: §FILL-GATE2-CP§. The
+  exit 0, 494 of 494 test files, 5,638 of 5,638 tests, none skipped, in 1,246 seconds, all 23 checks (`final-runs/gate.txt`, `final-runs/gate-exit.txt`). Its figure folded, 634 of 658; the gate again on the commit that holds it: exit 0, the same counts, the matrix at 634
+  (`final-runs/gate-receipt.txt`, `final-runs/gate-receipt-exit.txt`). The
   report brief 26's §13 asks for is the README's last section.
 
 ## The Completion Matrix While The Sweep Runs
