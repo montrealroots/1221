@@ -344,6 +344,57 @@
    "prior": "pro.cut_reel"
   },
   {
+   "id": "pro.mix_demo",
+   "kind": "command",
+   "area": "career",
+   "mechanic": true,
+   "seeded": false,
+   "readBy": "career",
+   "readAt": "f36f49a5",
+   "where": "Career, Portfolio: Mix A Voice Demo, choosing up to four voice recordings; grayed with demoRefusal's words.",
+   "prerequisites": "Recordings of the voice alone (a voice brief's take, a released voice credit); one to four, each once; not the same set again; two free hours; $300 the bank can cover.",
+   "reads": "The voice recordings (`demoSources`), the current demo, the clock, the bank.",
+   "changes": "$300 spent as a work cost, two hours on the clock, a demo material numbered among its kind with its recordings and bands.",
+   "consumers": [
+    {
+     "what": "a voice part's submission sends it, where screen work sends the reel",
+     "at": "src/engine/systems/projobs.ts:1291"
+    },
+    {
+     "what": "a voice part whose casting asks for a demo refuses a submission without one",
+     "at": "src/engine/systems/projobs.ts:963"
+    },
+    {
+     "what": "the voice purpose of the materials check says when newer recordings came after it",
+     "at": "src/engine/systems/pro.ts:1164"
+    },
+    {
+     "what": "the same recordings again are refused",
+     "at": "src/engine/systems/pro.ts:1248"
+    }
+   ],
+   "experienced": "At once the Portfolio lists the demo with its recordings; a submission for voice work sends it from then, and names that version after another is mixed.",
+   "saveLoad": "The professional record (`person.pro`) and the calendar's pending `pro.*` items are in the save; every handler reads the record's own state (a status, a key, a guard) before acting, so a load runs nothing twice and drops nothing. Held to the byte across a save and a load before each step of a part and of an approach by tests/b20-career-saveload.test.ts.",
+   "evidence": {
+    "tests": [
+     "tests/b27-voice-demo.test.ts",
+     "tests/career-workflows.test.ts",
+     "tests/pro-core.test.ts"
+    ],
+    "comparisons": [
+     "b27-voice-demo: a voice part's submission refused without a demo and sent with it; screen work sends the reel, never the demo"
+    ],
+    "mutations": [],
+    "journeys": [
+     "b27-voice-demo: a slate voice part, the demo mixed, the submission, a second demo"
+    ]
+   },
+   "missing": "No played life of the long runs mixes one yet: they're replayed in brief 27's F.",
+   "status": "Implemented And Verified",
+   "why": "",
+   "prior": null
+  },
+  {
    "id": "pro.decline_agreement",
    "kind": "command",
    "area": "career",
@@ -3498,6 +3549,46 @@
    "seeded": false,
    "readBy": "career-world",
    "readAt": "f341b3b1"
+  },
+  {
+   "id": "promise.career.demo>craft.brief-tape",
+   "kind": "prerequisite",
+   "claim": "A voice brief you’ve taped is the first recording a demo can be mixed from.",
+   "entryFile": "src/engine/content/guide/career.ts",
+   "holds": "`demoSources` offers a voice brief's takes (src/engine/systems/pro.ts:1113).",
+   "tests": [
+    "tests/b27-voice-demo.test.ts"
+   ],
+   "evidence": {
+    "tests": [
+     "tests/b27-voice-demo.test.ts"
+    ]
+   },
+   "status": "Implemented And Verified",
+   "why": "",
+   "seeded": false,
+   "readBy": "career",
+   "readAt": "f36f49a5"
+  },
+  {
+   "id": "promise.career.demo>career.reel",
+   "kind": "optional",
+   "claim": "The reel is the demo’s counterpart for work on camera.",
+   "entryFile": "src/engine/content/guide/career.ts",
+   "holds": "A voice part's submission sends the demo and a screen part's the reel (src/engine/systems/projobs.ts:1291); a voice recording a reel refuses goes on a demo (src/engine/systems/pro.ts:1108).",
+   "tests": [
+    "tests/b27-voice-demo.test.ts"
+   ],
+   "evidence": {
+    "tests": [
+     "tests/b27-voice-demo.test.ts"
+    ]
+   },
+   "status": "Implemented And Verified",
+   "why": "",
+   "seeded": false,
+   "readBy": "career",
+   "readAt": "f36f49a5"
   }
  ]
 }

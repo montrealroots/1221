@@ -295,8 +295,8 @@ describe('the portfolio’s commands', () => {
     }
     const sources = reelSources(sim.player, sim.now);
     const voiced = sources.find((s) => s.title.startsWith(voice.title))!;
-    expect(voiced).toMatchObject({ usable: false, why: 'It’s a voice recording with no picture, so it can’t go on a reel.' });
-    expect(sim.execute({ kind: 'pro.cut_reel', payload: { pieces: [voiced.ref] } }).error).toBe('It’s a voice recording with no picture, so it can’t go on a reel.');
+    expect(voiced).toMatchObject({ usable: false, why: 'It’s a voice recording with no picture, so it can’t go on a reel. It can go on a voice demo.' });
+    expect(sim.execute({ kind: 'pro.cut_reel', payload: { pieces: [voiced.ref] } }).error).toBe('It’s a voice recording with no picture, so it can’t go on a reel. It can go on a voice demo.');
     expect(sim.execute({ kind: 'pro.cut_reel', payload: { pieces: ['tape:nothing:1'] } }).error).toBe('That piece isn’t among your recorded material.');
     const tapes = sources.filter((s) => s.usable);
     expect(tapes).toHaveLength(2);

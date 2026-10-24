@@ -130,7 +130,7 @@ export interface KindProfile {
    * which tests/cohesion.test.ts took, rightly by the name, for a reading of somebody's genres.
    */
   genreSets: readonly (readonly string[])[];
-  sends: readonly ('headshot' | 'resume' | 'reel')[];
+  sends: readonly ('headshot' | 'resume' | 'reel' | 'demo')[];
   /** Days from a part's posting to the production's first day, at least and at most. */
   lead: readonly [number, number];
   /** The chance it's never made, and that it's pushed, and by how many weeks at least and at most. */
@@ -144,6 +144,8 @@ export interface KindProfile {
 
 const SCREEN_SENDS = ['headshot', 'resume', 'reel'] as const;
 const STAGE_SENDS = ['headshot', 'resume'] as const;
+/** Voice casting listens: a voice demo where screen casting asks for a reel (until 2026-10-24, brief 27, the screen's three). */
+const VOICE_SENDS = ['headshot', 'resume', 'demo'] as const;
 const FATE_FILM = { never: 0.08, pushed: 0.12, weeks: [3, 10] } as const;
 const FATE_TV = { never: 0.04, pushed: 0.1, weeks: [2, 6] } as const;
 const FATE_STAGE = { never: 0.03, pushed: 0.05, weeks: [4, 12] } as const;
@@ -215,7 +217,7 @@ export const KIND_PROFILES: Readonly<Partial<Record<ProjectKind, KindProfile>>> 
     schedules: [{ kind: 'sessions', sessions: 3, everyDays: 14, minutes: 240, hour: 10 }, { kind: 'sessions', sessions: 2, everyDays: 21, minutes: 240, hour: 10 }],
     audition: 'self-tape', callback: 0.5, access: { agent: false, open: 'anyone' }, sizes: { 'co-star': 2, supporting: 1 }, parts: [1, 2],
     genreSets: [['animated', 'comedy'], ['animated', 'adventure'], ['animated', 'childrens']],
-    sends: SCREEN_SENDS, lead: [21, 42], fate: FATE_TV, techniques: { voice: 2, voiceover: 2 }, stakes: 1,
+    sends: VOICE_SENDS, lead: [21, 42], fate: FATE_TV, techniques: { voice: 2, voiceover: 2 }, stakes: 1,
     series: { episodes: 13, everyDays: 14, daysEach: 1, program: 'half-hour', renew: 0.6, revive: 0.1 },
   },
   'limited-series': {
@@ -279,7 +281,7 @@ export const KIND_PROFILES: Readonly<Partial<Record<ProjectKind, KindProfile>>> 
     schedules: [{ kind: 'sessions', sessions: 4, everyDays: 35, minutes: 240, hour: 10 }, { kind: 'sessions', sessions: 3, everyDays: 28, minutes: 240, hour: 10 }],
     audition: 'self-tape', callback: 0.6, access: { agent: false, open: 'anyone' }, sizes: { supporting: 2, 'co-star': 2 }, parts: [1, 2],
     genreSets: [['animated', 'adventure'], ['animated', 'fantasy'], ['animated', 'family']],
-    sends: SCREEN_SENDS, lead: [28, 56], fate: FATE_FILM, techniques: { voice: 2, voiceover: 2 }, stakes: 2,
+    sends: VOICE_SENDS, lead: [28, 56], fate: FATE_FILM, techniques: { voice: 2, voiceover: 2 }, stakes: 2,
   },
   'capture-feature': {
     format: 'capture', medium: 'film', union: 'sag-aftra', contract: 'SAG-AFTRA Basic Agreement (Performance Capture)', pay: 'sag-tv-day',
@@ -293,14 +295,14 @@ export const KIND_PROFILES: Readonly<Partial<Record<ProjectKind, KindProfile>>> 
     schedules: [{ kind: 'sessions', sessions: 3, everyDays: 1, minutes: 480, hour: 9 }, { kind: 'sessions', sessions: 2, everyDays: 1, minutes: 480, hour: 9 }],
     audition: 'self-tape', callback: 0, access: { agent: false, open: 'anyone' }, sizes: { supporting: 2, 'co-star': 1 }, parts: [1, 2],
     genreSets: [['drama', 'thriller'], ['animated', 'adventure'], ['crime', 'drama']],
-    sends: SCREEN_SENDS, lead: [14, 35], fate: { never: 0.05, pushed: 0.08, weeks: [1, 4] }, techniques: { voice: 2, voiceover: 1 }, stakes: 1,
+    sends: VOICE_SENDS, lead: [14, 35], fate: { never: 0.05, pushed: 0.08, weeks: [1, 4] }, techniques: { voice: 2, voiceover: 1 }, stakes: 1,
   },
   documentary: {
     format: 'narration', medium: 'film', union: 'sag-aftra', contract: 'SAG-AFTRA Basic Agreement', pay: 'sag-tv-day',
     schedules: [{ kind: 'sessions', sessions: 3, everyDays: 2, minutes: 240, hour: 10 }, { kind: 'sessions', sessions: 2, everyDays: 3, minutes: 240, hour: 10 }],
     audition: 'self-tape', callback: 0, access: { agent: false, open: 'anyone' }, sizes: { lead: 1 }, parts: [1, 1],
     genreSets: [['documentary', 'nature_documentary'], ['documentary', 'true_crime'], ['documentary', 'biographical']],
-    sends: SCREEN_SENDS, lead: [21, 42], fate: { never: 0.06, pushed: 0.1, weeks: [2, 6] }, techniques: { voiceover: 2, speech: 1 }, stakes: 1,
+    sends: VOICE_SENDS, lead: [21, 42], fate: { never: 0.06, pushed: 0.1, weeks: [2, 6] }, techniques: { voiceover: 2, speech: 1 }, stakes: 1,
   },
   'overseas-feature': {
     format: 'studio-feature', medium: 'film', union: 'sag-aftra', contract: 'SAG-AFTRA Basic Agreement (Theatrical)', pay: 'sag-tv-week',

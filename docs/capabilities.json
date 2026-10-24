@@ -2940,8 +2940,8 @@
     },
     {
       "id": "career-portfolio",
-      "goal": "Keep a professional profile and make the portfolio a submission sends: a professional name, headshots, a résumé and a reel, each with where it came from, when it was made and what’s in it",
-      "entry": "Career, under Your Work: Overview (Where You Stand, The Way You’re On, What’s Missing, What’s Next); Portfolio: Professional Name and Use This Name, Book A Headshot Session, Make Your Résumé or Update Your Résumé, Recorded Work To Cut From and Cut A Reel",
+      "goal": "Keep a professional profile and make the portfolio a submission sends: a professional name, headshots, a résumé, a reel and, from 2026-10-24, a voice demo, each with where it came from, when it was made and what’s in it",
+      "entry": "Career, under Your Work: Overview (Where You Stand, The Way You’re On, What’s Missing, What’s Next); Portfolio: Professional Name and Use This Name, Book A Headshot Session, Make Your Résumé or Update Your Résumé, Recorded Work To Cut From and Cut A Reel, Voice Recordings To Mix From and Mix A Voice Demo",
       "entities": [
         "ProRecord",
         "Material",
@@ -2949,20 +2949,22 @@
         "MaterialPiece"
       ],
       "state": "src/engine/systems/pro.ts",
-      "preconditions": "The record, which every life has from its start and an older save from its first opening (pro.begun). A name of letters, 40 characters at most, not the one in use (nameRefusal); a session free for four hours, in person, starting from 9 AM to 4 PM, with the bank covering it (headshotRefusal); a résumé free for an hour with something on the record the last doesn’t have (resumeRefusal); a reel from one to four pieces of recorded work, not a voice brief, not the same pieces as the reel already holds, free for two hours with the bank covering the edit (reelRefusal)",
+      "preconditions": "The record, which every life has from its start and an older save from its first opening (pro.begun). A name of letters, 40 characters at most, not the one in use (nameRefusal); a session free for four hours, in person, starting from 9 AM to 4 PM, with the bank covering it (headshotRefusal); a résumé free for an hour with something on the record the last doesn’t have (resumeRefusal); a reel from one to four pieces of recorded work, not a voice brief, not the same pieces as the reel already holds, free for two hours with the bank covering the edit (reelRefusal); a voice demo from one to four recordings of the voice alone (a voice brief's take, a released voice credit), not the same as the demo holds, free for two hours with the bank covering the session (demoRefusal)",
       "commands": [
         "pro.set_name",
         "pro.headshots",
         "pro.update_resume",
-        "pro.cut_reel"
+        "pro.cut_reel",
+        "pro.mix_demo"
       ],
-      "effects": "A name: none in time or money. Headshots: four hours on the clock and $700 through spend as a work cost, both estimated. A résumé: an hour, nothing paid. A reel: two hours and $250, both estimated. Each material is added with its provenance and numbered among its kind, the last six of each kind kept",
+      "effects": "A name: none in time or money. Headshots: four hours on the clock and $700 through spend as a work cost, both estimated. A résumé: an hour, nothing paid. A reel: two hours and $250, both estimated. Each material is added with its provenance and numbered among its kind, the last six of each kind kept. A voice demo: two hours and $300, both estimated, numbered among its kind like the rest",
       "persists": "Person.pro: name, materials (kind, made, version, source, contains, pieces, keys, cost), made counts; and the record the other career systems fill (credits, relations, agreements, opportunities, engagements, showcase, outside work, unions)",
       "readers": [
         "materialsCheck: the Career screen’s What’s Missing, and the agent’s and the work’s submissions",
         "resumeBehind: the résumé’s standing",
         "reelSources: what a reel can be cut from",
-        "profileOf: the profile on both tabs"
+        "profileOf: the profile on both tabs",
+        "demoSources: what a voice demo can be mixed from; materialsCheck's voice purpose and the work's submission, which sends the demo with a voice part and refuses one whose casting asks for a demo without it"
       ],
       "looks": [],
       "routes": [
@@ -2973,7 +2975,8 @@
       "tests": [
         "tests/pro-core.test.ts",
         "tests/pro-screen.test.ts",
-        "tests/journey-career.test.ts"
+        "tests/journey-career.test.ts",
+        "tests/b27-voice-demo.test.ts"
       ],
       "manual": "",
       "status": "Implemented",
@@ -2983,7 +2986,7 @@
         "interaction": "Implemented",
         "verified": "Partial"
       },
-      "limits": "Built on 2026-10-20 for brief 19, and read on 2026-10-21 against 7bbab80f by a reader who wrote none of it, again against a483247d once V1’s journeys had landed, and a third time against c01e06f4 once tests had been written for what the second reading found missing, and a fourth against 9c3e6fa5 once tests had been written for what the third found unread (docs/verification/career-2026-10-20/audit/REPORT.md). docs/GAMEPLAY-COVERAGE.md calls each of its four commands verified. A reel is read by his office’s Your Work, and a better one counts as something new a year after a pass (tests/journey-agent.test.ts). From c01e06f4 until 9c3e6fa5 these limits called pro.cut_reel partial, that count read by no test then (mutation R8 survived). Driven through the commands and checked: a name set, read by the profile and by a résumé behind on it (tests/pro-core.test.ts); headshots, a résumé and a reel each made on the clock and paid through spend, with their provenance, and read by materialsCheck, which refuses the agent’s check and a submission without headshots or a résumé, played through those commands (tests/journey-agent.test.ts, tests/pro-work.test.ts), and says out of date, behind, tapes only and newer work, read by calling it after the commands. In a played life (tests/journey-career.test.ts) the portfolio is made once the School posts the filmed monologues, the reel cut from them, and it goes with his submissions; in another, an up-to-date résumé his office asks for is made and sent. What isn’t: a released credit’s footage is a reel source only by calling reelSources on state set by hand, and no test cuts a reel from it; no played life is asked for new headshots, a request for them reached only on headshots dated back by hand (tests/journey-agent.test.ts); and no test presses a Portfolio button on the rendered screen. Until c01e06f4 these limits said a request for new headshots was never played and the résumé’s SAG-AFTRA line for a member was read by no test. Until a483247d they said the filmed monologues too were reel sources only that way, that every request in a test was for a reel, and that no test sent a reel with a submission; V1’s journeys do each. Until 2026-10-21 these limits said the materials were read by the Career screen alone until the agent’s and the work’s systems called materialsCheck; both call it since the parts were merged that day. It isn’t called Verified because tools/capabilities.mjs and tools/coverage.mjs count a command’s row as read only by the review of 2026-10-13, and its rows were added on 2026-10-21, as brief 09’s capabilities stand. The materials’ prices and times are the game’s estimates, said so on the screen"
+      "limits": "Built on 2026-10-20 for brief 19, and read on 2026-10-21 against 7bbab80f by a reader who wrote none of it, again against a483247d once V1’s journeys had landed, and a third time against c01e06f4 once tests had been written for what the second reading found missing, and a fourth against 9c3e6fa5 once tests had been written for what the third found unread (docs/verification/career-2026-10-20/audit/REPORT.md). docs/GAMEPLAY-COVERAGE.md calls each of its four commands verified. A reel is read by his office’s Your Work, and a better one counts as something new a year after a pass (tests/journey-agent.test.ts). From c01e06f4 until 9c3e6fa5 these limits called pro.cut_reel partial, that count read by no test then (mutation R8 survived). Driven through the commands and checked: a name set, read by the profile and by a résumé behind on it (tests/pro-core.test.ts); headshots, a résumé and a reel each made on the clock and paid through spend, with their provenance, and read by materialsCheck, which refuses the agent’s check and a submission without headshots or a résumé, played through those commands (tests/journey-agent.test.ts, tests/pro-work.test.ts), and says out of date, behind, tapes only and newer work, read by calling it after the commands. In a played life (tests/journey-career.test.ts) the portfolio is made once the School posts the filmed monologues, the reel cut from them, and it goes with his submissions; in another, an up-to-date résumé his office asks for is made and sent. What isn’t: a released credit’s footage is a reel source only by calling reelSources on state set by hand, and no test cuts a reel from it; no played life is asked for new headshots, a request for them reached only on headshots dated back by hand (tests/journey-agent.test.ts); and no test presses a Portfolio button on the rendered screen. Until c01e06f4 these limits said a request for new headshots was never played and the résumé’s SAG-AFTRA line for a member was read by no test. Until a483247d they said the filmed monologues too were reel sources only that way, that every request in a test was for a reel, and that no test sent a reel with a submission; V1’s journeys do each. Until 2026-10-21 these limits said the materials were read by the Career screen alone until the agent’s and the work’s systems called materialsCheck; both call it since the parts were merged that day. It isn’t called Verified because tools/capabilities.mjs and tools/coverage.mjs count a command’s row as read only by the review of 2026-10-13, and its rows were added on 2026-10-21, as brief 09’s capabilities stand. The materials’ prices and times are the game’s estimates, said so on the screen From 2026-10-24 (brief 27, K3) a fifth command, pro.mix_demo: the voice demo, mixed from recordings a reel can't hold, sent with a submission for voice work where a reel goes with screen work's, and named by version in the submission after another is mixed (tests/b27-voice-demo.test.ts, through the commands and the rendered Portfolio tab). Until then a voice part's submission sent the reel, which no voice recording could go on."
     },
     {
       "id": "school-showcase",

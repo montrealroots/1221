@@ -25,8 +25,8 @@ import { plural } from '@/engine/core/text';
 import { countWords } from '@/engine/systems/school';
 import { WorkPane } from '@/ui/career/WorkPane';
 import {
-  HEADSHOTS, NAME_MOST, REEL, RESUME, SKILL_LISTED_AT, currentOf, headshotCost, headshotRefusal, materialsCheck, nameRefusal,
-  pathwayOf, pieceWords, proCreditWords, profileOf, reelCost, reelRefusal, reelSources, resumeBehind, resumeRefusal,
+  DEMO, HEADSHOTS, NAME_MOST, REEL, RESUME, SKILL_LISTED_AT, currentOf, demoCost, demoRefusal, demoSources, headshotCost, headshotRefusal,
+  materialsCheck, nameRefusal, pathwayOf, pieceWords, proCreditWords, profileOf, reelCost, reelRefusal, reelSources, resumeBehind, resumeRefusal,
   schoolCreditWords, type MaterialProblem,
 } from '@/engine/systems/pro';
 import { OpportunitiesPane } from '@/ui/career/OpportunitiesPane';
@@ -124,7 +124,7 @@ function OverviewPane({ toPortfolio }: { toPortfolio: () => void }) {
   );
 }
 
-/** The profile, headshots, résumé and reel, each with where it came from and its control. */
+/** The profile, headshots, résumé, reel and, from 2026-10-24 (brief 27), voice demo, each with where it came from and its control. */
 function PortfolioPane() {
   return (
     <div className="col gap-5">
@@ -132,6 +132,7 @@ function PortfolioPane() {
       <HeadshotsPanel />
       <ResumePanel />
       <ReelPanel />
+      <DemoPanel />
     </div>
   );
 }
@@ -311,6 +312,59 @@ function ReelPanel() {
         </div>
         <WhyNot reasons={[[label, no]]} />
         <Fine>The edit’s price and the two hours are estimated. A night on stage and a class piece aren’t recorded, so they can’t go on a reel.</Fine>
+      </div>
+    </Panel>
+  );
+}
+
+/**
+ * The voice demo (from 2026-10-24, the owner's brief 27, Part 7): mixed from recordings of the voice alone, which a reel
+ * can't hold, and sent with a submission for voice work where a reel goes with screen work's.
+ */
+function DemoPanel() {
+  const { sim, run, toast } = useGame();
+  const person = useWorld((s) => s.player);
+  const cur = saveCurrency(sim.universe);
+  const current = currentOf(person.pro, 'demo');
+  const sources = demoSources(person, sim.now);
+  const [chosen, setChosen] = useState<string[]>([]);
+  const no = demoRefusal(sim, person, chosen);
+  const notes = materialsCheck(person, 'voice', sim.now).filter((x) => x.kind === 'demo' && x.problem !== 'missing');
+  const label = `Mix A Voice Demo (${plural(DEMO.minutes / 60, 'Hour')}, ${formatMoney(demoCost(sim), cur)})`;
+  const toggle = (ref: string) => setChosen((was) => (was.includes(ref) ? was.filter((x) => x !== ref) : [...was, ref]));
+  return (
+    <Panel title="Voice Demo" help="career.demo">
+      <div className="col gap-3">
+        {current ? (
+          <dl className="col gap-2 small" style={{ margin: 0 }}>
+            <div><dt className="strong">Mixed</dt><dd style={{ margin: 0 }}>{`${formatDate(current.made, sim.zone)}, the ${current.version === 1 ? 'first' : `version ${current.version}`}`}</dd></div>
+            <div><dt className="strong">Where It Came From</dt><dd style={{ margin: 0 }}>{current.source}</dd></div>
+            <div>
+              <dt className="strong">What’s On It</dt>
+              <dd style={{ margin: 0 }}><ul style={{ margin: 0, paddingLeft: '1.1rem' }}>{current.contains.map((line, i) => <li key={i}>{line}</li>)}</ul></dd>
+            </div>
+          </dl>
+        ) : <p className="small" style={{ margin: 0 }}>You have no voice demo yet. Voice casting, for animation, dubbing and narration, listens to one where screen casting watches a reel. It’s mixed only from recordings of your voice: your takes of voice briefs, and voice work once it’s released.</p>}
+        {notes.length > 0 && <Problems problems={notes} />}
+        {sources.length > 0 ? (
+          <fieldset className="col gap-2" style={{ border: 0, padding: 0, margin: 0 }}>
+            <legend className="small strong">Voice Recordings To Mix From</legend>
+            <p className="xs dim" style={{ margin: 0 }}>{`Choose up to ${countWords(DEMO.most)} recordings. Each shows how it was judged.`}</p>
+            <ul className="small" style={{ margin: 0, padding: 0, listStyle: 'none' }}>
+              {sources.map((s, i) => (
+                <li key={s.ref} className="row gap-2" style={{ alignItems: 'baseline' }}>
+                  <input type="checkbox" id={`demo-piece-${i}`} checked={chosen.includes(s.ref)} onChange={() => toggle(s.ref)} />
+                  <label htmlFor={`demo-piece-${i}`}>{pieceWords(s, sim.zone)}</label>
+                </li>
+              ))}
+            </ul>
+          </fieldset>
+        ) : <p className="small" style={{ margin: 0 }}>You haven’t recorded your voice yet. Tape a voice brief on the Player Profile, and it’s here to mix from.</p>}
+        <div className="row gap-2" style={{ flexWrap: 'wrap' }}>
+          <Gated feature="pro.mix_demo" className="btn btn-sm" disabled={!!no} title={no} onClick={() => { const r = run<{ cost: number; pieces: number }>('pro.mix_demo', { pieces: chosen }); if (r.ok) { toast(`Your voice demo is mixed: ${plural(r.value!.pieces, 'recording')}, ${formatMoney(r.value!.cost, cur)}.`, 'positive'); setChosen([]); } }}>{label}</Gated>
+        </div>
+        <WhyNot reasons={[[label, no]]} />
+        <Fine>The session’s price and the two hours are estimated. A voice demo holds only recordings of your voice, and a submission keeps the demo it sent after you mix another.</Fine>
       </div>
     </Panel>
   );

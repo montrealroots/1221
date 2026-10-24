@@ -106,9 +106,9 @@
  },
  "src/engine/content/tutorial.ts#CHAPTERS [career]": {
   "status": "Rewritten",
-  "hash": "1bd4fb1d54f3",
-  "on": "2026-10-22",
-  "evidence": "tests/b22-authorization.test.ts (the rule the chapter says: a job's days with work from its first, the days before a booked job begins without)",
+  "hash": "f28ccf1cd74d",
+  "on": "2026-10-24",
+  "evidence": "Written for brief 27's K3 (Part 7, voice samples: the voice demo) to docs/STYLE.md and docs/GLOSSARY.md, and read where the player meets it: tests/b27-voice-demo.test.ts draws the Portfolio tab's Voice Demo panel before and after a recording and after the mix, presses Mix A Voice Demo through its command, and holds the refusals, a slate voice part's casting asking for a demo, the submission that sends it and names its version after another is mixed; tests/pro-core.test.ts and tests/career-workflows.test.ts hold the reel's refusal that now says a voice recording goes on a demo. On reading, three sentences that opened with Nothing were turned round (tools/tics.mjs). tools/voice-check.mjs, tools/tics.mjs, tools/title-case.mjs, tools/plural-check.mjs and tools/spelling.mjs pass",
   "first": "Pending"
  },
  "src/engine/content/tutorial.ts#CHAPTERS [clock]": {

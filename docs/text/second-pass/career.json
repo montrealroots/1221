@@ -622,6 +622,13 @@
   "evidence": "Written for brief 25's Module 4 (contracts, pay states, overtime, the producer's contribution, residuals, the per diem, a recurring part's season and a series' seasons) to docs/STYLE.md and docs/GLOSSARY.md, every rule's figure the agreements' own and every invention said as the game's; read where the player meets it in tests/career-contracts.test.ts (the offer, the contract, each payment's state, the notices of each episode, option, decision, telecast, rerun, residual and per diem, through a played recurring part), with tools/voice-check.mjs, tools/tics.mjs and tools/title-case.mjs clean.",
   "first": "Pending"
  },
+ "src/engine/content/guide/career.ts#CAREER_GUIDE [career.demo]": {
+  "status": "Rewritten",
+  "hash": "ea2f838ec85e",
+  "on": "2026-10-24",
+  "evidence": "Written for brief 27's K3 (Part 7, voice samples: the voice demo) to docs/STYLE.md and docs/GLOSSARY.md, and read where the player meets it: tests/b27-voice-demo.test.ts draws the Portfolio tab's Voice Demo panel before and after a recording and after the mix, presses Mix A Voice Demo through its command, and holds the refusals, a slate voice part's casting asking for a demo, the submission that sends it and names its version after another is mixed; tests/pro-core.test.ts and tests/career-workflows.test.ts hold the reel's refusal that now says a voice recording goes on a demo. On reading, three sentences that opened with Nothing were turned round (tools/tics.mjs). tools/voice-check.mjs, tools/tics.mjs, tools/title-case.mjs, tools/plural-check.mjs and tools/spelling.mjs pass",
+  "first": "Pending"
+ },
  "src/engine/content/guide/career.ts#CAREER_GUIDE [career.headshots]": {
   "status": "Rewritten",
   "hash": "461c859c90b3",
@@ -680,9 +687,9 @@
  },
  "src/engine/content/guide/career.ts#CAREER_GUIDE [career.reel]": {
   "status": "Rewritten",
-  "hash": "e3ea0f2c7283",
-  "on": "2026-10-21",
-  "evidence": "Written for brief 19 to docs/STYLE.md and docs/GLOSSARY.md; read where the player meets it in tests/pro-screen.test.ts and tests/pro-core.test.ts, with tools/voice-check.mjs, tools/tics.mjs and tools/title-case.mjs passing",
+  "hash": "a28e36fd1f7d",
+  "on": "2026-10-24",
+  "evidence": "Written for brief 27's K3 (Part 7, voice samples: the voice demo) to docs/STYLE.md and docs/GLOSSARY.md, and read where the player meets it: tests/b27-voice-demo.test.ts draws the Portfolio tab's Voice Demo panel before and after a recording and after the mix, presses Mix A Voice Demo through its command, and holds the refusals, a slate voice part's casting asking for a demo, the submission that sends it and names its version after another is mixed; tests/pro-core.test.ts and tests/career-workflows.test.ts hold the reel's refusal that now says a voice recording goes on a demo. On reading, three sentences that opened with Nothing were turned round (tools/tics.mjs). tools/voice-check.mjs, tools/tics.mjs, tools/title-case.mjs, tools/plural-check.mjs and tools/spelling.mjs pass",
   "first": "Pending"
  },
  "src/engine/content/guide/career.ts#CAREER_GUIDE [career.resume]": {
@@ -701,9 +708,9 @@
  },
  "src/engine/content/guide/career.ts#CAREER_GUIDE [career.work-abroad]": {
   "status": "Rewritten",
-  "hash": "f45f42346d53",
-  "on": "2026-10-23",
-  "evidence": "Written for brief 25's work abroad (Module 1) to docs/STYLE.md and docs/GLOSSARY.md; read where the player meets it in tests/career-world-sydney.test.ts (the journey, the release, the missed flight and the Work tab drawn at each stage) and tests/career-world-countries.test.ts, with tools/voice-check.mjs, tools/tics.mjs, tools/title-case.mjs and tools/plural-check.mjs passing",
+  "hash": "adb5c8dff1f2",
+  "on": "2026-10-24",
+  "evidence": "Brief 25's Work Abroad chapter, read again on 2026-10-24 when the trace (tools/trace.ts) showed it still said so far, Australia and that a visa cost nothing, both untrue once brief 27 verified the UK's routes: it now gives the UK's three routes, the ETA's and the visa's fees and timings from the routes' own figures, and the Irish citizen's exemption. Read in the guide by tests/b20-guide-chapters.test.ts and tests/guide.test.ts, and against the game by tests/b27-slate-screens.test.ts (the ETA on the Work tab); tools/voice-check.mjs, tools/tics.mjs, tools/title-case.mjs and tools/plural-check.mjs pass",
   "first": "Pending"
  },
  "src/engine/content/guide/career.ts#CAREER_GUIDE [career.workflows]": {
@@ -736,16 +743,16 @@
  },
  "src/engine/content/guide/career.ts#CAREER_GUIDE [optional]": {
   "status": "Rewritten",
-  "hash": "7a801fe50843",
+  "hash": "347dae2b74be",
   "on": "2026-10-24",
-  "evidence": "Written for brief 25's Module 6 to docs/STYLE.md and docs/GLOSSARY.md: the guide's chapter on charts, festivals and awards and its links to the ways of working and to offers, each link's promise read against the code by tools/effects.mjs and each quote by tools/guide-quotes.mjs, the chapter's commands issued by tests/career-awards-screen.test.ts, with tools/voice-check.mjs and tools/tics.mjs clean.",
+  "evidence": "Written for brief 27's K3 (Part 7, voice samples: the voice demo) to docs/STYLE.md and docs/GLOSSARY.md, and read where the player meets it: tests/b27-voice-demo.test.ts draws the Portfolio tab's Voice Demo panel before and after a recording and after the mix, presses Mix A Voice Demo through its command, and holds the refusals, a slate voice part's casting asking for a demo, the submission that sends it and names its version after another is mixed; tests/pro-core.test.ts and tests/career-workflows.test.ts hold the reel's refusal that now says a voice recording goes on a demo. On reading, three sentences that opened with Nothing were turned round (tools/tics.mjs). tools/voice-check.mjs, tools/tics.mjs, tools/title-case.mjs, tools/plural-check.mjs and tools/spelling.mjs pass",
   "first": "Pending"
  },
  "src/engine/content/guide/career.ts#CAREER_GUIDE [prerequisite]": {
   "status": "Rewritten",
-  "hash": "df2fbe293649",
+  "hash": "08c9087b1697",
   "on": "2026-10-24",
-  "evidence": "Written for brief 25's Module 5 to docs/STYLE.md and docs/GLOSSARY.md: the guide's chapter on how each kind of work is done and its links to Contracts and Pay, each link's promise read against the code by tools/effects.mjs and each quote by tools/guide-quotes.mjs, the chapter's command opened by tests/career-workflows-screen.test.ts, with tools/voice-check.mjs and tools/tics.mjs clean.",
+  "evidence": "Written for brief 27's K3 (the voice demo's chapter, its prerequisite) to docs/STYLE.md and docs/GLOSSARY.md: a take, which the house keeps for a tape, became a voice brief you've taped on reading (the inventory's engine-speak). Read in the guide's chapter by tests/b20-guide-promises.test.ts and tests/b27-voice-demo.test.ts; tools/voice-check.mjs and tools/tics.mjs pass",
   "first": "Pending"
  },
  "src/engine/content/guide/career.ts#CAREER_GUIDE [scheduled]": {
@@ -790,6 +797,20 @@
   "evidence": "Written for brief 19 to docs/STYLE.md and docs/GLOSSARY.md; read where the player meets it in tests/pro-screen.test.ts and tests/pro-core.test.ts, with tools/voice-check.mjs, tools/tics.mjs and tools/title-case.mjs passing",
   "first": "Pending"
  },
+ "src/engine/systems/pro.ts#demoRefusal": {
+  "status": "Rewritten",
+  "hash": "40c00fdb4df6",
+  "on": "2026-10-24",
+  "evidence": "Written for brief 27's K3 (Part 7, voice samples: the voice demo) to docs/STYLE.md and docs/GLOSSARY.md, and read where the player meets it: tests/b27-voice-demo.test.ts draws the Portfolio tab's Voice Demo panel before and after a recording and after the mix, presses Mix A Voice Demo through its command, and holds the refusals, a slate voice part's casting asking for a demo, the submission that sends it and names its version after another is mixed; tests/pro-core.test.ts and tests/career-workflows.test.ts hold the reel's refusal that now says a voice recording goes on a demo. On reading, three sentences that opened with Nothing were turned round (tools/tics.mjs). tools/voice-check.mjs, tools/tics.mjs, tools/title-case.mjs, tools/plural-check.mjs and tools/spelling.mjs pass",
+  "first": "Pending"
+ },
+ "src/engine/systems/pro.ts#demoSources": {
+  "status": "Rewritten",
+  "hash": "07302cf4d373",
+  "on": "2026-10-24",
+  "evidence": "Written for brief 27's K3 (Part 7, voice samples: the voice demo) to docs/STYLE.md and docs/GLOSSARY.md, and read where the player meets it: tests/b27-voice-demo.test.ts draws the Portfolio tab's Voice Demo panel before and after a recording and after the mix, presses Mix A Voice Demo through its command, and holds the refusals, a slate voice part's casting asking for a demo, the submission that sends it and names its version after another is mixed; tests/pro-core.test.ts and tests/career-workflows.test.ts hold the reel's refusal that now says a voice recording goes on a demo. On reading, three sentences that opened with Nothing were turned round (tools/tics.mjs). tools/voice-check.mjs, tools/tics.mjs, tools/title-case.mjs, tools/plural-check.mjs and tools/spelling.mjs pass",
+  "first": "Pending"
+ },
  "src/engine/systems/pro.ts#eligibilityOf": {
   "status": "Rewritten",
   "hash": "e4509320e234",
@@ -802,6 +823,13 @@
   "hash": "d990bccbedc6",
   "on": "2026-10-21",
   "evidence": "Written for brief 19 to docs/STYLE.md and docs/GLOSSARY.md; read where the player meets it in tests/pro-screen.test.ts and tests/pro-core.test.ts, with tools/voice-check.mjs, tools/tics.mjs and tools/title-case.mjs passing",
+  "first": "Pending"
+ },
+ "src/engine/systems/pro.ts#materialsCheck [demo]": {
+  "status": "Rewritten",
+  "hash": "706ce7a0bc2a",
+  "on": "2026-10-24",
+  "evidence": "Written for brief 27's K3 (Part 7, voice samples: the voice demo) to docs/STYLE.md and docs/GLOSSARY.md, and read where the player meets it: tests/b27-voice-demo.test.ts draws the Portfolio tab's Voice Demo panel before and after a recording and after the mix, presses Mix A Voice Demo through its command, and holds the refusals, a slate voice part's casting asking for a demo, the submission that sends it and names its version after another is mixed; tests/pro-core.test.ts and tests/career-workflows.test.ts hold the reel's refusal that now says a voice recording goes on a demo. On reading, three sentences that opened with Nothing were turned round (tools/tics.mjs). tools/voice-check.mjs, tools/tics.mjs, tools/title-case.mjs, tools/plural-check.mjs and tools/spelling.mjs pass",
   "first": "Pending"
  },
  "src/engine/systems/pro.ts#materialsCheck [headshot]": {
@@ -876,9 +904,16 @@
  },
  "src/engine/systems/pro.ts#reelSources": {
   "status": "Rewritten",
-  "hash": "1b1c70d2f192",
+  "hash": "5779c7230268",
   "on": "2026-10-24",
-  "evidence": "Written for brief 25's Module 5 (the ways of working: the booth, the dub, narration, multicamera, performance capture, reenactment, the musical and action; a shoot's order and takes, revised pages, a recall to loop and a scene cut) to docs/STYLE.md and docs/GLOSSARY.md, every rule the agreements' own and every invention said as the game's; read where the player meets it in tests/career-workflows-screen.test.ts (the Work and Opportunities tabs drawn for a voice session, a multicamera week and an action shoot, through the clock and a reload at each stage) and tests/career-workflows.test.ts (each workflow's days, choices, reports and notices), with tools/voice-check.mjs, tools/tics.mjs and tools/title-case.mjs clean.",
+  "evidence": "Written for brief 27's K3 (Part 7, voice samples: the voice demo) to docs/STYLE.md and docs/GLOSSARY.md, and read where the player meets it: tests/b27-voice-demo.test.ts draws the Portfolio tab's Voice Demo panel before and after a recording and after the mix, presses Mix A Voice Demo through its command, and holds the refusals, a slate voice part's casting asking for a demo, the submission that sends it and names its version after another is mixed; tests/pro-core.test.ts and tests/career-workflows.test.ts hold the reel's refusal that now says a voice recording goes on a demo. On reading, three sentences that opened with Nothing were turned round (tools/tics.mjs). tools/voice-check.mjs, tools/tics.mjs, tools/title-case.mjs, tools/plural-check.mjs and tools/spelling.mjs pass",
+  "first": "Pending"
+ },
+ "src/engine/systems/pro.ts#registerPro [demo]": {
+  "status": "Rewritten",
+  "hash": "0cf93e867bc6",
+  "on": "2026-10-24",
+  "evidence": "Written for brief 27's K3 (Part 7, voice samples: the voice demo) to docs/STYLE.md and docs/GLOSSARY.md, and read where the player meets it: tests/b27-voice-demo.test.ts draws the Portfolio tab's Voice Demo panel before and after a recording and after the mix, presses Mix A Voice Demo through its command, and holds the refusals, a slate voice part's casting asking for a demo, the submission that sends it and names its version after another is mixed; tests/pro-core.test.ts and tests/career-workflows.test.ts hold the reel's refusal that now says a voice recording goes on a demo. On reading, three sentences that opened with Nothing were turned round (tools/tics.mjs). tools/voice-check.mjs, tools/tics.mjs, tools/title-case.mjs, tools/plural-check.mjs and tools/spelling.mjs pass",
   "first": "Pending"
  },
  "src/engine/systems/pro.ts#registerPro [headshot]": {
@@ -914,6 +949,13 @@
   "hash": "a11f3e69ca6c",
   "on": "2026-10-21",
   "evidence": "Written for brief 19 to docs/STYLE.md and docs/GLOSSARY.md; read where the player meets it in tests/pro-screen.test.ts and tests/pro-core.test.ts, with tools/voice-check.mjs, tools/tics.mjs and tools/title-case.mjs passing",
+  "first": "Pending"
+ },
+ "src/engine/systems/pro.ts#registerPro <pro.mix_demo>": {
+  "status": "Rewritten",
+  "hash": "4b23bfd334d8",
+  "on": "2026-10-24",
+  "evidence": "Written for brief 27's K3 (Part 7, voice samples: the voice demo) to docs/STYLE.md and docs/GLOSSARY.md, and read where the player meets it: tests/b27-voice-demo.test.ts draws the Portfolio tab's Voice Demo panel before and after a recording and after the mix, presses Mix A Voice Demo through its command, and holds the refusals, a slate voice part's casting asking for a demo, the submission that sends it and names its version after another is mixed; tests/pro-core.test.ts and tests/career-workflows.test.ts hold the reel's refusal that now says a voice recording goes on a demo. On reading, three sentences that opened with Nothing were turned round (tools/tics.mjs). tools/voice-check.mjs, tools/tics.mjs, tools/title-case.mjs, tools/plural-check.mjs and tools/spelling.mjs pass",
   "first": "Pending"
  },
  "src/engine/systems/pro.ts#resumeNow": {
@@ -970,6 +1012,13 @@
   "hash": "ec14e795fc68",
   "on": "2026-10-23",
   "evidence": "Read against docs/STYLE.md for brief 23; the engagement and its pay table rendered by tests/propay-screen.test.ts, and walked by docs/verification/ui-2026-10-23/app/capture.mjs",
+  "first": "Pending"
+ },
+ "src/ui/workspaces/CareerWorkspace.tsx#DemoPanel": {
+  "status": "Rewritten",
+  "hash": "ff3188c71513",
+  "on": "2026-10-24",
+  "evidence": "Written for brief 27's K3 (Part 7, voice samples: the voice demo) to docs/STYLE.md and docs/GLOSSARY.md, and read where the player meets it: tests/b27-voice-demo.test.ts draws the Portfolio tab's Voice Demo panel before and after a recording and after the mix, presses Mix A Voice Demo through its command, and holds the refusals, a slate voice part's casting asking for a demo, the submission that sends it and names its version after another is mixed; tests/pro-core.test.ts and tests/career-workflows.test.ts hold the reel's refusal that now says a voice recording goes on a demo. On reading, three sentences that opened with Nothing were turned round (tools/tics.mjs). tools/voice-check.mjs, tools/tics.mjs, tools/title-case.mjs, tools/plural-check.mjs and tools/spelling.mjs pass",
   "first": "Pending"
  },
  "src/ui/workspaces/CareerWorkspace.tsx#HeadshotsPanel": {

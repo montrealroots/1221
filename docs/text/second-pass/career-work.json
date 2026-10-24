@@ -869,9 +869,9 @@
  },
  "src/engine/systems/projobs.ts#finish": {
   "status": "Rewritten",
-  "hash": "f67ce1bce385",
+  "hash": "52ba5fc828bc",
   "on": "2026-10-24",
-  "evidence": "Written for brief 25's Module 5 (the ways of working: the booth, the dub, narration, multicamera, performance capture, reenactment, the musical and action; a shoot's order and takes, revised pages, a recall to loop and a scene cut) to docs/STYLE.md and docs/GLOSSARY.md, every rule the agreements' own and every invention said as the game's; read where the player meets it in tests/career-workflows-screen.test.ts (the Work and Opportunities tabs drawn for a voice session, a multicamera week and an action shoot, through the clock and a reload at each stage) and tests/career-workflows.test.ts (each workflow's days, choices, reports and notices), with tools/voice-check.mjs, tools/tics.mjs and tools/title-case.mjs clean.",
+  "evidence": "Written for brief 27's K3 (Part 7, voice samples: the voice demo) to docs/STYLE.md and docs/GLOSSARY.md, and read where the player meets it: tests/b27-voice-demo.test.ts draws the Portfolio tab's Voice Demo panel before and after a recording and after the mix, presses Mix A Voice Demo through its command, and holds the refusals, a slate voice part's casting asking for a demo, the submission that sends it and names its version after another is mixed; tests/pro-core.test.ts and tests/career-workflows.test.ts hold the reel's refusal that now says a voice recording goes on a demo. On reading, three sentences that opened with Nothing were turned round (tools/tics.mjs). tools/voice-check.mjs, tools/tics.mjs, tools/title-case.mjs, tools/plural-check.mjs and tools/spelling.mjs pass",
   "first": "Pending"
  },
  "src/engine/systems/projobs.ts#finish [success]": {
@@ -958,12 +958,19 @@
   "evidence": "Written for brief 25's Module 4 (contracts, pay states, overtime, the producer's contribution, residuals, the per diem, a recurring part's season and a series' seasons) to docs/STYLE.md and docs/GLOSSARY.md, every rule's figure the agreements' own and every invention said as the game's; read where the player meets it in tests/career-contracts.test.ts (the offer, the contract, each payment's state, the notices of each episode, option, decision, telecast, rerun, residual and per diem, through a played recurring part), with tools/voice-check.mjs, tools/tics.mjs and tools/title-case.mjs clean.",
   "first": "Pending"
  },
+ "src/engine/systems/projobs.ts#MATERIAL_WORDS": {
+  "status": "Rewritten",
+  "hash": "ff3b1662dc23",
+  "on": "2026-10-24",
+  "evidence": "Written for brief 27's K3 (Part 7, voice samples: the voice demo) to docs/STYLE.md and docs/GLOSSARY.md, and read where the player meets it: tests/b27-voice-demo.test.ts draws the Portfolio tab's Voice Demo panel before and after a recording and after the mix, presses Mix A Voice Demo through its command, and holds the refusals, a slate voice part's casting asking for a demo, the submission that sends it and names its version after another is mixed; tests/pro-core.test.ts and tests/career-workflows.test.ts hold the reel's refusal that now says a voice recording goes on a demo. On reading, three sentences that opened with Nothing were turned round (tools/tics.mjs). tools/voice-check.mjs, tools/tics.mjs, tools/title-case.mjs, tools/plural-check.mjs and tools/spelling.mjs pass",
+  "first": "Pending"
+ },
  "src/engine/systems/projobs.ts#materialProblems": {
   "status": "Rewritten",
-  "hash": "f16233b23e46",
-  "on": "2026-10-21",
-  "evidence": "Written for brief 19's work loop to docs/STYLE.md and docs/GLOSSARY.md; read where the player meets it in tests/pro-work.test.ts and tests/pro-opportunities-screen.test.ts, with tools/voice-check.mjs, tools/tics.mjs and tools/title-case.mjs passing",
-  "first": "Rewritten And Verified"
+  "hash": "28012fbebabb",
+  "on": "2026-10-24",
+  "evidence": "Written for brief 27's K3 (Part 7, voice samples: the voice demo) to docs/STYLE.md and docs/GLOSSARY.md, and read where the player meets it: tests/b27-voice-demo.test.ts draws the Portfolio tab's Voice Demo panel before and after a recording and after the mix, presses Mix A Voice Demo through its command, and holds the refusals, a slate voice part's casting asking for a demo, the submission that sends it and names its version after another is mixed; tests/pro-core.test.ts and tests/career-workflows.test.ts hold the reel's refusal that now says a voice recording goes on a demo. On reading, three sentences that opened with Nothing were turned round (tools/tics.mjs). tools/voice-check.mjs, tools/tics.mjs, tools/title-case.mjs, tools/plural-check.mjs and tools/spelling.mjs pass",
+  "first": "Pending"
  },
  "src/engine/systems/projobs.ts#missDay": {
   "status": "Rewritten",
@@ -1212,10 +1219,10 @@
  },
  "src/engine/systems/projobs.ts#submit": {
   "status": "Rewritten",
-  "hash": "6ecad909c353",
-  "on": "2026-10-21",
-  "evidence": "Written for brief 20's D4 to docs/STYLE.md and docs/GLOSSARY.md; read where the player meets it in tests/b20-career-history.test.ts (the record's line, the card's line and his notice) and tests/pro-work.test.ts",
-  "first": "Rewritten And Verified"
+  "hash": "054ec5e48572",
+  "on": "2026-10-24",
+  "evidence": "Written for brief 27's K3 (Part 7, voice samples: the voice demo) to docs/STYLE.md and docs/GLOSSARY.md, and read where the player meets it: tests/b27-voice-demo.test.ts draws the Portfolio tab's Voice Demo panel before and after a recording and after the mix, presses Mix A Voice Demo through its command, and holds the refusals, a slate voice part's casting asking for a demo, the submission that sends it and names its version after another is mixed; tests/pro-core.test.ts and tests/career-workflows.test.ts hold the reel's refusal that now says a voice recording goes on a demo. On reading, three sentences that opened with Nothing were turned round (tools/tics.mjs). tools/voice-check.mjs, tools/tics.mjs, tools/title-case.mjs, tools/plural-check.mjs and tools/spelling.mjs pass",
+  "first": "Pending"
  },
  "src/engine/systems/projobs.ts#submitRefusal": {
   "status": "Rewritten",

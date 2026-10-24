@@ -58,7 +58,7 @@ import { yearsSince } from './life';
 import { defineStop } from '../world/clock';
 import {
   activeAgreement, availabilityOf, countOf, currentOf, eligibilityOf, ensurePro, finished, materialsCheck, noteEvent, trainingOf,
-  type Agreement, type AgentRelation, type EndedHow, type MaterialKind, type MaterialProblem, type ProEvent, type ProEventKind, type ProId, type RelationStage,
+  type Agreement, type AgentMaterial, type AgentRelation, type EndedHow, type MaterialKind, type MaterialProblem, type ProEvent, type ProEventKind, type ProId, type RelationStage,
 } from './pro';
 import { yearOfStudy } from './school';
 import { attendedAcross } from './projobs';
@@ -449,7 +449,7 @@ export type ReplyOutcome = 'meeting' | 'request' | 'pass' | 'silence';
  * at the bar, the draw against the chance takes it further, to a request for what's missing first where something is,
  * or a meeting. What isn't taken further is a pass, or, for the last `CHANCE.unanswered` of the draw's range, no answer.
  */
-export function replyOutcome(interest: Interest, u: number, o: { asked?: boolean; requestable: readonly MaterialKind[] }): ReplyOutcome {
+export function replyOutcome(interest: Interest, u: number, o: { asked?: boolean; requestable: readonly AgentMaterial[] }): ReplyOutcome {
   if (o.asked) return 'meeting';
   if (interest.gate && u < interest.chance) return o.requestable.length ? 'request' : 'meeting';
   const p = interest.gate ? interest.chance : 0;
@@ -463,13 +463,13 @@ export const offerOutcome = (interest: Interest, u: number): 'offer' | 'pass' =>
 export const followUpAsks = (interest: Interest, u: number): boolean => interest.gate && u < interest.chance;
 
 /** What the materials check says his office could ask for: a missing reel, old headshots, a résumé behind the record. */
-function requestable(person: Person, at: Instant): MaterialKind[] {
+function requestable(person: Person, at: Instant): AgentMaterial[] {
   return materialsCheck(person, 'representation', at)
     .filter((p) => !p.blocking && ((p.kind === 'reel' && p.problem === 'missing') || (p.kind === 'headshot' && p.problem === 'out-of-date') || (p.kind === 'resume' && p.problem === 'behind')))
-    .map((p) => p.kind);
+    .map((p) => p.kind as AgentMaterial);
 }
 
-const KIND_WORDS: Readonly<Record<MaterialKind, string>> = { headshot: 'new headshots', resume: 'an up-to-date résumé', reel: 'a reel' };
+const KIND_WORDS: Readonly<Record<AgentMaterial, string>> = { headshot: 'new headshots', resume: 'an up-to-date résumé', reel: 'a reel' };
 
 /** A problem the materials check found, as the history says it afterwards. */
 const FOUND: Readonly<Record<MaterialProblem['problem'], (kind: MaterialKind) => string>> = {

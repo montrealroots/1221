@@ -7,7 +7,7 @@ persistence and world mechanics that matrix has no row for. Each carries the swe
 code, by a test the gate runs, by playing the built app), the commit, the evidence and what was found. Only Verified and Fixed And
 Verified count as done, out of every row not Deferred. Not Tested is the honest default: nothing is counted done for having a row.
 
-**Coverage:** 1126 of 1151 in scope Verified or Fixed And Verified (97.8%); 1119 Verified, 7 Fixed And Verified, 0 Failed, 0 Blocked, 20 Deferred, 25 Not Tested. By inspection 1146, automated 1146, interactive 34.
+**Coverage:** 1129 of 1154 in scope Verified or Fixed And Verified (97.8%); 1122 Verified, 7 Fixed And Verified, 0 Failed, 0 Blocked, 20 Deferred, 25 Not Tested. By inspection 1149, automated 1149, interactive 34.
 
 ## Totals
 
@@ -20,10 +20,10 @@ Verified count as done, out of every row not Deferred. Not Tested is the honest 
 | benefits | 77 | 63 |  |  |  | 14 |  | 77 | 77 |  |
 | papers | 103 | 97 |  |  |  | 6 |  | 103 | 103 |  |
 | life | 87 | 84 |  |  |  |  | 3 | 84 | 84 |  |
-| career | 104 | 89 |  |  |  |  | 15 | 89 | 89 |  |
+| career | 107 | 92 |  |  |  |  | 15 | 92 | 92 |  |
 | guide | 70 | 63 |  |  |  |  | 7 | 63 | 63 | 25 |
 | persistence | 12 | 11 | 1 |  |  |  |  | 12 | 12 | 9 |
-| **All** | **1171** | **1119** | **7** | **0** | **0** | **20** | **25** | **1146** | **1146** | **34** |
+| **All** | **1174** | **1122** | **7** | **0** | **0** | **20** | **25** | **1149** | **1149** | **34** |
 
 ## Creation
 
@@ -1056,6 +1056,7 @@ Verified count as done, out of every row not Deferred. Not Tested is the honest 
 | `pro.ask_referral` | command | Career, Representation, How To Reach Him: Ask For A Referral beside each finished job, grayed with its reason. | Implemented And Verified | Verified | inspection, automated | 9018cc4e | tests/journey-agent.test.ts; tests/journey-career-older.test.ts; tests/pro-agent.test.ts; tests/b20-career-effects.test.ts; src/engine/systems/proagent.ts:1037-1052 the command; src/engine/systems/proagent.ts:573-586 re… |  |
 | `pro.ask_to_move` | command | The stop at his meeting: Ask To Move (`defineStop`), and the Representation tab's Ask To Move. | Implemented And Verified | Verified | inspection, automated | 9018cc4e | tests/journey-agent.test.ts; tests/pro-representation-screen.test.ts; tests/journey-career.test.ts; src/engine/systems/proagent.ts:1097-1111 the command moves the meeting a week, once, the item rescheduled; src/engine/s… |  |
 | `pro.cut_reel` | command | Career, Portfolio: Cut A Reel, choosing up to four recorded pieces; grayed with reelRefusal's words. | Implemented And Verified | Verified | inspection, automated | 9018cc4e | tests/pro-core.test.ts; tests/journey-agent.test.ts; tests/b20-career-effects.test.ts; src/engine/systems/pro.ts:1014-1032 the command; src/engine/systems/pro.ts:940-956 reelRefusal: nothing recorded, a piece twice, mor… |  |
+| `pro.mix_demo` | command | Career, Portfolio: Mix A Voice Demo, choosing up to four voice recordings; grayed with demoRefusal's words. | Implemented And Verified | Verified | inspection, automated | f36f49a5 | tests/b27-voice-demo.test.ts; tests/career-workflows.test.ts; tests/pro-core.test.ts; src/engine/systems/pro.ts:1332 the command; src/engine/systems/pro.ts:1241 demoRefusal: nothing of the voice recorded, none chosen, o… |  |
 | `pro.decline_agreement` | command | Career, Representation, The Agreement: Decline The Agreement, grayed with answerRefusal's words. | Implemented And Verified | Verified | inspection, automated | 9018cc4e | tests/journey-agent.test.ts; tests/journey-career.test.ts; tests/b20-career-effects.test.ts; tests/b20-career-history.test.ts; src/engine/systems/proagent.ts:1132-1144 the command; src/engine/systems/proagent.ts:488-493… |  |
 | `pro.decline_offer` | command | Career, Opportunities, Offers: Decline The Offer, and What Needs You's Decline action. | Implemented And Verified | Verified | inspection, automated | 9018cc4e | tests/pro-work.test.ts; tests/b20-career-history.test.ts; tests/b20-career-effects.test.ts; src/engine/systems/projobs.ts:1679-1689 the command: refused with no offer, the lapse called off, settled; tests/pro-work.test.… |  |
 | `pro.end_agreement` | command | Career, Representation, The Agreement: End It By Agreement, End It: No Offer In 90 Days, End It: Too Little Work, each … | Implemented And Verified | Verified | inspection, automated | 9018cc4e | tests/journey-agent.test.ts; tests/journey-career.test.ts; tests/propay.test.ts; src/engine/systems/proagent.ts:1146-1155 the command; src/engine/systems/proagent.ts:735-755 endRefusal: Equity’s 90 days extended by days… |  |
@@ -1153,6 +1154,8 @@ Verified count as done, out of every row not Deferred. Not Tested is the honest 
 | `promise.coursework.showcase>career.overview` | promise | src/engine/content/guide/showcase.ts | Implemented And Verified | Verified | inspection, automated | bd7b9d02 | tests/pro-showcase.test.ts; src/engine/systems/proshowcase.ts:346-375 beginShowcase: the calls booked, the notice, an older save decided at once; src/engine/systems/proshowcase.ts:378-392 choiceRefusal; src/engine/syste… |  |
 | `promise.career.work-abroad>documents.work` | promise | src/engine/content/guide/career.ts | Implemented And Verified | Not Tested |  |  |  |  |
 | `promise.career.work-abroad>career.offers` | promise | src/engine/content/guide/career.ts | Implemented And Verified | Not Tested |  |  |  |  |
+| `promise.career.demo>craft.brief-tape` | promise | src/engine/content/guide/career.ts | Implemented And Verified | Verified | inspection, automated | f36f49a5 | tests/b27-voice-demo.test.ts; src/engine/systems/pro.ts:1108 demoSources: a voice brief's takes and a released voice credit, what a reel refuses |  |
+| `promise.career.demo>career.reel` | promise | src/engine/content/guide/career.ts | Implemented And Verified | Verified | inspection, automated | f36f49a5 | tests/b27-voice-demo.test.ts; src/engine/systems/pro.ts:1108 demoSources: a voice brief's takes and a released voice credit, what a reel refuses |  |
 
 ## Guide
 

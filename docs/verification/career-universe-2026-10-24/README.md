@@ -302,6 +302,44 @@ was a test or a record the slate's larger world had moved, fixed in the commit a
 - **The cohesion rule (1):** "only enjoyment reads somebody's genres" caught the slate's `profile.genres`, a kind's genre
   pairs, not a person's; the field is `genreSets` now, so the name says what it holds.
 
+Run again on the fixed code (`f36f49a5`): **exit 0, 510 of 510 test files, 5,839 of 5,839 tests**, with the typecheck,
+lint and the 24 checks clean.
+
+## K3: Representation And Materials
+
+Parts 6 and 7 and the supplement's loops 7 to 9, read against what briefs 19, 20 and 25 built before anything was added.
+**Already in the game, and kept:** the agents as individuals (one invented, three real ones at Stewart Talent's New York
+office as its own page names them, each with a notice saying what's the game's); each office's own way in (the School's
+follow-up, a referral, or none taken unsolicited); the approach's stages from the check to an answer, a request for more,
+a meeting kept, missed or moved once, a pass or no answer closed after six weeks; the offer with its terms (scope,
+territory, medium, exclusivity, term and commission, each union's rule kept apart: Equity's tiers, SAG-AFTRA's scale plus
+ten, New York's cap); one agent at a time, a second agreement refused while the first runs; ending by Equity's ninety
+days or SAG-AFTRA's 151 and 91, with commission still owed on work contracted while represented; the professional name;
+headshots, résumé and reel each kept as a numbered version with where it came from, and each submission naming the
+versions it sent.
+
+**Found:** the slate's voice work (animated series and features, dubbing, narration) asked for a headshot, a résumé and a
+reel, and took no submission without the reel, while a voice actor's recordings are the one thing a reel can't hold. A
+voice part's submission sent the reel too. (Defects, 8.)
+
+**Built, the voice demo** (Part 7, "Voice samples"; loop 7): a fourth material, mixed from recordings of the voice alone
+(a voice brief's take, a released voice credit), two hours and $300 with an engineer, both the game's estimates, kept as
+a numbered version like the rest (`pro.mix_demo`, `demoSources`, `demoRefusal`, `systems/pro.ts`). Voice casting asks for
+it where screen casting asks for a reel: the slate's voice kinds send a headshot, a résumé and a demo, and refuse a
+submission without the demo, saying where to make one; a voice part's submission sends the demo and never the reel; and a
+submission keeps naming the demo it sent after another is mixed. The Portfolio tab's Voice Demo panel, its guide chapter
+(`career.demo`) and the tutorial's Your Career chapter say what it is. Held by `tests/b27-voice-demo.test.ts` through the
+commands and the drawn tab, the falsifiability test among them: the same recording sent with a screen part changes nothing,
+since screen work still sends the reel.
+
+**Also found and fixed on the way:** the guide's Work Abroad chapter still said work abroad was "so far, Australia" and
+cost nothing, both untrue once the UK's routes were verified; it now gives the three UK routes with their fees and timings
+from the routes' own figures (`tools/trace.ts` showed it).
+
+**Not built, said so:** managers, lawyers and publicists aren't in the game, so nothing tells them apart from agents; the
+agreement's terms aren't negotiated, since they're the unions' regulations as read (a commission over ten percent is
+barred); and no agent in the game covers voice work, so an office never asks for a demo (`AgentMaterial`).
+
 ## Defects Found And Fixed
 
 | # | Where | What stood | What stands | Held by |
@@ -313,4 +351,6 @@ was a test or a record the slate's larger world had moved, fixed in the commit a
 | 5 | A slate part in Los Angeles, read by a New Haven actor | "Getting there takes about three hours each way from where you live": a daily journey to Los Angeles, since only parts abroad carried a trip | every slate part carries the production's trip, used where the actor lives too far away | `tests/b27-slate-screens.test.ts` |
 | 6 | `propay.ts`, a non-union producer's late pay | drawn by the payment's key, which carries the engagement's number, so the slate's postings moved a played life's documentary pay from January 10 to February 7, 2030 | drawn by the work: its part, its first day and the payment's number | `tests/journey-career-older.test.ts` |
 | 7 | `wiring.json`, the guide's wiring list | 17 handlers named lines their commands had moved from, as the slate and the UK's routes grew five files | each at the line its command is registered on | `tests/b20-guide-wiring.test.ts` |
+| 8 | The slate's voice work, and a voice part's submission | asked for a reel, which no voice recording can go on, and refused a submission without one; a voice part's submission sent the reel | voice casting asks for a voice demo, mixed from the voice alone, and a voice part's submission sends it | `tests/b27-voice-demo.test.ts` |
+| 9 | The guide's Work Abroad chapter | "so far, Australia", and a visa that cost nothing, after the UK's routes were verified | the UK's three routes, fees and timings, read from the routes | `tests/b20-guide-chapters.test.ts`, `docs/verification/connected-journey/TRACE.md` |
 

@@ -25,7 +25,7 @@
 import { CHAPTER_FOR } from '../tutorial';
 import { SKILL_WORDS } from '../school';
 import { formatMoney } from '../../core/money';
-import { HEADSHOTS, NAME_MOST, REEL, RESUME, SESSION_HOURS, SKILL_LISTED_AT, SPECIAL_SKILLS, clockWords } from '../../systems/pro';
+import { DEMO, HEADSHOTS, NAME_MOST, REEL, RESUME, SESSION_HOURS, SKILL_LISTED_AT, SPECIAL_SKILLS, clockWords } from '../../systems/pro';
 import { AGENT_TIMES, COOLDOWN_WORDS, GATE, REFERRAL_BAND, TEN, TIME_WORDS, TRAVEL_MINUTES, tripWords } from '../../systems/proagent';
 import { YALE_DRAMA } from '../school';
 import { AGENTS, agencyOf } from '../agents';
@@ -54,6 +54,10 @@ const CHAPTER = CHAPTER_FOR['ui.career']!.title;
 const WORK_CHAPTER = CHAPTER_FOR['pro.submit']!.title;
 /** Australia's 408, the route the Work Abroad entry teaches (`content/jurisdictions.ts`). */
 const AU = JURISDICTIONS.au!.routes.find((r) => r.id === 'au-408-entertainment')!;
+// The UK's routes (from 2026-10-24, brief 27): the concession with its ETA, and the Creative Worker visa.
+const UK_ETA = JURISDICTIONS.uk!.routes.find((r) => r.id === 'uk-creative-concession')!;
+const UK_VISA = JURISDICTIONS.uk!.routes.find((r) => r.id === 'uk-creative-worker')!;
+const gbp = (pence: number): string => formatMoney(pence, 'GBP');
 /** How long before the first call the flight out lands, at least: the trip's own rule (`TRIP`). */
 const AHEAD = TRIP.arriveBeforeHours % 24 === 12 ? `${TRIP.arriveBeforeHours === 36 ? 'a day and a half' : `${(TRIP.arriveBeforeHours - 12) / 24} and a half days`}` : `${TRIP.arriveBeforeHours} hours`;
 const STEPS = `${BRIEF.steps.read.label}, ${BRIEF.steps.lines.label} and ${BRIEF.steps.rehearse.label}`;
@@ -288,7 +292,7 @@ export const CAREER_GUIDE: readonly GuideEntry[] = [
     unavailable: [
       'You have nothing recorded to cut a reel from.',
       `A reel holds ${word(REEL.most)} pieces at most.`,
-      'A voice brief is a sound recording with no picture, so it can’t go on a reel.',
+      'A voice brief is a sound recording with no picture, so it can’t go on a reel. It can go on a voice demo.',
       'Your reel already holds exactly these pieces.',
     ],
     mistakes: ['Expecting a production’s nights on it. Only recorded work can be.'],
@@ -302,6 +306,55 @@ export const CAREER_GUIDE: readonly GuideEntry[] = [
       setup: 'Three self-tapes of camera briefs taped, one of them Strong.',
       steps: ['Tick the Strong tape and one other.', 'Press Cut A Reel.'],
       result: `Two hours on, ${usd(REEL.cost)} comes out of your bank, and Reel lists the two pieces with their bands. What’s Missing says it holds only self-tapes.`,
+    },
+  },
+  // From 2026-10-24 (the owner's brief 27, Part 7, "Voice samples"): the voice demo, voice casting's reel.
+  {
+    id: 'career.demo',
+    title: 'Your Voice Demo',
+    goal: 'career',
+    covers: ['pro.mix_demo'],
+    synonyms: ['voice demo', 'demo', 'voice reel', 'voice sample', 'mix a demo'],
+    questions: ['How do I make a voice demo?', 'What does voice casting ask for?', 'Where can my voice tapes go?'],
+    where: on('portfolio', 'Career, Portfolio, Voice Demo'),
+    available: `From the guide’s chapter “${CHAPTER}”.`,
+    short: `A voice demo is your voice alone, for voice casting: animation, dubbing and narration. It’s mixed only from recordings of your voice: your takes of voice briefs, and voice work once it’s released. An engineer mixes up to ${word(DEMO.most)} recordings in ${hours(DEMO.minutes)} for about ${usd(DEMO.cost)}, both estimated.`,
+    steps: [
+      'Open Career, then the Portfolio tab.',
+      `Under Voice Recordings To Mix From, tick up to ${word(DEMO.most)} recordings. Each shows how it was judged and when.`,
+      'Press Mix A Voice Demo.',
+    ],
+    needs: ['A recording of your voice: tape a voice brief on the Player Profile first.', `Free for ${hours(DEMO.minutes)}.`, 'Enough in your bank for the session.'],
+    costs: [{ label: 'Time', value: hours(DEMO.minutes), estimate: true }, { label: 'Money', value: usd(DEMO.cost), estimate: true }],
+    reads: [
+      { label: 'Voice Recordings', value: 'The takes of each voice brief you keep, with their bands' },
+      { label: 'Voice Work', value: 'A voice part of yours once it’s released' },
+    ],
+    now: ['The clock moves on two hours, the session comes out of your bank, and the demo shows what’s on it, a line a recording.'],
+    later: [
+      'A submission for voice work sends the demo you have then, and keeps saying which one after you mix another.',
+      'A newer recording of your voice shows on the Voice Demo panel as worth adding.',
+    ],
+    interpret: [
+      'Voice casting asks for a demo where screen casting asks for a reel: an animated series, an animated feature, a dub or a narration the game’s slate makes takes no submission without one.',
+      'A demo holds only what you recorded for the voice, and a reel only what was filmed.',
+    ],
+    unavailable: [
+      'You have nothing of your voice recorded to mix a demo from.',
+      `A demo holds ${word(DEMO.most)} recordings at most.`,
+      'Your voice demo already holds exactly these recordings.',
+    ],
+    mistakes: ['Expecting a self-tape on camera on it. Only recordings of your voice can be.'],
+    next: ['Submit yourself for a voice part on the Opportunities tab.'],
+    related: ['career.reel', 'craft.brief-tape'],
+    connections: [
+      { to: 'craft.brief-tape', kind: 'prerequisite', why: 'A voice brief you’ve taped is the first recording a demo can be mixed from.' },
+      { to: 'career.reel', kind: 'optional', why: 'The reel is the demo’s counterpart for work on camera.' },
+    ],
+    example: {
+      setup: 'Two voice briefs taped, one of them Strong.',
+      steps: ['Tick the Strong take.', 'Press Mix A Voice Demo.'],
+      result: `Two hours on, ${usd(DEMO.cost)} comes out of your bank, and Voice Demo lists the recording with its band.`,
     },
   },
   {
@@ -1023,32 +1076,38 @@ The tab also shows the game’s own box office for your films, and the weekly ch
     title: 'Work Abroad',
     goal: 'career',
     covers: ['pro.apply_work_visa'],
-    synonyms: ['work abroad', 'work visa', '408 visa', 'filming overseas', 'flight to sydney', 'travel for work'],
-    questions: ['Can I take work in another country?', 'How do I get a visa to work in Australia?', 'What happens if my visa isn’t ready?'],
+    synonyms: ['work abroad', 'work visa', '408 visa', 'filming overseas', 'flight to sydney', 'travel for work', 'eta', 'creative worker visa', 'work in london'],
+    questions: ['Can I take work in another country?', 'How do I get a visa to work in Australia?', 'Do I need a visa to work in London?', 'What happens if my visa isn’t ready?'],
     where: on('work', 'Career, Work, Your Engagements'),
     available: `From the guide’s chapter “${WORK_CHAPTER}”, once you’ve accepted work in another country.`,
-    short: `Some roles are abroad: Harbor Line shoots in Sydney. Accepting one is the contract, not permission to work there. Work in Australia needs ${AU.name}, which the production supports and you apply for once you’ve accepted. Press Apply For The Visa on the engagement under Career, Work.\n\nThe production books your flights, the cars and a hotel. You land ${AHEAD} or more before your first call and home the day after your last.`,
+    short: `Some roles are abroad: Harbor Line shoots in Sydney. Accepting one is the contract, not permission to work there. Work in Australia needs ${AU.name}, which the production supports and you apply for once you’ve accepted. Press Apply For The Visa on the engagement under Career, Work.\n\nWork in the United Kingdom of ${word(UK_ETA.maxMonths ?? 3)} months or less, for a citizen who doesn’t need a visa to visit, comes under the ${UK_ETA.short} with an ETA, ${gbp(UK_ETA.authorization!.fee!.amount)}: press Apply For The ETA. Longer work, or a citizen who needs a visa to visit, needs the ${UK_VISA.short}, ${gbp(UK_VISA.fee!.amount)}. An Irish citizen needs neither.\n\nThe production books your flights, the cars and a hotel. You land ${AHEAD} or more before your first call and home the day after your last.`,
     steps: [
       'Accept the offer, after reading what it says about the visa and the dates you’d be away.',
-      'Open Career, then Work, and press Apply For The Visa on the engagement.',
+      'Open Career, then Work, and press Apply For The Visa, or Apply For The ETA for short work in the UK, on the engagement.',
       'When the clock stops for the car to the airport, press Go.',
     ],
     needs: [
-      'A booking in another country whose rules are in the game: so far, Australia.',
+      'A booking in another country whose rules are in the game: so far, Australia and the United Kingdom.',
       'A passport in force until you’re home. Papers shows yours.',
-      'Not an Australian or a New Zealand citizen: an Australian needs no visa, and a New Zealander is granted one on arrival.',
+      'A visa or an ETA only where you need one: in Australia an Australian needs no visa and a New Zealander is granted one on arrival, and in the UK an Irish citizen needs nothing.',
     ],
-    costs: [{ label: 'Time', value: `${AU.decisionDays} days for the department’s decision`, estimate: true }, { label: 'Money', value: 'None. The visa’s charge isn’t in the department’s page, and the production pays for the trip.', estimate: true }],
+    costs: [{ label: 'Time', value: `${AU.decisionDays} days for Australia’s decision, a day for a UK ETA, about ${word(Math.round((UK_VISA.decisionDays ?? 21) / 7))} weeks for the ${UK_VISA.short}`, estimate: true }, { label: 'Money', value: `In Australia none: the visa’s charge isn’t in the department’s page. In the UK, ${gbp(UK_ETA.authorization!.fee!.amount)} for an ETA or ${gbp(UK_VISA.fee!.amount)} for the ${UK_VISA.short}, from your bank. The production pays for the trip.`, estimate: true }],
     reads: [
       { label: 'The Contract', value: 'The booking you’ve accepted' },
-      { label: 'Your Supporter', value: 'The production’s company in Australia' },
+      { label: 'Your Supporter', value: 'The production’s company in the country: your supporter in Australia, your sponsor in the UK' },
       { label: 'Your Passport', value: 'In force until you’re home' },
     ],
     now: ['The visa is pending in Papers, under Permission To Work, tied to this work.'],
-    later: [`${AU.decisionDays} days on, the department grants it, to ${AU.graceDays} days after your last work day. At the first flight, without it, you don’t go, and the production releases you with nothing owed.`],
-    interpret: [`The 408’s conditions come from the department’s page: ${routeSourceWords(AU).replace(/^From the department’s page as /, '').replace(/\.$/, '')}. Its ${word(AU.decisionDays ?? 0)} days and the hotel paid by the production are estimated, and so are the flight times, from the distances.`],
+    later: [
+      `${AU.decisionDays} days on, the department grants it, to ${AU.graceDays} days after your last work day. At the first flight, without it, you don’t go, and the production releases you with nothing owed.`,
+      `In the UK an ETA is decided the next day and lasts ${word(UK_ETA.authorization!.validityYears ?? 2)} years or to your passport’s end; the ${UK_VISA.short} in about ${word(Math.round((UK_VISA.decisionDays ?? 21) / 7))} weeks, to ${UK_VISA.graceDays} days after your last work day.`,
+    ],
+    interpret: [`The 408’s conditions come from the department’s page: ${routeSourceWords(AU).replace(/^From the department’s page as /, '').replace(/\.$/, '')}. Its ${word(AU.decisionDays ?? 0)} days and the hotel paid by the production are estimated, and so are the flight times, from the distances.`,
+      `The UK’s routes come from GOV.UK’s pages: ${routeSourceWords(UK_ETA).replace(/^From the department’s page as /, '').replace(/\.$/, '')}. The ETA’s decision the next day is estimated from its page’s “usually within a day”.`,
+    ],
     unavailable: [
       'You’ve applied already.',
+      'It’s granted already.',
       'You need a passport in force until you’re home.',
       'The rules for working there aren’t in the game.',
     ],

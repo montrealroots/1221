@@ -11,13 +11,15 @@
  * their histories (`AgentRelation`); agreements, opportunities and engagements with their payments; the School's
  * showcase; requests for outside work; the unions. School credits stay in `school.credits` and are read from there as
  * school credits (`schoolCreditsOf`). Practice, the briefs and their self-tapes are never credits: a self-tape is a
- * recording, which a reel can be cut from (`reelSources`), and nothing more.
+ * recording, which a reel can be cut from (`reelSources`), or, recorded for the voice alone, a voice demo (`demoSources`,
+ * from 2026-10-24, the owner's brief 27, Part 7: "Voice samples"), and nothing more.
  *
  * **What's worked out, never stored.** The profile (`profileOf`): the professional name (the display name until one is
  * set, `pro.set_name`), training and education in true words, the two lists of credits, the skills on record, the
  * availability, the place and the permission to work, each read from where the game keeps it. A material's standing:
  * headshots over two years old read as out of date (ASSUMPTION, `HEADSHOTS.staleDays`), a résumé missing anything on
- * the record since it was made reads as behind, a reel with no screen material reads as tapes only (`materialsCheck`).
+ * the record since it was made reads as behind, a reel with no screen material reads as tapes only, and a reel or a
+ * voice demo with recorded work newer than it reads as behind that work (`materialsCheck`).
  *
  * **Bounded.** Each history is kept to its last `HISTORY_KEPT` events, its counts by kind kept whole (`noteEvent`);
  * resolved opportunities to the last `OPPORTUNITIES_KEPT`, finished engagements to the last `ENGAGEMENTS_KEPT` (their
@@ -37,7 +39,7 @@
  * yale.md`, B27 p.24); a life graduating later is given it at the degree (`setStanding`, `systems/school.ts`).
  *
  * Every cost and time here is the game's estimate, said where a player reads it: no source in the research prices a
- * headshot session, a résumé or a reel's edit.
+ * headshot session, a résumé, a reel's edit or a voice demo's mix.
  */
 
 import type { SimRun } from './charts';
@@ -145,7 +147,10 @@ export interface ProCredit {
   run?: SimRun;
 }
 
-export type MaterialKind = 'headshot' | 'resume' | 'reel';
+/** From 2026-10-24 (brief 27, Part 7) a voice demo too: recordings of the voice alone, for voice casting, which a reel can't hold. */
+export type MaterialKind = 'headshot' | 'resume' | 'reel' | 'demo';
+/** What an agent's office can ask for: never a voice demo, since no agent's department in the game covers voice work. */
+export type AgentMaterial = Exclude<MaterialKind, 'demo'>;
 
 /** One recorded piece on a reel, copied in when it's cut, so it reads the same after its source has gone from the record. */
 export interface MaterialPiece {
@@ -201,7 +206,7 @@ export interface AgentRelation extends HasHistory {
   /** What the last decision considered, by key, so a new approach can be told from the same one again. */
   considered?: { at: Instant; keys: string[] };
   /** Material asked for, and by when. */
-  request?: { id: ProId; at: Instant; what: MaterialKind[]; by: Instant };
+  request?: { id: ProId; at: Instant; what: AgentMaterial[]; by: Instant };
   /** A meeting: when, where, how many times it moved, and how it went. */
   meeting?: { id: ProId; at: Instant; where: 'office' | 'video'; moved: number; status: 'set' | 'kept' | 'missed' };
   agreementId?: ProId;
@@ -684,6 +689,11 @@ export const SESSION_HOURS = `between ${clockWords(HEADSHOTS.from)} and ${clockW
 export const RESUME = { minutes: 60 } as const;
 /** A reel: two hours choosing and reviewing with an editor, $250 for the edit (the old line's estimate, $150 to $400), four pieces at most. ASSUMPTION. */
 export const REEL = { cost: 250_00, minutes: 120, most: 4 } as const;
+/**
+ * A voice demo (from 2026-10-24, brief 27, Part 7): two hours with an engineer mixing your voice recordings, $300 for the
+ * session, four pieces at most, as a reel. ASSUMPTION, every figure: no source the game uses prices one.
+ */
+export const DEMO = { cost: 300_00, minutes: 120, most: 4 } as const;
 /** The techniques a résumé lists as special skills, and the level from which it lists one. ASSUMPTION: the game's line. */
 export const SPECIAL_SKILLS: readonly Skill[] = ['accents', 'combat', 'singing', 'dance', 'improv', 'clown', 'voiceover', 'classical', 'comedy', 'intimacy', 'screen'];
 export const SKILL_LISTED_AT = 60;
@@ -772,7 +782,7 @@ export function keepBounded(pro: ProRecord): void {
   const over = pro.engagements.filter(finished).sort((a, b) => (a.finishedAt ?? 0) - (b.finishedAt ?? 0));
   const dropE = new Set(over.slice(0, Math.max(0, over.length - ENGAGEMENTS_KEPT)));
   if (dropE.size) pro.engagements = pro.engagements.filter((e) => !dropE.has(e));
-  for (const kind of ['headshot', 'resume', 'reel'] as const) {
+  for (const kind of ['headshot', 'resume', 'reel', 'demo'] as const) {
     const all = pro.materials.filter((m) => m.kind === kind).sort((a, b) => a.made - b.made);
     if (all.length <= MATERIALS_KEPT) continue;
     const drop = new Set(all.slice(0, all.length - MATERIALS_KEPT));
@@ -1068,7 +1078,7 @@ export function reelSources(person: Person, at: Instant): ReelSource[] {
     if (!brief) continue;
     for (const t of rec.takes) {
       const usable = brief.medium === 'camera';
-      out.push({ ref: `tape:${id}:${t.at}`, from: 'tape', title: `${brief.title}, A Self-Tape`, at: t.at, band: bandOfQuality(t.together?.overall ?? t.overall), genre: t.genre, usable, ...(usable ? {} : { why: 'It’s a voice recording with no picture, so it can’t go on a reel.' }) });
+      out.push({ ref: `tape:${id}:${t.at}`, from: 'tape', title: `${brief.title}, A Self-Tape`, at: t.at, band: bandOfQuality(t.together?.overall ?? t.overall), genre: t.genre, usable, ...(usable ? {} : { why: 'It’s a voice recording with no picture, so it can’t go on a reel. It can go on a voice demo.' }) });
     }
   }
   const school = person.school;
@@ -1084,7 +1094,26 @@ export function reelSources(person: Person, at: Instant): ReelSource[] {
     if (c.medium === 'stage' || c.status !== 'released' || c.releasedAt === undefined) continue;
     // A voice part is heard and not seen (from 2026-10-24, brief 25's Module 5): listed, as a voice brief is, as one that
     // can't go on a reel.
-    if (c.voice) { out.push({ ref: `footage:${c.id}`, from: 'footage', title: `${c.role}, ${c.project}`, at: c.releasedAt, ...(c.band ? { band: c.band } : {}), usable: false, why: 'It’s your voice with no picture of you, so it can’t go on a reel.' }); continue; }
+    if (c.voice) { out.push({ ref: `footage:${c.id}`, from: 'footage', title: `${c.role}, ${c.project}`, at: c.releasedAt, ...(c.band ? { band: c.band } : {}), usable: false, why: 'It’s your voice with no picture of you, so it can’t go on a reel. It can go on a voice demo.' }); continue; }
+    out.push({ ref: `footage:${c.id}`, from: 'footage', title: `${c.role}, ${c.project}`, at: c.releasedAt, ...(c.band ? { band: c.band } : {}), usable: true });
+  }
+  return out.sort((a, b) => b.at - a.at);
+}
+
+/**
+ * Everything of the voice alone a voice demo could be mixed from, newest first (from 2026-10-24, brief 27, Part 7): the
+ * voice briefs' kept takes, and a released voice credit's recording. What a reel can't hold, a demo can, and nothing
+ * filmed goes on a demo: it's what voice casting listens to.
+ */
+export function demoSources(person: Person, at: Instant): ReelSource[] {
+  const out: ReelSource[] = [];
+  for (const [id, rec] of Object.entries(person.briefs ?? {})) {
+    const brief = BRIEF_BY_ID[id];
+    if (!brief || brief.medium !== 'voice') continue;
+    for (const t of rec.takes) out.push({ ref: `tape:${id}:${t.at}`, from: 'tape', title: `${brief.title}, A Voice Recording`, at: t.at, band: bandOfQuality(t.together?.overall ?? t.overall), genre: t.genre, usable: true });
+  }
+  for (const c of person.pro?.credits ?? []) {
+    if (!c.voice || c.status !== 'released' || c.releasedAt === undefined || c.releasedAt > at) continue;
     out.push({ ref: `footage:${c.id}`, from: 'footage', title: `${c.role}, ${c.project}`, at: c.releasedAt, ...(c.band ? { band: c.band } : {}), usable: true });
   }
   return out.sort((a, b) => b.at - a.at);
@@ -1097,8 +1126,11 @@ export const pieceWords = (p: MaterialPiece, zone: string): string => `${p.title
 // What's missing or unsuitable
 // ---------------------------------------------------------------------------------------------------------------------
 
-/** What a set of materials is for: approaching an agent, or a submission for stage or screen work. */
-export type MaterialPurpose = 'representation' | 'stage' | 'screen';
+/**
+ * What a set of materials is for: approaching an agent, or a submission for stage, screen or voice work (the last from
+ * 2026-10-24, brief 27: voice casting listens, so it asks for a voice demo where screen casting asks for a reel).
+ */
+export type MaterialPurpose = 'representation' | 'stage' | 'screen' | 'voice';
 
 export interface MaterialProblem {
   kind: MaterialKind;
@@ -1128,6 +1160,17 @@ export function materialsCheck(person: Person, purpose: MaterialPurpose, at: Ins
     if (behind.length) out.push({ kind: 'resume', problem: 'behind', blocking: false, words: `Your résumé from ${formatDate(resume.made, zone)} doesn’t have ${spokenList(behind)}. Press Update Your Résumé to bring it up to date.` });
   }
   if (purpose === 'stage') return out;
+  if (purpose === 'voice') {
+    const demo = currentOf(pro, 'demo');
+    const heard = demoSources(person, at);
+    if (!demo) {
+      out.push({ kind: 'demo', problem: 'missing', blocking: false, words: heard.length ? `You have no voice demo, and voice casting often asks for one. You have ${plural(heard.length, 'recording')} of your voice to mix a demo from.` : 'You have no voice demo, and nothing of your voice recorded to mix one from yet. Tape a voice brief on the Player Profile first.' });
+      return out;
+    }
+    const newerVoice = heard.filter((s) => s.at > demo.made && !(demo.pieces ?? []).some((p) => p.ref === s.ref));
+    if (newerVoice.length) out.push({ kind: 'demo', problem: 'newer-work', blocking: false, words: `You’ve recorded more of your voice since you mixed your demo on ${formatDate(demo.made, zone)}: ${spokenList(newerVoice.slice(0, 3).map((s) => s.title))}${newerVoice.length > 3 ? `, and ${plural(newerVoice.length - 3, 'more recording')}` : ''}.` });
+    return out;
+  }
   const reel = currentOf(pro, 'reel');
   const sources = reelSources(person, at).filter((s) => s.usable);
   if (!reel) {
@@ -1149,6 +1192,8 @@ export function materialsCheck(person: Person, purpose: MaterialPurpose, at: Ins
 export const headshotCost = (sim: Simulation): Money => inSaveMoney(sim, HEADSHOTS.cost, 'USD');
 /** A reel's edit in the save's money. */
 export const reelCost = (sim: Simulation): Money => inSaveMoney(sim, REEL.cost, 'USD');
+/** A voice demo's mix in the save's money. */
+export const demoCost = (sim: Simulation): Money => inSaveMoney(sim, DEMO.cost, 'USD');
 
 /** The money refusal: before it's pressed, what can't be covered; once pressed, what didn't happen too (docs/STYLE.md). */
 function moneyRefusal(sim: Simulation, person: Person, cost: Money, what: string, pressed: boolean): string | undefined {
@@ -1190,6 +1235,21 @@ export function reelRefusal(sim: Simulation, person: Person, pieces: readonly st
   const busy = startRefusal(sim, person, REEL.minutes);
   if (busy) return busy;
   return moneyRefusal(sim, person, reelCost(sim), 'edit', pressed);
+}
+
+/** Why a voice demo can't be mixed from these recordings now, or nothing (from 2026-10-24, brief 27). */
+export function demoRefusal(sim: Simulation, person: Person, pieces: readonly string[], pressed = false): string | undefined {
+  const sources = demoSources(person, sim.now);
+  if (!sources.length) return 'You have nothing of your voice recorded to mix a demo from. Tape a voice brief on the Player Profile first.';
+  if (!pieces.length) return 'Choose at least one recording to mix it from.';
+  if (new Set(pieces).size !== pieces.length) return 'Each recording goes on a demo once.';
+  if (pieces.length > DEMO.most) return `A demo holds ${countWords(DEMO.most)} recordings at most.`;
+  if (pieces.some((ref) => !sources.some((x) => x.ref === ref))) return 'That isn’t among your voice recordings.';
+  const current = currentOf(person.pro, 'demo');
+  if (current && current.pieces?.length === pieces.length && pieces.every((r) => current.pieces!.some((p) => p.ref === r))) return 'Your voice demo already holds exactly these recordings.';
+  const busy = startRefusal(sim, person, DEMO.minutes);
+  if (busy) return busy;
+  return moneyRefusal(sim, person, demoCost(sim), 'session', pressed);
 }
 
 /** The longest professional name the record keeps. */
@@ -1266,5 +1326,26 @@ export function registerPro(sim: Simulation): void {
       contains: pieces.map((x) => pieceWords(x, s.zone)),
     });
     return { id: m.id, cost, pieces: pieces.length };
+  });
+
+  // A voice demo (from 2026-10-24, brief 27, Part 7): mixed from the voice alone, kept as a version the submissions name.
+  sim.onCommand<{ pieces: string[] }, { id: ProId; cost: Money; pieces: number; version: number }>('pro.mix_demo', (p, { sim: s }) => {
+    const person = s.player;
+    const refs = Array.isArray(p?.pieces) ? p.pieces.map(String) : [];
+    const no = demoRefusal(s, person, refs, true);
+    if (no) throw new CommandError(no);
+    const pro = ensurePro(s, person);
+    const cost = demoCost(s);
+    const start = s.now;
+    const sources = demoSources(person, start);
+    const pieces: MaterialPiece[] = refs.map((ref) => { const { usable: _u, why: _w, ...piece } = sources.find((x) => x.ref === ref)!; return piece; });
+    if (!spend(s, person, cost, 'A voice demo, mixed', 'career')) throw new CommandError(`Your bank can’t cover ${formatMoney(cost, saveCurrency(s.universe))}, so nothing was charged.`);
+    s.advanceTo(start + DEMO.minutes * 60_000);
+    const m = addMaterial(s, pro, {
+      kind: 'demo', made: start, cost, pieces,
+      source: `Mixed by an engineer from your voice recordings on ${formatDate(start, s.zone)}, ${formatMoney(cost, saveCurrency(s.universe))} and two hours, both estimated.`,
+      contains: pieces.map((x) => pieceWords(x, s.zone)),
+    });
+    return { id: m.id, cost, pieces: pieces.length, version: m.version };
   });
 }

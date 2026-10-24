@@ -1,9 +1,9 @@
 {
  "written": "by outstanding.mjs, from completion-matrix.json and criteria.json",
- "completion": "Completion, by the matrix: 549 of 663 rows in scope Implemented And Verified (82.8%); 110 Implemented, Verification Incomplete, 0 Partially Implemented, 0 Not Implemented, 0 Blocked Externally, 4 Decision Required, 41 Explicitly Deferred.",
+ "completion": "Completion, by the matrix: 549 of 664 rows in scope Implemented And Verified (82.6%); 111 Implemented, Verification Incomplete, 0 Partially Implemented, 0 Not Implemented, 0 Blocked Externally, 4 Decision Required, 41 Explicitly Deferred.",
  "byClass": {
   "Proof in a played life, behind a product decision": 20,
-  "Proof: no audit reading yet": 5,
+  "Proof: no audit reading yet": 6,
   "A product decision": 4,
   "Proof: a measurement behind the code": 85
  },
@@ -154,6 +154,16 @@
    "status": "Implemented, Verification Incomplete",
    "requirement": "The published weekly charts read as dated imports, each in its own unit, territory and week; the game's own box office for the player's films, a simulation and never pay; every award and festival the brief names with what this build read of it; the Emmy Awards by the 78th's rules (eligibility, an en…",
    "implementation": "`systems/awards.ts` | IndustryPane.tsx",
+   "class": "Proof: no audit reading yet",
+   "lacks": "Brief 25's command, traced in connected-journey/TRACE.md and tested, but read by no audit row, so the matrix can't call it verified.",
+   "action": "Read by an audit row once brief 27's career milestones (K2 to K7) settle the command, so the reading isn't made stale by them."
+  },
+  {
+   "id": "pro.mix_demo",
+   "group": "Commands Traced Outside The Audit",
+   "status": "Implemented, Verification Incomplete",
+   "requirement": "Keep a professional profile and make the portfolio a submission sends: a professional name, headshots, a résumé, a reel and, from 2026-10-24, a voice demo, each with where it came from, when it was made and what’s in it | Your Voice Demo (`career.demo`)",
+   "implementation": "`systems/pro.ts` | CareerWorkspace.tsx",
    "class": "Proof: no audit reading yet",
    "lacks": "Brief 25's command, traced in connected-journey/TRACE.md and tested, but read by no audit row, so the matrix can't call it verified.",
    "action": "Read by an audit row once brief 27's career milestones (K2 to K7) settle the command, so the reading isn't made stale by them."

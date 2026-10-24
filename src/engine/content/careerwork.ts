@@ -263,8 +263,11 @@ export interface ProjectTemplate {
     membersOnly?: 'equity';
     /** Techniques the part needs at a level, where it needs any. */
     skills?: Partial<Record<Skill, number>>;
-    /** What a submission sends: a headshot and a résumé always; a reel where screen casting asks for one. */
-    sends: readonly ('headshot' | 'resume' | 'reel')[];
+    /**
+     * What a submission sends: a headshot and a résumé always, a reel where screen casting asks for one, and, from
+     * 2026-10-24 (brief 27), a voice demo where voice casting does.
+     */
+    sends: readonly ('headshot' | 'resume' | 'reel' | 'demo')[];
   };
   /** The stages it uses: how it's auditioned, and whether there's a callback. */
   stages: { audition: 'self-tape' | 'in-person'; callback: boolean };

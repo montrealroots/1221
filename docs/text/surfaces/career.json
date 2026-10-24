@@ -294,5 +294,44 @@
     "ref": "tests/pro-core.test.ts: 'gives every project a fictional company and casting office but a part drawn from a real production, the game’s genres, a rate that is verified or assumed, and every agreement term a basis'"
    }
   ]
+ },
+ {
+  "surface": "Career, Portfolio: Voice Demo, the recordings to mix from and Mix A Voice Demo; a voice part's submission",
+  "where": "Career, under Your Work in the menu, the Portfolio tab, Voice Demo; Opportunities, a voice part's Submit Yourself and its refusal; the submission's history line",
+  "sources": [
+   "src/ui/workspaces/CareerWorkspace.tsx#DemoPanel",
+   "src/engine/systems/pro.ts#demoSources",
+   "src/engine/systems/pro.ts#materialsCheck [demo]",
+   "src/engine/systems/pro.ts#demoRefusal",
+   "src/engine/systems/pro.ts#registerPro <pro.mix_demo>",
+   "src/engine/systems/pro.ts#registerPro [demo]",
+   "src/engine/systems/projobs.ts#MATERIAL_WORDS"
+  ],
+  "states": [
+   "first use",
+   "empty",
+   "unavailable",
+   "confirmation",
+   "details",
+   "history",
+   "explanation"
+  ],
+  "outcome": "Revised",
+  "why": "New with brief 27's K3: the demo says what it's for, what it's mixed from and what's on it, each refusal says what to do, and a submission says which demo it sent.",
+  "changes": "Written new: the panel, its refusals, the materials check's voice lines and the submission's words for a demo. Read on the screen, the empty state, which opened with Nothing of your voice recorded yet, became You haven’t recorded your voice yet, and the panel's note was turned round the same way.",
+  "evidence": [
+   {
+    "kind": "test",
+    "ref": "tests/b27-voice-demo.test.ts: 'shows the demo and its control on the Portfolio tab, with what’s on it'"
+   },
+   {
+    "kind": "test",
+    "ref": "tests/b27-voice-demo.test.ts: 'PLAYER JOURNEY: a slate voice part takes no submission without a demo; mixed, the submission sends it, and keeps naming it after another is mixed'"
+   },
+   {
+    "kind": "test",
+    "ref": "tests/b27-voice-demo.test.ts: 'takes what a reel can’t: a voice brief’s take is a demo’s recording and a reel’s refusal that says where it can go'"
+   }
+  ]
  }
 ]

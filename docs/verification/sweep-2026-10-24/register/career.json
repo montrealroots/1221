@@ -545,6 +545,21 @@
  "pro.loop": {
   "status": "Not Tested"
  },
+ "pro.mix_demo": {
+  "status": "Verified",
+  "by": [
+   "inspection",
+   "automated"
+  ],
+  "on": "f36f49a5",
+  "evidence": [
+   "tests/b27-voice-demo.test.ts",
+   "tests/career-workflows.test.ts",
+   "tests/pro-core.test.ts",
+   "src/engine/systems/pro.ts:1332 the command; src/engine/systems/pro.ts:1241 demoRefusal: nothing of the voice recorded, none chosen, one twice, more than four, not a voice recording, the same recordings again, the clock and the bank",
+   "src/engine/systems/projobs.ts:1291 a voice part's submission sends the demo where screen work sends the reel"
+  ]
+ },
  "pro.move_audition": {
   "status": "Verified",
   "by": [
@@ -983,6 +998,30 @@
    "src/engine/systems/propay.ts:339-373 commissionOn: Equity’s tiers, SAG-AFTRA’s above scale, New York’s cap, continuing and the tail; src/engine/systems/propay.ts:524-546 release",
    "tests/propay.test.ts",
    "tests/pro-core.test.ts the career’s 32 test files, 423 tests, run on this commit: all green"
+  ]
+ },
+ "promise.career.demo>career.reel": {
+  "status": "Verified",
+  "by": [
+   "inspection",
+   "automated"
+  ],
+  "on": "f36f49a5",
+  "evidence": [
+   "tests/b27-voice-demo.test.ts",
+   "src/engine/systems/pro.ts:1108 demoSources: a voice brief's takes and a released voice credit, what a reel refuses"
+  ]
+ },
+ "promise.career.demo>craft.brief-tape": {
+  "status": "Verified",
+  "by": [
+   "inspection",
+   "automated"
+  ],
+  "on": "f36f49a5",
+  "evidence": [
+   "tests/b27-voice-demo.test.ts",
+   "src/engine/systems/pro.ts:1108 demoSources: a voice brief's takes and a released voice credit, what a reel refuses"
   ]
  },
  "promise.career.headshots>bank.accounts": {

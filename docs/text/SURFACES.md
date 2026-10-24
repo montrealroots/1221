@@ -2,7 +2,7 @@
 
 Every surface a player can reach that shows text, written by `tools/surfaces.mjs` from `surfaces/*.json` (from 2026-10-20, the owner's brief 17, section 2). Each row says where the player meets it, the sources it draws on, the states it's met in, what reading it in context found, what changed, and the evidence. `--check` fails a source no row claims.
 
-**340 surfaces; 4999 of 4999 sources claimed; 201 revised, 139 kept.**
+**341 surfaces; 5007 of 5007 sources claimed; 202 revised, 139 kept.**
 
 | Area | Sources | Claimed |
 |---|---|---|
@@ -18,7 +18,7 @@ Every surface a player can reach that shows text, written by `tools/surfaces.mjs
 | material-b | 492 | 492 |
 | money | 266 | 266 |
 | money-data | 522 | 522 |
-| new | 302 | 302 |
+| new | 310 | 310 |
 | papers | 477 | 477 |
 | profile | 634 | 634 |
 | school | 638 | 638 |
@@ -134,6 +134,7 @@ Every surface a player can reach that shows text, written by `tools/surfaces.mjs
 | The guide: “Your Career”, and the help’s Your Career goal | The guide, the chapter after You As An Actor, read in order on a new life or opened from Guide at any time; the help’s contents | first use, explanation, locked | Revised | New with brief 19: the chapter that opens the Career screen and its four commands. **Changed:** Written new: where Career is, what each tab and button does with its time and cost, what isn’t a credit and what can’t go on a reel, what a grayed button means, and the next chapter; The Details for the special skills, Equity at the degree and the versions kept. | test: tests/tutorial.test.ts: 'is the table the coverage matrix prints, row for row'; test: tests/guide.test.ts: 'names no feature or label the game no longer has' |
 | The agent’s record, the notice that he and his agency are invented, and the agency’s rule on submissions | Read by the agent’s panel and his messages, which the agent’s system draws; held as data here | details, explanation, first use | Revised | New with brief 19: one real agent, held to what is published about his role, with the notice the research asked for; from 2026-10-21 a fictional agent in his place, at the owner’s word. **Changed:** Written new: the notice in the player’s words (“Jordan Parente is a real agent at Stewart Talent in New York. Everything he says and decides in this game is invented: …”), the line every panel of his carries, the fields as the game names them, and the roster’s assumption said as the game’s; the agency’s policy, its warning and each source’s words kept as published. Rewritten on 2026-10-21 for the fictional agent: “Thomas Ashgrove and Halberd Talent are invented for the game, as every agency, project and casting office in it is. …”, the agency’s policy said as the game’s own rule, and the real agency’s warning, its sources and the line every panel of his carried taken out. | test: tests/pro-core.test.ts: 'holds the game’s own agent and agency, the game’s rule on submissions, the routes it allows and the notice that says they’re invented' |
 | The work and the agreement, as data: projects, rates, the unions and the agreement’s terms | Read by the opportunities, the offers and the agreement the work’s and the agent’s systems show | details, explanation, forecast | Revised | New with brief 19: fictional projects, verified and assumed rates, and the agreement’s terms each marked verified or simulation. **Changed:** Written new: each project, company and casting office fictional; each rate’s label, with an assumed one’s words saying it’s estimated; each agreement term’s heading and words in the player’s language; each source’s words kept as published. | test: tests/pro-core.test.ts: 'gives every project a fictional company and casting office but a part drawn from a real production, the game’s genres, a rate that is verified or assumed, and every agreement term a basis' |
+| Career, Portfolio: Voice Demo, the recordings to mix from and Mix A Voice Demo; a voice part's submission | Career, under Your Work in the menu, the Portfolio tab, Voice Demo; Opportunities, a voice part's Submit Yourself and its refusal; the submission's history line | first use, empty, unavailable, confirmation, details, history, explanation | Revised | New with brief 27's K3: the demo says what it's for, what it's mixed from and what's on it, each refusal says what to do, and a submission says which demo it sent. **Changed:** Written new: the panel, its refusals, the materials check's voice lines and the submission's words for a demo. Read on the screen, the empty state, which opened with Nothing of your voice recorded yet, became You haven’t recorded your voice yet, and the panel's note was turned round the same way. | test: tests/b27-voice-demo.test.ts: 'shows the demo and its control on the Portfolio tab, with what’s on it'; test: tests/b27-voice-demo.test.ts: 'PLAYER JOURNEY: a slate voice part takes no submission without a demo; mixed, the submission sends it, and keeps naming it after another is mixed'; test: tests/b27-voice-demo.test.ts: 'takes what a reel can’t: a voice brief’s take is a demo’s recording and a reel’s refusal that says where it can go' |
 
 ## coordinator
 

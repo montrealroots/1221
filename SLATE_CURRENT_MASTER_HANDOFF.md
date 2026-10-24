@@ -12,12 +12,13 @@ date at each milestone.)
   (the geographic coverage matrix of 252 countries and territories and 170,911 places, and the research register, brief
   25's unread sources asked for again with the network full) and K2 (the slate: the work the world keeps making, its
   London work under the UK's rules, read from GOV.UK).
-- **Next:** K3, representation depth and versioned materials; then K4 to K8 and F (the final runs, the measured rows
-  measured again, the gate in a clean clone).
+- **In progress:** K3, representation and materials: what briefs 19 to 25 built read against Parts 6 and 7, and the
+  voice demo built (voice casting's reel, `pro.mix_demo`). **Next:** K3's close, then K4 to K8 and F (the final runs,
+  the measured rows measured again, the gate in a clean clone).
 - **Blocked, and said so:** SAG-AFTRA's pages, USCIS, the Academy, BAFTA, France-Visas, Japan's foreign ministry and the
   ATO refuse this environment (HTTP 403); none is worked around, and the game names each as unread where it uses it.
 
-**Completion, by the matrix:** 549 of 663 rows in scope Implemented And Verified (82.8%); 110 Implemented, Verification Incomplete, 0 Partially Implemented, 0 Not Implemented, 0 Blocked Externally, 4 Decision Required, 41 Explicitly Deferred.
+**Completion, by the matrix:** 549 of 664 rows in scope Implemented And Verified (82.6%); 111 Implemented, Verification Incomplete, 0 Partially Implemented, 0 Not Implemented, 0 Blocked Externally, 4 Decision Required, 41 Explicitly Deferred.
 
 # Brief 26, The Complete Game Connectivity, Logic And Functionality Sweep, Complete And Merged (#64), 2026-10-24
 

@@ -9,7 +9,7 @@ import type { Simulation } from '@/engine/core/simulation';
 import { MS_DAY, MS_HOUR, zonedParts } from '@/engine/core/time';
 import { PROJECTS, projectById } from '@/engine/content/careerwork';
 import { FORMATS, STUNT, VOICE, WORKFLOWS, type FormatId, type WorkflowId } from '@/engine/content/workflows';
-import { ensurePro, reelSources, type Engagement, type Opportunity } from '@/engine/systems/pro';
+import { demoSources, ensurePro, reelSources, type Engagement, type Opportunity } from '@/engine/systems/pro';
 import { datesOf, payTermsOf, castingDraw, termsWords } from '@/engine/systems/projobs';
 import { clauseOf, overtimeOf } from '@/engine/systems/contracts';
 import {
@@ -299,7 +299,9 @@ describe('W4: voice in the booth', () => {
     credit.status = 'released';
     credit.releasedAt = sim.now;
     const source = reelSources(sim.player, sim.now).find((x) => x.ref === `footage:${credit.id}`)!;
-    expect([source.usable, source.why]).toEqual([false, 'It’s your voice with no picture of you, so it can’t go on a reel.']);
+    expect([source.usable, source.why]).toEqual([false, 'It’s your voice with no picture of you, so it can’t go on a reel. It can go on a voice demo.']);
+    // From 2026-10-24 (brief 27) it can go on a voice demo.
+    expect(demoSources(sim.player, sim.now).some((x) => x.ref === `footage:${credit.id}`)).toBe(true);
   });
 
   it('WF-11: an animated feature’s sessions months apart, each paid as a day and the days between not, as the agreement leaves voice-over out of consecutive employment', () => {

@@ -70,8 +70,8 @@ import { PROJECTS, RATES, minimumOn, projectById, type ProjectKind, type Project
 import { agencyOf, agentById, type AgentField } from '../content/agents';
 import { IN_TOWN_MINUTES } from '../world/calendar';
 import {
-  activeAgreement, addCredit, currentOf, eligibilityOf, ensurePro, finished, keepBounded, materialsCheck, noteEvent, reelSources, releaseScreenCredit, resolved,
-  type Agreement, type AuditionRound, type Engagement, type MaterialProblem, type Opportunity, type OutsideWorkRequest, type PartPrep,
+  activeAgreement, addCredit, currentOf, demoSources, eligibilityOf, ensurePro, finished, keepBounded, materialsCheck, noteEvent, reelSources, releaseScreenCredit, resolved,
+  type Agreement, type AuditionRound, type Engagement, type MaterialKind, type MaterialProblem, type Opportunity, type OutsideWorkRequest, type PartPrep,
   type ProEventKind, type ProPayment,
 } from './pro';
 import { BAND_LABEL, prepLean, type Band } from './coursework';
@@ -953,13 +953,17 @@ export function eligibilityProblems(person: Person, o: Opportunity, at: Instant)
 }
 
 /**
- * The materials a submission for the project sends, and what's wrong with them (`materialsCheck`, the stage's or the
- * screen's), with whether each stops the submission: what the core counts as blocking, and a missing reel where the
- * casting office asks for one with every submission.
+ * The materials a submission for the project sends, and what's wrong with them (`materialsCheck`, the stage's, the
+ * screen's or, for voice work, the voice's from 2026-10-24), with whether each stops the submission: what the core
+ * counts as blocking, and a missing reel or voice demo where the casting office asks for one with every submission.
  */
 export function materialProblems(person: Person, t: ProjectTemplate, at: Instant): (MaterialProblem & { stops: boolean })[] {
-  return materialsCheck(person, t.medium === 'stage' ? 'stage' : 'screen', at).map((p) => {
-    const asked = p.kind === 'reel' && p.problem === 'missing' && t.requirements.sends.includes('reel');
+  return materialsCheck(person, t.medium === 'stage' ? 'stage' : voiceOnly(t) ? 'voice' : 'screen', at).map((p) => {
+    const asked = (p.kind === 'reel' || p.kind === 'demo') && p.problem === 'missing' && t.requirements.sends.includes(p.kind);
+    if (asked && p.kind === 'demo') {
+      const heard = demoSources(person, at).length;
+      return { ...p, stops: true, words: `${castingAs(t)} ${agrees(t, 'asks', 'ask')} for a voice demo with every submission, and you have none. ${heard ? `You have ${counted(heard, 'recording')} of your voice to mix a demo from: press Mix A Voice Demo on the Career screen’s Portfolio tab.` : 'You have nothing of your voice recorded yet: tape a voice brief on the Player Profile first.'}` };
+    }
     const pieces = asked ? reelSources(person, at).filter((x) => x.usable).length : 0;
     return { ...p, stops: p.blocking || asked, ...(asked ? { words: `${castingAs(t)} ${agrees(t, 'asks', 'ask')} for a reel with every submission, and you have none. ${pieces ? `You have ${counted(pieces, 'recorded piece')} to cut one from: press Cut A Reel on the Career screen’s Portfolio tab.` : 'You have nothing recorded to cut one from yet: tape a practice brief on the Player Profile first.'}` } : {}) };
   });
@@ -1275,13 +1279,19 @@ function post(sim: Simulation, person: Person, t: ProjectTemplate, at: Instant, 
   return o;
 }
 
+/** Each material as a sentence names it. */
+const MATERIAL_WORDS: Record<MaterialKind, string> = { headshot: 'headshots', resume: 'résumé', reel: 'reel', demo: 'voice demo' };
+
 /** A submission made, by the player or the agent: what it sent noted, and the casting office's answer on the clock. */
 function submit(sim: Simulation, person: Person, o: Opportunity): void {
   const t = projectOf(o);
-  const kinds = (['headshot', 'resume', 'reel'] as const).filter((k) => t.requirements.sends.includes(k) || (k === 'reel' && t.medium !== 'stage'));
+  // Voice work sends the voice demo where screen work sends the reel (from 2026-10-24, brief 27); until then every part
+  // not on stage sent the reel, which a voice recording can't go on.
+  const voice = voiceOnly(t);
+  const kinds = (['headshot', 'resume', 'reel', 'demo'] as const).filter((k) => (voice ? k !== 'reel' && (t.requirements.sends.includes(k) || k === 'demo') : k !== 'demo' && (t.requirements.sends.includes(k) || (k === 'reel' && t.medium !== 'stage'))));
   o.sent = kinds.map((k) => currentOf(person.pro, k)).filter((m) => m !== undefined).map((m) => ({ kind: m.kind, id: m.id, made: m.made }));
   o.status = 'submitted';
-  const sent = o.sent.map((m) => `your ${m.kind === 'headshot' ? 'headshots' : m.kind === 'resume' ? 'résumé' : 'reel'} from ${formatDate(m.made, NY)}`);
+  const sent = o.sent.map((m) => `your ${MATERIAL_WORDS[m.kind]} from ${formatDate(m.made, NY)}`);
   const agent = agentFor(o);
   const words = `${agent ? `${agent.name} submitted you` : 'You submitted yourself'} for ${t.role.part} in ${t.project}, sending ${spokenList(sent)}.`;
   note(sim, person, o, { kind: 'submitted', key: 'submitted', words });
@@ -1613,7 +1623,7 @@ function finish(sim: Simulation, person: Person, e: Engagement, t: ProjectTempla
   const rel = e.agentId ? person.pro?.relations[e.agentId] : undefined;
   if (rel) noteEvent(sim, rel, { kind: 'success', key: `eng:${e.id}:finished`, words: `You finished ${t.role.part} in ${t.project}.`, ref: e.id });
   keepBounded(ensurePro(sim, person));
-  tell(sim, person, t.medium === 'stage' ? `${t.project} Closed` : `You Wrapped ${t.project}`, `${t.medium === 'stage' ? `The run of ${t.project} is over` : `${t.project} wrapped`}, and ${t.role.part} is on your professional credits${t.medium === 'stage' ? '' : voiceOnly(t) ? `, not yet released. It’s your voice with no picture of you, so a reel can’t use it${RELEASE_DAYS[t.kind] ? `; it comes out about ${counted(Math.round(RELEASE_DAYS[t.kind]! / 30), 'month')} on, estimated` : ''}` : `, not yet released. Its footage can go on a reel once it comes out${RELEASE_DAYS[t.kind] ? `, about ${counted(Math.round(RELEASE_DAYS[t.kind]! / 30), 'month')} on, estimated` : ''}`}. Update your résumé on the Portfolio tab to add it.`, 70);
+  tell(sim, person, t.medium === 'stage' ? `${t.project} Closed` : `You Wrapped ${t.project}`, `${t.medium === 'stage' ? `The run of ${t.project} is over` : `${t.project} wrapped`}, and ${t.role.part} is on your professional credits${t.medium === 'stage' ? '' : voiceOnly(t) ? `, not yet released. It’s your voice with no picture of you, so it can go on a voice demo and not a reel${RELEASE_DAYS[t.kind] ? `; it comes out about ${counted(Math.round(RELEASE_DAYS[t.kind]! / 30), 'month')} on, estimated` : ''}` : `, not yet released. Its footage can go on a reel once it comes out${RELEASE_DAYS[t.kind] ? `, about ${counted(Math.round(RELEASE_DAYS[t.kind]! / 30), 'month')} on, estimated` : ''}`}. Update your résumé on the Portfolio tab to add it.`, 70);
 }
 
 /** A unit as a sentence names it: "scene 14". */

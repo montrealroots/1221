@@ -53,7 +53,7 @@ import { EARLY_DEGREE } from '../systems/proshowcase';
 import { AGENTS, agencyOf } from './agents';
 import { AGENT_TIMES as PRO_TIMES, COOLDOWN_WORDS as PRO_HOLDS, GATE as PRO_GATE, REFERRAL_BAND, TEN as PRO_TEN } from '../systems/proagent';
 import { BAND_LABEL } from '../systems/coursework';
-import { HEADSHOTS as PRO_HEADSHOTS, MATERIALS_KEPT as PRO_MATERIALS_KEPT, REEL as PRO_REEL, SESSION_HOURS as PRO_SESSION_HOURS, SKILL_LISTED_AT as PRO_SKILL_AT, SPECIAL_SKILLS as PRO_SKILLS } from '../systems/pro';
+import { DEMO as PRO_DEMO, HEADSHOTS as PRO_HEADSHOTS, MATERIALS_KEPT as PRO_MATERIALS_KEPT, REEL as PRO_REEL, SESSION_HOURS as PRO_SESSION_HOURS, SKILL_LISTED_AT as PRO_SKILL_AT, SPECIAL_SKILLS as PRO_SKILLS } from '../systems/pro';
 import { PAY as PRO_PAY, sagJoinUsd } from '../systems/propay';
 import { AGREEMENT as PRO_AGREEMENT, AUDITION_TOWNS as PRO_AUDITION_TOWNS, UNIONS as PRO_UNIONS } from './careerwork';
 import { COASTING_ENERGY_CEILING, LONGEST_NIGHT, SHORTEST_SLEEP } from '../systems/life';
@@ -454,16 +454,18 @@ export const CHAPTERS: readonly Chapter[] = [
   {
     id: 'career',
     title: 'Your Career',
-    lead: 'Your professional profile, the headshots, résumé and reel a submission sends, and your work’s pay and unions.',
+    lead: 'Your professional profile, the headshots, résumé, reel and voice demo a submission sends, and your work’s pay and unions.',
     body: [
       'Career, in the menu under Your Work, shows where you stand as a professional actor. Its Overview says what training you have, when you’re free for work, whether you can work in the US, and what your portfolio is missing.',
-      'The Portfolio tab holds what a submission sends: your profile, headshots, a résumé and a reel. Each says where it came from, when it was made and what’s in it. Each button says its time and cost before you press it.',
+      'The Portfolio tab holds what a submission sends: your profile, headshots, a résumé, a reel and a voice demo. Each says where it came from, when it was made and what’s in it. Each button says its time and cost before you press it.',
       'Your Profile shows the name you work under. To change it, type a name under Professional Name and press Use This Name. Leave it blank and press it to go back to your own name. Your résumé uses the name you choose.',
       `Book A Headshot Session takes ${counted(PRO_HEADSHOTS.minutes / 60, 'hour')} and costs about ${formatMoney(PRO_HEADSHOTS.cost, 'USD')}, both estimated. Photographers work by day, so a session starts ${PRO_SESSION_HOURS}. Headshots more than two years old read as out of date.`,
       'Make Your Résumé takes an hour. It lists your name, training, unions, credits and special skills from your record, with School credits and professional credits apart. Practice, practice briefs and self-tapes are never credits.',
       'Once something new is on your record, such as a part played or a skill grown, your résumé reads as behind. Press Update Your Résumé to bring it up to date.',
       `A reel is cut only from recorded work: self-tapes of practice briefs, the School’s filmed monologues once they’re posted at the end of your last term, and screen work once it’s released. Choose up to ${word(PRO_REEL.most)} pieces under Recorded Work To Cut From and press Cut A Reel. It takes two hours and about ${formatMoney(PRO_REEL.cost, 'USD')}, both estimated.`,
       'A night on stage and a class piece aren’t recorded, so they can’t go on a reel. A voice brief is a sound recording, so it can’t either.',
+      // From 2026-10-24 (the owner's brief 27, Part 7): the voice demo, what voice casting asks for where screen casting asks for a reel.
+      `A voice brief goes on a voice demo instead: voice casting, for animation, dubbing and narration, asks for one where screen casting asks for a reel. Choose up to ${word(PRO_DEMO.most)} recordings under Voice Recordings To Mix From and press Mix A Voice Demo. It takes two hours and about ${formatMoney(PRO_DEMO.cost, 'USD')}, both estimated.`,
       // From 2026-10-21 (brief 19's pay): the Work tab, its pay, commission, permission to work and the unions
       // (`systems/propay.ts`), opening Join SAG-AFTRA.
       `The Work tab lists work you’ve booked: its dates, its calls on your calendar and its pay. Pay is promised when you accept the work, and paid the Thursday after each week of it with tax withheld. If you’re represented, it goes through your agency, which takes its commission and passes the rest on within ${word(PRO_PAY.trustBusinessDays)} business days. Each payment says what was taken and what reached you, and Money shows it land.`,
@@ -480,8 +482,8 @@ export const CHAPTERS: readonly Chapter[] = [
       `Commission is taken only on work you contracted while represented: ${pct(PRO_AGREEMENT.commission)} at most, ${pct(PRO_AGREEMENT.equityLowTier.rate)} on an Equity contract paying ${formatMoney(PRO_AGREEMENT.equityLowTier.weeklyAtOrBelow, 'USD')} a week or less, and on SAG-AFTRA work only what’s paid over scale. A contract made while an agreement ran still carries it after the agreement ends.`,
       `Equity’s initiation fee is ${formatMoney(PRO_UNIONS.equity.initiation, 'USD')}, paid within three years, and its basic dues ${formatMoney(PRO_UNIONS.equity.yearlyDues / 2, 'USD')} each May and November. Joining SAG-AFTRA costs about ${formatMoney(sagJoinUsd(), 'USD')}, read from a search engine’s copy of its pages. Each union takes working dues from union pay.`,
     ],
-    names: ['Career', 'Overview', 'Portfolio', 'Work', 'Use This Name', 'Book A Headshot Session', 'Make Your Résumé and Update Your Résumé', 'Cut A Reel', 'Join SAG-AFTRA'],
-    opens: ['ui.career', 'pro.set_name', 'pro.headshots', 'pro.update_resume', 'pro.cut_reel', 'pro.join_sag'],
+    names: ['Career', 'Overview', 'Portfolio', 'Work', 'Use This Name', 'Book A Headshot Session', 'Make Your Résumé and Update Your Résumé', 'Cut A Reel', 'Mix A Voice Demo', 'Join SAG-AFTRA'],
+    opens: ['ui.career', 'pro.set_name', 'pro.headshots', 'pro.update_resume', 'pro.cut_reel', 'pro.mix_demo', 'pro.join_sag'],
   },
   // From 2026-10-21 (the owner's brief 19): the agent's relationship, his office's interest and the agreement
   // (`systems/proagent.ts`), after the portfolio an approach sends. The agent is named from `AGENTS`.
