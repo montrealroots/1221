@@ -89,6 +89,7 @@ import { SKILL_WORDS, type Skill } from '../content/school';
 import { plural } from '../core/text';
 import { judgePiece, type PieceResult, type PieceSpec } from './piece';
 import { GRAIN } from '../content/interpretation';
+import { VOICE } from '../content/workflows';
 
 export type { Dimension, TaskProfile } from '../content/tasks';
 
@@ -165,6 +166,8 @@ export interface Condition {
   injured?: boolean;
   /** A concussion still mending (from 2026-10-10): every dimension, once, in place of `injured`. */
   concussed?: boolean;
+  /** The voice's strain, 0 to 100 (from 2026-10-24, brief 25's Module 5, W4): what voice work reads (`VOICE`). */
+  voice?: number;
 }
 
 export interface Limit {
@@ -423,12 +426,14 @@ export function judgeExact(seed: string, performer: Performer, ctx: EvalContext)
     const prepared = parts.reduce((m, p) => Math.min(m, p.f), 1);
     // Condition: readiness under sufficient, and a named cause where it reaches this dimension.
     const reaches = spec.conditions ?? [];
-    const causes: { what: 'fatigue' | 'illness' | 'injury' | 'stamina' | 'shaken'; label: string; f: number }[] = [];
+    const causes: { what: 'fatigue' | 'illness' | 'injury' | 'stamina' | 'shaken' | 'voice'; label: string; f: number }[] = [];
     if (ctx.condition.readiness < E.sufficientReadiness && reaches.includes('fatigue')) causes.push({ what: 'fatigue', label: `Readiness At ${Math.round(ctx.condition.readiness)}, Under ${E.sufficientReadiness}`, f: E.fatigueFloor + (1 - E.fatigueFloor) * clamp(ctx.condition.readiness / E.sufficientReadiness, 0, 1) });
     if (ctx.condition.ill && reaches.includes('illness')) causes.push({ what: 'illness', label: 'Down With The Flu', f: E.illness });
     if (ctx.condition.injured && reaches.includes('injury')) causes.push({ what: 'injury', label: 'An Injury Still Mending', f: E.injury });
     // A concussion reaches every dimension, whatever its conditions name: it's thinking and memory, not the body only.
     else if (ctx.condition.concussed) causes.push({ what: 'injury', label: 'A Concussion Still Mending', f: E.injury });
+    // A strained voice, on the work whose instrument it is (from 2026-10-24, brief 25's Module 5, W4): `VOICE.floor` at 100.
+    if (ctx.condition.voice && reaches.includes('voice')) causes.push({ what: 'voice', label: `A Strained Voice, ${Math.round(ctx.condition.voice)} Of 100`, f: 1 - (1 - VOICE.floor) * clamp(ctx.condition.voice / 100, 0, 1) });
     // A segment late in a piece, where the stamina doesn't hold, and one after a slip (`systems/piece.ts`).
     if (ctx.drain && ctx.drain.f < 1 && reaches.includes('fatigue')) causes.push({ what: 'stamina', label: ctx.drain.label, f: ctx.drain.f });
     if (ctx.shaken && ctx.shaken.f < 1 && (d === 'believability' || d === 'consistency')) causes.push({ what: 'shaken', label: ctx.shaken.label, f: ctx.shaken.f });
@@ -664,6 +669,7 @@ function conditionWords(l: Pick<Limit, 'what' | 'label'>): string {
   if (l.what === 'injury') return `Working with ${l.label.charAt(0).toLowerCase()}${l.label.slice(1).toLowerCase()}`;
   if (l.what === 'stamina') return `Running low on stamina${l.label.startsWith('Stamina, By ') ? ` by ${part(l.label.slice('Stamina, By '.length))}` : ''}`;
   if (l.what === 'shaken') return `Being shaken by a slip${l.label.startsWith('Shaken By A Slip In ') ? ` in ${part(l.label.slice('Shaken By A Slip In '.length))}` : ''}`;
+  if (l.what === 'voice') return `Working with a strained voice${/, (\d+) Of 100$/.test(l.label) ? ` (${/, (\d+) Of 100$/.exec(l.label)![1]} of 100)` : ''}`;
   return l.label;
 }
 

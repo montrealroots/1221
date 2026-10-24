@@ -117,6 +117,13 @@ No role asks other than its project (`ROLE_GENRES` is empty: 0); each pair of pa
 | Paper Moons | Felix, Ivy | Coming Of Age, Drama | Coming Of Age 100% | Coming Of Age 100% | A brother not going back, a sister deciding whether to say so, one summer: a coming of age. |
 | Last Bus To Eastview | Robin | Romantic Comedy | Romantic Comedy 100% | Romantic Comedy 100% | Two strangers arguing through the night over a job abroad: a romantic comedy. |
 
+Projects added after this review state theirs in `src/engine/content/genre-weights.ts`, each with its reason, and
+tests/b22-genre-weights.test.ts holds every project to having one: Harbor Line (brief 25, 2026-10-23), the parts drawn
+from 9-1-1 and Abbott Elementary (brief 25's Module 2), and from 2026-10-24 the thirteen projects of brief 25's Module 5
+(Half Past Normal, Lantern Row, The Kite And The Crow, The Salt Road, Iron Meridian, Tidewater: The Last Oyster Towns, The
+Lamplighters, Breakwater, The Glass Orchard, Northern Line, Second Shift, Six Rooms and A Light On Pell Street), which
+until their test failed them read their tags evenly.
+
 ## What Moved
 
 13 of 31 plays read otherwise than brief 21’s rule read them: Woyzeck; Three Sisters; Blood Wedding; Major Barbara; The Wild Duck; The Winter’s Tale; Macbeth; Julius Caesar; A Midsummer Night’s Dream; Uncle Vanya; Miss Julie; Trifles; The Seagull. Every project reads as before: each states one genre, and its tags were that genre beside its broad genre, which brief 21 folded into it.

@@ -316,9 +316,9 @@
  },
  "src/engine/systems/proagent.ts#registerProAgent <pro.ask_referral>": {
   "status": "Rewritten",
-  "hash": "419bb08274e8",
+  "hash": "909b60e823cf",
   "on": "2026-10-24",
-  "evidence": "Written for brief 25's Module 3 (real agencies and agents) to docs/STYLE.md and docs/GLOSSARY.md, with no pronoun for a real agent and the game's own agent's words unchanged; read where the player meets it in tests/career-agents.test.ts (the Representation tab drawn with Dan Patack chosen, the notices and history of a played referral, meeting, offer and signing) and in tests/pro-representation-screen.test.ts, tests/journey-agent.test.ts and tests/pro-agent.test.ts for Thomas Ashgrove, with tools/voice-check.mjs, tools/tics.mjs, tools/title-case.mjs, tools/plural-check.mjs and tools/spelling.mjs passing",
+  "evidence": "Written for brief 25's Module 5 to docs/STYLE.md: a referral from a production's producers says they have referred you, not has; read where the player meets it in tests/journey-career-older.test.ts (the reenactment's producers' referral, its notice read and the materials sent through it), with tools/voice-check.mjs clean.",
   "first": "Pending"
  },
  "src/engine/systems/proagent.ts#registerProAgent <pro.ask_to_move>": {

@@ -278,6 +278,9 @@ function workSeen(person: Person, rel: AgentRelation | undefined, reelId?: ProId
 /** The field of his department a project's kind is in. */
 const FIELD_OF: Readonly<Record<ProjectKind, AgentField>> = {
   'off-broadway': 'off-broadway', lort: 'regional', 'network-drama': 'television', 'low-budget': 'film', 'ultra-low-budget': 'film', 'student-film': 'film', 'non-union-short': 'film', 'overseas-feature': 'film', 'network-comedy': 'television',
+  // From 2026-10-24 (brief 25's Module 5), the kinds the workflows brought, by their medium, a musical as a regional theater's.
+  'multicam-comedy': 'television', 'animated-series': 'television', 'animated-feature': 'film', dub: 'television', 'capture-feature': 'film', documentary: 'television',
+  musical: 'regional', 'action-feature': 'film', 'limited-series': 'television', 'serialized-drama': 'television', 'serialized-comedy': 'television', anthology: 'television', 'tv-movie': 'television',
 };
 
 /** The billing the record shows the player in: the biggest part among the School's credits and the jobs, a featured one with none. */
@@ -1094,7 +1097,9 @@ export function registerProAgent(sim: Simulation): void {
     setStage(s, rel, 'introduced');
     note(s, rel, 'referred', `referral:${engagementId}`, `${capital(job.by)} referred you to ${agent.words.office}, from your work as ${job.job}.`);
     // From the person who made it, never from him: he never seeks the player out (the module's note).
-    if (person.id === s.universe.playerId) s.notify({ category: 'career', title: `${titled(job.by)} Referred You`, body: `${capital(job.by)} has referred you to ${officeOf(agent)}, from your work as ${job.job}. You can send your materials now, from the Career screen’s Representation tab.`, importance: 60, route: REPRESENTATION_ROUTE, refType: 'pro-referral', refId: engagementId });
+    // A production's producers referring you take a plural verb (from 2026-10-24, brief 25's Module 5, when a documentary's
+    // producers first did: "The film’s producers has referred you").
+    if (person.id === s.universe.playerId) s.notify({ category: 'career', title: `${titled(job.by)} Referred You`, body: `${capital(job.by)} ${/\bproducers$/i.test(job.by) ? 'have' : 'has'} referred you to ${officeOf(agent)}, from your work as ${job.job}. You can send your materials now, from the Career screen’s Representation tab.`, importance: 60, route: REPRESENTATION_ROUTE, refType: 'pro-referral', refId: engagementId });
     return { by: job.by };
   });
 

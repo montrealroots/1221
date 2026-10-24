@@ -135,6 +135,10 @@ export interface ProCredit {
   releasedAt?: Instant;
   /** The best band its work was judged at, where it was judged. */
   band?: Band;
+  /** Your voice alone, with no picture of you (from 2026-10-24, Module 5): a reel can't use it. */
+  voice?: true;
+  /** Scenes of yours cut in the edit (Module 5, T46): the credit kept, the reel only what's left. */
+  cut?: number;
 }
 
 export type MaterialKind = 'headshot' | 'resume' | 'reel';
@@ -268,7 +272,12 @@ export interface Opportunity extends HasHistory {
 }
 
 /** How far the sides or the part stand, in a practice brief's three parts (`systems/briefs.ts`), each 0 to 1. */
-export interface PartPrep { interpretation: number; memorization: number; rehearsal: number }
+/**
+ * A part's preparation: the breakdown, the lines and rehearsal, and from 2026-10-24 (brief 25's Module 5) the workflow's
+ * own where it has one (`SpecialStep`, `content/workflows.ts`): finding the voice, watching the original, the movement,
+ * the pronunciations, the period's movement, the choreography, the fight rehearsal.
+ */
+export interface PartPrep { interpretation: number; memorization: number; rehearsal: number; special?: number }
 
 /** One audition round (`systems/projobs.ts`): in person at a time, or a self-tape due by one. */
 export interface AuditionRound {
@@ -384,6 +393,69 @@ export interface Engagement extends HasHistory {
   contract?: Contract;
   /** Money paid beside the wages, each once by its key: a per diem (D6). */
   allowances?: Allowance[];
+  /**
+   * The part's units in its workflow (from 2026-10-24, brief 25's Module 5, `systems/workflow.ts`): each judged day's
+   * scenes, loops, chapters or sequences, their place in the script and the order they were shot in, and the takes.
+   */
+  units?: WorkUnit[];
+  /** Each day's report, as it was worked. */
+  reports?: WorkReport[];
+  /** The player's choices in the work, by decision (`content/workflows.ts`'s `Decision`). */
+  choices?: Partial<Record<import('../content/workflows').DecisionId, string>>;
+  /** The script's version and the days whose pages were revised, with how much of the lines changed. */
+  script?: { version: number; drawn: number[]; revised: { day: number; share: number; at: Instant }[] };
+  /** A recall to loop after the wrap (N13 Schedule A §28.A): when, and how it went. */
+  loop?: { at: Instant; status: 'set' | 'done' | 'missed'; overall?: number; units?: WorkUnit[] };
+}
+
+/** One unit of a part's work (`systems/workflow.ts`): a scene, a loop, a chapter or a sequence. */
+export interface WorkUnit {
+  id: string;
+  /** The work day it's on, by index, or -1 for a looping session's. */
+  day: number;
+  /** Its place in the script, which the story puts in order. */
+  scene: number;
+  /** Its place in the day's shooting. */
+  order: number;
+  episode?: number;
+  /** Another character, on a dub's or a capture day's (N13 Schedule A §37; N17 item 27). */
+  character?: string;
+  /** The script's version it was shot from. */
+  version?: number;
+  stunt?: true;
+  intimate?: true;
+  /** Screamed lines in it, announced before the session or not (N13 Schedule A §37.C). */
+  stressful?: 'announced' | 'unannounced';
+  /** Each take's whole, to a tenth, in the order taken. */
+  takes?: number[];
+  /** The printed take's whole, with a double's insert taken from it. */
+  best?: number;
+  /** The takes asked for beyond the format's. */
+  extra?: number;
+  /** The last take a pickup. */
+  pickup?: true;
+  /** Who did it: you, a double, or nobody where you refused it. */
+  by?: 'you' | 'double' | 'refused';
+  /** Cut in the edit (`cutInEdit`). */
+  cut?: true;
+}
+
+/** A day's report (`systems/workflow.ts`, `reportWords`): what it was, what was shot and how, and what it left. */
+export interface WorkReport {
+  day: number;
+  at: Instant;
+  step: import('../content/workflows').StepId;
+  units: string[];
+  choices: Record<string, string>;
+  /** The pages revised for it: the share of the lines changed. */
+  revised?: number;
+  /** What an unjudged day built, each part after it. */
+  built?: Partial<Record<keyof PartPrep, number>>;
+  overall?: number;
+  band?: Band;
+  strain?: { before: number; after: number };
+  energy?: { before: number; after: number };
+  injury?: string;
 }
 
 /**
@@ -399,7 +471,9 @@ export type ContractClause =
   | { kind: 'trip'; words: string }
   | { kind: 'per-diem'; perDay: Money; days: number }
   | { kind: 'episodes'; ordered: number; guaranteed: number; expected: number; daysEach: number; numbers: number[]; further: { n: number; status: 'pending' | 'called' | 'not-called' | 'off'; at?: Instant }[] }
-  | { kind: 'option'; season: number; year: number; by: Instant; raise: number; status: 'open' | 'exercised' | 'expired'; settled?: { at: Instant; why: string; engagementId?: ProId } };
+  | { kind: 'option'; season: number; year: number; by: Instant; raise: number; status: 'open' | 'exercised' | 'expired'; settled?: { at: Instant; why: string; engagementId?: ProId } }
+  // A workflow's rule (from 2026-10-24, brief 25's Module 5, `workflowRules`, `systems/contracts.ts`): its words.
+  | { kind: 'rule'; id: 'rehearsal-paid' | 'dubbing' | 'stressful' | 'days-only' | 'stunts' | 'intimacy' | 'looping' | 'voice-over' | 'residuals-unread'; words: string };
 
 /** An engagement's contract (D1), its money in US cents as the offer's: a gross estimate, never cash. */
 export interface Contract {
@@ -982,6 +1056,9 @@ export function reelSources(person: Person, at: Instant): ReelSource[] {
   }
   for (const c of person.pro?.credits ?? []) {
     if (c.medium === 'stage' || c.status !== 'released' || c.releasedAt === undefined) continue;
+    // A voice part is heard and not seen (from 2026-10-24, brief 25's Module 5): listed, as a voice brief is, as one that
+    // can't go on a reel.
+    if (c.voice) { out.push({ ref: `footage:${c.id}`, from: 'footage', title: `${c.role}, ${c.project}`, at: c.releasedAt, ...(c.band ? { band: c.band } : {}), usable: false, why: 'It’s your voice with no picture of you, so it can’t go on a reel.' }); continue; }
     out.push({ ref: `footage:${c.id}`, from: 'footage', title: `${c.role}, ${c.project}`, at: c.releasedAt, ...(c.band ? { band: c.band } : {}), usable: true });
   }
   return out.sort((a, b) => b.at - a.at);

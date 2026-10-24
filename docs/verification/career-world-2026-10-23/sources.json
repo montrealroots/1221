@@ -2402,6 +2402,61 @@
      "field": "pension-health-2014",
      "value": "Pension and health contributions in 2014: 17% of gross compensation",
      "quote": "seventeen percent (17.0%) of all gross compensation"
+    },
+    {
+     "field": "multicam-rehearsal",
+     "value": "Schedule A §21.E: rehearsal doesn’t start a day performer’s consecutive days of employment, except on a half-hour multicamera series, where it does",
+     "quote": "Rehearsal shall not start the consecutive days of employment for a day performer (other than on a one-half hour multi-camera series)"
+    },
+    {
+     "field": "animated-voice-over",
+     "value": "Schedule A §21: consecutive employment doesn’t apply to voice-over work on animated theatrical motion pictures",
+     "quote": "to performers employed to perform voice-over work on animated theatrical motion pictures"
+    },
+    {
+     "field": "looping",
+     "value": "Schedule A §28.A: a recall to loop after principal photography pays half the pro rata daily salary for a four-hour session, a full day past four hours; retakes within four months, six for theatrical films, pilots and long-form television including multi-part closed-end series, at the daily rate",
+     "quote": "Performer may be recalled to loop (record sound track) after completion of principal photography at one-half (½) of the performer's pro rata daily salary for a four (4) hour looping session."
+    },
+    {
+     "field": "dialogue-replacement",
+     "value": "Schedule A §37.A: a day’s pay covers unlimited non-synchronized lines and up to five synchronized lines for each of up to three characters, a day more for any part of more than five and each further set of up to three",
+     "quote": "a maximum of five (5) synchronized lines for each of up to three (3) characters"
+    },
+    {
+     "field": "dialogue-replacement-single",
+     "value": "Schedule A §37.E(1): a single character’s synchronized lines, any number, for the minimum",
+     "quote": "Producer may employ a performer to speak an unlimited number of synchronized lines for a single character, for which Producer shall pay performer the applicable minimum compensation."
+    },
+    {
+     "field": "vocally-stressful",
+     "value": "Schedule A §37.C: the producer says before a dialogue replacement session whether vocally stressful work is planned, and if not the performer may refuse it",
+     "quote": "If the performer is not informed of vocally stressful work prior to the session, the performer may refuse to do such work."
+    },
+    {
+     "field": "stunt-coordinator",
+     "value": "General Provisions §28.B(1): a person qualified in the stunt engaged and on the set, and the performer’s chance to consult them first",
+     "quote": "an individual qualified by training and/or experience in the planning, setting up and/or performance of the type of stunt involved shall be engaged and present on the set"
+    },
+    {
+     "field": "stunt-consent",
+     "value": "General Provisions §28.B(4): the performer’s consent is a precondition of a stunt, limited to the stunt described; violation is $900 in liquidated damages",
+     "quote": "The performer's consent shall be a requisite precondition to performing stunts or other hazardous activity."
+    },
+    {
+     "field": "nudity-notice",
+     "value": "General Provisions §43.A: nudity or sex acts expected in a role are notified before the first interview or audition",
+     "quote": "notify the performer (or his representative) of any nudity or sex acts expected in the role (if known by management at the time) prior to the first interview or audition"
+    },
+    {
+     "field": "nudity-closed-set",
+     "value": "General Provisions §43.B: the set closed during nudity or sex scenes",
+     "quote": "the set shall be closed to all persons having no business purpose in connection with the production"
+    },
+    {
+     "field": "nudity-consent",
+     "value": "General Provisions §43.D: prior written consent describing the scene; withdrawn, the producer may double, and consent can’t be withdrawn for film already shot",
+     "quote": "If a performer has agreed to appear in such scenes and then withdraws his or her consent, Producer shall have the right to double, but consent may not be withdrawn as to film already photographed."
     }
    ]
   },
@@ -2552,6 +2607,16 @@
      "field": "contribution-ceiling",
      "value": "The one-hour contribution ceiling, $35,000, from July 1, 2024",
      "quote": "One-hour television motion picture or covered new media program 36-65 minutes in length: $35,000."
+    },
+    {
+     "field": "performance-capture",
+     "value": "Performance capture: covered by Schedules A, B, C or F; consecutive employment doesn’t apply; unlimited drops and pickups; more than one character a day at no additional pay",
+     "quote": "Consecutive employment rules shall not apply."
+    },
+    {
+     "field": "capture-characters",
+     "value": "A performance capture actor may play more than one character in a day at no additional pay",
+     "quote": "to render services for more than one character on the same day and, if so required, shall not be entitled to any additional compensation for such services"
     }
    ]
   },

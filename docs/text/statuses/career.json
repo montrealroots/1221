@@ -167,12 +167,6 @@
   "on": "2026-10-21",
   "evidence": "Written for brief 19 to docs/STYLE.md and docs/GLOSSARY.md; read where the player meets it in tests/pro-screen.test.ts and tests/pro-core.test.ts, with tools/voice-check.mjs, tools/tics.mjs and tools/title-case.mjs passing"
  },
- "src/engine/content/careerwork.ts#PROJECTS [camera]": {
-  "status": "Rewritten And Verified",
-  "hash": "6e3f94b53b5e",
-  "on": "2026-10-21",
-  "evidence": "Written for brief 20 to docs/STYLE.md and docs/GLOSSARY.md; the part Sam renamed Robin, read in tests/pro-core.test.ts, tests/pro-opportunities-screen.test.ts and tests/propay-screen.test.ts; the guide's line on parts posted again read against tests/b20-career-history.test.ts"
- },
  "src/engine/content/careerwork.ts#PROJECTS [eastview]": {
   "status": "Rewritten And Verified",
   "hash": "b62c30ae4255",
@@ -202,12 +196,6 @@
   "hash": "1ea6c461efbe",
   "on": "2026-10-21",
   "evidence": "Written for brief 19 to docs/STYLE.md and docs/GLOSSARY.md; read where the player meets it in tests/pro-screen.test.ts and tests/pro-core.test.ts, with tools/voice-check.mjs, tools/tics.mjs and tools/title-case.mjs passing"
- },
- "src/engine/content/careerwork.ts#PROJECTS [performance]": {
-  "status": "Rewritten And Verified",
-  "hash": "c6b14128900e",
-  "on": "2026-10-21",
-  "evidence": "Written 2026-10-21 at the owner's word (parts for an actor, an actress or either) to docs/STYLE.md and docs/GLOSSARY.md; read where the player meets it in tests/pro-opportunities-screen.test.ts and tests/pro-core.test.ts ('writes each part for an actor, an actress or either…'), with tools/voice-check.mjs, tools/tics.mjs and tools/title-case.mjs passing"
  },
  "src/engine/content/careerwork.ts#PROJECTS [route-nine]": {
   "status": "Rewritten And Verified",

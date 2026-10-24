@@ -181,7 +181,10 @@ describe('J1: fictional roles, posted on a schedule', () => {
       const weeks = (n: number) => Array.from({ length: n }, (_, w) => postingsAt(sim, sim.player, monday + w * 7 * MS_DAY)).flat();
       const open = weeks(104);
       const agreement = represent(sim);
-      const through = weeks(50);
+      // TEST SETUP: the agreement renewed for a second year (from 2026-10-24, brief 25's Module 5, whose kinds of work post
+      // to an agent more rarely, so a year doesn't bring every one).
+      sim.player.pro!.agreements.push({ ...agreement, id: sim.nextId('pro'), signedAt: agreement.endsAt!, endsAt: agreement.endsAt! + 365 * MS_DAY });
+      const through = weeks(100);
       return { sim, agreement, open, through };
     };
     const actor = seen('he/him');
@@ -217,8 +220,9 @@ describe('J1: fictional roles, posted on a schedule', () => {
       expect([p.weekday, p.hour, p.minute]).toEqual([1, 9, 0]);
       expect(o.submitBy - o.postedAt).toBe(7 * MS_DAY);
       const days = datesOf(o);
-      // Open postings only (a recurring part, from 2026-10-24, is cast through an agent), so a shoot's days or a run's.
-      expect(days.length).toBe(t.schedule.kind === 'shoot' ? t.schedule.days : t.schedule.kind === 'run' ? t.schedule.rehearsalWeeks * 5 + t.schedule.performanceWeeks * 6 : -1);
+      // Open postings only (a recurring part, from 2026-10-24, is cast through an agent), so a shoot's days, a run's, or
+      // from Module 5 a booth's sessions.
+      expect(days.length).toBe(t.schedule.kind === 'shoot' ? t.schedule.days + (t.schedule.rehearsalDays ?? 0) : t.schedule.kind === 'run' ? t.schedule.rehearsalWeeks * 5 + t.schedule.performanceWeeks * 6 : t.schedule.kind === 'sessions' ? t.schedule.sessions : -1);
       expect(Math.round((startOfDay(days[0]!.from, zone) - startOfDay(o.postedAt, zone)) / MS_DAY)).toBeGreaterThanOrEqual(WORK.leadDays);
       // A part posted before says it's posted again and what came of it the last time (from 2026-10-21, brief 20's D4).
       expect(o.history[0]!.words).toBe(`${t.casting.charAt(0).toUpperCase()}${t.casting.slice(1)} posted ${t.role.part} in ${t.project}${o.again ? ` again, a new casting of the part. The last time it was posted to you, on ${formatDate(o.again.postedAt, zone)}: ${o.again.outcome}` : '.'}`);
@@ -403,7 +407,7 @@ describe('the whole loop, played', () => {
     expect(o.history[4]!.words).toMatch(/^The film’s director offered you Felix in Paper Moons, a fictional student film\. The pay is deferred: .+ The work was from \w+ \d+, 2026 to \w+ \d+, 2026, in New York, and the offer stood until .+ at 5:00 PM\.$/);
     const decision = Object.values(sim.universe.decisions).find((d) => d.refId === o.id && !d.resolvedAt)!;
     expect(decision.title).toBe('An Offer For Felix');
-    expect(decision.detail).toMatch(/^The film’s director offers you Felix in Paper Moons, a fictional student film\. The pay is deferred: a student film pays its actors only if it earns money later, and no film in the game does, so nothing is paid for its three days of work\. The work is from \w+ \d+, 2026 to \w+ \d+, 2026, in New York\. The offer stands until .+ at 5:00 PM\.$/);
+    expect(decision.detail).toMatch(/^The film’s director offers you Felix in Paper Moons, a fictional student film\. The pay is deferred: a student film pays its actors only if it earns money later, and no film in the game does, so nothing is paid for its three days of work\. A film school’s production: more takes than any paid set can spare, the pay deferred, and the film screened at the school, its footage yours for a reel\. The work is from \w+ \d+, 2026 to \w+ \d+, 2026, in New York\. The offer stands until .+ at 5:00 PM\.$/);
     expect(decision.actions.map((a) => a.label)).toEqual(['Accept The Offer', 'Decline The Offer']);
     // The audition was judged by the evaluation, kept on the work record with its band, and casting read it apart from the fit and the field.
     const round = o.rounds![0]!;
@@ -449,7 +453,8 @@ describe('the whole loop, played', () => {
     played(sim, sim.now + 200 * MS_DAY);
     const released = sim.player.pro!.credits.find((c) => c.engagementId === e.id)!;
     expect(released.status).toBe('released');
-    expect(notices(sim)).toContain('Paper Moons Is Released | Paper Moons is out, so Felix shows as released on your credits, and its footage can go on your reel. Cut A Reel on the Portfolio tab lists it.');
+    // A scene of the part may be cut in the edit (from 2026-10-24, brief 25's Module 5, T46), which the notice then adds.
+    expect(notices(sim).some((n) => n.startsWith('Paper Moons Is Released | Paper Moons was screened at its film school, so Felix shows as released on your credits, and its footage can go on your reel. Cut A Reel on the Portfolio tab lists it.'))).toBe(true);
     expect(breaches(sim.universe, sim.now)).toEqual([]);
     // Settled once: one engagement, one credit, one booked event, whatever the reloads.
     expect(sim.player.pro!.engagements.filter((x) => x.opportunityId === o.id)).toHaveLength(1);
@@ -899,7 +904,7 @@ describe('what missing a step costs', () => {
     } else {
       played(sim, r.at + MS_HOUR);
       expect(o.status).toBe('lapsed');
-      expect(notices(sim).at(-1)).toMatch(/^Your Self-Tape For \w+ Wasn’t In \| Your self-tape for \w+ wasn’t in by .+ at 6:00 PM, so .+ moved on without it\.$/);
+      expect(notices(sim).at(-1)).toMatch(/^Your Self-Tape For [\w ]+ Wasn’t In \| Your self-tape for [\w ]+ wasn’t in by .+ at 6:00 PM, so .+ moved on without it\.$/);
     }
     expect(o.rounds![0]!.status).toBe('missed');
     expect(o.counts.problem).toBe(1);
@@ -951,7 +956,7 @@ describe('what missing a step costs', () => {
     const twin = reload(sim);
     played(sim, o.offer!.until + MS_HOUR);
     expect(o.status).toBe('lapsed');
-    expect(notices(sim).at(-1)).toMatch(/^The Offer For \w+ Lapsed \| You didn’t answer the offer for \w+ by .+ at 5:00 PM, so it lapsed\.$/);
+    expect(notices(sim).at(-1)).toMatch(/^The Offer For [\w ]+ Lapsed \| You didn’t answer the offer for [\w ]+ by .+ at 5:00 PM, so it lapsed\.$/);
     expect(Object.values(sim.universe.decisions).find((d) => d.refId === o.id)!.resolvedAt).toBeDefined();
     const o2 = twin.player.pro!.opportunities.find((x) => x.id === o.id)!;
     twin.must({ kind: 'pro.decline_offer', payload: { opportunityId: o2.id } });

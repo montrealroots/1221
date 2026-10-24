@@ -332,10 +332,14 @@ describe('p-abilities', () => {
     // Stamina's from 2026-10-17 (brief 11, A4): in a task judged in parts it's read as the drain on every dimension tiring
     // reaches, a scene's first (`abilityReaders`, systems/material.ts), where until then this said consistency alone, the
     // task profiles' input a piece in parts takes out.
+    // From 2026-10-24 (brief 25's Module 5) the professional tasks join them: a dub's execution reads listening, a booth's
+    // and a dub's believability the voice, and a reenactment's believability the body, each where fatigue reaches; until
+    // then Listening was tired in connection and responsiveness alone, Vocal Expression in execution and consistency, and
+    // Physical Expression in execution.
     const TIRED: Record<string, string> = {
-      'Emotional Depth': 'believability', Imagination: 'believability', Presence: 'connection', 'Listening And Responsiveness': 'connection, responsiveness',
+      'Emotional Depth': 'believability', Imagination: 'believability', Presence: 'connection', 'Listening And Responsiveness': 'connection, responsiveness, execution',
       Focus: 'execution, consistency', Memory: 'execution', Adaptability: 'responsiveness', Composure: 'consistency',
-      'Vocal Expression': 'execution, consistency', 'Physical Expression': 'execution', Discipline: 'consistency, execution', Stamina: 'believability, connection, execution, consistency, responsiveness',
+      'Vocal Expression': 'execution, consistency, believability', 'Physical Expression': 'execution, believability', Discipline: 'consistency, execution', Stamina: 'believability, connection, execution, consistency, responsiveness',
     };
     const twins = [['early_riser'], [], ['night_owl']].map((traits) => {
       const sim = ada('g31-today', { personalityTraits: traits });
@@ -405,7 +409,8 @@ describe('p-abilities', () => {
       Stamina: mending('consistency, execution'),
     });
     // The two the column over-reported still shape both: the column It Shapes is every dimension, condition or none.
-    expect(rows.get('Vocal Expression')![5]).toBe('Execution, Consistency');
+    // Vocal Expression shapes a booth's and a dub's believability too (from 2026-10-24, brief 25's Module 5).
+    expect(rows.get('Vocal Expression')![5]).toBe('Execution, Consistency, Believability');
     expect(rows.get('Discipline')![5]).toBe('Consistency, Execution');
     expect(rows.get('Stamina')![7]).toContain('Not with a sprained ankle; it has 7 days yet to mend.');
   });

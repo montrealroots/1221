@@ -565,11 +565,22 @@
    "file": "src/ui/career/OpportunitiesPane.tsx",
    "control": "<Gated onClick>",
    "feature": "pro.prepare",
+   "label": "{own[0]}",
+   "kind": "pro.prepare",
+   "payload": "{ ...target, step: 'special' }",
+   "verdict": "Right",
+   "handler": "src/engine/systems/projobs.ts:2100",
+   "note": "The work's own preparation (Find The Voice, Watch The Original, Work On The Movement and the rest) prepares that step on the booked work; its refusal (prepareRefusal, 'special') is the button's title, and Fight Rehearsal is refused here, done only on the work's rehearsal days with the coordinator. Read on 2026-10-24 by its builder (brief 25's Module 5), pressed through the command in tests/career-workflows-screen.test.ts."
+  },
+  {
+   "file": "src/ui/career/OpportunitiesPane.tsx",
+   "control": "<Gated onClick>",
+   "feature": "pro.prepare",
    "label": "{reasons[i]![0]}",
    "kind": "pro.prepare",
    "payload": "{ ...target, step }",
    "verdict": "Right",
-   "handler": "src/engine/systems/projobs.ts:1920"
+   "handler": "src/engine/systems/projobs.ts:2100"
   },
   {
    "file": "src/ui/career/OpportunitiesPane.tsx",
@@ -579,7 +590,7 @@
    "kind": "pro.accept_offer",
    "payload": "{ opportunityId: o.id }",
    "verdict": "Right",
-   "handler": "src/engine/systems/projobs.ts:1963"
+   "handler": "src/engine/systems/projobs.ts:2143"
   },
   {
    "file": "src/ui/career/OpportunitiesPane.tsx",
@@ -589,7 +600,7 @@
    "kind": "pro.move_audition",
    "payload": "{ opportunityId: o.id }",
    "verdict": "Right",
-   "handler": "src/engine/systems/projobs.ts:1945"
+   "handler": "src/engine/systems/projobs.ts:2125"
   },
   {
    "file": "src/ui/career/OpportunitiesPane.tsx",
@@ -599,7 +610,7 @@
    "kind": "pro.request_outside_work",
    "payload": "{ opportunityId: o.id }",
    "verdict": "Right",
-   "handler": "src/engine/systems/projobs.ts:2016"
+   "handler": "src/engine/systems/projobs.ts:2198"
   },
   {
    "file": "src/ui/career/OpportunitiesPane.tsx",
@@ -609,7 +620,7 @@
    "kind": "pro.decline_offer",
    "payload": "{ opportunityId: o.id }",
    "verdict": "Right",
-   "handler": "src/engine/systems/projobs.ts:2004"
+   "handler": "src/engine/systems/projobs.ts:2186"
   },
   {
    "file": "src/ui/career/OpportunitiesPane.tsx",
@@ -619,7 +630,7 @@
    "kind": "pro.submit",
    "payload": "{ opportunityId: o.id }",
    "verdict": "Right",
-   "handler": "src/engine/systems/projobs.ts:1911"
+   "handler": "src/engine/systems/projobs.ts:2091"
   },
   {
    "file": "src/ui/career/OpportunitiesPane.tsx",
@@ -629,7 +640,7 @@
    "kind": "pro.tape_audition",
    "payload": "{ opportunityId: o.id }",
    "verdict": "Right",
-   "handler": "src/engine/systems/projobs.ts:1930"
+   "handler": "src/engine/systems/projobs.ts:2110"
   },
   {
    "file": "src/ui/career/RepresentationPane.tsx",
@@ -639,7 +650,7 @@
    "kind": "pro.supply_material",
    "payload": "{ agentId: agent.id }",
    "verdict": "Right",
-   "handler": "src/engine/systems/proagent.ts:1124",
+   "handler": "src/engine/systems/proagent.ts:1129",
    "note": "The label names the office as the agent’s panel does: His Office for the game’s own agent, The Office for a real one (from 2026-10-24). It sends what that office asked for, and nothing else."
   },
   {
@@ -650,7 +661,7 @@
    "kind": "pro.end_agreement",
    "payload": "{ agentId: agent.id, how }",
    "verdict": "Right",
-   "handler": "src/engine/systems/proagent.ts:1193",
+   "handler": "src/engine/systems/proagent.ts:1198",
    "note": "One button for each way an agreement ends (`ends`: by agreement, no offer in its days, under ten days' work), each sending its own `how`."
   },
   {
@@ -661,7 +672,7 @@
    "kind": "pro.accept_agreement",
    "payload": "{ agentId: agent.id }",
    "verdict": "Right",
-   "handler": "src/engine/systems/proagent.ts:1160"
+   "handler": "src/engine/systems/proagent.ts:1165"
   },
   {
    "file": "src/ui/career/RepresentationPane.tsx",
@@ -671,7 +682,7 @@
    "kind": "pro.ask_referral",
    "payload": "{ agentId: agent.id, engagementId: j.engagementId }",
    "verdict": "Right",
-   "handler": "src/engine/systems/proagent.ts:1084"
+   "handler": "src/engine/systems/proagent.ts:1087"
   },
   {
    "file": "src/ui/career/RepresentationPane.tsx",
@@ -681,7 +692,7 @@
    "kind": "pro.ask_to_move",
    "payload": "{ meetingId: m.id }",
    "verdict": "Right",
-   "handler": "src/engine/systems/proagent.ts:1144"
+   "handler": "src/engine/systems/proagent.ts:1149"
   },
   {
    "file": "src/ui/career/RepresentationPane.tsx",
@@ -691,7 +702,7 @@
    "kind": "pro.agent_check",
    "payload": "{ agentId: agent.id }",
    "verdict": "Right",
-   "handler": "src/engine/systems/proagent.ts:1068"
+   "handler": "src/engine/systems/proagent.ts:1071"
   },
   {
    "file": "src/ui/career/RepresentationPane.tsx",
@@ -701,7 +712,7 @@
    "kind": "pro.decline_agreement",
    "payload": "{ agentId: agent.id }",
    "verdict": "Right",
-   "handler": "src/engine/systems/proagent.ts:1179"
+   "handler": "src/engine/systems/proagent.ts:1184"
   },
   {
    "file": "src/ui/career/RepresentationPane.tsx",
@@ -711,7 +722,7 @@
    "kind": "pro.agent_notice",
    "payload": "{ agentId: agent.id }",
    "verdict": "Right",
-   "handler": "src/engine/systems/proagent.ts:1057"
+   "handler": "src/engine/systems/proagent.ts:1060"
   },
   {
    "file": "src/ui/career/RepresentationPane.tsx",
@@ -721,7 +732,7 @@
    "kind": "pro.send_materials",
    "payload": "{ agentId: agent.id }",
    "verdict": "Right",
-   "handler": "src/engine/systems/proagent.ts:1101"
+   "handler": "src/engine/systems/proagent.ts:1106"
   },
   {
    "file": "src/ui/career/SchoolShowcase.tsx",
@@ -732,6 +743,17 @@
    "payload": "{ options: chosen }",
    "verdict": "Right",
    "handler": "src/engine/systems/proshowcase.ts:664"
+  },
+  {
+   "file": "src/ui/career/WorkPane.tsx",
+   "control": "<Gated onClick>",
+   "feature": "pro.work_choice",
+   "label": "{o.label}",
+   "kind": "pro.work_choice",
+   "payload": "{ engagementId: e.id, decision: d.id, option: o.id }",
+   "verdict": "Right",
+   "handler": "src/engine/systems/workflow.ts:697",
+   "note": "Each option's button under How The Work Is Done sets that choice on that engagement, by its decision and option ids; its refusal (choiceRefusal) is the button's title and grays it, and the option in force says now beside it. Read on 2026-10-24 by its builder (brief 25's Module 5), pressed through the command in tests/career-workflows-screen.test.ts."
   },
   {
    "file": "src/ui/career/WorkPane.tsx",
@@ -752,7 +774,7 @@
    "kind": "pro.ask_pay",
    "payload": "{ engagementId: e.id, key: r.key }",
    "verdict": "Right",
-   "handler": "src/engine/systems/contracts.ts:411",
+   "handler": "src/engine/systems/contracts.ts:464",
    "note": "Ask About It under an overdue payment asks the producer about that payment, by its engagement and key; its refusal (askRefusal) is its title before it is pressed, and the row then reads Disputed with the answer. Read 2026-10-24, brief 25."
   },
   {
@@ -763,7 +785,7 @@
    "kind": "pro.join_sag",
    "payload": "",
    "verdict": "Right",
-   "handler": "src/engine/systems/propay.ts:812"
+   "handler": "src/engine/systems/propay.ts:818"
   },
   {
    "file": "src/ui/components/BriefPane.tsx",
@@ -1527,7 +1549,7 @@
    "kind": "pro.update_resume",
    "payload": "",
    "verdict": "Right",
-   "handler": "src/engine/systems/pro.ts:1136"
+   "handler": "src/engine/systems/pro.ts:1213"
   },
   {
    "file": "src/ui/workspaces/CareerWorkspace.tsx",
@@ -1537,7 +1559,7 @@
    "kind": "pro.headshots",
    "payload": "",
    "verdict": "Right",
-   "handler": "src/engine/systems/pro.ts:1119"
+   "handler": "src/engine/systems/pro.ts:1196"
   },
   {
    "file": "src/ui/workspaces/CareerWorkspace.tsx",
@@ -1547,7 +1569,7 @@
    "kind": "pro.cut_reel",
    "payload": "{ pieces: chosen }",
    "verdict": "Right",
-   "handler": "src/engine/systems/pro.ts:1148"
+   "handler": "src/engine/systems/pro.ts:1225"
   },
   {
    "file": "src/ui/workspaces/CareerWorkspace.tsx",
@@ -1557,7 +1579,7 @@
    "kind": "pro.set_name",
    "payload": "{ name }",
    "verdict": "Right",
-   "handler": "src/engine/systems/pro.ts:1107"
+   "handler": "src/engine/systems/pro.ts:1184"
   },
   {
    "file": "src/ui/workspaces/PapersWorkspace.tsx",
@@ -1577,7 +1599,7 @@
    "kind": "health.extra_supply",
    "payload": "{ days: longest }",
    "verdict": "Right",
-   "handler": "src/engine/systems/health.ts:2237"
+   "handler": "src/engine/systems/health.ts:2243"
   },
   {
    "file": "src/ui/workspaces/PapersWorkspace.tsx",
@@ -1596,7 +1618,7 @@
    "kind": "health.prepay",
    "payload": "{ months: m }",
    "verdict": "Right",
-   "handler": "src/engine/systems/health.ts:2247",
+   "handler": "src/engine/systems/health.ts:2253",
    "note": "Sends the months on the button; the prices on it are NHS.prepayment's (safetynet.ts), written into the label by hand, and the handler charges the same figures. A price moved in the content would leave the label behind: noted for the papers area."
   },
   {
@@ -1617,7 +1639,7 @@
    "kind": "health.treat",
    "payload": "{ condition, on: !state.treated }",
    "verdict": "Right",
-   "handler": "src/engine/systems/health.ts:2380"
+   "handler": "src/engine/systems/health.ts:2386"
   },
   {
    "file": "src/ui/workspaces/PapersWorkspace.tsx",
@@ -1627,7 +1649,7 @@
    "kind": "health.appeal",
    "payload": "{ billId: b.id }",
    "verdict": "Right",
-   "handler": "src/engine/systems/health.ts:2193"
+   "handler": "src/engine/systems/health.ts:2199"
   },
   {
    "file": "src/ui/workspaces/PapersWorkspace.tsx",
@@ -1637,7 +1659,7 @@
    "kind": "health.apply",
    "payload": "",
    "verdict": "Right",
-   "handler": "src/engine/systems/health.ts:2291"
+   "handler": "src/engine/systems/health.ts:2297"
   },
   {
    "file": "src/ui/workspaces/PapersWorkspace.tsx",
@@ -1647,7 +1669,7 @@
    "kind": "health.apply_aid",
    "payload": "{ billId: b.id }",
    "verdict": "Right",
-   "handler": "src/engine/systems/health.ts:2429"
+   "handler": "src/engine/systems/health.ts:2435"
   },
   {
    "file": "src/ui/workspaces/PapersWorkspace.tsx",
@@ -1686,7 +1708,7 @@
    "kind": "health.dental",
    "payload": "{ on: true }",
    "verdict": "Right",
-   "handler": "src/engine/systems/health.ts:2394"
+   "handler": "src/engine/systems/health.ts:2400"
   },
   {
    "file": "src/ui/workspaces/PapersWorkspace.tsx",
@@ -1775,7 +1797,7 @@
    "kind": "health.dental",
    "payload": "{ on: false }",
    "verdict": "Right",
-   "handler": "src/engine/systems/health.ts:2394"
+   "handler": "src/engine/systems/health.ts:2400"
   },
   {
    "file": "src/ui/workspaces/PapersWorkspace.tsx",
@@ -1785,7 +1807,7 @@
    "kind": "health.drop",
    "payload": "",
    "verdict": "Right",
-   "handler": "src/engine/systems/health.ts:2343"
+   "handler": "src/engine/systems/health.ts:2349"
   },
   {
    "file": "src/ui/workspaces/PapersWorkspace.tsx",
@@ -1795,7 +1817,7 @@
    "kind": "health.enroll",
    "payload": "",
    "verdict": "Right",
-   "handler": "src/engine/systems/health.ts:2262"
+   "handler": "src/engine/systems/health.ts:2268"
   },
   {
    "file": "src/ui/workspaces/PapersWorkspace.tsx",
@@ -1825,7 +1847,7 @@
    "kind": "health.pay_bill",
    "payload": "{ amount: -debt.balance }",
    "verdict": "Right",
-   "handler": "src/engine/systems/health.ts:2443"
+   "handler": "src/engine/systems/health.ts:2449"
   },
   {
    "file": "src/ui/workspaces/PapersWorkspace.tsx",
@@ -1865,7 +1887,7 @@
    "kind": "health.request_hardship",
    "payload": "",
    "verdict": "Right",
-   "handler": "src/engine/systems/health.ts:2309"
+   "handler": "src/engine/systems/health.ts:2315"
   },
   {
    "file": "src/ui/workspaces/PapersWorkspace.tsx",
@@ -1884,7 +1906,7 @@
    "kind": "health.choose_clinic",
    "payload": "{ clinicId: e.target.value }",
    "verdict": "Right",
-   "handler": "src/engine/systems/health.ts:2373"
+   "handler": "src/engine/systems/health.ts:2379"
   },
   {
    "file": "src/ui/workspaces/PapersWorkspace.tsx",
@@ -1893,7 +1915,7 @@
    "kind": "health.choose_pharmacy",
    "payload": "{ chain: e.target.value }",
    "verdict": "Right",
-   "handler": "src/engine/systems/health.ts:2365"
+   "handler": "src/engine/systems/health.ts:2371"
   },
   {
    "file": "src/ui/workspaces/ProfileWorkspace.tsx",
@@ -2045,7 +2067,7 @@
    "kind": "pro.accept_offer",
    "payload": "{ opportunityId: o.id }",
    "verdict": "Right",
-   "handler": "src/engine/systems/projobs.ts:1963"
+   "handler": "src/engine/systems/projobs.ts:2143"
   },
   {
    "file": "src/engine/systems/projobs.ts",
@@ -2053,7 +2075,7 @@
    "kind": "pro.decline_offer",
    "payload": "{ opportunityId: o.id }",
    "verdict": "Right",
-   "handler": "src/engine/systems/projobs.ts:2004"
+   "handler": "src/engine/systems/projobs.ts:2186"
   },
   {
    "file": "src/engine/systems/taxreturn.ts",
@@ -2072,7 +2094,7 @@
    "kind": "pro.ask_to_move",
    "payload": "(item) => ({ meetingId: item.payload.meetingId })",
    "verdict": "Right",
-   "handler": "src/engine/systems/proagent.ts:1144"
+   "handler": "src/engine/systems/proagent.ts:1149"
   },
   {
    "file": "src/engine/world/clock.ts",

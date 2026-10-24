@@ -1,6 +1,6 @@
 # Every Touched Feature, Traced
 
-Written by `tools/trace.ts` from the guide's registry and the tests; don't edit it by hand. 46 entries in the four
+Written by `tools/trace.ts` from the guide's registry and the tests; don't edit it by hand. 47 entries in the four
 areas the connected-journey pass of 2026-10-12 rebuilt, and from 2026-10-20 the career's (brief 19), each traced Action →
 Preconditions → Costs → State → Consumer → Feedback → History → Later consequence. The words are the guide's own, which
 carry the rules' figures; the four areas' entries' claims were checked against the engine by a second reader when they
@@ -1327,7 +1327,7 @@ The Career screen, your professional profile and name, headshots, your résumé 
   - (none)
 - **Later consequence:**
   - A day after a first audition casting decides whether to call you back, and three days after the last whether to offer you the role. A notice says which.
-- **Tested by:** `pro.prepare`: `tests/journey-career.test.ts`, `tests/pro-work.test.ts`; `pro.tape_audition`: `tests/journey-career.test.ts`, `tests/pro-work.test.ts`; `pro.move_audition`: `tests/pro-work.test.ts`
+- **Tested by:** `pro.prepare`: `tests/career-workflows-screen.test.ts`, `tests/career-workflows.test.ts`, `tests/journey-career.test.ts`, `tests/pro-work.test.ts`; `pro.tape_audition`: `tests/journey-career.test.ts`, `tests/pro-work.test.ts`; `pro.move_audition`: `tests/pro-work.test.ts`
 
 ### Offers And Booked Work (`career.offers`)
 
@@ -1353,7 +1353,7 @@ The Career screen, your professional profile and name, headshots, your résumé 
 - **Later consequence:**
   - A stage part goes on your credits at its first night; a screen part when it’s shot, and as released once it comes out, when its footage can go on a reel.
   - Miss a shoot day, or a second day of a run, and the production replaces you.
-- **Tested by:** `pro.accept_offer`: `tests/b20-benefits-safetynet.test.ts`, `tests/b20-benefits-tax.test.ts`, `tests/b20-benefits-unemployment.test.ts`, `tests/b20-career-defects.test.ts`, `tests/b20-career-effects.test.ts`, `tests/b20-career-history.test.ts`, `tests/b20-career-skill.test.ts`, `tests/b20-guide-screens.test.ts`, `tests/b20-life-fatigue.test.ts`, `tests/b20-papers-work.test.ts`, `tests/b21-genre-proof.test.ts`, `tests/b22-authorization.test.ts`, `tests/career-contracts.test.ts`, `tests/career-drawn.test.ts`, `tests/career-world-sydney.test.ts`, `tests/pro-opportunities-screen.test.ts`, `tests/pro-work.test.ts`; `pro.decline_offer`: `tests/b20-career-effects.test.ts`, `tests/b20-career-history.test.ts`, `tests/b20-guide-screens.test.ts`, `tests/pro-work.test.ts`
+- **Tested by:** `pro.accept_offer`: `tests/b20-benefits-safetynet.test.ts`, `tests/b20-benefits-tax.test.ts`, `tests/b20-benefits-unemployment.test.ts`, `tests/b20-career-defects.test.ts`, `tests/b20-career-effects.test.ts`, `tests/b20-career-history.test.ts`, `tests/b20-career-skill.test.ts`, `tests/b20-guide-screens.test.ts`, `tests/b20-life-fatigue.test.ts`, `tests/b20-papers-work.test.ts`, `tests/b21-genre-proof.test.ts`, `tests/b22-authorization.test.ts`, `tests/career-contracts.test.ts`, `tests/career-drawn.test.ts`, `tests/career-workflows-screen.test.ts`, `tests/career-workflows.test.ts`, `tests/career-world-sydney.test.ts`, `tests/pro-opportunities-screen.test.ts`, `tests/pro-work.test.ts`; `pro.decline_offer`: `tests/b20-career-effects.test.ts`, `tests/b20-career-history.test.ts`, `tests/b20-guide-screens.test.ts`, `tests/pro-work.test.ts`
 
 ### Work While You’re At The School (`career.outside-work`)
 
@@ -1406,6 +1406,32 @@ The Career screen, your professional profile and name, headshots, your résumé 
   - The Calloway Files shoots each season from mid-July to May. From May 2030 the network says each May whether there’s another season. A canceled series stops that day: casting for it closes, and work not yet done is called off with nothing owed. It can come back years later.
   - A recurring part guarantees some episodes and is expected in more: a further episode is paid only if the production calls you for it. The option on the next season, at 5% more a day, is taken up or let go by June 30, once.
 - **Tested by:** `pro.ask_pay`: `tests/career-contracts.test.ts`
+
+### How Each Kind Of Work Is Done (`career.workflows`)
+
+- **Action:** `pro.work_choice`, at Career, Work, How The Work Is Done (`/workspace/career?tab=work`). Opens: From the guide’s chapter “Finding Work”, once you’ve accepted work.
+- **Preconditions:**
+  - Work you’ve accepted. A choice about the intimate scene can’t be changed once the scene is shot.
+  - Contracts, Residuals And A Series’ Seasons first: The agreements’ rules for a dub, a stunt, an intimate scene and a recall to loop are in the contract.
+- **Costs:**
+  - Another Take: Energy for the takes you ask for beyond the scene’s own, as many as the production allows in a day
+  - A Strained Voice: Voice work raises it and rest eases it, 2 points of 100 an hour. A strained voice holds back what voice work asks of it (an estimate)
+  - A Stunt Yourself: A chance of an injury, about 3% for a stunt with the fight rehearsed and up to 15% without, less for a strong body; the double carries none of it (an estimate)
+- **State (what changes at once):**
+  - A choice is kept on the engagement and read by each day after it.
+- **Consumer (what reads it):**
+  - Your Work And Its Pay, scheduled: A looping session is paid half a day, on the work’s pay.
+- **Feedback (how to read what comes back):**
+  - A dub’s pay by its characters and lines, a recall to loop at half a day for four hours, a stunt only with your consent and a coordinator there, and an intimate scene only with your written consent are the SAG-AFTRA agreements’ rules. The takes, the strain, the stunt’s risk and how often pages change are the game’s.
+  - There are 10 ways of working in the game: a stage play, single camera, multicamera, the booth, dubbing, performance capture, narration, reenactment, a musical and action.
+  - Declining an intimate scene costs you nothing: a body double does it, and the part, the pay and the casting are as they were.
+- **History (kept in the record):**
+  - (none)
+- **Later consequence:**
+  - Each judged day plays its scenes, loops, chapters or sequences in takes, the best printed, and leaves a report.
+  - Pages revised the night before change some of your lines, and Learn The Lines that evening puts them back.
+  - After a screen wrap, the production may recall you to loop: a four-hour session paid half a day. When the work comes out, the edit may cut one of your scenes, about 2 times in ten; the part stays on your credits with its pay.
+- **Tested by:** `pro.work_choice`: `tests/career-workflows-screen.test.ts`, `tests/career-workflows.test.ts`
 
 ### Work Abroad (`career.work-abroad`)
 

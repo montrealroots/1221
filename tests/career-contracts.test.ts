@@ -6,6 +6,7 @@
  * their premise held.
  */
 import { describe, expect, it } from 'vitest';
+import { FORMATS } from '@/engine/content/workflows';
 import type { Simulation } from '@/engine/core/simulation';
 import { MS_DAY, MS_HOUR, zonedParts } from '@/engine/core/time';
 import { RATES, projectById } from '@/engine/content/careerwork';
@@ -67,7 +68,9 @@ describe('D1: every engagement carries its contract, with only the clauses that 
     expect(c.estimate).toBe(clerk.pay.reduce((n, p) => n + p.promised, 0));
     expect(c.payKeys).toEqual(clerk.pay.map((p) => p.key));
     // Only the clauses that apply: SAG-AFTRA television's overtime, residuals and contribution; nothing of a trip it has none of.
-    expect(c.clauses.map((x) => x.kind)).toEqual(['overtime', 'residuals', 'contributions']);
+    // From 2026-10-24 (brief 25's Module 5) a procedural's recall to loop too, within four months (N13 Schedule A §28.A).
+    expect(c.clauses.map((x) => x.kind)).toEqual(['overtime', 'residuals', 'contributions', 'rule']);
+    expect(c.clauses.at(-1)).toMatchObject({ kind: 'rule', id: 'looping' });
     expect(short.contract!.clauses).toEqual([]);
     expect(short.contract!).toMatchObject({ classification: 'Non-Union Day Rate', agreement: 'Non-Union', basis: 'day' });
     expect(film.contract!.clauses).toEqual([{ kind: 'deferred' }]);
@@ -84,7 +87,8 @@ describe('D1: every engagement carries its contract, with only the clauses that 
     const kinds = new Set<string>();
     const posted = [['calloway-files', at(2026, 9, 14)], ['calloway-files-whitlock', at(2026, 10, 19)], ['eastview', at(2027, 3, 1)], ['nine-one-one-guest', at(2027, 5, 3)], ['winter-ledger', at(2027, 8, 2)], ['route-nine', at(2028, 1, 3)]] as const;
     for (const [id, when] of posted) for (const x of accept(sim, offerFor(sim, id, when)).contract!.clauses) kinds.add(x.kind);
-    expect([...kinds].every((k) => ['deferred', 'overtime', 'residuals', 'contributions', 'trip', 'per-diem', 'episodes', 'option'].includes(k))).toBe(true);
+    // A workflow's rule from 2026-10-24 (brief 25's Module 5): the agreements' words for a recall to loop, a dub's pay, a stunt's consent.
+    expect([...kinds].every((k) => ['deferred', 'overtime', 'residuals', 'contributions', 'trip', 'per-diem', 'episodes', 'option', 'rule'].includes(k))).toBe(true);
     expect(JSON.stringify(sim.player.pro!.engagements.map((e) => e.contract))).not.toMatch(/participation|profit|backend|points/i);
   });
 });
@@ -102,7 +106,8 @@ describe('D3: a day performer’s overtime', () => {
     expect(e.pay[0]!.promised).toBe(2 * (day + overtimeOf(day)));
     expect(clauseOf(e.contract, 'overtime')).toEqual({ kind: 'overtime', hourly: Math.round(day / 8), hours: 2, premium: 1.5, perDay: overtimeOf(day) });
     // Said in the offer, with the pay.
-    expect(termsWords(projectById('calloway-files')!, day)).toBe(` Each shoot day runs eleven hours with an hour for lunch, so its last two hours of work are overtime at time and one-half, $${(overtimeOf(day) / 100).toFixed(2)} more a day.`);
+    // And how the work is done, from 2026-10-24 (brief 25's Module 5): the format's words.
+    expect(termsWords(projectById('calloway-files')!, day)).toBe(` Each shoot day runs eleven hours with an hour for lunch, so its last two hours of work are overtime at time and one-half, $${(overtimeOf(day) / 100).toFixed(2)} more a day. ${FORMATS.procedural.words}`);
     // None where the overtime terms weren't read: Low Budget's, a weekly performer's, a stage run's.
     for (const [id, posted] of [['gull-season', at(2027, 1, 4)], ['harbor-line', at(2027, 4, 5)], ['calder-street', at(2027, 8, 2)]] as const) {
       const o = accept(sim, offerFor(sim, id, posted));
@@ -322,7 +327,11 @@ describe('D7: a recurring part, guaranteed some episodes of the season, expected
   it('T89 and T90: takes up its option into the next version of the contract, or lets it lapse once', () => {
     const outcomes: string[] = [];
     const further = new Set<string>();
-    for (const seed of ['contracts-opt-0', 'contracts-opt-1', 'contracts-opt-2', 'contracts-opt-3']) {
+    // Seeds taken in turn until each branch has run and a further episode was called and one wasn't (from 2026-10-24,
+    // brief 25's Module 5, when a day's takes moved the bands the production's call reads, and the first four seeds'
+    // further episodes were all called).
+    for (const seed of Array.from({ length: 12 }, (_, k) => `contracts-opt-${k}`)) {
+      if (new Set(outcomes).size === 2 && further.has('called') && further.has('not-called')) break;
       const { sim, e } = season(seed);
       const option = clauseOf(e.contract, 'option')!;
       outcomes.push(option.status);
@@ -426,7 +435,10 @@ describe('D8: a series’ seasons, decided by the world', () => {
     // T100: the twin loaded before the decision made the same of it.
     expect(twin.player.pro!.engagements.map((x) => [x.id, x.status, x.pay.length])).toEqual(sim.player.pro!.engagements.map((x) => [x.id, x.status, x.pay.length]));
     expect(twin.player.pro!.opportunities.find((x) => x.id === open.id)!.outcome).toBe(closed.outcome);
-    // T59, T93: back in May 2032, cast again, the old work unchanged.
+    // T59, T93: back in May 2032, cast again, the old work unchanged. Read from June 2031, once the old work's releases and
+    // any recall to loop are past (from 2026-10-24, brief 25's Module 5, when a release could cut a scene and a wrap bring
+    // a looping session, each a change of its own, not the revival's).
+    while (sim.now < at(2031, 6, 1)) { tend(sim); sim.advanceTo(Math.min(at(2031, 6, 1), sim.now + 30 * MS_DAY)); }
     const old = JSON.stringify(sim.player.pro!.engagements.filter((x) => x.projectId.startsWith('calloway')));
     while (sim.now < at(2032, 5, 1)) { tend(sim); sim.advanceTo(Math.min(at(2032, 5, 1), sim.now + 30 * MS_DAY)); }
     const t = projectById('calloway-files')!;

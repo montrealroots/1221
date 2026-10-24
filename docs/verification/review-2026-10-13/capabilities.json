@@ -4846,5 +4846,55 @@
   ],
   "rows": "pro.ask_pay is traced in docs/verification/connected-journey/TRACE.md (the guide’s career.contracts), not a row of the audit.",
   "weakTests": []
+ },
+ {
+  "on": "2026-10-24",
+  "against": "584321a6",
+  "by": "its builder",
+  "id": "career-workflows",
+  "claim": "Brief 25’s Module 5: each kind of acting work done its own way, with its own days, preparation, choices (pro.work_choice), judging and reports; revised pages, a recall to loop, a scene cut in the edit and an anthology’s invitation; the agreements’ rules for a multicamera week, a dub, vocally stressful lines, performance capture, an animated feature, stunts, an intimate scene and looping in the contract.",
+  "implementation": "src/engine/content/workflows.ts (the workflows, the formats, the decisions); src/engine/systems/workflow.ts (planWork, workTheDay, reportWords, revisePages, afterWrap, loopSession, cutInEdit, pro.work_choice); src/engine/systems/projobs.ts (datesOf, promisedPay, termsWords, the work-day handler, finish, the release); src/engine/systems/contracts.ts (workflowRules); src/ui/career/WorkPane.tsx (How The Work Is Done, Each Day’s Report); src/ui/career/OpportunitiesPane.tsx (Prepare, RoleFacts).",
+  "consumers": "The Work tab; the Opportunities tab; the judging (evaluate); the payroll (propay); the contract; the reel; the agent’s commission; the release.",
+  "uiEvidence": {
+   "needed": true,
+   "have": "tests/career-workflows-screen.test.ts draws the Work and Opportunities tabs for a voice session, a multicamera week and an action shoot through the clock, its choices pressed through the commands the buttons name, saved and loaded at each stage."
+  },
+  "evidence": [
+   {
+    "kind": "command",
+    "where": "tests/career-workflows.test.ts ‘WF-18, WF-27: fight rehearsal only with the coordinator, on its days; a stunt done by the double or by the player who consents’",
+    "asserts": "pro.work_choice sets the stunts to the player; the stunt is theirs, its risk theirs; with the double, the shot less their own and no risk.",
+    "reachesAction": true,
+    "checksConsequence": true,
+    "independent": false,
+    "problem": "Written by the builder of the code it reads."
+   },
+   {
+    "kind": "command",
+    "where": "tests/career-workflows.test.ts ‘WF-27: an intimate scene said before the audition and in the offer’",
+    "asserts": "Without consent a body double does the scene, unjudged; consent given, it’s shot on a closed set; withdrawing it after the day is refused in its words.",
+    "reachesAction": true,
+    "checksConsequence": true,
+    "independent": false,
+    "problem": "Written by the builder."
+   },
+   {
+    "kind": "journey",
+    "where": "tests/career-workflows-screen.test.ts ‘WF-21, WF-24, CONT-01, PLAYER JOURNEY: a voice session, a multicamera week and an action shoot’",
+    "asserts": "Each workflow read and chosen on the Work tab, prepared on the Opportunities tab, worked through the clock, its days’ reports kept, across a save and a load at each stage.",
+    "reachesAction": true,
+    "checksConsequence": true,
+    "independent": false,
+    "problem": "Written by the builder."
+   }
+  ],
+  "verdict": "partial",
+  "partialClass": "missing-evidence",
+  "gaps": [
+   "No reader independent of the builder has read it against the standard: this entry is the builder’s own reading, made on 2026-10-24.",
+   "The registry can’t call it Verified while its rows were added after 2026-10-13: tools/capabilities.mjs and tools/coverage.mjs count a row as read only by that day’s review."
+  ],
+  "rows": "pro.work_choice is traced in docs/verification/connected-journey/TRACE.md (the guide’s career.workflows), not a row of the audit.",
+  "weakTests": []
  }
 ]

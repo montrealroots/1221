@@ -20,7 +20,7 @@
    "src/engine/systems/projobs.ts#kindPhrase",
    "src/engine/systems/projobs.ts#reachWords",
    "src/engine/systems/projobs.ts#post [opportunity]",
-   "src/engine/systems/projobs.ts#datesOf [shoot]",
+   "src/engine/systems/projobs.ts#datesOf",
    "src/engine/systems/projobs.ts#submit",
    "src/ui/shell/sections.ts#SECTIONS [opportunities]",
    "src/engine/systems/projobs.ts#lastPostingOf",
@@ -354,6 +354,123 @@
    {
     "kind": "test",
     "ref": "tests/deciders.test.ts"
+   }
+  ]
+ },
+ {
+  "surface": "Career, Work: How The Work Is Done on an engagement, its days, its own preparation, its choices with a button for each, the voice and each day's report",
+  "where": "Career, the Work tab, an engagement's How The Work Is Done and Each Day’s Report",
+  "sources": [
+   "src/engine/content/workflows.ts#*",
+   "src/engine/systems/workflow.ts#NY",
+   "src/engine/systems/workflow.ts#STEP_WORDS",
+   "src/engine/systems/workflow.ts#STEP_LABEL",
+   "src/engine/systems/workflow.ts#choiceRefusal",
+   "src/engine/systems/workflow.ts#unitName",
+   "src/engine/systems/workflow.ts#takeCount",
+   "src/engine/systems/workflow.ts#reportWords",
+   "src/ui/career/WorkPane.tsx#WorkflowView"
+  ],
+  "states": [
+   "first use",
+   "ordinary",
+   "details",
+   "explanation",
+   "unavailable",
+   "history",
+   "warning"
+  ],
+  "outcome": "Revised",
+  "why": "New with brief 25's Module 5: each engagement says how its kind of work is done, in the format's words, then its days and what each asks, the work's own preparation, each choice with what it does said before it's pressed, and after each day the report of what was shot, in what order, in how many takes and how it went.",
+  "changes": "Read on the drawn Work tab: the action workflow's day report said “it worked on the blocking and fight rehearsal”, the button's label lowercased; it says “you worked on the blocking and the fights” now, each workflow's preparation having its own noun. Seven choices that opened on “You” were turned (“Once a scene has its takes, you let the director move on.”), a capture choice said “in the volume” and says “on the stage”, and the dub's format words gave the day's pay a rule the code doesn't keep; they say the agreement's rule now, the main character's lines counted as a part of more than five.",
+  "evidence": [
+   {
+    "kind": "test",
+    "ref": "tests/career-workflows-screen.test.ts: 'WF-21, WF-24, CONT-01, PLAYER JOURNEY: a voice session, a multicamera week and an action shoot'"
+   },
+   {
+    "kind": "test",
+    "ref": "tests/career-workflows.test.ts: 'WF-01, WF-25: shoots an independent feature’s scenes out of the script’s order'"
+   },
+   {
+    "kind": "test",
+    "ref": "tests/career-workflows.test.ts: 'WF-21: no two workflows share every part of a day'"
+   }
+  ]
+ },
+ {
+  "surface": "Notices and history of the ways of working: revised pages, a choice made, a recall to loop and the session, an anthology's invitation, a scene cut in the edit",
+  "where": "Home's notices and Updates, and an engagement's What Happened on the Work tab",
+  "sources": [
+   "src/engine/systems/workflow.ts#choose [worked]",
+   "src/engine/systems/workflow.ts#afterWrap",
+   "src/engine/systems/workflow.ts#afterWrap [success]",
+   "src/engine/systems/workflow.ts#loopSession",
+   "src/engine/systems/workflow.ts#loopSession [problem]",
+   "src/engine/systems/workflow.ts#loopSession [worked]",
+   "src/engine/systems/workflow.ts#revisePages",
+   "src/engine/systems/projobs.ts#WORKFLOW_HOOKS [opportunity]",
+   "src/engine/systems/projobs.ts#registerProJobs [problem]"
+  ],
+  "states": [
+   "notification",
+   "history",
+   "setback",
+   "success",
+   "failure"
+  ],
+  "outcome": "Revised",
+  "why": "New with brief 25's Module 5: each notice says what happened, when, what it costs or pays, and what to press where something can be done (Learn The Lines tonight puts revised pages back).",
+  "changes": "Read in each test's notices: the revised pages' notice said the script was “on its version 3 now”; it says “on version 3 now”.",
+  "evidence": [
+   {
+    "kind": "test",
+    "ref": "tests/career-workflows.test.ts: 'WF-24: revised pages the night before take a share of the lines learned'"
+   },
+   {
+    "kind": "test",
+    "ref": "tests/career-workflows.test.ts: 'T47: a recall to loop after a screen wrap'"
+   },
+   {
+    "kind": "test",
+    "ref": "tests/career-workflows.test.ts: 'T46: a scene of the player’s cut in the edit at the release'"
+   },
+   {
+    "kind": "test",
+    "ref": "tests/career-workflows.test.ts: 'WF-06, WF-07, WF-21: a limited series carries no option; an anthology invites strong work back'"
+   }
+  ]
+ },
+ {
+  "surface": "Career, Opportunities: a role's days by the work's own steps, its intimate scene said before the audition, and Prepare's own step for the work",
+  "where": "Career, the Opportunities tab, a role's facts and Booked Work's Prepare",
+  "sources": [
+   "src/ui/career/OpportunitiesPane.tsx#daysWords",
+   "src/engine/systems/projobs.ts#datesOf",
+   "src/engine/systems/projobs.ts#intimacyWords",
+   "src/engine/systems/projobs.ts#specialOn"
+  ],
+  "states": [
+   "first use",
+   "details",
+   "explanation",
+   "unavailable"
+  ],
+  "outcome": "Revised",
+  "why": "New with brief 25's Module 5: a role's days say the work's own steps (a table read, rehearsal, camera blocking and a tape night; fight rehearsal and shoot days), an intimate scene is said in the role and in the offer before anything is agreed, and Prepare offers the work's own step beside the lines, refused in plain words where the work has no lines to learn.",
+  "changes": "Found by its test: the reenactment's refusal to learn lines spoke of the booth; it says “This part has no lines to learn.”",
+  "evidence": [
+   {
+    "kind": "test",
+    "ref": "tests/career-workflows-screen.test.ts: 'WF-21, WF-24, CONT-01, PLAYER JOURNEY: a voice session, a multicamera week and an action shoot'"
+   },
+   {
+    "kind": "test",
+    "ref": "tests/career-workflows.test.ts: 'WF-27: an intimate scene said before the audition and in the offer'"
+   },
+   {
+    "kind": "test",
+    "ref": "tests/career-workflows.test.ts: 'WF-16: a reenactment with no lines to learn'"
    }
   ]
  }

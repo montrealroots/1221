@@ -9,7 +9,7 @@
   "Decision Required",
   "Explicitly Deferred"
  ],
- "completion": "Completion, by the matrix: 588 of 660 rows in scope Implemented And Verified (89.0%); 68 Implemented, Verification Incomplete, 0 Partially Implemented, 0 Not Implemented, 0 Blocked Externally, 4 Decision Required, 41 Explicitly Deferred.",
+ "completion": "Completion, by the matrix: 549 of 661 rows in scope Implemented And Verified (83.0%); 108 Implemented, Verification Incomplete, 0 Partially Implemented, 0 Not Implemented, 0 Blocked Externally, 4 Decision Required, 41 Explicitly Deferred.",
  "fields": [
   "goal",
   "entry",
@@ -6123,7 +6123,7 @@
    "saveLoad": "The relation’s referrals, via, stage and history; the notice | Person.pro.relations[agentId]: stage, stageAt, noticeShownAt, via, referrals, request, meeting, cooldown, considered, why, agreementId, history and counts; Person.pro.agreements: the terms copied in, offeredAt, standsUntil, status, signedAt, endsAt, endedAt, endedHow; Person.pro.showcase.followUp",
    "failure": "each refusal said in the player's words (above) | Open: Ask For A Referral isn’t pressed on the rendered screen: the command is issued through execute.",
    "implementation": "`systems/proagent.ts` | Career, Representation, How To Reach Him: People You’ve Worked With and Ask For A Referral (RepresentationPane.tsx:117), each job listed with why it can’t refer you where it can’t; opened by “Representation” (tutorial.ts:502); registered by proagent.ts:985 (from 2026-10-21)",
-   "evidence": "tests/journey-agent.test.ts ‘PLAYER JOURNEY: a year on, a referral alone is something new for his office: the same record but for it is refused, and with it the next approach goes through’ (a year after a pass, the send refused as nothing new; a referral asked through the command from a job already considered; newSince reads only the referral, and the next approach is taken); tests/journey-career-older.test.ts ‘PLAYER JOURNEY: Ask For A Referral, from the director of the student film her work in was judged Strong...’ (a play, The Winter Ledger, booked from an open call, worked and judged Strong by the work loop; the referral asked from it through the command: the route in, kept once with its band, the notice in its casting office’s name, not his, her materials sent through it, and his office’s answer two weeks on, a request for a reel; until 2026-10-21 a student film, Paper Moons, and its director, before its part was written for an actor); tests/journey-agent.test.ts ‘PLAYER JOURNEY: the check refuses an incomplete submission with what’s missing, the remedy is made...’ (the job listed, the referral noted once, the notice in the referrer’s name, a second refused, then a send taken); tests/pro-agent.test.ts ‘offers a referral only from a finished job judged well enough, saying why for each one it can’t’ (refused before the check, for a Working job, an unjudged one and one not finished); ‘works out each factor apart, with its level and its words...’ (Your Work reads the referring job’s band, and the answer keeps those reasons); tests/pro-representation-screen.test.ts ‘PLAYER JOURNEY: G2 and V5: the check and the send grayed with their reasons under them...’ (the job listed with Ask For A Referral open). In every one the finished job is written by hand (finishedJob) | journeys: journey-agent.test.ts",
+   "evidence": "tests/journey-agent.test.ts ‘PLAYER JOURNEY: a year on, a referral alone is something new for his office: the same record but for it is refused, and with it the next approach goes through’ (a year after a pass, the send refused as nothing new; a referral asked through the command from a job already considered; newSince reads only the referral, and the next approach is taken); tests/journey-career-older.test.ts ‘PLAYER JOURNEY: Ask For A Referral, from the producers of the documentary her reenactment in was judged Strong...’ (a play, The Winter Ledger, booked from an open call, worked and judged Strong by the work loop; the referral asked from it through the command: the route in, kept once with its band, the notice in its casting office’s name, not his, her materials sent through it, and his office’s answer two weeks on, a request for a reel; until 2026-10-21 a student film, Paper Moons, and its director, before its part was written for an actor); tests/journey-agent.test.ts ‘PLAYER JOURNEY: the check refuses an incomplete submission with what’s missing, the remedy is made...’ (the job listed, the referral noted once, the notice in the referrer’s name, a second refused, then a send taken); tests/pro-agent.test.ts ‘offers a referral only from a finished job judged well enough, saying why for each one it can’t’ (refused before the check, for a Working job, an unjudged one and one not finished); ‘works out each factor apart, with its level and its words...’ (Your Work reads the referring job’s band, and the answer keeps those reasons); tests/pro-representation-screen.test.ts ‘PLAYER JOURNEY: G2 and V5: the check and the send grayed with their reasons under them...’ (the job listed with Ask For A Referral open). In every one the finished job is written by hand (finishedJob) | journeys: journey-agent.test.ts",
    "sourceStatus": "verified",
    "status": "Implemented And Verified"
   },
@@ -6145,7 +6145,7 @@
    "saveLoad": "The relation: stage, considered, cooldown, request, meeting, why, history and counts; the scheduled answer | Person.pro.relations[agentId]: stage, stageAt, noticeShownAt, via, referrals, request, meeting, cooldown, considered, why, agreementId, history and counts; Person.pro.agreements: the terms copied in, offeredAt, standsUntil, status, signedAt, endsAt, endedAt, endedHow; Person.pro.showcase.followUp",
    "failure": "each refusal said in the player's words (above) | Open: A pass and no answer, with their holds, follow a send only after an introduction written by hand (tests/journey-agent.test.ts).; Send Your Materials isn’t pressed on the rendered screen: the command is issued through execute.",
    "implementation": "`systems/proagent.ts` | Career, Representation, Your Materials For Him: Send Your Materials (RepresentationPane.tsx:149), grayed with sendRefusal’s words; opened by “Representation” (tutorial.ts:502); registered by proagent.ts:1002 (from 2026-10-21)",
-   "evidence": "tests/journey-career.test.ts ‘the School’s follow-up passes on his office’s request to meet; Check Your Materials and Send Your Materials...’ (life A: after the School’s follow-up passed on his office’s request to meet, checked and sent the same morning; a week on the meeting set, the answer’s seven factors and its chance kept); tests/journey-career.test.ts ‘PLAYER JOURNEY: no request to meet from the follow-up; the reel cut then, Check Your Materials and Send Your Materials...’ (life B: after a follow-up with no request, sent; the answer after the degree a request for an up-to-date résumé); tests/journey-career-older.test.ts ‘PLAYER JOURNEY: Ask For A Referral, from the director of the student film her work in was judged Strong...’ (sent on a played referral; the answer a request for a reel); tests/journey-agent.test.ts ‘PLAYER JOURNEY: the check refuses an incomplete submission with what’s missing...’ (the unsolicited send refused in the agency’s quoted words, then taken on a referral, the answer on the clock, nothing from him meanwhile); ‘PLAYER JOURNEY: no answer: waiting once the usual two weeks go by...’; ‘PLAYER JOURNEY: a request for more: what, by when...’; ‘PLAYER JOURNEY: passed; a year’s hold said with its date; nothing new refused; a new credit lets the next approach through’ (a pass, too soon, nothing new, then a second approach to a meeting); tests/pro-agent.test.ts ‘PLAYER JOURNEY: put on once, it comes through the School, never claims he was there...’ (after the School’s follow-up, the request to meet answered by a meeting); ‘GUARD: a reload before the answer gives the same answer...’. Every send in a test follows an introduction the game didn’t make in that test | journeys: journey-agent.test.ts",
+   "evidence": "tests/journey-career.test.ts ‘the School’s follow-up passes on his office’s request to meet; Check Your Materials and Send Your Materials...’ (life A: after the School’s follow-up passed on his office’s request to meet, checked and sent the same morning; a week on the meeting set, the answer’s seven factors and its chance kept); tests/journey-career.test.ts ‘PLAYER JOURNEY: no request to meet from the follow-up; the reel cut then, Check Your Materials and Send Your Materials...’ (life B: after a follow-up with no request, sent; the answer after the degree a request for an up-to-date résumé); tests/journey-career-older.test.ts ‘PLAYER JOURNEY: Ask For A Referral, from the producers of the documentary her reenactment in was judged Strong...’ (sent on a played referral; the answer a request for a reel); tests/journey-agent.test.ts ‘PLAYER JOURNEY: the check refuses an incomplete submission with what’s missing...’ (the unsolicited send refused in the agency’s quoted words, then taken on a referral, the answer on the clock, nothing from him meanwhile); ‘PLAYER JOURNEY: no answer: waiting once the usual two weeks go by...’; ‘PLAYER JOURNEY: a request for more: what, by when...’; ‘PLAYER JOURNEY: passed; a year’s hold said with its date; nothing new refused; a new credit lets the next approach through’ (a pass, too soon, nothing new, then a second approach to a meeting); tests/pro-agent.test.ts ‘PLAYER JOURNEY: put on once, it comes through the School, never claims he was there...’ (after the School’s follow-up, the request to meet answered by a meeting); ‘GUARD: a reload before the answer gives the same answer...’. Every send in a test follows an introduction the game didn’t make in that test | journeys: journey-agent.test.ts",
    "sourceStatus": "verified",
    "status": "Implemented And Verified"
   },
@@ -8040,6 +8040,29 @@
    "failure": "refusals said in the player's words: — (also askRefusal) | Built on 2026-10-24 for brief 25's Module 4. pro.ask_pay and the rest are played through the commands and the clock (tests/career-contracts.test.ts), each stage saved and loaded. It isn’t called Verified because tools/capabilities.mjs and tools/coverage.mjs count a command’s row as read only by the review of 2026-10-13. Syndication and streaming residuals, a weekly performer’s and the Low Budget agreements’ overtime, the contribution under SAGindie’s agreements and Equity’s, residuals on stage and film work, and profit participation aren’t in the game: no participation is invented",
    "implementation": "`systems/contracts.ts` | WorkPane.tsx",
    "evidence": "`pro.ask_pay`: `tests/career-contracts.test.ts` | 1 test files",
+   "sourceStatus": "capability Implemented",
+   "status": "Implemented, Verification Incomplete",
+   "missing": "No audit row has read it against the standard on docs/GAMEPLAY-COVERAGE.md; its capability’s limits say what no test checks"
+  },
+  {
+   "id": "pro.work_choice",
+   "group": "Commands Traced Outside The Audit",
+   "kind": "command",
+   "source": "docs/verification/connected-journey/TRACE.md (How Each Kind Of Work Is Done (`career.workflows`))",
+   "goal": "Each kind of acting work done its own way: a shoot's scenes out of the script's order in takes with the best printed, revised pages the night before, a multicamera week taped before a studio audience, voice work, a dub and a narration in a booth that strain the voice, performance capture called in by the day, a documentary reenactment with no lines, a musical's music rehearsals and choreography, an action film's fight rehearsal and stunts done only with consent, an intimate scene only with written consent, a recall to loop after a screen wrap, a scene cut in the edit and an anthology's invitation back | How Each Kind Of Work Is Done (`career.workflows`)",
+   "entry": "`pro.work_choice`, at Career, Work, How The Work Is Done (`/workspace/career?tab=work`). Opens: From the guide’s chapter “Finding Work”, once you’ve accepted work. | guide: Finding Work | WorkPane.tsx",
+   "preconditions": "Work you’ve accepted. A choice about the intimate scene can’t be changed once the scene is shot.; Contracts, Residuals And A Series’ Seasons first: The agreements’ rules for a dub, a stunt, an intimate scene and a recall to loop are in the contract. | pro.work_choice needs work booked and not finished, a choice its format asks and one of its options; consent to an intimate scene can't be withdrawn once the scene is shot (choiceRefusal); a looping session needs permission to work on its day and the player there; an anthology's invitation needs work in its last story judged Strong or better | refused where: — (also choiceRefusal)",
+   "reads": "src/engine/systems/workflow.ts",
+   "decisions": "chooses: engagementId, decision, option",
+   "validation": "refusals: — (also choiceRefusal) | Another Take: Energy for the takes you ask for beyond the scene’s own, as many as the production allows in a day; A Strained Voice: Voice work raises it and rest eases it, 2 points of 100 an hour. A strained voice holds back what voice work asks of it (an estimate); A Stunt Yourself: A chance of an injury, about 3% for a stunt with the fight rehearsed and up to 15% without, less for a strong body; the double carries none of it (an estimate) | costs: Accepting plans the work's units, their places in the script and the order each day shoots them (planWork, decider pro.board); each judged day plays its units in takes, the best printed, reading the choices in force (workTheDay), strains the voice where the work is voice work (strain), puts a stunt to the double or to the player who consented, and an intimate scene without consent to a body double, unjudged; a build day (a table read, blocking, music rehearsal, choreography, fight rehearsal) builds the preparation; revised pages the evening before take a share of what was learned (pro.pages, decider pro.pages); after a screen wrap a recall to loop is on the clock (pro.loop, decider pro.loop) and paid half a day; at the release a scene may be cut (decider pro.cut), the credit's band the best of the scenes kept; an anthology's strong work brings an invitation 240 days on (pro.invite). The rules are the AMPTP agreements' (N13, N17); the takes, the strain, the stunt's risk, the pages' chances, the loop's and the cut's are the game's assumptions, said so",
+   "changes": "A choice is kept on the engagement and read by each day after it.",
+   "later": "Each judged day plays its scenes, loops, chapters or sequences in takes, the best printed, and leaves a report.; Pages revised the night before change some of your lines, and Learn The Lines that evening puts them back.; After a screen wrap, the production may recall you to loop: a four-hour session paid half a day. When the work comes out, the edit may cut one of your scenes, about 2 times in ten; the part stays on your credits with its pay.",
+   "systems": "Your Work And Its Pay, scheduled: A looping session is paid half a day, on the work’s pay. | evaluate: a day's judging leans on the choices and reads the voice's strain as a condition; payUnitsOf and promisedPay: a dub day's pay by its characters and lines, overtime by the day's hours; contractFor: the workflow's rules among the clauses (workflowRules); reelSources: a voice credit can't go on a reel; coveredWork: voice-over outside an agent's agreement, no commission; the Work tab: How The Work Is Done, the choices and Each Day's Report",
+   "sees": "A dub’s pay by its characters and lines, a recall to loop at half a day for four hours, a stunt only with your consent and a coordinator there, and an intimate scene only with your written consent are the SAG-AFTRA agreements’ rules. The takes, the strain, the stunt’s risk and how often pages change are the game’s.; There are 10 ways of working in the game: a stage play, single camera, multicamera, the booth, dubbing, performance capture, narration, reenactment, a musical and action.; Declining an intimate scene costs you nothing: a body double does it, and the part, the pay and the casting are as they were.",
+   "saveLoad": "(none) | Person.pro.engagements[].units, .reports, .choices, .script and .loop; Person.health.voice; ProCredit.voice and .cut; the pending pro.loop and pro.invite items",
+   "failure": "refusals said in the player's words: — (also choiceRefusal) | Built on 2026-10-24 for brief 25's Module 5. pro.work_choice and the rest are played through the commands and the clock (tests/career-workflows.test.ts, tests/career-workflows-screen.test.ts, which draws the Work and Opportunities tabs), each stage saved and loaded. It isn’t called Verified because tools/capabilities.mjs and tools/coverage.mjs count a command’s row as read only by the review of 2026-10-13. A director who overrules the actor, a stunt's pay adjustment, Equity's musical-specific rules beyond LORT's, the Television Animation Agreement's own rates and residuals, and looping abroad aren't in the game",
+   "implementation": "`systems/workflow.ts` | WorkPane.tsx",
+   "evidence": "`pro.work_choice`: `tests/career-workflows-screen.test.ts`, `tests/career-workflows.test.ts` | 2 test files",
    "sourceStatus": "capability Implemented",
    "status": "Implemented, Verification Incomplete",
    "missing": "No audit row has read it against the standard on docs/GAMEPLAY-COVERAGE.md; its capability’s limits say what no test checks"
@@ -10777,13 +10800,14 @@
    "implementation": "Not recorded",
    "evidence": "docs/verification/integration-2026-10-16/genres-09/after/signature.json ‘npx vite-node tools/genre-signature.ts -- --out …’ (static); docs/verification/integration-2026-10-16/genres-09/after/signature-fresh.json ‘npx vite-node tools/genre-signature.ts -- --fresh --out …’ (static); docs/verification/integration-2026-10-16/genres-09/after/signature-validate.json ‘npx vite-node tools/genre-signature.ts -- --validate --out …’ (static); docs/verification/integration-2026-10-16/genres-09/after/genre-identity.json ‘npx vite-node tools/genre-identity.ts -- --out …’ (static); docs/verification/integration-2026-10-16/genres-09/after/genre-audit.md ‘npx vite-node tools/genre-audit.ts -- --out …’ (static); docs/verification/integration-2026-10-16/genres-09/after/ag-criteria.txt ‘node tools/ag-criteria.mjs …/ag-baseline.json’ (static); docs/verification/integration-2026-10-16/genres-09/after/interpretation.json ‘npx vite-node tools/interpretation.ts -- --fresh --stage --out …’ (static)",
    "sourceStatus": "verified as it stands",
-   "status": "Implemented And Verified",
+   "status": "Implemented, Verification Incomplete",
    "disposition": "verified as it stands",
    "override": "Brief 22, the judge area (docs/verification/career-genre-2026-10-22/final-runs/judge-result.json): The same commands and seeds on brief 22's tested commit, 16b50e07 (measure.sh genres-a, genres-b, stage, ag): signature.json, signature-fresh.json, signature-validate.json, genre-identity.json, ag-baseline.json the same as brief 21's in every number. The audit, on the criterion that replaced its first (the owner's brief 22, docs/verification/career-genre-2026-10-22/decision-history.md): tools/genre-audit.ts on brief 22's tested commit, 16b50e07 (measure.sh genres-b): every genre helps its own brief in 149 of 149; an unrelated genre moves another's brief in 0 of 21644 ordered pairs; a genre one direct link away (a kind and its broad genre) in 408 of 408, each by less than the genre itself in 408 of 408, the most 85% of its own gain; the old criterion's next genre over moves in 9, each a genre and its own kind, reported and not counted",
    "measured": {
     "commit": "16b50e07",
     "watch": "judge"
-   }
+   },
+   "missing": "It was measured on 16b50e07, and what it reads has changed since (src/engine/content/tasks.ts, src/engine/systems/evaluation.ts): measure it again"
   },
   {
    "id": "genres.8-docs",
@@ -11578,13 +11602,14 @@
    "implementation": "Not recorded",
    "evidence": "docs/verification/decisions-2026-10-16/advice/f2-as-written.txt ‘npx vite-node tools/ag-baseline.ts -- --out f2-ag-baseline.json; node tools/ag-criteria.mjs f2-ag-baseline.json’ (measurement (no draw))",
    "sourceStatus": "verified as it stands",
-   "status": "Implemented And Verified",
+   "status": "Implemented, Verification Incomplete",
    "disposition": "verified as it stands",
    "override": "Brief 22, the judge area (docs/verification/career-genre-2026-10-22/final-runs/judge-result.json): tools/ag-baseline.ts and tools/ag-criteria.mjs on brief 22's tested commit, 16b50e07 (measure.sh ag): F2 as written FAILS named 2.43 against 1.14 (2.13×); unread 0; the largest gain in 308 of 447 (68.9%) [2×; 0; 80%]; the line brief 21's, reported beside F2-A10 and not counted for the advice",
    "measured": {
     "commit": "16b50e07",
     "watch": "judge"
-   }
+   },
+   "missing": "It was measured on 16b50e07, and what it reads has changed since (src/engine/content/tasks.ts, src/engine/systems/evaluation.ts): measure it again"
   },
   {
    "id": "advice.F2A10-a",
@@ -12710,13 +12735,14 @@
    "implementation": "Not recorded",
    "evidence": "docs/verification/decisions-2026-10-16/integrated/after/l3r.json ‘node tools/l3r.mjs <folder> after tools/brief-journeys.ts -- --profile <p> --seed <s> --days 120 --trace <file>’ (measurement)",
    "sourceStatus": "verified as it stands",
-   "status": "Implemented And Verified",
+   "status": "Implemented, Verification Incomplete",
    "disposition": "verified as it stands",
    "override": "Brief 22, the judge area (docs/verification/career-genre-2026-10-22/final-runs/judge-result.json): measure.sh journeys-a, journeys-b and l3r on brief 22's tested commit, 16b50e07, seeds bj-0 and bj-1, all four profiles: (b) met on 8 journeys, beginner 2, developing 2, generalist 2, specialist 2; (c) met, growth 1.253 at least; L3-R met: True; l3r.json moved from brief 21's, the verdict read from it here",
    "measured": {
     "commit": "16b50e07",
     "watch": "judge"
-   }
+   },
+   "missing": "It was measured on 16b50e07, and what it reads has changed since (src/engine/content/tasks.ts, src/engine/systems/evaluation.ts): measure it again"
   },
   {
    "id": "L3-R.c",
@@ -12856,13 +12882,14 @@
    "implementation": "Not recorded",
    "evidence": "docs/verification/decisions-2026-10-16/integrated/after/README.md ‘docs/verification/decisions-2026-10-16/measure.sh <after> <part>’ (measurement)",
    "sourceStatus": "verified as it stands",
-   "status": "Implemented And Verified",
+   "status": "Implemented, Verification Incomplete",
    "disposition": "verified as it stands",
    "override": "Brief 22, the judge area (docs/verification/career-genre-2026-10-22/final-runs/judge-result.json): Every part of measure.sh but the two mutation runs on brief 22's tested commit, 16b50e07 (23 parts, every one exit 0): 22 of 35 outputs brief 21's in every number; moved by brief 22's genre weights and related credit, each read in judge-moved.json: journey-beginner-bj-0.json, journey-beginner-bj-1.json, journey-developing-bj-0.json, journey-specialist-bj-1.json, l3-trace-beginner-bj-0.json, l3-trace-beginner-bj-1.json, l3-trace-developing-bj-0.json, l3-trace-developing-bj-1.json, l3-trace-generalist-bj-0.json, l3-trace-generalist-bj-1.json, l3-trace-specialist-bj-0.json, l3-trace-specialist-bj-1.json, l3r.json; L3-R's verdict True, as brief 21's True. So every criterion that held holds and those that failed fail as before.",
    "measured": {
     "commit": "16b50e07",
     "watch": "judge"
-   }
+   },
+   "missing": "It was measured on 16b50e07, and what it reads has changed since (src/engine/content/tasks.ts, src/engine/systems/evaluation.ts): measure it again"
   },
   {
    "id": "judge.tests",
@@ -13326,14 +13353,15 @@
    "failure": "Before: restrained 50, expansive 33 of 85; after: restrained 49, expansive 37 of 89; on the integrated tree, brief 09 (c9cba9c8): restrained 50, expansive 42 of 94; on brief 10's tested commit (567d27dd): restrained 50, expansive 44 of 96; on brief 11's tested commit (81eadac9): the same; on brief 13's tested commit (7e7a3af6): the same; on brief 14's tested commit (6d83601a): the same; on brief 15's tested commit (d6f6527a): the same; on brief 16's tested commit (4ef5e961): the same; on brief 17's tested commit (ecd961cc): the same; on brief 19's tested commit (728b4972): the same; on brief 21's tested commit (fd32e869): the same; on brief 22's tested commit (16b50e07): the same",
    "implementation": "systems/evaluation.ts, systems/piece.ts, content/tasks.ts, content/approaches.ts",
    "evidence": "docs/verification/integration-2026-10-16/st3/stage-restraint-draw.json; docs/verification/stage-2026-10-16/criteria.md; docs/verification/integration-2026-10-16/integrated-09/README.md; docs/verification/decisions-2026-10-16/final/README.md; docs/verification/completion-2026-10-16/final/README.md; docs/verification/playthroughs-2026-10-17/final/README.md; docs/verification/language-2026-10-17/final/README.md; docs/verification/editorial-2026-10-19/final/README.md; docs/verification/voices-2026-10-20/final/README.md; docs/verification/continuity-2026-10-20/final/README.md; docs/verification/career-2026-10-20/final-runs/final/README.md; docs/verification/genre-banking-2026-10-22/final-runs/final/README.md; docs/verification/career-genre-2026-10-22/final-runs/final/README.md",
-   "status": "Implemented And Verified",
+   "status": "Implemented, Verification Incomplete",
    "before": "restrained 50, expansive 33 of 85",
    "after": "restrained 49, expansive 37 of 89",
    "sourceStatus": "Met",
    "measured": {
     "commit": "16b50e07",
     "watch": "judge"
-   }
+   },
+   "missing": "It was measured on 16b50e07, and what it reads has changed since (src/engine/content/tasks.ts, src/engine/systems/evaluation.ts): measure it again"
   },
   {
    "source": "docs/verification/integration-2026-10-16/criteria.json",
@@ -13354,14 +13382,15 @@
    "failure": "Before: 72 of 72; after: 75 of 75; on the integrated tree, brief 09 (c9cba9c8): 80 of 80, no house signal on any material; on brief 10's tested commit (567d27dd): 82 of 82, no house signal on any material; on brief 11's tested commit (81eadac9): the same; on brief 13's tested commit (7e7a3af6): the same; on brief 14's tested commit (6d83601a): the same; on brief 15's tested commit (d6f6527a): the same; on brief 16's tested commit (4ef5e961): the same; on brief 17's tested commit (ecd961cc): the same; on brief 19's tested commit (728b4972): the same; on brief 21's tested commit (fd32e869): the same; on brief 22's tested commit (16b50e07): the same",
    "implementation": "systems/evaluation.ts, systems/piece.ts, content/tasks.ts, content/approaches.ts",
    "evidence": "docs/verification/integration-2026-10-16/st3/stage-restraint-draw.json; docs/verification/integration-2026-10-16/integrated-09/README.md; docs/verification/decisions-2026-10-16/final/README.md; docs/verification/completion-2026-10-16/final/README.md; docs/verification/playthroughs-2026-10-17/final/README.md; docs/verification/language-2026-10-17/final/README.md; docs/verification/editorial-2026-10-19/final/README.md; docs/verification/voices-2026-10-20/final/README.md; docs/verification/continuity-2026-10-20/final/README.md; docs/verification/career-2026-10-20/final-runs/final/README.md; docs/verification/genre-banking-2026-10-22/final-runs/final/README.md; docs/verification/career-genre-2026-10-22/final-runs/final/README.md",
-   "status": "Implemented And Verified",
+   "status": "Implemented, Verification Incomplete",
    "before": "72 of 72",
    "after": "75 of 75",
    "sourceStatus": "Met",
    "measured": {
     "commit": "16b50e07",
     "watch": "judge"
-   }
+   },
+   "missing": "It was measured on 16b50e07, and what it reads has changed since (src/engine/content/tasks.ts, src/engine/systems/evaluation.ts): measure it again"
   },
   {
    "source": "docs/verification/integration-2026-10-16/criteria.json",
@@ -13407,14 +13436,15 @@
    "failure": "Before: drama 25 / 0; after: drama 25 / 4; comedy 13 / 15; tragedy 4 / 16; on the integrated tree, brief 09 (c9cba9c8): drama {\"r\": 25, \"e\": 5, \"n\": 30}; comedy {\"r\": 14, \"e\": 16, \"n\": 30}; tragedy {\"r\": 4, \"e\": 18, \"n\": 24}; on brief 10's tested commit (567d27dd): drama {\"r\": 25, \"e\": 7, \"n\": 32}; comedy {\"r\": 14, \"e\": 16, \"n\": 30}; tragedy {\"r\": 4, \"e\": 18, \"n\": 24}; on brief 11's tested commit (81eadac9): the same; on brief 13's tested commit (7e7a3af6): the same; on brief 14's tested commit (6d83601a): the same; on brief 15's tested commit (d6f6527a): the same; on brief 16's tested commit (4ef5e961): the same; on brief 17's tested commit (ecd961cc): the same; on brief 19's tested commit (728b4972): the same; on brief 21's tested commit (fd32e869): the same; on brief 22's tested commit (16b50e07): the same",
    "implementation": "content/scenes-public.ts, content/material.ts, content/coursework.ts",
    "evidence": "docs/verification/integration-2026-10-16/st6.md; docs/verification/integration-2026-10-16/st3/stage-restraint-draw.json; tests/integration-stage.test.ts; docs/verification/integration-2026-10-16/integrated-09/README.md; docs/verification/decisions-2026-10-16/final/README.md; docs/verification/completion-2026-10-16/final/README.md; docs/verification/playthroughs-2026-10-17/final/README.md; docs/verification/language-2026-10-17/final/README.md; docs/verification/editorial-2026-10-19/final/README.md; docs/verification/voices-2026-10-20/final/README.md; docs/verification/continuity-2026-10-20/final/README.md; docs/verification/career-2026-10-20/final-runs/final/README.md; docs/verification/genre-banking-2026-10-22/final-runs/final/README.md; docs/verification/career-genre-2026-10-22/final-runs/final/README.md",
-   "status": "Implemented And Verified",
+   "status": "Implemented, Verification Incomplete",
    "before": "drama 25 / 0",
    "after": "drama 25 / 4; comedy 13 / 15; tragedy 4 / 16",
    "sourceStatus": "Met",
    "measured": {
     "commit": "16b50e07",
     "watch": "judge"
-   }
+   },
+   "missing": "It was measured on 16b50e07, and what it reads has changed since (src/engine/content/tasks.ts, src/engine/systems/evaluation.ts): measure it again"
   },
   {
    "source": "docs/verification/integration-2026-10-16/criteria.json",
@@ -13435,14 +13465,15 @@
    "failure": "Before: 2,277 of 2,277; after: 2,385 of 2,385; on the integrated tree, brief 09 (c9cba9c8): 2,520 of 2,520 at 100; on brief 10's tested commit (567d27dd): 2,574 of 2,574 at 100; on brief 11's tested commit (81eadac9): the same; on brief 13's tested commit (7e7a3af6): the same; on brief 14's tested commit (6d83601a): the same; on brief 15's tested commit (d6f6527a): the same; on brief 16's tested commit (4ef5e961): the same; on brief 17's tested commit (ecd961cc): the same; on brief 19's tested commit (728b4972): the same; on brief 21's tested commit (fd32e869): the same; on brief 22's tested commit (16b50e07): the same",
    "implementation": "systems/evaluation.ts, systems/piece.ts, content/tasks.ts, content/approaches.ts",
    "evidence": "docs/verification/integration-2026-10-16/st3/stage-restraint-draw.json; docs/verification/integration-2026-10-16/integrated-09/README.md; docs/verification/decisions-2026-10-16/final/README.md; docs/verification/completion-2026-10-16/final/README.md; docs/verification/playthroughs-2026-10-17/final/README.md; docs/verification/language-2026-10-17/final/README.md; docs/verification/editorial-2026-10-19/final/README.md; docs/verification/voices-2026-10-20/final/README.md; docs/verification/continuity-2026-10-20/final/README.md; docs/verification/career-2026-10-20/final-runs/final/README.md; docs/verification/genre-banking-2026-10-22/final-runs/final/README.md; docs/verification/career-genre-2026-10-22/final-runs/final/README.md",
-   "status": "Implemented And Verified",
+   "status": "Implemented, Verification Incomplete",
    "before": "2,277 of 2,277",
    "after": "2,385 of 2,385",
    "sourceStatus": "Met",
    "measured": {
     "commit": "16b50e07",
     "watch": "judge"
-   }
+   },
+   "missing": "It was measured on 16b50e07, and what it reads has changed since (src/engine/content/tasks.ts, src/engine/systems/evaluation.ts): measure it again"
   },
   {
    "source": "docs/verification/integration-2026-10-16/criteria.json",
@@ -13488,14 +13519,15 @@
    "failure": "Before: 84 of 86; after: 88 of 90; on the integrated tree, brief 09 (c9cba9c8): 95 of 95; on brief 10's tested commit (567d27dd): 97 of 97; on brief 11's tested commit (81eadac9): the same; on brief 13's tested commit (7e7a3af6): the same; on brief 14's tested commit (6d83601a): the same; on brief 15's tested commit (d6f6527a): the same; on brief 16's tested commit (4ef5e961): the same; on brief 17's tested commit (ecd961cc): the same; on brief 19's tested commit (728b4972): the same; on brief 21's tested commit (fd32e869): the same; on brief 22's tested commit (16b50e07): the same",
    "implementation": "systems/evaluation.ts, systems/piece.ts, content/tasks.ts, content/approaches.ts",
    "evidence": "docs/verification/integration-2026-10-16/st3/stage-restraint-draw.json; docs/verification/integration-2026-10-16/integrated-09/README.md; docs/verification/decisions-2026-10-16/final/README.md; docs/verification/completion-2026-10-16/final/README.md; docs/verification/playthroughs-2026-10-17/final/README.md; docs/verification/language-2026-10-17/final/README.md; docs/verification/editorial-2026-10-19/final/README.md; docs/verification/voices-2026-10-20/final/README.md; docs/verification/continuity-2026-10-20/final/README.md; docs/verification/career-2026-10-20/final-runs/final/README.md; docs/verification/genre-banking-2026-10-22/final-runs/final/README.md; docs/verification/career-genre-2026-10-22/final-runs/final/README.md",
-   "status": "Implemented And Verified",
+   "status": "Implemented, Verification Incomplete",
    "before": "84 of 86",
    "after": "88 of 90",
    "sourceStatus": "Met",
    "measured": {
     "commit": "16b50e07",
     "watch": "judge"
-   }
+   },
+   "missing": "It was measured on 16b50e07, and what it reads has changed since (src/engine/content/tasks.ts, src/engine/systems/evaluation.ts): measure it again"
   },
   {
    "source": "docs/verification/integration-2026-10-16/criteria.json",
@@ -13516,14 +13548,15 @@
    "failure": "Before: 72 of 72; after: 75 of 75; on the integrated tree, brief 09 (c9cba9c8): 80 of 80; on brief 10's tested commit (567d27dd): 82 of 82; on brief 11's tested commit (81eadac9): the same; on brief 13's tested commit (7e7a3af6): the same; on brief 14's tested commit (6d83601a): the same; on brief 15's tested commit (d6f6527a): the same; on brief 16's tested commit (4ef5e961): the same; on brief 17's tested commit (ecd961cc): the same; on brief 19's tested commit (728b4972): the same; on brief 21's tested commit (fd32e869): the same; on brief 22's tested commit (16b50e07): the same",
    "implementation": "systems/evaluation.ts, systems/piece.ts, content/tasks.ts, content/approaches.ts",
    "evidence": "docs/verification/integration-2026-10-16/st3/stage-restraint-draw.json; docs/verification/integration-2026-10-16/integrated-09/README.md; docs/verification/decisions-2026-10-16/final/README.md; docs/verification/completion-2026-10-16/final/README.md; docs/verification/playthroughs-2026-10-17/final/README.md; docs/verification/language-2026-10-17/final/README.md; docs/verification/editorial-2026-10-19/final/README.md; docs/verification/voices-2026-10-20/final/README.md; docs/verification/continuity-2026-10-20/final/README.md; docs/verification/career-2026-10-20/final-runs/final/README.md; docs/verification/genre-banking-2026-10-22/final-runs/final/README.md; docs/verification/career-genre-2026-10-22/final-runs/final/README.md",
-   "status": "Implemented And Verified",
+   "status": "Implemented, Verification Incomplete",
    "before": "72 of 72",
    "after": "75 of 75",
    "sourceStatus": "Met",
    "measured": {
     "commit": "16b50e07",
     "watch": "judge"
-   }
+   },
+   "missing": "It was measured on 16b50e07, and what it reads has changed since (src/engine/content/tasks.ts, src/engine/systems/evaluation.ts): measure it again"
   },
   {
    "source": "docs/verification/integration-2026-10-16/criteria.json",
@@ -13544,14 +13577,15 @@
    "failure": "Before: held; after: see I1 to I5, S1 to S4 and G2; on the integrated tree, brief 09 (c9cba9c8): I1 to I5, S1 to S4 and G2 as their rows say; on brief 10's tested commit (567d27dd): I1 to I5, S1 to S4 and G2 as their rows say; on brief 11's tested commit (81eadac9): the same; on brief 13's tested commit (7e7a3af6): the same; on brief 14's tested commit (6d83601a): the same; on brief 15's tested commit (d6f6527a): the same; on brief 16's tested commit (4ef5e961): the same; on brief 17's tested commit (ecd961cc): the same; on brief 19's tested commit (728b4972): the same; on brief 21's tested commit (fd32e869): the same; on brief 22's tested commit (16b50e07): the same",
    "implementation": "systems/evaluation.ts, systems/piece.ts, content/tasks.ts, content/approaches.ts",
    "evidence": "docs/verification/integration-2026-10-16/st3/stage-restraint-draw.json; docs/verification/integration-2026-10-16/closeout/signature.json; docs/verification/integration-2026-10-16/integrated-09/README.md; docs/verification/decisions-2026-10-16/final/README.md; docs/verification/completion-2026-10-16/final/README.md; docs/verification/playthroughs-2026-10-17/final/README.md; docs/verification/language-2026-10-17/final/README.md; docs/verification/editorial-2026-10-19/final/README.md; docs/verification/voices-2026-10-20/final/README.md; docs/verification/continuity-2026-10-20/final/README.md; docs/verification/career-2026-10-20/final-runs/final/README.md; docs/verification/genre-banking-2026-10-22/final-runs/final/README.md; docs/verification/career-genre-2026-10-22/final-runs/final/README.md",
-   "status": "Implemented And Verified",
+   "status": "Implemented, Verification Incomplete",
    "before": "held",
    "after": "see I1 to I5, S1 to S4 and G2",
    "sourceStatus": "Met",
    "measured": {
     "commit": "16b50e07",
     "watch": "judge"
-   }
+   },
+   "missing": "It was measured on 16b50e07, and what it reads has changed since (src/engine/content/tasks.ts, src/engine/systems/evaluation.ts): measure it again"
   },
   {
    "source": "docs/verification/integration-2026-10-16/criteria.json",
@@ -13572,14 +13606,15 @@
    "failure": "Before: all hold; after: all hold; on the integrated tree, brief 09 (c9cba9c8): ST1 16 / 13 of 29; ST5 783 of 783; ST7 30 of 30; ST8 27 of 27; on brief 10's tested commit (567d27dd): ST1 16 / 13 of 29; ST5 783 of 783; ST7 30 of 30; ST8 27 of 27; on brief 11's tested commit (81eadac9): the same; on brief 13's tested commit (7e7a3af6): the same; on brief 14's tested commit (6d83601a): the same; on brief 15's tested commit (d6f6527a): the same; on brief 16's tested commit (4ef5e961): the same; on brief 17's tested commit (ecd961cc): the same; on brief 19's tested commit (728b4972): the same; on brief 21's tested commit (fd32e869): the same; on brief 22's tested commit (16b50e07): the same",
    "implementation": "systems/evaluation.ts, systems/piece.ts, content/tasks.ts, content/approaches.ts",
    "evidence": "docs/verification/integration-2026-10-16/st3/stage-restraint-draw.json; docs/verification/integration-2026-10-16/integrated-09/README.md; docs/verification/decisions-2026-10-16/final/README.md; docs/verification/completion-2026-10-16/final/README.md; docs/verification/playthroughs-2026-10-17/final/README.md; docs/verification/language-2026-10-17/final/README.md; docs/verification/editorial-2026-10-19/final/README.md; docs/verification/voices-2026-10-20/final/README.md; docs/verification/continuity-2026-10-20/final/README.md; docs/verification/career-2026-10-20/final-runs/final/README.md; docs/verification/genre-banking-2026-10-22/final-runs/final/README.md; docs/verification/career-genre-2026-10-22/final-runs/final/README.md",
-   "status": "Implemented And Verified",
+   "status": "Implemented, Verification Incomplete",
    "before": "all hold",
    "after": "all hold",
    "sourceStatus": "Met",
    "measured": {
     "commit": "16b50e07",
     "watch": "judge"
-   }
+   },
+   "missing": "It was measured on 16b50e07, and what it reads has changed since (src/engine/content/tasks.ts, src/engine/systems/evaluation.ts): measure it again"
   },
   {
    "source": "docs/verification/integration-2026-10-16/criteria.json",
@@ -13600,14 +13635,15 @@
    "failure": "Before: all hold; after: all hold; on the integrated tree, brief 09 (c9cba9c8): 40: ST1 50 / 42 of 94, ST8 80 of 80; 75: ST1 51 / 41 of 94, ST8 80 of 80; on brief 10's tested commit (567d27dd): 40: ST1 50 / 45 of 96, ST8 82 of 82; 75: ST1 52 / 42 of 96, ST8 82 of 82; on brief 11's tested commit (81eadac9): the same; on brief 13's tested commit (7e7a3af6): the same; on brief 14's tested commit (6d83601a): the same; on brief 15's tested commit (d6f6527a): the same; on brief 16's tested commit (4ef5e961): the same; on brief 17's tested commit (ecd961cc): the same; on brief 19's tested commit (728b4972): the same; on brief 21's tested commit (fd32e869): the same; on brief 22's tested commit (16b50e07): the same",
    "implementation": "systems/evaluation.ts, systems/piece.ts, content/tasks.ts, content/approaches.ts",
    "evidence": "docs/verification/integration-2026-10-16/st3/stage-restraint-draw.json; docs/verification/integration-2026-10-16/integrated-09/README.md; docs/verification/decisions-2026-10-16/final/README.md; docs/verification/completion-2026-10-16/final/README.md; docs/verification/playthroughs-2026-10-17/final/README.md; docs/verification/language-2026-10-17/final/README.md; docs/verification/editorial-2026-10-19/final/README.md; docs/verification/voices-2026-10-20/final/README.md; docs/verification/continuity-2026-10-20/final/README.md; docs/verification/career-2026-10-20/final-runs/final/README.md; docs/verification/genre-banking-2026-10-22/final-runs/final/README.md; docs/verification/career-genre-2026-10-22/final-runs/final/README.md",
-   "status": "Implemented And Verified",
+   "status": "Implemented, Verification Incomplete",
    "before": "all hold",
    "after": "all hold",
    "sourceStatus": "Met",
    "measured": {
     "commit": "16b50e07",
     "watch": "judge"
-   }
+   },
+   "missing": "It was measured on 16b50e07, and what it reads has changed since (src/engine/content/tasks.ts, src/engine/systems/evaluation.ts): measure it again"
   },
   {
    "source": "docs/verification/integration-2026-10-16/criteria.json",
@@ -13628,14 +13664,15 @@
    "failure": "Before: 8,010 and 9,117 at 100; after: 8,010, 9,117 and 2,385 at 100; on the integrated tree, brief 09 (c9cba9c8): designed 8,010 of 8,010, heldOut 9,378 of 9,378, freshHeldOut 2,520 of 2,520; on brief 10's tested commit (567d27dd): designed 8,010 of 8,010, heldOut 9,378 of 9,378, freshHeldOut 2,574 of 2,574; on brief 11's tested commit (81eadac9): the same; on brief 13's tested commit (7e7a3af6): the same; on brief 14's tested commit (6d83601a): the same; on brief 15's tested commit (d6f6527a): the same; on brief 16's tested commit (4ef5e961): the same; on brief 17's tested commit (ecd961cc): the same; on brief 19's tested commit (728b4972): the same; on brief 21's tested commit (fd32e869): the same; on brief 22's tested commit (16b50e07): the same",
    "implementation": "systems/evaluation.ts, systems/piece.ts, content/tasks.ts, content/approaches.ts",
    "evidence": "docs/verification/integration-2026-10-16/st3/stage-restraint-draw.json; docs/verification/interpretation-2026-10-16/criteria.md; docs/verification/integration-2026-10-16/integrated-09/README.md; docs/verification/decisions-2026-10-16/final/README.md; docs/verification/completion-2026-10-16/final/README.md; docs/verification/playthroughs-2026-10-17/final/README.md; docs/verification/language-2026-10-17/final/README.md; docs/verification/editorial-2026-10-19/final/README.md; docs/verification/voices-2026-10-20/final/README.md; docs/verification/continuity-2026-10-20/final/README.md; docs/verification/career-2026-10-20/final-runs/final/README.md; docs/verification/genre-banking-2026-10-22/final-runs/final/README.md; docs/verification/career-genre-2026-10-22/final-runs/final/README.md",
-   "status": "Implemented And Verified",
+   "status": "Implemented, Verification Incomplete",
    "before": "8,010 and 9,117 at 100",
    "after": "8,010, 9,117 and 2,385 at 100",
    "sourceStatus": "Met",
    "measured": {
     "commit": "16b50e07",
     "watch": "judge"
-   }
+   },
+   "missing": "It was measured on 16b50e07, and what it reads has changed since (src/engine/content/tasks.ts, src/engine/systems/evaluation.ts): measure it again"
   },
   {
    "source": "docs/verification/integration-2026-10-16/criteria.json",
@@ -13656,14 +13693,15 @@
    "failure": "Before: pace 24.2%, scale 20.8%, structure 32.9%; after: the same; on the integrated tree, brief 09 (c9cba9c8): pace 26.8%, scale 23.5%, structure 35.6%; on brief 10's tested commit (567d27dd): pace 26.8%, scale 23.5%, structure 35.6%; on brief 11's tested commit (81eadac9): the same; on brief 13's tested commit (7e7a3af6): the same; on brief 14's tested commit (6d83601a): the same; on brief 15's tested commit (d6f6527a): the same; on brief 16's tested commit (4ef5e961): the same; on brief 17's tested commit (ecd961cc): the same; on brief 19's tested commit (728b4972): the same; on brief 21's tested commit (fd32e869): the same; on brief 22's tested commit (16b50e07): the same",
    "implementation": "systems/evaluation.ts, systems/piece.ts, content/tasks.ts, content/approaches.ts",
    "evidence": "docs/verification/integration-2026-10-16/st3/stage-restraint-draw.json; docs/verification/interpretation-2026-10-16/criteria.md; docs/verification/integration-2026-10-16/integrated-09/README.md; docs/verification/decisions-2026-10-16/final/README.md; docs/verification/completion-2026-10-16/final/README.md; docs/verification/playthroughs-2026-10-17/final/README.md; docs/verification/language-2026-10-17/final/README.md; docs/verification/editorial-2026-10-19/final/README.md; docs/verification/voices-2026-10-20/final/README.md; docs/verification/continuity-2026-10-20/final/README.md; docs/verification/career-2026-10-20/final-runs/final/README.md; docs/verification/genre-banking-2026-10-22/final-runs/final/README.md; docs/verification/career-genre-2026-10-22/final-runs/final/README.md",
-   "status": "Implemented And Verified",
+   "status": "Implemented, Verification Incomplete",
    "before": "pace 24.2%, scale 20.8%, structure 32.9%",
    "after": "the same",
    "sourceStatus": "Met",
    "measured": {
     "commit": "16b50e07",
     "watch": "judge"
-   }
+   },
+   "missing": "It was measured on 16b50e07, and what it reads has changed since (src/engine/content/tasks.ts, src/engine/systems/evaluation.ts): measure it again"
   },
   {
    "source": "docs/verification/integration-2026-10-16/criteria.json",
@@ -13684,14 +13722,15 @@
    "failure": "Before: spread 1.29 / 1.19; expansive ahead 27.0%; after: spread 1.28 / 1.19 / 3.43; expansive ahead 27.0% / 41.2% / 41.6%; on the integrated tree, brief 09 (c9cba9c8): designed sd 1.28, restrained ahead 70.3%, expansive 27%, heldOut sd 1.15, restrained ahead 51.4%, expansive 42.6%, freshHeldOut sd 3.4, restrained ahead 53.2%, expansive 44.7%; on brief 10's tested commit (567d27dd): designed sd 1.26, restrained ahead 69.6%, expansive 28.4%, heldOut sd 1.14, restrained ahead 51.4%, expansive 42.6%, freshHeldOut sd 3.38, restrained ahead 52.1%, expansive 45.8%; on brief 11's tested commit (81eadac9): the same; on brief 13's tested commit (7e7a3af6): the same; on brief 14's tested commit (6d83601a): the same; on brief 15's tested commit (d6f6527a): the same; on brief 16's tested commit (4ef5e961): the same; on brief 17's tested commit (ecd961cc): the same; on brief 19's tested commit (728b4972): the same; on brief 21's tested commit (fd32e869): the same; on brief 22's tested commit (16b50e07): the same",
    "implementation": "systems/evaluation.ts, systems/piece.ts, content/tasks.ts, content/approaches.ts",
    "evidence": "docs/verification/integration-2026-10-16/st3/stage-restraint-draw.json; docs/verification/interpretation-2026-10-16/criteria.md; docs/verification/integration-2026-10-16/integrated-09/README.md; docs/verification/decisions-2026-10-16/final/README.md; docs/verification/completion-2026-10-16/final/README.md; docs/verification/playthroughs-2026-10-17/final/README.md; docs/verification/language-2026-10-17/final/README.md; docs/verification/editorial-2026-10-19/final/README.md; docs/verification/voices-2026-10-20/final/README.md; docs/verification/continuity-2026-10-20/final/README.md; docs/verification/career-2026-10-20/final-runs/final/README.md; docs/verification/genre-banking-2026-10-22/final-runs/final/README.md; docs/verification/career-genre-2026-10-22/final-runs/final/README.md",
-   "status": "Implemented And Verified",
+   "status": "Implemented, Verification Incomplete",
    "before": "spread 1.29 / 1.19; expansive ahead 27.0%",
    "after": "spread 1.28 / 1.19 / 3.43; expansive ahead 27.0% / 41.2% / 41.6%",
    "sourceStatus": "Met",
    "measured": {
     "commit": "16b50e07",
     "watch": "judge"
-   }
+   },
+   "missing": "It was measured on 16b50e07, and what it reads has changed since (src/engine/content/tasks.ts, src/engine/systems/evaluation.ts): measure it again"
   },
   {
    "source": "docs/verification/integration-2026-10-16/criteria.json",
@@ -13712,14 +13751,15 @@
    "failure": "Before: 100%; after: 100% on every sample; on the integrated tree, brief 09 (c9cba9c8): designed {\"restrainedSuitsMore\": 94, \"specialistExpansiveWins\": 54.3, \"bandApart\": 84, \"evenActorFollowsSuitability\": 100}, heldOut {\"restrainedSuitsMore\": 70, \"specialistExpansiveWins\": 47.1, \"bandApart\": 86, \"evenActorFollowsSuitability\": 100}, freshHeldOut {\"bandApart\": 80, \"evenActorFollowsSuitability\": 100}; on brief 10's tested commit (567d27dd): designed {\"restrainedSuitsMore\": 94, \"specialistExpansiveWins\": 54.3, \"bandApart\": 84, \"evenActorFollowsSuitability\": 100}, heldOut {\"restrainedSuitsMore\": 70, \"specialistExpansiveWins\": 44.3, \"bandApart\": 86, \"evenActorFollowsSuitability\": 100}, freshHeldOut {\"bandApart\": 82, \"evenActorFollowsSuitability\": 100}; on brief 11's tested commit (81eadac9): the same; on brief 13's tested commit (7e7a3af6): the same; on brief 14's tested commit (6d83601a): the same; on brief 15's tested commit (d6f6527a): the same; on brief 16's tested commit (4ef5e961): the same; on brief 17's tested commit (ecd961cc): the same; on brief 19's tested commit (728b4972): the same; on brief 21's tested commit (fd32e869): the same; on brief 22's tested commit (16b50e07): the same",
    "implementation": "systems/evaluation.ts, systems/piece.ts, content/tasks.ts, content/approaches.ts",
    "evidence": "docs/verification/integration-2026-10-16/st3/stage-restraint-draw.json; docs/verification/interpretation-2026-10-16/criteria.md; docs/verification/integration-2026-10-16/integrated-09/README.md; docs/verification/decisions-2026-10-16/final/README.md; docs/verification/completion-2026-10-16/final/README.md; docs/verification/playthroughs-2026-10-17/final/README.md; docs/verification/language-2026-10-17/final/README.md; docs/verification/editorial-2026-10-19/final/README.md; docs/verification/voices-2026-10-20/final/README.md; docs/verification/continuity-2026-10-20/final/README.md; docs/verification/career-2026-10-20/final-runs/final/README.md; docs/verification/genre-banking-2026-10-22/final-runs/final/README.md; docs/verification/career-genre-2026-10-22/final-runs/final/README.md",
-   "status": "Implemented And Verified",
+   "status": "Implemented, Verification Incomplete",
    "before": "100%",
    "after": "100% on every sample",
    "sourceStatus": "Met",
    "measured": {
     "commit": "16b50e07",
     "watch": "judge"
-   }
+   },
+   "missing": "It was measured on 16b50e07, and what it reads has changed since (src/engine/content/tasks.ts, src/engine/systems/evaluation.ts): measure it again"
   },
   {
    "source": "docs/verification/integration-2026-10-16/criteria.json",
@@ -13740,14 +13780,15 @@
    "failure": "Before: ≥ 98.7%; after: 99.3%, 98.0%, 97.8%; on the integrated tree, brief 09 (c9cba9c8): designed {\"atLeastTwoWithinAPoint\": 99.3}, heldOut {\"atLeastTwoWithinAPoint\": 97.3}, freshHeldOut {\"atLeastTwoWithinAPoint\": 100}; on brief 10's tested commit (567d27dd): designed {\"atLeastTwoWithinAPoint\": 99.3}, heldOut {\"atLeastTwoWithinAPoint\": 98}, freshHeldOut {\"atLeastTwoWithinAPoint\": 100}; on brief 11's tested commit (81eadac9): the same; on brief 13's tested commit (7e7a3af6): the same; on brief 14's tested commit (6d83601a): the same; on brief 15's tested commit (d6f6527a): the same; on brief 16's tested commit (4ef5e961): the same; on brief 17's tested commit (ecd961cc): the same; on brief 19's tested commit (728b4972): the same; on brief 21's tested commit (fd32e869): the same; on brief 22's tested commit (16b50e07): the same",
    "implementation": "systems/evaluation.ts, systems/piece.ts, content/tasks.ts, content/approaches.ts",
    "evidence": "docs/verification/integration-2026-10-16/st3/stage-restraint-draw.json; docs/verification/interpretation-2026-10-16/criteria.md; docs/verification/integration-2026-10-16/integrated-09/README.md; docs/verification/decisions-2026-10-16/final/README.md; docs/verification/completion-2026-10-16/final/README.md; docs/verification/playthroughs-2026-10-17/final/README.md; docs/verification/language-2026-10-17/final/README.md; docs/verification/editorial-2026-10-19/final/README.md; docs/verification/voices-2026-10-20/final/README.md; docs/verification/continuity-2026-10-20/final/README.md; docs/verification/career-2026-10-20/final-runs/final/README.md; docs/verification/genre-banking-2026-10-22/final-runs/final/README.md; docs/verification/career-genre-2026-10-22/final-runs/final/README.md",
-   "status": "Implemented And Verified",
+   "status": "Implemented, Verification Incomplete",
    "before": "≥ 98.7%",
    "after": "99.3%, 98.0%, 97.8%",
    "sourceStatus": "Met",
    "measured": {
     "commit": "16b50e07",
     "watch": "judge"
-   }
+   },
+   "missing": "It was measured on 16b50e07, and what it reads has changed since (src/engine/content/tasks.ts, src/engine/systems/evaluation.ts): measure it again"
   },
   {
    "source": "docs/verification/integration-2026-10-16/criteria.json",
@@ -13768,14 +13809,15 @@
    "failure": "Before: met; after: met; on the integrated tree, brief 09 (c9cba9c8): Meets: every ability at 0.5 or more on a kind of work; on brief 10's tested commit (567d27dd): Meets: every ability at 0.5 or more on a kind of work; on brief 11's tested commit (81eadac9): the same; on brief 13's tested commit (7e7a3af6): the same; on brief 14's tested commit (6d83601a): the same; on brief 15's tested commit (d6f6527a): the same; on brief 16's tested commit (4ef5e961): the same; on brief 17's tested commit (ecd961cc): the same; on brief 19's tested commit (728b4972): the same; on brief 21's tested commit (fd32e869): the same; on brief 22's tested commit (16b50e07): the same",
    "implementation": "systems/evaluation.ts, systems/piece.ts, content/tasks.ts, content/approaches.ts",
    "evidence": "docs/verification/integration-2026-10-16/closeout/ag-baseline.json; docs/verification/integration-2026-10-16/baseline/ag-baseline.json; docs/verification/attributes-genres-2026-10-16/acceptance-criteria.md (A1); docs/verification/integration-2026-10-16/integrated-09/README.md; docs/verification/decisions-2026-10-16/final/README.md; docs/verification/completion-2026-10-16/final/README.md; docs/verification/playthroughs-2026-10-17/final/README.md; docs/verification/language-2026-10-17/final/README.md; docs/verification/editorial-2026-10-19/final/README.md; docs/verification/voices-2026-10-20/final/README.md; docs/verification/continuity-2026-10-20/final/README.md; docs/verification/career-2026-10-20/final-runs/final/README.md; docs/verification/genre-banking-2026-10-22/final-runs/final/README.md; docs/verification/career-genre-2026-10-22/final-runs/final/README.md",
-   "status": "Implemented And Verified",
+   "status": "Implemented, Verification Incomplete",
    "before": "met",
    "after": "met",
    "sourceStatus": "Met",
    "measured": {
     "commit": "16b50e07",
     "watch": "judge"
-   }
+   },
+   "missing": "It was measured on 16b50e07, and what it reads has changed since (src/engine/content/tasks.ts, src/engine/systems/evaluation.ts): measure it again"
   },
   {
    "source": "docs/verification/integration-2026-10-16/criteria.json",
@@ -13796,14 +13838,15 @@
    "failure": "Before: highest 0.536; after: highest 0.527; on the integrated tree, brief 09 (c9cba9c8): Meets: highest 0.532 (discipline, stamina); on brief 10's tested commit (567d27dd): Meets: highest 0.444 (presence, listening); on brief 11's tested commit (81eadac9): the same; on brief 13's tested commit (7e7a3af6): the same; on brief 14's tested commit (6d83601a): the same; on brief 15's tested commit (d6f6527a): the same; on brief 16's tested commit (4ef5e961): the same; on brief 17's tested commit (ecd961cc): the same; on brief 19's tested commit (728b4972): the same; on brief 21's tested commit (fd32e869): the same; on brief 22's tested commit (16b50e07): the same",
    "implementation": "systems/evaluation.ts, systems/piece.ts, content/tasks.ts, content/approaches.ts",
    "evidence": "docs/verification/integration-2026-10-16/closeout/ag-baseline.json; docs/verification/integration-2026-10-16/baseline/ag-baseline.json; docs/verification/attributes-genres-2026-10-16/acceptance-criteria.md (A2); docs/verification/integration-2026-10-16/integrated-09/README.md; docs/verification/decisions-2026-10-16/final/README.md; docs/verification/completion-2026-10-16/final/README.md; docs/verification/playthroughs-2026-10-17/final/README.md; docs/verification/language-2026-10-17/final/README.md; docs/verification/editorial-2026-10-19/final/README.md; docs/verification/voices-2026-10-20/final/README.md; docs/verification/continuity-2026-10-20/final/README.md; docs/verification/career-2026-10-20/final-runs/final/README.md; docs/verification/genre-banking-2026-10-22/final-runs/final/README.md; docs/verification/career-genre-2026-10-22/final-runs/final/README.md",
-   "status": "Implemented And Verified",
+   "status": "Implemented, Verification Incomplete",
    "before": "highest 0.536",
    "after": "highest 0.527",
    "sourceStatus": "Met",
    "measured": {
     "commit": "16b50e07",
     "watch": "judge"
-   }
+   },
+   "missing": "It was measured on 16b50e07, and what it reads has changed since (src/engine/content/tasks.ts, src/engine/systems/evaluation.ts): measure it again"
   },
   {
    "source": "docs/verification/integration-2026-10-16/criteria.json",
@@ -13824,14 +13867,15 @@
    "failure": "Before: met; after: met; on the integrated tree, brief 09 (c9cba9c8): Meets: the least spread among the widest: emotionalDepth cv 0.49, presence cv 0.55, listening cv 0.41, imagination cv 0.39, focus cv 0.5, memory cv 0.75, adaptability cv 0.4, composure cv 0.43; on brief 10's tested commit (567d27dd): Meets: the least spread among the widest: emotionalDepth cv 0.49, presence cv 0.55, listening cv 0.41, imagination cv 0.39, focus cv 0.5, adaptability cv 0.39, composure cv 0.41; on brief 11's tested commit (81eadac9): the same; on brief 13's tested commit (7e7a3af6): the same; on brief 14's tested commit (6d83601a): the same; on brief 15's tested commit (d6f6527a): the same; on brief 16's tested commit (4ef5e961): the same; on brief 17's tested commit (ecd961cc): the same; on brief 19's tested commit (728b4972): the same; on brief 21's tested commit (fd32e869): the same; on brief 22's tested commit (16b50e07): the same",
    "implementation": "systems/evaluation.ts, systems/piece.ts, content/tasks.ts, content/approaches.ts",
    "evidence": "docs/verification/integration-2026-10-16/closeout/ag-baseline.json; docs/verification/integration-2026-10-16/baseline/ag-baseline.json; docs/verification/attributes-genres-2026-10-16/acceptance-criteria.md (A3); docs/verification/integration-2026-10-16/integrated-09/README.md; docs/verification/decisions-2026-10-16/final/README.md; docs/verification/completion-2026-10-16/final/README.md; docs/verification/playthroughs-2026-10-17/final/README.md; docs/verification/language-2026-10-17/final/README.md; docs/verification/editorial-2026-10-19/final/README.md; docs/verification/voices-2026-10-20/final/README.md; docs/verification/continuity-2026-10-20/final/README.md; docs/verification/career-2026-10-20/final-runs/final/README.md; docs/verification/genre-banking-2026-10-22/final-runs/final/README.md; docs/verification/career-genre-2026-10-22/final-runs/final/README.md",
-   "status": "Implemented And Verified",
+   "status": "Implemented, Verification Incomplete",
    "before": "met",
    "after": "met",
    "sourceStatus": "Met",
    "measured": {
     "commit": "16b50e07",
     "watch": "judge"
-   }
+   },
+   "missing": "It was measured on 16b50e07, and what it reads has changed since (src/engine/content/tasks.ts, src/engine/systems/evaluation.ts): measure it again"
   },
   {
    "source": "docs/verification/integration-2026-10-16/criteria.json",
@@ -13852,14 +13896,15 @@
    "failure": "Before: 1.875 of 4; after: 1.875 of 4; on the integrated tree, brief 09 (c9cba9c8): Meets: 1.875 sessions' worth against 4; on brief 10's tested commit (567d27dd): Meets: 1.875 sessions' worth against 4; on brief 11's tested commit (81eadac9): the same; on brief 13's tested commit (7e7a3af6): the same; on brief 14's tested commit (6d83601a): the same; on brief 15's tested commit (d6f6527a): the same; on brief 16's tested commit (4ef5e961): the same; on brief 17's tested commit (ecd961cc): the same; on brief 19's tested commit (728b4972): the same; on brief 21's tested commit (fd32e869): the same; on brief 22's tested commit (16b50e07): the same",
    "implementation": "systems/evaluation.ts, systems/piece.ts, content/tasks.ts, content/approaches.ts",
    "evidence": "docs/verification/integration-2026-10-16/closeout/ag-baseline.json; docs/verification/integration-2026-10-16/baseline/ag-baseline.json; docs/verification/attributes-genres-2026-10-16/acceptance-criteria.md (T2); docs/verification/integration-2026-10-16/integrated-09/README.md; docs/verification/decisions-2026-10-16/final/README.md; docs/verification/completion-2026-10-16/final/README.md; docs/verification/playthroughs-2026-10-17/final/README.md; docs/verification/language-2026-10-17/final/README.md; docs/verification/editorial-2026-10-19/final/README.md; docs/verification/voices-2026-10-20/final/README.md; docs/verification/continuity-2026-10-20/final/README.md; docs/verification/career-2026-10-20/final-runs/final/README.md; docs/verification/genre-banking-2026-10-22/final-runs/final/README.md; docs/verification/career-genre-2026-10-22/final-runs/final/README.md",
-   "status": "Implemented And Verified",
+   "status": "Implemented, Verification Incomplete",
    "before": "1.875 of 4",
    "after": "1.875 of 4",
    "sourceStatus": "Met",
    "measured": {
     "commit": "16b50e07",
     "watch": "judge"
-   }
+   },
+   "missing": "It was measured on 16b50e07, and what it reads has changed since (src/engine/content/tasks.ts, src/engine/systems/evaluation.ts): measure it again"
   },
   {
    "source": "docs/verification/integration-2026-10-16/criteria.json",
@@ -13880,14 +13925,15 @@
    "failure": "Before: 36%; after: 36%; on the integrated tree, brief 09 (c9cba9c8): Meets: 0.105 at 90 against 0.294 at 30 (36%); on brief 10's tested commit (567d27dd): Meets: 0.105 at 90 against 0.294 at 30 (36%); on brief 11's tested commit (81eadac9): the same; on brief 13's tested commit (7e7a3af6): the same; on brief 14's tested commit (6d83601a): the same; on brief 15's tested commit (d6f6527a): the same; on brief 16's tested commit (4ef5e961): the same; on brief 17's tested commit (ecd961cc): the same; on brief 19's tested commit (728b4972): the same; on brief 21's tested commit (fd32e869): the same; on brief 22's tested commit (16b50e07): the same",
    "implementation": "systems/evaluation.ts, systems/piece.ts, content/tasks.ts, content/approaches.ts",
    "evidence": "docs/verification/integration-2026-10-16/closeout/ag-baseline.json; docs/verification/integration-2026-10-16/baseline/ag-baseline.json; docs/verification/attributes-genres-2026-10-16/acceptance-criteria.md (T3); docs/verification/integration-2026-10-16/integrated-09/README.md; docs/verification/decisions-2026-10-16/final/README.md; docs/verification/completion-2026-10-16/final/README.md; docs/verification/playthroughs-2026-10-17/final/README.md; docs/verification/language-2026-10-17/final/README.md; docs/verification/editorial-2026-10-19/final/README.md; docs/verification/voices-2026-10-20/final/README.md; docs/verification/continuity-2026-10-20/final/README.md; docs/verification/career-2026-10-20/final-runs/final/README.md; docs/verification/genre-banking-2026-10-22/final-runs/final/README.md; docs/verification/career-genre-2026-10-22/final-runs/final/README.md",
-   "status": "Implemented And Verified",
+   "status": "Implemented, Verification Incomplete",
    "before": "36%",
    "after": "36%",
    "sourceStatus": "Met",
    "measured": {
     "commit": "16b50e07",
     "watch": "judge"
-   }
+   },
+   "missing": "It was measured on 16b50e07, and what it reads has changed since (src/engine/content/tasks.ts, src/engine/systems/evaluation.ts): measure it again"
   },
   {
    "source": "docs/verification/integration-2026-10-16/criteria.json",
@@ -13908,14 +13954,15 @@
    "failure": "Before: 53 of 149; 8 actors; after: 53 of 149; 8 actors; on the integrated tree, brief 09 (c9cba9c8): Meets: the most any actor is best on: 50 of 149; 8 actors best on 10 or more; on brief 10's tested commit (567d27dd): Meets: the most any actor is best on: 49 of 149; 8 actors best on 10 or more; on brief 11's tested commit (81eadac9): the same; on brief 13's tested commit (7e7a3af6): the same; on brief 14's tested commit (6d83601a): the same; on brief 15's tested commit (d6f6527a): the same; on brief 16's tested commit (4ef5e961): the same; on brief 17's tested commit (ecd961cc): the same; on brief 19's tested commit (728b4972): the same; on brief 21's tested commit (fd32e869): the same; on brief 22's tested commit (16b50e07): the same",
    "implementation": "systems/evaluation.ts, systems/piece.ts, content/tasks.ts, content/approaches.ts",
    "evidence": "docs/verification/integration-2026-10-16/closeout/ag-baseline.json; docs/verification/integration-2026-10-16/baseline/ag-baseline.json; docs/verification/attributes-genres-2026-10-16/acceptance-criteria.md (G3); docs/verification/integration-2026-10-16/integrated-09/README.md; docs/verification/decisions-2026-10-16/final/README.md; docs/verification/completion-2026-10-16/final/README.md; docs/verification/playthroughs-2026-10-17/final/README.md; docs/verification/language-2026-10-17/final/README.md; docs/verification/editorial-2026-10-19/final/README.md; docs/verification/voices-2026-10-20/final/README.md; docs/verification/continuity-2026-10-20/final/README.md; docs/verification/career-2026-10-20/final-runs/final/README.md; docs/verification/genre-banking-2026-10-22/final-runs/final/README.md; docs/verification/career-genre-2026-10-22/final-runs/final/README.md",
-   "status": "Implemented And Verified",
+   "status": "Implemented, Verification Incomplete",
    "before": "53 of 149; 8 actors",
    "after": "53 of 149; 8 actors",
    "sourceStatus": "Met",
    "measured": {
     "commit": "16b50e07",
     "watch": "judge"
-   }
+   },
+   "missing": "It was measured on 16b50e07, and what it reads has changed since (src/engine/content/tasks.ts, src/engine/systems/evaluation.ts): measure it again"
   },
   {
    "source": "docs/verification/integration-2026-10-16/criteria.json",
@@ -13936,14 +13983,15 @@
    "failure": "Before: met; after: met; on the integrated tree, brief 09 (c9cba9c8): Meets: 2 briefs, 4 readings at least; 4 reader behaviors; on brief 10's tested commit (567d27dd): Meets: 2 briefs, 4 readings at least; 4 reader behaviors; on brief 11's tested commit (81eadac9): the same; on brief 13's tested commit (7e7a3af6): the same; on brief 14's tested commit (6d83601a): the same; on brief 15's tested commit (d6f6527a): the same; on brief 16's tested commit (4ef5e961): the same; on brief 17's tested commit (ecd961cc): the same; on brief 19's tested commit (728b4972): the same; on brief 21's tested commit (fd32e869): the same; on brief 22's tested commit (16b50e07): the same",
    "implementation": "systems/evaluation.ts, systems/piece.ts, content/tasks.ts, content/approaches.ts",
    "evidence": "docs/verification/integration-2026-10-16/closeout/ag-baseline.json; docs/verification/integration-2026-10-16/baseline/ag-baseline.json; docs/verification/attributes-genres-2026-10-16/acceptance-criteria.md (G4); docs/verification/integration-2026-10-16/integrated-09/README.md; docs/verification/decisions-2026-10-16/final/README.md; docs/verification/completion-2026-10-16/final/README.md; docs/verification/playthroughs-2026-10-17/final/README.md; docs/verification/language-2026-10-17/final/README.md; docs/verification/editorial-2026-10-19/final/README.md; docs/verification/voices-2026-10-20/final/README.md; docs/verification/continuity-2026-10-20/final/README.md; docs/verification/career-2026-10-20/final-runs/final/README.md; docs/verification/genre-banking-2026-10-22/final-runs/final/README.md; docs/verification/career-genre-2026-10-22/final-runs/final/README.md",
-   "status": "Implemented And Verified",
+   "status": "Implemented, Verification Incomplete",
    "before": "met",
    "after": "met",
    "sourceStatus": "Met",
    "measured": {
     "commit": "16b50e07",
     "watch": "judge"
-   }
+   },
+   "missing": "It was measured on 16b50e07, and what it reads has changed since (src/engine/content/tasks.ts, src/engine/systems/evaluation.ts): measure it again"
   },
   {
    "source": "docs/verification/integration-2026-10-16/criteria.json",
@@ -13964,14 +14012,15 @@
    "failure": "Before: 51.23 → 53.86; after: 51.22 → 53.86; on the integrated tree, brief 09 (c9cba9c8): Meets: 51.13 at 30 known, 53.74 at 100; on brief 10's tested commit (567d27dd): Meets: 50.66 at 30 known, 53.1 at 100; on brief 11's tested commit (81eadac9): the same; on brief 13's tested commit (7e7a3af6): the same; on brief 14's tested commit (6d83601a): the same; on brief 15's tested commit (d6f6527a): the same; on brief 16's tested commit (4ef5e961): the same; on brief 17's tested commit (ecd961cc): the same; on brief 19's tested commit (728b4972): the same; on brief 21's tested commit (fd32e869): the same; on brief 22's tested commit (16b50e07): the same",
    "implementation": "systems/evaluation.ts, systems/piece.ts, content/tasks.ts, content/approaches.ts",
    "evidence": "docs/verification/integration-2026-10-16/closeout/ag-baseline.json; docs/verification/integration-2026-10-16/baseline/ag-baseline.json; docs/verification/attributes-genres-2026-10-16/acceptance-criteria.md (G5); docs/verification/integration-2026-10-16/integrated-09/README.md; docs/verification/decisions-2026-10-16/final/README.md; docs/verification/completion-2026-10-16/final/README.md; docs/verification/playthroughs-2026-10-17/final/README.md; docs/verification/language-2026-10-17/final/README.md; docs/verification/editorial-2026-10-19/final/README.md; docs/verification/voices-2026-10-20/final/README.md; docs/verification/continuity-2026-10-20/final/README.md; docs/verification/career-2026-10-20/final-runs/final/README.md; docs/verification/genre-banking-2026-10-22/final-runs/final/README.md; docs/verification/career-genre-2026-10-22/final-runs/final/README.md",
-   "status": "Implemented And Verified",
+   "status": "Implemented, Verification Incomplete",
    "before": "51.23 → 53.86",
    "after": "51.22 → 53.86",
    "sourceStatus": "Met",
    "measured": {
     "commit": "16b50e07",
     "watch": "judge"
-   }
+   },
+   "missing": "It was measured on 16b50e07, and what it reads has changed since (src/engine/content/tasks.ts, src/engine/systems/evaluation.ts): measure it again"
   },
   {
    "source": "docs/verification/integration-2026-10-16/criteria.json",
@@ -13992,14 +14041,15 @@
    "failure": "Before: 4,495 briefs, 56 scenes, 30 nights, 30 casting, 13 coursework; 0 drawn off; after: 4,495 briefs, 60 scenes, 30 nights, 30 casting, 13 coursework; 0 drawn off; on the integrated tree, brief 09 (c9cba9c8): Meets: briefs 4560 of 4560; scenes 65 of 65; nights 30 of 30; casting 30 of 30; coursework 13 of 13; drawn off 100: 0; on brief 10's tested commit (567d27dd): Meets: briefs 4560 of 4560; scenes 67 of 67; nights 30 of 30; casting 30 of 30; coursework 13 of 13; drawn off 100: 0; on brief 11's tested commit (81eadac9): the same; on brief 13's tested commit (7e7a3af6): the same; on brief 14's tested commit (6d83601a): the same; on brief 15's tested commit (d6f6527a): the same; on brief 16's tested commit (4ef5e961): the same; on brief 17's tested commit (ecd961cc): the same; on brief 19's tested commit (728b4972): the same; on brief 21's tested commit (fd32e869): the same; on brief 22's tested commit (16b50e07): the same",
    "implementation": "systems/evaluation.ts, systems/piece.ts, content/tasks.ts, content/approaches.ts",
    "evidence": "docs/verification/integration-2026-10-16/closeout/ag-baseline.json; docs/verification/integration-2026-10-16/baseline/ag-baseline.json; docs/verification/attributes-genres-2026-10-16/acceptance-criteria.md (M1); docs/verification/integration-2026-10-16/integrated-09/README.md; docs/verification/decisions-2026-10-16/final/README.md; docs/verification/completion-2026-10-16/final/README.md; docs/verification/playthroughs-2026-10-17/final/README.md; docs/verification/language-2026-10-17/final/README.md; docs/verification/editorial-2026-10-19/final/README.md; docs/verification/voices-2026-10-20/final/README.md; docs/verification/continuity-2026-10-20/final/README.md; docs/verification/career-2026-10-20/final-runs/final/README.md; docs/verification/genre-banking-2026-10-22/final-runs/final/README.md; docs/verification/career-genre-2026-10-22/final-runs/final/README.md",
-   "status": "Implemented And Verified",
+   "status": "Implemented, Verification Incomplete",
    "before": "4,495 briefs, 56 scenes, 30 nights, 30 casting, 13 coursework; 0 drawn off",
    "after": "4,495 briefs, 60 scenes, 30 nights, 30 casting, 13 coursework; 0 drawn off",
    "sourceStatus": "Met",
    "measured": {
     "commit": "16b50e07",
     "watch": "judge"
-   }
+   },
+   "missing": "It was measured on 16b50e07, and what it reads has changed since (src/engine/content/tasks.ts, src/engine/systems/evaluation.ts): measure it again"
   },
   {
    "source": "docs/verification/integration-2026-10-16/criteria.json",
@@ -14020,14 +14070,15 @@
    "failure": "Before: own 100 on 56 scenes, the partner never coming (the reader); after: own 100 on 60 scenes; on the integrated tree, brief 09 (c9cba9c8): Meets: own 100 to 100 on 65 scenes, the partner never coming; on brief 10's tested commit (567d27dd): Meets: own 100 to 100 on 67 scenes, the partner never coming; on brief 11's tested commit (81eadac9): the same; on brief 13's tested commit (7e7a3af6): the same; on brief 14's tested commit (6d83601a): the same; on brief 15's tested commit (d6f6527a): the same; on brief 16's tested commit (4ef5e961): the same; on brief 17's tested commit (ecd961cc): the same; on brief 19's tested commit (728b4972): the same; on brief 21's tested commit (fd32e869): the same; on brief 22's tested commit (16b50e07): the same",
    "implementation": "systems/evaluation.ts, systems/piece.ts, content/tasks.ts, content/approaches.ts",
    "evidence": "docs/verification/integration-2026-10-16/closeout/ag-baseline.json; docs/verification/integration-2026-10-16/baseline/ag-baseline.json; docs/verification/attributes-genres-2026-10-16/acceptance-criteria.md (M3); docs/verification/integration-2026-10-16/integrated-09/README.md; docs/verification/decisions-2026-10-16/final/README.md; docs/verification/completion-2026-10-16/final/README.md; docs/verification/playthroughs-2026-10-17/final/README.md; docs/verification/language-2026-10-17/final/README.md; docs/verification/editorial-2026-10-19/final/README.md; docs/verification/voices-2026-10-20/final/README.md; docs/verification/continuity-2026-10-20/final/README.md; docs/verification/career-2026-10-20/final-runs/final/README.md; docs/verification/genre-banking-2026-10-22/final-runs/final/README.md; docs/verification/career-genre-2026-10-22/final-runs/final/README.md",
-   "status": "Implemented And Verified",
+   "status": "Implemented, Verification Incomplete",
    "before": "own 100 on 56 scenes, the partner never coming (the reader)",
    "after": "own 100 on 60 scenes",
    "sourceStatus": "Met",
    "measured": {
     "commit": "16b50e07",
     "watch": "judge"
-   }
+   },
+   "missing": "It was measured on 16b50e07, and what it reads has changed since (src/engine/content/tasks.ts, src/engine/systems/evaluation.ts): measure it again"
   },
   {
    "source": "docs/verification/integration-2026-10-16/criteria.json",
@@ -14048,14 +14099,15 @@
    "failure": "Before: sd 0; after: sd 0; on the integrated tree, brief 09 (c9cba9c8): Meets: A Recording: own sd 0; Unprepared, Distracted: own sd 0; Prepared, Attentive: own sd 0; on brief 10's tested commit (567d27dd): Meets: A Recording: own sd 0; Unprepared, Distracted: own sd 0; Prepared, Attentive: own sd 0; on brief 11's tested commit (81eadac9): the same; on brief 13's tested commit (7e7a3af6): the same; on brief 14's tested commit (6d83601a): the same; on brief 15's tested commit (d6f6527a): the same; on brief 16's tested commit (4ef5e961): the same; on brief 17's tested commit (ecd961cc): the same; on brief 19's tested commit (728b4972): the same; on brief 21's tested commit (fd32e869): the same; on brief 22's tested commit (16b50e07): the same",
    "implementation": "systems/evaluation.ts, systems/piece.ts, content/tasks.ts, content/approaches.ts",
    "evidence": "docs/verification/integration-2026-10-16/closeout/ag-baseline.json; docs/verification/integration-2026-10-16/baseline/ag-baseline.json; docs/verification/attributes-genres-2026-10-16/acceptance-criteria.md (O1); docs/verification/integration-2026-10-16/integrated-09/README.md; docs/verification/decisions-2026-10-16/final/README.md; docs/verification/completion-2026-10-16/final/README.md; docs/verification/playthroughs-2026-10-17/final/README.md; docs/verification/language-2026-10-17/final/README.md; docs/verification/editorial-2026-10-19/final/README.md; docs/verification/voices-2026-10-20/final/README.md; docs/verification/continuity-2026-10-20/final/README.md; docs/verification/career-2026-10-20/final-runs/final/README.md; docs/verification/genre-banking-2026-10-22/final-runs/final/README.md; docs/verification/career-genre-2026-10-22/final-runs/final/README.md",
-   "status": "Implemented And Verified",
+   "status": "Implemented, Verification Incomplete",
    "before": "sd 0",
    "after": "sd 0",
    "sourceStatus": "Met",
    "measured": {
     "commit": "16b50e07",
     "watch": "judge"
-   }
+   },
+   "missing": "It was measured on 16b50e07, and what it reads has changed since (src/engine/content/tasks.ts, src/engine/systems/evaluation.ts): measure it again"
   },
   {
    "source": "docs/verification/integration-2026-10-16/criteria.json",
@@ -14076,14 +14128,15 @@
    "failure": "Before: 93.1, 86.1, 100; after: 93.1, 86.1, 100; on the integrated tree, brief 09 (c9cba9c8): Meets: together 93.05, 86.1, 100; on brief 10's tested commit (567d27dd): Meets: together 93.05, 86.1, 100; on brief 11's tested commit (81eadac9): the same; on brief 13's tested commit (7e7a3af6): the same; on brief 14's tested commit (6d83601a): the same; on brief 15's tested commit (d6f6527a): the same; on brief 16's tested commit (4ef5e961): the same; on brief 17's tested commit (ecd961cc): the same; on brief 19's tested commit (728b4972): the same; on brief 21's tested commit (fd32e869): the same; on brief 22's tested commit (16b50e07): the same",
    "implementation": "systems/evaluation.ts, systems/piece.ts, content/tasks.ts, content/approaches.ts",
    "evidence": "docs/verification/integration-2026-10-16/closeout/ag-baseline.json; docs/verification/integration-2026-10-16/baseline/ag-baseline.json; docs/verification/attributes-genres-2026-10-16/acceptance-criteria.md (O2); docs/verification/integration-2026-10-16/integrated-09/README.md; docs/verification/decisions-2026-10-16/final/README.md; docs/verification/completion-2026-10-16/final/README.md; docs/verification/playthroughs-2026-10-17/final/README.md; docs/verification/language-2026-10-17/final/README.md; docs/verification/editorial-2026-10-19/final/README.md; docs/verification/voices-2026-10-20/final/README.md; docs/verification/continuity-2026-10-20/final/README.md; docs/verification/career-2026-10-20/final-runs/final/README.md; docs/verification/genre-banking-2026-10-22/final-runs/final/README.md; docs/verification/career-genre-2026-10-22/final-runs/final/README.md",
-   "status": "Implemented And Verified",
+   "status": "Implemented, Verification Incomplete",
    "before": "93.1, 86.1, 100",
    "after": "93.1, 86.1, 100",
    "sourceStatus": "Met",
    "measured": {
     "commit": "16b50e07",
     "watch": "judge"
-   }
+   },
+   "missing": "It was measured on 16b50e07, and what it reads has changed since (src/engine/content/tasks.ts, src/engine/systems/evaluation.ts): measure it again"
   },
   {
    "source": "docs/verification/integration-2026-10-16/criteria.json",
@@ -14104,14 +14157,15 @@
    "failure": "Before: briefs 96 of 298; scenes 20 of 56; after: briefs 96 of 298; scenes 20 of 60; on the integrated tree, brief 09 (c9cba9c8): Meets: brief: emotionalDepth specialist 94 of 298; scene: emotionalDepth specialist 17 of 65; night: emotionalDepth specialist 7 of 30; casting: listening specialist 8 of 30; on brief 10's tested commit (567d27dd): Meets: brief: emotionalDepth specialist 93 of 298; scene: listening specialist 17 of 67; night: discipline specialist 7 of 30; casting: emotionalDepth specialist 6 of 30; on brief 11's tested commit (81eadac9): the same; on brief 13's tested commit (7e7a3af6): the same; on brief 14's tested commit (6d83601a): the same; on brief 15's tested commit (d6f6527a): the same; on brief 16's tested commit (4ef5e961): the same; on brief 17's tested commit (ecd961cc): the same; on brief 19's tested commit (728b4972): the same; on brief 21's tested commit (fd32e869): the same; on brief 22's tested commit (16b50e07): the same",
    "implementation": "systems/evaluation.ts, systems/piece.ts, content/tasks.ts, content/approaches.ts",
    "evidence": "docs/verification/integration-2026-10-16/closeout/ag-baseline.json; docs/verification/integration-2026-10-16/baseline/ag-baseline.json; docs/verification/attributes-genres-2026-10-16/acceptance-criteria.md (H2); docs/verification/integration-2026-10-16/integrated-09/README.md; docs/verification/decisions-2026-10-16/final/README.md; docs/verification/completion-2026-10-16/final/README.md; docs/verification/playthroughs-2026-10-17/final/README.md; docs/verification/language-2026-10-17/final/README.md; docs/verification/editorial-2026-10-19/final/README.md; docs/verification/voices-2026-10-20/final/README.md; docs/verification/continuity-2026-10-20/final/README.md; docs/verification/career-2026-10-20/final-runs/final/README.md; docs/verification/genre-banking-2026-10-22/final-runs/final/README.md; docs/verification/career-genre-2026-10-22/final-runs/final/README.md",
-   "status": "Implemented And Verified",
+   "status": "Implemented, Verification Incomplete",
    "before": "briefs 96 of 298; scenes 20 of 56",
    "after": "briefs 96 of 298; scenes 20 of 60",
    "sourceStatus": "Met",
    "measured": {
     "commit": "16b50e07",
     "watch": "judge"
-   }
+   },
+   "missing": "It was measured on 16b50e07, and what it reads has changed since (src/engine/content/tasks.ts, src/engine/systems/evaluation.ts): measure it again"
   },
   {
    "source": "docs/verification/integration-2026-10-16/criteria.json",
@@ -14132,14 +14186,15 @@
    "failure": "Before: 427 of 427; 26.5%; after: 431 of 431; 26.9%; on the integrated tree, brief 09 (c9cba9c8): Meets: ahead of half on 436 of 436; within a point of the best on 126 (28.9%); on brief 10's tested commit (567d27dd): Meets: ahead of half on 438 of 438; within a point of the best on 131 (29.9%); on brief 11's tested commit (81eadac9): the same; on brief 13's tested commit (7e7a3af6): the same; on brief 14's tested commit (6d83601a): the same; on brief 15's tested commit (d6f6527a): the same; on brief 16's tested commit (4ef5e961): the same; on brief 17's tested commit (ecd961cc): the same; on brief 19's tested commit (728b4972): the same; on brief 21's tested commit (fd32e869): the same; on brief 22's tested commit (16b50e07): the same",
    "implementation": "systems/evaluation.ts, systems/piece.ts, content/tasks.ts, content/approaches.ts",
    "evidence": "docs/verification/integration-2026-10-16/closeout/ag-baseline.json; docs/verification/integration-2026-10-16/baseline/ag-baseline.json; docs/verification/attributes-genres-2026-10-16/acceptance-criteria.md (H5); docs/verification/integration-2026-10-16/integrated-09/README.md; docs/verification/decisions-2026-10-16/final/README.md; docs/verification/completion-2026-10-16/final/README.md; docs/verification/playthroughs-2026-10-17/final/README.md; docs/verification/language-2026-10-17/final/README.md; docs/verification/editorial-2026-10-19/final/README.md; docs/verification/voices-2026-10-20/final/README.md; docs/verification/continuity-2026-10-20/final/README.md; docs/verification/career-2026-10-20/final-runs/final/README.md; docs/verification/genre-banking-2026-10-22/final-runs/final/README.md; docs/verification/career-genre-2026-10-22/final-runs/final/README.md",
-   "status": "Implemented And Verified",
+   "status": "Implemented, Verification Incomplete",
    "before": "427 of 427; 26.5%",
    "after": "431 of 431; 26.9%",
    "sourceStatus": "Met",
    "measured": {
     "commit": "16b50e07",
     "watch": "judge"
-   }
+   },
+   "missing": "It was measured on 16b50e07, and what it reads has changed since (src/engine/content/tasks.ts, src/engine/systems/evaluation.ts): measure it again"
   },
   {
    "source": "docs/verification/integration-2026-10-16/criteria.json",
@@ -14160,14 +14215,15 @@
    "failure": "Before: 0%; 2.61; after: 0%; 2.62; on the integrated tree, brief 09 (c9cba9c8): Meets: beginner 30 against 40: 0.0%; developing 50 against 60: 0.0%; advanced 70 against 80: 0.0%; a developing actor's range 2.62; on brief 10's tested commit (567d27dd): Meets: beginner 30 against 40: 0.0%; developing 50 against 60: 0.0%; advanced 70 against 80: 0.0%; a developing actor's range 2.58; on brief 11's tested commit (81eadac9): the same; on brief 13's tested commit (7e7a3af6): the same; on brief 14's tested commit (6d83601a): the same; on brief 15's tested commit (d6f6527a): the same; on brief 16's tested commit (4ef5e961): the same; on brief 17's tested commit (ecd961cc): the same; on brief 19's tested commit (728b4972): the same; on brief 21's tested commit (fd32e869): the same; on brief 22's tested commit (16b50e07): the same",
    "implementation": "systems/evaluation.ts, systems/piece.ts, content/tasks.ts, content/approaches.ts",
    "evidence": "docs/verification/integration-2026-10-16/closeout/ag-baseline.json; docs/verification/integration-2026-10-16/baseline/ag-baseline.json; docs/verification/attributes-genres-2026-10-16/acceptance-criteria.md (H7); docs/verification/integration-2026-10-16/integrated-09/README.md; docs/verification/decisions-2026-10-16/final/README.md; docs/verification/completion-2026-10-16/final/README.md; docs/verification/playthroughs-2026-10-17/final/README.md; docs/verification/language-2026-10-17/final/README.md; docs/verification/editorial-2026-10-19/final/README.md; docs/verification/voices-2026-10-20/final/README.md; docs/verification/continuity-2026-10-20/final/README.md; docs/verification/career-2026-10-20/final-runs/final/README.md; docs/verification/genre-banking-2026-10-22/final-runs/final/README.md; docs/verification/career-genre-2026-10-22/final-runs/final/README.md",
-   "status": "Implemented And Verified",
+   "status": "Implemented, Verification Incomplete",
    "before": "0%; 2.61",
    "after": "0%; 2.62",
    "sourceStatus": "Met",
    "measured": {
     "commit": "16b50e07",
     "watch": "judge"
-   }
+   },
+   "missing": "It was measured on 16b50e07, and what it reads has changed since (src/engine/content/tasks.ts, src/engine/systems/evaluation.ts): measure it again"
   },
   {
    "source": "docs/verification/integration-2026-10-16/criteria.json",
@@ -14460,14 +14516,15 @@
    "failure": "Before: 0; after: 0; on the integrated tree, brief 09 (c9cba9c8): specialist 0, beginner 0; on brief 10's tested commit (567d27dd): specialist 0, beginner 0; on brief 11's tested commit (81eadac9): the same; on brief 13's tested commit (7e7a3af6): the same; on brief 14's tested commit (6d83601a): the same; on brief 15's tested commit (d6f6527a): the same; on brief 16's tested commit (4ef5e961): the same; on brief 17's tested commit (ecd961cc): the same; on brief 19's tested commit (728b4972): the same; on brief 21's tested commit (fd32e869): the same; on brief 22's tested commit (16b50e07): the same",
    "implementation": "systems/evaluation.ts, systems/piece.ts, content/tasks.ts, content/approaches.ts",
    "evidence": "docs/verification/integration-2026-10-16/closeout/journey-specialist-bj-0.json; docs/verification/integration-2026-10-16/integrated-09/README.md; docs/verification/decisions-2026-10-16/final/README.md; docs/verification/completion-2026-10-16/final/README.md; docs/verification/playthroughs-2026-10-17/final/README.md; docs/verification/language-2026-10-17/final/README.md; docs/verification/editorial-2026-10-19/final/README.md; docs/verification/voices-2026-10-20/final/README.md; docs/verification/continuity-2026-10-20/final/README.md; docs/verification/career-2026-10-20/final-runs/final/README.md; docs/verification/genre-banking-2026-10-22/final-runs/final/README.md; docs/verification/career-genre-2026-10-22/final-runs/final/README.md",
-   "status": "Implemented And Verified",
+   "status": "Implemented, Verification Incomplete",
    "before": "0",
    "after": "0",
    "sourceStatus": "Met",
    "measured": {
     "commit": "16b50e07",
     "watch": "judge"
-   }
+   },
+   "missing": "It was measured on 16b50e07, and what it reads has changed since (src/engine/content/tasks.ts, src/engine/systems/evaluation.ts): measure it again"
   },
   {
    "source": "docs/verification/integration-2026-10-16/criteria.json",
@@ -14710,14 +14767,15 @@
    "failure": "Before: 0.90, 0.88, 0.90, 0.87; after: 0.901, 0.883, 0.904, 0.880; on the integrated tree, brief 09 (c9cba9c8): designed 0.901 (least 0.842); held out 0.885 (least 0.807); fresh designed 0.904 (least 0.845); fresh held out 0.881 (least 0.786); on brief 10's tested commit (567d27dd): designed 0.905 (least 0.847); held out 0.884 (least 0.793); fresh designed 0.903 (least 0.847); fresh held out 0.877 (least 0.784); on brief 11's tested commit (81eadac9): the same; on brief 13's tested commit (7e7a3af6): the same; on brief 14's tested commit (6d83601a): the same; on brief 15's tested commit (d6f6527a): the same; on brief 16's tested commit (4ef5e961): the same; on brief 17's tested commit (ecd961cc): the same; on brief 19's tested commit (728b4972): the same; on brief 21's tested commit (fd32e869): the same; on brief 22's tested commit (16b50e07): the same",
    "implementation": "systems/evaluation.ts, systems/piece.ts, content/tasks.ts, content/approaches.ts",
    "evidence": "docs/verification/integration-2026-10-16/closeout/signature.json; docs/verification/integration-2026-10-16/closeout/signature-fresh.json; docs/verification/integration-2026-10-16/closeout/genre-identity.json; docs/verification/genres-2026-10-16/g1-replacement.md; docs/verification/integration-2026-10-16/integrated-09/README.md; docs/verification/decisions-2026-10-16/final/README.md; docs/verification/completion-2026-10-16/final/README.md; docs/verification/playthroughs-2026-10-17/final/README.md; docs/verification/language-2026-10-17/final/README.md; docs/verification/editorial-2026-10-19/final/README.md; docs/verification/voices-2026-10-20/final/README.md; docs/verification/continuity-2026-10-20/final/README.md; docs/verification/career-2026-10-20/final-runs/final/README.md; docs/verification/genre-banking-2026-10-22/final-runs/final/README.md; docs/verification/career-genre-2026-10-22/final-runs/final/README.md",
-   "status": "Implemented And Verified",
+   "status": "Implemented, Verification Incomplete",
    "before": "0.90, 0.88, 0.90, 0.87",
    "after": "0.901, 0.883, 0.904, 0.880",
    "sourceStatus": "Met",
    "measured": {
     "commit": "16b50e07",
     "watch": "judge"
-   }
+   },
+   "missing": "It was measured on 16b50e07, and what it reads has changed since (src/engine/content/tasks.ts, src/engine/systems/evaluation.ts): measure it again"
   },
   {
    "source": "docs/verification/integration-2026-10-16/criteria.json",
@@ -14738,14 +14796,15 @@
    "failure": "Before: 1.60, 1.61, 1.60, 1.61; 98.7%; after: 1.599, 1.612, 1.598, 1.613; 98.7%; on the integrated tree, brief 09 (c9cba9c8): designed 1.599×; held out 1.614×; fresh designed 1.598×; fresh held out 1.614×; on brief 10's tested commit (567d27dd): designed 1.597×; held out 1.615×; fresh designed 1.598×; fresh held out 1.615×; on brief 11's tested commit (81eadac9): the same; on brief 13's tested commit (7e7a3af6): the same; on brief 14's tested commit (6d83601a): the same; on brief 15's tested commit (d6f6527a): the same; on brief 16's tested commit (4ef5e961): the same; on brief 17's tested commit (ecd961cc): the same; on brief 19's tested commit (728b4972): the same; on brief 21's tested commit (fd32e869): the same; on brief 22's tested commit (16b50e07): the same",
    "implementation": "systems/evaluation.ts, systems/piece.ts, content/tasks.ts, content/approaches.ts",
    "evidence": "docs/verification/integration-2026-10-16/closeout/signature.json; docs/verification/integration-2026-10-16/closeout/signature-fresh.json; docs/verification/integration-2026-10-16/closeout/genre-identity.json; docs/verification/genres-2026-10-16/g1-replacement.md; docs/verification/integration-2026-10-16/integrated-09/README.md; docs/verification/decisions-2026-10-16/final/README.md; docs/verification/completion-2026-10-16/final/README.md; docs/verification/playthroughs-2026-10-17/final/README.md; docs/verification/language-2026-10-17/final/README.md; docs/verification/editorial-2026-10-19/final/README.md; docs/verification/voices-2026-10-20/final/README.md; docs/verification/continuity-2026-10-20/final/README.md; docs/verification/career-2026-10-20/final-runs/final/README.md; docs/verification/genre-banking-2026-10-22/final-runs/final/README.md; docs/verification/career-genre-2026-10-22/final-runs/final/README.md",
-   "status": "Implemented And Verified",
+   "status": "Implemented, Verification Incomplete",
    "before": "1.60, 1.61, 1.60, 1.61; 98.7%",
    "after": "1.599, 1.612, 1.598, 1.613; 98.7%",
    "sourceStatus": "Met",
    "measured": {
     "commit": "16b50e07",
     "watch": "judge"
-   }
+   },
+   "missing": "It was measured on 16b50e07, and what it reads has changed since (src/engine/content/tasks.ts, src/engine/systems/evaluation.ts): measure it again"
   },
   {
    "source": "docs/verification/integration-2026-10-16/criteria.json",
@@ -14766,14 +14825,15 @@
    "failure": "Before: 12,757, 11,887, 24,832, 23,300 of 14,350, 14,350, 28,413, 28,413; after: 12,744, 11,890, 24,838, 23,304 (82.0% the lowest); on the integrated tree, brief 09 (c9cba9c8): designed 12,744 of 14,350 (88.8%); held out 11,676 of 14,350 (81.4%); fresh designed 24,838 of 28,413 (87.4%); fresh held out 23,206 of 28,413 (81.7%); on brief 10's tested commit (567d27dd): designed 12,742 of 14,350 (88.8%); held out 11,670 of 14,350 (81.3%); fresh designed 24,871 of 28,413 (87.5%); fresh held out 23,222 of 28,413 (81.7%); on brief 11's tested commit (81eadac9): the same; on brief 13's tested commit (7e7a3af6): the same; on brief 14's tested commit (6d83601a): the same; on brief 15's tested commit (d6f6527a): the same; on brief 16's tested commit (4ef5e961): the same; on brief 17's tested commit (ecd961cc): the same; on brief 19's tested commit (728b4972): the same; on brief 21's tested commit (fd32e869): the same; on brief 22's tested commit (16b50e07): the same",
    "implementation": "systems/evaluation.ts, systems/piece.ts, content/tasks.ts, content/approaches.ts",
    "evidence": "docs/verification/integration-2026-10-16/closeout/signature.json; docs/verification/integration-2026-10-16/closeout/signature-fresh.json; docs/verification/integration-2026-10-16/closeout/genre-identity.json; docs/verification/genres-2026-10-16/g1-replacement.md; docs/verification/integration-2026-10-16/integrated-09/README.md; docs/verification/decisions-2026-10-16/final/README.md; docs/verification/completion-2026-10-16/final/README.md; docs/verification/playthroughs-2026-10-17/final/README.md; docs/verification/language-2026-10-17/final/README.md; docs/verification/editorial-2026-10-19/final/README.md; docs/verification/voices-2026-10-20/final/README.md; docs/verification/continuity-2026-10-20/final/README.md; docs/verification/career-2026-10-20/final-runs/final/README.md; docs/verification/genre-banking-2026-10-22/final-runs/final/README.md; docs/verification/career-genre-2026-10-22/final-runs/final/README.md",
-   "status": "Implemented And Verified",
+   "status": "Implemented, Verification Incomplete",
    "before": "12,757, 11,887, 24,832, 23,300 of 14,350, 14,350, 28,413, 28,413",
    "after": "12,744, 11,890, 24,838, 23,304 (82.0% the lowest)",
    "sourceStatus": "Met",
    "measured": {
     "commit": "16b50e07",
     "watch": "judge"
-   }
+   },
+   "missing": "It was measured on 16b50e07, and what it reads has changed since (src/engine/content/tasks.ts, src/engine/systems/evaluation.ts): measure it again"
   },
   {
    "source": "docs/verification/integration-2026-10-16/criteria.json",
@@ -14794,14 +14854,15 @@
    "failure": "Before: 0; after: 0; on the integrated tree, brief 09 (c9cba9c8): 0 briefs of different genres identical in every number; on brief 10's tested commit (567d27dd): 0 briefs of different genres identical in every number; on brief 11's tested commit (81eadac9): the same; on brief 13's tested commit (7e7a3af6): the same; on brief 14's tested commit (6d83601a): the same; on brief 15's tested commit (d6f6527a): the same; on brief 16's tested commit (4ef5e961): the same; on brief 17's tested commit (ecd961cc): the same; on brief 19's tested commit (728b4972): the same; on brief 21's tested commit (fd32e869): the same; on brief 22's tested commit (16b50e07): the same",
    "implementation": "systems/evaluation.ts, systems/piece.ts, content/tasks.ts, content/approaches.ts",
    "evidence": "docs/verification/integration-2026-10-16/closeout/signature.json; docs/verification/integration-2026-10-16/closeout/signature-fresh.json; docs/verification/integration-2026-10-16/closeout/genre-identity.json; docs/verification/genres-2026-10-16/g1-replacement.md; docs/verification/integration-2026-10-16/integrated-09/README.md; docs/verification/decisions-2026-10-16/final/README.md; docs/verification/completion-2026-10-16/final/README.md; docs/verification/playthroughs-2026-10-17/final/README.md; docs/verification/language-2026-10-17/final/README.md; docs/verification/editorial-2026-10-19/final/README.md; docs/verification/voices-2026-10-20/final/README.md; docs/verification/continuity-2026-10-20/final/README.md; docs/verification/career-2026-10-20/final-runs/final/README.md; docs/verification/genre-banking-2026-10-22/final-runs/final/README.md; docs/verification/career-genre-2026-10-22/final-runs/final/README.md",
-   "status": "Implemented And Verified",
+   "status": "Implemented, Verification Incomplete",
    "before": "0",
    "after": "0",
    "sourceStatus": "Met",
    "measured": {
     "commit": "16b50e07",
     "watch": "judge"
-   }
+   },
+   "missing": "It was measured on 16b50e07, and what it reads has changed since (src/engine/content/tasks.ts, src/engine/systems/evaluation.ts): measure it again"
   },
   {
    "source": "docs/verification/integration-2026-10-16/criteria.json",
@@ -16319,12 +16380,13 @@
    "failure": "tools/genre-audit.ts on brief 22's tested commit, 16b50e07 (measure.sh genres-b): every genre helps its own brief in 149 of 149; an unrelated genre moves another's brief in 0 of 21644 ordered pairs; a genre one direct link away (a kind and its broad genre) in 408 of 408, each by less than the genre itself in 408 of 408, the most 85% of its own gain; the old criterion's next genre over moves in 9, each a genre and its own kind, reported and not counted",
    "implementation": "systems/engagement.ts (`relatedness`, `relevantGenre`), content/engagement.ts (`ENGAGEMENT.related`), tools/genre-audit.ts",
    "evidence": "docs/verification/career-genre-2026-10-22/final-runs/final/genre-audit.md ‘the criterion and the direct pairs’; docs/verification/career-genre-2026-10-22/decision-history.md ‘the old criterion, brief 21's question and the owner's authorization’; docs/verification/career-genre-2026-10-22/comparisons.md ‘the coefficients measured’; tests/b22-transfer.test.ts; tests/b22-comparisons.test.ts",
-   "status": "Implemented And Verified",
+   "status": "Implemented, Verification Incomplete",
    "sourceStatus": "docs/verification/career-genre-2026-10-22/final-runs/judge-result.json",
    "measured": {
     "commit": "16b50e07",
     "watch": "judge"
-   }
+   },
+   "missing": "It was measured on 16b50e07, and what it reads has changed since (src/engine/content/tasks.ts, src/engine/systems/evaluation.ts): measure it again"
   }
  ]
 }

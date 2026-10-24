@@ -72,8 +72,12 @@ export const DIMENSION_MEANS: Readonly<Record<Dimension, string>> = {
   responsiveness: 'Answering what actually happens, a partner’s offer or a note, not a plan.',
 };
 
-/** What can reach a dimension on the day: being tired, being ill, being hurt. */
-export type ConditionKind = 'fatigue' | 'illness' | 'injury';
+/**
+ * What can reach a dimension on the day: being tired, being ill, being hurt, and a strained voice (from 2026-10-24, brief
+ * 25's Module 5, W4: read only by the work whose instrument is the voice, the booth, the dub, narration and a musical's
+ * night; `VOICE`, `content/workflows.ts`).
+ */
+export type ConditionKind = 'fatigue' | 'illness' | 'injury' | 'voice';
 
 export type Input = { ability: AbilityId; weight: number } | { techniques: true; weight: number };
 
@@ -284,6 +288,95 @@ export const TASK_PROFILES: Readonly<Record<string, TaskProfile>> = {
       execution: { weight: 2, inputs: [a('memory', 1), a('vocal', 1), a('physical', 1), tech(2)], prep: ['memorization', 'rehearsal'], conditions: ['fatigue', 'illness'] },
       connection: { weight: 1, inputs: [a('presence', 2)], prep: ['rehearsal'], conditions: ALL },
       consistency: { weight: 1, inputs: [a('composure', 2)], conditions: ALL },
+    },
+  },
+  // The professional workflows' own (from 2026-10-24, the owner's brief 25, Part 8; `content/workflows.ts`). Until then a
+  // professional day was a night on stage or a shoot day judged as a self-tape, whatever the work: a session in a booth,
+  // a dub, a capture stage, a narration, a tape night before a studio audience, a musical's night and a stunt had no
+  // profile of their own. Every weight is SLATE's reading of what each asks.
+  booth: {
+    id: 'booth', label: 'A Session In The Booth', what: 'A part’s lines recorded in a booth, scene by scene, the script on a stand.',
+    prepLabel: { ...COURSEWORK_PREP, interpretation: 'Breaking down the script', rehearsal: 'Running the lines aloud', special: 'Finding the voice', genre: 'Knowing the genre' },
+    dims: {
+      execution: { weight: 3, inputs: [a('vocal', 3), a('focus', 1), tech(2)], prep: ['special', 'rehearsal'], conditions: ['fatigue', 'illness', 'voice'] },
+      interpretation: { weight: 2, inputs: [a('imagination', 2), tech(1)], prep: ['interpretation', 'genre'] },
+      believability: { weight: 2, inputs: [a('emotionalDepth', 2), a('vocal', 1), tech(1)], prep: ['interpretation'], conditions: ['fatigue', 'voice'] },
+      consistency: { weight: 1, inputs: [a('vocal', 1), a('discipline', 1), a('focus', 1)], prep: ['special'], conditions: ['fatigue', 'voice'] },
+      responsiveness: { weight: 1, inputs: [a('adaptability', 1), a('listening', 1)], prep: ['rehearsal'], conditions: ALL },
+    },
+  },
+  dub: {
+    id: 'dub', label: 'A Dubbing Session', what: 'Another actor’s lines replaced in English, fitted to the mouth on screen a loop at a time.',
+    prepLabel: { ...COURSEWORK_PREP, interpretation: 'Breaking down the script', special: 'Watching the original', genre: 'Knowing the genre' },
+    dims: {
+      execution: { weight: 3, inputs: [a('focus', 2), a('listening', 1), a('vocal', 1), tech(2)], prep: ['special'], conditions: ['fatigue', 'illness', 'voice'] },
+      believability: { weight: 2, inputs: [a('emotionalDepth', 2), a('vocal', 1), tech(1)], prep: ['interpretation'], conditions: ['fatigue', 'voice'] },
+      interpretation: { weight: 1, inputs: [a('imagination', 1), tech(1)], prep: ['interpretation', 'genre'] },
+      consistency: { weight: 1, inputs: [a('discipline', 1), a('focus', 1)], prep: ['special'], conditions: ALL },
+    },
+  },
+  narration: {
+    id: 'narration', label: 'A Narration', what: 'A documentary’s script read in a booth, chapter by chapter, over hours.',
+    prepLabel: { ...COURSEWORK_PREP, interpretation: 'Breaking down the script', special: 'Checking the pronunciations', genre: 'Knowing the genre' },
+    dims: {
+      execution: { weight: 3, inputs: [a('vocal', 2), a('focus', 1), tech(2)], prep: ['special'], conditions: ['fatigue', 'illness', 'voice'] },
+      consistency: { weight: 2, inputs: [a('vocal', 1), a('stamina', 1), a('discipline', 1)], prep: ['special'], conditions: ['fatigue', 'voice'] },
+      interpretation: { weight: 2, inputs: [a('imagination', 1), a('focus', 1), tech(1)], prep: ['interpretation', 'genre'] },
+      believability: { weight: 1, inputs: [a('emotionalDepth', 1), tech(1)], prep: ['interpretation'], conditions: ALL },
+    },
+  },
+  capture: {
+    id: 'capture', label: 'A Capture Sequence', what: 'A sequence played on a capture stage in a suit and markers, with no set, for a character made in the computer.',
+    prepLabel: { ...COURSEWORK_PREP, special: 'Working on the movement', genre: 'Knowing the genre' },
+    dims: {
+      execution: { weight: 3, inputs: [a('physical', 3), tech(2)], prep: ['special', 'rehearsal'], conditions: ['fatigue', 'illness', 'injury'] },
+      interpretation: { weight: 3, inputs: [a('imagination', 3), tech(1)], prep: ['interpretation', 'genre'] },
+      believability: { weight: 2, inputs: [a('emotionalDepth', 1), a('imagination', 1), tech(1)], prep: ['interpretation', 'memorization'], conditions: ALL },
+      consistency: { weight: 1, inputs: [a('stamina', 1), a('discipline', 1)], prep: ['rehearsal'], conditions: ['fatigue', 'injury'] },
+    },
+  },
+  reenactment: {
+    id: 'reenactment', label: 'A Reenactment', what: 'A scene of a documentary’s history played on camera with no lines.',
+    prepLabel: { ...COURSEWORK_PREP, special: 'Studying the period’s movement', genre: 'Knowing the genre' },
+    dims: {
+      believability: { weight: 3, inputs: [a('emotionalDepth', 1), a('physical', 1), tech(1)], prep: ['interpretation', 'special'], conditions: ALL },
+      execution: { weight: 2, inputs: [a('physical', 2), tech(2)], prep: ['special', 'rehearsal'], conditions: ['fatigue', 'illness', 'injury'] },
+      connection: { weight: 1, inputs: [a('presence', 2)], prep: ['rehearsal'], conditions: ALL },
+      interpretation: { weight: 1, inputs: [a('imagination', 1), tech(1)], prep: ['interpretation', 'genre'] },
+    },
+  },
+  multicam: {
+    id: 'multicam', label: 'A Tape Night', what: 'A comedy’s scenes played in order before a studio audience, with the cameras rolling.',
+    prepLabel: { ...COURSEWORK_PREP, genre: 'Knowing the genre' },
+    dims: {
+      believability: { weight: 2, inputs: [a('emotionalDepth', 1), a('imagination', 0.5), tech(1)], prep: ['interpretation', 'memorization'], conditions: ALL },
+      connection: { weight: 2, inputs: [a('presence', 2), a('listening', 0.5)], prep: ['rehearsal'], conditions: ALL },
+      execution: { weight: 2, inputs: [a('memory', 2), a('vocal', 0.5), a('physical', 0.5), tech(2)], prep: ['memorization', 'rehearsal'], conditions: ['fatigue', 'illness', 'injury'] },
+      responsiveness: { weight: 2, inputs: [a('listening', 1), a('adaptability', 1)], prep: ['rehearsal'], conditions: ALL },
+      interpretation: { weight: 1, inputs: [a('imagination', 1), tech(1)], prep: ['interpretation', 'genre'] },
+      consistency: { weight: 1, inputs: [a('composure', 2), a('discipline', 1)], prep: ['rehearsal'], conditions: ALL },
+    },
+  },
+  stunt: {
+    id: 'stunt', label: 'A Stunt Scene', what: 'A scene built on a fight or a stunt, shot in takes with the stunt coordinator there.',
+    prepLabel: { ...COURSEWORK_PREP, special: 'Fight rehearsal', genre: 'Knowing the genre' },
+    dims: {
+      believability: { weight: 2, inputs: [a('emotionalDepth', 2), tech(1)], prep: ['interpretation', 'memorization'], conditions: ALL },
+      execution: { weight: 3, inputs: [a('physical', 2), a('memory', 1), a('focus', 1), tech(2)], prep: ['special', 'rehearsal'], conditions: ['fatigue', 'illness', 'injury'] },
+      interpretation: { weight: 1, inputs: [a('imagination', 1), tech(1)], prep: ['interpretation', 'genre'] },
+      consistency: { weight: 1, inputs: [a('composure', 1), a('discipline', 1), a('stamina', 1)], prep: ['special'], conditions: ['fatigue', 'injury'] },
+    },
+  },
+  musicalNight: {
+    id: 'musicalNight', label: 'A Night Of A Musical', what: 'A performance of a musical in front of an audience: the scenes, the songs and the numbers.',
+    prepLabel: { lines: 'Learning the lines and songs', blocking: 'The staging', notes: 'Taking the director’s notes', special: 'The choreography', genre: 'Knowing the genre' },
+    dims: {
+      believability: { weight: 2, inputs: BASE_INPUTS.night.believability, prep: ['lines', 'notes'], conditions: ALL },
+      interpretation: { weight: 1, inputs: BASE_INPUTS.night.interpretation, prep: ['notes', 'genre'] },
+      connection: { weight: 2, inputs: BASE_INPUTS.night.connection, prep: ['blocking'], conditions: ALL },
+      execution: { weight: 3, inputs: [a('memory', 3), a('vocal', 2), a('physical', 1.5), tech(2)], prep: ['lines', 'blocking', 'special'], conditions: ['fatigue', 'illness', 'injury', 'voice'] },
+      consistency: { weight: 1, inputs: BASE_INPUTS.night.consistency, prep: ['lines', 'special'], conditions: ['fatigue', 'voice'] },
+      responsiveness: { weight: 1, inputs: BASE_INPUTS.night.responsiveness, prep: ['notes'], conditions: ALL },
     },
   },
   performance: {

@@ -84,6 +84,9 @@ import type { Recommendation } from '@/engine/systems/experience';
 import { suggestions } from '@/engine/systems/briefs';
 import { AXES } from '@/engine/content/approaches';
 import { genreState } from '@/engine/systems/engagement';
+import { projectById } from '@/engine/content/careerwork';
+import { unitContext } from '@/engine/systems/workflow';
+import type { Engagement, WorkUnit } from '@/engine/systems/pro';
 
 const h = vi.hoisted(() => ({
   sim: undefined as unknown as import('@/engine/core/simulation').Simulation,
@@ -470,7 +473,20 @@ function auditionOn(sceneId: string): Judged {
   const piece = scenePiece(a)!;
   return (p) => judgePiece('p2b', p, ctx, piece);
 }
-/** Every piece of each kind of work, by the task it's judged as: every template, every brief at its first reading, every class scene, every night. */
+/**
+ * A professional unit judged as the kind of work it is (from 2026-10-24, brief 25's Module 5): its context as a work day
+ * builds it (`unitContext`), on the part each task's project casts (FIXTURE: fully prepared, readiness 100, no draw).
+ * Until then every task an ability's look names had a piece here; the eight the workflows added had none.
+ */
+const PRO_PIECES: readonly (readonly [string, string])[] = [['booth', 'lantern-row'], ['dub', 'salt-road'], ['narration', 'tidewater-narrator'], ['capture', 'iron-meridian'], ['reenactment', 'tidewater-reenactment'], ['multicam', 'half-past-normal'], ['stunt', 'breakwater'], ['musicalNight', 'lamplighters']];
+function proUnit(task: string, projectId: string): Judged {
+  const sim = life(`p2b-pro-${task}`);
+  const e = { prep: { interpretation: 1, memorization: 1, rehearsal: 1, special: 1 }, units: [] } as unknown as Engagement;
+  const u = { id: 'u1', day: 0, scene: 10, order: 1, version: 1 } as WorkUnit;
+  const ctx = { ...unitContext(sim, sim.player, e, projectById(projectId)!, u, 1, TASK_PROFILES[task]!, {}, 1), condition: { readiness: 100 }, key: `p2b:pro:${task}`, expected: true };
+  return (p) => judge('p2b', p, ctx);
+}
+/** Every piece of each kind of work, by the task it's judged as: every template, every brief at its first reading, every class scene, every night, and a professional unit of each kind the workflows judge. */
 const PIECES_BY_TASK: Readonly<Record<string, readonly Judged[]>> = (() => {
   const out: Record<string, Judged[]> = {};
   const add = (j: Judged) => { (out[j(EVEN).task] ??= []).push(j); };
@@ -478,6 +494,7 @@ const PIECES_BY_TASK: Readonly<Record<string, readonly Judged[]>> = (() => {
   for (const b of BRIEFS) { const pc = briefReadingPiece(b.id, b.readings[0]!.id); add((p) => pc.judge(p)); }
   for (const m of SCENE_MATERIAL) { const pc = gamePiece(m, 'scene'); add((p) => pc.judge(p)); }
   for (const m of PLAY_MATERIAL) { const pc = gamePiece(m, 'night'); add((p) => pc.judge(p)); }
+  for (const [task, projectId] of PRO_PIECES) add(proUnit(task, projectId));
   return out;
 })();
 const dimsOf = (e: Evaluation): Partial<Record<Dimension, number>> => Object.fromEntries(e.dimensions.map((d) => [d.dimension, d.exact ?? d.quality]));

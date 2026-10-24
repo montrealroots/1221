@@ -14,6 +14,10 @@
  * contribution beside the pay and never in it, a per diem apart from wages, residuals in their four records, and a
  * recurring part's episodes, its option and its series' seasons. Ask About It is the one control they add. Until then the
  * fold was The Agreement, the company and the venue, and every payment not yet paid read "Promised".
+ *
+ * From 2026-10-24 (brief 25's Module 5, `systems/workflow.ts`): How The Work Is Done, each engagement's workflow, its
+ * own preparation, the voice where the work reads it, the choices the work asks with a button for each option
+ * (`pro.work_choice`), a recall to loop, and each day's report as it was worked.
  */
 
 import { useGame, useWorld } from '@/app/game-context';
@@ -29,6 +33,9 @@ import { finished, type Contract, type ContractClause, type Engagement, type Pro
 import { askRefusal, notOwed, payState, calculationWords } from '@/engine/systems/contracts';
 import { EPISODE_CALL_KIND, OPTION_KIND, decisionsTo, decisionWords, ordinal } from '@/engine/systems/series';
 import { seriesById } from '@/engine/content/series';
+import { FORMATS } from '@/engine/content/workflows';
+import { choiceRefusal, choicesOf, formatOf, reportWords, strainOf, workflowOf } from '@/engine/systems/workflow';
+import { projectById } from '@/engine/content/careerwork';
 import { inSaveMoney } from '@/engine/systems/banking';
 import { DEFERRED_WHY, counted, drawnWords } from '@/engine/systems/projobs';
 import { SCHEDULE_WORDS, US_RULES, countryIn, legWords, routeFor, routeSourceWords, tripOf, tripRead, visaFor, visaRefusal } from '@/engine/systems/worktrip';
@@ -256,11 +263,56 @@ function ContractFacts({ c, zone }: { c: Contract; zone: string }) {
   );
 }
 
+/**
+ * How the work is done (from 2026-10-24, brief 25's Module 5): its workflow and format in words, its own preparation and
+ * how far it stands, the voice where the work reads it, a recall to loop, and each choice the work asks with its
+ * options, the one in force said and the others a button each.
+ */
+function WorkflowView({ person, e }: { person: Person; e: Engagement }) {
+  const { sim, run, toast } = useGame();
+  const t = projectById(e.projectId)!;
+  const flow = workflowOf(t);
+  const fmt = formatOf(t);
+  const voice = Object.values(flow.judged).some((j) => j?.strain) || Object.values(flow.builds ?? {}).some((b) => b?.strain);
+  const strain = strainOf(person, sim.now);
+  const live = e.status !== 'finished' && e.status !== 'canceled';
+  return (
+    <div className="col gap-2 small">
+      <SectionHead title={flow.label} help="career.workflows" />
+      <p style={{ margin: 0 }}>{`${FORMATS[t.format].label}. ${fmt.words} ${flow.words}`}</p>
+      {flow.prep.special && <p style={{ margin: 0 }}>{`Its own preparation, ${flow.prep.special.label}: ${flow.prep.special.what} Done so far: ${Math.round((e.prep?.special ?? 0) * 100)}%.`}</p>}
+      {voice && <p style={{ margin: 0 }}>{`Your voice’s strain now: ${Math.round(strain)} of 100. Voice work raises it, and rest eases it.`}</p>}
+      {e.loop && <p style={{ margin: 0 }}>{e.loop.status === 'set' ? `Recalled to loop on ${formatDateTime(e.loop.at, sim.zone)}: four hours at a studio near you, paid half a day.` : e.loop.status === 'done' ? `Looped on ${formatDate(e.loop.at, sim.zone)}, paid half a day.` : `The looping session on ${formatDate(e.loop.at, sim.zone)} was missed, and another actor did it.`}</p>}
+      {live && choicesOf(e, t).map(({ decision: d, chosen }) => {
+        const now = d.options.find((o) => o.id === chosen)!;
+        const others = d.options.filter((o) => o.id !== chosen);
+        const reasons = others.map((o) => [o.label, choiceRefusal(e, t, d.id, o.id)] as const);
+        return (
+          <div key={d.id} className="col gap-1">
+            <h4 style={{ margin: 0 }}>{d.label}</h4>
+            <p style={{ margin: 0 }}>{`${now.label}, now: ${now.words}`}</p>
+            <div className="row gap-2" style={{ flexWrap: 'wrap' }}>
+              {others.map((o, i) => (
+                <Gated key={o.id} feature="pro.work_choice" className="btn btn-sm" disabled={!!reasons[i]![1]} title={reasons[i]![1]} onClick={() => { const r = run('pro.work_choice', { engagementId: e.id, decision: d.id, option: o.id }); if (r.ok) toast(`${d.label}: ${o.label}.`, 'positive'); }}>{o.label}</Gated>
+              ))}
+            </div>
+            <ul className="xs dim" style={{ margin: 0, paddingLeft: '1.1rem' }}>{others.map((o) => <li key={o.id}>{`${o.label}: ${o.words}`}</li>)}</ul>
+            <WhyNot reasons={reasons} />
+          </div>
+        );
+      })}
+    </div>
+  );
+}
+
 /** A clause in a sentence (D1 to D8): what it gives, and where it stands. */
 function clauseWords(x: ContractClause, zone: string): string {
   switch (x.kind) {
     case 'deferred': return `Deferred pay: ${DEFERRED_WHY}.`;
-    case 'overtime': return `Overtime: each shoot day is eleven hours with an hour for lunch, so its ninth and tenth hours of work are paid at time and one-half, ${usd(x.perDay)} a day, an hour being ${usd(x.hourly)}, an eighth of the day rate. SAG-AFTRA’s agreement sets it.`;
+    // A day of one hour's overtime, a capture day's, from 2026-10-24 (brief 25's Module 5).
+    case 'overtime': return x.hours === 2
+      ? `Overtime: each shoot day is eleven hours with an hour for lunch, so its ninth and tenth hours of work are paid at time and one-half, ${usd(x.perDay)} a day, an hour being ${usd(x.hourly)}, an eighth of the day rate. SAG-AFTRA’s agreement sets it.`
+      : `Overtime: each day is ten hours with an hour for lunch, so its ninth hour of work is paid at time and one-half, ${usd(x.perDay)} a day, an hour being ${usd(x.hourly)}, an eighth of the day rate. SAG-AFTRA’s agreement sets it.`;
     case 'residuals': return `Residuals: a network rerun of the episode in prime time pays you again, all your pay for the time you worked with overtime at straight time, up to ${usd(x.ceiling)} for ${x.program === 'hour' ? 'an hour' : 'a half-hour'}’s program. Your pay covers its first telecast.`;
     case 'contributions': return `Pension and health: the producer pays ${pct(x.rate)} of your pay on top of it to SAG-AFTRA’s pension and health plans. It isn’t taken from your pay, and it isn’t money of yours to spend.`;
     case 'trip': return `Travel: ${x.words}`;
@@ -274,6 +326,8 @@ function clauseWords(x: ContractClause, zone: string): string {
       if (x.status === 'open') return `${head} Not yet decided.`;
       return `${head} ${x.settled?.why ?? (x.status === 'exercised' ? 'Taken up.' : 'Lapsed.')}`;
     }
+    // A workflow's rule (from 2026-10-24, brief 25's Module 5): its own words.
+    case 'rule': return x.words;
   }
   return '';
 }
@@ -355,11 +409,25 @@ function EngagementView({ person, e }: { person: Person; e: Engagement }) {
         </dl>
         {e.contract && <SectionHead title="Its Terms" help="career.contracts" />}
         {e.contract
-          ? <ul className="small col gap-2" style={{ margin: 'var(--s2) 0 0', paddingLeft: '1.1rem' }}>{e.contract.clauses.map((x) => <li key={x.kind}>{clauseWords(x, zone)}</li>)}</ul>
+          ? <ul className="small col gap-2" style={{ margin: 'var(--s2) 0 0', paddingLeft: '1.1rem' }}>{e.contract.clauses.map((x) => <li key={x.kind === 'rule' ? `rule:${x.id}` : x.kind}>{clauseWords(x, zone)}</li>)}</ul>
           : <p className="xs dim" style={{ margin: 'var(--s2) 0 0' }}>This work was booked before the game kept contracts, so its terms are its pay below.</p>}
         {e.contract?.series && <p className="xs dim" style={{ margin: 'var(--s2) 0 0' }}>{[seriesById(e.contract.series.id)?.words ?? '', ...seasonsWords(sim, e.contract)].join(' ')}</p>}
         {!placeKnown(e) && project && <p className="xs dim" style={{ margin: 'var(--s2) 0 0' }}>{`${project.place.city} isn’t among the game’s towns, so its pay counts on your tax return as earned where you live, and the tax where the work is done isn’t worked out.`}</p>}
       </details>
+      {project && project.format !== 'play' && (
+        <details className="section-fold">
+          <summary>How The Work Is Done</summary>
+          <WorkflowView person={person} e={e} />
+        </details>
+      )}
+      {(e.reports?.length ?? 0) > 0 && project && (
+        <details className="section-fold">
+          <summary>{`Each Day’s Report (${e.reports!.length})`}</summary>
+          <ul className="small col gap-2" style={{ margin: 0, paddingLeft: '1.1rem' }}>
+            {[...e.reports!].reverse().map((r) => <li key={`${r.day}:${r.at}`}>{`${formatDate(r.at, zone)}, ${e.days[r.day]?.label.replace(/^[^:]*: /, '') ?? 'a day'}: ${reportWords(e, project, r)}`}</li>)}
+          </ul>
+        </details>
+      )}
       <details className="section-fold">
         <summary>{calls.length ? `On Your Calendar (${calls.length})` : 'On Your Calendar'}</summary>
         {runs.length

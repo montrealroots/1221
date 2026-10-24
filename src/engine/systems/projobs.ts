@@ -97,6 +97,8 @@ import { companiesAs, productionById } from '../content/catalog';
 import { episodeDays, episodesFrom, seasonYearAt, seriesById } from '../content/series';
 import { clauseOf, contractFor, entitle, overtimeOf, paysOvertime, OPTION_RAISE } from './contracts';
 import { inProduction, registerSeries, scheduleSeason, seasonOf } from './series';
+import { STEP_LABEL, STEP_WORDS, afterWrap, dubDaysOf, cutInEdit, formatOf, keptBand, payUnitsOf, planWork, registerWorkflows, sessionDays, stepOf, voiceOnly, workHoursOf, workTheDay, workflowOf } from './workflow';
+import { RELEASED } from '../content/workflows';
 
 // ---------------------------------------------------------------------------------------------------------------------
 // The rules: each a published one with its source, or the game's ASSUMPTION
@@ -124,6 +126,12 @@ export const WORK = {
   offerDays: 3, offerHour: 17,
   leadDays: 35,
   shoot: { hour: 7, minutes: 660 }, rehearsal: { hour: 10, minutes: 480 }, performance: { hour: 20, minutes: 150 },
+  /**
+   * The workflows' days (from 2026-10-24, brief 25's Module 5), ASSUMPTION each: a multicamera table read from ten for
+   * four hours, its tape night from two for eight, the camera run before the audience comes in; a fight rehearsal from
+   * ten for six.
+   */
+  tableRead: { hour: 10, minutes: 240 }, tapeNight: { hour: 14, minutes: 480 }, fightRehearsal: { hour: 10, minutes: 360 },
   /** Asking for another time: once, at least a day ahead, the casting office's other times (eleven, two and five) in the next three weekdays. */
   moveAheadHours: 24, movesAllowed: 1, moveSlots: [11, 14, 17] as readonly number[], moveDays: 3,
   /** A step on the whole part takes twice its time on the sides; the part starts from half the sides' preparation. */
@@ -139,8 +147,13 @@ export const WORK = {
  * project's breakdown reaches a represented actor's agent in one. ASSUMPTION: the game's, for a steady trickle.
  */
 export const POSTING = {
-  open: { 'student-film': 0.3, 'non-union-short': 0.25, 'ultra-low-budget': 0.15, lort: 0.12, 'overseas-feature': 0.1 } as Readonly<Partial<Record<ProjectKind, number>>>,
+  open: { 'student-film': 0.3, 'non-union-short': 0.25, 'ultra-low-budget': 0.15, lort: 0.12, 'overseas-feature': 0.1, 'animated-series': 0.08, 'animated-feature': 0.06, dub: 0.08, documentary: 0.08, musical: 0.08 } as Readonly<Partial<Record<ProjectKind, number>>>,
   agent: 0.2,
+  /**
+   * The chance a breakdown of a kind added with the workflows reaches the agent in a week (from 2026-10-24, brief 25's
+   * Module 5), where it isn't `agent`: rarer work for an emerging actor, so nine kinds more don't post nine times as often.
+   */
+  agentKind: { 'multicam-comedy': 0.08, 'capture-feature': 0.05, musical: 0.08, 'action-feature': 0.06, 'limited-series': 0.06, 'serialized-drama': 0.07, 'serialized-comedy': 0.07, anthology: 0.06, 'tv-movie': 0.06 } as Readonly<Partial<Record<ProjectKind, number>>>,
   /**
    * A project casts its role once a cycle: posted again only ten weeks after its last posting to the actor, and only once
    * the work that posting cast is over, as a new casting of the part (`againWords`). The second half from 2026-10-21
@@ -160,7 +173,11 @@ export const CASTING = {
   final: { unready: 0.04, working: 0.18, strong: 0.38, exceptional: 0.58 } as Readonly<Record<Band, number>>,
   callback: { unready: 0.1, working: 0.45, strong: 0.78, exceptional: 0.9 } as Readonly<Record<Band, number>>,
   fitFloor: 0.4,
-  field: { 'off-broadway': 0.8, lort: 0.85, 'network-drama': 0.75, 'low-budget': 0.85, 'ultra-low-budget': 1, 'student-film': 1.25, 'non-union-short': 1.2, 'overseas-feature': 0.8, 'network-comedy': 0.75 } as Readonly<Record<ProjectKind, number>>,
+  field: {
+    'off-broadway': 0.8, lort: 0.85, 'network-drama': 0.75, 'low-budget': 0.85, 'ultra-low-budget': 1, 'student-film': 1.25, 'non-union-short': 1.2, 'overseas-feature': 0.8, 'network-comedy': 0.75,
+    'multicam-comedy': 0.75, 'animated-series': 0.9, 'animated-feature': 0.8, dub: 1.1, 'capture-feature': 0.9, documentary: 1.1, musical: 0.85, 'action-feature': 0.8,
+    'limited-series': 0.8, 'serialized-drama': 0.8, 'serialized-comedy': 0.8, anthology: 0.85, 'tv-movie': 0.9,
+  } as Readonly<Record<ProjectKind, number>>,
   least: 0.01, most: 0.8,
   /** An actor plays three years either side of their own age. */
   playingSpread: 3,
@@ -177,6 +194,19 @@ export const FIELD_WORDS: Readonly<Record<ProjectKind, string>> = {
   'non-union-short': 'a small field',
   'overseas-feature': 'a large field: a studio feature shooting abroad sees tapes from actors in more than one country',
   'network-comedy': 'the largest field: a network co-star is seen by the most actors',
+  'multicam-comedy': 'the largest field: a network co-star is seen by the most actors',
+  'animated-series': 'a large field: voice casting hears actors from everywhere',
+  'animated-feature': 'a large field: an animated feature hears actors from everywhere',
+  dub: 'a middling field: dubbing casts from the voice actors it knows',
+  'capture-feature': 'a large field',
+  documentary: 'a middling field',
+  musical: 'a large field: a regional musical casts from New York',
+  'action-feature': 'a large field',
+  'limited-series': 'a large field',
+  'serialized-drama': 'a large field',
+  'serialized-comedy': 'a large field',
+  anthology: 'a large field',
+  'tv-movie': 'a large field',
 };
 
 /** Missed work days a project allows before replacing the actor: the stage's understudy covers one, a shoot can't wait. ASSUMPTION. */
@@ -185,6 +215,8 @@ export const MISSES = { stage: 1, screen: 0 } as const;
 /** How long after it's shot a screen project comes out, so its footage can go on a reel. ASSUMPTION, by kind. */
 export const RELEASE_DAYS: Readonly<Partial<Record<ProjectKind, number>>> = {
   'network-drama': 120, 'low-budget': 365, 'ultra-low-budget': 300, 'student-film': 180, 'non-union-short': 150, 'overseas-feature': 365, 'network-comedy': 120,
+  'multicam-comedy': 60, 'animated-series': 240, 'animated-feature': 540, dub: 90, 'capture-feature': 450, documentary: 200, 'action-feature': 365,
+  'limited-series': 240, 'serialized-drama': 200, 'serialized-comedy': 180, anthology: 200, 'tv-movie': 120,
 };
 
 /** The School's rule on outside work in term: the design's ASSUMPTIONS for the Bulletin's words (this file's header). */
@@ -244,10 +276,14 @@ export const KIND_WORDS: Readonly<Record<ProjectKind, string>> = {
   'off-broadway': 'Off-Broadway play', lort: 'play in a regional theater’s season', 'network-drama': 'network television drama',
   'low-budget': 'low-budget feature film', 'ultra-low-budget': 'ultra-low-budget feature film', 'student-film': 'student film',
   'non-union-short': 'non-union short film', 'overseas-feature': 'studio feature film shooting abroad', 'network-comedy': 'network television comedy',
+  'multicam-comedy': 'multicamera television comedy', 'animated-series': 'animated television series', 'animated-feature': 'animated feature film',
+  dub: 'English dub of a series from abroad', 'capture-feature': 'feature film’s performance capture', documentary: 'documentary', musical: 'musical in a regional theater’s season',
+  'action-feature': 'studio action feature', 'limited-series': 'limited series', 'serialized-drama': 'serialized television drama',
+  'serialized-comedy': 'serialized television comedy', anthology: 'anthology series', 'tv-movie': 'television movie',
 };
 
 /** One work day: when, its label on the calendar, and what it is. */
-export interface WorkDay { from: Instant; to: Instant; label: string; kind: 'rehearsal' | 'performance' | 'shoot' }
+export interface WorkDay { from: Instant; to: Instant; label: string; kind: 'rehearsal' | 'performance' | 'shoot' | 'session' }
 
 /**
  * The work's days, worked out from the posting and the project's schedule (`content/careerwork.ts`): a shoot's days on
@@ -263,16 +299,45 @@ export function datesOf(o: Pick<Opportunity, 'projectId' | 'postedAt'>): WorkDay
   const out: WorkDay[] = [];
   if (t.schedule.kind === 'episodes') return episodeWorkDays(t, start, t.schedule.guaranteed);
   if (t.schedule.kind === 'shoot') {
-    for (let d = start; out.length < t.schedule.days; d = addDays(d, 1, zone)) {
+    // An action shoot's fight rehearsal days first (from 2026-10-24, brief 25's Module 5), with the stunt coordinator.
+    const before = t.schedule.rehearsalDays ?? 0;
+    const total = t.schedule.days + before;
+    let shot = 0;
+    for (let d = start; out.length < total; d = addDays(d, 1, zone)) {
       const wd = weekdayOf(d, zone);
-      if (wd >= 1 && wd <= 5) out.push({ ...at(d, WORK.shoot), label: `${t.project}: Shoot Day ${out.length + 1}`, kind: 'shoot' });
+      if (wd < 1 || wd > 5) continue;
+      if (out.length < before) { out.push({ ...at(d, WORK.fightRehearsal), label: `${t.project}: ${STEP_LABEL['stunt-rehearsal']} ${out.length + 1}`, kind: 'shoot' }); continue; }
+      shot += 1;
+      const step = stepOf(t, out.length);
+      const day = step === 'stunt-day' ? STEP_LABEL['stunt-day'].replace('Shoot Day', `Shoot Day ${shot}`) : step === 'reenactment' ? `${STEP_LABEL.reenactment} ${shot}` : `Shoot Day ${shot}`;
+      out.push({ ...at(d, WORK.shoot), label: `${t.project}: ${day}`, kind: 'shoot' });
     }
     return out;
+  }
+  // A multicamera episode's week from its first Monday (Module 5): the table read Monday morning, rehearsal and camera
+  // blocking Tuesday to Thursday, and the tape night Friday before a studio audience.
+  if (t.schedule.kind === 'week') {
+    let monday = start;
+    while (weekdayOf(monday, zone) !== 1) monday = addDays(monday, 1, zone);
+    for (let w = 0; w < t.schedule.weeks; w += 1) {
+      for (let k = 0; k < 5; k += 1) {
+        const day = addDays(monday, w * 7 + k, zone);
+        const step = stepOf(t, w * 5 + k);
+        out.push({ ...at(day, step === 'table-read' ? WORK.tableRead : step === 'tape-night' ? WORK.tapeNight : WORK.rehearsal), label: `${t.project}: ${STEP_LABEL[step]}`, kind: 'shoot' });
+      }
+    }
+    return out;
+  }
+  // Sessions on weekdays (Module 5): the booth, the dub, narration, the capture stage.
+  if (t.schedule.kind === 'sessions') {
+    const step = stepOf(t, 0);
+    return sessionDays(t, start, zone).map((d, k) => ({ ...d, label: `${t.project}: ${STEP_LABEL[step]} ${k + 1}`, kind: step === 'capture' ? 'shoot' as const : 'session' as const }));
   }
   let tuesday = start;
   while (weekdayOf(tuesday, zone) !== 2) tuesday = addDays(tuesday, 1, zone);
   for (let w = 0; w < t.schedule.rehearsalWeeks; w += 1) {
-    for (let k = 0; k < 5; k += 1) out.push({ ...at(addDays(tuesday, w * 7 + k, zone), WORK.rehearsal), label: `${t.project}: Rehearsal`, kind: 'rehearsal' });
+    // A musical's music rehearsals and choreography come first (Module 5): each day named for what it is.
+    for (let k = 0; k < 5; k += 1) out.push({ ...at(addDays(tuesday, w * 7 + k, zone), WORK.rehearsal), label: `${t.project}: ${STEP_LABEL[stepOf(t, w * 5 + k)]}`, kind: 'rehearsal' });
   }
   const opening = addDays(tuesday, t.schedule.rehearsalWeeks * 7, zone);
   for (let w = 0; w < t.schedule.performanceWeeks; w += 1) {
@@ -304,7 +369,9 @@ export const episodeOfDay = (d: { label: string }): number | undefined => { cons
 
 /** A booked day's kind, read from where it falls in the project's schedule: a run's rehearsals come first. */
 export function dayKindOf(t: ProjectTemplate, index: number): WorkDay['kind'] {
-  // A recurring part's episodes are shoot days (from 2026-10-24): until then a schedule was a run's or a shoot's.
+  // A recurring part's episodes are shoot days (from 2026-10-24): until then a schedule was a run's or a shoot's. A booth's
+  // session is its own from Module 5; a multicamera week's days and an action shoot's rehearsals are a screen production's.
+  if (t.schedule.kind === 'sessions') return stepOf(t, index) === 'capture' ? 'shoot' : 'session';
   if (t.schedule.kind !== 'run') return 'shoot';
   return index < t.schedule.rehearsalWeeks * 5 ? 'rehearsal' : 'performance';
 }
@@ -353,7 +420,7 @@ export function payWords(terms: PayTerms, amount: Money | undefined = terms.each
 /** The department field a project falls in, by the agent's published list (`content/agents.ts`). */
 export function fieldOf(t: ProjectTemplate): AgentField {
   if (t.kind === 'off-broadway') return 'off-broadway';
-  if (t.kind === 'lort') return 'regional';
+  if (t.kind === 'lort' || t.kind === 'musical') return 'regional';
   // By the medium (from 2026-10-23, brief 25's Module 2): until then by the one television kind, network drama, so the
   // network comedy it added would have been filed under film.
   if (t.medium === 'television') return 'television';
@@ -523,7 +590,7 @@ export function postingsAt(sim: Simulation, person: Person, at: Instant): { proj
       const season = seriesSeasonOf(t, days[0]!.from);
       if (person.pro?.engagements.some((e) => e.projectId === t.id && e.status !== 'canceled' && (!finished(e) || seriesSeasonOf(t, e.days[0]?.from ?? 0) === season))) continue;
     } else if (person.pro?.engagements.some((e) => e.projectId === t.id && e.status !== 'canceled') || person.pro?.credits.some((c) => c.project === t.project && c.role === t.role.part)) continue;
-    const chance = via === 'agent' ? POSTING.agent : POSTING.open[t.kind] ?? 0;
+    const chance = via === 'agent' ? POSTING.agentKind[t.kind] ?? POSTING.agent : POSTING.open[t.kind] ?? 0;
     if (sim.rng('pro.posting', week, t.id, via).next() < chance) out.push({ project: t, via });
   }
   return out;
@@ -882,6 +949,25 @@ export function prepareRefusal(sim: Simulation, person: Person, x: PrepTarget | 
   if (!x) return 'There’s nothing to prepare for that.';
   if ('opportunity' in x && (!roundToCome(x.opportunity) || (x.opportunity.status !== 'audition' && x.opportunity.status !== 'callback'))) return 'There are no sides yet: casting sends them with an audition.';
   if ('engagement' in x && !live(x.engagement)) return 'That work is over.';
+  // A booked part prepares as its workflow does (from 2026-10-24, brief 25's Module 5): its own step, and only the
+  // three it reads, so a voice part has no lines to learn by heart.
+  if ('engagement' in x) {
+    const flow = workflowOf(projectById(x.engagement.projectId)!);
+    if (step === 'special') {
+      const sp = flow.prep.special;
+      if (!sp) return 'This work has no preparation of its own beyond the part.';
+      if (sp.onlyWithCrew) return `${sp.label} happens only on the work’s own rehearsal days, with the stunt coordinator, never alone.`;
+      if ((x.engagement.prep?.special ?? 0) >= 0.97) return 'You’ve done all this step can do.';
+      if (person.awakeSince !== undefined && person.awakeSince > sim.now) return 'You’re asleep.';
+      if (sp.feet) {
+        if (person.wellbeing.energy < SPENT) return 'You’re too tired to work on your feet. Sleep first.';
+        const hurt = trainingRefusal(person, sim.now);
+        if (hurt) return hurt;
+      }
+      return startRefusal(sim, person, sp.minutes, true);
+    }
+    if (BRIEF.steps[step as BriefStep] && !flow.prep.steps.includes(step as BriefStep)) return step !== 'lines' ? 'This work doesn’t ask for that step.' : voiceOnly(projectById(x.engagement.projectId)!) ? 'There are no lines to learn by heart: the script is on the stand in the booth.' : 'This part has no lines to learn.';
+  }
   const s = BRIEF.steps[step as BriefStep];
   if (!s) return 'That isn’t a step of preparation.';
   const prep = prepOfTarget(x);
@@ -1110,7 +1196,7 @@ export function reachWords(person: Person, t: ProjectTemplate, days: readonly { 
 
 /** The casting office as a sentence's subject: capitalized to start one ("The producers"), and its verb agreeing with it. */
 export const castingAs = (t: ProjectTemplate): string => t.casting.charAt(0).toUpperCase() + t.casting.slice(1);
-export const agrees = (t: ProjectTemplate, one: string, many: string): string => (/^the producers\b/i.test(t.casting) ? many : one);
+export const agrees = (t: ProjectTemplate, one: string, many: string): string => (/\bproducers$/i.test(t.casting) ? many : one);
 
 // ---------------------------------------------------------------------------------------------------------------------
 // The loop's steps
@@ -1316,7 +1402,7 @@ function makeOffer(sim: Simulation, person: Person, o: Opportunity): void {
   const drawn = drawnWords(t);
   // What the contract adds to the pay, said with it (from 2026-10-24, brief 25's Module 4): a day's overtime, and a
   // recurring part's episodes and option.
-  const more = termsWords(t, o.offer.amount);
+  const more = termsWords(t, o.offer.amount, days);
   const words = `${castingAs(t)} ${agrees(t, 'offers', 'offer')} you ${roleWords(t)}. ${payWords(terms, o.offer.amount)}${more} The work is ${span}. The offer stands until ${formatDate(until, NY)} at ${formatTime(until, NY)}.${drawn ? ` ${drawn}` : ''}`;
   // In the history, past (from 2026-10-21, as the rounds' lines): the offer stood until its day, whatever came of it.
   note(sim, person, o, { kind: 'offer', key: 'offer', words: `${castingAs(t)} offered you ${roleWords(t)}. ${payWords(terms, o.offer.amount)}${more} The work was ${span}, and the offer stood until ${formatDate(until, NY)} at ${formatTime(until, NY)}.` });
@@ -1338,9 +1424,17 @@ function makeOffer(sim: Simulation, person: Person, o: Opportunity): void {
  * What a contract adds to an offer's pay, in sentences after it (from 2026-10-24, brief 25's Module 4, D3 and D7): a day
  * performer's overtime on each eleven-hour day, and a recurring part's guaranteed and expected episodes and its option.
  */
-export function termsWords(t: ProjectTemplate, amount: Money | undefined): string {
+// The days' lengths are the schedule's whenever it's posted, so the words read the same without a posting's own.
+export function termsWords(t: ProjectTemplate, amount: Money | undefined, days: readonly WorkDay[] = datesOf({ projectId: t.id, postedAt: 0 })): string {
   const out: string[] = [];
-  if (amount !== undefined && paysOvertime(t.pay)) out.push(`Each shoot day runs eleven hours with an hour for lunch, so its last two hours of work are overtime at time and one-half, ${formatMoney(overtimeOf(amount), 'USD')} more a day.`);
+  // Overtime only where the days run long enough for it (from 2026-10-24, brief 25's Module 5): a booth's sessions carry none.
+  const ot = Math.max(0, ...days.map((d) => overtimeHours(d)));
+  if (amount !== undefined && paysOvertime(t.pay) && ot === 2) out.push(`Each shoot day runs eleven hours with an hour for lunch, so its last two hours of work are overtime at time and one-half, ${formatMoney(overtimeOf(amount), 'USD')} more a day.`);
+  else if (amount !== undefined && paysOvertime(t.pay) && ot > 0) out.push(`Each day runs ten hours with an hour for lunch, so its last hour of work is overtime at time and one-half, ${formatMoney(overtimeOf(amount, ot), 'USD')} more a day.`);
+  // How the work is done (Module 5), and what it asks before anyone's cast: an intimate scene.
+  out.push(formatOf(t).words);
+  if (t.dub) out.push(`The dub’s pay follows the agreement’s rule for replacing another actor’s lines: its ${counted(t.dub.length, 'session')} pay ${spokenList(t.dub.map((d) => counted(dubDaysOf(d), 'day')))} in turn.`);
+  if (t.intimacy) out.push(intimacyWords(t));
   const s = t.series ? seriesById(t.series) : undefined;
   if (s && t.schedule.kind === 'episodes') {
     out.push(`The contract guarantees ${counted(t.schedule.guaranteed, 'episode')} of the season’s ${counted(s.episodes, 'episode')}, ${counted(s.daysEach, 'shoot day')} each, and expects you in up to ${countWords(t.schedule.expected)}: a further episode is paid the same if the production calls you for it, and one it doesn’t call you for isn’t paid.`);
@@ -1348,6 +1442,12 @@ export function termsWords(t: ProjectTemplate, amount: Money | undefined): strin
   }
   return out.length ? ` ${out.join(' ')}` : '';
 }
+
+/**
+ * What an intimate scene asks, said before the audition and with the offer (N13 §43.A): what it is, the closed set and the
+ * coordinator, and that consent is the actor's to give or not without any cost to them.
+ */
+export const intimacyWords = (t: ProjectTemplate): string => (t.intimacy ? `The part has ${t.intimacy.words}, shot on a closed set with an intimacy coordinator and only with your written consent. A body double can do it instead, and declining it costs you nothing in the casting.` : '');
 
 /**
  * The promised pay, one entry for each week of work: a run's by its weeks, a shoot's by the calendar week (Sunday to
@@ -1369,13 +1469,18 @@ export function promisedPay(sim: Simulation, e: Engagement, o: Opportunity, from
     const due = addDays(dayAt(last, 12), (4 - weekdayOf(last) + 7) % 7 || 7, NY);
     // A day performer's two hours of overtime on each day (`systems/contracts.ts`, from 2026-10-24, brief 25's Module 4,
     // D3): until then a SAG-AFTRA day was paid its day rate for eleven hours on set.
-    const overtime = offer.amount !== undefined && offer.per === 'day' && paysOvertime(offer.rate) ? overtimeOf(offer.amount) * g.length : 0;
-    const promised = (offer.amount === undefined ? 0 : offer.per === 'week' ? offer.amount : offer.amount * g.length) + overtime;
+    // Overtime on each day long enough for it (from 2026-10-24, brief 25's Module 5): a booth's four hours carry none, a
+    // capture day's nine one hour, a shoot day's ten two. And a dub day's pay in days by N13 Schedule A §37 (`payUnitsOf`).
+    const overtime = offer.amount !== undefined && offer.per === 'day' && paysOvertime(offer.rate) ? g.reduce((n, i) => n + overtimeOf(offer.amount!, overtimeHours(e.days[i]!)), 0) : 0;
+    const promised = (offer.amount === undefined ? 0 : offer.per === 'week' ? offer.amount : offer.amount * g.reduce((n, i) => n + payUnitsOf(t, i), 0)) + overtime;
     // The days it pays for go on it, so the pay reads this week, not the calendar week before its payday (from 2026-10-21).
     const week = { from: e.days[g[0]!]!.from, to: e.days[g[g.length - 1]!]!.to };
     return { id: sim.nextId('pro'), key: `${e.id}:${w + 1 + (first ?? 0)}`, promised, currency: 'USD', promisedAt: sim.now, due, week, ...(overtime ? { overtime } : {}), ...(offer.amount === undefined ? { deferred: true as const } : {}) };
   });
 }
+
+/** A day's overtime hours: those past eight of its work time, up to the two at time and one-half (`OVERTIME`). */
+export const overtimeHours = (d: { from: Instant; to: Instant }): number => Math.max(0, Math.min(2, workHoursOf(d) - 8));
 
 /** The days in each paid week, by their indexes: a run's weeks from its first Tuesday; a shoot's calendar weeks. */
 export function payGroups(e: Pick<Engagement, 'days'>, t: ProjectTemplate): number[][] {
@@ -1440,6 +1545,8 @@ function finish(sim: Simulation, person: Person, e: Engagement, t: ProjectTempla
     const c = addCredit(sim, person, {
       kind: t.kind === 'student-film' ? 'student-film' : 'screen', project: t.project, role: t.role.part, company: t.company,
       year: zonedParts(worked.at, NY).year, medium: t.medium, status: 'shot', ...(t.union !== 'none' ? { union: t.union } : {}), engagementId: e.id, at: worked.at, ...(best ? { band: best } : {}),
+      // Voice work is heard, not seen (from 2026-10-24, brief 25's Module 5): its credit can't go on a reel.
+      ...(voiceOnly(t) ? { voice: true as const } : {}),
     });
     e.creditId = c.id;
     const days = RELEASE_DAYS[t.kind];
@@ -1452,11 +1559,16 @@ function finish(sim: Simulation, person: Person, e: Engagement, t: ProjectTempla
   // Television work under SAG-AFTRA carries residuals from the day it's done (`entitle`, `systems/contracts.ts`, from
   // 2026-10-24, brief 25's Module 4, D5).
   entitle(sim, person, e, t);
+  // A recall to loop, and an anthology's invitation for strong work (from 2026-10-24, brief 25's Module 5, `afterWrap`).
+  if (t.medium !== 'stage') afterWrap(sim, person, e, t, best, (title, body) => tell(sim, person, title, body, 70));
   const rel = e.agentId ? person.pro?.relations[e.agentId] : undefined;
   if (rel) noteEvent(sim, rel, { kind: 'success', key: `eng:${e.id}:finished`, words: `You finished ${t.role.part} in ${t.project}.`, ref: e.id });
   keepBounded(ensurePro(sim, person));
-  tell(sim, person, t.medium === 'stage' ? `${t.project} Closed` : `You Wrapped ${t.project}`, `${t.medium === 'stage' ? `The run of ${t.project} is over` : `${t.project} wrapped`}, and ${t.role.part} is on your professional credits${t.medium === 'stage' ? '' : `, not yet released. Its footage can go on a reel once it comes out${RELEASE_DAYS[t.kind] ? `, about ${counted(Math.round(RELEASE_DAYS[t.kind]! / 30), 'month')} on, estimated` : ''}`}. Update your résumé on the Portfolio tab to add it.`, 70);
+  tell(sim, person, t.medium === 'stage' ? `${t.project} Closed` : `You Wrapped ${t.project}`, `${t.medium === 'stage' ? `The run of ${t.project} is over` : `${t.project} wrapped`}, and ${t.role.part} is on your professional credits${t.medium === 'stage' ? '' : voiceOnly(t) ? `, not yet released. It’s your voice with no picture of you, so a reel can’t use it${RELEASE_DAYS[t.kind] ? `; it comes out about ${counted(Math.round(RELEASE_DAYS[t.kind]! / 30), 'month')} on, estimated` : ''}` : `, not yet released. Its footage can go on a reel once it comes out${RELEASE_DAYS[t.kind] ? `, about ${counted(Math.round(RELEASE_DAYS[t.kind]! / 30), 'month')} on, estimated` : ''}`}. Update your résumé on the Portfolio tab to add it.`, 70);
 }
+
+/** A unit as a sentence names it: "scene 14". */
+const unitWord = (t: ProjectTemplate, u: { scene: number }): string => `${workflowOf(t).judged[stepOf(t, t.schedule.kind === 'shoot' ? t.schedule.rehearsalDays ?? 0 : 0)]?.unit.one ?? 'scene'} ${u.scene}`;
 
 /** A missed work day: the project's consequence, said. The stage's understudy covers one; a second, or a shoot day, and you're replaced. */
 function missDay(sim: Simulation, person: Person, e: Engagement, t: ProjectTemplate, i: number, at: Instant): void {
@@ -1464,7 +1576,8 @@ function missDay(sim: Simulation, person: Person, e: Engagement, t: ProjectTempl
   const misses = e.log.filter((l) => l.status === 'missed').length;
   const allowed = t.medium === 'stage' ? MISSES.stage : MISSES.screen;
   const kind = dayKindOf(t, i);
-  const what = kind === 'shoot' ? 'a shoot day' : kind === 'rehearsal' ? 'a rehearsal' : 'a performance';
+  // The day named for what it was (from 2026-10-24, brief 25's Module 5): a tape night, a recording session.
+  const what = STEP_WORDS[stepOf(t, i)];
   noteEvent(sim, e, { kind: 'problem', key: `missed:${i}`, words: `You missed ${what} of ${t.project} on ${formatDate(at, NY)}.` });
   const rel = e.agentId ? person.pro?.relations[e.agentId] : undefined;
   if (rel) noteEvent(sim, rel, { kind: 'problem', key: `eng:${e.id}:missed:${i}`, words: `You missed ${what} of ${t.project}.`, ref: e.id });
@@ -1591,7 +1704,8 @@ function unionsFrom(sim: Simulation, person: Person, t: ProjectTemplate, at: Ins
  * in `systems/briefs.ts`): its time on the clock, its part moved by its gain at the hour's focus, halved for each time
  * the same step was done today, by the ability it's practice in and the way you prepare, of what's left.
  */
-export function prepareOn(sim: Simulation, person: Person, x: PrepTarget, step: BriefStep): { moved: number; part: keyof PartPrep; minutes: number } {
+export function prepareOn(sim: Simulation, person: Person, x: PrepTarget, step: BriefStep | 'special'): { moved: number; part: keyof PartPrep; minutes: number } {
+  if (step === 'special') return specialOn(sim, person, x as { engagement: Engagement });
   const s = BRIEF.steps[step];
   const minutes = prepMinutes(x, step);
   const prep: PartPrep = 'opportunity' in x ? (x.opportunity.prep ??= { ...ZERO }) : (x.engagement.prep ??= { ...ZERO });
@@ -1605,6 +1719,25 @@ export function prepareOn(sim: Simulation, person: Person, x: PrepTarget, step: 
   prep[s.part] = r3(clamp(before + gain * prepLean(person, s.part) * able * (1 - before), 0, 1));
   if (s.trains && prep[s.part] > before) ordinary(sim, person, s.trains, focus, BRIEF.trainingWeight, `pro:${s.part}`);
   return { moved: r3(prep[s.part] - before), part: s.part, minutes };
+}
+
+/**
+ * A workflow's own preparation on a booked part (from 2026-10-24, brief 25's Module 5): its step's time, the body's cost
+ * where it's on your feet, and the part brought toward complete at its gain, halved again on each repeat that day, as a
+ * brief's steps are.
+ */
+function specialOn(sim: Simulation, person: Person, x: { engagement: Engagement }): { moved: number; part: keyof PartPrep; minutes: number } {
+  const sp = workflowOf(projectById(x.engagement.projectId)!).prep.special!;
+  const prep = (x.engagement.prep ??= { ...ZERO });
+  const focus = focusAt(sim, person, sim.now);
+  const n = repeatsToday(sim, person, `pro:${x.engagement.id}<special`);
+  sim.advanceTo(sim.now + sp.minutes * MIN);
+  exerts(person, sp.feet ? BRIEF.met.feet : BRIEF.met.desk, sp.minutes / 60);
+  const before = prep.special ?? 0;
+  const able = sp.trains ? stepSpeed(sim, person, sp.trains) : 1;
+  prep.special = r3(clamp(before + sp.gain * clamp(focus, 0.5, 1.1) * 0.5 ** n * able * (1 - before), 0, 1));
+  if (sp.trains && prep.special > before) ordinary(sim, person, sp.trains, focus, BRIEF.trainingWeight, 'pro:special');
+  return { moved: r3(prep.special - before), part: 'special', minutes: sp.minutes };
 }
 
 // ---------------------------------------------------------------------------------------------------------------------
@@ -1668,6 +1801,7 @@ const SEASON_HOOKS = {
     const from = e.days.length;
     e.days.push(...days.map(({ from: f, to, label }) => ({ from: f, to, label })));
     bookDays(sim, person, e, t, from);
+    planWork(sim, e, t, from);
     const o = opportunityOf(person, e.opportunityId);
     if (!o?.offer) return;
     const more = promisedPay(sim, e, o, from);
@@ -1701,7 +1835,26 @@ const located = (sim: Simulation, item: ScheduledItem): { person: Person; o: Opp
   return person && o ? { person, o } : undefined;
 };
 
+/** What the workflows' clock and command borrow from here (`registerWorkflows`). */
+const WORKFLOW_HOOKS = {
+  tell: (sim: Simulation, person: Person, title: string, body: string) => tell(sim, person, title, body, 70),
+  there: (person: Person, at: Instant) => there(person, at),
+  genre: (person: Person, t: ProjectTemplate) => fitOf(person, t).genre * BRIEF.complete.genre,
+  // An anthology's next story, offered without an audition to an actor whose work in its last was strong (Module 5).
+  offerInvite: (sim: Simulation, person: Person, projectId: string, from: Engagement) => {
+    const t = projectById(projectId);
+    if (!t || person.pro?.engagements.some((x) => x.projectId === projectId)) return;
+    const o = post(sim, person, t, sim.now, 'open');
+    if (!o) return;
+    const last = projectById(from.projectId)!;
+    note(sim, person, o, { kind: 'opportunity', key: 'invited', words: `${t.company} invited you back into ${t.project}’s next story for your work as ${last.role.part}, without an audition.` });
+    makeOffer(sim, person, o);
+  },
+};
+
 export function registerProJobs(sim: Simulation): void {
+  // The workflows' revised pages, looping sessions, invitations and choices (from 2026-10-24, brief 25's Module 5).
+  registerWorkflows(sim, WORKFLOW_HOOKS);
   // Work abroad's trips and visas (from 2026-10-23, the owner's brief 25): their handlers, lent what they need from here.
   registerWorkTrips(sim, {
     engagementOf, projectOf: (e) => projectById(e.projectId), there,
@@ -1829,7 +1982,19 @@ export function registerProJobs(sim: Simulation): void {
     unionsFrom(s, person, t, item.at);
     const kind = dayKindOf(t, i);
     exerts(person, WORK.met, (e.days[i]!.to - e.days[i]!.from) / MS_HOUR);
-    if (kind === 'rehearsal') {
+    if (workflowOf(t).id !== 'stage') {
+      // The part worked the way its production works (from 2026-10-24, the owner's brief 25, Part 8, `workTheDay`): an
+      // unjudged day builds the part, a judged one plays its units in takes with the player's choices read, and either
+      // leaves a report. Until then every screen day was one take judged as a self-tape, whatever the work.
+      const done = workTheDay(s, person, e, t, i, item.at, fitOf(person, t).genre * BRIEF.complete.genre, () => rehearseDay(person, e, t));
+      practiceGenres(s, person, projectGenresOf(t));
+      (e.log ??= []).push({ day: i, at: item.at, status: 'worked', ...(done.band ? { band: done.band, overall: done.overall! } : {}) });
+      // A musical's stage credit, from its first night, as a play's.
+      if (t.medium === 'stage' && done.band && !e.creditId) {
+        const c = addCredit(s, person, { kind: 'stage', project: t.project, role: t.role.part, company: t.company, year: zonedParts(item.at, NY).year, medium: 'stage', status: 'performed', ...(t.union !== 'none' ? { union: t.union } : {}), engagementId: e.id, at: item.at, band: done.band });
+        e.creditId = c.id;
+      }
+    } else if (kind === 'rehearsal') {
       rehearseDay(person, e, t);
       // A rehearsal day is work in the project's genres, as a School call is (from 2026-10-22, the owner's brief 21).
       practiceGenres(s, person, projectGenresOf(t));
@@ -1885,8 +2050,23 @@ export function registerProJobs(sim: Simulation): void {
 
   sim.onSchedule(RELEASE_KIND, (item, s) => {
     const person = s.universe.people[String(item.payload.personId)];
+    // A scene of yours cut in the edit (from 2026-10-24, brief 25's Module 5, T46): the credit and the pay stay, and the
+    // credit's band is the best of the days on the scenes kept, which a reel cut from it shows.
+    const pre = person?.pro?.credits.find((x) => x.id === String(item.payload.creditId));
+    const e = pre?.engagementId ? engagementOf(person!, pre.engagementId) : undefined;
+    const cut = e ? cutInEdit(s, e) : undefined;
     const c = person && releaseScreenCredit(s, person, String(item.payload.creditId));
-    if (person && c) tell(s, person, `${c.project} Is Released`, `${c.project} is out, so ${c.role} shows as released on your credits, and its footage can go on your reel. Cut A Reel on the Portfolio tab lists it.`, 60);
+    if (!person || !c) return;
+    const t = e ? projectById(e.projectId) : undefined;
+    if (cut && e && t) {
+      c.cut = (c.cut ?? 0) + 1;
+      const kept = keptBand(e);
+      if (kept) c.band = kept;
+      noteEvent(s, e, { kind: 'problem', key: 'cut', words: `The edit cut your ${unitWord(t, cut)} from ${t.project}. ${c.role} stays on your credits, and the pay is yours.` });
+    }
+    const out = t ? RELEASED[formatOf(t).after] : 'is out';
+    const words = c.voice ? `${c.project} ${out}, so ${c.role} shows as released on your credits. It’s your voice with no picture of you, so it can’t go on a reel.` : `${c.project} ${out}, so ${c.role} shows as released on your credits, and its footage can go on your reel. Cut A Reel on the Portfolio tab lists it.`;
+    tell(s, person, `${c.project} Is Released`, cut && t ? `${words} The edit cut one of your scenes, ${unitWord(t, cut)}: the part stays on your credits with the pay, and the reel can use only the scenes kept.` : words, 60);
   });
 
   sim.onSchedule(SCHOOL_ANSWER_KIND, (item, s) => {
@@ -1924,7 +2104,7 @@ export function registerProJobs(sim: Simulation): void {
     const x: PrepTarget | undefined = o ? { opportunity: o } : e ? { engagement: e } : undefined;
     const no = prepareRefusal(s, person, x, String(p?.step));
     if (no) throw new CommandError(no);
-    return prepareOn(s, person, x!, p.step as BriefStep);
+    return prepareOn(s, person, x!, p.step as BriefStep | 'special');
   });
 
   sim.onCommand<{ opportunityId: string }, { band: Band; overall: number }>('pro.tape_audition', (p, { sim: s }) => {
@@ -1992,6 +2172,8 @@ export function registerProJobs(sim: Simulation): void {
     // production's word on each further episode, and its option on the next season (`systems/series.ts`).
     e.contract = contractFor(s, e, o!.offer!, t, trip, seasonOf(t, e));
     scheduleSeason(s, person, e);
+    // The part's scenes and the order they're shot in (from 2026-10-24, brief 25's Module 5, `planWork`).
+    planWork(s, e, t);
     s.timeline.cancelFor('pro.offer', o!.id, s.now);
     const words = `You accepted ${t.role.part} in ${t.project}: ${counted(days.length, 'work day')}, from ${formatDate(days[0]!.from, NY)}.`;
     noteEvent(s, e, { kind: 'booked', key: 'booked', words });

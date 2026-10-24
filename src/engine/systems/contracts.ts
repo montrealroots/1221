@@ -48,7 +48,7 @@ import { CommandError } from '../core/simulation';
 import type { Person } from '../domain/model';
 import { MS_DAY, addDays, dateKey, formatDate, instantFromZoned, zonedParts, type Instant } from '../core/time';
 import { formatMoney, saveCurrency, type Money } from '../core/money';
-import { plural } from '../core/text';
+import { plural, spokenList } from '../core/text';
 import { RATES, projectById, type ProjectKind, type ProjectTemplate } from '../content/careerwork';
 import { seriesById } from '../content/series';
 import { CITIES } from '../content/geography';
@@ -59,7 +59,8 @@ import { recordWages } from './earnings';
 import { businessDaysOn } from './permission';
 import { PAY_KIND, projectOf, weekOf, withholdingOn } from './propay';
 import { seasonNumber } from './series';
-import { KIND_WORDS } from './projobs';
+import { KIND_WORDS, counted, overtimeHours } from './projobs';
+import { dubDaysOf, formatOf } from './workflow';
 
 const NY = 'America/New_York';
 const MIN = 60_000;
@@ -84,10 +85,33 @@ export const RERUN_CEILING = { hour: 3_668_00, 'half-hour': 2_578_00 } as const;
 export const CONTRIBUTION = { rate: 0.195, healthFrom: '2026-09-06', healthAdd: 0.01 } as const;
 
 /** The SAG-AFTRA work whose contract carries the contribution: the TV agreement's and the Basic Agreement's. */
-const CONTRIBUTING: readonly ProjectKind[] = ['network-drama', 'network-comedy', 'overseas-feature'];
+// From 2026-10-24 (brief 25's Module 5), the kinds the workflows brought under the same two agreements; not the animated
+// series, under the Television Animation Agreement, which the game hasn't read.
+const CONTRIBUTING: readonly ProjectKind[] = [
+  'network-drama', 'network-comedy', 'overseas-feature', 'multicam-comedy', 'animated-feature', 'dub', 'capture-feature', 'documentary', 'action-feature',
+  'limited-series', 'serialized-drama', 'serialized-comedy', 'anthology', 'tv-movie',
+];
 
 /** The work that carries residuals here: SAG-AFTRA television, an hour's drama or a half-hour's comedy. */
-const PROGRAM: Readonly<Partial<Record<ProjectKind, 'hour' | 'half-hour'>>> = { 'network-drama': 'hour', 'network-comedy': 'half-hour' };
+const PROGRAM: Readonly<Partial<Record<ProjectKind, 'hour' | 'half-hour'>>> = { 'network-drama': 'hour', 'network-comedy': 'half-hour', 'multicam-comedy': 'half-hour' };
+
+/**
+ * SAG-AFTRA screen work whose residuals the game doesn't pay, and why (from 2026-10-24, Module 5): the terms that would
+ * set them weren't read, so its contract says so rather than showing none.
+ */
+const RESIDUALS_UNREAD: Readonly<Partial<Record<ProjectKind, string>>> = {
+  'animated-series': 'The Television Animation Agreement’s residuals weren’t read, so the game pays none on this work.',
+  'animated-feature': 'A feature’s residuals come from its later sales to television and streaming, which the game doesn’t follow, so it pays none.',
+  dub: 'A dub’s residuals depend on where the series is shown, which the game doesn’t follow, so it pays none.',
+  'capture-feature': 'A feature’s residuals come from its later sales to television and streaming, which the game doesn’t follow, so it pays none.',
+  documentary: 'A documentary’s residuals depend on where it’s shown, which the game doesn’t follow, so it pays none.',
+  'action-feature': 'A feature’s residuals come from its later sales to television and streaming, which the game doesn’t follow, so it pays none.',
+  'limited-series': 'Streaming residuals weren’t read, so the game pays none on this work.',
+  'serialized-drama': 'Streaming residuals weren’t read, so the game pays none on this work.',
+  'serialized-comedy': 'Streaming residuals weren’t read, so the game pays none on this work.',
+  anthology: 'Streaming residuals weren’t read, so the game pays none on this work.',
+  'tv-movie': 'The rerun ceiling for a program longer than an hour wasn’t read, so the game pays no residual on this work.',
+};
 
 /**
  * The telecasts the game imagines (ASSUMPTION, every figure): the first ten weeks after the work is done, at nine at night;
@@ -105,8 +129,12 @@ export const RESIDUAL_PAY_KIND = 'pro.residual.pay';
 const usd = (c: Money): string => formatMoney(c, 'USD');
 const pct = (r: number): string => `${Math.round(r * 1000) / 10}%`;
 
-/** A day's overtime on a day rate (USD cents): two hours at time and one-half of an eighth of the day. */
-export const overtimeOf = (dayRate: Money): Money => Math.round((dayRate / OVERTIME.straightHours) * OVERTIME.premium * (OVERTIME.workHours - OVERTIME.straightHours));
+/**
+ * A day's overtime on a day rate (USD cents): its hours past eight at time and one-half of an eighth of the day, two on a
+ * shoot day's ten hours of work. The hours from 2026-10-24 (brief 25's Module 5), when days of other lengths came: a
+ * capture day's nine carry one, a booth session's four none.
+ */
+export const overtimeOf = (dayRate: Money, hours: number = OVERTIME.workHours - OVERTIME.straightHours): Money => Math.round((dayRate / OVERTIME.straightHours) * OVERTIME.premium * hours);
 
 /** Whether work under a rate carries the overtime clause. */
 export const paysOvertime = (rate: string): boolean => OVERTIME_RATES.includes(rate);
@@ -156,9 +184,12 @@ export function contractFor(sim: Simulation, e: Engagement, offer: NonNullable<i
   const deferred = offer.amount === undefined;
   const clauses: ContractClause[] = [];
   if (deferred) clauses.push({ kind: 'deferred' });
-  if (!deferred && paysOvertime(t.pay)) clauses.push({ kind: 'overtime', hourly: Math.round(offer.amount! / OVERTIME.straightHours), hours: OVERTIME.workHours - OVERTIME.straightHours, premium: OVERTIME.premium, perDay: overtimeOf(offer.amount!) });
+  // Overtime where a day runs long enough for it (from 2026-10-24, Module 5): the longest day's hours past eight.
+  const hours = Math.max(0, ...e.days.map((d) => overtimeHours(d)));
+  if (!deferred && paysOvertime(t.pay) && hours > 0) clauses.push({ kind: 'overtime', hourly: Math.round(offer.amount! / OVERTIME.straightHours), hours, premium: OVERTIME.premium, perDay: overtimeOf(offer.amount!, hours) });
   const program = t.union === 'sag-aftra' ? PROGRAM[t.kind] : undefined;
   if (program) clauses.push({ kind: 'residuals', program, ceiling: RERUN_CEILING[program] });
+  else if (t.union === 'sag-aftra' && RESIDUALS_UNREAD[t.kind]) clauses.push({ kind: 'rule', id: 'residuals-unread', words: RESIDUALS_UNREAD[t.kind]! });
   const made = sim.now;
   if (t.union === 'sag-aftra' && CONTRIBUTING.includes(t.kind)) clauses.push({ kind: 'contributions', rate: contributionRate(e.days[0]?.from ?? made) });
   if (trip && t.trip) {
@@ -170,6 +201,8 @@ export function contractFor(sim: Simulation, e: Engagement, offer: NonNullable<i
     clauses.push({ kind: 'episodes', ordered: s.episodes, guaranteed: t.schedule.guaranteed, expected: t.schedule.expected, daysEach: s.daysEach, numbers: extra.season.guaranteed, further: extra.season.further.map((n) => ({ n, status: 'pending' as const })) });
   }
   if (s && extra.option) clauses.push({ kind: 'option', season: seasonNumber(sim, s, extra.option.year), year: extra.option.year, by: extra.option.by, raise: OPTION_RAISE, status: 'open' });
+  // The workflow's rules last (from 2026-10-24, brief 25's Module 5, `workflowRules`).
+  clauses.push(...workflowRules(t));
   const first = e.days[0];
   const last = e.days[e.days.length - 1];
   const basis: Contract['basis'] = deferred ? 'deferred' : t.schedule.kind === 'episodes' ? 'episode' : offer.per;
@@ -185,6 +218,26 @@ export function contractFor(sim: Simulation, e: Engagement, offer: NonNullable<i
     clauses,
   };
 }
+
+/**
+ * The rules a workflow's work carries into its contract (from 2026-10-24, brief 25's Module 5), each the agreement's where
+ * it names one (N13, N17) and the game's where it says so.
+ */
+function workflowRules(t: ProjectTemplate): ContractClause[] {
+  const fmt = formatOf(t);
+  const out: ContractClause[] = [];
+  if (fmt.workflow === 'multicam') out.push({ kind: 'rule', id: 'rehearsal-paid', words: 'Every day of the week is paid from the first rehearsal, the table read included: a half-hour multicamera series’ rehearsal begins its employment, as the agreement sets.' });
+  if (t.dub) out.push({ kind: 'rule', id: 'dubbing', words: `A day’s pay covers any number of unsynchronized lines and up to five synchronized lines each for up to three characters, and a day more for each part of more than five and each further set of up to three, as the agreement sets; your character alone, any number of lines, is a day. So its ${counted(t.dub.length, 'session')} pay ${spokenList(t.dub.map((d) => counted(dubDaysOf(d), 'day')))} in turn.` });
+  if (fmt.workflow === 'dubbing' || (fmt.workflow === 'voice' && t.union === 'sag-aftra')) out.push({ kind: 'rule', id: 'stressful', words: fmt.workflow === 'dubbing' ? 'The producer tells you before each session whether it asks for screams or other vocally stressful lines, and if it doesn’t, you may refuse them, as the agreement sets.' : 'The producer tells you before each session whether it asks for screams or other vocally stressful lines, and if it doesn’t, you may refuse them: the agreement’s rule for dubbing, which the game applies to animation, its assumption.' });
+  if (fmt.daysOnly) out.push({ kind: 'rule', id: 'days-only', words: fmt.workflow === 'capture' ? 'Each day you’re called in is paid, and the days between aren’t: performance capture has no consecutive employment, its drops and pickups unlimited, and several characters in a day at no more pay, as the agreement sets.' : 'Each session is paid as a day, and the days between aren’t: voice work on an animated feature is outside the rule that pays the days between, as the agreement sets.' });
+  if (t.schedule.kind === 'shoot' && t.schedule.stuntDays?.length) out.push({ kind: 'rule', id: 'stunts', words: 'A stunt is done by you only with your consent, given before it, and with a qualified stunt coordinator there and consulted, as the agreement sets. Without your consent the stunt double does it.' });
+  if (t.intimacy) out.push({ kind: 'rule', id: 'intimacy', words: `The part has ${t.intimacy.words}. It’s shot on a closed set with an intimacy coordinator, only with your written consent describing it; you can withdraw consent until it’s shot, and a body double does it then, as the agreement allows. Declining it doesn’t cost you the part, the pay or the credit.` });
+  if (fmt.looping) out.push({ kind: 'rule', id: 'looping', words: `The production can recall you within ${fmt.looping} months of the wrap to loop: a four-hour session paid half a day, as the agreement sets.` });
+  if (voiceOnlyFormat(fmt.workflow)) out.push({ kind: 'rule', id: 'voice-over', words: 'Voice-over work is outside an agent’s agreement, so no commission is owed on it.' });
+  return out;
+}
+
+const voiceOnlyFormat = (w: string): boolean => w === 'voice' || w === 'dubbing' || w === 'narration';
 
 /** The raise an option on a next season carries (ASSUMPTION, the game's terms). */
 export const OPTION_RAISE = 0.05;

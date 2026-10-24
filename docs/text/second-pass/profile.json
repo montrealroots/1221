@@ -2465,9 +2465,9 @@
  },
  "src/engine/content/genre-weights.ts#PROJECT_GENRES": {
   "status": "Rewritten",
-  "hash": "ed8ce62893f2",
-  "on": "2026-10-23",
-  "evidence": "Brief 25's Module 2 states the genres of the two series parts are drawn from, each from its page's own words in src/engine/content/catalog.ts, said to docs/STYLE.md without the engine's terms; held by tests/b22-genre-weights.test.ts and tests/career-drawn.test.ts, with tools/voice-check.mjs, tools/tics.mjs, tools/title-case.mjs, tools/plural-check.mjs and tools/spelling.mjs passing",
+  "hash": "021d6119c99e",
+  "on": "2026-10-24",
+  "evidence": "Written for brief 25's Module 5 to docs/STYLE.md: each new project's genres and why, in the words its story gives, read where the player meets them on a role's genre in tests/b22-genre-weights.test.ts (every project stating its own, each reason held), with tools/voice-check.mjs and tools/tics.mjs clean.",
   "first": "Pending"
  },
  "src/engine/content/genre-weights.ts#SCENE_GENRES": {

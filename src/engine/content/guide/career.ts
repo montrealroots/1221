@@ -37,6 +37,7 @@ import { OUTSIDE_WORK, WORK } from '../../systems/projobs';
 import { TRIP, routeSourceWords } from '../../systems/worktrip';
 import { CONTRIBUTION, LATE, OPTION_RAISE, PER_DIEM, RERUN_CEILING, RESIDUALS, contributionRate, overtimeOf } from '../../systems/contracts';
 import { SERIES } from '../series';
+import { AFTER_WRAP, STUNT, VOICE, WORKFLOWS } from '../workflows';
 import { JURISDICTIONS } from '../jurisdictions';
 import { BRIEF } from '../../systems/briefs';
 import type { GuideEntry } from './types';
@@ -894,6 +895,63 @@ export const CAREER_GUIDE: readonly GuideEntry[] = [
       setup: 'A graduate accepts Assistant DA Whitlock in The Calloway Files at the $1,283 minimum, guaranteed two episodes of its season.',
       steps: ['Open The Contract and read its episodes and its option.', 'Work the four shoot days, and join SAG-AFTRA after the first.', 'Read each further episode’s word as it comes.'],
       result: `Each day pays ${usd(1_283_00 + overtimeOf(1_283_00))} with its overtime, a further episode is paid only if you’re called for it, and by June 30 the production takes up its option or lets it go.`,
+    },
+  },
+  // From 2026-10-24 (the owner's brief 25, Part 8): how each kind of work is done, its days, its preparation, its choices
+  // and what it leaves (`content/workflows.ts`, `systems/workflow.ts`). Every figure is the workflows' own, imported.
+  {
+    id: 'career.workflows',
+    title: 'How Each Kind Of Work Is Done',
+    goal: 'career',
+    covers: ['pro.work_choice'],
+    synonyms: ['takes', 'another take', 'voice session', 'booth', 'dubbing', 'loop', 'looping', 'motion capture', 'performance capture', 'narration', 'reenactment', 'multicam', 'studio audience', 'musical', 'mark it', 'stunt', 'stunt double', 'intimacy coordinator', 'consent', 'revised pages', 'scene cut'],
+    questions: ['Why were my scenes shot out of order?', 'Should I ask for another take?', 'What is a tape night?', 'Why is my voice strained?', 'Do I have to do my own stunts?', 'Do I have to do the intimate scene?', 'Why was a scene of mine cut?', 'Why was I called back to loop?'],
+    where: on('work', 'Career, Work, How The Work Is Done'),
+    available: `From the guide’s chapter “${WORK_CHAPTER}”, once you’ve accepted work.`,
+    short: `Each kind of work is done its own way. A film or a single-camera series shoots your scenes out of the script’s order, each in takes, and prints the best. A multicamera comedy rehearses for a week and tapes before a studio audience. Voice work, a dub and a narration are sessions in a booth, and they strain the voice. Performance capture is a suit and markers and no set. A musical has its music rehearsals and choreography. An action film rehearses its fights with the stunt coordinator before the stunts.\n\nEach engagement says how its work is done, the choices it asks of you, and each day’s report once it’s worked.`,
+    steps: [
+      'Open Career, then Work, and open How The Work Is Done on an engagement.',
+      'Read its days and what each asks, then make its choices: another take, the studio audience, the stunts, the intimate scene, and the rest the work offers.',
+      'Prepare as the work asks: Find The Voice for a booth, Watch The Original for a dub, Work On The Movement for capture, on Career, Opportunities, under the booked work.',
+      'After each day, read its report: what was shot and in what order, the takes, and how it went.',
+    ],
+    needs: ['Work you’ve accepted. A choice about the intimate scene can’t be changed once the scene is shot.'],
+    costs: [
+      { label: 'Another Take', value: 'Energy for the takes you ask for beyond the scene’s own, as many as the production allows in a day' },
+      { label: 'A Strained Voice', value: `Voice work raises it and rest eases it, ${VOICE.restPerHour} points of 100 an hour. A strained voice holds back what voice work asks of it`, estimate: true },
+      { label: 'A Stunt Yourself', value: `A chance of an injury, about ${Math.round(STUNT.rehearsed * 100)}% for a stunt with the fight rehearsed and up to ${Math.round(STUNT.cold * 100)}% without, less for a strong body; the double carries none of it`, estimate: true },
+    ],
+    reads: [
+      { label: 'Your Preparation', value: 'The breakdown, the lines, rehearsal, and the work’s own preparation where it has one' },
+      { label: 'Your Choices', value: 'What each day puts first, and who does what a double can do' },
+      { label: 'Your Voice', value: 'Its strain, on voice work alone', estimate: true },
+    ],
+    now: ['A choice is kept on the engagement and read by each day after it.'],
+    later: [
+      'Each judged day plays its scenes, loops, chapters or sequences in takes, the best printed, and leaves a report.',
+      'Pages revised the night before change some of your lines, and Learn The Lines that evening puts them back.',
+      `After a screen wrap, the production may recall you to loop: a four-hour session paid half a day. When the work comes out, the edit may cut one of your scenes, about ${Math.round(AFTER_WRAP.cut * 10)} times in ten; the part stays on your credits with its pay.`,
+    ],
+    interpret: [
+      'A dub’s pay by its characters and lines, a recall to loop at half a day for four hours, a stunt only with your consent and a coordinator there, and an intimate scene only with your written consent are the SAG-AFTRA agreements’ rules. The takes, the strain, the stunt’s risk and how often pages change are the game’s.',
+      `There are ${Object.keys(WORKFLOWS).length} ways of working in the game: a stage play, single camera, multicamera, the booth, dubbing, performance capture, narration, reenactment, a musical and action.`,
+      'Declining an intimate scene costs you nothing: a body double does it, and the part, the pay and the casting are as they were.',
+    ],
+    unavailable: ['“The scene is already shot. Consent given for what’s on film can’t be taken back, and nothing is shot of it again.”'],
+    mistakes: [
+      'Asking for another take on every scene of a long day: each one costs energy the next scenes need.',
+      'Booking voice sessions back to back on a strained voice.',
+    ],
+    next: ['Read Contracts, Residuals And A Series’ Seasons: the rules a workflow carries are in its contract.'],
+    related: ['career.contracts', 'career.offers', 'career.pay'],
+    connections: [
+      { to: 'career.contracts', kind: 'prerequisite', why: 'The agreements’ rules for a dub, a stunt, an intimate scene and a recall to loop are in the contract.' },
+      { to: 'career.pay', kind: 'scheduled', why: 'A looping session is paid half a day, on the work’s pay.' },
+    ],
+    example: {
+      setup: 'A graduate books The Getaway Driver in Breakwater, an action feature.',
+      steps: ['Work the two days of fight rehearsal with the stunt coordinator.', 'Choose Use The Double or Do It Yourself for the stunts.', 'Read each shoot day’s report.'],
+      result: 'With the double, the stunts carry no risk and the shots are less your own; done yourself, the shots are all yours, and the rehearsal and your body set the chance of an injury.',
     },
   },
   // From 2026-10-23 (the owner's brief 25): work abroad, Sydney first, its visa and its trip (`systems/worktrip.ts`).

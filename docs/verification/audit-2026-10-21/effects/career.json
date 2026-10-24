@@ -2262,6 +2262,190 @@
    "status": "Implemented And Verified",
    "why": "",
    "prior": null
+  },
+  {
+   "id": "pro.work_choice",
+   "kind": "command",
+   "area": "career",
+   "mechanic": true,
+   "seeded": false,
+   "readBy": "career",
+   "readAt": "brief 25",
+   "where": "Career, Work: How The Work Is Done, a button for each option of each choice the work asks, grayed with choiceRefusal's words.",
+   "prerequisites": "Work booked and not finished; a choice its format asks; consent to an intimate scene withdrawn only before the day it's shot (`choiceRefusal`).",
+   "reads": "The engagement, its part's format and whether it has an intimate scene (`decisionsFor`).",
+   "changes": "The option kept on the engagement (`choices`), in force from the next day worked; a line in its history.",
+   "consumers": [
+    {
+     "what": "the day's judging leans on the option's dimensions",
+     "at": "src/engine/systems/workflow.ts:248"
+    },
+    {
+     "what": "the takes a scene gets",
+     "at": "src/engine/systems/workflow.ts:343"
+    },
+    {
+     "what": "an intimate scene without consent goes to a body double",
+     "at": "src/engine/systems/workflow.ts:395"
+    },
+    {
+     "what": "the looping session's sync choice",
+     "at": "src/engine/systems/workflow.ts:585"
+    },
+    {
+     "what": "the Work tab shows the option in force",
+     "at": "src/ui/career/WorkPane.tsx:286"
+    }
+   ],
+   "experienced": "The pressed option says now beside it; the next day's report reads its effect (more takes, a strain spared, the stunt by the double or by you).",
+   "saveLoad": "The professional record (`person.pro`: each engagement's `units`, `reports`, `choices`, `script` and `loop`, and `person.health.voice`) and the calendar's pending `pro.*` items are in the save; every handler reads its record's own state (a day reported, a page drawn, a loop's status, an engagement for the next story) before acting, so a load runs nothing twice; every draw is keyed by the work, never by an id, so a reload decides it the same. Held across a save and a load at each stage by tests/career-workflows.test.ts and tests/career-workflows-screen.test.ts.",
+   "evidence": {
+    "tests": [
+     "tests/career-workflows.test.ts",
+     "tests/career-workflows-screen.test.ts"
+    ],
+    "comparisons": [],
+    "mutations": [],
+    "journeys": [
+     "tests/career-workflows-screen.test.ts"
+    ]
+   },
+   "missing": "A director who overrules the actor, and a negotiation over a stunt's pay adjustment, aren't modeled.",
+   "status": "Implemented And Verified",
+   "why": "",
+   "prior": null
+  },
+  {
+   "id": "pro.pages",
+   "kind": "reactor",
+   "area": "career",
+   "mechanic": true,
+   "seeded": false,
+   "readBy": "career",
+   "readAt": "brief 25",
+   "where": "The clock, at the first stop after 6:00 PM the evening before each work day of a format that revises its pages (`onPassage`).",
+   "prerequisites": "Work booked and not finished, its format revising pages; the day not drawn already.",
+   "reads": "The engagement's days and script, the format's share of revisions (decider `pro.pages`, keyed by the work).",
+   "changes": "The script's version up by one for the day and the days after; that share of what was learned of the lines (or of the breakdown, where there are none) taken off; a line in the history; a notice.",
+   "consumers": [
+    {
+     "what": "the units shot that day carry the new version",
+     "at": "src/engine/systems/workflow.ts:655"
+    },
+    {
+     "what": "what was learned falls by the share",
+     "at": "src/engine/systems/workflow.ts:658"
+    },
+    {
+     "what": "the day's report says the pages were revised",
+     "at": "src/engine/systems/workflow.ts:361"
+    },
+    {
+     "what": "the Work tab's report reads it",
+     "at": "src/engine/systems/workflow.ts:473"
+    }
+   ],
+   "experienced": "Revised Pages For Half Past Normal, the evening before, with the share changed and Learn The Lines to put it back.",
+   "saveLoad": "The professional record (`person.pro`: each engagement's `units`, `reports`, `choices`, `script` and `loop`, and `person.health.voice`) and the calendar's pending `pro.*` items are in the save; every handler reads its record's own state (a day reported, a page drawn, a loop's status, an engagement for the next story) before acting, so a load runs nothing twice; every draw is keyed by the work, never by an id, so a reload decides it the same. Held across a save and a load at each stage by tests/career-workflows.test.ts and tests/career-workflows-screen.test.ts.",
+   "evidence": {
+    "tests": [
+     "tests/career-workflows.test.ts",
+     "tests/career-workflows-screen.test.ts"
+    ],
+    "comparisons": [],
+    "mutations": [],
+    "journeys": [
+     "tests/career-workflows-screen.test.ts"
+    ]
+   },
+   "missing": "None found within the module's scope.",
+   "status": "Implemented And Verified",
+   "why": "",
+   "prior": null
+  },
+  {
+   "id": "pro.loop",
+   "kind": "scheduled",
+   "area": "career",
+   "mechanic": true,
+   "seeded": false,
+   "readBy": "career",
+   "readAt": "brief 25",
+   "where": "The clock, at a looping session the production recalled the player to after a screen wrap (`LOOP_KIND`).",
+   "prerequisites": "The loop set, not missed or done; permission to work on the day; the player there.",
+   "reads": "The engagement's contract rate, its loops and the sync choice.",
+   "changes": "The loops judged as a booth's, half a day's pay among the payments and on the clock; missed or not permitted, another actor loops it and nothing is paid.",
+   "consumers": [
+    {
+     "what": "the half day's pay",
+     "at": "src/engine/systems/workflow.ts:598"
+    },
+    {
+     "what": "the payroll pays it on its Thursday",
+     "at": "src/engine/systems/workflow.ts:600"
+    },
+    {
+     "what": "the loop's status read before acting, so it's worked once",
+     "at": "src/engine/systems/workflow.ts:570"
+    }
+   ],
+   "experienced": "A looping session on the calendar and a line in the history: You looped your part, its lines re-recorded, paid half a day.",
+   "saveLoad": "The professional record (`person.pro`: each engagement's `units`, `reports`, `choices`, `script` and `loop`, and `person.health.voice`) and the calendar's pending `pro.*` items are in the save; every handler reads its record's own state (a day reported, a page drawn, a loop's status, an engagement for the next story) before acting, so a load runs nothing twice; every draw is keyed by the work, never by an id, so a reload decides it the same. Held across a save and a load at each stage by tests/career-workflows.test.ts and tests/career-workflows-screen.test.ts.",
+   "evidence": {
+    "tests": [
+     "tests/career-workflows.test.ts",
+     "tests/career-workflows-screen.test.ts"
+    ],
+    "comparisons": [],
+    "mutations": [],
+    "journeys": [
+     "tests/career-workflows-screen.test.ts"
+    ]
+   },
+   "missing": "A recall abroad, and looping over more than one session, aren't modeled.",
+   "status": "Implemented And Verified",
+   "why": "",
+   "prior": null
+  },
+  {
+   "id": "pro.invite",
+   "kind": "scheduled",
+   "area": "career",
+   "mechanic": true,
+   "seeded": false,
+   "readBy": "career",
+   "readAt": "brief 25",
+   "where": "The clock, 240 days after an anthology's wrap whose work was judged Strong or better (`INVITE_KIND`).",
+   "prerequisites": "The anthology has a next story (`invitedFrom`); the player not already in it.",
+   "reads": "The next story's part and the work it follows.",
+   "changes": "The next story's part posted to the player and offered at once, without an audition; a line in the opportunity's history.",
+   "consumers": [
+    {
+     "what": "the part posted and offered",
+     "at": "src/engine/systems/projobs.ts:1847"
+    },
+    {
+     "what": "the offer's line says why",
+     "at": "src/engine/systems/projobs.ts:1850"
+    }
+   ],
+   "experienced": "An offer on the Opportunities tab: the company invited you back into its next story for your work, without an audition.",
+   "saveLoad": "The professional record (`person.pro`: each engagement's `units`, `reports`, `choices`, `script` and `loop`, and `person.health.voice`) and the calendar's pending `pro.*` items are in the save; every handler reads its record's own state (a day reported, a page drawn, a loop's status, an engagement for the next story) before acting, so a load runs nothing twice; every draw is keyed by the work, never by an id, so a reload decides it the same. Held across a save and a load at each stage by tests/career-workflows.test.ts and tests/career-workflows-screen.test.ts.",
+   "evidence": {
+    "tests": [
+     "tests/career-workflows.test.ts",
+     "tests/career-workflows-screen.test.ts"
+    ],
+    "comparisons": [],
+    "mutations": [],
+    "journeys": [
+     "tests/career-workflows-screen.test.ts"
+    ]
+   },
+   "missing": "An anthology's whole company returning, and an invitation declined for a conflict before it's made, aren't modeled.",
+   "status": "Implemented And Verified",
+   "why": "",
+   "prior": null
   }
  ],
  "promises": [

@@ -469,16 +469,17 @@ describe('the agent and the work, as data', () => {
     const forWhom = (title: 'actor' | 'actress') => PROJECTS.filter((p) => p.role.for === 'either' || p.role.for === title);
     // Four for each until 2026-10-23, when brief 25's Sydney feature, Harbor Line, brought a part for each; three for
     // either until its Module 2 drew a part for either from each of two real series, and five until its Module 4 brought
-    // a recurring part in The Calloway Files, for either.
-    expect(PROJECTS.map((p) => p.role.for).sort()).toEqual([...Array(6).fill('either'), ...Array(5).fill('actor'), ...Array(5).fill('actress')].sort());
+    // a recurring part in The Calloway Files, for either, and six until its Module 5 brought fifteen parts in thirteen
+    // projects, one or more for each way of working, every one for either.
+    expect(PROJECTS.map((p) => p.role.for).sort()).toEqual([...Array(21).fill('either'), ...Array(5).fill('actor'), ...Array(5).fill('actress')].sort());
     const actor = forWhom('actor');
     const actress = forWhom('actress');
     // Each sees every project once, and the same kinds, sizes, ways in and pay: the counterpart is the same work for the other.
     // Every project at least once: The Calloway Files twice from 2026-10-24, its recurring part beside the co-star's, both
     // for either.
     for (const seen of [actor, actress]) expect([...new Set(seen.map((p) => p.project))].sort()).toEqual([...new Set(PROJECTS.map((p) => p.project))].sort());
-    expect(new Set(PROJECTS.map((p) => p.project)).size).toBe(10);
-    const shape = (p: (typeof PROJECTS)[number]) => JSON.stringify([p.project, p.kind, p.role.size, p.role.task, p.role.stakes, p.access, p.pay, p.stages, p.schedule, p.place]);
+    expect(new Set(PROJECTS.map((p) => p.project)).size).toBe(23);
+    const shape = (p: (typeof PROJECTS)[number]) => JSON.stringify([p.project, p.kind, p.role.size, p.role.stakes, p.access, p.pay, p.stages, p.schedule, p.place]);
     expect(actor.map(shape).sort()).toEqual(actress.map(shape).sort());
     // A part written for one is its own person, not the other renamed: its own name and its own breakdown.
     for (const p of PROJECTS.filter((x) => x.role.for !== 'either')) {
@@ -493,10 +494,13 @@ describe('the agent and the work, as data', () => {
 
   it('names no part as the School names a classmate, so an audition’s notice can’t read as a classmate’s (Theo, Felix since, and Owen, Callum since, until the app’s walks found them, 2026-10-21)', () => {
     const given = new Set([...GIVEN_ACTOR, ...GIVEN_ACTRESS]);
-    expect(PROJECTS.map((p) => p.role.part.split(' ')[0]!).filter((first) => given.has(first))).toEqual([]);
+    // A part named for what it is ("The Upstairs Neighbor", "An Oyster Tonger Of 1890", from 2026-10-24, brief 25's
+    // Module 5) is read from the word after its article: "The" is nobody's name, though "Theo" begins with it.
+    const firstOf = (part: string): string => { const words = part.split(' '); return /^(The|An|A)$/.test(words[0]!) ? words[1]! : words[0]!; };
+    expect(PROJECTS.map((p) => firstOf(p.role.part)).filter((first) => given.has(first))).toEqual([]);
     // Nor as the short form of one, or one as the short form of a part (from 2026-10-21, brief 20: Sam, Robin since, and
     // the classmate Samuel, whose notices read "Samuel: A Request For Help" beside "A Self-Tape For Sam").
-    const near = PROJECTS.map((p) => p.role.part.split(' ')[0]!).filter((first) => [...given].some((g) => g.startsWith(first) || first.startsWith(g)));
+    const near = PROJECTS.map((p) => firstOf(p.role.part)).filter((first) => [...given].some((g) => g.startsWith(first) || first.startsWith(g)));
     expect(near).toEqual([]);
   });
 
@@ -513,9 +517,13 @@ describe('the agent and the work, as data', () => {
   it('gives every project a fictional company and casting office but a part drawn from a real production, the game’s genres, a rate that is verified or assumed, and every agreement term a basis', () => {
     // Ten projects, some with a part for each (from 2026-10-21): the kinds read once a project. Seven until 2026-10-23,
     // when brief 25 added the Sydney feature, and eight until its Module 2 drew parts from 9-1-1 and Abbott Elementary,
-    // the second of them the first network comedy.
-    expect([...new Set(PROJECTS.map((p) => p.kind))]).toEqual(['off-broadway', 'lort', 'network-drama', 'low-budget', 'ultra-low-budget', 'student-film', 'non-union-short', 'overseas-feature', 'network-comedy']);
-    expect(new Set(PROJECTS.map((p) => p.project)).size).toBe(10);
+    // the second of them the first network comedy; ten until its Module 5 brought a project for each way of working.
+    expect([...new Set(PROJECTS.map((p) => p.kind))]).toEqual([
+      'off-broadway', 'lort', 'network-drama', 'low-budget', 'ultra-low-budget', 'student-film', 'non-union-short', 'overseas-feature',
+      'multicam-comedy', 'animated-series', 'animated-feature', 'dub', 'capture-feature', 'documentary', 'musical', 'action-feature', 'limited-series',
+      'serialized-drama', 'serialized-comedy', 'anthology', 'tv-movie', 'network-comedy',
+    ]);
+    expect(new Set(PROJECTS.map((p) => p.project)).size).toBe(23);
     for (const p of PROJECTS) {
       // A drawn part's production and company are real, and it says the part is the game's (tests/career-drawn.test.ts).
       expect(p.fictional).toBe(!p.drawn);
@@ -525,7 +533,8 @@ describe('the agent and the work, as data', () => {
       else expect(rate.words).toMatch(/estimated/);
     }
     // The Sydney feature takes self-tapes from anyone in the US (from 2026-10-23, brief 25): outside an agent's agreement.
-    expect([...new Set(PROJECTS.filter((p) => p.access.open).map((p) => p.kind))]).toEqual(['lort', 'ultra-low-budget', 'student-film', 'non-union-short', 'overseas-feature']);
+    // And from Module 5 the voice-over work an agent's agreement leaves out, a documentary's reenactment and a musical's Equity call.
+    expect([...new Set(PROJECTS.filter((p) => p.access.open).map((p) => p.kind))]).toEqual(['lort', 'ultra-low-budget', 'student-film', 'non-union-short', 'overseas-feature', 'animated-series', 'animated-feature', 'dub', 'documentary', 'musical']);
     for (const t of AGREEMENT_TERMS) expect(['verified', 'simulation']).toContain(t.basis);
     expect(AGREEMENT_TERMS.filter((t) => t.basis === 'verified').every((t) => (t.sources ?? []).length > 0)).toBe(true);
   });

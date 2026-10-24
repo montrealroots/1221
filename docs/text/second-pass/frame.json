@@ -1966,12 +1966,26 @@
   "evidence": "Written for brief 19: what the agent's two deciders decide, in a sentence each, read by tests/deciders.test.ts, which sweeps every input they declare, and by tools/deciders.mjs and tools/tics.mjs passing",
   "first": "Rewritten And Verified"
  },
+ "src/engine/decided.ts#top [pro.board]": {
+  "status": "Rewritten",
+  "hash": "e7daf8b703da",
+  "on": "2026-10-24",
+  "evidence": "Written for brief 25's Module 5 to docs/STYLE.md: each of the five draws the ways of working make, said in the player's terms, registered and checked by tools/deciders.mjs and each drawn in tests/career-workflows.test.ts (the board, the screamed lines, the revised pages, the recall to loop and the scene cut), with tools/voice-check.mjs clean.",
+  "first": "Pending"
+ },
  "src/engine/decided.ts#top [pro.casting]": {
   "status": "Retained",
   "hash": "463e16217581",
   "on": "2026-10-21",
   "reason": "A decider's description, read by tests/deciders.test.ts and tools/deciders.mjs and never shown to a player: it says what the draw decides and what moves it.",
   "first": "Reviewed And Retained"
+ },
+ "src/engine/decided.ts#top [pro.cut]": {
+  "status": "Rewritten",
+  "hash": "f285f379daea",
+  "on": "2026-10-24",
+  "evidence": "Written for brief 25's Module 5 to docs/STYLE.md: each of the five draws the ways of working make, said in the player's terms, registered and checked by tools/deciders.mjs and each drawn in tests/career-workflows.test.ts (the board, the screamed lines, the revised pages, the recall to loop and the scene cut), with tools/voice-check.mjs clean.",
+  "first": "Pending"
  },
  "src/engine/decided.ts#top [pro.episode]": {
   "status": "Retained",
@@ -1987,11 +2001,25 @@
   "reason": "Developer notes on each random draw, read only by tests/deciders.test.ts and tools/deciders.mjs; nothing the game ships imports decided.ts.",
   "first": "Pending"
  },
+ "src/engine/decided.ts#top [pro.loop]": {
+  "status": "Rewritten",
+  "hash": "93a725da5d19",
+  "on": "2026-10-24",
+  "evidence": "Written for brief 25's Module 5 to docs/STYLE.md: each of the five draws the ways of working make, said in the player's terms, registered and checked by tools/deciders.mjs and each drawn in tests/career-workflows.test.ts (the board, the screamed lines, the revised pages, the recall to loop and the scene cut), with tools/voice-check.mjs clean.",
+  "first": "Pending"
+ },
  "src/engine/decided.ts#top [pro.option]": {
   "status": "Retained",
   "hash": "6178793ecb7a",
   "on": "2026-10-24",
   "reason": "Developer notes on each random draw, read only by tests/deciders.test.ts and tools/deciders.mjs; nothing the game ships imports decided.ts.",
+  "first": "Pending"
+ },
+ "src/engine/decided.ts#top [pro.pages]": {
+  "status": "Rewritten",
+  "hash": "1fe9c9074229",
+  "on": "2026-10-24",
+  "evidence": "Written for brief 25's Module 5 to docs/STYLE.md: each of the five draws the ways of working make, said in the player's terms, registered and checked by tools/deciders.mjs and each drawn in tests/career-workflows.test.ts (the board, the screamed lines, the revised pages, the recall to loop and the scene cut), with tools/voice-check.mjs clean.",
   "first": "Pending"
  },
  "src/engine/decided.ts#top [pro.posting]": {
@@ -2020,6 +2048,13 @@
   "hash": "0f5ab221069a",
   "on": "2026-10-24",
   "reason": "Developer notes on each random draw, read only by tests/deciders.test.ts and tools/deciders.mjs; nothing the game ships imports decided.ts.",
+  "first": "Pending"
+ },
+ "src/engine/decided.ts#top [pro.stress]": {
+  "status": "Rewritten",
+  "hash": "663dc483d812",
+  "on": "2026-10-24",
+  "evidence": "Written for brief 25's Module 5 to docs/STYLE.md: each of the five draws the ways of working make, said in the player's terms, registered and checked by tools/deciders.mjs and each drawn in tests/career-workflows.test.ts (the board, the screamed lines, the revised pages, the recall to loop and the scene cut), with tools/voice-check.mjs clean.",
   "first": "Pending"
  },
  "src/engine/decided.ts#top [production.direction]": {
@@ -3019,10 +3054,10 @@
  },
  "src/ui/looks/day.tsx#missCost": {
   "status": "Rewritten",
-  "hash": "ac490e9c295a",
-  "on": "2026-10-21",
-  "evidence": "tests/journey-career-older.test.ts, J6 calendar: an audition in person and a booked shoot day opened from the calendar say the trip is part of them and what missing them costs, and a showcase rehearsal and showcase day still ask for New Haven and say theirs; tests/journey-career.test.ts: life A's meeting entry says the trip goes with it and that missing it closes the approach; each case read against its handler (proagent MEETING_KIND, projobs missRound and missDay with MISSES, proshowcase's calls with offSick and a sick day called in) on 2026-10-21 by the playthroughs",
-  "first": "Rewritten And Verified"
+  "hash": "e31626d6919d",
+  "on": "2026-10-24",
+  "evidence": "Written for brief 25's Module 5 (the ways of working: the booth, the dub, narration, multicamera, performance capture, reenactment, the musical and action; a shoot's order and takes, revised pages, a recall to loop and a scene cut) to docs/STYLE.md and docs/GLOSSARY.md, every rule the agreements' own and every invention said as the game's; read where the player meets it in tests/career-workflows-screen.test.ts (the Work and Opportunities tabs drawn for a voice session, a multicamera week and an action shoot, through the clock and a reload at each stage) and tests/career-workflows.test.ts (each workflow's days, choices, reports and notices), with tools/voice-check.mjs, tools/tics.mjs and tools/title-case.mjs clean.",
+  "first": "Pending"
  },
  "src/ui/looks/day.tsx#quarterSentence": {
   "status": "Retained",

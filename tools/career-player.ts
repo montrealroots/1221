@@ -149,7 +149,7 @@ export function playTo(sim: Simulation, until: number, player: Player = {}, stop
 /** The sides or the part, ready: each part at a practice brief's complete mark, rehearsal at its most (`BRIEF.complete`). */
 export const ready = (prep: PartPrep | undefined): boolean => !!prep && prep.interpretation >= BRIEF.complete.interpretation && prep.memorization >= BRIEF.complete.memorization && prep.rehearsal >= BRIEF.complete.mostRehearsal;
 const STEPS = [['read', 'interpretation'], ['lines', 'memorization'], ['rehearse', 'rehearsal']] as const;
-const short = (prep: PartPrep | undefined, part: keyof PartPrep) => (prep?.[part] ?? 0) < (part === 'rehearsal' ? BRIEF.complete.mostRehearsal : BRIEF.complete[part]);
+const short = (prep: PartPrep | undefined, part: 'interpretation' | 'memorization' | 'rehearsal') => (prep?.[part] ?? 0) < (part === 'rehearsal' ? BRIEF.complete.mostRehearsal : BRIEF.complete[part]);
 
 /** How an actor goes about the work: what they prepare, when they update the résumé. */
 export interface Ways {
@@ -200,6 +200,12 @@ function ownWork(sim: Simulation, t: Transcript | undefined, ways: Ways): boolea
         press(sim, t, `Prepare the part (${step}) for ${e.projectId}`, 'pro.prepare', { engagementId: e.id, step });
         if (sim.now > before) return true;
       }
+    }
+    // The work's own preparation where it has one (from 2026-10-24, brief 25's Module 5): Find The Voice, Watch The
+    // Original and the rest, to the same mark as rehearsal, as an actor booked for it would.
+    if ((e.prep?.special ?? 0) < BRIEF.complete.mostRehearsal && !prepareRefusal(sim, person, { engagement: e }, 'special')) {
+      press(sim, t, `Prepare the part (special) for ${e.projectId}`, 'pro.prepare', { engagementId: e.id, step: 'special' });
+      if (sim.now > before) return true;
     }
   }
   if (ways.resume !== 'when-asked' && currentOf(pro, 'resume') && materialsCheck(person, 'screen', sim.now).some((x) => x.kind === 'resume' && x.problem === 'behind') && !resumeRefusal(sim, person)) {

@@ -69,6 +69,21 @@ export const PROJECT_GENRES: Readonly<Record<string, Stated>> = {
   // in its own words (`content/catalog.ts`), and the game's genres for them are its reading of those words.
   '9-1-1': { weights: { police_procedural: 0.5, disaster: 0.5 }, why: 'Its page calls it a procedural drama, and it’s named for the emergency number: half a police procedural, half a disaster story.' },
   'Abbott Elementary': { weights: { comedy: 1 }, why: 'Its page calls it a workplace comedy, so comedy is its genre.' },
+  // The ways of working' own projects (from 2026-10-24, brief 25's Module 5); until then none was in the game. Each is
+  // SLATE's reading of its story, as the others are.
+  'Half Past Normal': { weights: { hangout: 1 }, why: 'Neighbors in one building whose business everyone hears through the ceiling: a hangout comedy.' },
+  'Lantern Row': { weights: { childrens: 0.6, animated: 0.4 }, why: 'A ferret who sells lost things back at a night market, for children, and drawn: a children’s story first, animated second.' },
+  'The Kite And The Crow': { weights: { adventure: 0.6, animated: 0.4 }, why: 'A crow who leaves the steeple after forty years to help a child with a kite: an adventure, and an animated film.' },
+  'The Salt Road': { weights: { nordic_noir: 1 }, why: 'A Danish island, a harbormaster who knows every boat and lies about one: a Nordic noir, crime being its broad genre.' },
+  'Iron Meridian': { weights: { science_fiction: 0.6, action: 0.4 }, why: 'A stone giant woken after a thousand years, deciding whose side it was built for: science fiction, with the action it ends in.' },
+  'Tidewater: The Last Oyster Towns': { weights: { documentary: 1 }, why: 'The history of the Chesapeake’s oyster towns, narrated and reenacted: a documentary.' },
+  'The Lamplighters': { weights: { musical: 0.6, historical_fiction: 0.4 }, why: 'The city’s lamplighters in 1899, the year the electric lights come, in songs and numbers: a musical, set in history.' },
+  'Breakwater': { weights: { action: 0.6, heist: 0.4 }, why: 'A crew on the waterfront and a driver told there’d be no fighting: action first, around a heist.' },
+  'The Glass Orchard': { weights: { psychological_thriller: 0.6, domestic_drama: 0.4 }, why: 'A family orchard kept solvent by a bookkeeper with two ledgers: a psychological thriller inside a family drama.' },
+  'Northern Line': { weights: { romantic_drama: 1 }, why: 'An engineer who falls for the lead over a season of crossings and says nothing: a romantic drama.' },
+  'Second Shift': { weights: { hangout: 1 }, why: 'A diner’s regulars and the night manager who keeps their secrets: a hangout comedy.' },
+  'Six Rooms': { weights: { anthology: 0.5, mystery: 0.5 }, why: 'A new story in a new hotel each season, each around something someone hides: an anthology of mysteries.' },
+  'A Light On Pell Street': { weights: { christmas: 0.5, romantic_comedy: 0.5 }, why: 'One December to save the last lamp shop, and the developer’s heir: a Christmas story and a romantic comedy.' },
 };
 
 /**

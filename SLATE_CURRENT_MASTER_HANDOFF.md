@@ -1,4 +1,4 @@
-# Read First: Brief 25, The Master Career Build, Modules 1 To 4 (Work Abroad, The Real Catalog, Real Agents, Contracts) Done, 2026-10-24
+# Read First: Brief 25, The Master Career Build, Modules 1 To 5 (Work Abroad, The Real Catalog, Real Agents, Contracts, The Ways Of Working) Done, 2026-10-24
 
 **This section is the current status, and where a new session starts.** The owner gave brief 25, "SLATE — Master
 Career Build Command", with its research dossier (Sections 1 to 29), on `main` after #63. It is kept verbatim at
@@ -8,12 +8,15 @@ is worked on `claude/peaceful-hamilton-59zdbb` from `b46ee301`, pushed and never
 owner says otherwise, no contact with real people, no purchased data, and none of housing, vehicles, shopping, other
 occupations or parental leave.
 
-**Completion, by the matrix:** 588 of 660 rows in scope Implemented And Verified (89.0%); 68 Implemented, Verification Incomplete, 0 Partially Implemented, 0 Not Implemented, 0 Blocked Externally, 4 Decision Required, 41 Explicitly Deferred.
+**Completion, by the matrix:** 549 of 661 rows in scope Implemented And Verified (83.0%); 108 Implemented, Verification Incomplete, 0 Partially Implemented, 0 Not Implemented, 0 Blocked Externally, 4 Decision Required, 41 Explicitly Deferred.
 
-  (634 at brief 24's close. The 46 rows brief 22's final runs measured fall behind whenever `src/engine` changes, as
-  they did through briefs 23 and 24, and are held again by playing those runs on the brief's last tested commit; the
-  659th row is work abroad's capability, and the 660th Module 4's contracts, each Implemented, its verified layer Partial,
-  as every row added after the review of 2026-10-13 is.)
+  (634 at brief 24's close, 588 at Module 4's. The 46 rows brief 22's final runs measured fall behind whenever
+  `src/engine` changes, as they did through briefs 23 and 24, and are held again by playing those runs on the brief's last
+  tested commit; Module 5 changed the judge's own files (`evaluation.ts`, `content/tasks.ts`, the genre weights), so 39
+  more measured rows, the genre signatures, the advice baselines and the stamina and judging runs among them, fall behind
+  until the brief's final runs play them again, as Module 7 does; the
+  659th row is work abroad's capability, the 660th Module 4's contracts and the 661st Module 5's ways of working, each
+  Implemented, its verified layer Partial, as every row added after the review of 2026-10-13 is.)
 
 - **Read first:** `docs/verification/career-world-2026-10-23/CHECKPOINT.md` (where the work is, module by module, and the
   blockers met), `criteria.md` (each module's checks, written before its code), `REGISTER.md` (290 rows: the brief's
@@ -79,8 +82,32 @@ occupations or parental leave.
 - **Measured (Module 4):** the full gate, exit 0: 494 of 494 test files, 5,691 of 5,691 tests, the 23 checks. On the way,
   brief 19's pay test learned that a non-union producer can pay late, the Work tab's pay table stopped saying a
   payment's state twice, and `pro.ask_pay` was traced and its capability given its builder's review.
-- **Register:** 73 of 290 rows Implemented And Verified (52 at Module 3's end, 43 at Module 2's, 24 at Module 1's).
-- **Next:** Module 5, distinct production workflows (Part 8); then charts and awards, and the time loop, tutorials,
+- **Module 5, the ways of working** (`content/workflows.ts`, `systems/workflow.ts`): ten workflows and twenty-one
+  formats, every project naming one, each with its own days, preparation and own step, choices (`pro.work_choice`, a
+  button for each option on the Work tab), judging and reports. A shoot's scenes are planned at booking and shot out of
+  the script's order by location, kept to each episode's days for a procedural, two episodes cross-boarded for a
+  serialized show, in the story's order on a tape night; each in takes, the best printed, Ask For Another Take within
+  the format's allowance. Revised pages the evening before take a share of what was learned. The booth, the dub and a
+  narration strain the voice (`health.voice`), which rest eases and which holds back the work that uses it. A multicamera
+  week is paid from its table read; a dub by characters and lines; capture and an animated feature by the day called;
+  a stunt is the double's unless the player consents; an intimate scene is said before the audition and done by a double
+  without written consent, costing nothing. After a screen wrap, a recall to loop paid half a day; at the release, a
+  scene may be cut, the credit's band the best of what's kept; an anthology invites strong work back. Fifteen new parts in
+  thirteen fictional projects, five new deciders (`pro.board`, `pro.stress`, `pro.pages`, `pro.loop`, `pro.cut`). The
+  rules are N13's and N17's, each cited in `criteria.md`, Module 5, W1 to W13.
+- **Defects found on the way and fixed:** a procedural's scenes dealt across all its episodes' days; `FormatSpec.after`
+  read by nothing (the release notice reads it now) and `closedEnd` read by nothing (gone); the dub format's words giving
+  a rule the code doesn't keep; a day's report saying "it worked on the blocking and fight rehearsal"; the new projects
+  stating no genres; the ability test holding no piece of the eight new tasks.
+- **Moved with it:** the older graduate's journey (V16) now has its referral from the producers of a documentary her
+  reenactment in was judged Strong, where it was the director of a student film; the role facts' task line gave way to How
+  The Work Is Done; Listening is read in a dub's execution and Vocal and Physical Expression in believability, so Today's
+  rows for them say more.
+- **Measured (Module 5):** the full gate, exit 0: 496 of 496 test files, 5,727 of 5,727 tests, the 23 checks. The
+  suite's first run failed 11 tests, each written before the rule it reads moved, and each was moved with it.
+- **Register:** 101 of 290 rows Implemented And Verified (73 at Module 4's end, 52 at Module 3's, 43 at Module 2's, 24 at
+  Module 1's); WF-19, short films, is Partially Implemented until Module 6 gives it festivals.
+- **Next:** Module 6, weekly charts, festivals and awards with an anonymous field (Part 9); then the time loop, tutorials,
   playthroughs and the final gate, each in the checkpoint's table.
 
 # Earlier: Brief 24, UI Alignment, Home Spacing And Navigation Cleanup, Merged, 2026-10-23

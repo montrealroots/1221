@@ -23,6 +23,7 @@
 import type { Family } from './genres';
 import type { Skill } from './school';
 import type { PartFor, PartSize } from './plays';
+import type { FormatId } from './workflows';
 
 export type Basis = 'verified' | 'assumption';
 
@@ -41,7 +42,7 @@ const R = 'representation.md' as const;
 // Pay
 // ---------------------------------------------------------------------------------------------------------------------
 
-export type RateId = 'sag-tv-day' | 'sag-tv-week' | 'low-budget-day' | 'low-budget-week' | 'ultra-low-budget-day' | 'student-film' | 'lort-d' | 'lort-c' | 'lort-b' | 'off-broadway' | 'non-union-day';
+export type RateId = 'sag-tv-day' | 'sag-tv-week' | 'low-budget-day' | 'low-budget-week' | 'ultra-low-budget-day' | 'student-film' | 'lort-d' | 'lort-c' | 'lort-b' | 'off-broadway' | 'non-union-day' | 'animation-session';
 
 export interface Rate {
   id: RateId;
@@ -87,6 +88,9 @@ export const RATES: Readonly<Record<RateId, Rate>> = {
   'off-broadway': { id: 'off-broadway', label: 'Off-Broadway Weekly Salary', amount: 1_051_00, per: 'week', effective: { from: '2026-06-29' }, basis: 'assumption', words: 'Equity’s Off-Broadway minimums aren’t public, so this weekly salary is estimated, between the LORT D and LORT B minimums.' },
   // ASSUMPTION: no published figure for a non-union short.
   'non-union-day': { id: 'non-union-day', label: 'Non-Union Day Rate', amount: 125_00, per: 'day', effective: { from: '2026-07-01' }, basis: 'assumption', words: 'A non-union short sets its own pay, so this day rate is estimated.' },
+  // ASSUMPTION (from 2026-10-24, brief 25's Module 5): SAG-AFTRA's Television Animation Agreement wasn't read, so a
+  // session is paid the day performer's minimum, by its year as that minimum is (`SHARE_OF_SAG_DAY`).
+  'animation-session': { id: 'animation-session', label: 'SAG-AFTRA Television Animation Session', amount: 1_283_00, per: 'day', effective: { from: '2026-07-01', to: '2027-06-30' }, basis: 'assumption', words: 'SAG-AFTRA’s television animation rates weren’t read, so a session here is paid the day performer’s minimum, estimated.' },
 };
 
 /** The SAG-AFTRA day performer's minimum by contract year, each from July 1 (S30): 2025's, then the agreement's four. */
@@ -111,7 +115,7 @@ export const SAG_WEEK_BY_YEAR: readonly { from: string; amount: number }[] = [
  * Ultra Low Budget at 20% (S32), each the year's, rounded to the dollar as the rate sheets print them. Both reproduce
  * `RATES`' 2026–27 figures, $834 and $257.
  */
-const SHARE_OF_SAG_DAY: Partial<Record<RateId, number>> = { 'sag-tv-day': 1, 'low-budget-day': 0.65, 'ultra-low-budget-day': 0.2 };
+const SHARE_OF_SAG_DAY: Partial<Record<RateId, number>> = { 'sag-tv-day': 1, 'low-budget-day': 0.65, 'ultra-low-budget-day': 0.2, 'animation-session': 1 };
 
 /**
  * A rate's minimum on a day (`YYYY-MM-DD`): the SAG-AFTRA day performer's by its contract year (S30, `SAG_DAY_BY_YEAR`),
@@ -166,7 +170,11 @@ export const UNIONS = {
 // ---------------------------------------------------------------------------------------------------------------------
 
 export type ProMedium = 'stage' | 'film' | 'television';
-export type ProjectKind = 'off-broadway' | 'lort' | 'network-drama' | 'network-comedy' | 'low-budget' | 'ultra-low-budget' | 'student-film' | 'non-union-short' | 'overseas-feature';
+export type ProjectKind =
+  | 'off-broadway' | 'lort' | 'network-drama' | 'network-comedy' | 'low-budget' | 'ultra-low-budget' | 'student-film' | 'non-union-short' | 'overseas-feature'
+  // From 2026-10-24 (brief 25's Module 5): the kinds of production the workflows brought (`content/workflows.ts`).
+  | 'multicam-comedy' | 'animated-series' | 'animated-feature' | 'dub' | 'capture-feature' | 'documentary' | 'musical' | 'action-feature'
+  | 'limited-series' | 'serialized-drama' | 'serialized-comedy' | 'anthology' | 'tv-movie';
 
 /**
  * How a project abroad gets its actor there and keeps them (from 2026-10-23, the owner's brief 25, Part 9 and the
@@ -204,6 +212,11 @@ export interface ProjectTemplate {
   id: string;
   kind: ProjectKind;
   /**
+   * How the work is done (from 2026-10-24, the owner's brief 25, Part 8): the format, which names its workflow
+   * (`content/workflows.ts`). Until then every project was worked as a run or a shoot, whatever it was.
+   */
+  format: FormatId;
+  /**
    * The project, its company and its casting office are the game's inventions; false only for a part drawn from a real
    * production (`drawn`), whose production and companies are the catalog's and whose part is the game's (from
    * 2026-10-23, brief 25's Module 2: until then always true).
@@ -231,8 +244,11 @@ export interface ProjectTemplate {
     for: PartFor;
     /** The part, said as a breakdown says it. */
     about: string;
-    /** What it asks, for the judge (`content/tasks.ts`): the task, its families and the techniques it reads. */
-    task: 'performance' | 'camera';
+    /**
+     * What it asks, for the judge (`content/tasks.ts`): its families and the techniques it reads. A `task` stood here,
+     * 'performance' or 'camera', until 2026-10-24 (brief 25's Module 5), read by nothing: the work's format names how
+     * each of its days is judged now (`content/workflows.ts`).
+     */
     families: readonly Family[];
     techniques: Partial<Record<Skill, number>>;
     stakes: number;
@@ -257,7 +273,16 @@ export interface ProjectTemplate {
    * (`content/series.ts`, from 2026-10-24, brief 25's Module 4, D7): the episodes its contract guarantees, the next ones
    * in the season, and how many it's expected in, each further one paid only if it's called for.
    */
-  schedule: { kind: 'run'; rehearsalWeeks: number; performanceWeeks: number } | { kind: 'shoot'; days: number } | { kind: 'episodes'; guaranteed: number; expected: number };
+  schedule:
+    | { kind: 'run'; rehearsalWeeks: number; performanceWeeks: number }
+    // An action shoot's fight rehearsal days before it, and the shoot days with stunts, counted from the first shoot day
+    // (from 2026-10-24, Module 5).
+    | { kind: 'shoot'; days: number; rehearsalDays?: number; stuntDays?: readonly number[] }
+    | { kind: 'episodes'; guaranteed: number; expected: number }
+    // A multicamera episode's week (Module 5): a table read, rehearsal and camera blocking, and a tape night.
+    | { kind: 'week'; weeks: number }
+    // Sessions on weekdays `everyDays` apart, each `minutes` long from `hour` (Module 5): the booth, the dub, the capture stage.
+    | { kind: 'sessions'; sessions: number; everyDays: number; minutes: number; hour: number };
   /** Who can put the actor up for it: an agent, and the actor's own submission where it's open. */
   access: { agent: boolean; open: false | 'anyone' | 'equity-members' };
   pay: RateId;
@@ -270,6 +295,25 @@ export interface ProjectTemplate {
    * made, and called off where the network stops making it (from 2026-10-24, brief 25's Module 4, D8).
    */
   series?: string;
+  /**
+   * The episodes a part's scenes fall in, where its days are cross-boarded across them (a serialized drama or comedy, a
+   * limited series; from 2026-10-24, Module 5).
+   */
+  episodes?: readonly number[];
+  /**
+   * A scene of nudity or simulated sex in the part (N13 §43, from 2026-10-24, Module 5, W10): what it is, said before the
+   * audition, and the work day that holds it, counted from 0.
+   */
+  intimacy?: { words: string; day: number };
+  /**
+   * A dub's characters each session (N13 Schedule A §37, from 2026-10-24, Module 5, W5): each character and its
+   * synchronized lines, which set the days' pay.
+   */
+  dub?: readonly (readonly { character: string; lines: number }[])[];
+  /** Performance capture's other characters each session, at no more pay (N17 item 27, Module 5, W6). */
+  others?: readonly (readonly string[])[];
+  /** An anthology's next story, offered only to an actor whose work in this earlier one was strong (Module 5). */
+  invitedFrom?: string;
 }
 
 /**
@@ -287,11 +331,11 @@ export interface ProjectTemplate {
  */
 export const PROJECTS: readonly ProjectTemplate[] = [
   {
-    id: 'calder-street', kind: 'off-broadway', fictional: true,
+    id: 'calder-street', kind: 'off-broadway', format: 'play', fictional: true,
     project: 'A House On Calder Street', company: 'Marrow Lane Theater Company', casting: 'Pennick Casting',
     medium: 'stage', genres: ['domestic_drama', 'drama'],
     place: { city: 'New York', cityId: 'us-ny-newyork', venue: 'a 199-seat theater in Manhattan' },
-    role: { part: 'Nell', size: 'supporting', for: 'actress', about: 'The younger sister, home for the first time in six years, who says what the family won’t.', task: 'performance', families: ['drama'], techniques: { scene: 2, character: 1 }, stakes: 2 },
+    role: { part: 'Nell', size: 'supporting', for: 'actress', about: 'The younger sister, home for the first time in six years, who says what the family won’t.', families: ['drama'], techniques: { scene: 2, character: 1 }, stakes: 2 },
     union: 'equity', contract: 'Equity Off-Broadway',
     requirements: { ages: [22, 32], sends: ['headshot', 'resume'] },
     stages: { audition: 'in-person', callback: true },
@@ -299,11 +343,11 @@ export const PROJECTS: readonly ProjectTemplate[] = [
     access: { agent: true, open: false }, pay: 'off-broadway',
   },
   {
-    id: 'calder-street-callum', kind: 'off-broadway', fictional: true,
+    id: 'calder-street-callum', kind: 'off-broadway', format: 'play', fictional: true,
     project: 'A House On Calder Street', company: 'Marrow Lane Theater Company', casting: 'Pennick Casting',
     medium: 'stage', genres: ['domestic_drama', 'drama'],
     place: { city: 'New York', cityId: 'us-ny-newyork', venue: 'a 199-seat theater in Manhattan' },
-    role: { part: 'Callum', size: 'supporting', for: 'actor', about: 'The older brother who stayed, who has kept the house going and the family’s secret better than anyone.', task: 'performance', families: ['drama'], techniques: { scene: 2, character: 1 }, stakes: 2 },
+    role: { part: 'Callum', size: 'supporting', for: 'actor', about: 'The older brother who stayed, who has kept the house going and the family’s secret better than anyone.', families: ['drama'], techniques: { scene: 2, character: 1 }, stakes: 2 },
     union: 'equity', contract: 'Equity Off-Broadway',
     requirements: { ages: [22, 32], sends: ['headshot', 'resume'] },
     stages: { audition: 'in-person', callback: true },
@@ -311,13 +355,13 @@ export const PROJECTS: readonly ProjectTemplate[] = [
     access: { agent: true, open: false }, pay: 'off-broadway',
   },
   {
-    id: 'winter-ledger', kind: 'lort', fictional: true,
+    id: 'winter-ledger', kind: 'lort', format: 'play', fictional: true,
     project: 'The Winter Ledger', company: 'Harrow Point Repertory Theater', casting: 'Ostrander Vale Casting',
     medium: 'stage', genres: ['comedy', 'farce'],
     // In Providence until 2026-10-21, a town the gazetteer doesn't hold, so the tax return couldn't read where the work
     // was done; Hudson, New York, is held, and its work is taxed as a nonresident's New York wages like the city's.
     place: { city: 'Hudson', cityId: 'us-ny-hudson', venue: 'the company’s main stage' },
-    role: { part: 'Tobias Marsh', size: 'lead', for: 'actor', about: 'A young clerk who keeps two sets of books and two fiancées, and loses track of both in one night.', task: 'performance', families: ['comedy', 'farce'], techniques: { comedy: 2, scene: 1, movement: 1 }, stakes: 1 },
+    role: { part: 'Tobias Marsh', size: 'lead', for: 'actor', about: 'A young clerk who keeps two sets of books and two fiancées, and loses track of both in one night.', families: ['comedy', 'farce'], techniques: { comedy: 2, scene: 1, movement: 1 }, stakes: 1 },
     union: 'equity', contract: 'Equity LORT C',
     requirements: { ages: [22, 30], sends: ['headshot', 'resume'] },
     stages: { audition: 'in-person', callback: true },
@@ -325,11 +369,11 @@ export const PROJECTS: readonly ProjectTemplate[] = [
     access: { agent: true, open: 'equity-members' }, pay: 'lort-c',
   },
   {
-    id: 'winter-ledger-hester', kind: 'lort', fictional: true,
+    id: 'winter-ledger-hester', kind: 'lort', format: 'play', fictional: true,
     project: 'The Winter Ledger', company: 'Harrow Point Repertory Theater', casting: 'Ostrander Vale Casting',
     medium: 'stage', genres: ['comedy', 'farce'],
     place: { city: 'Hudson', cityId: 'us-ny-hudson', venue: 'the company’s main stage' },
-    role: { part: 'Hester Vane', size: 'lead', for: 'actress', about: 'A young widow who runs the inn where both fiancées arrive on the same night, and tells each of the three a different lie to keep the peace.', task: 'performance', families: ['comedy', 'farce'], techniques: { comedy: 2, scene: 1, movement: 1 }, stakes: 1 },
+    role: { part: 'Hester Vane', size: 'lead', for: 'actress', about: 'A young widow who runs the inn where both fiancées arrive on the same night, and tells each of the three a different lie to keep the peace.', families: ['comedy', 'farce'], techniques: { comedy: 2, scene: 1, movement: 1 }, stakes: 1 },
     union: 'equity', contract: 'Equity LORT C',
     requirements: { ages: [22, 30], sends: ['headshot', 'resume'] },
     stages: { audition: 'in-person', callback: true },
@@ -337,11 +381,11 @@ export const PROJECTS: readonly ProjectTemplate[] = [
     access: { agent: true, open: 'equity-members' }, pay: 'lort-c',
   },
   {
-    id: 'calloway-files', kind: 'network-drama', fictional: true, series: 'calloway-files',
+    id: 'calloway-files', kind: 'network-drama', format: 'procedural', fictional: true, series: 'calloway-files',
     project: 'The Calloway Files', company: 'Bright Harbor Television', casting: 'Kettering Casting',
     medium: 'television', genres: ['police_procedural', 'crime'],
     place: { city: 'New York', cityId: 'us-ny-newyork', venue: 'a studio in Queens' },
-    role: { part: 'Desk Clerk', size: 'co-star', for: 'either', about: 'A night clerk at a hotel who saw the victim leave and lies about when.', task: 'camera', families: ['crime', 'drama'], techniques: { screen: 2, scene: 1 }, stakes: 1 },
+    role: { part: 'Desk Clerk', size: 'co-star', for: 'either', about: 'A night clerk at a hotel who saw the victim leave and lies about when.', families: ['crime', 'drama'], techniques: { screen: 2, scene: 1 }, stakes: 1 },
     union: 'sag-aftra', contract: 'SAG-AFTRA TV/Theatrical',
     requirements: { ages: [22, 35], sends: ['headshot', 'resume', 'reel'] },
     stages: { audition: 'self-tape', callback: false },
@@ -352,11 +396,11 @@ export const PROJECTS: readonly ProjectTemplate[] = [
   // five, paid the day rate for each shoot day of an episode it's called for, with an option on the next season. Its
   // terms are the game's, and its contract says so.
   {
-    id: 'calloway-files-whitlock', kind: 'network-drama', fictional: true, series: 'calloway-files',
+    id: 'calloway-files-whitlock', kind: 'network-drama', format: 'procedural', fictional: true, series: 'calloway-files',
     project: 'The Calloway Files', company: 'Bright Harbor Television', casting: 'Kettering Casting',
     medium: 'television', genres: ['police_procedural', 'crime'],
     place: { city: 'New York', cityId: 'us-ny-newyork', venue: 'a studio in Queens' },
-    role: { part: 'Assistant DA Whitlock', size: 'co-star', for: 'either', about: 'A new prosecutor at the precinct who needs the detectives’ cases to hold up in court, and tells them when they won’t.', task: 'camera', families: ['crime', 'drama'], techniques: { screen: 2, scene: 1, speech: 1 }, stakes: 2 },
+    role: { part: 'Assistant DA Whitlock', size: 'co-star', for: 'either', about: 'A new prosecutor at the precinct who needs the detectives’ cases to hold up in court, and tells them when they won’t.', families: ['crime', 'drama'], techniques: { screen: 2, scene: 1, speech: 1 }, stakes: 2 },
     union: 'sag-aftra', contract: 'SAG-AFTRA TV/Theatrical',
     requirements: { ages: [25, 40], sends: ['headshot', 'resume', 'reel'] },
     stages: { audition: 'self-tape', callback: true },
@@ -364,11 +408,11 @@ export const PROJECTS: readonly ProjectTemplate[] = [
     access: { agent: true, open: false }, pay: 'sag-tv-day',
   },
   {
-    id: 'gull-season', kind: 'low-budget', fictional: true,
+    id: 'gull-season', kind: 'low-budget', format: 'independent-feature', fictional: true,
     project: 'Gull Season', company: 'Tern Island Pictures', casting: 'Quillon Casting',
     medium: 'film', genres: ['psychological_thriller', 'thriller'],
     place: { city: 'New York', cityId: 'us-ny-newyork', venue: 'locations on Long Island' },
-    role: { part: 'Wren', size: 'supporting', for: 'actress', about: 'A ferry deckhand who befriends the new arrival and knows more about the drowning than she says.', task: 'camera', families: ['thriller', 'drama'], techniques: { screen: 2, character: 1 }, stakes: 2 },
+    role: { part: 'Wren', size: 'supporting', for: 'actress', about: 'A ferry deckhand who befriends the new arrival and knows more about the drowning than she says.', families: ['thriller', 'drama'], techniques: { screen: 2, character: 1 }, stakes: 2 },
     union: 'sag-aftra', contract: 'SAG-AFTRA Low Budget Theatrical',
     requirements: { ages: [22, 34], sends: ['headshot', 'resume', 'reel'] },
     stages: { audition: 'self-tape', callback: true },
@@ -376,11 +420,11 @@ export const PROJECTS: readonly ProjectTemplate[] = [
     access: { agent: true, open: false }, pay: 'low-budget-day',
   },
   {
-    id: 'gull-season-ferris', kind: 'low-budget', fictional: true,
+    id: 'gull-season-ferris', kind: 'low-budget', format: 'independent-feature', fictional: true,
     project: 'Gull Season', company: 'Tern Island Pictures', casting: 'Quillon Casting',
     medium: 'film', genres: ['psychological_thriller', 'thriller'],
     place: { city: 'New York', cityId: 'us-ny-newyork', venue: 'locations on Long Island' },
-    role: { part: 'Ferris', size: 'supporting', for: 'actor', about: 'The ferry’s pilot, who pulled the body from the water and has told the police three different stories about it.', task: 'camera', families: ['thriller', 'drama'], techniques: { screen: 2, character: 1 }, stakes: 2 },
+    role: { part: 'Ferris', size: 'supporting', for: 'actor', about: 'The ferry’s pilot, who pulled the body from the water and has told the police three different stories about it.', families: ['thriller', 'drama'], techniques: { screen: 2, character: 1 }, stakes: 2 },
     union: 'sag-aftra', contract: 'SAG-AFTRA Low Budget Theatrical',
     requirements: { ages: [22, 34], sends: ['headshot', 'resume', 'reel'] },
     stages: { audition: 'self-tape', callback: true },
@@ -388,11 +432,11 @@ export const PROJECTS: readonly ProjectTemplate[] = [
     access: { agent: true, open: false }, pay: 'low-budget-day',
   },
   {
-    id: 'route-nine', kind: 'ultra-low-budget', fictional: true,
+    id: 'route-nine', kind: 'ultra-low-budget', format: 'independent-feature', fictional: true,
     project: 'Static On Route 9', company: 'Dead Air Films', casting: 'Brisbane Hall Casting',
     medium: 'film', genres: ['psychological_horror', 'horror'],
     place: { city: 'New York', cityId: 'us-ny-newyork', venue: 'a motel upstate' },
-    role: { part: 'Jess', size: 'lead', for: 'either', about: 'One of two night-shift radio hosts who start hearing their own voices call in.', task: 'camera', families: ['horror'], techniques: { screen: 2, emotion: 1 }, stakes: 2 },
+    role: { part: 'Jess', size: 'lead', for: 'either', about: 'One of two night-shift radio hosts who start hearing their own voices call in.', families: ['horror'], techniques: { screen: 2, emotion: 1 }, stakes: 2 },
     union: 'sag-aftra', contract: 'SAG-AFTRA Ultra Low Budget',
     requirements: { ages: [21, 32], sends: ['headshot', 'resume'] },
     stages: { audition: 'self-tape', callback: false },
@@ -400,11 +444,11 @@ export const PROJECTS: readonly ProjectTemplate[] = [
     access: { agent: true, open: 'anyone' }, pay: 'ultra-low-budget-day',
   },
   {
-    id: 'paper-moons', kind: 'student-film', fictional: true,
+    id: 'paper-moons', kind: 'student-film', format: 'student-film', fictional: true,
     project: 'Paper Moons', company: 'a graduate film program’s thesis production', casting: 'the film’s director',
     medium: 'film', genres: ['coming_of_age', 'drama'],
     place: { city: 'New York', cityId: 'us-ny-newyork', venue: 'an apartment in Brooklyn' },
-    role: { part: 'Felix', size: 'lead', for: 'actor', about: 'An older brother back for the summer, deciding whether to tell the family he isn’t going back.', task: 'camera', families: ['drama'], techniques: { screen: 1, scene: 2 }, stakes: 1 },
+    role: { part: 'Felix', size: 'lead', for: 'actor', about: 'An older brother back for the summer, deciding whether to tell the family he isn’t going back.', families: ['drama'], techniques: { screen: 1, scene: 2 }, stakes: 1 },
     union: 'sag-aftra', contract: 'SAG-AFTRA Student Film',
     requirements: { ages: [21, 30], sends: ['headshot', 'resume'] },
     stages: { audition: 'in-person', callback: false },
@@ -412,11 +456,11 @@ export const PROJECTS: readonly ProjectTemplate[] = [
     access: { agent: false, open: 'anyone' }, pay: 'student-film',
   },
   {
-    id: 'paper-moons-ivy', kind: 'student-film', fictional: true,
+    id: 'paper-moons-ivy', kind: 'student-film', format: 'student-film', fictional: true,
     project: 'Paper Moons', company: 'a graduate film program’s thesis production', casting: 'the film’s director',
     medium: 'film', genres: ['coming_of_age', 'drama'],
     place: { city: 'New York', cityId: 'us-ny-newyork', venue: 'an apartment in Brooklyn' },
-    role: { part: 'Ivy', size: 'lead', for: 'actress', about: 'The sister who stayed home, who learns first that her brother isn’t going back and has the summer to decide whether to say so.', task: 'camera', families: ['drama'], techniques: { screen: 1, scene: 2 }, stakes: 1 },
+    role: { part: 'Ivy', size: 'lead', for: 'actress', about: 'The sister who stayed home, who learns first that her brother isn’t going back and has the summer to decide whether to say so.', families: ['drama'], techniques: { screen: 1, scene: 2 }, stakes: 1 },
     union: 'sag-aftra', contract: 'SAG-AFTRA Student Film',
     requirements: { ages: [21, 30], sends: ['headshot', 'resume'] },
     stages: { audition: 'in-person', callback: false },
@@ -424,11 +468,11 @@ export const PROJECTS: readonly ProjectTemplate[] = [
     access: { agent: false, open: 'anyone' }, pay: 'student-film',
   },
   {
-    id: 'eastview', kind: 'non-union-short', fictional: true,
+    id: 'eastview', kind: 'non-union-short', format: 'short', fictional: true,
     project: 'Last Bus To Eastview', company: 'Ferrous Pictures', casting: 'the producers',
     medium: 'film', genres: ['romantic_comedy'],
     place: { city: 'New York', cityId: 'us-ny-newyork', venue: 'a bus depot in the Bronx' },
-    role: { part: 'Robin', size: 'lead', for: 'either', about: 'A commuter who misses the last bus and spends the night arguing with a stranger about whether to take the job abroad.', task: 'camera', families: ['comedy', 'romance'], techniques: { screen: 1, comedy: 2 }, stakes: 1 },
+    role: { part: 'Robin', size: 'lead', for: 'either', about: 'A commuter who misses the last bus and spends the night arguing with a stranger about whether to take the job abroad.', families: ['comedy', 'romance'], techniques: { screen: 1, comedy: 2 }, stakes: 1 },
     union: 'none', contract: 'Non-Union',
     requirements: { ages: [21, 35], sends: ['headshot', 'resume'] },
     stages: { audition: 'self-tape', callback: false },
@@ -443,11 +487,11 @@ export const PROJECTS: readonly ProjectTemplate[] = [
   // the posting, so a visa can be decided before the flight. An agent's agreement covers work in the United States
   // (`AGREEMENT_TERMS`' territory), so this is outside it: no agent puts the actor up for it, and none is owed commission.
   {
-    id: 'harbor-line', kind: 'overseas-feature', fictional: true,
+    id: 'harbor-line', kind: 'overseas-feature', format: 'studio-feature', fictional: true,
     project: 'Harbor Line', company: 'Larkspur Pictures', casting: 'Brandt Casting',
     medium: 'film', genres: ['conspiracy_thriller', 'thriller'],
     place: { city: 'Sydney', cityId: 'au-nsw-sydney', venue: 'a sound stage and the harbor’s wharves' },
-    role: { part: 'Dana Kell', size: 'supporting', for: 'actress', about: 'An American insurance investigator flown to Sydney when a container ship’s cargo vanishes between two ports, who finds the dockworkers know exactly where it went.', task: 'camera', families: ['thriller', 'drama'], techniques: { screen: 2, character: 1 }, stakes: 2 },
+    role: { part: 'Dana Kell', size: 'supporting', for: 'actress', about: 'An American insurance investigator flown to Sydney when a container ship’s cargo vanishes between two ports, who finds the dockworkers know exactly where it went.', families: ['thriller', 'drama'], techniques: { screen: 2, character: 1 }, stakes: 2 },
     union: 'sag-aftra', contract: 'SAG-AFTRA Basic Agreement (Theatrical)',
     requirements: { ages: [24, 36], sends: ['headshot', 'resume', 'reel'] },
     stages: { audition: 'self-tape', callback: true },
@@ -457,11 +501,11 @@ export const PROJECTS: readonly ProjectTemplate[] = [
     leadDays: 56,
   },
   {
-    id: 'harbor-line-arden', kind: 'overseas-feature', fictional: true,
+    id: 'harbor-line-arden', kind: 'overseas-feature', format: 'studio-feature', fictional: true,
     project: 'Harbor Line', company: 'Larkspur Pictures', casting: 'Brandt Casting',
     medium: 'film', genres: ['conspiracy_thriller', 'thriller'],
     place: { city: 'Sydney', cityId: 'au-nsw-sydney', venue: 'a sound stage and the harbor’s wharves' },
-    role: { part: 'Miles Arden', size: 'supporting', for: 'actor', about: 'The shipping line’s American lawyer, sent out to keep the loss quiet, who knows the cargo was never what the manifest said.', task: 'camera', families: ['thriller', 'drama'], techniques: { screen: 2, character: 1 }, stakes: 2 },
+    role: { part: 'Miles Arden', size: 'supporting', for: 'actor', about: 'The shipping line’s American lawyer, sent out to keep the loss quiet, who knows the cargo was never what the manifest said.', families: ['thriller', 'drama'], techniques: { screen: 2, character: 1 }, stakes: 2 },
     union: 'sag-aftra', contract: 'SAG-AFTRA Basic Agreement (Theatrical)',
     requirements: { ages: [24, 36], sends: ['headshot', 'resume', 'reel'] },
     stages: { audition: 'self-tape', callback: true },
@@ -469,6 +513,201 @@ export const PROJECTS: readonly ProjectTemplate[] = [
     access: { agent: false, open: 'anyone' }, pay: 'sag-tv-week',
     trip: { supporter: 'Larkspur Pictures Australia', hotel: 'the production’s hotel near Circular Quay', pays: 'production', words: 'Larkspur Pictures books and pays for your flights, the cars and the hotel, as the game assumes for a studio feature shooting abroad.' },
     leadDays: 56,
+  },
+  // Module 5's productions (from 2026-10-24, the owner's brief 25, Part 8): one or more for each way of working the
+  // game didn't have (`content/workflows.ts`), every name, company and casting office invented, every part written for
+  // either. Their schedules' lengths are assumed. Voice-over work (the animated parts, the dub, the narration) is outside
+  // an agent's agreement (`AGREEMENT_TERMS`' What It Leaves Out), so it's posted for the actor's own submission.
+  {
+    id: 'half-past-normal', kind: 'multicam-comedy', format: 'multicam-comedy', fictional: true,
+    project: 'Half Past Normal', company: 'Corner Booth Productions', casting: 'Wexley Casting',
+    medium: 'television', genres: ['comedy', 'hangout'],
+    place: { city: 'New York', cityId: 'us-ny-newyork', venue: 'a sound stage in Long Island City, before a studio audience' },
+    role: { part: 'The Upstairs Neighbor', size: 'co-star', for: 'either', about: 'A neighbor who hears everything through the ceiling and mentions it at the worst possible moment.', families: ['comedy'], techniques: { comedy: 2, scene: 1, improv: 1 }, stakes: 1 },
+    union: 'sag-aftra', contract: 'SAG-AFTRA TV/Theatrical',
+    requirements: { ages: [22, 45], sends: ['headshot', 'resume', 'reel'] },
+    stages: { audition: 'in-person', callback: true },
+    schedule: { kind: 'week', weeks: 1 },
+    access: { agent: true, open: false }, pay: 'sag-tv-day',
+  },
+  {
+    id: 'lantern-row', kind: 'animated-series', format: 'animated-series', fictional: true,
+    project: 'Lantern Row', company: 'Paper Lantern Animation', casting: 'Hollis Reed Casting',
+    medium: 'television', genres: ['animated', 'childrens'],
+    place: { city: 'New York', cityId: 'us-ny-newyork', venue: 'a recording studio in Midtown' },
+    role: { part: 'Pickett The Ferret', size: 'co-star', for: 'either', about: 'A fast-talking ferret who sells lost things back to their owners at the night market, and is sorry about it only sometimes.', families: ['animation', 'comedy'], techniques: { voiceover: 2, character: 2, comedy: 1 }, stakes: 1 },
+    union: 'sag-aftra', contract: 'SAG-AFTRA Television Animation',
+    requirements: { ages: [18, 60], sends: ['headshot', 'resume'] },
+    stages: { audition: 'self-tape', callback: true },
+    schedule: { kind: 'sessions', sessions: 3, everyDays: 14, minutes: 240, hour: 10 },
+    access: { agent: false, open: 'anyone' }, pay: 'animation-session',
+  },
+  {
+    id: 'kite-and-crow', kind: 'animated-feature', format: 'animated-feature', fictional: true,
+    project: 'The Kite And The Crow', company: 'Wren Hill Animation Studios', casting: 'Oyelaran Casting',
+    medium: 'film', genres: ['animated', 'adventure'],
+    place: { city: 'New York', cityId: 'us-ny-newyork', venue: 'a recording studio in Chelsea' },
+    role: { part: 'The Crow', size: 'supporting', for: 'either', about: 'A crow who has watched the town from the steeple for forty years and finally decides to help the child with the kite.', families: ['animation', 'adventure'], techniques: { voiceover: 2, character: 1, emotion: 1 }, stakes: 2 },
+    union: 'sag-aftra', contract: 'SAG-AFTRA Basic Agreement',
+    requirements: { ages: [18, 60], sends: ['headshot', 'resume'] },
+    stages: { audition: 'self-tape', callback: true },
+    schedule: { kind: 'sessions', sessions: 4, everyDays: 35, minutes: 240, hour: 10 },
+    access: { agent: false, open: 'anyone' }, pay: 'sag-tv-day',
+  },
+  {
+    id: 'salt-road', kind: 'dub', format: 'dub', fictional: true,
+    project: 'The Salt Road', company: 'Northlight Dubbing', casting: 'Northlight Dubbing’s casting director',
+    medium: 'television', genres: ['nordic_noir', 'crime'],
+    place: { city: 'New York', cityId: 'us-ny-newyork', venue: 'a dubbing stage in Manhattan' },
+    role: { part: 'Harbormaster Brandt', size: 'supporting', for: 'either', about: 'Harbormaster Brandt’s English voice, in a Danish crime series: a careful official who knows every boat on the island and lies about one of them.', families: ['crime', 'drama'], techniques: { voiceover: 2, screen: 1, speech: 1 }, stakes: 1 },
+    union: 'sag-aftra', contract: 'SAG-AFTRA Basic Agreement (Dialogue Replacement)',
+    requirements: { ages: [25, 55], sends: ['headshot', 'resume'] },
+    stages: { audition: 'self-tape', callback: false },
+    schedule: { kind: 'sessions', sessions: 3, everyDays: 1, minutes: 480, hour: 9 },
+    access: { agent: false, open: 'anyone' }, pay: 'sag-tv-day',
+    dub: [
+      [{ character: 'Harbormaster Brandt', lines: 60 }],
+      [{ character: 'Harbormaster Brandt', lines: 45 }, { character: 'a ferry captain', lines: 4 }, { character: 'a radio announcer', lines: 3 }, { character: 'a fisherman', lines: 2 }],
+      [{ character: 'Harbormaster Brandt', lines: 50 }],
+    ],
+  },
+  {
+    id: 'iron-meridian', kind: 'capture-feature', format: 'capture', fictional: true,
+    project: 'Iron Meridian', company: 'Hollowpoint Pictures', casting: 'Breck And Hale Casting',
+    medium: 'film', genres: ['science_fiction', 'action'],
+    place: { city: 'New York', cityId: 'us-ny-newyork', venue: 'a performance capture stage in Brooklyn' },
+    role: { part: 'The Sentinel', size: 'supporting', for: 'either', about: 'A stone giant made in the computer, woken after a thousand years, who has to decide whose side it was built for.', families: ['science_fiction', 'action'], techniques: { movement: 2, character: 2, screen: 1 }, stakes: 2 },
+    union: 'sag-aftra', contract: 'SAG-AFTRA Basic Agreement (Performance Capture)',
+    requirements: { ages: [20, 45], sends: ['headshot', 'resume', 'reel'] },
+    stages: { audition: 'in-person', callback: true },
+    schedule: { kind: 'sessions', sessions: 4, everyDays: 8, minutes: 600, hour: 8 },
+    access: { agent: true, open: false }, pay: 'sag-tv-day',
+    others: [[], ['a creature in the crowd'], [], ['a falling statue', 'a second sentinel']],
+  },
+  {
+    id: 'tidewater-narrator', kind: 'documentary', format: 'narration', fictional: true,
+    project: 'Tidewater: The Last Oyster Towns', company: 'Saltmeadow Films', casting: 'the film’s producers',
+    medium: 'television', genres: ['documentary'],
+    place: { city: 'New York', cityId: 'us-ny-newyork', venue: 'a sound booth in Manhattan' },
+    role: { part: 'The Narrator', size: 'lead', for: 'either', about: 'A voice to carry the film: the history of the oyster towns of the Chesapeake, from the boom years to the last boats.', families: ['documentary'], techniques: { voiceover: 2, speech: 2 }, stakes: 1 },
+    union: 'sag-aftra', contract: 'SAG-AFTRA Basic Agreement',
+    requirements: { ages: [25, 65], sends: ['headshot', 'resume'] },
+    stages: { audition: 'self-tape', callback: false },
+    schedule: { kind: 'sessions', sessions: 3, everyDays: 2, minutes: 240, hour: 10 },
+    access: { agent: false, open: 'anyone' }, pay: 'sag-tv-day',
+  },
+  {
+    id: 'tidewater-reenactment', kind: 'documentary', format: 'reenactment', fictional: true,
+    project: 'Tidewater: The Last Oyster Towns', company: 'Saltmeadow Films', casting: 'the film’s producers',
+    medium: 'television', genres: ['documentary', 'docudrama'],
+    place: { city: 'New York', cityId: 'us-ny-newyork', venue: 'a working oyster dock on Long Island' },
+    role: { part: 'An Oyster Tonger Of 1890', size: 'featured', for: 'either', about: 'A tonger working the beds from a skiff at dawn, shown at the work and at the dock, with no lines.', families: ['documentary', 'historical'], techniques: { movement: 2, character: 1 }, stakes: 1 },
+    union: 'none', contract: 'Non-Union',
+    requirements: { ages: [20, 50], sends: ['headshot', 'resume'] },
+    stages: { audition: 'self-tape', callback: false },
+    schedule: { kind: 'shoot', days: 2 },
+    access: { agent: false, open: 'anyone' }, pay: 'non-union-day',
+  },
+  {
+    id: 'lamplighters', kind: 'musical', format: 'musical', fictional: true,
+    project: 'The Lamplighters', company: 'Eastgate Music Theater', casting: 'Pell And Moran Casting',
+    medium: 'stage', genres: ['musical', 'historical_fiction'],
+    place: { city: 'New Haven', cityId: 'us-ct-newhaven', venue: 'a 500-seat regional theater' },
+    role: { part: 'The Apprentice Lamplighter', size: 'supporting', for: 'either', about: 'In 1899, the year the electric lights come, the youngest of the city’s lamplighters, with two songs and the number before the finale.', families: ['musical', 'drama'], techniques: { singing: 2, dance: 1, scene: 1 }, stakes: 2 },
+    union: 'equity', contract: 'Equity LORT B',
+    requirements: { ages: [20, 32], sends: ['headshot', 'resume'] },
+    stages: { audition: 'in-person', callback: true },
+    schedule: { kind: 'run', rehearsalWeeks: 3, performanceWeeks: 4 },
+    access: { agent: true, open: 'equity-members' }, pay: 'lort-b',
+  },
+  {
+    id: 'breakwater', kind: 'action-feature', format: 'action-feature', fictional: true,
+    project: 'Breakwater', company: 'Ninefold Pictures', casting: 'Castellane Casting',
+    medium: 'film', genres: ['action', 'heist'],
+    place: { city: 'New York', cityId: 'us-ny-newyork', venue: 'the Brooklyn waterfront and a stunt stage in Queens' },
+    role: { part: 'The Getaway Driver', size: 'supporting', for: 'either', about: 'Told there’d be no fighting, the crew’s driver ends up doing most of it.', families: ['action', 'crime'], techniques: { screen: 2, combat: 2, movement: 1 }, stakes: 2 },
+    union: 'sag-aftra', contract: 'SAG-AFTRA Basic Agreement',
+    requirements: { ages: [21, 40], sends: ['headshot', 'resume', 'reel'] },
+    stages: { audition: 'self-tape', callback: true },
+    schedule: { kind: 'shoot', days: 6, rehearsalDays: 2, stuntDays: [1, 3] },
+    access: { agent: true, open: false }, pay: 'sag-tv-day',
+  },
+  {
+    id: 'glass-orchard', kind: 'limited-series', format: 'limited-series', fictional: true,
+    project: 'The Glass Orchard', company: 'Long Acre Television', casting: 'Imbert Casting',
+    medium: 'television', genres: ['psychological_thriller', 'domestic_drama'],
+    place: { city: 'New York', cityId: 'us-ny-newyork', venue: 'an orchard in the Hudson Valley and a stage in Brooklyn' },
+    role: { part: 'The Orchard’s Bookkeeper', size: 'supporting', for: 'either', about: 'For twenty years the bookkeeper has kept the family’s orchard solvent, and for the last five its accounts in two ledgers.', families: ['thriller', 'drama'], techniques: { screen: 2, scene: 1, character: 1 }, stakes: 2 },
+    union: 'sag-aftra', contract: 'SAG-AFTRA TV/Theatrical',
+    requirements: { ages: [25, 50], sends: ['headshot', 'resume', 'reel'] },
+    stages: { audition: 'self-tape', callback: true },
+    schedule: { kind: 'shoot', days: 5 },
+    access: { agent: true, open: false }, pay: 'sag-tv-day',
+    episodes: [2, 5],
+  },
+  {
+    id: 'northern-line', kind: 'serialized-drama', format: 'serialized-drama', fictional: true,
+    project: 'Northern Line', company: 'Fennimore Street Television', casting: 'Abernathy Rhee Casting',
+    medium: 'television', genres: ['romantic_drama', 'drama'],
+    place: { city: 'New York', cityId: 'us-ny-newyork', venue: 'a ferry on the Hudson and a stage in Brooklyn' },
+    role: { part: 'The Ferry Engineer', size: 'co-star', for: 'either', about: 'The ferry’s engineer, who falls for the lead over a season of crossings and doesn’t say so until the boat breaks down mid-river.', families: ['romance', 'drama'], techniques: { screen: 2, emotion: 1, intimacy: 1 }, stakes: 2 },
+    union: 'sag-aftra', contract: 'SAG-AFTRA TV/Theatrical',
+    requirements: { ages: [22, 40], sends: ['headshot', 'resume', 'reel'] },
+    stages: { audition: 'self-tape', callback: true },
+    schedule: { kind: 'shoot', days: 4 },
+    access: { agent: true, open: false }, pay: 'sag-tv-day',
+    episodes: [3, 4],
+    intimacy: { words: 'a love scene below decks in Episode 4, with kissing, simulated sex and nudity from behind', day: 2 },
+  },
+  {
+    id: 'second-shift', kind: 'serialized-comedy', format: 'serialized-comedy', fictional: true,
+    project: 'Second Shift', company: 'Low Ceiling Pictures', casting: 'Dunmore Casting',
+    medium: 'television', genres: ['comedy', 'hangout'],
+    place: { city: 'New York', cityId: 'us-ny-newyork', venue: 'a diner in Queens' },
+    role: { part: 'The Night Manager', size: 'co-star', for: 'either', about: 'The diner’s night manager, who runs the place by keeping the regulars’ secrets and trading them when it helps.', families: ['comedy'], techniques: { comedy: 2, screen: 1, improv: 1 }, stakes: 1 },
+    union: 'sag-aftra', contract: 'SAG-AFTRA TV/Theatrical',
+    requirements: { ages: [22, 45], sends: ['headshot', 'resume', 'reel'] },
+    stages: { audition: 'self-tape', callback: false },
+    schedule: { kind: 'shoot', days: 3 },
+    access: { agent: true, open: false }, pay: 'sag-tv-day',
+    episodes: [5, 6],
+  },
+  {
+    id: 'six-rooms', kind: 'anthology', format: 'anthology', fictional: true,
+    project: 'Six Rooms', company: 'Brass Key Pictures', casting: 'Tolland Casting',
+    medium: 'television', genres: ['anthology', 'mystery'],
+    place: { city: 'New York', cityId: 'us-ny-newyork', venue: 'a hotel in Midtown' },
+    role: { part: 'The Night Auditor', size: 'co-star', for: 'either', about: 'This season’s story: the hotel’s night auditor, the only one awake when the guest in Room 4 checks out at three in the morning.', families: ['mystery', 'drama'], techniques: { screen: 2, character: 1 }, stakes: 1 },
+    union: 'sag-aftra', contract: 'SAG-AFTRA TV/Theatrical',
+    requirements: { ages: [22, 50], sends: ['headshot', 'resume', 'reel'] },
+    stages: { audition: 'self-tape', callback: true },
+    schedule: { kind: 'shoot', days: 3 },
+    access: { agent: true, open: false }, pay: 'sag-tv-day',
+  },
+  // The anthology's next story (Module 5): never posted, only offered to an actor whose work in the first was strong.
+  {
+    id: 'six-rooms-return', kind: 'anthology', format: 'anthology', fictional: true, invitedFrom: 'six-rooms',
+    project: 'Six Rooms', company: 'Brass Key Pictures', casting: 'Tolland Casting',
+    medium: 'television', genres: ['anthology', 'mystery'],
+    place: { city: 'New York', cityId: 'us-ny-newyork', venue: 'a hotel in Brooklyn' },
+    role: { part: 'The Lawyer Upstairs', size: 'co-star', for: 'either', about: 'Next season’s story, in another hotel: the lawyer living on the top floor, who drafts every guest’s will for a fee.', families: ['mystery', 'drama'], techniques: { screen: 2, character: 1 }, stakes: 1 },
+    union: 'sag-aftra', contract: 'SAG-AFTRA TV/Theatrical',
+    requirements: { ages: [22, 50], sends: ['headshot', 'resume', 'reel'] },
+    stages: { audition: 'self-tape', callback: false },
+    schedule: { kind: 'shoot', days: 3 },
+    access: { agent: false, open: false }, pay: 'sag-tv-day',
+  },
+  {
+    id: 'pell-street', kind: 'tv-movie', format: 'tv-movie', fictional: true,
+    project: 'A Light On Pell Street', company: 'Ardent Lane Television', casting: 'Vossberg Casting',
+    medium: 'television', genres: ['christmas', 'romantic_comedy'],
+    place: { city: 'New York', cityId: 'us-ny-newyork', venue: 'a street in Chinatown and a stage in Queens' },
+    role: { part: 'The Lamp Shop’s Owner', size: 'supporting', for: 'either', about: 'The owner of the last lamp shop on Pell Street, who has one December to save it and won’t take help from the developer’s heir.', families: ['romance', 'comedy'], techniques: { screen: 2, scene: 1 }, stakes: 1 },
+    union: 'sag-aftra', contract: 'SAG-AFTRA TV/Theatrical',
+    requirements: { ages: [24, 45], sends: ['headshot', 'resume', 'reel'] },
+    stages: { audition: 'self-tape', callback: true },
+    schedule: { kind: 'shoot', days: 4 },
+    access: { agent: true, open: false }, pay: 'sag-tv-day',
   },
   // Parts drawn from real productions (from 2026-10-23, brief 25's Module 2, criteria C8 to C10): each production and its
   // companies the catalog's (`content/catalog.ts`, as their pages had them on 2026-10-23); the part, its character, its
@@ -477,12 +716,12 @@ export const PROJECTS: readonly ProjectTemplate[] = [
   // build read, so the game sets the work in Los Angeles, its assumption, and says so; a trip from home, as the
   // production's.
   {
-    id: 'nine-one-one-guest', kind: 'network-drama', fictional: false,
+    id: 'nine-one-one-guest', kind: 'network-drama', format: 'procedural', fictional: false,
     drawn: { production: 'nine-one-one', season: 'a season of 9-1-1 the game imagines, after its tenth', placeWhy: 'The game sets this part’s shoot in Los Angeles: no page it read says where 9-1-1 films.' },
     project: '9-1-1', company: '20th Television', casting: 'the production’s casting office',
     medium: 'television', genres: ['police_procedural', 'disaster'],
     place: { city: 'Los Angeles', cityId: 'us-ca-losangeles', venue: 'a sound stage, where the game sets it' },
-    role: { part: 'Reese Pike', size: 'co-star', for: 'either', about: 'A driver pinned in a car on a collapsing overpass, who keeps talking to the crew as they work their way down to the car.', task: 'camera', families: ['drama', 'crime'], techniques: { screen: 2, scene: 1 }, stakes: 1 },
+    role: { part: 'Reese Pike', size: 'co-star', for: 'either', about: 'A driver pinned in a car on a collapsing overpass, who keeps talking to the crew as they work their way down to the car.', families: ['drama', 'crime'], techniques: { screen: 2, scene: 1 }, stakes: 1 },
     union: 'sag-aftra', contract: 'SAG-AFTRA TV/Theatrical',
     requirements: { ages: [22, 40], sends: ['headshot', 'resume', 'reel'] },
     stages: { audition: 'self-tape', callback: false },
@@ -492,12 +731,12 @@ export const PROJECTS: readonly ProjectTemplate[] = [
     leadDays: 28,
   },
   {
-    id: 'abbott-guest', kind: 'network-comedy', fictional: false,
+    id: 'abbott-guest', kind: 'network-comedy', format: 'single-camera-comedy', fictional: false,
     drawn: { production: 'abbott-elementary', season: 'a season of Abbott Elementary the game imagines', placeWhy: 'The game sets this part’s shoot in Los Angeles: no page it read says where Abbott Elementary films.' },
     project: 'Abbott Elementary', company: 'Warner Bros. Television and 20th Television', casting: 'the production’s casting office',
     medium: 'television', genres: ['comedy'],
     place: { city: 'Los Angeles', cityId: 'us-ca-losangeles', venue: 'a sound stage, where the game sets it' },
-    role: { part: 'Casey Marlow', size: 'co-star', for: 'either', about: 'A substitute sent for a week who is sure the job is beneath them, until the class wins them over by Friday.', task: 'camera', families: ['comedy'], techniques: { screen: 2, comedy: 1 }, stakes: 1 },
+    role: { part: 'Casey Marlow', size: 'co-star', for: 'either', about: 'A substitute sent for a week who is sure the job is beneath them, until the class wins them over by Friday.', families: ['comedy'], techniques: { screen: 2, comedy: 1 }, stakes: 1 },
     union: 'sag-aftra', contract: 'SAG-AFTRA TV/Theatrical',
     requirements: { ages: [22, 40], sends: ['headshot', 'resume', 'reel'] },
     stages: { audition: 'self-tape', callback: false },

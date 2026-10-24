@@ -127,9 +127,9 @@
  },
  "src/engine/content/tutorial.ts#CHAPTERS [finding-work]": {
   "status": "Rewritten",
-  "hash": "cff9eadd2ac5",
+  "hash": "589bc2ad4e37",
   "on": "2026-10-24",
-  "evidence": "Written for brief 25's Module 4 (contracts, pay states, overtime, the producer's contribution, residuals, the per diem, a recurring part's season and a series' seasons) to docs/STYLE.md and docs/GLOSSARY.md, every rule's figure the agreements' own and every invention said as the game's; read where the player meets it in tests/career-contracts.test.ts (the offer, the contract, each payment's state, the notices of each episode, option, decision, telecast, rerun, residual and per diem, through a played recurring part), with tools/voice-check.mjs, tools/tics.mjs and tools/title-case.mjs clean.",
+  "evidence": "Written for brief 25's Module 5 to docs/STYLE.md and docs/GLOSSARY.md: Finding Work's paragraph on how each kind of work is done, naming How The Work Is Done, Ask For Another Take and Use The Double as the screens name them; the chapter's opened command read in tests/career-workflows-screen.test.ts, its names checked by tools/guide-quotes.mjs, with tools/voice-check.mjs and tools/tics.mjs clean.",
   "first": "Pending"
  },
  "src/engine/content/tutorial.ts#CHAPTERS [life]": {

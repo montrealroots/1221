@@ -50,6 +50,7 @@ import { PROJECTS } from './content/careerwork';
 import { SERIES } from './content/series';
 import { decisionsTo, episodeDrawn, optionDrawn } from './systems/series';
 import { lateDays, rerunDrawn } from './systems/contracts';
+import { cutDrawn, loopDrawn, pagesDrawn, planWork, stressDrawn } from './systems/workflow';
 import type { Engagement } from './systems/pro';
 
 // ---------------------------------------------------------------------------
@@ -718,6 +719,74 @@ defineDecider<{ sim: Simulation; first: number }, string>({
   },
   sample: (seed) => ({ sim: atYale(seed), first: seed * 7 }),
   decide: ({ sim, first }) => Array.from({ length: 40 }, (_, n) => (rerunDrawn(sim, `e${first + n}`) ? '1' : '0')).join(''),
+});
+
+// The workflows' draws (from 2026-10-24, brief 25's Module 5, `systems/workflow.ts`), each keyed by the work, its project
+// and its first day, never the engagement's id.
+
+defineDecider<{ sim: Simulation; first: number }, string>({
+  id: 'pro.board',
+  decides: 'A booked part’s scenes, their places in the script and the order each day shoots them, by the work.',
+  drawnIn: 'src/engine/systems/workflow.ts',
+  reads: {
+    first: (o, t) => ({ ...o, first: Math.round(t * 100) }),
+    world: (o, t) => ({ ...o, sim: atYale(Math.round(t * 20)) }),
+  },
+  sample: (seed) => ({ sim: atYale(seed), first: seed * 7 }),
+  decide: ({ sim, first }) => {
+    const t = PROJECTS.find((p) => p.id === 'gull-season')!;
+    const e = { id: 'e', projectId: t.id, days: Array.from({ length: 6 }, (_, k) => ({ from: (first + k) * 86_400_000, to: (first + k) * 86_400_000 + 3_600_000, label: `${t.project}: Shoot Day ${k + 1}` })) } as unknown as Engagement;
+    planWork(sim, e, t);
+    return (e.units ?? []).map((u) => `${u.day}:${u.scene}`).join(',');
+  },
+});
+
+defineDecider<{ sim: Simulation; first: number }, string>({
+  id: 'pro.stress',
+  decides: 'Screamed lines in a booth’s or a dub’s session: in about a third of them, on one unit, announced three times in four.',
+  drawnIn: 'src/engine/systems/workflow.ts',
+  reads: {
+    first: (o, t) => ({ ...o, first: Math.round(t * 100) }),
+    world: (o, t) => ({ ...o, sim: atYale(Math.round(t * 20)) }),
+  },
+  sample: (seed) => ({ sim: atYale(seed), first: seed * 7 }),
+  decide: ({ sim, first }) => Array.from({ length: 40 }, (_, n) => { const d = stressDrawn(sim, `w${first + n}`, 0, 4); return d ? `${d.unit}${d.announced ? 'a' : 'u'}` : '-'; }).join(','),
+});
+
+defineDecider<{ sim: Simulation; first: number }, string>({
+  id: 'pro.pages',
+  decides: 'Revised pages for a work day, at its format’s chance, and the share of the lines they change.',
+  drawnIn: 'src/engine/systems/workflow.ts',
+  reads: {
+    first: (o, t) => ({ ...o, first: Math.round(t * 100) }),
+    world: (o, t) => ({ ...o, sim: atYale(Math.round(t * 20)) }),
+  },
+  sample: (seed) => ({ sim: atYale(seed), first: seed * 7 }),
+  decide: ({ sim, first }) => Array.from({ length: 40 }, (_, n) => pagesDrawn(sim, `w${first + n}`, 0, 0.35) ?? '-').join(','),
+});
+
+defineDecider<{ sim: Simulation; first: number }, string>({
+  id: 'pro.loop',
+  decides: 'A recall to loop after a screen wrap, about a third of the time, and the days on it’s asked for.',
+  drawnIn: 'src/engine/systems/workflow.ts',
+  reads: {
+    first: (o, t) => ({ ...o, first: Math.round(t * 100) }),
+    world: (o, t) => ({ ...o, sim: atYale(Math.round(t * 20)) }),
+  },
+  sample: (seed) => ({ sim: atYale(seed), first: seed * 7 }),
+  decide: ({ sim, first }) => Array.from({ length: 40 }, (_, n) => loopDrawn(sim, `w${first + n}`) ?? '-').join(','),
+});
+
+defineDecider<{ sim: Simulation; first: number }, string>({
+  id: 'pro.cut',
+  decides: 'A scene of the player’s cut in the edit at the release, two times in ten, by the work.',
+  drawnIn: 'src/engine/systems/workflow.ts',
+  reads: {
+    first: (o, t) => ({ ...o, first: Math.round(t * 100) }),
+    world: (o, t) => ({ ...o, sim: atYale(Math.round(t * 20)) }),
+  },
+  sample: (seed) => ({ sim: atYale(seed), first: seed * 7 }),
+  decide: ({ sim, first }) => Array.from({ length: 40 }, (_, n) => (cutDrawn(sim, `w${first + n}`) ? '1' : '0')).join(''),
 });
 
 defineDecider<{ sim: Simulation; first: number }, string>({

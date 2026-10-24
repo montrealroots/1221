@@ -77,12 +77,6 @@
   "on": "2026-10-21",
   "evidence": "Written for brief 19's work loop to docs/STYLE.md and docs/GLOSSARY.md; read where the player meets it in tests/pro-work.test.ts and tests/pro-opportunities-screen.test.ts, with tools/voice-check.mjs, tools/tics.mjs and tools/title-case.mjs passing"
  },
- "src/engine/systems/projobs.ts#datesOf [shoot]": {
-  "status": "Rewritten And Verified",
-  "hash": "f9de4e12b3c0",
-  "on": "2026-10-21",
-  "evidence": "Written for brief 19's work loop to docs/STYLE.md and docs/GLOSSARY.md; read where the player meets it in tests/pro-work.test.ts and tests/pro-opportunities-screen.test.ts, with tools/voice-check.mjs, tools/tics.mjs and tools/title-case.mjs passing"
- },
  "src/engine/systems/projobs.ts#DEFERRED_WHY": {
   "status": "Rewritten And Verified",
   "hash": "b0591c241c58",

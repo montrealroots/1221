@@ -21,8 +21,8 @@ The state of the work, kept so a session that's interrupted can pick it up. The 
 | 1 | The overseas engagement: Sydney, travel, presence, stay, permission, work, pay, return | Done: `6261883e`, `880d4231` (W1 to W12; see below) |
 | 2 | The real industry catalog and simulated roles drawn from it | Done: `de50c6e0` (C1 to C12; see below) |
 | 3 | Real agencies and agents in the representation engine | Done: `0978f022` (A1 to A8; see below) |
-| 4 | Contracts, options, episode guarantees, payment states, residuals, renewal and cancellation | Done in this commit (D1 to D9; see below) |
-| 5 | Distinct production workflows | Waiting |
+| 4 | Contracts, options, episode guarantees, payment states, residuals, renewal and cancellation | Done: `584321a6` (D1 to D9; see below) |
+| 5 | Distinct production workflows | Done in this commit (W1 to W13; see below) |
 | 6 | Weekly charts, festivals, awards and the anonymous field | Waiting |
 | 7 | The time loop's deadlines, drill-downs, tutorials, balance seeds, playthroughs, the final gate | Waiting |
 
@@ -177,7 +177,70 @@ The state of the work, kept so a session that's interrupted can pick it up. The 
   `pro.ask_pay` traced nowhere (now in docs/verification/connected-journey/TRACE.md, regenerated), and the contracts
   capability unreviewed (now its builder's reading in docs/verification/review-2026-10-13/capabilities.json).
 
+## Module 5, As Built (2026-10-24)
+
+- **The rules read**: N13, the 2014 Codified Basic Agreement: Schedule A §21.E (a half-hour multicamera series'
+  rehearsal begins its employment), §21's fourth exception (an animated feature's voice-over outside consecutive
+  employment), §28.A (a recall to loop: half the pro rata day for four hours, within four months, six for theatrical,
+  pilots and long-form television, a closed-end series among it), §37 (dialogue replacement: a day's pay by characters and
+  synchronized lines, one character alone a day; vocally stressful work said beforehand or refused), the General
+  Provisions' §28.B (a stunt only with consent and a qualified coordinator there) and §43 (nudity and simulated sex: said
+  before the audition, a closed set, written consent, withdrawn until shot, a double then); N17, the 2023 memorandum's
+  performance capture (no consecutive employment, drops and pickups unlimited, several characters a day at no more pay).
+  The Television Animation Agreement wasn't read: its sessions are paid the day performer's minimum, said as estimated,
+  and its residuals as unread.
+- **The ways of working** (`content/workflows.ts`): ten workflows (a stage play, single camera, multicamera, the booth,
+  dubbing, performance capture, narration, reenactment, a musical, action) and twenty-one formats, each with its days,
+  its judged and build steps, its preparation and its own step (Find The Voice, Watch The Original, Work On The Movement,
+  Check The Pronunciations, Study The Period's Movement, Practice The Choreography, Fight Rehearsal), its choices, what
+  it leaves (a reel or not) and its terms: takes and the extra takes a day allows, how often pages change, the board
+  (the story's order, by location, an episode's own days, two episodes cross-boarded), scenes a day, how it comes out,
+  an anthology's return, a recall to loop's months. Every project names its format; a test fails two workflows or two
+  formats that are the same in every part.
+- **A day of work** (`systems/workflow.ts`): the part's units planned at booking, numbered by their place in the script
+  and dealt to the days by the board (decider `pro.board`), keyed by the work, never an id, so a reload and a twin draw
+  the same. A judged day plays each unit in takes, the best printed, reads the choices in force, asks a quarter more of
+  the breakdown for a scene shot before what leads into it, picks up a tape night's scene played under Working without
+  its laughs, and a narration's chapter at the end; a build day (a table read, blocking, music rehearsal, choreography,
+  fight rehearsal) builds the preparation. Each day leaves a report the Work tab shows.
+- **The choices** (`pro.work_choice`, a button for each option on the Work tab): Ask For Another Take, Pitch An Alt,
+  the studio audience, screamed lines not announced, matching the original, playback, pacing a read, the historian's
+  notes, marking a rehearsal, the stunts and the intimate scene; each one's effect said before it's pressed.
+- **The voice** (`health.voice`): voice work strains it by the hour, screamed lines more, rest eases it two points an
+  hour, and a strained voice holds back the work that uses it, at most to 60%.
+- **After the wrap**: revised pages the evening before a day take a share of what was learned (decider `pro.pages`); a
+  recall to loop after a screen wrap about a third of the time, on a weekday clear of booked work, paid half a day
+  (decider `pro.loop`), missed or not permitted another actor's; at the release, a scene cut two times in ten (decider
+  `pro.cut`), the credit's band the best of the days on the scenes kept; an anthology's strong work invited into its next
+  story without an audition; the release notice says how the work came out, by its format.
+- **Boundaries**: an intimate scene is said in the role and the offer before anything is agreed; without written consent
+  a body double does it, unjudged, and the part, the pay and the casting are as they were; consent can't be withdrawn
+  once it's on film. A stunt is the double's unless the player consents; done yourself, the chance of an injury rests on
+  the fight rehearsal and the body, and workers' compensation answers it.
+- **Fixed on the way, found by its tests or a check**: a procedural's scenes were dealt across all its episodes' days, as
+  a location board deals them, so a recurring part's first episode could shoot a scene of its second; they're kept to
+  each episode's days now. `FormatSpec.after` was read by nothing until the release notice read it, and `closedEnd` was
+  read by nothing and is gone. The dub format's words gave a rule the code doesn't keep. A day's report said "it worked on
+  the blocking and fight rehearsal". The ability descriptions' test (tests/attributes-phase-2b.test.ts, A4) had no piece
+  of the eight new tasks to hold them to; it has one of each now, built by `unitContext`. Every new project states its
+  genres (`content/genre-weights.ts`), which until tests/b22-genre-weights.test.ts failed them were read evenly.
+- **Not modeled, said so**: `daysOnly` sets the contract's words, and no format's days have weekdays between them that
+  the rule which pays them would reach, so consecutive employment isn't modeled elsewhere; a director who overrules the
+  actor; a stunt's pay adjustment; Equity's musical-specific rules beyond LORT's; looping abroad; a festival run, which
+  is Module 6's (WF-19 is Partially Implemented for it).
+- **Mutations**: 32 run against tests/career-workflows.test.ts and tests/career-workflows-screen.test.ts (`mutate/m5.py`
+  in the session's scratchpad, in a copy of the tree). 26 were caught on the first run; six survived, each a test that
+  checked one side or the code's own constant (the historian's notes, a cut's band, an anthology inviting weak work, a
+  scene shot ahead, voice-over commission while represented, a tape night's order), and each test was made to hold it.
+  All 32 are caught.
+- **Measured**: the full gate in the Module 5 tree, exit 0: 496 of 496 test files, 5,727 of 5,727 tests, and the 23
+  checks. The suite's first run had 11 failures, each a test written before the work it reads changed: three ability
+  tests and the Profile's Today rows (Listening now read in a dub's execution, Vocal and Physical Expression in
+  believability), the film school's release words ("was screened at its film school"), the day's report ("you worked
+  on"), an earlier twin of the fatigue test meeting the new evening pages, and the older graduate's referral; each was
+  read against the new rule and moved with it.
+
 ## Next Concrete Action
 
-Module 5: distinct production workflows (Part 8), each with real entry points, preparation, work units, decisions,
-feedback, completion and consequences; its criteria written before any code.
+Module 6: weekly charts (reference snapshots and the save's own world), festivals and awards with an anonymous field
+(Part 9); its criteria written before any code.

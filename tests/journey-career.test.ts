@@ -45,6 +45,7 @@
  * on 1 May 2030.
  */
 import { beforeAll, describe, expect, it, vi } from 'vitest';
+import { EVALUATION } from '@/engine/content/tasks';
 import { createSave, loadSave } from '@/engine';
 import type { Simulation } from '@/engine/core/simulation';
 import type { ScheduledItem } from '@/engine/core/scheduler';
@@ -671,15 +672,19 @@ describe('preparation, played as twins from the same moment of life A (the falsi
       expect(sim.execute({ kind: 'pro.tape_audition', payload: { opportunityId: o().id } }).ok).toBe(true);
       const work = sim.player.work!.at(-1)!;
       expect(work.what).toBe('Desk Clerk, The Calloway Files: Audition, Taped');
-      return { prep: o().prep!, round: o().rounds![0]!, energy: sim.player.wellbeing.energy, limits: work.limits };
+      return { prep: o().prep!, round: o().rounds![0]!, energy: sim.player.wellbeing.energy, limits: work.limits, readiness: work.inputs.condition.readiness };
     };
     const rested = tape(true);
     const tired = tape(false);
     expect(tired.prep).toEqual(rested.prep);
     expect(tired.energy).toBeLessThan(rested.energy);
     expect(rested.round.overall!).toBeGreaterThan(tired.round.overall! + 3);
-    // The drill-down says how: the tape's work record, which the Player Profile's work look opens, names the tiredness.
-    expect(tired.limits.some((l) => l.what === 'fatigue')).toBe(true);
+    // The drill-down says how: the tape's work record, which the Player Profile's work look opens, keeps the readiness it
+    // was judged at ("Judged with readiness at …"), under what a day needs tired and over it rested. Until 2026-10-24 it
+    // also ranked the tiredness among the record's three limits; from brief 25's Module 5 this life's work before the
+    // tape is other work, the world having more of it, and her abilities' limits rank ahead of a night awake's.
+    expect(tired.readiness).toBeLessThan(EVALUATION.sufficientReadiness);
+    expect(rested.readiness).toBeGreaterThanOrEqual(EVALUATION.sufficientReadiness);
     expect(rested.limits.some((l) => l.what === 'fatigue')).toBe(false);
   });
 
