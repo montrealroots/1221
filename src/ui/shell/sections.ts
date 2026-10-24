@@ -12,7 +12,8 @@
  * Representation came on 2026-10-21 with the agent's system, Work, its
  * engagements, pay and unions, with the pay's (`ui/career/WorkPane.tsx`), and
  * Opportunities with the work loop's; its others come with the systems they
- * show, never before.
+ * show, never before. Charts And Awards came on 2026-10-24 (brief 25's
+ * Module 6) with the charts' and the awards' (`ui/career/IndustryPane.tsx`).
  */
 
 export interface Section { id: string; label: string }
@@ -31,6 +32,7 @@ export const SECTIONS: Readonly<Record<string, readonly Section[]>> = {
     { id: 'representation', label: 'Representation' },
     { id: 'opportunities', label: 'Opportunities' },
     { id: 'work', label: 'Work' },
+    { id: 'industry', label: 'Charts And Awards' },
   ],
   '/workspace/papers': [
     { id: 'returns', label: 'Tax Returns' }, { id: 'health', label: 'Health Cover' }, { id: 'benefits', label: 'Unemployment' },

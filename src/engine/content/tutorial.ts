@@ -533,6 +533,8 @@ export const CHAPTERS: readonly Chapter[] = [
       'Each engagement on the Work tab has its contract under The Contract: the part, the dates, the pay and only the terms that apply, such as overtime, residuals or an option. Its estimated pay isn’t money in your accounts. Each payment says where it stands, from Estimated to Settled. If one is overdue, press Ask About It.',
       // From 2026-10-24 (brief 25's Module 5): how each kind of work is done.
       'Each kind of work is done its own way, and How The Work Is Done on the engagement says how: its days, its preparation and the choices it asks of you, such as Ask For Another Take on a shoot day or Use The Double for a stunt. After each day it keeps that day’s report.',
+      // From 2026-10-24 (brief 25's Module 6): the charts, the Emmy Awards and Sundance.
+      'Charts And Awards, on the Career screen, says what each part on television is eligible for at the Emmy Awards. Press Enter Yourself before the entry deadline to enter it, or the production may. A film goes to Sundance only if its production submits it. When an award you’re nominated for is presented, press Watch The Ceremony, or just read the result. The tab also shows your films’ weeks in cinemas and the weekly charts Box Office Mojo, Netflix and Nielsen publish.',
       'Read “Cover, Benefits And Returns” next. It opens Papers: your health cover, benefits and tax returns.',
     ],
     more: [
@@ -540,8 +542,8 @@ export const CHAPTERS: readonly Chapter[] = [
       `The School’s rule is its Bulletin’s. Asking ${PRO_OUTSIDE.aheadDays} days ahead, ${PRO_OUTSIDE.mostDays} working days at most, ${counted(PRO_OUTSIDE.mostClassDays, 'class day')} at most, a student film not counting as professional work, and the dean’s week are the game’s readings of its words.`,
       'An agent represents you only under an agreement you accept. While it’s in force the agent submits you for the roles a casting office releases to agents, asks for scale plus ten on SAG-AFTRA work at the minimum, and passes on every answer and offer.',
     ],
-    names: ['Opportunities', 'Submit Yourself', `${PRO_STEPS}`, 'Tape It', 'Ask For Another Time', 'Accept The Offer and Decline The Offer', 'Ask The School', 'Apply For The Visa', 'Ask About It', 'Ask For Another Take', 'Use The Double'],
-    opens: ['pro.submit', 'pro.prepare', 'pro.tape_audition', 'pro.move_audition', 'pro.accept_offer', 'pro.decline_offer', 'pro.request_outside_work', 'pro.apply_work_visa', 'pro.ask_pay', 'pro.work_choice'],
+    names: ['Opportunities', 'Submit Yourself', `${PRO_STEPS}`, 'Tape It', 'Ask For Another Time', 'Accept The Offer and Decline The Offer', 'Ask The School', 'Apply For The Visa', 'Ask About It', 'Ask For Another Take', 'Use The Double', 'Enter Yourself', 'Watch The Ceremony'],
+    opens: ['pro.submit', 'pro.prepare', 'pro.tape_audition', 'pro.move_audition', 'pro.accept_offer', 'pro.decline_offer', 'pro.request_outside_work', 'pro.apply_work_visa', 'pro.ask_pay', 'pro.work_choice', 'pro.award_enter', 'pro.watch_ceremony'],
   },
   // Until 2026-10-12 this chapter opened enrollment only after Yale Health had ended, with a gap before the new cover,
   // and counted a plan dropped or left unpaid as cover lost (`mayEnroll`, `healthMonth`); offered Mexico City's Seguro de

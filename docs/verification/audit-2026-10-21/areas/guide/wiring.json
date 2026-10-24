@@ -562,6 +562,28 @@
    "handler": "src/engine/systems/accountlife.ts:611"
   },
   {
+   "file": "src/ui/career/IndustryPane.tsx",
+   "control": "<Gated onClick>",
+   "feature": "pro.award_enter",
+   "label": "Enter Yourself (${fee})",
+   "kind": "pro.award_enter",
+   "payload": "{ creditId: c.id }",
+   "verdict": "Right",
+   "handler": "src/engine/systems/awards.ts:608",
+   "note": "Enter Yourself under an eligible television part enters that credit for its Emmy year and pays the fee, by the credit's id; its refusal (entryRefusal) is its title and grays it, and the part then says where its entry stands. Read on 2026-10-24 by its builder (brief 25's Module 6), pressed through the command in tests/career-awards-screen.test.ts."
+  },
+  {
+   "file": "src/ui/career/IndustryPane.tsx",
+   "control": "<Gated onClick>",
+   "feature": "pro.watch_ceremony",
+   "label": "Watch The Ceremony",
+   "kind": "pro.watch_ceremony",
+   "payload": "{ entryId: a.id }",
+   "verdict": "Right",
+   "handler": "src/engine/systems/awards.ts:613",
+   "note": "Watch The Ceremony under a nomination shows its ceremony from the result settled at the final round, by the entry's id; its refusal (watchRefusal) is its title and grays it until the award is presented, and the lines stay once watched. Read on 2026-10-24 by its builder (brief 25's Module 6), pressed through the command in tests/career-awards-screen.test.ts."
+  },
+  {
    "file": "src/ui/career/OpportunitiesPane.tsx",
    "control": "<Gated onClick>",
    "feature": "pro.prepare",
@@ -569,7 +591,7 @@
    "kind": "pro.prepare",
    "payload": "{ ...target, step: 'special' }",
    "verdict": "Right",
-   "handler": "src/engine/systems/projobs.ts:2100",
+   "handler": "src/engine/systems/projobs.ts:2109",
    "note": "The work's own preparation (Find The Voice, Watch The Original, Work On The Movement and the rest) prepares that step on the booked work; its refusal (prepareRefusal, 'special') is the button's title, and Fight Rehearsal is refused here, done only on the work's rehearsal days with the coordinator. Read on 2026-10-24 by its builder (brief 25's Module 5), pressed through the command in tests/career-workflows-screen.test.ts."
   },
   {
@@ -580,7 +602,7 @@
    "kind": "pro.prepare",
    "payload": "{ ...target, step }",
    "verdict": "Right",
-   "handler": "src/engine/systems/projobs.ts:2100"
+   "handler": "src/engine/systems/projobs.ts:2109"
   },
   {
    "file": "src/ui/career/OpportunitiesPane.tsx",
@@ -590,7 +612,7 @@
    "kind": "pro.accept_offer",
    "payload": "{ opportunityId: o.id }",
    "verdict": "Right",
-   "handler": "src/engine/systems/projobs.ts:2143"
+   "handler": "src/engine/systems/projobs.ts:2152"
   },
   {
    "file": "src/ui/career/OpportunitiesPane.tsx",
@@ -600,7 +622,7 @@
    "kind": "pro.move_audition",
    "payload": "{ opportunityId: o.id }",
    "verdict": "Right",
-   "handler": "src/engine/systems/projobs.ts:2125"
+   "handler": "src/engine/systems/projobs.ts:2134"
   },
   {
    "file": "src/ui/career/OpportunitiesPane.tsx",
@@ -610,7 +632,7 @@
    "kind": "pro.request_outside_work",
    "payload": "{ opportunityId: o.id }",
    "verdict": "Right",
-   "handler": "src/engine/systems/projobs.ts:2198"
+   "handler": "src/engine/systems/projobs.ts:2207"
   },
   {
    "file": "src/ui/career/OpportunitiesPane.tsx",
@@ -620,7 +642,7 @@
    "kind": "pro.decline_offer",
    "payload": "{ opportunityId: o.id }",
    "verdict": "Right",
-   "handler": "src/engine/systems/projobs.ts:2186"
+   "handler": "src/engine/systems/projobs.ts:2195"
   },
   {
    "file": "src/ui/career/OpportunitiesPane.tsx",
@@ -630,7 +652,7 @@
    "kind": "pro.submit",
    "payload": "{ opportunityId: o.id }",
    "verdict": "Right",
-   "handler": "src/engine/systems/projobs.ts:2091"
+   "handler": "src/engine/systems/projobs.ts:2100"
   },
   {
    "file": "src/ui/career/OpportunitiesPane.tsx",
@@ -640,7 +662,7 @@
    "kind": "pro.tape_audition",
    "payload": "{ opportunityId: o.id }",
    "verdict": "Right",
-   "handler": "src/engine/systems/projobs.ts:2110"
+   "handler": "src/engine/systems/projobs.ts:2119"
   },
   {
    "file": "src/ui/career/RepresentationPane.tsx",
@@ -1549,7 +1571,7 @@
    "kind": "pro.update_resume",
    "payload": "",
    "verdict": "Right",
-   "handler": "src/engine/systems/pro.ts:1213"
+   "handler": "src/engine/systems/pro.ts:1221"
   },
   {
    "file": "src/ui/workspaces/CareerWorkspace.tsx",
@@ -1559,7 +1581,7 @@
    "kind": "pro.headshots",
    "payload": "",
    "verdict": "Right",
-   "handler": "src/engine/systems/pro.ts:1196"
+   "handler": "src/engine/systems/pro.ts:1204"
   },
   {
    "file": "src/ui/workspaces/CareerWorkspace.tsx",
@@ -1569,7 +1591,7 @@
    "kind": "pro.cut_reel",
    "payload": "{ pieces: chosen }",
    "verdict": "Right",
-   "handler": "src/engine/systems/pro.ts:1225"
+   "handler": "src/engine/systems/pro.ts:1233"
   },
   {
    "file": "src/ui/workspaces/CareerWorkspace.tsx",
@@ -1579,7 +1601,7 @@
    "kind": "pro.set_name",
    "payload": "{ name }",
    "verdict": "Right",
-   "handler": "src/engine/systems/pro.ts:1184"
+   "handler": "src/engine/systems/pro.ts:1192"
   },
   {
    "file": "src/ui/workspaces/PapersWorkspace.tsx",
@@ -2067,7 +2089,7 @@
    "kind": "pro.accept_offer",
    "payload": "{ opportunityId: o.id }",
    "verdict": "Right",
-   "handler": "src/engine/systems/projobs.ts:2143"
+   "handler": "src/engine/systems/projobs.ts:2152"
   },
   {
    "file": "src/engine/systems/projobs.ts",
@@ -2075,7 +2097,7 @@
    "kind": "pro.decline_offer",
    "payload": "{ opportunityId: o.id }",
    "verdict": "Right",
-   "handler": "src/engine/systems/projobs.ts:2186"
+   "handler": "src/engine/systems/projobs.ts:2195"
   },
   {
    "file": "src/engine/systems/taxreturn.ts",

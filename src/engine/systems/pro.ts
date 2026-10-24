@@ -40,6 +40,8 @@
  * headshot session, a résumé or a reel's edit.
  */
 
+import type { SimRun } from './charts';
+import type { AwardEntry, FestivalEntry } from './awards';
 import type { Simulation } from '../core/simulation';
 import { CommandError } from '../core/simulation';
 import type { Person } from '../domain/model';
@@ -139,6 +141,8 @@ export interface ProCredit {
   voice?: true;
   /** Scenes of yours cut in the edit (Module 5, T46): the credit kept, the reel only what's left. */
   cut?: number;
+  /** A film's run in the game's own weekly chart, from its release (from 2026-10-24, Module 6, X5): the game's simulation. */
+  run?: SimRun;
 }
 
 export type MaterialKind = 'headshot' | 'resume' | 'reel';
@@ -632,6 +636,10 @@ export interface ProRecord {
   unionBills?: UnionBill[];
   /** Residuals, one record for each piece of television work that carries them (`systems/contracts.ts`, from 2026-10-24). */
   residuals?: Residual[];
+  /** The player's Emmy entries, one for each performance and year, and what came of each (`systems/awards.ts`, from 2026-10-24, Module 6). */
+  awards?: AwardEntry[];
+  /** Each film's Sundance year: the production's submission and the festival's word (Module 6). */
+  festivals?: FestivalEntry[];
   // `trimmed`, how many resolved opportunities and finished engagements the bounds had dropped, went on 2026-10-21
   // (brief 20's D1, a value written and read by nothing but a test). What a dropped posting said that matters later is
   // kept in `lastPosted`. A save that has it keeps it, unread.

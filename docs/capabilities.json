@@ -3330,6 +3330,56 @@
         "verified": "Partial"
       },
       "limits": "Built on 2026-10-24 for brief 25's Module 5. pro.work_choice and the rest are played through the commands and the clock (tests/career-workflows.test.ts, tests/career-workflows-screen.test.ts, which draws the Work and Opportunities tabs), each stage saved and loaded. It isn’t called Verified because tools/capabilities.mjs and tools/coverage.mjs count a command’s row as read only by the review of 2026-10-13. A director who overrules the actor, a stunt's pay adjustment, Equity's musical-specific rules beyond LORT's, the Television Animation Agreement's own rates and residuals, and looping abroad aren't in the game"
+    },
+    {
+      "id": "career-awards",
+      "goal": "The published weekly charts read as dated imports, each in its own unit, territory and week; the game's own box office for the player's films, a simulation and never pay; every award and festival the brief names with what this build read of it; the Emmy Awards by the 78th's rules (eligibility, an entry and its fee, an anonymous field, the nominations by its table and tie rules, the final round and the ceremony) and Sundance by its 2027 festival's (a production's submission, the festival's word and the screening); recognition kept on the Portfolio and lifting casting's chance for a while",
+      "entry": "Career, Charts And Awards (Your Recognition with Enter Yourself and Watch The Ceremony; Your Films In Cinemas; Published Charts; Awards And Festivals); Career, Portfolio, Recognition; Home's notices (an entry by the production, the nominations, the night an award is presented, a disqualification, a festival's submission and word)",
+      "entities": [
+        "ChartSnapshot",
+        "HeldWeek",
+        "ChartStore",
+        "SimRun",
+        "AwardEntry",
+        "FestivalEntry",
+        "Institution",
+        "EmmyEdition",
+        "SundanceEdition",
+        "ProCredit (run)",
+        "ProRecord (awards, festivals)"
+      ],
+      "state": "src/engine/systems/awards.ts",
+      "preconditions": "pro.award_enter needs a television credit eligible by the 78th's rules, not entered for its year, before the entry deadline, and a bank that can pay the fee (entryRefusal); pro.watch_ceremony needs a nomination and the clock at its ceremony (watchRefusal)",
+      "commands": [
+        "pro.award_enter",
+        "pro.watch_ceremony"
+      ],
+      "effects": "Entering pays the $125 processing charge and the $100 entry fee and keeps an entry; at the deadline the production enters a performance the player didn't, or doesn't (decider awards.entry); at the nominations each category's anonymous field is drawn (decider awards.field) and nominated by the 78th's table and tie rules; at the final round's end the winner is settled (decider awards.final) and given at the ceremony; watching shows it and changes nothing; an entry whose scenes were all cut is disqualified; a film's production submits it to Sundance or doesn't (decider festival.submit), the festival selects it or doesn't (decider festival.select), and a selection screens; a released film in cinemas has a run in the game's own chart (decider charts.gross); recognition lifts casting's chance, fading over three years (visibilityOf)",
+      "persists": "Person.pro.awards and .festivals; ProCredit.run",
+      "readers": [
+        "castingDraw: casting's chance lifted by the player's visibility, within its ceiling",
+        "recognitionOf: the Portfolio's Recognition",
+        "the Charts And Awards tab: Your Recognition, Your Films In Cinemas, Published Charts and Awards And Festivals"
+      ],
+      "looks": [],
+      "routes": [
+        "/workspace/career"
+      ],
+      "saveLoad": "tests/career-awards-screen.test.ts",
+      "provenance": "docs/verification/career-world-2026-10-23/sources.json (N19 to N22, the charts as read on 2026-10-24; N23, the 78th Emmy Awards' Rules And Procedures, version 4; N24, the 2026 International Emmy Awards' rules; N25 and N26, the 2027 Sundance Film Festival's submissions page and dates; N27 to N30, what was read, refused or not reached of the rest); criteria.md, Module 6, X1 to X16; every project and every other entrant is the game's, never named",
+      "tests": [
+        "tests/career-awards.test.ts",
+        "tests/career-awards-screen.test.ts"
+      ],
+      "manual": "",
+      "status": "Implemented",
+      "layers": {
+        "schema": "Implemented",
+        "content": "Implemented",
+        "interaction": "Implemented",
+        "verified": "Partial"
+      },
+      "limits": "Built on 2026-10-24 for brief 25's Module 6. pro.award_enter and pro.watch_ceremony are played through the commands and the clock (tests/career-awards.test.ts, tests/career-awards-screen.test.ts, which draws the Charts And Awards tab and the Portfolio), each stage saved and loaded. It isn’t called Verified because tools/capabilities.mjs and tools/coverage.mjs count a command’s row as read only by the review of 2026-10-13. No other award or festival decides anything, their rules unread or refused; no chart is fetched or updated by the game; a performer's choice of category is the game's"
     }
   ]
 }

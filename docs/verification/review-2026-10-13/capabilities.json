@@ -4896,5 +4896,55 @@
   ],
   "rows": "pro.work_choice is traced in docs/verification/connected-journey/TRACE.md (the guide’s career.workflows), not a row of the audit.",
   "weakTests": []
+ },
+ {
+  "on": "2026-10-24",
+  "against": "ba6f62e2",
+  "by": "its builder",
+  "id": "career-awards",
+  "claim": "Brief 25’s Module 6: the published charts as dated imports with their revisions, movement and age; the game’s own box office for the player’s films; the awards and festivals inventory; the Emmy Awards by the 78th’s rules, entered by the player (pro.award_enter) or the production, an anonymous field, the nominations by the table and tie rules, the final round and the ceremony (pro.watch_ceremony); Sundance by its 2027 festival’s rules; recognition on the Portfolio and in casting’s chance.",
+  "implementation": "src/engine/content/charts.ts (CHARTS, SNAPSHOTS); src/engine/systems/charts.ts (importSnapshot, movementOf, latestOf, simulateRun, rankAmong); src/engine/content/awards.ts (INSTITUTIONS, EMMYS_78, EMMY_RULES, EMMY_CATEGORIES, SUNDANCE_2027); src/engine/systems/awards.ts (emmyCheck, entryRefusal, enterAward, nominationsFor, nominate, awardsPassage, festivalCheck, visibilityOf, recognitionOf, registerAwards); src/engine/systems/projobs.ts (castingDraw’s lift, the release’s run); src/ui/career/IndustryPane.tsx; src/ui/workspaces/CareerWorkspace.tsx (Recognition).",
+  "consumers": "The Charts And Awards tab; the Portfolio; casting’s decisions; Home’s notices.",
+  "uiEvidence": {
+   "needed": true,
+   "have": "tests/career-awards-screen.test.ts draws the Charts And Awards tab and the Portfolio before the work, after the wrap, after the entry, in November 2026 for the charts, at the nominations and after the ceremony, Enter Yourself and Watch The Ceremony pressed through the commands they name, saved and loaded at each stage."
+  },
+  "evidence": [
+   {
+    "kind": "command",
+    "where": "tests/career-awards.test.ts ‘AWD-06, AWD-09, AWD-12, T81: Enter Yourself pays the $125 processing charge and the $100 entry fee once, by the deadline’",
+    "asserts": "pro.award_enter pays $225 once, keeps the entry, refuses a second entry and one after the deadline in their words.",
+    "reachesAction": true,
+    "checksConsequence": true,
+    "independent": false,
+    "problem": "Written by the builder of the code it reads."
+   },
+   {
+    "kind": "command",
+    "where": "tests/career-awards.test.ts ‘ANON-06, ANON-07, ANON-08, ANON-09, ANON-10, T79, T80: a win settled at the final round, given at the ceremony’",
+    "asserts": "pro.watch_ceremony shows the settled result; a twin that skipped it and a reload have the same, one award, no money.",
+    "reachesAction": true,
+    "checksConsequence": true,
+    "independent": false,
+    "problem": "Written by the builder."
+   },
+   {
+    "kind": "journey",
+    "where": "tests/career-awards-screen.test.ts ‘CONT-01, ANON-03, ANON-06, ANON-09, CHART-07, PLAYER JOURNEY: a guest part entered on Charts And Awards’",
+    "asserts": "A guest part entered on the tab, nominated, its ceremony watched by one twin and skipped by the other, the same win on both Portfolios; the charts read on the same tab; across a save and a load at each stage.",
+    "reachesAction": true,
+    "checksConsequence": true,
+    "independent": false,
+    "problem": "Written by the builder."
+   }
+  ],
+  "verdict": "partial",
+  "partialClass": "missing-evidence",
+  "gaps": [
+   "No reader independent of the builder has read it against the standard: this entry is the builder’s own reading, made on 2026-10-24.",
+   "The registry can’t call it Verified while its rows were added after 2026-10-13: tools/capabilities.mjs and tools/coverage.mjs count a row as read only by that day’s review."
+  ],
+  "rows": "pro.award_enter and pro.watch_ceremony are traced in docs/verification/connected-journey/TRACE.md (the guide’s career.awards), not rows of the audit.",
+  "weakTests": []
  }
 ]

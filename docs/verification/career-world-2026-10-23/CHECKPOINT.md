@@ -22,8 +22,8 @@ The state of the work, kept so a session that's interrupted can pick it up. The 
 | 2 | The real industry catalog and simulated roles drawn from it | Done: `de50c6e0` (C1 to C12; see below) |
 | 3 | Real agencies and agents in the representation engine | Done: `0978f022` (A1 to A8; see below) |
 | 4 | Contracts, options, episode guarantees, payment states, residuals, renewal and cancellation | Done: `584321a6` (D1 to D9; see below) |
-| 5 | Distinct production workflows | Done in this commit (W1 to W13; see below) |
-| 6 | Weekly charts, festivals, awards and the anonymous field | Waiting |
+| 5 | Distinct production workflows | Done: `ba6f62e2` (W1 to W13; see below) |
+| 6 | Weekly charts, festivals, awards and the anonymous field | Done in this commit (X1 to X16; see below) |
 | 7 | The time loop's deadlines, drill-downs, tutorials, balance seeds, playthroughs, the final gate | Waiting |
 
 ## Blockers Met
@@ -35,6 +35,9 @@ The state of the work, kept so a session that's interrupted can pick it up. The 
 | Amazon MGM Studios' press dossier (S84) | Located, not read | Per-film details beyond the slate's lines | The slate's own line for each film is the record; what it doesn't give is unknown. |
 | CAA's, UTA's and Curtis Brown's pages (S89's agents, S90, S103), and CAA's home and terms | Each read 2026-10-23 and 2026-10-24: HTTP 200, but the agents and routes load in the browser | Real agents and routes at those three (REP-03) | Each is in Agencies with what its pages gave, and what they didn't as unknown; no one there is in the game. |
 | Stewart Talent's Atlanta office | Its contact page (N08) says referrals only; its submissions page (N09) says email from Southeast residents; neither is dated | Atlanta's way in | Unknown, both pages said. |
+| The Academy Awards' rules and key dates, BAFTA's film rules (N28) | Each 2026-10-24: HTTP 403 | Whether a film is eligible for an Oscar or a BAFTA (AWD-02, AWD-04) | In the inventory as refused; the game doesn't decide either. |
+| The Actor Awards', the Golden Globes', the Gotham Awards' and the Annie Awards' rules pages; AACTA, Annecy; TIFF's submissions (N28) | 2026-10-24: HTTP 404 for the first four; AACTA's and Annecy's sites not reached (the proxy's tunnel failed); TIFF's page answered 202 with a check and no body | Those competitions' eligibility (AWD-02, AWD-03) | In the inventory as not reached; the game doesn't decide them. |
+| A provider integration for the charts | Not tried: the brief buys no data service, and reading a public page isn't leave to reuse it automatically | Charts that update themselves (CHART-04) | The charts are dated imports, each saying how old it is. |
 | The 408 visa's charge and processing time (S01) | The page read in full on 2026-10-23; both are loaded by the department's estimator tools, not in the page | What the visa costs and how long it takes | Shown as not known to the game. Any time the game takes for a decision is its labeled assumption. |
 
 ## Module 1, As Built (2026-10-23)
@@ -240,7 +243,67 @@ The state of the work, kept so a session that's interrupted can pick it up. The 
   on"), an earlier twin of the fatigue test meeting the new evening pages, and the older graduate's referral; each was
   read against the new rule and moved with it.
 
+## Module 6, As Built (2026-10-24)
+
+- **The sources read** (each in `sources.json`): Box Office Mojo's domestic weekly chart for 2026's weeks 41 and 42 (N19,
+  N20), Netflix's global Top 10 file (N21) and Nielsen's streaming Top 10 for October 5 to 11, 2026 (N22), each read once
+  on 2026-10-24; the 78th Emmy Awards' Rules And Procedures, version 4 of April 7, 2026 (N23); the 2026 International Emmy
+  Awards' rules (N24); the 2027 Sundance Film Festival's submissions page and its dates (N25, N26); NATAS's rules page, the
+  festivals' regulations read in part and the home pages (N27, N29, N30); and what refused this build or wasn't reached
+  (N28, each attempt kept).
+- **The published charts** (`content/charts.ts`, `systems/charts.ts`): six charts, eleven weeks, each snapshot with its
+  measured week, who saw it and when, and each rank's figure or Not Reported. An import is checked: the same week twice is
+  nothing new, a changed figure is a revision with the first kept (Box Office Mojo's week 42, read by the dossier on
+  October 23 and by this build on October 24), and a malformed one is refused with why. Movement only between consecutive
+  weeks of one chart; a title new to the game's record is never called a new release; outside the published Top 10 is
+  never a place. A week the clock hasn't reached the end of isn't shown, and the latest says how old it is.
+- **The game's own box office**: a released film in cinemas has a run drawn by the film (decider `charts.gross`), its
+  opening from its kind's range, each week a share of the last, ranked among the game's own unnamed releases. It's the
+  production's: it posts nothing, and how the player's part went doesn't move it (CON-10, T98).
+- **The inventory** (`content/awards.ts`): the brief's fourteen awards and eight festivals, each with its organizer,
+  sources and coverage. Three decide: the Emmy Awards and Sundance, whose rules were read and are followed, and the
+  International Emmy Awards, whose rule (a program produced outside the U.S.) says every series the game casts isn't
+  eligible. The rest say the game doesn't decide them.
+- **The Emmy Awards** (`systems/awards.ts`): eligibility by the 78th's rules, its year June 1 to May 31 read from the
+  release on the clock; a guest category for a part in under half the season's episodes at 5% of the episode entered;
+  supporting in a limited series at 5% of the whole series, in a movie or an anthology at 5% of it; a series' supporting
+  part with no minimum; a guest part once nominated as a supporting one stays supporting; dubs, documentaries and films
+  refused, each with the rule. Enter Yourself (`pro.award_enter`) pays the $125 processing charge and the $100 entry fee
+  by the deadline; the production may enter a part the player didn't (decider `awards.entry`), only one it had by the
+  deadline. At the nominations each category's anonymous field is drawn (decider `awards.field`, keyed by the category's
+  kind, so an actor's and an actress's categories share its size and the 78th's parity holds) and nominated by the
+  table and the tie rules; the final round settles the winner (decider `awards.final`), given at the ceremony; Watch The
+  Ceremony (`pro.watch_ceremony`) shows it and changes nothing. An entry whose scenes were all cut is disqualified. Every
+  later edition is the 78th's rules carried forward, said so.
+- **Sundance**: a film's category by its running time and kind, the production's submission at the deadline (decider
+  `festival.submit`), the festival's word (decider `festival.select`) and the screening, kept apart; a feature released
+  before February 1 loses its world premiere, said before the release; a short finished after the window's day is
+  eligible whatever its premiere; a studio's film isn't sent by open submission; the player can't submit anything.
+- **Recognition**: kept for good on the Portfolio (a nomination, a win, a selection); casting's chance lifted by it,
+  fading over three years, at most 30% better, never past casting's ceiling (`visibilityOf`, `castingDraw`).
+- **The screen**: Career's Charts And Awards tab, with Your Recognition, Your Films In Cinemas, Published Charts and
+  Awards And Festivals; the guide's chapter Charts, Festivals And Awards; Finding Work's paragraph on the tab.
+- **Read again once built, and changed to the rules**: the first build held every part to 5% of an episode, let a guest
+  part stay a guest after a supporting nomination, gave a dub's refusal a reason the rules don't, and refused every short
+  finished before the festival's window though one not out before then is eligible (its probe of sixteen lives found no
+  short ever reached the festival). Votes in whole points tied at the nomination line in about half of the categories a
+  probe drew; in tenths a tie is the exception the rules make it. Two of Netflix's weekly Raw episodes shared one title id,
+  and Nielsen's East of Eden had one of its own; each is fixed. The entry deadline ended at midnight in New York; the
+  rules give the Academy's other deadlines in Pacific time, so it ends at midnight in Los Angeles. The gate's first run
+  failed one test, tests/cohesion.test.ts, which holds that only enjoyment reads a genres field: the children's
+  animation rule read a project's tags directly, and reads them as every other system does now (`requirementOfRole`).
+- **Not built, each a register row**: country and worldwide box office and a rank-only chart (CHART-01); a provider
+  integration (CHART-04, not authorized); the weekend chart (T69); another festival's rule that a selection elsewhere rules
+  a film out (AWD-08); anything that delays a release (T48); a revival's part played to an entry (T93).
+- **Mutations**: 42 run against tests/career-awards.test.ts and tests/career-awards-screen.test.ts (`mutate/m6.py` in the
+  session's scratchpad, in a copy of the tree), across the charts, the eligibility rules, the entry, the table and its ties,
+  the field, the final round, the ceremony, disqualification, Sundance and casting's lift, and two more after the gate's
+  first run (the deadline's clock, the children's animation rule). All 44 were caught on the first run.
+- **Measured**: the gate on this tree: tsc, eslint, 497 of 498 test files and 5,766 of 5,767 tests. The failure was
+  tests/b20-guide-wiring.test.ts: the guide's wiring list named awards.ts's lines for its two commands as they stood
+  before the entry deadline's helper moved them. Regenerated, the file passed, 7 of 7, and the 23 checks passed.
+
 ## Next Concrete Action
 
-Module 6: weekly charts (reference snapshots and the save's own world), festivals and awards with an anonymous field
-(Part 9); its criteria written before any code.
+Module 7: the time loop's deadlines, the drill-downs and tutorials, balance over a hundred seeds, the playthroughs, the
+final runs again (the measured rows Modules 5 and 6 left behind), and the final gate in a clean clone, then the report.

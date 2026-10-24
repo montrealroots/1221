@@ -1868,6 +1868,27 @@
   "reason": "Developer notes on each random draw, read only by tests/deciders.test.ts and tools/deciders.mjs; nothing the game ships imports decided.ts.",
   "first": "Reviewed And Retained"
  },
+ "src/engine/decided.ts#top [awards.entry]": {
+  "status": "Rewritten",
+  "hash": "60dcfe764aa2",
+  "on": "2026-10-24",
+  "evidence": "Written for brief 25's Module 6 to docs/STYLE.md: each of the six draws the charts and awards make, said in the player's terms, registered and checked by tools/deciders.mjs and each drawn in tests/career-awards.test.ts (a film's gross, a production's entry, a category's field, the final round, a production's submission and the festival's word), with tools/voice-check.mjs clean.",
+  "first": "Pending"
+ },
+ "src/engine/decided.ts#top [awards.field]": {
+  "status": "Rewritten",
+  "hash": "281ed30ce0ba",
+  "on": "2026-10-24",
+  "evidence": "Written for brief 25's Module 6 to docs/STYLE.md: each of the six draws the charts and awards make, said in the player's terms, registered and checked by tools/deciders.mjs and each drawn in tests/career-awards.test.ts (a film's gross, a production's entry, a category's field, the final round, a production's submission and the festival's word), with tools/voice-check.mjs clean.",
+  "first": "Pending"
+ },
+ "src/engine/decided.ts#top [awards.final]": {
+  "status": "Rewritten",
+  "hash": "59027890c09f",
+  "on": "2026-10-24",
+  "evidence": "Written for brief 25's Module 6 to docs/STYLE.md: each of the six draws the charts and awards make, said in the player's terms, registered and checked by tools/deciders.mjs and each drawn in tests/career-awards.test.ts (a film's gross, a production's entry, a category's field, the final round, a production's submission and the festival's word), with tools/voice-check.mjs clean.",
+  "first": "Pending"
+ },
  "src/engine/decided.ts#top [bank.chex]": {
   "status": "Retained",
   "hash": "f3a7ddfe3175",
@@ -1896,12 +1917,33 @@
   "reason": "Developer notes on each random draw, read only by tests/deciders.test.ts and tools/deciders.mjs; nothing the game ships imports decided.ts.",
   "first": "Reviewed And Retained"
  },
+ "src/engine/decided.ts#top [charts.gross]": {
+  "status": "Rewritten",
+  "hash": "83d35488ed7c",
+  "on": "2026-10-24",
+  "evidence": "Written for brief 25's Module 6 to docs/STYLE.md: each of the six draws the charts and awards make, said in the player's terms, registered and checked by tools/deciders.mjs and each drawn in tests/career-awards.test.ts (a film's gross, a production's entry, a category's field, the final round, a production's submission and the festival's word), with tools/voice-check.mjs clean.",
+  "first": "Pending"
+ },
  "src/engine/decided.ts#top [documents.start]": {
   "status": "Retained",
   "hash": "ec9e351ba863",
   "on": "2026-10-19",
   "reason": "Developer notes on each random draw, read only by tests/deciders.test.ts and tools/deciders.mjs; nothing the game ships imports decided.ts.",
   "first": "Reviewed And Retained"
+ },
+ "src/engine/decided.ts#top [festival.select]": {
+  "status": "Rewritten",
+  "hash": "bc21f8b37c20",
+  "on": "2026-10-24",
+  "evidence": "Written for brief 25's Module 6 to docs/STYLE.md: each of the six draws the charts and awards make, said in the player's terms, registered and checked by tools/deciders.mjs and each drawn in tests/career-awards.test.ts (a film's gross, a production's entry, a category's field, the final round, a production's submission and the festival's word), with tools/voice-check.mjs clean.",
+  "first": "Pending"
+ },
+ "src/engine/decided.ts#top [festival.submit]": {
+  "status": "Rewritten",
+  "hash": "0ac00d63e4a4",
+  "on": "2026-10-24",
+  "evidence": "Written for brief 25's Module 6 to docs/STYLE.md: each of the six draws the charts and awards make, said in the player's terms, registered and checked by tools/deciders.mjs and each drawn in tests/career-awards.test.ts (a film's gross, a production's entry, a category's field, the final round, a production's submission and the festival's word), with tools/voice-check.mjs clean.",
+  "first": "Pending"
  },
  "src/engine/decided.ts#top [health.appointment]": {
   "status": "Retained",
@@ -3513,6 +3555,13 @@
   "on": "2026-10-19",
   "reason": "Each screen’s tab names, short, Title Case and distinct from their neighbours, as the screens and the guide name them.",
   "first": "Reviewed And Retained"
+ },
+ "src/ui/shell/sections.ts#SECTIONS [industry]": {
+  "status": "Rewritten",
+  "hash": "b1c59b21bd6b",
+  "on": "2026-10-24",
+  "evidence": "Written for brief 25's Module 6 (the published charts as dated imports, the game's own box office, the awards and festivals inventory, the Emmy Awards by the 78th's rules and Sundance by its 2027 festival's) to docs/STYLE.md and docs/GLOSSARY.md, every rule the read sources' own and every invention said as the game's; read where the player meets it in tests/career-awards-screen.test.ts (the Charts And Awards tab and the Portfolio drawn before the work, after the wrap, after the entry, at the nominations and after the ceremony, through the clock and a reload at each stage) and tests/career-awards.test.ts (each refusal, notice, recap and festival word), with tools/voice-check.mjs, tools/tics.mjs and tools/title-case.mjs clean.",
+  "first": "Pending"
  },
  "src/ui/shell/sections.ts#SECTIONS [opportunities]": {
   "status": "Rewritten",

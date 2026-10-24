@@ -99,6 +99,8 @@ import { clauseOf, contractFor, entitle, overtimeOf, paysOvertime, OPTION_RAISE 
 import { inProduction, registerSeries, scheduleSeason, seasonOf } from './series';
 import { STEP_LABEL, STEP_WORDS, afterWrap, dubDaysOf, cutInEdit, formatOf, keptBand, payUnitsOf, planWork, registerWorkflows, sessionDays, stepOf, voiceOnly, workHoursOf, workTheDay, workflowOf } from './workflow';
 import { RELEASED } from '../content/workflows';
+import { registerAwards, visibilityOf } from './awards';
+import { simulateRun } from './charts';
 
 // ---------------------------------------------------------------------------------------------------------------------
 // The rules: each a published one with its source, or the game's ASSUMPTION
@@ -617,8 +619,10 @@ export function seriesPosts(sim: Simulation, t: ProjectTemplate, days: readonly 
  * save's numbering, so a project added to the game took an id ahead of later postings and changed their casting: brief
  * 25's eighth project moved a played life's (tests/journey-career.test.ts) first booking from December to June.
  */
-export function castingDraw(sim: Simulation, o: Pick<Opportunity, 'projectId' | 'postedAt'>, round: 'callback' | 'final', band: Band, fit: number): { chance: number; yes: boolean } {
-  const chance = chanceOf(band, fit, projectOf(o).kind, round);
+export function castingDraw(sim: Simulation, o: Pick<Opportunity, 'projectId' | 'postedAt'>, round: 'callback' | 'final', band: Band, fit: number, lift = 0): { chance: number; yes: boolean } {
+  // The player's visibility lifts the chance (from 2026-10-24, brief 25's Module 6, X13: `visibilityOf`), within casting's
+  // own ceiling, and never past it.
+  const chance = r3(Math.min(CASTING.most, chanceOf(band, fit, projectOf(o).kind, round) * (1 + lift)));
   return { chance, yes: sim.rng('pro.casting', o.projectId, o.postedAt, round).next() < chance };
 }
 
@@ -1855,6 +1859,8 @@ const WORKFLOW_HOOKS = {
 export function registerProJobs(sim: Simulation): void {
   // The workflows' revised pages, looping sessions, invitations and choices (from 2026-10-24, brief 25's Module 5).
   registerWorkflows(sim, WORKFLOW_HOOKS);
+  // The awards and festivals (from 2026-10-24, brief 25's Module 6).
+  registerAwards(sim, (s, person, title, body) => tell(s, person, title, body, 65));
   // Work abroad's trips and visas (from 2026-10-23, the owner's brief 25): their handlers, lent what they need from here.
   registerWorkTrips(sim, {
     engagementOf, projectOf: (e) => projectById(e.projectId), there,
@@ -1924,7 +1930,7 @@ export function registerProJobs(sim: Simulation): void {
       pass(s, person, o, `You’re booked for ${clash.label} on ${formatDate(clash.from, NY)}, so ${t.casting} cast another actor as ${t.role.part}.`);
       return;
     }
-    const d = castingDraw(s, o, cut ? 'callback' : 'final', r.band!, f.fit);
+    const d = castingDraw(s, o, cut ? 'callback' : 'final', r.band!, f.fit, visibilityOf(person, s.now));
     r.casting = { at: s.now, chance: d.chance, fit: f.fit, yes: d.yes };
     if (!d.yes) { pass(s, person, o, cut ? `${castingAs(t)} didn’t call you back for ${t.role.part}.` : `${castingAs(t)} cast another actor as ${t.role.part}.`); return; }
     if (cut) { setRound(s, person, o, 'callback'); return; }
@@ -2064,6 +2070,9 @@ export function registerProJobs(sim: Simulation): void {
       if (kept) c.band = kept;
       noteEvent(s, e, { kind: 'problem', key: 'cut', words: `The edit cut your ${unitWord(t, cut)} from ${t.project}. ${c.role} stays on your credits, and the pay is yours.` });
     }
+    // A film in cinemas enters the game's own weekly chart (from 2026-10-24, brief 25's Module 6, X5), its run drawn now
+    // and read by the clock: the game's simulation, never a published figure, and never pay.
+    if (t && formatOf(t).after === 'theatrical') c.run ??= simulateRun(s, t.id, t.kind, c.releasedAt ?? s.now);
     const out = t ? RELEASED[formatOf(t).after] : 'is out';
     const words = c.voice ? `${c.project} ${out}, so ${c.role} shows as released on your credits. It’s your voice with no picture of you, so it can’t go on a reel.` : `${c.project} ${out}, so ${c.role} shows as released on your credits, and its footage can go on your reel. Cut A Reel on the Portfolio tab lists it.`;
     tell(s, person, `${c.project} Is Released`, cut && t ? `${words} The edit cut one of your scenes, ${unitWord(t, cut)}: the part stays on your credits with the pay, and the reel can use only the scenes kept.` : words, 60);

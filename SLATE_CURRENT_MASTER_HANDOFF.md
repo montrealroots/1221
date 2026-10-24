@@ -1,4 +1,4 @@
-# Read First: Brief 25, The Master Career Build, Modules 1 To 5 (Work Abroad, The Real Catalog, Real Agents, Contracts, The Ways Of Working) Done, 2026-10-24
+# Read First: Brief 25, The Master Career Build, Modules 1 To 6 (Work Abroad, The Real Catalog, Real Agents, Contracts, The Ways Of Working, Charts And Awards) Done, 2026-10-24
 
 **This section is the current status, and where a new session starts.** The owner gave brief 25, "SLATE — Master
 Career Build Command", with its research dossier (Sections 1 to 29), on `main` after #63. It is kept verbatim at
@@ -8,7 +8,7 @@ is worked on `claude/peaceful-hamilton-59zdbb` from `b46ee301`, pushed and never
 owner says otherwise, no contact with real people, no purchased data, and none of housing, vehicles, shopping, other
 occupations or parental leave.
 
-**Completion, by the matrix:** 549 of 661 rows in scope Implemented And Verified (83.0%); 108 Implemented, Verification Incomplete, 0 Partially Implemented, 0 Not Implemented, 0 Blocked Externally, 4 Decision Required, 41 Explicitly Deferred.
+**Completion, by the matrix:** 549 of 663 rows in scope Implemented And Verified (82.8%); 110 Implemented, Verification Incomplete, 0 Partially Implemented, 0 Not Implemented, 0 Blocked Externally, 4 Decision Required, 41 Explicitly Deferred.
 
   (634 at brief 24's close, 588 at Module 4's. The 46 rows brief 22's final runs measured fall behind whenever
   `src/engine` changes, as they did through briefs 23 and 24, and are held again by playing those runs on the brief's last
@@ -16,7 +16,8 @@ occupations or parental leave.
   more measured rows, the genre signatures, the advice baselines and the stamina and judging runs among them, fall behind
   until the brief's final runs play them again, as Module 7 does; the
   659th row is work abroad's capability, the 660th Module 4's contracts and the 661st Module 5's ways of working, each
-  Implemented, its verified layer Partial, as every row added after the review of 2026-10-13 is.)
+  Implemented, its verified layer Partial, as every row added after the review of 2026-10-13 is; the 662nd and 663rd are
+  Module 6's two commands, Enter Yourself and Watch The Ceremony, the same.)
 
 - **Read first:** `docs/verification/career-world-2026-10-23/CHECKPOINT.md` (where the work is, module by module, and the
   blockers met), `criteria.md` (each module's checks, written before its code), `REGISTER.md` (290 rows: the brief's
@@ -107,8 +108,30 @@ occupations or parental leave.
   suite's first run failed 11 tests, each written before the rule it reads moved, and each was moved with it.
 - **Register:** 101 of 290 rows Implemented And Verified (73 at Module 4's end, 52 at Module 3's, 43 at Module 2's, 24 at
   Module 1's); WF-19, short films, is Partially Implemented until Module 6 gives it festivals.
-- **Next:** Module 6, weekly charts, festivals and awards with an anonymous field (Part 9); then the time loop, tutorials,
-  playthroughs and the final gate, each in the checkpoint's table.
+- **Module 6, charts, festivals and awards** (`content/charts.ts`, `systems/charts.ts`, `content/awards.ts`,
+  `systems/awards.ts`, `ui/career/IndustryPane.tsx`): Career's Charts And Awards tab. The published charts are dated
+  imports (Box Office Mojo's weeks 41 and 42, the second read twice and kept as a revision; Netflix's four lists for two
+  weeks; Nielsen's one), never fetched, each in its own unit and week, with movement only between consecutive weeks and
+  how old the latest is. A released film of the player's has a run in the game's own box office, the production's and
+  never pay. Fourteen awards and eight festivals, each with what was read; the Emmy Awards by the 78th's rules (Enter
+  Yourself, `pro.award_enter`, at $225; an anonymous field; the table and tie rules; the final round; Watch The Ceremony,
+  `pro.watch_ceremony`, which changes nothing) and Sundance by its 2027 festival's (only the production submits). A
+  nomination, a win or a selection stays on the Portfolio and lifts casting's chance for three years, at most 30%. Six
+  new deciders (`charts.gross`, `awards.entry`, `awards.field`, `awards.final`, `festival.submit`, `festival.select`);
+  sources N19 to N30; criteria X1 to X16.
+- **Defects found on the way and fixed:** the 5% screen-time rule held to every category (it's the guest's and the
+  limited series' supporting performer's); a guest part kept a guest after a supporting nomination; a dub refused for a
+  reason the rules don't give; every short finished before the festival's window refused, so no short reached Sundance;
+  votes in whole points tying at the nomination line half the time; two Raw episodes under one title id; the entry
+  deadline ending at midnight in New York, not on the Academy's clock in Los Angeles; the new files' text filed under
+  health by the text inventory.
+- **Measured (Module 6):** the gate: tsc, eslint, 497 of 498 test files and 5,766 of 5,767 tests. The one failure was the
+  guide's wiring list, which still named the lines Enter Yourself and Watch The Ceremony were registered at before the
+  entry deadline's helper moved them nine lines down; regenerated, its file passed (7 of 7), and the 23 checks then passed.
+- **Register:** 163 of 290 rows Implemented And Verified (101 at Module 5's end); CHART-01, CHART-04, AWD-08, T48 and T69
+  Partially Implemented, each with why.
+- **Next:** Module 7, the time loop's deadlines, drill-downs and tutorials, balance over a hundred seeds, playthroughs, the
+  final runs again and the final gate, each in the checkpoint's table.
 
 # Earlier: Brief 24, UI Alignment, Home Spacing And Navigation Cleanup, Merged, 2026-10-23
 

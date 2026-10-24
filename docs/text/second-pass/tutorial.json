@@ -127,9 +127,9 @@
  },
  "src/engine/content/tutorial.ts#CHAPTERS [finding-work]": {
   "status": "Rewritten",
-  "hash": "589bc2ad4e37",
+  "hash": "f6783d6d5abb",
   "on": "2026-10-24",
-  "evidence": "Written for brief 25's Module 5 to docs/STYLE.md and docs/GLOSSARY.md: Finding Work's paragraph on how each kind of work is done, naming How The Work Is Done, Ask For Another Take and Use The Double as the screens name them; the chapter's opened command read in tests/career-workflows-screen.test.ts, its names checked by tools/guide-quotes.mjs, with tools/voice-check.mjs and tools/tics.mjs clean.",
+  "evidence": "Written for brief 25's Module 6 to docs/STYLE.md and docs/GLOSSARY.md: Finding Work's paragraph on Charts And Awards, naming Enter Yourself and Watch The Ceremony as the tab names them; the chapter's opened commands issued in tests/career-awards-screen.test.ts, its names checked by tools/guide-quotes.mjs, with tools/voice-check.mjs and tools/tics.mjs clean.",
   "first": "Pending"
  },
  "src/engine/content/tutorial.ts#CHAPTERS [life]": {

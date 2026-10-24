@@ -601,6 +601,13 @@
   "evidence": "Said again for brief 21 (2026-10-22) to docs/STYLE.md and docs/GLOSSARY.md: a work's several genres, each by its share, and where knowing them counts; the mechanics it names played in tests/b20-career-effects.test.ts, tests/evidence-g20-school.test.ts, tests/evidence-g23-school.test.ts and tests/guide-examples-*.test.ts, with tools/voice-check.mjs, tools/tics.mjs, tools/title-case.mjs, tools/spelling.mjs and tools/plural-check.mjs passing",
   "first": "Pending"
  },
+ "src/engine/content/guide/career.ts#CAREER_GUIDE [career.awards]": {
+  "status": "Rewritten",
+  "hash": "4726b57d4d5d",
+  "on": "2026-10-24",
+  "evidence": "Written for brief 25's Module 6 to docs/STYLE.md and docs/GLOSSARY.md: the guide's chapter on charts, festivals and awards and its links to the ways of working and to offers, each link's promise read against the code by tools/effects.mjs and each quote by tools/guide-quotes.mjs, the chapter's commands issued by tests/career-awards-screen.test.ts, with tools/voice-check.mjs and tools/tics.mjs clean.",
+  "first": "Pending"
+ },
  "src/engine/content/guide/career.ts#CAREER_GUIDE [career.commission]": {
   "status": "Rewritten",
   "hash": "636bfa774038",
@@ -708,10 +715,10 @@
  },
  "src/engine/content/guide/career.ts#CAREER_GUIDE [evaluation]": {
   "status": "Rewritten",
-  "hash": "1cb2b1f9f7d1",
-  "on": "2026-10-21",
-  "evidence": "Read in the tool output of docs/verification/career-2026-10-20/integration/merged-career-text.ts (its .txt beside it) at the work loop's merge, 2026-10-21, against docs/STYLE.md: the agent's, the pay's and the work loop's lines, each read by its builder, joined; the chapters read in their order, Your Career, Representation, Finding Work, Papers",
-  "first": "Rewritten And Verified"
+  "hash": "a5315052e5a0",
+  "on": "2026-10-24",
+  "evidence": "Written for brief 25's Module 6 to docs/STYLE.md and docs/GLOSSARY.md: the guide's chapter on charts, festivals and awards and its links to the ways of working and to offers, each link's promise read against the code by tools/effects.mjs and each quote by tools/guide-quotes.mjs, the chapter's commands issued by tests/career-awards-screen.test.ts, with tools/voice-check.mjs and tools/tics.mjs clean.",
+  "first": "Pending"
  },
  "src/engine/content/guide/career.ts#CAREER_GUIDE [history]": {
   "status": "Rewritten",
@@ -729,9 +736,9 @@
  },
  "src/engine/content/guide/career.ts#CAREER_GUIDE [optional]": {
   "status": "Rewritten",
-  "hash": "32cba9d7b489",
+  "hash": "7a801fe50843",
   "on": "2026-10-24",
-  "evidence": "Written for brief 25's Module 3 (real agencies and agents) to docs/STYLE.md and docs/GLOSSARY.md, with no pronoun for a real agent and the game's own agent's words unchanged; read where the player meets it in tests/career-agents.test.ts (the Representation tab drawn with Dan Patack chosen, the notices and history of a played referral, meeting, offer and signing) and in tests/pro-representation-screen.test.ts, tests/journey-agent.test.ts and tests/pro-agent.test.ts for Thomas Ashgrove, with tools/voice-check.mjs, tools/tics.mjs, tools/title-case.mjs, tools/plural-check.mjs and tools/spelling.mjs passing",
+  "evidence": "Written for brief 25's Module 6 to docs/STYLE.md and docs/GLOSSARY.md: the guide's chapter on charts, festivals and awards and its links to the ways of working and to offers, each link's promise read against the code by tools/effects.mjs and each quote by tools/guide-quotes.mjs, the chapter's commands issued by tests/career-awards-screen.test.ts, with tools/voice-check.mjs and tools/tics.mjs clean.",
   "first": "Pending"
  },
  "src/engine/content/guide/career.ts#CAREER_GUIDE [prerequisite]": {
@@ -753,6 +760,13 @@
   "hash": "90335b649ade",
   "on": "2026-10-21",
   "evidence": "Written for brief 19 to docs/STYLE.md and docs/GLOSSARY.md; read where the player meets it in tests/pro-screen.test.ts and tests/pro-core.test.ts, with tools/voice-check.mjs, tools/tics.mjs and tools/title-case.mjs passing",
+  "first": "Pending"
+ },
+ "src/engine/content/guide/career.ts#MONTHS": {
+  "status": "Rewritten",
+  "hash": "27c857d61c2b",
+  "on": "2026-10-24",
+  "evidence": "Written for brief 25's Module 6 to docs/STYLE.md and docs/GLOSSARY.md: the guide's chapter on charts, festivals and awards and its links to the ways of working and to offers, each link's promise read against the code by tools/effects.mjs and each quote by tools/guide-quotes.mjs, the chapter's commands issued by tests/career-awards-screen.test.ts, with tools/voice-check.mjs and tools/tics.mjs clean.",
   "first": "Pending"
  },
  "src/engine/content/guide/career.ts#NO_OFFER": {
@@ -974,9 +988,9 @@
  },
  "src/ui/workspaces/CareerWorkspace.tsx#ProfilePanel": {
   "status": "Rewritten",
-  "hash": "2fa73c43bb1f",
-  "on": "2026-10-21",
-  "evidence": "Written for brief 19 to docs/STYLE.md and docs/GLOSSARY.md; read where the player meets it in tests/pro-screen.test.ts and tests/pro-core.test.ts, with tools/voice-check.mjs, tools/tics.mjs and tools/title-case.mjs passing",
+  "hash": "e58db547c159",
+  "on": "2026-10-24",
+  "evidence": "Written for brief 25's Module 6 (the published charts as dated imports, the game's own box office, the awards and festivals inventory, the Emmy Awards by the 78th's rules and Sundance by its 2027 festival's) to docs/STYLE.md and docs/GLOSSARY.md, every rule the read sources' own and every invention said as the game's; read where the player meets it in tests/career-awards-screen.test.ts (the Charts And Awards tab and the Portfolio drawn before the work, after the wrap, after the entry, at the nominations and after the ceremony, through the clock and a reload at each stage) and tests/career-awards.test.ts (each refusal, notice, recap and festival word), with tools/voice-check.mjs, tools/tics.mjs and tools/title-case.mjs clean.",
   "first": "Pending"
  },
  "src/ui/workspaces/CareerWorkspace.tsx#ReelPanel": {

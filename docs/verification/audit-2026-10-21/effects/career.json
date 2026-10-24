@@ -2422,11 +2422,11 @@
    "consumers": [
     {
      "what": "the part posted and offered",
-     "at": "src/engine/systems/projobs.ts:1847"
+     "at": "src/engine/systems/projobs.ts:1851"
     },
     {
      "what": "the offer's line says why",
-     "at": "src/engine/systems/projobs.ts:1850"
+     "at": "src/engine/systems/projobs.ts:1854"
     }
    ],
    "experienced": "An offer on the Opportunities tab: the company invited you back into its next story for your work, without an audition.",
@@ -2443,6 +2443,158 @@
     ]
    },
    "missing": "An anthology's whole company returning, and an invitation declined for a conflict before it's made, aren't modeled.",
+   "status": "Implemented And Verified",
+   "why": "",
+   "prior": null
+  },
+  {
+   "id": "pro.award_enter",
+   "kind": "command",
+   "area": "career",
+   "mechanic": true,
+   "seeded": false,
+   "readBy": "career",
+   "readAt": "brief 25",
+   "where": "Career, Charts And Awards: Your Recognition, Enter Yourself under each television part eligible and not entered, grayed with entryRefusal's words.",
+   "prerequisites": "A television credit eligible by the 78th's rules (`emmyCheck`: on the air or due on it, its kind, its episodes and its share of the running time), not yet entered for its year, before its edition's entry deadline, and a bank that can pay the $125 processing charge and the $100 entry fee (`entryRefusal`).",
+   "reads": "The credit, its engagement's scenes kept in the edit and their episodes, the release on the clock, the edition's dates and fees.",
+   "changes": "The fee spent from the bank (`spend`, `career`); an entry kept on the record, entered by you, in its category and year.",
+   "consumers": [
+    {
+     "what": "the fee paid from the bank",
+     "at": "src/engine/systems/awards.ts:226"
+    },
+    {
+     "what": "the nominations read only an entered performance",
+     "at": "src/engine/systems/awards.ts:453"
+    },
+    {
+     "what": "the field is drawn and the nominations made for it",
+     "at": "src/engine/systems/awards.ts:455"
+    },
+    {
+     "what": "Your Recognition says where it stands",
+     "at": "src/ui/career/IndustryPane.tsx:101"
+    }
+   ],
+   "experienced": "Entered for Outstanding Guest Actress In A Drama Series at the 79th Emmy Awards; the nominations are announced on July 8, 2027. The fee is in the bank's history.",
+   "saveLoad": "The professional record (`person.pro`: `awards`, one entry for each performance and Emmy year with its field, nominees, winner and ceremony; `festivals`; each credit's `run`) is in the save; every step reads its record's own state before acting (an entry's field drawn, its winner settled, a festival's word given), so a load runs nothing twice; every draw is keyed by the year, the category or the work, never by an id, so a reload decides it the same. Held across a save and a load at each stage by tests/career-awards.test.ts and tests/career-awards-screen.test.ts.",
+   "evidence": {
+    "tests": [
+     "tests/career-awards.test.ts",
+     "tests/career-awards-screen.test.ts"
+    ],
+    "comparisons": [],
+    "mutations": [],
+    "journeys": [
+     "tests/career-awards-screen.test.ts"
+    ]
+   },
+   "missing": "A performer's choice of category, which the rules leave to the entrant, is the game's (a part in under half the episodes enters as a guest).",
+   "status": "Implemented And Verified",
+   "why": "",
+   "prior": null
+  },
+  {
+   "id": "pro.watch_ceremony",
+   "kind": "command",
+   "area": "career",
+   "mechanic": true,
+   "seeded": false,
+   "readBy": "career",
+   "readAt": "brief 25",
+   "where": "Career, Charts And Awards: Your Recognition, Watch The Ceremony under a nominated entry, grayed with watchRefusal's words until the award is presented.",
+   "prerequisites": "A nomination, and the clock at its ceremony (`watchRefusal`).",
+   "reads": "The entry's result, settled at the final round (`field.winner`).",
+   "changes": "Nothing of the result: the day it was watched (`watchedAt`), and the ceremony's lines shown.",
+   "consumers": [
+    {
+     "what": "the ceremony's lines, read from the settled result",
+     "at": "src/engine/systems/awards.ts:522"
+    },
+    {
+     "what": "the entry keeps the day it was watched",
+     "at": "src/engine/systems/awards.ts:611"
+    },
+    {
+     "what": "Your Recognition shows the lines once watched",
+     "at": "src/ui/career/IndustryPane.tsx:103"
+    }
+   ],
+   "experienced": "The nominees read, the envelope opened, and the result: you won, or you didn't and your nomination stands. A twin who skipped it has the same result.",
+   "saveLoad": "The professional record (`person.pro`: `awards`, one entry for each performance and Emmy year with its field, nominees, winner and ceremony; `festivals`; each credit's `run`) is in the save; every step reads its record's own state before acting (an entry's field drawn, its winner settled, a festival's word given), so a load runs nothing twice; every draw is keyed by the year, the category or the work, never by an id, so a reload decides it the same. Held across a save and a load at each stage by tests/career-awards.test.ts and tests/career-awards-screen.test.ts.",
+   "evidence": {
+    "tests": [
+     "tests/career-awards.test.ts",
+     "tests/career-awards-screen.test.ts"
+    ],
+    "comparisons": [],
+    "mutations": [],
+    "journeys": [
+     "tests/career-awards-screen.test.ts"
+    ]
+   },
+   "missing": "None found within the module's scope.",
+   "status": "Implemented And Verified",
+   "why": "",
+   "prior": null
+  },
+  {
+   "id": "pro.awards",
+   "kind": "reactor",
+   "area": "career",
+   "mechanic": true,
+   "seeded": false,
+   "readBy": "career",
+   "readAt": "brief 25",
+   "where": "The clock, at every stop (`onPassage`): each television credit's Emmy year and each film's Sundance year, step by step.",
+   "prerequisites": "A professional credit; for an Emmy step, its eligibility and its edition's dates; for Sundance, its category, its deadline and its premiere.",
+   "reads": "The credits, their eligibility (`emmyCheck`, `festivalCheck`), the editions' dates, the deciders awards.entry, awards.field, awards.final, festival.submit and festival.select, keyed by the year, the category and the work.",
+   "changes": "At the deadline, the production's entry or not; at the nominations, the field and the nominees; at the final round's end, the winner; at the ceremony, won or lost; a disqualification where the work no longer meets the rules; the festival's submission, its word and the screening; notices for each.",
+   "consumers": [
+    {
+     "what": "an entry whose work no longer meets the rules is disqualified",
+     "at": "src/engine/systems/awards.ts:437"
+    },
+    {
+     "what": "the winner settled at the final round's end",
+     "at": "src/engine/systems/awards.ts:474"
+    },
+    {
+     "what": "the result given at the ceremony",
+     "at": "src/engine/systems/awards.ts:476"
+    },
+    {
+     "what": "the production submits its film",
+     "at": "src/engine/systems/awards.ts:489"
+    },
+    {
+     "what": "the festival selects it or doesn't",
+     "at": "src/engine/systems/awards.ts:497"
+    },
+    {
+     "what": "casting reads the recognition it leaves",
+     "at": "src/engine/systems/projobs.ts:1933"
+    },
+    {
+     "what": "the Portfolio keeps what was recognized",
+     "at": "src/ui/workspaces/CareerWorkspace.tsx:143"
+    }
+   ],
+   "experienced": "You’re Nominated For An Emmy; The Creative Arts Emmys Tonight; Last Bus To Eastview Is Selected For Sundance; the Portfolio's Recognition; a casting decision's chance a little higher afterward.",
+   "saveLoad": "The professional record (`person.pro`: `awards`, one entry for each performance and Emmy year with its field, nominees, winner and ceremony; `festivals`; each credit's `run`) is in the save; every step reads its record's own state before acting (an entry's field drawn, its winner settled, a festival's word given), so a load runs nothing twice; every draw is keyed by the year, the category or the work, never by an id, so a reload decides it the same. Held across a save and a load at each stage by tests/career-awards.test.ts and tests/career-awards-screen.test.ts.",
+   "evidence": {
+    "tests": [
+     "tests/career-awards.test.ts",
+     "tests/career-awards-screen.test.ts"
+    ],
+    "comparisons": [],
+    "mutations": [],
+    "journeys": [
+     "tests/career-awards-screen.test.ts"
+    ]
+   },
+   "missing": "No other award or festival is decided; their rules weren't read, and the inventory says so.",
    "status": "Implemented And Verified",
    "why": "",
    "prior": null

@@ -2644,6 +2644,495 @@
      "quote": "The national vote closed on June 4, 2026"
     }
    ]
+  },
+  {
+   "id": "N19",
+   "title": "Box Office Mojo by IMDbPro: Domestic Weekly Box Office, 2026 week 42 (October 16 to 22) and the weekly index",
+   "url": "https://www.boxofficemojo.com/weekly/2026W42/",
+   "status": "read",
+   "dossier": "Found by this build; not in the dossier’s register.",
+   "retrieved": "2026-10-24",
+   "published": null,
+   "effective": null,
+   "territory": "US",
+   "attempts": [
+    {
+     "at": "2026-10-24",
+     "how": "fetched by this build",
+     "result": "HTTP 200"
+    },
+    {
+     "at": "2026-10-24",
+     "how": "the weekly index, https://www.boxofficemojo.com/weekly/",
+     "result": "HTTP 200"
+    }
+   ],
+   "facts": [
+    {
+     "field": "week-42-first",
+     "value": "Street Fighter, No. 1, $38,338,634, 3,575 theaters, its first week",
+     "quote": "Street Fighter $38,338,634 3,575"
+    },
+    {
+     "field": "revision",
+     "value": "The dossier’s reading of 2026-10-23 (S93) gave Street Fighter $37,177,832 for the same week; this build’s of 2026-10-24 gives $38,338,634, kept as a revision",
+     "quote": "$38,338,634"
+    }
+   ]
+  },
+  {
+   "id": "N20",
+   "title": "Box Office Mojo by IMDbPro: Domestic Weekly Box Office, 2026 week 41 (October 9 to 15)",
+   "url": "https://www.boxofficemojo.com/weekly/2026W41/",
+   "status": "read",
+   "dossier": "Found by this build; not in the dossier’s register.",
+   "retrieved": "2026-10-24",
+   "published": null,
+   "effective": null,
+   "territory": "US",
+   "attempts": [
+    {
+     "at": "2026-10-24",
+     "how": "fetched by this build",
+     "result": "HTTP 200"
+    }
+   ],
+   "facts": [
+    {
+     "field": "week-41-first",
+     "value": "Other Mommy, No. 1, $36,504,440, 3,365 theaters, its first week",
+     "quote": "Other Mommy $36,504,440 3,365"
+    }
+   ]
+  },
+  {
+   "id": "N21",
+   "title": "Netflix Top 10: the all-weeks global file",
+   "url": "https://www.netflix.com/tudum/top10/data/all-weeks-global.tsv",
+   "status": "read",
+   "dossier": "Found by this build; not in the dossier’s register.",
+   "retrieved": "2026-10-24",
+   "published": null,
+   "effective": null,
+   "territory": "worldwide",
+   "attempts": [
+    {
+     "at": "2026-10-24",
+     "how": "fetched by this build",
+     "result": "HTTP 200"
+    },
+    {
+     "at": "2026-10-24",
+     "how": "the Top 10 pages, https://www.netflix.com/tudum/top10",
+     "result": "HTTP 200"
+    }
+   ],
+   "facts": [
+    {
+     "field": "columns",
+     "value": "Each row a week (ending Sunday), a list, a rank, the title and season, hours viewed, runtime, views and weeks in the Top 10",
+     "quote": "week\tcategory\tweekly_rank\tshow_title\tseason_title\tweekly_hours_viewed\truntime\tweekly_views\tcumulative_weeks_in_top_10"
+    },
+    {
+     "field": "week-ending-2026-10-18",
+     "value": "Films (English), No. 1: Animals, 30,800,000 views, 55,400,000 hours",
+     "quote": "2026-10-18\tFilms (English)\t1\tAnimals\tN/A\t55400000\t1.8\t30800000\t2"
+    },
+    {
+     "field": "runtime-zero",
+     "value": "Where the Mask Ends: Season 1 has a runtime of 0 in the file, which the game holds as not reported",
+     "quote": "Where the Mask Ends: Season 1\t12200000\t0\t1600000\t1"
+    }
+   ]
+  },
+  {
+   "id": "N22",
+   "title": "Nielsen: Streaming TV Top 10, Overall",
+   "url": "https://www.nielsen.com/data-center/top-ten/",
+   "status": "read",
+   "dossier": "Found by this build; not in the dossier’s register.",
+   "retrieved": "2026-10-24",
+   "published": null,
+   "effective": null,
+   "territory": "US",
+   "attempts": [
+    {
+     "at": "2026-10-24",
+     "how": "fetched by this build",
+     "result": "HTTP 200"
+    }
+   ],
+   "facts": [
+    {
+     "field": "metric",
+     "value": "Ranked by total minutes viewed by persons 2+, in the U.S.",
+     "quote": "Ranked by total minutes viewed by persons 2+."
+    },
+    {
+     "field": "week",
+     "value": "October 5 to 11, 2026: No. 1 Carrie (2026), 1,264 million minutes, 8 episodes, Prime Video",
+     "quote": "Oct. 05 – Oct. 11, 2026"
+    }
+   ]
+  },
+  {
+   "id": "N23",
+   "title": "The Television Academy: 78th Emmy Awards Rules And Procedures, version 4 (April 7, 2026)",
+   "url": "https://www.televisionacademy.com/rules",
+   "status": "read",
+   "dossier": "Found by this build; not in the dossier’s register.",
+   "retrieved": "2026-10-24",
+   "published": "2026-04-07",
+   "effective": "2025-06-01",
+   "territory": "US",
+   "attempts": [
+    {
+     "at": "2026-10-24",
+     "how": "fetched by this build",
+     "result": "HTTP 200 (a PDF)"
+    },
+    {
+     "at": "2026-10-24",
+     "how": "the downloads page, https://www.televisionacademy.com/downloads",
+     "result": "HTTP 200"
+    }
+   ],
+   "facts": [
+    {
+     "field": "eligibility-year",
+     "value": "June 1, 2025 to May 31, 2026",
+     "quote": "June 1, 2025 - May 31, 2026"
+    },
+    {
+     "field": "fees",
+     "value": "$125 processing per individual submission and $100 per entrant",
+     "quote": "Individual achievement entries have a processing charge of $125 per submission. In addition to the $125 processing charge, each entrant is charged a $100 entry fee"
+    },
+    {
+     "field": "guest",
+     "value": "Guest categories only for performers in less than 50% of the eligible episodes",
+     "quote": "only performers appearing in less than 50% of the eligible episodes can submit in the Guest Performer categories"
+    },
+    {
+     "field": "screen-time",
+     "value": "5% of the submitted episode (guest), or of the movie or complete limited series or anthology part (supporting in those)",
+     "quote": "The minimum stand-alone and contiguous-screen time (performer has an ongoing engagement in the scene, on or off camera) for eligibility is 5% of the total running time of the submitted episode."
+    },
+    {
+     "field": "nominations",
+     "value": "20–80 submissions 5, 81–160 6, 161–240 7, over 240 8; 8–19 a quarter; parity between actor and actress categories",
+     "quote": "20 – 80 submissions = 5 nominations"
+    },
+    {
+     "field": "ties",
+     "value": "The count closest to the target prevails; one away breaks higher, two away lower, three away to the Awards Committee",
+     "quote": "Ties that include the possibility of the total number of nominations being 1 number from the target number of nominations break in favor of the higher possibility"
+    },
+    {
+     "field": "guest-after-principal",
+     "value": "Nominated in lead or supporting, a performer can’t enter guest for the same role later",
+     "quote": "If a performer has been nominated or has won in a Lead or Supporting Performer category, the performer will not be eligible to submit in a Guest Performer category in a subsequent Emmy year for playing the same role in the same series."
+    },
+    {
+     "field": "foreign",
+     "value": "A foreign production is ineligible unless a U.S. co-production; a foreign acquisition can’t be made eligible by a new soundtrack",
+     "quote": "Foreign television production is ineligible unless it is the result of a co-production"
+    },
+    {
+     "field": "documentary",
+     "value": "Documentary and nonfiction performers aren’t eligible",
+     "quote": "Performers in documentary/nonfiction programs are not eligible in any performer category."
+    },
+    {
+     "field": "nominations-date",
+     "value": "July 8, 2026",
+     "quote": "Nominees will be announced live on July 8, 2026"
+    }
+   ]
+  },
+  {
+   "id": "N24",
+   "title": "The International Academy: 2026 International Emmy Awards Rules And Regulations",
+   "url": "https://www.iemmys.tv/wp-content/uploads/2025/11/2026-International-Emmy-Awards-Rules-Regulations-.pdf",
+   "status": "read",
+   "dossier": "Found by this build; not in the dossier’s register.",
+   "retrieved": "2026-10-24",
+   "published": null,
+   "effective": null,
+   "territory": "international",
+   "attempts": [
+    {
+     "at": "2026-10-24",
+     "how": "fetched by this build",
+     "result": "HTTP 200 (a PDF)"
+    },
+    {
+     "at": "2026-10-24",
+     "how": "the judging page, https://www.iemmys.tv/entries-judging/judging-process/",
+     "result": "HTTP 200"
+    }
+   ],
+   "facts": [
+    {
+     "field": "scope",
+     "value": "Programs mainly produced outside the U.S., first broadcast outside the U.S. in 2025",
+     "quote": "Rules & Regulations below pertain to submissions mainly produced outside of the U.S."
+    }
+   ]
+  },
+  {
+   "id": "N25",
+   "title": "Sundance Institute: Submit to the 2027 Sundance Film Festival",
+   "url": "https://www.sundance.org/festivals/sundance-film-festival/submit/",
+   "status": "read",
+   "dossier": "Found by this build; not in the dossier’s register.",
+   "retrieved": "2026-10-24",
+   "published": null,
+   "effective": null,
+   "territory": "US",
+   "attempts": [
+    {
+     "at": "2026-10-24",
+     "how": "fetched by this build",
+     "result": "HTTP 200"
+    }
+   ],
+   "facts": [
+    {
+     "field": "feature",
+     "value": "U.S. narrative and documentary features of 50 minutes or more, half their financing from the U.S., keeping world premiere status; not if public before February 1, 2027",
+     "quote": "Completed projects that have been or will have been exhibited theatrically or otherwise made available to the general public, either for free or for purchase prior to February 1, 2027 are not eligible to submit to this category."
+    },
+    {
+     "field": "short",
+     "value": "Under 50 minutes including credits; completed after December 31, 2025 eligible regardless of premiere",
+     "quote": "Projects completed after December 31, 2025 are still eligible to submit to the Festival, regardless of premiere status."
+    },
+    {
+     "field": "deadlines",
+     "value": "Features late deadline September 21 ($125), shorts August 31 ($95)",
+     "quote": "Feature Films Jul 27 $80 Aug 28 $100 Sept 21 $125 Short Films Jul 13 $55 Aug 3 $75 Aug 31 $95"
+    }
+   ]
+  },
+  {
+   "id": "N26",
+   "title": "Sundance Institute: 2027 Sundance Film Festival To Take Place January 21–31 in Boulder, Colorado",
+   "url": "https://www.sundance.org/blogs/2027-sundance-film-festival-to-take-place-january-21-31-in-boulder-colorado/",
+   "status": "read",
+   "dossier": "Found by this build; not in the dossier’s register.",
+   "retrieved": "2026-10-24",
+   "published": "2026-02-24",
+   "effective": null,
+   "territory": "US",
+   "attempts": [
+    {
+     "at": "2026-10-24",
+     "how": "fetched by this build",
+     "result": "HTTP 200"
+    }
+   ],
+   "facts": [
+    {
+     "field": "dates",
+     "value": "January 21 to 31, 2027, Boulder, Colorado",
+     "quote": "the 2027 edition will make its Boulder, Colorado debut on January 21–31, 2027"
+    }
+   ]
+  },
+  {
+   "id": "N27",
+   "title": "NATAS: the Emmy competitions’ rules page",
+   "url": "https://theemmys.tv/rules/",
+   "status": "excerpt",
+   "dossier": "Found by this build; not in the dossier’s register.",
+   "retrieved": "2026-10-24",
+   "published": null,
+   "effective": null,
+   "territory": "US",
+   "attempts": [
+    {
+     "at": "2026-10-24",
+     "how": "fetched by this build",
+     "result": "HTTP 200"
+    }
+   ],
+   "facts": [
+    {
+     "field": "competitions",
+     "value": "Daytime, Children’s, News And Documentary and Sports, each with its own rules",
+     "quote": "Daytime Children’s News & Documentary Sports"
+    }
+   ]
+  },
+  {
+   "id": "N28",
+   "title": "Rules pages that refused this build or weren’t there: the Academy Awards, BAFTA, the Actor Awards, the Golden Globes, the Gotham Awards, the Annie Awards, AACTA, TIFF and Annecy",
+   "url": "https://www.oscars.org/oscars/rules-eligibility",
+   "status": "blocked",
+   "dossier": "Found by this build; not in the dossier’s register.",
+   "retrieved": "2026-10-24",
+   "published": null,
+   "effective": null,
+   "territory": "various",
+   "attempts": [
+    {
+     "at": "2026-10-24",
+     "how": "fetched by this build",
+     "result": "HTTP 403"
+    },
+    {
+     "at": "2026-10-24",
+     "how": "https://www.oscars.org/sites/oscars/files/2026-05/99th_oscars_complete_rules.pdf",
+     "result": "HTTP 403"
+    },
+    {
+     "at": "2026-10-24",
+     "how": "https://www.oscars.org/99th-oscars-and-academy-key-dates",
+     "result": "HTTP 403"
+    },
+    {
+     "at": "2026-10-24",
+     "how": "https://www.bafta.org/awards/film-rules/",
+     "result": "HTTP 403"
+    },
+    {
+     "at": "2026-10-24",
+     "how": "https://www.sagawards.org/rules-eligibility",
+     "result": "HTTP 404"
+    },
+    {
+     "at": "2026-10-24",
+     "how": "https://goldenglobes.com/rules/",
+     "result": "HTTP 404"
+    },
+    {
+     "at": "2026-10-24",
+     "how": "https://thegotham.org/awards/",
+     "result": "HTTP 404"
+    },
+    {
+     "at": "2026-10-24",
+     "how": "https://annieawards.org/rules",
+     "result": "HTTP 404"
+    },
+    {
+     "at": "2026-10-24",
+     "how": "https://www.aacta.org/",
+     "result": "not reached: the proxy’s tunnel failed (502)"
+    },
+    {
+     "at": "2026-10-24",
+     "how": "https://tiff.net/submissions",
+     "result": "HTTP 202 with an empty body, a check this build couldn’t pass"
+    },
+    {
+     "at": "2026-10-24",
+     "how": "https://www.annecyfestival.com/en/take-part/submit-film",
+     "result": "not reached"
+    }
+   ],
+   "facts": []
+  },
+  {
+   "id": "N29",
+   "title": "Home pages read without their rules: the Spirit Awards, the Critics Choice Awards, the César, the Goya Awards, the Busan International Film Festival",
+   "url": "https://www.filmindependent.org/spirit-awards/",
+   "status": "excerpt",
+   "dossier": "Found by this build; not in the dossier’s register.",
+   "retrieved": "2026-10-24",
+   "published": null,
+   "effective": null,
+   "territory": "various",
+   "attempts": [
+    {
+     "at": "2026-10-24",
+     "how": "fetched by this build",
+     "result": "HTTP 200"
+    },
+    {
+     "at": "2026-10-24",
+     "how": "https://www.criticschoice.com/",
+     "result": "HTTP 200"
+    },
+    {
+     "at": "2026-10-24",
+     "how": "https://www.academie-cinema.org/",
+     "result": "HTTP 200"
+    },
+    {
+     "at": "2026-10-24",
+     "how": "https://www.premiosgoya.com/",
+     "result": "HTTP 200"
+    },
+    {
+     "at": "2026-10-24",
+     "how": "https://www.biff.kr/",
+     "result": "HTTP 200"
+    }
+   ],
+   "facts": [
+    {
+     "field": "spirit-ceremony",
+     "value": "The next Spirit Awards, March 6, 2027",
+     "quote": "March 6 2027"
+    }
+   ]
+  },
+  {
+   "id": "N30",
+   "title": "Festival regulations read in part: Cannes, Venice, the Berlinale and IDFA",
+   "url": "https://www.festival-cannes.com/en/take-part/submit-a-film/",
+   "status": "excerpt",
+   "dossier": "Found by this build; not in the dossier’s register.",
+   "retrieved": "2026-10-24",
+   "published": null,
+   "effective": null,
+   "territory": "various",
+   "attempts": [
+    {
+     "at": "2026-10-24",
+     "how": "fetched by this build",
+     "result": "HTTP 200"
+    },
+    {
+     "at": "2026-10-24",
+     "how": "https://www.labiennale.org/en/cinema/2026/regulations",
+     "result": "HTTP 200"
+    },
+    {
+     "at": "2026-10-24",
+     "how": "https://www.berlinale.de/en/film-entry/guidelines/general-guidelines.html",
+     "result": "HTTP 200"
+    },
+    {
+     "at": "2026-10-24",
+     "how": "https://professionals.idfa.nl/program/festival-entries/festival-entry-regulations/",
+     "result": "HTTP 200"
+    }
+   ],
+   "facts": [
+    {
+     "field": "cannes",
+     "value": "Features registered by March 13, 2026, shorts by March 2, 2026; a film in another festival’s international section becomes ineligible",
+     "quote": "If the film has been selected for an international section (competitive or not) of a festival, it becomes ineligible for the Festival de Cannes."
+    },
+    {
+     "field": "venice",
+     "value": "The 83rd edition on the Lido, September 2 to 12, 2026; world premieres; at most 21 films in competition",
+     "quote": "will be held on the Lido di Venezia from 2 to 12 September 2026"
+    },
+    {
+     "field": "berlinale",
+     "value": "World premieres preferred; a film on television, online or VOD not eligible",
+     "quote": "Films that have been broadcasted on television or presented on the internet/on VOD are not eligible."
+    },
+    {
+     "field": "idfa",
+     "value": "The 39th festival, November 12 to 22, 2026; early entry deadline April 23, 2026",
+     "quote": "takes place November 12 to 22, 2026"
+    }
+   ]
   }
  ]
 }

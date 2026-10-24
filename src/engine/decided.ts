@@ -51,6 +51,8 @@ import { SERIES } from './content/series';
 import { decisionsTo, episodeDrawn, optionDrawn } from './systems/series';
 import { lateDays, rerunDrawn } from './systems/contracts';
 import { cutDrawn, loopDrawn, pagesDrawn, planWork, stressDrawn } from './systems/workflow';
+import { simulateRun } from './systems/charts';
+import { fieldDrawn, finalDrawn, festivalSelects, festivalSubmits, nominationsFor, productionEnters } from './systems/awards';
 import type { Engagement } from './systems/pro';
 
 // ---------------------------------------------------------------------------
@@ -799,4 +801,79 @@ defineDecider<{ sim: Simulation; first: number }, string>({
   },
   sample: (seed) => ({ sim: atYale(seed), first: seed * 7 }),
   decide: ({ sim, first }) => Array.from({ length: 40 }, (_, n) => lateDays(sim, `e${first + n}:1`)).join(','),
+});
+
+// The charts' and the awards' draws (from 2026-10-24, brief 25's Module 6, `systems/charts.ts` and `systems/awards.ts`),
+// each keyed by the film, the year or the category, never an id.
+
+defineDecider<{ sim: Simulation; first: number }, string>({
+  id: 'charts.gross',
+  decides: 'A film’s run in the game’s own weekly chart: its opening, how it falls each week, and its rank among the game’s own unnamed releases.',
+  drawnIn: 'src/engine/systems/charts.ts',
+  reads: {
+    first: (o, t) => ({ ...o, first: Math.round(t * 100) }),
+    world: (o, t) => ({ ...o, sim: atYale(Math.round(t * 20)) }),
+  },
+  sample: (seed) => ({ sim: atYale(seed), first: seed * 7 }),
+  decide: ({ sim, first }) => Array.from({ length: 12 }, (_, n) => { const run = simulateRun(sim, `film-${first + n}`, 'low-budget', (first + n) * 7 * 86_400_000); return run ? `${run.weeks[0]!.gross}:${run.weeks.length}:${run.weeks[0]!.rank}` : '-'; }).join(','),
+});
+
+defineDecider<{ sim: Simulation; first: number }, string>({
+  id: 'awards.entry',
+  decides: 'Whether a production enters a performance the player didn’t: half the time for strong work, a tenth otherwise.',
+  drawnIn: 'src/engine/systems/awards.ts',
+  reads: {
+    first: (o, t) => ({ ...o, first: Math.round(t * 100) }),
+    world: (o, t) => ({ ...o, sim: atYale(Math.round(t * 20)) }),
+  },
+  sample: (seed) => ({ sim: atYale(seed), first: seed * 7 }),
+  decide: ({ sim, first }) => Array.from({ length: 40 }, (_, n) => (productionEnters(sim, 2027 + (n % 3), `p${first + n}`, 'r', n % 2 === 0) ? '1' : '0')).join(''),
+});
+
+defineDecider<{ sim: Simulation; first: number }, string>({
+  id: 'awards.field',
+  decides: 'A category’s anonymous field for a year: how many entered, each entrant’s standing, and so the nominations the rules give it.',
+  drawnIn: 'src/engine/systems/awards.ts',
+  reads: {
+    first: (o, t) => ({ ...o, first: Math.round(t * 100) }),
+    world: (o, t) => ({ ...o, sim: atYale(Math.round(t * 20)) }),
+  },
+  sample: (seed) => ({ sim: atYale(seed), first: seed * 7 }),
+  decide: ({ sim, first }) => Array.from({ length: 8 }, (_, n) => { const f = fieldDrawn(sim, 2027 + n, `c${first}`); return `${f.submissions}:${nominationsFor(f.submissions)}:${Math.max(...f.others.map((o) => o.votes))}`; }).join(','),
+});
+
+defineDecider<{ sim: Simulation; first: number }, string>({
+  id: 'awards.final',
+  decides: 'The final round’s peer vote: which nominee wins, each standing as the nominations left it, with the round’s own draw.',
+  drawnIn: 'src/engine/systems/awards.ts',
+  reads: {
+    first: (o, t) => ({ ...o, first: Math.round(t * 100) }),
+    world: (o, t) => ({ ...o, sim: atYale(Math.round(t * 20)) }),
+  },
+  sample: (seed) => ({ sim: atYale(seed), first: seed * 7 }),
+  decide: ({ sim, first }) => Array.from({ length: 20 }, (_, n) => finalDrawn(sim, 2027 + n, `c${first}`, ['you', 'a', 'b', 'c', 'd'], { you: 70, a: 68, b: 66, c: 64, d: 62 })).join(','),
+});
+
+defineDecider<{ sim: Simulation; first: number }, string>({
+  id: 'festival.submit',
+  decides: 'Whether a production submits its film to Sundance, eight times in ten.',
+  drawnIn: 'src/engine/systems/awards.ts',
+  reads: {
+    first: (o, t) => ({ ...o, first: Math.round(t * 100) }),
+    world: (o, t) => ({ ...o, sim: atYale(Math.round(t * 20)) }),
+  },
+  sample: (seed) => ({ sim: atYale(seed), first: seed * 7 }),
+  decide: ({ sim, first }) => Array.from({ length: 40 }, (_, n) => (festivalSubmits(sim, 2027 + (n % 3), `p${first + n}`) ? '1' : '0')).join(''),
+});
+
+defineDecider<{ sim: Simulation; first: number }, string>({
+  id: 'festival.select',
+  decides: 'Whether Sundance selects a submitted film, at a chance its band sets, from a field the game doesn’t name.',
+  drawnIn: 'src/engine/systems/awards.ts',
+  reads: {
+    first: (o, t) => ({ ...o, first: Math.round(t * 100) }),
+    world: (o, t) => ({ ...o, sim: atYale(Math.round(t * 20)) }),
+  },
+  sample: (seed) => ({ sim: atYale(seed), first: seed * 7 }),
+  decide: ({ sim, first }) => Array.from({ length: 60 }, (_, n) => (festivalSelects(sim, 2027, 'us-short', `p${first + n}`, 'exceptional') ? '1' : '0')).join(''),
 });

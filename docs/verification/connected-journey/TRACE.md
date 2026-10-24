@@ -1,6 +1,6 @@
 # Every Touched Feature, Traced
 
-Written by `tools/trace.ts` from the guide's registry and the tests; don't edit it by hand. 47 entries in the four
+Written by `tools/trace.ts` from the guide's registry and the tests; don't edit it by hand. 48 entries in the four
 areas the connected-journey pass of 2026-10-12 rebuilt, and from 2026-10-20 the career's (brief 19), each traced Action →
 Preconditions → Costs → State → Consumer → Feedback → History → Later consequence. The words are the guide's own, which
 carry the rules' figures; the four areas' entries' claims were checked against the engine by a second reader when they
@@ -1327,7 +1327,7 @@ The Career screen, your professional profile and name, headshots, your résumé 
   - (none)
 - **Later consequence:**
   - A day after a first audition casting decides whether to call you back, and three days after the last whether to offer you the role. A notice says which.
-- **Tested by:** `pro.prepare`: `tests/career-workflows-screen.test.ts`, `tests/career-workflows.test.ts`, `tests/journey-career.test.ts`, `tests/pro-work.test.ts`; `pro.tape_audition`: `tests/journey-career.test.ts`, `tests/pro-work.test.ts`; `pro.move_audition`: `tests/pro-work.test.ts`
+- **Tested by:** `pro.prepare`: `tests/career-awards-screen.test.ts`, `tests/career-awards.test.ts`, `tests/career-workflows-screen.test.ts`, `tests/career-workflows.test.ts`, `tests/journey-career.test.ts`, `tests/pro-work.test.ts`; `pro.tape_audition`: `tests/journey-career.test.ts`, `tests/pro-work.test.ts`; `pro.move_audition`: `tests/pro-work.test.ts`
 
 ### Offers And Booked Work (`career.offers`)
 
@@ -1353,7 +1353,7 @@ The Career screen, your professional profile and name, headshots, your résumé 
 - **Later consequence:**
   - A stage part goes on your credits at its first night; a screen part when it’s shot, and as released once it comes out, when its footage can go on a reel.
   - Miss a shoot day, or a second day of a run, and the production replaces you.
-- **Tested by:** `pro.accept_offer`: `tests/b20-benefits-safetynet.test.ts`, `tests/b20-benefits-tax.test.ts`, `tests/b20-benefits-unemployment.test.ts`, `tests/b20-career-defects.test.ts`, `tests/b20-career-effects.test.ts`, `tests/b20-career-history.test.ts`, `tests/b20-career-skill.test.ts`, `tests/b20-guide-screens.test.ts`, `tests/b20-life-fatigue.test.ts`, `tests/b20-papers-work.test.ts`, `tests/b21-genre-proof.test.ts`, `tests/b22-authorization.test.ts`, `tests/career-contracts.test.ts`, `tests/career-drawn.test.ts`, `tests/career-workflows-screen.test.ts`, `tests/career-workflows.test.ts`, `tests/career-world-sydney.test.ts`, `tests/pro-opportunities-screen.test.ts`, `tests/pro-work.test.ts`; `pro.decline_offer`: `tests/b20-career-effects.test.ts`, `tests/b20-career-history.test.ts`, `tests/b20-guide-screens.test.ts`, `tests/pro-work.test.ts`
+- **Tested by:** `pro.accept_offer`: `tests/b20-benefits-safetynet.test.ts`, `tests/b20-benefits-tax.test.ts`, `tests/b20-benefits-unemployment.test.ts`, `tests/b20-career-defects.test.ts`, `tests/b20-career-effects.test.ts`, `tests/b20-career-history.test.ts`, `tests/b20-career-skill.test.ts`, `tests/b20-guide-screens.test.ts`, `tests/b20-life-fatigue.test.ts`, `tests/b20-papers-work.test.ts`, `tests/b21-genre-proof.test.ts`, `tests/b22-authorization.test.ts`, `tests/career-awards-screen.test.ts`, `tests/career-awards.test.ts`, `tests/career-contracts.test.ts`, `tests/career-drawn.test.ts`, `tests/career-workflows-screen.test.ts`, `tests/career-workflows.test.ts`, `tests/career-world-sydney.test.ts`, `tests/pro-opportunities-screen.test.ts`, `tests/pro-work.test.ts`; `pro.decline_offer`: `tests/b20-career-effects.test.ts`, `tests/b20-career-history.test.ts`, `tests/b20-guide-screens.test.ts`, `tests/pro-work.test.ts`
 
 ### Work While You’re At The School (`career.outside-work`)
 
@@ -1421,6 +1421,7 @@ The Career screen, your professional profile and name, headshots, your résumé 
   - A choice is kept on the engagement and read by each day after it.
 - **Consumer (what reads it):**
   - Your Work And Its Pay, scheduled: A looping session is paid half a day, on the work’s pay.
+  - Charts, Festivals And Awards reads it, evaluation: How a part’s days were judged, and its scenes kept in the edit, are what its entry reads.
 - **Feedback (how to read what comes back):**
   - A dub’s pay by its characters and lines, a recall to loop at half a day for four hours, a stunt only with your consent and a coordinator there, and an intimate scene only with your written consent are the SAG-AFTRA agreements’ rules. The takes, the strain, the stunt’s risk and how often pages change are the game’s.
   - There are 10 ways of working in the game: a stage play, single camera, multicamera, the booth, dubbing, performance capture, narration, reenactment, a musical and action.
@@ -1432,6 +1433,30 @@ The Career screen, your professional profile and name, headshots, your résumé 
   - Pages revised the night before change some of your lines, and Learn The Lines that evening puts them back.
   - After a screen wrap, the production may recall you to loop: a four-hour session paid half a day. When the work comes out, the edit may cut one of your scenes, about 2 times in ten; the part stays on your credits with its pay.
 - **Tested by:** `pro.work_choice`: `tests/career-workflows-screen.test.ts`, `tests/career-workflows.test.ts`
+
+### Charts, Festivals And Awards (`career.awards`)
+
+- **Action:** `pro.award_enter`, `pro.watch_ceremony`, at Career, Charts And Awards (`/workspace/career?tab=industry`). Opens: From the guide’s chapter “Finding Work”, once you’ve accepted work.
+- **Preconditions:**
+  - A part on television that’s on the air, or due on it, in the Emmy year: June 1 to May 31.
+- **Costs:**
+  - An Emmy Entry: $125.00 for processing and $100.00 for the entry, the Television Academy’s fees for a performer who isn’t a member
+- **State (what changes at once):**
+  - Entering puts the part under Your Recognition as entered, and the fee is taken from your bank.
+- **Consumer (what reads it):**
+  - How Each Kind Of Work Is Done, evaluation: How a part’s days were judged, and its scenes kept in the edit, are what its entry reads.
+- **Feedback (how to read what comes back):**
+  - The eligibility year, the fees, the guest rule, the share of the running time and the nomination table are the 78th Emmy Awards’ rules. Sundance’s categories, deadlines and premiere rule are its 2027 festival’s. A later year carries them forward, and says so.
+  - How many enter a category, how the votes go, whether a production enters you or submits its film, and whether the festival selects it are the game’s, and no other nominee is ever named.
+  - A film’s box office is the production’s, not your pay, and how well your part went doesn’t move it. The published charts are the providers’ own figures, each in its own unit and week.
+  - Recognition makes casting a little likelier to choose you, fading over three years, and at most 30% better. It never changes a contract.
+- **History (kept in the record):**
+  - (none)
+- **Later consequence:**
+  - At the nominations, each category has its own field of entries, and the Academy’s table sets how many are nominated: 5 from 20 entries, 6 from 81 entries, 7 from 161 entries, 8 from 241 entries.
+  - The winner is settled when the final round of voting ends, and you learn it when the award is presented: guest and voice-over awards at the Creative Arts Emmys, the others at the telecast.
+  - A festival’s answer comes about December 1 for its 2027 festival, in Boulder, Colorado.
+- **Tested by:** `pro.award_enter`: `tests/career-awards-screen.test.ts`, `tests/career-awards.test.ts`; `pro.watch_ceremony`: `tests/career-awards-screen.test.ts`, `tests/career-awards.test.ts`
 
 ### Work Abroad (`career.work-abroad`)
 

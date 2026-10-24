@@ -40,11 +40,13 @@ import { SERIES } from '../series';
 import { AFTER_WRAP, STUNT, VOICE, WORKFLOWS } from '../workflows';
 import { JURISDICTIONS } from '../jurisdictions';
 import { BRIEF } from '../../systems/briefs';
+import { EMMY_RULES, SUNDANCE_2027 } from '../awards';
+import { VISIBILITY } from '../../systems/awards';
 import type { GuideEntry } from './types';
 
 const CAREER = '/workspace/career';
 /** A Career section's id: a parameter typed by its literals would read to `tools/title-case.mjs` as a label. */
-type Section = 'overview' | 'portfolio' | 'representation' | 'opportunities' | 'work';
+type Section = 'overview' | 'portfolio' | 'representation' | 'opportunities' | 'work' | 'industry';
 const on = (section: Section, label: string) => ({ route: CAREER, tab: section, label });
 
 const CHAPTER = CHAPTER_FOR['ui.career']!.title;
@@ -78,6 +80,9 @@ const FIVE = pct(AGREEMENT.equityLowTier.rate);
 const LOW = usd(AGREEMENT.equityLowTier.weeklyAtOrBelow);
 const TRUST_DAYS = word(PAY.trustBusinessDays);
 const JOIN = usd(sagJoinUsd());
+const MONTHS = ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'];
+/** A provider's ISO date as its day and month. */
+const longDayOf = (iso: string): string => `${MONTHS[Number(iso.slice(5, 7)) - 1]} ${Number(iso.slice(8, 10))}`;
 const SAG_DAYS = UNIONS.sagAftra.joinWithinDays;
 
 export const CAREER_GUIDE: readonly GuideEntry[] = [
@@ -952,6 +957,64 @@ export const CAREER_GUIDE: readonly GuideEntry[] = [
       setup: 'A graduate books The Getaway Driver in Breakwater, an action feature.',
       steps: ['Work the two days of fight rehearsal with the stunt coordinator.', 'Choose Use The Double or Do It Yourself for the stunts.', 'Read each shoot day’s report.'],
       result: 'With the double, the stunts carry no risk and the shots are less your own; done yourself, the shots are all yours, and the rehearsal and your body set the chance of an injury.',
+    },
+  },
+  // From 2026-10-24 (the owner's brief 25, Parts 10 to 12): the charts, the Emmy Awards and Sundance (`systems/charts.ts`,
+  // `systems/awards.ts`). The fees, the categories' rules and the festival's dates are the rules' own, imported.
+  {
+    id: 'career.awards',
+    title: 'Charts, Festivals And Awards',
+    goal: 'career',
+    covers: ['pro.award_enter', 'pro.watch_ceremony'],
+    synonyms: ['emmy', 'emmys', 'award', 'awards', 'nomination', 'nominated', 'ceremony', 'festival', 'sundance', 'box office', 'gross', 'chart', 'charts', 'top 10', 'netflix', 'nielsen', 'recognition'],
+    questions: ['Can I be nominated for an Emmy?', 'How do I enter for an award?', 'Why isn’t my part eligible?', 'Will my film go to Sundance?', 'Does a hit film pay me more?', 'What do the charts show?', 'Does skipping the ceremony change anything?'],
+    where: on('industry', 'Career, Charts And Awards'),
+    available: `From the guide’s chapter “${WORK_CHAPTER}”, once you’ve accepted work.`,
+    short: `A part on television can be entered for an Emmy, by you or by its production, if it meets the Television Academy’s rules: a guest part is in under half the season’s episodes, and every part needs ${Math.round(EMMY_RULES.leastShare * 100)}% of the running time. A film goes to the Sundance Film Festival only if its production submits it. A nomination, a win or a selection makes casting likelier to choose you for a while, and pays nothing.
+
+The tab also shows the game’s own box office for your films, and the weekly charts Box Office Mojo, Netflix and Nielsen publish, as they published them.`,
+    steps: [
+      'Open Career, then Charts And Awards, and read what each of your parts on television is eligible for, or why not.',
+      `Press Enter Yourself before the entry deadline: ${usd(EMMY_RULES.fees.processing + EMMY_RULES.fees.perEntrant)}, paid from your bank.`,
+      'Read the nominations when they’re announced, and when your award is presented, press Watch The Ceremony, or just read the result.',
+      'For a film, read whether it’s eligible for Sundance and what its production did.',
+    ],
+    needs: ['A part on television that’s on the air, or due on it, in the Emmy year: June 1 to May 31.'],
+    costs: [
+      { label: 'An Emmy Entry', value: `${usd(EMMY_RULES.fees.processing)} for processing and ${usd(EMMY_RULES.fees.perEntrant)} for the entry, the Television Academy’s fees for a performer who isn’t a member` },
+    ],
+    reads: [
+      { label: 'Your Part', value: 'Its episodes against the season’s, and its scenes kept in the edit against an episode’s', estimate: true },
+      { label: 'How It Went', value: 'The best your days on it were judged', estimate: true },
+      { label: 'Your Recognition', value: 'Nominations, wins and festival selections before it', estimate: true },
+    ],
+    now: ['Entering puts the part under Your Recognition as entered, and the fee is taken from your bank.'],
+    later: [
+      `At the nominations, each category has its own field of entries, and the Academy’s table sets how many are nominated: ${EMMY_RULES.nominationsBySubmissions.map(([n, k]) => `${k} from ${n} entries`).join(', ')}.`,
+      'The winner is settled when the final round of voting ends, and you learn it when the award is presented: guest and voice-over awards at the Creative Arts Emmys, the others at the telecast.',
+      `A festival’s answer comes about ${longDayOf(SUNDANCE_2027.notice)} for its ${SUNDANCE_2027.year} festival, in ${SUNDANCE_2027.place}.`,
+    ],
+    interpret: [
+      'The eligibility year, the fees, the guest rule, the share of the running time and the nomination table are the 78th Emmy Awards’ rules. Sundance’s categories, deadlines and premiere rule are its 2027 festival’s. A later year carries them forward, and says so.',
+      'How many enter a category, how the votes go, whether a production enters you or submits its film, and whether the festival selects it are the game’s, and no other nominee is ever named.',
+      'A film’s box office is the production’s, not your pay, and how well your part went doesn’t move it. The published charts are the providers’ own figures, each in its own unit and week.',
+      `Recognition makes casting a little likelier to choose you, fading over three years, and at most ${Math.round(VISIBILITY.most * 100)}% better. It never changes a contract.`,
+    ],
+    unavailable: ['“Performers in documentary and nonfiction programs aren’t eligible in any performer category.”', '“You weren’t nominated, so there’s no ceremony of yours to watch.”'],
+    mistakes: [
+      'Waiting for the production to enter you: it may not, and after the deadline nobody can.',
+      'Expecting a hit film to pay more: the pay is the contract’s.',
+    ],
+    next: ['Read How Each Kind Of Work Is Done: a scene cut in the edit can take a part below the share of the running time it needs.'],
+    related: ['career.workflows', 'career.offers', 'career.contracts'],
+    connections: [
+      { to: 'career.workflows', kind: 'evaluation', why: 'How a part’s days were judged, and its scenes kept in the edit, are what its entry reads.' },
+      { to: 'career.offers', kind: 'optional', why: 'Recognition makes casting likelier to choose you for a while.' },
+    ],
+    example: {
+      setup: 'A graduate plays a guest part in two episodes of a drama series’ ten, on the air in March.',
+      steps: ['Open Charts And Awards and read the part’s eligibility.', 'Press Enter Yourself before the entry deadline in May.', 'Read the nominations in July, and press Watch The Ceremony in September.'],
+      result: `The part is entered as a guest part in a drama series, for ${usd(EMMY_RULES.fees.processing + EMMY_RULES.fees.perEntrant)}. The vote decides the nomination; the ceremony shows the result settled at the final round, and watching it or not changes nothing.`,
     },
   },
   // From 2026-10-23 (the owner's brief 25): work abroad, Sydney first, its visa and its trip (`systems/worktrip.ts`).

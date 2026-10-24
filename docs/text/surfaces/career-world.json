@@ -174,5 +174,206 @@
     "ref": "tests/pro-opportunities-screen.test.ts: 'PLAYER JOURNEY: a first-year’s tab lists the open roles posted, each fictional with its facts, Submit Yourself grayed with what’s missing under it, and the School’s conditions for work in term'"
    }
   ]
+ },
+ {
+  "surface": "Career, Charts And Awards: Your Recognition, each television part’s Emmy eligibility with Enter Yourself, where its entry stands, Watch The Ceremony and the ceremony’s lines, and each film’s place at Sundance",
+  "where": "Career, the Charts And Awards tab, Your Recognition",
+  "sources": [
+   "src/engine/content/awards.ts#EMMY_CATEGORIES",
+   "src/engine/content/awards.ts#SUNDANCE_2027",
+   "src/engine/content/awards.ts#SUNDANCE_CATEGORY_NAME",
+   "src/engine/systems/awards.ts#NY",
+   "src/engine/systems/awards.ts#emmyCheck",
+   "src/engine/systems/awards.ts#eligibleWords",
+   "src/engine/systems/awards.ts#internationalWhy",
+   "src/engine/systems/awards.ts#entryRefusal",
+   "src/engine/systems/awards.ts#enterAward",
+   "src/engine/systems/awards.ts#festivalCheck",
+   "src/engine/systems/awards.ts#festivalWords",
+   "src/engine/systems/awards.ts#festivalCheckWords",
+   "src/engine/systems/awards.ts#watchRefusal",
+   "src/engine/systems/awards.ts#ceremonyLines",
+   "src/engine/systems/awards.ts#recapWords",
+   "src/ui/career/IndustryPane.tsx#RecognitionPanel",
+   "src/ui/career/IndustryPane.tsx#EmmyCredit",
+   "src/engine/systems/awards.ts#deadlineOf"
+  ],
+  "states": [
+   "first use",
+   "empty",
+   "unavailable",
+   "confirmation",
+   "details",
+   "success",
+   "setback",
+   "explanation",
+   "history"
+  ],
+  "outcome": "Revised",
+  "why": "New with brief 25’s Module 6: a part’s eligibility is said as the 78th Emmy Awards’ rules say it (its category, its episodes against the season’s, its share of an episode’s scenes), each refusal as the rule it is, the entry fee before it’s pressed, a nomination with its presentation’s date, a loss as the player not winning with the nomination kept, and a film’s place at Sundance with who submits it.",
+  "changes": "Found on the way: a dub’s refusal gave a reason the rules don’t (“part of the program it dubs”); it says the rule, that a new English soundtrack doesn’t make a foreign program eligible. A short finished before the festival’s window was refused though the rule takes it if it wasn’t out before then.",
+  "evidence": [
+   {
+    "kind": "test",
+    "ref": "tests/career-awards-screen.test.ts: 'CONT-01, ANON-03, ANON-06, ANON-09, CHART-07, PLAYER JOURNEY: a guest part entered on Charts And Awards'"
+   },
+   {
+    "kind": "test",
+    "ref": "tests/career-awards.test.ts: 'AWD-06, AWD-12, T94: each kind of part played to its wrap is checked by its program’s rules'"
+   },
+   {
+    "kind": "test",
+    "ref": "tests/career-awards.test.ts: 'AWD-06, AWD-09, AWD-12, T53, T54, T81: Enter Yourself pays the $125 processing charge and the $100 entry fee once'"
+   }
+  ]
+ },
+ {
+  "surface": "Home’s notices: an Emmy year on the clock (the production’s entry, the nominations, the night it’s presented, a disqualification) and a film’s Sundance year (its submission and the festival’s word)",
+  "where": "Home, What Needs You and the notices",
+  "sources": [
+   "src/engine/systems/awards.ts#emmyStep",
+   "src/engine/systems/awards.ts#resultStep",
+   "src/engine/systems/awards.ts#festivalStep"
+  ],
+  "states": [
+   "notification",
+   "success",
+   "setback",
+   "history"
+  ],
+  "outcome": "Revised",
+  "why": "New with brief 25’s Module 6: each step of the year tells the player when it happens, in the categories’ and the festival’s own names, never naming another entrant, and the night an award is presented says where to watch it or read the result.",
+  "changes": "Written plainly from the start: the notices open on what happened to the player’s work, not on the institution.",
+  "evidence": [
+   {
+    "kind": "test",
+    "ref": "tests/career-awards.test.ts: 'ANON-01, ANON-02, ANON-03, ANON-04, T76, T77, T84: entered and not nominated'"
+   },
+   {
+    "kind": "test",
+    "ref": "tests/career-awards.test.ts: 'ANON-04, T92: an entry whose scenes were all cut in the edit is disqualified'"
+   },
+   {
+    "kind": "test",
+    "ref": "tests/career-awards.test.ts: 'AWD-01, AWD-07, AWD-09, T52, WF-19: a short is submitted by its production at the deadline'"
+   }
+  ]
+ },
+ {
+  "surface": "Career, Charts And Awards: Your Films In Cinemas, the game’s own box office for each film of the player’s, week by week",
+  "where": "Career, the Charts And Awards tab, Your Films In Cinemas",
+  "sources": [
+   "src/ui/career/IndustryPane.tsx#BoxOfficePanel"
+  ],
+  "states": [
+   "empty",
+   "details",
+   "explanation"
+  ],
+  "outcome": "Revised",
+  "why": "New with brief 25’s Module 6: the weeks the clock has reached, each gross and place in the game’s own chart, said as the game’s simulation, the production’s and never the player’s pay.",
+  "changes": "Written plainly from the start.",
+  "evidence": [
+   {
+    "kind": "test",
+    "ref": "tests/career-awards-screen.test.ts: 'CONT-01, ANON-03, ANON-06, ANON-09, CHART-07, PLAYER JOURNEY: a guest part entered on Charts And Awards'"
+   },
+   {
+    "kind": "test",
+    "ref": "tests/career-awards.test.ts: 'CHART-06, CHART-11, T73, T74, T84, CON-10, T98: a released film enters a simulated weekly chart'"
+   }
+  ]
+ },
+ {
+  "surface": "Career, Charts And Awards: Published Charts, each provider’s week as it was read, how old it is, its revisions, each title’s movement and its figures in other charts",
+  "where": "Career, the Charts And Awards tab, Published Charts",
+  "sources": [
+   "src/engine/content/charts.ts#CHARTS [bom-domestic-weekly]",
+   "src/engine/content/charts.ts#CHARTS [netflix-films-english]",
+   "src/engine/content/charts.ts#CHARTS [netflix-films-other]",
+   "src/engine/content/charts.ts#CHARTS [netflix-tv-english]",
+   "src/engine/content/charts.ts#CHARTS [netflix-tv-other]",
+   "src/engine/content/charts.ts#CHARTS [nielsen-streaming-overall]",
+   "src/engine/content/charts.ts#SNAPSHOTS",
+   "src/engine/systems/charts.ts#NY",
+   "src/engine/systems/charts.ts#snapshotProblem",
+   "src/engine/systems/charts.ts#unitNoun",
+   "src/engine/systems/charts.ts#figureWords",
+   "src/engine/systems/charts.ts#movementWords",
+   "src/engine/systems/charts.ts#longDate",
+   "src/ui/career/IndustryPane.tsx#extraWords",
+   "src/ui/career/IndustryPane.tsx#ChartsPanel"
+  ],
+  "states": [
+   "empty",
+   "details",
+   "explanation",
+   "history"
+  ],
+  "outcome": "Revised",
+  "why": "New with brief 25’s Module 6: each figure in its own unit and territory, the week it measures, a figure not published said Not Reported, a title outside the published Top 10 never given a place, a title new to the game’s record never called a new release, and how old the latest week is.",
+  "changes": "Found on the way: two of Netflix’s weekly Raw episodes shared one title, so the second read as the first falling three places; each is its own title. Nielsen’s East of Eden had an id of its own; it’s Netflix’s East of Eden, one title.",
+  "evidence": [
+   {
+    "kind": "test",
+    "ref": "tests/career-awards-screen.test.ts: 'CONT-01, ANON-03, ANON-06, ANON-09, CHART-07, PLAYER JOURNEY: a guest part entered on Charts And Awards'"
+   },
+   {
+    "kind": "test",
+    "ref": "tests/career-awards.test.ts: 'CHART-08, CHART-09, CHART-10, T67, T68, T75: movement only between consecutive weeks of one chart'"
+   },
+   {
+    "kind": "test",
+    "ref": "tests/career-awards.test.ts: 'CHART-02, T50, T70: a title in two charts keeps each figure in its own unit, territory and week'"
+   }
+  ]
+ },
+ {
+  "surface": "Career, Charts And Awards: Awards And Festivals, every institution the brief names with what this build read of it and whether the game decides it",
+  "where": "Career, the Charts And Awards tab, Awards And Festivals",
+  "sources": [
+   "src/engine/content/awards.ts#INSTITUTIONS [oscars]",
+   "src/engine/content/awards.ts#INSTITUTIONS [emmys]",
+   "src/engine/content/awards.ts#INSTITUTIONS [natas]",
+   "src/engine/content/awards.ts#INSTITUTIONS [iemmys]",
+   "src/engine/content/awards.ts#INSTITUTIONS [bafta]",
+   "src/engine/content/awards.ts#INSTITUTIONS [actor-awards]",
+   "src/engine/content/awards.ts#INSTITUTIONS [golden-globes]",
+   "src/engine/content/awards.ts#INSTITUTIONS [spirit]",
+   "src/engine/content/awards.ts#INSTITUTIONS [critics-choice]",
+   "src/engine/content/awards.ts#INSTITUTIONS [gotham]",
+   "src/engine/content/awards.ts#INSTITUTIONS [aacta]",
+   "src/engine/content/awards.ts#INSTITUTIONS [cesar]",
+   "src/engine/content/awards.ts#INSTITUTIONS [goya]",
+   "src/engine/content/awards.ts#INSTITUTIONS [annie]",
+   "src/engine/content/awards.ts#INSTITUTIONS [cannes]",
+   "src/engine/content/awards.ts#INSTITUTIONS [venice]",
+   "src/engine/content/awards.ts#INSTITUTIONS [berlinale]",
+   "src/engine/content/awards.ts#INSTITUTIONS [sundance]",
+   "src/engine/content/awards.ts#INSTITUTIONS [tiff]",
+   "src/engine/content/awards.ts#INSTITUTIONS [annecy]",
+   "src/engine/content/awards.ts#INSTITUTIONS [idfa]",
+   "src/engine/content/awards.ts#INSTITUTIONS [busan]",
+   "src/ui/career/IndustryPane.tsx#COVERAGE_WORDS",
+   "src/ui/career/IndustryPane.tsx#InventoryPanel"
+  ],
+  "states": [
+   "details",
+   "explanation",
+   "unavailable"
+  ],
+  "outcome": "Revised",
+  "why": "New with brief 25’s Module 6: each award and festival says whether its rules were read and followed, read in part, refused or not reached, and that the game doesn’t decide what it didn’t read.",
+  "changes": "The institutions’ sentences were varied where most began “Its …”, a habit tools/tics.mjs counts.",
+  "evidence": [
+   {
+    "kind": "test",
+    "ref": "tests/career-awards-screen.test.ts: 'CONT-01, ANON-03, ANON-06, ANON-09, CHART-07, PLAYER JOURNEY: a guest part entered on Charts And Awards'"
+   },
+   {
+    "kind": "test",
+    "ref": "tests/career-awards.test.ts: 'AWD-02, AWD-03, AWD-04, AWD-05: fourteen awards and eight festivals'"
+   }
+  ]
  }
 ]

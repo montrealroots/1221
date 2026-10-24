@@ -3,7 +3,9 @@
  * portfolio a submission or an approach sends (`systems/pro.ts`). It had two tabs, Overview and Portfolio, until
  * 2026-10-21, when the agent's Representation came with its system (`ui/career/RepresentationPane.tsx`), the work loop's
  * Opportunities with its (`ui/career/OpportunitiesPane.tsx`, `systems/projobs.ts`) and Work, the engagements' pay and the
- * unions, with the pay's (`ui/career/WorkPane.tsx`); none is shown before it's playable (`ui/shell/sections.ts`).
+ * unions, with the pay's (`ui/career/WorkPane.tsx`); none is shown before it's playable (`ui/shell/sections.ts`). Charts
+ * And Awards came on 2026-10-24 (brief 25's Module 6, `ui/career/IndustryPane.tsx`), and with it the Portfolio's
+ * Recognition, a nomination, a win or a festival selection kept there for good.
  *
  * Every line is read from the record where the engine keeps it, worked out as it's drawn (`profileOf`,
  * `materialsCheck`, `reelSources`), and every control runs a command through `run`, behind its guide chapter
@@ -28,9 +30,11 @@ import {
   schoolCreditWords, type MaterialProblem,
 } from '@/engine/systems/pro';
 import { OpportunitiesPane } from '@/ui/career/OpportunitiesPane';
+import { IndustryPane } from '@/ui/career/IndustryPane';
+import { recognitionOf } from '@/engine/systems/awards';
 import { TabBar } from '@/ui/components/TabBar';
 
-type CareerTab = 'overview' | 'portfolio' | 'representation' | 'opportunities' | 'work';
+type CareerTab = 'overview' | 'portfolio' | 'representation' | 'opportunities' | 'work' | 'industry';
 
 /** Its tabs, as the rail lists them too (`ui/shell/sections.ts`). */
 const CAREER_TABS = SECTIONS['/workspace/career'] as readonly { id: CareerTab; label: string }[];
@@ -39,7 +43,7 @@ export function CareerWorkspace() {
   const [tab, setTab] = useKept<CareerTab>(tabKey('/workspace/career'), 'overview');
   const panes: Record<CareerTab, JSX.Element> = {
     overview: <OverviewPane toPortfolio={() => setTab('portfolio')} />, portfolio: <PortfolioPane />,
-    representation: <RepresentationPane />, opportunities: <OpportunitiesPane />, work: <WorkPane />,
+    representation: <RepresentationPane />, opportunities: <OpportunitiesPane />, work: <WorkPane />, industry: <IndustryPane />,
   };
   return (
     <>
@@ -136,6 +140,7 @@ function ProfilePanel() {
   const { sim, run, toast } = useGame();
   const person = useWorld((s) => s.player);
   const p = profileOf(person, sim.now);
+  const recognition = recognitionOf(person);
   const [name, setName] = useState('');
   const no = nameRefusal(person, name);
   return (
@@ -173,6 +178,12 @@ function ProfilePanel() {
           {p.proCredits.length
             ? <ul className="small" style={{ margin: 0, paddingLeft: '1.1rem' }}>{p.proCredits.map((c) => <li key={c.id}>{proCreditWords(c)}</li>)}</ul>
             : <p className="small" style={{ margin: 0 }}>None yet. Practice, practice briefs and self-tapes don’t count as credits.</p>}
+        </div>
+        <div className="col gap-2">
+          <h3 className="eyebrow" style={{ margin: 0 }}>Recognition</h3>
+          {recognition.length
+            ? <ul className="small" style={{ margin: 0, paddingLeft: '1.1rem' }}>{recognition.map((r) => <li key={r.id}>{r.words}</li>)}</ul>
+            : <p className="small" style={{ margin: 0 }}>None yet. An Emmy nomination or win, or a festival selection, goes here and stays.</p>}
         </div>
         <div className="col gap-2">
           <h3 className="eyebrow" style={{ margin: 0 }}>Special Skills</h3>
