@@ -1,0 +1,191 @@
+{
+ "persist.base44": {
+  "status": "Verified",
+  "by": [
+   "inspection",
+   "automated"
+  ],
+  "on": "3e359d4b",
+  "evidence": [
+   "src/engine/persistence/base44.ts:88-335 Base44SaveAdapter: the server’s functions preferred, an idempotency key from the save, the moment, the playtime and the schema so a retry writes once and a save brought forward still writes, the local mirror on every write and on failure, the server’s own words surfaced and retryable or not told apart, restore swapped by the server; src/engine/persistence/base44.ts:341-347 resolveAdapter: Base44 where its client is, this device where it isn’t; base44/functions/saveUniverse/entry.js:60-141 the server’s write: a receipt replayed, forward progress required, the previous payload kept as the backup; base44/functions/loadUniverse/entry.js:12-65 the slots and a slot read; base44/functions/clearSlot/entry.js:13-48 a slot cleared and released with its backup kept",
+   "tests/base44-adapter.test.ts",
+   "tests/base44-contract.test.ts",
+   "tests/persistence.test.ts the persistence area’s 19 test files (persistence, save-migration, migration-92, migration-94, base44-adapter, base44-contract, server-guards, restore-same-names, b20-career-saveload, integration-tax-reload, module-load-order, b20-guide-startup, determinism-played, smoke, remaining-09-coverage-guard, acceptance-contract, b23-pages, evidence-g27-ui, evidence-g28-ui), run on 3e359d4b: all green, 172 tests; tests/b26-persistence-repeats.test.ts: a save brought forward opened twice and written once, a newer save refused twice with nothing moved, a failed write leaving the slot as it was, a slot deleted twice and restored twice, thirty days reopened through the slot every five the same to the byte as the life played straight, loadSave on the same bytes twice; three mutations each caught (openSlot writing back every open, a delete keeping no backup, the slot written before its backup)"
+  ]
+ },
+ "persist.create": {
+  "status": "Verified",
+  "by": [
+   "inspection",
+   "automated",
+   "interactive"
+  ],
+  "on": "3e359d4b",
+  "evidence": [
+   "src/engine/index.ts:376-401 createSave: the universe from creation’s choices, the once-on-opening list full, every system registered, the world populated, the attributes drawn, the three craft records, the starting papers, the status look; src/app/SlateApp.tsx:50-76 start: a seed from the slot, the name and the moment, the guide and the clock paused, the places loaded, the card refreshed and the save written before play; docs/verification/sweep-2026-10-24/walk/creation/1440x900/creation.json and docs/verification/sweep-2026-10-24/walk/creation/844x390m/creation.json steps 1-7: a life made at both sizes; docs/verification/sweep-2026-10-24/walk/README.md M10’s browser walks",
+   "tests/smoke.test.ts",
+   "tests/b20-guide-startup.test.ts",
+   "tests/b26-persistence-repeats.test.ts",
+   "tests/persistence.test.ts the persistence area’s 19 test files (persistence, save-migration, migration-92, migration-94, base44-adapter, base44-contract, server-guards, restore-same-names, b20-career-saveload, integration-tax-reload, module-load-order, b20-guide-startup, determinism-played, smoke, remaining-09-coverage-guard, acceptance-contract, b23-pages, evidence-g27-ui, evidence-g28-ui), run on 3e359d4b: all green, 172 tests; tests/b26-persistence-repeats.test.ts: a save brought forward opened twice and written once, a newer save refused twice with nothing moved, a failed write leaving the slot as it was, a slot deleted twice and restored twice, thirty days reopened through the slot every five the same to the byte as the life played straight, loadSave on the same bytes twice; three mutations each caught (openSlot writing back every open, a delete keeping no backup, the slot written before its backup)"
+  ]
+ },
+ "persist.guard": {
+  "status": "Fixed And Verified",
+  "by": [
+   "inspection",
+   "automated"
+  ],
+  "on": "3e359d4b",
+  "evidence": [
+   "base44/shared/guard.js:48-133 inspectPayload: a payload present, under 24 MiB in UTF-8, parsed, with a meta.id, a format, a slot that matches, a clock, every transaction balanced in whole cents, the ledger at zero and no record of another save, the size reported in the bytes it measured; base44/shared/guard.js:155-179 requireForwardProgress: a different save in the slot, a clock behind or playtime behind refused; base44/shared/guard.js:182-193 one envelope",
+   "tests/server-guards.test.ts",
+   "tests/base44-contract.test.ts",
+   "tests/persistence.test.ts the persistence area’s 19 test files, run on 3e359d4b: all green, 172 tests; tests/server-guards.test.ts run again with the fix, 24 tests green, and the old guard against it, 2 failed"
+  ],
+  "fixed": "inspectPayload reported a save’s size in the string’s length where it measured the 24 MiB limit in UTF-8 bytes (since 2026-10-12), so the row’s payload_bytes and the slot card’s size on Base44 were a byte short for every accented character; it returns the count it measured (base44/shared/guard.js; tests/server-guards.test.ts asserts the UTF-8 count, with a case of accented names that fails on the old code, 2 of 24). Takes effect on the functions’ next deployment, after the gate."
+ },
+ "persist.load": {
+  "status": "Verified",
+  "by": [
+   "inspection",
+   "automated",
+   "interactive"
+  ],
+  "on": "3e359d4b",
+  "evidence": [
+   "src/engine/index.ts:403-615 loadSave: every system registered, each once-on-opening step marked in opened and never run twice, the rest changing nothing on a save they’ve visited; src/app/SlateApp.tsx:78-90 resume: the places loaded before anything reads a town; tests/b26-persistence-repeats.test.ts the same bytes twice and thirty days reopened every five; docs/verification/sweep-2026-10-24/walk/creation/1440x900/creation.json steps 26-27 Continue at the same moment with the chapters kept; docs/verification/sweep-2026-10-24/walk/capture/audit.json two played lives opened at three sizes; docs/verification/sweep-2026-10-24/walk/README.md M10’s browser walks",
+   "tests/b26-persistence-repeats.test.ts",
+   "tests/determinism-played.test.ts",
+   "tests/b20-guide-startup.test.ts",
+   "tests/integrity.test.ts",
+   "tests/persistence.test.ts the persistence area’s 19 test files (persistence, save-migration, migration-92, migration-94, base44-adapter, base44-contract, server-guards, restore-same-names, b20-career-saveload, integration-tax-reload, module-load-order, b20-guide-startup, determinism-played, smoke, remaining-09-coverage-guard, acceptance-contract, b23-pages, evidence-g27-ui, evidence-g28-ui), run on 3e359d4b: all green, 172 tests; tests/b26-persistence-repeats.test.ts: a save brought forward opened twice and written once, a newer save refused twice with nothing moved, a failed write leaving the slot as it was, a slot deleted twice and restored twice, thirty days reopened through the slot every five the same to the byte as the life played straight, loadSave on the same bytes twice; three mutations each caught (openSlot writing back every open, a delete keeping no backup, the slot written before its backup)"
+  ]
+ },
+ "persist.local-store": {
+  "status": "Verified",
+  "by": [
+   "inspection",
+   "automated",
+   "interactive"
+  ],
+  "on": "3e359d4b",
+  "evidence": [
+   "src/engine/persistence/local.ts:117-139 movingStore: a save still in local storage moved to IndexedDB once on its first read and the old key removed; src/engine/persistence/local.ts:141-252 LocalSaveAdapter: a backup of what’s there before every write and the slot’s key written last and whole, a failed write said in the player’s words with the slot as it was, a delete keeping a readable save as the backup and never writing a damaged one over a readable backup, restore swapping the two; tests/b26-persistence-repeats.test.ts a failed write, a delete twice, a restore twice; docs/verification/sweep-2026-10-24/walk/creation/1440x900/creation.json steps 26-27 Save & Exit and Continue through the browser’s store; docs/verification/sweep-2026-10-24/walk/README.md M10’s browser walks",
+   "tests/persistence.test.ts",
+   "tests/b26-persistence-repeats.test.ts",
+   "tests/b20-guide-startup.test.ts",
+   "tests/persistence.test.ts the persistence area’s 19 test files (persistence, save-migration, migration-92, migration-94, base44-adapter, base44-contract, server-guards, restore-same-names, b20-career-saveload, integration-tax-reload, module-load-order, b20-guide-startup, determinism-played, smoke, remaining-09-coverage-guard, acceptance-contract, b23-pages, evidence-g27-ui, evidence-g28-ui), run on 3e359d4b: all green, 172 tests; tests/b26-persistence-repeats.test.ts: a save brought forward opened twice and written once, a newer save refused twice with nothing moved, a failed write leaving the slot as it was, a slot deleted twice and restored twice, thirty days reopened through the slot every five the same to the byte as the life played straight, loadSave on the same bytes twice; three mutations each caught (openSlot writing back every open, a delete keeping no backup, the slot written before its backup)"
+  ]
+ },
+ "persist.migrate": {
+  "status": "Verified",
+  "by": [
+   "inspection",
+   "automated",
+   "interactive"
+  ],
+  "on": "3e359d4b",
+  "evidence": [
+   "src/engine/index.ts:686-1283 migrate: on every open, by the shape not the number (the labels alone by it, under 11); every collection created where absent, the fields nothing reads dropped, records re-stamped, questions dated, the title, the personality and the citizenship put right, each step said once; a newer save a problem; the number moved last; tests/b26-persistence-repeats.test.ts a step run once and the second open nothing; the seven fixtures opened and played (tests/b20-guide-startup.test.ts); docs/verification/sweep-2026-10-24/walk/capture/audit.json brief 23’s two lives opened; docs/verification/sweep-2026-10-24/walk/README.md M10’s browser walks",
+   "tests/migration-94.test.ts",
+   "tests/migration-92.test.ts",
+   "tests/save-migration.test.ts",
+   "tests/b26-persistence-repeats.test.ts",
+   "tests/persistence.test.ts the persistence area’s 19 test files (persistence, save-migration, migration-92, migration-94, base44-adapter, base44-contract, server-guards, restore-same-names, b20-career-saveload, integration-tax-reload, module-load-order, b20-guide-startup, determinism-played, smoke, remaining-09-coverage-guard, acceptance-contract, b23-pages, evidence-g27-ui, evidence-g28-ui), run on 3e359d4b: all green, 172 tests; tests/b26-persistence-repeats.test.ts: a save brought forward opened twice and written once, a newer save refused twice with nothing moved, a failed write leaving the slot as it was, a slot deleted twice and restored twice, thirty days reopened through the slot every five the same to the byte as the life played straight, loadSave on the same bytes twice; three mutations each caught (openSlot writing back every open, a delete keeping no backup, the slot written before its backup)"
+  ]
+ },
+ "persist.open-slot": {
+  "status": "Verified",
+  "by": [
+   "inspection",
+   "automated",
+   "interactive"
+  ],
+  "on": "3e359d4b",
+  "evidence": [
+   "src/engine/index.ts:1304-1331 openSlot: an empty slot or no backup refused in words, a newer save refused with nothing changed, migrate on every open, a problem refused, a save a step changed written back once after a backup and not when opened out of the backup; src/ui/saves/SaveSlots.tsx:37-66 Continue and Restore Backup; tests/b26-persistence-repeats.test.ts opened twice, refused twice, restored twice; docs/verification/sweep-2026-10-24/walk/creation/1440x900/creation.json step 27 and docs/verification/sweep-2026-10-24/walk/capture/audit.json; docs/verification/sweep-2026-10-24/walk/README.md M10’s browser walks",
+   "tests/persistence.test.ts",
+   "tests/b26-persistence-repeats.test.ts",
+   "tests/b20-guide-startup.test.ts",
+   "tests/persistence.test.ts the persistence area’s 19 test files (persistence, save-migration, migration-92, migration-94, base44-adapter, base44-contract, server-guards, restore-same-names, b20-career-saveload, integration-tax-reload, module-load-order, b20-guide-startup, determinism-played, smoke, remaining-09-coverage-guard, acceptance-contract, b23-pages, evidence-g27-ui, evidence-g28-ui), run on 3e359d4b: all green, 172 tests; tests/b26-persistence-repeats.test.ts: a save brought forward opened twice and written once, a newer save refused twice with nothing moved, a failed write leaving the slot as it was, a slot deleted twice and restored twice, thirty days reopened through the slot every five the same to the byte as the life played straight, loadSave on the same bytes twice; three mutations each caught (openSlot writing back every open, a delete keeping no backup, the slot written before its backup)"
+  ]
+ },
+ "persist.schema": {
+  "status": "Verified",
+  "by": [
+   "inspection",
+   "automated"
+  ],
+  "on": "3e359d4b",
+  "evidence": [
+   "src/engine/domain/model.ts:494 SAVE_SCHEMA_VERSION 94 and base44/shared/guard.js:25 SUPPORTED_SCHEMA_VERSION 94, moved by hand together (CLAUDE.md’s rule 14); pinned at 94 since ff837dfa (2026-10-10), every change since read from the save’s shape; src/ui/startup/StartupSequence.tsx:219 and src/ui/saves/SaveSlots.tsx:199 the format said on the start and the card",
+   "tests/migration-94.test.ts",
+   "tests/server-guards.test.ts",
+   "tests/base44-contract.test.ts",
+   "tests/persistence.test.ts the persistence area’s 19 test files (persistence, save-migration, migration-92, migration-94, base44-adapter, base44-contract, server-guards, restore-same-names, b20-career-saveload, integration-tax-reload, module-load-order, b20-guide-startup, determinism-played, smoke, remaining-09-coverage-guard, acceptance-contract, b23-pages, evidence-g27-ui, evidence-g28-ui), run on 3e359d4b: all green, 172 tests; tests/b26-persistence-repeats.test.ts: a save brought forward opened twice and written once, a newer save refused twice with nothing moved, a failed write leaving the slot as it was, a slot deleted twice and restored twice, thirty days reopened through the slot every five the same to the byte as the life played straight, loadSave on the same bytes twice; three mutations each caught (openSlot writing back every open, a delete keeping no backup, the slot written before its backup)"
+  ]
+ },
+ "persist.serialise": {
+  "status": "Verified",
+  "by": [
+   "inspection",
+   "automated",
+   "interactive"
+  ],
+  "on": "3e359d4b",
+  "evidence": [
+   "src/engine/persistence/adapter.ts:49-68 serialise and deserialise: a damaged file and a file that isn’t a save said in the player’s words; src/engine/persistence/local.ts:23-62 a save packed with its marker, an older plain one read; tests/b26-persistence-repeats.test.ts the same bytes after a round trip, twice, on a new life and one played a fortnight; docs/verification/sweep-2026-10-24/walk/creation/1440x900/creation.json step 27 the life read back in the browser; docs/verification/sweep-2026-10-24/walk/README.md M10’s browser walks",
+   "tests/persistence.test.ts",
+   "tests/b26-persistence-repeats.test.ts",
+   "tests/integrity.test.ts",
+   "tests/persistence.test.ts the persistence area’s 19 test files (persistence, save-migration, migration-92, migration-94, base44-adapter, base44-contract, server-guards, restore-same-names, b20-career-saveload, integration-tax-reload, module-load-order, b20-guide-startup, determinism-played, smoke, remaining-09-coverage-guard, acceptance-contract, b23-pages, evidence-g27-ui, evidence-g28-ui), run on 3e359d4b: all green, 172 tests; tests/b26-persistence-repeats.test.ts: a save brought forward opened twice and written once, a newer save refused twice with nothing moved, a failed write leaving the slot as it was, a slot deleted twice and restored twice, thirty days reopened through the slot every five the same to the byte as the life played straight, loadSave on the same bytes twice; three mutations each caught (openSlot writing back every open, a delete keeping no backup, the slot written before its backup)"
+  ]
+ },
+ "persist.slots": {
+  "status": "Verified",
+  "by": [
+   "inspection",
+   "automated",
+   "interactive"
+  ],
+  "on": "3e359d4b",
+  "evidence": [
+   "src/ui/saves/SaveSlots.tsx:12-265 Your Saves: three slots, Continue or See How It Ended, New Save, Restore Backup with the backup’s date, Delete behind a confirm naming the life and whether it can come back, an unreadable save in the player’s words, Updated When Opened, Saved To this device or Base44; src/app/SlateApp.tsx:92-96 Save & Exit re-reads the slots; docs/verification/sweep-2026-10-24/walk/creation/1440x900/creation.json step 26 and docs/verification/sweep-2026-10-24/walk/creation/844x390m/creation.json: Your Saves after Save & Exit with the life’s card; docs/verification/sweep-2026-10-24/walk/capture/audit.json two lives opened through it at three sizes; docs/verification/sweep-2026-10-24/walk/README.md M10’s browser walks",
+   "tests/b20-guide-startup.test.ts",
+   "tests/b23-pages.test.ts",
+   "tests/persistence.test.ts",
+   "tests/persistence.test.ts the persistence area’s 19 test files (persistence, save-migration, migration-92, migration-94, base44-adapter, base44-contract, server-guards, restore-same-names, b20-career-saveload, integration-tax-reload, module-load-order, b20-guide-startup, determinism-played, smoke, remaining-09-coverage-guard, acceptance-contract, b23-pages, evidence-g27-ui, evidence-g28-ui), run on 3e359d4b: all green, 172 tests; tests/b26-persistence-repeats.test.ts: a save brought forward opened twice and written once, a newer save refused twice with nothing moved, a failed write leaving the slot as it was, a slot deleted twice and restored twice, thirty days reopened through the slot every five the same to the byte as the life played straight, loadSave on the same bytes twice; three mutations each caught (openSlot writing back every open, a delete keeping no backup, the slot written before its backup)"
+  ]
+ },
+ "persist.startup": {
+  "status": "Verified",
+  "by": [
+   "inspection",
+   "automated",
+   "interactive"
+  ],
+  "on": "3e359d4b",
+  "evidence": [
+   "src/ui/startup/StartupSequence.tsx:48-93 the four stages, each doing work: the store found, the slots read, a slot that won’t read said with its way on, a save from another version said before it’s opened; src/ui/startup/StartupSequence.tsx:95-151 a failure stops with Try Again, warnings wait on Continue; docs/verification/sweep-2026-10-24/walk/creation/1440x900/creation.json step 1 and every walk’s start; docs/verification/sweep-2026-10-24/walk/README.md M10’s browser walks",
+   "tests/b20-guide-startup.test.ts",
+   "tests/module-load-order.test.ts",
+   "tests/persistence.test.ts the persistence area’s 19 test files (persistence, save-migration, migration-92, migration-94, base44-adapter, base44-contract, server-guards, restore-same-names, b20-career-saveload, integration-tax-reload, module-load-order, b20-guide-startup, determinism-played, smoke, remaining-09-coverage-guard, acceptance-contract, b23-pages, evidence-g27-ui, evidence-g28-ui), run on 3e359d4b: all green, 172 tests; tests/b26-persistence-repeats.test.ts: a save brought forward opened twice and written once, a newer save refused twice with nothing moved, a failed write leaving the slot as it was, a slot deleted twice and restored twice, thirty days reopened through the slot every five the same to the byte as the life played straight, loadSave on the same bytes twice; three mutations each caught (openSlot writing back every open, a delete keeping no backup, the slot written before its backup)"
+  ]
+ },
+ "persist.validate": {
+  "status": "Verified",
+  "by": [
+   "inspection",
+   "automated",
+   "interactive"
+  ],
+  "on": "3e359d4b",
+  "evidence": [
+   "src/engine/index.ts:1379-1444 validateUniverse: the ledger’s audit, the player and where they stand, the primary account, save isolation, the sorted timeline, the wellbeing bounds; src/ui/saves/SaveSlots.tsx:49-58 run after the places load, the developer’s words behind What’s Wrong With It; tests/b26-persistence-repeats.test.ts ok after every reopening; docs/verification/sweep-2026-10-24/walk/capture/audit.json two lives passed it at three sizes; docs/verification/sweep-2026-10-24/walk/README.md M10’s browser walks",
+   "tests/integrity.test.ts",
+   "tests/smoke.test.ts",
+   "tests/b26-persistence-repeats.test.ts",
+   "tests/persistence.test.ts the persistence area’s 19 test files (persistence, save-migration, migration-92, migration-94, base44-adapter, base44-contract, server-guards, restore-same-names, b20-career-saveload, integration-tax-reload, module-load-order, b20-guide-startup, determinism-played, smoke, remaining-09-coverage-guard, acceptance-contract, b23-pages, evidence-g27-ui, evidence-g28-ui), run on 3e359d4b: all green, 172 tests; tests/b26-persistence-repeats.test.ts: a save brought forward opened twice and written once, a newer save refused twice with nothing moved, a failed write leaving the slot as it was, a slot deleted twice and restored twice, thirty days reopened through the slot every five the same to the byte as the life played straight, loadSave on the same bytes twice; three mutations each caught (openSlot writing back every open, a delete keeping no backup, the slot written before its backup)"
+  ]
+ }
+}

@@ -6,7 +6,7 @@
    "part": 1,
    "from": "2029-08-04",
    "to": "2029-12-01",
-   "secs": 85,
+   "secs": 81,
    "reloads": 3,
    "done": true
   }
@@ -2374,7 +2374,7 @@
      ],
      "transactions": 1227
     },
-    "secs": 20
+    "secs": 19
    },
    {
     "why": "an audition (in-person) set for 2029-08-20T15:00, Hester Vane in The Winter Ledger",
@@ -2425,7 +2425,7 @@
      ],
      "transactions": 1246
     },
-    "secs": 18
+    "secs": 20
    },
    {
     "why": "an offer standing: An Offer For Ivy",

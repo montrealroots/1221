@@ -2753,9 +2753,9 @@
  },
  "src/ui/creation/CharacterCreation.tsx#PersonalStep": {
   "status": "Rewritten",
-  "hash": "9f000bb95a73",
-  "on": "2026-10-20",
-  "evidence": "Read on the built app by tools/screen-text.mjs, Creation Step 3 (brief 16): the genres paragraph went from 4 sentences to 3, pick as many as are true; tests/evidence-g28-ui.test.ts holds the rest word for word.",
+  "hash": "9dbda865cb70",
+  "on": "2026-10-24",
+  "evidence": "Read again against docs/STYLE.md on 2026-10-24 for brief 26: the Genres step says a day's work on a project of a loved kind lifts the day too, and marks · only a genre in no play or project; held by tests/evidence-g28-ui.test.ts (c-genres) and tests/b26-creation-genres.test.ts",
   "first": "Pending"
  },
  "src/ui/creation/CharacterCreation.tsx#ReviewStep": {

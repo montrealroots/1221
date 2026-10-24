@@ -1,0 +1,1742 @@
+{
+ "citizenship.decided": {
+  "status": "Deferred",
+  "by": [
+   "inspection",
+   "automated"
+  ],
+  "on": "388d9a1e",
+  "note": "Explicitly Deferred by the owner’s scope reset of 2026-10-09 (docs/REQUIREMENTS.md), as its effects row and the completion matrix’s deferred rows record it (effects row citizenship.decided): reached only from a save that applied before the reset (src/engine/systems/citizenship.ts:100-109, said once with the country).",
+  "evidence": [
+   "tests/coverage-gaps-papers.test.ts",
+   "tests/citizenship.test.ts",
+   "src/engine/systems/citizenship.ts:100-109 the decision: naturalized, said once",
+   "tests/citizenship.test.ts",
+   "tests/papers-complete.test.ts the papers and benefits areas’ 70 test files, 507 tests, run on 388d9a1e: all green; tests/b26-papers-repeats.test.ts, the repeat, reload and call-off probe on a New Haven life, green"
+  ]
+ },
+ "documents.apply_idcard": {
+  "status": "Verified",
+  "by": [
+   "inspection",
+   "automated"
+  ],
+  "on": "388d9a1e",
+  "evidence": [
+   "tests/b20-papers-ids.test.ts",
+   "tests/remaining-papers.test.ts",
+   "tests/evidence-g16-papers.test.ts",
+   "tests/evidence-g15-papers.test.ts",
+   "tests/defects3-50-70.test.ts",
+   "tests/papers-transitions.test.ts",
+   "tests/defects-g24-1.test.ts",
+   "src/engine/systems/identity.ts:315-347 the command: idCardRefusal (src/engine/systems/identity.ts:148-193) first, the fee from the bank once, a citizen’s card in force at the counter or mailed, a non-citizen’s after SAVE’s days and limited to lawful presence; a second press refused, One is already on its way",
+   "tests/b20-papers-ids.test.ts",
+   "tests/b26-papers-repeats.test.ts",
+   "tests/papers-transitions.test.ts",
+   "tests/papers-complete.test.ts the papers and benefits areas’ 70 test files, 507 tests, run on 388d9a1e: all green; tests/b26-papers-repeats.test.ts, the repeat, reload and call-off probe on a New Haven life, green"
+  ]
+ },
+ "documents.apply_opt": {
+  "status": "Verified",
+  "by": [
+   "inspection",
+   "automated"
+  ],
+  "on": "388d9a1e",
+  "evidence": [
+   "tests/b20-papers-work.test.ts",
+   "tests/permission.test.ts",
+   "tests/propay.test.ts",
+   "tests/b20-papers-defects.test.ts",
+   "tests/evidence-g15-papers.test.ts",
+   "tests/evidence2-b12.test.ts",
+   "src/engine/systems/permission.ts:376-390 the command: optRefusal (src/engine/systems/permission.ts:131-144), the fee once, pending to its day, the status’s decision answered",
+   "tests/b20-papers-work.test.ts",
+   "tests/permission.test.ts",
+   "tests/papers-complete.test.ts the papers and benefits areas’ 70 test files, 507 tests, run on 388d9a1e: all green; tests/b26-papers-repeats.test.ts, the repeat, reload and call-off probe on a New Haven life, green"
+  ]
+ },
+ "documents.apply_passport": {
+  "status": "Verified",
+  "by": [
+   "inspection",
+   "automated"
+  ],
+  "on": "388d9a1e",
+  "evidence": [
+   "tests/b20-papers-ids.test.ts",
+   "tests/defects-g25-1.test.ts",
+   "tests/remaining-papers.test.ts",
+   "tests/documents.test.ts",
+   "src/engine/systems/documents.ts:333-350 the command: passportRefusal (src/engine/systems/documents.ts:479-492), the office’s terms where they are, the fee once, pending to its day; a second press refused",
+   "tests/b20-papers-ids.test.ts",
+   "tests/b26-papers-repeats.test.ts",
+   "tests/papers-complete.test.ts the papers and benefits areas’ 70 test files, 507 tests, run on 388d9a1e: all green; tests/b26-papers-repeats.test.ts, the repeat, reload and call-off probe on a New Haven life, green"
+  ]
+ },
+ "documents.apply_ssn": {
+  "status": "Verified",
+  "by": [
+   "inspection",
+   "automated"
+  ],
+  "on": "388d9a1e",
+  "evidence": [
+   "tests/b20-papers-ids.test.ts",
+   "tests/evidence3-lifepapers.test.ts",
+   "tests/evidence-g16-papers.test.ts",
+   "tests/evidence-g17-papers.test.ts",
+   "src/engine/systems/taxid.ts:62-71 the command: ssnRefusal (src/engine/systems/taxid.ts:46-59), the office’s hour, the card in three weeks",
+   "tests/b20-papers-ids.test.ts",
+   "tests/coverage-gaps-number.test.ts",
+   "tests/papers-complete.test.ts the papers and benefits areas’ 70 test files, 507 tests, run on 388d9a1e: all green; tests/b26-papers-repeats.test.ts, the repeat, reload and call-off probe on a New Haven life, green"
+  ]
+ },
+ "documents.decided": {
+  "status": "Verified",
+  "by": [
+   "inspection",
+   "automated"
+  ],
+  "on": "388d9a1e",
+  "evidence": [
+   "tests/b20-papers-ids.test.ts",
+   "tests/defects-g25-1.test.ts",
+   "tests/editorial-papers.test.ts",
+   "tests/remaining-papers.test.ts",
+   "src/engine/systems/documents.ts:322-331 a pending document decided on its day, one waiting on its visit passed by; src/engine/systems/documents.ts:580-612 issue, a passport replacing the old (src/engine/systems/documents.ts:494-504)",
+   "tests/b20-papers-ids.test.ts",
+   "tests/documents.test.ts",
+   "tests/papers-complete.test.ts the papers and benefits areas’ 70 test files, 507 tests, run on 388d9a1e: all green; tests/b26-papers-repeats.test.ts, the repeat, reload and call-off probe on a New Haven life, green"
+  ]
+ },
+ "documents.idcard_arrives": {
+  "status": "Verified",
+  "by": [
+   "inspection",
+   "automated"
+  ],
+  "on": "388d9a1e",
+  "evidence": [
+   "tests/b20-papers-ids.test.ts",
+   "tests/evidence-g16-papers.test.ts",
+   "tests/evidence-g15-papers.test.ts",
+   "tests/remaining-papers.test.ts",
+   "src/engine/systems/identity.ts:304-313 the card or license comes: pending only, valid from its day, said once; once across a reload",
+   "tests/b20-papers-ids.test.ts",
+   "tests/b26-papers-repeats.test.ts",
+   "tests/papers-complete.test.ts the papers and benefits areas’ 70 test files, 507 tests, run on 388d9a1e: all green; tests/b26-papers-repeats.test.ts, the repeat, reload and call-off probe on a New Haven life, green"
+  ]
+ },
+ "documents.naturalize": {
+  "status": "Deferred",
+  "by": [
+   "inspection",
+   "automated"
+  ],
+  "on": "388d9a1e",
+  "note": "Explicitly Deferred by the owner’s scope reset of 2026-10-09 (docs/REQUIREMENTS.md), as its effects row and the completion matrix’s deferred rows record it (effects row documents.naturalize): naturalizing follows residence abroad, which no current life holds (src/engine/systems/citizenship.ts:85-99, naturalizeRefusal src/engine/systems/citizenship.ts:59-83).",
+  "evidence": [
+   "tests/commands-kept.test.ts",
+   "tests/coverage-gaps-papers.test.ts",
+   "src/engine/systems/citizenship.ts:85-99 the command; src/engine/systems/citizenship.ts:59-83 naturalizeRefusal",
+   "tests/citizenship.test.ts",
+   "tests/coverage-gaps-papers.test.ts",
+   "tests/papers-complete.test.ts the papers and benefits areas’ 70 test files, 507 tests, run on 388d9a1e: all green; tests/b26-papers-repeats.test.ts, the repeat, reload and call-off probe on a New Haven life, green"
+  ]
+ },
+ "documents.opt_week": {
+  "status": "Verified",
+  "by": [
+   "inspection",
+   "automated"
+  ],
+  "on": "388d9a1e",
+  "evidence": [
+   "tests/b20-papers-work.test.ts",
+   "tests/b22-authorization.test.ts",
+   "tests/evidence-g16-papers.test.ts",
+   "tests/evidence2-b06.test.ts",
+   "tests/permission.test.ts",
+   "tests/propay.test.ts",
+   "src/engine/systems/permission.ts:467-470 an older save’s week: settled by the day (src/engine/systems/permission.ts:312-327) and not booked again",
+   "tests/b22-authorization.test.ts",
+   "tests/permission.test.ts",
+   "tests/papers-complete.test.ts the papers and benefits areas’ 70 test files, 507 tests, run on 388d9a1e: all green; tests/b26-papers-repeats.test.ts, the repeat, reload and call-off probe on a New Haven life, green"
+  ]
+ },
+ "documents.permission": {
+  "status": "Verified",
+  "by": [
+   "inspection",
+   "automated"
+  ],
+  "on": "388d9a1e",
+  "evidence": [
+   "tests/b20-papers-work.test.ts",
+   "tests/b20-papers-defects.test.ts",
+   "tests/permission.test.ts",
+   "tests/evidence2-b06.test.ts",
+   "tests/evidence-g16-papers.test.ts",
+   "src/engine/systems/permission.ts:393-429 OPT decided: denied where the degree wasn’t had, else twelve months from the later of the program’s end and now, counted by the day, said once",
+   "tests/b20-papers-work.test.ts",
+   "tests/permission.test.ts",
+   "tests/papers-complete.test.ts the papers and benefits areas’ 70 test files, 507 tests, run on 388d9a1e: all green; tests/b26-papers-repeats.test.ts, the repeat, reload and call-off probe on a New Haven life, green"
+  ]
+ },
+ "documents.police_report": {
+  "status": "Verified",
+  "by": [
+   "inspection",
+   "automated"
+  ],
+  "on": "388d9a1e",
+  "evidence": [
+   "tests/evidence-g15-papers.test.ts",
+   "tests/commands-kept.test.ts",
+   "tests/coverage-gaps-papers.test.ts",
+   "src/engine/systems/documents.ts:367-374 the command; src/engine/systems/documents.ts:405-415 policeReportRefusal: lost first, once, each force’s online rule",
+   "tests/b26-papers-repeats.test.ts",
+   "tests/remaining-papers.test.ts",
+   "tests/papers-complete.test.ts the papers and benefits areas’ 70 test files, 507 tests, run on 388d9a1e: all green; tests/b26-papers-repeats.test.ts, the repeat, reload and call-off probe on a New Haven life, green"
+  ]
+ },
+ "documents.renew_residence": {
+  "status": "Deferred",
+  "by": [
+   "inspection",
+   "automated"
+  ],
+  "on": "388d9a1e",
+  "note": "Explicitly Deferred by the owner’s scope reset of 2026-10-09 (docs/REQUIREMENTS.md), as its effects row and the completion matrix’s deferred rows record it (effects row documents.renew_residence): Mexico’s card isn’t renewed, the rule said (src/engine/systems/residence.ts:208-210).",
+  "evidence": [
+   "tests/residence.test.ts",
+   "tests/remaining-09-journeys.test.ts",
+   "src/engine/systems/residence.ts:208-210 the command refuses with the rule",
+   "tests/residence.test.ts",
+   "tests/papers-complete.test.ts the papers and benefits areas’ 70 test files, 507 tests, run on 388d9a1e: all green; tests/b26-papers-repeats.test.ts, the repeat, reload and call-off probe on a New Haven life, green"
+  ]
+ },
+ "documents.replace_idcard": {
+  "status": "Verified",
+  "by": [
+   "inspection",
+   "automated"
+  ],
+  "on": "388d9a1e",
+  "evidence": [
+   "tests/evidence-g15-papers.test.ts",
+   "tests/idreplace.test.ts",
+   "tests/defects3-50-70.test.ts",
+   "src/engine/systems/identity.ts:288-303 the command: idReplaceRefusal (src/engine/systems/identity.ts:249-259), the fee once, the lost card canceled and a new one on its way; pressed again, It isn’t lost",
+   "tests/b26-papers-repeats.test.ts",
+   "tests/remaining-papers.test.ts",
+   "tests/papers-complete.test.ts the papers and benefits areas’ 70 test files, 507 tests, run on 388d9a1e: all green; tests/b26-papers-repeats.test.ts, the repeat, reload and call-off probe on a New Haven life, green"
+  ]
+ },
+ "documents.replace_license": {
+  "status": "Verified",
+  "by": [
+   "inspection",
+   "automated"
+  ],
+  "on": "388d9a1e",
+  "evidence": [
+   "tests/evidence-g15-papers.test.ts",
+   "tests/evidence-g16-papers.test.ts",
+   "tests/coverage-gaps-papers.test.ts",
+   "tests/defects3-50-70.test.ts",
+   "tests/commands-kept.test.ts",
+   "src/engine/systems/identity.ts:349-363 the command: licenseReplaceRefusal (src/engine/systems/identity.ts:210-220), New York’s free with the police’s MV-78B (src/engine/systems/identity.ts:233-237), the same license on a new card",
+   "tests/remaining-papers.test.ts",
+   "tests/whynot-papers.test.ts",
+   "tests/papers-complete.test.ts the papers and benefits areas’ 70 test files, 507 tests, run on 388d9a1e: all green; tests/b26-papers-repeats.test.ts, the repeat, reload and call-off probe on a New Haven life, green"
+  ]
+ },
+ "documents.report_lost": {
+  "status": "Verified",
+  "by": [
+   "inspection",
+   "automated"
+  ],
+  "on": "388d9a1e",
+  "evidence": [
+   "tests/evidence-g15-papers.test.ts",
+   "tests/evidence-g16-papers.test.ts",
+   "tests/papers-fixes.test.ts",
+   "tests/papers-complete.test.ts",
+   "tests/guide-examples-papers.test.ts",
+   "src/engine/systems/documents.ts:352-365 the command: a document in force only, a status refused, a passport’s dependants canceled but the F-1",
+   "tests/remaining-papers.test.ts",
+   "tests/b26-papers-repeats.test.ts",
+   "tests/papers-complete.test.ts the papers and benefits areas’ 70 test files, 507 tests, run on 388d9a1e: all green; tests/b26-papers-repeats.test.ts, the repeat, reload and call-off probe on a New Haven life, green"
+  ]
+ },
+ "documents.residence": {
+  "status": "Deferred",
+  "by": [
+   "inspection",
+   "automated"
+  ],
+  "on": "388d9a1e",
+  "note": "Explicitly Deferred by the owner’s scope reset of 2026-10-09 (docs/REQUIREMENTS.md), as its effects row and the completion matrix’s deferred rows record it (effects row documents.residence): every route is refused since 2026-10-16 with the rule and why (src/engine/systems/residence.ts:189-191, routeRefusal src/engine/systems/residence.ts:114-149); the papers a save holds are kept.",
+  "evidence": [
+   "tests/residence.test.ts",
+   "tests/remaining-09-journeys.test.ts",
+   "tests/guide-examples-papers.test.ts",
+   "tests/commands-kept.test.ts",
+   "src/engine/systems/residence.ts:189-191 the command refuses every route; src/engine/systems/residence.ts:114-149 routeRefusal",
+   "tests/residence.test.ts",
+   "tests/remaining-09-journeys.test.ts",
+   "tests/papers-complete.test.ts the papers and benefits areas’ 70 test files, 507 tests, run on 388d9a1e: all green; tests/b26-papers-repeats.test.ts, the repeat, reload and call-off probe on a New Haven life, green"
+  ]
+ },
+ "documents.settle": {
+  "status": "Deferred",
+  "by": [
+   "inspection",
+   "automated"
+  ],
+  "on": "388d9a1e",
+  "note": "Explicitly Deferred by the owner’s scope reset of 2026-10-09 (docs/REQUIREMENTS.md), as its effects row and the completion matrix’s deferred rows record it (effects row documents.settle): Britain’s alone, for a save that holds its visa, which no current life has (src/engine/systems/residence.ts:193-204, settleRefusal src/engine/systems/residence.ts:165-180).",
+  "evidence": [
+   "tests/commands-kept.test.ts",
+   "tests/residence.test.ts",
+   "src/engine/systems/residence.ts:193-204 the command; src/engine/systems/residence.ts:165-180 settleRefusal",
+   "tests/residence.test.ts",
+   "tests/commands-kept.test.ts",
+   "tests/papers-complete.test.ts the papers and benefits areas’ 70 test files, 507 tests, run on 388d9a1e: all green; tests/b26-papers-repeats.test.ts, the repeat, reload and call-off probe on a New Haven life, green"
+  ]
+ },
+ "documents.ssn_arrives": {
+  "status": "Verified",
+  "by": [
+   "inspection",
+   "automated"
+  ],
+  "on": "388d9a1e",
+  "evidence": [
+   "tests/b20-papers-ids.test.ts",
+   "tests/evidence-g16-papers.test.ts",
+   "tests/evidence-g17-papers.test.ts",
+   "src/engine/systems/taxid.ts:73-78 the card comes: applied only, issued, said once with what a bank can now do",
+   "tests/b20-papers-ids.test.ts",
+   "tests/papers-transitions.test.ts",
+   "tests/papers-complete.test.ts the papers and benefits areas’ 70 test files, 507 tests, run on 388d9a1e: all green; tests/b26-papers-repeats.test.ts, the repeat, reload and call-off probe on a New Haven life, green"
+  ]
+ },
+ "documents.us_status": {
+  "status": "Verified",
+  "by": [
+   "inspection",
+   "automated"
+  ],
+  "on": "388d9a1e",
+  "evidence": [
+   "tests/b20-papers-work.test.ts",
+   "tests/evidence2-b06.test.ts",
+   "tests/evidence-g16-papers.test.ts",
+   "tests/evidence3-lifepapers.test.ts",
+   "tests/defects3-50-70.test.ts",
+   "src/engine/systems/permission.ts:431-465 the status looked at: the ending said once as a decision with OPT’s way, then out of status, the F-1 canceled; src/engine/systems/permission.ts:221-226 scheduleUsStatus keeps one on the calendar",
+   "tests/b20-papers-work.test.ts",
+   "tests/visas.test.ts",
+   "tests/papers-complete.test.ts the papers and benefits areas’ 70 test files, 507 tests, run on 388d9a1e: all green; tests/b26-papers-repeats.test.ts, the repeat, reload and call-off probe on a New Haven life, green"
+  ]
+ },
+ "documents.visit": {
+  "status": "Verified",
+  "by": [
+   "inspection",
+   "automated"
+  ],
+  "on": "388d9a1e",
+  "evidence": [
+   "tests/paper-visits.test.ts",
+   "src/engine/systems/papervisits.ts:159-193 the visit: kept where present, decided its days after; missed, booked once more or the application ended, said; reached only from a save made before 2026-10-09, as tests/paper-visits.test.ts sets one up",
+   "tests/paper-visits.test.ts",
+   "tests/papers-complete.test.ts the papers and benefits areas’ 70 test files, 507 tests, run on 388d9a1e: all green; tests/b26-papers-repeats.test.ts, the repeat, reload and call-off probe on a New Haven life, green"
+  ]
+ },
+ "documents.work_permission_ended": {
+  "status": "Verified",
+  "by": [
+   "inspection",
+   "automated"
+  ],
+  "on": "388d9a1e",
+  "evidence": [
+   "tests/b22-authorization.test.ts",
+   "src/engine/systems/permission.ts:245 the event; src/engine/systems/permission.ts:340 emitted as OPT ends; src/engine/systems/projobs.ts:1561 pro.release_unauthorized releases the work booked past it",
+   "tests/b22-authorization.test.ts",
+   "tests/papers-complete.test.ts the papers and benefits areas’ 70 test files, 507 tests, run on 388d9a1e: all green; tests/b26-papers-repeats.test.ts, the repeat, reload and call-off probe on a New Haven life, green"
+  ]
+ },
+ "health.appeal": {
+  "status": "Verified",
+  "by": [
+   "inspection",
+   "automated"
+  ],
+  "on": "388d9a1e",
+  "evidence": [
+   "tests/evidence-g02-life.test.ts",
+   "tests/evidence-g05-life.test.ts",
+   "tests/evidence2-b02.test.ts",
+   "tests/claims.test.ts",
+   "src/engine/systems/health.ts:2193-2201 the command: appealRefusal (src/engine/systems/health.ts:2108-2113), decided in its days",
+   "tests/remaining-health-billing.test.ts",
+   "tests/papers-complete.test.ts the papers and benefits areas’ 70 test files, 507 tests, run on 388d9a1e: all green; tests/b26-papers-repeats.test.ts, the repeat, reload and call-off probe on a New Haven life, green"
+  ]
+ },
+ "health.appeal_decided": {
+  "status": "Verified",
+  "by": [
+   "inspection",
+   "automated"
+  ],
+  "on": "388d9a1e",
+  "evidence": [
+   "tests/evidence-g05-life.test.ts",
+   "tests/evidence2-b02.test.ts",
+   "tests/evidence3-lifepapers.test.ts",
+   "src/engine/systems/health.ts:2203-2235 the appeal: upheld or overturned once, what was paid over the share back, the debt reduced, said",
+   "tests/remaining-health-billing.test.ts",
+   "tests/papers-complete.test.ts the papers and benefits areas’ 70 test files, 507 tests, run on 388d9a1e: all green; tests/b26-papers-repeats.test.ts, the repeat, reload and call-off probe on a New Haven life, green"
+  ]
+ },
+ "health.apply": {
+  "status": "Verified",
+  "by": [
+   "inspection",
+   "automated"
+  ],
+  "on": "388d9a1e",
+  "evidence": [
+   "tests/remaining-health-eligibility.test.ts",
+   "tests/remaining-09-hardship.test.ts",
+   "src/engine/systems/health.ts:2291-2307 the command: applyRefusal (src/engine/systems/health.ts:1185-1209), the notice of noncompliance and its decision on the calendar",
+   "tests/remaining-health-eligibility.test.ts",
+   "tests/remaining-09-hardship.test.ts",
+   "tests/papers-complete.test.ts the papers and benefits areas’ 70 test files, 507 tests, run on 388d9a1e: all green; tests/b26-papers-repeats.test.ts, the repeat, reload and call-off probe on a New Haven life, green"
+  ]
+ },
+ "health.apply_aid": {
+  "status": "Verified",
+  "by": [
+   "inspection",
+   "automated"
+  ],
+  "on": "388d9a1e",
+  "evidence": [
+   "tests/safetynet.test.ts",
+   "tests/defects-g8-6.test.ts",
+   "tests/evidence-g02-life.test.ts",
+   "src/engine/systems/health.ts:2429-2441 the command: aidRefusal (src/engine/systems/health.ts:2069-2076), free, a discount or refused by the year’s income",
+   "tests/remaining-health-billing.test.ts",
+   "tests/papers-complete.test.ts the papers and benefits areas’ 70 test files, 507 tests, run on 388d9a1e: all green; tests/b26-papers-repeats.test.ts, the repeat, reload and call-off probe on a New Haven life, green"
+  ]
+ },
+ "health.appointment": {
+  "status": "Verified",
+  "by": [
+   "inspection",
+   "automated"
+  ],
+  "on": "388d9a1e",
+  "evidence": [
+   "tests/b20-papers-health.test.ts",
+   "tests/evidence-g05-life.test.ts",
+   "tests/evidence2-b02.test.ts",
+   "tests/scope-health.test.ts",
+   "tests/evidence3-lifepapers.test.ts",
+   "src/engine/systems/appointments.ts:242-268 the visit: missed or not seen at a members’ practice, owed and said; kept, the care billed (src/engine/systems/health.ts:1835-1942), prescriptions renewed, a referral drawn",
+   "tests/b20-papers-health.test.ts",
+   "tests/clinics.test.ts",
+   "tests/papers-complete.test.ts the papers and benefits areas’ 70 test files, 507 tests, run on 388d9a1e: all green; tests/b26-papers-repeats.test.ts, the repeat, reload and call-off probe on a New Haven life, green"
+  ]
+ },
+ "health.bill": {
+  "status": "Verified",
+  "by": [
+   "inspection",
+   "automated"
+  ],
+  "on": "388d9a1e",
+  "evidence": [
+   "tests/b20-papers-health.test.ts",
+   "tests/evidence-g05-life.test.ts",
+   "tests/evidence2-b02.test.ts",
+   "tests/b20-papers-defects.test.ts",
+   "src/engine/systems/health.ts:2177-2191 the bill due: paid from the bank, else medical debt opened or added to and said",
+   "tests/remaining-health-billing.test.ts",
+   "tests/b20-papers-defects.test.ts",
+   "tests/papers-complete.test.ts the papers and benefits areas’ 70 test files, 507 tests, run on 388d9a1e: all green; tests/b26-papers-repeats.test.ts, the repeat, reload and call-off probe on a New Haven life, green"
+  ]
+ },
+ "health.book": {
+  "status": "Verified",
+  "by": [
+   "inspection",
+   "automated"
+  ],
+  "on": "388d9a1e",
+  "evidence": [
+   "tests/b20-papers-health.test.ts",
+   "tests/evidence-g03-life.test.ts",
+   "tests/evidence2-b03.test.ts",
+   "tests/evidence-g07-life.test.ts",
+   "src/engine/systems/appointments.ts:270-279 the command: a visit owed, none booked, the place’s wait; booked once, the need no longer owed",
+   "tests/b26-papers-repeats.test.ts",
+   "tests/b20-papers-health.test.ts",
+   "tests/papers-complete.test.ts the papers and benefits areas’ 70 test files, 507 tests, run on 388d9a1e: all green; tests/b26-papers-repeats.test.ts, the repeat, reload and call-off probe on a New Haven life, green"
+  ]
+ },
+ "health.cancel_appointment": {
+  "status": "Verified",
+  "by": [
+   "inspection",
+   "automated"
+  ],
+  "on": "388d9a1e",
+  "evidence": [
+   "tests/evidence-g03-life.test.ts",
+   "tests/evidence2-b02.test.ts",
+   "tests/defects-g23-1.test.ts",
+   "tests/evidence3-lifepapers.test.ts",
+   "src/engine/systems/appointments.ts:280-288 the command: the appointment and its calendar entry gone, the need owed again; a second press refused",
+   "tests/b26-papers-repeats.test.ts",
+   "tests/remaining-health-billing.test.ts",
+   "tests/papers-complete.test.ts the papers and benefits areas’ 70 test files, 507 tests, run on 388d9a1e: all green; tests/b26-papers-repeats.test.ts, the repeat, reload and call-off probe on a New Haven life, green"
+  ]
+ },
+ "health.choose_clinic": {
+  "status": "Verified",
+  "by": [
+   "inspection",
+   "automated"
+  ],
+  "on": "388d9a1e",
+  "evidence": [
+   "tests/evidence3-lifepapers.test.ts",
+   "tests/scope-health.test.ts",
+   "tests/evidence-g03-life.test.ts",
+   "tests/evidence2-b01.test.ts",
+   "src/engine/systems/health.ts:2373-2378 the command: clinicRefusal, the practice kept for the visits booked after",
+   "tests/clinics.test.ts",
+   "tests/b20-papers-health.test.ts",
+   "tests/papers-complete.test.ts the papers and benefits areas’ 70 test files, 507 tests, run on 388d9a1e: all green; tests/b26-papers-repeats.test.ts, the repeat, reload and call-off probe on a New Haven life, green"
+  ]
+ },
+ "health.choose_pharmacy": {
+  "status": "Verified",
+  "by": [
+   "inspection",
+   "automated"
+  ],
+  "on": "388d9a1e",
+  "evidence": [
+   "tests/evidence-g05-life.test.ts",
+   "tests/evidence-g03-life.test.ts",
+   "tests/carevisits.test.ts",
+   "tests/defects-g8-4.test.ts",
+   "src/engine/systems/health.ts:2365-2371 the command: a US chain where they live",
+   "tests/scope-health.test.ts",
+   "tests/papers-complete.test.ts the papers and benefits areas’ 70 test files, 507 tests, run on 388d9a1e: all green; tests/b26-papers-repeats.test.ts, the repeat, reload and call-off probe on a New Haven life, green"
+  ]
+ },
+ "health.dental": {
+  "status": "Verified",
+  "by": [
+   "inspection",
+   "automated"
+  ],
+  "on": "388d9a1e",
+  "evidence": [
+   "tests/defects-g8-4.test.ts",
+   "tests/costs.test.ts",
+   "tests/editorial-money-refusals.test.ts",
+   "src/engine/systems/health.ts:2394-2427 the command: a plan where one is sold, Yale’s year paid at once and not canceled, a monthly one’s first month paid as it starts",
+   "tests/scope-cover.test.ts",
+   "tests/scope-health.test.ts",
+   "tests/papers-complete.test.ts the papers and benefits areas’ 70 test files, 507 tests, run on 388d9a1e: all green; tests/b26-papers-repeats.test.ts, the repeat, reload and call-off probe on a New Haven life, green"
+  ]
+ },
+ "health.drop": {
+  "status": "Verified",
+  "by": [
+   "inspection",
+   "automated"
+  ],
+  "on": "388d9a1e",
+  "evidence": [
+   "tests/defects-g8-5.test.ts",
+   "tests/commands-kept.test.ts",
+   "tests/remaining-09-journeys.test.ts",
+   "src/engine/systems/health.ts:2343-2363 the command: ends with the month, opens no special enrollment, a renewal’s notice and its decision gone with it; dropped twice refused",
+   "tests/remaining-health-eligibility.test.ts",
+   "tests/scope-cover.test.ts",
+   "tests/papers-complete.test.ts the papers and benefits areas’ 70 test files, 507 tests, run on 388d9a1e: all green; tests/b26-papers-repeats.test.ts, the repeat, reload and call-off probe on a New Haven life, green"
+  ]
+ },
+ "health.enroll": {
+  "status": "Verified",
+  "by": [
+   "inspection",
+   "automated"
+  ],
+  "on": "388d9a1e",
+  "evidence": [
+   "tests/b20-papers-health.test.ts",
+   "tests/evidence3-lifepapers.test.ts",
+   "tests/evidence-g03-life.test.ts",
+   "tests/scope-cover.test.ts",
+   "tests/need-paths.test.ts",
+   "tests/remaining-health-eligibility.test.ts",
+   "src/engine/systems/health.ts:2262-2289 the command: mayEnroll (src/engine/systems/health.ts:657-695, marketplaceOpen src/engine/systems/health.ts:697-723), the program from its start with the care since priced again, or the marketplace from its first; enrolled twice refused",
+   "tests/b20-papers-health.test.ts",
+   "tests/remaining-health-eligibility.test.ts",
+   "tests/papers-complete.test.ts the papers and benefits areas’ 70 test files, 507 tests, run on 388d9a1e: all green; tests/b26-papers-repeats.test.ts, the repeat, reload and call-off probe on a New Haven life, green"
+  ]
+ },
+ "health.extra_supply": {
+  "status": "Verified",
+  "by": [
+   "inspection",
+   "automated"
+  ],
+  "on": "388d9a1e",
+  "evidence": [
+   "tests/evidence-g03-life.test.ts",
+   "tests/defects-g8-5.test.ts",
+   "tests/commands-kept.test.ts",
+   "src/engine/systems/health.ts:2237-2245 the command: extraSupplyRefusal (src/engine/systems/health.ts:2092-2097), every condition filled or none charged",
+   "tests/scope-health.test.ts",
+   "tests/papers-complete.test.ts the papers and benefits areas’ 70 test files, 507 tests, run on 388d9a1e: all green; tests/b26-papers-repeats.test.ts, the repeat, reload and call-off probe on a New Haven life, green"
+  ]
+ },
+ "health.month": {
+  "status": "Verified",
+  "by": [
+   "inspection",
+   "automated"
+  ],
+  "on": "388d9a1e",
+  "evidence": [
+   "tests/evidence-g05-life.test.ts",
+   "tests/evidence3-lifepapers.test.ts",
+   "tests/evidence-g07-life.test.ts",
+   "tests/scope-cover.test.ts",
+   "tests/b20-papers-defects.test.ts",
+   "src/engine/systems/health.ts:2128-2134 the month; src/engine/systems/health.ts:843-1017 healthMonth: a plan ended for status, the credit or Yale Health, the renewal once, premiums, the dental plan, cover lost said once with the way back, the debt on the record",
+   "tests/b20-papers-defects.test.ts",
+   "tests/evidence3-lifepapers.test.ts",
+   "tests/coverage-gaps-life.test.ts",
+   "tests/papers-complete.test.ts the papers and benefits areas’ 70 test files, 507 tests, run on 388d9a1e: all green; tests/b26-papers-repeats.test.ts, the repeat, reload and call-off probe on a New Haven life, green"
+  ]
+ },
+ "health.pay_bill": {
+  "status": "Verified",
+  "by": [
+   "inspection",
+   "automated"
+  ],
+  "on": "388d9a1e",
+  "evidence": [
+   "tests/evidence-g03-life.test.ts",
+   "tests/coverage-gaps-life.test.ts",
+   "tests/evidence2-b02.test.ts",
+   "tests/commands-kept.test.ts",
+   "src/engine/systems/health.ts:2443-2473 the command: the debt only, from the account named or the current one, refused short with what to do; cleared, every bill settled",
+   "tests/remaining-health-billing.test.ts",
+   "tests/b20-papers-defects.test.ts",
+   "tests/papers-complete.test.ts the papers and benefits areas’ 70 test files, 507 tests, run on 388d9a1e: all green; tests/b26-papers-repeats.test.ts, the repeat, reload and call-off probe on a New Haven life, green"
+  ]
+ },
+ "health.prepay": {
+  "status": "Deferred",
+  "by": [
+   "inspection",
+   "automated"
+  ],
+  "on": "388d9a1e",
+  "note": "Explicitly Deferred by the owner’s scope reset of 2026-10-09 (docs/REQUIREMENTS.md), as its effects row and the completion matrix’s deferred rows record it (effects row health.prepay): England’s certificate is for a life in England, and every life lives in New Haven, where prepayRefusal (src/engine/systems/health.ts:1604) refuses it in its words; its months held on a London fixture.",
+  "evidence": [
+   "tests/coverage-gaps-life.test.ts",
+   "src/engine/systems/health.ts:2247-2260 the command; src/engine/systems/health.ts:1604-1611 prepayRefusal",
+   "tests/coverage-gaps-life.test.ts",
+   "tests/papers-complete.test.ts the papers and benefits areas’ 70 test files, 507 tests, run on 388d9a1e: all green; tests/b26-papers-repeats.test.ts, the repeat, reload and call-off probe on a New Haven life, green"
+  ]
+ },
+ "health.request_hardship": {
+  "status": "Verified",
+  "by": [
+   "inspection",
+   "automated"
+  ],
+  "on": "388d9a1e",
+  "evidence": [
+   "tests/remaining-09-hardship.test.ts",
+   "tests/remaining-health-eligibility.test.ts",
+   "tests/remaining-09-journeys.test.ts",
+   "src/engine/systems/health.ts:2309-2320 the command: hardshipRefusal (src/engine/systems/health.ts:1162-1183), granted at once (src/engine/systems/health.ts:1136-1160)",
+   "tests/remaining-09-hardship.test.ts",
+   "tests/remaining-health-eligibility.test.ts",
+   "tests/papers-complete.test.ts the papers and benefits areas’ 70 test files, 507 tests, run on 388d9a1e: all green; tests/b26-papers-repeats.test.ts, the repeat, reload and call-off probe on a New Haven life, green"
+  ]
+ },
+ "health.therapy": {
+  "status": "Verified",
+  "by": [
+   "inspection",
+   "automated"
+  ],
+  "on": "388d9a1e",
+  "evidence": [
+   "tests/evidence-g04-life.test.ts",
+   "tests/b20-papers-defects.test.ts",
+   "tests/defects-g8-5.test.ts",
+   "tests/life-fixes.test.ts",
+   "src/engine/systems/therapy.ts:117-126 the command: therapyRefusal (src/engine/systems/therapy.ts:76-83), the first session on the practice’s working day; in a course already refused",
+   "tests/therapy.test.ts",
+   "tests/b20-papers-defects.test.ts",
+   "tests/papers-complete.test.ts the papers and benefits areas’ 70 test files, 507 tests, run on 388d9a1e: all green; tests/b26-papers-repeats.test.ts, the repeat, reload and call-off probe on a New Haven life, green"
+  ]
+ },
+ "health.therapy_session": {
+  "status": "Verified",
+  "by": [
+   "inspection",
+   "automated"
+  ],
+  "on": "388d9a1e",
+  "evidence": [
+   "tests/evidence-g05-life.test.ts",
+   "tests/b20-papers-defects.test.ts",
+   "tests/evidence-g04-life.test.ts",
+   "src/engine/systems/therapy.ts:128-157 the session: held next week where absent, ended with Yale Health’s cover, paid or billed, the course done at eight and the depression lifted or not, said once",
+   "tests/therapy.test.ts",
+   "tests/b20-papers-defects.test.ts",
+   "tests/papers-complete.test.ts the papers and benefits areas’ 70 test files, 507 tests, run on 388d9a1e: all green; tests/b26-papers-repeats.test.ts, the repeat, reload and call-off probe on a New Haven life, green"
+  ]
+ },
+ "health.treat": {
+  "status": "Verified",
+  "by": [
+   "inspection",
+   "automated"
+  ],
+  "on": "388d9a1e",
+  "evidence": [
+   "tests/evidence-g04-life.test.ts",
+   "tests/evidence-g07-life.test.ts",
+   "tests/carried.test.ts",
+   "tests/evidence-g33-ui.test.ts",
+   "src/engine/systems/health.ts:2380-2392 the command: a condition they have; switched on, the month’s care paid now or lapsed",
+   "tests/scope-health.test.ts",
+   "tests/papers-complete.test.ts the papers and benefits areas’ 70 test files, 507 tests, run on 388d9a1e: all green; tests/b26-papers-repeats.test.ts, the repeat, reload and call-off probe on a New Haven life, green"
+  ]
+ },
+ "health.week": {
+  "status": "Verified",
+  "by": [
+   "inspection",
+   "automated"
+  ],
+  "on": "388d9a1e",
+  "evidence": [
+   "tests/b20-papers-health.test.ts",
+   "tests/evidence-g05-life.test.ts",
+   "tests/evidence-g07-life.test.ts",
+   "src/engine/systems/health.ts:2136-2175 the week: illness booked or billed, EI’s week, a review booked when due, medicine filled, conditions left alone taking their toll",
+   "tests/scope-health.test.ts",
+   "tests/therapy.test.ts",
+   "tests/papers-complete.test.ts the papers and benefits areas’ 70 test files, 507 tests, run on 388d9a1e: all green; tests/b26-papers-repeats.test.ts, the repeat, reload and call-off probe on a New Haven life, green"
+  ]
+ },
+ "health.work_decided": {
+  "status": "Verified",
+  "by": [
+   "inspection",
+   "automated"
+  ],
+  "on": "388d9a1e",
+  "evidence": [
+   "tests/remaining-health-eligibility.test.ts",
+   "tests/evidence-g05-life.test.ts",
+   "tests/need-paths.test.ts",
+   "src/engine/systems/health.ts:2322-2341 the thirty days over: granted where a month meets it, else an application denied or a renewal ended ahead, said once; a notice answered passed by",
+   "tests/remaining-health-eligibility.test.ts",
+   "tests/remaining-09-hardship.test.ts",
+   "tests/papers-complete.test.ts the papers and benefits areas’ 70 test files, 507 tests, run on 388d9a1e: all green; tests/b26-papers-repeats.test.ts, the repeat, reload and call-off probe on a New Haven life, green"
+  ]
+ },
+ "look.country": {
+  "status": "Verified",
+  "by": [
+   "inspection",
+   "automated"
+  ],
+  "on": "388d9a1e",
+  "evidence": [
+   "tests/language-crossarea.test.ts",
+   "tests/guide-examples-start-day-body.test.ts",
+   "tests/looks.test.ts",
+   "src/ui/looks/place.tsx:438-505 a country: its parts, capital and money",
+   "tests/looks.test.ts",
+   "tests/guide.test.ts",
+   "tests/papers-complete.test.ts the papers and benefits areas’ 70 test files, 507 tests, run on 388d9a1e: all green; tests/b26-papers-repeats.test.ts, the repeat, reload and call-off probe on a New Haven life, green"
+  ]
+ },
+ "look.document": {
+  "status": "Verified",
+  "by": [
+   "inspection",
+   "automated"
+  ],
+  "on": "388d9a1e",
+  "evidence": [
+   "tests/b20-papers-defects.test.ts",
+   "tests/b20-papers-ids.test.ts",
+   "tests/defects-g25-1.test.ts",
+   "tests/remaining-papers.test.ts",
+   "tests/looks.test.ts",
+   "src/ui/looks/papers.tsx:149-238 a document: its standing, what it does (src/engine/systems/documents.ts words), its visit, its dates; gone where not held",
+   "tests/b20-papers-ids.test.ts",
+   "tests/looks.test.ts",
+   "tests/papers-complete.test.ts the papers and benefits areas’ 70 test files, 507 tests, run on 388d9a1e: all green; tests/b26-papers-repeats.test.ts, the repeat, reload and call-off probe on a New Haven life, green"
+  ]
+ },
+ "look.place": {
+  "status": "Verified",
+  "by": [
+   "inspection",
+   "automated"
+  ],
+  "on": "388d9a1e",
+  "evidence": [
+   "tests/guide-examples-start-day-body.test.ts",
+   "tests/looks.test.ts",
+   "src/ui/looks/place.tsx:155-299 a town: its profile, clock, light and money, the ways on",
+   "tests/looks.test.ts",
+   "tests/guide.test.ts",
+   "tests/papers-complete.test.ts the papers and benefits areas’ 70 test files, 507 tests, run on 388d9a1e: all green; tests/b26-papers-repeats.test.ts, the repeat, reload and call-off probe on a New Haven life, green"
+  ]
+ },
+ "look.region": {
+  "status": "Verified",
+  "by": [
+   "inspection",
+   "automated"
+  ],
+  "on": "388d9a1e",
+  "evidence": [
+   "tests/guide-examples-start-day-body.test.ts",
+   "tests/looks.test.ts",
+   "src/ui/looks/place.tsx:355-424 a region: its towns and its country",
+   "tests/looks.test.ts",
+   "tests/guide.test.ts",
+   "tests/papers-complete.test.ts the papers and benefits areas’ 70 test files, 507 tests, run on 388d9a1e: all green; tests/b26-papers-repeats.test.ts, the repeat, reload and call-off probe on a New Haven life, green"
+  ]
+ },
+ "notice.systems/appointments#bookIn": {
+  "status": "Verified",
+  "by": [
+   "inspection",
+   "automated"
+  ],
+  "on": "388d9a1e",
+  "evidence": [
+   "tests/evidence-g03-life.test.ts",
+   "tests/evidence2-b02.test.ts",
+   "tests/defects-g8-6.test.ts",
+   "src/engine/systems/appointments.ts:188-204 A Doctor’s Appointment or A Referral, once per booking, with the practice, the day and the wait",
+   "tests/b26-papers-repeats.test.ts",
+   "tests/guide-examples-papers.test.ts",
+   "tests/papers-complete.test.ts the papers and benefits areas’ 70 test files, 507 tests, run on 388d9a1e: all green; tests/b26-papers-repeats.test.ts, the repeat, reload and call-off probe on a New Haven life, green"
+  ]
+ },
+ "notice.systems/documents#issue": {
+  "status": "Verified",
+  "by": [
+   "inspection",
+   "automated"
+  ],
+  "on": "388d9a1e",
+  "evidence": [
+   "tests/b20-papers-ids.test.ts",
+   "tests/editorial-papers.test.ts",
+   "src/engine/systems/documents.ts:580-612 Issued, once, with its date and what the old passport took with it",
+   "tests/b20-papers-ids.test.ts",
+   "tests/editorial-papers.test.ts",
+   "tests/papers-complete.test.ts the papers and benefits areas’ 70 test files, 507 tests, run on 388d9a1e: all green; tests/b26-papers-repeats.test.ts, the repeat, reload and call-off probe on a New Haven life, green"
+  ]
+ },
+ "notice.systems/health#applyRenewal": {
+  "status": "Verified",
+  "by": [
+   "inspection",
+   "automated"
+  ],
+  "on": "388d9a1e",
+  "evidence": [
+   "tests/defects-g8-4.test.ts",
+   "tests/need-paths.test.ts",
+   "tests/remaining-09-hardship.test.ts",
+   "src/engine/systems/health.ts:1062-1085 renewed or changed at renewal, once, with the month that met the work",
+   "tests/remaining-09-hardship.test.ts",
+   "tests/remaining-health-eligibility.test.ts",
+   "tests/papers-complete.test.ts the papers and benefits areas’ 70 test files, 507 tests, run on 388d9a1e: all green; tests/b26-papers-repeats.test.ts, the repeat, reload and call-off probe on a New Haven life, green"
+  ]
+ },
+ "notice.systems/health#careFor": {
+  "status": "Verified",
+  "by": [
+   "inspection",
+   "automated"
+  ],
+  "on": "388d9a1e",
+  "evidence": [
+   "tests/b20-papers-health.test.ts",
+   "tests/evidence-g05-life.test.ts",
+   "tests/language-care17.test.ts",
+   "tests/claims.test.ts",
+   "src/engine/systems/health.ts:1835-1942 the care’s notice, who was seen and what’s owed, a denial’s own; the bill on the calendar once",
+   "tests/b20-papers-health.test.ts",
+   "tests/remaining-health-billing.test.ts",
+   "tests/papers-complete.test.ts the papers and benefits areas’ 70 test files, 507 tests, run on 388d9a1e: all green; tests/b26-papers-repeats.test.ts, the repeat, reload and call-off probe on a New Haven life, green"
+  ]
+ },
+ "notice.systems/health#endAhead": {
+  "status": "Verified",
+  "by": [
+   "inspection",
+   "automated"
+  ],
+  "on": "388d9a1e",
+  "evidence": [
+   "tests/evidence-g05-life.test.ts",
+   "tests/need-paths.test.ts",
+   "tests/defects4.test.ts",
+   "src/engine/systems/health.ts:1087-1093 Your Public Cover Ends, the month’s end ten days on, the marketplace’s days or none out of status",
+   "tests/remaining-health-eligibility.test.ts",
+   "tests/papers-complete.test.ts the papers and benefits areas’ 70 test files, 507 tests, run on 388d9a1e: all green; tests/b26-papers-repeats.test.ts, the repeat, reload and call-off probe on a New Haven life, green"
+  ]
+ },
+ "notice.systems/health#grantPending": {
+  "status": "Verified",
+  "by": [
+   "inspection",
+   "automated"
+  ],
+  "on": "388d9a1e",
+  "evidence": [
+   "tests/remaining-health-eligibility.test.ts",
+   "tests/remaining-09-hardship.test.ts",
+   "src/engine/systems/health.ts:1136-1160 Public Cover Approved or the renewal applied, the care since priced again, the marketplace plan ended as it begins",
+   "tests/remaining-09-hardship.test.ts",
+   "tests/remaining-health-eligibility.test.ts",
+   "tests/papers-complete.test.ts the papers and benefits areas’ 70 test files, 507 tests, run on 388d9a1e: all green; tests/b26-papers-repeats.test.ts, the repeat, reload and call-off probe on a New Haven life, green"
+  ]
+ },
+ "notice.systems/health#healthMonth": {
+  "status": "Verified",
+  "by": [
+   "inspection",
+   "automated"
+  ],
+  "on": "388d9a1e",
+  "evidence": [
+   "tests/evidence2-b06.test.ts",
+   "tests/defects3-50-70.test.ts",
+   "tests/evidence-g05-life.test.ts",
+   "tests/evidence3-lifepapers.test.ts",
+   "tests/defects-g8-5.test.ts",
+   "tests/b20-papers-defects.test.ts",
+   "tests/defects-g8-6.test.ts",
+   "tests/coverage-gaps-life.test.ts",
+   "src/engine/systems/health.ts:843-1017 the month’s notices: a plan ended or never begun, cover lost with the way back, the debt on the record, each once",
+   "tests/b20-papers-defects.test.ts",
+   "tests/evidence3-lifepapers.test.ts",
+   "tests/papers-complete.test.ts the papers and benefits areas’ 70 test files, 507 tests, run on 388d9a1e: all green; tests/b26-papers-repeats.test.ts, the repeat, reload and call-off probe on a New Haven life, green"
+  ]
+ },
+ "notice.systems/health#noticeOfNoncompliance": {
+  "status": "Verified",
+  "by": [
+   "inspection",
+   "automated"
+  ],
+  "on": "388d9a1e",
+  "evidence": [
+   "tests/defects-g8-4.test.ts",
+   "tests/remaining-health-eligibility.test.ts",
+   "tests/evidence-g05-life.test.ts",
+   "src/engine/systems/health.ts:1112-1134 the notice, its months, the day to answer by, what follows; its decision on the calendar",
+   "tests/remaining-health-eligibility.test.ts",
+   "tests/remaining-09-hardship.test.ts",
+   "tests/papers-complete.test.ts the papers and benefits areas’ 70 test files, 507 tests, run on 388d9a1e: all green; tests/b26-papers-repeats.test.ts, the repeat, reload and call-off probe on a New Haven life, green"
+  ]
+ },
+ "notice.systems/health#onsetMonth": {
+  "status": "Verified",
+  "by": [
+   "inspection",
+   "automated"
+  ],
+  "on": "388d9a1e",
+  "evidence": [
+   "tests/evidence-g05-life.test.ts",
+   "tests/evidence2-b01.test.ts",
+   "tests/evidence-g07-life.test.ts",
+   "src/engine/systems/health.ts:824-842 a condition’s onset, drawn once a month and said",
+   "tests/scope-health.test.ts",
+   "tests/papers-complete.test.ts the papers and benefits areas’ 70 test files, 507 tests, run on 388d9a1e: all green; tests/b26-papers-repeats.test.ts, the repeat, reload and call-off probe on a New Haven life, green"
+  ]
+ },
+ "notice.systems/health#renewalDue": {
+  "status": "Verified",
+  "by": [
+   "inspection",
+   "automated"
+  ],
+  "on": "388d9a1e",
+  "evidence": [
+   "tests/scope-health.test.ts",
+   "tests/evidence-g03-life.test.ts",
+   "src/engine/systems/health.ts:1367-1375 A Prescription Ran Out, the visit booked or how to; only where a prescription has a term (British Columbia), never in New Haven, held on a Vancouver life",
+   "tests/scope-health.test.ts",
+   "tests/evidence-g03-life.test.ts",
+   "tests/papers-complete.test.ts the papers and benefits areas’ 70 test files, 507 tests, run on 388d9a1e: all green; tests/b26-papers-repeats.test.ts, the repeat, reload and call-off probe on a New Haven life, green"
+  ]
+ },
+ "notice.systems/health#repriceCare": {
+  "status": "Verified",
+  "by": [
+   "inspection",
+   "automated"
+  ],
+  "on": "388d9a1e",
+  "evidence": [
+   "tests/remaining-health-billing.test.ts",
+   "tests/leave.test.ts",
+   "tests/remaining-09-journeys.test.ts",
+   "src/engine/systems/health.ts:1974-2067 Care Billed Again or Care Credited, the difference only, credits off bills, the debt, then the bank",
+   "tests/remaining-health-billing.test.ts",
+   "tests/remaining-09-journeys.test.ts",
+   "tests/papers-complete.test.ts the papers and benefits areas’ 70 test files, 507 tests, run on 388d9a1e: all green; tests/b26-papers-repeats.test.ts, the repeat, reload and call-off probe on a New Haven life, green"
+  ]
+ },
+ "notice.systems/permission#endOpt": {
+  "status": "Verified",
+  "by": [
+   "inspection",
+   "automated"
+  ],
+  "on": "388d9a1e",
+  "evidence": [
+   "tests/b22-authorization.test.ts",
+   "tests/b20-papers-work.test.ts",
+   "src/engine/systems/permission.ts:335-341 OPT Ended, once, the status with it, the work released (src/engine/systems/permission.ts:245, src/engine/systems/projobs.ts:1561)",
+   "tests/b22-authorization.test.ts",
+   "tests/b20-papers-work.test.ts",
+   "tests/papers-complete.test.ts the papers and benefits areas’ 70 test files, 507 tests, run on 388d9a1e: all green; tests/b26-papers-repeats.test.ts, the repeat, reload and call-off probe on a New Haven life, green"
+  ]
+ },
+ "promise.documents.passport-id>bank.accounts": {
+  "status": "Verified",
+  "by": [
+   "inspection",
+   "automated"
+  ],
+  "on": "388d9a1e",
+  "evidence": [
+   "tests/b20-papers-ids.test.ts",
+   "tests/evidence-g15-papers.test.ts",
+   "src/engine/content/guide/documents.ts:143-241 the entry; src/engine/systems/documents.ts:333-350 the passport; src/engine/systems/identity.ts:315-347 the card; src/engine/systems/taxid.ts:46-59 what the number asks; src/engine/systems/identity.ts:148-193 what the DMV asks; the banks read a photo ID (src/engine/systems/documents.ts:276-279)",
+   "tests/b20-papers-ids.test.ts",
+   "tests/guide-examples-papers.test.ts",
+   "tests/papers-complete.test.ts the papers and benefits areas’ 70 test files, 507 tests, run on 388d9a1e: all green; tests/b26-papers-repeats.test.ts, the repeat, reload and call-off probe on a New Haven life, green"
+  ]
+ },
+ "promise.documents.passport-id>bank.other-banks": {
+  "status": "Verified",
+  "by": [
+   "inspection",
+   "automated"
+  ],
+  "on": "388d9a1e",
+  "evidence": [
+   "tests/b20-papers-ids.test.ts",
+   "tests/remaining-papers.test.ts",
+   "tests/evidence-g16-papers.test.ts",
+   "src/engine/content/guide/documents.ts:143-241 the entry; src/engine/systems/documents.ts:333-350 the passport; src/engine/systems/identity.ts:315-347 the card; src/engine/systems/taxid.ts:46-59 what the number asks; src/engine/systems/identity.ts:148-193 what the DMV asks; the banks read a photo ID (src/engine/systems/documents.ts:276-279)",
+   "tests/b20-papers-ids.test.ts",
+   "tests/guide-examples-papers.test.ts",
+   "tests/papers-complete.test.ts the papers and benefits areas’ 70 test files, 507 tests, run on 388d9a1e: all green; tests/b26-papers-repeats.test.ts, the repeat, reload and call-off probe on a New Haven life, green"
+  ]
+ },
+ "promise.documents.passport-id>documents.work#evaluation": {
+  "status": "Verified",
+  "by": [
+   "inspection",
+   "automated"
+  ],
+  "on": "388d9a1e",
+  "evidence": [
+   "tests/b20-papers-ids.test.ts",
+   "src/engine/content/guide/documents.ts:143-241 the entry; src/engine/systems/documents.ts:333-350 the passport; src/engine/systems/identity.ts:315-347 the card; src/engine/systems/taxid.ts:46-59 what the number asks; src/engine/systems/identity.ts:148-193 what the DMV asks; the banks read a photo ID (src/engine/systems/documents.ts:276-279)",
+   "tests/b20-papers-ids.test.ts",
+   "tests/guide-examples-papers.test.ts",
+   "tests/papers-complete.test.ts the papers and benefits areas’ 70 test files, 507 tests, run on 388d9a1e: all green; tests/b26-papers-repeats.test.ts, the repeat, reload and call-off probe on a New Haven life, green"
+  ]
+ },
+ "promise.documents.passport-id>documents.work#prerequisite": {
+  "status": "Verified",
+  "by": [
+   "inspection",
+   "automated"
+  ],
+  "on": "388d9a1e",
+  "evidence": [
+   "tests/evidence-g16-papers.test.ts",
+   "tests/papers-transitions.test.ts",
+   "src/engine/content/guide/documents.ts:143-241 the entry; src/engine/systems/documents.ts:333-350 the passport; src/engine/systems/identity.ts:315-347 the card; src/engine/systems/taxid.ts:46-59 what the number asks; src/engine/systems/identity.ts:148-193 what the DMV asks; the banks read a photo ID (src/engine/systems/documents.ts:276-279)",
+   "tests/b20-papers-ids.test.ts",
+   "tests/guide-examples-papers.test.ts",
+   "tests/papers-complete.test.ts the papers and benefits areas’ 70 test files, 507 tests, run on 388d9a1e: all green; tests/b26-papers-repeats.test.ts, the repeat, reload and call-off probe on a New Haven life, green"
+  ]
+ },
+ "promise.documents.passport-id>documents.work#prerequisite-2": {
+  "status": "Verified",
+  "by": [
+   "inspection",
+   "automated"
+  ],
+  "on": "388d9a1e",
+  "evidence": [
+   "tests/b20-papers-ids.test.ts",
+   "tests/remaining-papers.test.ts",
+   "tests/defects-g24-1.test.ts",
+   "src/engine/content/guide/documents.ts:143-241 the entry; src/engine/systems/documents.ts:333-350 the passport; src/engine/systems/identity.ts:315-347 the card; src/engine/systems/taxid.ts:46-59 what the number asks; src/engine/systems/identity.ts:148-193 what the DMV asks; the banks read a photo ID (src/engine/systems/documents.ts:276-279)",
+   "tests/b20-papers-ids.test.ts",
+   "tests/guide-examples-papers.test.ts",
+   "tests/papers-complete.test.ts the papers and benefits areas’ 70 test files, 507 tests, run on 388d9a1e: all green; tests/b26-papers-repeats.test.ts, the repeat, reload and call-off probe on a New Haven life, green"
+  ]
+ },
+ "promise.documents.residence>bank.accounts": {
+  "status": "Verified",
+  "by": [
+   "inspection",
+   "automated"
+  ],
+  "on": "388d9a1e",
+  "evidence": [
+   "tests/commands-kept.test.ts",
+   "src/engine/content/guide/documents.ts:329-390 the entry says the routes are refused and why; src/engine/systems/residence.ts:114-149 routeRefusal; src/engine/systems/residence.ts:189-210 the commands",
+   "tests/residence.test.ts",
+   "tests/guide-examples-papers.test.ts",
+   "tests/papers-complete.test.ts the papers and benefits areas’ 70 test files, 507 tests, run on 388d9a1e: all green; tests/b26-papers-repeats.test.ts, the repeat, reload and call-off probe on a New Haven life, green"
+  ]
+ },
+ "promise.documents.residence>documents.passport-id": {
+  "status": "Verified",
+  "by": [
+   "inspection",
+   "automated"
+  ],
+  "on": "388d9a1e",
+  "evidence": [
+   "tests/citizenship.test.ts",
+   "src/engine/content/guide/documents.ts:329-390 the entry says the routes are refused and why; src/engine/systems/residence.ts:114-149 routeRefusal; src/engine/systems/residence.ts:189-210 the commands",
+   "tests/residence.test.ts",
+   "tests/guide-examples-papers.test.ts",
+   "tests/papers-complete.test.ts the papers and benefits areas’ 70 test files, 507 tests, run on 388d9a1e: all green; tests/b26-papers-repeats.test.ts, the repeat, reload and call-off probe on a New Haven life, green"
+  ]
+ },
+ "promise.documents.residence>documents.work": {
+  "status": "Verified",
+  "by": [
+   "inspection",
+   "automated"
+  ],
+  "on": "388d9a1e",
+  "evidence": [
+   "tests/b20-papers-work.test.ts",
+   "tests/residence.test.ts",
+   "src/engine/content/guide/documents.ts:329-390 the entry says the routes are refused and why; src/engine/systems/residence.ts:114-149 routeRefusal; src/engine/systems/residence.ts:189-210 the commands",
+   "tests/residence.test.ts",
+   "tests/guide-examples-papers.test.ts",
+   "tests/papers-complete.test.ts the papers and benefits areas’ 70 test files, 507 tests, run on 388d9a1e: all green; tests/b26-papers-repeats.test.ts, the repeat, reload and call-off probe on a New Haven life, green"
+  ]
+ },
+ "promise.documents.work>bank.other-banks": {
+  "status": "Verified",
+  "by": [
+   "inspection",
+   "automated"
+  ],
+  "on": "388d9a1e",
+  "evidence": [
+   "tests/b20-papers-ids.test.ts",
+   "tests/papers-complete.test.ts",
+   "src/engine/content/guide/documents.ts:242-328 the entry; src/engine/systems/permission.ts:131-144 optRefusal; src/engine/systems/permission.ts:393-429 OPT decided; src/engine/systems/permission.ts:312-341 its days and its end; src/engine/systems/permission.ts:431-465 the status",
+   "tests/b20-papers-work.test.ts",
+   "tests/b22-authorization.test.ts",
+   "tests/guide-examples-papers.test.ts",
+   "tests/papers-complete.test.ts the papers and benefits areas’ 70 test files, 507 tests, run on 388d9a1e: all green; tests/b26-papers-repeats.test.ts, the repeat, reload and call-off probe on a New Haven life, green"
+  ]
+ },
+ "promise.documents.work>documents.passport-id": {
+  "status": "Verified",
+  "by": [
+   "inspection",
+   "automated"
+  ],
+  "on": "388d9a1e",
+  "evidence": [
+   "tests/b20-papers-ids.test.ts",
+   "src/engine/content/guide/documents.ts:242-328 the entry; src/engine/systems/permission.ts:131-144 optRefusal; src/engine/systems/permission.ts:393-429 OPT decided; src/engine/systems/permission.ts:312-341 its days and its end; src/engine/systems/permission.ts:431-465 the status",
+   "tests/b20-papers-work.test.ts",
+   "tests/b22-authorization.test.ts",
+   "tests/guide-examples-papers.test.ts",
+   "tests/papers-complete.test.ts the papers and benefits areas’ 70 test files, 507 tests, run on 388d9a1e: all green; tests/b26-papers-repeats.test.ts, the repeat, reload and call-off probe on a New Haven life, green"
+  ]
+ },
+ "promise.documents.work>papers.benefits": {
+  "status": "Verified",
+  "by": [
+   "inspection",
+   "automated"
+  ],
+  "on": "388d9a1e",
+  "evidence": [
+   "tests/evidence-g15-papers.test.ts",
+   "tests/evidence-g16-papers.test.ts",
+   "tests/papers-complete.test.ts",
+   "src/engine/content/guide/documents.ts:242-328 the entry; src/engine/systems/permission.ts:131-144 optRefusal; src/engine/systems/permission.ts:393-429 OPT decided; src/engine/systems/permission.ts:312-341 its days and its end; src/engine/systems/permission.ts:431-465 the status",
+   "tests/b20-papers-work.test.ts",
+   "tests/b22-authorization.test.ts",
+   "tests/guide-examples-papers.test.ts",
+   "tests/papers-complete.test.ts the papers and benefits areas’ 70 test files, 507 tests, run on 388d9a1e: all green; tests/b26-papers-repeats.test.ts, the repeat, reload and call-off probe on a New Haven life, green"
+  ]
+ },
+ "promise.documents.work>papers.health-cover": {
+  "status": "Verified",
+  "by": [
+   "inspection",
+   "automated"
+  ],
+  "on": "388d9a1e",
+  "evidence": [
+   "tests/b20-papers-work.test.ts",
+   "tests/evidence3-lifepapers.test.ts",
+   "tests/evidence2-b06.test.ts",
+   "src/engine/content/guide/documents.ts:242-328 the entry; src/engine/systems/permission.ts:131-144 optRefusal; src/engine/systems/permission.ts:393-429 OPT decided; src/engine/systems/permission.ts:312-341 its days and its end; src/engine/systems/permission.ts:431-465 the status",
+   "tests/b20-papers-work.test.ts",
+   "tests/b22-authorization.test.ts",
+   "tests/guide-examples-papers.test.ts",
+   "tests/papers-complete.test.ts the papers and benefits areas’ 70 test files, 507 tests, run on 388d9a1e: all green; tests/b26-papers-repeats.test.ts, the repeat, reload and call-off probe on a New Haven life, green"
+  ]
+ },
+ "promise.documents.work>school.orientation": {
+  "status": "Verified",
+  "by": [
+   "inspection",
+   "automated"
+  ],
+  "on": "388d9a1e",
+  "evidence": [
+   "tests/evidence-g17-papers.test.ts",
+   "tests/papers-complete.test.ts",
+   "src/engine/content/guide/documents.ts:242-328 the entry; src/engine/systems/permission.ts:131-144 optRefusal; src/engine/systems/permission.ts:393-429 OPT decided; src/engine/systems/permission.ts:312-341 its days and its end; src/engine/systems/permission.ts:431-465 the status",
+   "tests/b20-papers-work.test.ts",
+   "tests/b22-authorization.test.ts",
+   "tests/guide-examples-papers.test.ts",
+   "tests/papers-complete.test.ts the papers and benefits areas’ 70 test files, 507 tests, run on 388d9a1e: all green; tests/b26-papers-repeats.test.ts, the repeat, reload and call-off probe on a New Haven life, green"
+  ]
+ },
+ "promise.documents.work>taxes.plan": {
+  "status": "Verified",
+  "by": [
+   "inspection",
+   "automated"
+  ],
+  "on": "388d9a1e",
+  "evidence": [
+   "tests/evidence-g17-papers.test.ts",
+   "src/engine/content/guide/documents.ts:242-328 the entry; src/engine/systems/permission.ts:131-144 optRefusal; src/engine/systems/permission.ts:393-429 OPT decided; src/engine/systems/permission.ts:312-341 its days and its end; src/engine/systems/permission.ts:431-465 the status",
+   "tests/b20-papers-work.test.ts",
+   "tests/b22-authorization.test.ts",
+   "tests/guide-examples-papers.test.ts",
+   "tests/papers-complete.test.ts the papers and benefits areas’ 70 test files, 507 tests, run on 388d9a1e: all green; tests/b26-papers-repeats.test.ts, the repeat, reload and call-off probe on a New Haven life, green"
+  ]
+ },
+ "promise.documents.work>taxes.return": {
+  "status": "Verified",
+  "by": [
+   "inspection",
+   "automated"
+  ],
+  "on": "388d9a1e",
+  "evidence": [
+   "tests/defects-g8-8.test.ts",
+   "src/engine/content/guide/documents.ts:242-328 the entry; src/engine/systems/permission.ts:131-144 optRefusal; src/engine/systems/permission.ts:393-429 OPT decided; src/engine/systems/permission.ts:312-341 its days and its end; src/engine/systems/permission.ts:431-465 the status",
+   "tests/b20-papers-work.test.ts",
+   "tests/b22-authorization.test.ts",
+   "tests/guide-examples-papers.test.ts",
+   "tests/papers-complete.test.ts the papers and benefits areas’ 70 test files, 507 tests, run on 388d9a1e: all green; tests/b26-papers-repeats.test.ts, the repeat, reload and call-off probe on a New Haven life, green"
+  ]
+ },
+ "promise.papers.benefits>body.look-after": {
+  "status": "Verified",
+  "by": [
+   "inspection",
+   "automated"
+  ],
+  "on": "388d9a1e",
+  "evidence": [
+   "tests/evidence-g16-papers.test.ts",
+   "tests/assistance.test.ts",
+   "src/engine/content/guide/papers.ts:599-689 the entry; src/engine/systems/assistance.ts:166-180 and src/engine/systems/assistance.ts:244-321 SNAP; src/engine/systems/unemployment.ts:244-322 the claim and its weeks, work-study and the Cabaret read in them",
+   "tests/b20-benefits-unemployment.test.ts",
+   "tests/assistance.test.ts",
+   "tests/guide-examples-papers.test.ts",
+   "tests/papers-complete.test.ts the papers and benefits areas’ 70 test files, 507 tests, run on 388d9a1e: all green; tests/b26-papers-repeats.test.ts, the repeat, reload and call-off probe on a New Haven life, green"
+  ]
+ },
+ "promise.papers.benefits>productions.cabaret": {
+  "status": "Verified",
+  "by": [
+   "inspection",
+   "automated"
+  ],
+  "on": "388d9a1e",
+  "evidence": [
+   "tests/evidence2-b06.test.ts",
+   "tests/evidence-g16-papers.test.ts",
+   "src/engine/content/guide/papers.ts:599-689 the entry; src/engine/systems/assistance.ts:166-180 and src/engine/systems/assistance.ts:244-321 SNAP; src/engine/systems/unemployment.ts:244-322 the claim and its weeks, work-study and the Cabaret read in them",
+   "tests/b20-benefits-unemployment.test.ts",
+   "tests/assistance.test.ts",
+   "tests/guide-examples-papers.test.ts",
+   "tests/papers-complete.test.ts the papers and benefits areas’ 70 test files, 507 tests, run on 388d9a1e: all green; tests/b26-papers-repeats.test.ts, the repeat, reload and call-off probe on a New Haven life, green"
+  ]
+ },
+ "promise.papers.benefits>school.shifts": {
+  "status": "Verified",
+  "by": [
+   "inspection",
+   "automated"
+  ],
+  "on": "388d9a1e",
+  "evidence": [
+   "tests/evidence2-b06.test.ts",
+   "tests/evidence-g16-papers.test.ts",
+   "tests/defects-g8-5.test.ts",
+   "src/engine/content/guide/papers.ts:599-689 the entry; src/engine/systems/assistance.ts:166-180 and src/engine/systems/assistance.ts:244-321 SNAP; src/engine/systems/unemployment.ts:244-322 the claim and its weeks, work-study and the Cabaret read in them",
+   "tests/b20-benefits-unemployment.test.ts",
+   "tests/assistance.test.ts",
+   "tests/guide-examples-papers.test.ts",
+   "tests/papers-complete.test.ts the papers and benefits areas’ 70 test files, 507 tests, run on 388d9a1e: all green; tests/b26-papers-repeats.test.ts, the repeat, reload and call-off probe on a New Haven life, green"
+  ]
+ },
+ "promise.papers.benefits>school.standing": {
+  "status": "Verified",
+  "by": [
+   "inspection",
+   "automated"
+  ],
+  "on": "388d9a1e",
+  "evidence": [
+   "tests/evidence-g16-papers.test.ts",
+   "src/engine/content/guide/papers.ts:599-689 the entry; src/engine/systems/assistance.ts:166-180 and src/engine/systems/assistance.ts:244-321 SNAP; src/engine/systems/unemployment.ts:244-322 the claim and its weeks, work-study and the Cabaret read in them",
+   "tests/b20-benefits-unemployment.test.ts",
+   "tests/assistance.test.ts",
+   "tests/guide-examples-papers.test.ts",
+   "tests/papers-complete.test.ts the papers and benefits areas’ 70 test files, 507 tests, run on 388d9a1e: all green; tests/b26-papers-repeats.test.ts, the repeat, reload and call-off probe on a New Haven life, green"
+  ]
+ },
+ "promise.papers.benefits>taxes.return": {
+  "status": "Verified",
+  "by": [
+   "inspection",
+   "automated"
+  ],
+  "on": "388d9a1e",
+  "evidence": [
+   "tests/evidence-g16-papers.test.ts",
+   "src/engine/content/guide/papers.ts:599-689 the entry; src/engine/systems/assistance.ts:166-180 and src/engine/systems/assistance.ts:244-321 SNAP; src/engine/systems/unemployment.ts:244-322 the claim and its weeks, work-study and the Cabaret read in them",
+   "tests/b20-benefits-unemployment.test.ts",
+   "tests/assistance.test.ts",
+   "tests/guide-examples-papers.test.ts",
+   "tests/papers-complete.test.ts the papers and benefits areas’ 70 test files, 507 tests, run on 388d9a1e: all green; tests/b26-papers-repeats.test.ts, the repeat, reload and call-off probe on a New Haven life, green"
+  ]
+ },
+ "promise.papers.conditions>bank.accounts": {
+  "status": "Verified",
+  "by": [
+   "inspection",
+   "automated"
+  ],
+  "on": "388d9a1e",
+  "evidence": [
+   "tests/evidence-g04-life.test.ts",
+   "src/engine/content/guide/papers.ts:516-598 the entry; src/engine/systems/health.ts:824-842 onset; src/engine/systems/health.ts:1229-1375 the month’s care, the medicine and the prescription; src/engine/systems/health.ts:2136-2175 the week’s toll; src/engine/systems/health.ts:2380-2392 treat",
+   "tests/scope-health.test.ts",
+   "tests/guide-examples-papers.test.ts",
+   "tests/papers-complete.test.ts the papers and benefits areas’ 70 test files, 507 tests, run on 388d9a1e: all green; tests/b26-papers-repeats.test.ts, the repeat, reload and call-off probe on a New Haven life, green"
+  ]
+ },
+ "promise.papers.conditions>body.how": {
+  "status": "Verified",
+  "by": [
+   "inspection",
+   "automated"
+  ],
+  "on": "388d9a1e",
+  "evidence": [
+   "tests/evidence-g05-life.test.ts",
+   "tests/costs.test.ts",
+   "src/engine/content/guide/papers.ts:516-598 the entry; src/engine/systems/health.ts:824-842 onset; src/engine/systems/health.ts:1229-1375 the month’s care, the medicine and the prescription; src/engine/systems/health.ts:2136-2175 the week’s toll; src/engine/systems/health.ts:2380-2392 treat",
+   "tests/scope-health.test.ts",
+   "tests/guide-examples-papers.test.ts",
+   "tests/papers-complete.test.ts the papers and benefits areas’ 70 test files, 507 tests, run on 388d9a1e: all green; tests/b26-papers-repeats.test.ts, the repeat, reload and call-off probe on a New Haven life, green"
+  ]
+ },
+ "promise.papers.conditions>day.calendar": {
+  "status": "Verified",
+  "by": [
+   "inspection",
+   "automated"
+  ],
+  "on": "388d9a1e",
+  "evidence": [
+   "tests/b20-papers-defects.test.ts",
+   "tests/evidence-g04-life.test.ts",
+   "src/engine/content/guide/papers.ts:516-598 the entry; src/engine/systems/health.ts:824-842 onset; src/engine/systems/health.ts:1229-1375 the month’s care, the medicine and the prescription; src/engine/systems/health.ts:2136-2175 the week’s toll; src/engine/systems/health.ts:2380-2392 treat",
+   "tests/scope-health.test.ts",
+   "tests/guide-examples-papers.test.ts",
+   "tests/papers-complete.test.ts the papers and benefits areas’ 70 test files, 507 tests, run on 388d9a1e: all green; tests/b26-papers-repeats.test.ts, the repeat, reload and call-off probe on a New Haven life, green"
+  ]
+ },
+ "promise.papers.conditions>papers.doctor": {
+  "status": "Verified",
+  "by": [
+   "inspection",
+   "automated"
+  ],
+  "on": "388d9a1e",
+  "evidence": [
+   "tests/evidence-g07-life.test.ts",
+   "tests/evidence2-b02.test.ts",
+   "src/engine/content/guide/papers.ts:516-598 the entry; src/engine/systems/health.ts:824-842 onset; src/engine/systems/health.ts:1229-1375 the month’s care, the medicine and the prescription; src/engine/systems/health.ts:2136-2175 the week’s toll; src/engine/systems/health.ts:2380-2392 treat",
+   "tests/scope-health.test.ts",
+   "tests/guide-examples-papers.test.ts",
+   "tests/papers-complete.test.ts the papers and benefits areas’ 70 test files, 507 tests, run on 388d9a1e: all green; tests/b26-papers-repeats.test.ts, the repeat, reload and call-off probe on a New Haven life, green"
+  ]
+ },
+ "promise.papers.doctor>day.calendar": {
+  "status": "Verified",
+  "by": [
+   "inspection",
+   "automated"
+  ],
+  "on": "388d9a1e",
+  "evidence": [
+   "tests/evidence2-b03.test.ts",
+   "tests/evidence-g03-life.test.ts",
+   "src/engine/content/guide/papers.ts:405-515 the entry; src/engine/systems/appointments.ts:175-204 booking; src/engine/systems/appointments.ts:242-288 the visit, the booking and the call-off; src/engine/systems/health.ts:1835-1942 the bill",
+   "tests/b26-papers-repeats.test.ts",
+   "tests/guide-examples-papers.test.ts",
+   "tests/papers-complete.test.ts the papers and benefits areas’ 70 test files, 507 tests, run on 388d9a1e: all green; tests/b26-papers-repeats.test.ts, the repeat, reload and call-off probe on a New Haven life, green"
+  ]
+ },
+ "promise.papers.doctor>day.needs": {
+  "status": "Verified",
+  "by": [
+   "inspection",
+   "automated"
+  ],
+  "on": "388d9a1e",
+  "evidence": [
+   "tests/evidence-g03-life.test.ts",
+   "tests/b20-papers-health.test.ts",
+   "tests/evidence2-b02.test.ts",
+   "src/engine/content/guide/papers.ts:405-515 the entry; src/engine/systems/appointments.ts:175-204 booking; src/engine/systems/appointments.ts:242-288 the visit, the booking and the call-off; src/engine/systems/health.ts:1835-1942 the bill",
+   "tests/b26-papers-repeats.test.ts",
+   "tests/guide-examples-papers.test.ts",
+   "tests/papers-complete.test.ts the papers and benefits areas’ 70 test files, 507 tests, run on 388d9a1e: all green; tests/b26-papers-repeats.test.ts, the repeat, reload and call-off probe on a New Haven life, green"
+  ]
+ },
+ "promise.papers.doctor>papers.conditions": {
+  "status": "Verified",
+  "by": [
+   "inspection",
+   "automated"
+  ],
+  "on": "388d9a1e",
+  "evidence": [
+   "tests/evidence-g05-life.test.ts",
+   "tests/evidence-g03-life.test.ts",
+   "src/engine/content/guide/papers.ts:405-515 the entry; src/engine/systems/appointments.ts:175-204 booking; src/engine/systems/appointments.ts:242-288 the visit, the booking and the call-off; src/engine/systems/health.ts:1835-1942 the bill",
+   "tests/b26-papers-repeats.test.ts",
+   "tests/guide-examples-papers.test.ts",
+   "tests/papers-complete.test.ts the papers and benefits areas’ 70 test files, 507 tests, run on 388d9a1e: all green; tests/b26-papers-repeats.test.ts, the repeat, reload and call-off probe on a New Haven life, green"
+  ]
+ },
+ "promise.papers.doctor>papers.health-cover": {
+  "status": "Verified",
+  "by": [
+   "inspection",
+   "automated"
+  ],
+  "on": "388d9a1e",
+  "evidence": [
+   "tests/b20-papers-health.test.ts",
+   "src/engine/content/guide/papers.ts:405-515 the entry; src/engine/systems/appointments.ts:175-204 booking; src/engine/systems/appointments.ts:242-288 the visit, the booking and the call-off; src/engine/systems/health.ts:1835-1942 the bill",
+   "tests/b26-papers-repeats.test.ts",
+   "tests/guide-examples-papers.test.ts",
+   "tests/papers-complete.test.ts the papers and benefits areas’ 70 test files, 507 tests, run on 388d9a1e: all green; tests/b26-papers-repeats.test.ts, the repeat, reload and call-off probe on a New Haven life, green"
+  ]
+ },
+ "promise.papers.health-cover>money.affairs": {
+  "status": "Verified",
+  "by": [
+   "inspection",
+   "automated"
+  ],
+  "on": "388d9a1e",
+  "evidence": [
+   "tests/b20-papers-defects.test.ts",
+   "tests/evidence-g05-life.test.ts",
+   "tests/evidence-g03-life.test.ts",
+   "src/engine/content/guide/papers.ts:238-404 the entry; src/engine/systems/health.ts:657-723 mayEnroll; src/engine/systems/health.ts:2262-2363 the commands; src/engine/systems/health.ts:843-1017 the month; src/engine/systems/taxreturn.ts:950-1136 the credit and the mandate on the return",
+   "tests/b20-papers-health.test.ts",
+   "tests/guide-examples-papers.test.ts",
+   "tests/papers-complete.test.ts the papers and benefits areas’ 70 test files, 507 tests, run on 388d9a1e: all green; tests/b26-papers-repeats.test.ts, the repeat, reload and call-off probe on a New Haven life, green"
+  ]
+ },
+ "promise.papers.health-cover>papers.conditions": {
+  "status": "Verified",
+  "by": [
+   "inspection",
+   "automated"
+  ],
+  "on": "388d9a1e",
+  "evidence": [
+   "tests/carried.test.ts",
+   "tests/evidence-g05-life.test.ts",
+   "src/engine/content/guide/papers.ts:238-404 the entry; src/engine/systems/health.ts:657-723 mayEnroll; src/engine/systems/health.ts:2262-2363 the commands; src/engine/systems/health.ts:843-1017 the month; src/engine/systems/taxreturn.ts:950-1136 the credit and the mandate on the return",
+   "tests/b20-papers-health.test.ts",
+   "tests/guide-examples-papers.test.ts",
+   "tests/papers-complete.test.ts the papers and benefits areas’ 70 test files, 507 tests, run on 388d9a1e: all green; tests/b26-papers-repeats.test.ts, the repeat, reload and call-off probe on a New Haven life, green"
+  ]
+ },
+ "promise.papers.health-cover>papers.doctor": {
+  "status": "Verified",
+  "by": [
+   "inspection",
+   "automated"
+  ],
+  "on": "388d9a1e",
+  "evidence": [
+   "tests/b20-papers-health.test.ts",
+   "tests/evidence-g05-life.test.ts",
+   "src/engine/content/guide/papers.ts:238-404 the entry; src/engine/systems/health.ts:657-723 mayEnroll; src/engine/systems/health.ts:2262-2363 the commands; src/engine/systems/health.ts:843-1017 the month; src/engine/systems/taxreturn.ts:950-1136 the credit and the mandate on the return",
+   "tests/b20-papers-health.test.ts",
+   "tests/guide-examples-papers.test.ts",
+   "tests/papers-complete.test.ts the papers and benefits areas’ 70 test files, 507 tests, run on 388d9a1e: all green; tests/b26-papers-repeats.test.ts, the repeat, reload and call-off probe on a New Haven life, green"
+  ]
+ },
+ "promise.papers.health-cover>school.leave": {
+  "status": "Verified",
+  "by": [
+   "inspection",
+   "automated"
+  ],
+  "on": "388d9a1e",
+  "evidence": [
+   "tests/b20-papers-health.test.ts",
+   "tests/evidence3-lifepapers.test.ts",
+   "tests/scope-cover.test.ts",
+   "src/engine/content/guide/papers.ts:238-404 the entry; src/engine/systems/health.ts:657-723 mayEnroll; src/engine/systems/health.ts:2262-2363 the commands; src/engine/systems/health.ts:843-1017 the month; src/engine/systems/taxreturn.ts:950-1136 the credit and the mandate on the return",
+   "tests/b20-papers-health.test.ts",
+   "tests/guide-examples-papers.test.ts",
+   "tests/papers-complete.test.ts the papers and benefits areas’ 70 test files, 507 tests, run on 388d9a1e: all green; tests/b26-papers-repeats.test.ts, the repeat, reload and call-off probe on a New Haven life, green"
+  ]
+ },
+ "promise.papers.health-cover>school.money": {
+  "status": "Verified",
+  "by": [
+   "inspection",
+   "automated"
+  ],
+  "on": "388d9a1e",
+  "evidence": [
+   "tests/need-paths.test.ts",
+   "src/engine/content/guide/papers.ts:238-404 the entry; src/engine/systems/health.ts:657-723 mayEnroll; src/engine/systems/health.ts:2262-2363 the commands; src/engine/systems/health.ts:843-1017 the month; src/engine/systems/taxreturn.ts:950-1136 the credit and the mandate on the return",
+   "tests/b20-papers-health.test.ts",
+   "tests/guide-examples-papers.test.ts",
+   "tests/papers-complete.test.ts the papers and benefits areas’ 70 test files, 507 tests, run on 388d9a1e: all green; tests/b26-papers-repeats.test.ts, the repeat, reload and call-off probe on a New Haven life, green"
+  ]
+ },
+ "promise.papers.health-cover>school.sick": {
+  "status": "Verified",
+  "by": [
+   "inspection",
+   "automated"
+  ],
+  "on": "388d9a1e",
+  "evidence": [
+   "tests/evidence-g05-life.test.ts",
+   "src/engine/content/guide/papers.ts:238-404 the entry; src/engine/systems/health.ts:657-723 mayEnroll; src/engine/systems/health.ts:2262-2363 the commands; src/engine/systems/health.ts:843-1017 the month; src/engine/systems/taxreturn.ts:950-1136 the credit and the mandate on the return",
+   "tests/b20-papers-health.test.ts",
+   "tests/guide-examples-papers.test.ts",
+   "tests/papers-complete.test.ts the papers and benefits areas’ 70 test files, 507 tests, run on 388d9a1e: all green; tests/b26-papers-repeats.test.ts, the repeat, reload and call-off probe on a New Haven life, green"
+  ]
+ },
+ "promise.papers.health-cover>taxes.return": {
+  "status": "Verified",
+  "by": [
+   "inspection",
+   "automated"
+  ],
+  "on": "388d9a1e",
+  "evidence": [
+   "tests/evidence3-lifepapers.test.ts",
+   "tests/remaining-health-eligibility.test.ts",
+   "src/engine/content/guide/papers.ts:238-404 the entry; src/engine/systems/health.ts:657-723 mayEnroll; src/engine/systems/health.ts:2262-2363 the commands; src/engine/systems/health.ts:843-1017 the month; src/engine/systems/taxreturn.ts:950-1136 the credit and the mandate on the return",
+   "tests/b20-papers-health.test.ts",
+   "tests/guide-examples-papers.test.ts",
+   "tests/papers-complete.test.ts the papers and benefits areas’ 70 test files, 507 tests, run on 388d9a1e: all green; tests/b26-papers-repeats.test.ts, the repeat, reload and call-off probe on a New Haven life, green"
+  ]
+ },
+ "promise.papers.overview>day.needs": {
+  "status": "Verified",
+  "by": [
+   "inspection",
+   "automated"
+  ],
+  "on": "388d9a1e",
+  "evidence": [
+   "tests/b20-papers-health.test.ts",
+   "tests/b20-papers-ids.test.ts",
+   "tests/b20-papers-work.test.ts",
+   "tests/evidence-g32-ui.test.ts",
+   "src/engine/content/guide/papers.ts:184-237 the entry; src/engine/systems/taxreturn.ts:1324-1366 the season; src/engine/systems/health.ts:843-1017 the month; the guide’s own start",
+   "tests/guide-examples-papers.test.ts",
+   "tests/guide.test.ts",
+   "tests/papers-complete.test.ts the papers and benefits areas’ 70 test files, 507 tests, run on 388d9a1e: all green; tests/b26-papers-repeats.test.ts, the repeat, reload and call-off probe on a New Haven life, green"
+  ]
+ },
+ "promise.papers.overview>papers.health-cover": {
+  "status": "Verified",
+  "by": [
+   "inspection",
+   "automated"
+  ],
+  "on": "388d9a1e",
+  "evidence": [
+   "tests/evidence3-lifepapers.test.ts",
+   "tests/evidence-g03-life.test.ts",
+   "src/engine/content/guide/papers.ts:184-237 the entry; src/engine/systems/taxreturn.ts:1324-1366 the season; src/engine/systems/health.ts:843-1017 the month; the guide’s own start",
+   "tests/guide-examples-papers.test.ts",
+   "tests/guide.test.ts",
+   "tests/papers-complete.test.ts the papers and benefits areas’ 70 test files, 507 tests, run on 388d9a1e: all green; tests/b26-papers-repeats.test.ts, the repeat, reload and call-off probe on a New Haven life, green"
+  ]
+ },
+ "promise.papers.overview>start.guide": {
+  "status": "Verified",
+  "by": [
+   "inspection",
+   "automated"
+  ],
+  "on": "388d9a1e",
+  "evidence": [
+   "tests/evidence-g32-ui.test.ts",
+   "tests/whynot-papers.test.ts",
+   "src/engine/content/guide/papers.ts:184-237 the entry; src/engine/systems/taxreturn.ts:1324-1366 the season; src/engine/systems/health.ts:843-1017 the month; the guide’s own start",
+   "tests/guide-examples-papers.test.ts",
+   "tests/guide.test.ts",
+   "tests/papers-complete.test.ts the papers and benefits areas’ 70 test files, 507 tests, run on 388d9a1e: all green; tests/b26-papers-repeats.test.ts, the repeat, reload and call-off probe on a New Haven life, green"
+  ]
+ },
+ "promise.papers.overview>taxes.return": {
+  "status": "Verified",
+  "by": [
+   "inspection",
+   "automated"
+  ],
+  "on": "388d9a1e",
+  "evidence": [
+   "tests/evidence-g16-papers.test.ts",
+   "src/engine/content/guide/papers.ts:184-237 the entry; src/engine/systems/taxreturn.ts:1324-1366 the season; src/engine/systems/health.ts:843-1017 the month; the guide’s own start",
+   "tests/guide-examples-papers.test.ts",
+   "tests/guide.test.ts",
+   "tests/papers-complete.test.ts the papers and benefits areas’ 70 test files, 507 tests, run on 388d9a1e: all green; tests/b26-papers-repeats.test.ts, the repeat, reload and call-off probe on a New Haven life, green"
+  ]
+ },
+ "promise.papers.pensions>bank.accounts": {
+  "status": "Verified",
+  "by": [
+   "inspection",
+   "automated"
+  ],
+  "on": "388d9a1e",
+  "evidence": [
+   "tests/socialsecurity.test.ts",
+   "src/engine/content/guide/papers.ts:690-759 the entry says who can claim and that no current life reaches one; src/engine/systems/socialsecurity.ts:119-156, src/engine/systems/statepension.ts:68-100, src/engine/systems/homepensions.ts:163-231, src/engine/systems/imss.ts:127-166 the claims and their payments on the return",
+   "tests/b20-papers-pension.test.ts",
+   "tests/guide-examples-papers.test.ts",
+   "tests/papers-complete.test.ts the papers and benefits areas’ 70 test files, 507 tests, run on 388d9a1e: all green; tests/b26-papers-repeats.test.ts, the repeat, reload and call-off probe on a New Haven life, green"
+  ]
+ },
+ "promise.papers.pensions>documents.work": {
+  "status": "Verified",
+  "by": [
+   "inspection",
+   "automated"
+  ],
+  "on": "388d9a1e",
+  "evidence": [
+   "tests/b20-papers-pension.test.ts",
+   "src/engine/content/guide/papers.ts:690-759 the entry says who can claim and that no current life reaches one; src/engine/systems/socialsecurity.ts:119-156, src/engine/systems/statepension.ts:68-100, src/engine/systems/homepensions.ts:163-231, src/engine/systems/imss.ts:127-166 the claims and their payments on the return",
+   "tests/b20-papers-pension.test.ts",
+   "tests/guide-examples-papers.test.ts",
+   "tests/papers-complete.test.ts the papers and benefits areas’ 70 test files, 507 tests, run on 388d9a1e: all green; tests/b26-papers-repeats.test.ts, the repeat, reload and call-off probe on a New Haven life, green"
+  ]
+ },
+ "promise.papers.pensions>productions.cabaret": {
+  "status": "Verified",
+  "by": [
+   "inspection",
+   "automated"
+  ],
+  "on": "388d9a1e",
+  "evidence": [
+   "tests/b20-papers-pension.test.ts",
+   "tests/coverage-gaps-papers.test.ts",
+   "src/engine/content/guide/papers.ts:690-759 the entry says who can claim and that no current life reaches one; src/engine/systems/socialsecurity.ts:119-156, src/engine/systems/statepension.ts:68-100, src/engine/systems/homepensions.ts:163-231, src/engine/systems/imss.ts:127-166 the claims and their payments on the return",
+   "tests/b20-papers-pension.test.ts",
+   "tests/guide-examples-papers.test.ts",
+   "tests/papers-complete.test.ts the papers and benefits areas’ 70 test files, 507 tests, run on 388d9a1e: all green; tests/b26-papers-repeats.test.ts, the repeat, reload and call-off probe on a New Haven life, green"
+  ]
+ },
+ "promise.papers.pensions>taxes.return": {
+  "status": "Verified",
+  "by": [
+   "inspection",
+   "automated"
+  ],
+  "on": "388d9a1e",
+  "evidence": [
+   "tests/papers-complete.test.ts",
+   "tests/socialsecurity.test.ts",
+   "src/engine/content/guide/papers.ts:690-759 the entry says who can claim and that no current life reaches one; src/engine/systems/socialsecurity.ts:119-156, src/engine/systems/statepension.ts:68-100, src/engine/systems/homepensions.ts:163-231, src/engine/systems/imss.ts:127-166 the claims and their payments on the return",
+   "tests/b20-papers-pension.test.ts",
+   "tests/guide-examples-papers.test.ts",
+   "tests/papers-complete.test.ts the papers and benefits areas’ 70 test files, 507 tests, run on 388d9a1e: all green; tests/b26-papers-repeats.test.ts, the repeat, reload and call-off probe on a New Haven life, green"
+  ]
+ }
+}

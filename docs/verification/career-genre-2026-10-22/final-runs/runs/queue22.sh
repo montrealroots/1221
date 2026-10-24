@@ -7,7 +7,9 @@
 # stopped, or the lanes to play again on a later commit: after #54's merge, P=f22d and the runs lanes on the paydays fix)
 # From that run a lane's clone shares the repository's objects (git clone --shared), 45 MB where a full one took 570.
 set -u
-S=/tmp/claude-0/-home-user-1221/ae4b55a6-159b-5760-be37-d57f1bd5bd30/scratchpad
+# The scratchpad is the session's own (from 2026-10-24, brief 26): until then brief 22's session's path was written here,
+# and a later session ran the lanes in a folder it could not read back.
+S="${S:-/tmp/claude-0/-home-user-1221/ae4b55a6-159b-5760-be37-d57f1bd5bd30/scratchpad}"
 COMMIT="$1"
 P="${P:-f22}"
 export JSTATE="$S/$P-jstate" JOUT="$S/$P-journeys" MOUT="$S/$P-final" J20STATE="$S/$P-b20state" J20OUT="$S/$P-b20journeys"

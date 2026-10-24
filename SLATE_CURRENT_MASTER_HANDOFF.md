@@ -1,6 +1,121 @@
-# Read First: Brief 24, UI Alignment, Home Spacing And Navigation Cleanup, Merged, 2026-10-23
+# Read First: Brief 26, The Complete Game Connectivity, Logic And Functionality Sweep, Complete, 2026-10-24
 
-**This section is the current status, and where a new session starts.** The owner gave brief 24
+**This section is the current status, and where a new session starts.** The owner gave brief 26
+(`docs/verification/briefs-2026-10-16/26-complete-game-connectivity-logic-and-functionality-sweep.txt`, kept as sent) in
+a new session on 2026-10-24, after an account of #62's changes in that session, with "We’re going to work on everything
+here plus starting with fix of whatever and all thats stale" and the instruction to work with one agent and no subagents.
+It was worked on `claude/connectivity-sweep`, from `main` at `b46ee301` (#63), in twelve milestones, complete on
+2026-10-24 at `28a8f3f1` (the commit after it holds that commit's gate receipt and changes documents alone), pushed
+after each and never force-pushed, and kept out of `main` until the owner's word
+("Do not merge to main or deploy without my explicit instruction."). Nothing is deployed. There is no stash and one worktree. `claude/peaceful-hamilton-59zdbb` holds brief 25, the other account's
+career expansion, eight commits past `main` on 2026-10-24, unmerged; brief 26 says not to begin that expansion, and
+nothing here builds on it.
+
+**Completion, by the matrix:** 634 of 658 rows in scope Implemented And Verified (96.3%); 20 Implemented, Verification Incomplete, 0 Partially Implemented, 0 Not Implemented, 0 Blocked Externally, 4 Decision Required, 41 Explicitly Deferred.
+
+  (634 at `b46ee301`; 588 from M1's first change to `src` until M12, when brief 22's final runs were played again on
+  `124bec77`, the sweep's last source commit, and the 46 rows measured on the whole source came back; 633 until the gate
+  on the commit that holds the fold, `82b644aa`, added its own row, `INT-gate`; 634 since.)
+
+- **Read first:** `docs/verification/sweep-2026-10-24/README.md` (the receipt), `CHECKPOINT.md` (the trail, with the
+  exact next step) and `REGISTER.md` (every feature's status).
+- **The baseline:** `npm run gate` in a clean clone of `b46ee301`, before any change, its exit read from its file: 0. 488 of 488
+  test files, 5,616 of 5,616 tests, none skipped, all 22 checks, the matrix at 634 of 658
+  (`docs/verification/sweep-2026-10-24/baseline/gate.txt`). Nothing failed before this work, so a failure after it is this
+  work's. (#62's merge message claimed a run on `8d4139de` with no receipt; `src`, `tests`, `tools` and `package.json`
+  are the same at `b46ee301`, so this is that receipt too.)
+- **What was stale after #62, and fixed (M1):** the effects matrix's rows that still had Calendar and Updates on the
+  menu and What Needs You holding every notice; the attributes matrix's destinations ("the rail") and Profile Sections
+  (seven of eight); brief 23's records (the menu's "eight places", a before walk of 2,112 steps that was 2,040, the
+  matrix at 588 with no sequel, the final runs "not made here"); the completion matrix's descriptions of Home's six
+  rows, the review's claim of 2026-10-13, now a `claim` as the code stands through the pipeline's inputs; two
+  stylesheet rules nothing matched; 21 failure pictures brief 23's stopped lanes left; the briefs' README with no row
+  for 23 and 24. The receipt's table has each, with what held it.
+- **The register (M2):** `tools/sweep.mjs` finds 1,145 features in the code (the effects matrix's 541 rows and 406
+  promises, 17 techniques, 149 genres, the Profile's 8 sections, 8 places, 12 persistence behaviours, 4 world
+  mechanics), each with the sweep's status, how it was verified, the commit, the evidence and what was found
+  (`docs/verification/sweep-2026-10-24/register/`). The gate's twenty-third check holds it to the code. Every feature
+  began Not Tested.
+- **The traces (M3 to M11), as they close:**
+  - **M3, creation to progression (`22bfcd35`):** 266 rows verified by reading and the tests, 1 of them fixed (creation's Genres
+    step marked six genres the career's projects carry as shown only; one list now, with a test that fails without it),
+    1 Blocked for the owner (`create.livesWhereBorn`, as since brief 20), 3 effects rows corrected.
+  - **M4, the School (read on `bd7b9d02`):** 294 rows verified by reading and the tests (the School's 145, the craft
+    area's 145 promises, the career's 4 Actor Showcase promises); the School's 86 test files green (1,304 tests);
+    repeated presses, cancellations and reloads traced at each command, kind and notice; no defect found. 559 Verified
+    in all, 584 Not Tested.
+  - **M5, the career (read on `9018cc4e`):** 89 rows verified by reading the four career systems and the content whole
+    and by the career's 32 test files (423 tests, green); no defect found; two things noted and not changed (an
+    engagement status nothing sets; the career's content bound of eleven parts, each once). 644 Verified in all, 499 Not
+    Tested.
+  - **M6, money and banking (read on `bf0ef776`):** 161 rows verified by reading and the money area's 69 test files
+    (843 tests, green); 1 defect found and fixed, in two parts: a card closed holding a credit balance kept the credit
+    in the closed account for good, and net worth counted a card's credit as nothing (`closeCard` in `credit.ts`,
+    `netWorth` in `finance.ts`; `tests/b26-card-credit-on-close.test.ts` fails on the old code and passes with the
+    fix). 800 Verified, 6 Fixed And Verified in all, 339 Not Tested.
+  - **M7, papers and benefits (read on `388d9a1e`):** 180 rows: 160 verified by reading the documents, identity,
+    tax-id, permission, residence, citizenship, visits, appointments, health, therapy, assistance, unemployment,
+    universal credit, home benefits, pension, federal and state tax systems at their handlers, by the two areas' 70
+    test files (507 tests, green) and by a repeat, reload and call-off probe on a New Haven life
+    (`tests/b26-papers-repeats.test.ts`); 20 kept Deferred as the owner's scope reset of 2026-10-09 left them (the
+    pensions and their payments, EI, Jobseeker's Allowance, Universal Credit and its close, residence abroad, settling,
+    renewing, naturalizing and its decision, England's prepayment certificate). No defect found; noted and not changed:
+    EI's posting category (`'benefits'` where every other benefit posts `'benefit'`, unreachable) and `idCardRefusal`'s
+    order. 960 Verified, 6 Fixed And Verified, 20 Deferred in all, 159 Not Tested.
+  - **M8, life, the body, the day and the world (read on `27369727`):** 84 rows verified by reading the life system
+    whole, the plans, the clock, the calendar, the world, the body, injury, birthdays, mortality, weather and seasons
+    systems, the clock's arming on load, the running clock, the holidays and the zones, by the life area's 55 test
+    files (732 tests, green) and by a repeat, reload and call-off probe on a New Haven life
+    (`tests/b26-life-repeats.test.ts`: a plan called off and skipped once each, a retried hour lived once, a night's
+    refusals). No defect found; noted and not changed: the birthday notice's missing player check, which nothing
+    needs. 1044 Verified, 6 Fixed And Verified, 20 Deferred in all, 75 Not Tested (the guide's 63, persistence's 12).
+  - **M9, notices, decisions, scheduled events, continuity and freshness (read on `86890e43`):** 14 rows verified by
+    reading the world's commands, `requireDecision` and `notify`, the game provider, the time controls, What Needs You,
+    Updates, the calendar's forms and the two looks, and every scheduled handler's opening guard and the nine arm
+    functions as one list (each re-reads its subject or runs its own clock once; each arm looks for a pending item
+    first); by the shell's 55 test files (green) and a probe (`tests/b26-needs-repeats.test.ts`: a question raised
+    twice, answered and dismissed twice, marked read twice, left to its date and reloaded). No defect found; noted and
+    not changed: Dismiss takes a question already answered, which nothing offers. 1058 Verified, 6 Fixed And Verified,
+    20 Deferred in all, 61 Not Tested (the guide's 49, persistence's 12).
+  - **M10, the guide, the tutorial, the help, navigation and the journeys (read on `691556f0`):** 49 rows verified by
+    reading the twenty chapters and their `opens` lists, the gate (`isOpen`, `lockedBecause`, `tutorial.read`, the
+    command bus's check while guided), Gated, LockedPanel, the strip and the dialog, the reference (?, /, How This
+    Works), the shell's rail, drawer and foot, the router, the menu's entries, Home's panels, the time controls' gates
+    and the start entries; by the area's 32 test files (413 tests, green); and by three browser walks on the built app
+    (`docs/verification/sweep-2026-10-24/walk/README.md`): a new life through creation and five chapters at 1440×900
+    and 844×390, every check true; every screen of two played lives at 1440×900, 844×390 and upright 390×844, 132
+    entries with no page or console problem and nothing wider, clipped, bleeding or squeezed; the cohesion walk's
+    eleven screens, nothing broken. No defect found; corrected `tools/cohesion-walk.mjs`, which hadn't run since
+    2026-09-24 and predated brief 20's birthplace picker and the guide's locks. 1107 Verified, 6 Fixed And Verified,
+    20 Deferred in all, 12 Not Tested (persistence's).
+  - **M11, persistence, save compatibility and the longer playthroughs (read on `3e359d4b`):** 12 rows verified by
+    reading `createSave`, `loadSave` and its once-on-opening list, `migrate` (by the save's shape; the number 94 since
+    2026-10-10), `openSlot`, `validateUniverse`, the adapter, the local store (gzip, IndexedDB, the move from local
+    storage, a backup before every write), the Base44 adapter and its three functions, the guard, the schema pin in its
+    two places, Your Saves, the start's stages and the autosave; by the area's 19 test files (172 tests, green), which
+    open the seven fixtures and play each on a day; and by a probe (`tests/b26-persistence-repeats.test.ts`: a save
+    needing a step opened twice and written once, a newer save refused twice, a failed write leaving the slot as it
+    was, a delete and a restore twice, thirty days reopened through the slot every five the same to the byte as the
+    life played straight; three mutations caught). Found and fixed: the guard reported a save's size in the string's
+    length where it measured its limit in UTF-8 bytes, a byte short per accented character on the row and the slot
+    card (`base44/shared/guard.js`; `tests/server-guards.test.ts`); it takes effect on the functions' next deployment.
+    1118 Verified, 7 Fixed And Verified, 20 Deferred, 1 Blocked in all; nothing Not Tested.
+- **M12, the final runs, the gate and the receipt (2026-10-24):** brief 22's fifteen lanes again on `124bec77`, the
+  sweep's last source commit, in clean clones: every step exit 0 but brief 19's lives diff, as since brief 19; against
+  the runs as committed at `b46ee301`, every number the same, only each lane's record and the real-time walks' pictures
+  differing (`docs/verification/career-genre-2026-10-22/final-runs/runs/README.md`). Folded, 633 of 658 (`82b644aa`);
+  the gate in a clean clone of it, its exit read from its file: exit 0; 494 of 494 test files, 5,638 of 5,638 tests, none skipped, all 23 checks, the matrix at 633 before its own row (`docs/verification/sweep-2026-10-24/final-runs/gate.txt`). Its figure folded, 634 of 658; the gate
+  again on the commit that holds it: exit 0, the same counts, the matrix at 634
+    (`docs/verification/sweep-2026-10-24/final-runs/gate-receipt.txt`). The receipt's last section is the report brief 26's §13 asks for.
+- **What waits on the owner:** the merge of `claude/connectivity-sweep` to `main`; a deployment of the functions after
+  the gate (`base44/shared/guard.js`'s reported size, M11); `create.livesWhereBorn` (Blocked since brief 20); the next
+  brief. The 20 Deferred rows and the matrix's 41 stay as the owner's scope reset left them; brief 25's career expansion
+  stays on `claude/peaceful-hamilton-59zdbb`, unmerged and not built on.
+- **Not merged, not deployed.** The schema stays 94.
+
+# Earlier: Brief 24, UI Alignment, Home Spacing And Navigation Cleanup, Merged, 2026-10-23
+
+**This section was the current status until brief 26 (2026-10-24).** The owner gave brief 24
 (`docs/verification/briefs-2026-10-16/24-finish-slates-ui-alignment-home-spacing-and-navigation-cleanup.txt`, kept
 verbatim) on brief 23's line, before it was merged. It was worked on `claude/peaceful-hamilton-59zdbb` from `113765a6`,
 pushed and never force-pushed. Until the owner's word it was kept out of `main` ("Keep the changes reviewable. Do not
@@ -69,7 +184,7 @@ force-pushed. Until the owner's word it was kept out of `main` ("Keep the change
 without my instruction."); it went to `main` with brief 24, in #62, merged as `a4e6795a` (above). Nothing is deployed.
 There is no stash and one worktree.
 
-**Completion, by the matrix:** 588 of 658 rows in scope Implemented And Verified (89.3%); 66 Implemented, Verification Incomplete, 0 Partially Implemented, 0 Not Implemented, 0 Blocked Externally, 4 Decision Required, 41 Explicitly Deferred.
+**Completion, by the matrix:** 634 of 658 rows in scope Implemented And Verified (96.3%); 20 Implemented, Verification Incomplete, 0 Partially Implemented, 0 Not Implemented, 0 Blocked Externally, 4 Decision Required, 41 Explicitly Deferred.
 
   (634 at brief 22's close. Brief 23 changed `src` (the interface, the guide's and the tutorial's words, and
   `content/attributes-matrix.ts`'s navigation table). So the 46 rows brief 22's final runs measured on the engine's or the

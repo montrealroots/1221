@@ -1,0 +1,249 @@
+SLATE — Complete Game Connectivity, Logic, And Functionality Sweep
+
+Use ONE individual agent for this entire task. Do not launch subagents, parallel agents, or separate research/review agents. Work sequentially through focused milestones while preserving the full scope and quality of the work.
+
+Your task is to audit and improve the ENTIRE CURRENT GAME so that every implemented feature reads the correct state, has its intended meaningful consequences, and connects cohesively and logically with the rest of the game.
+
+I want the game to flow smoothly and seamlessly as one connected experience. Nothing presented as a functioning gameplay feature should exist only for decoration.
+
+1. Establish The Actual Current State
+
+Read the repository instructions, current handoff, latest main branch, relevant unfinished work, existing coverage matrices, and verification records.
+
+You have already read PR #62; use it as context, but check for newer changes.
+
+Identify the exact starting commit and preserve existing work. Create a dedicated audit-and-fixes branch.
+
+Run the required baseline checks. Record actual results and distinguish pre-existing failures from anything introduced during this task.
+
+Audit what currently exists. Do not begin the planned career expansion or restore previously removed personal-life systems. Preserve explicitly deferred requirements as deferred unless I separately authorize them.
+
+2. Inventory Every Current Feature
+
+Build a complete inventory from the actual code and player-facing interfaces—not only from documentation.
+
+Include every implemented:
+- Creation choice and starting condition.
+- Player-profile field.
+- Attribute, genre, interest, and progression mechanic.
+- School activity and outcome.
+- Career activity and outcome.
+- Money and banking operation.
+- Paper, document, eligibility rule, and deadline.
+- Self-care and condition mechanic.
+- Weather, holiday, clock, and calendar mechanic.
+- Notification, message, decision, and scheduled event.
+- Tutorial, help link, drill-down screen, and navigation action.
+- Save, load, migration, and persistence behavior.
+
+These are examples, not a limit. Account for every current feature you discover.
+
+3. Trace Every Feature From Beginning To End
+
+For each feature, establish:
+
+Trigger or player action
+→ prerequisites and validation
+→ state read
+→ engine logic
+→ state changed
+→ immediate effects
+→ delayed effects
+→ effects on other relevant systems
+→ player-visible feedback
+→ persistence after saving and reloading
+→ tests proving the connection.
+
+Trace actual execution paths and consumers. A function existing, a field being stored, or a test passing does not by itself prove meaningful functionality.
+
+Confirm that downstream systems actually use the resulting state.
+
+4. Make “Reads, Bites, And Has Downstream Effects” Concrete
+
+READS:
+The feature uses the correct current information, including relevant player history, abilities, circumstances, time, location, eligibility, resources, and commitments.
+
+BITES:
+The action or event produces its intended meaningful result. Costs, benefits, restrictions, progress, failure, and opportunities genuinely affect gameplay where appropriate.
+
+DOWNSTREAM EFFECTS:
+Related systems respond correctly, both immediately and later. The result persists and can influence subsequent decisions and outcomes.
+
+Do not force every feature to affect every engine. Connect systems where the relationship is justified and avoid arbitrary effects.
+
+No dead buttons, fake choices, unused gameplay statistics, disconnected progression, misleading eligibility checks, or success messages that do not match actual results.
+
+Information and navigation must also serve a real purpose: explanations must be accurate, status displays must reflect live state, and links must reach useful destinations. Do not invent stat penalties for informational text merely to claim it has an effect.
+
+5. Verify Cohesive And Logical Behavior
+
+Check that all relevant systems agree about:
+- The player’s identity, history, current condition, and progression.
+- Current time, dates, deadlines, and event order.
+- Location and availability.
+- School and career commitments.
+- Eligibility and document validity.
+- Money, obligations, transactions, and amounts owed.
+- Active, completed, expired, and cancelled activities.
+- The reasons given for outcomes.
+
+Look for impossible combinations, stale state, contradictory screens, duplicated events, disconnected formulas, hidden overrides, and circular chains of effects.
+
+Check that cancelled or expired work cleans up dependent schedules, notices, eligibility, and financial obligations appropriately.
+
+Prevent repeated clicks, reloads, retries, or time advancement from duplicating rewards, payments, penalties, or progression.
+
+Use consistent underlying rules across UI, engine logic, tutorials, and tests.
+
+6. Verify Attributes, Genres, And Progression
+
+Trace every implemented attribute, genre, interest, and creation choice to its intended use.
+
+Identify anything that is displayed or described as meaningful but never affects behavior.
+
+Check:
+- Relevant proficiency changes appropriate outcomes.
+- Higher relevant ability improves expected performance under controlled comparable circumstances.
+- Multiple genres combine deliberately without accidental double counting.
+- Training changes persistent progression as intended.
+- Explanations match the formula actually used.
+- Irrelevant skills do not influence unrelated outcomes without justification.
+- High ability does not bypass eligibility, resources, or scheduling rules.
+- No dominant exploit makes meaningful choices unnecessary.
+
+Define measurable expectations before adjusting balance. Do not weaken acceptance criteria or tune against a single favorable example.
+
+7. Verify Smooth Player Journeys
+
+Walk complete journeys through the existing game rather than checking isolated screens only.
+
+Ensure the player can:
+- Understand what is happening.
+- Find the appropriate action.
+- See requirements and important consequences before committing.
+- Complete the action without unnecessary navigation.
+- Understand the outcome.
+- Reach the logical next step.
+- Return later and find consistent state and history.
+
+Check desktop and the approved landscape-only mobile experience.
+
+Preserve approved Home organization, sidebar navigation, help alignment, Title Case rules, and portrait-phone behavior.
+
+Fix broken links, unreachable controls, confusing transitions, stale notices, misleading feedback, overflow, clipping, and lost interaction state where found.
+
+Do not perform an unrelated visual redesign.
+
+8. Verify Continuity And Freshness
+
+The world must remember what happened.
+
+Check for duplicated introductions, repeated resolved notices, forgotten decisions, repeated rewards, and scenarios that contradict established history.
+
+Recurring activities should reflect the current situation and prior events. Freshness should come from meaningful context and consequences, not random wording that contradicts the engine.
+
+Preserve understandable terminology. Do not promise literally endless unique content or remove realistic recurring routines simply because they repeat.
+
+9. Repair Confirmed Problems
+
+Do not stop at producing an audit report when an actionable defect is within the current authorized scope.
+
+For each confirmed issue:
+- Record how to reproduce it.
+- Explain the expected and actual behavior.
+- Identify the underlying cause.
+- Implement the fix.
+- Add or strengthen a meaningful regression test.
+- Verify related downstream systems.
+- Update affected tutorials and explanations.
+- Preserve save compatibility or implement a tested migration where necessary.
+
+If intended behavior is unclear, consult existing requirements and history. Do not invent a major new mechanic merely to fill the uncertainty.
+
+Keep fixes focused and reviewable. Avoid replacing working architecture without a demonstrated reason.
+
+10. Test The Connections, Including Failure Paths
+
+Use appropriate unit, integration, browser, and end-to-end checks.
+
+Include:
+- Successful actions.
+- Invalid and unavailable actions.
+- Insufficient resources.
+- Conflicting commitments.
+- Declined, cancelled, failed, and expired activities.
+- Time-boundary and event-ordering cases.
+- Repeated actions and duplicate-trigger prevention.
+- Save/load before and after important transitions.
+- Different supported player profiles.
+- Contrasting attribute and genre proficiency.
+- Longer playthroughs that reveal accumulating or stale state.
+- Desktop and landscape mobile navigation.
+
+Use controlled comparisons: change a relevant input and verify that the intended outcome changes while unrelated behavior remains consistent.
+
+Where practical, demonstrate that a test catches a deliberately broken connection. Do not rely only on tests that mirror the implementation or check that text exists.
+
+Run targeted checks during development. Run the complete required gate on the final implementation commit and rerun affected checks after any subsequent changes.
+
+Use multiple representative playthroughs with recorded seeds or inputs. Repeat tests when coverage, changes, or failures justify it—not merely to inflate run counts.
+
+11. Maintain An Evidence-Based Coverage Matrix
+
+For every inventoried feature, record:
+- Intended purpose.
+- Player entry point.
+- Relevant implementation.
+- State read and changed.
+- Downstream consumers.
+- Immediate and delayed consequences.
+- Player-visible feedback.
+- Save/load behavior.
+- Verification evidence.
+- Status.
+
+Use honest statuses such as:
+Verified; Fixed And Verified; Failed; Blocked; Deferred; Not Tested.
+
+Distinguish code inspection, automated testing, and interactive verification.
+
+Do not quietly remove difficult requirements, count deferred work as completed, or treat documentation as proof of functioning gameplay.
+
+12. Preserve Tokens Without Reducing Quality
+
+Use one agent throughout.
+
+Maintain one current inventory and checkpoint instead of repeatedly rediscovering the repository.
+
+Reuse still-valid research and verification evidence. Read the files needed for each trace. Keep updates concise and avoid duplicate reports or unnecessary full-suite reruns.
+
+Save progress after each meaningful milestone, including the branch, commit, completed coverage, remaining work, and exact continuation steps.
+
+13. Completion And Final Report
+
+Continue until every feature in the defined current scope has an accounted-for audit status and every actionable in-scope defect found during the sweep has been fixed and verified, or a concrete blocker prevents further progress.
+
+Do not stop after planning, a superficial scan, or a few passing tests.
+
+If an external dependency or genuine product decision blocks one item, document it and continue independent work. If session limits interrupt you, leave an exact restart handoff rather than claiming completion.
+
+At the end, provide:
+- Starting and final commit SHAs.
+- Features audited and coverage totals.
+- Confirmed defects and fixes.
+- Examples demonstrating complete cross-system consequence chains.
+- Any decorative, disconnected, misleading, or unverified features still remaining.
+- Exact test commands, results, counts, and evidence locations.
+- Representative playthrough results.
+- Save compatibility results.
+- Any UI evidence relevant to fixes.
+- Remaining blockers, limitations, and deferred requirements.
+- A concise handoff for continued development.
+
+My target is complete coverage of the current game and evidence that its features function together cohesively, logically, smoothly, and seamlessly.
+
+Do not substitute “10/10,” “perfect,” or “zero possible bugs” for evidence. Report what you actually proved.
+
+Follow repository instructions for committing and pushing reviewable progress. Do not merge to main or deploy without my explicit instruction.
+
+Begin the sweep and carry out the authorized fixes using ONE agent.

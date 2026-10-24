@@ -1,0 +1,1449 @@
+{
+ "calendar.cancel": {
+  "status": "Verified",
+  "by": [
+   "inspection",
+   "automated"
+  ],
+  "on": "27369727",
+  "evidence": [
+   "tests/evidence-g02-life.test.ts",
+   "tests/plans.test.ts",
+   "tests/b20-life-looks.test.ts",
+   "src/engine/world/plans.ts:221-236 the command: a plan of your own, pending, not yet begun, taken off the calendar once; a second press refused",
+   "tests/plans.test.ts",
+   "tests/b26-life-repeats.test.ts",
+   "tests/b20-life-time.test.ts the life area’s 55 test files, run on 27369727: all green; tests/b26-life-repeats.test.ts, the plans called off and skipped, the retried hour and the night’s refusals on a New Haven life, green"
+  ]
+ },
+ "calendar.schedule": {
+  "status": "Verified",
+  "by": [
+   "inspection",
+   "automated"
+  ],
+  "on": "27369727",
+  "evidence": [
+   "tests/evidence-g01-life.test.ts",
+   "tests/b20-life-time.test.ts",
+   "tests/b20-life-bite.test.ts",
+   "tests/plans.test.ts",
+   "src/engine/world/plans.ts:178-192 the command: checkPlan (src/engine/world/plans.ts:82-120) first, one item with requiresPlayer, its length and its place",
+   "tests/plans.test.ts",
+   "tests/b26-life-repeats.test.ts",
+   "tests/b20-life-time.test.ts the life area’s 55 test files, run on 27369727: all green; tests/b26-life-repeats.test.ts, the plans called off and skipped, the retried hour and the night’s refusals on a New Haven life, green"
+  ]
+ },
+ "calendar.skip": {
+  "status": "Verified",
+  "by": [
+   "inspection",
+   "automated"
+  ],
+  "on": "27369727",
+  "evidence": [
+   "tests/coverage-gaps-life.test.ts",
+   "tests/evidence-g04-life.test.ts",
+   "tests/time-stops.test.ts",
+   "tests/time-controls.test.ts",
+   "src/engine/world/plans.ts:202-219 the command: a plan of your own, pending, begun; missed once and said once; a second press refused",
+   "tests/plans.test.ts",
+   "tests/time-stops.test.ts",
+   "tests/b26-life-repeats.test.ts",
+   "tests/b20-life-time.test.ts the life area’s 55 test files, run on 27369727: all green; tests/b26-life-repeats.test.ts, the plans called off and skipped, the retried hour and the night’s refusals on a New Haven life, green"
+  ]
+ },
+ "dial.condition": {
+  "status": "Verified",
+  "by": [
+   "inspection",
+   "automated"
+  ],
+  "on": "27369727",
+  "evidence": [
+   "tests/evidence-g06-life.test.ts",
+   "tests/evidence2-b03.test.ts",
+   "tests/wellbeing-bites.test.ts",
+   "tests/b20-life-fatigue.test.ts",
+   "src/engine/systems/life.ts:143-155 what rest can mend it to; src/engine/systems/life.ts:200-233 hungry and overwrought hours wear it; src/engine/systems/life.ts:890-980 a night mends it to the fitness and the age; src/engine/systems/life.ts:1045-1056 the midnight’s drift; src/engine/systems/mortality.ts:98-103 frailty reads it; src/ui/looks/wellbeing.tsx:103-126 its words",
+   "tests/condition-reach.test.ts",
+   "tests/b20-life-fatigue.test.ts",
+   "tests/mortality.test.ts",
+   "tests/b20-life-time.test.ts the life area’s 55 test files, run on 27369727: all green; tests/b26-life-repeats.test.ts, the plans called off and skipped, the retried hour and the night’s refusals on a New Haven life, green"
+  ]
+ },
+ "dial.energy": {
+  "status": "Verified",
+  "by": [
+   "inspection",
+   "automated"
+  ],
+  "on": "27369727",
+  "evidence": [
+   "tests/b20-life-bite.test.ts",
+   "tests/b20-life-fatigue.test.ts",
+   "tests/evidence-g06-life.test.ts",
+   "src/engine/systems/life.ts:200-233 drained by the waking hour at the debt woken with; src/engine/systems/life.ts:890-980 a night puts it back by its quality, the debt, the body and the age; src/engine/systems/life.ts:716-760 a workout’s cost; src/engine/systems/life.ts:297-310 read by readiness; src/ui/looks/wellbeing.tsx:103-126 its words",
+   "tests/b20-life-fatigue.test.ts",
+   "tests/b20-life-bite.test.ts",
+   "tests/evidence-g06-life.test.ts",
+   "tests/b20-life-time.test.ts the life area’s 55 test files, run on 27369727: all green; tests/b26-life-repeats.test.ts, the plans called off and skipped, the retried hour and the night’s refusals on a New Haven life, green"
+  ]
+ },
+ "dial.fitness": {
+  "status": "Verified",
+  "by": [
+   "inspection",
+   "automated"
+  ],
+  "on": "27369727",
+  "evidence": [
+   "tests/b20-life-bite.test.ts",
+   "tests/evidence-g06-life.test.ts",
+   "tests/evidence-g01-life.test.ts",
+   "tests/fitness.test.ts",
+   "src/engine/systems/life.ts:85-107 held three days after a workout, then falls to the everyday; src/engine/systems/life.ts:671-720 what a workout or a training class builds; src/engine/systems/life.ts:1045-1056 the midnight; the Profile’s Stamina",
+   "tests/fitness.test.ts",
+   "tests/b20-life-bite.test.ts",
+   "tests/b20-life-time.test.ts the life area’s 55 test files, run on 27369727: all green; tests/b26-life-repeats.test.ts, the plans called off and skipped, the retried hour and the night’s refusals on a New Haven life, green"
+  ]
+ },
+ "dial.hygiene": {
+  "status": "Verified",
+  "by": [
+   "inspection",
+   "automated"
+  ],
+  "on": "27369727",
+  "evidence": [
+   "tests/b20-life-bite.test.ts",
+   "tests/evidence-g06-life.test.ts",
+   "tests/evidence2-b02.test.ts",
+   "tests/evidence-g08-life.test.ts",
+   "src/engine/systems/life.ts:200-233 soils by the person, grimy under fifty; src/engine/systems/life.ts:716-760 a shower’s hundred, a workout’s sweat; src/engine/systems/life.ts:1092-1094 the morning’s 82, the owner’s rule of 2026-10-14",
+   "tests/b20-life-bite.test.ts",
+   "tests/evidence-g06-life.test.ts",
+   "tests/b20-life-time.test.ts the life area’s 55 test files, run on 27369727: all green; tests/b26-life-repeats.test.ts, the plans called off and skipped, the retried hour and the night’s refusals on a New Haven life, green"
+  ]
+ },
+ "dial.morale": {
+  "status": "Verified",
+  "by": [
+   "inspection",
+   "automated"
+  ],
+  "on": "27369727",
+  "evidence": [
+   "tests/b20-life-bite.test.ts",
+   "tests/evidence-g06-life.test.ts",
+   "tests/evidence-g08-life.test.ts",
+   "tests/wellbeing-bites.test.ts",
+   "tests/b20-life-fatigue.test.ts",
+   "src/engine/systems/life.ts:128-141 where it settles; src/engine/systems/life.ts:200-233 hunger and grime pull it; src/engine/systems/life.ts:716-760 a meal, a workout and unwinding lift it; src/engine/systems/life.ts:890-980 a night moves it toward where the body has it settle; src/engine/systems/injury.ts:114-166 and src/engine/systems/injury.ts:187-193 an injury",
+   "tests/b20-life-bite.test.ts",
+   "tests/evidence-g06-life.test.ts",
+   "tests/b20-life-time.test.ts the life area’s 55 test files, run on 27369727: all green; tests/b26-life-repeats.test.ts, the plans called off and skipped, the retried hour and the night’s refusals on a New Haven life, green"
+  ]
+ },
+ "dial.nourishment": {
+  "status": "Verified",
+  "by": [
+   "inspection",
+   "automated"
+  ],
+  "on": "27369727",
+  "evidence": [
+   "tests/b20-life-bite.test.ts",
+   "tests/evidence-g06-life.test.ts",
+   "tests/evidence-g01-life.test.ts",
+   "tests/b20-life-time.test.ts",
+   "src/engine/systems/life.ts:200-233 two an hour awake, hungry under twenty; src/engine/systems/life.ts:716-760 a meal’s fifty; src/engine/systems/life.ts:1074-1114 the day’s meals bought at midnight, or eaten thin",
+   "tests/b20-life-bite.test.ts",
+   "tests/body.test.ts",
+   "tests/b20-life-time.test.ts the life area’s 55 test files, run on 27369727: all green; tests/b26-life-repeats.test.ts, the plans called off and skipped, the retried hour and the night’s refusals on a New Haven life, green"
+  ]
+ },
+ "dial.sleepDebt": {
+  "status": "Verified",
+  "by": [
+   "inspection",
+   "automated"
+  ],
+  "on": "27369727",
+  "evidence": [
+   "tests/b20-life-fatigue.test.ts",
+   "tests/b20-life-bite.test.ts",
+   "tests/simulation.test.ts",
+   "tests/wellbeing-bites.test.ts",
+   "src/engine/systems/life.ts:200-233 a third of an hour each waking hour, held at sixty; src/engine/systems/life.ts:890-980 a night pays it, a short night adds its shortfall once; src/engine/systems/life.ts:1473-1514 what the suggestion asks for it",
+   "tests/b20-life-fatigue.test.ts",
+   "tests/b20-life-bite.test.ts",
+   "tests/b20-life-time.test.ts the life area’s 55 test files, run on 27369727: all green; tests/b26-life-repeats.test.ts, the plans called off and skipped, the retried hour and the night’s refusals on a New Haven life, green"
+  ]
+ },
+ "dial.stress": {
+  "status": "Verified",
+  "by": [
+   "inspection",
+   "automated"
+  ],
+  "on": "27369727",
+  "evidence": [
+   "tests/b20-life-bite.test.ts",
+   "tests/evidence-g06-life.test.ts",
+   "tests/evidence-g05-life.test.ts",
+   "tests/evidence-g08-life.test.ts",
+   "src/engine/systems/life.ts:200-233 clears with energy left and climbs on empty, by the person; over src/engine/systems/life.ts:80 OVERWROUGHT it costs condition; src/engine/systems/life.ts:716-760 a shower, a workout and unwinding ease it; src/engine/systems/life.ts:890-980 a night clears it by the mood; src/engine/systems/injury.ts:114-166 and src/engine/systems/injury.ts:187-193 an injury adds to it",
+   "tests/b20-life-bite.test.ts",
+   "tests/evidence-g06-life.test.ts",
+   "tests/b20-life-time.test.ts the life area’s 55 test files, run on 27369727: all green; tests/b26-life-repeats.test.ts, the plans called off and skipped, the retried hour and the night’s refusals on a New Haven life, green"
+  ]
+ },
+ "injury.comp": {
+  "status": "Verified",
+  "by": [
+   "inspection",
+   "automated"
+  ],
+  "on": "27369727",
+  "evidence": [
+   "tests/life-fixes.test.ts",
+   "tests/injury.test.ts",
+   "tests/evidence-g05-life.test.ts",
+   "tests/evidence-g07-life.test.ts",
+   "src/engine/systems/injury.ts:221-233 the week: compWeek (src/engine/systems/injury.ts:200-216) pays the days owed less the waiting days once, booked again to the time off’s end",
+   "tests/injury.test.ts",
+   "tests/life-fixes.test.ts",
+   "tests/evidence-g07-life.test.ts",
+   "tests/b20-life-time.test.ts the life area’s 55 test files, run on 27369727: all green; tests/b26-life-repeats.test.ts, the plans called off and skipped, the retried hour and the night’s refusals on a New Haven life, green"
+  ]
+ },
+ "life.birthday": {
+  "status": "Verified",
+  "by": [
+   "inspection",
+   "automated"
+  ],
+  "on": "27369727",
+  "evidence": [
+   "tests/evidence-g04-life.test.ts",
+   "tests/mortality.test.ts",
+   "src/engine/systems/birthdays.ts:79-95 the birthday: said while the life runs, the next on the calendar and the year to it drawn (src/engine/systems/birthdays.ts:48-56, src/engine/systems/mortality.ts:122-130); src/engine/systems/birthdays.ts:64-77 the year redrawn when the body moves a band",
+   "tests/evidence-g04-life.test.ts",
+   "tests/evidence-g08-life.test.ts",
+   "tests/mortality.test.ts",
+   "tests/b20-life-time.test.ts the life area’s 55 test files, run on 27369727: all green; tests/b26-life-repeats.test.ts, the plans called off and skipped, the retried hour and the night’s refusals on a New Haven life, green"
+  ]
+ },
+ "life.commitment": {
+  "status": "Verified",
+  "by": [
+   "inspection",
+   "automated"
+  ],
+  "on": "27369727",
+  "evidence": [
+   "tests/evidence-g04-life.test.ts",
+   "tests/b20-life-time.test.ts",
+   "tests/plans.test.ts",
+   "tests/evidence-g01-life.test.ts",
+   "src/engine/world/plans.ts:127-176 the plan’s moment: kept where present, missed quietly asleep or in hospital, missed and said at another commitment or elsewhere; once across a reload",
+   "tests/plans.test.ts",
+   "tests/b20-life-time.test.ts",
+   "tests/b26-life-repeats.test.ts",
+   "tests/b20-life-time.test.ts the life area’s 55 test files, run on 27369727: all green; tests/b26-life-repeats.test.ts, the plans called off and skipped, the retried hour and the night’s refusals on a New Haven life, green"
+  ]
+ },
+ "life.day_rollover": {
+  "status": "Verified",
+  "by": [
+   "inspection",
+   "automated"
+  ],
+  "on": "27369727",
+  "evidence": [
+   "tests/evidence-g04-life.test.ts",
+   "tests/defects-r3a-1.test.ts",
+   "tests/b20-life-time.test.ts",
+   "src/engine/systems/life.ts:361-371 the midnight, armed again for the next date; src/engine/systems/life.ts:1010-1025 dailyRollover: the body settled, the day on the scale, starvation, the night alone, the day’s meals, the event; src/engine/index.ts:178-192 and src/engine/index.ts:577-585 armed once",
+   "tests/b20-life-time.test.ts",
+   "tests/body.test.ts",
+   "tests/evidence-g04-life.test.ts",
+   "tests/b20-life-time.test.ts the life area’s 55 test files, run on 27369727: all green; tests/b26-life-repeats.test.ts, the plans called off and skipped, the retried hour and the night’s refusals on a New Haven life, green"
+  ]
+ },
+ "life.end": {
+  "status": "Verified",
+  "by": [
+   "inspection",
+   "automated"
+  ],
+  "on": "27369727",
+  "evidence": [
+   "tests/evidence-g04-life.test.ts",
+   "tests/mortality.test.ts",
+   "tests/evidence-g08-life.test.ts",
+   "src/engine/systems/mortality.ts:152-164 the end: the player’s only, the clock stopped and the age kept, said once; src/engine/systems/mortality.ts:139-148 starvation’s own end; src/engine/core/simulation.ts:486-492 nothing after it is worked",
+   "tests/mortality.test.ts",
+   "tests/evidence-g04-life.test.ts",
+   "tests/evidence-g08-life.test.ts",
+   "tests/b20-life-time.test.ts the life area’s 55 test files, run on 27369727: all green; tests/b26-life-repeats.test.ts, the plans called off and skipped, the retried hour and the night’s refusals on a New Haven life, green"
+  ]
+ },
+ "life.look_after": {
+  "status": "Verified",
+  "by": [
+   "inspection",
+   "automated"
+  ],
+  "on": "27369727",
+  "evidence": [
+   "tests/b20-life-bite.test.ts",
+   "tests/evidence-g06-life.test.ts",
+   "tests/evidence-g01-life.test.ts",
+   "tests/fitness.test.ts",
+   "tests/looking-after.test.ts",
+   "src/engine/systems/life.ts:456-500 the command: a retry with one actionId lived once, lookAfterRefusal (src/engine/systems/life.ts:630-668) first, a meal paid as it’s ordered, the hour lived and charged, then what it does (src/engine/systems/life.ts:716-760); a workout’s weather, repeat, injury and body (src/engine/systems/life.ts:53-58, src/engine/systems/injury.ts:114-166, src/engine/systems/body.ts:124-133)",
+   "tests/b20-life-bite.test.ts",
+   "tests/b26-life-repeats.test.ts",
+   "tests/evidence-g06-life.test.ts",
+   "tests/b20-life-time.test.ts the life area’s 55 test files, run on 27369727: all green; tests/b26-life-repeats.test.ts, the plans called off and skipped, the retried hour and the night’s refusals on a New Haven life, green"
+  ]
+ },
+ "life.night_alone": {
+  "status": "Verified",
+  "by": [
+   "inspection",
+   "automated"
+  ],
+  "on": "27369727",
+  "evidence": [
+   "tests/b20-life-time.test.ts",
+   "tests/evidence-g08-life.test.ts",
+   "tests/simulation.test.ts",
+   "tests/b20-life-fatigue.test.ts",
+   "src/engine/systems/life.ts:347-349 at every stop of an advance; src/engine/systems/life.ts:1255-1330 sleepAlone: a night nobody chose, from midnight or the stop, paid once in full once the clock is an hour into it (src/engine/systems/life.ts:1332-1364), forfeit where the player keeps them up",
+   "tests/b20-life-time.test.ts",
+   "tests/b20-life-fatigue.test.ts",
+   "tests/simulation.test.ts",
+   "tests/b20-life-time.test.ts the life area’s 55 test files, run on 27369727: all green; tests/b26-life-repeats.test.ts, the plans called off and skipped, the retried hour and the night’s refusals on a New Haven life, green"
+  ]
+ },
+ "life.sleep": {
+  "status": "Verified",
+  "by": [
+   "inspection",
+   "automated"
+  ],
+  "on": "27369727",
+  "evidence": [
+   "tests/b20-life-bite.test.ts",
+   "tests/b20-life-fatigue.test.ts",
+   "tests/b20-life-screens.test.ts",
+   "tests/evidence-g01-life.test.ts",
+   "tests/sleep-commitments.test.ts",
+   "tests/simulation.test.ts",
+   "tests/language-dynamic.test.ts",
+   "src/engine/systems/life.ts:373-455 the command: the hours and the start checked, the night on record as its wake, a bedtime at a commitment refused and the clock put back, the night paid by applySleep (src/engine/systems/life.ts:890-980), what it slept through said once",
+   "tests/sleep-commitments.test.ts",
+   "tests/b20-life-bite.test.ts",
+   "tests/b26-life-repeats.test.ts",
+   "tests/b20-life-time.test.ts the life area’s 55 test files, run on 27369727: all green; tests/b26-life-repeats.test.ts, the plans called off and skipped, the retried hour and the night’s refusals on a New Haven life, green"
+  ]
+ },
+ "life.waking": {
+  "status": "Verified",
+  "by": [
+   "inspection",
+   "automated"
+  ],
+  "on": "27369727",
+  "evidence": [
+   "tests/b20-life-time.test.ts",
+   "tests/wellbeing-bites.test.ts",
+   "tests/simulation.test.ts",
+   "src/engine/systems/life.ts:351-355 every stretch the clock crosses; src/engine/systems/life.ts:260-272 chargeWakingHours; src/engine/systems/life.ts:200-233 applyElapsedWellbeing, the same afternoon costing the same in one jump or in seconds",
+   "tests/b20-life-time.test.ts",
+   "tests/wellbeing-bites.test.ts",
+   "tests/simulation.test.ts",
+   "tests/b20-life-time.test.ts the life area’s 55 test files, run on 27369727: all green; tests/b26-life-repeats.test.ts, the plans called off and skipped, the retried hour and the night’s refusals on a New Haven life, green"
+  ]
+ },
+ "look.condition": {
+  "status": "Verified",
+  "by": [
+   "inspection",
+   "automated"
+  ],
+  "on": "27369727",
+  "evidence": [
+   "tests/b20-life-looks.test.ts",
+   "tests/looks.test.ts",
+   "tests/attributes-phase-2b.test.ts",
+   "tests/language-injury.test.ts",
+   "src/ui/looks/wellbeing.tsx:536-595 an injury or a long-term condition: when it mends, what it keeps them from (src/engine/systems/injury.ts:86-92)",
+   "tests/b20-life-looks.test.ts",
+   "tests/looks.test.ts",
+   "tests/language-injury.test.ts",
+   "tests/b20-life-time.test.ts the life area’s 55 test files, run on 27369727: all green; tests/b26-life-repeats.test.ts, the plans called off and skipped, the retried hour and the night’s refusals on a New Haven life, green"
+  ]
+ },
+ "look.day": {
+  "status": "Verified",
+  "by": [
+   "inspection",
+   "automated"
+  ],
+  "on": "27369727",
+  "evidence": [
+   "tests/b20-life-looks.test.ts",
+   "tests/looks.test.ts",
+   "tests/b20-life-screens.test.ts",
+   "src/ui/looks/day.tsx:290-470 a day: its entries, holidays, season and weather, the ways on to each",
+   "tests/b20-life-looks.test.ts",
+   "tests/looks.test.ts",
+   "tests/day-bounds.test.ts",
+   "tests/b20-life-time.test.ts the life area’s 55 test files, run on 27369727: all green; tests/b26-life-repeats.test.ts, the plans called off and skipped, the retried hour and the night’s refusals on a New Haven life, green"
+  ]
+ },
+ "look.daylight": {
+  "status": "Verified",
+  "by": [
+   "inspection",
+   "automated"
+  ],
+  "on": "27369727",
+  "evidence": [
+   "tests/b20-life-looks.test.ts",
+   "tests/looks.test.ts",
+   "src/ui/looks/place.tsx:604-681 the light today: sunrise, sunset and the year’s swing",
+   "tests/b20-life-looks.test.ts",
+   "tests/looks.test.ts",
+   "tests/b20-life-time.test.ts the life area’s 55 test files, run on 27369727: all green; tests/b26-life-repeats.test.ts, the plans called off and skipped, the retried hour and the night’s refusals on a New Haven life, green"
+  ]
+ },
+ "look.dial": {
+  "status": "Verified",
+  "by": [
+   "inspection",
+   "automated"
+  ],
+  "on": "27369727",
+  "evidence": [
+   "tests/b20-life-looks.test.ts",
+   "tests/looks.test.ts",
+   "tests/evidence-g06-life.test.ts",
+   "tests/evidence-g33-ui.test.ts",
+   "src/ui/looks/wellbeing.tsx:289-317 a dial: whose, its figure, what the measure is; src/ui/looks/wellbeing.tsx:103-126 the eight",
+   "tests/b20-life-looks.test.ts",
+   "tests/looks.test.ts",
+   "tests/evidence-g06-life.test.ts",
+   "tests/b20-life-time.test.ts the life area’s 55 test files, run on 27369727: all green; tests/b26-life-repeats.test.ts, the plans called off and skipped, the retried hour and the night’s refusals on a New Haven life, green"
+  ]
+ },
+ "look.entry": {
+  "status": "Verified",
+  "by": [
+   "inspection",
+   "automated"
+  ],
+  "on": "27369727",
+  "evidence": [
+   "tests/b20-life-looks.test.ts",
+   "tests/looks.test.ts",
+   "tests/defects-g5-1.test.ts",
+   "tests/journey-career.test.ts",
+   "src/ui/looks/day.tsx:562-733 a thing on the calendar: its status, when it was booked and settled, its hours and its place",
+   "tests/b20-life-looks.test.ts",
+   "tests/looks.test.ts",
+   "tests/calendar-entry-trip.test.ts",
+   "tests/b20-life-time.test.ts the life area’s 55 test files, run on 27369727: all green; tests/b26-life-repeats.test.ts, the plans called off and skipped, the retried hour and the night’s refusals on a New Haven life, green"
+  ]
+ },
+ "look.forecastday": {
+  "status": "Verified",
+  "by": [
+   "inspection",
+   "automated"
+  ],
+  "on": "27369727",
+  "evidence": [
+   "tests/b20-life-looks.test.ts",
+   "tests/looks.test.ts",
+   "tests/day-bounds.test.ts",
+   "src/ui/looks/weather.tsx:284-359 a day of the week ahead",
+   "tests/b20-life-looks.test.ts",
+   "tests/looks.test.ts",
+   "tests/day-bounds.test.ts",
+   "tests/b20-life-time.test.ts the life area’s 55 test files, run on 27369727: all green; tests/b26-life-repeats.test.ts, the plans called off and skipped, the retried hour and the night’s refusals on a New Haven life, green"
+  ]
+ },
+ "look.hours": {
+  "status": "Verified",
+  "by": [
+   "inspection",
+   "automated"
+  ],
+  "on": "27369727",
+  "evidence": [
+   "tests/b20-life-looks.test.ts",
+   "tests/looks.test.ts",
+   "tests/day-bounds.test.ts",
+   "tests/weather.test.ts",
+   "src/ui/looks/weather.tsx:483-539 the rest of today and a day’s hours, each at its own reading on the clock (src/engine/systems/weather.ts:299-357)",
+   "tests/b20-life-looks.test.ts",
+   "tests/looks.test.ts",
+   "tests/day-bounds.test.ts",
+   "tests/b20-life-time.test.ts the life area’s 55 test files, run on 27369727: all green; tests/b26-life-repeats.test.ts, the plans called off and skipped, the retried hour and the night’s refusals on a New Haven life, green"
+  ]
+ },
+ "look.plans": {
+  "status": "Verified",
+  "by": [
+   "inspection",
+   "automated"
+  ],
+  "on": "27369727",
+  "evidence": [
+   "tests/b20-life-looks.test.ts",
+   "tests/looks.test.ts",
+   "tests/evidence-g33-ui.test.ts",
+   "src/ui/looks/plans.tsx:155-198 the plans ahead",
+   "tests/b20-life-looks.test.ts",
+   "tests/looks.test.ts",
+   "tests/b20-life-time.test.ts the life area’s 55 test files, run on 27369727: all green; tests/b26-life-repeats.test.ts, the plans called off and skipped, the retried hour and the night’s refusals on a New Haven life, green"
+  ]
+ },
+ "look.season": {
+  "status": "Verified",
+  "by": [
+   "inspection",
+   "automated"
+  ],
+  "on": "27369727",
+  "evidence": [
+   "tests/b20-life-looks.test.ts",
+   "tests/looks.test.ts",
+   "src/ui/looks/day.tsx:811-904 the season where they stand, by latitude and date",
+   "tests/b20-life-looks.test.ts",
+   "tests/looks.test.ts",
+   "tests/b20-life-time.test.ts the life area’s 55 test files, run on 27369727: all green; tests/b26-life-repeats.test.ts, the plans called off and skipped, the retried hour and the night’s refusals on a New Haven life, green"
+  ]
+ },
+ "look.skyhour": {
+  "status": "Verified",
+  "by": [
+   "inspection",
+   "automated"
+  ],
+  "on": "27369727",
+  "evidence": [
+   "tests/b20-life-looks.test.ts",
+   "tests/looks.test.ts",
+   "src/ui/looks/weather.tsx:547-619 one hour’s sky",
+   "tests/b20-life-looks.test.ts",
+   "tests/looks.test.ts",
+   "tests/b20-life-time.test.ts the life area’s 55 test files, run on 27369727: all green; tests/b26-life-repeats.test.ts, the plans called off and skipped, the retried hour and the night’s refusals on a New Haven life, green"
+  ]
+ },
+ "look.skyweek": {
+  "status": "Verified",
+  "by": [
+   "inspection",
+   "automated"
+  ],
+  "on": "27369727",
+  "evidence": [
+   "tests/b20-life-looks.test.ts",
+   "tests/looks.test.ts",
+   "src/ui/looks/weather.tsx:627-683 the week ahead",
+   "tests/b20-life-looks.test.ts",
+   "tests/looks.test.ts",
+   "tests/b20-life-time.test.ts the life area’s 55 test files, run on 27369727: all green; tests/b26-life-repeats.test.ts, the plans called off and skipped, the retried hour and the night’s refusals on a New Haven life, green"
+  ]
+ },
+ "look.stretch": {
+  "status": "Verified",
+  "by": [
+   "inspection",
+   "automated"
+  ],
+  "on": "27369727",
+  "evidence": [
+   "tests/b20-life-looks.test.ts",
+   "tests/looks.test.ts",
+   "src/ui/looks/plans.tsx:79-147 a commitment’s hours, from its entry",
+   "tests/b20-life-looks.test.ts",
+   "tests/looks.test.ts",
+   "tests/b20-life-time.test.ts the life area’s 55 test files, run on 27369727: all green; tests/b26-life-repeats.test.ts, the plans called off and skipped, the retried hour and the night’s refusals on a New Haven life, green"
+  ]
+ },
+ "look.weather": {
+  "status": "Verified",
+  "by": [
+   "inspection",
+   "automated"
+  ],
+  "on": "27369727",
+  "evidence": [
+   "tests/b20-life-looks.test.ts",
+   "tests/looks.test.ts",
+   "tests/weather.test.ts",
+   "src/ui/looks/weather.tsx:158-269 the sky now: the hour’s condition and temperature, the day’s high and low, the week on",
+   "tests/b20-life-looks.test.ts",
+   "tests/looks.test.ts",
+   "tests/weather.test.ts",
+   "tests/b20-life-time.test.ts the life area’s 55 test files, run on 27369727: all green; tests/b26-life-repeats.test.ts, the plans called off and skipped, the retried hour and the night’s refusals on a New Haven life, green"
+  ]
+ },
+ "notice.core/simulation#top": {
+  "status": "Verified",
+  "by": [
+   "inspection",
+   "automated"
+  ],
+  "on": "27369727",
+  "evidence": [
+   "tests/simulation.test.ts",
+   "src/engine/core/simulation.ts:466-485 a scheduled handler that fails: missed, said in the player’s words, a refusal kept as the reason; src/engine/core/simulation.ts:566-574 a command raised mid-advance that fails, said once",
+   "tests/simulation.test.ts",
+   "tests/b20-life-time.test.ts the life area’s 55 test files, run on 27369727: all green; tests/b26-life-repeats.test.ts, the plans called off and skipped, the retried hour and the night’s refusals on a New Haven life, green"
+  ]
+ },
+ "notice.systems/injury#mayHurt": {
+  "status": "Verified",
+  "by": [
+   "inspection",
+   "automated"
+  ],
+  "on": "27369727",
+  "evidence": [
+   "tests/evidence-g04-life.test.ts",
+   "tests/evidence-g07-life.test.ts",
+   "tests/evidence-g09-life.test.ts",
+   "tests/language-injury.test.ts",
+   "src/engine/systems/injury.ts:114-166 an injury drawn once, its care billed or compensation’s, the mood and stress moved, said with the day it mends, what it keeps them from (src/engine/systems/injury.ts:86-92) and its cost",
+   "tests/language-injury.test.ts",
+   "tests/injury.test.ts",
+   "tests/evidence-g07-life.test.ts",
+   "tests/b20-life-time.test.ts the life area’s 55 test files, run on 27369727: all green; tests/b26-life-repeats.test.ts, the plans called off and skipped, the retried hour and the night’s refusals on a New Haven life, green"
+  ]
+ },
+ "promise.body.how>body.look-after": {
+  "status": "Verified",
+  "by": [
+   "inspection",
+   "automated"
+  ],
+  "on": "27369727",
+  "evidence": [
+   "tests/b20-life-bite.test.ts",
+   "tests/looking-after.test.ts",
+   "src/engine/content/guide/body.ts:96-175 the entry; src/engine/systems/life.ts:200-233 the waking hours; src/engine/systems/life.ts:297-335 readiness and the summary; src/engine/systems/injury.ts:63-73 what an injury stops; src/engine/systems/life.ts:630-668 the flu’s and an injury’s refusals",
+   "tests/guide-examples-start-day-body.test.ts",
+   "tests/b20-life-bite.test.ts",
+   "tests/guide.test.ts",
+   "tests/b20-life-time.test.ts the life area’s 55 test files, run on 27369727: all green; tests/b26-life-repeats.test.ts, the plans called off and skipped, the retried hour and the night’s refusals on a New Haven life, green"
+  ]
+ },
+ "promise.body.how>body.sleep": {
+  "status": "Verified",
+  "by": [
+   "inspection",
+   "automated"
+  ],
+  "on": "27369727",
+  "evidence": [
+   "tests/b20-life-bite.test.ts",
+   "tests/wellbeing-bites.test.ts",
+   "src/engine/content/guide/body.ts:96-175 the entry; src/engine/systems/life.ts:200-233 the waking hours; src/engine/systems/life.ts:297-335 readiness and the summary; src/engine/systems/injury.ts:63-73 what an injury stops; src/engine/systems/life.ts:630-668 the flu’s and an injury’s refusals",
+   "tests/guide-examples-start-day-body.test.ts",
+   "tests/b20-life-bite.test.ts",
+   "tests/guide.test.ts",
+   "tests/b20-life-time.test.ts the life area’s 55 test files, run on 27369727: all green; tests/b26-life-repeats.test.ts, the plans called off and skipped, the retried hour and the night’s refusals on a New Haven life, green"
+  ]
+ },
+ "promise.body.how>coursework.class": {
+  "status": "Verified",
+  "by": [
+   "inspection",
+   "automated"
+  ],
+  "on": "27369727",
+  "evidence": [
+   "tests/evidence-g01-life.test.ts",
+   "src/engine/content/guide/body.ts:96-175 the entry; src/engine/systems/life.ts:200-233 the waking hours; src/engine/systems/life.ts:297-335 readiness and the summary; src/engine/systems/injury.ts:63-73 what an injury stops; src/engine/systems/life.ts:630-668 the flu’s and an injury’s refusals",
+   "tests/guide-examples-start-day-body.test.ts",
+   "tests/b20-life-bite.test.ts",
+   "tests/guide.test.ts",
+   "tests/b20-life-time.test.ts the life area’s 55 test files, run on 27369727: all green; tests/b26-life-repeats.test.ts, the plans called off and skipped, the retried hour and the night’s refusals on a New Haven life, green"
+  ]
+ },
+ "promise.body.how>papers.conditions": {
+  "status": "Verified",
+  "by": [
+   "inspection",
+   "automated"
+  ],
+  "on": "27369727",
+  "evidence": [
+   "tests/evidence-g04-life.test.ts",
+   "src/engine/content/guide/body.ts:96-175 the entry; src/engine/systems/life.ts:200-233 the waking hours; src/engine/systems/life.ts:297-335 readiness and the summary; src/engine/systems/injury.ts:63-73 what an injury stops; src/engine/systems/life.ts:630-668 the flu’s and an injury’s refusals",
+   "tests/guide-examples-start-day-body.test.ts",
+   "tests/b20-life-bite.test.ts",
+   "tests/guide.test.ts",
+   "tests/b20-life-time.test.ts the life area’s 55 test files, run on 27369727: all green; tests/b26-life-repeats.test.ts, the plans called off and skipped, the retried hour and the night’s refusals on a New Haven life, green"
+  ]
+ },
+ "promise.body.how>productions.nights": {
+  "status": "Verified",
+  "by": [
+   "inspection",
+   "automated"
+  ],
+  "on": "27369727",
+  "evidence": [
+   "tests/integration-mastery.test.ts",
+   "tests/b20-life-fatigue.test.ts",
+   "src/engine/content/guide/body.ts:96-175 the entry; src/engine/systems/life.ts:200-233 the waking hours; src/engine/systems/life.ts:297-335 readiness and the summary; src/engine/systems/injury.ts:63-73 what an injury stops; src/engine/systems/life.ts:630-668 the flu’s and an injury’s refusals",
+   "tests/guide-examples-start-day-body.test.ts",
+   "tests/b20-life-bite.test.ts",
+   "tests/guide.test.ts",
+   "tests/b20-life-time.test.ts the life area’s 55 test files, run on 27369727: all green; tests/b26-life-repeats.test.ts, the plans called off and skipped, the retried hour and the night’s refusals on a New Haven life, green"
+  ]
+ },
+ "promise.body.how>school.sick": {
+  "status": "Verified",
+  "by": [
+   "inspection",
+   "automated"
+  ],
+  "on": "27369727",
+  "evidence": [
+   "tests/whynot-school.test.ts",
+   "tests/evidence-g05-life.test.ts",
+   "tests/b20-life-bite.test.ts",
+   "src/engine/content/guide/body.ts:96-175 the entry; src/engine/systems/life.ts:200-233 the waking hours; src/engine/systems/life.ts:297-335 readiness and the summary; src/engine/systems/injury.ts:63-73 what an injury stops; src/engine/systems/life.ts:630-668 the flu’s and an injury’s refusals",
+   "tests/guide-examples-start-day-body.test.ts",
+   "tests/b20-life-bite.test.ts",
+   "tests/guide.test.ts",
+   "tests/b20-life-time.test.ts the life area’s 55 test files, run on 27369727: all green; tests/b26-life-repeats.test.ts, the plans called off and skipped, the retried hour and the night’s refusals on a New Haven life, green"
+  ]
+ },
+ "promise.body.look-after>bank.payments": {
+  "status": "Verified",
+  "by": [
+   "inspection",
+   "automated"
+  ],
+  "on": "27369727",
+  "evidence": [
+   "tests/evidence-g12-money.test.ts",
+   "tests/evidence-g01-life.test.ts",
+   "src/engine/content/guide/body.ts:256-358 the entry; src/engine/systems/life.ts:456-500 the hour; src/engine/systems/life.ts:630-668 its refusals; src/engine/systems/life.ts:716-760 what each does; src/engine/systems/life.ts:782-845 the menu’s order and words; src/engine/systems/life.ts:53-58 the weather’s run",
+   "tests/guide-examples-start-day-body.test.ts",
+   "tests/b20-life-bite.test.ts",
+   "tests/evidence-g06-life.test.ts",
+   "tests/b20-life-time.test.ts the life area’s 55 test files, run on 27369727: all green; tests/b26-life-repeats.test.ts, the plans called off and skipped, the retried hour and the night’s refusals on a New Haven life, green"
+  ]
+ },
+ "promise.body.look-after>body.how": {
+  "status": "Verified",
+  "by": [
+   "inspection",
+   "automated"
+  ],
+  "on": "27369727",
+  "evidence": [
+   "tests/looking-after.test.ts",
+   "tests/b20-life-bite.test.ts",
+   "src/engine/content/guide/body.ts:256-358 the entry; src/engine/systems/life.ts:456-500 the hour; src/engine/systems/life.ts:630-668 its refusals; src/engine/systems/life.ts:716-760 what each does; src/engine/systems/life.ts:782-845 the menu’s order and words; src/engine/systems/life.ts:53-58 the weather’s run",
+   "tests/guide-examples-start-day-body.test.ts",
+   "tests/b20-life-bite.test.ts",
+   "tests/evidence-g06-life.test.ts",
+   "tests/b20-life-time.test.ts the life area’s 55 test files, run on 27369727: all green; tests/b26-life-repeats.test.ts, the plans called off and skipped, the retried hour and the night’s refusals on a New Haven life, green"
+  ]
+ },
+ "promise.body.look-after>craft.profile": {
+  "status": "Verified",
+  "by": [
+   "inspection",
+   "automated"
+  ],
+  "on": "27369727",
+  "evidence": [
+   "tests/attributes-phase-2b.test.ts",
+   "tests/fitness.test.ts",
+   "src/engine/content/guide/body.ts:256-358 the entry; src/engine/systems/life.ts:456-500 the hour; src/engine/systems/life.ts:630-668 its refusals; src/engine/systems/life.ts:716-760 what each does; src/engine/systems/life.ts:782-845 the menu’s order and words; src/engine/systems/life.ts:53-58 the weather’s run",
+   "tests/guide-examples-start-day-body.test.ts",
+   "tests/b20-life-bite.test.ts",
+   "tests/evidence-g06-life.test.ts",
+   "tests/b20-life-time.test.ts the life area’s 55 test files, run on 27369727: all green; tests/b26-life-repeats.test.ts, the plans called off and skipped, the retried hour and the night’s refusals on a New Haven life, green"
+  ]
+ },
+ "promise.body.look-after>day.weather": {
+  "status": "Verified",
+  "by": [
+   "inspection",
+   "automated"
+  ],
+  "on": "27369727",
+  "evidence": [
+   "tests/b20-life-bite.test.ts",
+   "tests/evidence-g07-life.test.ts",
+   "src/engine/content/guide/body.ts:256-358 the entry; src/engine/systems/life.ts:456-500 the hour; src/engine/systems/life.ts:630-668 its refusals; src/engine/systems/life.ts:716-760 what each does; src/engine/systems/life.ts:782-845 the menu’s order and words; src/engine/systems/life.ts:53-58 the weather’s run",
+   "tests/guide-examples-start-day-body.test.ts",
+   "tests/b20-life-bite.test.ts",
+   "tests/evidence-g06-life.test.ts",
+   "tests/b20-life-time.test.ts the life area’s 55 test files, run on 27369727: all green; tests/b26-life-repeats.test.ts, the plans called off and skipped, the retried hour and the night’s refusals on a New Haven life, green"
+  ]
+ },
+ "promise.body.look-after>papers.doctor": {
+  "status": "Verified",
+  "by": [
+   "inspection",
+   "automated"
+  ],
+  "on": "27369727",
+  "evidence": [
+   "tests/evidence-g01-life.test.ts",
+   "tests/evidence-g08-life.test.ts",
+   "src/engine/content/guide/body.ts:256-358 the entry; src/engine/systems/life.ts:456-500 the hour; src/engine/systems/life.ts:630-668 its refusals; src/engine/systems/life.ts:716-760 what each does; src/engine/systems/life.ts:782-845 the menu’s order and words; src/engine/systems/life.ts:53-58 the weather’s run",
+   "tests/guide-examples-start-day-body.test.ts",
+   "tests/b20-life-bite.test.ts",
+   "tests/evidence-g06-life.test.ts",
+   "tests/b20-life-time.test.ts the life area’s 55 test files, run on 27369727: all green; tests/b26-life-repeats.test.ts, the plans called off and skipped, the retried hour and the night’s refusals on a New Haven life, green"
+  ]
+ },
+ "promise.body.sleep>body.how": {
+  "status": "Verified",
+  "by": [
+   "inspection",
+   "automated"
+  ],
+  "on": "27369727",
+  "evidence": [
+   "tests/b20-life-bite.test.ts",
+   "tests/evidence-g08-life.test.ts",
+   "src/engine/content/guide/body.ts:176-255 the entry; src/engine/systems/life.ts:373-455 the night; src/engine/systems/life.ts:890-980 what it gives; src/engine/systems/life.ts:1255-1364 the night nobody chose; src/engine/systems/life.ts:1473-1514 the suggestion before a commitment",
+   "tests/guide-examples-start-day-body.test.ts",
+   "tests/sleep-commitments.test.ts",
+   "tests/time-stops.test.ts",
+   "tests/b20-life-time.test.ts the life area’s 55 test files, run on 27369727: all green; tests/b26-life-repeats.test.ts, the plans called off and skipped, the retried hour and the night’s refusals on a New Haven life, green"
+  ]
+ },
+ "promise.body.sleep>day.advance": {
+  "status": "Verified",
+  "by": [
+   "inspection",
+   "automated"
+  ],
+  "on": "27369727",
+  "evidence": [
+   "tests/evidence-g08-life.test.ts",
+   "tests/b20-life-time.test.ts",
+   "src/engine/content/guide/body.ts:176-255 the entry; src/engine/systems/life.ts:373-455 the night; src/engine/systems/life.ts:890-980 what it gives; src/engine/systems/life.ts:1255-1364 the night nobody chose; src/engine/systems/life.ts:1473-1514 the suggestion before a commitment",
+   "tests/guide-examples-start-day-body.test.ts",
+   "tests/sleep-commitments.test.ts",
+   "tests/time-stops.test.ts",
+   "tests/b20-life-time.test.ts the life area’s 55 test files, run on 27369727: all green; tests/b26-life-repeats.test.ts, the plans called off and skipped, the retried hour and the night’s refusals on a New Haven life, green"
+  ]
+ },
+ "promise.body.sleep>day.calendar": {
+  "status": "Verified",
+  "by": [
+   "inspection",
+   "automated"
+  ],
+  "on": "27369727",
+  "evidence": [
+   "tests/evidence-g01-life.test.ts",
+   "tests/sleep-commitments.test.ts",
+   "tests/b20-life-bite.test.ts",
+   "src/engine/content/guide/body.ts:176-255 the entry; src/engine/systems/life.ts:373-455 the night; src/engine/systems/life.ts:890-980 what it gives; src/engine/systems/life.ts:1255-1364 the night nobody chose; src/engine/systems/life.ts:1473-1514 the suggestion before a commitment",
+   "tests/guide-examples-start-day-body.test.ts",
+   "tests/sleep-commitments.test.ts",
+   "tests/time-stops.test.ts",
+   "tests/b20-life-time.test.ts the life area’s 55 test files, run on 27369727: all green; tests/b26-life-repeats.test.ts, the plans called off and skipped, the retried hour and the night’s refusals on a New Haven life, green"
+  ]
+ },
+ "promise.body.sleep>day.needs": {
+  "status": "Verified",
+  "by": [
+   "inspection",
+   "automated"
+  ],
+  "on": "27369727",
+  "evidence": [
+   "tests/evidence-g01-life.test.ts",
+   "tests/b20-life-bite.test.ts",
+   "src/engine/content/guide/body.ts:176-255 the entry; src/engine/systems/life.ts:373-455 the night; src/engine/systems/life.ts:890-980 what it gives; src/engine/systems/life.ts:1255-1364 the night nobody chose; src/engine/systems/life.ts:1473-1514 the suggestion before a commitment",
+   "tests/guide-examples-start-day-body.test.ts",
+   "tests/sleep-commitments.test.ts",
+   "tests/time-stops.test.ts",
+   "tests/b20-life-time.test.ts the life area’s 55 test files, run on 27369727: all green; tests/b26-life-repeats.test.ts, the plans called off and skipped, the retried hour and the night’s refusals on a New Haven life, green"
+  ]
+ },
+ "promise.body.sleep>school.standing": {
+  "status": "Verified",
+  "by": [
+   "inspection",
+   "automated"
+  ],
+  "on": "27369727",
+  "evidence": [
+   "tests/b20-life-bite.test.ts",
+   "tests/evidence-g24-school.test.ts",
+   "src/engine/content/guide/body.ts:176-255 the entry; src/engine/systems/life.ts:373-455 the night; src/engine/systems/life.ts:890-980 what it gives; src/engine/systems/life.ts:1255-1364 the night nobody chose; src/engine/systems/life.ts:1473-1514 the suggestion before a commitment",
+   "tests/guide-examples-start-day-body.test.ts",
+   "tests/sleep-commitments.test.ts",
+   "tests/time-stops.test.ts",
+   "tests/b20-life-time.test.ts the life area’s 55 test files, run on 27369727: all green; tests/b26-life-repeats.test.ts, the plans called off and skipped, the retried hour and the night’s refusals on a New Haven life, green"
+  ]
+ },
+ "promise.day.advance>body.look-after": {
+  "status": "Verified",
+  "by": [
+   "inspection",
+   "automated"
+  ],
+  "on": "27369727",
+  "evidence": [
+   "tests/b20-life-time.test.ts",
+   "tests/evidence-g04-life.test.ts",
+   "src/engine/content/guide/day.ts:243-313 the entry; src/engine/world/clock.ts:151-174 the Advance menu’s lines; src/engine/world/calendar.ts:256-299 what a jump crosses; src/engine/systems/life.ts:1255-1364 the nights a jump sleeps",
+   "tests/time-stops.test.ts",
+   "tests/b20-life-time.test.ts",
+   "tests/whynot-time.test.ts",
+   "tests/b20-life-time.test.ts the life area’s 55 test files, run on 27369727: all green; tests/b26-life-repeats.test.ts, the plans called off and skipped, the retried hour and the night’s refusals on a New Haven life, green"
+  ]
+ },
+ "promise.day.advance>body.sleep": {
+  "status": "Verified",
+  "by": [
+   "inspection",
+   "automated"
+  ],
+  "on": "27369727",
+  "evidence": [
+   "tests/b20-life-time.test.ts",
+   "tests/evidence-g08-life.test.ts",
+   "src/engine/content/guide/day.ts:243-313 the entry; src/engine/world/clock.ts:151-174 the Advance menu’s lines; src/engine/world/calendar.ts:256-299 what a jump crosses; src/engine/systems/life.ts:1255-1364 the nights a jump sleeps",
+   "tests/time-stops.test.ts",
+   "tests/b20-life-time.test.ts",
+   "tests/whynot-time.test.ts",
+   "tests/b20-life-time.test.ts the life area’s 55 test files, run on 27369727: all green; tests/b26-life-repeats.test.ts, the plans called off and skipped, the retried hour and the night’s refusals on a New Haven life, green"
+  ]
+ },
+ "promise.day.advance>day.calendar": {
+  "status": "Verified",
+  "by": [
+   "inspection",
+   "automated"
+  ],
+  "on": "27369727",
+  "evidence": [
+   "tests/b20-life-time.test.ts",
+   "tests/time-controls.test.ts",
+   "src/engine/content/guide/day.ts:243-313 the entry; src/engine/world/clock.ts:151-174 the Advance menu’s lines; src/engine/world/calendar.ts:256-299 what a jump crosses; src/engine/systems/life.ts:1255-1364 the nights a jump sleeps",
+   "tests/time-stops.test.ts",
+   "tests/b20-life-time.test.ts",
+   "tests/whynot-time.test.ts",
+   "tests/b20-life-time.test.ts the life area’s 55 test files, run on 27369727: all green; tests/b26-life-repeats.test.ts, the plans called off and skipped, the retried hour and the night’s refusals on a New Haven life, green"
+  ]
+ },
+ "promise.day.advance>day.clock": {
+  "status": "Verified",
+  "by": [
+   "inspection",
+   "automated"
+  ],
+  "on": "27369727",
+  "evidence": [
+   "tests/realclock.test.ts",
+   "tests/plans.test.ts",
+   "src/engine/content/guide/day.ts:243-313 the entry; src/engine/world/clock.ts:151-174 the Advance menu’s lines; src/engine/world/calendar.ts:256-299 what a jump crosses; src/engine/systems/life.ts:1255-1364 the nights a jump sleeps",
+   "tests/time-stops.test.ts",
+   "tests/b20-life-time.test.ts",
+   "tests/whynot-time.test.ts",
+   "tests/b20-life-time.test.ts the life area’s 55 test files, run on 27369727: all green; tests/b26-life-repeats.test.ts, the plans called off and skipped, the retried hour and the night’s refusals on a New Haven life, green"
+  ]
+ },
+ "promise.day.calendar>coursework.partners": {
+  "status": "Verified",
+  "by": [
+   "inspection",
+   "automated"
+  ],
+  "on": "27369727",
+  "evidence": [
+   "tests/time-stops.test.ts",
+   "src/engine/content/guide/day.ts:89-171 the entry; src/engine/world/calendar.ts:113-141 entries and clashes; src/engine/world/calendar.ts:150-198 the month; src/engine/world/plans.ts:127-176 a plan kept or missed; src/engine/systems/life.ts:373-455 a night across commitments",
+   "tests/calendar.test.ts",
+   "tests/b20-life-time.test.ts",
+   "tests/guide.test.ts",
+   "tests/b20-life-time.test.ts the life area’s 55 test files, run on 27369727: all green; tests/b26-life-repeats.test.ts, the plans called off and skipped, the retried hour and the night’s refusals on a New Haven life, green"
+  ]
+ },
+ "promise.day.calendar>day.advance": {
+  "status": "Verified",
+  "by": [
+   "inspection",
+   "automated"
+  ],
+  "on": "27369727",
+  "evidence": [
+   "tests/b20-life-time.test.ts",
+   "tests/time-controls.test.ts",
+   "src/engine/content/guide/day.ts:89-171 the entry; src/engine/world/calendar.ts:113-141 entries and clashes; src/engine/world/calendar.ts:150-198 the month; src/engine/world/plans.ts:127-176 a plan kept or missed; src/engine/systems/life.ts:373-455 a night across commitments",
+   "tests/calendar.test.ts",
+   "tests/b20-life-time.test.ts",
+   "tests/guide.test.ts",
+   "tests/b20-life-time.test.ts the life area’s 55 test files, run on 27369727: all green; tests/b26-life-repeats.test.ts, the plans called off and skipped, the retried hour and the night’s refusals on a New Haven life, green"
+  ]
+ },
+ "promise.day.calendar>day.clock": {
+  "status": "Verified",
+  "by": [
+   "inspection",
+   "automated"
+  ],
+  "on": "27369727",
+  "evidence": [
+   "tests/plans.test.ts",
+   "tests/tutorial.test.ts",
+   "src/engine/content/guide/day.ts:89-171 the entry; src/engine/world/calendar.ts:113-141 entries and clashes; src/engine/world/calendar.ts:150-198 the month; src/engine/world/plans.ts:127-176 a plan kept or missed; src/engine/systems/life.ts:373-455 a night across commitments",
+   "tests/calendar.test.ts",
+   "tests/b20-life-time.test.ts",
+   "tests/guide.test.ts",
+   "tests/b20-life-time.test.ts the life area’s 55 test files, run on 27369727: all green; tests/b26-life-repeats.test.ts, the plans called off and skipped, the retried hour and the night’s refusals on a New Haven life, green"
+  ]
+ },
+ "promise.day.calendar>day.plans": {
+  "status": "Verified",
+  "by": [
+   "inspection",
+   "automated"
+  ],
+  "on": "27369727",
+  "evidence": [
+   "tests/time-stops.test.ts",
+   "tests/coverage-gaps-life.test.ts",
+   "src/engine/content/guide/day.ts:89-171 the entry; src/engine/world/calendar.ts:113-141 entries and clashes; src/engine/world/calendar.ts:150-198 the month; src/engine/world/plans.ts:127-176 a plan kept or missed; src/engine/systems/life.ts:373-455 a night across commitments",
+   "tests/calendar.test.ts",
+   "tests/b20-life-time.test.ts",
+   "tests/guide.test.ts",
+   "tests/b20-life-time.test.ts the life area’s 55 test files, run on 27369727: all green; tests/b26-life-repeats.test.ts, the plans called off and skipped, the retried hour and the night’s refusals on a New Haven life, green"
+  ]
+ },
+ "promise.day.calendar>school.sick": {
+  "status": "Verified",
+  "by": [
+   "inspection",
+   "automated"
+  ],
+  "on": "27369727",
+  "evidence": [
+   "tests/b20-life-bite.test.ts",
+   "tests/evidence-g19-school.test.ts",
+   "src/engine/content/guide/day.ts:89-171 the entry; src/engine/world/calendar.ts:113-141 entries and clashes; src/engine/world/calendar.ts:150-198 the month; src/engine/world/plans.ts:127-176 a plan kept or missed; src/engine/systems/life.ts:373-455 a night across commitments",
+   "tests/calendar.test.ts",
+   "tests/b20-life-time.test.ts",
+   "tests/guide.test.ts",
+   "tests/b20-life-time.test.ts the life area’s 55 test files, run on 27369727: all green; tests/b26-life-repeats.test.ts, the plans called off and skipped, the retried hour and the night’s refusals on a New Haven life, green"
+  ]
+ },
+ "promise.day.calendar>school.standing": {
+  "status": "Verified",
+  "by": [
+   "inspection",
+   "automated"
+  ],
+  "on": "27369727",
+  "evidence": [
+   "tests/evidence-g24-school.test.ts",
+   "tests/b20-life-bite.test.ts",
+   "src/engine/content/guide/day.ts:89-171 the entry; src/engine/world/calendar.ts:113-141 entries and clashes; src/engine/world/calendar.ts:150-198 the month; src/engine/world/plans.ts:127-176 a plan kept or missed; src/engine/systems/life.ts:373-455 a night across commitments",
+   "tests/calendar.test.ts",
+   "tests/b20-life-time.test.ts",
+   "tests/guide.test.ts",
+   "tests/b20-life-time.test.ts the life area’s 55 test files, run on 27369727: all green; tests/b26-life-repeats.test.ts, the plans called off and skipped, the retried hour and the night’s refusals on a New Haven life, green"
+  ]
+ },
+ "promise.day.clock>body.how": {
+  "status": "Verified",
+  "by": [
+   "inspection",
+   "automated"
+  ],
+  "on": "27369727",
+  "evidence": [
+   "tests/b20-life-time.test.ts",
+   "tests/wellbeing-bites.test.ts",
+   "src/engine/content/guide/day.ts:172-242 the entry; src/engine/core/simulation.ts:441-447 the stop; src/engine/world/clock.ts:92-148 its answers; src/engine/systems/life.ts:351-355 the waking charge; src/engine/systems/life.ts:1255-1330 the night alone",
+   "tests/time-stops.test.ts",
+   "tests/b20-life-time.test.ts",
+   "tests/guide.test.ts",
+   "tests/b20-life-time.test.ts the life area’s 55 test files, run on 27369727: all green; tests/b26-life-repeats.test.ts, the plans called off and skipped, the retried hour and the night’s refusals on a New Haven life, green"
+  ]
+ },
+ "promise.day.clock>body.sleep": {
+  "status": "Verified",
+  "by": [
+   "inspection",
+   "automated"
+  ],
+  "on": "27369727",
+  "evidence": [
+   "tests/b20-life-time.test.ts",
+   "tests/evidence-g01-life.test.ts",
+   "src/engine/content/guide/day.ts:172-242 the entry; src/engine/core/simulation.ts:441-447 the stop; src/engine/world/clock.ts:92-148 its answers; src/engine/systems/life.ts:351-355 the waking charge; src/engine/systems/life.ts:1255-1330 the night alone",
+   "tests/time-stops.test.ts",
+   "tests/b20-life-time.test.ts",
+   "tests/guide.test.ts",
+   "tests/b20-life-time.test.ts the life area’s 55 test files, run on 27369727: all green; tests/b26-life-repeats.test.ts, the plans called off and skipped, the retried hour and the night’s refusals on a New Haven life, green"
+  ]
+ },
+ "promise.day.clock>day.advance": {
+  "status": "Verified",
+  "by": [
+   "inspection",
+   "automated"
+  ],
+  "on": "27369727",
+  "evidence": [
+   "tests/time-controls.test.ts",
+   "tests/b20-life-time.test.ts",
+   "src/engine/content/guide/day.ts:172-242 the entry; src/engine/core/simulation.ts:441-447 the stop; src/engine/world/clock.ts:92-148 its answers; src/engine/systems/life.ts:351-355 the waking charge; src/engine/systems/life.ts:1255-1330 the night alone",
+   "tests/time-stops.test.ts",
+   "tests/b20-life-time.test.ts",
+   "tests/guide.test.ts",
+   "tests/b20-life-time.test.ts the life area’s 55 test files, run on 27369727: all green; tests/b26-life-repeats.test.ts, the plans called off and skipped, the retried hour and the night’s refusals on a New Haven life, green"
+  ]
+ },
+ "promise.day.clock>day.calendar": {
+  "status": "Verified",
+  "by": [
+   "inspection",
+   "automated"
+  ],
+  "on": "27369727",
+  "evidence": [
+   "tests/plans.test.ts",
+   "tests/time-controls.test.ts",
+   "src/engine/content/guide/day.ts:172-242 the entry; src/engine/core/simulation.ts:441-447 the stop; src/engine/world/clock.ts:92-148 its answers; src/engine/systems/life.ts:351-355 the waking charge; src/engine/systems/life.ts:1255-1330 the night alone",
+   "tests/time-stops.test.ts",
+   "tests/b20-life-time.test.ts",
+   "tests/guide.test.ts",
+   "tests/b20-life-time.test.ts the life area’s 55 test files, run on 27369727: all green; tests/b26-life-repeats.test.ts, the plans called off and skipped, the retried hour and the night’s refusals on a New Haven life, green"
+  ]
+ },
+ "promise.day.needs>bank.upkeep": {
+  "status": "Verified",
+  "by": [
+   "inspection",
+   "automated"
+  ],
+  "on": "27369727",
+  "evidence": [
+   "tests/guide-examples-money.test.ts",
+   "src/engine/content/guide/day.ts:314-396 the entry; src/engine/world/world.ts:36-82 a question dismissed or answered once; src/engine/world/world.ts:111-137 past its date; src/engine/core/simulation.ts:466-485 what didn’t go through",
+   "tests/evidence-g04-life.test.ts",
+   "tests/simulation.test.ts",
+   "tests/guide.test.ts",
+   "tests/b20-life-time.test.ts the life area’s 55 test files, run on 27369727: all green; tests/b26-life-repeats.test.ts, the plans called off and skipped, the retried hour and the night’s refusals on a New Haven life, green"
+  ]
+ },
+ "promise.day.needs>body.sleep": {
+  "status": "Verified",
+  "by": [
+   "inspection",
+   "automated"
+  ],
+  "on": "27369727",
+  "evidence": [
+   "tests/evidence-g01-life.test.ts",
+   "tests/b20-life-bite.test.ts",
+   "src/engine/content/guide/day.ts:314-396 the entry; src/engine/world/world.ts:36-82 a question dismissed or answered once; src/engine/world/world.ts:111-137 past its date; src/engine/core/simulation.ts:466-485 what didn’t go through",
+   "tests/evidence-g04-life.test.ts",
+   "tests/simulation.test.ts",
+   "tests/guide.test.ts",
+   "tests/b20-life-time.test.ts the life area’s 55 test files, run on 27369727: all green; tests/b26-life-repeats.test.ts, the plans called off and skipped, the retried hour and the night’s refusals on a New Haven life, green"
+  ]
+ },
+ "promise.day.needs>documents.work": {
+  "status": "Verified",
+  "by": [
+   "inspection",
+   "automated"
+  ],
+  "on": "27369727",
+  "evidence": [
+   "tests/evidence-g15-papers.test.ts",
+   "src/engine/content/guide/day.ts:314-396 the entry; src/engine/world/world.ts:36-82 a question dismissed or answered once; src/engine/world/world.ts:111-137 past its date; src/engine/core/simulation.ts:466-485 what didn’t go through",
+   "tests/evidence-g04-life.test.ts",
+   "tests/simulation.test.ts",
+   "tests/guide.test.ts",
+   "tests/b20-life-time.test.ts the life area’s 55 test files, run on 27369727: all green; tests/b26-life-repeats.test.ts, the plans called off and skipped, the retried hour and the night’s refusals on a New Haven life, green"
+  ]
+ },
+ "promise.day.needs>start.find": {
+  "status": "Verified",
+  "by": [
+   "inspection",
+   "automated"
+  ],
+  "on": "27369727",
+  "evidence": [
+   "tests/evidence-g32-ui.test.ts",
+   "tests/interface.test.ts",
+   "src/engine/content/guide/day.ts:314-396 the entry; src/engine/world/world.ts:36-82 a question dismissed or answered once; src/engine/world/world.ts:111-137 past its date; src/engine/core/simulation.ts:466-485 what didn’t go through",
+   "tests/evidence-g04-life.test.ts",
+   "tests/simulation.test.ts",
+   "tests/guide.test.ts",
+   "tests/b20-life-time.test.ts the life area’s 55 test files, run on 27369727: all green; tests/b26-life-repeats.test.ts, the plans called off and skipped, the retried hour and the night’s refusals on a New Haven life, green"
+  ]
+ },
+ "promise.day.needs>taxes.return": {
+  "status": "Verified",
+  "by": [
+   "inspection",
+   "automated"
+  ],
+  "on": "27369727",
+  "evidence": [
+   "tests/evidence-g02-life.test.ts",
+   "src/engine/content/guide/day.ts:314-396 the entry; src/engine/world/world.ts:36-82 a question dismissed or answered once; src/engine/world/world.ts:111-137 past its date; src/engine/core/simulation.ts:466-485 what didn’t go through",
+   "tests/evidence-g04-life.test.ts",
+   "tests/simulation.test.ts",
+   "tests/guide.test.ts",
+   "tests/b20-life-time.test.ts the life area’s 55 test files, run on 27369727: all green; tests/b26-life-repeats.test.ts, the plans called off and skipped, the retried hour and the night’s refusals on a New Haven life, green"
+  ]
+ },
+ "promise.day.plans>body.look-after": {
+  "status": "Verified",
+  "by": [
+   "inspection",
+   "automated"
+  ],
+  "on": "27369727",
+  "evidence": [
+   "tests/b20-life-bite.test.ts",
+   "tests/evidence-g02-life.test.ts",
+   "src/engine/content/guide/day.ts:397-478 the entry; src/engine/world/plans.ts:82-120 what the calendar takes; src/engine/world/plans.ts:127-236 the moment and the three commands; src/engine/systems/life.ts:566-599 a plan under way refuses the hour",
+   "tests/plans.test.ts",
+   "tests/b26-life-repeats.test.ts",
+   "tests/guide.test.ts",
+   "tests/b20-life-time.test.ts the life area’s 55 test files, run on 27369727: all green; tests/b26-life-repeats.test.ts, the plans called off and skipped, the retried hour and the night’s refusals on a New Haven life, green"
+  ]
+ },
+ "promise.day.plans>body.sleep": {
+  "status": "Verified",
+  "by": [
+   "inspection",
+   "automated"
+  ],
+  "on": "27369727",
+  "evidence": [
+   "tests/evidence-g01-life.test.ts",
+   "src/engine/content/guide/day.ts:397-478 the entry; src/engine/world/plans.ts:82-120 what the calendar takes; src/engine/world/plans.ts:127-236 the moment and the three commands; src/engine/systems/life.ts:566-599 a plan under way refuses the hour",
+   "tests/plans.test.ts",
+   "tests/b26-life-repeats.test.ts",
+   "tests/guide.test.ts",
+   "tests/b20-life-time.test.ts the life area’s 55 test files, run on 27369727: all green; tests/b26-life-repeats.test.ts, the plans called off and skipped, the retried hour and the night’s refusals on a New Haven life, green"
+  ]
+ },
+ "promise.day.plans>craft.practice": {
+  "status": "Verified",
+  "by": [
+   "inspection",
+   "automated"
+  ],
+  "on": "27369727",
+  "evidence": [
+   "tests/b20-life-bite.test.ts",
+   "src/engine/content/guide/day.ts:397-478 the entry; src/engine/world/plans.ts:82-120 what the calendar takes; src/engine/world/plans.ts:127-236 the moment and the three commands; src/engine/systems/life.ts:566-599 a plan under way refuses the hour",
+   "tests/plans.test.ts",
+   "tests/b26-life-repeats.test.ts",
+   "tests/guide.test.ts",
+   "tests/b20-life-time.test.ts the life area’s 55 test files, run on 27369727: all green; tests/b26-life-repeats.test.ts, the plans called off and skipped, the retried hour and the night’s refusals on a New Haven life, green"
+  ]
+ },
+ "promise.day.plans>day.calendar": {
+  "status": "Verified",
+  "by": [
+   "inspection",
+   "automated"
+  ],
+  "on": "27369727",
+  "evidence": [
+   "tests/plans.test.ts",
+   "tests/time-stops.test.ts",
+   "tests/b20-life-time.test.ts",
+   "src/engine/content/guide/day.ts:397-478 the entry; src/engine/world/plans.ts:82-120 what the calendar takes; src/engine/world/plans.ts:127-236 the moment and the three commands; src/engine/systems/life.ts:566-599 a plan under way refuses the hour",
+   "tests/plans.test.ts",
+   "tests/b26-life-repeats.test.ts",
+   "tests/guide.test.ts",
+   "tests/b20-life-time.test.ts the life area’s 55 test files, run on 27369727: all green; tests/b26-life-repeats.test.ts, the plans called off and skipped, the retried hour and the night’s refusals on a New Haven life, green"
+  ]
+ },
+ "promise.day.plans>day.needs": {
+  "status": "Verified",
+  "by": [
+   "inspection",
+   "automated"
+  ],
+  "on": "27369727",
+  "evidence": [
+   "tests/coverage-gaps-life.test.ts",
+   "tests/evidence-g01-life.test.ts",
+   "src/engine/content/guide/day.ts:397-478 the entry; src/engine/world/plans.ts:82-120 what the calendar takes; src/engine/world/plans.ts:127-236 the moment and the three commands; src/engine/systems/life.ts:566-599 a plan under way refuses the hour",
+   "tests/plans.test.ts",
+   "tests/b26-life-repeats.test.ts",
+   "tests/guide.test.ts",
+   "tests/b20-life-time.test.ts the life area’s 55 test files, run on 27369727: all green; tests/b26-life-repeats.test.ts, the plans called off and skipped, the retried hour and the night’s refusals on a New Haven life, green"
+  ]
+ },
+ "promise.day.plans>day.weather": {
+  "status": "Verified",
+  "by": [
+   "inspection",
+   "automated"
+  ],
+  "on": "27369727",
+  "evidence": [
+   "tests/b20-life-looks.test.ts",
+   "src/engine/content/guide/day.ts:397-478 the entry; src/engine/world/plans.ts:82-120 what the calendar takes; src/engine/world/plans.ts:127-236 the moment and the three commands; src/engine/systems/life.ts:566-599 a plan under way refuses the hour",
+   "tests/plans.test.ts",
+   "tests/b26-life-repeats.test.ts",
+   "tests/guide.test.ts",
+   "tests/b20-life-time.test.ts the life area’s 55 test files, run on 27369727: all green; tests/b26-life-repeats.test.ts, the plans called off and skipped, the retried hour and the night’s refusals on a New Haven life, green"
+  ]
+ },
+ "promise.day.weather>body.look-after": {
+  "status": "Verified",
+  "by": [
+   "inspection",
+   "automated"
+  ],
+  "on": "27369727",
+  "evidence": [
+   "tests/b20-life-bite.test.ts",
+   "tests/evidence-g07-life.test.ts",
+   "src/engine/content/guide/day.ts:479-537 the entry; src/engine/systems/weather.ts:193-262 a day from the seed, the city and the date; src/engine/systems/weather.ts:299-357 its hours; src/engine/systems/life.ts:53-58 a run in fine weather; src/engine/systems/seasons.ts:40-60 the flu’s weeks",
+   "tests/weather.test.ts",
+   "tests/heatindex.test.ts",
+   "tests/seasons.test.ts",
+   "tests/b20-life-time.test.ts the life area’s 55 test files, run on 27369727: all green; tests/b26-life-repeats.test.ts, the plans called off and skipped, the retried hour and the night’s refusals on a New Haven life, green"
+  ]
+ },
+ "promise.day.weather>school.sick": {
+  "status": "Verified",
+  "by": [
+   "inspection",
+   "automated"
+  ],
+  "on": "27369727",
+  "evidence": [
+   "tests/evidence-g06-life.test.ts",
+   "tests/evidence-g07-life.test.ts",
+   "tests/b20-life-bite.test.ts",
+   "src/engine/content/guide/day.ts:479-537 the entry; src/engine/systems/weather.ts:193-262 a day from the seed, the city and the date; src/engine/systems/weather.ts:299-357 its hours; src/engine/systems/life.ts:53-58 a run in fine weather; src/engine/systems/seasons.ts:40-60 the flu’s weeks",
+   "tests/weather.test.ts",
+   "tests/heatindex.test.ts",
+   "tests/seasons.test.ts",
+   "tests/b20-life-time.test.ts the life area’s 55 test files, run on 27369727: all green; tests/b26-life-repeats.test.ts, the plans called off and skipped, the retried hour and the night’s refusals on a New Haven life, green"
+  ]
+ },
+ "promise.day.weather>start.home": {
+  "status": "Verified",
+  "by": [
+   "inspection",
+   "automated"
+  ],
+  "on": "27369727",
+  "evidence": [
+   "tests/b20-life-looks.test.ts",
+   "tests/evidence3-home.test.ts",
+   "src/engine/content/guide/day.ts:479-537 the entry; src/engine/systems/weather.ts:193-262 a day from the seed, the city and the date; src/engine/systems/weather.ts:299-357 its hours; src/engine/systems/life.ts:53-58 a run in fine weather; src/engine/systems/seasons.ts:40-60 the flu’s weeks",
+   "tests/weather.test.ts",
+   "tests/heatindex.test.ts",
+   "tests/seasons.test.ts",
+   "tests/b20-life-time.test.ts the life area’s 55 test files, run on 27369727: all green; tests/b26-life-repeats.test.ts, the plans called off and skipped, the retried hour and the night’s refusals on a New Haven life, green"
+  ]
+ },
+ "world.holidays": {
+  "status": "Verified",
+  "by": [
+   "inspection",
+   "automated"
+  ],
+  "on": "27369727",
+  "evidence": [
+   "src/engine/content/holidays.ts:144-170 the holidays on a day in the calendars kept; src/engine/world/calendar.ts:143-148 and src/engine/world/calendar.ts:150-198 the calendar keeps where they stand; the School’s calls, the bank’s days and a therapist’s working day read them (src/engine/systems/therapy.ts:102-110)",
+   "tests/holidays.test.ts",
+   "tests/usholidays.test.ts",
+   "tests/b20-life-bite.test.ts",
+   "tests/b20-life-time.test.ts the life area’s 55 test files, run on 27369727: all green; tests/b26-life-repeats.test.ts, the plans called off and skipped, the retried hour and the night’s refusals on a New Haven life, green"
+  ]
+ },
+ "world.running-clock": {
+  "status": "Verified",
+  "by": [
+   "inspection",
+   "automated"
+  ],
+  "on": "27369727",
+  "evidence": [
+   "src/engine/core/realclock.ts:37-58 the stepper: world time owed for real time, paid in steps of half an hour at most, fractions carried",
+   "tests/realclock.test.ts",
+   "tests/time-controls.test.ts",
+   "tests/b20-life-time.test.ts the life area’s 55 test files, run on 27369727: all green; tests/b26-life-repeats.test.ts, the plans called off and skipped, the retried hour and the night’s refusals on a New Haven life, green"
+  ]
+ },
+ "world.stops": {
+  "status": "Verified",
+  "by": [
+   "inspection",
+   "automated"
+  ],
+  "on": "27369727",
+  "evidence": [
+   "src/engine/world/clock.ts:92-123 a stop: Go through the commitment’s hours, Stand Here, or a kind’s own choice run as its command and the jump carried on; src/engine/world/clock.ts:125-148 Skip It and Call It Off declared; src/engine/core/simulation.ts:441-447 the clock stops at what wants the player",
+   "tests/time-stops.test.ts",
+   "tests/b20-life-time.test.ts",
+   "tests/b20-life-time.test.ts the life area’s 55 test files, run on 27369727: all green; tests/b26-life-repeats.test.ts, the plans called off and skipped, the retried hour and the night’s refusals on a New Haven life, green"
+  ]
+ },
+ "world.tick": {
+  "status": "Verified",
+  "by": [
+   "inspection",
+   "automated"
+  ],
+  "on": "27369727",
+  "evidence": [
+   "tests/evidence-g04-life.test.ts",
+   "tests/decisions-2026-10-14.test.ts",
+   "tests/evidence2-b01.test.ts",
+   "src/engine/world/world.ts:24-32 every two days: decisions past their date closed, the timeline and the decisions pruned (src/engine/world/world.ts:111-137); src/engine/index.ts:186-192 and src/engine/index.ts:586-592 armed once",
+   "tests/evidence-g04-life.test.ts",
+   "tests/evidence2-b01.test.ts",
+   "tests/b20-life-time.test.ts the life area’s 55 test files, run on 27369727: all green; tests/b26-life-repeats.test.ts, the plans called off and skipped, the retried hour and the night’s refusals on a New Haven life, green"
+  ]
+ },
+ "world.zones": {
+  "status": "Verified",
+  "by": [
+   "inspection",
+   "automated"
+  ],
+  "on": "27369727",
+  "evidence": [
+   "src/engine/core/time.ts:356-366 a zone’s short name; src/engine/world/plans.ts:166-176 a plan elsewhere said on its own clock; src/engine/systems/life.ts:846-850 the home zone’s day",
+   "tests/time.test.ts",
+   "tests/plans.test.ts",
+   "tests/b20-life-time.test.ts the life area’s 55 test files, run on 27369727: all green; tests/b26-life-repeats.test.ts, the plans called off and skipped, the retried hour and the night’s refusals on a New Haven life, green"
+  ]
+ }
+}

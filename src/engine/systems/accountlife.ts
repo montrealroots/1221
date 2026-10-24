@@ -57,7 +57,7 @@ import { moveRoundUps, setRoundUps } from './roundups';
 import { closingFeesOf, dropPaymentsFor, inSaveMoney, interestTaxFor, openOne, rateOn, settleFees, settleInterest } from './banking';
 import { savingsLeftThisMonth } from './cash';
 import { checkingAt, checkingsOf, lendingOf, settleOverdraftInterest } from './lending';
-import { ensurePrimary, stateOf } from './credit';
+import { closeCard, stateOf } from './credit';
 import { closeRefusal, sendBetweenBanks } from './bankmoves';
 import { recordInterest } from './earnings';
 
@@ -632,7 +632,8 @@ export function registerAccountLife(sim: Simulation): void {
       // Canceled, with anything spent still to repay (C6).
       if (!person.credit) throw new CommandError('You don’t have a card.');
       stateOf(person, account).closing = s.now;
-      if (account.balance >= 0) { account.closedAt = s.now; ensurePrimary(s, person); }
+      // Owing nothing, closed now, a credit on it sent back first (`closeCard`, from 2026-10-24).
+      if (account.balance >= 0) closeCard(s, person, account, 'now');
       return { refunded: 0 };
     }
     if (!into || into.id === account.id) throw new CommandError('You can’t cancel your primary account. Make another account primary first.');

@@ -2,13 +2,13 @@
  "playthrough": "normal",
  "width": 390,
  "base": "http://localhost:4217",
- "commit": "05060742",
- "uncommitted": 9,
- "startedAt": "2026-10-23T18:57:00.699Z",
+ "commit": "124bec77",
+ "uncommitted": 8,
+ "startedAt": "2026-10-24T15:25:54.102Z",
  "startingPoint": {
   "kind": "new life",
   "how": "creation in a browser with no saves: billed as Actress, the first name as offered, born in New York, the rest as offered",
-  "seed": "1-AlexRivera-mvlc0txr"
+  "seed": "1-AlexRivera-mvmjx7hi"
  },
  "steps": [
   {
@@ -229,9 +229,9 @@
     "Coursework (tab)",
     "Table Work: A winter afternoon going dark in their Washington Square stu",
     "Table Work: Husband and wife of a few years; she has been reading his ev",
-    "Table Work: Turn her own theory back on her until she lets it go",
-    "Table Work: She believes in psychoanalysis, and by its lights a denial i",
-    "Table Work: Draw it out, and make her beg for each word of the diagnosis",
+    "Table Work: Find out what the analysis said",
+    "Table Work: Her own creed: she has preached that the unconscious can’t b",
+    "Table Work: Cross-examine him: did the doctor know he was married to her",
     "Read The Scene",
     "Read The Scene",
     "Read The Scene",
@@ -265,13 +265,12 @@
     "Menu",
     "School",
     "Coursework (tab)",
-    "Say Yes",
     "Rehearse Alone",
     "Advance",
     "Tomorrow Morning",
     "On The Way: Advance",
     "Classes: Go",
-    "Rehearsal With Aaliyah: Go",
+    "The Doctor, Yale Health Center, Student Health: Go",
     "Menu",
     "School",
     "Coursework (tab)",
@@ -283,13 +282,11 @@
     "Menu",
     "School",
     "Coursework (tab)",
-    "Say Yes",
     "Rehearse Alone",
     "Advance",
     "Tomorrow Morning",
     "On The Way: Advance",
     "Classes: Go",
-    "Rehearsal With Aaliyah: Go",
     "Menu",
     "School",
     "Coursework (tab)",
@@ -336,18 +333,18 @@
     "Coursework (tab)"
    ],
    "said": [
-    "August 29, 2026 11:55 AM: 22.1 → 29.5 (10 steps: Table Work, Table Work, Table Work, Table Work, Table Work, Read The Scene, Read The Scene, Read The Scene, Read The Scene, Learn Lines)",
-    "August 30, 2026 2:45 PM: 29.5 → 36.1 (10 steps: Learn Lines, Learn Lines, Learn Lines, Learn Lines, Learn Lines, Learn Lines, Learn Lines, Learn Lines, Learn Lines, Rehearse Alone)",
-    "August 31, 2026 8:00 AM: 36.1 → 38.7 (1 steps: Rehearse Alone)",
-    "September 1, 2026 8:00 AM: 38.7 → 40.6 (2 steps: answered yes, Rehearse Alone)",
-    "September 2, 2026 8:00 AM: 46.2 → 47.5 (1 steps: Rehearse Alone)",
-    "September 3, 2026 8:00 AM: 47.5 → 48.5 (2 steps: answered yes, Rehearse Alone)",
-    "September 4, 2026 8:00 AM: 52.6 → 53.3 (1 steps: Rehearse Alone)",
-    "September 5, 2026 9:00 AM: 53.3 → 53.9 (2 steps: Rehearse Alone, Rehearse Alone)",
-    "September 6, 2026 11:00 AM: 53.9 → 57.4 (4 steps: Rehearse Alone, Rehearse Alone, Rehearse Alone, Run It With A Reader)",
-    "September 7, 2026 8:00 AM: 57.4 → 60.1 (1 steps: Run It With A Reader)",
-    "September 8, 2026 8:00 AM: 60.1 → 61.9 (1 steps: Run It With A Reader)",
-    "11 days; Shown Today 22.1 → 61.9"
+    "August 29, 2026 11:55 AM: 22.4 → 30 (10 steps: Table Work, Table Work, Table Work, Table Work, Table Work, Read The Scene, Read The Scene, Read The Scene, Read The Scene, Learn Lines)",
+    "August 30, 2026 2:45 PM: 30 → 37.1 (10 steps: Learn Lines, Learn Lines, Learn Lines, Learn Lines, Learn Lines, Learn Lines, Learn Lines, Learn Lines, Learn Lines, Rehearse Alone)",
+    "August 31, 2026 8:00 AM: 37.1 → 39.7 (1 steps: Rehearse Alone)",
+    "September 1, 2026 8:00 AM: 39.7 → 41.6 (1 steps: Rehearse Alone)",
+    "September 2, 2026 8:00 AM: 41.6 → 42.9 (1 steps: Rehearse Alone)",
+    "September 3, 2026 8:00 AM: 43 → 43.9 (1 steps: Rehearse Alone)",
+    "September 4, 2026 8:00 AM: 43.9 → 44.6 (1 steps: Rehearse Alone)",
+    "September 5, 2026 9:00 AM: 44.6 → 45.2 (2 steps: Rehearse Alone, Rehearse Alone)",
+    "September 6, 2026 11:00 AM: 45.2 → 52 (4 steps: Rehearse Alone, Rehearse Alone, Rehearse Alone, Run It With A Reader)",
+    "September 7, 2026 8:00 AM: 51.9 → 57.1 (1 steps: Run It With A Reader)",
+    "September 8, 2026 8:00 AM: 57.1 → 60.7 (1 steps: Run It With A Reader)",
+    "11 days; Shown Today 22.4 → 60.7"
    ],
    "ok": true,
    "date": "September 9, 2026",
@@ -371,9 +368,9 @@
     "Work On The Note"
    ],
    "said": [
-    "notice “Shown: Scene Study, Working”: Simulated note from Acting I: Working, and not for lack of preparation: your focus held back your execution by 21 points out of 100. Classes build it, and so does Circles Of Attention, in the Practice column on your Player Profile.",
-    "To Show Again: refused “Not now: There’s new feedback on this piece. Read it, then press Mark As Read.”, then Mark As Read, and Work On The Note: Work On The Note: 60 minutes, 49% further on the note.",
-    "feedback: FEEDBACK: WORKING, 62 OF 100 · WHAT HELD IT BACK",
+    "notice “Shown: Scene Study, Working”: Simulated note from Acting I: Most of all, the two of you weren’t playing the same scene yet: it needed time together. You and Hannah hadn’t rehearsed together. You ran it with a reader 3 times. (With Your Partner: 67% prepared.) You played Henrietta in Suppressed Desires.",
+    "To Show Again: refused “Not now: There’s new feedback on this piece. Read it, then press Mark As Read.”, then Mark As Read, and Work On The Note: Work On The Note: 60 minutes, 50% further on the note.",
+    "feedback: FEEDBACK: WORKING, 61 OF 100 · A NEW NOTE",
     "Shown: Scene Study, Working"
    ],
    "ok": true,
@@ -534,11 +531,11 @@
    "step": 11,
    "title": "Classes",
    "pressed": "Go",
-   "after": "September 1, 2026 7:00 PM"
+   "after": "September 1, 2026 10:00 AM"
   },
   {
    "step": 11,
-   "title": "Rehearsal With Aaliyah",
+   "title": "The Doctor, Yale Health Center, Student Health",
    "pressed": "Go",
    "after": "September 2, 2026 7:00 AM"
   },
@@ -563,12 +560,6 @@
   {
    "step": 11,
    "title": "Classes",
-   "pressed": "Go",
-   "after": "September 3, 2026 7:00 PM"
-  },
-  {
-   "step": 11,
-   "title": "Rehearsal With Aaliyah",
    "pressed": "Go",
    "after": "September 4, 2026 7:00 AM"
   },
@@ -655,5 +646,5 @@
   "errors": 0,
   "overflows": 0
  },
- "finishedAt": "2026-10-23T19:00:35.576Z"
+ "finishedAt": "2026-10-24T15:29:28.480Z"
 }

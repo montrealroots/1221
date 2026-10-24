@@ -748,6 +748,14 @@
   "evidence": "tests/editorial-money.test.ts, it('a card charged off says how long it stays on the record, paid or not, and where to pay the debt')",
   "first": "Pending"
  },
+ "src/engine/systems/credit.ts#closeCard": {
+  "status": "Rewritten",
+  "hash": "eb60496f030d",
+  "on": "2026-10-24",
+  "reason": "Card Closed says what the player has: the card closed, and where what it held as a credit went, with its sum (brief 26, 2026-10-24)",
+  "evidence": "tests/b26-card-credit-on-close.test.ts, the notice read word for word at Close The Card and at the statement",
+  "first": "Rewritten And Verified"
+ },
  "src/engine/systems/credit.ts#delinquency": {
   "status": "Rewritten",
   "hash": "c97b22b06e75",
@@ -771,9 +779,10 @@
  },
  "src/engine/systems/credit.ts#registerCredit": {
   "status": "Rewritten",
-  "hash": "7f8aaba04c15",
-  "on": "2026-10-22",
-  "evidence": "tests/editorial17-money.test.ts 'six due dates missed at Chase' reads each late notice's minimum payment due with what's past due, word for word",
+  "hash": "9c7118d599cf",
+  "on": "2026-10-24",
+  "reason": "The statement’s Card Closed moved into closeCard with the credit’s clause; the rest of the handler’s words as read on 2026-10-19 (brief 26, 2026-10-24)",
+  "evidence": "tests/b26-card-credit-on-close.test.ts and tests/evidence-g11-money.test.ts, the statement’s Card Closed read word for word",
   "first": "Pending"
  },
  "src/engine/systems/credit.ts#registerCredit <card.refund_credit>": {

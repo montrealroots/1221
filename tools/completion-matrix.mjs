@@ -212,7 +212,9 @@ for (const a of audit()) {
   const gaps = a.review?.gaps?.length ? `Open: ${a.review.gaps.join('; ')}` : '';
   rows.push({
     id: a.id, group: a.area, kind: a.kind, source: 'audit',
-    goal: join(cap?.goal, a.review?.claim),
+    // The row's claim as the code stands (`claim`, set through the pipeline's inputs where the code moved since the review of
+    // 2026-10-13; from 2026-10-24, brief 26), else the review's. Until then Home's rows said Your Affairs' lines here.
+    goal: join(cap?.goal, a.claim ?? a.review?.claim),
     entry: join(a.entry, t?.chapter && t.chapter !== '—' ? `guide: ${t.chapter}` : '', t?.screens),
     preconditions: join(cap?.preconditions, a.kind === 'command' && t ? `refused where: ${t.refuses}` : ''),
     reads: clean(a.reads),

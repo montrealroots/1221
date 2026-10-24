@@ -31,6 +31,7 @@
 import ts from 'typescript';
 import { existsSync, mkdirSync, readdirSync, readFileSync, writeFileSync } from 'node:fs';
 import { join } from 'node:path';
+import { pathToFileURL } from 'node:url';
 
 const DIR = 'docs/verification/audit-2026-10-21';
 const ROWS = `${DIR}/effects`;
@@ -398,8 +399,12 @@ function seed() {
   console.log(`seeded ${added} rows`);
 }
 
+// Run as a command only when it is the command (from 2026-10-24, brief 26, when tools/sweep.mjs began importing `features`
+// and `areaOf`): until then an import ran whatever the importer's own arguments asked of this file.
 const args = process.argv.slice(2);
-if (args.includes('--seed')) seed();
+const asCommand = process.argv[1] !== undefined && pathToFileURL(process.argv[1]).href === import.meta.url;
+if (!asCommand) { /* imported */ }
+else if (args.includes('--seed')) seed();
 else if (args.includes('--write')) { writeFileSync(PAGE, page()); console.log(`wrote ${PAGE}`); }
 else if (args.includes('--todo')) {
   const area = args[args.indexOf('--todo') + 1];

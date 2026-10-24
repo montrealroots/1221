@@ -2,9 +2,9 @@
  "playthrough": "setback",
  "width": 1440,
  "base": "http://localhost:4217",
- "commit": "05060742",
- "uncommitted": 15,
- "startedAt": "2026-10-23T19:00:36.177Z",
+ "commit": "124bec77",
+ "uncommitted": 12,
+ "startedAt": "2026-10-24T15:29:29.364Z",
  "startingPoint": {
   "kind": "save",
   "file": "workload.json",
@@ -468,5 +468,5 @@
   "errors": 0,
   "overflows": 0
  },
- "finishedAt": "2026-10-23T19:02:35.305Z"
+ "finishedAt": "2026-10-24T15:31:29.681Z"
 }

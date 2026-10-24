@@ -114,13 +114,18 @@ export function attributesMatrix(): string {
   out.push(row(['Milestones', '`journey.milestones`', 'a run’s close; a first strong, distinction-level or mastered piece', '`milestone`', 'School Journey', 'the profile', '`tests/attributes-complete.test.ts`']));
   out.push(row(['Replay', 'each result’s levels, fulls and seed', 'any kept piece', '`replay`', '`look.work`', 'the explanation', '`tests/attributes-complete.test.ts`: after ratings and age change']));
 
-  out.push('', '## Profile Sections: 7 of 7', '', row(['Section', 'Reads']), '| --- | --- |');
-  for (const [s, r] of [['Identity And Background', 'the character sheet, the bank, the cover'], ['Attributes And Craft', '`abilityOf`, `abilityFull`, `reachOf`, today’s condition, the development history, the last five pieces’ limits'], ['Techniques', '`craft`, `reachOf`, `MASTERED`'], ['Genres', '`genres`, `engagement.byGenre`, the next part’s play'], ['Readiness Today', '`readiness`, `conditionAt`'], ['School Journey', '`school`, `journey`, `work`'], ['Development History', '`development.history`']] as const) out.push(row([s, r]));
+  // Eight, in the page's order, from 2026-10-23 (brief 23): Readiness Today moved up to second and the page gained On This
+  // Page. Your Work So Far, the artistry read from the record (`identityOf`, systems/artistry.ts), had been on the page since
+  // brief 13 and off this table, which said seven, until 2026-10-24 (brief 26).
+  out.push('', '## Profile Sections: 8 of 8', '', row(['Section', 'Reads']), '| --- | --- |');
+  for (const [s, r] of [['Identity And Background', 'the character sheet, the bank, the cover'], ['Readiness Today', '`readiness`, `conditionAt`'], ['Attributes And Craft', '`abilityOf`, `abilityFull`, `reachOf`, today’s condition, the development history, the last five pieces’ limits'], ['Techniques', '`craft`, `reachOf`, `MASTERED`'], ['Genres', '`genres`, `engagement.byGenre`, the next part’s play'], ['School Journey', '`school`, `journey`, `work`'], ['Your Work So Far', 'the work record, read as the page opens: what the work shows most and what holds it back, the material known, the habits; stored nowhere and counted in no result'], ['Development History', '`development.history`']] as const) out.push(row([s, r]));
 
   // Calendar joined the rail, and Updates was made, on 2026-10-23 (brief 23), when Your Affairs went from Home: until then
-  // the Calendar was off the rail, on Home's Calendar section, and School, Money and Papers were on Your Affairs too.
+  // the Calendar was off the rail, on Home's Calendar section, and School, Money and Papers were on Your Affairs too. Later
+  // that day (brief 24) both left the rail for Home alone, Up Next's Open Calendar and Recent Updates' View All Updates,
+  // with Back To Home at their heads; this table said "the rail" of both until 2026-10-24 (brief 26).
   out.push('', '## Navigation Destinations: 7 of 7', '', row(['Destination', 'Route', 'Where']), '| --- | --- | --- |');
-  for (const [n, r, w] of [['Home', '/home', 'the rail’s top, the brand, `h`'], ['Player Profile', '/workspace/profile', 'the rail, your name at its foot, `p`'], ['Calendar', '/workspace/calendar', 'the rail, Home’s Up Next, `c`'], ['Updates', '/workspace/updates', 'the rail, Home’s Recent Updates'], ['School', '/workspace/school', 'the rail, Open School under What Needs You'], ['Money', '/workspace/bank', 'the rail, Open Money under What Needs You'], ['Papers', '/workspace/papers', 'the rail, Open Papers under What Needs You']] as const) out.push(row([n, `\`${r}\``, w]));
+  for (const [n, r, w] of [['Home', '/home', 'the rail’s top, the brand, `h`'], ['Player Profile', '/workspace/profile', 'the rail, your name at its foot, `p`'], ['Calendar', '/workspace/calendar', 'Home’s Up Next, Open Calendar, `c`'], ['Updates', '/workspace/updates', 'Home’s Recent Updates, View All Updates'], ['School', '/workspace/school', 'the rail, Open School under What Needs You'], ['Money', '/workspace/bank', 'the rail, Open Money under What Needs You'], ['Papers', '/workspace/papers', 'the rail, Open Papers under What Needs You']] as const) out.push(row([n, `\`${r}\``, w]));
   out.push('');
   return out.join('\n');
 }

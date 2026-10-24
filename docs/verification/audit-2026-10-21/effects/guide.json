@@ -142,8 +142,8 @@
      "at": "src/engine/world/world.ts:177"
     },
     {
-     "what": "the rail’s count and the You line’s N Unread",
-     "at": "src/ui/shell/GameShell.tsx:48"
+     "what": "Recent Updates’ subtitle and Mark N Read’s count on Home, and Updates’ Unread (N) and All (N) (src/ui/screens/Updates.tsx:96-99); until 2026-10-23 (brief 23) the rail’s count and the You line’s N Unread",
+     "at": "src/ui/screens/Home.tsx:282"
     },
     {
      "what": "notify brings a notice said again up to now only while it’s unread; read, the same words are a new notice",
@@ -180,7 +180,7 @@
    "why": "",
    "prior": "world.mark_read",
    "readBy": "brief-23",
-   "readAt": "55543f7c"
+   "readAt": "b46ee301"
   },
   {
    "id": "world.set_preferences",
@@ -628,7 +628,7 @@
    "area": "guide",
    "mechanic": false,
    "seeded": false,
-   "where": "Home, Up Next (src/ui/screens/Home.tsx:362); the Calendar on the menu.",
+   "where": "Home, Up Next (src/ui/screens/Home.tsx:274, drawn by UpNext at :423-513), with Back To Home at the Calendar’s head (src/ui/workspaces/CalendarWorkspace.tsx:81). Until 2026-10-23 (brief 24, later the same day as brief 23) the Calendar was on the menu too.",
    "prerequisites": "“What’s Coming” read; Locked before it.",
    "reads": "nextCommitment and upcoming(6) from the calendar.",
    "changes": "Nothing: it reads.",
@@ -653,7 +653,7 @@
    "prior": null,
    "purpose": "Shows the next commitment, how soon and when, and up to five more after it, each opening to its entry.",
    "readBy": "brief-23",
-   "readAt": "55543f7c"
+   "readAt": "b46ee301"
   },
   {
    "id": "ui.go",
@@ -830,7 +830,7 @@
    "area": "guide",
    "mechanic": false,
    "seeded": false,
-   "where": "Home, What Needs You and Recent Updates (src/ui/screens/Home.tsx); Updates on the menu (src/ui/screens/Updates.tsx).",
+   "where": "Home, What Needs You and Recent Updates (src/ui/screens/Home.tsx:218-328); Updates from Recent Updates’ View All Updates (src/ui/screens/Home.tsx:324, src/ui/screens/Updates.tsx), which was on the menu too until 2026-10-23 (brief 24).",
    "prerequisites": "“What Needs You” read; Locked before it.",
    "reads": "openDecisions, unreadNotifications, thingsToDo (troubles, papersAlerts, the standing, the calendar’s clashes in the next month).",
    "changes": "Nothing itself: its buttons send world.take_decision_action, world.dismiss_decision and world.mark_read, and Go There goes to a route.",
@@ -856,9 +856,9 @@
    "status": "Implemented And Verified",
    "why": "",
    "prior": null,
-   "purpose": "Lists the open questions, overdue first and then by urgency, with their answers, and every unread notice, the most important first; with nothing waiting, it says what still weighs: money owed, a card behind, two commitments at once.",
+   "purpose": "Lists the open questions, overdue first and then by urgency, with their answers, and what needs putting right, each with the way to its screen; with nothing waiting, one All Clear line. Until 2026-10-23 (brief 23) every unread notice too, the most important first, and until brief 24 that day a card saying what still weighed.",
    "readBy": "brief-23",
-   "readAt": "55543f7c"
+   "readAt": "b46ee301"
   },
   {
    "id": "ui.open-calendar",
@@ -866,8 +866,8 @@
    "area": "guide",
    "mechanic": false,
    "seeded": false,
-   "where": "Home, Up Next’s head: Open Calendar (src/ui/screens/Home.tsx); the Calendar on the menu; C from anywhere but a text box.",
-   "prerequisites": "“Your Own Plans” read; Locked before it, opening the guide there.",
+   "where": "Home, Up Next’s head: Open Calendar (src/ui/screens/Home.tsx:438); C from anywhere but a text box, and Back To Home at the Calendar’s head (src/ui/workspaces/CalendarWorkspace.tsx:81). Until 2026-10-23 (brief 24) the Calendar was on the menu too.",
+   "prerequisites": "“What’s Coming” read; Locked before it, opening the guide there. Until 2026-10-23 (brief 24) it waited for “Your Own Plans”, the menu’s Calendar being the way in between.",
    "reads": "Nothing.",
    "changes": "Nothing: it goes to /workspace/calendar.",
    "consumers": [],
@@ -888,7 +888,7 @@
    "prior": null,
    "purpose": "Opens the Calendar screen, the month, where a plan of your own is put on and called off.",
    "readBy": "brief-23",
-   "readAt": "55543f7c"
+   "readAt": "b46ee301"
   },
   {
    "id": "ui.weather",

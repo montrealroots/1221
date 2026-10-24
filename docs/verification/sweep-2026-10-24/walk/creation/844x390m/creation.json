@@ -1,0 +1,791 @@
+{
+ "size": "844x390m",
+ "base": "http://localhost:4173",
+ "checks": {
+  "startsPaused": true,
+  "playLockedAtStart": true,
+  "guideOpensFirst": true,
+  "whereYouAreOpened": true,
+  "chaptersInOrder": [
+   "Your Life, Hour By Hour",
+   "What’s Coming",
+   "The Clock",
+   "Moving Time On",
+   "What Needs You"
+  ],
+  "nextOffered": [
+   "What’s Coming",
+   "The Clock",
+   "Moving Time On",
+   "What Needs You",
+   "How You Are"
+  ],
+  "homeAfterFive": {
+   "locked": [
+    "Sleep",
+    "Look After Yourself ▾",
+    "Weather",
+    "How You AreLockedYour energy, stress and readiness, and a line on how you are. It opens when you read “How You Are” in the guide.Read About It"
+   ],
+   "strip": "Guide · 6 Of 20 How You Are · Energy, stress, readiness, and the rest of your wellbeing.Read",
+   "rail": [
+    "Home"
+   ],
+   "running": "Paused"
+  },
+  "upNextOpen": true,
+  "needsOpen": true,
+  "howStillLocked": true,
+  "playAndPause": {
+   "playing": "Running",
+   "pausedAgain": "Paused",
+   "button": "Play"
+  },
+  "advanceLines": [
+   "One Hour",
+   "This Evening",
+   "Tonight",
+   "Tomorrow Morning",
+   "Next Event",
+   "Next Monday",
+   "One Week",
+   "Choose An Event…"
+  ],
+  "afterAdvance": {
+   "dialog": "On The Way",
+   "clock": "7:30 AM",
+   "toasts": []
+  },
+  "afterOnTheWay": {
+   "dialog": "Registration And Your Account",
+   "clock": "10:00 AM",
+   "headings": [
+    "Registration And Your Account"
+   ]
+  },
+  "stopOffers": {
+   "go": 1,
+   "standHere": 1
+  },
+  "sleepStillLocked": true,
+  "sleepOpensGuide": true,
+  "resumed": {
+   "slotsShowName": false,
+   "clock": "10:00 AM",
+   "strip": "Guide · 6 Of 20 How You Are · Energy, stress, readiness, and the rest of your wellbeing.Read",
+   "running": "Paused",
+   "dialog": null
+  }
+ },
+ "steps": [
+  {
+   "n": 1,
+   "step": "The Start",
+   "file": "844x390m/01-the-start.jpg",
+   "headings": [],
+   "dialog": null,
+   "clock": null,
+   "running": null,
+   "timeButton": null,
+   "locked": [],
+   "guideStrip": null,
+   "rail": [],
+   "toasts": [],
+   "pageWider": 0,
+   "problems": []
+  },
+  {
+   "n": 2,
+   "step": "Creation, Identity",
+   "file": "844x390m/02-creation-identity.jpg",
+   "headings": [
+    "Who Are You Going To Be?",
+    "Identity",
+    "Place Of Birth"
+   ],
+   "dialog": null,
+   "clock": null,
+   "running": null,
+   "timeButton": null,
+   "locked": [],
+   "guideStrip": null,
+   "rail": [],
+   "toasts": [],
+   "pageWider": 0,
+   "problems": []
+  },
+  {
+   "n": 3,
+   "step": "Creation, Dispositions And Traits",
+   "file": "844x390m/03-creation-dispositions-and-traits.jpg",
+   "headings": [
+    "Who Are You Going To Be?",
+    "Dispositions",
+    "Traits"
+   ],
+   "dialog": null,
+   "clock": null,
+   "running": null,
+   "timeButton": null,
+   "locked": [],
+   "guideStrip": null,
+   "rail": [],
+   "toasts": [],
+   "pageWider": 0,
+   "problems": []
+  },
+  {
+   "n": 4,
+   "step": "Creation, Genres And Background",
+   "file": "844x390m/04-creation-genres-and-background.jpg",
+   "headings": [
+    "Who Are You Going To Be?",
+    "Genres",
+    "Background",
+    "Your Family"
+   ],
+   "dialog": null,
+   "clock": null,
+   "running": null,
+   "timeButton": null,
+   "locked": [],
+   "guideStrip": null,
+   "rail": [],
+   "toasts": [],
+   "pageWider": 0,
+   "problems": []
+  },
+  {
+   "n": 5,
+   "step": "Creation, Starting Point",
+   "file": "844x390m/05-creation-starting-point.jpg",
+   "headings": [
+    "Who Are You Going To Be?",
+    "Your Body",
+    "Where It Begins",
+    "Your Money",
+    "Before Yale"
+   ],
+   "dialog": null,
+   "clock": null,
+   "running": null,
+   "timeButton": null,
+   "locked": [],
+   "guideStrip": null,
+   "rail": [],
+   "toasts": [],
+   "pageWider": 0,
+   "problems": []
+  },
+  {
+   "n": 6,
+   "step": "Creation, Review",
+   "file": "844x390m/06-creation-review.jpg",
+   "headings": [
+    "Who Are You Going To Be?",
+    "Alex Rivera"
+   ],
+   "dialog": null,
+   "clock": null,
+   "running": null,
+   "timeButton": null,
+   "locked": [],
+   "guideStrip": null,
+   "rail": [],
+   "toasts": [],
+   "pageWider": 0,
+   "problems": []
+  },
+  {
+   "n": 7,
+   "step": "The Guide Opens On Its First Chapter",
+   "file": "844x390m/07-the-guide-opens-on-its-first-chapter.jpg",
+   "headings": [
+    "Guide",
+    "Your Life, Hour By Hour"
+   ],
+   "dialog": "Guide",
+   "clock": "7:30 AM",
+   "running": "Paused",
+   "timeButton": "PlayLocked",
+   "locked": [
+    "Play",
+    "Sleep",
+    "Look After Yourself ▾",
+    "Advance ▾",
+    "Where You Are",
+    "Weather",
+    "What Needs YouLockedThe questions waiting on you, what needs putting right, and the notices that say what happened. It opens when you read “What Needs You” in the guide.Read About It",
+    "Up NextLockedWhat’s coming up, and when. It opens when you read “What’s Coming” in the guide.Read About It",
+    "How You AreLockedYour energy, stress and readiness, and a line on how you are. It opens when you read “How You Are” in the guide.Read About It"
+   ],
+   "guideStrip": "Guide · 1 Of 20 Your Life, Hour By Hour · How SLATE works, and how to read Home.Read",
+   "rail": [
+    "Home"
+   ],
+   "toasts": [],
+   "pageWider": 0,
+   "problems": []
+  },
+  {
+   "n": 8,
+   "step": "Chapter 1, Read",
+   "file": "844x390m/08-chapter-1-read.jpg",
+   "headings": [
+    "Guide",
+    "Your Life, Hour By Hour"
+   ],
+   "dialog": "Guide",
+   "clock": "7:30 AM",
+   "running": "Paused",
+   "timeButton": "PlayLocked",
+   "locked": [
+    "Play",
+    "Sleep",
+    "Look After Yourself ▾",
+    "Advance ▾",
+    "Weather",
+    "What Needs YouLockedThe questions waiting on you, what needs putting right, and the notices that say what happened. It opens when you read “What Needs You” in the guide.Read About It",
+    "Up NextLockedWhat’s coming up, and when. It opens when you read “What’s Coming” in the guide.Read About It",
+    "How You AreLockedYour energy, stress and readiness, and a line on how you are. It opens when you read “How You Are” in the guide.Read About It"
+   ],
+   "guideStrip": "Guide · 2 Of 20 What’s Coming · What’s coming up, and what to do when the clock stops for it.Read",
+   "rail": [
+    "Home"
+   ],
+   "toasts": [],
+   "pageWider": 0,
+   "problems": []
+  },
+  {
+   "n": 9,
+   "step": "Chapter 2",
+   "file": "844x390m/09-chapter-2.jpg",
+   "headings": [
+    "Guide",
+    "What’s Coming"
+   ],
+   "dialog": "Guide",
+   "clock": "7:30 AM",
+   "running": "Paused",
+   "timeButton": "PlayLocked",
+   "locked": [
+    "Play",
+    "Sleep",
+    "Look After Yourself ▾",
+    "Advance ▾",
+    "Weather",
+    "What Needs YouLockedThe questions waiting on you, what needs putting right, and the notices that say what happened. It opens when you read “What Needs You” in the guide.Read About It",
+    "Up NextLockedWhat’s coming up, and when. It opens when you read “What’s Coming” in the guide.Read About It",
+    "How You AreLockedYour energy, stress and readiness, and a line on how you are. It opens when you read “How You Are” in the guide.Read About It"
+   ],
+   "guideStrip": "Guide · 2 Of 20 What’s Coming · What’s coming up, and what to do when the clock stops for it.Read",
+   "rail": [
+    "Home"
+   ],
+   "toasts": [],
+   "pageWider": 0,
+   "problems": []
+  },
+  {
+   "n": 10,
+   "step": "Chapter 2, Read",
+   "file": "844x390m/10-chapter-2-read.jpg",
+   "headings": [
+    "Guide",
+    "What’s Coming"
+   ],
+   "dialog": "Guide",
+   "clock": "7:30 AM",
+   "running": "Paused",
+   "timeButton": "PlayLocked",
+   "locked": [
+    "Play",
+    "Sleep",
+    "Look After Yourself ▾",
+    "Advance ▾",
+    "Weather",
+    "What Needs YouLockedThe questions waiting on you, what needs putting right, and the notices that say what happened. It opens when you read “What Needs You” in the guide.Read About It",
+    "How You AreLockedYour energy, stress and readiness, and a line on how you are. It opens when you read “How You Are” in the guide.Read About It"
+   ],
+   "guideStrip": "Guide · 3 Of 20 The Clock · Starting and stopping time.Read",
+   "rail": [
+    "Home"
+   ],
+   "toasts": [],
+   "pageWider": 0,
+   "problems": []
+  },
+  {
+   "n": 11,
+   "step": "Chapter 3",
+   "file": "844x390m/11-chapter-3.jpg",
+   "headings": [
+    "Guide",
+    "The Clock"
+   ],
+   "dialog": "Guide",
+   "clock": "7:30 AM",
+   "running": "Paused",
+   "timeButton": "PlayLocked",
+   "locked": [
+    "Play",
+    "Sleep",
+    "Look After Yourself ▾",
+    "Advance ▾",
+    "Weather",
+    "What Needs YouLockedThe questions waiting on you, what needs putting right, and the notices that say what happened. It opens when you read “What Needs You” in the guide.Read About It",
+    "How You AreLockedYour energy, stress and readiness, and a line on how you are. It opens when you read “How You Are” in the guide.Read About It"
+   ],
+   "guideStrip": "Guide · 3 Of 20 The Clock · Starting and stopping time.Read",
+   "rail": [
+    "Home"
+   ],
+   "toasts": [],
+   "pageWider": 0,
+   "problems": []
+  },
+  {
+   "n": 12,
+   "step": "Chapter 3, Read",
+   "file": "844x390m/12-chapter-3-read.jpg",
+   "headings": [
+    "Guide",
+    "The Clock"
+   ],
+   "dialog": "Guide",
+   "clock": "7:30 AM",
+   "running": "Paused",
+   "timeButton": "Play",
+   "locked": [
+    "Sleep",
+    "Look After Yourself ▾",
+    "Advance ▾",
+    "Weather",
+    "What Needs YouLockedThe questions waiting on you, what needs putting right, and the notices that say what happened. It opens when you read “What Needs You” in the guide.Read About It",
+    "How You AreLockedYour energy, stress and readiness, and a line on how you are. It opens when you read “How You Are” in the guide.Read About It"
+   ],
+   "guideStrip": "Guide · 4 Of 20 Moving Time On · Jumping ahead, and what happens on the way.Read",
+   "rail": [
+    "Home"
+   ],
+   "toasts": [],
+   "pageWider": 0,
+   "problems": []
+  },
+  {
+   "n": 13,
+   "step": "Chapter 4",
+   "file": "844x390m/13-chapter-4.jpg",
+   "headings": [
+    "Guide",
+    "Moving Time On"
+   ],
+   "dialog": "Guide",
+   "clock": "7:30 AM",
+   "running": "Paused",
+   "timeButton": "Play",
+   "locked": [
+    "Sleep",
+    "Look After Yourself ▾",
+    "Advance ▾",
+    "Weather",
+    "What Needs YouLockedThe questions waiting on you, what needs putting right, and the notices that say what happened. It opens when you read “What Needs You” in the guide.Read About It",
+    "How You AreLockedYour energy, stress and readiness, and a line on how you are. It opens when you read “How You Are” in the guide.Read About It"
+   ],
+   "guideStrip": "Guide · 4 Of 20 Moving Time On · Jumping ahead, and what happens on the way.Read",
+   "rail": [
+    "Home"
+   ],
+   "toasts": [],
+   "pageWider": 0,
+   "problems": []
+  },
+  {
+   "n": 14,
+   "step": "Chapter 4, Read",
+   "file": "844x390m/14-chapter-4-read.jpg",
+   "headings": [
+    "Guide",
+    "Moving Time On"
+   ],
+   "dialog": "Guide",
+   "clock": "7:30 AM",
+   "running": "Paused",
+   "timeButton": "Play",
+   "locked": [
+    "Sleep",
+    "Look After Yourself ▾",
+    "Weather",
+    "What Needs YouLockedThe questions waiting on you, what needs putting right, and the notices that say what happened. It opens when you read “What Needs You” in the guide.Read About It",
+    "How You AreLockedYour energy, stress and readiness, and a line on how you are. It opens when you read “How You Are” in the guide.Read About It"
+   ],
+   "guideStrip": "Guide · 5 Of 20 What Needs You · What happened while you weren’t looking, and what’s waiting on you.Read",
+   "rail": [
+    "Home"
+   ],
+   "toasts": [],
+   "pageWider": 0,
+   "problems": []
+  },
+  {
+   "n": 15,
+   "step": "Chapter 5",
+   "file": "844x390m/15-chapter-5.jpg",
+   "headings": [
+    "Guide",
+    "What Needs You"
+   ],
+   "dialog": "Guide",
+   "clock": "7:30 AM",
+   "running": "Paused",
+   "timeButton": "Play",
+   "locked": [
+    "Sleep",
+    "Look After Yourself ▾",
+    "Weather",
+    "What Needs YouLockedThe questions waiting on you, what needs putting right, and the notices that say what happened. It opens when you read “What Needs You” in the guide.Read About It",
+    "How You AreLockedYour energy, stress and readiness, and a line on how you are. It opens when you read “How You Are” in the guide.Read About It"
+   ],
+   "guideStrip": "Guide · 5 Of 20 What Needs You · What happened while you weren’t looking, and what’s waiting on you.Read",
+   "rail": [
+    "Home"
+   ],
+   "toasts": [],
+   "pageWider": 0,
+   "problems": []
+  },
+  {
+   "n": 16,
+   "step": "Chapter 5, Read",
+   "file": "844x390m/16-chapter-5-read.jpg",
+   "headings": [
+    "Guide",
+    "What Needs You"
+   ],
+   "dialog": "Guide",
+   "clock": "7:30 AM",
+   "running": "Paused",
+   "timeButton": "Play",
+   "locked": [
+    "Sleep",
+    "Look After Yourself ▾",
+    "Weather",
+    "How You AreLockedYour energy, stress and readiness, and a line on how you are. It opens when you read “How You Are” in the guide.Read About It"
+   ],
+   "guideStrip": "Guide · 6 Of 20 How You Are · Energy, stress, readiness, and the rest of your wellbeing.Read",
+   "rail": [
+    "Home"
+   ],
+   "toasts": [],
+   "pageWider": 0,
+   "problems": []
+  },
+  {
+   "n": 17,
+   "step": "Home, Five Chapters Read",
+   "file": "844x390m/17-home-five-chapters-read.jpg",
+   "headings": [
+    "Good Morning, Alex.",
+    "What Needs You",
+    "All Clear",
+    "Up Next",
+    "How You Are",
+    "Recent Updates"
+   ],
+   "dialog": null,
+   "clock": "7:30 AM",
+   "running": "Paused",
+   "timeButton": "Play",
+   "locked": [
+    "Sleep",
+    "Look After Yourself ▾",
+    "Weather",
+    "How You AreLockedYour energy, stress and readiness, and a line on how you are. It opens when you read “How You Are” in the guide.Read About It"
+   ],
+   "guideStrip": "Guide · 6 Of 20 How You Are · Energy, stress, readiness, and the rest of your wellbeing.Read",
+   "rail": [
+    "Home"
+   ],
+   "toasts": [],
+   "pageWider": 0,
+   "problems": []
+  },
+  {
+   "n": 18,
+   "step": "Play Pressed",
+   "file": "844x390m/18-play-pressed.jpg",
+   "headings": [
+    "Good Morning, Alex.",
+    "What Needs You",
+    "All Clear",
+    "Up Next",
+    "How You Are",
+    "Recent Updates"
+   ],
+   "dialog": null,
+   "clock": "7:30 AM",
+   "running": "Running",
+   "timeButton": "Pause",
+   "locked": [
+    "Sleep",
+    "Look After Yourself ▾",
+    "Weather",
+    "How You AreLockedYour energy, stress and readiness, and a line on how you are. It opens when you read “How You Are” in the guide.Read About It"
+   ],
+   "guideStrip": "Guide · 6 Of 20 How You Are · Energy, stress, readiness, and the rest of your wellbeing.Read",
+   "rail": [
+    "Home"
+   ],
+   "toasts": [],
+   "pageWider": 0,
+   "problems": []
+  },
+  {
+   "n": 19,
+   "step": "Pause Pressed",
+   "file": "844x390m/19-pause-pressed.jpg",
+   "headings": [
+    "Good Morning, Alex.",
+    "What Needs You",
+    "All Clear",
+    "Up Next",
+    "How You Are",
+    "Recent Updates"
+   ],
+   "dialog": null,
+   "clock": "7:30 AM",
+   "running": "Paused",
+   "timeButton": "Play",
+   "locked": [
+    "Sleep",
+    "Look After Yourself ▾",
+    "Weather",
+    "How You AreLockedYour energy, stress and readiness, and a line on how you are. It opens when you read “How You Are” in the guide.Read About It"
+   ],
+   "guideStrip": "Guide · 6 Of 20 How You Are · Energy, stress, readiness, and the rest of your wellbeing.Read",
+   "rail": [
+    "Home"
+   ],
+   "toasts": [],
+   "pageWider": 0,
+   "problems": []
+  },
+  {
+   "n": 20,
+   "step": "Advance Menu",
+   "file": "844x390m/20-advance-menu.jpg",
+   "headings": [
+    "Good Morning, Alex.",
+    "What Needs You",
+    "All Clear",
+    "Up Next",
+    "How You Are",
+    "Recent Updates"
+   ],
+   "dialog": null,
+   "clock": "7:30 AM",
+   "running": "Paused",
+   "timeButton": "Play",
+   "locked": [
+    "Sleep",
+    "Look After Yourself ▾",
+    "Weather",
+    "How You AreLockedYour energy, stress and readiness, and a line on how you are. It opens when you read “How You Are” in the guide.Read About It"
+   ],
+   "guideStrip": "Guide · 6 Of 20 How You Are · Energy, stress, readiness, and the rest of your wellbeing.Read",
+   "rail": [
+    "Home"
+   ],
+   "toasts": [],
+   "pageWider": 0,
+   "problems": []
+  },
+  {
+   "n": 21,
+   "step": "Tomorrow Morning Pressed",
+   "file": "844x390m/21-tomorrow-morning-pressed.jpg",
+   "headings": [
+    "On The Way"
+   ],
+   "dialog": "On The Way",
+   "clock": "7:30 AM",
+   "running": "Paused",
+   "timeButton": "Play",
+   "locked": [
+    "Sleep",
+    "Look After Yourself ▾",
+    "Weather",
+    "How You AreLockedYour energy, stress and readiness, and a line on how you are. It opens when you read “How You Are” in the guide.Read About It"
+   ],
+   "guideStrip": "Guide · 6 Of 20 How You Are · Energy, stress, readiness, and the rest of your wellbeing.Read",
+   "rail": [
+    "Home"
+   ],
+   "toasts": [],
+   "pageWider": 0,
+   "problems": []
+  },
+  {
+   "n": 22,
+   "step": "The Clock Stopped Or Arrived",
+   "file": "844x390m/22-the-clock-stopped-or-arrived.jpg",
+   "headings": [
+    "Registration And Your Account"
+   ],
+   "dialog": "Registration And Your Account",
+   "clock": "10:00 AM",
+   "running": "Paused",
+   "timeButton": "Play",
+   "locked": [
+    "Sleep",
+    "Look After Yourself ▾",
+    "Weather",
+    "How You AreLockedYour energy, stress and readiness, and a line on how you are. It opens when you read “How You Are” in the guide.Read About It"
+   ],
+   "guideStrip": "Guide · 6 Of 20 How You Are · Energy, stress, readiness, and the rest of your wellbeing.Read",
+   "rail": [
+    "Home"
+   ],
+   "toasts": [],
+   "pageWider": 0,
+   "problems": []
+  },
+  {
+   "n": 23,
+   "step": "Stand Here Pressed",
+   "file": "844x390m/23-stand-here-pressed.jpg",
+   "headings": [
+    "Good Morning, Alex.",
+    "What Needs You",
+    "All Clear",
+    "Up Next",
+    "How You Are",
+    "Recent Updates"
+   ],
+   "dialog": null,
+   "clock": "10:00 AM",
+   "running": "Paused",
+   "timeButton": "Play",
+   "locked": [
+    "Sleep",
+    "Look After Yourself ▾",
+    "Weather",
+    "How You AreLockedYour energy, stress and readiness, and a line on how you are. It opens when you read “How You Are” in the guide.Read About It"
+   ],
+   "guideStrip": "Guide · 6 Of 20 How You Are · Energy, stress, readiness, and the rest of your wellbeing.Read",
+   "rail": [
+    "Home"
+   ],
+   "toasts": [],
+   "pageWider": 0,
+   "problems": []
+  },
+  {
+   "n": 24,
+   "step": "Home At The End",
+   "file": "844x390m/24-home-at-the-end.jpg",
+   "headings": [
+    "Good Morning, Alex.",
+    "What Needs You",
+    "All Clear",
+    "Up Next",
+    "How You Are",
+    "Recent Updates"
+   ],
+   "dialog": null,
+   "clock": "10:00 AM",
+   "running": "Paused",
+   "timeButton": "Play",
+   "locked": [
+    "Sleep",
+    "Look After Yourself ▾",
+    "Weather",
+    "How You AreLockedYour energy, stress and readiness, and a line on how you are. It opens when you read “How You Are” in the guide.Read About It"
+   ],
+   "guideStrip": "Guide · 6 Of 20 How You Are · Energy, stress, readiness, and the rest of your wellbeing.Read",
+   "rail": [
+    "Home"
+   ],
+   "toasts": [],
+   "pageWider": 0,
+   "problems": []
+  },
+  {
+   "n": 25,
+   "step": "Sleep Pressed, Its Chapter Unread",
+   "file": "844x390m/25-sleep-pressed-its-chapter-unread.jpg",
+   "headings": [
+    "Guide",
+    "Sleep"
+   ],
+   "dialog": "Guide",
+   "clock": "10:00 AM",
+   "running": "Paused",
+   "timeButton": "Play",
+   "locked": [
+    "Sleep",
+    "Look After Yourself ▾",
+    "Weather",
+    "How You AreLockedYour energy, stress and readiness, and a line on how you are. It opens when you read “How You Are” in the guide.Read About It"
+   ],
+   "guideStrip": "Guide · 6 Of 20 How You Are · Energy, stress, readiness, and the rest of your wellbeing.Read",
+   "rail": [
+    "Home"
+   ],
+   "toasts": [],
+   "pageWider": 0,
+   "problems": []
+  },
+  {
+   "n": 26,
+   "step": "Your Saves After Save And Exit",
+   "file": "844x390m/26-your-saves-after-save-and-exit.jpg",
+   "headings": [],
+   "dialog": null,
+   "clock": null,
+   "running": null,
+   "timeButton": null,
+   "locked": [],
+   "guideStrip": null,
+   "rail": [],
+   "toasts": [],
+   "pageWider": 0,
+   "problems": []
+  },
+  {
+   "n": 27,
+   "step": "Home After Continue",
+   "file": "844x390m/27-home-after-continue.jpg",
+   "headings": [
+    "Good Morning, Alex.",
+    "What Needs You",
+    "All Clear",
+    "Up Next",
+    "How You Are",
+    "Recent Updates"
+   ],
+   "dialog": null,
+   "clock": "10:00 AM",
+   "running": "Paused",
+   "timeButton": "Play",
+   "locked": [
+    "Sleep",
+    "Look After Yourself ▾",
+    "Weather",
+    "How You AreLockedYour energy, stress and readiness, and a line on how you are. It opens when you read “How You Are” in the guide.Read About It"
+   ],
+   "guideStrip": "Guide · 6 Of 20 How You Are · Energy, stress, readiness, and the rest of your wellbeing.Read",
+   "rail": [
+    "Home"
+   ],
+   "toasts": [],
+   "pageWider": 0,
+   "problems": []
+  },
+  {
+   "step": "(problems)",
+   "problems": []
+  }
+ ]
+}

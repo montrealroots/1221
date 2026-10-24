@@ -3173,6 +3173,13 @@
   "on": "2026-10-17",
   "reason": "'Your Card Was Charged Off: … on the … is with collections now, and the card is closed. It’s on your record.': says what happened and what it means; the memos and the collections account's name are matched by name"
  },
+ "src/engine/systems/credit.ts#closeCard": {
+  "status": "Rewritten And Verified",
+  "hash": "eb60496f030d",
+  "on": "2026-10-24",
+  "reason": "Card Closed, with what the card held as a credit named with its sum and the account it went to; plain and true, no engine word",
+  "evidence": "tests/b26-card-credit-on-close.test.ts: the notice read word for word at Close The Card and at the statement"
+ },
  "src/engine/systems/credit.ts#delinquency": {
   "status": "Rewritten And Verified",
   "hash": "c97b22b06e75",

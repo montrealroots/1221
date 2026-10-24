@@ -1,0 +1,2523 @@
+{
+ "bank.add_standing_order": {
+  "status": "Verified",
+  "by": [
+   "inspection",
+   "automated"
+  ],
+  "on": "bf0ef776",
+  "evidence": [
+   "tests/b20-money-clock.test.ts",
+   "tests/b20-money-promises.test.ts",
+   "tests/journey-money.test.ts",
+   "tests/payments.test.ts",
+   "src/engine/systems/payments.ts:300-314 the command: into easy-access savings of theirs, an amount, a day",
+   "tests/money.test.ts",
+   "tests/banking.test.ts the money area’s 69 test files, 843 tests, run on bf0ef776: all green; the 23 files the card’s close and net worth touch, and tests/b26-card-credit-on-close.test.ts, green with the fix"
+  ]
+ },
+ "bank.application": {
+  "status": "Verified",
+  "by": [
+   "inspection",
+   "automated"
+  ],
+  "on": "bf0ef776",
+  "evidence": [
+   "tests/evidence2-b05.test.ts",
+   "tests/evidence-g14-money.test.ts",
+   "tests/evidence2-b03.test.ts",
+   "src/engine/systems/bankmoves.ts:398-412 the decision: the checks again, the deposit back where refused",
+   "tests/bank-moves.test.ts",
+   "tests/banking.test.ts the money area’s 69 test files, 843 tests, run on bf0ef776: all green; the 23 files the card’s close and net worth touch, and tests/b26-card-credit-on-close.test.ts, green with the fix"
+  ]
+ },
+ "bank.arrange_overdraft": {
+  "status": "Verified",
+  "by": [
+   "inspection",
+   "automated"
+  ],
+  "on": "bf0ef776",
+  "evidence": [
+   "tests/scope-money.test.ts",
+   "tests/lending.test.ts",
+   "tests/journey-money.test.ts",
+   "src/engine/systems/lending.ts:1439-1483 the command: closed at nothing arranged or overdrawn, the offer’s range (src/engine/systems/lending.ts:443-463), the set-up or facility fee once",
+   "tests/lending.test.ts",
+   "tests/integration-home-lending.test.ts",
+   "tests/banking.test.ts the money area’s 69 test files, 843 tests, run on bf0ef776: all green; the 23 files the card’s close and net worth touch, and tests/b26-card-credit-on-close.test.ts, green with the fix"
+  ]
+ },
+ "bank.borrow": {
+  "status": "Verified",
+  "by": [
+   "inspection",
+   "automated"
+  ],
+  "on": "bf0ef776",
+  "evidence": [
+   "tests/b20-money-defects.test.ts",
+   "tests/evidence-g10-money.test.ts",
+   "tests/evidence-g14-money.test.ts",
+   "tests/journey-money.test.ts",
+   "src/engine/systems/lending.ts:1485-1509 the command; src/engine/systems/lending.ts:470-520 loanOffer: the lender’s conditions, one loan a bank, the score, the months, the share of wages across every loan",
+   "tests/lending.test.ts",
+   "tests/banking.test.ts the money area’s 69 test files, 843 tests, run on bf0ef776: all green; the 23 files the card’s close and net worth touch, and tests/b26-card-credit-on-close.test.ts, green with the fix"
+  ]
+ },
+ "bank.break_term": {
+  "status": "Verified",
+  "by": [
+   "inspection",
+   "automated"
+  ],
+  "on": "bf0ef776",
+  "evidence": [
+   "tests/evidence-g10-money.test.ts",
+   "tests/evidence2-b04.test.ts",
+   "tests/evidence3-lifepapers.test.ts",
+   "tests/journey-money.test.ts",
+   "src/engine/systems/accountlife.ts:564-579 the command: the quote’s refusals, notice where the bank needs it, once; src/engine/systems/accountlife.ts:497-526 breakTerm",
+   "tests/accountlife.test.ts",
+   "tests/banking.test.ts the money area’s 69 test files, 843 tests, run on bf0ef776: all green; the 23 files the card’s close and net worth touch, and tests/b26-card-credit-on-close.test.ts, green with the fix"
+  ]
+ },
+ "bank.cancel_new": {
+  "status": "Fixed And Verified",
+  "by": [
+   "inspection",
+   "automated"
+  ],
+  "on": "bf0ef776",
+  "evidence": [
+   "tests/scope-money.test.ts",
+   "tests/accountlife.test.ts",
+   "tests/defects5.test.ts",
+   "tests/remaining-09-banking.test.ts",
+   "src/engine/systems/accountlife.ts:625-688 the command: in its cooling-off (src/engine/systems/accountlife.ts:414-433), a card through closeCard; a current account on Close It’s refusals and the fees owed (src/engine/systems/accountlife.ts:343-369); settled by the country’s rule, charges refunded where the law refunds them, what it holds sent back",
+   "tests/accountlife.test.ts",
+   "tests/b26-card-credit-on-close.test.ts"
+  ],
+  "fixed": "Closing a card that held a credit balance left the credit in the closed account, which cardsOf and cardFor no longer read: Send The Credit To My Account refused it and net worth was down by it for good; and net worth counted a credit on an open card as nothing. Fixed 2026-10-24: closeCard (credit.ts:1300) sends the credit back to the current account first, from Close The Card, the statement and a cancellation, and netWorth counts a liability account’s credit with the cash. tests/b26-card-credit-on-close.test.ts fails on the old code (net worth $500.00 short; $120.00 left on the closed card) and passes with the fix."
+ },
+ "bank.cancel_scheduled": {
+  "status": "Verified",
+  "by": [
+   "inspection",
+   "automated"
+  ],
+  "on": "bf0ef776",
+  "evidence": [
+   "tests/journey-money.test.ts",
+   "tests/evidence-g14-money.test.ts",
+   "tests/payments.test.ts",
+   "src/engine/systems/payments.ts:343-348 the command: cancelled once",
+   "tests/money.test.ts",
+   "tests/banking.test.ts the money area’s 69 test files, 843 tests, run on bf0ef776: all green; the 23 files the card’s close and net worth touch, and tests/b26-card-credit-on-close.test.ts, green with the fix"
+  ]
+ },
+ "bank.cancel_standing_order": {
+  "status": "Verified",
+  "by": [
+   "inspection",
+   "automated"
+  ],
+  "on": "bf0ef776",
+  "evidence": [
+   "tests/journey-money.test.ts",
+   "tests/payments.test.ts",
+   "src/engine/systems/payments.ts:316-324 the command: gone already refused, its items cancelled",
+   "tests/money.test.ts",
+   "tests/banking.test.ts the money area’s 69 test files, 843 tests, run on bf0ef776: all green; the 23 files the card’s close and net worth touch, and tests/b26-card-credit-on-close.test.ts, green with the fix"
+  ]
+ },
+ "bank.cancel_switch": {
+  "status": "Verified",
+  "by": [
+   "inspection",
+   "automated"
+  ],
+  "on": "bf0ef776",
+  "evidence": [
+   "tests/scope-money.test.ts",
+   "tests/remaining-09-banking.test.ts",
+   "src/engine/systems/lending.ts:1611-1624 the command: until its last day, confirmed, the review cancelled with it",
+   "tests/lending.test.ts",
+   "tests/banking.test.ts the money area’s 69 test files, 843 tests, run on bf0ef776: all green; the 23 files the card’s close and net worth touch, and tests/b26-card-credit-on-close.test.ts, green with the fix"
+  ]
+ },
+ "bank.claim_unclaimed": {
+  "status": "Verified",
+  "by": [
+   "inspection",
+   "automated"
+  ],
+  "on": "bf0ef776",
+  "evidence": [
+   "tests/b20-money-clock.test.ts",
+   "tests/evidence-g10-money.test.ts",
+   "src/engine/systems/accountlife.ts:690-702 the command: what was handed to the state claimed back once",
+   "tests/accountlife.test.ts",
+   "tests/banking.test.ts the money area’s 69 test files, 843 tests, run on bf0ef776: all green; the 23 files the card’s close and net worth touch, and tests/b26-card-credit-on-close.test.ts, green with the fix"
+  ]
+ },
+ "bank.close_current": {
+  "status": "Verified",
+  "by": [
+   "inspection",
+   "automated"
+  ],
+  "on": "bf0ef776",
+  "evidence": [
+   "tests/evidence-g14-money.test.ts",
+   "tests/evidence2-b05.test.ts",
+   "tests/bank-moves.test.ts",
+   "src/engine/systems/bankmoves.ts:523-543 the command; src/engine/systems/bankmoves.ts:282-311 closeRefusal: not the only one, not primary, not overdrawn or owing, nothing in transit, no savings beside it, pending items, fees past what it holds; Citi’s restricted days; src/engine/systems/bankmoves.ts:317-334 closeNow",
+   "tests/bank-moves.test.ts",
+   "tests/bank-lifecycle.test.ts",
+   "tests/banking.test.ts the money area’s 69 test files, 843 tests, run on bf0ef776: all green; the 23 files the card’s close and net worth touch, and tests/b26-card-credit-on-close.test.ts, green with the fix"
+  ]
+ },
+ "bank.close_savings": {
+  "status": "Verified",
+  "by": [
+   "inspection",
+   "automated"
+  ],
+  "on": "bf0ef776",
+  "evidence": [
+   "tests/banking.test.ts",
+   "tests/accountlife.test.ts",
+   "tests/evidence-g11-money.test.ts",
+   "tests/integration-savings-notice.test.ts",
+   "src/engine/systems/banking.ts:1062-1079 the command: notice given once, Germany’s three months past the allowance; src/engine/systems/banking.ts:498-525 closeSavings pays the interest, settles the fees, moves what it holds and drops the payments into it (src/engine/systems/banking.ts:532-542)",
+   "tests/banking.test.ts",
+   "tests/bank-lifecycle.test.ts",
+   "tests/banking.test.ts the money area’s 69 test files, 843 tests, run on bf0ef776: all green; the 23 files the card’s close and net worth touch, and tests/b26-card-credit-on-close.test.ts, green with the fix"
+  ]
+ },
+ "bank.current_closes": {
+  "status": "Verified",
+  "by": [
+   "inspection",
+   "automated"
+  ],
+  "on": "bf0ef776",
+  "evidence": [
+   "tests/evidence-g14-money.test.ts",
+   "src/engine/systems/bankmoves.ts:545-562 the closing on its day: overdrawn since, it stays and says so",
+   "tests/bank-moves.test.ts",
+   "tests/banking.test.ts the money area’s 69 test files, 843 tests, run on bf0ef776: all green; the 23 files the card’s close and net worth touch, and tests/b26-card-credit-on-close.test.ts, green with the fix"
+  ]
+ },
+ "bank.debit_overdraft": {
+  "status": "Verified",
+  "by": [
+   "inspection",
+   "automated"
+  ],
+  "on": "bf0ef776",
+  "evidence": [
+   "tests/b20-money-promises.test.ts",
+   "tests/b20-money-funds.test.ts",
+   "tests/evidence-g10-money.test.ts",
+   "src/engine/systems/lending.ts:1410-1421 the command: where the bank offers the choice, not abroad",
+   "tests/lending.test.ts",
+   "tests/banking.test.ts the money area’s 69 test files, 843 tests, run on bf0ef776: all green; the 23 files the card’s close and net worth touch, and tests/b26-card-credit-on-close.test.ts, green with the fix"
+  ]
+ },
+ "bank.fraud_refund": {
+  "status": "Verified",
+  "by": [
+   "inspection",
+   "automated"
+  ],
+  "on": "bf0ef776",
+  "evidence": [
+   "tests/evidence-g13-money.test.ts",
+   "src/engine/systems/security.ts:255-272 the refund once, into an open account",
+   "tests/money.test.ts",
+   "tests/banking.test.ts the money area’s 69 test files, 843 tests, run on bf0ef776: all green; the 23 files the card’s close and net worth touch, and tests/b26-card-credit-on-close.test.ts, green with the fix"
+  ]
+ },
+ "bank.home_closes": {
+  "status": "Verified",
+  "by": [
+   "inspection",
+   "automated"
+  ],
+  "on": "bf0ef776",
+  "evidence": [
+   "tests/home-account-abroad.test.ts",
+   "tests/remaining-09-banking.test.ts",
+   "src/engine/systems/abroad.ts:591 the item; src/engine/systems/abroad.ts:501-550 homeCloses: settled, gathered, tried again while overdrawn, sent here, the orders ended",
+   "tests/home-account-abroad.test.ts",
+   "tests/banking.test.ts the money area’s 69 test files, 843 tests, run on bf0ef776: all green; the 23 files the card’s close and net worth touch, and tests/b26-card-credit-on-close.test.ts, green with the fix"
+  ]
+ },
+ "bank.loan_due": {
+  "status": "Verified",
+  "by": [
+   "inspection",
+   "automated"
+  ],
+  "on": "bf0ef776",
+  "evidence": [
+   "tests/b20-money-defects.test.ts",
+   "tests/evidence-g14-money.test.ts",
+   "tests/evidence-g10-money.test.ts",
+   "tests/defects3-bank.test.ts",
+   "src/engine/systems/lending.ts:1319-1361 the month’s interest and payment from the repayment account, a miss on the record with its fee, the loan closed at nothing owed, the next month booked (src/engine/systems/lending.ts:737-744)",
+   "tests/lending.test.ts",
+   "tests/banking.test.ts the money area’s 69 test files, 843 tests, run on bf0ef776: all green; the 23 files the card’s close and net worth touch, and tests/b26-card-credit-on-close.test.ts, green with the fix"
+  ]
+ },
+ "bank.month_end": {
+  "status": "Verified",
+  "by": [
+   "inspection",
+   "automated"
+  ],
+  "on": "bf0ef776",
+  "evidence": [
+   "tests/b20-money-interest.test.ts",
+   "tests/b20-money-clock.test.ts",
+   "tests/banking.test.ts",
+   "src/engine/systems/banking.ts:932-1000 the month’s end: marks fall off, the bonus kept or lost, interest paid in the bank’s months or at Germany’s quarter, the fee charged, held or waived (src/engine/systems/banking.ts:280-322 feeFor), the statement, the month reset",
+   "tests/bank-fees.test.ts",
+   "tests/interest.test.ts",
+   "tests/banking.test.ts the money area’s 69 test files, 843 tests, run on bf0ef776: all green; the 23 files the card’s close and net worth touch, and tests/b26-card-credit-on-close.test.ts, green with the fix"
+  ]
+ },
+ "bank.new_number": {
+  "status": "Verified",
+  "by": [
+   "inspection",
+   "automated"
+  ],
+  "on": "bf0ef776",
+  "evidence": [
+   "tests/coverage-gaps-number.test.ts",
+   "tests/security.test.ts",
+   "tests/evidence-g13-money.test.ts",
+   "src/engine/systems/security.ts:329-340 the command: where the bank offers it; the card replaced",
+   "tests/money.test.ts",
+   "tests/banking.test.ts the money area’s 69 test files, 843 tests, run on bf0ef776: all green; the 23 files the card’s close and net worth touch, and tests/b26-card-credit-on-close.test.ts, green with the fix"
+  ]
+ },
+ "bank.open_current": {
+  "status": "Verified",
+  "by": [
+   "inspection",
+   "automated"
+  ],
+  "on": "bf0ef776",
+  "evidence": [
+   "tests/evidence-g14-money.test.ts",
+   "tests/evidence2-b05.test.ts",
+   "tests/b20-money-clock.test.ts",
+   "tests/evidence2-b03.test.ts",
+   "src/engine/systems/bankmoves.ts:369-396 the command; src/engine/systems/bankmoves.ts:95-118 openRefusal: where they live, not twice, under review, a debt, the report, the ID, the age, a US person; the branch’s hour; the deposit sent",
+   "tests/bank-moves.test.ts",
+   "tests/banking.test.ts the money area’s 69 test files, 843 tests, run on bf0ef776: all green; the 23 files the card’s close and net worth touch, and tests/b26-card-credit-on-close.test.ts, green with the fix"
+  ]
+ },
+ "bank.open_savings": {
+  "status": "Verified",
+  "by": [
+   "inspection",
+   "automated"
+  ],
+  "on": "bf0ef776",
+  "evidence": [
+   "tests/defects-g14-1.test.ts",
+   "tests/bank-moves.test.ts",
+   "tests/accountlife.test.ts",
+   "tests/banking.test.ts",
+   "src/engine/systems/banking.ts:1049-1060 the command: one savings account a bank, at a bank with a checking account, not abroad",
+   "tests/banking.test.ts",
+   "tests/banking.test.ts the money area’s 69 test files, 843 tests, run on bf0ef776: all green; the 23 files the card’s close and net worth touch, and tests/b26-card-credit-on-close.test.ts, green with the fix"
+  ]
+ },
+ "bank.open_term": {
+  "status": "Verified",
+  "by": [
+   "inspection",
+   "automated"
+  ],
+  "on": "bf0ef776",
+  "evidence": [
+   "tests/b20-money-promises.test.ts",
+   "tests/b20-money-clock.test.ts",
+   "tests/evidence-g10-money.test.ts",
+   "tests/journey-money.test.ts",
+   "src/engine/systems/lending.ts:1584-1609 the command: at a bank with a checking account, the minimum, what the account holds",
+   "tests/lending.test.ts",
+   "tests/accountlife.test.ts",
+   "tests/banking.test.ts the money area’s 69 test files, 843 tests, run on bf0ef776: all green; the 23 files the card’s close and net worth touch, and tests/b26-card-credit-on-close.test.ts, green with the fix"
+  ]
+ },
+ "bank.pay_collections": {
+  "status": "Verified",
+  "by": [
+   "inspection",
+   "automated"
+  ],
+  "on": "bf0ef776",
+  "evidence": [
+   "tests/evidence-g10-money.test.ts",
+   "tests/arrears.test.ts",
+   "src/engine/systems/lending.ts:1423-1437 the command: the debt named, from the checking account, closed at nothing owed",
+   "tests/lending.test.ts",
+   "tests/banking.test.ts the money area’s 69 test files, 843 tests, run on bf0ef776: all green; the 23 files the card’s close and net worth touch, and tests/b26-card-credit-on-close.test.ts, green with the fix"
+  ]
+ },
+ "bank.reactivate": {
+  "status": "Verified",
+  "by": [
+   "inspection",
+   "automated"
+  ],
+  "on": "bf0ef776",
+  "evidence": [
+   "tests/b20-money-clock.test.ts",
+   "tests/b20-money-promises.test.ts",
+   "tests/evidence-g10-money.test.ts",
+   "src/engine/systems/accountlife.ts:613-623 the command: a dormant or warned account kept, its decision resolved",
+   "tests/accountlife.test.ts",
+   "tests/home-account-idle.test.ts",
+   "tests/banking.test.ts the money area’s 69 test files, 843 tests, run on bf0ef776: all green; the 23 files the card’s close and net worth touch, and tests/b26-card-credit-on-close.test.ts, green with the fix"
+  ]
+ },
+ "bank.redirect_deposits": {
+  "status": "Verified",
+  "by": [
+   "inspection",
+   "automated"
+  ],
+  "on": "bf0ef776",
+  "evidence": [
+   "tests/bank-moves.test.ts",
+   "tests/evidence-g21-school.test.ts",
+   "tests/language-money.test.ts",
+   "src/engine/systems/bankmoves.ts:485-493 the command: not closing, not abroad",
+   "tests/bank-moves.test.ts",
+   "tests/banking.test.ts the money area’s 69 test files, 843 tests, run on bf0ef776: all green; the 23 files the card’s close and net worth touch, and tests/b26-card-credit-on-close.test.ts, green with the fix"
+  ]
+ },
+ "bank.repay_loan": {
+  "status": "Verified",
+  "by": [
+   "inspection",
+   "automated"
+  ],
+  "on": "bf0ef776",
+  "evidence": [
+   "tests/evidence-g11-money.test.ts",
+   "tests/journey-money.test.ts",
+   "tests/lending.test.ts",
+   "src/engine/systems/lending.ts:1558-1582 the command: the days’ interest, refused where the account can’t cover it, closed and its item cancelled",
+   "tests/lending.test.ts",
+   "tests/banking.test.ts the money area’s 69 test files, 843 tests, run on bf0ef776: all green; the 23 files the card’s close and net worth touch, and tests/b26-card-credit-on-close.test.ts, green with the fix"
+  ]
+ },
+ "bank.savings_notice": {
+  "status": "Verified",
+  "by": [
+   "inspection",
+   "automated"
+  ],
+  "on": "bf0ef776",
+  "evidence": [
+   "tests/integration-savings-notice.test.ts",
+   "tests/scope-money.test.ts",
+   "src/engine/systems/banking.ts:1081-1092 the notice period ended: closed into the current account at its bank, said",
+   "tests/banking.test.ts",
+   "tests/banking.test.ts the money area’s 69 test files, 843 tests, run on bf0ef776: all green; the 23 files the card’s close and net worth touch, and tests/b26-card-credit-on-close.test.ts, green with the fix"
+  ]
+ },
+ "bank.schedule_payment": {
+  "status": "Verified",
+  "by": [
+   "inspection",
+   "automated"
+  ],
+  "on": "bf0ef776",
+  "evidence": [
+   "tests/b20-money-clock.test.ts",
+   "tests/b20-money-promises.test.ts",
+   "tests/evidence-g13-money.test.ts",
+   "tests/journey-money.test.ts",
+   "src/engine/systems/payments.ts:326-341 the command: between two of their own, not a term deposit, in the future",
+   "tests/money.test.ts",
+   "tests/banking.test.ts the money area’s 69 test files, 843 tests, run on bf0ef776: all green; the 23 files the card’s close and net worth touch, and tests/b26-card-credit-on-close.test.ts, green with the fix"
+  ]
+ },
+ "bank.scheduled_payment": {
+  "status": "Verified",
+  "by": [
+   "inspection",
+   "automated"
+  ],
+  "on": "bf0ef776",
+  "evidence": [
+   "tests/b20-money-clock.test.ts",
+   "tests/b20-money-promises.test.ts",
+   "tests/evidence-g13-money.test.ts",
+   "tests/journey-money.test.ts",
+   "src/engine/systems/payments.ts:258-281 the payment on its date: a closed account said, savings’ room and fee, across banks",
+   "tests/money.test.ts",
+   "tests/banking.test.ts the money area’s 69 test files, 843 tests, run on bf0ef776: all green; the 23 files the card’s close and net worth touch, and tests/b26-card-credit-on-close.test.ts, green with the fix"
+  ]
+ },
+ "bank.set_alerts": {
+  "status": "Verified",
+  "by": [
+   "inspection",
+   "automated"
+  ],
+  "on": "bf0ef776",
+  "evidence": [
+   "tests/evidence-g11-money.test.ts",
+   "tests/account-alerts.test.ts",
+   "tests/b20-money-promises.test.ts",
+   "tests/journey-money.test.ts",
+   "src/engine/systems/statements.ts:520-536 the command: each line an amount or blank",
+   "tests/account-alerts.test.ts",
+   "tests/banking.test.ts the money area’s 69 test files, 843 tests, run on bf0ef776: all green; the 23 files the card’s close and net worth touch, and tests/b26-card-credit-on-close.test.ts, green with the fix"
+  ]
+ },
+ "bank.set_loan_repayment": {
+  "status": "Verified",
+  "by": [
+   "inspection",
+   "automated"
+  ],
+  "on": "bf0ef776",
+  "evidence": [
+   "tests/evidence-g14-money.test.ts",
+   "tests/defects-r3b-1.test.ts",
+   "src/engine/systems/lending.ts:1511-1520 the command",
+   "tests/lending.test.ts",
+   "tests/banking.test.ts the money area’s 69 test files, 843 tests, run on bf0ef776: all green; the 23 files the card’s close and net worth touch, and tests/b26-card-credit-on-close.test.ts, green with the fix"
+  ]
+ },
+ "bank.set_order_source": {
+  "status": "Verified",
+  "by": [
+   "inspection",
+   "automated"
+  ],
+  "on": "bf0ef776",
+  "evidence": [
+   "tests/evidence-g14-money.test.ts",
+   "tests/evidence2-b05.test.ts",
+   "tests/bank-moves.test.ts",
+   "src/engine/systems/bankmoves.ts:495-506 the command",
+   "tests/bank-moves.test.ts",
+   "tests/banking.test.ts the money area’s 69 test files, 843 tests, run on bf0ef776: all green; the 23 files the card’s close and net worth touch, and tests/b26-card-credit-on-close.test.ts, green with the fix"
+  ]
+ },
+ "bank.set_payments": {
+  "status": "Verified",
+  "by": [
+   "inspection",
+   "automated"
+  ],
+  "on": "bf0ef776",
+  "evidence": [
+   "tests/b20-money-interest.test.ts",
+   "tests/b20-money-defects.test.ts",
+   "tests/evidence-g11-money.test.ts",
+   "tests/payments.test.ts",
+   "src/engine/systems/payments.ts:283-298 the command: how the day is paid, the link only where it covers something",
+   "tests/money.test.ts",
+   "tests/banking.test.ts the money area’s 69 test files, 843 tests, run on bf0ef776: all green; the 23 files the card’s close and net worth touch, and tests/b26-card-credit-on-close.test.ts, green with the fix"
+  ]
+ },
+ "bank.set_primary": {
+  "status": "Verified",
+  "by": [
+   "inspection",
+   "automated"
+  ],
+  "on": "bf0ef776",
+  "evidence": [
+   "tests/evidence-g14-money.test.ts",
+   "tests/bank-moves.test.ts",
+   "tests/defects-g19-1.test.ts",
+   "src/engine/systems/bankmoves.ts:466-483 the command: an open checking account, not closing, not a home card that can’t pay here; every instruction pinned first",
+   "tests/bank-moves.test.ts",
+   "tests/banking.test.ts the money area’s 69 test files, 843 tests, run on bf0ef776: all green; the 23 files the card’s close and net worth touch, and tests/b26-card-credit-on-close.test.ts, green with the fix"
+  ]
+ },
+ "bank.set_round_ups": {
+  "status": "Verified",
+  "by": [
+   "inspection",
+   "automated"
+  ],
+  "on": "bf0ef776",
+  "evidence": [
+   "tests/b20-money-promises.test.ts",
+   "tests/evidence-g11-money.test.ts",
+   "tests/roundups.test.ts",
+   "tests/journey-money.test.ts",
+   "src/engine/systems/accountlife.ts:611 the command; src/engine/systems/roundups.ts:305-327 setRoundUps: on with the bank’s choices, off dropping what was counted",
+   "tests/b20-money-funds.test.ts",
+   "tests/banking.test.ts the money area’s 69 test files, 843 tests, run on bf0ef776: all green; the 23 files the card’s close and net worth touch, and tests/b26-card-credit-on-close.test.ts, green with the fix"
+  ]
+ },
+ "bank.set_term_end": {
+  "status": "Verified",
+  "by": [
+   "inspection",
+   "automated"
+  ],
+  "on": "bf0ef776",
+  "evidence": [
+   "tests/evidence3-lifepapers.test.ts",
+   "tests/accountlife.test.ts",
+   "src/engine/systems/accountlife.ts:551-562 the command: the bank’s choices, its notice",
+   "tests/accountlife.test.ts",
+   "tests/banking.test.ts the money area’s 69 test files, 843 tests, run on bf0ef776: all green; the 23 files the card’s close and net worth touch, and tests/b26-card-credit-on-close.test.ts, green with the fix"
+  ]
+ },
+ "bank.standing_order": {
+  "status": "Verified",
+  "by": [
+   "inspection",
+   "automated"
+  ],
+  "on": "bf0ef776",
+  "evidence": [
+   "tests/b20-money-clock.test.ts",
+   "tests/b20-money-promises.test.ts",
+   "tests/payments.test.ts",
+   "tests/accountlife.test.ts",
+   "src/engine/systems/payments.ts:227-255 the order on its day: moved to the business day, refused where blocked or short with its notice, across banks in the bank’s days, the next booked",
+   "tests/money.test.ts",
+   "tests/bankdays.test.ts",
+   "tests/banking.test.ts the money area’s 69 test files, 843 tests, run on bf0ef776: all green; the 23 files the card’s close and net worth touch, and tests/b26-card-credit-on-close.test.ts, green with the fix"
+  ]
+ },
+ "bank.stop_balance_transfer": {
+  "status": "Verified",
+  "by": [
+   "inspection",
+   "automated"
+  ],
+  "on": "bf0ef776",
+  "evidence": [
+   "tests/scope-money.test.ts",
+   "tests/remaining-09-banking.test.ts",
+   "src/engine/systems/lending.ts:1393-1408 the command: no switch, no such step, stopped already, too late, confirm",
+   "tests/lending.test.ts",
+   "tests/banking.test.ts the money area’s 69 test files, 843 tests, run on bf0ef776: all green; the 23 files the card’s close and net worth touch, and tests/b26-card-credit-on-close.test.ts, green with the fix"
+  ]
+ },
+ "bank.switch": {
+  "status": "Verified",
+  "by": [
+   "inspection",
+   "automated"
+  ],
+  "on": "bf0ef776",
+  "evidence": [
+   "tests/scope-money.test.ts",
+   "tests/lending.test.ts",
+   "tests/remaining-09-banking.test.ts",
+   "src/engine/systems/lending.ts:1626-1690 the command: a bank where they live, not one they bank at or owe, the report, the ID, no overdraft, one switch at a time, the service’s days and its last day to call off",
+   "tests/lending.test.ts",
+   "tests/banking.test.ts the money area’s 69 test files, 843 tests, run on bf0ef776: all green; the 23 files the card’s close and net worth touch, and tests/b26-card-credit-on-close.test.ts, green with the fix"
+  ]
+ },
+ "bank.switch_complete": {
+  "status": "Verified",
+  "by": [
+   "inspection",
+   "automated"
+  ],
+  "on": "bf0ef776",
+  "evidence": [
+   "tests/scope-money.test.ts",
+   "tests/remaining-09-banking.test.ts",
+   "src/engine/systems/lending.ts:1363-1367 the item; src/engine/systems/lending.ts:758-863 completeSwitch: the balance kept or a partial switch, a debt left blocked, pending card payments held back, the accounts opened, the orders, wages, autopay, loan repayments and scheduled payments moved",
+   "tests/lending.test.ts",
+   "tests/bank-moves.test.ts",
+   "tests/banking.test.ts the money area’s 69 test files, 843 tests, run on bf0ef776: all green; the 23 files the card’s close and net worth touch, and tests/b26-card-credit-on-close.test.ts, green with the fix"
+  ]
+ },
+ "bank.switch_debt": {
+  "status": "Verified",
+  "by": [
+   "inspection",
+   "automated"
+  ],
+  "on": "bf0ef776",
+  "evidence": [
+   "tests/scope-money.test.ts",
+   "src/engine/systems/lending.ts:1383-1391 the blocked account checked until repaid, then closed",
+   "tests/lending.test.ts",
+   "tests/banking.test.ts the money area’s 69 test files, 843 tests, run on bf0ef776: all green; the 23 files the card’s close and net worth touch, and tests/b26-card-credit-on-close.test.ts, green with the fix"
+  ]
+ },
+ "bank.switch_review": {
+  "status": "Verified",
+  "by": [
+   "inspection",
+   "automated"
+  ],
+  "on": "bf0ef776",
+  "evidence": [
+   "tests/scope-money.test.ts",
+   "src/engine/systems/lending.ts:1370-1380 the new bank’s look: a refusal ends the switch before anything moves",
+   "tests/lending.test.ts",
+   "tests/banking.test.ts the money area’s 69 test files, 843 tests, run on bf0ef776: all green; the 23 files the card’s close and net worth touch, and tests/b26-card-credit-on-close.test.ts, green with the fix"
+  ]
+ },
+ "bank.take_overrun_loan": {
+  "status": "Verified",
+  "by": [
+   "inspection",
+   "automated"
+  ],
+  "on": "bf0ef776",
+  "evidence": [
+   "tests/scope-money.test.ts",
+   "tests/commands-kept.test.ts",
+   "src/engine/systems/lending.ts:1522-1556 the command: the offer on the account named, not abroad, one loan a bank, the days past the limit ended",
+   "tests/lending.test.ts",
+   "tests/banking.test.ts the money area’s 69 test files, 843 tests, run on bf0ef776: all green; the 23 files the card’s close and net worth touch, and tests/b26-card-credit-on-close.test.ts, green with the fix"
+  ]
+ },
+ "bank.take_term_interest": {
+  "status": "Verified",
+  "by": [
+   "inspection",
+   "automated"
+  ],
+  "on": "bf0ef776",
+  "evidence": [
+   "tests/evidence-g11-money.test.ts",
+   "tests/evidence3-lifepapers.test.ts",
+   "tests/accountlife.test.ts",
+   "src/engine/systems/accountlife.ts:592-609 the command: where the bank pays during the term, what’s earned",
+   "tests/accountlife.test.ts",
+   "tests/banking.test.ts the money area’s 69 test files, 843 tests, run on bf0ef776: all green; the 23 files the card’s close and net worth touch, and tests/b26-card-credit-on-close.test.ts, green with the fix"
+  ]
+ },
+ "bank.term_notice": {
+  "status": "Verified",
+  "by": [
+   "inspection",
+   "automated"
+  ],
+  "on": "bf0ef776",
+  "evidence": [
+   "tests/evidence-g10-money.test.ts",
+   "tests/evidence2-b04.test.ts",
+   "src/engine/systems/accountlife.ts:582-590 the notice run: broken, said",
+   "tests/accountlife.test.ts",
+   "tests/banking.test.ts the money area’s 69 test files, 843 tests, run on bf0ef776: all green; the 23 files the card’s close and net worth touch, and tests/b26-card-credit-on-close.test.ts, green with the fix"
+  ]
+ },
+ "bank.transfer": {
+  "status": "Verified",
+  "by": [
+   "inspection",
+   "automated"
+  ],
+  "on": "bf0ef776",
+  "evidence": [
+   "tests/b20-money-interest.test.ts",
+   "tests/b20-money-promises.test.ts",
+   "tests/b20-money-clock.test.ts",
+   "tests/b20-money-funds.test.ts",
+   "tests/banking.test.ts",
+   "src/engine/systems/banking.ts:1002-1047 the command: own accounts only, the sending account’s money, a blocked, dormant or closing account refused, Germany’s monthly allowance, the savings fee beside the move, between banks in the bank’s days",
+   "tests/banking.test.ts",
+   "tests/bank-moves.test.ts",
+   "tests/banking.test.ts the money area’s 69 test files, 843 tests, run on bf0ef776: all green; the 23 files the card’s close and net worth touch, and tests/b26-card-credit-on-close.test.ts, green with the fix"
+  ]
+ },
+ "bank.transfer_arrives": {
+  "status": "Verified",
+  "by": [
+   "inspection",
+   "automated"
+  ],
+  "on": "bf0ef776",
+  "evidence": [
+   "tests/b20-money-clock.test.ts",
+   "tests/evidence-g14-money.test.ts",
+   "tests/evidence2-b03.test.ts",
+   "src/engine/systems/bankmoves.ts:414-444 the arrival: waits for a review, abroad’s costs, lands, or comes back where nothing is open",
+   "tests/bank-moves.test.ts",
+   "tests/b22-transfer.test.ts",
+   "tests/banking.test.ts the money area’s 69 test files, 843 tests, run on bf0ef776: all green; the 23 files the card’s close and net worth touch, and tests/b26-card-credit-on-close.test.ts, green with the fix"
+  ]
+ },
+ "card.apply": {
+  "status": "Verified",
+  "by": [
+   "inspection",
+   "automated"
+  ],
+  "on": "bf0ef776",
+  "evidence": [
+   "tests/b20-money-funds.test.ts",
+   "tests/b20-money-clock.test.ts",
+   "tests/cardlife.test.ts",
+   "tests/cardoffers.test.ts",
+   "src/engine/systems/cardlife.ts:132-178 the command: one on its way, a bank in the country, not abroad, no card there already, the inquiry, the reasons, approved with its limit",
+   "tests/cardlife.test.ts",
+   "tests/banking.test.ts the money area’s 69 test files, 843 tests, run on bf0ef776: all green; the 23 files the card’s close and net worth touch, and tests/b26-card-credit-on-close.test.ts, green with the fix"
+  ]
+ },
+ "card.arrives": {
+  "status": "Verified",
+  "by": [
+   "inspection",
+   "automated"
+  ],
+  "on": "bf0ef776",
+  "evidence": [
+   "tests/b20-money-funds.test.ts",
+   "tests/b20-money-clock.test.ts",
+   "tests/cardlife.test.ts",
+   "tests/editorial-money.test.ts",
+   "src/engine/systems/cardlife.ts:103-130 the card arrives: its own state, the balance moved where asked, its statement booked once",
+   "tests/cardlife.test.ts",
+   "tests/banking.test.ts the money area’s 69 test files, 843 tests, run on bf0ef776: all green; the 23 files the card’s close and net worth touch, and tests/b26-card-credit-on-close.test.ts, green with the fix"
+  ]
+ },
+ "card.close": {
+  "status": "Fixed And Verified",
+  "by": [
+   "inspection",
+   "automated"
+  ],
+  "on": "bf0ef776",
+  "evidence": [
+   "tests/evidence-g11-money.test.ts",
+   "tests/cardlife.test.ts",
+   "tests/several-cards.test.ts",
+   "src/engine/systems/cardlife.ts:180-190 the command: closing once; owing nothing, closed now through closeCard (src/engine/systems/credit.ts:1300)",
+   "tests/cardlife.test.ts",
+   "tests/b26-card-credit-on-close.test.ts"
+  ],
+  "fixed": "Closing a card that held a credit balance left the credit in the closed account, which cardsOf and cardFor no longer read: Send The Credit To My Account refused it and net worth was down by it for good; and net worth counted a credit on an open card as nothing. Fixed 2026-10-24: closeCard (credit.ts:1300) sends the credit back to the current account first, from Close The Card, the statement and a cancellation, and netWorth counts a liability account’s credit with the cash. tests/b26-card-credit-on-close.test.ts fails on the old code (net worth $500.00 short; $120.00 left on the closed card) and passes with the fix."
+ },
+ "card.dispute": {
+  "status": "Verified",
+  "by": [
+   "inspection",
+   "automated"
+  ],
+  "on": "bf0ef776",
+  "evidence": [
+   "tests/evidence-g11-money.test.ts",
+   "tests/evidence-g13-money.test.ts",
+   "tests/defects-g17-1.test.ts",
+   "tests/security.test.ts",
+   "src/engine/systems/security.ts:342-358 the command; src/engine/systems/security.ts:216-225 disputeRefusal: reported once, inside the law’s days; src/engine/systems/security.ts:182-194 what the law leaves to carry",
+   "tests/money.test.ts",
+   "tests/banking.test.ts the money area’s 69 test files, 843 tests, run on bf0ef776: all green; the 23 files the card’s close and net worth touch, and tests/b26-card-credit-on-close.test.ts, green with the fix"
+  ]
+ },
+ "card.due": {
+  "status": "Verified",
+  "by": [
+   "inspection",
+   "automated"
+  ],
+  "on": "bf0ef776",
+  "evidence": [
+   "tests/b20-money-funds.test.ts",
+   "tests/b20-money-interest.test.ts",
+   "tests/b20-money-clock.test.ts",
+   "tests/b20-money-defects.test.ts",
+   "tests/cardlife.test.ts",
+   "src/engine/systems/credit.ts:1014-1159 the due date: autopay from its account and linked savings, a bounce’s one fee, the grace period kept or lost, the late fee by the law’s rule, the record, the suspension and the charge-off by the days or the misses (src/engine/systems/credit.ts:1395-1497), each notice naming its date",
+   "tests/editorial17-money.test.ts",
+   "tests/evidence-g10-money.test.ts",
+   "tests/banking.test.ts the money area’s 69 test files, 843 tests, run on bf0ef776: all green; the 23 files the card’s close and net worth touch, and tests/b26-card-credit-on-close.test.ts, green with the fix"
+  ]
+ },
+ "card.lock": {
+  "status": "Verified",
+  "by": [
+   "inspection",
+   "automated"
+  ],
+  "on": "bf0ef776",
+  "evidence": [
+   "tests/evidence-g11-money.test.ts",
+   "tests/evidence2-b04.test.ts",
+   "tests/b20-money-funds.test.ts",
+   "tests/b20-money-promises.test.ts",
+   "tests/journey-money.test.ts",
+   "src/engine/systems/security.ts:293-302 the command: not a stopped card",
+   "tests/money.test.ts",
+   "tests/banking.test.ts the money area’s 69 test files, 843 tests, run on bf0ef776: all green; the 23 files the card’s close and net worth touch, and tests/b26-card-credit-on-close.test.ts, green with the fix"
+  ]
+ },
+ "card.money_transfer": {
+  "status": "Verified",
+  "by": [
+   "inspection",
+   "automated"
+  ],
+  "on": "bf0ef776",
+  "evidence": [
+   "tests/cardoffers.test.ts",
+   "tests/scope-money.test.ts",
+   "src/engine/systems/cardoffers.ts:245-263 the command: offered by the card, into the checking account, within the room with its fee",
+   "tests/cardoffers.test.ts",
+   "tests/banking.test.ts the money area’s 69 test files, 843 tests, run on bf0ef776: all green; the 23 files the card’s close and net worth touch, and tests/b26-card-credit-on-close.test.ts, green with the fix"
+  ]
+ },
+ "card.plan": {
+  "status": "Verified",
+  "by": [
+   "inspection",
+   "automated"
+  ],
+  "on": "bf0ef776",
+  "evidence": [
+   "tests/cardoffers.test.ts",
+   "tests/defects-r4-1.test.ts",
+   "src/engine/systems/cardoffers.ts:265-291 the command: the card’s months, the room, the minimum, the fee or the interest fixed now",
+   "tests/cardoffers.test.ts",
+   "tests/money-plan-interest.test.ts",
+   "tests/banking.test.ts the money area’s 69 test files, 843 tests, run on bf0ef776: all green; the 23 files the card’s close and net worth touch, and tests/b26-card-credit-on-close.test.ts, green with the fix"
+  ]
+ },
+ "card.redeem_rewards": {
+  "status": "Verified",
+  "by": [
+   "inspection",
+   "automated"
+  ],
+  "on": "bf0ef776",
+  "evidence": [
+   "tests/cardoffers.test.ts",
+   "tests/journey-money.test.ts",
+   "tests/b20-money-clock.test.ts",
+   "src/engine/systems/cardoffers.ts:293-302 the command: rewards to the card once",
+   "tests/cardoffers.test.ts",
+   "tests/banking.test.ts the money area’s 69 test files, 843 tests, run on bf0ef776: all green; the 23 files the card’s close and net worth touch, and tests/b26-card-credit-on-close.test.ts, green with the fix"
+  ]
+ },
+ "card.refund_credit": {
+  "status": "Verified",
+  "by": [
+   "inspection",
+   "automated"
+  ],
+  "on": "bf0ef776",
+  "evidence": [
+   "tests/evidence-g13-money.test.ts",
+   "tests/interest.test.ts",
+   "src/engine/systems/credit.ts:1207-1212 the command; src/engine/systems/credit.ts:1282-1289 refundCredit sends a credit back once and refuses with none",
+   "tests/interest.test.ts",
+   "tests/evidence-g13-money.test.ts",
+   "tests/banking.test.ts the money area’s 69 test files, 843 tests, run on bf0ef776: all green; the 23 files the card’s close and net worth touch, and tests/b26-card-credit-on-close.test.ts, green with the fix"
+  ]
+ },
+ "card.replaced": {
+  "status": "Verified",
+  "by": [
+   "inspection",
+   "automated"
+  ],
+  "on": "bf0ef776",
+  "evidence": [
+   "tests/evidence-g13-money.test.ts",
+   "tests/evidence-g12-money.test.ts",
+   "src/engine/systems/security.ts:228-253 the card waited for arrives, a stale arrival passed over",
+   "tests/money.test.ts",
+   "tests/banking.test.ts the money area’s 69 test files, 843 tests, run on bf0ef776: all green; the 23 files the card’s close and net worth touch, and tests/b26-card-credit-on-close.test.ts, green with the fix"
+  ]
+ },
+ "card.report": {
+  "status": "Verified",
+  "by": [
+   "inspection",
+   "automated"
+  ],
+  "on": "bf0ef776",
+  "evidence": [
+   "tests/evidence-g12-money.test.ts",
+   "tests/evidence2-b03.test.ts",
+   "tests/evidence2-b04.test.ts",
+   "tests/security.test.ts",
+   "src/engine/systems/security.ts:304-327 the command: once, the bank’s fee and days, a rush where published",
+   "tests/money.test.ts",
+   "tests/banking.test.ts the money area’s 69 test files, 843 tests, run on bf0ef776: all green; the 23 files the card’s close and net worth touch, and tests/b26-card-credit-on-close.test.ts, green with the fix"
+  ]
+ },
+ "card.request_hardship": {
+  "status": "Verified",
+  "by": [
+   "inspection",
+   "automated"
+  ],
+  "on": "bf0ef776",
+  "evidence": [
+   "tests/evidence-g12-money.test.ts",
+   "tests/evidence2-b04.test.ts",
+   "tests/cardlife.test.ts",
+   "src/engine/systems/cardlife.ts:263-288 the command: once, something owed, not for one who could pay today",
+   "tests/cardlife.test.ts",
+   "tests/banking.test.ts the money area’s 69 test files, 843 tests, run on bf0ef776: all green; the 23 files the card’s close and net worth touch, and tests/b26-card-credit-on-close.test.ts, green with the fix"
+  ]
+ },
+ "card.request_limit": {
+  "status": "Verified",
+  "by": [
+   "inspection",
+   "automated"
+  ],
+  "on": "bf0ef776",
+  "evidence": [
+   "tests/b20-credit-limit.test.ts",
+   "tests/cardlife.test.ts",
+   "tests/evidence-g12-money.test.ts",
+   "tests/language-crossarea-raise.test.ts",
+   "src/engine/systems/cardlife.ts:213-244 the command: lower always, higher six months apart (src/engine/systems/cardlife.ts:68-73) and as the income carries",
+   "tests/cardlife.test.ts",
+   "tests/banking.test.ts the money area’s 69 test files, 843 tests, run on bf0ef776: all green; the 23 files the card’s close and net worth touch, and tests/b26-card-credit-on-close.test.ts, green with the fix"
+  ]
+ },
+ "card.set_auto_raise": {
+  "status": "Verified",
+  "by": [
+   "inspection",
+   "automated"
+  ],
+  "on": "bf0ef776",
+  "evidence": [
+   "tests/evidence-g13-money.test.ts",
+   "tests/cardlife.test.ts",
+   "src/engine/systems/cardlife.ts:246-251 the command",
+   "tests/cardlife.test.ts",
+   "tests/banking.test.ts the money area’s 69 test files, 843 tests, run on bf0ef776: all green; the 23 files the card’s close and net worth touch, and tests/b26-card-credit-on-close.test.ts, green with the fix"
+  ]
+ },
+ "card.set_autopay_from": {
+  "status": "Verified",
+  "by": [
+   "inspection",
+   "automated"
+  ],
+  "on": "bf0ef776",
+  "evidence": [
+   "tests/account-alerts.test.ts",
+   "tests/defects-g19-1.test.ts",
+   "tests/evidence-g14-money.test.ts",
+   "tests/evidence-g10-money.test.ts",
+   "src/engine/systems/bankmoves.ts:508-521 the command",
+   "tests/bank-moves.test.ts",
+   "tests/banking.test.ts the money area’s 69 test files, 843 tests, run on bf0ef776: all green; the 23 files the card’s close and net worth touch, and tests/b26-card-credit-on-close.test.ts, green with the fix"
+  ]
+ },
+ "card.set_everyday": {
+  "status": "Verified",
+  "by": [
+   "inspection",
+   "automated"
+  ],
+  "on": "bf0ef776",
+  "evidence": [
+   "tests/evidence-g12-money.test.ts",
+   "tests/journey-money.test.ts",
+   "tests/several-cards.test.ts",
+   "src/engine/systems/credit.ts:1245-1254 the command: not a card being closed",
+   "tests/several-cards.test.ts",
+   "tests/banking.test.ts the money area’s 69 test files, 843 tests, run on bf0ef776: all green; the 23 files the card’s close and net worth touch, and tests/b26-card-credit-on-close.test.ts, green with the fix"
+  ]
+ },
+ "card.set_over_limit": {
+  "status": "Verified",
+  "by": [
+   "inspection",
+   "automated"
+  ],
+  "on": "bf0ef776",
+  "evidence": [
+   "tests/evidence-g12-money.test.ts",
+   "tests/cardlife.test.ts",
+   "src/engine/systems/cardlife.ts:253-261 the command: a US card’s",
+   "tests/cardlife.test.ts",
+   "tests/banking.test.ts the money area’s 69 test files, 843 tests, run on bf0ef776: all green; the 23 files the card’s close and net worth touch, and tests/b26-card-credit-on-close.test.ts, green with the fix"
+  ]
+ },
+ "card.set_statement_day": {
+  "status": "Verified",
+  "by": [
+   "inspection",
+   "automated"
+  ],
+  "on": "bf0ef776",
+  "evidence": [
+   "tests/evidence-g13-money.test.ts",
+   "tests/cardlife.test.ts",
+   "tests/journey-money.test.ts",
+   "src/engine/systems/cardlife.ts:192-211 the command: 1 to 28, once a cycle, the statement rebooked",
+   "tests/cardlife.test.ts",
+   "tests/banking.test.ts the money area’s 69 test files, 843 tests, run on bf0ef776: all green; the 23 files the card’s close and net worth touch, and tests/b26-card-credit-on-close.test.ts, green with the fix"
+  ]
+ },
+ "card.statement": {
+  "status": "Fixed And Verified",
+  "by": [
+   "inspection",
+   "automated"
+  ],
+  "on": "bf0ef776",
+  "evidence": [
+   "tests/b20-credit-limit.test.ts",
+   "tests/b20-money-clock.test.ts",
+   "tests/b20-money-funds.test.ts",
+   "tests/b20-money-interest.test.ts",
+   "tests/evidence-g13-money.test.ts",
+   "src/engine/systems/credit.ts:895-1012 the statement: a due date still to come kept as it stood, interest where the grace period is lost, the offers, the yearly fee once in its month, the review every six months, the card closed through closeCard once paid off; src/engine/systems/credit.ts:1300-1308 closeCard",
+   "tests/interest.test.ts",
+   "tests/cards.test.ts",
+   "tests/b26-card-credit-on-close.test.ts",
+   "tests/banking.test.ts the money area’s 69 test files, 843 tests, run on bf0ef776: all green; the 23 files the card’s close and net worth touch, and tests/b26-card-credit-on-close.test.ts, green with the fix"
+  ],
+  "fixed": "Closing a card that held a credit balance left the credit in the closed account, which cardsOf and cardFor no longer read: Send The Credit To My Account refused it and net worth was down by it for good; and net worth counted a credit on an open card as nothing. Fixed 2026-10-24: closeCard (credit.ts:1300) sends the credit back to the current account first, from Close The Card, the statement and a cancellation, and netWorth counts a liability account’s credit with the cash. tests/b26-card-credit-on-close.test.ts fails on the old code (net worth $500.00 short; $120.00 left on the closed card) and passes with the fix."
+ },
+ "cash.deposit": {
+  "status": "Verified",
+  "by": [
+   "inspection",
+   "automated"
+  ],
+  "on": "bf0ef776",
+  "evidence": [
+   "tests/evidence-g12-money.test.ts",
+   "tests/b20-money-clock.test.ts",
+   "tests/journey-money.test.ts",
+   "src/engine/systems/cash.ts:246-272 the command: the wallet’s cash, into a checking or savings account that isn’t dormant, a term or abroad, the Post Office where the bank allows, the card at a machine",
+   "tests/cash.test.ts",
+   "tests/banking.test.ts the money area’s 69 test files, 843 tests, run on bf0ef776: all green; the 23 files the card’s close and net worth touch, and tests/b26-card-credit-on-close.test.ts, green with the fix"
+  ]
+ },
+ "cash.withdraw": {
+  "status": "Verified",
+  "by": [
+   "inspection",
+   "automated"
+  ],
+  "on": "bf0ef776",
+  "evidence": [
+   "tests/evidence-g12-money.test.ts",
+   "tests/b20-money-promises.test.ts",
+   "tests/b20-money-clock.test.ts",
+   "tests/journey-money.test.ts",
+   "src/engine/systems/cash.ts:221-244 the command: the quote’s refusals (src/engine/systems/cash.ts:111-160), from the card as a cash advance, else the checking account with the fees",
+   "tests/cash.test.ts",
+   "tests/banking.test.ts the money area’s 69 test files, 843 tests, run on bf0ef776: all green; the 23 files the card’s close and net worth touch, and tests/b26-card-credit-on-close.test.ts, green with the fix"
+  ]
+ },
+ "finance.pay_card": {
+  "status": "Verified",
+  "by": [
+   "inspection",
+   "automated"
+  ],
+  "on": "bf0ef776",
+  "evidence": [
+   "tests/b20-money-interest.test.ts",
+   "tests/evidence-g13-money.test.ts",
+   "tests/cardlife.test.ts",
+   "src/engine/systems/credit.ts:1214-1231 the command: full, the minimum the due date judges, or a sum, paid as far as the bank reaches; src/engine/systems/credit.ts:734-780 payCard, the payment split by the law (src/engine/systems/cash.ts:182-218)",
+   "tests/cards.test.ts",
+   "tests/evidence-g11-money.test.ts",
+   "tests/banking.test.ts the money area’s 69 test files, 843 tests, run on bf0ef776: all green; the 23 files the card’s close and net worth touch, and tests/b26-card-credit-on-close.test.ts, green with the fix"
+  ]
+ },
+ "finance.set_autopay": {
+  "status": "Verified",
+  "by": [
+   "inspection",
+   "automated"
+  ],
+  "on": "bf0ef776",
+  "evidence": [
+   "tests/b20-money-interest.test.ts",
+   "tests/evidence-g13-money.test.ts",
+   "tests/journey-money.test.ts",
+   "src/engine/systems/credit.ts:1233-1243 the command: minimum or full, never the minimum on a charge card",
+   "tests/cards.test.ts",
+   "tests/banking.test.ts the money area’s 69 test files, 843 tests, run on bf0ef776: all green; the 23 files the card’s close and net worth touch, and tests/b26-card-credit-on-close.test.ts, green with the fix"
+  ]
+ },
+ "look.account": {
+  "status": "Verified",
+  "by": [
+   "inspection",
+   "automated"
+  ],
+  "on": "bf0ef776",
+  "evidence": [
+   "tests/b20-money-looks.test.ts",
+   "tests/language-money.test.ts",
+   "src/ui/looks/money.tsx:165-198 an account: its sentence (a credit held said), its rate, what crossed it",
+   "tests/b20-money-looks.test.ts",
+   "tests/looks.test.ts"
+  ]
+ },
+ "look.bank": {
+  "status": "Verified",
+  "by": [
+   "inspection",
+   "automated"
+  ],
+  "on": "bf0ef776",
+  "evidence": [
+   "tests/b20-money-looks.test.ts",
+   "tests/language-money.test.ts",
+   "src/ui/looks/bank.tsx:97-169 the bank: held and owed there, each account, recent payments, the country and the currency",
+   "tests/b20-money-looks.test.ts",
+   "tests/looks.test.ts"
+  ]
+ },
+ "look.currency": {
+  "status": "Verified",
+  "by": [
+   "inspection",
+   "automated"
+  ],
+  "on": "bf0ef776",
+  "evidence": [
+   "tests/b20-money-looks.test.ts",
+   "tests/language-money.test.ts",
+   "tests/language-frame.test.ts",
+   "src/ui/looks/place.tsx:519-590 the money: its rate against the dollar, where it’s used",
+   "tests/b20-money-looks.test.ts",
+   "tests/looks.test.ts"
+  ]
+ },
+ "look.debt": {
+  "status": "Verified",
+  "by": [
+   "inspection",
+   "automated"
+  ],
+  "on": "bf0ef776",
+  "evidence": [
+   "tests/b20-money-looks.test.ts",
+   "tests/language-money.test.ts",
+   "tests/guide-examples-money.test.ts",
+   "src/ui/looks/money.tsx:495-522 what’s owed, a year of interest, the credit used",
+   "tests/b20-money-looks.test.ts",
+   "tests/looks.test.ts"
+  ]
+ },
+ "look.networth": {
+  "status": "Fixed And Verified",
+  "by": [
+   "inspection",
+   "automated"
+  ],
+  "on": "bf0ef776",
+  "evidence": [
+   "tests/b20-money-looks.test.ts",
+   "tests/language-money.test.ts",
+   "tests/defects-r5-2.test.ts",
+   "src/ui/looks/money.tsx:331-382 net worth from netWorth (src/engine/systems/finance.ts:56-80), which counts a card’s credit with the cash from 2026-10-24",
+   "tests/b20-money-looks.test.ts",
+   "tests/b26-card-credit-on-close.test.ts"
+  ],
+  "fixed": "Closing a card that held a credit balance left the credit in the closed account, which cardsOf and cardFor no longer read: Send The Credit To My Account refused it and net worth was down by it for good; and net worth counted a credit on an open card as nothing. Fixed 2026-10-24: closeCard (credit.ts:1300) sends the credit back to the current account first, from Close The Card, the statement and a cancellation, and netWorth counts a liability account’s credit with the cash. tests/b26-card-credit-on-close.test.ts fails on the old code (net worth $500.00 short; $120.00 left on the closed card) and passes with the fix."
+ },
+ "look.transaction": {
+  "status": "Verified",
+  "by": [
+   "inspection",
+   "automated"
+  ],
+  "on": "bf0ef776",
+  "evidence": [
+   "tests/b20-money-looks.test.ts",
+   "tests/language-money.test.ts",
+   "src/ui/looks/bank.tsx:193-267 an entry: what it moved on each account, pending or posted, reversed",
+   "tests/b20-money-looks.test.ts",
+   "tests/looks.test.ts"
+  ]
+ },
+ "notice.systems/abroad#armHomeAccounts": {
+  "status": "Verified",
+  "by": [
+   "inspection",
+   "automated"
+  ],
+  "on": "bf0ef776",
+  "evidence": [
+   "tests/home-account-abroad.test.ts",
+   "src/engine/systems/abroad.ts:480-498 the closing bank’s notice once",
+   "tests/home-account-abroad.test.ts",
+   "tests/banking.test.ts the money area’s 69 test files, 843 tests, run on bf0ef776: all green; the 23 files the card’s close and net worth touch, and tests/b26-card-credit-on-close.test.ts, green with the fix"
+  ]
+ },
+ "notice.systems/abroad#arriveFromAbroad": {
+  "status": "Verified",
+  "by": [
+   "inspection",
+   "automated"
+  ],
+  "on": "bf0ef776",
+  "evidence": [
+   "tests/home-account-abroad.test.ts",
+   "tests/home-account-transfers.test.ts",
+   "src/engine/systems/abroad.ts:440-459 a payment abroad lands less the margin and fee, or comes back",
+   "tests/home-account-transfers.test.ts",
+   "tests/banking.test.ts the money area’s 69 test files, 843 tests, run on bf0ef776: all green; the 23 files the card’s close and net worth touch, and tests/b26-card-credit-on-close.test.ts, green with the fix"
+  ]
+ },
+ "notice.systems/abroad#homeCloses": {
+  "status": "Verified",
+  "by": [
+   "inspection",
+   "automated"
+  ],
+  "on": "bf0ef776",
+  "evidence": [
+   "tests/home-account-abroad.test.ts",
+   "tests/remaining-09-banking.test.ts",
+   "src/engine/systems/abroad.ts:501-550 the closing said once, the retry once",
+   "tests/home-account-abroad.test.ts",
+   "tests/banking.test.ts the money area’s 69 test files, 843 tests, run on bf0ef776: all green; the 23 files the card’s close and net worth touch, and tests/b26-card-credit-on-close.test.ts, green with the fix"
+  ]
+ },
+ "notice.systems/accountlife#idleAccounts": {
+  "status": "Verified",
+  "by": [
+   "inspection",
+   "automated"
+  ],
+  "on": "bf0ef776",
+  "evidence": [
+   "tests/b20-money-clock.test.ts",
+   "tests/b20-money-promises.test.ts",
+   "tests/evidence-g10-money.test.ts",
+   "tests/accountlife.test.ts",
+   "src/engine/systems/accountlife.ts:723-760 dormant by the bank’s months, the warning as a decision, the balance handed over after the years",
+   "tests/accountlife.test.ts",
+   "tests/home-account-idle.test.ts",
+   "tests/banking.test.ts the money area’s 69 test files, 843 tests, run on bf0ef776: all green; the 23 files the card’s close and net worth touch, and tests/b26-card-credit-on-close.test.ts, green with the fix"
+  ]
+ },
+ "notice.systems/bankmoves#closedByBank": {
+  "status": "Verified",
+  "by": [
+   "inspection",
+   "automated"
+  ],
+  "on": "bf0ef776",
+  "evidence": [
+   "tests/evidence2-b05.test.ts",
+   "tests/remaining-banking.test.ts",
+   "src/engine/systems/bankmoves.ts:353-366 unfunded or idle at zero: closed, payments redirected, orders ended, said once",
+   "tests/bank-moves.test.ts",
+   "tests/banking.test.ts the money area’s 69 test files, 843 tests, run on bf0ef776: all green; the 23 files the card’s close and net worth touch, and tests/b26-card-credit-on-close.test.ts, green with the fix"
+  ]
+ },
+ "notice.systems/cardoffers#transferOnArrival": {
+  "status": "Verified",
+  "by": [
+   "inspection",
+   "automated"
+  ],
+  "on": "bf0ef776",
+  "evidence": [
+   "tests/editorial-money.test.ts",
+   "tests/cardoffers.test.ts",
+   "src/engine/systems/cardoffers.ts:223-242 the balance moved onto the new card for its fee, the old card closed, said once",
+   "tests/cardoffers.test.ts",
+   "tests/banking.test.ts the money area’s 69 test files, 843 tests, run on bf0ef776: all green; the 23 files the card’s close and net worth touch, and tests/b26-card-credit-on-close.test.ts, green with the fix"
+  ]
+ },
+ "notice.systems/credit#afterMissed": {
+  "status": "Verified",
+  "by": [
+   "inspection",
+   "automated"
+  ],
+  "on": "bf0ef776",
+  "evidence": [
+   "tests/b20-money-funds.test.ts",
+   "tests/cardlife.test.ts",
+   "tests/evidence2-b11.test.ts",
+   "src/engine/systems/credit.ts:1395-1429 the set-off, the suspension at the misses, the default notice and the charge-off, each once",
+   "tests/editorial17-money.test.ts",
+   "tests/banking.test.ts the money area’s 69 test files, 843 tests, run on bf0ef776: all green; the 23 files the card’s close and net worth touch, and tests/b26-card-credit-on-close.test.ts, green with the fix"
+  ]
+ },
+ "notice.systems/credit#chargeOff": {
+  "status": "Verified",
+  "by": [
+   "inspection",
+   "automated"
+  ],
+  "on": "bf0ef776",
+  "evidence": [
+   "tests/evidence-g10-money.test.ts",
+   "tests/cardlife.test.ts",
+   "src/engine/systems/credit.ts:1472-1497 the card closed, the debt in collections once, the record marked, the notice with its years",
+   "tests/evidence-g10-money.test.ts",
+   "tests/banking.test.ts the money area’s 69 test files, 843 tests, run on bf0ef776: all green; the 23 files the card’s close and net worth touch, and tests/b26-card-credit-on-close.test.ts, green with the fix"
+  ]
+ },
+ "notice.systems/credit#closeCard": {
+  "status": "Fixed And Verified",
+  "by": [
+   "inspection",
+   "automated"
+  ],
+  "on": "bf0ef776",
+  "evidence": [
+   "tests/b26-card-credit-on-close.test.ts",
+   "tests/evidence-g11-money.test.ts",
+   "src/engine/systems/credit.ts:1300-1308 closeCard: the credit refunded first, the card closed, the everyday card chosen again, Card Closed said with the credit’s clause",
+   "tests/b26-card-credit-on-close.test.ts",
+   "tests/evidence-g11-money.test.ts"
+  ],
+  "fixed": "Closing a card that held a credit balance left the credit in the closed account, which cardsOf and cardFor no longer read: Send The Credit To My Account refused it and net worth was down by it for good; and net worth counted a credit on an open card as nothing. Fixed 2026-10-24: closeCard (credit.ts:1300) sends the credit back to the current account first, from Close The Card, the statement and a cancellation, and netWorth counts a liability account’s credit with the cash. tests/b26-card-credit-on-close.test.ts fails on the old code (net worth $500.00 short; $120.00 left on the closed card) and passes with the fix."
+ },
+ "notice.systems/credit#delinquency": {
+  "status": "Verified",
+  "by": [
+   "inspection",
+   "automated"
+  ],
+  "on": "bf0ef776",
+  "evidence": [
+   "tests/b21-banking-proof.test.ts",
+   "tests/editorial17-money.test.ts",
+   "tests/interest.test.ts",
+   "tests/cardoffers.test.ts",
+   "tests/evidence3-home.test.ts",
+   "src/engine/systems/credit.ts:1440-1469 a US card’s days past due: the notice at 61, the penalty rate and the introduction’s end, the default notice at 150, the charge-off at 180, each once for its due date",
+   "tests/editorial17-money.test.ts",
+   "tests/banking.test.ts the money area’s 69 test files, 843 tests, run on bf0ef776: all green; the 23 files the card’s close and net worth touch, and tests/b26-card-credit-on-close.test.ts, green with the fix"
+  ]
+ },
+ "notice.systems/credit#persistentDebt": {
+  "status": "Verified",
+  "by": [
+   "inspection",
+   "automated"
+  ],
+  "on": "bf0ef776",
+  "evidence": [
+   "tests/cardlife.test.ts",
+   "src/engine/systems/credit.ts:1510-1536 Britain’s eighteen and thirty-six months",
+   "tests/cards.test.ts",
+   "tests/banking.test.ts the money area’s 69 test files, 843 tests, run on bf0ef776: all green; the 23 files the card’s close and net worth touch, and tests/b26-card-credit-on-close.test.ts, green with the fix"
+  ]
+ },
+ "notice.systems/lending#closeForOverdraft": {
+  "status": "Verified",
+  "by": [
+   "inspection",
+   "automated"
+  ],
+  "on": "bf0ef776",
+  "evidence": [
+   "tests/evidence-g10-money.test.ts",
+   "tests/evidence-g14-money.test.ts",
+   "tests/home-account-setoff.test.ts",
+   "src/engine/systems/lending.ts:1049-1180 sixty days below zero: the set-off, the accounts closed, the charge-off, the re-bank, the orders ended, said once",
+   "tests/lending.test.ts",
+   "tests/home-account-setoff.test.ts",
+   "tests/banking.test.ts the money area’s 69 test files, 843 tests, run on bf0ef776: all green; the 23 files the card’s close and net worth touch, and tests/b26-card-credit-on-close.test.ts, green with the fix"
+  ]
+ },
+ "notice.systems/lending#completeSwitch": {
+  "status": "Verified",
+  "by": [
+   "inspection",
+   "automated"
+  ],
+  "on": "bf0ef776",
+  "evidence": [
+   "tests/scope-money.test.ts",
+   "tests/remaining-09-banking.test.ts",
+   "src/engine/systems/lending.ts:758-863 each outcome said once: complete, held back, balance kept, partial, a debt left",
+   "tests/lending.test.ts",
+   "tests/banking.test.ts the money area’s 69 test files, 843 tests, run on bf0ef776: all green; the 23 files the card’s close and net worth touch, and tests/b26-card-credit-on-close.test.ts, green with the fix"
+  ]
+ },
+ "notice.systems/lending#frenchOverrun": {
+  "status": "Verified",
+  "by": [
+   "inspection",
+   "automated"
+  ],
+  "on": "bf0ef776",
+  "evidence": [
+   "tests/home-account-setoff.test.ts",
+   "tests/scope-money.test.ts",
+   "src/engine/systems/lending.ts:254-291 the overrun’s letter and loan offer",
+   "tests/lending.test.ts",
+   "tests/banking.test.ts the money area’s 69 test files, 843 tests, run on bf0ef776: all green; the 23 files the card’s close and net worth touch, and tests/b26-card-credit-on-close.test.ts, green with the fix"
+  ]
+ },
+ "notice.systems/lending#refundInterestTax": {
+  "status": "Verified",
+  "by": [
+   "inspection",
+   "automated"
+  ],
+  "on": "bf0ef776",
+  "evidence": [
+   "tests/b20-money-defects.test.ts",
+   "tests/bank-fees.test.ts",
+   "src/engine/systems/lending.ts:933-962 the tax refunded",
+   "tests/home-account-tax.test.ts",
+   "tests/banking.test.ts the money area’s 69 test files, 843 tests, run on bf0ef776: all green; the 23 files the card’s close and net worth touch, and tests/b26-card-credit-on-close.test.ts, green with the fix"
+  ]
+ },
+ "notice.systems/obligations#accountAlerts": {
+  "status": "Verified",
+  "by": [
+   "inspection",
+   "automated"
+  ],
+  "on": "bf0ef776",
+  "evidence": [
+   "tests/b20-money-defects.test.ts",
+   "tests/b20-money-promises.test.ts",
+   "tests/account-alerts.test.ts",
+   "src/engine/systems/obligations.ts:93-124 the low line once per fall, each payment ahead short said once; src/engine/systems/obligations.ts:49-74 obligationsAhead",
+   "tests/account-alerts.test.ts",
+   "tests/banking.test.ts the money area’s 69 test files, 843 tests, run on bf0ef776: all green; the 23 files the card’s close and net worth touch, and tests/b26-card-credit-on-close.test.ts, green with the fix"
+  ]
+ },
+ "notice.systems/roundups#moveRoundUps": {
+  "status": "Verified",
+  "by": [
+   "inspection",
+   "automated"
+  ],
+  "on": "bf0ef776",
+  "evidence": [
+   "tests/b20-money-promises.test.ts",
+   "tests/evidence-g11-money.test.ts",
+   "tests/roundups.test.ts",
+   "src/engine/systems/roundups.ts:199-296 the day’s round-ups by the bank’s rule, once a day, dropped where they can’t move",
+   "tests/b20-money-funds.test.ts",
+   "tests/banking.test.ts the money area’s 69 test files, 843 tests, run on bf0ef776: all green; the 23 files the card’s close and net worth touch, and tests/b26-card-credit-on-close.test.ts, green with the fix"
+  ]
+ },
+ "notice.systems/security#attemptOnNumber": {
+  "status": "Verified",
+  "by": [
+   "inspection",
+   "automated"
+  ],
+  "on": "bf0ef776",
+  "evidence": [
+   "tests/coverage-gaps-number.test.ts",
+   "src/engine/systems/security.ts:416-440 an attempt on an exposed number: declined where moved, taken where not",
+   "tests/money.test.ts",
+   "tests/banking.test.ts the money area’s 69 test files, 843 tests, run on bf0ef776: all green; the 23 files the card’s close and net worth touch, and tests/b26-card-credit-on-close.test.ts, green with the fix"
+  ]
+ },
+ "notice.systems/security#somebodyElse": {
+  "status": "Verified",
+  "by": [
+   "inspection",
+   "automated"
+  ],
+  "on": "bf0ef776",
+  "evidence": [
+   "tests/evidence-g11-money.test.ts",
+   "tests/evidence-g12-money.test.ts",
+   "tests/evidence2-b04.test.ts",
+   "tests/security.test.ts",
+   "src/engine/systems/security.ts:389-413 the day’s draw: stopped and replaced, or taken and learned of at the alert or the statement",
+   "tests/money.test.ts",
+   "tests/banking.test.ts the money area’s 69 test files, 843 tests, run on bf0ef776: all green; the 23 files the card’s close and net worth touch, and tests/b26-card-credit-on-close.test.ts, green with the fix"
+  ]
+ },
+ "notice.systems/spending#buyTheDaysFood": {
+  "status": "Verified",
+  "by": [
+   "inspection",
+   "automated"
+  ],
+  "on": "bf0ef776",
+  "evidence": [
+   "tests/b20-money-funds.test.ts",
+   "tests/evidence-g10-money.test.ts",
+   "src/engine/systems/spending.ts:398-427 the day’s food, SNAP first, the refusal’s reason said; src/engine/systems/spending.ts:266-292 spendRefusal; src/engine/systems/spending.ts:323-391 spend",
+   "tests/evidence-g01-life.test.ts",
+   "tests/money.test.ts",
+   "tests/banking.test.ts the money area’s 69 test files, 843 tests, run on bf0ef776: all green; the 23 files the card’s close and net worth touch, and tests/b26-card-credit-on-close.test.ts, green with the fix"
+  ]
+ },
+ "notice.systems/statements#statementReady": {
+  "status": "Verified",
+  "by": [
+   "inspection",
+   "automated"
+  ],
+  "on": "bf0ef776",
+  "evidence": [
+   "tests/evidence-g11-money.test.ts",
+   "tests/b20-money-funds.test.ts",
+   "src/engine/systems/statements.ts:481-484 a statement said where due or asked for; src/engine/systems/statements.ts:494-518 the large-payment alert from where it last looked",
+   "tests/account-alerts.test.ts",
+   "tests/banking.test.ts the money area’s 69 test files, 843 tests, run on bf0ef776: all green; the 23 files the card’s close and net worth touch, and tests/b26-card-credit-on-close.test.ts, green with the fix"
+  ]
+ },
+ "promise.bank.accounts>bank.borrowing": {
+  "status": "Verified",
+  "by": [
+   "inspection",
+   "automated"
+  ],
+  "on": "bf0ef776",
+  "evidence": [
+   "tests/evidence-g10-money.test.ts",
+   "tests/b20-money-promises.test.ts",
+   "src/engine/systems/banking.ts:63-67 bankAccountsOf; src/engine/systems/bankmoves.ts:95-118 openRefusal; src/engine/systems/bankmoves.ts:282-311 closeRefusal; src/engine/systems/banking.ts:1049-1079 savings opened and closed",
+   "tests/bank-moves.test.ts",
+   "tests/banking.test.ts the money area’s 69 test files, 843 tests, run on bf0ef776: all green; the 23 files the card’s close and net worth touch, and tests/b26-card-credit-on-close.test.ts, green with the fix"
+  ]
+ },
+ "promise.bank.accounts>bank.cash": {
+  "status": "Verified",
+  "by": [
+   "inspection",
+   "automated"
+  ],
+  "on": "bf0ef776",
+  "evidence": [
+   "tests/evidence-g14-money.test.ts",
+   "tests/evidence-g12-money.test.ts",
+   "src/engine/systems/banking.ts:63-67 bankAccountsOf; src/engine/systems/bankmoves.ts:95-118 openRefusal; src/engine/systems/bankmoves.ts:282-311 closeRefusal; src/engine/systems/banking.ts:1049-1079 savings opened and closed",
+   "tests/bank-moves.test.ts",
+   "tests/banking.test.ts the money area’s 69 test files, 843 tests, run on bf0ef776: all green; the 23 files the card’s close and net worth touch, and tests/b26-card-credit-on-close.test.ts, green with the fix"
+  ]
+ },
+ "promise.bank.accounts>bank.payments": {
+  "status": "Verified",
+  "by": [
+   "inspection",
+   "automated"
+  ],
+  "on": "bf0ef776",
+  "evidence": [
+   "tests/payments.test.ts",
+   "tests/evidence-g11-money.test.ts",
+   "tests/b20-money-defects.test.ts",
+   "src/engine/systems/banking.ts:63-67 bankAccountsOf; src/engine/systems/bankmoves.ts:95-118 openRefusal; src/engine/systems/bankmoves.ts:282-311 closeRefusal; src/engine/systems/banking.ts:1049-1079 savings opened and closed",
+   "tests/bank-moves.test.ts",
+   "tests/banking.test.ts the money area’s 69 test files, 843 tests, run on bf0ef776: all green; the 23 files the card’s close and net worth touch, and tests/b26-card-credit-on-close.test.ts, green with the fix"
+  ]
+ },
+ "promise.bank.accounts>bank.transfer": {
+  "status": "Verified",
+  "by": [
+   "inspection",
+   "automated"
+  ],
+  "on": "bf0ef776",
+  "evidence": [
+   "tests/language-money.test.ts",
+   "src/engine/systems/banking.ts:63-67 bankAccountsOf; src/engine/systems/bankmoves.ts:95-118 openRefusal; src/engine/systems/bankmoves.ts:282-311 closeRefusal; src/engine/systems/banking.ts:1049-1079 savings opened and closed",
+   "tests/bank-moves.test.ts",
+   "tests/banking.test.ts the money area’s 69 test files, 843 tests, run on bf0ef776: all green; the 23 files the card’s close and net worth touch, and tests/b26-card-credit-on-close.test.ts, green with the fix"
+  ]
+ },
+ "promise.bank.accounts>bank.upkeep": {
+  "status": "Verified",
+  "by": [
+   "inspection",
+   "automated"
+  ],
+  "on": "bf0ef776",
+  "evidence": [
+   "tests/b20-money-clock.test.ts",
+   "tests/b20-money-promises.test.ts",
+   "tests/accountlife.test.ts",
+   "src/engine/systems/banking.ts:63-67 bankAccountsOf; src/engine/systems/bankmoves.ts:95-118 openRefusal; src/engine/systems/bankmoves.ts:282-311 closeRefusal; src/engine/systems/banking.ts:1049-1079 savings opened and closed",
+   "tests/bank-moves.test.ts",
+   "tests/banking.test.ts the money area’s 69 test files, 843 tests, run on bf0ef776: all green; the 23 files the card’s close and net worth touch, and tests/b26-card-credit-on-close.test.ts, green with the fix"
+  ]
+ },
+ "promise.bank.accounts>money.affairs": {
+  "status": "Verified",
+  "by": [
+   "inspection",
+   "automated"
+  ],
+  "on": "bf0ef776",
+  "evidence": [
+   "tests/b20-money-looks.test.ts",
+   "tests/evidence2-b12.test.ts",
+   "src/engine/systems/banking.ts:63-67 bankAccountsOf; src/engine/systems/bankmoves.ts:95-118 openRefusal; src/engine/systems/bankmoves.ts:282-311 closeRefusal; src/engine/systems/banking.ts:1049-1079 savings opened and closed",
+   "tests/bank-moves.test.ts",
+   "tests/banking.test.ts the money area’s 69 test files, 843 tests, run on bf0ef776: all green; the 23 files the card’s close and net worth touch, and tests/b26-card-credit-on-close.test.ts, green with the fix"
+  ]
+ },
+ "promise.bank.borrowing>bank.card": {
+  "status": "Verified",
+  "by": [
+   "inspection",
+   "automated"
+  ],
+  "on": "bf0ef776",
+  "evidence": [
+   "tests/evidence-g13-money.test.ts",
+   "tests/evidence-g10-money.test.ts",
+   "tests/b20-money-funds.test.ts",
+   "src/engine/systems/lending.ts:443-520 the offers; src/engine/systems/lending.ts:1185-1317 the day; src/engine/systems/lending.ts:1319-1361 the loan’s month; src/engine/systems/lending.ts:1049-1180 closeForOverdraft",
+   "tests/lending.test.ts",
+   "tests/banking.test.ts the money area’s 69 test files, 843 tests, run on bf0ef776: all green; the 23 files the card’s close and net worth touch, and tests/b26-card-credit-on-close.test.ts, green with the fix"
+  ]
+ },
+ "promise.bank.borrowing>bank.other-banks": {
+  "status": "Verified",
+  "by": [
+   "inspection",
+   "automated"
+  ],
+  "on": "bf0ef776",
+  "evidence": [
+   "tests/evidence-g10-money.test.ts",
+   "tests/evidence-g14-money.test.ts",
+   "src/engine/systems/lending.ts:443-520 the offers; src/engine/systems/lending.ts:1185-1317 the day; src/engine/systems/lending.ts:1319-1361 the loan’s month; src/engine/systems/lending.ts:1049-1180 closeForOverdraft",
+   "tests/lending.test.ts",
+   "tests/banking.test.ts the money area’s 69 test files, 843 tests, run on bf0ef776: all green; the 23 files the card’s close and net worth touch, and tests/b26-card-credit-on-close.test.ts, green with the fix"
+  ]
+ },
+ "promise.bank.borrowing>bank.payments": {
+  "status": "Verified",
+  "by": [
+   "inspection",
+   "automated"
+  ],
+  "on": "bf0ef776",
+  "evidence": [
+   "tests/b20-money-funds.test.ts",
+   "tests/evidence-g10-money.test.ts",
+   "tests/evidence2-b03.test.ts",
+   "src/engine/systems/lending.ts:443-520 the offers; src/engine/systems/lending.ts:1185-1317 the day; src/engine/systems/lending.ts:1319-1361 the loan’s month; src/engine/systems/lending.ts:1049-1180 closeForOverdraft",
+   "tests/lending.test.ts",
+   "tests/banking.test.ts the money area’s 69 test files, 843 tests, run on bf0ef776: all green; the 23 files the card’s close and net worth touch, and tests/b26-card-credit-on-close.test.ts, green with the fix"
+  ]
+ },
+ "promise.bank.borrowing>body.how": {
+  "status": "Verified",
+  "by": [
+   "inspection",
+   "automated"
+  ],
+  "on": "bf0ef776",
+  "evidence": [
+   "tests/b20-money-promises.test.ts",
+   "tests/evidence-g08-life.test.ts",
+   "src/engine/systems/lending.ts:443-520 the offers; src/engine/systems/lending.ts:1185-1317 the day; src/engine/systems/lending.ts:1319-1361 the loan’s month; src/engine/systems/lending.ts:1049-1180 closeForOverdraft",
+   "tests/lending.test.ts",
+   "tests/banking.test.ts the money area’s 69 test files, 843 tests, run on bf0ef776: all green; the 23 files the card’s close and net worth touch, and tests/b26-card-credit-on-close.test.ts, green with the fix"
+  ]
+ },
+ "promise.bank.borrowing>money.affairs": {
+  "status": "Verified",
+  "by": [
+   "inspection",
+   "automated"
+  ],
+  "on": "bf0ef776",
+  "evidence": [
+   "tests/evidence-g10-money.test.ts",
+   "src/engine/systems/lending.ts:443-520 the offers; src/engine/systems/lending.ts:1185-1317 the day; src/engine/systems/lending.ts:1319-1361 the loan’s month; src/engine/systems/lending.ts:1049-1180 closeForOverdraft",
+   "tests/lending.test.ts",
+   "tests/banking.test.ts the money area’s 69 test files, 843 tests, run on bf0ef776: all green; the 23 files the card’s close and net worth touch, and tests/b26-card-credit-on-close.test.ts, green with the fix"
+  ]
+ },
+ "promise.bank.card-offers>bank.card": {
+  "status": "Verified",
+  "by": [
+   "inspection",
+   "automated"
+  ],
+  "on": "bf0ef776",
+  "evidence": [
+   "tests/cardoffers.test.ts",
+   "tests/editorial-money.test.ts",
+   "src/engine/systems/cardoffers.ts:156-192 statementOffers; src/engine/systems/cardoffers.ts:223-320 the offers’ commands and refusals",
+   "tests/cardoffers.test.ts",
+   "tests/banking.test.ts the money area’s 69 test files, 843 tests, run on bf0ef776: all green; the 23 files the card’s close and net worth touch, and tests/b26-card-credit-on-close.test.ts, green with the fix"
+  ]
+ },
+ "promise.bank.card-offers>money.affairs": {
+  "status": "Verified",
+  "by": [
+   "inspection",
+   "automated"
+  ],
+  "on": "bf0ef776",
+  "evidence": [
+   "tests/cardoffers.test.ts",
+   "src/engine/systems/cardoffers.ts:156-192 statementOffers; src/engine/systems/cardoffers.ts:223-320 the offers’ commands and refusals",
+   "tests/cardoffers.test.ts",
+   "tests/banking.test.ts the money area’s 69 test files, 843 tests, run on bf0ef776: all green; the 23 files the card’s close and net worth touch, and tests/b26-card-credit-on-close.test.ts, green with the fix"
+  ]
+ },
+ "promise.bank.card-security>bank.card": {
+  "status": "Verified",
+  "by": [
+   "inspection",
+   "automated"
+  ],
+  "on": "bf0ef776",
+  "evidence": [
+   "tests/evidence-g11-money.test.ts",
+   "tests/evidence-g12-money.test.ts",
+   "src/engine/systems/security.ts:182-194 liabilityFor; src/engine/systems/security.ts:228-358 the handlers and commands; src/engine/systems/security.ts:389-440 the draws",
+   "tests/money.test.ts",
+   "tests/banking.test.ts the money area’s 69 test files, 843 tests, run on bf0ef776: all green; the 23 files the card’s close and net worth touch, and tests/b26-card-credit-on-close.test.ts, green with the fix"
+  ]
+ },
+ "promise.bank.card-security>bank.cash": {
+  "status": "Verified",
+  "by": [
+   "inspection",
+   "automated"
+  ],
+  "on": "bf0ef776",
+  "evidence": [
+   "tests/evidence-g12-money.test.ts",
+   "src/engine/systems/security.ts:182-194 liabilityFor; src/engine/systems/security.ts:228-358 the handlers and commands; src/engine/systems/security.ts:389-440 the draws",
+   "tests/money.test.ts",
+   "tests/banking.test.ts the money area’s 69 test files, 843 tests, run on bf0ef776: all green; the 23 files the card’s close and net worth touch, and tests/b26-card-credit-on-close.test.ts, green with the fix"
+  ]
+ },
+ "promise.bank.card-security>bank.payments": {
+  "status": "Verified",
+  "by": [
+   "inspection",
+   "automated"
+  ],
+  "on": "bf0ef776",
+  "evidence": [
+   "tests/evidence-g12-money.test.ts",
+   "tests/evidence2-b04.test.ts",
+   "src/engine/systems/security.ts:182-194 liabilityFor; src/engine/systems/security.ts:228-358 the handlers and commands; src/engine/systems/security.ts:389-440 the draws",
+   "tests/money.test.ts",
+   "tests/banking.test.ts the money area’s 69 test files, 843 tests, run on bf0ef776: all green; the 23 files the card’s close and net worth touch, and tests/b26-card-credit-on-close.test.ts, green with the fix"
+  ]
+ },
+ "promise.bank.card-security>bank.upkeep": {
+  "status": "Verified",
+  "by": [
+   "inspection",
+   "automated"
+  ],
+  "on": "bf0ef776",
+  "evidence": [
+   "tests/evidence-g11-money.test.ts",
+   "src/engine/systems/security.ts:182-194 liabilityFor; src/engine/systems/security.ts:228-358 the handlers and commands; src/engine/systems/security.ts:389-440 the draws",
+   "tests/money.test.ts",
+   "tests/banking.test.ts the money area’s 69 test files, 843 tests, run on bf0ef776: all green; the 23 files the card’s close and net worth touch, and tests/b26-card-credit-on-close.test.ts, green with the fix"
+  ]
+ },
+ "promise.bank.card>bank.borrowing": {
+  "status": "Verified",
+  "by": [
+   "inspection",
+   "automated"
+  ],
+  "on": "bf0ef776",
+  "evidence": [
+   "tests/evidence-g13-money.test.ts",
+   "tests/evidence-g10-money.test.ts",
+   "src/engine/systems/credit.ts:895-1159 the statement and the due date; src/engine/systems/credit.ts:734-780 payCard; src/engine/systems/cardlife.ts:132-288 the card’s commands",
+   "tests/cards.test.ts",
+   "tests/banking.test.ts the money area’s 69 test files, 843 tests, run on bf0ef776: all green; the 23 files the card’s close and net worth touch, and tests/b26-card-credit-on-close.test.ts, green with the fix"
+  ]
+ },
+ "promise.bank.card>bank.card-offers": {
+  "status": "Verified",
+  "by": [
+   "inspection",
+   "automated"
+  ],
+  "on": "bf0ef776",
+  "evidence": [
+   "tests/cardoffers.test.ts",
+   "src/engine/systems/credit.ts:895-1159 the statement and the due date; src/engine/systems/credit.ts:734-780 payCard; src/engine/systems/cardlife.ts:132-288 the card’s commands",
+   "tests/cards.test.ts",
+   "tests/banking.test.ts the money area’s 69 test files, 843 tests, run on bf0ef776: all green; the 23 files the card’s close and net worth touch, and tests/b26-card-credit-on-close.test.ts, green with the fix"
+  ]
+ },
+ "promise.bank.card>bank.card-security": {
+  "status": "Verified",
+  "by": [
+   "inspection",
+   "automated"
+  ],
+  "on": "bf0ef776",
+  "evidence": [
+   "tests/evidence-g11-money.test.ts",
+   "tests/evidence-g12-money.test.ts",
+   "src/engine/systems/credit.ts:895-1159 the statement and the due date; src/engine/systems/credit.ts:734-780 payCard; src/engine/systems/cardlife.ts:132-288 the card’s commands",
+   "tests/cards.test.ts",
+   "tests/banking.test.ts the money area’s 69 test files, 843 tests, run on bf0ef776: all green; the 23 files the card’s close and net worth touch, and tests/b26-card-credit-on-close.test.ts, green with the fix"
+  ]
+ },
+ "promise.bank.card>bank.payments": {
+  "status": "Verified",
+  "by": [
+   "inspection",
+   "automated"
+  ],
+  "on": "bf0ef776",
+  "evidence": [
+   "tests/b20-money-interest.test.ts",
+   "tests/evidence-g11-money.test.ts",
+   "src/engine/systems/credit.ts:895-1159 the statement and the due date; src/engine/systems/credit.ts:734-780 payCard; src/engine/systems/cardlife.ts:132-288 the card’s commands",
+   "tests/cards.test.ts",
+   "tests/banking.test.ts the money area’s 69 test files, 843 tests, run on bf0ef776: all green; the 23 files the card’s close and net worth touch, and tests/b26-card-credit-on-close.test.ts, green with the fix"
+  ]
+ },
+ "promise.bank.card>day.needs": {
+  "status": "Verified",
+  "by": [
+   "inspection",
+   "automated"
+  ],
+  "on": "bf0ef776",
+  "evidence": [
+   "tests/b20-money-funds.test.ts",
+   "tests/evidence-g11-money.test.ts",
+   "tests/evidence-g13-money.test.ts",
+   "src/engine/systems/credit.ts:895-1159 the statement and the due date; src/engine/systems/credit.ts:734-780 payCard; src/engine/systems/cardlife.ts:132-288 the card’s commands",
+   "tests/cards.test.ts",
+   "tests/banking.test.ts the money area’s 69 test files, 843 tests, run on bf0ef776: all green; the 23 files the card’s close and net worth touch, and tests/b26-card-credit-on-close.test.ts, green with the fix"
+  ]
+ },
+ "promise.bank.card>money.affairs": {
+  "status": "Verified",
+  "by": [
+   "inspection",
+   "automated"
+  ],
+  "on": "bf0ef776",
+  "evidence": [
+   "tests/b20-money-looks.test.ts",
+   "tests/guide-examples-money.test.ts",
+   "src/engine/systems/credit.ts:895-1159 the statement and the due date; src/engine/systems/credit.ts:734-780 payCard; src/engine/systems/cardlife.ts:132-288 the card’s commands",
+   "tests/cards.test.ts",
+   "tests/banking.test.ts the money area’s 69 test files, 843 tests, run on bf0ef776: all green; the 23 files the card’s close and net worth touch, and tests/b26-card-credit-on-close.test.ts, green with the fix"
+  ]
+ },
+ "promise.bank.cash>bank.card": {
+  "status": "Verified",
+  "by": [
+   "inspection",
+   "automated"
+  ],
+  "on": "bf0ef776",
+  "evidence": [
+   "tests/evidence-g12-money.test.ts",
+   "src/engine/systems/cash.ts:111-160 withdrawalQuote; src/engine/systems/cash.ts:221-272 the commands",
+   "tests/cash.test.ts",
+   "tests/banking.test.ts the money area’s 69 test files, 843 tests, run on bf0ef776: all green; the 23 files the card’s close and net worth touch, and tests/b26-card-credit-on-close.test.ts, green with the fix"
+  ]
+ },
+ "promise.bank.cash>bank.card-security": {
+  "status": "Verified",
+  "by": [
+   "inspection",
+   "automated"
+  ],
+  "on": "bf0ef776",
+  "evidence": [
+   "tests/evidence-g12-money.test.ts",
+   "tests/evidence-g11-money.test.ts",
+   "src/engine/systems/cash.ts:111-160 withdrawalQuote; src/engine/systems/cash.ts:221-272 the commands",
+   "tests/cash.test.ts",
+   "tests/banking.test.ts the money area’s 69 test files, 843 tests, run on bf0ef776: all green; the 23 files the card’s close and net worth touch, and tests/b26-card-credit-on-close.test.ts, green with the fix"
+  ]
+ },
+ "promise.bank.cash>bank.payments": {
+  "status": "Verified",
+  "by": [
+   "inspection",
+   "automated"
+  ],
+  "on": "bf0ef776",
+  "evidence": [
+   "tests/evidence-g12-money.test.ts",
+   "src/engine/systems/cash.ts:111-160 withdrawalQuote; src/engine/systems/cash.ts:221-272 the commands",
+   "tests/cash.test.ts",
+   "tests/banking.test.ts the money area’s 69 test files, 843 tests, run on bf0ef776: all green; the 23 files the card’s close and net worth touch, and tests/b26-card-credit-on-close.test.ts, green with the fix"
+  ]
+ },
+ "promise.bank.cash>money.affairs": {
+  "status": "Verified",
+  "by": [
+   "inspection",
+   "automated"
+  ],
+  "on": "bf0ef776",
+  "evidence": [
+   "tests/b20-money-promises.test.ts",
+   "src/engine/systems/cash.ts:111-160 withdrawalQuote; src/engine/systems/cash.ts:221-272 the commands",
+   "tests/cash.test.ts",
+   "tests/banking.test.ts the money area’s 69 test files, 843 tests, run on bf0ef776: all green; the 23 files the card’s close and net worth touch, and tests/b26-card-credit-on-close.test.ts, green with the fix"
+  ]
+ },
+ "promise.bank.home-account>bank.accounts": {
+  "status": "Verified",
+  "by": [
+   "inspection",
+   "automated"
+  ],
+  "on": "bf0ef776",
+  "evidence": [
+   "tests/home-account-creation.test.ts",
+   "tests/home-account-abroad.test.ts",
+   "src/engine/systems/homeaccount.ts:231-277 opened at creation; src/engine/systems/abroad.ts:155-253 the home bank’s refusals, tax and fees; src/engine/systems/abroad.ts:480-550 its closing",
+   "tests/home-account-creation.test.ts",
+   "tests/home-account-abroad.test.ts",
+   "tests/banking.test.ts the money area’s 69 test files, 843 tests, run on bf0ef776: all green; the 23 files the card’s close and net worth touch, and tests/b26-card-credit-on-close.test.ts, green with the fix"
+  ]
+ },
+ "promise.bank.home-account>bank.transfer": {
+  "status": "Verified",
+  "by": [
+   "inspection",
+   "automated"
+  ],
+  "on": "bf0ef776",
+  "evidence": [
+   "tests/home-account-transfers.test.ts",
+   "tests/home-account-abroad.test.ts",
+   "src/engine/systems/homeaccount.ts:231-277 opened at creation; src/engine/systems/abroad.ts:155-253 the home bank’s refusals, tax and fees; src/engine/systems/abroad.ts:480-550 its closing",
+   "tests/home-account-creation.test.ts",
+   "tests/home-account-abroad.test.ts",
+   "tests/banking.test.ts the money area’s 69 test files, 843 tests, run on bf0ef776: all green; the 23 files the card’s close and net worth touch, and tests/b26-card-credit-on-close.test.ts, green with the fix"
+  ]
+ },
+ "promise.bank.home-account>bank.upkeep": {
+  "status": "Verified",
+  "by": [
+   "inspection",
+   "automated"
+  ],
+  "on": "bf0ef776",
+  "evidence": [
+   "tests/home-account-abroad.test.ts",
+   "tests/home-account-ledger.test.ts",
+   "src/engine/systems/homeaccount.ts:231-277 opened at creation; src/engine/systems/abroad.ts:155-253 the home bank’s refusals, tax and fees; src/engine/systems/abroad.ts:480-550 its closing",
+   "tests/home-account-creation.test.ts",
+   "tests/home-account-abroad.test.ts",
+   "tests/banking.test.ts the money area’s 69 test files, 843 tests, run on bf0ef776: all green; the 23 files the card’s close and net worth touch, and tests/b26-card-credit-on-close.test.ts, green with the fix"
+  ]
+ },
+ "promise.bank.home-account>taxes.return": {
+  "status": "Verified",
+  "by": [
+   "inspection",
+   "automated"
+  ],
+  "on": "bf0ef776",
+  "evidence": [
+   "tests/home-account-tax.test.ts",
+   "src/engine/systems/homeaccount.ts:231-277 opened at creation; src/engine/systems/abroad.ts:155-253 the home bank’s refusals, tax and fees; src/engine/systems/abroad.ts:480-550 its closing",
+   "tests/home-account-creation.test.ts",
+   "tests/home-account-abroad.test.ts",
+   "tests/banking.test.ts the money area’s 69 test files, 843 tests, run on bf0ef776: all green; the 23 files the card’s close and net worth touch, and tests/b26-card-credit-on-close.test.ts, green with the fix"
+  ]
+ },
+ "promise.bank.other-banks>bank.accounts": {
+  "status": "Verified",
+  "by": [
+   "inspection",
+   "automated"
+  ],
+  "on": "bf0ef776",
+  "evidence": [
+   "tests/evidence-g14-money.test.ts",
+   "src/engine/systems/bankmoves.ts:95-118 openRefusal; src/engine/systems/bankmoves.ts:369-464 opening, arriving, closing; src/engine/systems/lending.ts:1626-1690 the switch",
+   "tests/bank-moves.test.ts",
+   "tests/banking.test.ts the money area’s 69 test files, 843 tests, run on bf0ef776: all green; the 23 files the card’s close and net worth touch, and tests/b26-card-credit-on-close.test.ts, green with the fix"
+  ]
+ },
+ "promise.bank.other-banks>bank.borrowing": {
+  "status": "Verified",
+  "by": [
+   "inspection",
+   "automated"
+  ],
+  "on": "bf0ef776",
+  "evidence": [
+   "tests/evidence-g10-money.test.ts",
+   "src/engine/systems/bankmoves.ts:95-118 openRefusal; src/engine/systems/bankmoves.ts:369-464 opening, arriving, closing; src/engine/systems/lending.ts:1626-1690 the switch",
+   "tests/bank-moves.test.ts",
+   "tests/banking.test.ts the money area’s 69 test files, 843 tests, run on bf0ef776: all green; the 23 files the card’s close and net worth touch, and tests/b26-card-credit-on-close.test.ts, green with the fix"
+  ]
+ },
+ "promise.bank.other-banks>bank.payments": {
+  "status": "Verified",
+  "by": [
+   "inspection",
+   "automated"
+  ],
+  "on": "bf0ef776",
+  "evidence": [
+   "tests/evidence-g14-money.test.ts",
+   "tests/evidence2-b05.test.ts",
+   "src/engine/systems/bankmoves.ts:95-118 openRefusal; src/engine/systems/bankmoves.ts:369-464 opening, arriving, closing; src/engine/systems/lending.ts:1626-1690 the switch",
+   "tests/bank-moves.test.ts",
+   "tests/banking.test.ts the money area’s 69 test files, 843 tests, run on bf0ef776: all green; the 23 files the card’s close and net worth touch, and tests/b26-card-credit-on-close.test.ts, green with the fix"
+  ]
+ },
+ "promise.bank.other-banks>bank.transfer": {
+  "status": "Verified",
+  "by": [
+   "inspection",
+   "automated"
+  ],
+  "on": "bf0ef776",
+  "evidence": [
+   "tests/evidence-g14-money.test.ts",
+   "tests/evidence2-b03.test.ts",
+   "tests/b20-money-clock.test.ts",
+   "src/engine/systems/bankmoves.ts:95-118 openRefusal; src/engine/systems/bankmoves.ts:369-464 opening, arriving, closing; src/engine/systems/lending.ts:1626-1690 the switch",
+   "tests/bank-moves.test.ts",
+   "tests/banking.test.ts the money area’s 69 test files, 843 tests, run on bf0ef776: all green; the 23 files the card’s close and net worth touch, and tests/b26-card-credit-on-close.test.ts, green with the fix"
+  ]
+ },
+ "promise.bank.other-banks>documents.passport-id": {
+  "status": "Verified",
+  "by": [
+   "inspection",
+   "automated"
+  ],
+  "on": "bf0ef776",
+  "evidence": [
+   "tests/evidence2-b05.test.ts",
+   "src/engine/systems/bankmoves.ts:95-118 openRefusal; src/engine/systems/bankmoves.ts:369-464 opening, arriving, closing; src/engine/systems/lending.ts:1626-1690 the switch",
+   "tests/bank-moves.test.ts",
+   "tests/banking.test.ts the money area’s 69 test files, 843 tests, run on bf0ef776: all green; the 23 files the card’s close and net worth touch, and tests/b26-card-credit-on-close.test.ts, green with the fix"
+  ]
+ },
+ "promise.bank.payments>bank.borrowing": {
+  "status": "Verified",
+  "by": [
+   "inspection",
+   "automated"
+  ],
+  "on": "bf0ef776",
+  "evidence": [
+   "tests/b20-money-funds.test.ts",
+   "tests/b20-money-promises.test.ts",
+   "tests/evidence-g10-money.test.ts",
+   "src/engine/systems/payments.ts:227-348 the orders, the payments and their commands; src/engine/systems/spending.ts:323-391 spend",
+   "tests/money.test.ts",
+   "tests/banking.test.ts the money area’s 69 test files, 843 tests, run on bf0ef776: all green; the 23 files the card’s close and net worth touch, and tests/b26-card-credit-on-close.test.ts, green with the fix"
+  ]
+ },
+ "promise.bank.payments>bank.card": {
+  "status": "Verified",
+  "by": [
+   "inspection",
+   "automated"
+  ],
+  "on": "bf0ef776",
+  "evidence": [
+   "tests/b20-money-interest.test.ts",
+   "tests/b20-money-funds.test.ts",
+   "tests/evidence-g11-money.test.ts",
+   "src/engine/systems/payments.ts:227-348 the orders, the payments and their commands; src/engine/systems/spending.ts:323-391 spend",
+   "tests/money.test.ts",
+   "tests/banking.test.ts the money area’s 69 test files, 843 tests, run on bf0ef776: all green; the 23 files the card’s close and net worth touch, and tests/b26-card-credit-on-close.test.ts, green with the fix"
+  ]
+ },
+ "promise.bank.payments>bank.cash": {
+  "status": "Verified",
+  "by": [
+   "inspection",
+   "automated"
+  ],
+  "on": "bf0ef776",
+  "evidence": [
+   "tests/evidence-g12-money.test.ts",
+   "src/engine/systems/payments.ts:227-348 the orders, the payments and their commands; src/engine/systems/spending.ts:323-391 spend",
+   "tests/money.test.ts",
+   "tests/banking.test.ts the money area’s 69 test files, 843 tests, run on bf0ef776: all green; the 23 files the card’s close and net worth touch, and tests/b26-card-credit-on-close.test.ts, green with the fix"
+  ]
+ },
+ "promise.bank.payments>bank.upkeep": {
+  "status": "Verified",
+  "by": [
+   "inspection",
+   "automated"
+  ],
+  "on": "bf0ef776",
+  "evidence": [
+   "tests/b20-money-promises.test.ts",
+   "tests/b20-money-defects.test.ts",
+   "src/engine/systems/payments.ts:227-348 the orders, the payments and their commands; src/engine/systems/spending.ts:323-391 spend",
+   "tests/money.test.ts",
+   "tests/banking.test.ts the money area’s 69 test files, 843 tests, run on bf0ef776: all green; the 23 files the card’s close and net worth touch, and tests/b26-card-credit-on-close.test.ts, green with the fix"
+  ]
+ },
+ "promise.bank.payments>body.look-after": {
+  "status": "Verified",
+  "by": [
+   "inspection",
+   "automated"
+  ],
+  "on": "bf0ef776",
+  "evidence": [
+   "tests/evidence-g12-money.test.ts",
+   "tests/evidence-g11-money.test.ts",
+   "src/engine/systems/payments.ts:227-348 the orders, the payments and their commands; src/engine/systems/spending.ts:323-391 spend",
+   "tests/money.test.ts",
+   "tests/banking.test.ts the money area’s 69 test files, 843 tests, run on bf0ef776: all green; the 23 files the card’s close and net worth touch, and tests/b26-card-credit-on-close.test.ts, green with the fix"
+  ]
+ },
+ "promise.bank.payments>school.shifts": {
+  "status": "Verified",
+  "by": [
+   "inspection",
+   "automated"
+  ],
+  "on": "bf0ef776",
+  "evidence": [
+   "tests/bank-moves.test.ts",
+   "tests/evidence-g21-school.test.ts",
+   "src/engine/systems/payments.ts:227-348 the orders, the payments and their commands; src/engine/systems/spending.ts:323-391 spend",
+   "tests/money.test.ts",
+   "tests/banking.test.ts the money area’s 69 test files, 843 tests, run on bf0ef776: all green; the 23 files the card’s close and net worth touch, and tests/b26-card-credit-on-close.test.ts, green with the fix"
+  ]
+ },
+ "promise.bank.round-ups>bank.accounts": {
+  "status": "Verified",
+  "by": [
+   "inspection",
+   "automated"
+  ],
+  "on": "bf0ef776",
+  "evidence": [
+   "tests/evidence-g11-money.test.ts",
+   "tests/b20-money-promises.test.ts",
+   "src/engine/systems/roundups.ts:199-296 moveRoundUps; src/engine/systems/roundups.ts:305-327 setRoundUps; src/engine/systems/spending.ts:317-321 counted on a purchase",
+   "tests/b20-money-funds.test.ts",
+   "tests/banking.test.ts the money area’s 69 test files, 843 tests, run on bf0ef776: all green; the 23 files the card’s close and net worth touch, and tests/b26-card-credit-on-close.test.ts, green with the fix"
+  ]
+ },
+ "promise.bank.round-ups>bank.payments": {
+  "status": "Verified",
+  "by": [
+   "inspection",
+   "automated"
+  ],
+  "on": "bf0ef776",
+  "evidence": [
+   "tests/b20-money-promises.test.ts",
+   "src/engine/systems/roundups.ts:199-296 moveRoundUps; src/engine/systems/roundups.ts:305-327 setRoundUps; src/engine/systems/spending.ts:317-321 counted on a purchase",
+   "tests/b20-money-funds.test.ts",
+   "tests/banking.test.ts the money area’s 69 test files, 843 tests, run on bf0ef776: all green; the 23 files the card’s close and net worth touch, and tests/b26-card-credit-on-close.test.ts, green with the fix"
+  ]
+ },
+ "promise.bank.round-ups>bank.upkeep": {
+  "status": "Verified",
+  "by": [
+   "inspection",
+   "automated"
+  ],
+  "on": "bf0ef776",
+  "evidence": [
+   "tests/evidence-g11-money.test.ts",
+   "src/engine/systems/roundups.ts:199-296 moveRoundUps; src/engine/systems/roundups.ts:305-327 setRoundUps; src/engine/systems/spending.ts:317-321 counted on a purchase",
+   "tests/b20-money-funds.test.ts",
+   "tests/banking.test.ts the money area’s 69 test files, 843 tests, run on bf0ef776: all green; the 23 files the card’s close and net worth touch, and tests/b26-card-credit-on-close.test.ts, green with the fix"
+  ]
+ },
+ "promise.bank.term>bank.accounts": {
+  "status": "Verified",
+  "by": [
+   "inspection",
+   "automated"
+  ],
+  "on": "bf0ef776",
+  "evidence": [
+   "tests/evidence-g10-money.test.ts",
+   "tests/b20-money-promises.test.ts",
+   "src/engine/systems/lending.ts:1584-1609 opened; src/engine/systems/lending.ts:1275-1317 matured; src/engine/systems/accountlife.ts:497-526 broken; src/engine/systems/accountlife.ts:804-831 ended",
+   "tests/accountlife.test.ts",
+   "tests/banking.test.ts the money area’s 69 test files, 843 tests, run on bf0ef776: all green; the 23 files the card’s close and net worth touch, and tests/b26-card-credit-on-close.test.ts, green with the fix"
+  ]
+ },
+ "promise.bank.term>bank.upkeep": {
+  "status": "Verified",
+  "by": [
+   "inspection",
+   "automated"
+  ],
+  "on": "bf0ef776",
+  "evidence": [
+   "tests/accountlife.test.ts",
+   "src/engine/systems/lending.ts:1584-1609 opened; src/engine/systems/lending.ts:1275-1317 matured; src/engine/systems/accountlife.ts:497-526 broken; src/engine/systems/accountlife.ts:804-831 ended",
+   "tests/accountlife.test.ts",
+   "tests/banking.test.ts the money area’s 69 test files, 843 tests, run on bf0ef776: all green; the 23 files the card’s close and net worth touch, and tests/b26-card-credit-on-close.test.ts, green with the fix"
+  ]
+ },
+ "promise.bank.term>day.needs": {
+  "status": "Verified",
+  "by": [
+   "inspection",
+   "automated"
+  ],
+  "on": "bf0ef776",
+  "evidence": [
+   "tests/accountlife.test.ts",
+   "tests/evidence-g11-money.test.ts",
+   "tests/evidence3-lifepapers.test.ts",
+   "src/engine/systems/lending.ts:1584-1609 opened; src/engine/systems/lending.ts:1275-1317 matured; src/engine/systems/accountlife.ts:497-526 broken; src/engine/systems/accountlife.ts:804-831 ended",
+   "tests/accountlife.test.ts",
+   "tests/banking.test.ts the money area’s 69 test files, 843 tests, run on bf0ef776: all green; the 23 files the card’s close and net worth touch, and tests/b26-card-credit-on-close.test.ts, green with the fix"
+  ]
+ },
+ "promise.bank.term>money.affairs": {
+  "status": "Verified",
+  "by": [
+   "inspection",
+   "automated"
+  ],
+  "on": "bf0ef776",
+  "evidence": [
+   "tests/b20-money-promises.test.ts",
+   "src/engine/systems/lending.ts:1584-1609 opened; src/engine/systems/lending.ts:1275-1317 matured; src/engine/systems/accountlife.ts:497-526 broken; src/engine/systems/accountlife.ts:804-831 ended",
+   "tests/accountlife.test.ts",
+   "tests/banking.test.ts the money area’s 69 test files, 843 tests, run on bf0ef776: all green; the 23 files the card’s close and net worth touch, and tests/b26-card-credit-on-close.test.ts, green with the fix"
+  ]
+ },
+ "promise.bank.transfer>bank.accounts": {
+  "status": "Verified",
+  "by": [
+   "inspection",
+   "automated"
+  ],
+  "on": "bf0ef776",
+  "evidence": [
+   "tests/language-money.test.ts",
+   "src/engine/systems/banking.ts:1002-1047 the move; src/engine/systems/bankmoves.ts:231-253 sendBetweenBanks",
+   "tests/bank-moves.test.ts",
+   "tests/b22-transfer.test.ts",
+   "tests/banking.test.ts the money area’s 69 test files, 843 tests, run on bf0ef776: all green; the 23 files the card’s close and net worth touch, and tests/b26-card-credit-on-close.test.ts, green with the fix"
+  ]
+ },
+ "promise.bank.transfer>bank.other-banks": {
+  "status": "Verified",
+  "by": [
+   "inspection",
+   "automated"
+  ],
+  "on": "bf0ef776",
+  "evidence": [
+   "tests/evidence-g14-money.test.ts",
+   "tests/evidence2-b03.test.ts",
+   "tests/b20-money-clock.test.ts",
+   "src/engine/systems/banking.ts:1002-1047 the move; src/engine/systems/bankmoves.ts:231-253 sendBetweenBanks",
+   "tests/bank-moves.test.ts",
+   "tests/b22-transfer.test.ts",
+   "tests/banking.test.ts the money area’s 69 test files, 843 tests, run on bf0ef776: all green; the 23 files the card’s close and net worth touch, and tests/b26-card-credit-on-close.test.ts, green with the fix"
+  ]
+ },
+ "promise.bank.transfer>bank.payments": {
+  "status": "Verified",
+  "by": [
+   "inspection",
+   "automated"
+  ],
+  "on": "bf0ef776",
+  "evidence": [
+   "tests/b20-money-clock.test.ts",
+   "tests/payments.test.ts",
+   "src/engine/systems/banking.ts:1002-1047 the move; src/engine/systems/bankmoves.ts:231-253 sendBetweenBanks",
+   "tests/bank-moves.test.ts",
+   "tests/b22-transfer.test.ts",
+   "tests/banking.test.ts the money area’s 69 test files, 843 tests, run on bf0ef776: all green; the 23 files the card’s close and net worth touch, and tests/b26-card-credit-on-close.test.ts, green with the fix"
+  ]
+ },
+ "promise.bank.transfer>bank.upkeep": {
+  "status": "Verified",
+  "by": [
+   "inspection",
+   "automated"
+  ],
+  "on": "bf0ef776",
+  "evidence": [
+   "tests/b20-money-promises.test.ts",
+   "tests/evidence-g10-money.test.ts",
+   "src/engine/systems/banking.ts:1002-1047 the move; src/engine/systems/bankmoves.ts:231-253 sendBetweenBanks",
+   "tests/bank-moves.test.ts",
+   "tests/b22-transfer.test.ts",
+   "tests/banking.test.ts the money area’s 69 test files, 843 tests, run on bf0ef776: all green; the 23 files the card’s close and net worth touch, and tests/b26-card-credit-on-close.test.ts, green with the fix"
+  ]
+ },
+ "promise.bank.upkeep>bank.card": {
+  "status": "Verified",
+  "by": [
+   "inspection",
+   "automated"
+  ],
+  "on": "bf0ef776",
+  "evidence": [
+   "tests/b20-money-defects.test.ts",
+   "tests/account-alerts.test.ts",
+   "src/engine/systems/banking.ts:280-322 feeFor; src/engine/systems/banking.ts:932-1000 the month’s end; src/engine/systems/accountlife.ts:723-760 dormancy",
+   "tests/bank-fees.test.ts",
+   "tests/banking.test.ts the money area’s 69 test files, 843 tests, run on bf0ef776: all green; the 23 files the card’s close and net worth touch, and tests/b26-card-credit-on-close.test.ts, green with the fix"
+  ]
+ },
+ "promise.bank.upkeep>bank.card-security": {
+  "status": "Verified",
+  "by": [
+   "inspection",
+   "automated"
+  ],
+  "on": "bf0ef776",
+  "evidence": [
+   "tests/evidence-g11-money.test.ts",
+   "src/engine/systems/banking.ts:280-322 feeFor; src/engine/systems/banking.ts:932-1000 the month’s end; src/engine/systems/accountlife.ts:723-760 dormancy",
+   "tests/bank-fees.test.ts",
+   "tests/banking.test.ts the money area’s 69 test files, 843 tests, run on bf0ef776: all green; the 23 files the card’s close and net worth touch, and tests/b26-card-credit-on-close.test.ts, green with the fix"
+  ]
+ },
+ "promise.bank.upkeep>bank.payments": {
+  "status": "Verified",
+  "by": [
+   "inspection",
+   "automated"
+  ],
+  "on": "bf0ef776",
+  "evidence": [
+   "tests/b20-money-promises.test.ts",
+   "tests/b20-money-defects.test.ts",
+   "src/engine/systems/banking.ts:280-322 feeFor; src/engine/systems/banking.ts:932-1000 the month’s end; src/engine/systems/accountlife.ts:723-760 dormancy",
+   "tests/bank-fees.test.ts",
+   "tests/banking.test.ts the money area’s 69 test files, 843 tests, run on bf0ef776: all green; the 23 files the card’s close and net worth touch, and tests/b26-card-credit-on-close.test.ts, green with the fix"
+  ]
+ },
+ "promise.bank.upkeep>bank.round-ups": {
+  "status": "Verified",
+  "by": [
+   "inspection",
+   "automated"
+  ],
+  "on": "bf0ef776",
+  "evidence": [
+   "tests/evidence-g11-money.test.ts",
+   "src/engine/systems/banking.ts:280-322 feeFor; src/engine/systems/banking.ts:932-1000 the month’s end; src/engine/systems/accountlife.ts:723-760 dormancy",
+   "tests/bank-fees.test.ts",
+   "tests/banking.test.ts the money area’s 69 test files, 843 tests, run on bf0ef776: all green; the 23 files the card’s close and net worth touch, and tests/b26-card-credit-on-close.test.ts, green with the fix"
+  ]
+ },
+ "promise.bank.upkeep>bank.term": {
+  "status": "Verified",
+  "by": [
+   "inspection",
+   "automated"
+  ],
+  "on": "bf0ef776",
+  "evidence": [
+   "tests/evidence-g10-money.test.ts",
+   "tests/evidence-g11-money.test.ts",
+   "src/engine/systems/banking.ts:280-322 feeFor; src/engine/systems/banking.ts:932-1000 the month’s end; src/engine/systems/accountlife.ts:723-760 dormancy",
+   "tests/bank-fees.test.ts",
+   "tests/banking.test.ts the money area’s 69 test files, 843 tests, run on bf0ef776: all green; the 23 files the card’s close and net worth touch, and tests/b26-card-credit-on-close.test.ts, green with the fix"
+  ]
+ },
+ "promise.bank.upkeep>day.needs": {
+  "status": "Verified",
+  "by": [
+   "inspection",
+   "automated"
+  ],
+  "on": "bf0ef776",
+  "evidence": [
+   "tests/b20-money-clock.test.ts",
+   "tests/evidence2-b11.test.ts",
+   "src/engine/systems/banking.ts:280-322 feeFor; src/engine/systems/banking.ts:932-1000 the month’s end; src/engine/systems/accountlife.ts:723-760 dormancy",
+   "tests/bank-fees.test.ts",
+   "tests/banking.test.ts the money area’s 69 test files, 843 tests, run on bf0ef776: all green; the 23 files the card’s close and net worth touch, and tests/b26-card-credit-on-close.test.ts, green with the fix"
+  ]
+ },
+ "promise.money.affairs>bank.accounts": {
+  "status": "Verified",
+  "by": [
+   "inspection",
+   "automated"
+  ],
+  "on": "bf0ef776",
+  "evidence": [
+   "tests/evidence2-b12.test.ts",
+   "src/engine/systems/finance.ts:56-80 netWorth; src/engine/systems/spending.ts:461-493 troubles; src/engine/systems/spending.ts:502-511 the day’s worry",
+   "tests/finance-paths.test.ts",
+   "tests/banking.test.ts the money area’s 69 test files, 843 tests, run on bf0ef776: all green; the 23 files the card’s close and net worth touch, and tests/b26-card-credit-on-close.test.ts, green with the fix"
+  ]
+ },
+ "promise.money.affairs>bank.card": {
+  "status": "Verified",
+  "by": [
+   "inspection",
+   "automated"
+  ],
+  "on": "bf0ef776",
+  "evidence": [
+   "tests/evidence-g11-money.test.ts",
+   "tests/several-cards.test.ts",
+   "tests/evidence-g12-money.test.ts",
+   "src/engine/systems/finance.ts:56-80 netWorth; src/engine/systems/spending.ts:461-493 troubles; src/engine/systems/spending.ts:502-511 the day’s worry",
+   "tests/finance-paths.test.ts",
+   "tests/banking.test.ts the money area’s 69 test files, 843 tests, run on bf0ef776: all green; the 23 files the card’s close and net worth touch, and tests/b26-card-credit-on-close.test.ts, green with the fix"
+  ]
+ },
+ "promise.money.affairs>body.how": {
+  "status": "Verified",
+  "by": [
+   "inspection",
+   "automated"
+  ],
+  "on": "bf0ef776",
+  "evidence": [
+   "tests/b20-money-promises.test.ts",
+   "tests/evidence-g08-life.test.ts",
+   "src/engine/systems/finance.ts:56-80 netWorth; src/engine/systems/spending.ts:461-493 troubles; src/engine/systems/spending.ts:502-511 the day’s worry",
+   "tests/finance-paths.test.ts",
+   "tests/banking.test.ts the money area’s 69 test files, 843 tests, run on bf0ef776: all green; the 23 files the card’s close and net worth touch, and tests/b26-card-credit-on-close.test.ts, green with the fix"
+  ]
+ },
+ "promise.money.affairs>taxes.pay": {
+  "status": "Verified",
+  "by": [
+   "inspection",
+   "automated"
+  ],
+  "on": "bf0ef776",
+  "evidence": [
+   "tests/evidence2-b11.test.ts",
+   "src/engine/systems/finance.ts:56-80 netWorth; src/engine/systems/spending.ts:461-493 troubles; src/engine/systems/spending.ts:502-511 the day’s worry",
+   "tests/finance-paths.test.ts",
+   "tests/banking.test.ts the money area’s 69 test files, 843 tests, run on bf0ef776: all green; the 23 files the card’s close and net worth touch, and tests/b26-card-credit-on-close.test.ts, green with the fix"
+  ]
+ }
+}

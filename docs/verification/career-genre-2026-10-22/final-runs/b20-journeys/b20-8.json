@@ -14,35 +14,35 @@
    "part": 1,
    "from": "2026-08-24",
    "to": "2027-06-01",
-   "secs": 23,
+   "secs": 25,
    "reloads": 9
   },
   {
    "part": 2,
    "from": "2027-06-01",
    "to": "2028-06-01",
-   "secs": 76,
+   "secs": 80,
    "reloads": 12
   },
   {
    "part": 3,
    "from": "2028-06-01",
    "to": "2029-06-04",
-   "secs": 131,
+   "secs": 137,
    "reloads": 11
   },
   {
    "part": 4,
    "from": "2029-06-04",
    "to": "2029-11-01",
-   "secs": 118,
+   "secs": 120,
    "reloads": 5
   },
   {
    "part": 5,
    "from": "2029-11-01",
    "to": "2030-03-01",
-   "secs": 40,
+   "secs": 43,
    "reloads": 4,
    "done": true
   }
@@ -11541,7 +11541,7 @@
      ],
      "transactions": 1163
     },
-    "secs": 29
+    "secs": 31
    },
    {
     "why": "an audition (self-tape) set for 2029-07-08T22:00, Jess in Static On Route 9",
@@ -11592,7 +11592,7 @@
      ],
      "transactions": 1209
     },
-    "secs": 18
+    "secs": 19
    },
    {
     "why": "an offer standing: An Offer For Ivy",
@@ -11641,7 +11641,7 @@
      ],
      "transactions": 1240
     },
-    "secs": 25
+    "secs": 22
    }
   ],
   "workDays": [

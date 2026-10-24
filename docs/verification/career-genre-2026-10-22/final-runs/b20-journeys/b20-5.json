@@ -14,28 +14,28 @@
    "part": 1,
    "from": "2026-08-24",
    "to": "2027-06-01",
-   "secs": 23,
+   "secs": 22,
    "reloads": 8
   },
   {
    "part": 2,
    "from": "2027-06-01",
    "to": "2028-06-01",
-   "secs": 72,
+   "secs": 76,
    "reloads": 12
   },
   {
    "part": 3,
    "from": "2028-06-01",
    "to": "2029-06-04",
-   "secs": 111,
+   "secs": 115,
    "reloads": 12
   },
   {
    "part": 4,
    "from": "2029-06-04",
    "to": "2029-11-14",
-   "secs": 113,
+   "secs": 112,
    "reloads": 5
   },
   {
@@ -11537,7 +11537,7 @@
      ],
      "transactions": 1235
     },
-    "secs": 19
+    "secs": 17
    },
    {
     "why": "an offer standing: An Offer For Robin",
@@ -11582,7 +11582,7 @@
      ],
      "transactions": 1376
     },
-    "secs": 18
+    "secs": 15
    }
   ],
   "workDays": [],

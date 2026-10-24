@@ -966,12 +966,12 @@
     ],
     "journeys": []
    },
-   "missing": "The career’s work days read no loved genre: a professional performance of a play of a kind loved, which Genres & Background’s “rehearsing or performing a play in a genre you love” covers, and a shoot day, which the guide’s “a day of its work” covers, lift nothing (projobs.ts:1357-1405 calls no enjoyWork). The career’s code, reported to the coordinator.",
+   "missing": "None found. Until 2026-10-21 the career’s work days read no loved genre (projobs.ts called no enjoyWork), where Genres & Background’s “rehearsing or performing a play in a genre you love” and the guide’s “a day of its work” covered them; brief 20 wired a work day to enjoyWork with the project’s kinds (projobs.ts:1542-1547), and this row said the gap stood until 2026-10-24 (brief 26).",
    "status": "Implemented And Verified",
    "why": "",
    "prior": "c-genres",
    "readBy": "creation",
-   "readAt": "12c04ee1"
+   "readAt": "fd9f1151"
   },
   {
    "id": "create.background",
@@ -1700,12 +1700,12 @@
     ],
     "journeys": []
    },
-   "missing": "The career’s work days take no nerves and no rehearsal’s mood: a professional performance doesn’t read extraversion, and a professional rehearsal day doesn’t read agreeableness, where Dispositions & Traits says performing in front of people and a day of rehearsal (projobs.ts:1357-1405). The career’s code, reported to the coordinator.",
+   "missing": "None found. Until 2026-10-21 a professional night took no nerves (projobs.ts read neither extraversion nor agreeableness); brief 20 gave a performance day nerves (projobs.ts:1522-1525, takeTheHouse through nerves, attributes.ts:353) and a rehearsal day enjoyWork with rehearsal set (projobs.ts:1547), and this row said the gap stood until 2026-10-24 (brief 26).",
    "status": "Implemented And Verified",
    "why": "",
    "prior": "c-disp-extraversion",
    "readBy": "creation",
-   "readAt": "12c04ee1"
+   "readAt": "fd9f1151"
   },
   {
    "id": "axis.agreeableness",
@@ -1749,12 +1749,12 @@
     ],
     "journeys": []
    },
-   "missing": "The career’s work days take no nerves and no rehearsal’s mood: a professional performance doesn’t read extraversion, and a professional rehearsal day doesn’t read agreeableness, where Dispositions & Traits says performing in front of people and a day of rehearsal (projobs.ts:1357-1405). The career’s code, reported to the coordinator.",
+   "missing": "None found. Until 2026-10-21 a professional rehearsal day read no agreeableness (projobs.ts called no enjoyWork); brief 20 wired a work day to enjoyWork with rehearsal set (projobs.ts:1542-1547), and this row said the gap stood until 2026-10-24 (brief 26).",
    "status": "Implemented And Verified",
    "why": "",
    "prior": "c-disp-agreeableness",
    "readBy": "creation",
-   "readAt": "12c04ee1"
+   "readAt": "fd9f1151"
   },
   {
    "id": "axis.emotionalStability",

@@ -39,7 +39,7 @@ import { exchange } from '../content/currency';
 import { bankById } from '../content/banks';
 import { CARDS } from '../content/cards';
 import { ageOn } from './mortality';
-import { adoptEveryday, cardFor, cardOf, cardsOf, cardTerms, DUE_KIND, ensurePrimary, freshCardState, limitCarried, MIN_CYCLE_DAYS, RAISE_FROM, scheduleStatement, stateOf, statementDayRefusal, STATEMENT_KIND, type CardState } from './credit';
+import { adoptEveryday, cardFor, cardOf, cardsOf, cardTerms, closeCard, DUE_KIND, ensurePrimary, freshCardState, limitCarried, MIN_CYCLE_DAYS, RAISE_FROM, scheduleStatement, stateOf, statementDayRefusal, STATEMENT_KIND, type CardState } from './credit';
 import { transferOnArrival, transferRefusal } from './cardoffers';
 import { last4For } from './security';
 import { abroadRefusal } from './abroad';
@@ -184,7 +184,8 @@ export function registerCardLife(sim: Simulation): void {
     const state = stateOf(person, card);
     if (state.closing !== undefined) throw new CommandError('It’s already being closed.');
     state.closing = s.now;
-    if (card.balance >= 0) { card.closedAt = s.now; ensurePrimary(s, person); }
+    // Owing nothing, closed now, a credit on it sent back first (`closeCard`, from 2026-10-24).
+    if (card.balance >= 0) closeCard(s, person, card, 'now');
     return { closing: true };
   });
 

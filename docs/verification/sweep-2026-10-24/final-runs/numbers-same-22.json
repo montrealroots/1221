@@ -1,0 +1,157 @@
+{
+ "final": {
+  "before": "/tmp/claude-0/-home-user-1221/93119f3d-c8d9-5356-8130-0e0fe32e5c95/scratchpad/before-b46/docs/verification/career-genre-2026-10-22/final-runs/final",
+  "after": "docs/verification/career-genre-2026-10-22/final-runs/final",
+  "held": false,
+  "files": 35,
+  "same": 35,
+  "explained": {},
+  "unexplained": {},
+  "missing": []
+ },
+ "runs": {
+  "before": "/tmp/claude-0/-home-user-1221/93119f3d-c8d9-5356-8130-0e0fe32e5c95/scratchpad/before-b46/docs/verification/career-genre-2026-10-22/final-runs/runs",
+  "after": "docs/verification/career-genre-2026-10-22/final-runs/runs",
+  "held": false,
+  "files": 17,
+  "same": 17,
+  "explained": {},
+  "unexplained": {},
+  "missing": []
+ },
+ "advice": {
+  "before": "/tmp/claude-0/-home-user-1221/93119f3d-c8d9-5356-8130-0e0fe32e5c95/scratchpad/before-b46/docs/verification/career-genre-2026-10-22/final-runs/advice",
+  "after": "docs/verification/career-genre-2026-10-22/final-runs/advice",
+  "held": false,
+  "files": 31,
+  "same": 0,
+  "explained": {
+   "the run’s own record: its commit, whether its tree was clean, the files it read, its seconds": 33
+  },
+  "unexplained": {},
+  "missing": []
+ },
+ "journeys-final": {
+  "before": "/tmp/claude-0/-home-user-1221/93119f3d-c8d9-5356-8130-0e0fe32e5c95/scratchpad/before-b46/docs/verification/career-genre-2026-10-22/final-runs/journeys-final",
+  "after": "docs/verification/career-genre-2026-10-22/final-runs/journeys-final",
+  "held": false,
+  "files": 102,
+  "same": 10,
+  "explained": {
+   "the run’s own record: its commit, whether its tree was clean, the files it read, its seconds": 175
+  },
+  "unexplained": {},
+  "missing": []
+ },
+ "interface-final": {
+  "before": "/tmp/claude-0/-home-user-1221/93119f3d-c8d9-5356-8130-0e0fe32e5c95/scratchpad/before-b46/docs/verification/career-genre-2026-10-22/final-runs/interface-final",
+  "after": "docs/verification/career-genre-2026-10-22/final-runs/interface-final",
+  "held": false,
+  "files": 1,
+  "same": 1,
+  "explained": {},
+  "unexplained": {},
+  "missing": []
+ },
+ "journeys14-final": {
+  "before": "/tmp/claude-0/-home-user-1221/93119f3d-c8d9-5356-8130-0e0fe32e5c95/scratchpad/before-b46/docs/verification/career-genre-2026-10-22/final-runs/journeys14-final",
+  "after": "docs/verification/career-genre-2026-10-22/final-runs/journeys14-final",
+  "held": false,
+  "files": 0,
+  "same": 0,
+  "explained": {},
+  "unexplained": {},
+  "missing": []
+ },
+ "b20-journeys": {
+  "before": "/tmp/claude-0/-home-user-1221/93119f3d-c8d9-5356-8130-0e0fe32e5c95/scratchpad/before-b46/docs/verification/career-genre-2026-10-22/final-runs/b20-journeys",
+  "after": "docs/verification/career-genre-2026-10-22/final-runs/b20-journeys",
+  "held": false,
+  "files": 74,
+  "same": 7,
+  "explained": {
+   "the run’s own record: its commit, whether its tree was clean, the files it read, its seconds": 141
+  },
+  "unexplained": {},
+  "missing": []
+ },
+ "app": {
+  "before": "/tmp/claude-0/-home-user-1221/93119f3d-c8d9-5356-8130-0e0fe32e5c95/scratchpad/before-b46/docs/verification/career-genre-2026-10-22/final-runs/app",
+  "after": "docs/verification/career-genre-2026-10-22/final-runs/app",
+  "held": false,
+  "files": 0,
+  "same": 0,
+  "explained": {},
+  "unexplained": {},
+  "missing": []
+ },
+ "app/walk": {
+  "before": "/tmp/claude-0/-home-user-1221/93119f3d-c8d9-5356-8130-0e0fe32e5c95/scratchpad/before-b46/docs/verification/career-genre-2026-10-22/final-runs/app/walk",
+  "after": "docs/verification/career-genre-2026-10-22/final-runs/app/walk",
+  "held": false,
+  "files": 0,
+  "same": 0,
+  "explained": {},
+  "unexplained": {},
+  "missing": []
+ },
+ "app/older": {
+  "before": "/tmp/claude-0/-home-user-1221/93119f3d-c8d9-5356-8130-0e0fe32e5c95/scratchpad/before-b46/docs/verification/career-genre-2026-10-22/final-runs/app/older",
+  "after": "docs/verification/career-genre-2026-10-22/final-runs/app/older",
+  "held": false,
+  "files": 2,
+  "same": 0,
+  "explained": {
+   "the run’s own record: its commit, whether its tree was clean, the files it read, its seconds": 18
+  },
+  "unexplained": {
+   "older-1440.json": {
+    "differences": 7,
+    "first": [
+     ".saves[0].steps[0].ms: 4927 before, 4976 after",
+     ".saves[1].steps[0].ms: 4972 before, 5009 after",
+     ".saves[2].steps[0].ms: 4859 before, 4730 after",
+     ".saves[3].steps[0].ms: 4834 before, 4710 after",
+     ".saves[4].steps[0].ms: 4902 before, 4839 after",
+     ".saves[5].steps[0].ms: 4867 before, 4797 after"
+    ]
+   },
+   "older-390.json": {
+    "differences": 7,
+    "first": [
+     ".saves[0].steps[0].ms: 4896 before, 4894 after",
+     ".saves[1].steps[0].ms: 4970 before, 4852 after",
+     ".saves[2].steps[0].ms: 4932 before, 4835 after",
+     ".saves[3].steps[0].ms: 4859 before, 4797 after",
+     ".saves[4].steps[0].ms: 4860 before, 4846 after",
+     ".saves[5].steps[0].ms: 4895 before, 4834 after"
+    ]
+   }
+  },
+  "missing": []
+ },
+ "app/b21": {
+  "before": "/tmp/claude-0/-home-user-1221/93119f3d-c8d9-5356-8130-0e0fe32e5c95/scratchpad/before-b46/docs/verification/career-genre-2026-10-22/final-runs/app/b21",
+  "after": "docs/verification/career-genre-2026-10-22/final-runs/app/b21",
+  "held": false,
+  "files": 2,
+  "same": 0,
+  "explained": {
+   "the run’s own record: its commit, whether its tree was clean, the files it read, its seconds": 4
+  },
+  "unexplained": {},
+  "missing": []
+ },
+ "app/b22": {
+  "before": "/tmp/claude-0/-home-user-1221/93119f3d-c8d9-5356-8130-0e0fe32e5c95/scratchpad/before-b46/docs/verification/career-genre-2026-10-22/final-runs/app/b22",
+  "after": "docs/verification/career-genre-2026-10-22/final-runs/app/b22",
+  "held": false,
+  "files": 2,
+  "same": 0,
+  "explained": {
+   "the run’s own record: its commit, whether its tree was clean, the files it read, its seconds": 4
+  },
+  "unexplained": {},
+  "missing": []
+ }
+}

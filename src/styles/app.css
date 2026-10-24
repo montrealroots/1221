@@ -1512,7 +1512,8 @@ td, th { overflow-wrap: break-word; }
   summary { min-height: 44px; display: flex; align-items: center; gap: var(--s1); }
   details > summary { list-style-position: inside; }
   .breadcrumbs button { min-height: 44px; padding: 0 var(--s1); }
-  .link.strong { min-height: 32px; }
+  /* A `.link.strong` rule, 32 pixels tall, stood here from 2026-10-23 to 2026-10-24: no element carries both classes
+     (Help's topics are `.help-link`), so it matched nothing and went (brief 26). */
   /* Help's topics are its controls, a list to press, as tall as any (until 2026-10-23, 32 pixels). */
   .help-link { min-height: var(--control); min-width: var(--control); }
   /* A slider's track as tall as a control, so a finger finds it (Sleep's hours, 16 pixels until 2026-10-23). */
@@ -1576,7 +1577,8 @@ td, th { overflow-wrap: break-word; }
 
 /* ---------- The rail ---------- */
 
-.rail-badge-quiet { background: var(--surface-3); color: var(--text-muted); }
+/* `.rail-badge-quiet`, the quiet colour of the rail's Updates badge (brief 23), outlived the badge, which went when brief 24
+   took Updates off the rail; the rule went on 2026-10-24 (brief 26). */
 .rail-foot { border-top: 1px solid var(--line); padding-top: var(--s3); margin-top: var(--s3); }
 .rail-foot .topbar-group { flex-wrap: wrap; padding: 0 var(--s2); }
 

@@ -1,0 +1,1726 @@
+{
+ "ability.adaptability": {
+  "status": "Verified",
+  "by": [
+   "inspection",
+   "automated"
+  ],
+  "on": "22bfcd35",
+  "note": "Each kept in one place (abilityOf: the craft, the body’s fitness, or attrs), judged through the task profiles only where a task reads it, grown by grown/develop alone and recorded in the development history, full at 100 (stamina at the age’s ceiling). No dominant road: practice stops counting at four hours a day (practice.ts:68), repeats halve, an hour sent again with its actionId is refused (alreadyApplied), and classes level off at the reach.",
+  "evidence": [
+   "tests/b20-creation-abilities.test.ts",
+   "tests/attributes-phase-2b.test.ts",
+   "tests/ability-mastered.test.ts",
+   "tests/attributes.test.ts",
+   "tests/evaluation.test.ts",
+   "tests/engine-properties.test.ts",
+   "tests/attributes-phase-2b.test.ts",
+   "tests/b20-craft-bite.test.ts",
+   "src/engine/systems/evaluation.ts:1-70 the guarantee: an input a task doesn’t read changes nothing, and a dimension never falls as an input it reads rises",
+   "src/engine/systems/attributes.ts:150-330 one way anything grows: toward the reach by ordinary work, past it by deliberate practice, half again the same source the same day, discipline’s lift, never past full"
+  ]
+ },
+ "ability.composure": {
+  "status": "Verified",
+  "by": [
+   "inspection",
+   "automated"
+  ],
+  "on": "22bfcd35",
+  "note": "Each kept in one place (abilityOf: the craft, the body’s fitness, or attrs), judged through the task profiles only where a task reads it, grown by grown/develop alone and recorded in the development history, full at 100 (stamina at the age’s ceiling). No dominant road: practice stops counting at four hours a day (practice.ts:68), repeats halve, an hour sent again with its actionId is refused (alreadyApplied), and classes level off at the reach.",
+  "evidence": [
+   "tests/b20-creation-abilities.test.ts",
+   "tests/attributes-phase-2b.test.ts",
+   "tests/ability-mastered.test.ts",
+   "tests/attributes.test.ts",
+   "tests/evaluation.test.ts",
+   "tests/engine-properties.test.ts",
+   "tests/attributes-phase-2b.test.ts",
+   "tests/b20-craft-bite.test.ts",
+   "src/engine/systems/evaluation.ts:1-70 the guarantee: an input a task doesn’t read changes nothing, and a dimension never falls as an input it reads rises",
+   "src/engine/systems/attributes.ts:150-330 one way anything grows: toward the reach by ordinary work, past it by deliberate practice, half again the same source the same day, discipline’s lift, never past full"
+  ]
+ },
+ "ability.discipline": {
+  "status": "Verified",
+  "by": [
+   "inspection",
+   "automated"
+  ],
+  "on": "22bfcd35",
+  "note": "Each kept in one place (abilityOf: the craft, the body’s fitness, or attrs), judged through the task profiles only where a task reads it, grown by grown/develop alone and recorded in the development history, full at 100 (stamina at the age’s ceiling). No dominant road: practice stops counting at four hours a day (practice.ts:68), repeats halve, an hour sent again with its actionId is refused (alreadyApplied), and classes level off at the reach.",
+  "evidence": [
+   "tests/b20-creation-abilities.test.ts",
+   "tests/attributes-phase-2b.test.ts",
+   "tests/ability-mastered.test.ts",
+   "tests/attributes.test.ts",
+   "tests/evaluation.test.ts",
+   "tests/engine-properties.test.ts",
+   "tests/attributes-phase-2b.test.ts",
+   "tests/b20-craft-bite.test.ts",
+   "src/engine/systems/evaluation.ts:1-70 the guarantee: an input a task doesn’t read changes nothing, and a dimension never falls as an input it reads rises",
+   "src/engine/systems/attributes.ts:150-330 one way anything grows: toward the reach by ordinary work, past it by deliberate practice, half again the same source the same day, discipline’s lift, never past full"
+  ]
+ },
+ "ability.emotionalDepth": {
+  "status": "Verified",
+  "by": [
+   "inspection",
+   "automated"
+  ],
+  "on": "22bfcd35",
+  "note": "Each kept in one place (abilityOf: the craft, the body’s fitness, or attrs), judged through the task profiles only where a task reads it, grown by grown/develop alone and recorded in the development history, full at 100 (stamina at the age’s ceiling). No dominant road: practice stops counting at four hours a day (practice.ts:68), repeats halve, an hour sent again with its actionId is refused (alreadyApplied), and classes level off at the reach.",
+  "evidence": [
+   "tests/b20-creation-abilities.test.ts",
+   "tests/attributes-phase-2b.test.ts",
+   "tests/ability-mastered.test.ts",
+   "tests/attributes.test.ts",
+   "tests/evaluation.test.ts",
+   "tests/engine-properties.test.ts",
+   "tests/attributes-phase-2b.test.ts",
+   "tests/b20-craft-bite.test.ts",
+   "src/engine/systems/evaluation.ts:1-70 the guarantee: an input a task doesn’t read changes nothing, and a dimension never falls as an input it reads rises",
+   "src/engine/systems/attributes.ts:150-330 one way anything grows: toward the reach by ordinary work, past it by deliberate practice, half again the same source the same day, discipline’s lift, never past full"
+  ]
+ },
+ "ability.focus": {
+  "status": "Verified",
+  "by": [
+   "inspection",
+   "automated"
+  ],
+  "on": "22bfcd35",
+  "note": "Each kept in one place (abilityOf: the craft, the body’s fitness, or attrs), judged through the task profiles only where a task reads it, grown by grown/develop alone and recorded in the development history, full at 100 (stamina at the age’s ceiling). No dominant road: practice stops counting at four hours a day (practice.ts:68), repeats halve, an hour sent again with its actionId is refused (alreadyApplied), and classes level off at the reach.",
+  "evidence": [
+   "tests/b20-creation-abilities.test.ts",
+   "tests/attributes-phase-2b.test.ts",
+   "tests/ability-mastered.test.ts",
+   "tests/attributes.test.ts",
+   "tests/evaluation.test.ts",
+   "tests/engine-properties.test.ts",
+   "tests/attributes-phase-2b.test.ts",
+   "tests/b20-craft-bite.test.ts",
+   "src/engine/systems/evaluation.ts:1-70 the guarantee: an input a task doesn’t read changes nothing, and a dimension never falls as an input it reads rises",
+   "src/engine/systems/attributes.ts:150-330 one way anything grows: toward the reach by ordinary work, past it by deliberate practice, half again the same source the same day, discipline’s lift, never past full"
+  ]
+ },
+ "ability.imagination": {
+  "status": "Verified",
+  "by": [
+   "inspection",
+   "automated"
+  ],
+  "on": "22bfcd35",
+  "note": "Each kept in one place (abilityOf: the craft, the body’s fitness, or attrs), judged through the task profiles only where a task reads it, grown by grown/develop alone and recorded in the development history, full at 100 (stamina at the age’s ceiling). No dominant road: practice stops counting at four hours a day (practice.ts:68), repeats halve, an hour sent again with its actionId is refused (alreadyApplied), and classes level off at the reach.",
+  "evidence": [
+   "tests/b20-creation-abilities.test.ts",
+   "tests/attributes-phase-2b.test.ts",
+   "tests/ability-mastered.test.ts",
+   "tests/attributes.test.ts",
+   "tests/evaluation.test.ts",
+   "tests/engine-properties.test.ts",
+   "tests/attributes-phase-2b.test.ts",
+   "tests/b20-craft-bite.test.ts",
+   "src/engine/systems/evaluation.ts:1-70 the guarantee: an input a task doesn’t read changes nothing, and a dimension never falls as an input it reads rises",
+   "src/engine/systems/attributes.ts:150-330 one way anything grows: toward the reach by ordinary work, past it by deliberate practice, half again the same source the same day, discipline’s lift, never past full"
+  ]
+ },
+ "ability.listening": {
+  "status": "Verified",
+  "by": [
+   "inspection",
+   "automated"
+  ],
+  "on": "22bfcd35",
+  "note": "Each kept in one place (abilityOf: the craft, the body’s fitness, or attrs), judged through the task profiles only where a task reads it, grown by grown/develop alone and recorded in the development history, full at 100 (stamina at the age’s ceiling). No dominant road: practice stops counting at four hours a day (practice.ts:68), repeats halve, an hour sent again with its actionId is refused (alreadyApplied), and classes level off at the reach.",
+  "evidence": [
+   "tests/b20-creation-abilities.test.ts",
+   "tests/attributes-phase-2b.test.ts",
+   "tests/ability-mastered.test.ts",
+   "tests/attributes.test.ts",
+   "tests/evaluation.test.ts",
+   "tests/engine-properties.test.ts",
+   "tests/attributes-phase-2b.test.ts",
+   "tests/b20-craft-bite.test.ts",
+   "src/engine/systems/evaluation.ts:1-70 the guarantee: an input a task doesn’t read changes nothing, and a dimension never falls as an input it reads rises",
+   "src/engine/systems/attributes.ts:150-330 one way anything grows: toward the reach by ordinary work, past it by deliberate practice, half again the same source the same day, discipline’s lift, never past full"
+  ]
+ },
+ "ability.memory": {
+  "status": "Verified",
+  "by": [
+   "inspection",
+   "automated"
+  ],
+  "on": "22bfcd35",
+  "note": "Each kept in one place (abilityOf: the craft, the body’s fitness, or attrs), judged through the task profiles only where a task reads it, grown by grown/develop alone and recorded in the development history, full at 100 (stamina at the age’s ceiling). No dominant road: practice stops counting at four hours a day (practice.ts:68), repeats halve, an hour sent again with its actionId is refused (alreadyApplied), and classes level off at the reach.",
+  "evidence": [
+   "tests/b20-creation-abilities.test.ts",
+   "tests/attributes-phase-2b.test.ts",
+   "tests/ability-mastered.test.ts",
+   "tests/attributes.test.ts",
+   "tests/evaluation.test.ts",
+   "tests/engine-properties.test.ts",
+   "tests/attributes-phase-2b.test.ts",
+   "tests/b20-craft-bite.test.ts",
+   "src/engine/systems/evaluation.ts:1-70 the guarantee: an input a task doesn’t read changes nothing, and a dimension never falls as an input it reads rises",
+   "src/engine/systems/attributes.ts:150-330 one way anything grows: toward the reach by ordinary work, past it by deliberate practice, half again the same source the same day, discipline’s lift, never past full"
+  ]
+ },
+ "ability.physical": {
+  "status": "Verified",
+  "by": [
+   "inspection",
+   "automated"
+  ],
+  "on": "22bfcd35",
+  "note": "Each kept in one place (abilityOf: the craft, the body’s fitness, or attrs), judged through the task profiles only where a task reads it, grown by grown/develop alone and recorded in the development history, full at 100 (stamina at the age’s ceiling). No dominant road: practice stops counting at four hours a day (practice.ts:68), repeats halve, an hour sent again with its actionId is refused (alreadyApplied), and classes level off at the reach.",
+  "evidence": [
+   "tests/b20-creation-abilities.test.ts",
+   "tests/attributes-phase-2b.test.ts",
+   "tests/ability-mastered.test.ts",
+   "tests/attributes.test.ts",
+   "tests/evaluation.test.ts",
+   "tests/engine-properties.test.ts",
+   "tests/attributes-phase-2b.test.ts",
+   "tests/b20-craft-bite.test.ts",
+   "src/engine/systems/evaluation.ts:1-70 the guarantee: an input a task doesn’t read changes nothing, and a dimension never falls as an input it reads rises",
+   "src/engine/systems/attributes.ts:150-330 one way anything grows: toward the reach by ordinary work, past it by deliberate practice, half again the same source the same day, discipline’s lift, never past full"
+  ]
+ },
+ "ability.presence": {
+  "status": "Verified",
+  "by": [
+   "inspection",
+   "automated"
+  ],
+  "on": "22bfcd35",
+  "note": "Each kept in one place (abilityOf: the craft, the body’s fitness, or attrs), judged through the task profiles only where a task reads it, grown by grown/develop alone and recorded in the development history, full at 100 (stamina at the age’s ceiling). No dominant road: practice stops counting at four hours a day (practice.ts:68), repeats halve, an hour sent again with its actionId is refused (alreadyApplied), and classes level off at the reach.",
+  "evidence": [
+   "tests/b20-creation-abilities.test.ts",
+   "tests/attributes-phase-2b.test.ts",
+   "tests/ability-mastered.test.ts",
+   "tests/attributes.test.ts",
+   "tests/evaluation.test.ts",
+   "tests/engine-properties.test.ts",
+   "tests/attributes-phase-2b.test.ts",
+   "tests/b20-craft-bite.test.ts",
+   "src/engine/systems/evaluation.ts:1-70 the guarantee: an input a task doesn’t read changes nothing, and a dimension never falls as an input it reads rises",
+   "src/engine/systems/attributes.ts:150-330 one way anything grows: toward the reach by ordinary work, past it by deliberate practice, half again the same source the same day, discipline’s lift, never past full"
+  ]
+ },
+ "ability.stamina": {
+  "status": "Verified",
+  "by": [
+   "inspection",
+   "automated"
+  ],
+  "on": "22bfcd35",
+  "note": "Each kept in one place (abilityOf: the craft, the body’s fitness, or attrs), judged through the task profiles only where a task reads it, grown by grown/develop alone and recorded in the development history, full at 100 (stamina at the age’s ceiling). No dominant road: practice stops counting at four hours a day (practice.ts:68), repeats halve, an hour sent again with its actionId is refused (alreadyApplied), and classes level off at the reach.",
+  "evidence": [
+   "tests/b20-creation-abilities.test.ts",
+   "tests/attributes-phase-2b.test.ts",
+   "tests/ability-mastered.test.ts",
+   "tests/attributes.test.ts",
+   "tests/evaluation.test.ts",
+   "tests/engine-properties.test.ts",
+   "tests/attributes-phase-2b.test.ts",
+   "tests/b20-craft-bite.test.ts",
+   "src/engine/systems/evaluation.ts:1-70 the guarantee: an input a task doesn’t read changes nothing, and a dimension never falls as an input it reads rises",
+   "src/engine/systems/attributes.ts:150-330 one way anything grows: toward the reach by ordinary work, past it by deliberate practice, half again the same source the same day, discipline’s lift, never past full"
+  ]
+ },
+ "ability.vocal": {
+  "status": "Verified",
+  "by": [
+   "inspection",
+   "automated"
+  ],
+  "on": "22bfcd35",
+  "note": "Each kept in one place (abilityOf: the craft, the body’s fitness, or attrs), judged through the task profiles only where a task reads it, grown by grown/develop alone and recorded in the development history, full at 100 (stamina at the age’s ceiling). No dominant road: practice stops counting at four hours a day (practice.ts:68), repeats halve, an hour sent again with its actionId is refused (alreadyApplied), and classes level off at the reach.",
+  "evidence": [
+   "tests/b20-creation-abilities.test.ts",
+   "tests/attributes-phase-2b.test.ts",
+   "tests/ability-mastered.test.ts",
+   "tests/attributes.test.ts",
+   "tests/evaluation.test.ts",
+   "tests/engine-properties.test.ts",
+   "tests/attributes-phase-2b.test.ts",
+   "tests/b20-craft-bite.test.ts",
+   "src/engine/systems/evaluation.ts:1-70 the guarantee: an input a task doesn’t read changes nothing, and a dimension never falls as an input it reads rises",
+   "src/engine/systems/attributes.ts:150-330 one way anything grows: toward the reach by ordinary work, past it by deliberate practice, half again the same source the same day, discipline’s lift, never past full"
+  ]
+ },
+ "axis.agreeableness": {
+  "status": "Verified",
+  "by": [
+   "inspection",
+   "automated"
+  ],
+  "on": "22bfcd35",
+  "note": "Creation’s Dispositions list read against each axis’s consumers, one for one: stability, conscientiousness, ambition, risk tolerance (the card’s autopay over 65, credit.ts:1482), extraversion (a house’s nerves at School nights and, since brief 20, professional nights), openness, agreeableness (School rehearsals and, since brief 20, the career’s rehearsal days). The screen says none makes a better actor but composure’s and discipline’s start, which is so: enjoyment and nerves move mood and stress, the evaluation reads neither axis.",
+  "evidence": [
+   "tests/b20-creation-personality.test.ts",
+   "tests/personality.test.ts",
+   "tests/evidence2-b10.test.ts",
+   "tests/evidence-g27-ui.test.ts",
+   "tests/evidence-g28-ui.test.ts",
+   "src/engine/systems/personality.ts:76-79 stress’s gain and recovery and the night by the axes",
+   "src/engine/systems/enjoyment.ts:81-125 new work by openness, a rehearsal by agreeableness, a house by extraversion",
+   "src/engine/systems/attributes.ts:115-134 composure and discipline start by stability and conscientiousness"
+  ]
+ },
+ "axis.ambition": {
+  "status": "Verified",
+  "by": [
+   "inspection",
+   "automated"
+  ],
+  "on": "22bfcd35",
+  "note": "Creation’s Dispositions list read against each axis’s consumers, one for one: stability, conscientiousness, ambition, risk tolerance (the card’s autopay over 65, credit.ts:1482), extraversion (a house’s nerves at School nights and, since brief 20, professional nights), openness, agreeableness (School rehearsals and, since brief 20, the career’s rehearsal days). The screen says none makes a better actor but composure’s and discipline’s start, which is so: enjoyment and nerves move mood and stress, the evaluation reads neither axis.",
+  "evidence": [
+   "tests/b20-creation-personality.test.ts",
+   "tests/personality.test.ts",
+   "tests/evidence2-b10.test.ts",
+   "tests/evidence-g27-ui.test.ts",
+   "tests/evidence-g28-ui.test.ts",
+   "src/engine/systems/personality.ts:76-79 stress’s gain and recovery and the night by the axes",
+   "src/engine/systems/enjoyment.ts:81-125 new work by openness, a rehearsal by agreeableness, a house by extraversion",
+   "src/engine/systems/attributes.ts:115-134 composure and discipline start by stability and conscientiousness"
+  ]
+ },
+ "axis.conscientiousness": {
+  "status": "Verified",
+  "by": [
+   "inspection",
+   "automated"
+  ],
+  "on": "22bfcd35",
+  "note": "Creation’s Dispositions list read against each axis’s consumers, one for one: stability, conscientiousness, ambition, risk tolerance (the card’s autopay over 65, credit.ts:1482), extraversion (a house’s nerves at School nights and, since brief 20, professional nights), openness, agreeableness (School rehearsals and, since brief 20, the career’s rehearsal days). The screen says none makes a better actor but composure’s and discipline’s start, which is so: enjoyment and nerves move mood and stress, the evaluation reads neither axis.",
+  "evidence": [
+   "tests/b20-creation-personality.test.ts",
+   "tests/personality.test.ts",
+   "tests/evidence2-b10.test.ts",
+   "tests/evidence-g27-ui.test.ts",
+   "tests/evidence-g28-ui.test.ts",
+   "src/engine/systems/personality.ts:76-79 stress’s gain and recovery and the night by the axes",
+   "src/engine/systems/enjoyment.ts:81-125 new work by openness, a rehearsal by agreeableness, a house by extraversion",
+   "src/engine/systems/attributes.ts:115-134 composure and discipline start by stability and conscientiousness"
+  ]
+ },
+ "axis.emotionalStability": {
+  "status": "Verified",
+  "by": [
+   "inspection",
+   "automated"
+  ],
+  "on": "22bfcd35",
+  "note": "Creation’s Dispositions list read against each axis’s consumers, one for one: stability, conscientiousness, ambition, risk tolerance (the card’s autopay over 65, credit.ts:1482), extraversion (a house’s nerves at School nights and, since brief 20, professional nights), openness, agreeableness (School rehearsals and, since brief 20, the career’s rehearsal days). The screen says none makes a better actor but composure’s and discipline’s start, which is so: enjoyment and nerves move mood and stress, the evaluation reads neither axis.",
+  "evidence": [
+   "tests/b20-creation-personality.test.ts",
+   "tests/personality.test.ts",
+   "tests/evidence2-b10.test.ts",
+   "tests/evidence-g27-ui.test.ts",
+   "tests/evidence-g28-ui.test.ts",
+   "src/engine/systems/personality.ts:76-79 stress’s gain and recovery and the night by the axes",
+   "src/engine/systems/enjoyment.ts:81-125 new work by openness, a rehearsal by agreeableness, a house by extraversion",
+   "src/engine/systems/attributes.ts:115-134 composure and discipline start by stability and conscientiousness"
+  ]
+ },
+ "axis.extraversion": {
+  "status": "Verified",
+  "by": [
+   "inspection",
+   "automated"
+  ],
+  "on": "22bfcd35",
+  "note": "Creation’s Dispositions list read against each axis’s consumers, one for one: stability, conscientiousness, ambition, risk tolerance (the card’s autopay over 65, credit.ts:1482), extraversion (a house’s nerves at School nights and, since brief 20, professional nights), openness, agreeableness (School rehearsals and, since brief 20, the career’s rehearsal days). The screen says none makes a better actor but composure’s and discipline’s start, which is so: enjoyment and nerves move mood and stress, the evaluation reads neither axis.",
+  "evidence": [
+   "tests/b20-creation-personality.test.ts",
+   "tests/personality.test.ts",
+   "tests/evidence2-b10.test.ts",
+   "tests/evidence-g27-ui.test.ts",
+   "tests/evidence-g28-ui.test.ts",
+   "src/engine/systems/personality.ts:76-79 stress’s gain and recovery and the night by the axes",
+   "src/engine/systems/enjoyment.ts:81-125 new work by openness, a rehearsal by agreeableness, a house by extraversion",
+   "src/engine/systems/attributes.ts:115-134 composure and discipline start by stability and conscientiousness"
+  ]
+ },
+ "axis.openness": {
+  "status": "Verified",
+  "by": [
+   "inspection",
+   "automated"
+  ],
+  "on": "22bfcd35",
+  "note": "Creation’s Dispositions list read against each axis’s consumers, one for one: stability, conscientiousness, ambition, risk tolerance (the card’s autopay over 65, credit.ts:1482), extraversion (a house’s nerves at School nights and, since brief 20, professional nights), openness, agreeableness (School rehearsals and, since brief 20, the career’s rehearsal days). The screen says none makes a better actor but composure’s and discipline’s start, which is so: enjoyment and nerves move mood and stress, the evaluation reads neither axis.",
+  "evidence": [
+   "tests/b20-creation-personality.test.ts",
+   "tests/personality.test.ts",
+   "tests/evidence2-b10.test.ts",
+   "tests/evidence-g27-ui.test.ts",
+   "tests/evidence-g28-ui.test.ts",
+   "src/engine/systems/personality.ts:76-79 stress’s gain and recovery and the night by the axes",
+   "src/engine/systems/enjoyment.ts:81-125 new work by openness, a rehearsal by agreeableness, a house by extraversion",
+   "src/engine/systems/attributes.ts:115-134 composure and discipline start by stability and conscientiousness"
+  ]
+ },
+ "axis.riskTolerance": {
+  "status": "Verified",
+  "by": [
+   "inspection",
+   "automated"
+  ],
+  "on": "22bfcd35",
+  "note": "Creation’s Dispositions list read against each axis’s consumers, one for one: stability, conscientiousness, ambition, risk tolerance (the card’s autopay over 65, credit.ts:1482), extraversion (a house’s nerves at School nights and, since brief 20, professional nights), openness, agreeableness (School rehearsals and, since brief 20, the career’s rehearsal days). The screen says none makes a better actor but composure’s and discipline’s start, which is so: enjoyment and nerves move mood and stress, the evaluation reads neither axis.",
+  "evidence": [
+   "tests/b20-creation-personality.test.ts",
+   "tests/personality.test.ts",
+   "tests/evidence2-b10.test.ts",
+   "tests/evidence-g27-ui.test.ts",
+   "tests/evidence-g28-ui.test.ts",
+   "src/engine/systems/personality.ts:76-79 stress’s gain and recovery and the night by the axes",
+   "src/engine/systems/enjoyment.ts:81-125 new work by openness, a rehearsal by agreeableness, a house by extraversion",
+   "src/engine/systems/attributes.ts:115-134 composure and discipline start by stability and conscientiousness"
+  ]
+ },
+ "create.background": {
+  "status": "Verified",
+  "by": [
+   "inspection",
+   "automated"
+  ],
+  "on": "22bfcd35",
+  "note": "Read bootstrap.ts whole and populateWorld: every field lands on the person or the universe where its row says. Consumers spot-read at their lines: the title in casting (school.ts:2967, projobs.ts:411-428), the axes (attributes.ts:115-134, personality.ts:76-79, enjoyment.ts:81-125), the loved genres (enjoyment.ts:60-80), wealth and family (school.ts:1512), the body (body.ts:83-145), the birth instant (birthdays.ts:30, mortality.ts:108). The tests change the input and read the outcome: twins alike but for one field, each disposition at 5 and 95, a life saved at its first moment against one played straight, the family’s money on the first morning.",
+  "evidence": [
+   "tests/b20-creation-noleak.test.ts",
+   "tests/looks.test.ts",
+   "tests/evidence-g31-ui.test.ts",
+   "tests/creation.test.ts",
+   "src/engine/world/bootstrap.ts:322-440 createUniverse reads each field once and puts it where the effects row says",
+   "src/engine/index.ts:197-259 populateWorld: the family’s money, its card and the score, the bank chosen"
+  ]
+ },
+ "create.bankId": {
+  "status": "Verified",
+  "by": [
+   "inspection",
+   "automated"
+  ],
+  "on": "22bfcd35",
+  "note": "Read bootstrap.ts whole and populateWorld: every field lands on the person or the universe where its row says. Consumers spot-read at their lines: the title in casting (school.ts:2967, projobs.ts:411-428), the axes (attributes.ts:115-134, personality.ts:76-79, enjoyment.ts:81-125), the loved genres (enjoyment.ts:60-80), wealth and family (school.ts:1512), the body (body.ts:83-145), the birth instant (birthdays.ts:30, mortality.ts:108). The tests change the input and read the outcome: twins alike but for one field, each disposition at 5 and 95, a life saved at its first moment against one played straight, the family’s money on the first morning.",
+  "evidence": [
+   "tests/banking.test.ts",
+   "tests/evidence-g29-ui.test.ts",
+   "tests/b20-creation-twins.test.ts",
+   "src/engine/world/bootstrap.ts:322-440 createUniverse reads each field once and puts it where the effects row says",
+   "src/engine/index.ts:197-259 populateWorld: the family’s money, its card and the score, the bank chosen"
+  ]
+ },
+ "create.birthDay": {
+  "status": "Verified",
+  "by": [
+   "inspection",
+   "automated"
+  ],
+  "on": "22bfcd35",
+  "note": "Read bootstrap.ts whole and populateWorld: every field lands on the person or the universe where its row says. Consumers spot-read at their lines: the title in casting (school.ts:2967, projobs.ts:411-428), the axes (attributes.ts:115-134, personality.ts:76-79, enjoyment.ts:81-125), the loved genres (enjoyment.ts:60-80), wealth and family (school.ts:1512), the body (body.ts:83-145), the birth instant (birthdays.ts:30, mortality.ts:108). The tests change the input and read the outcome: twins alike but for one field, each disposition at 5 and 95, a life saved at its first moment against one played straight, the family’s money on the first morning.",
+  "evidence": [
+   "tests/b20-creation-twins.test.ts",
+   "tests/evidence-g27-ui.test.ts",
+   "tests/creation.test.ts",
+   "src/engine/world/bootstrap.ts:322-440 createUniverse reads each field once and puts it where the effects row says",
+   "src/engine/index.ts:197-259 populateWorld: the family’s money, its card and the score, the bank chosen"
+  ]
+ },
+ "create.birthMonth": {
+  "status": "Verified",
+  "by": [
+   "inspection",
+   "automated"
+  ],
+  "on": "22bfcd35",
+  "note": "Read bootstrap.ts whole and populateWorld: every field lands on the person or the universe where its row says. Consumers spot-read at their lines: the title in casting (school.ts:2967, projobs.ts:411-428), the axes (attributes.ts:115-134, personality.ts:76-79, enjoyment.ts:81-125), the loved genres (enjoyment.ts:60-80), wealth and family (school.ts:1512), the body (body.ts:83-145), the birth instant (birthdays.ts:30, mortality.ts:108). The tests change the input and read the outcome: twins alike but for one field, each disposition at 5 and 95, a life saved at its first moment against one played straight, the family’s money on the first morning.",
+  "evidence": [
+   "tests/b20-creation-twins.test.ts",
+   "tests/evidence-g27-ui.test.ts",
+   "tests/creation.test.ts",
+   "src/engine/world/bootstrap.ts:322-440 createUniverse reads each field once and puts it where the effects row says",
+   "src/engine/index.ts:197-259 populateWorld: the family’s money, its card and the score, the bank chosen"
+  ]
+ },
+ "create.birthYear": {
+  "status": "Verified",
+  "by": [
+   "inspection",
+   "automated"
+  ],
+  "on": "22bfcd35",
+  "note": "Read bootstrap.ts whole and populateWorld: every field lands on the person or the universe where its row says. Consumers spot-read at their lines: the title in casting (school.ts:2967, projobs.ts:411-428), the axes (attributes.ts:115-134, personality.ts:76-79, enjoyment.ts:81-125), the loved genres (enjoyment.ts:60-80), wealth and family (school.ts:1512), the body (body.ts:83-145), the birth instant (birthdays.ts:30, mortality.ts:108). The tests change the input and read the outcome: twins alike but for one field, each disposition at 5 and 95, a life saved at its first moment against one played straight, the family’s money on the first morning.",
+  "evidence": [
+   "tests/b20-creation-twins.test.ts",
+   "tests/evidence-g27-ui.test.ts",
+   "tests/creation.test.ts",
+   "src/engine/world/bootstrap.ts:322-440 createUniverse reads each field once and puts it where the effects row says",
+   "src/engine/index.ts:197-259 populateWorld: the family’s money, its card and the score, the bank chosen"
+  ]
+ },
+ "create.displayName": {
+  "status": "Verified",
+  "by": [
+   "inspection",
+   "automated"
+  ],
+  "on": "22bfcd35",
+  "note": "Read bootstrap.ts whole and populateWorld: every field lands on the person or the universe where its row says. Consumers spot-read at their lines: the title in casting (school.ts:2967, projobs.ts:411-428), the axes (attributes.ts:115-134, personality.ts:76-79, enjoyment.ts:81-125), the loved genres (enjoyment.ts:60-80), wealth and family (school.ts:1512), the body (body.ts:83-145), the birth instant (birthdays.ts:30, mortality.ts:108). The tests change the input and read the outcome: twins alike but for one field, each disposition at 5 and 95, a life saved at its first moment against one played straight, the family’s money on the first morning.",
+  "evidence": [
+   "tests/b20-creation-noleak.test.ts",
+   "tests/creation.test.ts",
+   "tests/evidence-g31-ui.test.ts",
+   "src/engine/world/bootstrap.ts:322-440 createUniverse reads each field once and puts it where the effects row says",
+   "src/engine/index.ts:197-259 populateWorld: the family’s money, its card and the score, the bank chosen"
+  ]
+ },
+ "create.family": {
+  "status": "Verified",
+  "by": [
+   "inspection",
+   "automated"
+  ],
+  "on": "22bfcd35",
+  "note": "Read bootstrap.ts whole and populateWorld: every field lands on the person or the universe where its row says. Consumers spot-read at their lines: the title in casting (school.ts:2967, projobs.ts:411-428), the axes (attributes.ts:115-134, personality.ts:76-79, enjoyment.ts:81-125), the loved genres (enjoyment.ts:60-80), wealth and family (school.ts:1512), the body (body.ts:83-145), the birth instant (birthdays.ts:30, mortality.ts:108). The tests change the input and read the outcome: twins alike but for one field, each disposition at 5 and 95, a life saved at its first moment against one played straight, the family’s money on the first morning.",
+  "evidence": [
+   "tests/b20-creation-twins.test.ts",
+   "tests/need-paths.test.ts",
+   "tests/evidence3-person.test.ts",
+   "src/engine/world/bootstrap.ts:322-440 createUniverse reads each field once and puts it where the effects row says",
+   "src/engine/index.ts:197-259 populateWorld: the family’s money, its card and the score, the bank chosen"
+  ]
+ },
+ "create.firstName": {
+  "status": "Verified",
+  "by": [
+   "inspection",
+   "automated"
+  ],
+  "on": "22bfcd35",
+  "note": "Read bootstrap.ts whole and populateWorld: every field lands on the person or the universe where its row says. Consumers spot-read at their lines: the title in casting (school.ts:2967, projobs.ts:411-428), the axes (attributes.ts:115-134, personality.ts:76-79, enjoyment.ts:81-125), the loved genres (enjoyment.ts:60-80), wealth and family (school.ts:1512), the body (body.ts:83-145), the birth instant (birthdays.ts:30, mortality.ts:108). The tests change the input and read the outcome: twins alike but for one field, each disposition at 5 and 95, a life saved at its first moment against one played straight, the family’s money on the first morning.",
+  "evidence": [
+   "tests/b20-creation-noleak.test.ts",
+   "tests/creation.test.ts",
+   "tests/evidence-g31-ui.test.ts",
+   "src/engine/world/bootstrap.ts:322-440 createUniverse reads each field once and puts it where the effects row says",
+   "src/engine/index.ts:197-259 populateWorld: the family’s money, its card and the score, the bank chosen"
+  ]
+ },
+ "create.genres": {
+  "status": "Fixed And Verified",
+  "by": [
+   "inspection",
+   "automated"
+  ],
+  "on": "22bfcd35",
+  "note": "Love is read by enjoyment alone (mood and stress), never by a result; a week lived loving an inert genre is the same week (traits-connected).",
+  "evidence": [
+   "tests/b20-creation-twins.test.ts",
+   "tests/evidence-g28-ui.test.ts",
+   "tests/traits-connected.test.ts",
+   "tests/b20-creation-looks.test.ts",
+   "tests/b26-creation-genres.test.ts the list creation says is read is the plays’ kinds and the projects’ genres; fails with the projects dropped",
+   "tests/b20-career-defects.test.ts a shoot day of a horror film is a better day for a lover of horror",
+   "src/engine/systems/enjoyment.ts:38-56 genresRead"
+  ],
+  "fixed": "Creation marked Crime, Horror, Police Procedural, Psychological Horror, Psychological Thriller and Thriller as “shown on your Player Profile only” (genresRead was the School’s plays’ kinds alone) while a work day on a career project of the kind had lifted the mood since brief 20. genresRead reads the projects’ genres too, and the step says a day’s work on a project of a loved kind lifts the day; 22bfcd35."
+ },
+ "create.heightCm": {
+  "status": "Verified",
+  "by": [
+   "inspection",
+   "automated"
+  ],
+  "on": "22bfcd35",
+  "note": "Read bootstrap.ts whole and populateWorld: every field lands on the person or the universe where its row says. Consumers spot-read at their lines: the title in casting (school.ts:2967, projobs.ts:411-428), the axes (attributes.ts:115-134, personality.ts:76-79, enjoyment.ts:81-125), the loved genres (enjoyment.ts:60-80), wealth and family (school.ts:1512), the body (body.ts:83-145), the birth instant (birthdays.ts:30, mortality.ts:108). The tests change the input and read the outcome: twins alike but for one field, each disposition at 5 and 95, a life saved at its first moment against one played straight, the family’s money on the first morning.",
+  "evidence": [
+   "tests/b20-creation-twins.test.ts",
+   "tests/evidence-g28-ui.test.ts",
+   "tests/body.test.ts",
+   "tests/b20-creation-looks.test.ts",
+   "src/engine/world/bootstrap.ts:322-440 createUniverse reads each field once and puts it where the effects row says",
+   "src/engine/index.ts:197-259 populateWorld: the family’s money, its card and the score, the bank chosen"
+  ]
+ },
+ "create.homeBankId": {
+  "status": "Verified",
+  "by": [
+   "inspection",
+   "automated"
+  ],
+  "on": "22bfcd35",
+  "note": "Read bootstrap.ts whole and populateWorld: every field lands on the person or the universe where its row says. Consumers spot-read at their lines: the title in casting (school.ts:2967, projobs.ts:411-428), the axes (attributes.ts:115-134, personality.ts:76-79, enjoyment.ts:81-125), the loved genres (enjoyment.ts:60-80), wealth and family (school.ts:1512), the body (body.ts:83-145), the birth instant (birthdays.ts:30, mortality.ts:108). The tests change the input and read the outcome: twins alike but for one field, each disposition at 5 and 95, a life saved at its first moment against one played straight, the family’s money on the first morning.",
+  "evidence": [
+   "tests/home-account-creation.test.ts",
+   "tests/home-account-abroad.test.ts",
+   "tests/home-account-tax.test.ts",
+   "src/engine/world/bootstrap.ts:322-440 createUniverse reads each field once and puts it where the effects row says",
+   "src/engine/index.ts:197-259 populateWorld: the family’s money, its card and the score, the bank chosen"
+  ]
+ },
+ "create.homeRegionId": {
+  "status": "Verified",
+  "by": [
+   "inspection",
+   "automated"
+  ],
+  "on": "22bfcd35",
+  "note": "Read bootstrap.ts whole and populateWorld: every field lands on the person or the universe where its row says. Consumers spot-read at their lines: the title in casting (school.ts:2967, projobs.ts:411-428), the axes (attributes.ts:115-134, personality.ts:76-79, enjoyment.ts:81-125), the loved genres (enjoyment.ts:60-80), wealth and family (school.ts:1512), the body (body.ts:83-145), the birth instant (birthdays.ts:30, mortality.ts:108). The tests change the input and read the outcome: twins alike but for one field, each disposition at 5 and 95, a life saved at its first moment against one played straight, the family’s money on the first morning.",
+  "evidence": [
+   "tests/b20-creation-twins.test.ts",
+   "tests/citizenship.test.ts",
+   "tests/documents.test.ts",
+   "tests/evidence-g27-ui.test.ts",
+   "src/engine/world/bootstrap.ts:322-440 createUniverse reads each field once and puts it where the effects row says",
+   "src/engine/index.ts:197-259 populateWorld: the family’s money, its card and the score, the bank chosen"
+  ]
+ },
+ "create.lastName": {
+  "status": "Verified",
+  "by": [
+   "inspection",
+   "automated"
+  ],
+  "on": "22bfcd35",
+  "note": "Read bootstrap.ts whole and populateWorld: every field lands on the person or the universe where its row says. Consumers spot-read at their lines: the title in casting (school.ts:2967, projobs.ts:411-428), the axes (attributes.ts:115-134, personality.ts:76-79, enjoyment.ts:81-125), the loved genres (enjoyment.ts:60-80), wealth and family (school.ts:1512), the body (body.ts:83-145), the birth instant (birthdays.ts:30, mortality.ts:108). The tests change the input and read the outcome: twins alike but for one field, each disposition at 5 and 95, a life saved at its first moment against one played straight, the family’s money on the first morning.",
+  "evidence": [
+   "tests/b20-creation-noleak.test.ts",
+   "tests/creation.test.ts",
+   "tests/evidence-g31-ui.test.ts",
+   "src/engine/world/bootstrap.ts:322-440 createUniverse reads each field once and puts it where the effects row says",
+   "src/engine/index.ts:197-259 populateWorld: the family’s money, its card and the score, the bank chosen"
+  ]
+ },
+ "create.livesWhereBorn": {
+  "status": "Blocked",
+  "by": [
+   "inspection"
+  ],
+  "on": "22bfcd35",
+  "note": "Written and read by no life a player can make: Starting Point’s Where You Live and I Still Live Where I Was Born are drawn only outside the School, where creation never begins a life (CharacterCreation.tsx:552, 973-976; tests/creation.test.ts). Whether the start outside the School comes back, or the field and its controls go, has been the owner’s decision since brief 20 (effects row create.livesWhereBorn); it decides nothing until then.",
+  "evidence": [
+   "tests/creation.test.ts",
+   "src/engine/world/bootstrap.ts:322-440 createUniverse reads each field once and puts it where the effects row says",
+   "src/engine/index.ts:197-259 populateWorld: the family’s money, its card and the score, the bank chosen"
+  ]
+ },
+ "create.middleName": {
+  "status": "Verified",
+  "by": [
+   "inspection",
+   "automated"
+  ],
+  "on": "22bfcd35",
+  "note": "Read bootstrap.ts whole and populateWorld: every field lands on the person or the universe where its row says. Consumers spot-read at their lines: the title in casting (school.ts:2967, projobs.ts:411-428), the axes (attributes.ts:115-134, personality.ts:76-79, enjoyment.ts:81-125), the loved genres (enjoyment.ts:60-80), wealth and family (school.ts:1512), the body (body.ts:83-145), the birth instant (birthdays.ts:30, mortality.ts:108). The tests change the input and read the outcome: twins alike but for one field, each disposition at 5 and 95, a life saved at its first moment against one played straight, the family’s money on the first morning.",
+  "evidence": [
+   "tests/b20-creation-noleak.test.ts",
+   "tests/creation.test.ts",
+   "tests/evidence-g31-ui.test.ts",
+   "src/engine/world/bootstrap.ts:322-440 createUniverse reads each field once and puts it where the effects row says",
+   "src/engine/index.ts:197-259 populateWorld: the family’s money, its card and the score, the bank chosen"
+  ]
+ },
+ "create.paused": {
+  "status": "Verified",
+  "by": [
+   "inspection",
+   "automated"
+  ],
+  "on": "22bfcd35",
+  "note": "Read bootstrap.ts whole and populateWorld: every field lands on the person or the universe where its row says. Consumers spot-read at their lines: the title in casting (school.ts:2967, projobs.ts:411-428), the axes (attributes.ts:115-134, personality.ts:76-79, enjoyment.ts:81-125), the loved genres (enjoyment.ts:60-80), wealth and family (school.ts:1512), the body (body.ts:83-145), the birth instant (birthdays.ts:30, mortality.ts:108). The tests change the input and read the outcome: twins alike but for one field, each disposition at 5 and 95, a life saved at its first moment against one played straight, the family’s money on the first morning.",
+  "evidence": [
+   "tests/b20-creation-twins.test.ts",
+   "tests/evidence2-b10.test.ts",
+   "src/engine/world/bootstrap.ts:322-440 createUniverse reads each field once and puts it where the effects row says",
+   "src/engine/index.ts:197-259 populateWorld: the family’s money, its card and the score, the bank chosen"
+  ]
+ },
+ "create.performerTitle": {
+  "status": "Verified",
+  "by": [
+   "inspection",
+   "automated"
+  ],
+  "on": "22bfcd35",
+  "note": "Read bootstrap.ts whole and populateWorld: every field lands on the person or the universe where its row says. Consumers spot-read at their lines: the title in casting (school.ts:2967, projobs.ts:411-428), the axes (attributes.ts:115-134, personality.ts:76-79, enjoyment.ts:81-125), the loved genres (enjoyment.ts:60-80), wealth and family (school.ts:1512), the body (body.ts:83-145), the birth instant (birthdays.ts:30, mortality.ts:108). The tests change the input and read the outcome: twins alike but for one field, each disposition at 5 and 95, a life saved at its first moment against one played straight, the family’s money on the first morning.",
+  "evidence": [
+   "tests/b20-creation-twins.test.ts",
+   "tests/evidence-g27-ui.test.ts",
+   "tests/attributes-complete.test.ts",
+   "tests/creation.test.ts",
+   "src/engine/world/bootstrap.ts:322-440 createUniverse reads each field once and puts it where the effects row says",
+   "src/engine/index.ts:197-259 populateWorld: the family’s money, its card and the score, the bank chosen"
+  ]
+ },
+ "create.personality": {
+  "status": "Verified",
+  "by": [
+   "inspection",
+   "automated"
+  ],
+  "on": "22bfcd35",
+  "note": "Read bootstrap.ts whole and populateWorld: every field lands on the person or the universe where its row says. Consumers spot-read at their lines: the title in casting (school.ts:2967, projobs.ts:411-428), the axes (attributes.ts:115-134, personality.ts:76-79, enjoyment.ts:81-125), the loved genres (enjoyment.ts:60-80), wealth and family (school.ts:1512), the body (body.ts:83-145), the birth instant (birthdays.ts:30, mortality.ts:108). The tests change the input and read the outcome: twins alike but for one field, each disposition at 5 and 95, a life saved at its first moment against one played straight, the family’s money on the first morning.",
+  "evidence": [
+   "tests/b20-creation-personality.test.ts",
+   "tests/personality.test.ts",
+   "tests/evidence2-b10.test.ts",
+   "tests/evidence-g27-ui.test.ts",
+   "tests/evidence-g28-ui.test.ts",
+   "src/engine/world/bootstrap.ts:322-440 createUniverse reads each field once and puts it where the effects row says",
+   "src/engine/index.ts:197-259 populateWorld: the family’s money, its card and the score, the bank chosen"
+  ]
+ },
+ "create.personalityTraits": {
+  "status": "Verified",
+  "by": [
+   "inspection",
+   "automated"
+  ],
+  "on": "22bfcd35",
+  "note": "Read bootstrap.ts whole and populateWorld: every field lands on the person or the universe where its row says. Consumers spot-read at their lines: the title in casting (school.ts:2967, projobs.ts:411-428), the axes (attributes.ts:115-134, personality.ts:76-79, enjoyment.ts:81-125), the loved genres (enjoyment.ts:60-80), wealth and family (school.ts:1512), the body (body.ts:83-145), the birth instant (birthdays.ts:30, mortality.ts:108). The tests change the input and read the outcome: twins alike but for one field, each disposition at 5 and 95, a life saved at its first moment against one played straight, the family’s money on the first morning.",
+  "evidence": [
+   "tests/b20-creation-personality.test.ts",
+   "tests/b20-creation-copy.test.ts",
+   "tests/personality.test.ts",
+   "tests/evidence2-b10.test.ts",
+   "tests/traits-connected.test.ts",
+   "tests/creation.test.ts",
+   "src/engine/world/bootstrap.ts:322-440 createUniverse reads each field once and puts it where the effects row says",
+   "src/engine/index.ts:197-259 populateWorld: the family’s money, its card and the score, the bank chosen"
+  ]
+ },
+ "create.portrait": {
+  "status": "Verified",
+  "by": [
+   "inspection",
+   "automated"
+  ],
+  "on": "22bfcd35",
+  "note": "Read bootstrap.ts whole and populateWorld: every field lands on the person or the universe where its row says. Consumers spot-read at their lines: the title in casting (school.ts:2967, projobs.ts:411-428), the axes (attributes.ts:115-134, personality.ts:76-79, enjoyment.ts:81-125), the loved genres (enjoyment.ts:60-80), wealth and family (school.ts:1512), the body (body.ts:83-145), the birth instant (birthdays.ts:30, mortality.ts:108). The tests change the input and read the outcome: twins alike but for one field, each disposition at 5 and 95, a life saved at its first moment against one played straight, the family’s money on the first morning.",
+  "evidence": [
+   "tests/b20-creation-noleak.test.ts",
+   "tests/portrait.test.ts",
+   "tests/evidence-g31-ui.test.ts",
+   "src/engine/world/bootstrap.ts:322-440 createUniverse reads each field once and puts it where the effects row says",
+   "src/engine/index.ts:197-259 populateWorld: the family’s money, its card and the score, the bank chosen"
+  ]
+ },
+ "create.priorResidence": {
+  "status": "Verified",
+  "by": [
+   "inspection",
+   "automated"
+  ],
+  "on": "22bfcd35",
+  "note": "Read bootstrap.ts whole and populateWorld: every field lands on the person or the universe where its row says. Consumers spot-read at their lines: the title in casting (school.ts:2967, projobs.ts:411-428), the axes (attributes.ts:115-134, personality.ts:76-79, enjoyment.ts:81-125), the loved genres (enjoyment.ts:60-80), wealth and family (school.ts:1512), the body (body.ts:83-145), the birth instant (birthdays.ts:30, mortality.ts:108). The tests change the input and read the outcome: twins alike but for one field, each disposition at 5 and 95, a life saved at its first moment against one played straight, the family’s money on the first morning.",
+  "evidence": [
+   "tests/home-account-creation.test.ts",
+   "tests/home-account-abroad.test.ts",
+   "tests/home-account-tax.test.ts",
+   "src/engine/world/bootstrap.ts:322-440 createUniverse reads each field once and puts it where the effects row says",
+   "src/engine/index.ts:197-259 populateWorld: the family’s money, its card and the score, the bank chosen"
+  ]
+ },
+ "create.pronouns": {
+  "status": "Verified",
+  "by": [
+   "inspection",
+   "automated"
+  ],
+  "on": "22bfcd35",
+  "note": "Read bootstrap.ts whole and populateWorld: every field lands on the person or the universe where its row says. Consumers spot-read at their lines: the title in casting (school.ts:2967, projobs.ts:411-428), the axes (attributes.ts:115-134, personality.ts:76-79, enjoyment.ts:81-125), the loved genres (enjoyment.ts:60-80), wealth and family (school.ts:1512), the body (body.ts:83-145), the birth instant (birthdays.ts:30, mortality.ts:108). The tests change the input and read the outcome: twins alike but for one field, each disposition at 5 and 95, a life saved at its first moment against one played straight, the family’s money on the first morning.",
+  "evidence": [
+   "tests/b20-creation-twins.test.ts",
+   "tests/evidence-g27-ui.test.ts",
+   "tests/creation.test.ts",
+   "src/engine/world/bootstrap.ts:322-440 createUniverse reads each field once and puts it where the effects row says",
+   "src/engine/index.ts:197-259 populateWorld: the family’s money, its card and the score, the bank chosen"
+  ]
+ },
+ "create.raceEthnicity": {
+  "status": "Verified",
+  "by": [
+   "inspection",
+   "automated"
+  ],
+  "on": "22bfcd35",
+  "note": "Read bootstrap.ts whole and populateWorld: every field lands on the person or the universe where its row says. Consumers spot-read at their lines: the title in casting (school.ts:2967, projobs.ts:411-428), the axes (attributes.ts:115-134, personality.ts:76-79, enjoyment.ts:81-125), the loved genres (enjoyment.ts:60-80), wealth and family (school.ts:1512), the body (body.ts:83-145), the birth instant (birthdays.ts:30, mortality.ts:108). The tests change the input and read the outcome: twins alike but for one field, each disposition at 5 and 95, a life saved at its first moment against one played straight, the family’s money on the first morning.",
+  "evidence": [
+   "tests/b20-creation-noleak.test.ts",
+   "tests/evidence-g31-ui.test.ts",
+   "tests/cohesion.test.ts",
+   "src/engine/world/bootstrap.ts:322-440 createUniverse reads each field once and puts it where the effects row says",
+   "src/engine/index.ts:197-259 populateWorld: the family’s money, its card and the score, the bank chosen"
+  ]
+ },
+ "create.raceEthnicityOwn": {
+  "status": "Verified",
+  "by": [
+   "inspection",
+   "automated"
+  ],
+  "on": "22bfcd35",
+  "note": "Read bootstrap.ts whole and populateWorld: every field lands on the person or the universe where its row says. Consumers spot-read at their lines: the title in casting (school.ts:2967, projobs.ts:411-428), the axes (attributes.ts:115-134, personality.ts:76-79, enjoyment.ts:81-125), the loved genres (enjoyment.ts:60-80), wealth and family (school.ts:1512), the body (body.ts:83-145), the birth instant (birthdays.ts:30, mortality.ts:108). The tests change the input and read the outcome: twins alike but for one field, each disposition at 5 and 95, a life saved at its first moment against one played straight, the family’s money on the first morning.",
+  "evidence": [
+   "tests/b20-creation-noleak.test.ts",
+   "tests/evidence-g31-ui.test.ts",
+   "tests/cohesion.test.ts",
+   "src/engine/world/bootstrap.ts:322-440 createUniverse reads each field once and puts it where the effects row says",
+   "src/engine/index.ts:197-259 populateWorld: the family’s money, its card and the score, the bank chosen"
+  ]
+ },
+ "create.savingsAtHome": {
+  "status": "Verified",
+  "by": [
+   "inspection",
+   "automated"
+  ],
+  "on": "22bfcd35",
+  "note": "Read bootstrap.ts whole and populateWorld: every field lands on the person or the universe where its row says. Consumers spot-read at their lines: the title in casting (school.ts:2967, projobs.ts:411-428), the axes (attributes.ts:115-134, personality.ts:76-79, enjoyment.ts:81-125), the loved genres (enjoyment.ts:60-80), wealth and family (school.ts:1512), the body (body.ts:83-145), the birth instant (birthdays.ts:30, mortality.ts:108). The tests change the input and read the outcome: twins alike but for one field, each disposition at 5 and 95, a life saved at its first moment against one played straight, the family’s money on the first morning.",
+  "evidence": [
+   "tests/home-account-creation.test.ts",
+   "tests/home-account-abroad.test.ts",
+   "tests/home-account-tax.test.ts",
+   "src/engine/world/bootstrap.ts:322-440 createUniverse reads each field once and puts it where the effects row says",
+   "src/engine/index.ts:197-259 populateWorld: the family’s money, its card and the score, the bank chosen"
+  ]
+ },
+ "create.school": {
+  "status": "Verified",
+  "by": [
+   "inspection",
+   "automated"
+  ],
+  "on": "22bfcd35",
+  "note": "Read bootstrap.ts whole and populateWorld: every field lands on the person or the universe where its row says. Consumers spot-read at their lines: the title in casting (school.ts:2967, projobs.ts:411-428), the axes (attributes.ts:115-134, personality.ts:76-79, enjoyment.ts:81-125), the loved genres (enjoyment.ts:60-80), wealth and family (school.ts:1512), the body (body.ts:83-145), the birth instant (birthdays.ts:30, mortality.ts:108). The tests change the input and read the outcome: twins alike but for one field, each disposition at 5 and 95, a life saved at its first moment against one played straight, the family’s money on the first morning.",
+  "evidence": [
+   "tests/b20-creation-twins.test.ts",
+   "tests/school.test.ts",
+   "tests/creation.test.ts",
+   "src/engine/world/bootstrap.ts:322-440 createUniverse reads each field once and puts it where the effects row says",
+   "src/engine/index.ts:197-259 populateWorld: the family’s money, its card and the score, the bank chosen"
+  ]
+ },
+ "create.startDay": {
+  "status": "Verified",
+  "by": [
+   "inspection",
+   "automated"
+  ],
+  "on": "22bfcd35",
+  "note": "Read bootstrap.ts whole and populateWorld: every field lands on the person or the universe where its row says. Consumers spot-read at their lines: the title in casting (school.ts:2967, projobs.ts:411-428), the axes (attributes.ts:115-134, personality.ts:76-79, enjoyment.ts:81-125), the loved genres (enjoyment.ts:60-80), wealth and family (school.ts:1512), the body (body.ts:83-145), the birth instant (birthdays.ts:30, mortality.ts:108). The tests change the input and read the outcome: twins alike but for one field, each disposition at 5 and 95, a life saved at its first moment against one played straight, the family’s money on the first morning.",
+  "evidence": [
+   "tests/b20-creation-twins.test.ts",
+   "tests/school.test.ts",
+   "tests/creation.test.ts",
+   "src/engine/world/bootstrap.ts:322-440 createUniverse reads each field once and puts it where the effects row says",
+   "src/engine/index.ts:197-259 populateWorld: the family’s money, its card and the score, the bank chosen"
+  ]
+ },
+ "create.startLocationId": {
+  "status": "Verified",
+  "by": [
+   "inspection",
+   "automated"
+  ],
+  "on": "22bfcd35",
+  "note": "Every life creation makes begins in New Haven (atSchool); the field is read for the zone, the currency, the bank, the holidays and the food. The picker that would set another town is drawn for no player-made life (see create.livesWhereBorn).",
+  "evidence": [
+   "tests/b20-creation-twins.test.ts",
+   "tests/creation.test.ts",
+   "tests/school.test.ts",
+   "src/engine/world/bootstrap.ts:325-337 the town, its zone and the first instant"
+  ]
+ },
+ "create.startMonth": {
+  "status": "Verified",
+  "by": [
+   "inspection",
+   "automated"
+  ],
+  "on": "22bfcd35",
+  "note": "Read bootstrap.ts whole and populateWorld: every field lands on the person or the universe where its row says. Consumers spot-read at their lines: the title in casting (school.ts:2967, projobs.ts:411-428), the axes (attributes.ts:115-134, personality.ts:76-79, enjoyment.ts:81-125), the loved genres (enjoyment.ts:60-80), wealth and family (school.ts:1512), the body (body.ts:83-145), the birth instant (birthdays.ts:30, mortality.ts:108). The tests change the input and read the outcome: twins alike but for one field, each disposition at 5 and 95, a life saved at its first moment against one played straight, the family’s money on the first morning.",
+  "evidence": [
+   "tests/b20-creation-twins.test.ts",
+   "tests/school.test.ts",
+   "tests/creation.test.ts",
+   "src/engine/world/bootstrap.ts:322-440 createUniverse reads each field once and puts it where the effects row says",
+   "src/engine/index.ts:197-259 populateWorld: the family’s money, its card and the score, the bank chosen"
+  ]
+ },
+ "create.startYear": {
+  "status": "Verified",
+  "by": [
+   "inspection",
+   "automated"
+  ],
+  "on": "22bfcd35",
+  "note": "Read bootstrap.ts whole and populateWorld: every field lands on the person or the universe where its row says. Consumers spot-read at their lines: the title in casting (school.ts:2967, projobs.ts:411-428), the axes (attributes.ts:115-134, personality.ts:76-79, enjoyment.ts:81-125), the loved genres (enjoyment.ts:60-80), wealth and family (school.ts:1512), the body (body.ts:83-145), the birth instant (birthdays.ts:30, mortality.ts:108). The tests change the input and read the outcome: twins alike but for one field, each disposition at 5 and 95, a life saved at its first moment against one played straight, the family’s money on the first morning.",
+  "evidence": [
+   "tests/b20-creation-twins.test.ts",
+   "tests/school.test.ts",
+   "tests/creation.test.ts",
+   "src/engine/world/bootstrap.ts:322-440 createUniverse reads each field once and puts it where the effects row says",
+   "src/engine/index.ts:197-259 populateWorld: the family’s money, its card and the score, the bank chosen"
+  ]
+ },
+ "create.tutorial": {
+  "status": "Verified",
+  "by": [
+   "inspection",
+   "automated"
+  ],
+  "on": "22bfcd35",
+  "note": "Read bootstrap.ts whole and populateWorld: every field lands on the person or the universe where its row says. Consumers spot-read at their lines: the title in casting (school.ts:2967, projobs.ts:411-428), the axes (attributes.ts:115-134, personality.ts:76-79, enjoyment.ts:81-125), the loved genres (enjoyment.ts:60-80), wealth and family (school.ts:1512), the body (body.ts:83-145), the birth instant (birthdays.ts:30, mortality.ts:108). The tests change the input and read the outcome: twins alike but for one field, each disposition at 5 and 95, a life saved at its first moment against one played straight, the family’s money on the first morning.",
+  "evidence": [
+   "tests/b20-creation-twins.test.ts",
+   "tests/tutorial.test.ts",
+   "tests/evidence2-b10.test.ts",
+   "tests/evidence-g29-ui.test.ts",
+   "src/engine/world/bootstrap.ts:322-440 createUniverse reads each field once and puts it where the effects row says",
+   "src/engine/index.ts:197-259 populateWorld: the family’s money, its card and the score, the bank chosen"
+  ]
+ },
+ "create.wealth": {
+  "status": "Verified",
+  "by": [
+   "inspection",
+   "automated"
+  ],
+  "on": "22bfcd35",
+  "note": "Read bootstrap.ts whole and populateWorld: every field lands on the person or the universe where its row says. Consumers spot-read at their lines: the title in casting (school.ts:2967, projobs.ts:411-428), the axes (attributes.ts:115-134, personality.ts:76-79, enjoyment.ts:81-125), the loved genres (enjoyment.ts:60-80), wealth and family (school.ts:1512), the body (body.ts:83-145), the birth instant (birthdays.ts:30, mortality.ts:108). The tests change the input and read the outcome: twins alike but for one field, each disposition at 5 and 95, a life saved at its first moment against one played straight, the family’s money on the first morning.",
+  "evidence": [
+   "tests/b20-creation-twins.test.ts",
+   "tests/need-paths.test.ts",
+   "tests/evidence2-b10.test.ts",
+   "tests/evidence-g29-ui.test.ts",
+   "tests/creation.test.ts",
+   "src/engine/world/bootstrap.ts:322-440 createUniverse reads each field once and puts it where the effects row says",
+   "src/engine/index.ts:197-259 populateWorld: the family’s money, its card and the score, the bank chosen"
+  ]
+ },
+ "create.weightKg": {
+  "status": "Verified",
+  "by": [
+   "inspection",
+   "automated"
+  ],
+  "on": "22bfcd35",
+  "note": "Read bootstrap.ts whole and populateWorld: every field lands on the person or the universe where its row says. Consumers spot-read at their lines: the title in casting (school.ts:2967, projobs.ts:411-428), the axes (attributes.ts:115-134, personality.ts:76-79, enjoyment.ts:81-125), the loved genres (enjoyment.ts:60-80), wealth and family (school.ts:1512), the body (body.ts:83-145), the birth instant (birthdays.ts:30, mortality.ts:108). The tests change the input and read the outcome: twins alike but for one field, each disposition at 5 and 95, a life saved at its first moment against one played straight, the family’s money on the first morning.",
+  "evidence": [
+   "tests/b20-creation-twins.test.ts",
+   "tests/evidence-g28-ui.test.ts",
+   "tests/body.test.ts",
+   "tests/b20-creation-looks.test.ts",
+   "src/engine/world/bootstrap.ts:322-440 createUniverse reads each field once and puts it where the effects row says",
+   "src/engine/index.ts:197-259 populateWorld: the family’s money, its card and the score, the bank chosen"
+  ]
+ },
+ "look.ability": {
+  "status": "Verified",
+  "by": [
+   "inspection",
+   "automated"
+  ],
+  "on": "22bfcd35",
+  "note": "A look reads and moves no clock (tests/guide.test.ts holds a save byte for byte under every look). The trait look’s “all told” is personalityOf; the genre look’s Preparation figure is genreSpeed; the ability look’s level and full are abilityOf and abilityFull.",
+  "evidence": [
+   "tests/b20-creation-looks.test.ts",
+   "tests/looks.test.ts",
+   "tests/attributes-phase-2b.test.ts",
+   "tests/ability-mastered.test.ts",
+   "tests/guide.test.ts"
+  ]
+ },
+ "look.genre": {
+  "status": "Verified",
+  "by": [
+   "inspection",
+   "automated"
+  ],
+  "on": "22bfcd35",
+  "note": "A look reads and moves no clock (tests/guide.test.ts holds a save byte for byte under every look). The trait look’s “all told” is personalityOf; the genre look’s Preparation figure is genreSpeed; the ability look’s level and full are abilityOf and abilityFull.",
+  "evidence": [
+   "tests/b20-creation-looks.test.ts",
+   "tests/looks.test.ts",
+   "tests/guide.test.ts"
+  ]
+ },
+ "look.person": {
+  "status": "Verified",
+  "by": [
+   "inspection",
+   "automated"
+  ],
+  "on": "22bfcd35",
+  "note": "A look reads and moves no clock (tests/guide.test.ts holds a save byte for byte under every look). The trait look’s “all told” is personalityOf; the genre look’s Preparation figure is genreSpeed; the ability look’s level and full are abilityOf and abilityFull.",
+  "evidence": [
+   "tests/b20-creation-looks.test.ts",
+   "tests/looks.test.ts",
+   "tests/looks.test.ts",
+   "tests/guide.test.ts"
+  ]
+ },
+ "look.readiness": {
+  "status": "Verified",
+  "by": [
+   "inspection",
+   "automated"
+  ],
+  "on": "22bfcd35",
+  "note": "A look reads and moves no clock (tests/guide.test.ts holds a save byte for byte under every look). The trait look’s “all told” is personalityOf; the genre look’s Preparation figure is genreSpeed; the ability look’s level and full are abilityOf and abilityFull.",
+  "evidence": [
+   "tests/b20-creation-looks.test.ts",
+   "tests/looks.test.ts",
+   "tests/looks.test.ts",
+   "tests/guide.test.ts"
+  ]
+ },
+ "look.skill": {
+  "status": "Verified",
+  "by": [
+   "inspection",
+   "automated"
+  ],
+  "on": "22bfcd35",
+  "note": "A look reads and moves no clock (tests/guide.test.ts holds a save byte for byte under every look). The trait look’s “all told” is personalityOf; the genre look’s Preparation figure is genreSpeed; the ability look’s level and full are abilityOf and abilityFull.",
+  "evidence": [
+   "tests/b20-creation-looks.test.ts",
+   "tests/looks.test.ts",
+   "tests/guide.test.ts"
+  ]
+ },
+ "look.trait": {
+  "status": "Verified",
+  "by": [
+   "inspection",
+   "automated"
+  ],
+  "on": "22bfcd35",
+  "note": "A look reads and moves no clock (tests/guide.test.ts holds a save byte for byte under every look). The trait look’s “all told” is personalityOf; the genre look’s Preparation figure is genreSpeed; the ability look’s level and full are abilityOf and abilityFull.",
+  "evidence": [
+   "tests/b20-creation-looks.test.ts",
+   "tests/looks.test.ts",
+   "tests/guide.test.ts"
+  ]
+ },
+ "profile.profile-abilities": {
+  "status": "Verified",
+  "by": [
+   "inspection",
+   "automated"
+  ],
+  "on": "22bfcd35",
+  "note": "Eight panels, each reading live state and drawing it with the engine’s own functions (abilityOf and abilityFull, reachOf, readiness and conditionAt, identityOf, journey, development.history); On This Page lists them in the page’s order and moves the focus. Your Work So Far says it is stored nowhere and adds to no result, which is so. The attributes matrix’s Profile Sections table was behind this page (seven of eight) until fd9f1151.",
+  "evidence": [
+   "tests/b23-pages.test.ts",
+   "tests/whynot-profile.test.ts",
+   "tests/evidence-g31-ui.test.ts",
+   "tests/evidence-g27-ui.test.ts",
+   "tests/ability-mastered.test.ts",
+   "tests/genre-mastered.test.ts",
+   "src/ui/workspaces/ProfileWorkspace.tsx:151-620 every panel reads the player through useWorld"
+  ]
+ },
+ "profile.profile-genres": {
+  "status": "Verified",
+  "by": [
+   "inspection",
+   "automated"
+  ],
+  "on": "22bfcd35",
+  "note": "Eight panels, each reading live state and drawing it with the engine’s own functions (abilityOf and abilityFull, reachOf, readiness and conditionAt, identityOf, journey, development.history); On This Page lists them in the page’s order and moves the focus. Your Work So Far says it is stored nowhere and adds to no result, which is so. The attributes matrix’s Profile Sections table was behind this page (seven of eight) until fd9f1151.",
+  "evidence": [
+   "tests/b23-pages.test.ts",
+   "tests/whynot-profile.test.ts",
+   "tests/evidence-g31-ui.test.ts",
+   "tests/evidence-g27-ui.test.ts",
+   "tests/ability-mastered.test.ts",
+   "tests/genre-mastered.test.ts",
+   "src/ui/workspaces/ProfileWorkspace.tsx:151-620 every panel reads the player through useWorld"
+  ]
+ },
+ "profile.profile-history": {
+  "status": "Verified",
+  "by": [
+   "inspection",
+   "automated"
+  ],
+  "on": "22bfcd35",
+  "note": "Eight panels, each reading live state and drawing it with the engine’s own functions (abilityOf and abilityFull, reachOf, readiness and conditionAt, identityOf, journey, development.history); On This Page lists them in the page’s order and moves the focus. Your Work So Far says it is stored nowhere and adds to no result, which is so. The attributes matrix’s Profile Sections table was behind this page (seven of eight) until fd9f1151.",
+  "evidence": [
+   "tests/b23-pages.test.ts",
+   "tests/whynot-profile.test.ts",
+   "tests/evidence-g31-ui.test.ts",
+   "tests/evidence-g27-ui.test.ts",
+   "tests/ability-mastered.test.ts",
+   "tests/genre-mastered.test.ts",
+   "src/ui/workspaces/ProfileWorkspace.tsx:151-620 every panel reads the player through useWorld"
+  ]
+ },
+ "profile.profile-identity": {
+  "status": "Verified",
+  "by": [
+   "inspection",
+   "automated"
+  ],
+  "on": "22bfcd35",
+  "note": "Eight panels, each reading live state and drawing it with the engine’s own functions (abilityOf and abilityFull, reachOf, readiness and conditionAt, identityOf, journey, development.history); On This Page lists them in the page’s order and moves the focus. Your Work So Far says it is stored nowhere and adds to no result, which is so. The attributes matrix’s Profile Sections table was behind this page (seven of eight) until fd9f1151.",
+  "evidence": [
+   "tests/b23-pages.test.ts",
+   "tests/whynot-profile.test.ts",
+   "tests/evidence-g31-ui.test.ts",
+   "tests/evidence-g27-ui.test.ts",
+   "tests/ability-mastered.test.ts",
+   "tests/genre-mastered.test.ts",
+   "src/ui/workspaces/ProfileWorkspace.tsx:151-620 every panel reads the player through useWorld"
+  ]
+ },
+ "profile.profile-journey": {
+  "status": "Verified",
+  "by": [
+   "inspection",
+   "automated"
+  ],
+  "on": "22bfcd35",
+  "note": "Eight panels, each reading live state and drawing it with the engine’s own functions (abilityOf and abilityFull, reachOf, readiness and conditionAt, identityOf, journey, development.history); On This Page lists them in the page’s order and moves the focus. Your Work So Far says it is stored nowhere and adds to no result, which is so. The attributes matrix’s Profile Sections table was behind this page (seven of eight) until fd9f1151.",
+  "evidence": [
+   "tests/b23-pages.test.ts",
+   "tests/whynot-profile.test.ts",
+   "tests/evidence-g31-ui.test.ts",
+   "tests/evidence-g27-ui.test.ts",
+   "tests/ability-mastered.test.ts",
+   "tests/genre-mastered.test.ts",
+   "src/ui/workspaces/ProfileWorkspace.tsx:151-620 every panel reads the player through useWorld"
+  ]
+ },
+ "profile.profile-readiness": {
+  "status": "Verified",
+  "by": [
+   "inspection",
+   "automated"
+  ],
+  "on": "22bfcd35",
+  "note": "Eight panels, each reading live state and drawing it with the engine’s own functions (abilityOf and abilityFull, reachOf, readiness and conditionAt, identityOf, journey, development.history); On This Page lists them in the page’s order and moves the focus. Your Work So Far says it is stored nowhere and adds to no result, which is so. The attributes matrix’s Profile Sections table was behind this page (seven of eight) until fd9f1151.",
+  "evidence": [
+   "tests/b23-pages.test.ts",
+   "tests/whynot-profile.test.ts",
+   "tests/evidence-g31-ui.test.ts",
+   "tests/evidence-g27-ui.test.ts",
+   "tests/ability-mastered.test.ts",
+   "tests/genre-mastered.test.ts",
+   "src/ui/workspaces/ProfileWorkspace.tsx:151-620 every panel reads the player through useWorld"
+  ]
+ },
+ "profile.profile-techniques": {
+  "status": "Verified",
+  "by": [
+   "inspection",
+   "automated"
+  ],
+  "on": "22bfcd35",
+  "note": "Eight panels, each reading live state and drawing it with the engine’s own functions (abilityOf and abilityFull, reachOf, readiness and conditionAt, identityOf, journey, development.history); On This Page lists them in the page’s order and moves the focus. Your Work So Far says it is stored nowhere and adds to no result, which is so. The attributes matrix’s Profile Sections table was behind this page (seven of eight) until fd9f1151.",
+  "evidence": [
+   "tests/b23-pages.test.ts",
+   "tests/whynot-profile.test.ts",
+   "tests/evidence-g31-ui.test.ts",
+   "tests/evidence-g27-ui.test.ts",
+   "tests/ability-mastered.test.ts",
+   "tests/genre-mastered.test.ts",
+   "src/ui/workspaces/ProfileWorkspace.tsx:151-620 every panel reads the player through useWorld"
+  ]
+ },
+ "profile.profile-work": {
+  "status": "Verified",
+  "by": [
+   "inspection",
+   "automated"
+  ],
+  "on": "22bfcd35",
+  "note": "Eight panels, each reading live state and drawing it with the engine’s own functions (abilityOf and abilityFull, reachOf, readiness and conditionAt, identityOf, journey, development.history); On This Page lists them in the page’s order and moves the focus. Your Work So Far says it is stored nowhere and adds to no result, which is so. The attributes matrix’s Profile Sections table was behind this page (seven of eight) until fd9f1151.",
+  "evidence": [
+   "tests/b23-pages.test.ts",
+   "tests/whynot-profile.test.ts",
+   "tests/evidence-g31-ui.test.ts",
+   "tests/evidence-g27-ui.test.ts",
+   "tests/ability-mastered.test.ts",
+   "tests/genre-mastered.test.ts",
+   "src/ui/workspaces/ProfileWorkspace.tsx:151-620 every panel reads the player through useWorld"
+  ]
+ },
+ "trait.burns_out": {
+  "status": "Verified",
+  "by": [
+   "inspection",
+   "automated"
+  ],
+  "on": "22bfcd35",
+  "note": "Thirty-five traits, each knob read where the row’s consumers say (stress, the night, grime, morale’s swing, an illness’s toll, the hour’s sharpness, a preparation step, bonds, food and a meal’s lift); creation’s list of what traits change is those knobs and no other; the look’s figures are the formula’s. traits-connected probes every trait by a knob it declares, and a trait with no knob changes no figure, as the look says.",
+  "evidence": [
+   "tests/b20-creation-personality.test.ts",
+   "tests/evidence2-b10.test.ts",
+   "tests/personality.test.ts",
+   "src/engine/systems/personality.ts:132-135 personalityOf: the traits’ knobs times the axis’s, bent within KNOB_LIMITS",
+   "src/ui/looks/wellbeing.tsx:473-510 the trait look says each knob and “all told” by the same personalityOf"
+  ]
+ },
+ "trait.chaotic": {
+  "status": "Verified",
+  "by": [
+   "inspection",
+   "automated"
+  ],
+  "on": "22bfcd35",
+  "note": "Thirty-five traits, each knob read where the row’s consumers say (stress, the night, grime, morale’s swing, an illness’s toll, the hour’s sharpness, a preparation step, bonds, food and a meal’s lift); creation’s list of what traits change is those knobs and no other; the look’s figures are the formula’s. traits-connected probes every trait by a knob it declares, and a trait with no knob changes no figure, as the look says.",
+  "evidence": [
+   "tests/b20-creation-personality.test.ts",
+   "tests/evidence2-b10.test.ts",
+   "tests/personality.test.ts",
+   "src/engine/systems/personality.ts:132-135 personalityOf: the traits’ knobs times the axis’s, bent within KNOB_LIMITS",
+   "src/ui/looks/wellbeing.tsx:473-510 the trait look says each knob and “all told” by the same personalityOf"
+  ]
+ },
+ "trait.curious": {
+  "status": "Verified",
+  "by": [
+   "inspection",
+   "automated"
+  ],
+  "on": "22bfcd35",
+  "note": "Thirty-five traits, each knob read where the row’s consumers say (stress, the night, grime, morale’s swing, an illness’s toll, the hour’s sharpness, a preparation step, bonds, food and a meal’s lift); creation’s list of what traits change is those knobs and no other; the look’s figures are the formula’s. traits-connected probes every trait by a knob it declares, and a trait with no knob changes no figure, as the look says.",
+  "evidence": [
+   "tests/b20-creation-personality.test.ts",
+   "tests/evidence2-b10.test.ts",
+   "tests/personality.test.ts",
+   "tests/traits-connected.test.ts",
+   "src/engine/systems/personality.ts:132-135 personalityOf: the traits’ knobs times the axis’s, bent within KNOB_LIMITS",
+   "src/ui/looks/wellbeing.tsx:473-510 the trait look says each knob and “all told” by the same personalityOf"
+  ]
+ },
+ "trait.detached": {
+  "status": "Verified",
+  "by": [
+   "inspection",
+   "automated"
+  ],
+  "on": "22bfcd35",
+  "note": "Thirty-five traits, each knob read where the row’s consumers say (stress, the night, grime, morale’s swing, an illness’s toll, the hour’s sharpness, a preparation step, bonds, food and a meal’s lift); creation’s list of what traits change is those knobs and no other; the look’s figures are the formula’s. traits-connected probes every trait by a knob it declares, and a trait with no knob changes no figure, as the look says.",
+  "evidence": [
+   "tests/b20-creation-personality.test.ts",
+   "tests/evidence2-b10.test.ts",
+   "tests/personality.test.ts",
+   "src/engine/systems/personality.ts:132-135 personalityOf: the traits’ knobs times the axis’s, bent within KNOB_LIMITS",
+   "src/ui/looks/wellbeing.tsx:473-510 the trait look says each knob and “all told” by the same personalityOf"
+  ]
+ },
+ "trait.disciplined_body": {
+  "status": "Verified",
+  "by": [
+   "inspection",
+   "automated"
+  ],
+  "on": "22bfcd35",
+  "note": "Thirty-five traits, each knob read where the row’s consumers say (stress, the night, grime, morale’s swing, an illness’s toll, the hour’s sharpness, a preparation step, bonds, food and a meal’s lift); creation’s list of what traits change is those knobs and no other; the look’s figures are the formula’s. traits-connected probes every trait by a knob it declares, and a trait with no knob changes no figure, as the look says.",
+  "evidence": [
+   "tests/b20-creation-personality.test.ts",
+   "tests/evidence2-b10.test.ts",
+   "tests/personality.test.ts",
+   "src/engine/systems/personality.ts:132-135 personalityOf: the traits’ knobs times the axis’s, bent within KNOB_LIMITS",
+   "src/ui/looks/wellbeing.tsx:473-510 the trait look says each knob and “all told” by the same personalityOf"
+  ]
+ },
+ "trait.early_riser": {
+  "status": "Verified",
+  "by": [
+   "inspection",
+   "automated"
+  ],
+  "on": "22bfcd35",
+  "note": "Thirty-five traits, each knob read where the row’s consumers say (stress, the night, grime, morale’s swing, an illness’s toll, the hour’s sharpness, a preparation step, bonds, food and a meal’s lift); creation’s list of what traits change is those knobs and no other; the look’s figures are the formula’s. traits-connected probes every trait by a knob it declares, and a trait with no knob changes no figure, as the look says.",
+  "evidence": [
+   "tests/b20-creation-personality.test.ts",
+   "tests/evidence2-b10.test.ts",
+   "tests/personality.test.ts",
+   "tests/traits-connected.test.ts",
+   "src/engine/systems/personality.ts:132-135 personalityOf: the traits’ knobs times the axis’s, bent within KNOB_LIMITS",
+   "src/ui/looks/wellbeing.tsx:473-510 the trait look says each knob and “all told” by the same personalityOf"
+  ]
+ },
+ "trait.even_tempered": {
+  "status": "Verified",
+  "by": [
+   "inspection",
+   "automated"
+  ],
+  "on": "22bfcd35",
+  "note": "Thirty-five traits, each knob read where the row’s consumers say (stress, the night, grime, morale’s swing, an illness’s toll, the hour’s sharpness, a preparation step, bonds, food and a meal’s lift); creation’s list of what traits change is those knobs and no other; the look’s figures are the formula’s. traits-connected probes every trait by a knob it declares, and a trait with no knob changes no figure, as the look says.",
+  "evidence": [
+   "tests/b20-creation-personality.test.ts",
+   "tests/evidence2-b10.test.ts",
+   "tests/personality.test.ts",
+   "src/engine/systems/personality.ts:132-135 personalityOf: the traits’ knobs times the axis’s, bent within KNOB_LIMITS",
+   "src/ui/looks/wellbeing.tsx:473-510 the trait look says each knob and “all told” by the same personalityOf"
+  ]
+ },
+ "trait.forgiving": {
+  "status": "Verified",
+  "by": [
+   "inspection",
+   "automated"
+  ],
+  "on": "22bfcd35",
+  "note": "Thirty-five traits, each knob read where the row’s consumers say (stress, the night, grime, morale’s swing, an illness’s toll, the hour’s sharpness, a preparation step, bonds, food and a meal’s lift); creation’s list of what traits change is those knobs and no other; the look’s figures are the formula’s. traits-connected probes every trait by a knob it declares, and a trait with no knob changes no figure, as the look says.",
+  "evidence": [
+   "tests/b20-creation-personality.test.ts",
+   "tests/evidence2-b10.test.ts",
+   "tests/personality.test.ts",
+   "src/engine/systems/personality.ts:132-135 personalityOf: the traits’ knobs times the axis’s, bent within KNOB_LIMITS",
+   "src/ui/looks/wellbeing.tsx:473-510 the trait look says each knob and “all told” by the same personalityOf"
+  ]
+ },
+ "trait.frugal": {
+  "status": "Verified",
+  "by": [
+   "inspection",
+   "automated"
+  ],
+  "on": "22bfcd35",
+  "note": "Thirty-five traits, each knob read where the row’s consumers say (stress, the night, grime, morale’s swing, an illness’s toll, the hour’s sharpness, a preparation step, bonds, food and a meal’s lift); creation’s list of what traits change is those knobs and no other; the look’s figures are the formula’s. traits-connected probes every trait by a knob it declares, and a trait with no knob changes no figure, as the look says.",
+  "evidence": [
+   "tests/b20-creation-personality.test.ts",
+   "tests/evidence2-b10.test.ts",
+   "tests/personality.test.ts",
+   "src/engine/systems/personality.ts:132-135 personalityOf: the traits’ knobs times the axis’s, bent within KNOB_LIMITS",
+   "src/ui/looks/wellbeing.tsx:473-510 the trait look says each knob and “all told” by the same personalityOf"
+  ]
+ },
+ "trait.generous": {
+  "status": "Verified",
+  "by": [
+   "inspection",
+   "automated"
+  ],
+  "on": "22bfcd35",
+  "note": "Thirty-five traits, each knob read where the row’s consumers say (stress, the night, grime, morale’s swing, an illness’s toll, the hour’s sharpness, a preparation step, bonds, food and a meal’s lift); creation’s list of what traits change is those knobs and no other; the look’s figures are the formula’s. traits-connected probes every trait by a knob it declares, and a trait with no knob changes no figure, as the look says.",
+  "evidence": [
+   "tests/b20-creation-personality.test.ts",
+   "tests/evidence2-b10.test.ts",
+   "tests/personality.test.ts",
+   "tests/b20-creation-copy.test.ts",
+   "src/engine/systems/personality.ts:132-135 personalityOf: the traits’ knobs times the axis’s, bent within KNOB_LIMITS",
+   "src/ui/looks/wellbeing.tsx:473-510 the trait look says each knob and “all told” by the same personalityOf"
+  ]
+ },
+ "trait.guarded": {
+  "status": "Verified",
+  "by": [
+   "inspection",
+   "automated"
+  ],
+  "on": "22bfcd35",
+  "note": "Thirty-five traits, each knob read where the row’s consumers say (stress, the night, grime, morale’s swing, an illness’s toll, the hour’s sharpness, a preparation step, bonds, food and a meal’s lift); creation’s list of what traits change is those knobs and no other; the look’s figures are the formula’s. traits-connected probes every trait by a knob it declares, and a trait with no knob changes no figure, as the look says.",
+  "evidence": [
+   "tests/b20-creation-personality.test.ts",
+   "tests/evidence2-b10.test.ts",
+   "tests/personality.test.ts",
+   "src/engine/systems/personality.ts:132-135 personalityOf: the traits’ knobs times the axis’s, bent within KNOB_LIMITS",
+   "src/ui/looks/wellbeing.tsx:473-510 the trait look says each knob and “all told” by the same personalityOf"
+  ]
+ },
+ "trait.highly_strung": {
+  "status": "Verified",
+  "by": [
+   "inspection",
+   "automated"
+  ],
+  "on": "22bfcd35",
+  "note": "Thirty-five traits, each knob read where the row’s consumers say (stress, the night, grime, morale’s swing, an illness’s toll, the hour’s sharpness, a preparation step, bonds, food and a meal’s lift); creation’s list of what traits change is those knobs and no other; the look’s figures are the formula’s. traits-connected probes every trait by a knob it declares, and a trait with no knob changes no figure, as the look says.",
+  "evidence": [
+   "tests/b20-creation-personality.test.ts",
+   "tests/evidence2-b10.test.ts",
+   "tests/personality.test.ts",
+   "src/engine/systems/personality.ts:132-135 personalityOf: the traits’ knobs times the axis’s, bent within KNOB_LIMITS",
+   "src/ui/looks/wellbeing.tsx:473-510 the trait look says each knob and “all told” by the same personalityOf"
+  ]
+ },
+ "trait.holds_grudges": {
+  "status": "Verified",
+  "by": [
+   "inspection",
+   "automated"
+  ],
+  "on": "22bfcd35",
+  "note": "Thirty-five traits, each knob read where the row’s consumers say (stress, the night, grime, morale’s swing, an illness’s toll, the hour’s sharpness, a preparation step, bonds, food and a meal’s lift); creation’s list of what traits change is those knobs and no other; the look’s figures are the formula’s. traits-connected probes every trait by a knob it declares, and a trait with no knob changes no figure, as the look says.",
+  "evidence": [
+   "tests/b20-creation-personality.test.ts",
+   "tests/evidence2-b10.test.ts",
+   "tests/personality.test.ts",
+   "src/engine/systems/personality.ts:132-135 personalityOf: the traits’ knobs times the axis’s, bent within KNOB_LIMITS",
+   "src/ui/looks/wellbeing.tsx:473-510 the trait look says each knob and “all told” by the same personalityOf"
+  ]
+ },
+ "trait.homebody": {
+  "status": "Verified",
+  "by": [
+   "inspection",
+   "automated"
+  ],
+  "on": "22bfcd35",
+  "note": "Thirty-five traits, each knob read where the row’s consumers say (stress, the night, grime, morale’s swing, an illness’s toll, the hour’s sharpness, a preparation step, bonds, food and a meal’s lift); creation’s list of what traits change is those knobs and no other; the look’s figures are the formula’s. traits-connected probes every trait by a knob it declares, and a trait with no knob changes no figure, as the look says.",
+  "evidence": [
+   "tests/b20-creation-personality.test.ts",
+   "tests/evidence2-b10.test.ts",
+   "tests/personality.test.ts",
+   "src/engine/systems/personality.ts:132-135 personalityOf: the traits’ knobs times the axis’s, bent within KNOB_LIMITS",
+   "src/ui/looks/wellbeing.tsx:473-510 the trait look says each knob and “all told” by the same personalityOf"
+  ]
+ },
+ "trait.independent": {
+  "status": "Verified",
+  "by": [
+   "inspection",
+   "automated"
+  ],
+  "on": "22bfcd35",
+  "note": "Thirty-five traits, each knob read where the row’s consumers say (stress, the night, grime, morale’s swing, an illness’s toll, the hour’s sharpness, a preparation step, bonds, food and a meal’s lift); creation’s list of what traits change is those knobs and no other; the look’s figures are the formula’s. traits-connected probes every trait by a knob it declares, and a trait with no knob changes no figure, as the look says.",
+  "evidence": [
+   "tests/b20-creation-personality.test.ts",
+   "tests/evidence2-b10.test.ts",
+   "tests/personality.test.ts",
+   "src/engine/systems/personality.ts:132-135 personalityOf: the traits’ knobs times the axis’s, bent within KNOB_LIMITS",
+   "src/ui/looks/wellbeing.tsx:473-510 the trait look says each knob and “all told” by the same personalityOf"
+  ]
+ },
+ "trait.indulgent": {
+  "status": "Verified",
+  "by": [
+   "inspection",
+   "automated"
+  ],
+  "on": "22bfcd35",
+  "note": "Thirty-five traits, each knob read where the row’s consumers say (stress, the night, grime, morale’s swing, an illness’s toll, the hour’s sharpness, a preparation step, bonds, food and a meal’s lift); creation’s list of what traits change is those knobs and no other; the look’s figures are the formula’s. traits-connected probes every trait by a knob it declares, and a trait with no knob changes no figure, as the look says.",
+  "evidence": [
+   "tests/b20-creation-personality.test.ts",
+   "tests/evidence2-b10.test.ts",
+   "tests/personality.test.ts",
+   "src/engine/systems/personality.ts:132-135 personalityOf: the traits’ knobs times the axis’s, bent within KNOB_LIMITS",
+   "src/ui/looks/wellbeing.tsx:473-510 the trait look says each knob and “all told” by the same personalityOf"
+  ]
+ },
+ "trait.keeps_accounts": {
+  "status": "Verified",
+  "by": [
+   "inspection",
+   "automated"
+  ],
+  "on": "22bfcd35",
+  "note": "Thirty-five traits, each knob read where the row’s consumers say (stress, the night, grime, morale’s swing, an illness’s toll, the hour’s sharpness, a preparation step, bonds, food and a meal’s lift); creation’s list of what traits change is those knobs and no other; the look’s figures are the formula’s. traits-connected probes every trait by a knob it declares, and a trait with no knob changes no figure, as the look says.",
+  "evidence": [
+   "tests/b20-creation-personality.test.ts",
+   "tests/evidence2-b10.test.ts",
+   "tests/personality.test.ts",
+   "tests/traits-connected.test.ts",
+   "src/engine/systems/personality.ts:132-135 personalityOf: the traits’ knobs times the axis’s, bent within KNOB_LIMITS",
+   "src/ui/looks/wellbeing.tsx:473-510 the trait look says each knob and “all told” by the same personalityOf"
+  ]
+ },
+ "trait.light_sleeper": {
+  "status": "Verified",
+  "by": [
+   "inspection",
+   "automated"
+  ],
+  "on": "22bfcd35",
+  "note": "Thirty-five traits, each knob read where the row’s consumers say (stress, the night, grime, morale’s swing, an illness’s toll, the hour’s sharpness, a preparation step, bonds, food and a meal’s lift); creation’s list of what traits change is those knobs and no other; the look’s figures are the formula’s. traits-connected probes every trait by a knob it declares, and a trait with no knob changes no figure, as the look says.",
+  "evidence": [
+   "tests/b20-creation-personality.test.ts",
+   "tests/evidence2-b10.test.ts",
+   "tests/personality.test.ts",
+   "src/engine/systems/personality.ts:132-135 personalityOf: the traits’ knobs times the axis’s, bent within KNOB_LIMITS",
+   "src/ui/looks/wellbeing.tsx:473-510 the trait look says each knob and “all told” by the same personalityOf"
+  ]
+ },
+ "trait.loyal": {
+  "status": "Verified",
+  "by": [
+   "inspection",
+   "automated"
+  ],
+  "on": "22bfcd35",
+  "note": "Thirty-five traits, each knob read where the row’s consumers say (stress, the night, grime, morale’s swing, an illness’s toll, the hour’s sharpness, a preparation step, bonds, food and a meal’s lift); creation’s list of what traits change is those knobs and no other; the look’s figures are the formula’s. traits-connected probes every trait by a knob it declares, and a trait with no knob changes no figure, as the look says.",
+  "evidence": [
+   "tests/b20-creation-personality.test.ts",
+   "tests/evidence2-b10.test.ts",
+   "tests/personality.test.ts",
+   "src/engine/systems/personality.ts:132-135 personalityOf: the traits’ knobs times the axis’s, bent within KNOB_LIMITS",
+   "src/ui/looks/wellbeing.tsx:473-510 the trait look says each knob and “all told” by the same personalityOf"
+  ]
+ },
+ "trait.needs_people": {
+  "status": "Verified",
+  "by": [
+   "inspection",
+   "automated"
+  ],
+  "on": "22bfcd35",
+  "note": "Thirty-five traits, each knob read where the row’s consumers say (stress, the night, grime, morale’s swing, an illness’s toll, the hour’s sharpness, a preparation step, bonds, food and a meal’s lift); creation’s list of what traits change is those knobs and no other; the look’s figures are the formula’s. traits-connected probes every trait by a knob it declares, and a trait with no knob changes no figure, as the look says.",
+  "evidence": [
+   "tests/b20-creation-personality.test.ts",
+   "tests/evidence2-b10.test.ts",
+   "tests/personality.test.ts",
+   "src/engine/systems/personality.ts:132-135 personalityOf: the traits’ knobs times the axis’s, bent within KNOB_LIMITS",
+   "src/ui/looks/wellbeing.tsx:473-510 the trait look says each knob and “all told” by the same personalityOf"
+  ]
+ },
+ "trait.night_owl": {
+  "status": "Verified",
+  "by": [
+   "inspection",
+   "automated"
+  ],
+  "on": "22bfcd35",
+  "note": "Thirty-five traits, each knob read where the row’s consumers say (stress, the night, grime, morale’s swing, an illness’s toll, the hour’s sharpness, a preparation step, bonds, food and a meal’s lift); creation’s list of what traits change is those knobs and no other; the look’s figures are the formula’s. traits-connected probes every trait by a knob it declares, and a trait with no knob changes no figure, as the look says.",
+  "evidence": [
+   "tests/b20-creation-personality.test.ts",
+   "tests/evidence2-b10.test.ts",
+   "tests/personality.test.ts",
+   "tests/traits-connected.test.ts",
+   "src/engine/systems/personality.ts:132-135 personalityOf: the traits’ knobs times the axis’s, bent within KNOB_LIMITS",
+   "src/ui/looks/wellbeing.tsx:473-510 the trait look says each knob and “all told” by the same personalityOf"
+  ]
+ },
+ "trait.open_book": {
+  "status": "Verified",
+  "by": [
+   "inspection",
+   "automated"
+  ],
+  "on": "22bfcd35",
+  "note": "Thirty-five traits, each knob read where the row’s consumers say (stress, the night, grime, morale’s swing, an illness’s toll, the hour’s sharpness, a preparation step, bonds, food and a meal’s lift); creation’s list of what traits change is those knobs and no other; the look’s figures are the formula’s. traits-connected probes every trait by a knob it declares, and a trait with no knob changes no figure, as the look says.",
+  "evidence": [
+   "tests/b20-creation-personality.test.ts",
+   "tests/evidence2-b10.test.ts",
+   "tests/personality.test.ts",
+   "src/engine/systems/personality.ts:132-135 personalityOf: the traits’ knobs times the axis’s, bent within KNOB_LIMITS",
+   "src/ui/looks/wellbeing.tsx:473-510 the trait look says each knob and “all told” by the same personalityOf"
+  ]
+ },
+ "trait.orderly": {
+  "status": "Verified",
+  "by": [
+   "inspection",
+   "automated"
+  ],
+  "on": "22bfcd35",
+  "note": "Thirty-five traits, each knob read where the row’s consumers say (stress, the night, grime, morale’s swing, an illness’s toll, the hour’s sharpness, a preparation step, bonds, food and a meal’s lift); creation’s list of what traits change is those knobs and no other; the look’s figures are the formula’s. traits-connected probes every trait by a knob it declares, and a trait with no knob changes no figure, as the look says.",
+  "evidence": [
+   "tests/b20-creation-personality.test.ts",
+   "tests/evidence2-b10.test.ts",
+   "tests/personality.test.ts",
+   "src/engine/systems/personality.ts:132-135 personalityOf: the traits’ knobs times the axis’s, bent within KNOB_LIMITS",
+   "src/ui/looks/wellbeing.tsx:473-510 the trait look says each knob and “all told” by the same personalityOf"
+  ]
+ },
+ "trait.peacemaker": {
+  "status": "Verified",
+  "by": [
+   "inspection",
+   "automated"
+  ],
+  "on": "22bfcd35",
+  "note": "Thirty-five traits, each knob read where the row’s consumers say (stress, the night, grime, morale’s swing, an illness’s toll, the hour’s sharpness, a preparation step, bonds, food and a meal’s lift); creation’s list of what traits change is those knobs and no other; the look’s figures are the formula’s. traits-connected probes every trait by a knob it declares, and a trait with no knob changes no figure, as the look says.",
+  "evidence": [
+   "tests/b20-creation-personality.test.ts",
+   "tests/evidence2-b10.test.ts",
+   "tests/personality.test.ts",
+   "src/engine/systems/personality.ts:132-135 personalityOf: the traits’ knobs times the axis’s, bent within KNOB_LIMITS",
+   "src/ui/looks/wellbeing.tsx:473-510 the trait look says each knob and “all told” by the same personalityOf"
+  ]
+ },
+ "trait.quick_tempered": {
+  "status": "Verified",
+  "by": [
+   "inspection",
+   "automated"
+  ],
+  "on": "22bfcd35",
+  "note": "Thirty-five traits, each knob read where the row’s consumers say (stress, the night, grime, morale’s swing, an illness’s toll, the hour’s sharpness, a preparation step, bonds, food and a meal’s lift); creation’s list of what traits change is those knobs and no other; the look’s figures are the formula’s. traits-connected probes every trait by a knob it declares, and a trait with no knob changes no figure, as the look says.",
+  "evidence": [
+   "tests/b20-creation-personality.test.ts",
+   "tests/evidence2-b10.test.ts",
+   "tests/personality.test.ts",
+   "src/engine/systems/personality.ts:132-135 personalityOf: the traits’ knobs times the axis’s, bent within KNOB_LIMITS",
+   "src/ui/looks/wellbeing.tsx:473-510 the trait look says each knob and “all told” by the same personalityOf"
+  ]
+ },
+ "trait.resilient": {
+  "status": "Verified",
+  "by": [
+   "inspection",
+   "automated"
+  ],
+  "on": "22bfcd35",
+  "note": "Thirty-five traits, each knob read where the row’s consumers say (stress, the night, grime, morale’s swing, an illness’s toll, the hour’s sharpness, a preparation step, bonds, food and a meal’s lift); creation’s list of what traits change is those knobs and no other; the look’s figures are the formula’s. traits-connected probes every trait by a knob it declares, and a trait with no knob changes no figure, as the look says.",
+  "evidence": [
+   "tests/b20-creation-personality.test.ts",
+   "tests/evidence2-b10.test.ts",
+   "tests/personality.test.ts",
+   "src/engine/systems/personality.ts:132-135 personalityOf: the traits’ knobs times the axis’s, bent within KNOB_LIMITS",
+   "src/ui/looks/wellbeing.tsx:473-510 the trait look says each knob and “all told” by the same personalityOf"
+  ]
+ },
+ "trait.restless": {
+  "status": "Verified",
+  "by": [
+   "inspection",
+   "automated"
+  ],
+  "on": "22bfcd35",
+  "note": "Thirty-five traits, each knob read where the row’s consumers say (stress, the night, grime, morale’s swing, an illness’s toll, the hour’s sharpness, a preparation step, bonds, food and a meal’s lift); creation’s list of what traits change is those knobs and no other; the look’s figures are the formula’s. traits-connected probes every trait by a knob it declares, and a trait with no knob changes no figure, as the look says.",
+  "evidence": [
+   "tests/b20-creation-personality.test.ts",
+   "tests/evidence2-b10.test.ts",
+   "tests/personality.test.ts",
+   "src/engine/systems/personality.ts:132-135 personalityOf: the traits’ knobs times the axis’s, bent within KNOB_LIMITS",
+   "src/ui/looks/wellbeing.tsx:473-510 the trait look says each knob and “all told” by the same personalityOf"
+  ]
+ },
+ "trait.scattered": {
+  "status": "Verified",
+  "by": [
+   "inspection",
+   "automated"
+  ],
+  "on": "22bfcd35",
+  "note": "Thirty-five traits, each knob read where the row’s consumers say (stress, the night, grime, morale’s swing, an illness’s toll, the hour’s sharpness, a preparation step, bonds, food and a meal’s lift); creation’s list of what traits change is those knobs and no other; the look’s figures are the formula’s. traits-connected probes every trait by a knob it declares, and a trait with no knob changes no figure, as the look says.",
+  "evidence": [
+   "tests/b20-creation-personality.test.ts",
+   "tests/evidence2-b10.test.ts",
+   "tests/personality.test.ts",
+   "tests/traits-connected.test.ts",
+   "src/engine/systems/personality.ts:132-135 personalityOf: the traits’ knobs times the axis’s, bent within KNOB_LIMITS",
+   "src/ui/looks/wellbeing.tsx:473-510 the trait look says each knob and “all told” by the same personalityOf"
+  ]
+ },
+ "trait.self_assured": {
+  "status": "Verified",
+  "by": [
+   "inspection",
+   "automated"
+  ],
+  "on": "22bfcd35",
+  "note": "Thirty-five traits, each knob read where the row’s consumers say (stress, the night, grime, morale’s swing, an illness’s toll, the hour’s sharpness, a preparation step, bonds, food and a meal’s lift); creation’s list of what traits change is those knobs and no other; the look’s figures are the formula’s. traits-connected probes every trait by a knob it declares, and a trait with no knob changes no figure, as the look says.",
+  "evidence": [
+   "tests/b20-creation-personality.test.ts",
+   "tests/evidence2-b10.test.ts",
+   "tests/personality.test.ts",
+   "src/engine/systems/personality.ts:132-135 personalityOf: the traits’ knobs times the axis’s, bent within KNOB_LIMITS",
+   "src/ui/looks/wellbeing.tsx:473-510 the trait look says each knob and “all told” by the same personalityOf"
+  ]
+ },
+ "trait.self_critical": {
+  "status": "Verified",
+  "by": [
+   "inspection",
+   "automated"
+  ],
+  "on": "22bfcd35",
+  "note": "Thirty-five traits, each knob read where the row’s consumers say (stress, the night, grime, morale’s swing, an illness’s toll, the hour’s sharpness, a preparation step, bonds, food and a meal’s lift); creation’s list of what traits change is those knobs and no other; the look’s figures are the formula’s. traits-connected probes every trait by a knob it declares, and a trait with no knob changes no figure, as the look says.",
+  "evidence": [
+   "tests/b20-creation-personality.test.ts",
+   "tests/evidence2-b10.test.ts",
+   "tests/personality.test.ts",
+   "tests/traits-connected.test.ts",
+   "src/engine/systems/personality.ts:132-135 personalityOf: the traits’ knobs times the axis’s, bent within KNOB_LIMITS",
+   "src/ui/looks/wellbeing.tsx:473-510 the trait look says each knob and “all told” by the same personalityOf"
+  ]
+ },
+ "trait.sentimental": {
+  "status": "Verified",
+  "by": [
+   "inspection",
+   "automated"
+  ],
+  "on": "22bfcd35",
+  "note": "Thirty-five traits, each knob read where the row’s consumers say (stress, the night, grime, morale’s swing, an illness’s toll, the hour’s sharpness, a preparation step, bonds, food and a meal’s lift); creation’s list of what traits change is those knobs and no other; the look’s figures are the formula’s. traits-connected probes every trait by a knob it declares, and a trait with no knob changes no figure, as the look says.",
+  "evidence": [
+   "tests/b20-creation-personality.test.ts",
+   "tests/evidence2-b10.test.ts",
+   "tests/personality.test.ts",
+   "src/engine/systems/personality.ts:132-135 personalityOf: the traits’ knobs times the axis’s, bent within KNOB_LIMITS",
+   "src/ui/looks/wellbeing.tsx:473-510 the trait look says each knob and “all told” by the same personalityOf"
+  ]
+ },
+ "trait.single_minded": {
+  "status": "Verified",
+  "by": [
+   "inspection",
+   "automated"
+  ],
+  "on": "22bfcd35",
+  "note": "Thirty-five traits, each knob read where the row’s consumers say (stress, the night, grime, morale’s swing, an illness’s toll, the hour’s sharpness, a preparation step, bonds, food and a meal’s lift); creation’s list of what traits change is those knobs and no other; the look’s figures are the formula’s. traits-connected probes every trait by a knob it declares, and a trait with no knob changes no figure, as the look says.",
+  "evidence": [
+   "tests/b20-creation-personality.test.ts",
+   "tests/evidence2-b10.test.ts",
+   "tests/personality.test.ts",
+   "tests/traits-connected.test.ts",
+   "src/engine/systems/personality.ts:132-135 personalityOf: the traits’ knobs times the axis’s, bent within KNOB_LIMITS",
+   "src/ui/looks/wellbeing.tsx:473-510 the trait look says each knob and “all told” by the same personalityOf"
+  ]
+ },
+ "trait.sleeps_anywhere": {
+  "status": "Verified",
+  "by": [
+   "inspection",
+   "automated"
+  ],
+  "on": "22bfcd35",
+  "note": "Thirty-five traits, each knob read where the row’s consumers say (stress, the night, grime, morale’s swing, an illness’s toll, the hour’s sharpness, a preparation step, bonds, food and a meal’s lift); creation’s list of what traits change is those knobs and no other; the look’s figures are the formula’s. traits-connected probes every trait by a knob it declares, and a trait with no knob changes no figure, as the look says.",
+  "evidence": [
+   "tests/b20-creation-personality.test.ts",
+   "tests/evidence2-b10.test.ts",
+   "tests/personality.test.ts",
+   "src/engine/systems/personality.ts:132-135 personalityOf: the traits’ knobs times the axis’s, bent within KNOB_LIMITS",
+   "src/ui/looks/wellbeing.tsx:473-510 the trait look says each knob and “all told” by the same personalityOf"
+  ]
+ },
+ "trait.spender": {
+  "status": "Verified",
+  "by": [
+   "inspection",
+   "automated"
+  ],
+  "on": "22bfcd35",
+  "note": "Thirty-five traits, each knob read where the row’s consumers say (stress, the night, grime, morale’s swing, an illness’s toll, the hour’s sharpness, a preparation step, bonds, food and a meal’s lift); creation’s list of what traits change is those knobs and no other; the look’s figures are the formula’s. traits-connected probes every trait by a knob it declares, and a trait with no knob changes no figure, as the look says.",
+  "evidence": [
+   "tests/b20-creation-personality.test.ts",
+   "tests/evidence2-b10.test.ts",
+   "tests/personality.test.ts",
+   "src/engine/systems/personality.ts:132-135 personalityOf: the traits’ knobs times the axis’s, bent within KNOB_LIMITS",
+   "src/ui/looks/wellbeing.tsx:473-510 the trait look says each knob and “all told” by the same personalityOf"
+  ]
+ },
+ "trait.unshakeable": {
+  "status": "Verified",
+  "by": [
+   "inspection",
+   "automated"
+  ],
+  "on": "22bfcd35",
+  "note": "Thirty-five traits, each knob read where the row’s consumers say (stress, the night, grime, morale’s swing, an illness’s toll, the hour’s sharpness, a preparation step, bonds, food and a meal’s lift); creation’s list of what traits change is those knobs and no other; the look’s figures are the formula’s. traits-connected probes every trait by a knob it declares, and a trait with no knob changes no figure, as the look says.",
+  "evidence": [
+   "tests/b20-creation-personality.test.ts",
+   "tests/evidence2-b10.test.ts",
+   "tests/personality.test.ts",
+   "src/engine/systems/personality.ts:132-135 personalityOf: the traits’ knobs times the axis’s, bent within KNOB_LIMITS",
+   "src/ui/looks/wellbeing.tsx:473-510 the trait look says each knob and “all told” by the same personalityOf"
+  ]
+ }
+}

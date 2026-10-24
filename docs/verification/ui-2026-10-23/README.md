@@ -184,11 +184,14 @@ Brief 22's gate had 486 test files and 5,598 tests. Brief 23 added 2 test files 
 **Completion, by the matrix:** 588 of 658 rows in scope Implemented And Verified (89.3%); 66 Implemented, Verification
 Incomplete, 0 Partially Implemented, 0 Not Implemented, 0 Blocked Externally, 4 Decision Required, 41 Explicitly Deferred.
 
-It stood at 634 at brief 22's close. Brief 23 changed `src`, so the 46 rows brief 22's final runs measured on the
+It stood at 634 at brief 22's close, and stands at 634 again since brief 24's replay of the final runs on its commits
+(`../ui-polish-2026-10-23/README.md`); this page is brief 23's record, and said 588 with no sequel until 2026-10-24. Brief 23 changed `src`, so the 46 rows brief 22's final runs measured on the
 engine's or the app's whole source read as measured before what they read last changed. Brief 23 changed no game rule:
 only the interface, the guide's and the tutorial's words, and the attributes matrix's navigation table. The final runs
-that would measure those rows again on `208dbf1f` weren't made here. The owner asked for them before brief 22's merges,
-and can again (`../career-genre-2026-10-22/final-runs/runs/`'s scripts).
+that would measure those rows again on `208dbf1f` weren't made for brief 23 alone: at the owner's word ("So we can get it
+back to 634") the engine's lanes ran on brief 23's commit, and the browser's were stopped for brief 24 and made again on
+its commits (`../career-genre-2026-10-22/final-runs/runs/README.md`, Played Again On Brief 24's Commits). Until
+2026-10-24 this said they weren't made here, which was so when it was written.
 
 ## What Remains
 

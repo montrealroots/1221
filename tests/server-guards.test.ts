@@ -60,7 +60,19 @@ describe('the payload a client sends', () => {
     const result = inspectPayload(payload, 1);
     expect(result.saveId).toBe(sim.universe.meta.id);
     expect(result.worldNow).toBe(sim.now);
-    expect(result.bytes).toBe(payload.length);
+    // The UTF-8 count, as the limit is measured (from 2026-10-24): until then the string's length, which the guard also
+    // reported, so the test agreed with the under-count.
+    expect(result.bytes).toBe(new TextEncoder().encode(payload).length);
+  });
+
+  it('reports the size in the UTF-8 bytes it measured the limit in, so a save of accented names is not under-counted', () => {
+    // From 2026-10-24 (brief 26): until then the limit was measured in UTF-8 bytes and the size reported in the string's
+    // length, so the row's payload_bytes and the slot's size were a byte short for every accented character.
+    const sim = quickSave({ wealth: 'comfortable', firstName: 'Zoé', lastName: 'Ferrière' }, 'guard-accents', 2);
+    const payload = serialise(sim.universe);
+    const utf8 = new TextEncoder().encode(payload).length;
+    expect(utf8).toBeGreaterThan(payload.length);
+    expect(inspectPayload(payload, 2).bytes).toBe(utf8);
   });
 
   it('refuses an empty or missing payload', () => {
