@@ -65,6 +65,10 @@ export const PROJECT_GENRES: Readonly<Record<string, Stated>> = {
   'Last Bus To Eastview': { weights: { romantic_comedy: 1 }, why: 'Two strangers arguing through the night over a job abroad: a romantic comedy.' },
   // Brief 25's feature in Sydney (from 2026-10-23); until then nothing stated it, and its parts read their genres evenly.
   'Harbor Line': { weights: { conspiracy_thriller: 1 }, why: 'A cargo that vanished between two ports, and the people paid to keep it quiet: a conspiracy thriller, thriller being its broad genre.' },
+  // The parts drawn from real productions (from 2026-10-23, brief 25's Module 2): each production's page names its genre
+  // in its own words (`content/catalog.ts`), and the game's genres for them are its reading of those words.
+  '9-1-1': { weights: { police_procedural: 0.5, disaster: 0.5 }, why: 'Its page calls it a procedural drama, and it’s named for the emergency number: half a police procedural, half a disaster story.' },
+  'Abbott Elementary': { weights: { comedy: 1 }, why: 'Its page calls it a workplace comedy, so comedy is its genre.' },
 };
 
 /**

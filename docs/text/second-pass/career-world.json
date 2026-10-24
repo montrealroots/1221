@@ -1,4 +1,228 @@
 {
+ "src/engine/content/catalog.ts#COMPANIES [20th-television]": {
+  "status": "Retained",
+  "hash": "9ad262373c17",
+  "on": "2026-10-23",
+  "reason": "Each line is a production page’s own words, quoted exactly as the register recorded them on October 23, 2026, or a company’s name as its page prints it; tests/career-catalog.test.ts holds every one to sources.json, so rewriting them would break the record they prove.",
+  "first": "Pending"
+ },
+ "src/engine/content/catalog.ts#COMPANIES [amazon-mgm-studios]": {
+  "status": "Retained",
+  "hash": "14008901411d",
+  "on": "2026-10-23",
+  "reason": "Each line is a production page’s own words, quoted exactly as the register recorded them on October 23, 2026, or a company’s name as its page prints it; tests/career-catalog.test.ts holds every one to sources.json, so rewriting them would break the record they prove.",
+  "first": "Pending"
+ },
+ "src/engine/content/catalog.ts#COMPANIES [apple-tv]": {
+  "status": "Retained",
+  "hash": "4b1d5768bf02",
+  "on": "2026-10-23",
+  "reason": "Each line is a production page’s own words, quoted exactly as the register recorded them on October 23, 2026, or a company’s name as its page prints it; tests/career-catalog.test.ts holds every one to sources.json, so rewriting them would break the record they prove.",
+  "first": "Pending"
+ },
+ "src/engine/content/catalog.ts#COMPANIES [baha-productions]": {
+  "status": "Retained",
+  "hash": "64829715313e",
+  "on": "2026-10-23",
+  "reason": "Each line is a production page’s own words, quoted exactly as the register recorded them on October 23, 2026, or a company’s name as its page prints it; tests/career-catalog.test.ts holds every one to sources.json, so rewriting them would break the record they prove.",
+  "first": "Pending"
+ },
+ "src/engine/content/catalog.ts#COMPANIES [brad-falchuk-teley-vision]": {
+  "status": "Retained",
+  "hash": "7c6ff7c09741",
+  "on": "2026-10-23",
+  "reason": "Each line is a production page’s own words, quoted exactly as the register recorded them on October 23, 2026, or a company’s name as its page prints it; tests/career-catalog.test.ts holds every one to sources.json, so rewriting them would break the record they prove.",
+  "first": "Pending"
+ },
+ "src/engine/content/catalog.ts#COMPANIES [fireside-films]": {
+  "status": "Retained",
+  "hash": "906902c15dbd",
+  "on": "2026-10-23",
+  "reason": "Each line is a production page’s own words, quoted exactly as the register recorded them on October 23, 2026, or a company’s name as its page prints it; tests/career-catalog.test.ts holds every one to sources.json, so rewriting them would break the record they prove.",
+  "first": "Pending"
+ },
+ "src/engine/content/catalog.ts#COMPANIES [hulu]": {
+  "status": "Retained",
+  "hash": "3bf0b3699bbd",
+  "on": "2026-10-23",
+  "reason": "Each line is a production page’s own words, quoted exactly as the register recorded them on October 23, 2026, or a company’s name as its page prints it; tests/career-catalog.test.ts holds every one to sources.json, so rewriting them would break the record they prove.",
+  "first": "Pending"
+ },
+ "src/engine/content/catalog.ts#COMPANIES [orion-pictures]": {
+  "status": "Retained",
+  "hash": "7c7bcc454990",
+  "on": "2026-10-23",
+  "reason": "Each line is a production page’s own words, quoted exactly as the register recorded them on October 23, 2026, or a company’s name as its page prints it; tests/career-catalog.test.ts holds every one to sources.json, so rewriting them would break the record they prove.",
+  "first": "Pending"
+ },
+ "src/engine/content/catalog.ts#COMPANIES [ryan-murphy-television]": {
+  "status": "Retained",
+  "hash": "5e0eb7fdf967",
+  "on": "2026-10-23",
+  "reason": "Each line is a production page’s own words, quoted exactly as the register recorded them on October 23, 2026, or a company’s name as its page prints it; tests/career-catalog.test.ts holds every one to sources.json, so rewriting them would break the record they prove.",
+  "first": "Pending"
+ },
+ "src/engine/content/catalog.ts#COMPANIES [see-saw-films]": {
+  "status": "Retained",
+  "hash": "bebab3b5c65b",
+  "on": "2026-10-23",
+  "reason": "Each line is a production page’s own words, quoted exactly as the register recorded them on October 23, 2026, or a company’s name as its page prints it; tests/career-catalog.test.ts holds every one to sources.json, so rewriting them would break the record they prove.",
+  "first": "Pending"
+ },
+ "src/engine/content/catalog.ts#COMPANIES [united-artists]": {
+  "status": "Retained",
+  "hash": "d97faa8de0f2",
+  "on": "2026-10-23",
+  "reason": "Each line is a production page’s own words, quoted exactly as the register recorded them on October 23, 2026, or a company’s name as its page prints it; tests/career-catalog.test.ts holds every one to sources.json, so rewriting them would break the record they prove.",
+  "first": "Pending"
+ },
+ "src/engine/content/catalog.ts#COMPANIES [warner-bros-television]": {
+  "status": "Retained",
+  "hash": "8bf1668e3e20",
+  "on": "2026-10-23",
+  "reason": "Each line is a production page’s own words, quoted exactly as the register recorded them on October 23, 2026, or a company’s name as its page prints it; tests/career-catalog.test.ts holds every one to sources.json, so rewriting them would break the record they prove.",
+  "first": "Pending"
+ },
+ "src/engine/content/catalog.ts#FILMS": {
+  "status": "Rewritten",
+  "hash": "81e82e096abe",
+  "on": "2026-10-23",
+  "evidence": "Written for brief 25's Module 2 (the reference catalog and the parts drawn from it) to docs/STYLE.md and docs/GLOSSARY.md; read where the player meets it in tests/career-drawn.test.ts (the role card, the offer, the Work tab and the trip to Los Angeles drawn over a played journey) and tests/career-catalog.test.ts (productionWords and CATALOG.md), with tools/voice-check.mjs, tools/tics.mjs, tools/title-case.mjs, tools/plural-check.mjs and tools/spelling.mjs passing",
+  "first": "Pending"
+ },
+ "src/engine/content/catalog.ts#FILMS [conflict]": {
+  "status": "Rewritten",
+  "hash": "13dfab35f1bd",
+  "on": "2026-10-23",
+  "evidence": "Written for brief 25's Module 2 (the reference catalog and the parts drawn from it) to docs/STYLE.md and docs/GLOSSARY.md; read where the player meets it in tests/career-drawn.test.ts (the role card, the offer, the Work tab and the trip to Los Angeles drawn over a played journey) and tests/career-catalog.test.ts (productionWords and CATALOG.md), with tools/voice-check.mjs, tools/tics.mjs, tools/title-case.mjs, tools/plural-check.mjs and tools/spelling.mjs passing",
+  "first": "Pending"
+ },
+ "src/engine/content/catalog.ts#NO_FILMING": {
+  "status": "Rewritten",
+  "hash": "92091201150a",
+  "on": "2026-10-23",
+  "evidence": "Written for brief 25's Module 2 (the reference catalog and the parts drawn from it) to docs/STYLE.md and docs/GLOSSARY.md; read where the player meets it in tests/career-drawn.test.ts (the role card, the offer, the Work tab and the trip to Los Angeles drawn over a played journey) and tests/career-catalog.test.ts (productionWords and CATALOG.md), with tools/voice-check.mjs, tools/tics.mjs, tools/title-case.mjs, tools/plural-check.mjs and tools/spelling.mjs passing",
+  "first": "Pending"
+ },
+ "src/engine/content/catalog.ts#NO_LANGUAGE": {
+  "status": "Rewritten",
+  "hash": "b63fa73f09f2",
+  "on": "2026-10-23",
+  "evidence": "Written for brief 25's Module 2 (the reference catalog and the parts drawn from it) to docs/STYLE.md and docs/GLOSSARY.md; read where the player meets it in tests/career-drawn.test.ts (the role card, the offer, the Work tab and the trip to Los Angeles drawn over a played journey) and tests/career-catalog.test.ts (productionWords and CATALOG.md), with tools/voice-check.mjs, tools/tics.mjs, tools/title-case.mjs, tools/plural-check.mjs and tools/spelling.mjs passing",
+  "first": "Pending"
+ },
+ "src/engine/content/catalog.ts#NO_RUNTIME": {
+  "status": "Rewritten",
+  "hash": "254901fbaca8",
+  "on": "2026-10-23",
+  "evidence": "Written for brief 25's Module 2 (the reference catalog and the parts drawn from it) to docs/STYLE.md and docs/GLOSSARY.md; read where the player meets it in tests/career-drawn.test.ts (the role card, the offer, the Work tab and the trip to Los Angeles drawn over a played journey) and tests/career-catalog.test.ts (productionWords and CATALOG.md), with tools/voice-check.mjs, tools/tics.mjs, tools/title-case.mjs, tools/plural-check.mjs and tools/spelling.mjs passing",
+  "first": "Pending"
+ },
+ "src/engine/content/catalog.ts#PAGES_READ": {
+  "status": "Rewritten",
+  "hash": "9510eee976c6",
+  "on": "2026-10-23",
+  "evidence": "Written for brief 25's Module 2 (the reference catalog and the parts drawn from it) to docs/STYLE.md and docs/GLOSSARY.md; read where the player meets it in tests/career-drawn.test.ts (the role card, the offer, the Work tab and the trip to Los Angeles drawn over a played journey) and tests/career-catalog.test.ts (productionWords and CATALOG.md), with tools/voice-check.mjs, tools/tics.mjs, tools/title-case.mjs, tools/plural-check.mjs and tools/spelling.mjs passing",
+  "first": "Pending"
+ },
+ "src/engine/content/catalog.ts#productionWords": {
+  "status": "Rewritten",
+  "hash": "8893b745d883",
+  "on": "2026-10-23",
+  "evidence": "Written for brief 25's Module 2 (the reference catalog and the parts drawn from it) to docs/STYLE.md and docs/GLOSSARY.md; read where the player meets it in tests/career-drawn.test.ts (the role card, the offer, the Work tab and the trip to Los Angeles drawn over a played journey) and tests/career-catalog.test.ts (productionWords and CATALOG.md), with tools/voice-check.mjs, tools/tics.mjs, tools/title-case.mjs, tools/plural-check.mjs and tools/spelling.mjs passing",
+  "first": "Pending"
+ },
+ "src/engine/content/catalog.ts#ROCKY_MAKERS": {
+  "status": "Retained",
+  "hash": "afefe123a219",
+  "on": "2026-10-23",
+  "reason": "Each line is a production page’s own words, quoted exactly as the register recorded them on October 23, 2026, or a company’s name as its page prints it; tests/career-catalog.test.ts holds every one to sources.json, so rewriting them would break the record they prove.",
+  "first": "Pending"
+ },
+ "src/engine/content/catalog.ts#ROCKY_RELEASE": {
+  "status": "Retained",
+  "hash": "14b7781f0379",
+  "on": "2026-10-23",
+  "reason": "Each line is a production page’s own words, quoted exactly as the register recorded them on October 23, 2026, or a company’s name as its page prints it; tests/career-catalog.test.ts holds every one to sources.json, so rewriting them would break the record they prove.",
+  "first": "Pending"
+ },
+ "src/engine/content/catalog.ts#S109_CAST": {
+  "status": "Retained",
+  "hash": "aec6a3d0374a",
+  "on": "2026-10-23",
+  "reason": "Each line is a production page’s own words, quoted exactly as the register recorded them on October 23, 2026, or a company’s name as its page prints it; tests/career-catalog.test.ts holds every one to sources.json, so rewriting them would break the record they prove.",
+  "first": "Pending"
+ },
+ "src/engine/content/catalog.ts#S79_ENSEMBLE": {
+  "status": "Retained",
+  "hash": "c17361265145",
+  "on": "2026-10-23",
+  "reason": "Each line is a production page’s own words, quoted exactly as the register recorded them on October 23, 2026, or a company’s name as its page prints it; tests/career-catalog.test.ts holds every one to sources.json, so rewriting them would break the record they prove.",
+  "first": "Pending"
+ },
+ "src/engine/content/catalog.ts#S80_CAST": {
+  "status": "Retained",
+  "hash": "49e0387430b4",
+  "on": "2026-10-23",
+  "reason": "Each line is a production page’s own words, quoted exactly as the register recorded them on October 23, 2026, or a company’s name as its page prints it; tests/career-catalog.test.ts holds every one to sources.json, so rewriting them would break the record they prove.",
+  "first": "Pending"
+ },
+ "src/engine/content/catalog.ts#S85_CAST": {
+  "status": "Retained",
+  "hash": "c5ee72c0e1c4",
+  "on": "2026-10-23",
+  "reason": "Each line is a production page’s own words, quoted exactly as the register recorded them on October 23, 2026, or a company’s name as its page prints it; tests/career-catalog.test.ts holds every one to sources.json, so rewriting them would break the record they prove.",
+  "first": "Pending"
+ },
+ "src/engine/content/catalog.ts#SERIES [abbott-elementary]": {
+  "status": "Rewritten",
+  "hash": "591fe9d119a0",
+  "on": "2026-10-23",
+  "evidence": "Written for brief 25's Module 2 (the reference catalog and the parts drawn from it) to docs/STYLE.md and docs/GLOSSARY.md; read where the player meets it in tests/career-drawn.test.ts (the role card, the offer, the Work tab and the trip to Los Angeles drawn over a played journey) and tests/career-catalog.test.ts (productionWords and CATALOG.md), with tools/voice-check.mjs, tools/tics.mjs, tools/title-case.mjs, tools/plural-check.mjs and tools/spelling.mjs passing",
+  "first": "Pending"
+ },
+ "src/engine/content/catalog.ts#SERIES [nine-one-one]": {
+  "status": "Rewritten",
+  "hash": "37ca439d5d3b",
+  "on": "2026-10-23",
+  "evidence": "Written for brief 25's Module 2 (the reference catalog and the parts drawn from it) to docs/STYLE.md and docs/GLOSSARY.md; read where the player meets it in tests/career-drawn.test.ts (the role card, the offer, the Work tab and the trip to Los Angeles drawn over a played journey) and tests/career-catalog.test.ts (productionWords and CATALOG.md), with tools/voice-check.mjs, tools/tics.mjs, tools/title-case.mjs, tools/plural-check.mjs and tools/spelling.mjs passing",
+  "first": "Pending"
+ },
+ "src/engine/content/catalog.ts#SERIES [severance]": {
+  "status": "Rewritten",
+  "hash": "1e78998fb218",
+  "on": "2026-10-23",
+  "evidence": "Written for brief 25's Module 2 (the reference catalog and the parts drawn from it) to docs/STYLE.md and docs/GLOSSARY.md; read where the player meets it in tests/career-drawn.test.ts (the role card, the offer, the Work tab and the trip to Los Angeles drawn over a played journey) and tests/career-catalog.test.ts (productionWords and CATALOG.md), with tools/voice-check.mjs, tools/tics.mjs, tools/title-case.mjs, tools/plural-check.mjs and tools/spelling.mjs passing",
+  "first": "Pending"
+ },
+ "src/engine/content/catalog.ts#SERIES [slow-horses]": {
+  "status": "Rewritten",
+  "hash": "cdd882e1a4bf",
+  "on": "2026-10-23",
+  "evidence": "Written for brief 25's Module 2 (the reference catalog and the parts drawn from it) to docs/STYLE.md and docs/GLOSSARY.md; read where the player meets it in tests/career-drawn.test.ts (the role card, the offer, the Work tab and the trip to Los Angeles drawn over a played journey) and tests/career-catalog.test.ts (productionWords and CATALOG.md), with tools/voice-check.mjs, tools/tics.mjs, tools/title-case.mjs, tools/plural-check.mjs and tools/spelling.mjs passing",
+  "first": "Pending"
+ },
+ "src/engine/content/catalog.ts#slate": {
+  "status": "Rewritten",
+  "hash": "e88339377b7b",
+  "on": "2026-10-23",
+  "evidence": "Written for brief 25's Module 2 (the reference catalog and the parts drawn from it) to docs/STYLE.md and docs/GLOSSARY.md; read where the player meets it in tests/career-drawn.test.ts (the role card, the offer, the Work tab and the trip to Los Angeles drawn over a played journey) and tests/career-catalog.test.ts (productionWords and CATALOG.md), with tools/voice-check.mjs, tools/tics.mjs, tools/title-case.mjs, tools/plural-check.mjs and tools/spelling.mjs passing",
+  "first": "Pending"
+ },
+ "src/engine/content/catalog.ts#stars": {
+  "status": "Rewritten",
+  "hash": "f85778c40730",
+  "on": "2026-10-23",
+  "evidence": "Written for brief 25's Module 2 (the reference catalog and the parts drawn from it) to docs/STYLE.md and docs/GLOSSARY.md; read where the player meets it in tests/career-drawn.test.ts (the role card, the offer, the Work tab and the trip to Los Angeles drawn over a played journey) and tests/career-catalog.test.ts (productionWords and CATALOG.md), with tools/voice-check.mjs, tools/tics.mjs, tools/title-case.mjs, tools/plural-check.mjs and tools/spelling.mjs passing",
+  "first": "Pending"
+ },
+ "src/engine/content/catalog.ts#W": {
+  "status": "Retained",
+  "hash": "c2228a2ba8a1",
+  "on": "2026-10-23",
+  "reason": "Each line is a production page’s own words, quoted exactly as the register recorded them on October 23, 2026, or a company’s name as its page prints it; tests/career-catalog.test.ts holds every one to sources.json, so rewriting them would break the record they prove.",
+  "first": "Pending"
+ },
  "src/engine/content/jurisdictions.ts#AU_408": {
   "status": "Rewritten",
   "hash": "00d6a69add1b",
@@ -143,14 +367,14 @@
   "status": "Rewritten",
   "hash": "a8616274684d",
   "on": "2026-10-23",
-  "evidence": "Written for brief 25's work abroad (Module 1) to docs/STYLE.md and docs/GLOSSARY.md; read where the player meets it in tests/career-world-sydney.test.ts (the journey, the release, the missed flight and the Work tab drawn at each stage) and tests/career-world-countries.test.ts, with tools/voice-check.mjs, tools/tics.mjs, tools/title-case.mjs and tools/plural-check.mjs passing",
+  "evidence": "Written for brief 25's Module 2 (the reference catalog and the parts drawn from it) to docs/STYLE.md and docs/GLOSSARY.md; read where the player meets it in tests/career-drawn.test.ts (the role card, the offer, the Work tab and the trip to Los Angeles drawn over a played journey) and tests/career-catalog.test.ts (productionWords and CATALOG.md), with tools/voice-check.mjs, tools/tics.mjs, tools/title-case.mjs, tools/plural-check.mjs and tools/spelling.mjs passing",
   "first": "Pending"
  },
  "src/engine/systems/worktrip.ts#applyVisa [visa-applied]": {
   "status": "Rewritten",
-  "hash": "ccf58a6c699f",
+  "hash": "64de7989b993",
   "on": "2026-10-23",
-  "evidence": "Written for brief 25's work abroad (Module 1) to docs/STYLE.md and docs/GLOSSARY.md; read where the player meets it in tests/career-world-sydney.test.ts (the journey, the release, the missed flight and the Work tab drawn at each stage) and tests/career-world-countries.test.ts, with tools/voice-check.mjs, tools/tics.mjs, tools/title-case.mjs and tools/plural-check.mjs passing",
+  "evidence": "Written for brief 25's Module 2 (the reference catalog and the parts drawn from it) to docs/STYLE.md and docs/GLOSSARY.md; read where the player meets it in tests/career-drawn.test.ts (the role card, the offer, the Work tab and the trip to Los Angeles drawn over a played journey) and tests/career-catalog.test.ts (productionWords and CATALOG.md), with tools/voice-check.mjs, tools/tics.mjs, tools/title-case.mjs, tools/plural-check.mjs and tools/spelling.mjs passing",
   "first": "Pending"
  },
  "src/engine/systems/worktrip.ts#callWords": {
@@ -260,9 +484,9 @@
  },
  "src/engine/systems/worktrip.ts#visaRefusal": {
   "status": "Rewritten",
-  "hash": "6676407ad6ff",
+  "hash": "b653025e1e5e",
   "on": "2026-10-23",
-  "evidence": "Written for brief 25's work abroad (Module 1) to docs/STYLE.md and docs/GLOSSARY.md; read where the player meets it in tests/career-world-sydney.test.ts (the journey, the release, the missed flight and the Work tab drawn at each stage) and tests/career-world-countries.test.ts, with tools/voice-check.mjs, tools/tics.mjs, tools/title-case.mjs and tools/plural-check.mjs passing",
+  "evidence": "Written for brief 25's Module 2 (the reference catalog and the parts drawn from it) to docs/STYLE.md and docs/GLOSSARY.md; read where the player meets it in tests/career-drawn.test.ts (the role card, the offer, the Work tab and the trip to Los Angeles drawn over a played journey) and tests/career-catalog.test.ts (productionWords and CATALOG.md), with tools/voice-check.mjs, tools/tics.mjs, tools/title-case.mjs, tools/plural-check.mjs and tools/spelling.mjs passing",
   "first": "Pending"
  },
  "src/engine/systems/worktrip.ts#way": {

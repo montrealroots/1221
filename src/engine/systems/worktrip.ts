@@ -9,7 +9,11 @@
  * connection, then in the work's town. Home stays where it was (`person.currentLocationId`), so the bank, the taxes and
  * the School's residence read what they always did; what's in person anywhere else can't be gone to while away.
  *
- * Permission to work there is the country's (`content/jurisdictions.ts`): a citizen needs nothing; a route granted on
+ * Work in the US a long way from home is a trip the same way (from 2026-10-23, brief 25's Module 2, criteria C10: a
+ * part drawn from a production the game sets in Los Angeles), its permission the US rule the rest of the work reads
+ * (`eligibilityRead`, `tripRead`), with no visa and no passport.
+ *
+ * Permission to work abroad is the country's (`content/jurisdictions.ts`): a citizen needs nothing; a route granted on
  * arrival (New Zealand's citizens' Special Category visa) is granted at the border; one applied for ahead (the 408) is a
  * permit in Papers tied to the engagement (`bookingId`), applied for once the contract exists and decided after the
  * game's assumed delay. A country whose rules aren't in the game gives no permission at all.
@@ -28,6 +32,7 @@ import { jurisdictionOf, type WorkRoute } from '../content/jurisdictions';
 import type { ProjectTemplate } from '../content/careerwork';
 import { citizenOf, documentsOf, inForce, numberFor, passportOf, type PersonDocument } from './documents';
 import { ensurePro, noteEvent, type EligibilityRead, type Engagement, type ProId, type TripLeg, type WorkStay, type WorkTrip } from './pro';
+import { eligibilityRead } from './propay';
 
 const MIN = 60_000;
 
@@ -259,6 +264,14 @@ export function abroadRead(person: Person, country: string, days: readonly { fro
   if (visa?.status === 'pending') return { ...base, authorized: false, basis: 'abroad-needed', words: `Your ${route.short} is with the department, which decides on ${formatDate(visa.readyAt ?? now, zoneOf(person.currentLocationId))}.` };
   return { ...base, authorized: false, basis: 'abroad-needed', words: `Work in ${j.name} needs a ${route.short} (${route.name}), which the production supports. Apply for it on the Career screen’s Work tab once you’ve accepted.` };
 }
+/** The country whose work reads the US rule (brief 19's package, `systems/permission.ts`) rather than a jurisdiction's. */
+export const US_RULES = 'us';
+
+/** What permission reads for a trip's work: the US rule for work in the US, the country's own for work abroad. */
+export function tripRead(person: Person, country: string, days: readonly { from: Instant; to: Instant }[], engagementId: ProId | undefined, now: Instant): EligibilityRead {
+  return country === US_RULES ? eligibilityRead(person, days, now) : abroadRead(person, country, days, engagementId, now);
+}
+
 const cityIdIn = (country: string): string => CITIES.all().find((c) => c.countryId === country)?.id ?? '';
 const nameOfIso = (iso: string): string => COUNTRIES.all().find((c) => c.iso2?.toUpperCase() === iso)?.name ?? iso;
 
@@ -267,6 +280,7 @@ export function visaRefusal(person: Person, e: Engagement | undefined, t: Projec
   if (!e || !t || !t.trip) return 'No work abroad is booked, so there’s no visa to apply for.';
   if (e.status === 'finished' || e.status === 'canceled') return 'That work is over, so there’s no visa to apply for.';
   const country = cityOf(t.place.cityId)?.countryId ?? '';
+  if (country === US_RULES) return 'Work in the US needs no visa, only your permission to work here.';
   const route = routeFor(person, country);
   const read = abroadRead(person, country, e.days, e.id, now);
   if (read.basis === 'abroad-citizen' || (route && route.how === 'on-arrival' && read.authorized)) return `You don’t need one: ${read.words.charAt(0).toLowerCase()}${read.words.slice(1)}`;
@@ -294,7 +308,7 @@ export function applyVisa(sim: Simulation, person: Person, e: Engagement, t: Pro
   const doc: PersonDocument = { id, kind: 'permit', issuer: j.iso, destination: j.iso, name: route.name, number: numberFor('VGN', id), status: 'pending', appliedAt: sim.now, readyAt, bookingId: e.id, passportId: passportOf(person, sim.now)?.id };
   documentsOf(person).push(doc);
   sim.schedule({ at: readyAt, kind: VISA_KIND, label: `The Decision On Your ${route.short}`, category: 'career', priority: 30, refType: 'pro.engagement', refId: e.id, payload: { personId: person.id, engagementId: e.id, documentId: id } });
-  noteEvent(sim, e, { kind: 'visa-applied', key: `visa:${id}:applied`, words: `You applied for the ${route.short} for ${t.project}, with ${t.trip!.supporter} as your supporter.` });
+  noteEvent(sim, e, { kind: 'visa-applied', key: `visa:${id}:applied`, words: t.trip?.supporter ? `You applied for the ${route.short} for ${t.project}, with ${t.trip.supporter} as your supporter.` : `You applied for the ${route.short} for ${t.project}.` });
   return doc;
 }
 
@@ -350,6 +364,7 @@ export function cancelTrip(sim: Simulation, trip: WorkTrip): void {
 
 /** Why a player can't fly out for work abroad, said at the flight: no visa applied for, one still undecided, or no route at all. */
 function departureWords(person: Person, country: string, e: Engagement, now: Instant): string {
+  if (country === US_RULES) return tripRead(person, country, e.days, e.id, now).words.replace(/\.$/, '');
   const route = routeFor(person, country);
   const where = jurisdictionOf(country, countryName(country)).name;
   const visa = visaFor(person, e.id);
@@ -414,9 +429,10 @@ export function registerWorkTrips(sim: Simulation, hooks: TripHooks): void {
     }
     if (leg.way === 'out') {
       // At the first departure (W9): permission for the work and a passport in force to the trip's end, or no flight.
-      const read = abroadRead(person, trip.country, e.days, e.id, s.now);
+      const read = tripRead(person, trip.country, e.days, e.id, s.now);
       const end = windowOf(trip.legs)!.to;
-      const why = !read.authorized ? departureWords(person, trip.country, e, s.now) : !passportOf(person, end) ? `You need a passport in force until you’re home on ${formatDate(end, zoneOf(person.currentLocationId))}, and yours isn’t` : undefined;
+      // A passport for a flight abroad; a flight within the US needs none (the game reads no other ID for one).
+      const why = !read.authorized ? departureWords(person, trip.country, e, s.now) : trip.country !== US_RULES && !passportOf(person, end) ? `You need a passport in force until you’re home on ${formatDate(end, zoneOf(person.currentLocationId))}, and yours isn’t` : undefined;
       if (why) {
         cancelTrip(s, trip);
         hooks.release(s, person, e, t, s.now, why.replace(/\.$/, ''));

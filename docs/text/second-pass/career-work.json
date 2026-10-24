@@ -1,9 +1,9 @@
 {
  "src/engine/systems/projobs.ts#abroadWarning": {
   "status": "Rewritten",
-  "hash": "88b8da0825cd",
+  "hash": "bf838bb40899",
   "on": "2026-10-23",
-  "evidence": "Written for brief 25's work abroad (Module 1) to docs/STYLE.md and docs/GLOSSARY.md; read where the player meets it in tests/career-world-sydney.test.ts (the journey, the release, the missed flight and the Work tab drawn at each stage) and tests/career-world-countries.test.ts, with tools/voice-check.mjs, tools/tics.mjs, tools/title-case.mjs and tools/plural-check.mjs passing",
+  "evidence": "Written for brief 25's Module 2 (the reference catalog and the parts drawn from it) to docs/STYLE.md and docs/GLOSSARY.md; read where the player meets it in tests/career-drawn.test.ts (the role card, the offer, the Work tab and the trip to Los Angeles drawn over a played journey) and tests/career-catalog.test.ts (productionWords and CATALOG.md), with tools/voice-check.mjs, tools/tics.mjs, tools/title-case.mjs, tools/plural-check.mjs and tools/spelling.mjs passing",
   "first": "Pending"
  },
  "src/engine/systems/projobs.ts#acceptRefusal": {
@@ -118,6 +118,13 @@
   "evidence": "Rewritten on 2026-10-21 after the built app's walk read each technique with its level in a clause, four things for two; read where the player meets it in tests/pro-opportunities-screen.test.ts (What It Asks), with tools/voice-check.mjs, tools/tics.mjs and tools/title-case.mjs passing",
   "first": "Rewritten And Verified"
  },
+ "src/engine/systems/projobs.ts#drawnWords": {
+  "status": "Rewritten",
+  "hash": "64752ecf061b",
+  "on": "2026-10-23",
+  "evidence": "Written for brief 25's Module 2 (the reference catalog and the parts drawn from it) to docs/STYLE.md and docs/GLOSSARY.md; read where the player meets it in tests/career-drawn.test.ts (the role card, the offer, the Work tab and the trip to Los Angeles drawn over a played journey) and tests/career-catalog.test.ts (productionWords and CATALOG.md), with tools/voice-check.mjs, tools/tics.mjs, tools/title-case.mjs, tools/plural-check.mjs and tools/spelling.mjs passing",
+  "first": "Pending"
+ },
  "src/engine/systems/projobs.ts#eligibilityProblems": {
   "status": "Rewritten",
   "hash": "8e57de4a0dbe",
@@ -127,9 +134,9 @@
  },
  "src/engine/systems/projobs.ts#FIELD_WORDS": {
   "status": "Rewritten",
-  "hash": "d04600e0bef5",
+  "hash": "c477e631eab1",
   "on": "2026-10-23",
-  "evidence": "Written for brief 25's work abroad (Module 1) to docs/STYLE.md and docs/GLOSSARY.md; read where the player meets it in tests/career-world-sydney.test.ts and tests/b22-genre-weights.test.ts, with tools/voice-check.mjs, tools/tics.mjs and tools/plural-check.mjs passing",
+  "evidence": "Written for brief 25's Module 2 (the reference catalog and the parts drawn from it) to docs/STYLE.md and docs/GLOSSARY.md; read where the player meets it in tests/career-drawn.test.ts (the role card, the offer, the Work tab and the trip to Los Angeles drawn over a played journey) and tests/career-catalog.test.ts (productionWords and CATALOG.md), with tools/voice-check.mjs, tools/tics.mjs, tools/title-case.mjs, tools/plural-check.mjs and tools/spelling.mjs passing",
   "first": "Pending"
  },
  "src/engine/systems/projobs.ts#finish": {
@@ -176,9 +183,16 @@
  },
  "src/engine/systems/projobs.ts#KIND_WORDS": {
   "status": "Rewritten",
-  "hash": "8b9f5216b575",
+  "hash": "4367560df154",
   "on": "2026-10-23",
-  "evidence": "Written for brief 25's work abroad (Module 1) to docs/STYLE.md and docs/GLOSSARY.md; read where the player meets it in tests/career-world-sydney.test.ts (the journey, the release, the missed flight and the Work tab drawn at each stage) and tests/career-world-countries.test.ts, with tools/voice-check.mjs, tools/tics.mjs, tools/title-case.mjs and tools/plural-check.mjs passing",
+  "evidence": "Written for brief 25's Module 2 (the reference catalog and the parts drawn from it) to docs/STYLE.md and docs/GLOSSARY.md; read where the player meets it in tests/career-drawn.test.ts (the role card, the offer, the Work tab and the trip to Los Angeles drawn over a played journey) and tests/career-catalog.test.ts (productionWords and CATALOG.md), with tools/voice-check.mjs, tools/tics.mjs, tools/title-case.mjs, tools/plural-check.mjs and tools/spelling.mjs passing",
+  "first": "Pending"
+ },
+ "src/engine/systems/projobs.ts#kindPhrase": {
+  "status": "Rewritten",
+  "hash": "827e3e90b41f",
+  "on": "2026-10-23",
+  "evidence": "Written for brief 25's Module 2 (the reference catalog and the parts drawn from it) to docs/STYLE.md and docs/GLOSSARY.md; read where the player meets it in tests/career-drawn.test.ts (the role card, the offer, the Work tab and the trip to Los Angeles drawn over a played journey) and tests/career-catalog.test.ts (productionWords and CATALOG.md), with tools/voice-check.mjs, tools/tics.mjs, tools/title-case.mjs, tools/plural-check.mjs and tools/spelling.mjs passing",
   "first": "Pending"
  },
  "src/engine/systems/projobs.ts#lastPostingOf": {
@@ -197,10 +211,10 @@
  },
  "src/engine/systems/projobs.ts#makeOffer": {
   "status": "Rewritten",
-  "hash": "cc63b4aca539",
-  "on": "2026-10-21",
-  "evidence": "Read in one played life's order (docs/verification/career-2026-10-20/app/make-saves.log) and on the built app's Opportunities tab and History With His Office at 1440 and 390 (app/walk/): the history now says the casting office asked and offered, in the past, among lines that said submitted and was Working, while the notice and the question keep saying it as it comes; one week's promised pay is said as one week. Held by tests/pro-work.test.ts and tests/pro-opportunities-screen.test.ts",
-  "first": "Rewritten And Verified"
+  "hash": "e36fe7221dae",
+  "on": "2026-10-23",
+  "evidence": "Written for brief 25's Module 2 (the reference catalog and the parts drawn from it) to docs/STYLE.md and docs/GLOSSARY.md; read where the player meets it in tests/career-drawn.test.ts (the role card, the offer, the Work tab and the trip to Los Angeles drawn over a played journey) and tests/career-catalog.test.ts (productionWords and CATALOG.md), with tools/voice-check.mjs, tools/tics.mjs, tools/title-case.mjs, tools/plural-check.mjs and tools/spelling.mjs passing",
+  "first": "Pending"
  },
  "src/engine/systems/projobs.ts#makeOffer [offer]": {
   "status": "Rewritten",
@@ -292,6 +306,13 @@
   "on": "2026-10-21",
   "evidence": "Written for brief 19's work loop to docs/STYLE.md and docs/GLOSSARY.md; read where the player meets it in tests/pro-work.test.ts and tests/pro-opportunities-screen.test.ts, with tools/voice-check.mjs, tools/tics.mjs and tools/title-case.mjs passing",
   "first": "Rewritten And Verified"
+ },
+ "src/engine/systems/projobs.ts#reachWords": {
+  "status": "Rewritten",
+  "hash": "781967b079fa",
+  "on": "2026-10-23",
+  "evidence": "Written for brief 25's Module 2 (the reference catalog and the parts drawn from it) to docs/STYLE.md and docs/GLOSSARY.md; read where the player meets it in tests/career-drawn.test.ts (the role card, the offer, the Work tab and the trip to Los Angeles drawn over a played journey) and tests/career-catalog.test.ts (productionWords and CATALOG.md), with tools/voice-check.mjs, tools/tics.mjs, tools/title-case.mjs, tools/plural-check.mjs and tools/spelling.mjs passing",
+  "first": "Pending"
  },
  "src/engine/systems/projobs.ts#registerProJobs": {
   "status": "Rewritten",
@@ -405,13 +426,6 @@
   "evidence": "Written for brief 19's work loop to docs/STYLE.md and docs/GLOSSARY.md; read where the player meets it in tests/pro-work.test.ts and tests/pro-opportunities-screen.test.ts, with tools/voice-check.mjs, tools/tics.mjs and tools/title-case.mjs passing",
   "first": "Rewritten And Verified"
  },
- "src/engine/systems/projobs.ts#roleWords": {
-  "status": "Rewritten",
-  "hash": "57bab5c99428",
-  "on": "2026-10-21",
-  "evidence": "Written for brief 19's work loop to docs/STYLE.md and docs/GLOSSARY.md; read where the player meets it in tests/pro-work.test.ts and tests/pro-opportunities-screen.test.ts, with tools/voice-check.mjs, tools/tics.mjs and tools/title-case.mjs passing",
-  "first": "Rewritten And Verified"
- },
  "src/engine/systems/projobs.ts#schoolWarning": {
   "status": "Rewritten",
   "hash": "4ea5abca35eb",
@@ -505,9 +519,9 @@
  },
  "src/ui/career/OpportunitiesPane.tsx#OpportunitiesPane": {
   "status": "Rewritten",
-  "hash": "c8aa043a1efc",
+  "hash": "ff5cde196808",
   "on": "2026-10-23",
-  "evidence": "Read against docs/STYLE.md for brief 23; the offer card rendered on the walk's offer save by docs/verification/ui-2026-10-23/app/capture.mjs and tests/navigation.test.ts",
+  "evidence": "Corrected on 2026-10-24 where it said every project, company and casting office was invented for the game, untrue once parts were drawn from real productions (brief 25's Module 2); read to docs/STYLE.md where the player meets it in tests/pro-opportunities-screen.test.ts, tests/propay-screen.test.ts, tests/pro-agent.test.ts, tests/b20-guide-chapters.test.ts and tests/career-drawn.test.ts, with tools/voice-check.mjs, tools/tics.mjs, tools/title-case.mjs, tools/plural-check.mjs and tools/spelling.mjs passing",
   "first": "Pending"
  },
  "src/ui/career/OpportunitiesPane.tsx#Prepare": {
@@ -519,9 +533,9 @@
  },
  "src/ui/career/OpportunitiesPane.tsx#RoleFacts": {
   "status": "Rewritten",
-  "hash": "4f2f844589b1",
-  "on": "2026-10-22",
-  "evidence": "Rewritten 2026-10-22 (the owner's brief 22): What It Asks says the part's genres in words (requirementWords: 'Domestic Drama', 'Mostly Farce, with some Romantic Comedy'), never the project's tags as listed nor a weight; read where the player meets it in tests/pro-opportunities-screen.test.ts ('a first-year’s tab lists the open roles posted…': 'What It Asks Psychological Horror. …'), with tools/voice-check.mjs, tools/tics.mjs and tools/title-case.mjs passing",
+  "hash": "d6721a47f773",
+  "on": "2026-10-23",
+  "evidence": "Written for brief 25's Module 2 (the reference catalog and the parts drawn from it) to docs/STYLE.md and docs/GLOSSARY.md; read where the player meets it in tests/career-drawn.test.ts (the role card, the offer, the Work tab and the trip to Los Angeles drawn over a played journey) and tests/career-catalog.test.ts (productionWords and CATALOG.md), with tools/voice-check.mjs, tools/tics.mjs, tools/title-case.mjs, tools/plural-check.mjs and tools/spelling.mjs passing",
   "first": "Pending"
  },
  "src/ui/career/OpportunitiesPane.tsx#SchoolRule": {

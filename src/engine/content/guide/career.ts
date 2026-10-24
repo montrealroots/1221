@@ -632,7 +632,7 @@ export const CAREER_GUIDE: readonly GuideEntry[] = [
     questions: ['How do I find acting work?', 'How do I submit for a role?', 'Why can’t I submit for this role?'],
     where: on('opportunities', 'Career, Opportunities, Open Calls'),
     available: `From the guide’s chapter “${WORK_CHAPTER}”.`,
-    short: `The Opportunities tab lists the roles you can be seen for, every project, company and casting office invented for the game. New roles go up each Monday morning and take submissions for ${word(WORK.submitDays)} days.\n\nPress Submit Yourself on an open role to send your headshots and résumé, and a reel where casting asks for one. Some casting offices take actors only through an agent, and their roles reach you only while one represents you.`,
+    short: `The Opportunities tab lists the roles you can be seen for. Their projects, companies and casting offices are invented for the game, except a few parts drawn from real productions, which say so. New roles go up each Monday morning and take submissions for ${word(WORK.submitDays)} days.\n\nPress Submit Yourself on an open role to send your headshots and résumé, and a reel where casting asks for one. Some casting offices take actors only through an agent, and their roles reach you only while one represents you.`,
     steps: [
       'Open Career, then the Opportunities tab.',
       'Under Open Calls, read a role: the project, the part, who it’s written for, what it asks, its dates and place, its pay and whether you can be seen for it. Each part is written for an actor, an actress or either, and you’re posted only the ones written for you or for either.',
@@ -652,7 +652,7 @@ export const CAREER_GUIDE: readonly GuideEntry[] = [
     later: [`${word(WORK.replyDays).charAt(0).toUpperCase()}${word(WORK.replyDays).slice(1)} days on, the casting office answers with an audition in person or a self-tape, and a notice says when and where.`],
     interpret: [
       'Open Calls are roles you can submit yourself for. Through An Agent shows the roles an agent brought, which only the agent submits.',
-      'Each role says it’s fictional: no real production is casting.',
+      'Each role says it’s fictional, or, for a part drawn from a real production, that the part is the game’s own: no real production is casting.',
       'A part comes round again only once the work it was cast for is over, as a new casting of the part, and its card says what came of it the last time. A part you’ve been booked for doesn’t come round again.',
     ],
     unavailable: [

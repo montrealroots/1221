@@ -131,5 +131,48 @@
     "ref": "tests/career-world-sydney.test.ts: 'T28: a booking whose days fall in the trip is refused'"
    }
   ]
+ },
+ {
+  "surface": "A part drawn from a real production: The Game’s Own Part, the production As Its Pages Had It, the trip to Los Angeles, and the agreement",
+  "where": "Career, Opportunities, Through An Agent and the offer; What Needs You, the offer's decision; Career, Work, the engagement",
+  "sources": [
+   "src/engine/systems/projobs.ts#kindPhrase",
+   "src/engine/systems/projobs.ts#drawnWords",
+   "src/engine/systems/projobs.ts#reachWords",
+   "src/engine/systems/projobs.ts#makeOffer",
+   "src/ui/career/OpportunitiesPane.tsx#RoleFacts",
+   "src/ui/career/OpportunitiesPane.tsx#OpportunitiesPane",
+   "src/ui/career/WorkPane.tsx#EngagementView",
+   "src/engine/content/careerwork.ts#PROJECTS [nine-one-one-guest]",
+   "src/engine/content/careerwork.ts#PROJECTS [abbott-guest]",
+   "src/engine/content/catalog.ts#*"
+  ],
+  "states": [
+   "first use",
+   "details",
+   "explanation",
+   "warning"
+  ],
+  "outcome": "Revised",
+  "why": "New with brief 25's Module 2: two parts the game makes up in real series, 9-1-1 and Abbott Elementary, each saying it's the game's own wherever it's shown, with the production as its official pages had it on October 23, 2026, and nothing the pages don't give.",
+  "changes": "Written new: the role's kind (“a network television drama on ABC, in a part the game made up”), its notice (“Reese Pike is the game’s own character, in a season of 9-1-1 the game imagines, after its tenth. It isn’t a real casting notice, and no one at the real production is casting it.”), the production's facts said from the catalog with what isn't known said as not known, and the trip from home. Corrected on 2026-10-24: the tab's head, its agent-only list, the agreement's Who line, the guide, the tutorial and the agent's notice had said every project, company and casting office was invented for the game.",
+  "evidence": [
+   {
+    "kind": "test",
+    "ref": "tests/career-drawn.test.ts: 'says so on the role and the offer, and names the broadcaster its page gives'"
+   },
+   {
+    "kind": "test",
+    "ref": "tests/career-drawn.test.ts: 'PLAYER JOURNEY: put up by the agent, taped, offered with the game’s notice, accepted, flown to Los Angeles, worked, paid less commission and flown home; saved and loaded on the way'"
+   },
+   {
+    "kind": "test",
+    "ref": "tests/career-catalog.test.ts: 'says a production to a player as its pages had it, and what they don’t give as not given'"
+   },
+   {
+    "kind": "test",
+    "ref": "tests/pro-opportunities-screen.test.ts: 'PLAYER JOURNEY: a first-year’s tab lists the open roles posted, each fictional with its facts, Submit Yourself grayed with what’s missing under it, and the School’s conditions for work in term'"
+   }
+  ]
  }
 ]

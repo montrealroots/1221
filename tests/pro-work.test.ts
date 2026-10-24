@@ -318,12 +318,13 @@ describe('F4 and J4: what a submission reads, and who can submit for what', () =
 });
 
 describe('J5: casting decided apart from quality', () => {
-  const ids = Array.from({ length: 400 }, (_, n) => `seeded-${n}`);
+  // Four hundred postings a week apart, each its own casting (the draw is keyed by the posting, from 2026-10-23).
+  const ids = Array.from({ length: 400 }, (_, n) => n * 7 * MS_DAY);
   it('raises the chance with the band and the fit, never to certainty, and a developing actor books a role that suits them', () => {
     const sim = student('work-casting');
     const film = PROJECTS.find((t) => t.kind === 'student-film')!;
     const network = PROJECTS.find((t) => t.kind === 'network-drama')!;
-    const yes = (projectId: string, band: 'unready' | 'working' | 'strong' | 'exceptional', fit: number) => ids.filter((id) => castingDraw(sim, { id, projectId }, 'final', band, fit).yes).length;
+    const yes = (projectId: string, band: 'unready' | 'working' | 'strong' | 'exceptional', fit: number) => ids.filter((postedAt) => castingDraw(sim, { postedAt, projectId }, 'final', band, fit).yes).length;
     // Change the band, the chance moves; so does the fit, and the field.
     expect(chanceOf('working', 0.5, 'student-film', 'final')).toBeLessThan(chanceOf('strong', 0.5, 'student-film', 'final'));
     expect(chanceOf('strong', 0.2, 'student-film', 'final')).toBeLessThan(chanceOf('strong', 0.9, 'student-film', 'final'));
@@ -337,8 +338,8 @@ describe('J5: casting decided apart from quality', () => {
     expect(yes(film.id, 'exceptional', 1)).toBeLessThan(ids.length);
     // A developing actor, working band, in a role that suits them, books some.
     expect(yes(film.id, 'working', 0.8)).toBeGreaterThan(0);
-    // The draw is the save's and the opportunity's own: the same again, the same answer.
-    expect(ids.map((id) => castingDraw(sim, { id, projectId: film.id }, 'final', 'working', 0.8).yes)).toEqual(ids.map((id) => castingDraw(sim, { id, projectId: film.id }, 'final', 'working', 0.8).yes));
+    // The draw is the save's and the posting's own: the same again, the same answer.
+    expect(ids.map((postedAt) => castingDraw(sim, { postedAt, projectId: film.id }, 'final', 'working', 0.8).yes)).toEqual(ids.map((postedAt) => castingDraw(sim, { postedAt, projectId: film.id }, 'final', 'working', 0.8).yes));
   });
 
   it('reads the role’s fit from the record: the genre known and the role’s techniques against the actor’s', () => {

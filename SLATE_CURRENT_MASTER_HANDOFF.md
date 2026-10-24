@@ -1,4 +1,4 @@
-# Read First: Brief 25, The Master Career Build, Module 1 (Work Abroad) Done, 2026-10-23
+# Read First: Brief 25, The Master Career Build, Modules 1 (Work Abroad) And 2 (The Real Catalog) Done, 2026-10-24
 
 **This section is the current status, and where a new session starts.** The owner gave brief 25, "SLATE — Master
 Career Build Command", with its research dossier (Sections 1 to 29), on `main` after #63. It is kept verbatim at
@@ -36,9 +36,27 @@ occupations or parental leave.
   premise said every project is in New York, where what it needs is that none is in Oregon. Both are fixed in the commit
   after it, whose changed tests and the gate's 23 checks pass. The whole gate runs again in a clean clone at the next
   module's end.
-- **Next:** Module 2, the real industry catalog with field-level provenance and roles drawn from it; then real agencies
-  and agents, contracts and residuals, production workflows, charts and awards, and the time loop, tutorials,
-  playthroughs and the final gate, each in the checkpoint's table.
+- **Module 2, the real catalog and parts drawn from it:** `content/catalog.ts` holds what thirteen official pages said
+  on 2026-10-23, field by field (a reading held to its page's words, a conflict with both kept, the game's assumption,
+  or unknown with why), for 9-1-1, Slow Horses, Severance, Abbott Elementary and Amazon MGM Studios' twelve-film slate,
+  with each company named by its role; `CATALOG.md` is generated from it. Two parts are drawn from it, Reese Pike in
+  9-1-1 and Casey Marlow in Abbott Elementary: new characters, through an agent only, at SAG-AFTRA's day minimum, a trip
+  to Los Angeles under the US rule, and the game's own wherever they're shown. Casting's draw is keyed by the posting,
+  so a part added moves no other; the seeded career journeys moved once with it and say so.
+- **A defect found reading the text, and fixed:** the Opportunities tab, its agent-only list, the agreement's Who line,
+  the guide, the tutorial and the agent's notice said every project, company and casting office was invented, untrue
+  once parts came from real series.
+- **Measured (Module 2):** the full gate in the Module 2 clone: 491 of 492 test files and 5,648 of 5,649 tests passed.
+  The one failure was the guide's wiring readings, whose handler lines the text fix's comments had moved down six lines
+  in `projobs.ts`; recomputed, its two test files pass (44 tests), and so do the gate's 23 checks, which the failure had
+  stopped.
+- **Register:** 43 of 290 rows Implemented And Verified (24 at Module 1's end).
+- **Next:** Module 3, real agencies and agents (Part 4), from their own pages: Stewart Talent's four offices and their
+  routes, WME's terms, United Agents' route, the others' unknown. The owner said on 2026-10-24 to use real agents, on the
+  plan put to them: Stewart Talent's New York theatrical agents reached by referral, Jordan Parente left out as on
+  2026-10-21, Thomas Ashgrove kept as the game's own, and nothing said of a real agent's list, clients or preferences;
+  then contracts and residuals, production workflows,
+  charts and awards, and the time loop, tutorials, playthroughs and the final gate, each in the checkpoint's table.
 
 # Earlier: Brief 24, UI Alignment, Home Spacing And Navigation Cleanup, Merged, 2026-10-23
 

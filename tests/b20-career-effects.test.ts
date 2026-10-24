@@ -145,7 +145,7 @@ describe('B1 and B3: the career’s inputs, each changed alone', () => {
   }, 180_000);
 
   it('4. PLAYER JOURNEY: represented when the contract is made, the pay goes through the agency’s trust account less ten percent; unrepresented, straight to the bank with none; the work, the gross and the tax withheld are the same, and so are the calls no agent brings', () => {
-    const { sim, o } = offeredPart('b20-skill-2', 'eastview');
+    const { sim, o } = offeredPart('b20-skill-1', 'eastview');
     const rep = twin(sim);
     const own = twin(sim);
     represent(rep);

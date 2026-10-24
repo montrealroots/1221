@@ -94,6 +94,8 @@ const REAL_NAMES = [
   // The studio behind Total Extreme Wrestling, named in docs/DEPTH.md. It is a
   // company, not a color.
   'Grey Dog Software',
+  // ABC's series, named on 9-1-1's page in the reference catalog (`content/catalog.ts`).
+  'Grey’s Anatomy',
   'Southbank Centre', 'Sydney Theatre', 'Abbey Theatre', 'Lyric Theatre', 'Apollo Theatre',
   'Dolby Theatre', 'Pantages Theatre', 'Chinese Theatre', 'Egyptian Theatre', 'Yale Repertory Theatre',
   // Retail chains that spell themselves that way.

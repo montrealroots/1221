@@ -253,7 +253,7 @@ function workSeen(person: Person, rel: AgentRelation | undefined, reelId?: ProId
 
 /** The field of his department a project's kind is in. */
 const FIELD_OF: Readonly<Record<ProjectKind, AgentField>> = {
-  'off-broadway': 'off-broadway', lort: 'regional', 'network-drama': 'television', 'low-budget': 'film', 'ultra-low-budget': 'film', 'student-film': 'film', 'non-union-short': 'film', 'overseas-feature': 'film',
+  'off-broadway': 'off-broadway', lort: 'regional', 'network-drama': 'television', 'low-budget': 'film', 'ultra-low-budget': 'film', 'student-film': 'film', 'non-union-short': 'film', 'overseas-feature': 'film', 'network-comedy': 'television',
 };
 
 /** The billing the record shows the player in: the biggest part among the School's credits and the jobs, a featured one with none. */

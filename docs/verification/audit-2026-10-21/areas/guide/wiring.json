@@ -569,7 +569,7 @@
    "kind": "pro.prepare",
    "payload": "{ ...target, step }",
    "verdict": "Right",
-   "handler": "src/engine/systems/projobs.ts:1691"
+   "handler": "src/engine/systems/projobs.ts:1743"
   },
   {
    "file": "src/ui/career/OpportunitiesPane.tsx",
@@ -579,7 +579,7 @@
    "kind": "pro.accept_offer",
    "payload": "{ opportunityId: o.id }",
    "verdict": "Right",
-   "handler": "src/engine/systems/projobs.ts:1734"
+   "handler": "src/engine/systems/projobs.ts:1786"
   },
   {
    "file": "src/ui/career/OpportunitiesPane.tsx",
@@ -589,7 +589,7 @@
    "kind": "pro.move_audition",
    "payload": "{ opportunityId: o.id }",
    "verdict": "Right",
-   "handler": "src/engine/systems/projobs.ts:1716"
+   "handler": "src/engine/systems/projobs.ts:1768"
   },
   {
    "file": "src/ui/career/OpportunitiesPane.tsx",
@@ -599,7 +599,7 @@
    "kind": "pro.request_outside_work",
    "payload": "{ opportunityId: o.id }",
    "verdict": "Right",
-   "handler": "src/engine/systems/projobs.ts:1782"
+   "handler": "src/engine/systems/projobs.ts:1835"
   },
   {
    "file": "src/ui/career/OpportunitiesPane.tsx",
@@ -609,7 +609,7 @@
    "kind": "pro.decline_offer",
    "payload": "{ opportunityId: o.id }",
    "verdict": "Right",
-   "handler": "src/engine/systems/projobs.ts:1770"
+   "handler": "src/engine/systems/projobs.ts:1823"
   },
   {
    "file": "src/ui/career/OpportunitiesPane.tsx",
@@ -619,7 +619,7 @@
    "kind": "pro.submit",
    "payload": "{ opportunityId: o.id }",
    "verdict": "Right",
-   "handler": "src/engine/systems/projobs.ts:1682"
+   "handler": "src/engine/systems/projobs.ts:1734"
   },
   {
    "file": "src/ui/career/OpportunitiesPane.tsx",
@@ -629,7 +629,7 @@
    "kind": "pro.tape_audition",
    "payload": "{ opportunityId: o.id }",
    "verdict": "Right",
-   "handler": "src/engine/systems/projobs.ts:1701"
+   "handler": "src/engine/systems/projobs.ts:1753"
   },
   {
    "file": "src/ui/career/RepresentationPane.tsx",
@@ -740,7 +740,7 @@
    "kind": "pro.apply_work_visa",
    "payload": "{ engagementId: e.id }",
    "verdict": "Right",
-   "handler": "src/engine/systems/worktrip.ts:478",
+   "handler": "src/engine/systems/worktrip.ts:494",
    "note": "Apply For The Visa on a booking abroad applies for the visa that booking needs, tied to it; its refusal (visaRefusal) is said under it before it is pressed. Read 2026-10-23, brief 25."
   },
   {
@@ -2033,7 +2033,7 @@
    "kind": "pro.accept_offer",
    "payload": "{ opportunityId: o.id }",
    "verdict": "Right",
-   "handler": "src/engine/systems/projobs.ts:1734"
+   "handler": "src/engine/systems/projobs.ts:1786"
   },
   {
    "file": "src/engine/systems/projobs.ts",
@@ -2041,7 +2041,7 @@
    "kind": "pro.decline_offer",
    "payload": "{ opportunityId: o.id }",
    "verdict": "Right",
-   "handler": "src/engine/systems/projobs.ts:1770"
+   "handler": "src/engine/systems/projobs.ts:1823"
   },
   {
    "file": "src/engine/systems/taxreturn.ts",

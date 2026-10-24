@@ -8,8 +8,10 @@
  *   and the unions, `representation.md` for agency agreements), the source's id there, and the date it takes effect.
  * - **Assumption**: the game's stand-in where the sources are silent, marked `basis: 'assumption'` and said as one
  *   where a player reads it.
- * - **Fictional**: every project, company and casting office below. None is a real production, and nothing here says a
- *   real production is casting. A title that happens to match a real one is a coincidence: each says it's fictional.
+ * - **Fictional**: every project, company and casting office below but the parts drawn from real productions (from
+ *   2026-10-23, brief 25's Module 2), which say they're the game's own parts in a real production; until then every one
+ *   was fictional. Nothing here says a real production is casting. A fictional title that happens to match a real one is
+ *   a coincidence: each says it's fictional.
  *
  * The projects are templates: the work system (`systems/projobs.ts`, built on this) makes each opportunity from one,
  * with its dates. Each names its medium, its genres (the game's genre ids, `content/genres.ts`), the role's size and
@@ -160,11 +162,11 @@ export const UNIONS = {
 } as const;
 
 // ---------------------------------------------------------------------------------------------------------------------
-// The projects (all fictional)
+// The projects (fictional, but the two drawn from real productions at the end)
 // ---------------------------------------------------------------------------------------------------------------------
 
 export type ProMedium = 'stage' | 'film' | 'television';
-export type ProjectKind = 'off-broadway' | 'lort' | 'network-drama' | 'low-budget' | 'ultra-low-budget' | 'student-film' | 'non-union-short' | 'overseas-feature';
+export type ProjectKind = 'off-broadway' | 'lort' | 'network-drama' | 'network-comedy' | 'low-budget' | 'ultra-low-budget' | 'student-film' | 'non-union-short' | 'overseas-feature';
 
 /**
  * How a project abroad gets its actor there and keeps them (from 2026-10-23, the owner's brief 25, Part 9 and the
@@ -174,13 +176,26 @@ export type ProjectKind = 'off-broadway' | 'lort' | 'network-drama' | 'low-budge
  * reads it.
  */
 export interface TripTerms {
-  /** The production's own company in the country of the work, which supports the visa. */
-  supporter: string;
+  /** The production's own company in the country of the work, which supports the visa; none for work in the US, which needs no visa. */
+  supporter?: string;
   /** Where the production puts the actor up, as a screen names it. */
   hotel: string;
   /** Who books and pays for the travel and the stay: the production, assumed. */
   pays: 'production';
   words: string;
+}
+/**
+ * A part drawn from a real production (from 2026-10-23, brief 25's Module 2, criteria C8 and C9): the catalog's record
+ * (`content/catalog.ts`) and the work the game imagines for it, after the research baseline. The character is new, never a
+ * regular's; the casting office is the production's, unnamed; and every screen that shows it says it's the game's.
+ */
+export interface DrawnFrom {
+  /** The catalog's production id. */
+  production: string;
+  /** The work the game imagines, in a phrase that names its production: "a season of 9-1-1 the game imagines, after its tenth". */
+  season: string;
+  /** Why the game sets the work where it does, the filming location being unknown. */
+  placeWhy: string;
 }
 /** A role's size as billing calls it: the stage's three, and screen's co-star and day player. */
 export type RoleSize = PartSize | 'co-star';
@@ -188,8 +203,14 @@ export type RoleSize = PartSize | 'co-star';
 export interface ProjectTemplate {
   id: string;
   kind: ProjectKind;
-  /** Always true: the project, its company and its casting office are the game's inventions. */
-  fictional: true;
+  /**
+   * The project, its company and its casting office are the game's inventions; false only for a part drawn from a real
+   * production (`drawn`), whose production and companies are the catalog's and whose part is the game's (from
+   * 2026-10-23, brief 25's Module 2: until then always true).
+   */
+  fictional: boolean;
+  /** A part the game draws from a real production (Module 2, C8): the catalog's record, and the work it imagines. */
+  drawn?: DrawnFrom;
   project: string;
   company: string;
   casting: string;
@@ -424,6 +445,42 @@ export const PROJECTS: readonly ProjectTemplate[] = [
     access: { agent: false, open: 'anyone' }, pay: 'sag-tv-week',
     trip: { supporter: 'Larkspur Pictures Australia', hotel: 'the production’s hotel near Circular Quay', pays: 'production', words: 'Larkspur Pictures books and pays for your flights, the cars and the hotel, as the game assumes for a studio feature shooting abroad.' },
     leadDays: 56,
+  },
+  // Parts drawn from real productions (from 2026-10-23, brief 25's Module 2, criteria C8 to C10): each production and its
+  // companies the catalog's (`content/catalog.ts`, as their pages had them on 2026-10-23); the part, its character, its
+  // story and its dates the game's own, for work the game imagines after the research baseline. No casting director is
+  // named and none is known; the pay is SAG-AFTRA's Day Performer minimum. Where either films isn't in any page this
+  // build read, so the game sets the work in Los Angeles, its assumption, and says so; a trip from home, as the
+  // production's.
+  {
+    id: 'nine-one-one-guest', kind: 'network-drama', fictional: false,
+    drawn: { production: 'nine-one-one', season: 'a season of 9-1-1 the game imagines, after its tenth', placeWhy: 'The game sets this part’s shoot in Los Angeles: no page it read says where 9-1-1 films.' },
+    project: '9-1-1', company: '20th Television', casting: 'the production’s casting office',
+    medium: 'television', genres: ['police_procedural', 'disaster'],
+    place: { city: 'Los Angeles', cityId: 'us-ca-losangeles', venue: 'a sound stage, where the game sets it' },
+    role: { part: 'Reese Pike', size: 'co-star', for: 'either', about: 'A driver pinned in a car on a collapsing overpass, who keeps talking to the crew as they work their way down to the car.', task: 'camera', families: ['drama', 'crime'], techniques: { screen: 2, scene: 1 }, stakes: 1 },
+    union: 'sag-aftra', contract: 'SAG-AFTRA TV/Theatrical',
+    requirements: { ages: [22, 40], sends: ['headshot', 'resume', 'reel'] },
+    stages: { audition: 'self-tape', callback: false },
+    schedule: { kind: 'shoot', days: 2 },
+    access: { agent: true, open: false }, pay: 'sag-tv-day',
+    trip: { hotel: 'a hotel near the studio, the production’s', pays: 'production', words: '20th Television books and pays for your flights, the cars and the hotel, as the game assumes for a part cast from New York.' },
+    leadDays: 28,
+  },
+  {
+    id: 'abbott-guest', kind: 'network-comedy', fictional: false,
+    drawn: { production: 'abbott-elementary', season: 'a season of Abbott Elementary the game imagines', placeWhy: 'The game sets this part’s shoot in Los Angeles: no page it read says where Abbott Elementary films.' },
+    project: 'Abbott Elementary', company: 'Warner Bros. Television and 20th Television', casting: 'the production’s casting office',
+    medium: 'television', genres: ['comedy'],
+    place: { city: 'Los Angeles', cityId: 'us-ca-losangeles', venue: 'a sound stage, where the game sets it' },
+    role: { part: 'Casey Marlow', size: 'co-star', for: 'either', about: 'A substitute sent for a week who is sure the job is beneath them, until the class wins them over by Friday.', task: 'camera', families: ['comedy'], techniques: { screen: 2, comedy: 1 }, stakes: 1 },
+    union: 'sag-aftra', contract: 'SAG-AFTRA TV/Theatrical',
+    requirements: { ages: [22, 40], sends: ['headshot', 'resume', 'reel'] },
+    stages: { audition: 'self-tape', callback: false },
+    schedule: { kind: 'shoot', days: 2 },
+    access: { agent: true, open: false }, pay: 'sag-tv-day',
+    trip: { hotel: 'a hotel near the studio, the production’s', pays: 'production', words: 'Warner Bros. Television and 20th Television book and pay for your flights, the cars and the hotel, as the game assumes for a part cast from New York.' },
+    leadDays: 28,
   },
 ];
 

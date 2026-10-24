@@ -82,7 +82,9 @@ describe('the Work tab', () => {
     schedulePay(sim, sim.player, e);
     const promised = drawn(sim).shown;
     expect(promised).toContain('Desk Clerk, The Calloway Files');
-    expect(promised).toContain('Who Bright Harbor Television, SAG-AFTRA TV/Theatrical. Fictional, as every project in the game is.');
+    // Until 2026-10-24 it said "Fictional, as every project in the game is", untrue once parts were drawn from real
+    // productions (brief 25's Module 2), whose agreement says no such thing (tests/career-drawn.test.ts).
+    expect(promised).toContain('Who Bright Harbor Television, SAG-AFTRA TV/Theatrical. Fictional, invented for the game.');
     // Permission to work now, and what it said when the work was accepted, apart (from 2026-10-23, brief 23: until then
     // “Permission To Work Read September 3, 2026: …”, the reading at acceptance alone, under its own label).
     expect(promised).toContain('Permission To Work Now. You’re a US citizen, so you can work for any employer in the US.');

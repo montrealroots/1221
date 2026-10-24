@@ -92,11 +92,14 @@ describe('V16: an existing graduate’s save from before brief 19 (J01 at 8283f8
     const paid = (s: Simulation) => s.player.pro!.engagements.find((e) => e.pay.length > 0 && !e.pay.some((p) => p.deferred));
     until('portfolio', at(2029, 8, 6), (s) => currentOf(s.player.pro, 'resume') !== undefined);
     until('submitted', at(2029, 9, 30), (s) => s.player.pro!.opportunities.some((o) => o.status !== 'open' && o.status !== 'lapsed'));
-    until('booked', at(2029, 10, 30), (s) => paid(s) !== undefined);
-    until('worked', at(2029, 11, 30), (s) => paid(s)!.status === 'finished');
-    until('paid', at(2029, 11, 30), (s) => paid(s)!.pay.every((p) => p.received !== undefined));
-    // The November billing, already past by the time her first paid job's pay came (22 November 2029). Until 2026-10-21
-    // that pay came on 4 October, and this was played to after the referral below.
+    // Her first paid job is Jess in Static On Route 9, booked in the summer of 2030 and shot from 26 August. Until
+    // 2026-10-23 (brief 25, casting keyed by the posting) it came in the autumn of 2029, its pay on 22 November.
+    until('booked', at(2030, 8, 31), (s) => paid(s) !== undefined);
+    until('worked', at(2030, 9, 30), (s) => paid(s)!.status === 'finished');
+    until('paid', at(2030, 10, 15), (s) => paid(s)!.pay.every((p) => p.received !== undefined));
+    // The November billing, long past by the time her first paid job's pay came (September 2030; 22 November 2029 until
+    // 2026-10-23, when casting's draws came to be keyed by the posting, and 4 October 2029 until 2026-10-21, when this was
+    // played to after the referral below).
     until('november', at(2029, 11, 30), (s) => (s.player.pro!.unionBills ?? []).filter((b) => b.due === at(2029, 11, 1)).every((b) => b.settled));
     // Then the agent's way in for an actor the showcase didn't bring him: on the Representation tab, his office's notice
     // read, her materials checked, a referral asked for from a finished job whose work was judged well enough (the
@@ -111,14 +114,14 @@ describe('V16: an existing graduate’s save from before brief 19 (J01 at 8283f8
     // parts weren't yet written for an actor, an actress or either, it was Theo in Paper Moons (an actor's part since,
     // named Felix), judged Strong, and the referral was asked for on 4 October 2029.
     const AGENT = AGENTS[0]!;
-    until('referrer', at(2030, 6, 1), (s) => referrersOf(s, s.player, AGENT).some((r) => !r.why));
+    until('referrer', at(2030, 12, 1), (s) => referrersOf(s, s.player, AGENT).some((r) => !r.why));
     const job = referrersOf(sim, sim.player, AGENT).find((r) => !r.why)!;
     expect(press(sim, t, 'I’ve Read This', 'pro.agent_notice', { agentId: AGENT.id })).toBe(true);
     expect(press(sim, t, 'Check Your Materials', 'pro.agent_check', { agentId: AGENT.id })).toBe(true);
     expect(press(sim, t, 'Ask For A Referral', 'pro.ask_referral', { agentId: AGENT.id, engagementId: job.engagementId })).toBe(true);
     expect(press(sim, t, 'Send Your Materials', 'pro.send_materials', { agentId: AGENT.id })).toBe(true);
     keep('referred');
-    until('answered', at(2030, 12, 31), (s) => relationOf(s.player, AGENTS[0]!.id)!.stage !== 'sent');
+    until('answered', at(2031, 6, 30), (s) => relationOf(s.player, AGENTS[0]!.id)!.stage !== 'sent');
     readNotices(sim, t);
     G.lines = t.lines;
   }, 600_000);
@@ -162,7 +165,9 @@ describe('V16: an existing graduate’s save from before brief 19 (J01 at 8283f8
     // The union's money out of her own accounts, by its category, since the save opened: the $600.00 down and the
     // first half-year's $88.00, both on November 1.
     const own = Object.values(nov.universe.accounts).filter((x) => x.ownerId === nov.player.id).map((x) => x.id);
-    const taken = nov.universe.transactions.filter((x) => x.category === 'dues' && x.at > sim.now);
+    // November 2029's alone: the save kept from 2026-10-23 is played on into 2030 (brief 25, casting keyed by the posting),
+    // past May's dues and the second part of the fee.
+    const taken = nov.universe.transactions.filter((x) => x.category === 'dues' && x.at > sim.now && x.at < at(2029, 12, 1));
     expect(taken.map((x) => [x.postings.filter((q) => own.includes(q.accountId)).reduce((n, q) => n + q.amount, 0), formatDate(x.at, zone)])).toEqual([
       [-600_00, 'November 1, 2029'],
       [-88_00, 'November 1, 2029'],
@@ -197,7 +202,8 @@ describe('V16: an existing graduate’s save from before brief 19 (J01 at 8283f8
     }
     // The credit on the résumé.
     const resume = opened('november').player.pro!.materials.filter((m) => m.kind === 'resume').at(-1)!;
-    expect(resume.contains.some((line) => line.startsWith(`${project.role.part}, ${project.project}, ${project.company}, 2029`))).toBe(true);
+    // Shot in 2030 from 2026-10-23 (brief 25, casting keyed by the posting); in 2029 until then.
+    expect(resume.contains.some((line) => line.startsWith(`${project.role.part}, ${project.project}, ${project.company}, 2030`))).toBe(true);
     expect(breaches(sim.universe, sim.now)).toEqual([]);
   });
 
@@ -214,12 +220,14 @@ describe('V16: an existing graduate’s save from before brief 19 (J01 at 8283f8
     const route = pro.engagements.find((e) => e.projectId === 'route-nine')!;
     expect([film.status, route.status]).toEqual(['finished', 'finished']);
     // Each finished job is listed with whether it can refer: work judged Strong or better (`REFERRAL_BAND`), and not
-    // already used. Both of hers were judged Strong; the film's has referred her. A job judged under Strong, and what
-    // the tab says of it, is tests/pro-agent.test.ts's.
+    // already used. The film was judged Strong and Jess Exceptional; the film's has referred her, on 5 September 2030,
+    // after Jess was paid. Until 2026-10-23 (brief 25, casting keyed by the posting) Jess was Strong, cast in the autumn of
+    // 2029, and the referral asked on 22 November 2029. A job judged under Strong, and what the tab says of it, is
+    // tests/pro-agent.test.ts's.
     expect(pro.credits.find((c) => c.engagementId === film.id)!.band).toBe('strong');
     expect(referrersOf(sim, sim.player, AGENT).map((r) => [r.job, r.band, r.why ?? null])).toEqual([
-      ['Ivy in Paper Moons', 'strong', 'The film’s director referred you on November 22, 2029.'],
-      ['Jess in Static On Route 9', 'strong', null],
+      ['Ivy in Paper Moons', 'strong', 'The film’s director referred you on September 5, 2030.'],
+      ['Jess in Static On Route 9', 'exceptional', null],
     ]);
     // The referral is the route in, from the film's director, and her materials went through it.
     const rel = relationOf(sim.player, AGENT.id)!;
@@ -231,17 +239,19 @@ describe('V16: an existing graduate’s save from before brief 19 (J01 at 8283f8
     expect(referred).toContain(`The film’s director has referred you to ${AGENT.name}’s office at Halberd Talent, from your work as Ivy in Paper Moons.`);
     expect(referred).not.toMatch(/Fictional:/);
     // His office's answer, two weeks on: six of the seven factors at the bar or beyond (four are needed), the room on his
-    // list assumed for 2029 near it (one supporting actor aged 22 to 35, and she's a lead), so the chance is 0.24, and
-    // the draw, keyed by her, him and the approach, falls under it: a reel asked for, which she hasn't got.
+    // list assumed for 2030 short of it (two leads aged 30 to 40, and she's 28), so the chance is 0.12, and the draw,
+    // keyed by her, him and the approach, falls under it: a reel asked for, which she hasn't got. Until 2026-10-23 the
+    // referral came in 2029, its year's room near the bar and the chance 0.24.
     const an = opened('answered');
     const answered = relationOf(an.player, AGENT.id)!;
     expect([answered.stage, answered.request!.what]).toEqual(['requested', ['reel']]);
     expect([answered.why!.step, answered.why!.outcome, answered.why!.atOrBeyond]).toEqual(['reply', 'request', 6]);
-    expect(answered.why!.factors.find((f) => f.id === 'roster')!.level).toBe('near');
+    expect(answered.why!.factors.find((f) => f.id === 'roster')!.level).toBe('short');
+    expect(answered.why!.chance).toBe(0.12);
     expect(drawOf(an, an.player, AGENT, 1, 'interest')).toBeLessThan(answered.why!.chance!);
     // By the title's shape, his office however the build names it (`titleShape`).
     const asked = G.lines.find((l) => { const x = l.split(' | '); return x[1] === 'NOTICE' && titleShape(x[2] ?? '', { name: AGENT.name, agency: agencyOf(AGENT).name }) === 'His Office Asked For More'; })!;
-    expect(asked).toContain(`${AGENT.name}’s office at Halberd Talent has asked for a reel by December 27, 2029.`);
+    expect(asked).toContain(`${AGENT.name}’s office at Halberd Talent has asked for a reel by October 10, 2030.`);
     expect(asked).not.toMatch(/Fictional:/);
     expect(breaches(an.universe, an.now)).toEqual([]);
   });
@@ -252,13 +262,14 @@ describe('J6, the calendar: what the career puts on it, drawn and opened (the gr
     const sim = loadSave(deserialise(fixture('journey-j01-degree-8283f80c')) as never);
     // Played as the V16 journey above plays it, first to an audition in person on her calendar.
     const audition = (s: Simulation) => s.universe.scheduled.find((i) => i.kind === AUDITION_KIND && i.status === 'pending');
-    playTo(sim, at(2029, 10, 30), { career: unsignedActor() }, (s) => audition(s) !== undefined);
+    playTo(sim, at(2030, 8, 31), { career: unsignedActor() }, (s) => audition(s) !== undefined);
     const au = audition(sim)!;
     const said = entryWords(sim, au.id);
     expect(said).toContain('You need to be there, awake, when the clock reaches it. If you aren’t, it’s missed: casting moves on without you, and the role is gone.');
     expect(said).toContain('It’s in New York, two hours each way from New Haven, and the trip is part of it.');
     // On to her first booking.
-    playTo(sim, at(2029, 10, 30), { career: unsignedActor() }, (s) => s.player.pro!.engagements.some((e) => e.pay.length > 0 && !e.pay.some((p) => p.deferred)));
+    // Her first paid booking is in the summer of 2030 from 2026-10-23 (brief 25, casting keyed by the posting).
+    playTo(sim, at(2030, 8, 31), { career: unsignedActor() }, (s) => s.player.pro!.engagements.some((e) => e.pay.length > 0 && !e.pay.some((p) => p.deferred)));
     const entries = entriesBetween(sim, sim.now, sim.now + 40 * MS_DAY);
     const career = entries.filter((e) => e.category === 'career' && e.requiresPlayer);
     expect(career.length).toBeGreaterThan(0);

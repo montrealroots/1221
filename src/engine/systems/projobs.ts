@@ -49,7 +49,8 @@
  *
  * **Every number here is the game's estimate unless it cites a source**: the timings of a casting office, the chances,
  * the trips and the lead time are ASSUMPTIONS, said so on the screen. The rates are the unions' (`RATES`). Every
- * project, company and casting office is fictional, and each says so where it's first shown.
+ * project, company and casting office is fictional but a part drawn from a real production (from 2026-10-23, brief 25's
+ * Module 2), and each says which it is where it's first shown. Until then every one was fictional.
  */
 
 import type { Simulation } from '../core/simulation';
@@ -90,8 +91,9 @@ import {
 import { OPT_ZONE, PERMISSION_ENDED, f1Of, optRunsOut, settleOpt, usWorkAuthorized, workAuthorizedFor } from './permission';
 import { documentsOf, passportOf } from './documents';
 import { EQUITY_JOINED, SAG_QUALIFIES, dropPaydays, negotiatedAmount, sagWorkRefusal, schedulePay } from './propay';
-import { TRIP, abroadRead, awayOn, bookTrip, needsTrip, planTrip, registerWorkTrips, tripSpans, whereAt, whereWords, windowOf as tripWindow } from './worktrip';
+import { TRIP, US_RULES, abroadRead, awayOn, bookTrip, needsTrip, planTrip, registerWorkTrips, tripSpans, whereAt, whereWords, windowOf as tripWindow } from './worktrip';
 import { AGENT_TIMES, MEETING_KIND, TRAVEL_MINUTES } from './proagent';
+import { companiesAs, productionById } from '../content/catalog';
 
 // ---------------------------------------------------------------------------------------------------------------------
 // The rules: each a published one with its source, or the game's ASSUMPTION
@@ -155,7 +157,7 @@ export const CASTING = {
   final: { unready: 0.04, working: 0.18, strong: 0.38, exceptional: 0.58 } as Readonly<Record<Band, number>>,
   callback: { unready: 0.1, working: 0.45, strong: 0.78, exceptional: 0.9 } as Readonly<Record<Band, number>>,
   fitFloor: 0.4,
-  field: { 'off-broadway': 0.8, lort: 0.85, 'network-drama': 0.75, 'low-budget': 0.85, 'ultra-low-budget': 1, 'student-film': 1.25, 'non-union-short': 1.2, 'overseas-feature': 0.8 } as Readonly<Record<ProjectKind, number>>,
+  field: { 'off-broadway': 0.8, lort: 0.85, 'network-drama': 0.75, 'low-budget': 0.85, 'ultra-low-budget': 1, 'student-film': 1.25, 'non-union-short': 1.2, 'overseas-feature': 0.8, 'network-comedy': 0.75 } as Readonly<Record<ProjectKind, number>>,
   least: 0.01, most: 0.8,
   /** An actor plays three years either side of their own age. */
   playingSpread: 3,
@@ -171,6 +173,7 @@ export const FIELD_WORDS: Readonly<Record<ProjectKind, string>> = {
   'student-film': 'a small field: a student film sees fewer actors',
   'non-union-short': 'a small field',
   'overseas-feature': 'a large field: a studio feature shooting abroad sees tapes from actors in more than one country',
+  'network-comedy': 'the largest field: a network co-star is seen by the most actors',
 };
 
 /** Missed work days a project allows before replacing the actor: the stage's understudy covers one, a shoot can't wait. ASSUMPTION. */
@@ -178,7 +181,7 @@ export const MISSES = { stage: 1, screen: 0 } as const;
 
 /** How long after it's shot a screen project comes out, so its footage can go on a reel. ASSUMPTION, by kind. */
 export const RELEASE_DAYS: Readonly<Partial<Record<ProjectKind, number>>> = {
-  'network-drama': 120, 'low-budget': 365, 'ultra-low-budget': 300, 'student-film': 180, 'non-union-short': 150, 'overseas-feature': 365,
+  'network-drama': 120, 'low-budget': 365, 'ultra-low-budget': 300, 'student-film': 180, 'non-union-short': 150, 'overseas-feature': 365, 'network-comedy': 120,
 };
 
 /** The School's rule on outside work in term: the design's ASSUMPTIONS for the Bulletin's words (this file's header). */
@@ -237,7 +240,7 @@ function weekdayFrom(t: Instant, hour: number, zone: string = NY): Instant {
 export const KIND_WORDS: Readonly<Record<ProjectKind, string>> = {
   'off-broadway': 'Off-Broadway play', lort: 'play in a regional theater’s season', 'network-drama': 'network television drama',
   'low-budget': 'low-budget feature film', 'ultra-low-budget': 'ultra-low-budget feature film', 'student-film': 'student film',
-  'non-union-short': 'non-union short film', 'overseas-feature': 'studio feature film shooting abroad',
+  'non-union-short': 'non-union short film', 'overseas-feature': 'studio feature film shooting abroad', 'network-comedy': 'network television comedy',
 };
 
 /** One work day: when, its label on the calendar, and what it is. */
@@ -325,7 +328,9 @@ export function payWords(terms: PayTerms, amount: Money | undefined = terms.each
 export function fieldOf(t: ProjectTemplate): AgentField {
   if (t.kind === 'off-broadway') return 'off-broadway';
   if (t.kind === 'lort') return 'regional';
-  if (t.kind === 'network-drama') return 'television';
+  // By the medium (from 2026-10-23, brief 25's Module 2): until then by the one television kind, network drama, so the
+  // network comedy it added would have been filed under film.
+  if (t.medium === 'television') return 'television';
   return 'film';
 }
 
@@ -493,11 +498,14 @@ export function postingsAt(sim: Simulation, person: Person, at: Instant): { proj
 
 /**
  * Casting's decision on a round (the decider `pro.casting`): the chance the band, the fit and the field give, and a draw
- * for the field of other actors, keyed by the opportunity and the round so a reload decides the same.
+ * for the field of other actors, keyed by the posting (its project and when it was posted) and the round, so a reload
+ * decides the same. Until 2026-10-23 (brief 25, criteria C11) it was keyed by the opportunity's id, its place in the
+ * save's numbering, so a project added to the game took an id ahead of later postings and changed their casting: brief
+ * 25's eighth project moved a played life's (tests/journey-career.test.ts) first booking from December to June.
  */
-export function castingDraw(sim: Simulation, o: Pick<Opportunity, 'id' | 'projectId'>, round: 'callback' | 'final', band: Band, fit: number): { chance: number; yes: boolean } {
+export function castingDraw(sim: Simulation, o: Pick<Opportunity, 'projectId' | 'postedAt'>, round: 'callback' | 'final', band: Band, fit: number): { chance: number; yes: boolean } {
   const chance = chanceOf(band, fit, projectOf(o).kind, round);
-  return { chance, yes: sim.rng('pro.casting', o.id, round).next() < chance };
+  return { chance, yes: sim.rng('pro.casting', o.projectId, o.postedAt, round).next() < chance };
 }
 
 // ---------------------------------------------------------------------------------------------------------------------
@@ -526,15 +534,17 @@ export const inSessionAny = (person: Person, days: readonly { from: Instant }[])
 
 /** The country of a project's town, by the gazetteer's id. */
 export const countryOfProject = (t: Pick<ProjectTemplate, 'place'>): string => CITIES.get(t.place.cityId)?.countryId ?? (t.place.cityId.startsWith('us-') ? 'us' : '');
-/** Whether a project's work is reached by a trip abroad (`systems/worktrip.ts`, from 2026-10-23, the owner's brief 25). */
-export const abroad = (person: Person, t: ProjectTemplate): boolean => t.trip !== undefined && needsTrip(person.currentLocationId, t.place.cityId);
+/** Whether a project's work is reached by a trip from home, abroad or in the US (`systems/worktrip.ts`, from 2026-10-23, the owner's brief 25). */
+export const travels = (person: Person, t: ProjectTemplate): boolean => t.trip !== undefined && needsTrip(person.currentLocationId, t.place.cityId);
+/** Whether that trip is abroad, so the work reads the country's permission. Until Module 2 (2026-10-23) every trip was. */
+export const abroad = (person: Person, t: ProjectTemplate): boolean => travels(person, t) && countryOfProject(t) !== US_RULES;
 
 /**
  * The time a booking takes the actor away for: its work days, or, for work abroad, every day from the trip's first leg to
  * its last, whole, since nothing at home can be gone to while away (W8). From 2026-10-23, the owner's brief 25.
  */
 export function spansOf(person: Person, t: ProjectTemplate, days: readonly WorkDay[] | readonly { from: Instant; to: Instant; label: string }[]): { from: Instant; to: Instant; label: string }[] {
-  if (!abroad(person, t)) return [...days];
+  if (!travels(person, t)) return [...days];
   const span = tripWindow(planTrip(person.currentLocationId, t.place.cityId, days)?.legs ?? []);
   if (!span) return [...days];
   const out: { from: Instant; to: Instant; label: string }[] = [];
@@ -944,10 +954,13 @@ export function acceptWarning(sim: Simulation, person: Person, o: Opportunity): 
  */
 function abroadWarning(sim: Simulation, person: Person, o: Opportunity, days: readonly WorkDay[]): string | undefined {
   const t = projectOf(o);
-  if (!abroad(person, t)) return undefined;
+  if (!travels(person, t)) return undefined;
   const span = tripWindow(planTrip(person.currentLocationId, t.place.cityId, days)?.legs ?? []);
-  const read = abroadRead(person, countryOfProject(t), days, undefined, sim.now);
   const away = span ? `You’d be away from ${formatDate(span.from, NY)} to ${formatDate(span.to, NY)}. ` : '';
+  // A trip in the US (Module 2, C10) says the days away and the production's arrangements; its permission is the US rule
+  // acceptance already reads, so there's no permit to warn of.
+  if (!abroad(person, t)) return `This work is in ${t.place.city}. ${away}${t.trip!.words}`;
+  const read = abroadRead(person, countryOfProject(t), days, undefined, sim.now);
   const permit = read.basis === 'abroad-needed' ? `${read.words} Accepting is the contract, not permission to work: without the visa in force at your first flight, you can’t go, and the production releases you.` : read.words;
   return `This work is in ${t.place.city}. ${away}${t.trip!.words} ${permit}`;
 }
@@ -1009,8 +1022,41 @@ function tell(sim: Simulation, person: Person, title: string, body: string, impo
   sim.notify({ category: 'career', title, body, importance, route: '/workspace/career' });
 }
 
+/**
+ * What a project is, said in a phrase: "a fictional Off-Broadway play", or, for a part drawn from a real production
+ * (from 2026-10-23, brief 25's Module 2, C8), "a network television drama on ABC, in a part the game made up".
+ */
+export function kindPhrase(t: ProjectTemplate): string {
+  if (!t.drawn) return `a fictional ${KIND_WORDS[t.kind]}`;
+  const p = productionById(t.drawn.production);
+  const on = p ? companiesAs(p, 'broadcaster')[0] ?? companiesAs(p, 'streaming-platform')[0] : undefined;
+  return `a ${KIND_WORDS[t.kind]}${on ? ` on ${on}` : ''}, in a part the game made up`;
+}
+
+/**
+ * A drawn part's notice (Module 2, C8), said on the role, the offer and the engagement: the game's own, not a casting
+ * notice. Until the text pass of 2026-10-24 it said "the game's own part, for a season after its tenth of 9-1-1 as the
+ * game imagines it", which the role's card had just called "a part the game made up", and the season came before its
+ * series.
+ */
+export const drawnWords = (t: ProjectTemplate): string | undefined => (t.drawn
+  ? `${t.role.part} is the game’s own character, in ${t.drawn.season}. It isn’t a real casting notice, and no one at the real production is casting it. ${t.drawn.placeWhy}`
+  : undefined);
+
 /** The role as a sentence names it: "Nell in A House On Calder Street, a fictional Off-Broadway play". */
-export const roleWords = (t: ProjectTemplate): string => `${t.role.part} in ${t.project}, a fictional ${KIND_WORDS[t.kind]}`;
+export const roleWords = (t: ProjectTemplate): string => `${t.role.part} in ${t.project}, ${kindPhrase(t)}`;
+
+/**
+ * How the work is reached, in a sentence: a day's travel each way, or the trip the production books, door to door (from
+ * 2026-10-23, brief 25's Module 2: until then the role's notice gave a day's travel for any work, "about 3 hours each
+ * way" to Sydney).
+ */
+export function reachWords(person: Person, t: ProjectTemplate, days: readonly { from: Instant; to: Instant }[]): string {
+  if (!travels(person, t)) return `Getting there takes about ${counted(Math.round(tripMinutes(person.currentLocationId, t.place.cityId) / 60), 'hour')} each way from where you live.`;
+  const out = planTrip(person.currentLocationId, t.place.cityId, days)?.legs.filter((l) => l.way === 'out') ?? [];
+  const hours = out.length ? Math.round((out[out.length - 1]!.arrives - out[0]!.departs) / MS_HOUR) : 0;
+  return `It’s a trip the production books: about ${counted(hours, 'hour')} door to door each way, by car and by air, landing at least ${TRIP.arriveBeforeHours} hours before the first call.`;
+}
 
 /** The casting office as a sentence's subject: capitalized to start one ("The producers"), and its verb agreeing with it. */
 export const castingAs = (t: ProjectTemplate): string => t.casting.charAt(0).toUpperCase() + t.casting.slice(1);
@@ -1214,7 +1260,8 @@ function makeOffer(sim: Simulation, person: Person, o: Opportunity): void {
   if (o.offer.amount !== undefined) o.offer.amount = negotiatedAmount(o.offer.amount, t.union, o.agreementId !== undefined);
   const days = datesOf(o);
   const span = `${days.length === 1 ? `on ${formatDate(days[0]!.from, NY)}` : `from ${formatDate(days[0]!.from, NY)} to ${formatDate(days[days.length - 1]!.from, NY)}`}, in ${t.place.city}`;
-  const words = `${castingAs(t)} ${agrees(t, 'offers', 'offer')} you ${roleWords(t)}. ${payWords(terms, o.offer.amount)} The work is ${span}. The offer stands until ${formatDate(until, NY)} at ${formatTime(until, NY)}.`;
+  const drawn = drawnWords(t);
+  const words = `${castingAs(t)} ${agrees(t, 'offers', 'offer')} you ${roleWords(t)}. ${payWords(terms, o.offer.amount)} The work is ${span}. The offer stands until ${formatDate(until, NY)} at ${formatTime(until, NY)}.${drawn ? ` ${drawn}` : ''}`;
   // In the history, past (from 2026-10-21, as the rounds' lines): the offer stood until its day, whatever came of it.
   note(sim, person, o, { kind: 'offer', key: 'offer', words: `${castingAs(t)} offered you ${roleWords(t)}. ${payWords(terms, o.offer.amount)} The work was ${span}, and the offer stood until ${formatDate(until, NY)} at ${formatTime(until, NY)}.` });
   sim.schedule({ at: until, kind: OFFER_KIND, label: `The Offer For ${t.role.part} Lapses`, category: 'career', priority: 40, refType: 'pro.offer', refId: o.id, payload: { personId: person.id, opportunityId: o.id } });
@@ -1267,7 +1314,7 @@ export function payGroups(e: Pick<Engagement, 'days'>, t: ProjectTemplate): numb
 /** The work days booked on the calendar, each wanting the player, with its trip. */
 function bookDays(sim: Simulation, person: Person, e: Engagement, t: ProjectTemplate): void {
   // Abroad, the day starts at the hotel (from 2026-10-23, the owner's brief 25, W10): the set is a short drive.
-  const trip = abroad(person, t) ? TRIP.hotelMinutes : tripMinutes(person.currentLocationId, t.place.cityId);
+  const trip = travels(person, t) ? TRIP.hotelMinutes : tripMinutes(person.currentLocationId, t.place.cityId);
   e.days.forEach((d, i) => {
     if (d.from <= sim.now) return;
     sim.schedule({
@@ -1588,6 +1635,11 @@ export function registerProJobs(sim: Simulation): void {
     } else if (!workAuthorizedFor(person, e.days[i]!)) {
       release(s, person, e, t, item.at);
       return;
+    } else if (travels(person, t) && whereAt(person, item.at).cityId !== t.place.cityId) {
+      // A trip in the US (Module 2, C10): the US rule above, and the actor there.
+      missDay(s, person, e, t, i, item.at);
+      if (i === e.days.length - 1 && live(e)) finish(s, person, e, t);
+      return;
     }
     if (!there(person, item.at)) {
       missDay(s, person, e, t, i, item.at);
@@ -1756,7 +1808,8 @@ export function registerProJobs(sim: Simulation): void {
     // 2026-10-21: promised here, paid once when it comes.
     schedulePay(s, person, e);
     bookDays(s, person, e, t);
-    // Work abroad books its trip (from 2026-10-23, the owner's brief 25, W6): the flights, the cars and the hotel.
+    // Work a long way from home books its trip (from 2026-10-23, the owner's brief 25, W6; in the US too from Module 2):
+    // the flights, the cars and the hotel.
     bookTrip(s, person, e, t);
     s.timeline.cancelFor('pro.offer', o!.id, s.now);
     const words = `You accepted ${t.role.part} in ${t.project}: ${counted(days.length, 'work day')}, from ${formatDate(days[0]!.from, NY)}.`;

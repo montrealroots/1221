@@ -1105,78 +1105,284 @@
    "id": "S78",
    "title": "Slow Horses: Apple Press",
    "url": "https://www.apple.com/tv-pr/originals/slow-horses/",
-   "status": "dossier-located",
+   "status": "read",
    "dossier": "Listed in the dossier’s register; access date 23 October 2026 unless noted.",
-   "retrieved": null,
+   "retrieved": "2026-10-23",
    "published": null,
    "effective": null,
-   "territory": null,
-   "attempts": [],
-   "facts": []
+   "territory": "US",
+   "attempts": [
+    {
+     "at": "2026-10-23",
+     "how": "curl with a browser user agent",
+     "result": "HTTP 200"
+    }
+   ],
+   "facts": [
+    {
+     "field": "rating",
+     "value": "TV-MA",
+     "quote": "Rated TV-MA"
+    },
+    {
+     "field": "genres",
+     "value": "Thriller, Drama",
+     "quote": "Thriller, Drama"
+    },
+    {
+     "field": "season-6-release",
+     "value": "September 16, 2026",
+     "quote": "Season 6 Release Date: September 16, 2026"
+    },
+    {
+     "field": "lead",
+     "value": "Gary Oldman plays Jackson Lamb",
+     "quote": "the notorious Jackson Lamb (Academy Award winner Sir Gary Oldman)"
+    },
+    {
+     "field": "premise",
+     "value": "British intelligence agents in a dumping-ground department of MI5",
+     "quote": "follows a team of British intelligence agents who serve in a dumping ground department of MI5"
+    }
+   ]
   },
   {
    "id": "S79",
    "title": "Slow Horses Season-Six Announcement",
    "url": "https://www.apple.com/tv-pr/news/2026/08/apple-tv-debuts-enthralling-trailer-for-season-six-of-emmy-and-bafta-award-winning-espionage-drama-slow-horses-starring-academy-award-winner-sir-gary-oldman/",
-   "status": "dossier-located",
+   "status": "read",
    "dossier": "Listed in the dossier’s register; access date 23 October 2026 unless noted.",
-   "retrieved": null,
-   "published": null,
+   "retrieved": "2026-10-23",
+   "published": "2026-08-18",
    "effective": null,
-   "territory": null,
-   "attempts": [],
-   "facts": []
+   "territory": "global",
+   "attempts": [
+    {
+     "at": "2026-10-23",
+     "how": "curl with a browser user agent",
+     "result": "HTTP 200"
+    }
+   ],
+   "facts": [
+    {
+     "field": "season-6-episodes",
+     "value": "Six episodes, weekly from September 16 to October 21, 2026",
+     "quote": "six-episode sixth season will premiere globally on Wednesday, September 16, 2026 with the first episode, followed by one episode weekly until October 21, 2026"
+    },
+    {
+     "field": "source-novels",
+     "value": "Adapted from the sixth and seventh Slough House novels",
+     "quote": "Adapted from “Joe Country” and “Slough House,” the sixth and seventh novels in Mick Herron’s"
+    },
+    {
+     "field": "season-6-ensemble",
+     "value": "The season six ensemble",
+     "quote": "The ensemble cast includes Academy Award nominee Kristin Scott Thomas, Emmy Award nominee Jack Lowden, Saskia Reeves, BAFTA TV Award nominee Christopher Chung, Aimee-Ffion Edwards, Rosalind Eleazar, Joanna Scanlan, BAFTA Award nominee Samuel West, Ruth Bradley, Tom Brooke, Academy Award nominee Jonathan Pryce and Hugo Weaving, alongside new addition, BAFTA TV Award winner Lenny Rush."
+    },
+    {
+     "field": "sid-baker",
+     "value": "Olivia Cooke as Sidonie “Sid” Baker in season six",
+     "quote": "Olivia Cooke will reprise her role as Sidonie “Sid” Baker in the sixth season."
+    },
+    {
+     "field": "producer",
+     "value": "Produced for Apple TV by See-Saw Films",
+     "quote": "The series is produced for Apple TV by See-Saw Films"
+    },
+    {
+     "field": "season-6-writer-director",
+     "value": "Gaby Chiappe adapts season six; Adam Randall directs",
+     "quote": "Season six is adapted for television by co-executive producer Gaby Chiappe, with Randall returning to direct."
+    },
+    {
+     "field": "seasons-streaming",
+     "value": "Seasons one to five stream on Apple TV",
+     "quote": "The complete first five seasons of “ Slow Horses ” are now streaming on Apple TV."
+    }
+   ]
   },
   {
    "id": "S80",
    "title": "9-1-1: ABC Press",
    "url": "https://www.detpress.com/abc/shows/9-1-1/",
-   "status": "dossier-located",
+   "status": "read",
    "dossier": "Listed in the dossier’s register; access date 23 October 2026 unless noted.",
-   "retrieved": null,
+   "retrieved": "2026-10-23",
    "published": null,
    "effective": null,
-   "territory": null,
-   "attempts": [],
-   "facts": []
+   "territory": "US",
+   "attempts": [
+    {
+     "at": "2026-10-23",
+     "how": "curl with a browser user agent",
+     "result": "HTTP 200"
+    }
+   ],
+   "facts": [
+    {
+     "field": "season-10-premiere",
+     "value": "Season 10 premieres October 15, 2026",
+     "quote": "Season 10 premieres October 15, 2026."
+    },
+    {
+     "field": "creators",
+     "value": "Created by Ryan Murphy, Brad Falchuk and Tim Minear",
+     "quote": "Created by executive producers Ryan Murphy, Brad Falchuk and Tim Minear"
+    },
+    {
+     "field": "genre",
+     "value": "A procedural drama",
+     "quote": "reimagine the procedural drama"
+    },
+    {
+     "field": "cast",
+     "value": "The series cast and their characters",
+     "quote": "The series stars Angela Bassett as Athena Grant, Jennifer Love Hewitt as Maddie Han, Oliver Stark as Evan “Buck” Buckley, Kenneth Choi as Howie “Chimney” Han, Aisha Hinds as Henrietta “Hen” Wilson, Ryan Guzman as Eddie Diaz, Gavin McHugh as Christopher Diaz, Corinne Messiah as May Grant and Elijah M. Cooper as Harry Grant."
+    },
+    {
+     "field": "producers",
+     "value": "Produced by 20th Television with Ryan Murphy Television and Brad Falchuk Teley-Vision",
+     "quote": "“9-1-1” is produced by 20th Television in association with Ryan Murphy Television and Brad Falchuk Teley-Vision."
+    },
+    {
+     "field": "showrunner",
+     "value": "Tim Minear is showrunner",
+     "quote": "Minear serves as showrunner."
+    }
+   ]
   },
   {
    "id": "S81",
    "title": "9-1-1 Season Ten: Disney+",
    "url": "https://www.disneyplus.com/explore/articles/911-season-10",
-   "status": "dossier-located",
+   "status": "read",
    "dossier": "Listed in the dossier’s register; access date 23 October 2026 unless noted.",
-   "retrieved": null,
+   "retrieved": "2026-10-23",
    "published": null,
    "effective": null,
-   "territory": null,
-   "attempts": [],
-   "facts": []
+   "territory": "US",
+   "attempts": [
+    {
+     "at": "2026-10-23",
+     "how": "curl with a browser user agent",
+     "result": "HTTP 200"
+    }
+   ],
+   "facts": [
+    {
+     "field": "airs",
+     "value": "Airs on ABC and streams on Hulu",
+     "quote": "The season premiere aired on ABC on October 15 and is streaming on Hulu and Hulu on Disney+ for bundle subscribers as of October 16 ."
+    },
+    {
+     "field": "schedule",
+     "value": "Thursdays on ABC, Fridays on Hulu",
+     "quote": "New episodes air Thursdays on ABC and stream Fridays on Hulu and Hulu on Disney+ for bundle subscribers."
+    }
+   ]
   },
   {
    "id": "S82",
    "title": "Amazon MGM Film Slate",
    "url": "https://www.aboutamazon.com/news/entertainment/amazon-mgm-studios-films",
-   "status": "dossier-located",
+   "status": "read",
    "dossier": "Listed in the dossier’s register; access date 23 October 2026 unless noted.",
-   "retrieved": null,
-   "published": null,
+   "retrieved": "2026-10-23",
+   "published": "2026-04-16",
    "effective": null,
-   "territory": null,
-   "attempts": [],
-   "facts": []
+   "territory": "US",
+   "attempts": [
+    {
+     "at": "2026-10-23",
+     "how": "curl with a browser user agent",
+     "result": "HTTP 200"
+    }
+   ],
+   "facts": [
+    {
+     "field": "slate",
+     "value": "At least 15 theatrical films a year",
+     "quote": "Our commitment to release at least 15 films every year into your theaters is on schedule."
+    },
+    {
+     "field": "the-sheep-detectives",
+     "value": "May 8, 2026; Hugh Jackman",
+     "quote": "The Sheep Detectives (May 8, 2026): In this witty, new breed of mystery , a shepherd (Hugh Jackman)"
+    },
+    {
+     "field": "masters-of-the-universe",
+     "value": "June 5, 2026; Travis Knight",
+     "quote": "Masters of the Universe (June 5, 2026): Director Travis Knight brings the world of Eternia to life on a massive scale with stars Nicholas Galitzine, Camila Mendes, and Idris Elba."
+    },
+    {
+     "field": "how-to-rob-a-bank",
+     "value": "September 4, 2026; David Leitch",
+     "quote": "How to Rob a Bank (September 4, 2026): Director David Leitch teams with Nicholas Hoult, Zoë Kravitz, Anna Sawai, Pete Davidson, and John C. Reilly"
+    },
+    {
+     "field": "verity",
+     "value": "October 2, 2026",
+     "quote": "Verity (October 2, 2026):"
+    },
+    {
+     "field": "i-play-rocky",
+     "value": "November 20, 2026; Peter Farrelly",
+     "quote": "I Play Rocky (November 20, 2026): Director Peter Farrelly"
+    },
+    {
+     "field": "the-beekeeper-2",
+     "value": "January 15, 2027; Jason Statham",
+     "quote": "The Beekeeper 2 (January 15, 2027): Jason Statham returns"
+    },
+    {
+     "field": "the-thomas-crown-affair",
+     "value": "March 5, 2027; Michael B. Jordan",
+     "quote": "The Thomas Crown Affair (March 5, 2027): A reimagining of the 1968 film, directed by and starring Academy Award winner Michael B. Jordan alongside Adria Arjona"
+    },
+    {
+     "field": "spaceballs-the-new-one",
+     "value": "April 23, 2027; Josh Greenbaum",
+     "quote": "Spaceballs: The New One (April 23, 2027): Director Josh Greenbaum"
+    },
+    {
+     "field": "the-chosen-crucifixion",
+     "value": "2027",
+     "quote": "The Chosen: Crucifixion (2027)"
+    },
+    {
+     "field": "a-colt-is-my-passport",
+     "value": "Orion Pictures; Gareth Evans",
+     "quote": "A Colt Is My Passport (Orion Pictures): Director Gareth Evans"
+    },
+    {
+     "field": "highlander",
+     "value": "United Artists; Henry Cavill",
+     "quote": "Highlander (United Artists): Henry Cavill stars"
+    },
+    {
+     "field": "your-mother-your-mother-your-mother",
+     "value": "Orion Pictures; Bassam Tariq",
+     "quote": "Your Mother Your Mother Your Mother (Orion Pictures) : Director Bassam Tariq and Mahershala Ali"
+    }
+   ]
   },
   {
    "id": "S83",
    "title": "Universal Upcoming Films",
    "url": "https://www.universalpictures.com/movies/",
-   "status": "dossier-located",
+   "status": "unreadable",
    "dossier": "Listed in the dossier’s register; access date 23 October 2026 unless noted.",
    "retrieved": null,
    "published": null,
    "effective": null,
    "territory": null,
-   "attempts": [],
+   "attempts": [
+    {
+     "at": "2026-10-23",
+     "how": "curl with a browser user agent",
+     "result": "HTTP 200, but the page loads its films in the browser: its text holds no titles"
+    }
+   ],
    "facts": []
   },
   {
@@ -1196,26 +1402,44 @@
    "id": "S85",
    "title": "Severance Cast and Crew",
    "url": "https://www.apple.com/tv-pr/originals/severance/cast-crew/",
-   "status": "dossier-located",
+   "status": "read",
    "dossier": "Listed in the dossier’s register; access date 23 October 2026 unless noted.",
-   "retrieved": null,
+   "retrieved": "2026-10-23",
    "published": null,
    "effective": null,
-   "territory": null,
-   "attempts": [],
-   "facts": []
+   "territory": "US",
+   "attempts": [
+    {
+     "at": "2026-10-23",
+     "how": "curl with a browser user agent",
+     "result": "HTTP 200"
+    }
+   ],
+   "facts": [
+    {
+     "field": "season-2-cast",
+     "value": "Season two’s cast, without their characters",
+     "quote": "Season 2 Adam Scott as Patricia Arquette as Britt Lower as Tramell Tillman as Zach Cherry as Jen Tullock as Michael Chernus as Dichen Lachman as Sarah Bock as John Turturro as Christopher Walken as"
+    }
+   ]
   },
   {
    "id": "S86",
    "title": "Abbott Elementary Cast",
    "url": "https://abc.com/show/e4f28254-2fc4-4cc1-b9bb-eee0564c178e/cast",
-   "status": "dossier-located",
+   "status": "unreadable",
    "dossier": "Listed in the dossier’s register; access date 23 October 2026 unless noted.",
    "retrieved": null,
    "published": null,
    "effective": null,
    "territory": null,
-   "attempts": [],
+   "attempts": [
+    {
+     "at": "2026-10-23",
+     "how": "curl with a browser user agent",
+     "result": "HTTP 200, but the cast loads in the browser: the text holds none of it"
+    }
+   ],
    "facts": []
   },
   {
@@ -1235,13 +1459,19 @@
    "id": "S88",
    "title": "9-1-1 Cast",
    "url": "https://abc.com/show/42bb0821-68c2-4543-8d0f-51ca8e7dbcf4/cast",
-   "status": "dossier-located",
+   "status": "unreadable",
    "dossier": "Listed in the dossier’s register; access date 23 October 2026 unless noted.",
    "retrieved": null,
    "published": null,
    "effective": null,
    "territory": null,
-   "attempts": [],
+   "attempts": [
+    {
+     "at": "2026-10-23",
+     "how": "curl with a browser user agent",
+     "result": "HTTP 200, but the cast loads in the browser: the text holds none of it"
+    }
+   ],
    "facts": []
   },
   {
@@ -1508,27 +1738,86 @@
    "id": "S109",
    "title": "Abbott Elementary: ABC Press",
    "url": "https://www.detpress.com/abc/shows/abbott-elementary/",
-   "status": "dossier-located",
+   "status": "read",
    "dossier": "Listed in the dossier’s register; access date 23 October 2026 unless noted.",
-   "retrieved": null,
+   "retrieved": "2026-10-23",
    "published": null,
    "effective": null,
-   "territory": null,
-   "attempts": [],
-   "facts": []
+   "territory": "US",
+   "attempts": [
+    {
+     "at": "2026-10-23",
+     "how": "curl with a browser user agent",
+     "result": "HTTP 200"
+    }
+   ],
+   "facts": [
+    {
+     "field": "airs",
+     "value": "Wednesdays on ABC; streams on Hulu",
+     "quote": "Wednesdays, 8:30-9:02 p.m. ET/PT, on ABC; Streams on Hulu"
+    },
+    {
+     "field": "genre",
+     "value": "A workplace comedy",
+     "quote": "In this workplace comedy"
+    },
+    {
+     "field": "cast",
+     "value": "The series cast and their characters",
+     "quote": "“Abbott Elementary” stars Emmy® Award winner Quinta Brunson as Janine Teagues, Tyler James Williams as Gregory Eddie, Janelle James as Ava Coleman, Chris Perfetti as Jacob Hill, Lisa Ann Walter as Melissa Schemmenti, William Stanford Davis as Mr. Johnson and Emmy Award winner Sheryl Lee Ralph as Barbara Howard."
+    },
+    {
+     "field": "creator",
+     "value": "Created by Quinta Brunson",
+     "quote": "Quinta Brunson created the series and serves as executive producer"
+    },
+    {
+     "field": "producers",
+     "value": "Produced by Warner Bros. Television and 20th Television",
+     "quote": "The series is produced by Warner Bros. Television and 20th Television, a part of Disney Television Studios."
+    }
+   ]
   },
   {
    "id": "S110",
    "title": "Amazon: I Play Rocky",
    "url": "https://www.aboutamazon.com/news/entertainment/i-play-rocky-trailer-cast-release-date-amazon-mgm-studios",
-   "status": "dossier-located",
+   "status": "read",
    "dossier": "Article updated 22 October 2026.",
-   "retrieved": null,
-   "published": null,
+   "retrieved": "2026-10-23",
+   "published": "2026-10-22",
    "effective": null,
-   "territory": null,
-   "attempts": [],
-   "facts": []
+   "territory": "US",
+   "attempts": [
+    {
+     "at": "2026-10-23",
+     "how": "curl with a browser user agent",
+     "result": "HTTP 200"
+    }
+   ],
+   "facts": [
+    {
+     "field": "release",
+     "value": "Select theaters November 6, 2026; everywhere later in November",
+     "quote": "The film releases in select theaters on November 6, 2026, and everywhere later in November"
+    },
+    {
+     "field": "lead",
+     "value": "Anthony Ippolito as a young Sylvester Stallone",
+     "quote": "Anthony Ippolito ( The Offer ) stars as a young Sylvester Stallone."
+    },
+    {
+     "field": "cast",
+     "value": "The rest of the cast",
+     "quote": "The cast also includes Matt Dillon, AnnaSophia Robb, P.J. Byrne, Toby Kebbell, Tracy Letts, Jay Duplass, Stephan James, Kiki Seto, Robert Morgan, Saul Stein, Trevor St. John, Erik Palladino, and Rob Demery."
+    },
+    {
+     "field": "makers",
+     "value": "Written by Peter Gamble; produced from Fireside Films and Baha Productions",
+     "quote": "Farrelly directs from a script by Peter Gamble. Toby Emmerich, Christian Baha, and Farrelly produce the film from Fireside Films and Baha Productions."
+    }
+   ]
   },
   {
    "id": "N01",
@@ -1597,6 +1886,71 @@
      "field": "stay",
      "value": "For as long as they remain a New Zealand citizen",
      "quote": "enter and stay in Australia for as long as you are and continue to remain a New Zealand citizen"
+    }
+   ]
+  },
+  {
+   "id": "N03",
+   "title": "Apple TV Press: Severance",
+   "url": "https://www.apple.com/tv-pr/originals/severance/",
+   "status": "read",
+   "dossier": "Not in the dossier.",
+   "retrieved": "2026-10-23",
+   "published": null,
+   "effective": null,
+   "territory": "US",
+   "attempts": [
+    {
+     "at": "2026-10-23",
+     "how": "curl with a browser user agent",
+     "result": "HTTP 200"
+    }
+   ],
+   "facts": [
+    {
+     "field": "rating",
+     "value": "TV-MA",
+     "quote": "Rated TV-MA"
+    },
+    {
+     "field": "genre",
+     "value": "Thriller",
+     "quote": "Rated TV-MA Thriller Severance"
+    },
+    {
+     "field": "season-2-release",
+     "value": "January 17, 2025",
+     "quote": "Season 2 Release Date: January 17, 2025"
+    },
+    {
+     "field": "lead",
+     "value": "Adam Scott plays Mark Scout",
+     "quote": "Mark Scout (Adam Scott) leads a team at Lumon Industries"
+    }
+   ]
+  },
+  {
+   "id": "N04",
+   "title": "Apple TV Press: Slow Horses Cast And Crew",
+   "url": "https://www.apple.com/tv-pr/originals/slow-horses/cast-crew/",
+   "status": "read",
+   "dossier": "Not in the dossier.",
+   "retrieved": "2026-10-23",
+   "published": null,
+   "effective": null,
+   "territory": "US",
+   "attempts": [
+    {
+     "at": "2026-10-23",
+     "how": "curl with a browser user agent",
+     "result": "HTTP 200"
+    }
+   ],
+   "facts": [
+    {
+     "field": "seasons-listed",
+     "value": "The page lists seasons one to five, season five’s actors without their characters",
+     "quote": "Season 5 Season 4 Season 3 Season 2 Season 1 Season 5 Sir Gary Oldman as Kristin Scott Thomas as Jack Lowden as"
     }
    ]
   }

@@ -27,3 +27,24 @@ the same record (`person.pro`), the same work loop, the same pay and the same pa
 What this module leaves for later, each a register row: flight delays and missed connections (T24, T25), a stay
 extended (T26), weather on outdoor days (T31), allowances and per diem, Australian tax, and jet lag. SLATE's body clock
 went in the scope reset of 2026-10-09; the trip tires the player through the existing condition alone.
+
+## Module 2: The Real Catalog, And Parts The Game Draws From It (2026-10-23)
+
+Parts 3, 5 and 6. The catalog is reference data: what official pages said when this build read them, kept apart from
+what happens in a save. A part the game draws from a real production is the save's own invention and says so wherever
+it's shown.
+
+| # | Check | Rows |
+|---|---|---|
+| C1 | Every catalog field is one of four kinds, kept apart: a fact read (its source, the day this build read it, the page's own date where it gives one, its territory, and the words it rests on), the game's assumption (said as one), an event of the save, or unknown (and why). A field no source gives is unknown, never a default. | PROV-01, PROV-02, CAT-10 |
+| C2 | Companies are records of their own, and a production names each by its role: producer, co-producer, in association, broadcaster, streaming platform or distributor. Apple TV streams Slow Horses, which See-Saw Films produces; ABC airs 9-1-1, Hulu streams it, and 20th Television produces it in association with Ryan Murphy Television and Brad Falchuk Teley-Vision. | CAT-01, CAT-02 |
+| C3 | Reference records for 9-1-1, Slow Horses, Severance and Abbott Elementary, and Amazon MGM Studios' announced theatrical slate for 2026 and 2027, from the official pages read on 2026-10-23. | CAT-05, CAT-06, CAT-07, CAT-08, CAT-09 |
+| C4 | A performer is credited for the scope the source gives: Slow Horses' season six ensemble from that season's release, Olivia Cooke as Sid Baker in season six. A cast page that names no characters credits the performer and leaves the character unknown. | CAT-12, PROV-09 |
+| C5 | No filming location is taken from a story's setting: a title's filming location is unknown unless a source says it, and a drawn part's place is the game's assumption, said as one. | CAT-11 |
+| C6 | A generated coverage inventory lists the pages inspected, the titles they named, the titles imported, the duplicates merged, the records left unresolved (pages whose words load only in a browser, pages that refused) and how many fields are unverified. It claims nothing beyond them. | CAT-03, CAT-04 |
+| C7 | Where two sources disagree, both are kept, the later one is used, and the disagreement is said: I Play Rocky's November 20, 2026 (S82, April 16) against November 6, 2026 in select theaters (S110, last changed October 22). | PROV-03, PROV-02 |
+| C8 | A part drawn from a real production is a new character in a season to come, with dates after the research baseline. The role, the offer and the engagement each say it's the game's invention, not a casting notice, and that no one at the production is casting it. No part is drawn from a film announced or released, from a production whose next work the game has no grounds to imagine (Severance), from a country whose rules and pay aren't in the game (Slow Horses, in the UK), or into a regular's character. | CAT-13, CAT-14, PROV-04, PROV-08, PROV-09, T61 |
+| C9 | A drawn part names no casting director, salary, deal or contract its sources don't give: the casting office is the production's, unnamed; the pay is the union's minimum. | PROV-06 |
+| C10 | A drawn part in Los Angeles is a trip from home, as work abroad is: the production's flights and hotel (its assumption), the player away for the whole of it, the US rule for permission, and no visa. | GEO-13, GEO-21 |
+| C11 | Casting's draw is keyed by the posting itself (the project, when it was posted, the round), not by the opportunity's place in the save's numbering, so a role added to the game changes no other role's casting. | CAST-11 |
+| C12 | Played: a represented life is put up for a drawn part, tapes, is decided, and booked work and its credit read as any other's; saved and loaded, the same. | CAT-14, CONT-01 |

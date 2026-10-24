@@ -514,7 +514,7 @@ export const CHAPTERS: readonly Chapter[] = [
     title: 'Finding Work',
     lead: 'Roles to be seen for, submissions, auditions, offers and the work itself, with or without an agent.',
     body: [
-      `The Career screen’s Opportunities tab lists the roles you can be seen for. Every project, company and casting office on it is invented for the game. New roles go up each Monday morning, and each takes submissions for ${counted(PRO_WORK.submitDays, 'day')}.`,
+      `The Career screen’s Opportunities tab lists the roles you can be seen for. Their projects, companies and casting offices are invented for the game, except a few parts drawn from real productions, which say so. New roles go up each Monday morning, and each takes submissions for ${counted(PRO_WORK.submitDays, 'day')}.`,
       'Each role says its project, the part, what it asks, its dates and place, the pay, and whether you can be seen for it. Some casting offices take actors only through an agent: those roles reach you only while an agent represents you, and the agent submits you for them.',
       'To put yourself up for an open role, press Submit Yourself. A submission sends your headshots and résumé, and a reel where casting asks for one. If something’s missing, the line under the button says what, and where to make it.',
       `${counted(PRO_WORK.replyDays, 'day').replace(/^./, (c) => c.toUpperCase())} later the casting office answers with an audition: in person in ${PRO_AUDITION_TOWNS} at a set time, with the trip there, or a self-tape due by an evening. An audition in person goes on your calendar.`,

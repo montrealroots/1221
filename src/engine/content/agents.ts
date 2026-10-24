@@ -3,8 +3,9 @@
  * Career Foundation And The First Individual Agent"; `docs/verification/career-2026-10-20/design.md`, The Agent).
  *
  * One agent, in depth: Thomas Ashgrove, an agent in the Legit (Theatrical) Department of Halberd Talent's New York
- * office. He and the agency are invented for the game, as every project, company and casting office in it is, and the
- * notice below says so where he first appears and on his panel. Until 2026-10-21 the agent was a real person, Jordan
+ * office. He and the agency are invented for the game, as every agency in it is, and the notice below says so where he
+ * first appears and on his panel. Until 2026-10-24 the notice said every project and casting office was too, which the
+ * parts drawn from real productions (brief 25's Module 2) had made untrue. Until 2026-10-21 the agent was a real person, Jordan
  * Parente of Stewart Talent, depicted only from what the agency and the trade press published
  * (`docs/research/career-2026-10-20/agent.md`); the owner chose a fictional agent in his place that day ("Let's go ahead
  * and swap in a fictional agent."). Neither name was found as a real talent agent or agency when checked that day.
@@ -112,7 +113,7 @@ export const AGENTS: readonly Agent[] = [
     agencyId: 'halberd-talent',
     role: 'Agent, Legit Department',
     routes: ['showcase', 'referral'],
-    notice: 'Thomas Ashgrove and Halberd Talent are invented for the game, as every agency, project and casting office in it is. His office takes no submissions it hasn’t asked for: it sees your materials through the School’s follow-up after the showcase, or a referral from someone you’ve worked with. He never gets in touch first.',
+    notice: 'Thomas Ashgrove and Halberd Talent are invented for the game, as every agency in it is. His office takes no submissions it hasn’t asked for: it sees your materials through the School’s follow-up after the showcase, or a referral from someone you’ve worked with. He never gets in touch first.',
     roster: {
       basis: 'assumption',
       // ASSUMPTION, the game's: types a legit list for stage and screen might take on, by billing and playing age.

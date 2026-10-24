@@ -440,22 +440,30 @@
    "sources": [],
    "edition": "",
    "applicability": "Every life.",
-   "implementation": [],
-   "entry": "None yet.",
-   "reads": "None yet.",
-   "writes": "None yet.",
-   "consumers": "None yet.",
-   "save": "None yet.",
-   "tests": [],
+   "implementation": [
+    "src/engine/content/catalog.ts",
+    "tools/catalog.mjs",
+    "src/engine/content/jurisdictions.ts"
+   ],
+   "entry": "Career, Opportunities: a drawn part’s “As Its Pages Had It”; docs/verification/career-world-2026-10-23/CATALOG.md.",
+   "reads": "The pages read (sources.json) and their quoted words.",
+   "writes": "Nothing in a save: the catalog is reference data, and a drawn part’s events are the save’s own (person.pro).",
+   "consumers": "productionWords, the drawn parts, CATALOG.md.",
+   "save": "None: the catalog isn’t saved; what a life does with a drawn part is, as any work is.",
+   "tests": [
+    "tests/career-catalog.test.ts#holds every read field, company, person, rating and cast line",
+    "tests/career-catalog.test.ts#says a production to a player as its pages had it",
+    "tests/career-drawn.test.ts#says so on the role and the offer"
+   ],
    "evidence": [],
-   "status": "Not Implemented",
+   "status": "Implemented And Verified",
    "blocker": "",
    "tracks": {
     "sourceLocated": "n/a",
     "sourceVerified": "n/a",
     "ruleExtracted": "n/a",
-    "implemented": "no",
-    "tested": "no",
+    "implemented": "yes",
+    "tested": "yes",
     "externallyBlocked": "no"
    },
    "covers": []
@@ -469,22 +477,29 @@
    "sources": [],
    "edition": "",
    "applicability": "Every life.",
-   "implementation": [],
-   "entry": "None yet.",
-   "reads": "None yet.",
-   "writes": "None yet.",
-   "consumers": "None yet.",
-   "save": "None yet.",
-   "tests": [],
+   "implementation": [
+    "src/engine/content/catalog.ts",
+    "tools/catalog.mjs"
+   ],
+   "entry": "Career, Opportunities: a drawn part’s “As Its Pages Had It”; docs/verification/career-world-2026-10-23/CATALOG.md.",
+   "reads": "Each field’s source id, and that source’s URL, published and retrieved dates, territory and status in sources.json.",
+   "writes": "None.",
+   "consumers": "CATALOG.md, productionWords’ “Read from its official pages on …”.",
+   "save": "None.",
+   "tests": [
+    "tests/career-catalog.test.ts#holds every read field, company, person, rating and cast line",
+    "tests/career-catalog.test.ts#records each page as read or unreadable",
+    "tests/career-catalog.test.ts#uses the later of two dates for I Play Rocky"
+   ],
    "evidence": [],
-   "status": "Not Implemented",
+   "status": "Implemented And Verified",
    "blocker": "",
    "tracks": {
     "sourceLocated": "n/a",
     "sourceVerified": "n/a",
     "ruleExtracted": "n/a",
-    "implemented": "no",
-    "tested": "no",
+    "implemented": "yes",
+    "tested": "yes",
     "externallyBlocked": "no"
    },
    "covers": []
@@ -498,22 +513,29 @@
    "sources": [],
    "edition": "",
    "applicability": "Every life.",
-   "implementation": [],
-   "entry": "None yet.",
-   "reads": "None yet.",
-   "writes": "None yet.",
-   "consumers": "None yet.",
-   "save": "None yet.",
-   "tests": [],
+   "implementation": [
+    "src/engine/content/catalog.ts",
+    "tools/catalog.mjs"
+   ],
+   "entry": "sources.json: each source’s attempts, what each retrieval got.",
+   "reads": "The attempts recorded for each page.",
+   "writes": "None.",
+   "consumers": "CATALOG.md’s unresolved records; the I Play Rocky conflict.",
+   "save": "None.",
+   "tests": [
+    "tests/career-catalog.test.ts#records each page as read or unreadable",
+    "tests/career-catalog.test.ts#uses the later of two dates for I Play Rocky",
+    "tests/career-catalog.test.ts#works the inventory out from the pages and the records"
+   ],
    "evidence": [],
-   "status": "Not Implemented",
-   "blocker": "",
+   "status": "Partially Implemented",
+   "blocker": "Each retrieval is recorded with what it got, and a fact read on two pages keeps both and uses the later; nothing yet rechecks a fact when a later module puts it to use.",
    "tracks": {
     "sourceLocated": "n/a",
     "sourceVerified": "n/a",
     "ruleExtracted": "n/a",
-    "implemented": "no",
-    "tested": "no",
+    "implemented": "partial",
+    "tested": "partial",
     "externallyBlocked": "no"
    },
    "covers": []
@@ -527,22 +549,31 @@
    "sources": [],
    "edition": "",
    "applicability": "Every life.",
-   "implementation": [],
-   "entry": "None yet.",
-   "reads": "None yet.",
-   "writes": "None yet.",
-   "consumers": "None yet.",
-   "save": "None yet.",
-   "tests": [],
+   "implementation": [
+    "src/engine/content/careerwork.ts",
+    "src/engine/systems/projobs.ts",
+    "src/ui/career/OpportunitiesPane.tsx",
+    "src/ui/career/WorkPane.tsx"
+   ],
+   "entry": "Career, Opportunities: The Game’s Own Part; the offer; Career, Work.",
+   "reads": "The template’s drawn production.",
+   "writes": "The opportunity, as any.",
+   "consumers": "The role card, the offer’s decision, the engagement.",
+   "save": "person.pro.opportunities, engagements.",
+   "tests": [
+    "tests/career-drawn.test.ts#says so on the role and the offer",
+    "tests/career-drawn.test.ts#PLAYER JOURNEY: put up by the agent",
+    "tests/pro-opportunities-screen.test.ts#and the game’s own parts in 9-1-1 and Abbott Elementary"
+   ],
    "evidence": [],
-   "status": "Not Implemented",
+   "status": "Implemented And Verified",
    "blocker": "",
    "tracks": {
     "sourceLocated": "n/a",
     "sourceVerified": "n/a",
     "ruleExtracted": "n/a",
-    "implemented": "no",
-    "tested": "no",
+    "implemented": "yes",
+    "tested": "yes",
     "externallyBlocked": "no"
    },
    "covers": []
@@ -585,22 +616,29 @@
    "sources": [],
    "edition": "",
    "applicability": "Every life.",
-   "implementation": [],
-   "entry": "None yet.",
-   "reads": "None yet.",
-   "writes": "None yet.",
-   "consumers": "None yet.",
-   "save": "None yet.",
-   "tests": [],
+   "implementation": [
+    "src/engine/content/careerwork.ts",
+    "src/engine/systems/projobs.ts",
+    "src/ui/career/OpportunitiesPane.tsx",
+    "src/ui/career/WorkPane.tsx"
+   ],
+   "entry": "The drawn parts: “cast by the production’s casting office”; the union’s minimum.",
+   "reads": "RATES, the catalog.",
+   "writes": "None.",
+   "consumers": "The role card, the offer.",
+   "save": "None.",
+   "tests": [
+    "tests/career-drawn.test.ts#draws two parts, each from a series on the air"
+   ],
    "evidence": [],
-   "status": "Not Implemented",
+   "status": "Implemented And Verified",
    "blocker": "",
    "tracks": {
     "sourceLocated": "n/a",
     "sourceVerified": "n/a",
     "ruleExtracted": "n/a",
-    "implemented": "no",
-    "tested": "no",
+    "implemented": "yes",
+    "tested": "yes",
     "externallyBlocked": "no"
    },
    "covers": []
@@ -643,22 +681,29 @@
    "sources": [],
    "edition": "",
    "applicability": "Every life.",
-   "implementation": [],
-   "entry": "None yet.",
-   "reads": "None yet.",
-   "writes": "None yet.",
-   "consumers": "None yet.",
-   "save": "None yet.",
-   "tests": [],
+   "implementation": [
+    "src/engine/content/careerwork.ts",
+    "src/engine/systems/projobs.ts",
+    "src/ui/career/OpportunitiesPane.tsx",
+    "src/ui/career/WorkPane.tsx"
+   ],
+   "entry": "The drawn parts: seasons the game imagines after the research baseline.",
+   "reads": "The catalog’s format and status.",
+   "writes": "None.",
+   "consumers": "Posting.",
+   "save": "None.",
+   "tests": [
+    "tests/career-drawn.test.ts#draws two parts, each from a series on the air"
+   ],
    "evidence": [],
-   "status": "Not Implemented",
+   "status": "Implemented And Verified",
    "blocker": "",
    "tracks": {
     "sourceLocated": "n/a",
     "sourceVerified": "n/a",
     "ruleExtracted": "n/a",
-    "implemented": "no",
-    "tested": "no",
+    "implemented": "yes",
+    "tested": "yes",
     "externallyBlocked": "no"
    },
    "covers": []
@@ -672,22 +717,32 @@
    "sources": [],
    "edition": "",
    "applicability": "Every life.",
-   "implementation": [],
-   "entry": "None yet.",
-   "reads": "None yet.",
-   "writes": "None yet.",
-   "consumers": "None yet.",
-   "save": "None yet.",
-   "tests": [],
+   "implementation": [
+    "src/engine/content/careerwork.ts",
+    "src/engine/systems/projobs.ts",
+    "src/ui/career/OpportunitiesPane.tsx",
+    "src/ui/career/WorkPane.tsx",
+    "src/engine/content/catalog.ts",
+    "tools/catalog.mjs"
+   ],
+   "entry": "The drawn parts: new characters; the catalog’s cast by scope.",
+   "reads": "The catalog’s cast.",
+   "writes": "None.",
+   "consumers": "The role card.",
+   "save": "None.",
+   "tests": [
+    "tests/career-drawn.test.ts#draws two parts, each from a series on the air",
+    "tests/career-catalog.test.ts#credits a performer for the scope the page gives"
+   ],
    "evidence": [],
-   "status": "Not Implemented",
+   "status": "Implemented And Verified",
    "blocker": "",
    "tracks": {
     "sourceLocated": "n/a",
     "sourceVerified": "n/a",
     "ruleExtracted": "n/a",
-    "implemented": "no",
-    "tested": "no",
+    "implemented": "yes",
+    "tested": "yes",
     "externallyBlocked": "no"
    },
    "covers": []
@@ -1143,22 +1198,29 @@
    "sources": [],
    "edition": "",
    "applicability": "Every life.",
-   "implementation": [],
-   "entry": "None yet.",
-   "reads": "None yet.",
-   "writes": "None yet.",
-   "consumers": "None yet.",
-   "save": "None yet.",
-   "tests": [],
+   "implementation": [
+    "src/engine/content/catalog.ts",
+    "tools/catalog.mjs"
+   ],
+   "entry": "Career, Opportunities: a drawn part’s “As Its Pages Had It”; docs/verification/career-world-2026-10-23/CATALOG.md.",
+   "reads": "The pages read.",
+   "writes": "None.",
+   "consumers": "productionWords, companiesAs, CATALOG.md.",
+   "save": "None.",
+   "tests": [
+    "tests/career-catalog.test.ts#names the producer, the broadcaster and the platform apart",
+    "tests/career-catalog.test.ts#credits a performer for the scope the page gives",
+    "tests/career-catalog.test.ts#holds the four series and the slate’s twelve films"
+   ],
    "evidence": [],
-   "status": "Not Implemented",
-   "blocker": "",
+   "status": "Partially Implemented",
+   "blocker": "Companies by role, productions, seasons, characters, performers, creators, showrunners and directors are records apart; episodes are counted, not recorded one by one, and no casting director or representative is in the catalog, none being given by the pages read.",
    "tracks": {
     "sourceLocated": "n/a",
     "sourceVerified": "n/a",
     "ruleExtracted": "n/a",
-    "implemented": "no",
-    "tested": "no",
+    "implemented": "partial",
+    "tested": "yes",
     "externallyBlocked": "no"
    },
    "covers": []
@@ -1172,22 +1234,27 @@
    "sources": [],
    "edition": "",
    "applicability": "Every life.",
-   "implementation": [],
-   "entry": "None yet.",
-   "reads": "None yet.",
-   "writes": "None yet.",
-   "consumers": "None yet.",
-   "save": "None yet.",
-   "tests": [],
+   "implementation": [
+    "src/engine/content/catalog.ts",
+    "tools/catalog.mjs"
+   ],
+   "entry": "Career, Opportunities: a drawn part’s “As Its Pages Had It”; docs/verification/career-world-2026-10-23/CATALOG.md.",
+   "reads": "Each company credit’s role and words.",
+   "writes": "None.",
+   "consumers": "companiesAs, the drawn parts’ company and broadcaster.",
+   "save": "None.",
+   "tests": [
+    "tests/career-catalog.test.ts#names the producer, the broadcaster and the platform apart"
+   ],
    "evidence": [],
-   "status": "Not Implemented",
+   "status": "Implemented And Verified",
    "blocker": "",
    "tracks": {
     "sourceLocated": "n/a",
     "sourceVerified": "n/a",
     "ruleExtracted": "n/a",
-    "implemented": "no",
-    "tested": "no",
+    "implemented": "yes",
+    "tested": "yes",
     "externallyBlocked": "no"
    },
    "covers": []
@@ -1205,22 +1272,28 @@
    ],
    "edition": "",
    "applicability": "Every life.",
-   "implementation": [],
-   "entry": "None yet.",
-   "reads": "None yet.",
-   "writes": "None yet.",
-   "consumers": "None yet.",
-   "save": "None yet.",
-   "tests": [],
+   "implementation": [
+    "src/engine/content/catalog.ts",
+    "tools/catalog.mjs"
+   ],
+   "entry": "docs/verification/career-world-2026-10-23/CATALOG.md, The Inventory.",
+   "reads": "PAGES_READ and the records.",
+   "writes": "CATALOG.md.",
+   "consumers": "The owner’s review.",
+   "save": "None.",
+   "tests": [
+    "tests/career-catalog.test.ts#works the inventory out from the pages and the records",
+    "tests/career-catalog.test.ts#is what tools/catalog.mjs writes"
+   ],
    "evidence": [],
-   "status": "Not Implemented",
-   "blocker": "",
+   "status": "Partially Implemented",
+   "blocker": "The inventory is worked out from what was read: one studio’s slate (Amazon MGM Studios, S82) and four series’ pages. Universal’s page (S83) loads its films only in a browser, and Amazon MGM’s press dossier (S84) was located, not read; no other studio’s slate is in.",
    "tracks": {
     "sourceLocated": "yes",
-    "sourceVerified": "no",
-    "ruleExtracted": "no",
-    "implemented": "no",
-    "tested": "no",
+    "sourceVerified": "partial",
+    "ruleExtracted": "n/a",
+    "implemented": "partial",
+    "tested": "yes",
     "externallyBlocked": "no"
    },
    "covers": []
@@ -1234,22 +1307,29 @@
    "sources": [],
    "edition": "",
    "applicability": "Every life.",
-   "implementation": [],
-   "entry": "None yet.",
-   "reads": "None yet.",
-   "writes": "None yet.",
-   "consumers": "None yet.",
-   "save": "None yet.",
-   "tests": [],
+   "implementation": [
+    "src/engine/content/catalog.ts",
+    "tools/catalog.mjs",
+    "src/ui/career/OpportunitiesPane.tsx"
+   ],
+   "entry": "CATALOG.md’s opening; the Opportunities tab’s head (“a few parts drawn from real productions”).",
+   "reads": "None.",
+   "writes": "None.",
+   "consumers": "The player, the owner.",
+   "save": "None.",
+   "tests": [
+    "tests/career-catalog.test.ts#claims no more than it read",
+    "tests/pro-opportunities-screen.test.ts#except a few parts drawn from real productions"
+   ],
    "evidence": [],
-   "status": "Not Implemented",
+   "status": "Implemented And Verified",
    "blocker": "",
    "tracks": {
     "sourceLocated": "n/a",
     "sourceVerified": "n/a",
     "ruleExtracted": "n/a",
-    "implemented": "no",
-    "tested": "no",
+    "implemented": "yes",
+    "tested": "yes",
     "externallyBlocked": "no"
    },
    "covers": []
@@ -1267,22 +1347,29 @@
    ],
    "edition": "",
    "applicability": "Every life.",
-   "implementation": [],
-   "entry": "None yet.",
-   "reads": "None yet.",
-   "writes": "None yet.",
-   "consumers": "None yet.",
-   "save": "None yet.",
-   "tests": [],
+   "implementation": [
+    "src/engine/content/catalog.ts",
+    "tools/catalog.mjs"
+   ],
+   "entry": "CATALOG.md, 9-1-1; a drawn part’s “As Its Pages Had It”.",
+   "reads": "Its official pages.",
+   "writes": "None.",
+   "consumers": "productionWords, CATALOG.md, the drawn part.",
+   "save": "None.",
+   "tests": [
+    "tests/career-catalog.test.ts#holds the four series and the slate’s twelve films",
+    "tests/career-catalog.test.ts#holds every read field, company, person, rating and cast line",
+    "tests/career-catalog.test.ts#says a production to a player as its pages had it"
+   ],
    "evidence": [],
-   "status": "Not Implemented",
-   "blocker": "",
+   "status": "Implemented And Verified",
+   "blocker": "Its cast page loads only in a browser (unresolved, CATALOG.md); its record rests on the pages that read.",
    "tracks": {
     "sourceLocated": "yes",
-    "sourceVerified": "no",
-    "ruleExtracted": "no",
-    "implemented": "no",
-    "tested": "no",
+    "sourceVerified": "partial",
+    "ruleExtracted": "n/a",
+    "implemented": "yes",
+    "tested": "yes",
     "externallyBlocked": "no"
    },
    "covers": []
@@ -1299,22 +1386,29 @@
    ],
    "edition": "",
    "applicability": "Every life.",
-   "implementation": [],
-   "entry": "None yet.",
-   "reads": "None yet.",
-   "writes": "None yet.",
-   "consumers": "None yet.",
-   "save": "None yet.",
-   "tests": [],
+   "implementation": [
+    "src/engine/content/catalog.ts",
+    "tools/catalog.mjs"
+   ],
+   "entry": "CATALOG.md, Slow Horses; reference only: no part is drawn from it.",
+   "reads": "Its official pages.",
+   "writes": "None.",
+   "consumers": "productionWords, CATALOG.md.",
+   "save": "None.",
+   "tests": [
+    "tests/career-catalog.test.ts#holds the four series and the slate’s twelve films",
+    "tests/career-catalog.test.ts#holds every read field, company, person, rating and cast line",
+    "tests/career-catalog.test.ts#credits a performer for the scope the page gives"
+   ],
    "evidence": [],
-   "status": "Not Implemented",
+   "status": "Implemented And Verified",
    "blocker": "",
    "tracks": {
     "sourceLocated": "yes",
-    "sourceVerified": "no",
-    "ruleExtracted": "no",
-    "implemented": "no",
-    "tested": "no",
+    "sourceVerified": "yes",
+    "ruleExtracted": "n/a",
+    "implemented": "yes",
+    "tested": "yes",
     "externallyBlocked": "no"
    },
    "covers": []
@@ -1330,22 +1424,29 @@
    ],
    "edition": "",
    "applicability": "Every life.",
-   "implementation": [],
-   "entry": "None yet.",
-   "reads": "None yet.",
-   "writes": "None yet.",
-   "consumers": "None yet.",
-   "save": "None yet.",
-   "tests": [],
+   "implementation": [
+    "src/engine/content/catalog.ts",
+    "tools/catalog.mjs"
+   ],
+   "entry": "CATALOG.md, Severance; reference only: no part is drawn from it.",
+   "reads": "Its official pages.",
+   "writes": "None.",
+   "consumers": "productionWords, CATALOG.md.",
+   "save": "None.",
+   "tests": [
+    "tests/career-catalog.test.ts#holds the four series and the slate’s twelve films",
+    "tests/career-catalog.test.ts#holds every read field, company, person, rating and cast line",
+    "tests/career-catalog.test.ts#credits a performer for the scope the page gives"
+   ],
    "evidence": [],
-   "status": "Not Implemented",
+   "status": "Implemented And Verified",
    "blocker": "",
    "tracks": {
     "sourceLocated": "yes",
-    "sourceVerified": "no",
-    "ruleExtracted": "no",
-    "implemented": "no",
-    "tested": "no",
+    "sourceVerified": "yes",
+    "ruleExtracted": "n/a",
+    "implemented": "yes",
+    "tested": "yes",
     "externallyBlocked": "no"
    },
    "covers": []
@@ -1362,22 +1463,28 @@
    ],
    "edition": "",
    "applicability": "Every life.",
-   "implementation": [],
-   "entry": "None yet.",
-   "reads": "None yet.",
-   "writes": "None yet.",
-   "consumers": "None yet.",
-   "save": "None yet.",
-   "tests": [],
+   "implementation": [
+    "src/engine/content/catalog.ts",
+    "tools/catalog.mjs"
+   ],
+   "entry": "CATALOG.md, Abbott Elementary; a drawn part’s “As Its Pages Had It”.",
+   "reads": "Its official pages.",
+   "writes": "None.",
+   "consumers": "productionWords, CATALOG.md, the drawn part.",
+   "save": "None.",
+   "tests": [
+    "tests/career-catalog.test.ts#holds the four series and the slate’s twelve films",
+    "tests/career-catalog.test.ts#holds every read field, company, person, rating and cast line"
+   ],
    "evidence": [],
-   "status": "Not Implemented",
-   "blocker": "",
+   "status": "Implemented And Verified",
+   "blocker": "Its cast page loads only in a browser (unresolved, CATALOG.md); its record rests on the pages that read.",
    "tracks": {
     "sourceLocated": "yes",
-    "sourceVerified": "no",
-    "ruleExtracted": "no",
-    "implemented": "no",
-    "tested": "no",
+    "sourceVerified": "partial",
+    "ruleExtracted": "n/a",
+    "implemented": "yes",
+    "tested": "yes",
     "externallyBlocked": "no"
    },
    "covers": []
@@ -1394,22 +1501,29 @@
    ],
    "edition": "",
    "applicability": "Every life.",
-   "implementation": [],
-   "entry": "None yet.",
-   "reads": "None yet.",
-   "writes": "None yet.",
-   "consumers": "None yet.",
-   "save": "None yet.",
-   "tests": [],
+   "implementation": [
+    "src/engine/content/catalog.ts",
+    "tools/catalog.mjs"
+   ],
+   "entry": "CATALOG.md, the twelve films of Amazon MGM Studios’ slate.",
+   "reads": "S82, S110.",
+   "writes": "None.",
+   "consumers": "CATALOG.md.",
+   "save": "None.",
+   "tests": [
+    "tests/career-catalog.test.ts#holds the four series and the slate’s twelve films",
+    "tests/career-catalog.test.ts#uses the later of two dates for I Play Rocky",
+    "tests/career-catalog.test.ts#claims no more than it read"
+   ],
    "evidence": [],
-   "status": "Not Implemented",
-   "blocker": "",
+   "status": "Partially Implemented",
+   "blocker": "One studio’s announced slate (Amazon MGM Studios, S82, with S110 for I Play Rocky) is in; Universal’s page (S83) holds its films only in a browser, and no other studio’s slate was read.",
    "tracks": {
     "sourceLocated": "yes",
-    "sourceVerified": "no",
-    "ruleExtracted": "no",
-    "implemented": "no",
-    "tested": "no",
+    "sourceVerified": "yes",
+    "ruleExtracted": "n/a",
+    "implemented": "partial",
+    "tested": "yes",
     "externallyBlocked": "no"
    },
    "covers": []
@@ -1423,22 +1537,29 @@
    "sources": [],
    "edition": "",
    "applicability": "Every life.",
-   "implementation": [],
-   "entry": "None yet.",
-   "reads": "None yet.",
-   "writes": "None yet.",
-   "consumers": "None yet.",
-   "save": "None yet.",
-   "tests": [],
+   "implementation": [
+    "src/engine/content/catalog.ts",
+    "tools/catalog.mjs"
+   ],
+   "entry": "Career, Opportunities: a drawn part’s “As Its Pages Had It”; docs/verification/career-world-2026-10-23/CATALOG.md.",
+   "reads": "The pages read.",
+   "writes": "None.",
+   "consumers": "fieldsOf, CATALOG.md, productionWords.",
+   "save": "None.",
+   "tests": [
+    "tests/career-catalog.test.ts#holds every read field, company, person, rating and cast line",
+    "tests/career-catalog.test.ts#works the inventory out from the pages and the records",
+    "tests/career-catalog.test.ts#is what tools/catalog.mjs writes"
+   ],
    "evidence": [],
-   "status": "Not Implemented",
+   "status": "Implemented And Verified",
    "blocker": "",
    "tracks": {
     "sourceLocated": "n/a",
     "sourceVerified": "n/a",
     "ruleExtracted": "n/a",
-    "implemented": "no",
-    "tested": "no",
+    "implemented": "yes",
+    "tested": "yes",
     "externallyBlocked": "no"
    },
    "covers": []
@@ -1452,22 +1573,32 @@
    "sources": [],
    "edition": "",
    "applicability": "Every life.",
-   "implementation": [],
-   "entry": "None yet.",
-   "reads": "None yet.",
-   "writes": "None yet.",
-   "consumers": "None yet.",
-   "save": "None yet.",
-   "tests": [],
+   "implementation": [
+    "src/engine/content/catalog.ts",
+    "tools/catalog.mjs",
+    "src/engine/content/careerwork.ts",
+    "src/engine/systems/projobs.ts",
+    "src/ui/career/OpportunitiesPane.tsx",
+    "src/ui/career/WorkPane.tsx"
+   ],
+   "entry": "CATALOG.md’s filming field; a drawn part’s “The game sets this part’s shoot in Los Angeles”.",
+   "reads": "None.",
+   "writes": "None.",
+   "consumers": "drawnWords.",
+   "save": "None.",
+   "tests": [
+    "tests/career-catalog.test.ts#takes no filming location from where a story is set",
+    "tests/career-drawn.test.ts#says so on the role and the offer"
+   ],
    "evidence": [],
-   "status": "Not Implemented",
+   "status": "Implemented And Verified",
    "blocker": "",
    "tracks": {
     "sourceLocated": "n/a",
     "sourceVerified": "n/a",
     "ruleExtracted": "n/a",
-    "implemented": "no",
-    "tested": "no",
+    "implemented": "yes",
+    "tested": "yes",
     "externallyBlocked": "no"
    },
    "covers": []
@@ -1481,22 +1612,27 @@
    "sources": [],
    "edition": "",
    "applicability": "Every life.",
-   "implementation": [],
-   "entry": "None yet.",
-   "reads": "None yet.",
-   "writes": "None yet.",
-   "consumers": "None yet.",
-   "save": "None yet.",
-   "tests": [],
+   "implementation": [
+    "src/engine/content/catalog.ts",
+    "tools/catalog.mjs"
+   ],
+   "entry": "CATALOG.md’s cast, each by scope.",
+   "reads": "The pages’ cast lines.",
+   "writes": "None.",
+   "consumers": "productionWords.",
+   "save": "None.",
+   "tests": [
+    "tests/career-catalog.test.ts#credits a performer for the scope the page gives"
+   ],
    "evidence": [],
-   "status": "Not Implemented",
+   "status": "Implemented And Verified",
    "blocker": "",
    "tracks": {
     "sourceLocated": "n/a",
     "sourceVerified": "n/a",
     "ruleExtracted": "n/a",
-    "implemented": "no",
-    "tested": "no",
+    "implemented": "yes",
+    "tested": "yes",
     "externallyBlocked": "no"
    },
    "covers": []
@@ -1510,22 +1646,29 @@
    "sources": [],
    "edition": "",
    "applicability": "Every life.",
-   "implementation": [],
-   "entry": "None yet.",
-   "reads": "None yet.",
-   "writes": "None yet.",
-   "consumers": "None yet.",
-   "save": "None yet.",
-   "tests": [],
+   "implementation": [
+    "src/engine/content/careerwork.ts",
+    "src/engine/systems/projobs.ts",
+    "src/ui/career/OpportunitiesPane.tsx",
+    "src/ui/career/WorkPane.tsx"
+   ],
+   "entry": "The drawn parts: none from a film.",
+   "reads": "The catalog’s format.",
+   "writes": "None.",
+   "consumers": "Posting.",
+   "save": "None.",
+   "tests": [
+    "tests/career-drawn.test.ts#draws two parts, each from a series on the air"
+   ],
    "evidence": [],
-   "status": "Not Implemented",
+   "status": "Implemented And Verified",
    "blocker": "",
    "tracks": {
     "sourceLocated": "n/a",
     "sourceVerified": "n/a",
     "ruleExtracted": "n/a",
-    "implemented": "no",
-    "tested": "no",
+    "implemented": "yes",
+    "tested": "yes",
     "externallyBlocked": "no"
    },
    "covers": []
@@ -1539,22 +1682,30 @@
    "sources": [],
    "edition": "",
    "applicability": "Every life.",
-   "implementation": [],
-   "entry": "None yet.",
-   "reads": "None yet.",
-   "writes": "None yet.",
-   "consumers": "None yet.",
-   "save": "None yet.",
-   "tests": [],
+   "implementation": [
+    "src/engine/content/careerwork.ts",
+    "src/engine/systems/projobs.ts",
+    "src/ui/career/OpportunitiesPane.tsx",
+    "src/ui/career/WorkPane.tsx"
+   ],
+   "entry": "Career, Opportunities: Through An Agent, The Game’s Own Part; the offer; Career, Work.",
+   "reads": "The catalog and the templates.",
+   "writes": "Opportunities, engagements, credits.",
+   "consumers": "Casting, the agent, pay.",
+   "save": "person.pro.",
+   "tests": [
+    "tests/career-drawn.test.ts#says so on the role and the offer",
+    "tests/career-drawn.test.ts#PLAYER JOURNEY: put up by the agent"
+   ],
    "evidence": [],
-   "status": "Not Implemented",
+   "status": "Implemented And Verified",
    "blocker": "",
    "tracks": {
     "sourceLocated": "n/a",
     "sourceVerified": "n/a",
     "ruleExtracted": "n/a",
-    "implemented": "no",
-    "tested": "no",
+    "implemented": "yes",
+    "tested": "yes",
     "externallyBlocked": "no"
    },
    "covers": []
@@ -1872,22 +2023,24 @@
     "src/engine/decided.ts"
    ],
    "entry": "Career, Opportunities.",
-   "reads": "Deciders’ stored draws.",
+   "reads": "Deciders’ draws, keyed by the posting (project, posted, round) from 2026-10-23.",
    "writes": "Rounds’ casting records.",
    "consumers": "Offers.",
    "save": "person.pro.opportunities[].rounds[].casting.",
    "tests": [
-    "tests/b20-career-saveload.test.ts"
+    "tests/b20-career-saveload.test.ts",
+    "tests/career-drawn.test.ts#decides a posting the same whatever its opportunity’s number",
+    "tests/career-drawn.test.ts#PLAYER JOURNEY: put up by the agent"
    ],
    "evidence": [],
-   "status": "Implemented, Verification Incomplete",
+   "status": "Implemented And Verified",
    "blocker": "",
    "tracks": {
     "sourceLocated": "n/a",
     "sourceVerified": "n/a",
     "ruleExtracted": "n/a",
-    "implemented": "partial",
-    "tested": "partial",
+    "implemented": "yes",
+    "tested": "yes",
     "externallyBlocked": "no"
    },
    "covers": []
@@ -3452,7 +3605,7 @@
    "implementation": [
     "src/engine/systems/worktrip.ts"
    ],
-   "entry": "The Trip To Sydney’s legs; the clock stops for the car to the airport.",
+   "entry": "The Trip To Sydney’s legs; the clock stops for the car to the airport; the trip to Los Angeles for a drawn part.",
    "reads": "Distances between cities, airports, hubs, zones.",
    "writes": "Legs with local departure and arrival, the stay.",
    "consumers": "whereAt, the work days, the School, auditions.",
@@ -3460,7 +3613,9 @@
    "tests": [
     "tests/career-world-sydney.test.ts#T21, T22: New Haven to Sydney",
     "tests/career-world-sydney.test.ts#T11, T21, T22, PLAYER JOURNEY",
-    "tests/career-world-sydney.test.ts#asleep when the car to the airport comes"
+    "tests/career-world-sydney.test.ts#asleep when the car to the airport comes",
+    "tests/career-drawn.test.ts#flies New Haven to Los Angeles direct",
+    "tests/career-drawn.test.ts#PLAYER JOURNEY: put up by the agent"
    ],
    "evidence": [],
    "status": "Partially Implemented",
@@ -3713,7 +3868,7 @@
     "src/engine/systems/worktrip.ts",
     "src/engine/systems/projobs.ts"
    ],
-   "entry": "The calendar, the School’s classes, auditions, work days.",
+   "entry": "The calendar, the School’s classes, auditions, work days; the trip to Los Angeles for a drawn part.",
    "reads": "The trip’s legs and stay (whereAt).",
    "writes": "Missed classes and auditions, said with where the player was.",
    "consumers": "The School’s present(), the audition handler, the work day.",
@@ -3721,7 +3876,9 @@
    "tests": [
     "tests/career-world-sydney.test.ts#T11, T21, T22, PLAYER JOURNEY",
     "tests/career-world-sydney.test.ts#T28: a booking whose days fall in the trip",
-    "tests/career-world-sydney.test.ts#asleep when the car to the airport comes"
+    "tests/career-world-sydney.test.ts#asleep when the car to the airport comes",
+    "tests/career-drawn.test.ts#flies New Haven to Los Angeles direct",
+    "tests/career-drawn.test.ts#PLAYER JOURNEY: put up by the agent"
    ],
    "evidence": [],
    "status": "Implemented And Verified",
@@ -4830,11 +4987,12 @@
    "consumers": "The Work tab, Papers.",
    "save": "Saved and loaded at each stage in the journey.",
    "tests": [
-    "tests/career-world-sydney.test.ts#T11, T21, T22, PLAYER JOURNEY"
+    "tests/career-world-sydney.test.ts#T11, T21, T22, PLAYER JOURNEY",
+    "tests/career-drawn.test.ts#PLAYER JOURNEY: put up by the agent"
    ],
    "evidence": [],
    "status": "Partially Implemented",
-   "blocker": "Applications, auditions, contracts, roles, credits and earnings persist (brief 19, and the trip here); collaborators, scenes, footage, reception, nominations and awards are later modules.",
+   "blocker": "Applications, auditions, contracts, roles, credits and earnings persist (brief 19, the trip abroad, and a drawn part saved and loaded on the way); collaborators, scenes, footage, reception, nominations and awards are later modules.",
    "tracks": {
     "sourceLocated": "n/a",
     "sourceVerified": "n/a",
@@ -7825,22 +7983,30 @@
    "sources": [],
    "edition": "",
    "applicability": "Every life.",
-   "implementation": [],
-   "entry": "None yet.",
-   "reads": "None yet.",
-   "writes": "None yet.",
-   "consumers": "None yet.",
-   "save": "None yet.",
-   "tests": [],
+   "implementation": [
+    "src/engine/content/careerwork.ts",
+    "src/engine/systems/projobs.ts",
+    "src/ui/career/OpportunitiesPane.tsx",
+    "src/ui/career/WorkPane.tsx"
+   ],
+   "entry": "Career, Opportunities; the offer.",
+   "reads": "The drawn templates.",
+   "writes": "None.",
+   "consumers": "The role card.",
+   "save": "None.",
+   "tests": [
+    "tests/career-drawn.test.ts#says so on the role and the offer",
+    "tests/career-drawn.test.ts#draws two parts, each from a series on the air"
+   ],
    "evidence": [],
-   "status": "Not Implemented",
+   "status": "Implemented And Verified",
    "blocker": "",
    "tracks": {
     "sourceLocated": "n/a",
     "sourceVerified": "n/a",
     "ruleExtracted": "n/a",
-    "implemented": "no",
-    "tested": "no",
+    "implemented": "yes",
+    "tested": "yes",
     "externallyBlocked": "no"
    },
    "covers": [

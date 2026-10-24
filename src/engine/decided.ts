@@ -648,6 +648,6 @@ defineDecider<{ sim: Simulation; band: number; fit: number; kind: number }, stri
   sample: (seed) => ({ sim: atYale(seed), band: seed % 4, fit: (seed % 5) / 4, kind: seed % PROJECTS.length }),
   decide: ({ sim, band, fit, kind }) => {
     const b = (['unready', 'working', 'strong', 'exceptional'] as const)[band]!;
-    return (['callback', 'final'] as const).map((round) => Array.from({ length: 40 }, (_, n) => (castingDraw(sim, { id: `o${n}`, projectId: PROJECTS[kind]!.id }, round, b, fit).yes ? '1' : '0')).join('')).join(' ');
+    return (['callback', 'final'] as const).map((round) => Array.from({ length: 40 }, (_, n) => (castingDraw(sim, { postedAt: sim.now + n * 7 * 86_400_000, projectId: PROJECTS[kind]!.id }, round, b, fit).yes ? '1' : '0')).join('')).join(' ');
   },
 });

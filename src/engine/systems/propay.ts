@@ -145,7 +145,7 @@ export const BILLS_KEPT = 12;
  * The SAG-AFTRA work that makes an actor eligible: a principal role under the TV/Theatrical or the Low Budget agreement
  * (S22's Taft-Hartley reports). Ultra Low Budget and student films don't (S20, a search engine's copy).
  */
-export const SAG_QUALIFIES: readonly ProjectKind[] = ['network-drama', 'low-budget', 'overseas-feature'];
+export const SAG_QUALIFIES: readonly ProjectKind[] = ['network-drama', 'network-comedy', 'low-budget', 'overseas-feature'];
 
 /** What an agreement's scope covers: stage, film and television (`AGREEMENT_TERMS`, a simulation term), in the US. */
 export const COVERED_MEDIA: readonly ProMedium[] = ['stage', 'film', 'television'];

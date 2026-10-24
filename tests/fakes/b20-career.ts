@@ -228,7 +228,8 @@ export function baseLife(seed: string, more: Partial<ReturnType<typeof newLifeCo
 /**
  * A base life played to an offer for a part, through the commands and the clock: the part's first posting submitted,
  * its sides prepared, taped or auditioned, and casting's word. The seeds used are tests/b20-career-skill.test.ts's fixed
- * list's, whose lives were offered: b20-skill-0 (Jess, Static On Route 9) and b20-skill-2 (Robin, Last Bus To Eastview).
+ * list's, whose lives were offered: b20-skill-0 (Jess, Static On Route 9) and b20-skill-1 (Robin, Last Bus To Eastview;
+ * b20-skill-2 until 2026-10-23, when casting's draw came to be keyed by the posting, brief 25).
  */
 export function offeredPart(seed: string, projectId: string): { sim: Simulation; o: Opportunity } {
   const sim = baseLife(seed);

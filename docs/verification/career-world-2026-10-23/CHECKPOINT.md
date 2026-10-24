@@ -18,8 +18,8 @@ The state of the work, kept so a session that's interrupted can pick it up. The 
 | # | Module | State |
 |---|---|---|
 | 0 | Starting point, register, sources, checker | Done: `f341b3b1` |
-| 1 | The overseas engagement: Sydney, travel, presence, stay, permission, work, pay, return | Done in this commit (W1 to W12; see below) |
-| 2 | The real industry catalog and simulated roles drawn from it | Waiting |
+| 1 | The overseas engagement: Sydney, travel, presence, stay, permission, work, pay, return | Done: `6261883e`, `880d4231` (W1 to W12; see below) |
+| 2 | The real industry catalog and simulated roles drawn from it | Done in this commit (C1 to C12; see below) |
 | 3 | Real agencies and agents in the representation engine | Waiting |
 | 4 | Contracts, options, episode guarantees, payment states, residuals, renewal and cancellation | Waiting |
 | 5 | Distinct production workflows | Waiting |
@@ -31,6 +31,8 @@ The state of the work, kept so a session that's interrupted can pick it up. The 
 | What | Tried | Affects | Fallback |
 |---|---|---|---|
 | The ATO's foreign-resident withholding pages (S28) | curl with a browser's user agent, WebFetch, the ATO's public content API: each HTTP 403, 2026-10-23 | Australian tax on pay for work in Australia (GEO-06, GEO-19) | The indexed summary is kept in `sources.json` as an excerpt and not used as a verified rule. Australian tax is shown as not worked out by the game, never as nil. |
+| Cast pages for 9-1-1 (S88) and Abbott Elementary (S86), and Universal's upcoming films (S83) | Each read 2026-10-23: HTTP 200, but the page loads its list in the browser, and its text holds none of it | Characters for those casts; a second studio's slate (CAT-03, CAT-09) | Recorded as unresolved in `CATALOG.md`. 9-1-1's and Abbott Elementary's casts come from their press pages (S80, S109), which name characters; no film from Universal is in the catalog. |
+| Amazon MGM Studios' press dossier (S84) | Located, not read | Per-film details beyond the slate's lines | The slate's own line for each film is the record; what it doesn't give is unknown. |
 | The 408 visa's charge and processing time (S01) | The page read in full on 2026-10-23; both are loaded by the department's estimator tools, not in the page | What the visa costs and how long it takes | Shown as not known to the game. Any time the game takes for a decision is its labeled assumption. |
 
 ## Module 1, As Built (2026-10-23)
@@ -62,7 +64,41 @@ The state of the work, kept so a session that's interrupted can pick it up. The 
   weather (T31), allowances and per diem, Australian tax (GEO-19, blocked on S28), jet lag (GEO-13), the five partly
   researched countries' rules.
 
+## Module 2, As Built (2026-10-24)
+
+- **The catalog** (`content/catalog.ts`): what thirteen official pages said on 2026-10-23, field by field. Every field
+  is a reading (its source, the words it rests on, held to `sources.json` by the test), a conflict kept with both
+  sources and the later used (I Play Rocky's release), the game's assumption, or unknown with why; none is a default.
+  Four series (9-1-1, Slow Horses, Severance, Abbott Elementary) and the twelve films of Amazon MGM Studios' slate;
+  thirteen companies, each named by the role its page gives (producer, in association, broadcaster, streaming
+  platform, distributor, studio label), and nothing said of who owns whom; performers credited for the scope their page
+  gives; no filming location, none being given. `CATALOG.md` is generated from it (`npx vite-node tools/catalog.mjs
+  --write`): 13 pages, 21 titles named, 16 imported, 4 merged, 3 unresolved, 116 of 175 fields unverified.
+- **Parts drawn from it** (`content/careerwork.ts`): Reese Pike in 9-1-1 and Casey Marlow in Abbott Elementary, new
+  characters in seasons the game imagines, each a co-star for an actor or an actress, through an agent only, at
+  SAG-AFTRA's day minimum, cast by the production's casting office, unnamed. The role, the offer and the engagement say
+  it's the game's own and that no one at the production is casting it; the role shows the production as its pages had
+  it. No part is drawn from a film, from Severance (no season ahead in its pages) or from Slow Horses (the UK's rules
+  aren't in the game).
+- **Los Angeles** is a trip from home, as Sydney is: the production's flights and hotel, the player away for the whole of
+  it, the US rule for permission, no visa. Each day's call is at the shoot's hour on Los Angeles' clock.
+- **Casting is keyed by the posting** (the project, when it was posted, the round), not by the opportunity's number in
+  the save, so a part added to the game moves no other part's casting. The seeded career journeys moved once with the
+  key, and each says in the past tense what it had been.
+- **A defect found reading the text, and fixed**: the Opportunities tab's head, its agent-only list, the agreement's
+  Who line ("Fictional, as every project in the game is"), the guide, the tutorial and the agent's notice all said every
+  project, company and casting office was invented for the game, which the drawn parts made untrue. Each now says which
+  it is, and `tests/pro-opportunities-screen.test.ts`, `tests/propay-screen.test.ts` and `tests/career-drawn.test.ts`
+  fail on the old words (each mutation run and killed).
+- **Measured**: the full gate in the Module 2 clone: 491 of 492 test files and 5,648 of 5,649 tests passed. The one
+  failure was the guide's wiring readings, whose handler lines the text fix's comments had moved down six lines in
+  `projobs.ts`; recomputed, its two test files pass (44 tests), and so do the gate's 23 checks, which the failure had
+  stopped.
+- **Left for later, each a register row**: episodes one by one and a casting director or representative in the catalog
+  (CAT-01); a second studio's slate (CAT-03, CAT-09); rechecking a fact when a later module puts it to use (PROV-03); a
+  real director's fictional offer (PROV-05); a data update that never erases a save's history (PROV-07).
+
 ## Next Concrete Action
 
-Module 2: the real industry catalog with field-level provenance (Part 3, Part 4), and simulated roles drawn from it,
-its criteria written before any code.
+Module 3: real agencies and individual agents in the representation engine (Part 7), from their own published pages,
+with agency-specific routes, its criteria written before any code.

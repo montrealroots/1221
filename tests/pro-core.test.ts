@@ -423,7 +423,7 @@ describe('the agent and the work, as data', () => {
     expect(agency.policy.words).toBe('His office takes no submissions it hasn’t asked for.');
     expect(agency.policy.unsolicited).toBe('refused');
     expect(agent.routes).toEqual(['showcase', 'referral']);
-    expect(agent.notice).toBe('Thomas Ashgrove and Halberd Talent are invented for the game, as every agency, project and casting office in it is. His office takes no submissions it hasn’t asked for: it sees your materials through the School’s follow-up after the showcase, or a referral from someone you’ve worked with. He never gets in touch first.');
+    expect(agent.notice).toBe('Thomas Ashgrove and Halberd Talent are invented for the game, as every agency in it is. His office takes no submissions it hasn’t asked for: it sees your materials through the School’s follow-up after the showcase, or a referral from someone you’ve worked with. He never gets in touch first.');
     expect(agent.roster.basis).toBe('assumption');
     // Nothing private: no contact detail of any kind in the agent's or the agency's data.
     const text = JSON.stringify([AGENTS, AGENCIES]);
@@ -462,10 +462,11 @@ describe('the agent and the work, as data', () => {
     expect(files.filter((f) => /Parente|jordan-parente|Stewart Talent|Ashgrove|thomas-ashgrove|Halberd/.test(readFileSync(f, 'utf8')))).toEqual([]);
   });
 
-  it('writes each part for an actor, an actress or either, three for either and five for each, so an actor and an actress each have a part in all eight projects, of every size and kind as often (the owner’s word, 2026-10-21)', () => {
+  it('writes each part for an actor, an actress or either, five for either and five for each, so an actor and an actress each have a part in all ten projects, of every size and kind as often (the owner’s word, 2026-10-21)', () => {
     const forWhom = (title: 'actor' | 'actress') => PROJECTS.filter((p) => p.role.for === 'either' || p.role.for === title);
-    // Four for each until 2026-10-23, when brief 25's Sydney feature, Harbor Line, brought a part for each.
-    expect(PROJECTS.map((p) => p.role.for).sort()).toEqual([...Array(3).fill('either'), ...Array(5).fill('actor'), ...Array(5).fill('actress')].sort());
+    // Four for each until 2026-10-23, when brief 25's Sydney feature, Harbor Line, brought a part for each; three for
+    // either until its Module 2 drew a part for either from each of two real series.
+    expect(PROJECTS.map((p) => p.role.for).sort()).toEqual([...Array(5).fill('either'), ...Array(5).fill('actor'), ...Array(5).fill('actress')].sort());
     const actor = forWhom('actor');
     const actress = forWhom('actress');
     // Each sees every project once, and the same kinds, sizes, ways in and pay: the counterpart is the same work for the other.
@@ -498,13 +499,15 @@ describe('the agent and the work, as data', () => {
     expect(readFileSync('src/engine/content/guide/career.ts', 'utf8').match(/no real offer of covered work[^`’,.]*/g)!.map((x) => x.trim())).toEqual(Array(2).fill('no real offer of covered work through him'));
   });
 
-  it('gives every project a fictional company and casting office, the game’s genres, a rate that is verified or assumed, and every agreement term a basis', () => {
-    // Eight projects, one of each kind, some with a part for each (from 2026-10-21): the kinds read once a project. Seven
-    // until 2026-10-23, when brief 25 added the Sydney feature.
-    expect([...new Set(PROJECTS.map((p) => p.kind))]).toEqual(['off-broadway', 'lort', 'network-drama', 'low-budget', 'ultra-low-budget', 'student-film', 'non-union-short', 'overseas-feature']);
-    expect(new Set(PROJECTS.map((p) => p.project)).size).toBe(8);
+  it('gives every project a fictional company and casting office but a part drawn from a real production, the game’s genres, a rate that is verified or assumed, and every agreement term a basis', () => {
+    // Ten projects, some with a part for each (from 2026-10-21): the kinds read once a project. Seven until 2026-10-23,
+    // when brief 25 added the Sydney feature, and eight until its Module 2 drew parts from 9-1-1 and Abbott Elementary,
+    // the second of them the first network comedy.
+    expect([...new Set(PROJECTS.map((p) => p.kind))]).toEqual(['off-broadway', 'lort', 'network-drama', 'low-budget', 'ultra-low-budget', 'student-film', 'non-union-short', 'overseas-feature', 'network-comedy']);
+    expect(new Set(PROJECTS.map((p) => p.project)).size).toBe(10);
     for (const p of PROJECTS) {
-      expect(p.fictional).toBe(true);
+      // A drawn part's production and company are real, and it says the part is the game's (tests/career-drawn.test.ts).
+      expect(p.fictional).toBe(!p.drawn);
       const rate = RATES[p.pay];
       expect(['verified', 'assumption']).toContain(rate.basis);
       if (rate.basis === 'verified') expect(rate.source).toBeDefined();

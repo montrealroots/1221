@@ -291,7 +291,7 @@
   "evidence": [
    {
     "kind": "test",
-    "ref": "tests/pro-core.test.ts: 'gives every project a fictional company and casting office, the game’s genres, a rate that is verified or assumed, and every agreement term a basis'"
+    "ref": "tests/pro-core.test.ts: 'gives every project a fictional company and casting office but a part drawn from a real production, the game’s genres, a rate that is verified or assumed, and every agreement term a basis'"
    }
   ]
  }

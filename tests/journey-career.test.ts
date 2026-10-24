@@ -23,9 +23,12 @@
  *   and the filmed monologues its reel was cut from came out Working, as nearly every seed's did, so the work stood near
  *   the bar; but five of the seven factors stood at it or beyond (four are needed), and his list's assumed room was beyond
  *   the bar, which lifts the follow-up's chance a quarter, to 0.1875. Its draw, 0.058, fell under that, and at the
- *   decision (0.4375) the offer's, 0.276, did too. His breakdowns brought Desk Clerk in The Calloway Files three times:
- *   the June and August self-tapes came out Working and Kettering Casting cast another actor; the third, posted on
- *   12 November, came out Strong and was offered, so the shoot fell on 17 and 18 December and the pay came on the 26th.
+ *   decision (0.4375) the offer's, 0.276, did too. His breakdowns brought Desk Clerk in The Calloway Files twice before
+ *   it was booked: the June self-tape came out Working and Kettering Casting cast another actor; the August one came out
+ *   Strong and was offered, so the shoot fell on 1 and 2 October 2029 and the pay was passed on to her on the 10th. Two weeks
+ *   later she shot a part his breakdowns brought in Abbott Elementary, the game's own in the real series, in Los Angeles.
+ *   Until 2026-10-23 (brief 25) casting's draws were keyed by the opportunity's number, the August tape was passed too,
+ *   and the third posting, on 12 November, was the one booked, shot on 17 and 18 December.
  *   Earlier seeds' follow-ups brought no request, their draws over their chances (v1-0, v1-2 to v1-6, v1-9 to v1-13,
  *   v1-15 to v1-20); v1-8's meeting ended in a pass; v1-7 and v1-14 were represented and booked no SAG-AFTRA principal
  *   role through him that year (v1-7 Nell in A House On Calder Street, an Equity part; v1-14 nothing); and v1-1 was
@@ -83,10 +86,11 @@ const AGENT = AGENTS[0]!;
 const SEED_A = 'v1-21';
 const SEED_B = 'v1-7';
 /**
- * Desk Clerk in The Calloway Files as his breakdowns brought it the third time, on Monday 12 November 2029: the one
- * booked, where until 2026-10-21 v1-12's first, posted in June, was.
+ * Desk Clerk in The Calloway Files as his breakdowns brought it the second time, on Monday 27 August 2029: the one
+ * booked. Until 2026-10-23 it was the third, posted on 12 November, when casting's draws were keyed by the opportunity's
+ * number and the August tape was passed; and until 2026-10-21, v1-12's first, posted in June.
  */
-const deskClerk = (sim: Simulation) => sim.player.pro!.opportunities.find((o) => o.projectId === 'calloway-files' && o.via === 'agent' && o.postedAt >= at(2029, 11, 12, 0));
+const deskClerk = (sim: Simulation) => sim.player.pro!.opportunities.find((o) => o.projectId === 'calloway-files' && o.via === 'agent' && o.postedAt >= at(2029, 8, 27, 0));
 
 /**
  * TEST SETUP: the life to the first morning of its last term, Monday 8 January 2029 at seven, before the School's term
@@ -300,13 +304,13 @@ beforeAll(() => {
   until('met', at(2029, 6, 2), () => rel()?.meeting?.status === 'kept');
   until('offered', at(2029, 6, 8), () => pro().agreements.length > 0);
   until('signed', at(2029, 6, 8), () => pro().agreements[0]!.status === 'accepted');
-  until('audition', at(2029, 11, 15), () => calloway()?.rounds?.[0]?.status === 'set');
-  until('offer', at(2029, 11, 30), () => calloway()?.status === 'offered' || calloway()?.status === 'passed');
-  until('booked', at(2029, 11, 30), () => booked() !== undefined);
-  until('sag-joined', at(2029, 12, 31), () => pro().sag?.memberSince !== undefined);
-  until('wrapped', at(2029, 12, 31), () => booked()!.status === 'finished');
-  until('in-trust', at(2029, 12, 31), () => booked()!.pay.every((p) => p.inTrust !== undefined));
-  until('paid-on', at(2029, 12, 31), () => booked()!.pay.every((p) => p.received !== undefined));
+  until('audition', at(2029, 9, 15), () => calloway()?.rounds?.[0]?.status === 'set');
+  until('offer', at(2029, 9, 30), () => calloway()?.status === 'offered' || calloway()?.status === 'passed');
+  until('booked', at(2029, 9, 30), () => booked() !== undefined);
+  until('sag-joined', at(2029, 10, 31), () => pro().sag?.memberSince !== undefined);
+  until('wrapped', at(2029, 10, 31), () => booked()!.status === 'finished');
+  until('in-trust', at(2029, 11, 15), () => booked()!.pay.every((p) => p.inTrust !== undefined));
+  until('paid-on', at(2029, 11, 15), () => booked()!.pay.every((p) => p.received !== undefined));
   until('resume', at(2029, 12, 31), () => (currentOf(pro(), 'resume')?.keys ?? []).includes(`pro:${booked()!.creditId}`));
   // The first billing after she joined SAG-AFTRA: May's, 2030 (until 2026-10-21 v1-12's was 1 November 2029, the
   // transition named for it).
@@ -429,12 +433,13 @@ describe('V1 and A1: a graduating student carried into the career, played whole 
     const agreementId = au.player.pro!.agreements[0]!.id;
     expect([o.via, o.agentId, o.agreementId, o.status, o.rounds![0]!.form]).toEqual(['agent', AGENT.id, agreementId, 'audition', 'self-tape']);
     expect(o.sent!.map((x) => x.kind)).toEqual(['headshot', 'resume', 'reel']);
-    // The third time his breakdowns brought the part: the first self-tape judged Working and the second Strong, and casting
-    // passed both. Both were Working until brief 21 (2026-10-22): from then the drama she'd worked in at the School counts
-    // half toward a police procedural, a kind of drama (`relatedness`), so each tape's genre part read 0.23 of 0.9 where it
-    // had read nothing, and the August tape came to 66.5, not 64.5.
+    // The second time his breakdowns brought the part: the first self-tape judged Working and passed. Until brief 25
+    // (2026-10-23) casting's draws were keyed by the opportunity's number, and the August tape, judged Strong, was passed
+    // too, and the third posting, on 12 November, was the one booked; keyed by the posting, the August draw fell under its
+    // chance. The June tape was Strong-less before brief 21 (2026-10-22) as well: from then the drama she'd worked in at
+    // the School counts half toward a police procedural (`relatedness`), so each tape's genre part read 0.23 of 0.9.
     expect(au.player.pro!.opportunities.filter((x) => x.projectId === 'calloway-files' && x.via === 'agent').map((x) => [formatDate(x.postedAt, zone), x.status, x.rounds?.[0]?.band ?? null])).toEqual([
-      ['June 11, 2029', 'passed', 'working'], ['August 27, 2029', 'passed', 'strong'], ['November 12, 2029', 'audition', null],
+      ['June 11, 2029', 'passed', 'working'], ['August 27, 2029', 'audition', null],
     ]);
     // The offer: SAG-AFTRA's Day Performer minimum for work from July 1, 2029, $1,402.00 (work.md S30), plus ten percent.
     const of = opened('offer');
@@ -448,8 +453,8 @@ describe('V1 and A1: a graduating student carried into the career, played whole 
     const bk = opened('booked');
     const e = bk.player.pro!.engagements.find((x) => x.opportunityId === o.id)!;
     expect([e.agreementId, e.agentId, e.status]).toEqual([agreementId, AGENT.id, 'booked']);
-    expect(e.days.map((d) => formatDate(d.from, zone))).toEqual(['December 17, 2029', 'December 18, 2029']);
-    expect(e.pay.map((x) => [x.promised, formatDate(x.due, zone), x.received ?? null, x.inTrust ?? null])).toEqual([[2 * 1_542_20, 'December 20, 2029', null, null]]);
+    expect(e.days.map((d) => formatDate(d.from, zone))).toEqual(['October 1, 2029', 'October 2, 2029']);
+    expect(e.pay.map((x) => [x.promised, formatDate(x.due, zone), x.received ?? null, x.inTrust ?? null])).toEqual([[2 * 1_542_20, 'October 4, 2029', null, null]]);
     expect(bk.universe.scheduled.filter((i) => i.kind === WORK_DAY_KIND && i.refId === e.id).map((i) => [i.requiresPlayer, i.travelMinutes])).toEqual([[true, 120], [true, 120]]);
     // Worked and judged, the credit shot; and, the J6 rule, each day is work in the project's genres (content/engagement.ts).
     // Until brief 21 (2026-10-22) a day's practice was shared between police procedural and crime, 100 x 0.1 x a half of
@@ -472,20 +477,20 @@ describe('V1 and A1: a graduating student carried into the career, played whole 
     expect((1_542_20 - 1_402_00) * 2).toBe(280_40);
     expect(Math.round(3_084_40 * UNIONS.sagAftra.workingDues)).toBe(48_58);
     expect(tr.inTrust!.held).toBe(3_084_40 - tr.inTrust!.withheld - 48_58);
-    expect(formatDate(tr.inTrust!.releaseAt, zone)).toBe('December 26, 2029');
-    // Passed on three business days later (Christmas Day not among them), less the commission, into her checking: what
-    // was held, less $280.40.
+    expect(formatDate(tr.inTrust!.releaseAt, zone)).toBe('October 10, 2029');
+    // Passed on three business days later (Columbus Day, October 8, not among them; Christmas Day until 2026-10-23, when
+    // the shoot was in December), less the commission, into her checking: what was held, less $280.40.
     const po = opened('paid-on');
     const r = po.player.pro!.engagements.find((x) => x.id === e.id)!.pay[0]!.received!;
     expect(r).toMatchObject({ via: 'trust', gross: 3_084_40, commission: 280_40, dues: 48_58, net: tr.inTrust!.held - 280_40 });
     const passed = po.universe.transactions.find((x) => x.id === r.txnId)!;
     expect(passed.postings.some((x) => x.amount === r.net && po.universe.accounts[x.accountId]?.ownerId === po.player.id)).toBe(true);
-    // Her first pay through the trust was this job's until brief 25 (2026-10-23). From then an eighth project, a feature
-    // shooting in Sydney and open to anyone's self-tape, was posted to her among the others, its opportunity took an id
-    // ahead of theirs, and casting's draws, keyed by the opportunity, fell otherwise: Jess in Static On Route 9, an Ultra
-    // Low Budget feature, was offered in June and paid through the trust in August, before this one.
-    expect(met(A.lines, /^(NOTICE \| (Pay Held|Paid On))/).slice(0, 4)).toEqual(['August 2, 2029 at 12:00 PM | NOTICE: Pay Held For You At Halberd Talent', 'August 7, 2029 at 12:00 PM | NOTICE: Paid On From Halberd Talent', 'December 20, 2029 at 12:00 PM | NOTICE: Pay Held For You At Halberd Talent', 'December 26, 2029 at 12:00 PM | NOTICE: Paid On From Halberd Talent']);
-    // This job's, the second paid on from brief 25 (2026-10-23), as above.
+    // Her first pay through the trust is this job's, and the next her part in Abbott Elementary's, drawn by the game from
+    // the real series (from brief 25's Module 2, 2026-10-23), shot in Los Angeles two weeks later. For a day of brief 25
+    // (its Module 1), when casting's draws were keyed by the opportunity's number, an eighth project's opportunity took an
+    // id ahead and Jess in Static On Route 9 was paid in August, before this.
+    expect(met(A.lines, /^(NOTICE \| (Pay Held|Paid On))/).slice(0, 4)).toEqual(['October 4, 2029 at 12:00 PM | NOTICE: Pay Held For You At Halberd Talent', 'October 10, 2029 at 12:00 PM | NOTICE: Paid On From Halberd Talent', 'October 18, 2029 at 12:00 PM | NOTICE: Pay Held For You At Halberd Talent', 'October 23, 2029 at 12:00 PM | NOTICE: Paid On From Halberd Talent']);
+    // This job's, found by its project: the first paid on, Abbott Elementary's after it.
     const paidOn = A.lines.find((l) => l.includes('| NOTICE | Paid On From Halberd Talent |') && l.includes('The Calloway Files'))!;
     expect(paidOn).toContain('$280.40');
     expect(paidOn).toContain(`${money(r.net)} went into your`);
@@ -493,13 +498,14 @@ describe('V1 and A1: a graduating student carried into the career, played whole 
     expect(currentOf(opened('resume').player.pro, 'resume')!.contains).toContain('Desk Clerk, The Calloway Files, Bright Harbor Television, 2029 (not yet released)');
   });
 
-  // Until 2026-10-21 this said "at the November billing": v1-12's first billing as a member was 1 November 2029, and
-  // v1-21's, who joined in December, is 1 May 2030.
-  it('Join SAG-AFTRA after her first SAG-AFTRA principal job began: refused before it with its reason, $3,244.07 taken once, SAG-AFTRA’s working dues taken from that job’s pay, and half a year’s base dues taken at the May billing beside Equity’s', () => {
+  // Her first billing as a member is 1 November 2029, joined on her first shoot day, 1 October. It said "at the May
+  // billing" from 2026-10-21, when v1-21 joined in December, until 2026-10-23 (brief 25, casting keyed by the posting);
+  // and "at the November billing" before that, for v1-12, who joined in July.
+  it('Join SAG-AFTRA after her first SAG-AFTRA principal job began: refused before it with its reason, $3,244.07 taken once, SAG-AFTRA’s working dues taken from that job’s pay, and half a year’s base dues taken at the November billing beside Equity’s', () => {
     const bk = opened('booked');
     expect(joinSagRefusal(bk, bk.player)).toBe('You can join SAG-AFTRA once you’ve worked a SAG-AFTRA principal role: a TV, theatrical or Low Budget film part. Ultra Low Budget and student films don’t count toward it.');
     const sj = opened('sag-joined');
-    expect(formatDate(sj.player.pro!.sag!.eligibleSince!, zone)).toBe('December 17, 2029');
+    expect(formatDate(sj.player.pro!.sag!.eligibleSince!, zone)).toBe('October 1, 2029');
     expect(sj.player.pro!.sag!.memberSince).toBeGreaterThanOrEqual(sj.player.pro!.sag!.eligibleSince!);
     // SAG-AFTRA's initiation fee and half a year's base dues, from its pages as a search engine copied them (work.md S20).
     const fee = sj.universe.transactions.filter((x) => x.memo === 'SAG-AFTRA: initiation fee and half a year’s base dues');
@@ -507,8 +513,8 @@ describe('V1 and A1: a graduating student carried into the career, played whole 
     expect(3_121_00 + Math.round(246_14 / 2)).toBe(3_244_07);
     const own = Object.values(sj.universe.accounts).filter((x) => x.ownerId === sj.player.id).map((x) => x.id);
     expect(fee[0]!.postings.filter((x) => own.includes(x.accountId)).map((x) => x.amount)).toEqual([-3_244_07]);
-    expect(sj.player.pro!.unionBills!.find((b) => b.key === 'sag-aftra:dues:2030-05')).toMatchObject({ amount: 123_07, due: at(2030, 5, 1) });
-    // The Calloway Files' pay, found by its project: from brief 25 (2026-10-23) her first engagement was Static On Route 9.
+    expect(sj.player.pro!.unionBills!.find((b) => b.key === 'sag-aftra:dues:2029-11')).toMatchObject({ amount: 123_07, due: at(2029, 11, 1) });
+    // The Calloway Files' pay, found by its project, as other engagements came beside it from brief 25 (2026-10-23).
     expect(opened('in-trust').player.pro!.engagements.find((x) => x.projectId === 'calloway-files')!.pay[0]!.inTrust!.dues).toBe(48_58);
     const may = opened('may');
     expect(may.player.pro!.unionBills!.filter((b) => b.due === at(2030, 5, 1)).map((b) => [b.key, b.amount, b.settled?.how])).toEqual([['equity:dues:2030-05', 88_00, 'paid'], ['sag-aftra:dues:2030-05', 123_07, 'paid']]);
@@ -518,10 +524,11 @@ describe('V1 and A1: a graduating student carried into the career, played whole 
     const made = currentOf(opened('resume').player.pro, 'resume')!.contains;
     expect(made).toContain('SAG-AFTRA');
     expect(made).not.toContain('SAG-AFTRA Eligible');
-    // Equity's November dues came before the job, billed alone; May's were both unions'.
+    // Joined on the first shoot day, so November's billing and May's were both unions'. Until 2026-10-23 (brief 25), when
+    // the job was in December, Equity's November dues came before it, billed alone.
     expect(met(A.lines, /^(NOTICE \| (You Can Join|SAG-AFTRA:|Actors’ Equity Association: \$88)|PRESS \| Join)/)).toEqual([
-      'November 1, 2029 at 9:00 AM | NOTICE: Actors’ Equity Association: $88.00 Paid',
-      'December 17, 2029 at 7:00 AM | NOTICE: You Can Join SAG-AFTRA', 'December 17, 2029 at 6:00 PM | PRESS: Join SAG-AFTRA',
+      'October 1, 2029 at 7:00 AM | NOTICE: You Can Join SAG-AFTRA', 'October 1, 2029 at 6:00 PM | PRESS: Join SAG-AFTRA',
+      'November 1, 2029 at 9:00 AM | NOTICE: Actors’ Equity Association: $88.00 Paid', 'November 1, 2029 at 9:00 AM | NOTICE: SAG-AFTRA: $123.07 Paid',
       'May 1, 2030 at 9:00 AM | NOTICE: Actors’ Equity Association: $88.00 Paid', 'May 1, 2030 at 9:00 AM | NOTICE: SAG-AFTRA: $123.07 Paid',
     ]);
   });
@@ -571,7 +578,8 @@ describe('V1 and A1: a graduating student carried into the career, played whole 
     expect(sim.execute({ kind: 'pro.end_agreement', payload: { how: 'agreement' } }).ok).toBe(true);
     const a = sim.player.pro!.agreements[0]!;
     expect([a.status, a.endedHow]).toEqual(['ended', 'agreement']);
-    const owed = 'Commission stays owed on the pay still to come from contracts you made while it ran: Desk Clerk in The Calloway Files. It comes out of that pay when it’s paid.';
+    // Abbott Elementary's part, booked while it ran, owes it too (from brief 25's Module 2, 2026-10-23).
+    const owed = 'Commission stays owed on the pay still to come from contracts you made while it ran: Desk Clerk in The Calloway Files and Casey Marlow in Abbott Elementary. It comes out of that pay when it’s paid.';
     expect(stillOwed(sim.player, a)).toContain(owed);
     expect(sim.universe.notifications.filter((n) => shape(n.title) === 'Your Agreement Ended').at(-1)!.body).toContain(owed);
     sim = cross(sim);
@@ -647,11 +655,12 @@ describe('preparation, played as twins from the same moment of life A (the falsi
       const sim = opened('audition');
       const o = () => deskClerk(sim)!;
       const player: Player = { career: graduatingActor({ joinSag: true, tape: false }) };
-      // The tape is due on Sunday 18 November at six; taped the morning before (until 2026-10-21, v1-12's on 30 June).
-      playTo(sim, at(2029, 11, 16, 22), player);
+      // The tape is due on Sunday 2 September at six; taped the morning before (until 2026-10-23, the November tape's, on
+      // 17 November; until 2026-10-21, v1-12's on 30 June).
+      playTo(sim, at(2029, 8, 31, 22), player);
       // The night before: slept as the Sleep dialog suggests, or stayed up, the clock moved through it by the hour.
-      if (sleeps) playTo(sim, at(2029, 11, 17, 10), player);
-      else for (let h = sim.now; h < at(2029, 11, 17, 10); h += MS_HOUR) go(sim, Math.min(at(2029, 11, 17, 10), h + MS_HOUR));
+      if (sleeps) playTo(sim, at(2029, 9, 1, 10), player);
+      else for (let h = sim.now; h < at(2029, 9, 1, 10); h += MS_HOUR) go(sim, Math.min(at(2029, 9, 1, 10), h + MS_HOUR));
       expect(sim.execute({ kind: 'pro.tape_audition', payload: { opportunityId: o().id } }).ok).toBe(true);
       const work = sim.player.work!.at(-1)!;
       expect(work.what).toBe('Desk Clerk, The Calloway Files: Audition, Taped');
@@ -671,7 +680,7 @@ describe('preparation, played as twins from the same moment of life A (the falsi
     const shoot = (part: boolean) => {
       const sim = opened('offer');
       const e = () => sim.player.pro!.engagements.find((x) => x.projectId === 'calloway-files');
-      playTo(sim, at(2029, 12, 19), { career: graduatingActor({ joinSag: true, part }) }, () => e()?.status === 'finished');
+      playTo(sim, at(2029, 10, 4), { career: graduatingActor({ joinSag: true, part }) }, () => e()?.status === 'finished');
       return e()!;
     };
     const prepared = shoot(true);

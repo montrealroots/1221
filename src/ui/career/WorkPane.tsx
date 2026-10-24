@@ -21,8 +21,8 @@ import type { Person } from '@/engine/domain/model';
 import { UNIONS } from '@/engine/content/careerwork';
 import { finished, type Engagement, type ProPayment, type UnionBill } from '@/engine/systems/pro';
 import { inSaveMoney } from '@/engine/systems/banking';
-import { DEFERRED_WHY, counted } from '@/engine/systems/projobs';
-import { SCHEDULE_WORDS, abroadRead, countryIn, legWords, routeFor, routeSourceWords, tripOf, visaFor, visaRefusal } from '@/engine/systems/worktrip';
+import { DEFERRED_WHY, counted, drawnWords } from '@/engine/systems/projobs';
+import { SCHEDULE_WORDS, US_RULES, countryIn, legWords, routeFor, routeSourceWords, tripOf, tripRead, visaFor, visaRefusal } from '@/engine/systems/worktrip';
 import { gapWords, jurisdictionOf } from '@/engine/content/jurisdictions';
 import { CITIES } from '@/engine/content/geography';
 import {
@@ -113,7 +113,7 @@ function EngagementPay({ person, e }: { person: Person; e: Engagement }) {
       </div>
       {whys.length === 1 && <p className="xs dim" style={{ margin: 0 }}>{`Commission: ${whys[0]}`}</p>}
       {/* Work abroad (from 2026-10-23, the owner's brief 25): the country's own tax isn't worked out, said where the pay is. */}
-      {trip && <p className="xs dim" style={{ margin: 0 }}>{`Your tax return counts this pay as earned in ${countryIn(trip.country)}. Tax in ${countryIn(trip.country)} on it isn’t part of the game yet.`}</p>}
+      {trip && trip.country !== US_RULES && <p className="xs dim" style={{ margin: 0 }}>{`Your tax return counts this pay as earned in ${countryIn(trip.country)}. Tax in ${countryIn(trip.country)} on it isn’t part of the game yet.`}</p>}
     </div>
   );
 }
@@ -132,14 +132,16 @@ function TripView({ person, e }: { person: Person; e: Engagement }) {
   const visa = visaFor(person, e.id);
   const no = visaRefusal(person, e, project, sim.now);
   const route = routeFor(person, trip.country);
-  const read = abroadRead(person, trip.country, e.days, e.id, sim.now);
+  const read = tripRead(person, trip.country, e.days, e.id, sim.now);
+  // A trip in the US (Module 2, C10) needs no visa, and its rules aren't a jurisdiction's gaps.
+  const domestic = trip.country === US_RULES;
   const city = CITIES.get(trip.cityId)?.name ?? 'abroad';
-  const needs = !finished(e) && read.basis !== 'abroad-citizen' && !(read.authorized && !visa);
+  const needs = !domestic && !finished(e) && read.basis !== 'abroad-citizen' && !(read.authorized && !visa);
   return (
     <details className="section-fold" open={!finished(e)}>
       <summary>{`The Trip To ${city}`}</summary>
       <div className="col gap-2">
-        <SectionHead title="Permission, Flights And Hotel" help="career.work-abroad" />
+        <SectionHead title={domestic ? 'Flights And Hotel' : 'Permission, Flights And Hotel'} help="career.work-abroad" />
         {!finished(e) && <p className={`small ${read.authorized ? '' : 'callout callout-warning'}`} style={{ margin: 0 }}>{read.words}</p>}
         {visa && <p className="small" style={{ margin: 0 }}>{visa.status === 'pending' ? `Applied ${formatDate(visa.appliedAt ?? sim.now, zone)}. The department decides on ${formatDate(visa.readyAt ?? sim.now, zone)}.` : visa.status === 'valid' ? `Granted ${formatDate(visa.issuedAt ?? sim.now, zone)}, in force to ${formatDate(visa.expiresAt ?? sim.now, zone)}.` : `${visa.name}: ${visa.status}.`}</p>}
         {needs && !visa && (
@@ -154,7 +156,7 @@ function TripView({ person, e }: { person: Person; e: Engagement }) {
           {trip.legs.map((l) => <li key={l.id}>{`${l.label}${l.status === 'missed' ? ' (missed)' : l.status === 'canceled' ? ' (called off)' : l.status === 'done' ? ' (done)' : ''}. ${legWords(l)}`}</li>)}
         </ul>
         <p className="small" style={{ margin: 0 }}>{`${trip.stay.place[0]!.toUpperCase()}${trip.stay.place.slice(1)}, ${formatDate(trip.stay.from, zone)} to ${formatDate(trip.stay.to, zone)}, paid by the production.`}</p>
-        {route && read.basis !== 'abroad-citizen' && (
+        {!domestic && route && read.basis !== 'abroad-citizen' && (
           <details className="section-fold">
             <summary>{`What The ${route.short.replace(/\bvisa\b/, 'Visa')} Asks`}</summary>
             <ul className="small" style={{ margin: 0, paddingLeft: '1.1rem' }}>
@@ -163,7 +165,7 @@ function TripView({ person, e }: { person: Person; e: Engagement }) {
             <Fine>{routeSourceWords(route)}</Fine>
           </details>
         )}
-        <Fine>{`${project.trip?.words ?? ''} ${SCHEDULE_WORDS} ${gapWords(jurisdictionOf(trip.country))}`}</Fine>
+        <Fine>{`${project.trip?.words ?? ''} ${SCHEDULE_WORDS}${domestic ? '' : ` ${gapWords(jurisdictionOf(trip.country))}`}`}</Fine>
       </div>
     </details>
   );
@@ -224,6 +226,8 @@ function EngagementView({ person, e }: { person: Person; e: Engagement }) {
         <div><dt>Pay</dt><dd>{payLine(e)}</dd></div>
         <div><dt>Next Call</dt><dd>{calls[0] ? `${calls[0].label}, ${formatDateTime(calls[0].at, zone)}` : finished(e) ? 'Its calls are over.' : 'No calls on your calendar for it yet.'}</dd></div>
       </dl>
+      {/* A part drawn from a real production says so on the engagement too (from 2026-10-23, brief 25's Module 2, C8). */}
+      {project?.drawn && <p className="xs dim" style={{ margin: 0 }}>{drawnWords(project)}</p>}
       {ended && <p className="callout callout-warning small" style={{ margin: 0 }}>{`${formatDate(ended.at, zone)}: ${ended.words}`}</p>}
       {now && (
         <p className={`callout small ${now.authorized ? '' : 'callout-warning'}`} style={{ margin: 0 }}>
@@ -234,7 +238,7 @@ function EngagementView({ person, e }: { person: Person; e: Engagement }) {
       <details className="section-fold">
         <summary>The Agreement</summary>
         <dl className="facts">
-          <div><dt>Who</dt><dd>{project ? `${project.company}, ${project.contract}. Fictional, as every project in the game is.` : 'The production.'}</dd></div>
+          <div><dt>Who</dt><dd>{project ? `${project.company}, ${project.contract}.${project.fictional ? ' Fictional, invented for the game.' : ''}` : 'The production.'}</dd></div>
           {project && <div><dt>Where</dt><dd>{`${project.place.venue[0]!.toUpperCase()}${project.place.venue.slice(1)}, ${project.place.city}.`}</dd></div>}
         </dl>
         {!placeKnown(e) && project && <p className="xs dim" style={{ margin: 'var(--s2) 0 0' }}>{`${project.place.city} isn’t among the game’s towns, so its pay counts on your tax return as earned where you live, and the tax where the work is done isn’t worked out.`}</p>}
