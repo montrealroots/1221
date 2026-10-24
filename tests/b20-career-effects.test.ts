@@ -33,7 +33,7 @@ import { acceptRefusal, projectOf, roundToCome } from '@/engine/systems/projobs'
 import { caseKeys, interestOf, relationOf, sendRefusal } from '@/engine/systems/proagent';
 import { resumeBehind } from '@/engine/systems/pro';
 import {
-  AGENT, SURE, at, baseLife, eng, offeredPart, opp, played, prepareAll, reel, referredGraduate, represent, seedWhere, setSkill, submitted, tape,
+  AGENT, SURE, at, baseLife, eng, heldByBoth, offeredPart, opp, played, prepareAll, reel, referredGraduate, represent, seedWhere, setSkill, submitted, tape,
   tended, toCasting, twin, waitFor,
 } from './fakes/b20-career';
 
@@ -126,7 +126,10 @@ describe('B1 and B3: the career’s inputs, each changed alone', () => {
     // Signed, his breakdowns came; declined, none did. The calls no agent brings came the same weeks to both.
     expect(signed.player.pro!.opportunities.filter((o) => o.via === 'agent').length).toBeGreaterThan(0);
     expect(declined.player.pro!.opportunities.filter((o) => o.via === 'agent')).toEqual([]);
-    expect(openOnly(declined)).toEqual(openOnly(signed));
+    // Over the weeks both records hold (`heldByBoth`): his breakdowns fill the signed life's record sooner.
+    const [d3, s3] = heldByBoth(openOnly(declined), openOnly(signed));
+    expect(d3.length).toBeGreaterThan(0);
+    expect(d3).toEqual(s3);
     // Six months on, the hold is over; something new is still asked for.
     tended(declined, at(2027, 4, 1, 12));
     expect(sendRefusal(declined, declined.player, AGENT)).toMatch(/^His office already looked at everything on your record, on September 30, 2026\./);
@@ -174,7 +177,9 @@ describe('B1 and B3: the career’s inputs, each changed alone', () => {
     for (const s of [rep, own]) tended(s, s.now + 20 * 7 * MS_DAY);
     expect(rep.player.pro!.opportunities.filter((x) => x.via === 'agent').length).toBeGreaterThan(0);
     expect(own.player.pro!.opportunities.filter((x) => x.via === 'agent')).toEqual([]);
-    expect(openOnly(rep)).toEqual(openOnly(own));
+    const [r4, o4] = heldByBoth(openOnly(rep), openOnly(own));
+    expect(r4.length).toBeGreaterThan(0);
+    expect(r4).toEqual(o4);
   }, 180_000);
 
   it('5 and 6. PLAYER JOURNEY: a job judged Strong can refer her and one judged Working can’t; its credit reaches the résumé and his office’s reading, and its part never comes round again, where the other parts come round as they would have', () => {
@@ -219,9 +224,13 @@ describe('B1 and B3: the career’s inputs, each changed alone', () => {
     expect(caseKeys(strong.player, undefined)).toContain(`credit:${strong.player.pro!.credits.find((c) => c.engagementId === id)!.id}`);
     // The part never comes round again after the credit; declined, it does; every other part, the same weeks in both.
     for (const s of [fresh, declined]) tended(s, o.postedAt + 60 * 7 * MS_DAY);
-    expect(fresh.player.pro!.opportunities.filter((x) => x.projectId === 'route-nine').map((x) => x.id)).toEqual([o.id]);
-    expect(declined.player.pro!.opportunities.filter((x) => x.projectId === 'route-nine').length).toBeGreaterThan(1);
-    expect(othersPosted(fresh, 'route-nine')).toEqual(othersPosted(declined, 'route-nine'));
+    // Read from `lastPosted`, which the record keeps past its bound (from 2026-10-24: the slate's postings trim the first
+    // posting from both records within the sixty weeks), and the others over the weeks both records hold.
+    expect(fresh.player.pro!.lastPosted!['route-nine']!.id).toBe(o.id);
+    expect(declined.player.pro!.lastPosted!['route-nine']!.id).not.toBe(o.id);
+    const [f6, d6] = heldByBoth(othersPosted(fresh, 'route-nine'), othersPosted(declined, 'route-nine'));
+    expect(f6.length).toBeGreaterThan(0);
+    expect(f6).toEqual(d6);
   }, 240_000);
 
   it('7. PLAYER JOURNEY: an F-1 graduate on OPT can accept the part, and one without it can’t, said; the roles posted, the self-tape and casting’s word are the same', () => {

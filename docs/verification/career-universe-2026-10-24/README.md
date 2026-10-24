@@ -281,6 +281,27 @@ world on every asking and another save another.
 - **Away from home:** every slate part carries the production's trip, used where the actor lives too far to go daily, so
   a New Haven actor flies to Los Angeles and an Angeleno doesn't.
 
+### The Full Suite On K1 And K2
+
+The 24 checks, the typecheck, lint and the career tests passed before `d05f004b` was committed; the full suite, run on
+the same code, did not: **exit 1, 10 of 5,839 tests failed in 7 files.** None was a wrong outcome for the player; each
+was a test or a record the slate's larger world had moved, fixed in the commit after:
+
+- **Brief 20's career tests (6)** read the kept record over sixty and seventy weeks. The slate's postings fill its bound
+  (`OPPORTUNITIES_KEPT`, the last 40 resolved) sooner, so a first posting or a twin's earliest open calls were trimmed
+  from one record and not the other. They now compare the weeks both records hold (`heldByBoth`, tests/fakes/b20-career.ts)
+  and read a part's last posting from `lastPosted`, which the record keeps past its bound. One claim changed on purpose:
+  brief 20's "skill moves neither the roles posted" holds for the fixed parts and every open call, and through an agent
+  the slate's parts now move with the fit, as Area B asks ("responsive to ... skills"); held week by week from the same
+  record, the less skilled twin's among the more skilled twin's.
+- **The wiring list (1):** 17 handler lines in `wiring.json` had drifted as `projobs.ts`, `pro.ts`, `propay.ts`,
+  `contracts.ts` and `worktrip.ts` grew; each re-pointed to the line its command is registered on.
+- **The late pay (2):** keyed by the work from this brief (Defects, 6), so `career-contracts` T43 read the draw by the
+  old key, and an OPT shoot's one payment, now late, was looked for before its payday. The key is exported (`lateKey`,
+  `systems/propay.ts`) and read by the test; the OPT journey plays on to the payday the record holds.
+- **The cohesion rule (1):** "only enjoyment reads somebody's genres" caught the slate's `profile.genres`, a kind's genre
+  pairs, not a person's; the field is `genreSets` now, so the name says what it holds.
+
 ## Defects Found And Fixed
 
 | # | Where | What stood | What stands | Held by |
@@ -291,4 +312,5 @@ world on every asking and another save another.
 | 4 | `loadUniverse` listing | a cleared slot's backup unlisted | listed, so Restore Backup is offered | `tests/b27-backend.test.ts` |
 | 5 | A slate part in Los Angeles, read by a New Haven actor | "Getting there takes about three hours each way from where you live": a daily journey to Los Angeles, since only parts abroad carried a trip | every slate part carries the production's trip, used where the actor lives too far away | `tests/b27-slate-screens.test.ts` |
 | 6 | `propay.ts`, a non-union producer's late pay | drawn by the payment's key, which carries the engagement's number, so the slate's postings moved a played life's documentary pay from January 10 to February 7, 2030 | drawn by the work: its part, its first day and the payment's number | `tests/journey-career-older.test.ts` |
+| 7 | `wiring.json`, the guide's wiring list | 17 handlers named lines their commands had moved from, as the slate and the UK's routes grew five files | each at the line its command is registered on | `tests/b20-guide-wiring.test.ts` |
 

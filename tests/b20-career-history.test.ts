@@ -41,7 +41,12 @@ describe('D4: a part posted again comes as a new casting, after the work it was 
     for (const t of PROJECTS) {
       const list = postingsOf(sim, t.id);
       list.forEach((o, i) => {
-        if (i === 0) { expect(o.again).toBeUndefined(); return; }
+        // The first the record holds: the first ever posted, or, from 2026-10-24 (brief 27), a posting again whose earlier
+        // one the record's bound has trimmed, the slate's postings filling it within the seventy weeks.
+        if (i === 0) {
+          if (o.again) expect([list.some((x) => x.postedAt === o.again!.postedAt), o.postedAt - o.again.postedAt >= POSTING.againDays * MS_DAY]).toEqual([false, true]);
+          return;
+        }
         const before = list[i - 1]!;
         again += 1;
         if (t.medium === 'stage') stage += 1;
@@ -77,18 +82,23 @@ describe('D4: a part posted again comes as a new casting, after the work it was 
     const id = booked.must<{ engagementId: string }>({ kind: 'pro.accept_offer', payload: { opportunityId: o.id } }).engagementId;
     // The shoot days gone to at their stops, as the top bar meets them.
     played(booked, eng(booked, id).days.at(-1)!.to + MS_DAY);
-    for (const s of [declined, lapsed, booked]) tended(s, o.postedAt + 60 * 7 * MS_DAY);
+    expect(opp(lapsed, o.id).outcome).toMatch(/^You didn’t answer the offer for Jess by .+, so it lapsed\.$/);
+    // Each played on until the part comes round, so the first posting is still in the record to compare with (from
+    // 2026-10-24, brief 27: sixty weeks of the slate's postings trim it, where until then the whole run was played first).
     for (const [s, outcome] of [[declined, `You declined Jess in Static On Route 9.`], [lapsed, opp(lapsed, o.id).outcome!]] as const) {
+      const status = opp(s, o.id).status;
+      for (let w = 1; w <= 60 && !postingsOf(s, 'route-nine').some((x) => x.postedAt > o.postedAt); w += 1) tended(s, o.postedAt + w * 7 * MS_DAY);
       const next = postingsOf(s, 'route-nine').find((x) => x.postedAt > o.postedAt)!;
       expect(next).toBeDefined();
-      expect(next.again).toEqual({ postedAt: o.postedAt, status: opp(s, o.id).status, outcome });
+      expect(next.again).toEqual({ postedAt: o.postedAt, status, outcome });
       expect(next.history[0]!.words).toContain(`posted Jess in Static On Route 9 again, a new casting of the part. The last time it was posted to you, on ${formatDate(o.postedAt, zone)}: ${outcome}`);
     }
-    expect(opp(lapsed, o.id).outcome).toMatch(/^You didn’t answer the offer for Jess by .+, so it lapsed\.$/);
-    // Booked: worked, credited, and never posted again in the sixty weeks, where the other two lives were.
+    // Booked: worked, credited, and never posted again in the sixty weeks, where the other two lives were: read from
+    // `lastPosted`, which the record keeps past its bound.
+    tended(booked, o.postedAt + 60 * 7 * MS_DAY);
     expect(eng(booked, id).status).toBe('finished');
     expect(booked.player.pro!.credits.map((c) => c.role)).toContain('Jess');
-    expect(postingsOf(booked, 'route-nine').map((x) => x.id)).toEqual([o.id]);
+    expect(booked.player.pro!.lastPosted!['route-nine']!.id).toBe(o.id);
   }, 120_000);
 
   it('PLAYER JOURNEY: a part posted again through him says so in his notice when he submits you for it', () => {

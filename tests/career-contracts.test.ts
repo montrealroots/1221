@@ -13,7 +13,7 @@ import { RATES, projectById } from '@/engine/content/careerwork';
 import { SERIES, decisionAt, episodeDays } from '@/engine/content/series';
 import { ensurePro, type Engagement, type Opportunity } from '@/engine/systems/pro';
 import { payTermsOf, datesOf, seriesPosts, episodesPending, termsWords } from '@/engine/systems/projobs';
-import { PAY_KIND, negotiatedAmount } from '@/engine/systems/propay';
+import { PAY_KIND, lateKey, negotiatedAmount } from '@/engine/systems/propay';
 import {
   CONTRIBUTION, OVERTIME, PER_DIEM, RERUN_CEILING, RESIDUALS, RESIDUAL_PAY_KIND, askRefusal, clauseOf, contributionRate, daysAway, lateDays, notOwed, overtimeOf,
   payPerDiem, payState, rerunAmount, rerunDrawn, totalActualCompensation,
@@ -161,7 +161,8 @@ describe('D2 and D4: where each payment stands, and the producer’s contributio
     }
     expect(late).toBeDefined();
     const p = late!.pay[0]!;
-    expect(p.late!.days).toBe(lateDays(sim, p.key));
+    // Drawn by the work (`lateKey`) from 2026-10-24 (brief 27); until then by the payment's key.
+    expect(p.late!.days).toBe(lateDays(sim, lateKey(late!, p)));
     expect(p.late!.days).toBeGreaterThanOrEqual(7);
     // The payday is on the clock that many days after it's due.
     expect(sim.universe.scheduled.find((i) => i.kind === PAY_KIND && i.payload.key === p.key && i.status === 'pending')!.at).toBe(p.due + p.late!.days * MS_DAY);

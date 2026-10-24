@@ -566,6 +566,9 @@ function release(s: Simulation, person: Person, e: Engagement, p: ProPayment, pr
 /** Whether a payment is already on the clock. */
 const scheduledFor = (sim: Simulation, kind: string, key: string): boolean => sim.universe.scheduled.some((i) => i.status === 'pending' && i.kind === kind && i.payload.key === key);
 
+/** What a late payment's draw is keyed by (`lateDays`): the work, its first day and the payment's number (`schedulePay`). */
+export const lateKey = (e: Pick<Engagement, 'projectId' | 'days'>, p: Pick<ProPayment, 'key'>): string => `${e.projectId}:${e.days[0]?.from ?? 0}:${p.key.slice(p.key.lastIndexOf(':') + 1)}`;
+
 /**
  * Puts an engagement's promised payments on the clock, each for its `due`, once (called when an offer is accepted): every
  * payment not deferred, not received and not already scheduled. Keeps what permission to work read for its dates, now,
@@ -585,7 +588,7 @@ export function schedulePay(sim: Simulation, person: Person, e: Engagement): { s
     // part, its first day and the payment's number) from 2026-10-24 (brief 27): until then by the payment's key, which
     // carries the engagement's number in the save, so the slate's postings, taking numbers before it, moved a played life's
     // documentary pay from January 10 to February 7, 2030 (tests/journey-career-older.test.ts).
-    if (project?.union === 'none' && p.late === undefined) { const days = lateDays(sim, `${e.projectId}:${e.days[0]?.from ?? 0}:${p.key.slice(p.key.lastIndexOf(':') + 1)}`); if (days) p.late = { days }; }
+    if (project?.union === 'none' && p.late === undefined) { const days = lateDays(sim, lateKey(e, p)); if (days) p.late = { days }; }
     const at = p.due + (p.late?.days ?? 0) * MS_DAY;
     sim.schedule({ at: Math.max(at, sim.now + 60_000), kind: PAY_KIND, label: `Payday: ${project?.project ?? 'Your Work'}`, category: 'home', priority: 30, refType: 'engagement', refId: e.id, payload: { personId: person.id, engagementId: e.id, key: p.key } });
     scheduled += 1;

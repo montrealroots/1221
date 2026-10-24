@@ -591,7 +591,7 @@
    "kind": "pro.prepare",
    "payload": "{ ...target, step: 'special' }",
    "verdict": "Right",
-   "handler": "src/engine/systems/projobs.ts:2109",
+   "handler": "src/engine/systems/projobs.ts:2199",
    "note": "The work's own preparation (Find The Voice, Watch The Original, Work On The Movement and the rest) prepares that step on the booked work; its refusal (prepareRefusal, 'special') is the button's title, and Fight Rehearsal is refused here, done only on the work's rehearsal days with the coordinator. Read on 2026-10-24 by its builder (brief 25's Module 5), pressed through the command in tests/career-workflows-screen.test.ts."
   },
   {
@@ -602,7 +602,7 @@
    "kind": "pro.prepare",
    "payload": "{ ...target, step }",
    "verdict": "Right",
-   "handler": "src/engine/systems/projobs.ts:2109"
+   "handler": "src/engine/systems/projobs.ts:2199"
   },
   {
    "file": "src/ui/career/OpportunitiesPane.tsx",
@@ -612,7 +612,7 @@
    "kind": "pro.accept_offer",
    "payload": "{ opportunityId: o.id }",
    "verdict": "Right",
-   "handler": "src/engine/systems/projobs.ts:2152"
+   "handler": "src/engine/systems/projobs.ts:2242"
   },
   {
    "file": "src/ui/career/OpportunitiesPane.tsx",
@@ -622,7 +622,7 @@
    "kind": "pro.move_audition",
    "payload": "{ opportunityId: o.id }",
    "verdict": "Right",
-   "handler": "src/engine/systems/projobs.ts:2134"
+   "handler": "src/engine/systems/projobs.ts:2224"
   },
   {
    "file": "src/ui/career/OpportunitiesPane.tsx",
@@ -632,7 +632,7 @@
    "kind": "pro.request_outside_work",
    "payload": "{ opportunityId: o.id }",
    "verdict": "Right",
-   "handler": "src/engine/systems/projobs.ts:2207"
+   "handler": "src/engine/systems/projobs.ts:2297"
   },
   {
    "file": "src/ui/career/OpportunitiesPane.tsx",
@@ -642,7 +642,7 @@
    "kind": "pro.decline_offer",
    "payload": "{ opportunityId: o.id }",
    "verdict": "Right",
-   "handler": "src/engine/systems/projobs.ts:2195"
+   "handler": "src/engine/systems/projobs.ts:2285"
   },
   {
    "file": "src/ui/career/OpportunitiesPane.tsx",
@@ -652,7 +652,7 @@
    "kind": "pro.submit",
    "payload": "{ opportunityId: o.id }",
    "verdict": "Right",
-   "handler": "src/engine/systems/projobs.ts:2100"
+   "handler": "src/engine/systems/projobs.ts:2190"
   },
   {
    "file": "src/ui/career/OpportunitiesPane.tsx",
@@ -662,7 +662,7 @@
    "kind": "pro.tape_audition",
    "payload": "{ opportunityId: o.id }",
    "verdict": "Right",
-   "handler": "src/engine/systems/projobs.ts:2119"
+   "handler": "src/engine/systems/projobs.ts:2209"
   },
   {
    "file": "src/ui/career/RepresentationPane.tsx",
@@ -774,7 +774,7 @@
    "kind": "pro.apply_work_visa",
    "payload": "{ engagementId: e.id }",
    "verdict": "Right",
-   "handler": "src/engine/systems/worktrip.ts:580",
+   "handler": "src/engine/systems/worktrip.ts:581",
    "note": "Apply For The Visa on a booking abroad applies for the visa that booking needs, tied to it; its refusal (visaRefusal) is said under it before it is pressed. Read 2026-10-23, brief 25. From 2026-10-24 (brief 27) it reads Apply For The ETA where the route is the UK’s concession, and the same command applies for the ETA the route needs, its £20 paid from the bank."
   },
   {
@@ -796,7 +796,7 @@
    "kind": "pro.ask_pay",
    "payload": "{ engagementId: e.id, key: r.key }",
    "verdict": "Right",
-   "handler": "src/engine/systems/contracts.ts:464",
+   "handler": "src/engine/systems/contracts.ts:467",
    "note": "Ask About It under an overdue payment asks the producer about that payment, by its engagement and key; its refusal (askRefusal) is its title before it is pressed, and the row then reads Disputed with the answer. Read 2026-10-24, brief 25."
   },
   {
@@ -807,7 +807,7 @@
    "kind": "pro.join_sag",
    "payload": "",
    "verdict": "Right",
-   "handler": "src/engine/systems/propay.ts:818"
+   "handler": "src/engine/systems/propay.ts:824"
   },
   {
    "file": "src/ui/components/BriefPane.tsx",
@@ -1561,7 +1561,7 @@
    "kind": "pro.update_resume",
    "payload": "",
    "verdict": "Right",
-   "handler": "src/engine/systems/pro.ts:1221"
+   "handler": "src/engine/systems/pro.ts:1239"
   },
   {
    "file": "src/ui/workspaces/CareerWorkspace.tsx",
@@ -1571,7 +1571,7 @@
    "kind": "pro.headshots",
    "payload": "",
    "verdict": "Right",
-   "handler": "src/engine/systems/pro.ts:1204"
+   "handler": "src/engine/systems/pro.ts:1222"
   },
   {
    "file": "src/ui/workspaces/CareerWorkspace.tsx",
@@ -1581,7 +1581,7 @@
    "kind": "pro.cut_reel",
    "payload": "{ pieces: chosen }",
    "verdict": "Right",
-   "handler": "src/engine/systems/pro.ts:1233"
+   "handler": "src/engine/systems/pro.ts:1251"
   },
   {
    "file": "src/ui/workspaces/CareerWorkspace.tsx",
@@ -1591,7 +1591,7 @@
    "kind": "pro.set_name",
    "payload": "{ name }",
    "verdict": "Right",
-   "handler": "src/engine/systems/pro.ts:1192"
+   "handler": "src/engine/systems/pro.ts:1210"
   },
   {
    "file": "src/ui/workspaces/PapersWorkspace.tsx",
@@ -2079,7 +2079,7 @@
    "kind": "pro.accept_offer",
    "payload": "{ opportunityId: o.id }",
    "verdict": "Right",
-   "handler": "src/engine/systems/projobs.ts:2152"
+   "handler": "src/engine/systems/projobs.ts:2242"
   },
   {
    "file": "src/engine/systems/projobs.ts",
@@ -2087,7 +2087,7 @@
    "kind": "pro.decline_offer",
    "payload": "{ opportunityId: o.id }",
    "verdict": "Right",
-   "handler": "src/engine/systems/projobs.ts:2195"
+   "handler": "src/engine/systems/projobs.ts:2285"
   },
   {
    "file": "src/engine/systems/taxreturn.ts",

@@ -70,7 +70,7 @@ describe('the slate makes work, year on year', () => {
   it('writes its parts from its own lists: genres the game has, names no classmate has, each fictional', () => {
     expect(new Set(CLASSMATE_NAMES)).toEqual(new Set([...GIVEN_ACTRESS, ...GIVEN_ACTOR, 'Sam', 'Theo', 'Max', 'Zoe']));
     for (const list of Object.values(GIVEN)) for (const n of list) expect(CLASSMATE_NAMES).not.toContain(n);
-    for (const [kind, p] of Object.entries(KIND_PROFILES)) for (const pair of p!.genres) for (const g of pair) expect(GENRE_DEFS[g], `${kind}: ${g}`).toBeDefined();
+    for (const [kind, p] of Object.entries(KIND_PROFILES)) for (const pair of p!.genreSets) for (const g of pair) expect(GENRE_DEFS[g], `${kind}: ${g}`).toBeDefined();
     const sim = student('b27-slate-words');
     for (let w = 0; w < 20; w += 1) for (const t of productionsOf(sim, sim.now + w * WEEK).flatMap((p) => p.parts)) {
       expect(t.fictional).toBe(true);

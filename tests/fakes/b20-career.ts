@@ -241,3 +241,15 @@ export function offeredPart(seed: string, projectId: string): { sim: Simulation;
   expect(o.status).toBe('offered');
   return { sim, o };
 }
+
+/**
+ * Two lives' postings over the weeks both records still hold (from 2026-10-24, brief 27): each entry `part@postedAt…`,
+ * kept from the later of the two lives' earliest postings on. The record keeps the last `OPPORTUNITIES_KEPT` resolved
+ * postings (`keepBounded`), and the slate's work fills that sooner in a life that's posted more, so a comparison of the
+ * whole record read the bound, not the postings. Until then the fixed parts alone never reached it in these journeys.
+ */
+export function heldByBoth(a: readonly string[], b: readonly string[]): [string[], string[]] {
+  const at = (x: string) => Number(x.split('@')[1]!.split(':')[0]);
+  const from = Math.max(Math.min(...a.map(at)), Math.min(...b.map(at)));
+  return [a.filter((x) => at(x) >= from), b.filter((x) => at(x) >= from)];
+}

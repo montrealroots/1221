@@ -140,7 +140,7 @@ function makeProduction(sim: Simulation, tag: string, week: Instant, market: Mar
   const title = extra ? extra.series.title : titleOf(r);
   const company = extra ? extra.series.company : companyOf(r, profile.medium);
   const casting = extra ? `${CASTING_NAMES[(hash32(extra.series.id) >>> 0) % CASTING_NAMES.length]} Casting` : `${r.pick(CASTING_NAMES)} Casting`;
-  const genres = r.pick(profile.genres);
+  const genres = r.pick(profile.genreSets);
   const families = familiesOf(genres);
   const schedule = r.pick(profile.schedules);
   const venues = market.venues[profile.medium] ?? ['locations in town'];

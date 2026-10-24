@@ -299,6 +299,10 @@ describe('A4 to A9: OPT counted by the day, a graduate on OPT from 1 October 202
     played(sim, at(2026, 12, 20, 12));
     expect(worked(shoot).map((l) => l.day)).toEqual([0]);
     expect([shoot.status, shoot.finishedAt, shoot.creditId]).toEqual(['canceled', two!.from, undefined]);
+    // Played on to its payday: a non-union producer pays late at times (`lateDays`), and from 2026-10-24 (brief 27, the
+    // draw keyed by the work, `lateKey`) this one is, its payday after the twentieth, where until then it fell before.
+    const due = shoot.pay[0]!.due + (shoot.pay[0]!.late?.days ?? 0) * MS_DAY;
+    played(sim, Math.max(sim.now, due + MS_HOUR));
     expect(shoot.pay.map((p) => [p.promised, Boolean(p.received)])).toEqual([[Math.round(each / 2), true]]);
     expect(titled(sim, 'Released As Robin').map((n) => n.body)).toEqual(['Your OPT ran out on December 7, 2026, and without it you can’t work in the United States. So Ferrous Pictures can’t keep you on as Robin in Last Bus To Eastview, and has released you. The one day you worked is still paid on its payday, and the rest are called off. There’s no credit for it.']);
   }, 180_000);

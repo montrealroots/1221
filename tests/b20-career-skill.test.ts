@@ -5,7 +5,10 @@
  * `setSkill`, the only thing set between them), then the same commands and the same clock:
  * - the most skilled actor's self-tape, in-person audition and shoot days are judged better, from the same preparation;
  * - skill moves neither which parts are posted (`postingsAt`, `writtenFor`) nor his office's reading of the record, the
- *   room on his list among it (`rosterFor`, `interestOf`);
+ *   room on his list among it (`rosterFor`, `interestOf`). From 2026-10-24 (the owner's brief 27, Area B: supply
+ *   "responsive to ... skills") an agent puts a client up for the slate's parts by how well each fits them, so the claim
+ *   holds for the fixed parts and every open call, and through him the more skilled twin is put up for every slate part
+ *   the less skilled one is, and more;
  * - skill guarantees neither a booking nor representation: casting's draw and his office's are each a chance short of
  *   certain, and the other factors stand whatever the skill. Shown on fixed seeds, named before their first run and kept
  *   whatever came of them (`SKILL_SEEDS`, `REP_SEEDS`), never searched.
@@ -24,7 +27,7 @@ import { CASTING, postingTimes, postingsAt, projectOf, roundToCome, writtenFor }
 import { CHANCE, interestOf, relationOf, rosterFor } from '@/engine/systems/proagent';
 import type { Band } from '@/engine/systems/coursework';
 import {
-  AGENT, at, baseLife, eng, finishedJob, graduate, life, opp, played, postedKeys, prepareAll, represent, setSkill, submitted, tape, tended, toCasting, twin, waitFor,
+  AGENT, at, baseLife, eng, finishedJob, graduate, heldByBoth, life, opp, played, postedKeys, prepareAll, represent, setSkill, submitted, tape, tended, toCasting, twin, waitFor,
 } from './fakes/b20-career';
 
 /** Named before their first run (2026-10-21) and kept whatever came of them. */
@@ -46,14 +49,15 @@ interface Run {
 }
 
 /**
- * One seed played: the first open role of the student film, the ultra-low-budget film or the non-union short posted to
- * the base life, submitted and its sides prepared there; the twins split from that save at the top and the bottom, each
+ * One seed played: the first open role of the fixed parts' student film, ultra-low-budget film or non-union short posted
+ * to the base life (from 2026-10-24 the slate makes its own of those kinds, whose casting may ask for a reel the base life
+ * hasn't cut; the seeds were named for the fixed parts), submitted and its sides prepared there; the twins split from that save at the top and the bottom, each
  * auditioned at the same moment (Tape It, or the clock to the audition in person); casting's word in each. Where the base
  * life is offered the part, it accepts and prepares the part, and the twins split from that save play its shoot days.
  */
 function play(seed: string): Run | undefined {
   const base = baseLife(seed);
-  const o = waitFor(base, (x) => ['non-union-short', 'ultra-low-budget', 'student-film'].includes(projectById(x.projectId)!.kind));
+  const o = waitFor(base, (x) => !projectById(x.projectId)!.slate && ['non-union-short', 'ultra-low-budget', 'student-film'].includes(projectById(x.projectId)!.kind));
   if (!o) return undefined;
   submitted(base, o);
   prepareAll(base, { opportunityId: o.id });
@@ -130,9 +134,28 @@ describe('B2: skill moves neither the roles posted nor his office’s reading of
     for (const s of [top, bottom]) tended(s, s.now + 40 * 7 * MS_DAY);
     expect(postedKeys(top).length).toBeGreaterThan(5);
     expect(postedKeys(bottom)).toEqual(postedKeys(top));
-    for (const s of [top, bottom]) { represent(s); tended(s, s.now + 20 * 7 * MS_DAY); }
+    for (const s of [top, bottom]) represent(s);
+    // The game's own rule through him, read for each Monday of the twenty weeks from the same record: the fixed parts and
+    // the open calls the same; the slate's through him, the bottom twin's among the top twin's each week, the fit raising
+    // his chance of putting her up (from 2026-10-24, brief 27). Read week by week, since a series part is drawn each week
+    // until it's posted, so played, one twin can have it a week the other has it later.
+    const slateAgent = (p: { project: { slate?: unknown }; via: string }) => p.project.slate !== undefined && p.via === 'agent';
+    let more = 0;
+    for (const when of postingTimes(top.now, top.now + 20 * 7 * MS_DAY)) {
+      const a = postingsAt(top, top.player, when);
+      const b = postingsAt(bottom, bottom.player, when);
+      expect(b.filter((p) => !slateAgent(p)).map((p) => `${p.project.id}:${p.via}`)).toEqual(a.filter((p) => !slateAgent(p)).map((p) => `${p.project.id}:${p.via}`));
+      const topIds = new Set(a.filter(slateAgent).map((p) => p.project.id));
+      expect(b.filter(slateAgent).every((p) => topIds.has(p.project.id))).toBe(true);
+      more += topIds.size - b.filter(slateAgent).length;
+    }
+    expect(more).toBeGreaterThanOrEqual(0);
+    for (const s of [top, bottom]) tended(s, s.now + 20 * 7 * MS_DAY);
     expect(postedKeys(top).some((k) => k.endsWith(':agent'))).toBe(true);
-    expect(postedKeys(bottom)).toEqual(postedKeys(top));
+    // Played, the fixed parts the same over the weeks both records hold (`heldByBoth`).
+    const fixed = (k: string) => projectById(k.split('@')[0]!)?.slate === undefined;
+    const [t5, b5] = heldByBoth(postedKeys(top).filter(fixed), postedKeys(bottom).filter(fixed));
+    expect(b5).toEqual(t5);
   });
 
   it('PLAYER JOURNEY: his office reads the twins’ records alike, the room on his list among them, and answers the same approach the same way', () => {
