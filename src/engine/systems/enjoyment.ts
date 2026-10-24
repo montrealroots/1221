@@ -33,14 +33,21 @@ import type { Person } from '../domain/model';
 import { clamp } from '../core/rng';
 import { personalityOf } from './personality';
 import { REP_PLAYS, SHAKESPEARE_PLAYS, SUMMER_PLAYS, THESIS_PLAYS } from '../content/plays';
+import { PROJECTS } from '../content/careerwork';
 
 /**
  * The genres something in a student's life reads: the kinds of the plays the game has, which a rehearsal and a night
- * of them read. Creation marks the rest as said back only (from 2026-10-09; it named the interests too until
- * 2026-10-10, as `interestsRead`).
+ * of them read, and the kinds of the career's projects, which a work day on one reads (`enjoyWork`, from 2026-10-21,
+ * brief 20). Creation marks the rest as said back only (from 2026-10-09; it named the interests too until 2026-10-10,
+ * as `interestsRead`). Until 2026-10-24 (brief 26) this was the plays' kinds alone, so creation marked Crime, Horror,
+ * Police Procedural, Psychological Horror, Psychological Thriller and Thriller as shown only while a shoot day of a
+ * horror film was a better day for a lover of horror (tests/b20-career-defects.test.ts had held that since brief 20).
  */
 export function genresRead(): Set<string> {
-  return new Set([...THESIS_PLAYS, ...SHAKESPEARE_PLAYS, ...REP_PLAYS, ...SUMMER_PLAYS].flatMap((p) => p.kinds ?? []));
+  return new Set([
+    ...[...THESIS_PLAYS, ...SHAKESPEARE_PLAYS, ...REP_PLAYS, ...SUMMER_PLAYS].flatMap((p) => p.kinds ?? []),
+    ...PROJECTS.flatMap((p) => p.genres ?? []),
+  ]);
 }
 
 /**

@@ -609,7 +609,9 @@ describe('c-traits', () => {
 // ---------------------------------------------------------------------------------------------------------------------
 
 /** The kinds the game's plays have, by their chips' names: the theses, Shakespeare, the Rep's and the summer's. */
-const READ = ['Comedy', 'Coming Of Age', 'Domestic Drama', 'Drama', 'Fairy Tale', 'Farce', 'Historical Drama', 'Mystery', 'Political Drama', 'Romance', 'Romantic Comedy', 'Romantic Drama', 'Satire', 'Social Realism', 'Supernatural', 'Tragedy', 'Tragicomedy'];
+// The genres something reads: the School's plays' kinds and, from 2026-10-24 (brief 26), the career's projects' (Crime,
+// Horror, Police Procedural, Psychological Horror, Psychological Thriller and Thriller), which a work day had read since brief 20.
+const READ = ['Comedy', 'Coming Of Age', 'Crime', 'Domestic Drama', 'Drama', 'Fairy Tale', 'Farce', 'Historical Drama', 'Horror', 'Mystery', 'Police Procedural', 'Political Drama', 'Psychological Horror', 'Psychological Thriller', 'Romance', 'Romantic Comedy', 'Romantic Drama', 'Satire', 'Social Realism', 'Supernatural', 'Thriller', 'Tragedy', 'Tragicomedy'];
 
 /**
  * PLAYER JOURNEY: four second-years, alike but for the genre each loves, made on g28-oncall-5 and played by the clock to
@@ -636,11 +638,12 @@ describe('c-genres', () => {
   it('PLAYER JOURNEY: Genres & Background marks every chip no play’s kind names with ·, a chip pressed is chosen, Select All takes all 149 and Clear These puts them back; Review, the Profile and Yourself say the one loved back', () => {
     let config = ada();
     let page = creation(STEP.genres, config);
-    expect(page.text).toContain('Rehearsing or performing a play in a genre you love, a comedy or a tragedy, lifts your morale and eases your stress, though it doesn’t make you any better at it. A genre marked · has no plays here, so it’s only shown on your Player Profile.');
+    // The sentence from 2026-10-24 (brief 26): until then it said a play alone lifted the day and “A genre marked · has no plays here”.
+    expect(page.text).toContain('Rehearsing or performing a play in a genre you love, a comedy or a tragedy, or a day’s work on a project of its kind, lifts your morale and eases your stress, though it doesn’t make you any better at it. A genre marked · is in no play or project here, so it’s only shown on your Player Profile.');
     expect(chips(page)).toHaveLength(149);
     expect(chips(page).filter((c) => !c.text.endsWith(' ·')).map((c) => c.first)).toEqual(READ);
     const western = chips(page).find((c) => c.first === 'Western')!;
-    expect([western.text, western.props.title]).toEqual(['Western ·', 'Shown on your Player Profile, but nothing in a student’s life uses it']);
+    expect([western.text, western.props.title]).toEqual(['Western ·', 'Shown on your Player Profile; no play or project here is of its kind']);
     expect(chips(page).find((c) => c.first === 'Drama')!.props.title).toBeUndefined();
     expect(page.text).toContain('0 Chosen');
 

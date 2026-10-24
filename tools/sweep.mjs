@@ -20,7 +20,9 @@
  *   node tools/sweep.mjs                     prints the totals
  *   node tools/sweep.mjs --seed              adds a Not Tested entry for every feature no file has
  *   node tools/sweep.mjs --mark <id|prefix*> <status> --by <kind[,kind]> [--on <commit>] [--note <text>] [--evidence <text>]...
- *                                            [--fixed <text>]   records a status for the matching features
+ *                                            [--fixed <text>] [--with-tests]   records a status for the matching features;
+ *                                            --with-tests puts each feature's own tests from its effects row (those the
+ *                                            gate runs and that exist) before the evidence given
  *   node tools/sweep.mjs --write             writes docs/verification/sweep-2026-10-24/REGISTER.md
  *   node tools/sweep.mjs --todo [<area>]     lists the features still Not Tested, by area
  *   node tools/sweep.mjs --check             exits 1 on a feature with no entry, an entry for a feature that's gone, a status
@@ -270,9 +272,12 @@ function mark(args) {
   const re = new RegExp(`^${pattern.replace(/[.+?^${}()|[\]\\]/g, '\\$&').replace(/\*/g, '.*')}$`);
   const ids = [...all.keys()].filter((id) => re.test(id));
   if (!ids.length) throw new Error(`no feature matches ${pattern}`);
+  const withTests = args.includes('--with-tests');
   for (const id of ids) {
     const prev = entries.get(id) ?? {};
-    entries.set(id, { ...prev, status, by: by.length ? by : prev.by, on: opt('--on') ?? prev.on, note: opt('--note') ?? prev.note, evidence: evidence.length ? evidence : prev.evidence, fixed: opt('--fixed') ?? prev.fixed });
+    const own = withTests ? (all.get(id).tests ?? []).filter((t) => IN_GATE.test(t) && existsSync(t)) : [];
+    const ev = [...own, ...evidence];
+    entries.set(id, { ...prev, status, by: by.length ? by : prev.by, on: opt('--on') ?? prev.on, note: opt('--note') ?? prev.note, evidence: ev.length ? ev : prev.evidence, fixed: opt('--fixed') ?? prev.fixed });
   }
   saveEntries(entries, all);
   console.log(`${ids.length} marked ${status}${by.length ? ` by ${by.join(', ')}` : ''}`);

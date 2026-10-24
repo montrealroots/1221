@@ -773,7 +773,8 @@ function PersonalStep({
     });
   };
 
-  // Which of them something reads (`genresRead`, from 2026-10-09): the rest are said back, and the chip says so.
+  // Which of them something reads (`genresRead`, from 2026-10-09: the School's plays' kinds, and from 2026-10-24 the
+  // career's projects' too): the rest are said back, and the chip says so.
   const read = genresRead();
   const Chips = ({ options, chosen, onToggle, moves }: {
     options: readonly Genre[];
@@ -792,7 +793,7 @@ function PersonalStep({
               ? { background: 'var(--accent-dim)', color: 'var(--accent-strong)', borderColor: 'var(--accent-line)' }
               : undefined}
             aria-pressed={on}
-            title={moves.has(option.id) ? undefined : 'Shown on your Player Profile, but nothing in a student’s life uses it'}
+            title={moves.has(option.id) ? undefined : 'Shown on your Player Profile; no play or project here is of its kind'}
             onClick={() => onToggle(option.id)}
           >
             {option.label}{moves.has(option.id) ? '' : <span className="dim" aria-label=", shown on your Player Profile only"> ·</span>}
@@ -825,10 +826,10 @@ function PersonalStep({
           <div>
             <h2>Genres</h2>
             <p className="muted small">
-              The films you love: pick as many as are true. Rehearsing or performing a
-              play in a genre you love, a comedy or a tragedy, lifts your morale and eases your stress, though
-              it doesn’t make you any better at it. A genre marked · has no plays here, so it’s only shown on
-              your Player Profile.
+              The films you love: pick as many as are true. Rehearsing or performing a play in a genre you
+              love, a comedy or a tragedy, or a day’s work on a project of its kind, lifts your morale and eases your
+              stress, though it doesn’t make you any better at it. A genre marked · is in no play or project here, so
+              it’s only shown on your Player Profile.
             </p>
           </div>
           <div className="row gap-2" style={{ alignItems: 'center' }}>
