@@ -255,15 +255,67 @@
   "status": "Not Tested"
  },
  "promise.coursework.showcase>career.overview": {
-  "status": "Not Tested"
+  "status": "Verified",
+  "by": [
+   "inspection",
+   "automated"
+  ],
+  "on": "bd7b9d02",
+  "evidence": [
+   "tests/pro-showcase.test.ts",
+   "src/engine/systems/proshowcase.ts:346-375 beginShowcase: the calls booked, the notice, an older save decided at once; src/engine/systems/proshowcase.ts:378-392 choiceRefusal; src/engine/systems/proshowcase.ts:395-421 setScenes; src/engine/systems/proshowcase.ts:431-455 decide: an Incomplete outstanding cancels the pending calls and excuses the pieces, else the faculty choose; src/engine/systems/proshowcase.ts:489-525 perform keys each day’s showing so a reload can’t judge it twice; src/engine/systems/proshowcase.ts:532-560 endShowcase settles DRAM 793b once",
+   "tests/pro-showcase.test.ts",
+   "tests/journey-career.test.ts",
+   "tests/scope-school.test.ts",
+   "tests/school-paths.test.ts the School’s 86 test files, 1,304 tests, run on this commit: all green"
+  ]
  },
  "promise.coursework.showcase>coursework.feedback": {
-  "status": "Not Tested"
+  "status": "Verified",
+  "by": [
+   "inspection",
+   "automated"
+  ],
+  "on": "bd7b9d02",
+  "evidence": [
+   "tests/pro-showcase.test.ts",
+   "src/engine/systems/proshowcase.ts:346-375 beginShowcase: the calls booked, the notice, an older save decided at once; src/engine/systems/proshowcase.ts:378-392 choiceRefusal; src/engine/systems/proshowcase.ts:395-421 setScenes; src/engine/systems/proshowcase.ts:431-455 decide: an Incomplete outstanding cancels the pending calls and excuses the pieces, else the faculty choose; src/engine/systems/proshowcase.ts:489-525 perform keys each day’s showing so a reload can’t judge it twice; src/engine/systems/proshowcase.ts:532-560 endShowcase settles DRAM 793b once",
+   "tests/pro-showcase.test.ts",
+   "tests/journey-career.test.ts",
+   "tests/scope-school.test.ts",
+   "tests/school-paths.test.ts the School’s 86 test files, 1,304 tests, run on this commit: all green"
+  ]
  },
  "promise.coursework.showcase>coursework.prepare": {
-  "status": "Not Tested"
+  "status": "Verified",
+  "by": [
+   "inspection",
+   "automated"
+  ],
+  "on": "bd7b9d02",
+  "evidence": [
+   "tests/pro-showcase.test.ts",
+   "src/engine/systems/proshowcase.ts:346-375 beginShowcase: the calls booked, the notice, an older save decided at once; src/engine/systems/proshowcase.ts:378-392 choiceRefusal; src/engine/systems/proshowcase.ts:395-421 setScenes; src/engine/systems/proshowcase.ts:431-455 decide: an Incomplete outstanding cancels the pending calls and excuses the pieces, else the faculty choose; src/engine/systems/proshowcase.ts:489-525 perform keys each day’s showing so a reload can’t judge it twice; src/engine/systems/proshowcase.ts:532-560 endShowcase settles DRAM 793b once",
+   "tests/pro-showcase.test.ts",
+   "tests/journey-career.test.ts",
+   "tests/scope-school.test.ts",
+   "tests/school-paths.test.ts the School’s 86 test files, 1,304 tests, run on this commit: all green"
+  ]
  },
  "promise.coursework.showcase>school.repeat": {
-  "status": "Not Tested"
+  "status": "Verified",
+  "by": [
+   "inspection",
+   "automated"
+  ],
+  "on": "bd7b9d02",
+  "evidence": [
+   "tests/pro-showcase.test.ts",
+   "src/engine/systems/proshowcase.ts:346-375 beginShowcase: the calls booked, the notice, an older save decided at once; src/engine/systems/proshowcase.ts:378-392 choiceRefusal; src/engine/systems/proshowcase.ts:395-421 setScenes; src/engine/systems/proshowcase.ts:431-455 decide: an Incomplete outstanding cancels the pending calls and excuses the pieces, else the faculty choose; src/engine/systems/proshowcase.ts:489-525 perform keys each day’s showing so a reload can’t judge it twice; src/engine/systems/proshowcase.ts:532-560 endShowcase settles DRAM 793b once",
+   "tests/pro-showcase.test.ts",
+   "tests/journey-career.test.ts",
+   "tests/scope-school.test.ts",
+   "tests/school-paths.test.ts the School’s 86 test files, 1,304 tests, run on this commit: all green"
+  ]
  }
 }

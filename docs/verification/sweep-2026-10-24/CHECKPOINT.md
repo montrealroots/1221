@@ -35,9 +35,16 @@ each milestone's end, with the branch, the commit, what's covered, what remains 
   Genres step marked six genres the career's projects carry as shown only, while a work day on one had lifted the mood
   since brief 20 (`genresRead` reads the projects' genres now; tests/b26-creation-genres.test.ts, which fails with the
   projects dropped; `22bfcd35`). Found and corrected: three effects rows recording that gap as open. Left to the owner,
-  as since brief 20: `create.livesWhereBorn`, written and read by no player-made life (Blocked). 267 rows Verified or Fixed
-  And Verified, 1 Blocked; the craft area's 145 guide promises wait for M4, whose coursework they describe.
-- **M4 to M11:** the traces, area by area (the handoff's top section lists them with what each found).
+  as since brief 20: `create.livesWhereBorn`, written and read by no player-made life (Blocked). 266 rows Verified or Fixed
+  And Verified, 1 Blocked; the craft area's 145 guide promises waited for M4, whose coursework they describe.
+- **M4, 2026-10-24: the School.** Read `systems/school.ts` whole and the leave, coursework, production, classmates, course
+  record, workbook, play-reading, briefs, practice, engagement and showcase systems at their commands, refusals,
+  scheduled kinds and notices, and the School's five looks; ran the School's 86 test files (1,304 tests, green on
+  `bd7b9d02`). Traced the brief's repeated presses (each refused in its words, an elective shift another evening),
+  cancellations (`setStanding`, `startLeave`, `callOff`, `leaveCabaret`, the showcase's `decide`) and reloads (each
+  payment, decision and judging once across a save). Found no defect. 294 rows Verified: the School's 145, the craft
+  area's 145 promises, the career area's 4 Actor Showcase promises. 559 Verified in all.
+- **M5 to M11:** the traces, area by area (the handoff's top section lists them with what each found).
 - **M12:** brief 22's final runs again on the finished commit, the gate, the receipt.
 
 ## The Completion Matrix While The Sweep Runs
@@ -48,5 +55,6 @@ source change until the runs are played again on the finished commit (M12). That
 
 ## Next Step
 
-Begin M4, the School: its 102 effects rows and the craft area's 145 promises (`node tools/sweep.mjs --todo school`,
-`--todo craft`), reading `systems/school.ts`, `coursework.ts`, `production.ts`, `leave.ts` and the commands' UI.
+Begin M5, the career: its 85 rows still Not Tested (`node tools/sweep.mjs --todo career`), reading the `pro.*`
+commands and scheduled kinds in `systems/pro*.ts`, the work day and its pay, the permission to work and the project's
+genres in `content/careerwork.ts`, and the career's screens.

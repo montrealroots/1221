@@ -79,7 +79,39 @@ day. `tests/b26-creation-genres.test.ts` fails with the projects' genres dropped
 `axis.agreeableness` still said the career's days read no loved genre and no disposition, a gap brief 20 closed.
 **Left to the owner (1):** `create.livesWhereBorn`, written and read by no life a player can make, as brief 20 recorded.
 
-**Register:** 266 Verified, 1 Fixed And Verified, 1 Blocked, by inspection and the tests named on each row.
+**Register:** 265 Verified, 1 Fixed And Verified, 1 Blocked, by inspection and the tests named on each row.
+
+### M4: The School
+
+**Read:** `systems/school.ts` whole (the term's start and enrolment; the class day, which grows the courses' skills for a
+student present, rested and in New Haven and counts an absence; the shift, the payday and the stipend; the call and the
+night; the casting and the term's evaluation; the Cabaret and the Summer Cabaret; the labs, the recesses, commencement
+and conferral; `setStanding`, which cancels every pending School item, keeps the stipend's share and pays the hours owed;
+every command's refusal); `systems/leave.ts` (the leave refused, asked, begun, closed and returned from; the repeat, the
+additional term, the aid review, the Yale account and its hold, the affiliate cover; every decision's kind);
+`systems/coursework.ts` (the work set, prepared, approached, chosen, shown and noted; the partner's ask, answer, rehearsal
+and cancellation; the term's warning); `systems/production.ts` (the part learned, the blocking caught up, the note worked,
+the closing's reflection); `systems/classmates.ts`, `courserecord.ts`, `workbook.ts`, `playreading.ts`, `briefs.ts`,
+`practice.ts` and `engagement.ts` (their commands and refusals); `systems/proshowcase.ts` (the Actor Showcase begun,
+chosen, decided, played and settled); the School's five looks. **Ran:** the School's 86 test files, 1,304 tests, green on
+`bd7b9d02`.
+
+**Traced for the brief's three questions.** *Repeated presses:* every School command that spends or books refuses its
+second press in its own words (`ppeRefusal`, `cabaretRefusal`, `sickRefusal`, `conversionRefusal`, `leaveRefusal`,
+`repeatRefusal`, `aidReviewRefusal`, the showcase's `choiceRefusal`, the partner's `askRefusal`, Learn The Part's cap of
+three, Work On The Note's second time), and Take An Elective Shift books another evening, never the same one twice.
+*Cancellation:* `setStanding` and `startLeave` cancel the pending School items, `callOff` gives a called-off evening's
+hours back, `leaveCabaret` calls a show off, the showcase's `decide` cancels its calls for an Incomplete outstanding and
+excuses its pieces, and Cancel A Rehearsal charges trust only when late. *Reloads:* a payday, a conversion, a leave's
+rebate, a repeat, an affiliate cover, a showcase day's judging and a note worked each happen once across a save, the
+item done before its handler runs or the record keyed, and the tests named on the rows hold each. **Found:** no defect.
+Each row carries the file and lines read for it.
+
+**Register:** 294 more rows Verified by inspection and the tests named on each: the School's 145 (69 commands and
+scheduled kinds, 17 notices, 5 looks, 11 craft commands, 43 of the School chapter's promises), the craft area's 145
+promises (the coursework's, the briefs', the genres', the identity's, the practice's, the Profile's, the workbook's and
+the productions') and the career area's 4 Actor Showcase promises. Running total: 559 Verified, 1 Fixed And Verified,
+1 Blocked, 584 Not Tested.
 
 ## Final Runs, Gate And Report (M12)
 

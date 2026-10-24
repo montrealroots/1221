@@ -2533,439 +2533,2225 @@
   ]
  },
  "promise.coursework.approach>coursework.feedback": {
-  "status": "Not Tested"
+  "status": "Verified",
+  "by": [
+   "inspection",
+   "automated"
+  ],
+  "on": "bd7b9d02",
+  "evidence": [
+   "tests/approaches.test.ts",
+   "src/engine/systems/coursework.ts:416-535 setWork; src/engine/systems/coursework.ts:598-834 prepareRefusal and prepare; src/engine/systems/coursework.ts:1470 meetingWeight; src/engine/systems/coursework.ts:1702-1903 the partner’s ask and answer; src/engine/systems/coursework.ts:1916-2060 the commands and kinds",
+   "tests/evidence-g18-school.test.ts",
+   "tests/evidence-g24-school.test.ts",
+   "tests/school-paths.test.ts the School’s 86 test files, 1,304 tests, run on this commit: all green"
+  ]
  },
  "promise.coursework.approach>coursework.partners": {
-  "status": "Not Tested"
+  "status": "Verified",
+  "by": [
+   "inspection",
+   "automated"
+  ],
+  "on": "bd7b9d02",
+  "evidence": [
+   "tests/approaches.test.ts",
+   "tests/evidence-g18-school.test.ts",
+   "tests/evidence-g22-school.test.ts",
+   "src/engine/systems/coursework.ts:416-535 setWork; src/engine/systems/coursework.ts:598-834 prepareRefusal and prepare; src/engine/systems/coursework.ts:1470 meetingWeight; src/engine/systems/coursework.ts:1702-1903 the partner’s ask and answer; src/engine/systems/coursework.ts:1916-2060 the commands and kinds",
+   "tests/evidence-g18-school.test.ts",
+   "tests/evidence-g24-school.test.ts",
+   "tests/school-paths.test.ts the School’s 86 test files, 1,304 tests, run on this commit: all green"
+  ]
  },
  "promise.coursework.approach>coursework.prepare": {
-  "status": "Not Tested"
+  "status": "Verified",
+  "by": [
+   "inspection",
+   "automated"
+  ],
+  "on": "bd7b9d02",
+  "evidence": [
+   "tests/approaches.test.ts",
+   "tests/evidence-g18-school.test.ts",
+   "tests/coursework-objective.test.ts",
+   "src/engine/systems/coursework.ts:416-535 setWork; src/engine/systems/coursework.ts:598-834 prepareRefusal and prepare; src/engine/systems/coursework.ts:1470 meetingWeight; src/engine/systems/coursework.ts:1702-1903 the partner’s ask and answer; src/engine/systems/coursework.ts:1916-2060 the commands and kinds",
+   "tests/evidence-g18-school.test.ts",
+   "tests/evidence-g24-school.test.ts",
+   "tests/school-paths.test.ts the School’s 86 test files, 1,304 tests, run on this commit: all green"
+  ]
  },
  "promise.coursework.approach>school.standing": {
-  "status": "Not Tested"
+  "status": "Verified",
+  "by": [
+   "inspection",
+   "automated"
+  ],
+  "on": "bd7b9d02",
+  "evidence": [
+   "tests/approaches.test.ts",
+   "tests/guide-examples-coursework.test.ts",
+   "src/engine/systems/coursework.ts:416-535 setWork; src/engine/systems/coursework.ts:598-834 prepareRefusal and prepare; src/engine/systems/coursework.ts:1470 meetingWeight; src/engine/systems/coursework.ts:1702-1903 the partner’s ask and answer; src/engine/systems/coursework.ts:1916-2060 the commands and kinds",
+   "tests/evidence-g18-school.test.ts",
+   "tests/evidence-g24-school.test.ts",
+   "tests/school-paths.test.ts the School’s 86 test files, 1,304 tests, run on this commit: all green"
+  ]
  },
  "promise.coursework.class>body.how": {
-  "status": "Not Tested"
+  "status": "Verified",
+  "by": [
+   "inspection",
+   "automated"
+  ],
+  "on": "bd7b9d02",
+  "evidence": [
+   "tests/evidence-g24-school.test.ts",
+   "src/engine/systems/coursework.ts:416-535 setWork; src/engine/systems/coursework.ts:598-834 prepareRefusal and prepare; src/engine/systems/coursework.ts:1470 meetingWeight; src/engine/systems/coursework.ts:1702-1903 the partner’s ask and answer; src/engine/systems/coursework.ts:1916-2060 the commands and kinds",
+   "tests/evidence-g18-school.test.ts",
+   "tests/evidence-g24-school.test.ts",
+   "tests/school-paths.test.ts the School’s 86 test files, 1,304 tests, run on this commit: all green"
+  ]
  },
  "promise.coursework.class>coursework.partners": {
-  "status": "Not Tested"
+  "status": "Verified",
+  "by": [
+   "inspection",
+   "automated"
+  ],
+  "on": "bd7b9d02",
+  "evidence": [
+   "tests/evidence-g24-school.test.ts",
+   "tests/guide-examples-coursework.test.ts",
+   "src/engine/systems/coursework.ts:416-535 setWork; src/engine/systems/coursework.ts:598-834 prepareRefusal and prepare; src/engine/systems/coursework.ts:1470 meetingWeight; src/engine/systems/coursework.ts:1702-1903 the partner’s ask and answer; src/engine/systems/coursework.ts:1916-2060 the commands and kinds",
+   "tests/evidence-g18-school.test.ts",
+   "tests/evidence-g24-school.test.ts",
+   "tests/school-paths.test.ts the School’s 86 test files, 1,304 tests, run on this commit: all green"
+  ]
  },
  "promise.coursework.class>coursework.prepare": {
-  "status": "Not Tested"
+  "status": "Verified",
+  "by": [
+   "inspection",
+   "automated"
+  ],
+  "on": "bd7b9d02",
+  "evidence": [
+   "tests/evidence-g23-school.test.ts",
+   "src/engine/systems/coursework.ts:416-535 setWork; src/engine/systems/coursework.ts:598-834 prepareRefusal and prepare; src/engine/systems/coursework.ts:1470 meetingWeight; src/engine/systems/coursework.ts:1702-1903 the partner’s ask and answer; src/engine/systems/coursework.ts:1916-2060 the commands and kinds",
+   "tests/evidence-g18-school.test.ts",
+   "tests/evidence-g24-school.test.ts",
+   "tests/school-paths.test.ts the School’s 86 test files, 1,304 tests, run on this commit: all green"
+  ]
  },
  "promise.coursework.class>coursework.table": {
-  "status": "Not Tested"
+  "status": "Verified",
+  "by": [
+   "inspection",
+   "automated"
+  ],
+  "on": "bd7b9d02",
+  "evidence": [
+   "tests/evidence-g18-school.test.ts",
+   "src/engine/systems/coursework.ts:416-535 setWork; src/engine/systems/coursework.ts:598-834 prepareRefusal and prepare; src/engine/systems/coursework.ts:1470 meetingWeight; src/engine/systems/coursework.ts:1702-1903 the partner’s ask and answer; src/engine/systems/coursework.ts:1916-2060 the commands and kinds",
+   "tests/evidence-g18-school.test.ts",
+   "tests/evidence-g24-school.test.ts",
+   "tests/school-paths.test.ts the School’s 86 test files, 1,304 tests, run on this commit: all green"
+  ]
  },
  "promise.coursework.class>school.orientation": {
-  "status": "Not Tested"
+  "status": "Verified",
+  "by": [
+   "inspection",
+   "automated"
+  ],
+  "on": "bd7b9d02",
+  "evidence": [
+   "tests/evidence-g22-school.test.ts",
+   "tests/evidence-g18-school.test.ts",
+   "tests/classmate-moments.test.ts",
+   "src/engine/systems/coursework.ts:416-535 setWork; src/engine/systems/coursework.ts:598-834 prepareRefusal and prepare; src/engine/systems/coursework.ts:1470 meetingWeight; src/engine/systems/coursework.ts:1702-1903 the partner’s ask and answer; src/engine/systems/coursework.ts:1916-2060 the commands and kinds",
+   "tests/evidence-g18-school.test.ts",
+   "tests/evidence-g24-school.test.ts",
+   "tests/school-paths.test.ts the School’s 86 test files, 1,304 tests, run on this commit: all green"
+  ]
  },
  "promise.coursework.feedback>coursework.approach": {
-  "status": "Not Tested"
+  "status": "Verified",
+  "by": [
+   "inspection",
+   "automated"
+  ],
+  "on": "bd7b9d02",
+  "evidence": [
+   "tests/approaches.test.ts",
+   "tests/evidence-g18-school.test.ts",
+   "src/engine/systems/coursework.ts:416-535 setWork; src/engine/systems/coursework.ts:598-834 prepareRefusal and prepare; src/engine/systems/coursework.ts:1470 meetingWeight; src/engine/systems/coursework.ts:1702-1903 the partner’s ask and answer; src/engine/systems/coursework.ts:1916-2060 the commands and kinds",
+   "tests/evidence-g18-school.test.ts",
+   "tests/evidence-g24-school.test.ts",
+   "tests/school-paths.test.ts the School’s 86 test files, 1,304 tests, run on this commit: all green"
+  ]
  },
  "promise.coursework.feedback>coursework.partners": {
-  "status": "Not Tested"
+  "status": "Verified",
+  "by": [
+   "inspection",
+   "automated"
+  ],
+  "on": "bd7b9d02",
+  "evidence": [
+   "tests/ensemble.test.ts",
+   "tests/guide-examples-coursework.test.ts",
+   "tests/evidence-g18-school.test.ts",
+   "src/engine/systems/coursework.ts:416-535 setWork; src/engine/systems/coursework.ts:598-834 prepareRefusal and prepare; src/engine/systems/coursework.ts:1470 meetingWeight; src/engine/systems/coursework.ts:1702-1903 the partner’s ask and answer; src/engine/systems/coursework.ts:1916-2060 the commands and kinds",
+   "tests/evidence-g18-school.test.ts",
+   "tests/evidence-g24-school.test.ts",
+   "tests/school-paths.test.ts the School’s 86 test files, 1,304 tests, run on this commit: all green"
+  ]
  },
  "promise.coursework.feedback>coursework.prepare": {
-  "status": "Not Tested"
+  "status": "Verified",
+  "by": [
+   "inspection",
+   "automated"
+  ],
+  "on": "bd7b9d02",
+  "evidence": [
+   "tests/b20-craft-clock.test.ts",
+   "tests/guide-examples-coursework.test.ts",
+   "src/engine/systems/coursework.ts:416-535 setWork; src/engine/systems/coursework.ts:598-834 prepareRefusal and prepare; src/engine/systems/coursework.ts:1470 meetingWeight; src/engine/systems/coursework.ts:1702-1903 the partner’s ask and answer; src/engine/systems/coursework.ts:1916-2060 the commands and kinds",
+   "tests/evidence-g18-school.test.ts",
+   "tests/evidence-g24-school.test.ts",
+   "tests/school-paths.test.ts the School’s 86 test files, 1,304 tests, run on this commit: all green"
+  ]
  },
  "promise.coursework.feedback>craft.identity": {
-  "status": "Not Tested"
+  "status": "Verified",
+  "by": [
+   "inspection",
+   "automated"
+  ],
+  "on": "bd7b9d02",
+  "evidence": [
+   "tests/defects-g8-11.test.ts",
+   "src/engine/systems/coursework.ts:416-535 setWork; src/engine/systems/coursework.ts:598-834 prepareRefusal and prepare; src/engine/systems/coursework.ts:1470 meetingWeight; src/engine/systems/coursework.ts:1702-1903 the partner’s ask and answer; src/engine/systems/coursework.ts:1916-2060 the commands and kinds",
+   "tests/evidence-g18-school.test.ts",
+   "tests/evidence-g24-school.test.ts",
+   "tests/school-paths.test.ts the School’s 86 test files, 1,304 tests, run on this commit: all green"
+  ]
  },
  "promise.coursework.feedback>craft.profile": {
-  "status": "Not Tested"
+  "status": "Verified",
+  "by": [
+   "inspection",
+   "automated"
+  ],
+  "on": "bd7b9d02",
+  "evidence": [
+   "tests/evidence-g21-school.test.ts",
+   "tests/evidence-g24-school.test.ts",
+   "src/engine/systems/coursework.ts:416-535 setWork; src/engine/systems/coursework.ts:598-834 prepareRefusal and prepare; src/engine/systems/coursework.ts:1470 meetingWeight; src/engine/systems/coursework.ts:1702-1903 the partner’s ask and answer; src/engine/systems/coursework.ts:1916-2060 the commands and kinds",
+   "tests/evidence-g18-school.test.ts",
+   "tests/evidence-g24-school.test.ts",
+   "tests/school-paths.test.ts the School’s 86 test files, 1,304 tests, run on this commit: all green"
+  ]
  },
  "promise.coursework.feedback>school.standing": {
-  "status": "Not Tested"
+  "status": "Verified",
+  "by": [
+   "inspection",
+   "automated"
+  ],
+  "on": "bd7b9d02",
+  "evidence": [
+   "tests/evidence-g21-school.test.ts",
+   "tests/evidence-g24-school.test.ts",
+   "src/engine/systems/coursework.ts:416-535 setWork; src/engine/systems/coursework.ts:598-834 prepareRefusal and prepare; src/engine/systems/coursework.ts:1470 meetingWeight; src/engine/systems/coursework.ts:1702-1903 the partner’s ask and answer; src/engine/systems/coursework.ts:1916-2060 the commands and kinds",
+   "tests/evidence-g18-school.test.ts",
+   "tests/evidence-g24-school.test.ts",
+   "tests/school-paths.test.ts the School’s 86 test files, 1,304 tests, run on this commit: all green"
+  ]
  },
  "promise.coursework.partners>coursework.class": {
-  "status": "Not Tested"
+  "status": "Verified",
+  "by": [
+   "inspection",
+   "automated"
+  ],
+  "on": "bd7b9d02",
+  "evidence": [
+   "tests/guide-examples-coursework.test.ts",
+   "tests/evidence-g18-school.test.ts",
+   "src/engine/systems/coursework.ts:416-535 setWork; src/engine/systems/coursework.ts:598-834 prepareRefusal and prepare; src/engine/systems/coursework.ts:1470 meetingWeight; src/engine/systems/coursework.ts:1702-1903 the partner’s ask and answer; src/engine/systems/coursework.ts:1916-2060 the commands and kinds",
+   "tests/evidence-g18-school.test.ts",
+   "tests/evidence-g24-school.test.ts",
+   "tests/school-paths.test.ts the School’s 86 test files, 1,304 tests, run on this commit: all green"
+  ]
  },
  "promise.coursework.partners>coursework.feedback": {
-  "status": "Not Tested"
+  "status": "Verified",
+  "by": [
+   "inspection",
+   "automated"
+  ],
+  "on": "bd7b9d02",
+  "evidence": [
+   "tests/ensemble.test.ts",
+   "tests/guide-examples-coursework.test.ts",
+   "src/engine/systems/coursework.ts:416-535 setWork; src/engine/systems/coursework.ts:598-834 prepareRefusal and prepare; src/engine/systems/coursework.ts:1470 meetingWeight; src/engine/systems/coursework.ts:1702-1903 the partner’s ask and answer; src/engine/systems/coursework.ts:1916-2060 the commands and kinds",
+   "tests/evidence-g18-school.test.ts",
+   "tests/evidence-g24-school.test.ts",
+   "tests/school-paths.test.ts the School’s 86 test files, 1,304 tests, run on this commit: all green"
+  ]
  },
  "promise.coursework.partners>coursework.playing": {
-  "status": "Not Tested"
+  "status": "Verified",
+  "by": [
+   "inspection",
+   "automated"
+  ],
+  "on": "bd7b9d02",
+  "evidence": [
+   "tests/defects-g8-10.test.ts",
+   "src/engine/systems/coursework.ts:416-535 setWork; src/engine/systems/coursework.ts:598-834 prepareRefusal and prepare; src/engine/systems/coursework.ts:1470 meetingWeight; src/engine/systems/coursework.ts:1702-1903 the partner’s ask and answer; src/engine/systems/coursework.ts:1916-2060 the commands and kinds",
+   "tests/evidence-g18-school.test.ts",
+   "tests/evidence-g24-school.test.ts",
+   "tests/school-paths.test.ts the School’s 86 test files, 1,304 tests, run on this commit: all green"
+  ]
  },
  "promise.coursework.partners>coursework.prepare": {
-  "status": "Not Tested"
+  "status": "Verified",
+  "by": [
+   "inspection",
+   "automated"
+  ],
+  "on": "bd7b9d02",
+  "evidence": [
+   "tests/b20-craft-promises.test.ts",
+   "tests/partners.test.ts",
+   "tests/evidence-g22-school.test.ts",
+   "src/engine/systems/coursework.ts:416-535 setWork; src/engine/systems/coursework.ts:598-834 prepareRefusal and prepare; src/engine/systems/coursework.ts:1470 meetingWeight; src/engine/systems/coursework.ts:1702-1903 the partner’s ask and answer; src/engine/systems/coursework.ts:1916-2060 the commands and kinds",
+   "tests/evidence-g18-school.test.ts",
+   "tests/evidence-g24-school.test.ts",
+   "tests/school-paths.test.ts the School’s 86 test files, 1,304 tests, run on this commit: all green"
+  ]
  },
  "promise.coursework.partners>craft.identity": {
-  "status": "Not Tested"
+  "status": "Verified",
+  "by": [
+   "inspection",
+   "automated"
+  ],
+  "on": "bd7b9d02",
+  "evidence": [
+   "tests/evidence-g23-school.test.ts",
+   "tests/b20-craft-promises.test.ts",
+   "src/engine/systems/coursework.ts:416-535 setWork; src/engine/systems/coursework.ts:598-834 prepareRefusal and prepare; src/engine/systems/coursework.ts:1470 meetingWeight; src/engine/systems/coursework.ts:1702-1903 the partner’s ask and answer; src/engine/systems/coursework.ts:1916-2060 the commands and kinds",
+   "tests/evidence-g18-school.test.ts",
+   "tests/evidence-g24-school.test.ts",
+   "tests/school-paths.test.ts the School’s 86 test files, 1,304 tests, run on this commit: all green"
+  ]
  },
  "promise.coursework.partners>day.calendar": {
-  "status": "Not Tested"
+  "status": "Verified",
+  "by": [
+   "inspection",
+   "automated"
+  ],
+  "on": "bd7b9d02",
+  "evidence": [
+   "tests/b20-craft-promises.test.ts",
+   "tests/time-stops.test.ts",
+   "tests/partners.test.ts",
+   "src/engine/systems/coursework.ts:416-535 setWork; src/engine/systems/coursework.ts:598-834 prepareRefusal and prepare; src/engine/systems/coursework.ts:1470 meetingWeight; src/engine/systems/coursework.ts:1702-1903 the partner’s ask and answer; src/engine/systems/coursework.ts:1916-2060 the commands and kinds",
+   "tests/evidence-g18-school.test.ts",
+   "tests/evidence-g24-school.test.ts",
+   "tests/school-paths.test.ts the School’s 86 test files, 1,304 tests, run on this commit: all green"
+  ]
  },
  "promise.coursework.partners>school.orientation": {
-  "status": "Not Tested"
+  "status": "Verified",
+  "by": [
+   "inspection",
+   "automated"
+  ],
+  "on": "bd7b9d02",
+  "evidence": [
+   "tests/evidence-g19-school.test.ts",
+   "tests/evidence-g22-school.test.ts",
+   "src/engine/systems/coursework.ts:416-535 setWork; src/engine/systems/coursework.ts:598-834 prepareRefusal and prepare; src/engine/systems/coursework.ts:1470 meetingWeight; src/engine/systems/coursework.ts:1702-1903 the partner’s ask and answer; src/engine/systems/coursework.ts:1916-2060 the commands and kinds",
+   "tests/evidence-g18-school.test.ts",
+   "tests/evidence-g24-school.test.ts",
+   "tests/school-paths.test.ts the School’s 86 test files, 1,304 tests, run on this commit: all green"
+  ]
  },
  "promise.coursework.partners>school.sick": {
-  "status": "Not Tested"
+  "status": "Verified",
+  "by": [
+   "inspection",
+   "automated"
+  ],
+  "on": "bd7b9d02",
+  "evidence": [
+   "tests/coursework-defects.test.ts",
+   "tests/evidence-g19-school.test.ts",
+   "src/engine/systems/coursework.ts:416-535 setWork; src/engine/systems/coursework.ts:598-834 prepareRefusal and prepare; src/engine/systems/coursework.ts:1470 meetingWeight; src/engine/systems/coursework.ts:1702-1903 the partner’s ask and answer; src/engine/systems/coursework.ts:1916-2060 the commands and kinds",
+   "tests/evidence-g18-school.test.ts",
+   "tests/evidence-g24-school.test.ts",
+   "tests/school-paths.test.ts the School’s 86 test files, 1,304 tests, run on this commit: all green"
+  ]
  },
  "promise.coursework.playing>coursework.feedback": {
-  "status": "Not Tested"
+  "status": "Verified",
+  "by": [
+   "inspection",
+   "automated"
+  ],
+  "on": "bd7b9d02",
+  "evidence": [
+   "tests/b20-craft-promises.test.ts",
+   "tests/stage-interpretation.test.ts",
+   "src/engine/systems/coursework.ts:416-535 setWork; src/engine/systems/coursework.ts:598-834 prepareRefusal and prepare; src/engine/systems/coursework.ts:1470 meetingWeight; src/engine/systems/coursework.ts:1702-1903 the partner’s ask and answer; src/engine/systems/coursework.ts:1916-2060 the commands and kinds",
+   "tests/evidence-g18-school.test.ts",
+   "tests/evidence-g24-school.test.ts",
+   "tests/school-paths.test.ts the School’s 86 test files, 1,304 tests, run on this commit: all green"
+  ]
  },
  "promise.coursework.playing>coursework.partners": {
-  "status": "Not Tested"
+  "status": "Verified",
+  "by": [
+   "inspection",
+   "automated"
+  ],
+  "on": "bd7b9d02",
+  "evidence": [
+   "tests/defects-g8-10.test.ts",
+   "src/engine/systems/coursework.ts:416-535 setWork; src/engine/systems/coursework.ts:598-834 prepareRefusal and prepare; src/engine/systems/coursework.ts:1470 meetingWeight; src/engine/systems/coursework.ts:1702-1903 the partner’s ask and answer; src/engine/systems/coursework.ts:1916-2060 the commands and kinds",
+   "tests/evidence-g18-school.test.ts",
+   "tests/evidence-g24-school.test.ts",
+   "tests/school-paths.test.ts the School’s 86 test files, 1,304 tests, run on this commit: all green"
+  ]
  },
  "promise.coursework.playing>coursework.prepare": {
-  "status": "Not Tested"
+  "status": "Verified",
+  "by": [
+   "inspection",
+   "automated"
+  ],
+  "on": "bd7b9d02",
+  "evidence": [
+   "tests/guide-examples-coursework.test.ts",
+   "tests/defects-g8-10.test.ts",
+   "src/engine/systems/coursework.ts:416-535 setWork; src/engine/systems/coursework.ts:598-834 prepareRefusal and prepare; src/engine/systems/coursework.ts:1470 meetingWeight; src/engine/systems/coursework.ts:1702-1903 the partner’s ask and answer; src/engine/systems/coursework.ts:1916-2060 the commands and kinds",
+   "tests/evidence-g18-school.test.ts",
+   "tests/evidence-g24-school.test.ts",
+   "tests/school-paths.test.ts the School’s 86 test files, 1,304 tests, run on this commit: all green"
+  ]
  },
  "promise.coursework.playing>coursework.workbook": {
-  "status": "Not Tested"
+  "status": "Verified",
+  "by": [
+   "inspection",
+   "automated"
+  ],
+  "on": "bd7b9d02",
+  "evidence": [
+   "tests/b20-craft-promises.test.ts",
+   "tests/workbook.test.ts",
+   "src/engine/systems/coursework.ts:416-535 setWork; src/engine/systems/coursework.ts:598-834 prepareRefusal and prepare; src/engine/systems/coursework.ts:1470 meetingWeight; src/engine/systems/coursework.ts:1702-1903 the partner’s ask and answer; src/engine/systems/coursework.ts:1916-2060 the commands and kinds",
+   "tests/evidence-g18-school.test.ts",
+   "tests/evidence-g24-school.test.ts",
+   "tests/school-paths.test.ts the School’s 86 test files, 1,304 tests, run on this commit: all green"
+  ]
  },
  "promise.coursework.playing>craft.identity": {
-  "status": "Not Tested"
+  "status": "Verified",
+  "by": [
+   "inspection",
+   "automated"
+  ],
+  "on": "bd7b9d02",
+  "evidence": [
+   "tests/defects-g8-15.test.ts",
+   "tests/evidence2-b11.test.ts",
+   "src/engine/systems/coursework.ts:416-535 setWork; src/engine/systems/coursework.ts:598-834 prepareRefusal and prepare; src/engine/systems/coursework.ts:1470 meetingWeight; src/engine/systems/coursework.ts:1702-1903 the partner’s ask and answer; src/engine/systems/coursework.ts:1916-2060 the commands and kinds",
+   "tests/evidence-g18-school.test.ts",
+   "tests/evidence-g24-school.test.ts",
+   "tests/school-paths.test.ts the School’s 86 test files, 1,304 tests, run on this commit: all green"
+  ]
  },
  "promise.coursework.prepare>body.how": {
-  "status": "Not Tested"
+  "status": "Verified",
+  "by": [
+   "inspection",
+   "automated"
+  ],
+  "on": "bd7b9d02",
+  "evidence": [
+   "tests/b20-craft-promises.test.ts",
+   "tests/b20-craft-clock.test.ts",
+   "src/engine/systems/coursework.ts:416-535 setWork; src/engine/systems/coursework.ts:598-834 prepareRefusal and prepare; src/engine/systems/coursework.ts:1470 meetingWeight; src/engine/systems/coursework.ts:1702-1903 the partner’s ask and answer; src/engine/systems/coursework.ts:1916-2060 the commands and kinds",
+   "tests/evidence-g18-school.test.ts",
+   "tests/evidence-g24-school.test.ts",
+   "tests/school-paths.test.ts the School’s 86 test files, 1,304 tests, run on this commit: all green"
+  ]
  },
  "promise.coursework.prepare>coursework.feedback": {
-  "status": "Not Tested"
+  "status": "Verified",
+  "by": [
+   "inspection",
+   "automated"
+  ],
+  "on": "bd7b9d02",
+  "evidence": [
+   "tests/b20-craft-clock.test.ts",
+   "tests/evidence-g18-school.test.ts",
+   "src/engine/systems/coursework.ts:416-535 setWork; src/engine/systems/coursework.ts:598-834 prepareRefusal and prepare; src/engine/systems/coursework.ts:1470 meetingWeight; src/engine/systems/coursework.ts:1702-1903 the partner’s ask and answer; src/engine/systems/coursework.ts:1916-2060 the commands and kinds",
+   "tests/evidence-g18-school.test.ts",
+   "tests/evidence-g24-school.test.ts",
+   "tests/school-paths.test.ts the School’s 86 test files, 1,304 tests, run on this commit: all green"
+  ]
  },
  "promise.coursework.prepare>coursework.playing": {
-  "status": "Not Tested"
+  "status": "Verified",
+  "by": [
+   "inspection",
+   "automated"
+  ],
+  "on": "bd7b9d02",
+  "evidence": [
+   "tests/guide-examples-coursework.test.ts",
+   "tests/defects-g8-10.test.ts",
+   "src/engine/systems/coursework.ts:416-535 setWork; src/engine/systems/coursework.ts:598-834 prepareRefusal and prepare; src/engine/systems/coursework.ts:1470 meetingWeight; src/engine/systems/coursework.ts:1702-1903 the partner’s ask and answer; src/engine/systems/coursework.ts:1916-2060 the commands and kinds",
+   "tests/evidence-g18-school.test.ts",
+   "tests/evidence-g24-school.test.ts",
+   "tests/school-paths.test.ts the School’s 86 test files, 1,304 tests, run on this commit: all green"
+  ]
  },
  "promise.coursework.prepare>craft.identity": {
-  "status": "Not Tested"
+  "status": "Verified",
+  "by": [
+   "inspection",
+   "automated"
+  ],
+  "on": "bd7b9d02",
+  "evidence": [
+   "tests/b20-craft-promises.test.ts",
+   "tests/evidence-g23-school.test.ts",
+   "tests/evidence-g18-school.test.ts",
+   "src/engine/systems/coursework.ts:416-535 setWork; src/engine/systems/coursework.ts:598-834 prepareRefusal and prepare; src/engine/systems/coursework.ts:1470 meetingWeight; src/engine/systems/coursework.ts:1702-1903 the partner’s ask and answer; src/engine/systems/coursework.ts:1916-2060 the commands and kinds",
+   "tests/evidence-g18-school.test.ts",
+   "tests/evidence-g24-school.test.ts",
+   "tests/school-paths.test.ts the School’s 86 test files, 1,304 tests, run on this commit: all green"
+  ]
  },
  "promise.coursework.prepare>craft.profile": {
-  "status": "Not Tested"
+  "status": "Verified",
+  "by": [
+   "inspection",
+   "automated"
+  ],
+  "on": "bd7b9d02",
+  "evidence": [
+   "tests/guide-examples-coursework.test.ts",
+   "tests/evidence-g18-school.test.ts",
+   "tests/evidence-g23-school.test.ts",
+   "src/engine/systems/coursework.ts:416-535 setWork; src/engine/systems/coursework.ts:598-834 prepareRefusal and prepare; src/engine/systems/coursework.ts:1470 meetingWeight; src/engine/systems/coursework.ts:1702-1903 the partner’s ask and answer; src/engine/systems/coursework.ts:1916-2060 the commands and kinds",
+   "tests/evidence-g18-school.test.ts",
+   "tests/evidence-g24-school.test.ts",
+   "tests/school-paths.test.ts the School’s 86 test files, 1,304 tests, run on this commit: all green"
+  ]
  },
  "promise.coursework.prepare>school.orientation": {
-  "status": "Not Tested"
+  "status": "Verified",
+  "by": [
+   "inspection",
+   "automated"
+  ],
+  "on": "bd7b9d02",
+  "evidence": [
+   "tests/evidence-g19-school.test.ts",
+   "tests/evidence-g22-school.test.ts",
+   "src/engine/systems/coursework.ts:416-535 setWork; src/engine/systems/coursework.ts:598-834 prepareRefusal and prepare; src/engine/systems/coursework.ts:1470 meetingWeight; src/engine/systems/coursework.ts:1702-1903 the partner’s ask and answer; src/engine/systems/coursework.ts:1916-2060 the commands and kinds",
+   "tests/evidence-g18-school.test.ts",
+   "tests/evidence-g24-school.test.ts",
+   "tests/school-paths.test.ts the School’s 86 test files, 1,304 tests, run on this commit: all green"
+  ]
  },
  "promise.coursework.prepare>school.standing": {
-  "status": "Not Tested"
+  "status": "Verified",
+  "by": [
+   "inspection",
+   "automated"
+  ],
+  "on": "bd7b9d02",
+  "evidence": [
+   "tests/evidence-g21-school.test.ts",
+   "tests/evidence-g24-school.test.ts",
+   "tests/remaining-school-term.test.ts",
+   "src/engine/systems/coursework.ts:416-535 setWork; src/engine/systems/coursework.ts:598-834 prepareRefusal and prepare; src/engine/systems/coursework.ts:1470 meetingWeight; src/engine/systems/coursework.ts:1702-1903 the partner’s ask and answer; src/engine/systems/coursework.ts:1916-2060 the commands and kinds",
+   "tests/evidence-g18-school.test.ts",
+   "tests/evidence-g24-school.test.ts",
+   "tests/school-paths.test.ts the School’s 86 test files, 1,304 tests, run on this commit: all green"
+  ]
  },
  "promise.coursework.table>coursework.class": {
-  "status": "Not Tested"
+  "status": "Verified",
+  "by": [
+   "inspection",
+   "automated"
+  ],
+  "on": "bd7b9d02",
+  "evidence": [
+   "tests/evidence-g18-school.test.ts",
+   "tests/journey-school-year.test.ts",
+   "src/engine/systems/coursework.ts:416-535 setWork; src/engine/systems/coursework.ts:598-834 prepareRefusal and prepare; src/engine/systems/coursework.ts:1470 meetingWeight; src/engine/systems/coursework.ts:1702-1903 the partner’s ask and answer; src/engine/systems/coursework.ts:1916-2060 the commands and kinds",
+   "tests/evidence-g18-school.test.ts",
+   "tests/evidence-g24-school.test.ts",
+   "tests/school-paths.test.ts the School’s 86 test files, 1,304 tests, run on this commit: all green"
+  ]
  },
  "promise.coursework.table>coursework.feedback": {
-  "status": "Not Tested"
+  "status": "Verified",
+  "by": [
+   "inspection",
+   "automated"
+  ],
+  "on": "bd7b9d02",
+  "evidence": [
+   "tests/evidence-g18-school.test.ts",
+   "tests/guide-examples-coursework.test.ts",
+   "tests/coursework-defects.test.ts",
+   "src/engine/systems/coursework.ts:416-535 setWork; src/engine/systems/coursework.ts:598-834 prepareRefusal and prepare; src/engine/systems/coursework.ts:1470 meetingWeight; src/engine/systems/coursework.ts:1702-1903 the partner’s ask and answer; src/engine/systems/coursework.ts:1916-2060 the commands and kinds",
+   "tests/evidence-g18-school.test.ts",
+   "tests/evidence-g24-school.test.ts",
+   "tests/school-paths.test.ts the School’s 86 test files, 1,304 tests, run on this commit: all green"
+  ]
  },
  "promise.coursework.table>coursework.partners": {
-  "status": "Not Tested"
+  "status": "Verified",
+  "by": [
+   "inspection",
+   "automated"
+  ],
+  "on": "bd7b9d02",
+  "evidence": [
+   "tests/evidence-g18-school.test.ts",
+   "tests/ensemble.test.ts",
+   "src/engine/systems/coursework.ts:416-535 setWork; src/engine/systems/coursework.ts:598-834 prepareRefusal and prepare; src/engine/systems/coursework.ts:1470 meetingWeight; src/engine/systems/coursework.ts:1702-1903 the partner’s ask and answer; src/engine/systems/coursework.ts:1916-2060 the commands and kinds",
+   "tests/evidence-g18-school.test.ts",
+   "tests/evidence-g24-school.test.ts",
+   "tests/school-paths.test.ts the School’s 86 test files, 1,304 tests, run on this commit: all green"
+  ]
  },
  "promise.coursework.table>coursework.prepare": {
-  "status": "Not Tested"
+  "status": "Verified",
+  "by": [
+   "inspection",
+   "automated"
+  ],
+  "on": "bd7b9d02",
+  "evidence": [
+   "tests/table-work-unread.test.ts",
+   "tests/evidence-g18-school.test.ts",
+   "src/engine/systems/coursework.ts:416-535 setWork; src/engine/systems/coursework.ts:598-834 prepareRefusal and prepare; src/engine/systems/coursework.ts:1470 meetingWeight; src/engine/systems/coursework.ts:1702-1903 the partner’s ask and answer; src/engine/systems/coursework.ts:1916-2060 the commands and kinds",
+   "tests/evidence-g18-school.test.ts",
+   "tests/evidence-g24-school.test.ts",
+   "tests/school-paths.test.ts the School’s 86 test files, 1,304 tests, run on this commit: all green"
+  ]
  },
  "promise.coursework.table>coursework.workbook": {
-  "status": "Not Tested"
+  "status": "Verified",
+  "by": [
+   "inspection",
+   "automated"
+  ],
+  "on": "bd7b9d02",
+  "evidence": [
+   "tests/b20-craft-promises.test.ts",
+   "src/engine/systems/coursework.ts:416-535 setWork; src/engine/systems/coursework.ts:598-834 prepareRefusal and prepare; src/engine/systems/coursework.ts:1470 meetingWeight; src/engine/systems/coursework.ts:1702-1903 the partner’s ask and answer; src/engine/systems/coursework.ts:1916-2060 the commands and kinds",
+   "tests/evidence-g18-school.test.ts",
+   "tests/evidence-g24-school.test.ts",
+   "tests/school-paths.test.ts the School’s 86 test files, 1,304 tests, run on this commit: all green"
+  ]
  },
  "promise.coursework.workbook>coursework.feedback": {
-  "status": "Not Tested"
+  "status": "Verified",
+  "by": [
+   "inspection",
+   "automated"
+  ],
+  "on": "bd7b9d02",
+  "evidence": [
+   "tests/guide-examples-coursework.test.ts",
+   "src/engine/systems/coursework.ts:416-535 setWork; src/engine/systems/coursework.ts:598-834 prepareRefusal and prepare; src/engine/systems/coursework.ts:1470 meetingWeight; src/engine/systems/coursework.ts:1702-1903 the partner’s ask and answer; src/engine/systems/coursework.ts:1916-2060 the commands and kinds",
+   "tests/evidence-g18-school.test.ts",
+   "tests/evidence-g24-school.test.ts",
+   "tests/school-paths.test.ts the School’s 86 test files, 1,304 tests, run on this commit: all green"
+  ]
  },
  "promise.coursework.workbook>coursework.playing": {
-  "status": "Not Tested"
+  "status": "Verified",
+  "by": [
+   "inspection",
+   "automated"
+  ],
+  "on": "bd7b9d02",
+  "evidence": [
+   "tests/b20-craft-promises.test.ts",
+   "tests/workbook.test.ts",
+   "src/engine/systems/coursework.ts:416-535 setWork; src/engine/systems/coursework.ts:598-834 prepareRefusal and prepare; src/engine/systems/coursework.ts:1470 meetingWeight; src/engine/systems/coursework.ts:1702-1903 the partner’s ask and answer; src/engine/systems/coursework.ts:1916-2060 the commands and kinds",
+   "tests/evidence-g18-school.test.ts",
+   "tests/evidence-g24-school.test.ts",
+   "tests/school-paths.test.ts the School’s 86 test files, 1,304 tests, run on this commit: all green"
+  ]
  },
  "promise.coursework.workbook>coursework.prepare": {
-  "status": "Not Tested"
+  "status": "Verified",
+  "by": [
+   "inspection",
+   "automated"
+  ],
+  "on": "bd7b9d02",
+  "evidence": [
+   "tests/b20-craft-promises.test.ts",
+   "src/engine/systems/coursework.ts:416-535 setWork; src/engine/systems/coursework.ts:598-834 prepareRefusal and prepare; src/engine/systems/coursework.ts:1470 meetingWeight; src/engine/systems/coursework.ts:1702-1903 the partner’s ask and answer; src/engine/systems/coursework.ts:1916-2060 the commands and kinds",
+   "tests/evidence-g18-school.test.ts",
+   "tests/evidence-g24-school.test.ts",
+   "tests/school-paths.test.ts the School’s 86 test files, 1,304 tests, run on this commit: all green"
+  ]
  },
  "promise.coursework.workbook>craft.brief-prepare": {
-  "status": "Not Tested"
+  "status": "Verified",
+  "by": [
+   "inspection",
+   "automated"
+  ],
+  "on": "bd7b9d02",
+  "evidence": [
+   "tests/workbook.test.ts",
+   "src/engine/systems/coursework.ts:416-535 setWork; src/engine/systems/coursework.ts:598-834 prepareRefusal and prepare; src/engine/systems/coursework.ts:1470 meetingWeight; src/engine/systems/coursework.ts:1702-1903 the partner’s ask and answer; src/engine/systems/coursework.ts:1916-2060 the commands and kinds",
+   "tests/evidence-g18-school.test.ts",
+   "tests/evidence-g24-school.test.ts",
+   "tests/school-paths.test.ts the School’s 86 test files, 1,304 tests, run on this commit: all green"
+  ]
  },
  "promise.coursework.workbook>craft.brief-reader": {
-  "status": "Not Tested"
+  "status": "Verified",
+  "by": [
+   "inspection",
+   "automated"
+  ],
+  "on": "bd7b9d02",
+  "evidence": [
+   "tests/guide-examples-craft.test.ts",
+   "src/engine/systems/coursework.ts:416-535 setWork; src/engine/systems/coursework.ts:598-834 prepareRefusal and prepare; src/engine/systems/coursework.ts:1470 meetingWeight; src/engine/systems/coursework.ts:1702-1903 the partner’s ask and answer; src/engine/systems/coursework.ts:1916-2060 the commands and kinds",
+   "tests/evidence-g18-school.test.ts",
+   "tests/evidence-g24-school.test.ts",
+   "tests/school-paths.test.ts the School’s 86 test files, 1,304 tests, run on this commit: all green"
+  ]
  },
  "promise.coursework.workbook>craft.profile": {
-  "status": "Not Tested"
+  "status": "Verified",
+  "by": [
+   "inspection",
+   "automated"
+  ],
+  "on": "bd7b9d02",
+  "evidence": [
+   "tests/b20-craft-promises.test.ts",
+   "src/engine/systems/coursework.ts:416-535 setWork; src/engine/systems/coursework.ts:598-834 prepareRefusal and prepare; src/engine/systems/coursework.ts:1470 meetingWeight; src/engine/systems/coursework.ts:1702-1903 the partner’s ask and answer; src/engine/systems/coursework.ts:1916-2060 the commands and kinds",
+   "tests/evidence-g18-school.test.ts",
+   "tests/evidence-g24-school.test.ts",
+   "tests/school-paths.test.ts the School’s 86 test files, 1,304 tests, run on this commit: all green"
+  ]
  },
  "promise.coursework.workbook>productions.notes": {
-  "status": "Not Tested"
+  "status": "Verified",
+  "by": [
+   "inspection",
+   "automated"
+  ],
+  "on": "bd7b9d02",
+  "evidence": [
+   "tests/direction.test.ts",
+   "tests/evidence-g19-school.test.ts",
+   "src/engine/systems/coursework.ts:416-535 setWork; src/engine/systems/coursework.ts:598-834 prepareRefusal and prepare; src/engine/systems/coursework.ts:1470 meetingWeight; src/engine/systems/coursework.ts:1702-1903 the partner’s ask and answer; src/engine/systems/coursework.ts:1916-2060 the commands and kinds",
+   "tests/evidence-g18-school.test.ts",
+   "tests/evidence-g24-school.test.ts",
+   "tests/school-paths.test.ts the School’s 86 test files, 1,304 tests, run on this commit: all green"
+  ]
  },
  "promise.craft.brief-choose>coursework.playing": {
-  "status": "Not Tested"
+  "status": "Verified",
+  "by": [
+   "inspection",
+   "automated"
+  ],
+  "on": "bd7b9d02",
+  "evidence": [
+   "tests/guide-examples-coursework.test.ts",
+   "tests/guide-examples-craft.test.ts",
+   "src/engine/systems/briefs.ts:458-600 the briefs’ refusals; src/engine/systems/briefs.ts:831-902 the commands",
+   "tests/school-paths.test.ts the School’s 86 test files, 1,304 tests, run on this commit: all green"
+  ]
  },
  "promise.craft.brief-choose>coursework.workbook": {
-  "status": "Not Tested"
+  "status": "Verified",
+  "by": [
+   "inspection",
+   "automated"
+  ],
+  "on": "bd7b9d02",
+  "evidence": [
+   "tests/b20-craft-promises.test.ts",
+   "tests/workbook.test.ts",
+   "src/engine/systems/briefs.ts:458-600 the briefs’ refusals; src/engine/systems/briefs.ts:831-902 the commands",
+   "tests/school-paths.test.ts the School’s 86 test files, 1,304 tests, run on this commit: all green"
+  ]
  },
  "promise.craft.brief-choose>craft.brief-prepare": {
-  "status": "Not Tested"
+  "status": "Verified",
+  "by": [
+   "inspection",
+   "automated"
+  ],
+  "on": "bd7b9d02",
+  "evidence": [
+   "tests/guide-examples-craft.test.ts",
+   "src/engine/systems/briefs.ts:458-600 the briefs’ refusals; src/engine/systems/briefs.ts:831-902 the commands",
+   "tests/school-paths.test.ts the School’s 86 test files, 1,304 tests, run on this commit: all green"
+  ]
  },
  "promise.craft.brief-choose>craft.brief-tape": {
-  "status": "Not Tested"
+  "status": "Verified",
+  "by": [
+   "inspection",
+   "automated"
+  ],
+  "on": "bd7b9d02",
+  "evidence": [
+   "tests/briefs.test.ts",
+   "tests/decisions-judge.test.ts",
+   "src/engine/systems/briefs.ts:458-600 the briefs’ refusals; src/engine/systems/briefs.ts:831-902 the commands",
+   "tests/school-paths.test.ts the School’s 86 test files, 1,304 tests, run on this commit: all green"
+  ]
  },
  "promise.craft.brief-choose>craft.identity": {
-  "status": "Not Tested"
+  "status": "Verified",
+  "by": [
+   "inspection",
+   "automated"
+  ],
+  "on": "bd7b9d02",
+  "evidence": [
+   "tests/b20-craft-promises.test.ts",
+   "tests/guide-examples-craft.test.ts",
+   "tests/defects-g8-15.test.ts",
+   "src/engine/systems/briefs.ts:458-600 the briefs’ refusals; src/engine/systems/briefs.ts:831-902 the commands",
+   "tests/school-paths.test.ts the School’s 86 test files, 1,304 tests, run on this commit: all green"
+  ]
  },
  "promise.craft.brief-prepare>coursework.workbook": {
-  "status": "Not Tested"
+  "status": "Verified",
+  "by": [
+   "inspection",
+   "automated"
+  ],
+  "on": "bd7b9d02",
+  "evidence": [
+   "tests/workbook.test.ts",
+   "src/engine/systems/briefs.ts:458-600 the briefs’ refusals; src/engine/systems/briefs.ts:831-902 the commands",
+   "tests/school-paths.test.ts the School’s 86 test files, 1,304 tests, run on this commit: all green"
+  ]
  },
  "promise.craft.brief-prepare>craft.brief-choose": {
-  "status": "Not Tested"
+  "status": "Verified",
+  "by": [
+   "inspection",
+   "automated"
+  ],
+  "on": "bd7b9d02",
+  "evidence": [
+   "tests/briefs.test.ts",
+   "tests/remaining-09-coverage.test.ts",
+   "src/engine/systems/briefs.ts:458-600 the briefs’ refusals; src/engine/systems/briefs.ts:831-902 the commands",
+   "tests/school-paths.test.ts the School’s 86 test files, 1,304 tests, run on this commit: all green"
+  ]
  },
  "promise.craft.brief-prepare>craft.brief-reader": {
-  "status": "Not Tested"
+  "status": "Verified",
+  "by": [
+   "inspection",
+   "automated"
+  ],
+  "on": "bd7b9d02",
+  "evidence": [
+   "tests/guide-examples-craft.test.ts",
+   "src/engine/systems/briefs.ts:458-600 the briefs’ refusals; src/engine/systems/briefs.ts:831-902 the commands",
+   "tests/school-paths.test.ts the School’s 86 test files, 1,304 tests, run on this commit: all green"
+  ]
  },
  "promise.craft.brief-prepare>craft.brief-tape": {
-  "status": "Not Tested"
+  "status": "Verified",
+  "by": [
+   "inspection",
+   "automated"
+  ],
+  "on": "bd7b9d02",
+  "evidence": [
+   "tests/b20-craft-bite.test.ts",
+   "tests/briefs.test.ts",
+   "src/engine/systems/briefs.ts:458-600 the briefs’ refusals; src/engine/systems/briefs.ts:831-902 the commands",
+   "tests/school-paths.test.ts the School’s 86 test files, 1,304 tests, run on this commit: all green"
+  ]
  },
  "promise.craft.brief-prepare>craft.genre": {
-  "status": "Not Tested"
+  "status": "Verified",
+  "by": [
+   "inspection",
+   "automated"
+  ],
+  "on": "bd7b9d02",
+  "evidence": [
+   "tests/evidence-g31-ui.test.ts",
+   "src/engine/systems/briefs.ts:458-600 the briefs’ refusals; src/engine/systems/briefs.ts:831-902 the commands",
+   "tests/school-paths.test.ts the School’s 86 test files, 1,304 tests, run on this commit: all green"
+  ]
  },
  "promise.craft.brief-prepare>craft.profile": {
-  "status": "Not Tested"
+  "status": "Verified",
+  "by": [
+   "inspection",
+   "automated"
+  ],
+  "on": "bd7b9d02",
+  "evidence": [
+   "tests/b20-craft-bite.test.ts",
+   "src/engine/systems/briefs.ts:458-600 the briefs’ refusals; src/engine/systems/briefs.ts:831-902 the commands",
+   "tests/school-paths.test.ts the School’s 86 test files, 1,304 tests, run on this commit: all green"
+  ]
  },
  "promise.craft.brief-reader>coursework.partners": {
-  "status": "Not Tested"
+  "status": "Verified",
+  "by": [
+   "inspection",
+   "automated"
+  ],
+  "on": "bd7b9d02",
+  "evidence": [
+   "tests/evidence-g20-school.test.ts",
+   "src/engine/systems/briefs.ts:458-600 the briefs’ refusals; src/engine/systems/briefs.ts:831-902 the commands",
+   "tests/school-paths.test.ts the School’s 86 test files, 1,304 tests, run on this commit: all green"
+  ]
  },
  "promise.craft.brief-reader>coursework.workbook": {
-  "status": "Not Tested"
+  "status": "Verified",
+  "by": [
+   "inspection",
+   "automated"
+  ],
+  "on": "bd7b9d02",
+  "evidence": [
+   "tests/guide-examples-craft.test.ts",
+   "src/engine/systems/briefs.ts:458-600 the briefs’ refusals; src/engine/systems/briefs.ts:831-902 the commands",
+   "tests/school-paths.test.ts the School’s 86 test files, 1,304 tests, run on this commit: all green"
+  ]
  },
  "promise.craft.brief-reader>craft.brief-tape": {
-  "status": "Not Tested"
+  "status": "Verified",
+  "by": [
+   "inspection",
+   "automated"
+  ],
+  "on": "bd7b9d02",
+  "evidence": [
+   "tests/ensemble.test.ts",
+   "tests/guide-examples-craft.test.ts",
+   "src/engine/systems/briefs.ts:458-600 the briefs’ refusals; src/engine/systems/briefs.ts:831-902 the commands",
+   "tests/school-paths.test.ts the School’s 86 test files, 1,304 tests, run on this commit: all green"
+  ]
  },
  "promise.craft.brief-reader>craft.identity": {
-  "status": "Not Tested"
+  "status": "Verified",
+  "by": [
+   "inspection",
+   "automated"
+  ],
+  "on": "bd7b9d02",
+  "evidence": [
+   "tests/b20-craft-promises.test.ts",
+   "src/engine/systems/briefs.ts:458-600 the briefs’ refusals; src/engine/systems/briefs.ts:831-902 the commands",
+   "tests/school-paths.test.ts the School’s 86 test files, 1,304 tests, run on this commit: all green"
+  ]
  },
  "promise.craft.brief-tape>body.sleep": {
-  "status": "Not Tested"
+  "status": "Verified",
+  "by": [
+   "inspection",
+   "automated"
+  ],
+  "on": "bd7b9d02",
+  "evidence": [
+   "tests/b20-craft-promises.test.ts",
+   "tests/b20-craft-bite.test.ts",
+   "src/engine/systems/briefs.ts:458-600 the briefs’ refusals; src/engine/systems/briefs.ts:831-902 the commands",
+   "tests/school-paths.test.ts the School’s 86 test files, 1,304 tests, run on this commit: all green"
+  ]
  },
  "promise.craft.brief-tape>coursework.workbook": {
-  "status": "Not Tested"
+  "status": "Verified",
+  "by": [
+   "inspection",
+   "automated"
+  ],
+  "on": "bd7b9d02",
+  "evidence": [
+   "tests/workbook.test.ts",
+   "src/engine/systems/briefs.ts:458-600 the briefs’ refusals; src/engine/systems/briefs.ts:831-902 the commands",
+   "tests/school-paths.test.ts the School’s 86 test files, 1,304 tests, run on this commit: all green"
+  ]
  },
  "promise.craft.brief-tape>craft.brief-choose": {
-  "status": "Not Tested"
+  "status": "Verified",
+  "by": [
+   "inspection",
+   "automated"
+  ],
+  "on": "bd7b9d02",
+  "evidence": [
+   "tests/briefs.test.ts",
+   "tests/evidence-g31-ui.test.ts",
+   "src/engine/systems/briefs.ts:458-600 the briefs’ refusals; src/engine/systems/briefs.ts:831-902 the commands",
+   "tests/school-paths.test.ts the School’s 86 test files, 1,304 tests, run on this commit: all green"
+  ]
  },
  "promise.craft.brief-tape>craft.genre": {
-  "status": "Not Tested"
+  "status": "Verified",
+  "by": [
+   "inspection",
+   "automated"
+  ],
+  "on": "bd7b9d02",
+  "evidence": [
+   "tests/briefs.test.ts",
+   "tests/evidence-g31-ui.test.ts",
+   "tests/b22-genre-weights.test.ts",
+   "src/engine/systems/briefs.ts:458-600 the briefs’ refusals; src/engine/systems/briefs.ts:831-902 the commands",
+   "tests/school-paths.test.ts the School’s 86 test files, 1,304 tests, run on this commit: all green"
+  ]
  },
  "promise.craft.brief-tape>craft.identity": {
-  "status": "Not Tested"
+  "status": "Verified",
+  "by": [
+   "inspection",
+   "automated"
+  ],
+  "on": "bd7b9d02",
+  "evidence": [
+   "tests/b20-craft-promises.test.ts",
+   "src/engine/systems/briefs.ts:458-600 the briefs’ refusals; src/engine/systems/briefs.ts:831-902 the commands",
+   "tests/school-paths.test.ts the School’s 86 test files, 1,304 tests, run on this commit: all green"
+  ]
  },
  "promise.craft.brief-tape>craft.profile": {
-  "status": "Not Tested"
+  "status": "Verified",
+  "by": [
+   "inspection",
+   "automated"
+  ],
+  "on": "bd7b9d02",
+  "evidence": [
+   "tests/evidence-g20-school.test.ts",
+   "src/engine/systems/briefs.ts:458-600 the briefs’ refusals; src/engine/systems/briefs.ts:831-902 the commands",
+   "tests/school-paths.test.ts the School’s 86 test files, 1,304 tests, run on this commit: all green"
+  ]
  },
  "promise.craft.brief-tape>craft.work": {
-  "status": "Not Tested"
+  "status": "Verified",
+  "by": [
+   "inspection",
+   "automated"
+  ],
+  "on": "bd7b9d02",
+  "evidence": [
+   "tests/guide-examples-craft.test.ts",
+   "tests/b20-craft-screens.test.ts",
+   "src/engine/systems/briefs.ts:458-600 the briefs’ refusals; src/engine/systems/briefs.ts:831-902 the commands",
+   "tests/school-paths.test.ts the School’s 86 test files, 1,304 tests, run on this commit: all green"
+  ]
  },
  "promise.craft.genre>career.auditions": {
-  "status": "Not Tested"
+  "status": "Verified",
+  "by": [
+   "inspection",
+   "automated"
+  ],
+  "on": "bd7b9d02",
+  "evidence": [
+   "tests/b20-career-effects.test.ts",
+   "tests/b22-genre-weights.test.ts",
+   "tests/b22-comparisons.test.ts",
+   "src/engine/systems/engagement.ts:144-307 knownOf, relatedness, relevantGenre; src/engine/systems/engagement.ts:375 the command",
+   "tests/engagement.test.ts",
+   "tests/b22-genre-weights.test.ts",
+   "tests/school-paths.test.ts the School’s 86 test files, 1,304 tests, run on this commit: all green"
+  ]
  },
  "promise.craft.genre>coursework.prepare": {
-  "status": "Not Tested"
+  "status": "Verified",
+  "by": [
+   "inspection",
+   "automated"
+  ],
+  "on": "bd7b9d02",
+  "evidence": [
+   "tests/b20-craft-bite.test.ts",
+   "tests/evidence-g20-school.test.ts",
+   "tests/evidence-g23-school.test.ts",
+   "tests/b22-genre-weights.test.ts",
+   "src/engine/systems/engagement.ts:144-307 knownOf, relatedness, relevantGenre; src/engine/systems/engagement.ts:375 the command",
+   "tests/engagement.test.ts",
+   "tests/b22-genre-weights.test.ts",
+   "tests/school-paths.test.ts the School’s 86 test files, 1,304 tests, run on this commit: all green"
+  ]
  },
  "promise.craft.genre>craft.brief-prepare": {
-  "status": "Not Tested"
+  "status": "Verified",
+  "by": [
+   "inspection",
+   "automated"
+  ],
+  "on": "bd7b9d02",
+  "evidence": [
+   "tests/evidence-g31-ui.test.ts",
+   "src/engine/systems/engagement.ts:144-307 knownOf, relatedness, relevantGenre; src/engine/systems/engagement.ts:375 the command",
+   "tests/engagement.test.ts",
+   "tests/b22-genre-weights.test.ts",
+   "tests/school-paths.test.ts the School’s 86 test files, 1,304 tests, run on this commit: all green"
+  ]
  },
  "promise.craft.genre>craft.brief-tape": {
-  "status": "Not Tested"
+  "status": "Verified",
+  "by": [
+   "inspection",
+   "automated"
+  ],
+  "on": "bd7b9d02",
+  "evidence": [
+   "tests/b20-craft-bite.test.ts",
+   "tests/genre-identity.test.ts",
+   "src/engine/systems/engagement.ts:144-307 knownOf, relatedness, relevantGenre; src/engine/systems/engagement.ts:375 the command",
+   "tests/engagement.test.ts",
+   "tests/b22-genre-weights.test.ts",
+   "tests/school-paths.test.ts the School’s 86 test files, 1,304 tests, run on this commit: all green"
+  ]
  },
  "promise.craft.genre>craft.identity": {
-  "status": "Not Tested"
+  "status": "Verified",
+  "by": [
+   "inspection",
+   "automated"
+  ],
+  "on": "bd7b9d02",
+  "evidence": [
+   "tests/evidence-g23-school.test.ts",
+   "src/engine/systems/engagement.ts:144-307 knownOf, relatedness, relevantGenre; src/engine/systems/engagement.ts:375 the command",
+   "tests/engagement.test.ts",
+   "tests/b22-genre-weights.test.ts",
+   "tests/school-paths.test.ts the School’s 86 test files, 1,304 tests, run on this commit: all green"
+  ]
  },
  "promise.craft.genre>craft.profile": {
-  "status": "Not Tested"
+  "status": "Verified",
+  "by": [
+   "inspection",
+   "automated"
+  ],
+  "on": "bd7b9d02",
+  "evidence": [
+   "tests/evidence-g31-ui.test.ts",
+   "src/engine/systems/engagement.ts:144-307 knownOf, relatedness, relevantGenre; src/engine/systems/engagement.ts:375 the command",
+   "tests/engagement.test.ts",
+   "tests/b22-genre-weights.test.ts",
+   "tests/school-paths.test.ts the School’s 86 test files, 1,304 tests, run on this commit: all green"
+  ]
  },
  "promise.craft.genre>productions.part": {
-  "status": "Not Tested"
+  "status": "Verified",
+  "by": [
+   "inspection",
+   "automated"
+  ],
+  "on": "bd7b9d02",
+  "evidence": [
+   "tests/evidence-g23-school.test.ts",
+   "tests/evidence-g20-school.test.ts",
+   "src/engine/systems/engagement.ts:144-307 knownOf, relatedness, relevantGenre; src/engine/systems/engagement.ts:375 the command",
+   "tests/engagement.test.ts",
+   "tests/b22-genre-weights.test.ts",
+   "tests/school-paths.test.ts the School’s 86 test files, 1,304 tests, run on this commit: all green"
+  ]
  },
  "promise.craft.identity>coursework.partners": {
-  "status": "Not Tested"
+  "status": "Verified",
+  "by": [
+   "inspection",
+   "automated"
+  ],
+  "on": "bd7b9d02",
+  "evidence": [
+   "tests/b20-craft-promises.test.ts",
+   "tests/defects-g8-14.test.ts",
+   "src/engine/systems/artistry.ts:85-140 identityOf, read as the Profile opens and counted in no result",
+   "tests/attributes-matrix.test.ts"
+  ]
  },
  "promise.craft.identity>craft.brief-tape": {
-  "status": "Not Tested"
+  "status": "Verified",
+  "by": [
+   "inspection",
+   "automated"
+  ],
+  "on": "bd7b9d02",
+  "evidence": [
+   "tests/b20-craft-screens.test.ts",
+   "tests/briefs.test.ts",
+   "src/engine/systems/artistry.ts:85-140 identityOf, read as the Profile opens and counted in no result",
+   "tests/attributes-matrix.test.ts"
+  ]
  },
  "promise.craft.identity>craft.profile": {
-  "status": "Not Tested"
+  "status": "Verified",
+  "by": [
+   "inspection",
+   "automated"
+  ],
+  "on": "bd7b9d02",
+  "evidence": [
+   "tests/defects-r8-1.test.ts",
+   "src/engine/systems/artistry.ts:85-140 identityOf, read as the Profile opens and counted in no result",
+   "tests/attributes-matrix.test.ts"
+  ]
  },
  "promise.craft.identity>craft.work": {
-  "status": "Not Tested"
+  "status": "Verified",
+  "by": [
+   "inspection",
+   "automated"
+  ],
+  "on": "bd7b9d02",
+  "evidence": [
+   "tests/guide-examples-craft.test.ts",
+   "src/engine/systems/artistry.ts:85-140 identityOf, read as the Profile opens and counted in no result",
+   "tests/attributes-matrix.test.ts"
+  ]
  },
  "promise.craft.identity>productions.notes": {
-  "status": "Not Tested"
+  "status": "Verified",
+  "by": [
+   "inspection",
+   "automated"
+  ],
+  "on": "bd7b9d02",
+  "evidence": [
+   "tests/evidence-g23-school.test.ts",
+   "tests/defects-r8-1.test.ts",
+   "src/engine/systems/artistry.ts:85-140 identityOf, read as the Profile opens and counted in no result",
+   "tests/attributes-matrix.test.ts"
+  ]
  },
  "promise.craft.practice>body.look-after": {
-  "status": "Not Tested"
+  "status": "Verified",
+  "by": [
+   "inspection",
+   "automated"
+  ],
+  "on": "bd7b9d02",
+  "evidence": [
+   "tests/fitness.test.ts",
+   "tests/decisions-advice.test.ts",
+   "src/engine/systems/practice.ts:53-120 practiceRefusal and focusRefusal; src/engine/systems/practice.ts:260-300 the command",
+   "tests/attributes-phase-2b.test.ts",
+   "tests/b20-craft-bite.test.ts",
+   "tests/school-paths.test.ts the School’s 86 test files, 1,304 tests, run on this commit: all green"
+  ]
  },
  "promise.craft.practice>body.sleep": {
-  "status": "Not Tested"
+  "status": "Verified",
+  "by": [
+   "inspection",
+   "automated"
+  ],
+  "on": "bd7b9d02",
+  "evidence": [
+   "tests/material.test.ts",
+   "tests/evidence-g20-school.test.ts",
+   "tests/evidence-g31-ui.test.ts",
+   "src/engine/systems/practice.ts:53-120 practiceRefusal and focusRefusal; src/engine/systems/practice.ts:260-300 the command",
+   "tests/attributes-phase-2b.test.ts",
+   "tests/b20-craft-bite.test.ts",
+   "tests/school-paths.test.ts the School’s 86 test files, 1,304 tests, run on this commit: all green"
+  ]
  },
  "promise.craft.practice>craft.brief-prepare": {
-  "status": "Not Tested"
+  "status": "Verified",
+  "by": [
+   "inspection",
+   "automated"
+  ],
+  "on": "bd7b9d02",
+  "evidence": [
+   "tests/b20-craft-promises.test.ts",
+   "tests/material.test.ts",
+   "src/engine/systems/practice.ts:53-120 practiceRefusal and focusRefusal; src/engine/systems/practice.ts:260-300 the command",
+   "tests/attributes-phase-2b.test.ts",
+   "tests/b20-craft-bite.test.ts",
+   "tests/school-paths.test.ts the School’s 86 test files, 1,304 tests, run on this commit: all green"
+  ]
  },
  "promise.craft.practice>craft.identity": {
-  "status": "Not Tested"
+  "status": "Verified",
+  "by": [
+   "inspection",
+   "automated"
+  ],
+  "on": "bd7b9d02",
+  "evidence": [
+   "tests/b20-craft-promises.test.ts",
+   "tests/evidence2-b11.test.ts",
+   "src/engine/systems/practice.ts:53-120 practiceRefusal and focusRefusal; src/engine/systems/practice.ts:260-300 the command",
+   "tests/attributes-phase-2b.test.ts",
+   "tests/b20-craft-bite.test.ts",
+   "tests/school-paths.test.ts the School’s 86 test files, 1,304 tests, run on this commit: all green"
+  ]
  },
  "promise.craft.practice>craft.profile": {
-  "status": "Not Tested"
+  "status": "Verified",
+  "by": [
+   "inspection",
+   "automated"
+  ],
+  "on": "bd7b9d02",
+  "evidence": [
+   "tests/evidence-g31-ui.test.ts",
+   "src/engine/systems/practice.ts:53-120 practiceRefusal and focusRefusal; src/engine/systems/practice.ts:260-300 the command",
+   "tests/attributes-phase-2b.test.ts",
+   "tests/b20-craft-bite.test.ts",
+   "tests/school-paths.test.ts the School’s 86 test files, 1,304 tests, run on this commit: all green"
+  ]
  },
  "promise.craft.practice>craft.work": {
-  "status": "Not Tested"
+  "status": "Verified",
+  "by": [
+   "inspection",
+   "automated"
+  ],
+  "on": "bd7b9d02",
+  "evidence": [
+   "tests/b20-craft-advice.test.ts",
+   "tests/evidence-g23-school.test.ts",
+   "src/engine/systems/practice.ts:53-120 practiceRefusal and focusRefusal; src/engine/systems/practice.ts:260-300 the command",
+   "tests/attributes-phase-2b.test.ts",
+   "tests/b20-craft-bite.test.ts",
+   "tests/school-paths.test.ts the School’s 86 test files, 1,304 tests, run on this commit: all green"
+  ]
  },
  "promise.craft.practice>day.clock": {
-  "status": "Not Tested"
+  "status": "Verified",
+  "by": [
+   "inspection",
+   "automated"
+  ],
+  "on": "bd7b9d02",
+  "evidence": [
+   "tests/guide-examples-craft.test.ts",
+   "tests/evidence-g31-ui.test.ts",
+   "tests/evidence-g20-school.test.ts",
+   "src/engine/systems/practice.ts:53-120 practiceRefusal and focusRefusal; src/engine/systems/practice.ts:260-300 the command",
+   "tests/attributes-phase-2b.test.ts",
+   "tests/b20-craft-bite.test.ts",
+   "tests/school-paths.test.ts the School’s 86 test files, 1,304 tests, run on this commit: all green"
+  ]
  },
  "promise.craft.profile>body.how": {
-  "status": "Not Tested"
+  "status": "Verified",
+  "by": [
+   "inspection",
+   "automated"
+  ],
+  "on": "bd7b9d02",
+  "evidence": [
+   "tests/evidence-g32-ui.test.ts",
+   "tests/evidence-g31-ui.test.ts",
+   "src/engine/content/attributes-matrix.ts the Profile’s eight sections, each read and named; src/engine/systems/artistry.ts:85 identityOf",
+   "tests/attributes-matrix.test.ts"
+  ]
  },
  "promise.craft.profile>craft.identity": {
-  "status": "Not Tested"
+  "status": "Verified",
+  "by": [
+   "inspection",
+   "automated"
+  ],
+  "on": "bd7b9d02",
+  "evidence": [
+   "tests/evidence-g32-ui.test.ts",
+   "tests/evidence2-b11.test.ts",
+   "src/engine/content/attributes-matrix.ts the Profile’s eight sections, each read and named; src/engine/systems/artistry.ts:85 identityOf",
+   "tests/attributes-matrix.test.ts"
+  ]
  },
  "promise.craft.profile>craft.practice": {
-  "status": "Not Tested"
+  "status": "Verified",
+  "by": [
+   "inspection",
+   "automated"
+  ],
+  "on": "bd7b9d02",
+  "evidence": [
+   "tests/evidence-g31-ui.test.ts",
+   "src/engine/content/attributes-matrix.ts the Profile’s eight sections, each read and named; src/engine/systems/artistry.ts:85 identityOf",
+   "tests/attributes-matrix.test.ts"
+  ]
  },
  "promise.craft.profile>craft.work": {
-  "status": "Not Tested"
+  "status": "Verified",
+  "by": [
+   "inspection",
+   "automated"
+  ],
+  "on": "bd7b9d02",
+  "evidence": [
+   "tests/b20-craft-screens.test.ts",
+   "tests/guide-examples-craft.test.ts",
+   "tests/evidence-g23-school.test.ts",
+   "src/engine/content/attributes-matrix.ts the Profile’s eight sections, each read and named; src/engine/systems/artistry.ts:85 identityOf",
+   "tests/attributes-matrix.test.ts"
+  ]
  },
  "promise.craft.profile>start.find": {
-  "status": "Not Tested"
+  "status": "Verified",
+  "by": [
+   "inspection",
+   "automated"
+  ],
+  "on": "bd7b9d02",
+  "evidence": [
+   "tests/help-mechanics.test.ts",
+   "src/engine/content/attributes-matrix.ts the Profile’s eight sections, each read and named; src/engine/systems/artistry.ts:85 identityOf",
+   "tests/attributes-matrix.test.ts"
+  ]
  },
  "promise.craft.profile>start.guide": {
-  "status": "Not Tested"
+  "status": "Verified",
+  "by": [
+   "inspection",
+   "automated"
+  ],
+  "on": "bd7b9d02",
+  "evidence": [
+   "tests/b20-craft-promises.test.ts",
+   "tests/guide-examples-craft.test.ts",
+   "src/engine/content/attributes-matrix.ts the Profile’s eight sections, each read and named; src/engine/systems/artistry.ts:85 identityOf",
+   "tests/attributes-matrix.test.ts"
+  ]
  },
  "promise.craft.work>body.how": {
-  "status": "Not Tested"
+  "status": "Verified",
+  "by": [
+   "inspection",
+   "automated"
+  ],
+  "on": "bd7b9d02",
+  "evidence": [
+   "tests/b20-craft-bite.test.ts",
+   "tests/b20-craft-clock.test.ts",
+   "tests/evidence-g31-ui.test.ts",
+   "src/engine/systems/workbook.ts:216-348 the workbook’s refusals; src/engine/systems/workbook.ts:349-385 the commands",
+   "tests/school-paths.test.ts the School’s 86 test files, 1,304 tests, run on this commit: all green"
+  ]
  },
  "promise.craft.work>coursework.feedback": {
-  "status": "Not Tested"
+  "status": "Verified",
+  "by": [
+   "inspection",
+   "automated"
+  ],
+  "on": "bd7b9d02",
+  "evidence": [
+   "tests/b20-craft-screens.test.ts",
+   "tests/evidence-g24-school.test.ts",
+   "src/engine/systems/workbook.ts:216-348 the workbook’s refusals; src/engine/systems/workbook.ts:349-385 the commands",
+   "tests/school-paths.test.ts the School’s 86 test files, 1,304 tests, run on this commit: all green"
+  ]
  },
  "promise.craft.work>craft.identity": {
-  "status": "Not Tested"
+  "status": "Verified",
+  "by": [
+   "inspection",
+   "automated"
+  ],
+  "on": "bd7b9d02",
+  "evidence": [
+   "tests/evidence-g23-school.test.ts",
+   "tests/evidence2-b11.test.ts",
+   "tests/defects-r8-1.test.ts",
+   "src/engine/systems/workbook.ts:216-348 the workbook’s refusals; src/engine/systems/workbook.ts:349-385 the commands",
+   "tests/school-paths.test.ts the School’s 86 test files, 1,304 tests, run on this commit: all green"
+  ]
  },
  "promise.craft.work>craft.practice": {
-  "status": "Not Tested"
+  "status": "Verified",
+  "by": [
+   "inspection",
+   "automated"
+  ],
+  "on": "bd7b9d02",
+  "evidence": [
+   "tests/b20-craft-advice.test.ts",
+   "tests/evidence-g23-school.test.ts",
+   "tests/material.test.ts",
+   "src/engine/systems/workbook.ts:216-348 the workbook’s refusals; src/engine/systems/workbook.ts:349-385 the commands",
+   "tests/school-paths.test.ts the School’s 86 test files, 1,304 tests, run on this commit: all green"
+  ]
  },
  "promise.craft.work>craft.profile": {
-  "status": "Not Tested"
+  "status": "Verified",
+  "by": [
+   "inspection",
+   "automated"
+  ],
+  "on": "bd7b9d02",
+  "evidence": [
+   "tests/b20-craft-promises.test.ts",
+   "tests/evidence-g32-ui.test.ts",
+   "tests/attributes-complete.test.ts",
+   "src/engine/systems/workbook.ts:216-348 the workbook’s refusals; src/engine/systems/workbook.ts:349-385 the commands",
+   "tests/school-paths.test.ts the School’s 86 test files, 1,304 tests, run on this commit: all green"
+  ]
  },
  "promise.craft.work>productions.nights": {
-  "status": "Not Tested"
+  "status": "Verified",
+  "by": [
+   "inspection",
+   "automated"
+  ],
+  "on": "bd7b9d02",
+  "evidence": [
+   "tests/b20-craft-promises.test.ts",
+   "tests/evidence-g23-school.test.ts",
+   "src/engine/systems/workbook.ts:216-348 the workbook’s refusals; src/engine/systems/workbook.ts:349-385 the commands",
+   "tests/school-paths.test.ts the School’s 86 test files, 1,304 tests, run on this commit: all green"
+  ]
  },
  "promise.productions.cabaret>day.calendar": {
-  "status": "Not Tested"
+  "status": "Verified",
+  "by": [
+   "inspection",
+   "automated"
+  ],
+  "on": "bd7b9d02",
+  "evidence": [
+   "tests/evidence-g19-school.test.ts",
+   "src/engine/systems/production.ts:184-240 partPlayingRefusal; src/engine/systems/production.ts:284 nightFactor; src/engine/systems/production.ts:566-706 ownWorkRefusal and the commands; src/engine/systems/production.ts:707-753 reflect; src/engine/systems/school.ts:3856-3984 a call; src/engine/systems/school.ts:2948-3266 cast",
+   "tests/evidence-g19-school.test.ts",
+   "tests/production-staging.test.ts",
+   "tests/school-paths.test.ts the School’s 86 test files, 1,304 tests, run on this commit: all green"
+  ]
  },
  "promise.productions.cabaret>money.affairs": {
-  "status": "Not Tested"
+  "status": "Verified",
+  "by": [
+   "inspection",
+   "automated"
+  ],
+  "on": "bd7b9d02",
+  "evidence": [
+   "tests/evidence-g22-school.test.ts",
+   "tests/evidence-g20-school.test.ts",
+   "src/engine/systems/production.ts:184-240 partPlayingRefusal; src/engine/systems/production.ts:284 nightFactor; src/engine/systems/production.ts:566-706 ownWorkRefusal and the commands; src/engine/systems/production.ts:707-753 reflect; src/engine/systems/school.ts:3856-3984 a call; src/engine/systems/school.ts:2948-3266 cast",
+   "tests/evidence-g19-school.test.ts",
+   "tests/production-staging.test.ts",
+   "tests/school-paths.test.ts the School’s 86 test files, 1,304 tests, run on this commit: all green"
+  ]
  },
  "promise.productions.cabaret>productions.casting#evaluation": {
-  "status": "Not Tested"
+  "status": "Verified",
+  "by": [
+   "inspection",
+   "automated"
+  ],
+  "on": "bd7b9d02",
+  "evidence": [
+   "tests/evidence-g19-school.test.ts",
+   "tests/evidence-g22-school.test.ts",
+   "src/engine/systems/production.ts:184-240 partPlayingRefusal; src/engine/systems/production.ts:284 nightFactor; src/engine/systems/production.ts:566-706 ownWorkRefusal and the commands; src/engine/systems/production.ts:707-753 reflect; src/engine/systems/school.ts:3856-3984 a call; src/engine/systems/school.ts:2948-3266 cast",
+   "tests/evidence-g19-school.test.ts",
+   "tests/production-staging.test.ts",
+   "tests/school-paths.test.ts the School’s 86 test files, 1,304 tests, run on this commit: all green"
+  ]
  },
  "promise.productions.cabaret>productions.casting#prerequisite": {
-  "status": "Not Tested"
+  "status": "Verified",
+  "by": [
+   "inspection",
+   "automated"
+  ],
+  "on": "bd7b9d02",
+  "evidence": [
+   "tests/evidence-g19-school.test.ts",
+   "tests/evidence-g22-school.test.ts",
+   "src/engine/systems/production.ts:184-240 partPlayingRefusal; src/engine/systems/production.ts:284 nightFactor; src/engine/systems/production.ts:566-706 ownWorkRefusal and the commands; src/engine/systems/production.ts:707-753 reflect; src/engine/systems/school.ts:3856-3984 a call; src/engine/systems/school.ts:2948-3266 cast",
+   "tests/evidence-g19-school.test.ts",
+   "tests/production-staging.test.ts",
+   "tests/school-paths.test.ts the School’s 86 test files, 1,304 tests, run on this commit: all green"
+  ]
  },
  "promise.productions.cabaret>productions.nights": {
-  "status": "Not Tested"
+  "status": "Verified",
+  "by": [
+   "inspection",
+   "automated"
+  ],
+  "on": "bd7b9d02",
+  "evidence": [
+   "tests/evidence-g23-school.test.ts",
+   "tests/evidence-g19-school.test.ts",
+   "src/engine/systems/production.ts:184-240 partPlayingRefusal; src/engine/systems/production.ts:284 nightFactor; src/engine/systems/production.ts:566-706 ownWorkRefusal and the commands; src/engine/systems/production.ts:707-753 reflect; src/engine/systems/school.ts:3856-3984 a call; src/engine/systems/school.ts:2948-3266 cast",
+   "tests/evidence-g19-school.test.ts",
+   "tests/production-staging.test.ts",
+   "tests/school-paths.test.ts the School’s 86 test files, 1,304 tests, run on this commit: all green"
+  ]
  },
  "promise.productions.cabaret>productions.part": {
-  "status": "Not Tested"
+  "status": "Verified",
+  "by": [
+   "inspection",
+   "automated"
+  ],
+  "on": "bd7b9d02",
+  "evidence": [
+   "tests/evidence-g23-school.test.ts",
+   "tests/evidence-g20-school.test.ts",
+   "src/engine/systems/production.ts:184-240 partPlayingRefusal; src/engine/systems/production.ts:284 nightFactor; src/engine/systems/production.ts:566-706 ownWorkRefusal and the commands; src/engine/systems/production.ts:707-753 reflect; src/engine/systems/school.ts:3856-3984 a call; src/engine/systems/school.ts:2948-3266 cast",
+   "tests/evidence-g19-school.test.ts",
+   "tests/production-staging.test.ts",
+   "tests/school-paths.test.ts the School’s 86 test files, 1,304 tests, run on this commit: all green"
+  ]
  },
  "promise.productions.cabaret>school.standing": {
-  "status": "Not Tested"
+  "status": "Verified",
+  "by": [
+   "inspection",
+   "automated"
+  ],
+  "on": "bd7b9d02",
+  "evidence": [
+   "tests/school.test.ts",
+   "tests/student-experience.test.ts",
+   "tests/evidence-g24-school.test.ts",
+   "src/engine/systems/production.ts:184-240 partPlayingRefusal; src/engine/systems/production.ts:284 nightFactor; src/engine/systems/production.ts:566-706 ownWorkRefusal and the commands; src/engine/systems/production.ts:707-753 reflect; src/engine/systems/school.ts:3856-3984 a call; src/engine/systems/school.ts:2948-3266 cast",
+   "tests/evidence-g19-school.test.ts",
+   "tests/production-staging.test.ts",
+   "tests/school-paths.test.ts the School’s 86 test files, 1,304 tests, run on this commit: all green"
+  ]
  },
  "promise.productions.cabaret>taxes.return": {
-  "status": "Not Tested"
+  "status": "Verified",
+  "by": [
+   "inspection",
+   "automated"
+  ],
+  "on": "bd7b9d02",
+  "evidence": [
+   "tests/evidence-g22-school.test.ts",
+   "src/engine/systems/production.ts:184-240 partPlayingRefusal; src/engine/systems/production.ts:284 nightFactor; src/engine/systems/production.ts:566-706 ownWorkRefusal and the commands; src/engine/systems/production.ts:707-753 reflect; src/engine/systems/school.ts:3856-3984 a call; src/engine/systems/school.ts:2948-3266 cast",
+   "tests/evidence-g19-school.test.ts",
+   "tests/production-staging.test.ts",
+   "tests/school-paths.test.ts the School’s 86 test files, 1,304 tests, run on this commit: all green"
+  ]
  },
  "promise.productions.casting>body.how": {
-  "status": "Not Tested"
+  "status": "Verified",
+  "by": [
+   "inspection",
+   "automated"
+  ],
+  "on": "bd7b9d02",
+  "evidence": [
+   "tests/evidence-g24-school.test.ts",
+   "tests/evidence-g30-ui.test.ts",
+   "src/engine/systems/production.ts:184-240 partPlayingRefusal; src/engine/systems/production.ts:284 nightFactor; src/engine/systems/production.ts:566-706 ownWorkRefusal and the commands; src/engine/systems/production.ts:707-753 reflect; src/engine/systems/school.ts:3856-3984 a call; src/engine/systems/school.ts:2948-3266 cast",
+   "tests/evidence-g19-school.test.ts",
+   "tests/production-staging.test.ts",
+   "tests/school-paths.test.ts the School’s 86 test files, 1,304 tests, run on this commit: all green"
+  ]
  },
  "promise.productions.casting>coursework.partners": {
-  "status": "Not Tested"
+  "status": "Verified",
+  "by": [
+   "inspection",
+   "automated"
+  ],
+  "on": "bd7b9d02",
+  "evidence": [
+   "tests/casting.test.ts",
+   "tests/evidence-g27-ui.test.ts",
+   "src/engine/systems/production.ts:184-240 partPlayingRefusal; src/engine/systems/production.ts:284 nightFactor; src/engine/systems/production.ts:566-706 ownWorkRefusal and the commands; src/engine/systems/production.ts:707-753 reflect; src/engine/systems/school.ts:3856-3984 a call; src/engine/systems/school.ts:2948-3266 cast",
+   "tests/evidence-g19-school.test.ts",
+   "tests/production-staging.test.ts",
+   "tests/school-paths.test.ts the School’s 86 test files, 1,304 tests, run on this commit: all green"
+  ]
  },
  "promise.productions.casting>day.calendar": {
-  "status": "Not Tested"
+  "status": "Verified",
+  "by": [
+   "inspection",
+   "automated"
+  ],
+  "on": "bd7b9d02",
+  "evidence": [
+   "tests/b20-craft-promises.test.ts",
+   "src/engine/systems/production.ts:184-240 partPlayingRefusal; src/engine/systems/production.ts:284 nightFactor; src/engine/systems/production.ts:566-706 ownWorkRefusal and the commands; src/engine/systems/production.ts:707-753 reflect; src/engine/systems/school.ts:3856-3984 a call; src/engine/systems/school.ts:2948-3266 cast",
+   "tests/evidence-g19-school.test.ts",
+   "tests/production-staging.test.ts",
+   "tests/school-paths.test.ts the School’s 86 test files, 1,304 tests, run on this commit: all green"
+  ]
  },
  "promise.productions.casting>productions.cabaret": {
-  "status": "Not Tested"
+  "status": "Verified",
+  "by": [
+   "inspection",
+   "automated"
+  ],
+  "on": "bd7b9d02",
+  "evidence": [
+   "tests/remaining-school.test.ts",
+   "tests/school.test.ts",
+   "src/engine/systems/production.ts:184-240 partPlayingRefusal; src/engine/systems/production.ts:284 nightFactor; src/engine/systems/production.ts:566-706 ownWorkRefusal and the commands; src/engine/systems/production.ts:707-753 reflect; src/engine/systems/school.ts:3856-3984 a call; src/engine/systems/school.ts:2948-3266 cast",
+   "tests/evidence-g19-school.test.ts",
+   "tests/production-staging.test.ts",
+   "tests/school-paths.test.ts the School’s 86 test files, 1,304 tests, run on this commit: all green"
+  ]
  },
  "promise.productions.casting>productions.nights": {
-  "status": "Not Tested"
+  "status": "Verified",
+  "by": [
+   "inspection",
+   "automated"
+  ],
+  "on": "bd7b9d02",
+  "evidence": [
+   "tests/b20-craft-productions.test.ts",
+   "tests/understudy-part.test.ts",
+   "src/engine/systems/production.ts:184-240 partPlayingRefusal; src/engine/systems/production.ts:284 nightFactor; src/engine/systems/production.ts:566-706 ownWorkRefusal and the commands; src/engine/systems/production.ts:707-753 reflect; src/engine/systems/school.ts:3856-3984 a call; src/engine/systems/school.ts:2948-3266 cast",
+   "tests/evidence-g19-school.test.ts",
+   "tests/production-staging.test.ts",
+   "tests/school-paths.test.ts the School’s 86 test files, 1,304 tests, run on this commit: all green"
+  ]
  },
  "promise.productions.casting>productions.part": {
-  "status": "Not Tested"
+  "status": "Verified",
+  "by": [
+   "inspection",
+   "automated"
+  ],
+  "on": "bd7b9d02",
+  "evidence": [
+   "tests/b20-craft-promises.test.ts",
+   "tests/evidence-g20-school.test.ts",
+   "tests/production-staging.test.ts",
+   "src/engine/systems/production.ts:184-240 partPlayingRefusal; src/engine/systems/production.ts:284 nightFactor; src/engine/systems/production.ts:566-706 ownWorkRefusal and the commands; src/engine/systems/production.ts:707-753 reflect; src/engine/systems/school.ts:3856-3984 a call; src/engine/systems/school.ts:2948-3266 cast",
+   "tests/evidence-g19-school.test.ts",
+   "tests/production-staging.test.ts",
+   "tests/school-paths.test.ts the School’s 86 test files, 1,304 tests, run on this commit: all green"
+  ]
  },
  "promise.productions.casting>school.standing": {
-  "status": "Not Tested"
+  "status": "Verified",
+  "by": [
+   "inspection",
+   "automated"
+  ],
+  "on": "bd7b9d02",
+  "evidence": [
+   "tests/evidence-g21-school.test.ts",
+   "tests/evidence-g24-school.test.ts",
+   "src/engine/systems/production.ts:184-240 partPlayingRefusal; src/engine/systems/production.ts:284 nightFactor; src/engine/systems/production.ts:566-706 ownWorkRefusal and the commands; src/engine/systems/production.ts:707-753 reflect; src/engine/systems/school.ts:3856-3984 a call; src/engine/systems/school.ts:2948-3266 cast",
+   "tests/evidence-g19-school.test.ts",
+   "tests/production-staging.test.ts",
+   "tests/school-paths.test.ts the School’s 86 test files, 1,304 tests, run on this commit: all green"
+  ]
  },
  "promise.productions.nights>body.how": {
-  "status": "Not Tested"
+  "status": "Verified",
+  "by": [
+   "inspection",
+   "automated"
+  ],
+  "on": "bd7b9d02",
+  "evidence": [
+   "tests/b20-craft-promises.test.ts",
+   "tests/evidence-g22-school.test.ts",
+   "tests/evidence-g27-ui.test.ts",
+   "src/engine/systems/production.ts:184-240 partPlayingRefusal; src/engine/systems/production.ts:284 nightFactor; src/engine/systems/production.ts:566-706 ownWorkRefusal and the commands; src/engine/systems/production.ts:707-753 reflect; src/engine/systems/school.ts:3856-3984 a call; src/engine/systems/school.ts:2948-3266 cast",
+   "tests/evidence-g19-school.test.ts",
+   "tests/production-staging.test.ts",
+   "tests/school-paths.test.ts the School’s 86 test files, 1,304 tests, run on this commit: all green"
+  ]
  },
  "promise.productions.nights>coursework.feedback": {
-  "status": "Not Tested"
+  "status": "Verified",
+  "by": [
+   "inspection",
+   "automated"
+  ],
+  "on": "bd7b9d02",
+  "evidence": [
+   "tests/evidence-g19-school.test.ts",
+   "src/engine/systems/production.ts:184-240 partPlayingRefusal; src/engine/systems/production.ts:284 nightFactor; src/engine/systems/production.ts:566-706 ownWorkRefusal and the commands; src/engine/systems/production.ts:707-753 reflect; src/engine/systems/school.ts:3856-3984 a call; src/engine/systems/school.ts:2948-3266 cast",
+   "tests/evidence-g19-school.test.ts",
+   "tests/production-staging.test.ts",
+   "tests/school-paths.test.ts the School’s 86 test files, 1,304 tests, run on this commit: all green"
+  ]
  },
  "promise.productions.nights>craft.identity": {
-  "status": "Not Tested"
+  "status": "Verified",
+  "by": [
+   "inspection",
+   "automated"
+  ],
+  "on": "bd7b9d02",
+  "evidence": [
+   "tests/b20-craft-promises.test.ts",
+   "src/engine/systems/production.ts:184-240 partPlayingRefusal; src/engine/systems/production.ts:284 nightFactor; src/engine/systems/production.ts:566-706 ownWorkRefusal and the commands; src/engine/systems/production.ts:707-753 reflect; src/engine/systems/school.ts:3856-3984 a call; src/engine/systems/school.ts:2948-3266 cast",
+   "tests/evidence-g19-school.test.ts",
+   "tests/production-staging.test.ts",
+   "tests/school-paths.test.ts the School’s 86 test files, 1,304 tests, run on this commit: all green"
+  ]
  },
  "promise.productions.nights>craft.profile": {
-  "status": "Not Tested"
+  "status": "Verified",
+  "by": [
+   "inspection",
+   "automated"
+  ],
+  "on": "bd7b9d02",
+  "evidence": [
+   "tests/b20-craft-productions.test.ts",
+   "tests/evidence-g23-school.test.ts",
+   "tests/casting.test.ts",
+   "src/engine/systems/production.ts:184-240 partPlayingRefusal; src/engine/systems/production.ts:284 nightFactor; src/engine/systems/production.ts:566-706 ownWorkRefusal and the commands; src/engine/systems/production.ts:707-753 reflect; src/engine/systems/school.ts:3856-3984 a call; src/engine/systems/school.ts:2948-3266 cast",
+   "tests/evidence-g19-school.test.ts",
+   "tests/production-staging.test.ts",
+   "tests/school-paths.test.ts the School’s 86 test files, 1,304 tests, run on this commit: all green"
+  ]
  },
  "promise.productions.nights>craft.work": {
-  "status": "Not Tested"
+  "status": "Verified",
+  "by": [
+   "inspection",
+   "automated"
+  ],
+  "on": "bd7b9d02",
+  "evidence": [
+   "tests/b20-craft-promises.test.ts",
+   "tests/evidence-g23-school.test.ts",
+   "src/engine/systems/production.ts:184-240 partPlayingRefusal; src/engine/systems/production.ts:284 nightFactor; src/engine/systems/production.ts:566-706 ownWorkRefusal and the commands; src/engine/systems/production.ts:707-753 reflect; src/engine/systems/school.ts:3856-3984 a call; src/engine/systems/school.ts:2948-3266 cast",
+   "tests/evidence-g19-school.test.ts",
+   "tests/production-staging.test.ts",
+   "tests/school-paths.test.ts the School’s 86 test files, 1,304 tests, run on this commit: all green"
+  ]
  },
  "promise.productions.nights>productions.casting": {
-  "status": "Not Tested"
+  "status": "Verified",
+  "by": [
+   "inspection",
+   "automated"
+  ],
+  "on": "bd7b9d02",
+  "evidence": [
+   "tests/casting.test.ts",
+   "tests/evidence-g24-school.test.ts",
+   "src/engine/systems/production.ts:184-240 partPlayingRefusal; src/engine/systems/production.ts:284 nightFactor; src/engine/systems/production.ts:566-706 ownWorkRefusal and the commands; src/engine/systems/production.ts:707-753 reflect; src/engine/systems/school.ts:3856-3984 a call; src/engine/systems/school.ts:2948-3266 cast",
+   "tests/evidence-g19-school.test.ts",
+   "tests/production-staging.test.ts",
+   "tests/school-paths.test.ts the School’s 86 test files, 1,304 tests, run on this commit: all green"
+  ]
  },
  "promise.productions.nights>productions.part": {
-  "status": "Not Tested"
+  "status": "Verified",
+  "by": [
+   "inspection",
+   "automated"
+  ],
+  "on": "bd7b9d02",
+  "evidence": [
+   "tests/evidence-g19-school.test.ts",
+   "src/engine/systems/production.ts:184-240 partPlayingRefusal; src/engine/systems/production.ts:284 nightFactor; src/engine/systems/production.ts:566-706 ownWorkRefusal and the commands; src/engine/systems/production.ts:707-753 reflect; src/engine/systems/school.ts:3856-3984 a call; src/engine/systems/school.ts:2948-3266 cast",
+   "tests/evidence-g19-school.test.ts",
+   "tests/production-staging.test.ts",
+   "tests/school-paths.test.ts the School’s 86 test files, 1,304 tests, run on this commit: all green"
+  ]
  },
  "promise.productions.nights>school.standing": {
-  "status": "Not Tested"
+  "status": "Verified",
+  "by": [
+   "inspection",
+   "automated"
+  ],
+  "on": "bd7b9d02",
+  "evidence": [
+   "tests/casting.test.ts",
+   "tests/evidence-g21-school.test.ts",
+   "src/engine/systems/production.ts:184-240 partPlayingRefusal; src/engine/systems/production.ts:284 nightFactor; src/engine/systems/production.ts:566-706 ownWorkRefusal and the commands; src/engine/systems/production.ts:707-753 reflect; src/engine/systems/school.ts:3856-3984 a call; src/engine/systems/school.ts:2948-3266 cast",
+   "tests/evidence-g19-school.test.ts",
+   "tests/production-staging.test.ts",
+   "tests/school-paths.test.ts the School’s 86 test files, 1,304 tests, run on this commit: all green"
+  ]
  },
  "promise.productions.notes>coursework.feedback": {
-  "status": "Not Tested"
+  "status": "Verified",
+  "by": [
+   "inspection",
+   "automated"
+  ],
+  "on": "bd7b9d02",
+  "evidence": [
+   "tests/evidence-g19-school.test.ts",
+   "src/engine/systems/production.ts:184-240 partPlayingRefusal; src/engine/systems/production.ts:284 nightFactor; src/engine/systems/production.ts:566-706 ownWorkRefusal and the commands; src/engine/systems/production.ts:707-753 reflect; src/engine/systems/school.ts:3856-3984 a call; src/engine/systems/school.ts:2948-3266 cast",
+   "tests/evidence-g19-school.test.ts",
+   "tests/production-staging.test.ts",
+   "tests/school-paths.test.ts the School’s 86 test files, 1,304 tests, run on this commit: all green"
+  ]
  },
  "promise.productions.notes>coursework.workbook": {
-  "status": "Not Tested"
+  "status": "Verified",
+  "by": [
+   "inspection",
+   "automated"
+  ],
+  "on": "bd7b9d02",
+  "evidence": [
+   "tests/direction.test.ts",
+   "src/engine/systems/production.ts:184-240 partPlayingRefusal; src/engine/systems/production.ts:284 nightFactor; src/engine/systems/production.ts:566-706 ownWorkRefusal and the commands; src/engine/systems/production.ts:707-753 reflect; src/engine/systems/school.ts:3856-3984 a call; src/engine/systems/school.ts:2948-3266 cast",
+   "tests/evidence-g19-school.test.ts",
+   "tests/production-staging.test.ts",
+   "tests/school-paths.test.ts the School’s 86 test files, 1,304 tests, run on this commit: all green"
+  ]
  },
  "promise.productions.notes>craft.identity": {
-  "status": "Not Tested"
+  "status": "Verified",
+  "by": [
+   "inspection",
+   "automated"
+  ],
+  "on": "bd7b9d02",
+  "evidence": [
+   "tests/evidence-g23-school.test.ts",
+   "tests/defects-r8-1.test.ts",
+   "src/engine/systems/production.ts:184-240 partPlayingRefusal; src/engine/systems/production.ts:284 nightFactor; src/engine/systems/production.ts:566-706 ownWorkRefusal and the commands; src/engine/systems/production.ts:707-753 reflect; src/engine/systems/school.ts:3856-3984 a call; src/engine/systems/school.ts:2948-3266 cast",
+   "tests/evidence-g19-school.test.ts",
+   "tests/production-staging.test.ts",
+   "tests/school-paths.test.ts the School’s 86 test files, 1,304 tests, run on this commit: all green"
+  ]
  },
  "promise.productions.notes>craft.profile": {
-  "status": "Not Tested"
+  "status": "Verified",
+  "by": [
+   "inspection",
+   "automated"
+  ],
+  "on": "bd7b9d02",
+  "evidence": [
+   "tests/b20-craft-productions.test.ts",
+   "tests/evidence-g19-school.test.ts",
+   "src/engine/systems/production.ts:184-240 partPlayingRefusal; src/engine/systems/production.ts:284 nightFactor; src/engine/systems/production.ts:566-706 ownWorkRefusal and the commands; src/engine/systems/production.ts:707-753 reflect; src/engine/systems/school.ts:3856-3984 a call; src/engine/systems/school.ts:2948-3266 cast",
+   "tests/evidence-g19-school.test.ts",
+   "tests/production-staging.test.ts",
+   "tests/school-paths.test.ts the School’s 86 test files, 1,304 tests, run on this commit: all green"
+  ]
  },
  "promise.productions.notes>productions.nights": {
-  "status": "Not Tested"
+  "status": "Verified",
+  "by": [
+   "inspection",
+   "automated"
+  ],
+  "on": "bd7b9d02",
+  "evidence": [
+   "tests/b20-craft-productions.test.ts",
+   "tests/evidence-g19-school.test.ts",
+   "src/engine/systems/production.ts:184-240 partPlayingRefusal; src/engine/systems/production.ts:284 nightFactor; src/engine/systems/production.ts:566-706 ownWorkRefusal and the commands; src/engine/systems/production.ts:707-753 reflect; src/engine/systems/school.ts:3856-3984 a call; src/engine/systems/school.ts:2948-3266 cast",
+   "tests/evidence-g19-school.test.ts",
+   "tests/production-staging.test.ts",
+   "tests/school-paths.test.ts the School’s 86 test files, 1,304 tests, run on this commit: all green"
+  ]
  },
  "promise.productions.notes>productions.part": {
-  "status": "Not Tested"
+  "status": "Verified",
+  "by": [
+   "inspection",
+   "automated"
+  ],
+  "on": "bd7b9d02",
+  "evidence": [
+   "tests/journey-school-production.test.ts",
+   "tests/evidence-g19-school.test.ts",
+   "src/engine/systems/production.ts:184-240 partPlayingRefusal; src/engine/systems/production.ts:284 nightFactor; src/engine/systems/production.ts:566-706 ownWorkRefusal and the commands; src/engine/systems/production.ts:707-753 reflect; src/engine/systems/school.ts:3856-3984 a call; src/engine/systems/school.ts:2948-3266 cast",
+   "tests/evidence-g19-school.test.ts",
+   "tests/production-staging.test.ts",
+   "tests/school-paths.test.ts the School’s 86 test files, 1,304 tests, run on this commit: all green"
+  ]
  },
  "promise.productions.notes>productions.playing": {
-  "status": "Not Tested"
+  "status": "Verified",
+  "by": [
+   "inspection",
+   "automated"
+  ],
+  "on": "bd7b9d02",
+  "evidence": [
+   "tests/b20-craft-productions.test.ts",
+   "tests/material.test.ts",
+   "src/engine/systems/production.ts:184-240 partPlayingRefusal; src/engine/systems/production.ts:284 nightFactor; src/engine/systems/production.ts:566-706 ownWorkRefusal and the commands; src/engine/systems/production.ts:707-753 reflect; src/engine/systems/school.ts:3856-3984 a call; src/engine/systems/school.ts:2948-3266 cast",
+   "tests/evidence-g19-school.test.ts",
+   "tests/production-staging.test.ts",
+   "tests/school-paths.test.ts the School’s 86 test files, 1,304 tests, run on this commit: all green"
+  ]
  },
  "promise.productions.part>coursework.workbook": {
-  "status": "Not Tested"
+  "status": "Verified",
+  "by": [
+   "inspection",
+   "automated"
+  ],
+  "on": "bd7b9d02",
+  "evidence": [
+   "tests/b20-craft-productions.test.ts",
+   "src/engine/systems/production.ts:184-240 partPlayingRefusal; src/engine/systems/production.ts:284 nightFactor; src/engine/systems/production.ts:566-706 ownWorkRefusal and the commands; src/engine/systems/production.ts:707-753 reflect; src/engine/systems/school.ts:3856-3984 a call; src/engine/systems/school.ts:2948-3266 cast",
+   "tests/evidence-g19-school.test.ts",
+   "tests/production-staging.test.ts",
+   "tests/school-paths.test.ts the School’s 86 test files, 1,304 tests, run on this commit: all green"
+  ]
  },
  "promise.productions.part>craft.profile": {
-  "status": "Not Tested"
+  "status": "Verified",
+  "by": [
+   "inspection",
+   "automated"
+  ],
+  "on": "bd7b9d02",
+  "evidence": [
+   "tests/evidence-g19-school.test.ts",
+   "src/engine/systems/production.ts:184-240 partPlayingRefusal; src/engine/systems/production.ts:284 nightFactor; src/engine/systems/production.ts:566-706 ownWorkRefusal and the commands; src/engine/systems/production.ts:707-753 reflect; src/engine/systems/school.ts:3856-3984 a call; src/engine/systems/school.ts:2948-3266 cast",
+   "tests/evidence-g19-school.test.ts",
+   "tests/production-staging.test.ts",
+   "tests/school-paths.test.ts the School’s 86 test files, 1,304 tests, run on this commit: all green"
+  ]
  },
  "promise.productions.part>productions.casting": {
-  "status": "Not Tested"
+  "status": "Verified",
+  "by": [
+   "inspection",
+   "automated"
+  ],
+  "on": "bd7b9d02",
+  "evidence": [
+   "tests/evidence-g19-school.test.ts",
+   "src/engine/systems/production.ts:184-240 partPlayingRefusal; src/engine/systems/production.ts:284 nightFactor; src/engine/systems/production.ts:566-706 ownWorkRefusal and the commands; src/engine/systems/production.ts:707-753 reflect; src/engine/systems/school.ts:3856-3984 a call; src/engine/systems/school.ts:2948-3266 cast",
+   "tests/evidence-g19-school.test.ts",
+   "tests/production-staging.test.ts",
+   "tests/school-paths.test.ts the School’s 86 test files, 1,304 tests, run on this commit: all green"
+  ]
  },
  "promise.productions.part>productions.nights": {
-  "status": "Not Tested"
+  "status": "Verified",
+  "by": [
+   "inspection",
+   "automated"
+  ],
+  "on": "bd7b9d02",
+  "evidence": [
+   "tests/evidence-g19-school.test.ts",
+   "src/engine/systems/production.ts:184-240 partPlayingRefusal; src/engine/systems/production.ts:284 nightFactor; src/engine/systems/production.ts:566-706 ownWorkRefusal and the commands; src/engine/systems/production.ts:707-753 reflect; src/engine/systems/school.ts:3856-3984 a call; src/engine/systems/school.ts:2948-3266 cast",
+   "tests/evidence-g19-school.test.ts",
+   "tests/production-staging.test.ts",
+   "tests/school-paths.test.ts the School’s 86 test files, 1,304 tests, run on this commit: all green"
+  ]
  },
  "promise.productions.part>productions.notes": {
-  "status": "Not Tested"
+  "status": "Verified",
+  "by": [
+   "inspection",
+   "automated"
+  ],
+  "on": "bd7b9d02",
+  "evidence": [
+   "tests/evidence-g19-school.test.ts",
+   "tests/journey-school-production.test.ts",
+   "src/engine/systems/production.ts:184-240 partPlayingRefusal; src/engine/systems/production.ts:284 nightFactor; src/engine/systems/production.ts:566-706 ownWorkRefusal and the commands; src/engine/systems/production.ts:707-753 reflect; src/engine/systems/school.ts:3856-3984 a call; src/engine/systems/school.ts:2948-3266 cast",
+   "tests/evidence-g19-school.test.ts",
+   "tests/production-staging.test.ts",
+   "tests/school-paths.test.ts the School’s 86 test files, 1,304 tests, run on this commit: all green"
+  ]
  },
  "promise.productions.part>school.standing": {
-  "status": "Not Tested"
+  "status": "Verified",
+  "by": [
+   "inspection",
+   "automated"
+  ],
+  "on": "bd7b9d02",
+  "evidence": [
+   "tests/b20-craft-productions.test.ts",
+   "src/engine/systems/production.ts:184-240 partPlayingRefusal; src/engine/systems/production.ts:284 nightFactor; src/engine/systems/production.ts:566-706 ownWorkRefusal and the commands; src/engine/systems/production.ts:707-753 reflect; src/engine/systems/school.ts:3856-3984 a call; src/engine/systems/school.ts:2948-3266 cast",
+   "tests/evidence-g19-school.test.ts",
+   "tests/production-staging.test.ts",
+   "tests/school-paths.test.ts the School’s 86 test files, 1,304 tests, run on this commit: all green"
+  ]
  },
  "promise.productions.playing>coursework.playing": {
-  "status": "Not Tested"
+  "status": "Verified",
+  "by": [
+   "inspection",
+   "automated"
+  ],
+  "on": "bd7b9d02",
+  "evidence": [
+   "tests/guide-examples-productions.test.ts",
+   "tests/guide-examples-coursework.test.ts",
+   "src/engine/systems/production.ts:184-240 partPlayingRefusal; src/engine/systems/production.ts:284 nightFactor; src/engine/systems/production.ts:566-706 ownWorkRefusal and the commands; src/engine/systems/production.ts:707-753 reflect; src/engine/systems/school.ts:3856-3984 a call; src/engine/systems/school.ts:2948-3266 cast",
+   "tests/evidence-g19-school.test.ts",
+   "tests/production-staging.test.ts",
+   "tests/school-paths.test.ts the School’s 86 test files, 1,304 tests, run on this commit: all green"
+  ]
  },
  "promise.productions.playing>craft.identity": {
-  "status": "Not Tested"
+  "status": "Verified",
+  "by": [
+   "inspection",
+   "automated"
+  ],
+  "on": "bd7b9d02",
+  "evidence": [
+   "tests/b20-craft-productions.test.ts",
+   "tests/defects-g8-15.test.ts",
+   "src/engine/systems/production.ts:184-240 partPlayingRefusal; src/engine/systems/production.ts:284 nightFactor; src/engine/systems/production.ts:566-706 ownWorkRefusal and the commands; src/engine/systems/production.ts:707-753 reflect; src/engine/systems/school.ts:3856-3984 a call; src/engine/systems/school.ts:2948-3266 cast",
+   "tests/evidence-g19-school.test.ts",
+   "tests/production-staging.test.ts",
+   "tests/school-paths.test.ts the School’s 86 test files, 1,304 tests, run on this commit: all green"
+  ]
  },
  "promise.productions.playing>productions.casting": {
-  "status": "Not Tested"
+  "status": "Verified",
+  "by": [
+   "inspection",
+   "automated"
+  ],
+  "on": "bd7b9d02",
+  "evidence": [
+   "tests/b20-craft-productions.test.ts",
+   "src/engine/systems/production.ts:184-240 partPlayingRefusal; src/engine/systems/production.ts:284 nightFactor; src/engine/systems/production.ts:566-706 ownWorkRefusal and the commands; src/engine/systems/production.ts:707-753 reflect; src/engine/systems/school.ts:3856-3984 a call; src/engine/systems/school.ts:2948-3266 cast",
+   "tests/evidence-g19-school.test.ts",
+   "tests/production-staging.test.ts",
+   "tests/school-paths.test.ts the School’s 86 test files, 1,304 tests, run on this commit: all green"
+  ]
  },
  "promise.productions.playing>productions.nights": {
-  "status": "Not Tested"
+  "status": "Verified",
+  "by": [
+   "inspection",
+   "automated"
+  ],
+  "on": "bd7b9d02",
+  "evidence": [
+   "tests/b20-craft-productions.test.ts",
+   "src/engine/systems/production.ts:184-240 partPlayingRefusal; src/engine/systems/production.ts:284 nightFactor; src/engine/systems/production.ts:566-706 ownWorkRefusal and the commands; src/engine/systems/production.ts:707-753 reflect; src/engine/systems/school.ts:3856-3984 a call; src/engine/systems/school.ts:2948-3266 cast",
+   "tests/evidence-g19-school.test.ts",
+   "tests/production-staging.test.ts",
+   "tests/school-paths.test.ts the School’s 86 test files, 1,304 tests, run on this commit: all green"
+  ]
  },
  "promise.productions.playing>productions.notes": {
-  "status": "Not Tested"
+  "status": "Verified",
+  "by": [
+   "inspection",
+   "automated"
+  ],
+  "on": "bd7b9d02",
+  "evidence": [
+   "tests/b20-craft-productions.test.ts",
+   "tests/material.test.ts",
+   "src/engine/systems/production.ts:184-240 partPlayingRefusal; src/engine/systems/production.ts:284 nightFactor; src/engine/systems/production.ts:566-706 ownWorkRefusal and the commands; src/engine/systems/production.ts:707-753 reflect; src/engine/systems/school.ts:3856-3984 a call; src/engine/systems/school.ts:2948-3266 cast",
+   "tests/evidence-g19-school.test.ts",
+   "tests/production-staging.test.ts",
+   "tests/school-paths.test.ts the School’s 86 test files, 1,304 tests, run on this commit: all green"
+  ]
  },
  "promise.productions.playing>productions.part": {
-  "status": "Not Tested"
+  "status": "Verified",
+  "by": [
+   "inspection",
+   "automated"
+  ],
+  "on": "bd7b9d02",
+  "evidence": [
+   "tests/guide-examples-productions.test.ts",
+   "tests/b20-craft-productions.test.ts",
+   "src/engine/systems/production.ts:184-240 partPlayingRefusal; src/engine/systems/production.ts:284 nightFactor; src/engine/systems/production.ts:566-706 ownWorkRefusal and the commands; src/engine/systems/production.ts:707-753 reflect; src/engine/systems/school.ts:3856-3984 a call; src/engine/systems/school.ts:2948-3266 cast",
+   "tests/evidence-g19-school.test.ts",
+   "tests/production-staging.test.ts",
+   "tests/school-paths.test.ts the School’s 86 test files, 1,304 tests, run on this commit: all green"
+  ]
  },
  "promise.productions.plays>coursework.prepare": {
-  "status": "Not Tested"
+  "status": "Verified",
+  "by": [
+   "inspection",
+   "automated"
+  ],
+  "on": "bd7b9d02",
+  "evidence": [
+   "tests/b20-craft-promises.test.ts",
+   "src/engine/systems/production.ts:184-240 partPlayingRefusal; src/engine/systems/production.ts:284 nightFactor; src/engine/systems/production.ts:566-706 ownWorkRefusal and the commands; src/engine/systems/production.ts:707-753 reflect; src/engine/systems/school.ts:3856-3984 a call; src/engine/systems/school.ts:2948-3266 cast",
+   "tests/evidence-g19-school.test.ts",
+   "tests/production-staging.test.ts",
+   "tests/school-paths.test.ts the School’s 86 test files, 1,304 tests, run on this commit: all green"
+  ]
  },
  "promise.productions.plays>craft.profile": {
-  "status": "Not Tested"
+  "status": "Verified",
+  "by": [
+   "inspection",
+   "automated"
+  ],
+  "on": "bd7b9d02",
+  "evidence": [
+   "tests/b20-craft-promises.test.ts",
+   "tests/playreading.test.ts",
+   "tests/evidence-g20-school.test.ts",
+   "src/engine/systems/production.ts:184-240 partPlayingRefusal; src/engine/systems/production.ts:284 nightFactor; src/engine/systems/production.ts:566-706 ownWorkRefusal and the commands; src/engine/systems/production.ts:707-753 reflect; src/engine/systems/school.ts:3856-3984 a call; src/engine/systems/school.ts:2948-3266 cast",
+   "tests/evidence-g19-school.test.ts",
+   "tests/production-staging.test.ts",
+   "tests/school-paths.test.ts the School’s 86 test files, 1,304 tests, run on this commit: all green"
+  ]
  },
  "promise.productions.plays>school.orientation": {
-  "status": "Not Tested"
+  "status": "Verified",
+  "by": [
+   "inspection",
+   "automated"
+  ],
+  "on": "bd7b9d02",
+  "evidence": [
+   "tests/evidence-g19-school.test.ts",
+   "tests/evidence-g22-school.test.ts",
+   "src/engine/systems/production.ts:184-240 partPlayingRefusal; src/engine/systems/production.ts:284 nightFactor; src/engine/systems/production.ts:566-706 ownWorkRefusal and the commands; src/engine/systems/production.ts:707-753 reflect; src/engine/systems/school.ts:3856-3984 a call; src/engine/systems/school.ts:2948-3266 cast",
+   "tests/evidence-g19-school.test.ts",
+   "tests/production-staging.test.ts",
+   "tests/school-paths.test.ts the School’s 86 test files, 1,304 tests, run on this commit: all green"
+  ]
  },
  "technique.accents": {
   "status": "Verified",
