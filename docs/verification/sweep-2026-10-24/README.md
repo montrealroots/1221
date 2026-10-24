@@ -57,7 +57,29 @@ what it needs, and a page behind the entries. Every feature began Not Tested; no
 
 ## The Traces (M3 to M11)
 
-(Written as each milestone closes.)
+### M3: Creation, The Profile, The Abilities, The Genres And Progression
+
+**Read:** `world/bootstrap.ts` and `populateWorld` whole (every creation field lands where its row says); the
+evaluation's guarantee (`systems/evaluation.ts`: an input a task doesn't read changes nothing, and a dimension never
+falls as an input it reads rises); the one way anything grows (`systems/attributes.ts`: toward the reach by ordinary
+work, past it by deliberate practice, half again the same source the same day, discipline's lift, never past full;
+`systems/practice.ts`: four hours a day, an hour sent again with its id refused); the genres' knowledge
+(`systems/engagement.ts`: weights summing to 1, a kind beside its broad genre one demand, relatedness one link, nothing
+passing 1) and love (`systems/enjoyment.ts`: mood and stress, never the result); the personality knobs and the trait
+look that explains them by the same formula; the Profile's eight panels, each reading live state. **Ran:** the area's
+37 test files, 449 tests, green; the creation screen's claims for each disposition and trait read against the consumers
+one for one.
+
+**Found and fixed (1):** creation's Genres step marked Crime, Horror, Police Procedural, Psychological Horror,
+Psychological Thriller and Thriller as "shown on your Player Profile only" (`genresRead` read the School's plays' kinds
+alone), while a work day on a career project of the kind had lifted the mood since brief 20, and the project's own test
+said so. One list now, for the screen and the engine; the step says a day's work on a project of a loved kind lifts the
+day. `tests/b26-creation-genres.test.ts` fails with the projects' genres dropped (2 of 2) and passes restored
+(`22bfcd35`). **Found and corrected (3 records):** the effects rows for `create.genres`, `axis.extraversion` and
+`axis.agreeableness` still said the career's days read no loved genre and no disposition, a gap brief 20 closed.
+**Left to the owner (1):** `create.livesWhereBorn`, written and read by no life a player can make, as brief 20 recorded.
+
+**Register:** 266 Verified, 1 Fixed And Verified, 1 Blocked, by inspection and the tests named on each row.
 
 ## Final Runs, Gate And Report (M12)
 

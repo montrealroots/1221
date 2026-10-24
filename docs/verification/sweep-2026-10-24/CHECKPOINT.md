@@ -29,7 +29,15 @@ each milestone's end, with the branch, the commit, what's covered, what remains 
   briefs 23 and 24 and said brief 22 was in progress.
 - **M2:** the register, `tools/sweep.mjs`, 1,145 features from the code, every one Not Tested until it's traced, and the
   gate's twenty-third check holding it to the code.
-- **M3 to M11:** the traces, area by area (the handoff's top section lists them with what each found).
+- **M3, 2026-10-24: creation, the Profile, the abilities, the techniques, the genres, progression.** Read bootstrap.ts and
+  populateWorld whole, the evaluation's guarantee, the one way anything grows, the practice cap, the enjoyment and
+  personality knobs, the Profile's eight panels; ran the area's 37 test files (449 tests). Found and fixed: creation's
+  Genres step marked six genres the career's projects carry as shown only, while a work day on one had lifted the mood
+  since brief 20 (`genresRead` reads the projects' genres now; tests/b26-creation-genres.test.ts, which fails with the
+  projects dropped; `22bfcd35`). Found and corrected: three effects rows recording that gap as open. Left to the owner,
+  as since brief 20: `create.livesWhereBorn`, written and read by no player-made life (Blocked). 267 rows Verified or Fixed
+  And Verified, 1 Blocked; the craft area's 145 guide promises wait for M4, whose coursework they describe.
+- **M4 to M11:** the traces, area by area (the handoff's top section lists them with what each found).
 - **M12:** brief 22's final runs again on the finished commit, the gate, the receipt.
 
 ## The Completion Matrix While The Sweep Runs
@@ -40,5 +48,5 @@ source change until the runs are played again on the finished commit (M12). That
 
 ## Next Step
 
-M2's register is seeded. Begin M3: creation, the Profile, the abilities, the techniques, the genres and progression
-(`node tools/sweep.mjs --todo creation`, then `--todo craft`).
+Begin M4, the School: its 102 effects rows and the craft area's 145 promises (`node tools/sweep.mjs --todo school`,
+`--todo craft`), reading `systems/school.ts`, `coursework.ts`, `production.ts`, `leave.ts` and the commands' UI.

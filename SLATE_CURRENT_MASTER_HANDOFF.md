@@ -35,7 +35,10 @@ nothing here builds on it.
   mechanics), each with the sweep's status, how it was verified, the commit, the evidence and what was found
   (`docs/verification/sweep-2026-10-24/register/`). The gate's twenty-third check holds it to the code. Every feature
   began Not Tested.
-- **The traces (M3 to M11), as they close:** none yet.
+- **The traces (M3 to M11), as they close:**
+  - **M3, creation to progression (`22bfcd35`):** 267 rows verified by reading and the tests, 1 fixed (creation's Genres
+    step marked six genres the career's projects carry as shown only; one list now, with a test that fails without it),
+    1 Blocked for the owner (`create.livesWhereBorn`, as since brief 20), 3 effects rows corrected.
 - **M12, at the close:** brief 22's final runs again on the finished commit (back to 634), the gate in a clean clone of
   it, the receipt with everything brief 26's §13 asks.
 - **Not merged, not deployed.** The schema stays 94.

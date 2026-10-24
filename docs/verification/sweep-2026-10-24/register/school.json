@@ -9,7 +9,21 @@
   "status": "Not Tested"
  },
  "genre.study": {
-  "status": "Not Tested"
+  "status": "Not Tested",
+  "by": [
+   "inspection",
+   "automated"
+  ],
+  "on": "22bfcd35",
+  "note": "",
+  "evidence": [
+   "tests/genre-coverage.test.ts",
+   "tests/b22-genre-weights.test.ts",
+   "tests/b21-genre-proof.test.ts",
+   "tests/attributes-matrix.test.ts",
+   "tests/b26-creation-genres.test.ts",
+   "src/engine/systems/engagement.ts:144-307 knownOf, relatedness one link only, relevantGenre: exact knowledge in full, the best related once, nothing passes 1"
+  ]
  },
  "look.assignment": {
   "status": "Not Tested"

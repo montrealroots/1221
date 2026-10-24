@@ -1,450 +1,2536 @@
 {
  "genre.absurdist": {
-  "status": "Not Tested"
+  "status": "Verified",
+  "by": [
+   "inspection",
+   "automated"
+  ],
+  "on": "22bfcd35",
+  "note": "Knowledge (familiarity by genre.study, practice by work in it) read by relevantGenre for every material, each requirement’s weights summing to 1, a kind beside its broad genre one demand; all 149 studied, taped and brought to 100 by the coverage tests. Love is read by enjoyment alone, mood and stress, for the 23 genres a play or a project is of; the other 126 are shown only, and creation says so (22bfcd35).",
+  "evidence": [
+   "tests/genre-coverage.test.ts",
+   "tests/b22-genre-weights.test.ts",
+   "tests/b21-genre-proof.test.ts",
+   "tests/attributes-matrix.test.ts",
+   "tests/b26-creation-genres.test.ts",
+   "src/engine/systems/engagement.ts:144-307 knownOf, relatedness one link only, relevantGenre: exact knowledge in full, the best related once, nothing passes 1"
+  ]
  },
  "genre.action": {
-  "status": "Not Tested"
+  "status": "Verified",
+  "by": [
+   "inspection",
+   "automated"
+  ],
+  "on": "22bfcd35",
+  "note": "Knowledge (familiarity by genre.study, practice by work in it) read by relevantGenre for every material, each requirement’s weights summing to 1, a kind beside its broad genre one demand; all 149 studied, taped and brought to 100 by the coverage tests. Love is read by enjoyment alone, mood and stress, for the 23 genres a play or a project is of; the other 126 are shown only, and creation says so (22bfcd35).",
+  "evidence": [
+   "tests/genre-coverage.test.ts",
+   "tests/b22-genre-weights.test.ts",
+   "tests/b21-genre-proof.test.ts",
+   "tests/attributes-matrix.test.ts",
+   "tests/b26-creation-genres.test.ts",
+   "src/engine/systems/engagement.ts:144-307 knownOf, relatedness one link only, relevantGenre: exact knowledge in full, the best related once, nothing passes 1"
+  ]
  },
  "genre.action_comedy": {
-  "status": "Not Tested"
+  "status": "Verified",
+  "by": [
+   "inspection",
+   "automated"
+  ],
+  "on": "22bfcd35",
+  "note": "Knowledge (familiarity by genre.study, practice by work in it) read by relevantGenre for every material, each requirement’s weights summing to 1, a kind beside its broad genre one demand; all 149 studied, taped and brought to 100 by the coverage tests. Love is read by enjoyment alone, mood and stress, for the 23 genres a play or a project is of; the other 126 are shown only, and creation says so (22bfcd35).",
+  "evidence": [
+   "tests/genre-coverage.test.ts",
+   "tests/b22-genre-weights.test.ts",
+   "tests/b21-genre-proof.test.ts",
+   "tests/attributes-matrix.test.ts",
+   "tests/b26-creation-genres.test.ts",
+   "src/engine/systems/engagement.ts:144-307 knownOf, relatedness one link only, relevantGenre: exact knowledge in full, the best related once, nothing passes 1"
+  ]
  },
  "genre.adventure": {
-  "status": "Not Tested"
+  "status": "Verified",
+  "by": [
+   "inspection",
+   "automated"
+  ],
+  "on": "22bfcd35",
+  "note": "Knowledge (familiarity by genre.study, practice by work in it) read by relevantGenre for every material, each requirement’s weights summing to 1, a kind beside its broad genre one demand; all 149 studied, taped and brought to 100 by the coverage tests. Love is read by enjoyment alone, mood and stress, for the 23 genres a play or a project is of; the other 126 are shown only, and creation says so (22bfcd35).",
+  "evidence": [
+   "tests/genre-coverage.test.ts",
+   "tests/b22-genre-weights.test.ts",
+   "tests/b21-genre-proof.test.ts",
+   "tests/attributes-matrix.test.ts",
+   "tests/b26-creation-genres.test.ts",
+   "src/engine/systems/engagement.ts:144-307 knownOf, relatedness one link only, relevantGenre: exact knowledge in full, the best related once, nothing passes 1"
+  ]
  },
  "genre.alternate_history": {
-  "status": "Not Tested"
+  "status": "Verified",
+  "by": [
+   "inspection",
+   "automated"
+  ],
+  "on": "22bfcd35",
+  "note": "Knowledge (familiarity by genre.study, practice by work in it) read by relevantGenre for every material, each requirement’s weights summing to 1, a kind beside its broad genre one demand; all 149 studied, taped and brought to 100 by the coverage tests. Love is read by enjoyment alone, mood and stress, for the 23 genres a play or a project is of; the other 126 are shown only, and creation says so (22bfcd35).",
+  "evidence": [
+   "tests/genre-coverage.test.ts",
+   "tests/b22-genre-weights.test.ts",
+   "tests/b21-genre-proof.test.ts",
+   "tests/attributes-matrix.test.ts",
+   "tests/b26-creation-genres.test.ts",
+   "src/engine/systems/engagement.ts:144-307 knownOf, relatedness one link only, relevantGenre: exact knowledge in full, the best related once, nothing passes 1"
+  ]
  },
  "genre.animated": {
-  "status": "Not Tested"
+  "status": "Verified",
+  "by": [
+   "inspection",
+   "automated"
+  ],
+  "on": "22bfcd35",
+  "note": "Knowledge (familiarity by genre.study, practice by work in it) read by relevantGenre for every material, each requirement’s weights summing to 1, a kind beside its broad genre one demand; all 149 studied, taped and brought to 100 by the coverage tests. Love is read by enjoyment alone, mood and stress, for the 23 genres a play or a project is of; the other 126 are shown only, and creation says so (22bfcd35).",
+  "evidence": [
+   "tests/genre-coverage.test.ts",
+   "tests/b22-genre-weights.test.ts",
+   "tests/b21-genre-proof.test.ts",
+   "tests/attributes-matrix.test.ts",
+   "tests/b26-creation-genres.test.ts",
+   "src/engine/systems/engagement.ts:144-307 knownOf, relatedness one link only, relevantGenre: exact knowledge in full, the best related once, nothing passes 1"
+  ]
  },
  "genre.anime": {
-  "status": "Not Tested"
+  "status": "Verified",
+  "by": [
+   "inspection",
+   "automated"
+  ],
+  "on": "22bfcd35",
+  "note": "Knowledge (familiarity by genre.study, practice by work in it) read by relevantGenre for every material, each requirement’s weights summing to 1, a kind beside its broad genre one demand; all 149 studied, taped and brought to 100 by the coverage tests. Love is read by enjoyment alone, mood and stress, for the 23 genres a play or a project is of; the other 126 are shown only, and creation says so (22bfcd35).",
+  "evidence": [
+   "tests/genre-coverage.test.ts",
+   "tests/b22-genre-weights.test.ts",
+   "tests/b21-genre-proof.test.ts",
+   "tests/attributes-matrix.test.ts",
+   "tests/b26-creation-genres.test.ts",
+   "src/engine/systems/engagement.ts:144-307 knownOf, relatedness one link only, relevantGenre: exact knowledge in full, the best related once, nothing passes 1"
+  ]
  },
  "genre.anthology": {
-  "status": "Not Tested"
+  "status": "Verified",
+  "by": [
+   "inspection",
+   "automated"
+  ],
+  "on": "22bfcd35",
+  "note": "Knowledge (familiarity by genre.study, practice by work in it) read by relevantGenre for every material, each requirement’s weights summing to 1, a kind beside its broad genre one demand; all 149 studied, taped and brought to 100 by the coverage tests. Love is read by enjoyment alone, mood and stress, for the 23 genres a play or a project is of; the other 126 are shown only, and creation says so (22bfcd35).",
+  "evidence": [
+   "tests/genre-coverage.test.ts",
+   "tests/b22-genre-weights.test.ts",
+   "tests/b21-genre-proof.test.ts",
+   "tests/attributes-matrix.test.ts",
+   "tests/b26-creation-genres.test.ts",
+   "src/engine/systems/engagement.ts:144-307 knownOf, relatedness one link only, relevantGenre: exact knowledge in full, the best related once, nothing passes 1"
+  ]
  },
  "genre.apocalyptic": {
-  "status": "Not Tested"
+  "status": "Verified",
+  "by": [
+   "inspection",
+   "automated"
+  ],
+  "on": "22bfcd35",
+  "note": "Knowledge (familiarity by genre.study, practice by work in it) read by relevantGenre for every material, each requirement’s weights summing to 1, a kind beside its broad genre one demand; all 149 studied, taped and brought to 100 by the coverage tests. Love is read by enjoyment alone, mood and stress, for the 23 genres a play or a project is of; the other 126 are shown only, and creation says so (22bfcd35).",
+  "evidence": [
+   "tests/genre-coverage.test.ts",
+   "tests/b22-genre-weights.test.ts",
+   "tests/b21-genre-proof.test.ts",
+   "tests/attributes-matrix.test.ts",
+   "tests/b26-creation-genres.test.ts",
+   "src/engine/systems/engagement.ts:144-307 knownOf, relatedness one link only, relevantGenre: exact knowledge in full, the best related once, nothing passes 1"
+  ]
  },
  "genre.art_house": {
-  "status": "Not Tested"
+  "status": "Verified",
+  "by": [
+   "inspection",
+   "automated"
+  ],
+  "on": "22bfcd35",
+  "note": "Knowledge (familiarity by genre.study, practice by work in it) read by relevantGenre for every material, each requirement’s weights summing to 1, a kind beside its broad genre one demand; all 149 studied, taped and brought to 100 by the coverage tests. Love is read by enjoyment alone, mood and stress, for the 23 genres a play or a project is of; the other 126 are shown only, and creation says so (22bfcd35).",
+  "evidence": [
+   "tests/genre-coverage.test.ts",
+   "tests/b22-genre-weights.test.ts",
+   "tests/b21-genre-proof.test.ts",
+   "tests/attributes-matrix.test.ts",
+   "tests/b26-creation-genres.test.ts",
+   "src/engine/systems/engagement.ts:144-307 knownOf, relatedness one link only, relevantGenre: exact knowledge in full, the best related once, nothing passes 1"
+  ]
  },
  "genre.avant_garde": {
-  "status": "Not Tested"
+  "status": "Verified",
+  "by": [
+   "inspection",
+   "automated"
+  ],
+  "on": "22bfcd35",
+  "note": "Knowledge (familiarity by genre.study, practice by work in it) read by relevantGenre for every material, each requirement’s weights summing to 1, a kind beside its broad genre one demand; all 149 studied, taped and brought to 100 by the coverage tests. Love is read by enjoyment alone, mood and stress, for the 23 genres a play or a project is of; the other 126 are shown only, and creation says so (22bfcd35).",
+  "evidence": [
+   "tests/genre-coverage.test.ts",
+   "tests/b22-genre-weights.test.ts",
+   "tests/b21-genre-proof.test.ts",
+   "tests/attributes-matrix.test.ts",
+   "tests/b26-creation-genres.test.ts",
+   "src/engine/systems/engagement.ts:144-307 knownOf, relatedness one link only, relevantGenre: exact knowledge in full, the best related once, nothing passes 1"
+  ]
  },
  "genre.backstage_musical": {
-  "status": "Not Tested"
+  "status": "Verified",
+  "by": [
+   "inspection",
+   "automated"
+  ],
+  "on": "22bfcd35",
+  "note": "Knowledge (familiarity by genre.study, practice by work in it) read by relevantGenre for every material, each requirement’s weights summing to 1, a kind beside its broad genre one demand; all 149 studied, taped and brought to 100 by the coverage tests. Love is read by enjoyment alone, mood and stress, for the 23 genres a play or a project is of; the other 126 are shown only, and creation says so (22bfcd35).",
+  "evidence": [
+   "tests/genre-coverage.test.ts",
+   "tests/b22-genre-weights.test.ts",
+   "tests/b21-genre-proof.test.ts",
+   "tests/attributes-matrix.test.ts",
+   "tests/b26-creation-genres.test.ts",
+   "src/engine/systems/engagement.ts:144-307 knownOf, relatedness one link only, relevantGenre: exact knowledge in full, the best related once, nothing passes 1"
+  ]
  },
  "genre.biker": {
-  "status": "Not Tested"
+  "status": "Verified",
+  "by": [
+   "inspection",
+   "automated"
+  ],
+  "on": "22bfcd35",
+  "note": "Knowledge (familiarity by genre.study, practice by work in it) read by relevantGenre for every material, each requirement’s weights summing to 1, a kind beside its broad genre one demand; all 149 studied, taped and brought to 100 by the coverage tests. Love is read by enjoyment alone, mood and stress, for the 23 genres a play or a project is of; the other 126 are shown only, and creation says so (22bfcd35).",
+  "evidence": [
+   "tests/genre-coverage.test.ts",
+   "tests/b22-genre-weights.test.ts",
+   "tests/b21-genre-proof.test.ts",
+   "tests/attributes-matrix.test.ts",
+   "tests/b26-creation-genres.test.ts",
+   "src/engine/systems/engagement.ts:144-307 knownOf, relatedness one link only, relevantGenre: exact knowledge in full, the best related once, nothing passes 1"
+  ]
  },
  "genre.biographical": {
-  "status": "Not Tested"
+  "status": "Verified",
+  "by": [
+   "inspection",
+   "automated"
+  ],
+  "on": "22bfcd35",
+  "note": "Knowledge (familiarity by genre.study, practice by work in it) read by relevantGenre for every material, each requirement’s weights summing to 1, a kind beside its broad genre one demand; all 149 studied, taped and brought to 100 by the coverage tests. Love is read by enjoyment alone, mood and stress, for the 23 genres a play or a project is of; the other 126 are shown only, and creation says so (22bfcd35).",
+  "evidence": [
+   "tests/genre-coverage.test.ts",
+   "tests/b22-genre-weights.test.ts",
+   "tests/b21-genre-proof.test.ts",
+   "tests/attributes-matrix.test.ts",
+   "tests/b26-creation-genres.test.ts",
+   "src/engine/systems/engagement.ts:144-307 knownOf, relatedness one link only, relevantGenre: exact knowledge in full, the best related once, nothing passes 1"
+  ]
  },
  "genre.black_comedy": {
-  "status": "Not Tested"
+  "status": "Verified",
+  "by": [
+   "inspection",
+   "automated"
+  ],
+  "on": "22bfcd35",
+  "note": "Knowledge (familiarity by genre.study, practice by work in it) read by relevantGenre for every material, each requirement’s weights summing to 1, a kind beside its broad genre one demand; all 149 studied, taped and brought to 100 by the coverage tests. Love is read by enjoyment alone, mood and stress, for the 23 genres a play or a project is of; the other 126 are shown only, and creation says so (22bfcd35).",
+  "evidence": [
+   "tests/genre-coverage.test.ts",
+   "tests/b22-genre-weights.test.ts",
+   "tests/b21-genre-proof.test.ts",
+   "tests/attributes-matrix.test.ts",
+   "tests/b26-creation-genres.test.ts",
+   "src/engine/systems/engagement.ts:144-307 knownOf, relatedness one link only, relevantGenre: exact knowledge in full, the best related once, nothing passes 1"
+  ]
  },
  "genre.blaxploitation": {
-  "status": "Not Tested"
+  "status": "Verified",
+  "by": [
+   "inspection",
+   "automated"
+  ],
+  "on": "22bfcd35",
+  "note": "Knowledge (familiarity by genre.study, practice by work in it) read by relevantGenre for every material, each requirement’s weights summing to 1, a kind beside its broad genre one demand; all 149 studied, taped and brought to 100 by the coverage tests. Love is read by enjoyment alone, mood and stress, for the 23 genres a play or a project is of; the other 126 are shown only, and creation says so (22bfcd35).",
+  "evidence": [
+   "tests/genre-coverage.test.ts",
+   "tests/b22-genre-weights.test.ts",
+   "tests/b21-genre-proof.test.ts",
+   "tests/attributes-matrix.test.ts",
+   "tests/b26-creation-genres.test.ts",
+   "src/engine/systems/engagement.ts:144-307 knownOf, relatedness one link only, relevantGenre: exact knowledge in full, the best related once, nothing passes 1"
+  ]
  },
  "genre.body_horror": {
-  "status": "Not Tested"
+  "status": "Verified",
+  "by": [
+   "inspection",
+   "automated"
+  ],
+  "on": "22bfcd35",
+  "note": "Knowledge (familiarity by genre.study, practice by work in it) read by relevantGenre for every material, each requirement’s weights summing to 1, a kind beside its broad genre one demand; all 149 studied, taped and brought to 100 by the coverage tests. Love is read by enjoyment alone, mood and stress, for the 23 genres a play or a project is of; the other 126 are shown only, and creation says so (22bfcd35).",
+  "evidence": [
+   "tests/genre-coverage.test.ts",
+   "tests/b22-genre-weights.test.ts",
+   "tests/b21-genre-proof.test.ts",
+   "tests/attributes-matrix.test.ts",
+   "tests/b26-creation-genres.test.ts",
+   "src/engine/systems/engagement.ts:144-307 knownOf, relatedness one link only, relevantGenre: exact knowledge in full, the best related once, nothing passes 1"
+  ]
  },
  "genre.buddy_comedy": {
-  "status": "Not Tested"
+  "status": "Verified",
+  "by": [
+   "inspection",
+   "automated"
+  ],
+  "on": "22bfcd35",
+  "note": "Knowledge (familiarity by genre.study, practice by work in it) read by relevantGenre for every material, each requirement’s weights summing to 1, a kind beside its broad genre one demand; all 149 studied, taped and brought to 100 by the coverage tests. Love is read by enjoyment alone, mood and stress, for the 23 genres a play or a project is of; the other 126 are shown only, and creation says so (22bfcd35).",
+  "evidence": [
+   "tests/genre-coverage.test.ts",
+   "tests/b22-genre-weights.test.ts",
+   "tests/b21-genre-proof.test.ts",
+   "tests/attributes-matrix.test.ts",
+   "tests/b26-creation-genres.test.ts",
+   "src/engine/systems/engagement.ts:144-307 knownOf, relatedness one link only, relevantGenre: exact knowledge in full, the best related once, nothing passes 1"
+  ]
  },
  "genre.buddy_cop": {
-  "status": "Not Tested"
+  "status": "Verified",
+  "by": [
+   "inspection",
+   "automated"
+  ],
+  "on": "22bfcd35",
+  "note": "Knowledge (familiarity by genre.study, practice by work in it) read by relevantGenre for every material, each requirement’s weights summing to 1, a kind beside its broad genre one demand; all 149 studied, taped and brought to 100 by the coverage tests. Love is read by enjoyment alone, mood and stress, for the 23 genres a play or a project is of; the other 126 are shown only, and creation says so (22bfcd35).",
+  "evidence": [
+   "tests/genre-coverage.test.ts",
+   "tests/b22-genre-weights.test.ts",
+   "tests/b21-genre-proof.test.ts",
+   "tests/attributes-matrix.test.ts",
+   "tests/b26-creation-genres.test.ts",
+   "src/engine/systems/engagement.ts:144-307 knownOf, relatedness one link only, relevantGenre: exact knowledge in full, the best related once, nothing passes 1"
+  ]
  },
  "genre.caper": {
-  "status": "Not Tested"
+  "status": "Verified",
+  "by": [
+   "inspection",
+   "automated"
+  ],
+  "on": "22bfcd35",
+  "note": "Knowledge (familiarity by genre.study, practice by work in it) read by relevantGenre for every material, each requirement’s weights summing to 1, a kind beside its broad genre one demand; all 149 studied, taped and brought to 100 by the coverage tests. Love is read by enjoyment alone, mood and stress, for the 23 genres a play or a project is of; the other 126 are shown only, and creation says so (22bfcd35).",
+  "evidence": [
+   "tests/genre-coverage.test.ts",
+   "tests/b22-genre-weights.test.ts",
+   "tests/b21-genre-proof.test.ts",
+   "tests/attributes-matrix.test.ts",
+   "tests/b26-creation-genres.test.ts",
+   "src/engine/systems/engagement.ts:144-307 knownOf, relatedness one link only, relevantGenre: exact knowledge in full, the best related once, nothing passes 1"
+  ]
  },
  "genre.chanbara": {
-  "status": "Not Tested"
+  "status": "Verified",
+  "by": [
+   "inspection",
+   "automated"
+  ],
+  "on": "22bfcd35",
+  "note": "Knowledge (familiarity by genre.study, practice by work in it) read by relevantGenre for every material, each requirement’s weights summing to 1, a kind beside its broad genre one demand; all 149 studied, taped and brought to 100 by the coverage tests. Love is read by enjoyment alone, mood and stress, for the 23 genres a play or a project is of; the other 126 are shown only, and creation says so (22bfcd35).",
+  "evidence": [
+   "tests/genre-coverage.test.ts",
+   "tests/b22-genre-weights.test.ts",
+   "tests/b21-genre-proof.test.ts",
+   "tests/attributes-matrix.test.ts",
+   "tests/b26-creation-genres.test.ts",
+   "src/engine/systems/engagement.ts:144-307 knownOf, relatedness one link only, relevantGenre: exact knowledge in full, the best related once, nothing passes 1"
+  ]
  },
  "genre.chase": {
-  "status": "Not Tested"
+  "status": "Verified",
+  "by": [
+   "inspection",
+   "automated"
+  ],
+  "on": "22bfcd35",
+  "note": "Knowledge (familiarity by genre.study, practice by work in it) read by relevantGenre for every material, each requirement’s weights summing to 1, a kind beside its broad genre one demand; all 149 studied, taped and brought to 100 by the coverage tests. Love is read by enjoyment alone, mood and stress, for the 23 genres a play or a project is of; the other 126 are shown only, and creation says so (22bfcd35).",
+  "evidence": [
+   "tests/genre-coverage.test.ts",
+   "tests/b22-genre-weights.test.ts",
+   "tests/b21-genre-proof.test.ts",
+   "tests/attributes-matrix.test.ts",
+   "tests/b26-creation-genres.test.ts",
+   "src/engine/systems/engagement.ts:144-307 knownOf, relatedness one link only, relevantGenre: exact knowledge in full, the best related once, nothing passes 1"
+  ]
  },
  "genre.childrens": {
-  "status": "Not Tested"
+  "status": "Verified",
+  "by": [
+   "inspection",
+   "automated"
+  ],
+  "on": "22bfcd35",
+  "note": "Knowledge (familiarity by genre.study, practice by work in it) read by relevantGenre for every material, each requirement’s weights summing to 1, a kind beside its broad genre one demand; all 149 studied, taped and brought to 100 by the coverage tests. Love is read by enjoyment alone, mood and stress, for the 23 genres a play or a project is of; the other 126 are shown only, and creation says so (22bfcd35).",
+  "evidence": [
+   "tests/genre-coverage.test.ts",
+   "tests/b22-genre-weights.test.ts",
+   "tests/b21-genre-proof.test.ts",
+   "tests/attributes-matrix.test.ts",
+   "tests/b26-creation-genres.test.ts",
+   "src/engine/systems/engagement.ts:144-307 knownOf, relatedness one link only, relevantGenre: exact knowledge in full, the best related once, nothing passes 1"
+  ]
  },
  "genre.christmas": {
-  "status": "Not Tested"
+  "status": "Verified",
+  "by": [
+   "inspection",
+   "automated"
+  ],
+  "on": "22bfcd35",
+  "note": "Knowledge (familiarity by genre.study, practice by work in it) read by relevantGenre for every material, each requirement’s weights summing to 1, a kind beside its broad genre one demand; all 149 studied, taped and brought to 100 by the coverage tests. Love is read by enjoyment alone, mood and stress, for the 23 genres a play or a project is of; the other 126 are shown only, and creation says so (22bfcd35).",
+  "evidence": [
+   "tests/genre-coverage.test.ts",
+   "tests/b22-genre-weights.test.ts",
+   "tests/b21-genre-proof.test.ts",
+   "tests/attributes-matrix.test.ts",
+   "tests/b26-creation-genres.test.ts",
+   "src/engine/systems/engagement.ts:144-307 knownOf, relatedness one link only, relevantGenre: exact knowledge in full, the best related once, nothing passes 1"
+  ]
  },
  "genre.comedy": {
-  "status": "Not Tested"
+  "status": "Verified",
+  "by": [
+   "inspection",
+   "automated"
+  ],
+  "on": "22bfcd35",
+  "note": "Knowledge (familiarity by genre.study, practice by work in it) read by relevantGenre for every material, each requirement’s weights summing to 1, a kind beside its broad genre one demand; all 149 studied, taped and brought to 100 by the coverage tests. Love is read by enjoyment alone, mood and stress, for the 23 genres a play or a project is of; the other 126 are shown only, and creation says so (22bfcd35).",
+  "evidence": [
+   "tests/genre-coverage.test.ts",
+   "tests/b22-genre-weights.test.ts",
+   "tests/b21-genre-proof.test.ts",
+   "tests/attributes-matrix.test.ts",
+   "tests/b26-creation-genres.test.ts",
+   "src/engine/systems/engagement.ts:144-307 knownOf, relatedness one link only, relevantGenre: exact knowledge in full, the best related once, nothing passes 1"
+  ]
  },
  "genre.coming_of_age": {
-  "status": "Not Tested"
+  "status": "Verified",
+  "by": [
+   "inspection",
+   "automated"
+  ],
+  "on": "22bfcd35",
+  "note": "Knowledge (familiarity by genre.study, practice by work in it) read by relevantGenre for every material, each requirement’s weights summing to 1, a kind beside its broad genre one demand; all 149 studied, taped and brought to 100 by the coverage tests. Love is read by enjoyment alone, mood and stress, for the 23 genres a play or a project is of; the other 126 are shown only, and creation says so (22bfcd35).",
+  "evidence": [
+   "tests/genre-coverage.test.ts",
+   "tests/b22-genre-weights.test.ts",
+   "tests/b21-genre-proof.test.ts",
+   "tests/attributes-matrix.test.ts",
+   "tests/b26-creation-genres.test.ts",
+   "src/engine/systems/engagement.ts:144-307 knownOf, relatedness one link only, relevantGenre: exact knowledge in full, the best related once, nothing passes 1"
+  ]
  },
  "genre.concert_film": {
-  "status": "Not Tested"
+  "status": "Verified",
+  "by": [
+   "inspection",
+   "automated"
+  ],
+  "on": "22bfcd35",
+  "note": "Knowledge (familiarity by genre.study, practice by work in it) read by relevantGenre for every material, each requirement’s weights summing to 1, a kind beside its broad genre one demand; all 149 studied, taped and brought to 100 by the coverage tests. Love is read by enjoyment alone, mood and stress, for the 23 genres a play or a project is of; the other 126 are shown only, and creation says so (22bfcd35).",
+  "evidence": [
+   "tests/genre-coverage.test.ts",
+   "tests/b22-genre-weights.test.ts",
+   "tests/b21-genre-proof.test.ts",
+   "tests/attributes-matrix.test.ts",
+   "tests/b26-creation-genres.test.ts",
+   "src/engine/systems/engagement.ts:144-307 knownOf, relatedness one link only, relevantGenre: exact knowledge in full, the best related once, nothing passes 1"
+  ]
  },
  "genre.conspiracy_thriller": {
-  "status": "Not Tested"
+  "status": "Verified",
+  "by": [
+   "inspection",
+   "automated"
+  ],
+  "on": "22bfcd35",
+  "note": "Knowledge (familiarity by genre.study, practice by work in it) read by relevantGenre for every material, each requirement’s weights summing to 1, a kind beside its broad genre one demand; all 149 studied, taped and brought to 100 by the coverage tests. Love is read by enjoyment alone, mood and stress, for the 23 genres a play or a project is of; the other 126 are shown only, and creation says so (22bfcd35).",
+  "evidence": [
+   "tests/genre-coverage.test.ts",
+   "tests/b22-genre-weights.test.ts",
+   "tests/b21-genre-proof.test.ts",
+   "tests/attributes-matrix.test.ts",
+   "tests/b26-creation-genres.test.ts",
+   "src/engine/systems/engagement.ts:144-307 knownOf, relatedness one link only, relevantGenre: exact knowledge in full, the best related once, nothing passes 1"
+  ]
  },
  "genre.cosmic_horror": {
-  "status": "Not Tested"
+  "status": "Verified",
+  "by": [
+   "inspection",
+   "automated"
+  ],
+  "on": "22bfcd35",
+  "note": "Knowledge (familiarity by genre.study, practice by work in it) read by relevantGenre for every material, each requirement’s weights summing to 1, a kind beside its broad genre one demand; all 149 studied, taped and brought to 100 by the coverage tests. Love is read by enjoyment alone, mood and stress, for the 23 genres a play or a project is of; the other 126 are shown only, and creation says so (22bfcd35).",
+  "evidence": [
+   "tests/genre-coverage.test.ts",
+   "tests/b22-genre-weights.test.ts",
+   "tests/b21-genre-proof.test.ts",
+   "tests/attributes-matrix.test.ts",
+   "tests/b26-creation-genres.test.ts",
+   "src/engine/systems/engagement.ts:144-307 knownOf, relatedness one link only, relevantGenre: exact knowledge in full, the best related once, nothing passes 1"
+  ]
  },
  "genre.costume_drama": {
-  "status": "Not Tested"
+  "status": "Verified",
+  "by": [
+   "inspection",
+   "automated"
+  ],
+  "on": "22bfcd35",
+  "note": "Knowledge (familiarity by genre.study, practice by work in it) read by relevantGenre for every material, each requirement’s weights summing to 1, a kind beside its broad genre one demand; all 149 studied, taped and brought to 100 by the coverage tests. Love is read by enjoyment alone, mood and stress, for the 23 genres a play or a project is of; the other 126 are shown only, and creation says so (22bfcd35).",
+  "evidence": [
+   "tests/genre-coverage.test.ts",
+   "tests/b22-genre-weights.test.ts",
+   "tests/b21-genre-proof.test.ts",
+   "tests/attributes-matrix.test.ts",
+   "tests/b26-creation-genres.test.ts",
+   "src/engine/systems/engagement.ts:144-307 knownOf, relatedness one link only, relevantGenre: exact knowledge in full, the best related once, nothing passes 1"
+  ]
  },
  "genre.courtroom_drama": {
-  "status": "Not Tested"
+  "status": "Verified",
+  "by": [
+   "inspection",
+   "automated"
+  ],
+  "on": "22bfcd35",
+  "note": "Knowledge (familiarity by genre.study, practice by work in it) read by relevantGenre for every material, each requirement’s weights summing to 1, a kind beside its broad genre one demand; all 149 studied, taped and brought to 100 by the coverage tests. Love is read by enjoyment alone, mood and stress, for the 23 genres a play or a project is of; the other 126 are shown only, and creation says so (22bfcd35).",
+  "evidence": [
+   "tests/genre-coverage.test.ts",
+   "tests/b22-genre-weights.test.ts",
+   "tests/b21-genre-proof.test.ts",
+   "tests/attributes-matrix.test.ts",
+   "tests/b26-creation-genres.test.ts",
+   "src/engine/systems/engagement.ts:144-307 knownOf, relatedness one link only, relevantGenre: exact knowledge in full, the best related once, nothing passes 1"
+  ]
  },
  "genre.creature_feature": {
-  "status": "Not Tested"
+  "status": "Verified",
+  "by": [
+   "inspection",
+   "automated"
+  ],
+  "on": "22bfcd35",
+  "note": "Knowledge (familiarity by genre.study, practice by work in it) read by relevantGenre for every material, each requirement’s weights summing to 1, a kind beside its broad genre one demand; all 149 studied, taped and brought to 100 by the coverage tests. Love is read by enjoyment alone, mood and stress, for the 23 genres a play or a project is of; the other 126 are shown only, and creation says so (22bfcd35).",
+  "evidence": [
+   "tests/genre-coverage.test.ts",
+   "tests/b22-genre-weights.test.ts",
+   "tests/b21-genre-proof.test.ts",
+   "tests/attributes-matrix.test.ts",
+   "tests/b26-creation-genres.test.ts",
+   "src/engine/systems/engagement.ts:144-307 knownOf, relatedness one link only, relevantGenre: exact knowledge in full, the best related once, nothing passes 1"
+  ]
  },
  "genre.crime": {
-  "status": "Not Tested"
+  "status": "Verified",
+  "by": [
+   "inspection",
+   "automated"
+  ],
+  "on": "22bfcd35",
+  "note": "Knowledge (familiarity by genre.study, practice by work in it) read by relevantGenre for every material, each requirement’s weights summing to 1, a kind beside its broad genre one demand; all 149 studied, taped and brought to 100 by the coverage tests. Love is read by enjoyment alone, mood and stress, for the 23 genres a play or a project is of; the other 126 are shown only, and creation says so (22bfcd35).",
+  "evidence": [
+   "tests/genre-coverage.test.ts",
+   "tests/b22-genre-weights.test.ts",
+   "tests/b21-genre-proof.test.ts",
+   "tests/attributes-matrix.test.ts",
+   "tests/b26-creation-genres.test.ts",
+   "src/engine/systems/engagement.ts:144-307 knownOf, relatedness one link only, relevantGenre: exact knowledge in full, the best related once, nothing passes 1"
+  ]
  },
  "genre.cyberpunk": {
-  "status": "Not Tested"
+  "status": "Verified",
+  "by": [
+   "inspection",
+   "automated"
+  ],
+  "on": "22bfcd35",
+  "note": "Knowledge (familiarity by genre.study, practice by work in it) read by relevantGenre for every material, each requirement’s weights summing to 1, a kind beside its broad genre one demand; all 149 studied, taped and brought to 100 by the coverage tests. Love is read by enjoyment alone, mood and stress, for the 23 genres a play or a project is of; the other 126 are shown only, and creation says so (22bfcd35).",
+  "evidence": [
+   "tests/genre-coverage.test.ts",
+   "tests/b22-genre-weights.test.ts",
+   "tests/b21-genre-proof.test.ts",
+   "tests/attributes-matrix.test.ts",
+   "tests/b26-creation-genres.test.ts",
+   "src/engine/systems/engagement.ts:144-307 knownOf, relatedness one link only, relevantGenre: exact knowledge in full, the best related once, nothing passes 1"
+  ]
  },
  "genre.dance": {
-  "status": "Not Tested"
+  "status": "Verified",
+  "by": [
+   "inspection",
+   "automated"
+  ],
+  "on": "22bfcd35",
+  "note": "Knowledge (familiarity by genre.study, practice by work in it) read by relevantGenre for every material, each requirement’s weights summing to 1, a kind beside its broad genre one demand; all 149 studied, taped and brought to 100 by the coverage tests. Love is read by enjoyment alone, mood and stress, for the 23 genres a play or a project is of; the other 126 are shown only, and creation says so (22bfcd35).",
+  "evidence": [
+   "tests/genre-coverage.test.ts",
+   "tests/b22-genre-weights.test.ts",
+   "tests/b21-genre-proof.test.ts",
+   "tests/attributes-matrix.test.ts",
+   "tests/b26-creation-genres.test.ts",
+   "src/engine/systems/engagement.ts:144-307 knownOf, relatedness one link only, relevantGenre: exact knowledge in full, the best related once, nothing passes 1"
+  ]
  },
  "genre.dark_fantasy": {
-  "status": "Not Tested"
+  "status": "Verified",
+  "by": [
+   "inspection",
+   "automated"
+  ],
+  "on": "22bfcd35",
+  "note": "Knowledge (familiarity by genre.study, practice by work in it) read by relevantGenre for every material, each requirement’s weights summing to 1, a kind beside its broad genre one demand; all 149 studied, taped and brought to 100 by the coverage tests. Love is read by enjoyment alone, mood and stress, for the 23 genres a play or a project is of; the other 126 are shown only, and creation says so (22bfcd35).",
+  "evidence": [
+   "tests/genre-coverage.test.ts",
+   "tests/b22-genre-weights.test.ts",
+   "tests/b21-genre-proof.test.ts",
+   "tests/attributes-matrix.test.ts",
+   "tests/b26-creation-genres.test.ts",
+   "src/engine/systems/engagement.ts:144-307 knownOf, relatedness one link only, relevantGenre: exact knowledge in full, the best related once, nothing passes 1"
+  ]
  },
  "genre.detective": {
-  "status": "Not Tested"
+  "status": "Verified",
+  "by": [
+   "inspection",
+   "automated"
+  ],
+  "on": "22bfcd35",
+  "note": "Knowledge (familiarity by genre.study, practice by work in it) read by relevantGenre for every material, each requirement’s weights summing to 1, a kind beside its broad genre one demand; all 149 studied, taped and brought to 100 by the coverage tests. Love is read by enjoyment alone, mood and stress, for the 23 genres a play or a project is of; the other 126 are shown only, and creation says so (22bfcd35).",
+  "evidence": [
+   "tests/genre-coverage.test.ts",
+   "tests/b22-genre-weights.test.ts",
+   "tests/b21-genre-proof.test.ts",
+   "tests/attributes-matrix.test.ts",
+   "tests/b26-creation-genres.test.ts",
+   "src/engine/systems/engagement.ts:144-307 knownOf, relatedness one link only, relevantGenre: exact knowledge in full, the best related once, nothing passes 1"
+  ]
  },
  "genre.disaster": {
-  "status": "Not Tested"
+  "status": "Verified",
+  "by": [
+   "inspection",
+   "automated"
+  ],
+  "on": "22bfcd35",
+  "note": "Knowledge (familiarity by genre.study, practice by work in it) read by relevantGenre for every material, each requirement’s weights summing to 1, a kind beside its broad genre one demand; all 149 studied, taped and brought to 100 by the coverage tests. Love is read by enjoyment alone, mood and stress, for the 23 genres a play or a project is of; the other 126 are shown only, and creation says so (22bfcd35).",
+  "evidence": [
+   "tests/genre-coverage.test.ts",
+   "tests/b22-genre-weights.test.ts",
+   "tests/b21-genre-proof.test.ts",
+   "tests/attributes-matrix.test.ts",
+   "tests/b26-creation-genres.test.ts",
+   "src/engine/systems/engagement.ts:144-307 knownOf, relatedness one link only, relevantGenre: exact knowledge in full, the best related once, nothing passes 1"
+  ]
  },
  "genre.docudrama": {
-  "status": "Not Tested"
+  "status": "Verified",
+  "by": [
+   "inspection",
+   "automated"
+  ],
+  "on": "22bfcd35",
+  "note": "Knowledge (familiarity by genre.study, practice by work in it) read by relevantGenre for every material, each requirement’s weights summing to 1, a kind beside its broad genre one demand; all 149 studied, taped and brought to 100 by the coverage tests. Love is read by enjoyment alone, mood and stress, for the 23 genres a play or a project is of; the other 126 are shown only, and creation says so (22bfcd35).",
+  "evidence": [
+   "tests/genre-coverage.test.ts",
+   "tests/b22-genre-weights.test.ts",
+   "tests/b21-genre-proof.test.ts",
+   "tests/attributes-matrix.test.ts",
+   "tests/b26-creation-genres.test.ts",
+   "src/engine/systems/engagement.ts:144-307 knownOf, relatedness one link only, relevantGenre: exact knowledge in full, the best related once, nothing passes 1"
+  ]
  },
  "genre.docufiction": {
-  "status": "Not Tested"
+  "status": "Verified",
+  "by": [
+   "inspection",
+   "automated"
+  ],
+  "on": "22bfcd35",
+  "note": "Knowledge (familiarity by genre.study, practice by work in it) read by relevantGenre for every material, each requirement’s weights summing to 1, a kind beside its broad genre one demand; all 149 studied, taped and brought to 100 by the coverage tests. Love is read by enjoyment alone, mood and stress, for the 23 genres a play or a project is of; the other 126 are shown only, and creation says so (22bfcd35).",
+  "evidence": [
+   "tests/genre-coverage.test.ts",
+   "tests/b22-genre-weights.test.ts",
+   "tests/b21-genre-proof.test.ts",
+   "tests/attributes-matrix.test.ts",
+   "tests/b26-creation-genres.test.ts",
+   "src/engine/systems/engagement.ts:144-307 knownOf, relatedness one link only, relevantGenre: exact knowledge in full, the best related once, nothing passes 1"
+  ]
  },
  "genre.documentary": {
-  "status": "Not Tested"
+  "status": "Verified",
+  "by": [
+   "inspection",
+   "automated"
+  ],
+  "on": "22bfcd35",
+  "note": "Knowledge (familiarity by genre.study, practice by work in it) read by relevantGenre for every material, each requirement’s weights summing to 1, a kind beside its broad genre one demand; all 149 studied, taped and brought to 100 by the coverage tests. Love is read by enjoyment alone, mood and stress, for the 23 genres a play or a project is of; the other 126 are shown only, and creation says so (22bfcd35).",
+  "evidence": [
+   "tests/genre-coverage.test.ts",
+   "tests/b22-genre-weights.test.ts",
+   "tests/b21-genre-proof.test.ts",
+   "tests/attributes-matrix.test.ts",
+   "tests/b26-creation-genres.test.ts",
+   "src/engine/systems/engagement.ts:144-307 knownOf, relatedness one link only, relevantGenre: exact knowledge in full, the best related once, nothing passes 1"
+  ]
  },
  "genre.domestic_drama": {
-  "status": "Not Tested"
+  "status": "Verified",
+  "by": [
+   "inspection",
+   "automated"
+  ],
+  "on": "22bfcd35",
+  "note": "Knowledge (familiarity by genre.study, practice by work in it) read by relevantGenre for every material, each requirement’s weights summing to 1, a kind beside its broad genre one demand; all 149 studied, taped and brought to 100 by the coverage tests. Love is read by enjoyment alone, mood and stress, for the 23 genres a play or a project is of; the other 126 are shown only, and creation says so (22bfcd35).",
+  "evidence": [
+   "tests/genre-coverage.test.ts",
+   "tests/b22-genre-weights.test.ts",
+   "tests/b21-genre-proof.test.ts",
+   "tests/attributes-matrix.test.ts",
+   "tests/b26-creation-genres.test.ts",
+   "src/engine/systems/engagement.ts:144-307 knownOf, relatedness one link only, relevantGenre: exact knowledge in full, the best related once, nothing passes 1"
+  ]
  },
  "genre.drama": {
-  "status": "Not Tested"
+  "status": "Verified",
+  "by": [
+   "inspection",
+   "automated"
+  ],
+  "on": "22bfcd35",
+  "note": "Knowledge (familiarity by genre.study, practice by work in it) read by relevantGenre for every material, each requirement’s weights summing to 1, a kind beside its broad genre one demand; all 149 studied, taped and brought to 100 by the coverage tests. Love is read by enjoyment alone, mood and stress, for the 23 genres a play or a project is of; the other 126 are shown only, and creation says so (22bfcd35).",
+  "evidence": [
+   "tests/genre-coverage.test.ts",
+   "tests/b22-genre-weights.test.ts",
+   "tests/b21-genre-proof.test.ts",
+   "tests/attributes-matrix.test.ts",
+   "tests/b26-creation-genres.test.ts",
+   "src/engine/systems/engagement.ts:144-307 knownOf, relatedness one link only, relevantGenre: exact knowledge in full, the best related once, nothing passes 1"
+  ]
  },
  "genre.dystopian": {
-  "status": "Not Tested"
+  "status": "Verified",
+  "by": [
+   "inspection",
+   "automated"
+  ],
+  "on": "22bfcd35",
+  "note": "Knowledge (familiarity by genre.study, practice by work in it) read by relevantGenre for every material, each requirement’s weights summing to 1, a kind beside its broad genre one demand; all 149 studied, taped and brought to 100 by the coverage tests. Love is read by enjoyment alone, mood and stress, for the 23 genres a play or a project is of; the other 126 are shown only, and creation says so (22bfcd35).",
+  "evidence": [
+   "tests/genre-coverage.test.ts",
+   "tests/b22-genre-weights.test.ts",
+   "tests/b21-genre-proof.test.ts",
+   "tests/attributes-matrix.test.ts",
+   "tests/b26-creation-genres.test.ts",
+   "src/engine/systems/engagement.ts:144-307 knownOf, relatedness one link only, relevantGenre: exact knowledge in full, the best related once, nothing passes 1"
+  ]
  },
  "genre.eco_horror": {
-  "status": "Not Tested"
+  "status": "Verified",
+  "by": [
+   "inspection",
+   "automated"
+  ],
+  "on": "22bfcd35",
+  "note": "Knowledge (familiarity by genre.study, practice by work in it) read by relevantGenre for every material, each requirement’s weights summing to 1, a kind beside its broad genre one demand; all 149 studied, taped and brought to 100 by the coverage tests. Love is read by enjoyment alone, mood and stress, for the 23 genres a play or a project is of; the other 126 are shown only, and creation says so (22bfcd35).",
+  "evidence": [
+   "tests/genre-coverage.test.ts",
+   "tests/b22-genre-weights.test.ts",
+   "tests/b21-genre-proof.test.ts",
+   "tests/attributes-matrix.test.ts",
+   "tests/b26-creation-genres.test.ts",
+   "src/engine/systems/engagement.ts:144-307 knownOf, relatedness one link only, relevantGenre: exact knowledge in full, the best related once, nothing passes 1"
+  ]
  },
  "genre.epic": {
-  "status": "Not Tested"
+  "status": "Verified",
+  "by": [
+   "inspection",
+   "automated"
+  ],
+  "on": "22bfcd35",
+  "note": "Knowledge (familiarity by genre.study, practice by work in it) read by relevantGenre for every material, each requirement’s weights summing to 1, a kind beside its broad genre one demand; all 149 studied, taped and brought to 100 by the coverage tests. Love is read by enjoyment alone, mood and stress, for the 23 genres a play or a project is of; the other 126 are shown only, and creation says so (22bfcd35).",
+  "evidence": [
+   "tests/genre-coverage.test.ts",
+   "tests/b22-genre-weights.test.ts",
+   "tests/b21-genre-proof.test.ts",
+   "tests/attributes-matrix.test.ts",
+   "tests/b26-creation-genres.test.ts",
+   "src/engine/systems/engagement.ts:144-307 knownOf, relatedness one link only, relevantGenre: exact knowledge in full, the best related once, nothing passes 1"
+  ]
  },
  "genre.erotic_thriller": {
-  "status": "Not Tested"
+  "status": "Verified",
+  "by": [
+   "inspection",
+   "automated"
+  ],
+  "on": "22bfcd35",
+  "note": "Knowledge (familiarity by genre.study, practice by work in it) read by relevantGenre for every material, each requirement’s weights summing to 1, a kind beside its broad genre one demand; all 149 studied, taped and brought to 100 by the coverage tests. Love is read by enjoyment alone, mood and stress, for the 23 genres a play or a project is of; the other 126 are shown only, and creation says so (22bfcd35).",
+  "evidence": [
+   "tests/genre-coverage.test.ts",
+   "tests/b22-genre-weights.test.ts",
+   "tests/b21-genre-proof.test.ts",
+   "tests/attributes-matrix.test.ts",
+   "tests/b26-creation-genres.test.ts",
+   "src/engine/systems/engagement.ts:144-307 knownOf, relatedness one link only, relevantGenre: exact knowledge in full, the best related once, nothing passes 1"
+  ]
  },
  "genre.espionage": {
-  "status": "Not Tested"
+  "status": "Verified",
+  "by": [
+   "inspection",
+   "automated"
+  ],
+  "on": "22bfcd35",
+  "note": "Knowledge (familiarity by genre.study, practice by work in it) read by relevantGenre for every material, each requirement’s weights summing to 1, a kind beside its broad genre one demand; all 149 studied, taped and brought to 100 by the coverage tests. Love is read by enjoyment alone, mood and stress, for the 23 genres a play or a project is of; the other 126 are shown only, and creation says so (22bfcd35).",
+  "evidence": [
+   "tests/genre-coverage.test.ts",
+   "tests/b22-genre-weights.test.ts",
+   "tests/b21-genre-proof.test.ts",
+   "tests/attributes-matrix.test.ts",
+   "tests/b26-creation-genres.test.ts",
+   "src/engine/systems/engagement.ts:144-307 knownOf, relatedness one link only, relevantGenre: exact knowledge in full, the best related once, nothing passes 1"
+  ]
  },
  "genre.experimental": {
-  "status": "Not Tested"
+  "status": "Verified",
+  "by": [
+   "inspection",
+   "automated"
+  ],
+  "on": "22bfcd35",
+  "note": "Knowledge (familiarity by genre.study, practice by work in it) read by relevantGenre for every material, each requirement’s weights summing to 1, a kind beside its broad genre one demand; all 149 studied, taped and brought to 100 by the coverage tests. Love is read by enjoyment alone, mood and stress, for the 23 genres a play or a project is of; the other 126 are shown only, and creation says so (22bfcd35).",
+  "evidence": [
+   "tests/genre-coverage.test.ts",
+   "tests/b22-genre-weights.test.ts",
+   "tests/b21-genre-proof.test.ts",
+   "tests/attributes-matrix.test.ts",
+   "tests/b26-creation-genres.test.ts",
+   "src/engine/systems/engagement.ts:144-307 knownOf, relatedness one link only, relevantGenre: exact knowledge in full, the best related once, nothing passes 1"
+  ]
  },
  "genre.exploitation": {
-  "status": "Not Tested"
+  "status": "Verified",
+  "by": [
+   "inspection",
+   "automated"
+  ],
+  "on": "22bfcd35",
+  "note": "Knowledge (familiarity by genre.study, practice by work in it) read by relevantGenre for every material, each requirement’s weights summing to 1, a kind beside its broad genre one demand; all 149 studied, taped and brought to 100 by the coverage tests. Love is read by enjoyment alone, mood and stress, for the 23 genres a play or a project is of; the other 126 are shown only, and creation says so (22bfcd35).",
+  "evidence": [
+   "tests/genre-coverage.test.ts",
+   "tests/b22-genre-weights.test.ts",
+   "tests/b21-genre-proof.test.ts",
+   "tests/attributes-matrix.test.ts",
+   "tests/b26-creation-genres.test.ts",
+   "src/engine/systems/engagement.ts:144-307 knownOf, relatedness one link only, relevantGenre: exact knowledge in full, the best related once, nothing passes 1"
+  ]
  },
  "genre.fairy_tale": {
-  "status": "Not Tested"
+  "status": "Verified",
+  "by": [
+   "inspection",
+   "automated"
+  ],
+  "on": "22bfcd35",
+  "note": "Knowledge (familiarity by genre.study, practice by work in it) read by relevantGenre for every material, each requirement’s weights summing to 1, a kind beside its broad genre one demand; all 149 studied, taped and brought to 100 by the coverage tests. Love is read by enjoyment alone, mood and stress, for the 23 genres a play or a project is of; the other 126 are shown only, and creation says so (22bfcd35).",
+  "evidence": [
+   "tests/genre-coverage.test.ts",
+   "tests/b22-genre-weights.test.ts",
+   "tests/b21-genre-proof.test.ts",
+   "tests/attributes-matrix.test.ts",
+   "tests/b26-creation-genres.test.ts",
+   "src/engine/systems/engagement.ts:144-307 knownOf, relatedness one link only, relevantGenre: exact knowledge in full, the best related once, nothing passes 1"
+  ]
  },
  "genre.family": {
-  "status": "Not Tested"
+  "status": "Verified",
+  "by": [
+   "inspection",
+   "automated"
+  ],
+  "on": "22bfcd35",
+  "note": "Knowledge (familiarity by genre.study, practice by work in it) read by relevantGenre for every material, each requirement’s weights summing to 1, a kind beside its broad genre one demand; all 149 studied, taped and brought to 100 by the coverage tests. Love is read by enjoyment alone, mood and stress, for the 23 genres a play or a project is of; the other 126 are shown only, and creation says so (22bfcd35).",
+  "evidence": [
+   "tests/genre-coverage.test.ts",
+   "tests/b22-genre-weights.test.ts",
+   "tests/b21-genre-proof.test.ts",
+   "tests/attributes-matrix.test.ts",
+   "tests/b26-creation-genres.test.ts",
+   "src/engine/systems/engagement.ts:144-307 knownOf, relatedness one link only, relevantGenre: exact knowledge in full, the best related once, nothing passes 1"
+  ]
  },
  "genre.fantasy": {
-  "status": "Not Tested"
+  "status": "Verified",
+  "by": [
+   "inspection",
+   "automated"
+  ],
+  "on": "22bfcd35",
+  "note": "Knowledge (familiarity by genre.study, practice by work in it) read by relevantGenre for every material, each requirement’s weights summing to 1, a kind beside its broad genre one demand; all 149 studied, taped and brought to 100 by the coverage tests. Love is read by enjoyment alone, mood and stress, for the 23 genres a play or a project is of; the other 126 are shown only, and creation says so (22bfcd35).",
+  "evidence": [
+   "tests/genre-coverage.test.ts",
+   "tests/b22-genre-weights.test.ts",
+   "tests/b21-genre-proof.test.ts",
+   "tests/attributes-matrix.test.ts",
+   "tests/b26-creation-genres.test.ts",
+   "src/engine/systems/engagement.ts:144-307 knownOf, relatedness one link only, relevantGenre: exact knowledge in full, the best related once, nothing passes 1"
+  ]
  },
  "genre.farce": {
-  "status": "Not Tested"
+  "status": "Verified",
+  "by": [
+   "inspection",
+   "automated"
+  ],
+  "on": "22bfcd35",
+  "note": "Knowledge (familiarity by genre.study, practice by work in it) read by relevantGenre for every material, each requirement’s weights summing to 1, a kind beside its broad genre one demand; all 149 studied, taped and brought to 100 by the coverage tests. Love is read by enjoyment alone, mood and stress, for the 23 genres a play or a project is of; the other 126 are shown only, and creation says so (22bfcd35).",
+  "evidence": [
+   "tests/genre-coverage.test.ts",
+   "tests/b22-genre-weights.test.ts",
+   "tests/b21-genre-proof.test.ts",
+   "tests/attributes-matrix.test.ts",
+   "tests/b26-creation-genres.test.ts",
+   "src/engine/systems/engagement.ts:144-307 knownOf, relatedness one link only, relevantGenre: exact knowledge in full, the best related once, nothing passes 1"
+  ]
  },
  "genre.film_noir": {
-  "status": "Not Tested"
+  "status": "Verified",
+  "by": [
+   "inspection",
+   "automated"
+  ],
+  "on": "22bfcd35",
+  "note": "Knowledge (familiarity by genre.study, practice by work in it) read by relevantGenre for every material, each requirement’s weights summing to 1, a kind beside its broad genre one demand; all 149 studied, taped and brought to 100 by the coverage tests. Love is read by enjoyment alone, mood and stress, for the 23 genres a play or a project is of; the other 126 are shown only, and creation says so (22bfcd35).",
+  "evidence": [
+   "tests/genre-coverage.test.ts",
+   "tests/b22-genre-weights.test.ts",
+   "tests/b21-genre-proof.test.ts",
+   "tests/attributes-matrix.test.ts",
+   "tests/b26-creation-genres.test.ts",
+   "src/engine/systems/engagement.ts:144-307 knownOf, relatedness one link only, relevantGenre: exact knowledge in full, the best related once, nothing passes 1"
+  ]
  },
  "genre.folk_horror": {
-  "status": "Not Tested"
+  "status": "Verified",
+  "by": [
+   "inspection",
+   "automated"
+  ],
+  "on": "22bfcd35",
+  "note": "Knowledge (familiarity by genre.study, practice by work in it) read by relevantGenre for every material, each requirement’s weights summing to 1, a kind beside its broad genre one demand; all 149 studied, taped and brought to 100 by the coverage tests. Love is read by enjoyment alone, mood and stress, for the 23 genres a play or a project is of; the other 126 are shown only, and creation says so (22bfcd35).",
+  "evidence": [
+   "tests/genre-coverage.test.ts",
+   "tests/b22-genre-weights.test.ts",
+   "tests/b21-genre-proof.test.ts",
+   "tests/attributes-matrix.test.ts",
+   "tests/b26-creation-genres.test.ts",
+   "src/engine/systems/engagement.ts:144-307 knownOf, relatedness one link only, relevantGenre: exact knowledge in full, the best related once, nothing passes 1"
+  ]
  },
  "genre.found_footage": {
-  "status": "Not Tested"
+  "status": "Verified",
+  "by": [
+   "inspection",
+   "automated"
+  ],
+  "on": "22bfcd35",
+  "note": "Knowledge (familiarity by genre.study, practice by work in it) read by relevantGenre for every material, each requirement’s weights summing to 1, a kind beside its broad genre one demand; all 149 studied, taped and brought to 100 by the coverage tests. Love is read by enjoyment alone, mood and stress, for the 23 genres a play or a project is of; the other 126 are shown only, and creation says so (22bfcd35).",
+  "evidence": [
+   "tests/genre-coverage.test.ts",
+   "tests/b22-genre-weights.test.ts",
+   "tests/b21-genre-proof.test.ts",
+   "tests/attributes-matrix.test.ts",
+   "tests/b26-creation-genres.test.ts",
+   "src/engine/systems/engagement.ts:144-307 knownOf, relatedness one link only, relevantGenre: exact knowledge in full, the best related once, nothing passes 1"
+  ]
  },
  "genre.gangster": {
-  "status": "Not Tested"
+  "status": "Verified",
+  "by": [
+   "inspection",
+   "automated"
+  ],
+  "on": "22bfcd35",
+  "note": "Knowledge (familiarity by genre.study, practice by work in it) read by relevantGenre for every material, each requirement’s weights summing to 1, a kind beside its broad genre one demand; all 149 studied, taped and brought to 100 by the coverage tests. Love is read by enjoyment alone, mood and stress, for the 23 genres a play or a project is of; the other 126 are shown only, and creation says so (22bfcd35).",
+  "evidence": [
+   "tests/genre-coverage.test.ts",
+   "tests/b22-genre-weights.test.ts",
+   "tests/b21-genre-proof.test.ts",
+   "tests/attributes-matrix.test.ts",
+   "tests/b26-creation-genres.test.ts",
+   "src/engine/systems/engagement.ts:144-307 knownOf, relatedness one link only, relevantGenre: exact knowledge in full, the best related once, nothing passes 1"
+  ]
  },
  "genre.giallo": {
-  "status": "Not Tested"
+  "status": "Verified",
+  "by": [
+   "inspection",
+   "automated"
+  ],
+  "on": "22bfcd35",
+  "note": "Knowledge (familiarity by genre.study, practice by work in it) read by relevantGenre for every material, each requirement’s weights summing to 1, a kind beside its broad genre one demand; all 149 studied, taped and brought to 100 by the coverage tests. Love is read by enjoyment alone, mood and stress, for the 23 genres a play or a project is of; the other 126 are shown only, and creation says so (22bfcd35).",
+  "evidence": [
+   "tests/genre-coverage.test.ts",
+   "tests/b22-genre-weights.test.ts",
+   "tests/b21-genre-proof.test.ts",
+   "tests/attributes-matrix.test.ts",
+   "tests/b26-creation-genres.test.ts",
+   "src/engine/systems/engagement.ts:144-307 knownOf, relatedness one link only, relevantGenre: exact knowledge in full, the best related once, nothing passes 1"
+  ]
  },
  "genre.gothic_horror": {
-  "status": "Not Tested"
+  "status": "Verified",
+  "by": [
+   "inspection",
+   "automated"
+  ],
+  "on": "22bfcd35",
+  "note": "Knowledge (familiarity by genre.study, practice by work in it) read by relevantGenre for every material, each requirement’s weights summing to 1, a kind beside its broad genre one demand; all 149 studied, taped and brought to 100 by the coverage tests. Love is read by enjoyment alone, mood and stress, for the 23 genres a play or a project is of; the other 126 are shown only, and creation says so (22bfcd35).",
+  "evidence": [
+   "tests/genre-coverage.test.ts",
+   "tests/b22-genre-weights.test.ts",
+   "tests/b21-genre-proof.test.ts",
+   "tests/attributes-matrix.test.ts",
+   "tests/b26-creation-genres.test.ts",
+   "src/engine/systems/engagement.ts:144-307 knownOf, relatedness one link only, relevantGenre: exact knowledge in full, the best related once, nothing passes 1"
+  ]
  },
  "genre.grindhouse": {
-  "status": "Not Tested"
+  "status": "Verified",
+  "by": [
+   "inspection",
+   "automated"
+  ],
+  "on": "22bfcd35",
+  "note": "Knowledge (familiarity by genre.study, practice by work in it) read by relevantGenre for every material, each requirement’s weights summing to 1, a kind beside its broad genre one demand; all 149 studied, taped and brought to 100 by the coverage tests. Love is read by enjoyment alone, mood and stress, for the 23 genres a play or a project is of; the other 126 are shown only, and creation says so (22bfcd35).",
+  "evidence": [
+   "tests/genre-coverage.test.ts",
+   "tests/b22-genre-weights.test.ts",
+   "tests/b21-genre-proof.test.ts",
+   "tests/attributes-matrix.test.ts",
+   "tests/b26-creation-genres.test.ts",
+   "src/engine/systems/engagement.ts:144-307 knownOf, relatedness one link only, relevantGenre: exact knowledge in full, the best related once, nothing passes 1"
+  ]
  },
  "genre.hangout": {
-  "status": "Not Tested"
+  "status": "Verified",
+  "by": [
+   "inspection",
+   "automated"
+  ],
+  "on": "22bfcd35",
+  "note": "Knowledge (familiarity by genre.study, practice by work in it) read by relevantGenre for every material, each requirement’s weights summing to 1, a kind beside its broad genre one demand; all 149 studied, taped and brought to 100 by the coverage tests. Love is read by enjoyment alone, mood and stress, for the 23 genres a play or a project is of; the other 126 are shown only, and creation says so (22bfcd35).",
+  "evidence": [
+   "tests/genre-coverage.test.ts",
+   "tests/b22-genre-weights.test.ts",
+   "tests/b21-genre-proof.test.ts",
+   "tests/attributes-matrix.test.ts",
+   "tests/b26-creation-genres.test.ts",
+   "src/engine/systems/engagement.ts:144-307 knownOf, relatedness one link only, relevantGenre: exact knowledge in full, the best related once, nothing passes 1"
+  ]
  },
  "genre.heist": {
-  "status": "Not Tested"
+  "status": "Verified",
+  "by": [
+   "inspection",
+   "automated"
+  ],
+  "on": "22bfcd35",
+  "note": "Knowledge (familiarity by genre.study, practice by work in it) read by relevantGenre for every material, each requirement’s weights summing to 1, a kind beside its broad genre one demand; all 149 studied, taped and brought to 100 by the coverage tests. Love is read by enjoyment alone, mood and stress, for the 23 genres a play or a project is of; the other 126 are shown only, and creation says so (22bfcd35).",
+  "evidence": [
+   "tests/genre-coverage.test.ts",
+   "tests/b22-genre-weights.test.ts",
+   "tests/b21-genre-proof.test.ts",
+   "tests/attributes-matrix.test.ts",
+   "tests/b26-creation-genres.test.ts",
+   "src/engine/systems/engagement.ts:144-307 knownOf, relatedness one link only, relevantGenre: exact knowledge in full, the best related once, nothing passes 1"
+  ]
  },
  "genre.historical_drama": {
-  "status": "Not Tested"
+  "status": "Verified",
+  "by": [
+   "inspection",
+   "automated"
+  ],
+  "on": "22bfcd35",
+  "note": "Knowledge (familiarity by genre.study, practice by work in it) read by relevantGenre for every material, each requirement’s weights summing to 1, a kind beside its broad genre one demand; all 149 studied, taped and brought to 100 by the coverage tests. Love is read by enjoyment alone, mood and stress, for the 23 genres a play or a project is of; the other 126 are shown only, and creation says so (22bfcd35).",
+  "evidence": [
+   "tests/genre-coverage.test.ts",
+   "tests/b22-genre-weights.test.ts",
+   "tests/b21-genre-proof.test.ts",
+   "tests/attributes-matrix.test.ts",
+   "tests/b26-creation-genres.test.ts",
+   "src/engine/systems/engagement.ts:144-307 knownOf, relatedness one link only, relevantGenre: exact knowledge in full, the best related once, nothing passes 1"
+  ]
  },
  "genre.historical_fiction": {
-  "status": "Not Tested"
+  "status": "Verified",
+  "by": [
+   "inspection",
+   "automated"
+  ],
+  "on": "22bfcd35",
+  "note": "Knowledge (familiarity by genre.study, practice by work in it) read by relevantGenre for every material, each requirement’s weights summing to 1, a kind beside its broad genre one demand; all 149 studied, taped and brought to 100 by the coverage tests. Love is read by enjoyment alone, mood and stress, for the 23 genres a play or a project is of; the other 126 are shown only, and creation says so (22bfcd35).",
+  "evidence": [
+   "tests/genre-coverage.test.ts",
+   "tests/b22-genre-weights.test.ts",
+   "tests/b21-genre-proof.test.ts",
+   "tests/attributes-matrix.test.ts",
+   "tests/b26-creation-genres.test.ts",
+   "src/engine/systems/engagement.ts:144-307 knownOf, relatedness one link only, relevantGenre: exact knowledge in full, the best related once, nothing passes 1"
+  ]
  },
  "genre.holiday": {
-  "status": "Not Tested"
+  "status": "Verified",
+  "by": [
+   "inspection",
+   "automated"
+  ],
+  "on": "22bfcd35",
+  "note": "Knowledge (familiarity by genre.study, practice by work in it) read by relevantGenre for every material, each requirement’s weights summing to 1, a kind beside its broad genre one demand; all 149 studied, taped and brought to 100 by the coverage tests. Love is read by enjoyment alone, mood and stress, for the 23 genres a play or a project is of; the other 126 are shown only, and creation says so (22bfcd35).",
+  "evidence": [
+   "tests/genre-coverage.test.ts",
+   "tests/b22-genre-weights.test.ts",
+   "tests/b21-genre-proof.test.ts",
+   "tests/attributes-matrix.test.ts",
+   "tests/b26-creation-genres.test.ts",
+   "src/engine/systems/engagement.ts:144-307 knownOf, relatedness one link only, relevantGenre: exact knowledge in full, the best related once, nothing passes 1"
+  ]
  },
  "genre.hood_film": {
-  "status": "Not Tested"
+  "status": "Verified",
+  "by": [
+   "inspection",
+   "automated"
+  ],
+  "on": "22bfcd35",
+  "note": "Knowledge (familiarity by genre.study, practice by work in it) read by relevantGenre for every material, each requirement’s weights summing to 1, a kind beside its broad genre one demand; all 149 studied, taped and brought to 100 by the coverage tests. Love is read by enjoyment alone, mood and stress, for the 23 genres a play or a project is of; the other 126 are shown only, and creation says so (22bfcd35).",
+  "evidence": [
+   "tests/genre-coverage.test.ts",
+   "tests/b22-genre-weights.test.ts",
+   "tests/b21-genre-proof.test.ts",
+   "tests/attributes-matrix.test.ts",
+   "tests/b26-creation-genres.test.ts",
+   "src/engine/systems/engagement.ts:144-307 knownOf, relatedness one link only, relevantGenre: exact knowledge in full, the best related once, nothing passes 1"
+  ]
  },
  "genre.horror": {
-  "status": "Not Tested"
+  "status": "Verified",
+  "by": [
+   "inspection",
+   "automated"
+  ],
+  "on": "22bfcd35",
+  "note": "Knowledge (familiarity by genre.study, practice by work in it) read by relevantGenre for every material, each requirement’s weights summing to 1, a kind beside its broad genre one demand; all 149 studied, taped and brought to 100 by the coverage tests. Love is read by enjoyment alone, mood and stress, for the 23 genres a play or a project is of; the other 126 are shown only, and creation says so (22bfcd35).",
+  "evidence": [
+   "tests/genre-coverage.test.ts",
+   "tests/b22-genre-weights.test.ts",
+   "tests/b21-genre-proof.test.ts",
+   "tests/attributes-matrix.test.ts",
+   "tests/b26-creation-genres.test.ts",
+   "src/engine/systems/engagement.ts:144-307 knownOf, relatedness one link only, relevantGenre: exact knowledge in full, the best related once, nothing passes 1"
+  ]
  },
  "genre.horror_comedy": {
-  "status": "Not Tested"
+  "status": "Verified",
+  "by": [
+   "inspection",
+   "automated"
+  ],
+  "on": "22bfcd35",
+  "note": "Knowledge (familiarity by genre.study, practice by work in it) read by relevantGenre for every material, each requirement’s weights summing to 1, a kind beside its broad genre one demand; all 149 studied, taped and brought to 100 by the coverage tests. Love is read by enjoyment alone, mood and stress, for the 23 genres a play or a project is of; the other 126 are shown only, and creation says so (22bfcd35).",
+  "evidence": [
+   "tests/genre-coverage.test.ts",
+   "tests/b22-genre-weights.test.ts",
+   "tests/b21-genre-proof.test.ts",
+   "tests/attributes-matrix.test.ts",
+   "tests/b26-creation-genres.test.ts",
+   "src/engine/systems/engagement.ts:144-307 knownOf, relatedness one link only, relevantGenre: exact knowledge in full, the best related once, nothing passes 1"
+  ]
  },
  "genre.isekai": {
-  "status": "Not Tested"
+  "status": "Verified",
+  "by": [
+   "inspection",
+   "automated"
+  ],
+  "on": "22bfcd35",
+  "note": "Knowledge (familiarity by genre.study, practice by work in it) read by relevantGenre for every material, each requirement’s weights summing to 1, a kind beside its broad genre one demand; all 149 studied, taped and brought to 100 by the coverage tests. Love is read by enjoyment alone, mood and stress, for the 23 genres a play or a project is of; the other 126 are shown only, and creation says so (22bfcd35).",
+  "evidence": [
+   "tests/genre-coverage.test.ts",
+   "tests/b22-genre-weights.test.ts",
+   "tests/b21-genre-proof.test.ts",
+   "tests/attributes-matrix.test.ts",
+   "tests/b26-creation-genres.test.ts",
+   "src/engine/systems/engagement.ts:144-307 knownOf, relatedness one link only, relevantGenre: exact knowledge in full, the best related once, nothing passes 1"
+  ]
  },
  "genre.jidaigeki": {
-  "status": "Not Tested"
+  "status": "Verified",
+  "by": [
+   "inspection",
+   "automated"
+  ],
+  "on": "22bfcd35",
+  "note": "Knowledge (familiarity by genre.study, practice by work in it) read by relevantGenre for every material, each requirement’s weights summing to 1, a kind beside its broad genre one demand; all 149 studied, taped and brought to 100 by the coverage tests. Love is read by enjoyment alone, mood and stress, for the 23 genres a play or a project is of; the other 126 are shown only, and creation says so (22bfcd35).",
+  "evidence": [
+   "tests/genre-coverage.test.ts",
+   "tests/b22-genre-weights.test.ts",
+   "tests/b21-genre-proof.test.ts",
+   "tests/attributes-matrix.test.ts",
+   "tests/b26-creation-genres.test.ts",
+   "src/engine/systems/engagement.ts:144-307 knownOf, relatedness one link only, relevantGenre: exact knowledge in full, the best related once, nothing passes 1"
+  ]
  },
  "genre.jukebox_musical": {
-  "status": "Not Tested"
+  "status": "Verified",
+  "by": [
+   "inspection",
+   "automated"
+  ],
+  "on": "22bfcd35",
+  "note": "Knowledge (familiarity by genre.study, practice by work in it) read by relevantGenre for every material, each requirement’s weights summing to 1, a kind beside its broad genre one demand; all 149 studied, taped and brought to 100 by the coverage tests. Love is read by enjoyment alone, mood and stress, for the 23 genres a play or a project is of; the other 126 are shown only, and creation says so (22bfcd35).",
+  "evidence": [
+   "tests/genre-coverage.test.ts",
+   "tests/b22-genre-weights.test.ts",
+   "tests/b21-genre-proof.test.ts",
+   "tests/attributes-matrix.test.ts",
+   "tests/b26-creation-genres.test.ts",
+   "src/engine/systems/engagement.ts:144-307 knownOf, relatedness one link only, relevantGenre: exact knowledge in full, the best related once, nothing passes 1"
+  ]
  },
  "genre.kaiju": {
-  "status": "Not Tested"
+  "status": "Verified",
+  "by": [
+   "inspection",
+   "automated"
+  ],
+  "on": "22bfcd35",
+  "note": "Knowledge (familiarity by genre.study, practice by work in it) read by relevantGenre for every material, each requirement’s weights summing to 1, a kind beside its broad genre one demand; all 149 studied, taped and brought to 100 by the coverage tests. Love is read by enjoyment alone, mood and stress, for the 23 genres a play or a project is of; the other 126 are shown only, and creation says so (22bfcd35).",
+  "evidence": [
+   "tests/genre-coverage.test.ts",
+   "tests/b22-genre-weights.test.ts",
+   "tests/b21-genre-proof.test.ts",
+   "tests/attributes-matrix.test.ts",
+   "tests/b26-creation-genres.test.ts",
+   "src/engine/systems/engagement.ts:144-307 knownOf, relatedness one link only, relevantGenre: exact knowledge in full, the best related once, nothing passes 1"
+  ]
  },
  "genre.kitchen_sink": {
-  "status": "Not Tested"
+  "status": "Verified",
+  "by": [
+   "inspection",
+   "automated"
+  ],
+  "on": "22bfcd35",
+  "note": "Knowledge (familiarity by genre.study, practice by work in it) read by relevantGenre for every material, each requirement’s weights summing to 1, a kind beside its broad genre one demand; all 149 studied, taped and brought to 100 by the coverage tests. Love is read by enjoyment alone, mood and stress, for the 23 genres a play or a project is of; the other 126 are shown only, and creation says so (22bfcd35).",
+  "evidence": [
+   "tests/genre-coverage.test.ts",
+   "tests/b22-genre-weights.test.ts",
+   "tests/b21-genre-proof.test.ts",
+   "tests/attributes-matrix.test.ts",
+   "tests/b26-creation-genres.test.ts",
+   "src/engine/systems/engagement.ts:144-307 knownOf, relatedness one link only, relevantGenre: exact knowledge in full, the best related once, nothing passes 1"
+  ]
  },
  "genre.legal_drama": {
-  "status": "Not Tested"
+  "status": "Verified",
+  "by": [
+   "inspection",
+   "automated"
+  ],
+  "on": "22bfcd35",
+  "note": "Knowledge (familiarity by genre.study, practice by work in it) read by relevantGenre for every material, each requirement’s weights summing to 1, a kind beside its broad genre one demand; all 149 studied, taped and brought to 100 by the coverage tests. Love is read by enjoyment alone, mood and stress, for the 23 genres a play or a project is of; the other 126 are shown only, and creation says so (22bfcd35).",
+  "evidence": [
+   "tests/genre-coverage.test.ts",
+   "tests/b22-genre-weights.test.ts",
+   "tests/b21-genre-proof.test.ts",
+   "tests/attributes-matrix.test.ts",
+   "tests/b26-creation-genres.test.ts",
+   "src/engine/systems/engagement.ts:144-307 knownOf, relatedness one link only, relevantGenre: exact knowledge in full, the best related once, nothing passes 1"
+  ]
  },
  "genre.magical_realism": {
-  "status": "Not Tested"
+  "status": "Verified",
+  "by": [
+   "inspection",
+   "automated"
+  ],
+  "on": "22bfcd35",
+  "note": "Knowledge (familiarity by genre.study, practice by work in it) read by relevantGenre for every material, each requirement’s weights summing to 1, a kind beside its broad genre one demand; all 149 studied, taped and brought to 100 by the coverage tests. Love is read by enjoyment alone, mood and stress, for the 23 genres a play or a project is of; the other 126 are shown only, and creation says so (22bfcd35).",
+  "evidence": [
+   "tests/genre-coverage.test.ts",
+   "tests/b22-genre-weights.test.ts",
+   "tests/b21-genre-proof.test.ts",
+   "tests/attributes-matrix.test.ts",
+   "tests/b26-creation-genres.test.ts",
+   "src/engine/systems/engagement.ts:144-307 knownOf, relatedness one link only, relevantGenre: exact knowledge in full, the best related once, nothing passes 1"
+  ]
  },
  "genre.martial_arts": {
-  "status": "Not Tested"
+  "status": "Verified",
+  "by": [
+   "inspection",
+   "automated"
+  ],
+  "on": "22bfcd35",
+  "note": "Knowledge (familiarity by genre.study, practice by work in it) read by relevantGenre for every material, each requirement’s weights summing to 1, a kind beside its broad genre one demand; all 149 studied, taped and brought to 100 by the coverage tests. Love is read by enjoyment alone, mood and stress, for the 23 genres a play or a project is of; the other 126 are shown only, and creation says so (22bfcd35).",
+  "evidence": [
+   "tests/genre-coverage.test.ts",
+   "tests/b22-genre-weights.test.ts",
+   "tests/b21-genre-proof.test.ts",
+   "tests/attributes-matrix.test.ts",
+   "tests/b26-creation-genres.test.ts",
+   "src/engine/systems/engagement.ts:144-307 knownOf, relatedness one link only, relevantGenre: exact knowledge in full, the best related once, nothing passes 1"
+  ]
  },
  "genre.medical_drama": {
-  "status": "Not Tested"
+  "status": "Verified",
+  "by": [
+   "inspection",
+   "automated"
+  ],
+  "on": "22bfcd35",
+  "note": "Knowledge (familiarity by genre.study, practice by work in it) read by relevantGenre for every material, each requirement’s weights summing to 1, a kind beside its broad genre one demand; all 149 studied, taped and brought to 100 by the coverage tests. Love is read by enjoyment alone, mood and stress, for the 23 genres a play or a project is of; the other 126 are shown only, and creation says so (22bfcd35).",
+  "evidence": [
+   "tests/genre-coverage.test.ts",
+   "tests/b22-genre-weights.test.ts",
+   "tests/b21-genre-proof.test.ts",
+   "tests/attributes-matrix.test.ts",
+   "tests/b26-creation-genres.test.ts",
+   "src/engine/systems/engagement.ts:144-307 knownOf, relatedness one link only, relevantGenre: exact knowledge in full, the best related once, nothing passes 1"
+  ]
  },
  "genre.melodrama": {
-  "status": "Not Tested"
+  "status": "Verified",
+  "by": [
+   "inspection",
+   "automated"
+  ],
+  "on": "22bfcd35",
+  "note": "Knowledge (familiarity by genre.study, practice by work in it) read by relevantGenre for every material, each requirement’s weights summing to 1, a kind beside its broad genre one demand; all 149 studied, taped and brought to 100 by the coverage tests. Love is read by enjoyment alone, mood and stress, for the 23 genres a play or a project is of; the other 126 are shown only, and creation says so (22bfcd35).",
+  "evidence": [
+   "tests/genre-coverage.test.ts",
+   "tests/b22-genre-weights.test.ts",
+   "tests/b21-genre-proof.test.ts",
+   "tests/attributes-matrix.test.ts",
+   "tests/b26-creation-genres.test.ts",
+   "src/engine/systems/engagement.ts:144-307 knownOf, relatedness one link only, relevantGenre: exact knowledge in full, the best related once, nothing passes 1"
+  ]
  },
  "genre.military": {
-  "status": "Not Tested"
+  "status": "Verified",
+  "by": [
+   "inspection",
+   "automated"
+  ],
+  "on": "22bfcd35",
+  "note": "Knowledge (familiarity by genre.study, practice by work in it) read by relevantGenre for every material, each requirement’s weights summing to 1, a kind beside its broad genre one demand; all 149 studied, taped and brought to 100 by the coverage tests. Love is read by enjoyment alone, mood and stress, for the 23 genres a play or a project is of; the other 126 are shown only, and creation says so (22bfcd35).",
+  "evidence": [
+   "tests/genre-coverage.test.ts",
+   "tests/b22-genre-weights.test.ts",
+   "tests/b21-genre-proof.test.ts",
+   "tests/attributes-matrix.test.ts",
+   "tests/b26-creation-genres.test.ts",
+   "src/engine/systems/engagement.ts:144-307 knownOf, relatedness one link only, relevantGenre: exact knowledge in full, the best related once, nothing passes 1"
+  ]
  },
  "genre.mockumentary": {
-  "status": "Not Tested"
+  "status": "Verified",
+  "by": [
+   "inspection",
+   "automated"
+  ],
+  "on": "22bfcd35",
+  "note": "Knowledge (familiarity by genre.study, practice by work in it) read by relevantGenre for every material, each requirement’s weights summing to 1, a kind beside its broad genre one demand; all 149 studied, taped and brought to 100 by the coverage tests. Love is read by enjoyment alone, mood and stress, for the 23 genres a play or a project is of; the other 126 are shown only, and creation says so (22bfcd35).",
+  "evidence": [
+   "tests/genre-coverage.test.ts",
+   "tests/b22-genre-weights.test.ts",
+   "tests/b21-genre-proof.test.ts",
+   "tests/attributes-matrix.test.ts",
+   "tests/b26-creation-genres.test.ts",
+   "src/engine/systems/engagement.ts:144-307 knownOf, relatedness one link only, relevantGenre: exact knowledge in full, the best related once, nothing passes 1"
+  ]
  },
  "genre.monster_movie": {
-  "status": "Not Tested"
+  "status": "Verified",
+  "by": [
+   "inspection",
+   "automated"
+  ],
+  "on": "22bfcd35",
+  "note": "Knowledge (familiarity by genre.study, practice by work in it) read by relevantGenre for every material, each requirement’s weights summing to 1, a kind beside its broad genre one demand; all 149 studied, taped and brought to 100 by the coverage tests. Love is read by enjoyment alone, mood and stress, for the 23 genres a play or a project is of; the other 126 are shown only, and creation says so (22bfcd35).",
+  "evidence": [
+   "tests/genre-coverage.test.ts",
+   "tests/b22-genre-weights.test.ts",
+   "tests/b21-genre-proof.test.ts",
+   "tests/attributes-matrix.test.ts",
+   "tests/b26-creation-genres.test.ts",
+   "src/engine/systems/engagement.ts:144-307 knownOf, relatedness one link only, relevantGenre: exact knowledge in full, the best related once, nothing passes 1"
+  ]
  },
  "genre.mumblecore": {
-  "status": "Not Tested"
+  "status": "Verified",
+  "by": [
+   "inspection",
+   "automated"
+  ],
+  "on": "22bfcd35",
+  "note": "Knowledge (familiarity by genre.study, practice by work in it) read by relevantGenre for every material, each requirement’s weights summing to 1, a kind beside its broad genre one demand; all 149 studied, taped and brought to 100 by the coverage tests. Love is read by enjoyment alone, mood and stress, for the 23 genres a play or a project is of; the other 126 are shown only, and creation says so (22bfcd35).",
+  "evidence": [
+   "tests/genre-coverage.test.ts",
+   "tests/b22-genre-weights.test.ts",
+   "tests/b21-genre-proof.test.ts",
+   "tests/attributes-matrix.test.ts",
+   "tests/b26-creation-genres.test.ts",
+   "src/engine/systems/engagement.ts:144-307 knownOf, relatedness one link only, relevantGenre: exact knowledge in full, the best related once, nothing passes 1"
+  ]
  },
  "genre.musical": {
-  "status": "Not Tested"
+  "status": "Verified",
+  "by": [
+   "inspection",
+   "automated"
+  ],
+  "on": "22bfcd35",
+  "note": "Knowledge (familiarity by genre.study, practice by work in it) read by relevantGenre for every material, each requirement’s weights summing to 1, a kind beside its broad genre one demand; all 149 studied, taped and brought to 100 by the coverage tests. Love is read by enjoyment alone, mood and stress, for the 23 genres a play or a project is of; the other 126 are shown only, and creation says so (22bfcd35).",
+  "evidence": [
+   "tests/genre-coverage.test.ts",
+   "tests/b22-genre-weights.test.ts",
+   "tests/b21-genre-proof.test.ts",
+   "tests/attributes-matrix.test.ts",
+   "tests/b26-creation-genres.test.ts",
+   "src/engine/systems/engagement.ts:144-307 knownOf, relatedness one link only, relevantGenre: exact knowledge in full, the best related once, nothing passes 1"
+  ]
  },
  "genre.mystery": {
-  "status": "Not Tested"
+  "status": "Verified",
+  "by": [
+   "inspection",
+   "automated"
+  ],
+  "on": "22bfcd35",
+  "note": "Knowledge (familiarity by genre.study, practice by work in it) read by relevantGenre for every material, each requirement’s weights summing to 1, a kind beside its broad genre one demand; all 149 studied, taped and brought to 100 by the coverage tests. Love is read by enjoyment alone, mood and stress, for the 23 genres a play or a project is of; the other 126 are shown only, and creation says so (22bfcd35).",
+  "evidence": [
+   "tests/genre-coverage.test.ts",
+   "tests/b22-genre-weights.test.ts",
+   "tests/b21-genre-proof.test.ts",
+   "tests/attributes-matrix.test.ts",
+   "tests/b26-creation-genres.test.ts",
+   "src/engine/systems/engagement.ts:144-307 knownOf, relatedness one link only, relevantGenre: exact knowledge in full, the best related once, nothing passes 1"
+  ]
  },
  "genre.nature_documentary": {
-  "status": "Not Tested"
+  "status": "Verified",
+  "by": [
+   "inspection",
+   "automated"
+  ],
+  "on": "22bfcd35",
+  "note": "Knowledge (familiarity by genre.study, practice by work in it) read by relevantGenre for every material, each requirement’s weights summing to 1, a kind beside its broad genre one demand; all 149 studied, taped and brought to 100 by the coverage tests. Love is read by enjoyment alone, mood and stress, for the 23 genres a play or a project is of; the other 126 are shown only, and creation says so (22bfcd35).",
+  "evidence": [
+   "tests/genre-coverage.test.ts",
+   "tests/b22-genre-weights.test.ts",
+   "tests/b21-genre-proof.test.ts",
+   "tests/attributes-matrix.test.ts",
+   "tests/b26-creation-genres.test.ts",
+   "src/engine/systems/engagement.ts:144-307 knownOf, relatedness one link only, relevantGenre: exact knowledge in full, the best related once, nothing passes 1"
+  ]
  },
  "genre.neo_noir": {
-  "status": "Not Tested"
+  "status": "Verified",
+  "by": [
+   "inspection",
+   "automated"
+  ],
+  "on": "22bfcd35",
+  "note": "Knowledge (familiarity by genre.study, practice by work in it) read by relevantGenre for every material, each requirement’s weights summing to 1, a kind beside its broad genre one demand; all 149 studied, taped and brought to 100 by the coverage tests. Love is read by enjoyment alone, mood and stress, for the 23 genres a play or a project is of; the other 126 are shown only, and creation says so (22bfcd35).",
+  "evidence": [
+   "tests/genre-coverage.test.ts",
+   "tests/b22-genre-weights.test.ts",
+   "tests/b21-genre-proof.test.ts",
+   "tests/attributes-matrix.test.ts",
+   "tests/b26-creation-genres.test.ts",
+   "src/engine/systems/engagement.ts:144-307 knownOf, relatedness one link only, relevantGenre: exact knowledge in full, the best related once, nothing passes 1"
+  ]
  },
  "genre.neorealism": {
-  "status": "Not Tested"
+  "status": "Verified",
+  "by": [
+   "inspection",
+   "automated"
+  ],
+  "on": "22bfcd35",
+  "note": "Knowledge (familiarity by genre.study, practice by work in it) read by relevantGenre for every material, each requirement’s weights summing to 1, a kind beside its broad genre one demand; all 149 studied, taped and brought to 100 by the coverage tests. Love is read by enjoyment alone, mood and stress, for the 23 genres a play or a project is of; the other 126 are shown only, and creation says so (22bfcd35).",
+  "evidence": [
+   "tests/genre-coverage.test.ts",
+   "tests/b22-genre-weights.test.ts",
+   "tests/b21-genre-proof.test.ts",
+   "tests/attributes-matrix.test.ts",
+   "tests/b26-creation-genres.test.ts",
+   "src/engine/systems/engagement.ts:144-307 knownOf, relatedness one link only, relevantGenre: exact knowledge in full, the best related once, nothing passes 1"
+  ]
  },
  "genre.new_wave": {
-  "status": "Not Tested"
+  "status": "Verified",
+  "by": [
+   "inspection",
+   "automated"
+  ],
+  "on": "22bfcd35",
+  "note": "Knowledge (familiarity by genre.study, practice by work in it) read by relevantGenre for every material, each requirement’s weights summing to 1, a kind beside its broad genre one demand; all 149 studied, taped and brought to 100 by the coverage tests. Love is read by enjoyment alone, mood and stress, for the 23 genres a play or a project is of; the other 126 are shown only, and creation says so (22bfcd35).",
+  "evidence": [
+   "tests/genre-coverage.test.ts",
+   "tests/b22-genre-weights.test.ts",
+   "tests/b21-genre-proof.test.ts",
+   "tests/attributes-matrix.test.ts",
+   "tests/b26-creation-genres.test.ts",
+   "src/engine/systems/engagement.ts:144-307 knownOf, relatedness one link only, relevantGenre: exact knowledge in full, the best related once, nothing passes 1"
+  ]
  },
  "genre.nordic_noir": {
-  "status": "Not Tested"
+  "status": "Verified",
+  "by": [
+   "inspection",
+   "automated"
+  ],
+  "on": "22bfcd35",
+  "note": "Knowledge (familiarity by genre.study, practice by work in it) read by relevantGenre for every material, each requirement’s weights summing to 1, a kind beside its broad genre one demand; all 149 studied, taped and brought to 100 by the coverage tests. Love is read by enjoyment alone, mood and stress, for the 23 genres a play or a project is of; the other 126 are shown only, and creation says so (22bfcd35).",
+  "evidence": [
+   "tests/genre-coverage.test.ts",
+   "tests/b22-genre-weights.test.ts",
+   "tests/b21-genre-proof.test.ts",
+   "tests/attributes-matrix.test.ts",
+   "tests/b26-creation-genres.test.ts",
+   "src/engine/systems/engagement.ts:144-307 knownOf, relatedness one link only, relevantGenre: exact knowledge in full, the best related once, nothing passes 1"
+  ]
  },
  "genre.occult": {
-  "status": "Not Tested"
+  "status": "Verified",
+  "by": [
+   "inspection",
+   "automated"
+  ],
+  "on": "22bfcd35",
+  "note": "Knowledge (familiarity by genre.study, practice by work in it) read by relevantGenre for every material, each requirement’s weights summing to 1, a kind beside its broad genre one demand; all 149 studied, taped and brought to 100 by the coverage tests. Love is read by enjoyment alone, mood and stress, for the 23 genres a play or a project is of; the other 126 are shown only, and creation says so (22bfcd35).",
+  "evidence": [
+   "tests/genre-coverage.test.ts",
+   "tests/b22-genre-weights.test.ts",
+   "tests/b21-genre-proof.test.ts",
+   "tests/attributes-matrix.test.ts",
+   "tests/b26-creation-genres.test.ts",
+   "src/engine/systems/engagement.ts:144-307 knownOf, relatedness one link only, relevantGenre: exact knowledge in full, the best related once, nothing passes 1"
+  ]
  },
  "genre.parody": {
-  "status": "Not Tested"
+  "status": "Verified",
+  "by": [
+   "inspection",
+   "automated"
+  ],
+  "on": "22bfcd35",
+  "note": "Knowledge (familiarity by genre.study, practice by work in it) read by relevantGenre for every material, each requirement’s weights summing to 1, a kind beside its broad genre one demand; all 149 studied, taped and brought to 100 by the coverage tests. Love is read by enjoyment alone, mood and stress, for the 23 genres a play or a project is of; the other 126 are shown only, and creation says so (22bfcd35).",
+  "evidence": [
+   "tests/genre-coverage.test.ts",
+   "tests/b22-genre-weights.test.ts",
+   "tests/b21-genre-proof.test.ts",
+   "tests/attributes-matrix.test.ts",
+   "tests/b26-creation-genres.test.ts",
+   "src/engine/systems/engagement.ts:144-307 knownOf, relatedness one link only, relevantGenre: exact knowledge in full, the best related once, nothing passes 1"
+  ]
  },
  "genre.period_drama": {
-  "status": "Not Tested"
+  "status": "Verified",
+  "by": [
+   "inspection",
+   "automated"
+  ],
+  "on": "22bfcd35",
+  "note": "Knowledge (familiarity by genre.study, practice by work in it) read by relevantGenre for every material, each requirement’s weights summing to 1, a kind beside its broad genre one demand; all 149 studied, taped and brought to 100 by the coverage tests. Love is read by enjoyment alone, mood and stress, for the 23 genres a play or a project is of; the other 126 are shown only, and creation says so (22bfcd35).",
+  "evidence": [
+   "tests/genre-coverage.test.ts",
+   "tests/b22-genre-weights.test.ts",
+   "tests/b21-genre-proof.test.ts",
+   "tests/attributes-matrix.test.ts",
+   "tests/b26-creation-genres.test.ts",
+   "src/engine/systems/engagement.ts:144-307 knownOf, relatedness one link only, relevantGenre: exact knowledge in full, the best related once, nothing passes 1"
+  ]
  },
  "genre.picaresque": {
-  "status": "Not Tested"
+  "status": "Verified",
+  "by": [
+   "inspection",
+   "automated"
+  ],
+  "on": "22bfcd35",
+  "note": "Knowledge (familiarity by genre.study, practice by work in it) read by relevantGenre for every material, each requirement’s weights summing to 1, a kind beside its broad genre one demand; all 149 studied, taped and brought to 100 by the coverage tests. Love is read by enjoyment alone, mood and stress, for the 23 genres a play or a project is of; the other 126 are shown only, and creation says so (22bfcd35).",
+  "evidence": [
+   "tests/genre-coverage.test.ts",
+   "tests/b22-genre-weights.test.ts",
+   "tests/b21-genre-proof.test.ts",
+   "tests/attributes-matrix.test.ts",
+   "tests/b26-creation-genres.test.ts",
+   "src/engine/systems/engagement.ts:144-307 knownOf, relatedness one link only, relevantGenre: exact knowledge in full, the best related once, nothing passes 1"
+  ]
  },
  "genre.police_procedural": {
-  "status": "Not Tested"
+  "status": "Verified",
+  "by": [
+   "inspection",
+   "automated"
+  ],
+  "on": "22bfcd35",
+  "note": "Knowledge (familiarity by genre.study, practice by work in it) read by relevantGenre for every material, each requirement’s weights summing to 1, a kind beside its broad genre one demand; all 149 studied, taped and brought to 100 by the coverage tests. Love is read by enjoyment alone, mood and stress, for the 23 genres a play or a project is of; the other 126 are shown only, and creation says so (22bfcd35).",
+  "evidence": [
+   "tests/genre-coverage.test.ts",
+   "tests/b22-genre-weights.test.ts",
+   "tests/b21-genre-proof.test.ts",
+   "tests/attributes-matrix.test.ts",
+   "tests/b26-creation-genres.test.ts",
+   "src/engine/systems/engagement.ts:144-307 knownOf, relatedness one link only, relevantGenre: exact knowledge in full, the best related once, nothing passes 1"
+  ]
  },
  "genre.political_drama": {
-  "status": "Not Tested"
+  "status": "Verified",
+  "by": [
+   "inspection",
+   "automated"
+  ],
+  "on": "22bfcd35",
+  "note": "Knowledge (familiarity by genre.study, practice by work in it) read by relevantGenre for every material, each requirement’s weights summing to 1, a kind beside its broad genre one demand; all 149 studied, taped and brought to 100 by the coverage tests. Love is read by enjoyment alone, mood and stress, for the 23 genres a play or a project is of; the other 126 are shown only, and creation says so (22bfcd35).",
+  "evidence": [
+   "tests/genre-coverage.test.ts",
+   "tests/b22-genre-weights.test.ts",
+   "tests/b21-genre-proof.test.ts",
+   "tests/attributes-matrix.test.ts",
+   "tests/b26-creation-genres.test.ts",
+   "src/engine/systems/engagement.ts:144-307 knownOf, relatedness one link only, relevantGenre: exact knowledge in full, the best related once, nothing passes 1"
+  ]
  },
  "genre.political_thriller": {
-  "status": "Not Tested"
+  "status": "Verified",
+  "by": [
+   "inspection",
+   "automated"
+  ],
+  "on": "22bfcd35",
+  "note": "Knowledge (familiarity by genre.study, practice by work in it) read by relevantGenre for every material, each requirement’s weights summing to 1, a kind beside its broad genre one demand; all 149 studied, taped and brought to 100 by the coverage tests. Love is read by enjoyment alone, mood and stress, for the 23 genres a play or a project is of; the other 126 are shown only, and creation says so (22bfcd35).",
+  "evidence": [
+   "tests/genre-coverage.test.ts",
+   "tests/b22-genre-weights.test.ts",
+   "tests/b21-genre-proof.test.ts",
+   "tests/attributes-matrix.test.ts",
+   "tests/b26-creation-genres.test.ts",
+   "src/engine/systems/engagement.ts:144-307 knownOf, relatedness one link only, relevantGenre: exact knowledge in full, the best related once, nothing passes 1"
+  ]
  },
  "genre.post_apocalyptic": {
-  "status": "Not Tested"
+  "status": "Verified",
+  "by": [
+   "inspection",
+   "automated"
+  ],
+  "on": "22bfcd35",
+  "note": "Knowledge (familiarity by genre.study, practice by work in it) read by relevantGenre for every material, each requirement’s weights summing to 1, a kind beside its broad genre one demand; all 149 studied, taped and brought to 100 by the coverage tests. Love is read by enjoyment alone, mood and stress, for the 23 genres a play or a project is of; the other 126 are shown only, and creation says so (22bfcd35).",
+  "evidence": [
+   "tests/genre-coverage.test.ts",
+   "tests/b22-genre-weights.test.ts",
+   "tests/b21-genre-proof.test.ts",
+   "tests/attributes-matrix.test.ts",
+   "tests/b26-creation-genres.test.ts",
+   "src/engine/systems/engagement.ts:144-307 knownOf, relatedness one link only, relevantGenre: exact knowledge in full, the best related once, nothing passes 1"
+  ]
  },
  "genre.prison_film": {
-  "status": "Not Tested"
+  "status": "Verified",
+  "by": [
+   "inspection",
+   "automated"
+  ],
+  "on": "22bfcd35",
+  "note": "Knowledge (familiarity by genre.study, practice by work in it) read by relevantGenre for every material, each requirement’s weights summing to 1, a kind beside its broad genre one demand; all 149 studied, taped and brought to 100 by the coverage tests. Love is read by enjoyment alone, mood and stress, for the 23 genres a play or a project is of; the other 126 are shown only, and creation says so (22bfcd35).",
+  "evidence": [
+   "tests/genre-coverage.test.ts",
+   "tests/b22-genre-weights.test.ts",
+   "tests/b21-genre-proof.test.ts",
+   "tests/attributes-matrix.test.ts",
+   "tests/b26-creation-genres.test.ts",
+   "src/engine/systems/engagement.ts:144-307 knownOf, relatedness one link only, relevantGenre: exact knowledge in full, the best related once, nothing passes 1"
+  ]
  },
  "genre.psychological_horror": {
-  "status": "Not Tested"
+  "status": "Verified",
+  "by": [
+   "inspection",
+   "automated"
+  ],
+  "on": "22bfcd35",
+  "note": "Knowledge (familiarity by genre.study, practice by work in it) read by relevantGenre for every material, each requirement’s weights summing to 1, a kind beside its broad genre one demand; all 149 studied, taped and brought to 100 by the coverage tests. Love is read by enjoyment alone, mood and stress, for the 23 genres a play or a project is of; the other 126 are shown only, and creation says so (22bfcd35).",
+  "evidence": [
+   "tests/genre-coverage.test.ts",
+   "tests/b22-genre-weights.test.ts",
+   "tests/b21-genre-proof.test.ts",
+   "tests/attributes-matrix.test.ts",
+   "tests/b26-creation-genres.test.ts",
+   "src/engine/systems/engagement.ts:144-307 knownOf, relatedness one link only, relevantGenre: exact knowledge in full, the best related once, nothing passes 1"
+  ]
  },
  "genre.psychological_thriller": {
-  "status": "Not Tested"
+  "status": "Verified",
+  "by": [
+   "inspection",
+   "automated"
+  ],
+  "on": "22bfcd35",
+  "note": "Knowledge (familiarity by genre.study, practice by work in it) read by relevantGenre for every material, each requirement’s weights summing to 1, a kind beside its broad genre one demand; all 149 studied, taped and brought to 100 by the coverage tests. Love is read by enjoyment alone, mood and stress, for the 23 genres a play or a project is of; the other 126 are shown only, and creation says so (22bfcd35).",
+  "evidence": [
+   "tests/genre-coverage.test.ts",
+   "tests/b22-genre-weights.test.ts",
+   "tests/b21-genre-proof.test.ts",
+   "tests/attributes-matrix.test.ts",
+   "tests/b26-creation-genres.test.ts",
+   "src/engine/systems/engagement.ts:144-307 knownOf, relatedness one link only, relevantGenre: exact knowledge in full, the best related once, nothing passes 1"
+  ]
  },
  "genre.queer_cinema": {
-  "status": "Not Tested"
+  "status": "Verified",
+  "by": [
+   "inspection",
+   "automated"
+  ],
+  "on": "22bfcd35",
+  "note": "Knowledge (familiarity by genre.study, practice by work in it) read by relevantGenre for every material, each requirement’s weights summing to 1, a kind beside its broad genre one demand; all 149 studied, taped and brought to 100 by the coverage tests. Love is read by enjoyment alone, mood and stress, for the 23 genres a play or a project is of; the other 126 are shown only, and creation says so (22bfcd35).",
+  "evidence": [
+   "tests/genre-coverage.test.ts",
+   "tests/b22-genre-weights.test.ts",
+   "tests/b21-genre-proof.test.ts",
+   "tests/attributes-matrix.test.ts",
+   "tests/b26-creation-genres.test.ts",
+   "src/engine/systems/engagement.ts:144-307 knownOf, relatedness one link only, relevantGenre: exact knowledge in full, the best related once, nothing passes 1"
+  ]
  },
  "genre.revenge": {
-  "status": "Not Tested"
+  "status": "Verified",
+  "by": [
+   "inspection",
+   "automated"
+  ],
+  "on": "22bfcd35",
+  "note": "Knowledge (familiarity by genre.study, practice by work in it) read by relevantGenre for every material, each requirement’s weights summing to 1, a kind beside its broad genre one demand; all 149 studied, taped and brought to 100 by the coverage tests. Love is read by enjoyment alone, mood and stress, for the 23 genres a play or a project is of; the other 126 are shown only, and creation says so (22bfcd35).",
+  "evidence": [
+   "tests/genre-coverage.test.ts",
+   "tests/b22-genre-weights.test.ts",
+   "tests/b21-genre-proof.test.ts",
+   "tests/attributes-matrix.test.ts",
+   "tests/b26-creation-genres.test.ts",
+   "src/engine/systems/engagement.ts:144-307 knownOf, relatedness one link only, relevantGenre: exact knowledge in full, the best related once, nothing passes 1"
+  ]
  },
  "genre.road_movie": {
-  "status": "Not Tested"
+  "status": "Verified",
+  "by": [
+   "inspection",
+   "automated"
+  ],
+  "on": "22bfcd35",
+  "note": "Knowledge (familiarity by genre.study, practice by work in it) read by relevantGenre for every material, each requirement’s weights summing to 1, a kind beside its broad genre one demand; all 149 studied, taped and brought to 100 by the coverage tests. Love is read by enjoyment alone, mood and stress, for the 23 genres a play or a project is of; the other 126 are shown only, and creation says so (22bfcd35).",
+  "evidence": [
+   "tests/genre-coverage.test.ts",
+   "tests/b22-genre-weights.test.ts",
+   "tests/b21-genre-proof.test.ts",
+   "tests/attributes-matrix.test.ts",
+   "tests/b26-creation-genres.test.ts",
+   "src/engine/systems/engagement.ts:144-307 knownOf, relatedness one link only, relevantGenre: exact knowledge in full, the best related once, nothing passes 1"
+  ]
  },
  "genre.rockumentary": {
-  "status": "Not Tested"
+  "status": "Verified",
+  "by": [
+   "inspection",
+   "automated"
+  ],
+  "on": "22bfcd35",
+  "note": "Knowledge (familiarity by genre.study, practice by work in it) read by relevantGenre for every material, each requirement’s weights summing to 1, a kind beside its broad genre one demand; all 149 studied, taped and brought to 100 by the coverage tests. Love is read by enjoyment alone, mood and stress, for the 23 genres a play or a project is of; the other 126 are shown only, and creation says so (22bfcd35).",
+  "evidence": [
+   "tests/genre-coverage.test.ts",
+   "tests/b22-genre-weights.test.ts",
+   "tests/b21-genre-proof.test.ts",
+   "tests/attributes-matrix.test.ts",
+   "tests/b26-creation-genres.test.ts",
+   "src/engine/systems/engagement.ts:144-307 knownOf, relatedness one link only, relevantGenre: exact knowledge in full, the best related once, nothing passes 1"
+  ]
  },
  "genre.romance": {
-  "status": "Not Tested"
+  "status": "Verified",
+  "by": [
+   "inspection",
+   "automated"
+  ],
+  "on": "22bfcd35",
+  "note": "Knowledge (familiarity by genre.study, practice by work in it) read by relevantGenre for every material, each requirement’s weights summing to 1, a kind beside its broad genre one demand; all 149 studied, taped and brought to 100 by the coverage tests. Love is read by enjoyment alone, mood and stress, for the 23 genres a play or a project is of; the other 126 are shown only, and creation says so (22bfcd35).",
+  "evidence": [
+   "tests/genre-coverage.test.ts",
+   "tests/b22-genre-weights.test.ts",
+   "tests/b21-genre-proof.test.ts",
+   "tests/attributes-matrix.test.ts",
+   "tests/b26-creation-genres.test.ts",
+   "src/engine/systems/engagement.ts:144-307 knownOf, relatedness one link only, relevantGenre: exact knowledge in full, the best related once, nothing passes 1"
+  ]
  },
  "genre.romantic_comedy": {
-  "status": "Not Tested"
+  "status": "Verified",
+  "by": [
+   "inspection",
+   "automated"
+  ],
+  "on": "22bfcd35",
+  "note": "Knowledge (familiarity by genre.study, practice by work in it) read by relevantGenre for every material, each requirement’s weights summing to 1, a kind beside its broad genre one demand; all 149 studied, taped and brought to 100 by the coverage tests. Love is read by enjoyment alone, mood and stress, for the 23 genres a play or a project is of; the other 126 are shown only, and creation says so (22bfcd35).",
+  "evidence": [
+   "tests/genre-coverage.test.ts",
+   "tests/b22-genre-weights.test.ts",
+   "tests/b21-genre-proof.test.ts",
+   "tests/attributes-matrix.test.ts",
+   "tests/b26-creation-genres.test.ts",
+   "src/engine/systems/engagement.ts:144-307 knownOf, relatedness one link only, relevantGenre: exact knowledge in full, the best related once, nothing passes 1"
+  ]
  },
  "genre.romantic_drama": {
-  "status": "Not Tested"
+  "status": "Verified",
+  "by": [
+   "inspection",
+   "automated"
+  ],
+  "on": "22bfcd35",
+  "note": "Knowledge (familiarity by genre.study, practice by work in it) read by relevantGenre for every material, each requirement’s weights summing to 1, a kind beside its broad genre one demand; all 149 studied, taped and brought to 100 by the coverage tests. Love is read by enjoyment alone, mood and stress, for the 23 genres a play or a project is of; the other 126 are shown only, and creation says so (22bfcd35).",
+  "evidence": [
+   "tests/genre-coverage.test.ts",
+   "tests/b22-genre-weights.test.ts",
+   "tests/b21-genre-proof.test.ts",
+   "tests/attributes-matrix.test.ts",
+   "tests/b26-creation-genres.test.ts",
+   "src/engine/systems/engagement.ts:144-307 knownOf, relatedness one link only, relevantGenre: exact knowledge in full, the best related once, nothing passes 1"
+  ]
  },
  "genre.samurai": {
-  "status": "Not Tested"
+  "status": "Verified",
+  "by": [
+   "inspection",
+   "automated"
+  ],
+  "on": "22bfcd35",
+  "note": "Knowledge (familiarity by genre.study, practice by work in it) read by relevantGenre for every material, each requirement’s weights summing to 1, a kind beside its broad genre one demand; all 149 studied, taped and brought to 100 by the coverage tests. Love is read by enjoyment alone, mood and stress, for the 23 genres a play or a project is of; the other 126 are shown only, and creation says so (22bfcd35).",
+  "evidence": [
+   "tests/genre-coverage.test.ts",
+   "tests/b22-genre-weights.test.ts",
+   "tests/b21-genre-proof.test.ts",
+   "tests/attributes-matrix.test.ts",
+   "tests/b26-creation-genres.test.ts",
+   "src/engine/systems/engagement.ts:144-307 knownOf, relatedness one link only, relevantGenre: exact knowledge in full, the best related once, nothing passes 1"
+  ]
  },
  "genre.satire": {
-  "status": "Not Tested"
+  "status": "Verified",
+  "by": [
+   "inspection",
+   "automated"
+  ],
+  "on": "22bfcd35",
+  "note": "Knowledge (familiarity by genre.study, practice by work in it) read by relevantGenre for every material, each requirement’s weights summing to 1, a kind beside its broad genre one demand; all 149 studied, taped and brought to 100 by the coverage tests. Love is read by enjoyment alone, mood and stress, for the 23 genres a play or a project is of; the other 126 are shown only, and creation says so (22bfcd35).",
+  "evidence": [
+   "tests/genre-coverage.test.ts",
+   "tests/b22-genre-weights.test.ts",
+   "tests/b21-genre-proof.test.ts",
+   "tests/attributes-matrix.test.ts",
+   "tests/b26-creation-genres.test.ts",
+   "src/engine/systems/engagement.ts:144-307 knownOf, relatedness one link only, relevantGenre: exact knowledge in full, the best related once, nothing passes 1"
+  ]
  },
  "genre.science_fantasy": {
-  "status": "Not Tested"
+  "status": "Verified",
+  "by": [
+   "inspection",
+   "automated"
+  ],
+  "on": "22bfcd35",
+  "note": "Knowledge (familiarity by genre.study, practice by work in it) read by relevantGenre for every material, each requirement’s weights summing to 1, a kind beside its broad genre one demand; all 149 studied, taped and brought to 100 by the coverage tests. Love is read by enjoyment alone, mood and stress, for the 23 genres a play or a project is of; the other 126 are shown only, and creation says so (22bfcd35).",
+  "evidence": [
+   "tests/genre-coverage.test.ts",
+   "tests/b22-genre-weights.test.ts",
+   "tests/b21-genre-proof.test.ts",
+   "tests/attributes-matrix.test.ts",
+   "tests/b26-creation-genres.test.ts",
+   "src/engine/systems/engagement.ts:144-307 knownOf, relatedness one link only, relevantGenre: exact knowledge in full, the best related once, nothing passes 1"
+  ]
  },
  "genre.science_fiction": {
-  "status": "Not Tested"
+  "status": "Verified",
+  "by": [
+   "inspection",
+   "automated"
+  ],
+  "on": "22bfcd35",
+  "note": "Knowledge (familiarity by genre.study, practice by work in it) read by relevantGenre for every material, each requirement’s weights summing to 1, a kind beside its broad genre one demand; all 149 studied, taped and brought to 100 by the coverage tests. Love is read by enjoyment alone, mood and stress, for the 23 genres a play or a project is of; the other 126 are shown only, and creation says so (22bfcd35).",
+  "evidence": [
+   "tests/genre-coverage.test.ts",
+   "tests/b22-genre-weights.test.ts",
+   "tests/b21-genre-proof.test.ts",
+   "tests/attributes-matrix.test.ts",
+   "tests/b26-creation-genres.test.ts",
+   "src/engine/systems/engagement.ts:144-307 knownOf, relatedness one link only, relevantGenre: exact knowledge in full, the best related once, nothing passes 1"
+  ]
  },
  "genre.screwball_comedy": {
-  "status": "Not Tested"
+  "status": "Verified",
+  "by": [
+   "inspection",
+   "automated"
+  ],
+  "on": "22bfcd35",
+  "note": "Knowledge (familiarity by genre.study, practice by work in it) read by relevantGenre for every material, each requirement’s weights summing to 1, a kind beside its broad genre one demand; all 149 studied, taped and brought to 100 by the coverage tests. Love is read by enjoyment alone, mood and stress, for the 23 genres a play or a project is of; the other 126 are shown only, and creation says so (22bfcd35).",
+  "evidence": [
+   "tests/genre-coverage.test.ts",
+   "tests/b22-genre-weights.test.ts",
+   "tests/b21-genre-proof.test.ts",
+   "tests/attributes-matrix.test.ts",
+   "tests/b26-creation-genres.test.ts",
+   "src/engine/systems/engagement.ts:144-307 knownOf, relatedness one link only, relevantGenre: exact knowledge in full, the best related once, nothing passes 1"
+  ]
  },
  "genre.sea_adventure": {
-  "status": "Not Tested"
+  "status": "Verified",
+  "by": [
+   "inspection",
+   "automated"
+  ],
+  "on": "22bfcd35",
+  "note": "Knowledge (familiarity by genre.study, practice by work in it) read by relevantGenre for every material, each requirement’s weights summing to 1, a kind beside its broad genre one demand; all 149 studied, taped and brought to 100 by the coverage tests. Love is read by enjoyment alone, mood and stress, for the 23 genres a play or a project is of; the other 126 are shown only, and creation says so (22bfcd35).",
+  "evidence": [
+   "tests/genre-coverage.test.ts",
+   "tests/b22-genre-weights.test.ts",
+   "tests/b21-genre-proof.test.ts",
+   "tests/attributes-matrix.test.ts",
+   "tests/b26-creation-genres.test.ts",
+   "src/engine/systems/engagement.ts:144-307 knownOf, relatedness one link only, relevantGenre: exact knowledge in full, the best related once, nothing passes 1"
+  ]
  },
  "genre.silent_film": {
-  "status": "Not Tested"
+  "status": "Verified",
+  "by": [
+   "inspection",
+   "automated"
+  ],
+  "on": "22bfcd35",
+  "note": "Knowledge (familiarity by genre.study, practice by work in it) read by relevantGenre for every material, each requirement’s weights summing to 1, a kind beside its broad genre one demand; all 149 studied, taped and brought to 100 by the coverage tests. Love is read by enjoyment alone, mood and stress, for the 23 genres a play or a project is of; the other 126 are shown only, and creation says so (22bfcd35).",
+  "evidence": [
+   "tests/genre-coverage.test.ts",
+   "tests/b22-genre-weights.test.ts",
+   "tests/b21-genre-proof.test.ts",
+   "tests/attributes-matrix.test.ts",
+   "tests/b26-creation-genres.test.ts",
+   "src/engine/systems/engagement.ts:144-307 knownOf, relatedness one link only, relevantGenre: exact knowledge in full, the best related once, nothing passes 1"
+  ]
  },
  "genre.slapstick": {
-  "status": "Not Tested"
+  "status": "Verified",
+  "by": [
+   "inspection",
+   "automated"
+  ],
+  "on": "22bfcd35",
+  "note": "Knowledge (familiarity by genre.study, practice by work in it) read by relevantGenre for every material, each requirement’s weights summing to 1, a kind beside its broad genre one demand; all 149 studied, taped and brought to 100 by the coverage tests. Love is read by enjoyment alone, mood and stress, for the 23 genres a play or a project is of; the other 126 are shown only, and creation says so (22bfcd35).",
+  "evidence": [
+   "tests/genre-coverage.test.ts",
+   "tests/b22-genre-weights.test.ts",
+   "tests/b21-genre-proof.test.ts",
+   "tests/attributes-matrix.test.ts",
+   "tests/b26-creation-genres.test.ts",
+   "src/engine/systems/engagement.ts:144-307 knownOf, relatedness one link only, relevantGenre: exact knowledge in full, the best related once, nothing passes 1"
+  ]
  },
  "genre.slasher": {
-  "status": "Not Tested"
+  "status": "Verified",
+  "by": [
+   "inspection",
+   "automated"
+  ],
+  "on": "22bfcd35",
+  "note": "Knowledge (familiarity by genre.study, practice by work in it) read by relevantGenre for every material, each requirement’s weights summing to 1, a kind beside its broad genre one demand; all 149 studied, taped and brought to 100 by the coverage tests. Love is read by enjoyment alone, mood and stress, for the 23 genres a play or a project is of; the other 126 are shown only, and creation says so (22bfcd35).",
+  "evidence": [
+   "tests/genre-coverage.test.ts",
+   "tests/b22-genre-weights.test.ts",
+   "tests/b21-genre-proof.test.ts",
+   "tests/attributes-matrix.test.ts",
+   "tests/b26-creation-genres.test.ts",
+   "src/engine/systems/engagement.ts:144-307 knownOf, relatedness one link only, relevantGenre: exact knowledge in full, the best related once, nothing passes 1"
+  ]
  },
  "genre.slice_of_life": {
-  "status": "Not Tested"
+  "status": "Verified",
+  "by": [
+   "inspection",
+   "automated"
+  ],
+  "on": "22bfcd35",
+  "note": "Knowledge (familiarity by genre.study, practice by work in it) read by relevantGenre for every material, each requirement’s weights summing to 1, a kind beside its broad genre one demand; all 149 studied, taped and brought to 100 by the coverage tests. Love is read by enjoyment alone, mood and stress, for the 23 genres a play or a project is of; the other 126 are shown only, and creation says so (22bfcd35).",
+  "evidence": [
+   "tests/genre-coverage.test.ts",
+   "tests/b22-genre-weights.test.ts",
+   "tests/b21-genre-proof.test.ts",
+   "tests/attributes-matrix.test.ts",
+   "tests/b26-creation-genres.test.ts",
+   "src/engine/systems/engagement.ts:144-307 knownOf, relatedness one link only, relevantGenre: exact knowledge in full, the best related once, nothing passes 1"
+  ]
  },
  "genre.social_realism": {
-  "status": "Not Tested"
+  "status": "Verified",
+  "by": [
+   "inspection",
+   "automated"
+  ],
+  "on": "22bfcd35",
+  "note": "Knowledge (familiarity by genre.study, practice by work in it) read by relevantGenre for every material, each requirement’s weights summing to 1, a kind beside its broad genre one demand; all 149 studied, taped and brought to 100 by the coverage tests. Love is read by enjoyment alone, mood and stress, for the 23 genres a play or a project is of; the other 126 are shown only, and creation says so (22bfcd35).",
+  "evidence": [
+   "tests/genre-coverage.test.ts",
+   "tests/b22-genre-weights.test.ts",
+   "tests/b21-genre-proof.test.ts",
+   "tests/attributes-matrix.test.ts",
+   "tests/b26-creation-genres.test.ts",
+   "src/engine/systems/engagement.ts:144-307 knownOf, relatedness one link only, relevantGenre: exact knowledge in full, the best related once, nothing passes 1"
+  ]
  },
  "genre.space_opera": {
-  "status": "Not Tested"
+  "status": "Verified",
+  "by": [
+   "inspection",
+   "automated"
+  ],
+  "on": "22bfcd35",
+  "note": "Knowledge (familiarity by genre.study, practice by work in it) read by relevantGenre for every material, each requirement’s weights summing to 1, a kind beside its broad genre one demand; all 149 studied, taped and brought to 100 by the coverage tests. Love is read by enjoyment alone, mood and stress, for the 23 genres a play or a project is of; the other 126 are shown only, and creation says so (22bfcd35).",
+  "evidence": [
+   "tests/genre-coverage.test.ts",
+   "tests/b22-genre-weights.test.ts",
+   "tests/b21-genre-proof.test.ts",
+   "tests/attributes-matrix.test.ts",
+   "tests/b26-creation-genres.test.ts",
+   "src/engine/systems/engagement.ts:144-307 knownOf, relatedness one link only, relevantGenre: exact knowledge in full, the best related once, nothing passes 1"
+  ]
  },
  "genre.spaghetti_western": {
-  "status": "Not Tested"
+  "status": "Verified",
+  "by": [
+   "inspection",
+   "automated"
+  ],
+  "on": "22bfcd35",
+  "note": "Knowledge (familiarity by genre.study, practice by work in it) read by relevantGenre for every material, each requirement’s weights summing to 1, a kind beside its broad genre one demand; all 149 studied, taped and brought to 100 by the coverage tests. Love is read by enjoyment alone, mood and stress, for the 23 genres a play or a project is of; the other 126 are shown only, and creation says so (22bfcd35).",
+  "evidence": [
+   "tests/genre-coverage.test.ts",
+   "tests/b22-genre-weights.test.ts",
+   "tests/b21-genre-proof.test.ts",
+   "tests/attributes-matrix.test.ts",
+   "tests/b26-creation-genres.test.ts",
+   "src/engine/systems/engagement.ts:144-307 knownOf, relatedness one link only, relevantGenre: exact knowledge in full, the best related once, nothing passes 1"
+  ]
  },
  "genre.splatter": {
-  "status": "Not Tested"
+  "status": "Verified",
+  "by": [
+   "inspection",
+   "automated"
+  ],
+  "on": "22bfcd35",
+  "note": "Knowledge (familiarity by genre.study, practice by work in it) read by relevantGenre for every material, each requirement’s weights summing to 1, a kind beside its broad genre one demand; all 149 studied, taped and brought to 100 by the coverage tests. Love is read by enjoyment alone, mood and stress, for the 23 genres a play or a project is of; the other 126 are shown only, and creation says so (22bfcd35).",
+  "evidence": [
+   "tests/genre-coverage.test.ts",
+   "tests/b22-genre-weights.test.ts",
+   "tests/b21-genre-proof.test.ts",
+   "tests/attributes-matrix.test.ts",
+   "tests/b26-creation-genres.test.ts",
+   "src/engine/systems/engagement.ts:144-307 knownOf, relatedness one link only, relevantGenre: exact knowledge in full, the best related once, nothing passes 1"
+  ]
  },
  "genre.sports": {
-  "status": "Not Tested"
+  "status": "Verified",
+  "by": [
+   "inspection",
+   "automated"
+  ],
+  "on": "22bfcd35",
+  "note": "Knowledge (familiarity by genre.study, practice by work in it) read by relevantGenre for every material, each requirement’s weights summing to 1, a kind beside its broad genre one demand; all 149 studied, taped and brought to 100 by the coverage tests. Love is read by enjoyment alone, mood and stress, for the 23 genres a play or a project is of; the other 126 are shown only, and creation says so (22bfcd35).",
+  "evidence": [
+   "tests/genre-coverage.test.ts",
+   "tests/b22-genre-weights.test.ts",
+   "tests/b21-genre-proof.test.ts",
+   "tests/attributes-matrix.test.ts",
+   "tests/b26-creation-genres.test.ts",
+   "src/engine/systems/engagement.ts:144-307 knownOf, relatedness one link only, relevantGenre: exact knowledge in full, the best related once, nothing passes 1"
+  ]
  },
  "genre.spy": {
-  "status": "Not Tested"
+  "status": "Verified",
+  "by": [
+   "inspection",
+   "automated"
+  ],
+  "on": "22bfcd35",
+  "note": "Knowledge (familiarity by genre.study, practice by work in it) read by relevantGenre for every material, each requirement’s weights summing to 1, a kind beside its broad genre one demand; all 149 studied, taped and brought to 100 by the coverage tests. Love is read by enjoyment alone, mood and stress, for the 23 genres a play or a project is of; the other 126 are shown only, and creation says so (22bfcd35).",
+  "evidence": [
+   "tests/genre-coverage.test.ts",
+   "tests/b22-genre-weights.test.ts",
+   "tests/b21-genre-proof.test.ts",
+   "tests/attributes-matrix.test.ts",
+   "tests/b26-creation-genres.test.ts",
+   "src/engine/systems/engagement.ts:144-307 knownOf, relatedness one link only, relevantGenre: exact knowledge in full, the best related once, nothing passes 1"
+  ]
  },
  "genre.steampunk": {
-  "status": "Not Tested"
+  "status": "Verified",
+  "by": [
+   "inspection",
+   "automated"
+  ],
+  "on": "22bfcd35",
+  "note": "Knowledge (familiarity by genre.study, practice by work in it) read by relevantGenre for every material, each requirement’s weights summing to 1, a kind beside its broad genre one demand; all 149 studied, taped and brought to 100 by the coverage tests. Love is read by enjoyment alone, mood and stress, for the 23 genres a play or a project is of; the other 126 are shown only, and creation says so (22bfcd35).",
+  "evidence": [
+   "tests/genre-coverage.test.ts",
+   "tests/b22-genre-weights.test.ts",
+   "tests/b21-genre-proof.test.ts",
+   "tests/attributes-matrix.test.ts",
+   "tests/b26-creation-genres.test.ts",
+   "src/engine/systems/engagement.ts:144-307 knownOf, relatedness one link only, relevantGenre: exact knowledge in full, the best related once, nothing passes 1"
+  ]
  },
  "genre.stoner_comedy": {
-  "status": "Not Tested"
+  "status": "Verified",
+  "by": [
+   "inspection",
+   "automated"
+  ],
+  "on": "22bfcd35",
+  "note": "Knowledge (familiarity by genre.study, practice by work in it) read by relevantGenre for every material, each requirement’s weights summing to 1, a kind beside its broad genre one demand; all 149 studied, taped and brought to 100 by the coverage tests. Love is read by enjoyment alone, mood and stress, for the 23 genres a play or a project is of; the other 126 are shown only, and creation says so (22bfcd35).",
+  "evidence": [
+   "tests/genre-coverage.test.ts",
+   "tests/b22-genre-weights.test.ts",
+   "tests/b21-genre-proof.test.ts",
+   "tests/attributes-matrix.test.ts",
+   "tests/b26-creation-genres.test.ts",
+   "src/engine/systems/engagement.ts:144-307 knownOf, relatedness one link only, relevantGenre: exact knowledge in full, the best related once, nothing passes 1"
+  ]
  },
  "genre.superhero": {
-  "status": "Not Tested"
+  "status": "Verified",
+  "by": [
+   "inspection",
+   "automated"
+  ],
+  "on": "22bfcd35",
+  "note": "Knowledge (familiarity by genre.study, practice by work in it) read by relevantGenre for every material, each requirement’s weights summing to 1, a kind beside its broad genre one demand; all 149 studied, taped and brought to 100 by the coverage tests. Love is read by enjoyment alone, mood and stress, for the 23 genres a play or a project is of; the other 126 are shown only, and creation says so (22bfcd35).",
+  "evidence": [
+   "tests/genre-coverage.test.ts",
+   "tests/b22-genre-weights.test.ts",
+   "tests/b21-genre-proof.test.ts",
+   "tests/attributes-matrix.test.ts",
+   "tests/b26-creation-genres.test.ts",
+   "src/engine/systems/engagement.ts:144-307 knownOf, relatedness one link only, relevantGenre: exact knowledge in full, the best related once, nothing passes 1"
+  ]
  },
  "genre.supernatural": {
-  "status": "Not Tested"
+  "status": "Verified",
+  "by": [
+   "inspection",
+   "automated"
+  ],
+  "on": "22bfcd35",
+  "note": "Knowledge (familiarity by genre.study, practice by work in it) read by relevantGenre for every material, each requirement’s weights summing to 1, a kind beside its broad genre one demand; all 149 studied, taped and brought to 100 by the coverage tests. Love is read by enjoyment alone, mood and stress, for the 23 genres a play or a project is of; the other 126 are shown only, and creation says so (22bfcd35).",
+  "evidence": [
+   "tests/genre-coverage.test.ts",
+   "tests/b22-genre-weights.test.ts",
+   "tests/b21-genre-proof.test.ts",
+   "tests/attributes-matrix.test.ts",
+   "tests/b26-creation-genres.test.ts",
+   "src/engine/systems/engagement.ts:144-307 knownOf, relatedness one link only, relevantGenre: exact knowledge in full, the best related once, nothing passes 1"
+  ]
  },
  "genre.surrealist": {
-  "status": "Not Tested"
+  "status": "Verified",
+  "by": [
+   "inspection",
+   "automated"
+  ],
+  "on": "22bfcd35",
+  "note": "Knowledge (familiarity by genre.study, practice by work in it) read by relevantGenre for every material, each requirement’s weights summing to 1, a kind beside its broad genre one demand; all 149 studied, taped and brought to 100 by the coverage tests. Love is read by enjoyment alone, mood and stress, for the 23 genres a play or a project is of; the other 126 are shown only, and creation says so (22bfcd35).",
+  "evidence": [
+   "tests/genre-coverage.test.ts",
+   "tests/b22-genre-weights.test.ts",
+   "tests/b21-genre-proof.test.ts",
+   "tests/attributes-matrix.test.ts",
+   "tests/b26-creation-genres.test.ts",
+   "src/engine/systems/engagement.ts:144-307 knownOf, relatedness one link only, relevantGenre: exact knowledge in full, the best related once, nothing passes 1"
+  ]
  },
  "genre.survival": {
-  "status": "Not Tested"
+  "status": "Verified",
+  "by": [
+   "inspection",
+   "automated"
+  ],
+  "on": "22bfcd35",
+  "note": "Knowledge (familiarity by genre.study, practice by work in it) read by relevantGenre for every material, each requirement’s weights summing to 1, a kind beside its broad genre one demand; all 149 studied, taped and brought to 100 by the coverage tests. Love is read by enjoyment alone, mood and stress, for the 23 genres a play or a project is of; the other 126 are shown only, and creation says so (22bfcd35).",
+  "evidence": [
+   "tests/genre-coverage.test.ts",
+   "tests/b22-genre-weights.test.ts",
+   "tests/b21-genre-proof.test.ts",
+   "tests/attributes-matrix.test.ts",
+   "tests/b26-creation-genres.test.ts",
+   "src/engine/systems/engagement.ts:144-307 knownOf, relatedness one link only, relevantGenre: exact knowledge in full, the best related once, nothing passes 1"
+  ]
  },
  "genre.swashbuckler": {
-  "status": "Not Tested"
+  "status": "Verified",
+  "by": [
+   "inspection",
+   "automated"
+  ],
+  "on": "22bfcd35",
+  "note": "Knowledge (familiarity by genre.study, practice by work in it) read by relevantGenre for every material, each requirement’s weights summing to 1, a kind beside its broad genre one demand; all 149 studied, taped and brought to 100 by the coverage tests. Love is read by enjoyment alone, mood and stress, for the 23 genres a play or a project is of; the other 126 are shown only, and creation says so (22bfcd35).",
+  "evidence": [
+   "tests/genre-coverage.test.ts",
+   "tests/b22-genre-weights.test.ts",
+   "tests/b21-genre-proof.test.ts",
+   "tests/attributes-matrix.test.ts",
+   "tests/b26-creation-genres.test.ts",
+   "src/engine/systems/engagement.ts:144-307 knownOf, relatedness one link only, relevantGenre: exact knowledge in full, the best related once, nothing passes 1"
+  ]
  },
  "genre.sword_and_sandal": {
-  "status": "Not Tested"
+  "status": "Verified",
+  "by": [
+   "inspection",
+   "automated"
+  ],
+  "on": "22bfcd35",
+  "note": "Knowledge (familiarity by genre.study, practice by work in it) read by relevantGenre for every material, each requirement’s weights summing to 1, a kind beside its broad genre one demand; all 149 studied, taped and brought to 100 by the coverage tests. Love is read by enjoyment alone, mood and stress, for the 23 genres a play or a project is of; the other 126 are shown only, and creation says so (22bfcd35).",
+  "evidence": [
+   "tests/genre-coverage.test.ts",
+   "tests/b22-genre-weights.test.ts",
+   "tests/b21-genre-proof.test.ts",
+   "tests/attributes-matrix.test.ts",
+   "tests/b26-creation-genres.test.ts",
+   "src/engine/systems/engagement.ts:144-307 knownOf, relatedness one link only, relevantGenre: exact knowledge in full, the best related once, nothing passes 1"
+  ]
  },
  "genre.sword_and_sorcery": {
-  "status": "Not Tested"
+  "status": "Verified",
+  "by": [
+   "inspection",
+   "automated"
+  ],
+  "on": "22bfcd35",
+  "note": "Knowledge (familiarity by genre.study, practice by work in it) read by relevantGenre for every material, each requirement’s weights summing to 1, a kind beside its broad genre one demand; all 149 studied, taped and brought to 100 by the coverage tests. Love is read by enjoyment alone, mood and stress, for the 23 genres a play or a project is of; the other 126 are shown only, and creation says so (22bfcd35).",
+  "evidence": [
+   "tests/genre-coverage.test.ts",
+   "tests/b22-genre-weights.test.ts",
+   "tests/b21-genre-proof.test.ts",
+   "tests/attributes-matrix.test.ts",
+   "tests/b26-creation-genres.test.ts",
+   "src/engine/systems/engagement.ts:144-307 knownOf, relatedness one link only, relevantGenre: exact knowledge in full, the best related once, nothing passes 1"
+  ]
  },
  "genre.techno_thriller": {
-  "status": "Not Tested"
+  "status": "Verified",
+  "by": [
+   "inspection",
+   "automated"
+  ],
+  "on": "22bfcd35",
+  "note": "Knowledge (familiarity by genre.study, practice by work in it) read by relevantGenre for every material, each requirement’s weights summing to 1, a kind beside its broad genre one demand; all 149 studied, taped and brought to 100 by the coverage tests. Love is read by enjoyment alone, mood and stress, for the 23 genres a play or a project is of; the other 126 are shown only, and creation says so (22bfcd35).",
+  "evidence": [
+   "tests/genre-coverage.test.ts",
+   "tests/b22-genre-weights.test.ts",
+   "tests/b21-genre-proof.test.ts",
+   "tests/attributes-matrix.test.ts",
+   "tests/b26-creation-genres.test.ts",
+   "src/engine/systems/engagement.ts:144-307 knownOf, relatedness one link only, relevantGenre: exact knowledge in full, the best related once, nothing passes 1"
+  ]
  },
  "genre.teen": {
-  "status": "Not Tested"
+  "status": "Verified",
+  "by": [
+   "inspection",
+   "automated"
+  ],
+  "on": "22bfcd35",
+  "note": "Knowledge (familiarity by genre.study, practice by work in it) read by relevantGenre for every material, each requirement’s weights summing to 1, a kind beside its broad genre one demand; all 149 studied, taped and brought to 100 by the coverage tests. Love is read by enjoyment alone, mood and stress, for the 23 genres a play or a project is of; the other 126 are shown only, and creation says so (22bfcd35).",
+  "evidence": [
+   "tests/genre-coverage.test.ts",
+   "tests/b22-genre-weights.test.ts",
+   "tests/b21-genre-proof.test.ts",
+   "tests/attributes-matrix.test.ts",
+   "tests/b26-creation-genres.test.ts",
+   "src/engine/systems/engagement.ts:144-307 knownOf, relatedness one link only, relevantGenre: exact knowledge in full, the best related once, nothing passes 1"
+  ]
  },
  "genre.thriller": {
-  "status": "Not Tested"
+  "status": "Verified",
+  "by": [
+   "inspection",
+   "automated"
+  ],
+  "on": "22bfcd35",
+  "note": "Knowledge (familiarity by genre.study, practice by work in it) read by relevantGenre for every material, each requirement’s weights summing to 1, a kind beside its broad genre one demand; all 149 studied, taped and brought to 100 by the coverage tests. Love is read by enjoyment alone, mood and stress, for the 23 genres a play or a project is of; the other 126 are shown only, and creation says so (22bfcd35).",
+  "evidence": [
+   "tests/genre-coverage.test.ts",
+   "tests/b22-genre-weights.test.ts",
+   "tests/b21-genre-proof.test.ts",
+   "tests/attributes-matrix.test.ts",
+   "tests/b26-creation-genres.test.ts",
+   "src/engine/systems/engagement.ts:144-307 knownOf, relatedness one link only, relevantGenre: exact knowledge in full, the best related once, nothing passes 1"
+  ]
  },
  "genre.time_travel": {
-  "status": "Not Tested"
+  "status": "Verified",
+  "by": [
+   "inspection",
+   "automated"
+  ],
+  "on": "22bfcd35",
+  "note": "Knowledge (familiarity by genre.study, practice by work in it) read by relevantGenre for every material, each requirement’s weights summing to 1, a kind beside its broad genre one demand; all 149 studied, taped and brought to 100 by the coverage tests. Love is read by enjoyment alone, mood and stress, for the 23 genres a play or a project is of; the other 126 are shown only, and creation says so (22bfcd35).",
+  "evidence": [
+   "tests/genre-coverage.test.ts",
+   "tests/b22-genre-weights.test.ts",
+   "tests/b21-genre-proof.test.ts",
+   "tests/attributes-matrix.test.ts",
+   "tests/b26-creation-genres.test.ts",
+   "src/engine/systems/engagement.ts:144-307 knownOf, relatedness one link only, relevantGenre: exact knowledge in full, the best related once, nothing passes 1"
+  ]
  },
  "genre.tokusatsu": {
-  "status": "Not Tested"
+  "status": "Verified",
+  "by": [
+   "inspection",
+   "automated"
+  ],
+  "on": "22bfcd35",
+  "note": "Knowledge (familiarity by genre.study, practice by work in it) read by relevantGenre for every material, each requirement’s weights summing to 1, a kind beside its broad genre one demand; all 149 studied, taped and brought to 100 by the coverage tests. Love is read by enjoyment alone, mood and stress, for the 23 genres a play or a project is of; the other 126 are shown only, and creation says so (22bfcd35).",
+  "evidence": [
+   "tests/genre-coverage.test.ts",
+   "tests/b22-genre-weights.test.ts",
+   "tests/b21-genre-proof.test.ts",
+   "tests/attributes-matrix.test.ts",
+   "tests/b26-creation-genres.test.ts",
+   "src/engine/systems/engagement.ts:144-307 knownOf, relatedness one link only, relevantGenre: exact knowledge in full, the best related once, nothing passes 1"
+  ]
  },
  "genre.tragedy": {
-  "status": "Not Tested"
+  "status": "Verified",
+  "by": [
+   "inspection",
+   "automated"
+  ],
+  "on": "22bfcd35",
+  "note": "Knowledge (familiarity by genre.study, practice by work in it) read by relevantGenre for every material, each requirement’s weights summing to 1, a kind beside its broad genre one demand; all 149 studied, taped and brought to 100 by the coverage tests. Love is read by enjoyment alone, mood and stress, for the 23 genres a play or a project is of; the other 126 are shown only, and creation says so (22bfcd35).",
+  "evidence": [
+   "tests/genre-coverage.test.ts",
+   "tests/b22-genre-weights.test.ts",
+   "tests/b21-genre-proof.test.ts",
+   "tests/attributes-matrix.test.ts",
+   "tests/b26-creation-genres.test.ts",
+   "src/engine/systems/engagement.ts:144-307 knownOf, relatedness one link only, relevantGenre: exact knowledge in full, the best related once, nothing passes 1"
+  ]
  },
  "genre.tragicomedy": {
-  "status": "Not Tested"
+  "status": "Verified",
+  "by": [
+   "inspection",
+   "automated"
+  ],
+  "on": "22bfcd35",
+  "note": "Knowledge (familiarity by genre.study, practice by work in it) read by relevantGenre for every material, each requirement’s weights summing to 1, a kind beside its broad genre one demand; all 149 studied, taped and brought to 100 by the coverage tests. Love is read by enjoyment alone, mood and stress, for the 23 genres a play or a project is of; the other 126 are shown only, and creation says so (22bfcd35).",
+  "evidence": [
+   "tests/genre-coverage.test.ts",
+   "tests/b22-genre-weights.test.ts",
+   "tests/b21-genre-proof.test.ts",
+   "tests/attributes-matrix.test.ts",
+   "tests/b26-creation-genres.test.ts",
+   "src/engine/systems/engagement.ts:144-307 knownOf, relatedness one link only, relevantGenre: exact knowledge in full, the best related once, nothing passes 1"
+  ]
  },
  "genre.true_crime": {
-  "status": "Not Tested"
+  "status": "Verified",
+  "by": [
+   "inspection",
+   "automated"
+  ],
+  "on": "22bfcd35",
+  "note": "Knowledge (familiarity by genre.study, practice by work in it) read by relevantGenre for every material, each requirement’s weights summing to 1, a kind beside its broad genre one demand; all 149 studied, taped and brought to 100 by the coverage tests. Love is read by enjoyment alone, mood and stress, for the 23 genres a play or a project is of; the other 126 are shown only, and creation says so (22bfcd35).",
+  "evidence": [
+   "tests/genre-coverage.test.ts",
+   "tests/b22-genre-weights.test.ts",
+   "tests/b21-genre-proof.test.ts",
+   "tests/attributes-matrix.test.ts",
+   "tests/b26-creation-genres.test.ts",
+   "src/engine/systems/engagement.ts:144-307 knownOf, relatedness one link only, relevantGenre: exact knowledge in full, the best related once, nothing passes 1"
+  ]
  },
  "genre.vampire": {
-  "status": "Not Tested"
+  "status": "Verified",
+  "by": [
+   "inspection",
+   "automated"
+  ],
+  "on": "22bfcd35",
+  "note": "Knowledge (familiarity by genre.study, practice by work in it) read by relevantGenre for every material, each requirement’s weights summing to 1, a kind beside its broad genre one demand; all 149 studied, taped and brought to 100 by the coverage tests. Love is read by enjoyment alone, mood and stress, for the 23 genres a play or a project is of; the other 126 are shown only, and creation says so (22bfcd35).",
+  "evidence": [
+   "tests/genre-coverage.test.ts",
+   "tests/b22-genre-weights.test.ts",
+   "tests/b21-genre-proof.test.ts",
+   "tests/attributes-matrix.test.ts",
+   "tests/b26-creation-genres.test.ts",
+   "src/engine/systems/engagement.ts:144-307 knownOf, relatedness one link only, relevantGenre: exact knowledge in full, the best related once, nothing passes 1"
+  ]
  },
  "genre.war": {
-  "status": "Not Tested"
+  "status": "Verified",
+  "by": [
+   "inspection",
+   "automated"
+  ],
+  "on": "22bfcd35",
+  "note": "Knowledge (familiarity by genre.study, practice by work in it) read by relevantGenre for every material, each requirement’s weights summing to 1, a kind beside its broad genre one demand; all 149 studied, taped and brought to 100 by the coverage tests. Love is read by enjoyment alone, mood and stress, for the 23 genres a play or a project is of; the other 126 are shown only, and creation says so (22bfcd35).",
+  "evidence": [
+   "tests/genre-coverage.test.ts",
+   "tests/b22-genre-weights.test.ts",
+   "tests/b21-genre-proof.test.ts",
+   "tests/attributes-matrix.test.ts",
+   "tests/b26-creation-genres.test.ts",
+   "src/engine/systems/engagement.ts:144-307 knownOf, relatedness one link only, relevantGenre: exact knowledge in full, the best related once, nothing passes 1"
+  ]
  },
  "genre.werewolf": {
-  "status": "Not Tested"
+  "status": "Verified",
+  "by": [
+   "inspection",
+   "automated"
+  ],
+  "on": "22bfcd35",
+  "note": "Knowledge (familiarity by genre.study, practice by work in it) read by relevantGenre for every material, each requirement’s weights summing to 1, a kind beside its broad genre one demand; all 149 studied, taped and brought to 100 by the coverage tests. Love is read by enjoyment alone, mood and stress, for the 23 genres a play or a project is of; the other 126 are shown only, and creation says so (22bfcd35).",
+  "evidence": [
+   "tests/genre-coverage.test.ts",
+   "tests/b22-genre-weights.test.ts",
+   "tests/b21-genre-proof.test.ts",
+   "tests/attributes-matrix.test.ts",
+   "tests/b26-creation-genres.test.ts",
+   "src/engine/systems/engagement.ts:144-307 knownOf, relatedness one link only, relevantGenre: exact knowledge in full, the best related once, nothing passes 1"
+  ]
  },
  "genre.western": {
-  "status": "Not Tested"
+  "status": "Verified",
+  "by": [
+   "inspection",
+   "automated"
+  ],
+  "on": "22bfcd35",
+  "note": "Knowledge (familiarity by genre.study, practice by work in it) read by relevantGenre for every material, each requirement’s weights summing to 1, a kind beside its broad genre one demand; all 149 studied, taped and brought to 100 by the coverage tests. Love is read by enjoyment alone, mood and stress, for the 23 genres a play or a project is of; the other 126 are shown only, and creation says so (22bfcd35).",
+  "evidence": [
+   "tests/genre-coverage.test.ts",
+   "tests/b22-genre-weights.test.ts",
+   "tests/b21-genre-proof.test.ts",
+   "tests/attributes-matrix.test.ts",
+   "tests/b26-creation-genres.test.ts",
+   "src/engine/systems/engagement.ts:144-307 knownOf, relatedness one link only, relevantGenre: exact knowledge in full, the best related once, nothing passes 1"
+  ]
  },
  "genre.whodunit": {
-  "status": "Not Tested"
+  "status": "Verified",
+  "by": [
+   "inspection",
+   "automated"
+  ],
+  "on": "22bfcd35",
+  "note": "Knowledge (familiarity by genre.study, practice by work in it) read by relevantGenre for every material, each requirement’s weights summing to 1, a kind beside its broad genre one demand; all 149 studied, taped and brought to 100 by the coverage tests. Love is read by enjoyment alone, mood and stress, for the 23 genres a play or a project is of; the other 126 are shown only, and creation says so (22bfcd35).",
+  "evidence": [
+   "tests/genre-coverage.test.ts",
+   "tests/b22-genre-weights.test.ts",
+   "tests/b21-genre-proof.test.ts",
+   "tests/attributes-matrix.test.ts",
+   "tests/b26-creation-genres.test.ts",
+   "src/engine/systems/engagement.ts:144-307 knownOf, relatedness one link only, relevantGenre: exact knowledge in full, the best related once, nothing passes 1"
+  ]
  },
  "genre.wuxia": {
-  "status": "Not Tested"
+  "status": "Verified",
+  "by": [
+   "inspection",
+   "automated"
+  ],
+  "on": "22bfcd35",
+  "note": "Knowledge (familiarity by genre.study, practice by work in it) read by relevantGenre for every material, each requirement’s weights summing to 1, a kind beside its broad genre one demand; all 149 studied, taped and brought to 100 by the coverage tests. Love is read by enjoyment alone, mood and stress, for the 23 genres a play or a project is of; the other 126 are shown only, and creation says so (22bfcd35).",
+  "evidence": [
+   "tests/genre-coverage.test.ts",
+   "tests/b22-genre-weights.test.ts",
+   "tests/b21-genre-proof.test.ts",
+   "tests/attributes-matrix.test.ts",
+   "tests/b26-creation-genres.test.ts",
+   "src/engine/systems/engagement.ts:144-307 knownOf, relatedness one link only, relevantGenre: exact knowledge in full, the best related once, nothing passes 1"
+  ]
  },
  "genre.yakuza": {
-  "status": "Not Tested"
+  "status": "Verified",
+  "by": [
+   "inspection",
+   "automated"
+  ],
+  "on": "22bfcd35",
+  "note": "Knowledge (familiarity by genre.study, practice by work in it) read by relevantGenre for every material, each requirement’s weights summing to 1, a kind beside its broad genre one demand; all 149 studied, taped and brought to 100 by the coverage tests. Love is read by enjoyment alone, mood and stress, for the 23 genres a play or a project is of; the other 126 are shown only, and creation says so (22bfcd35).",
+  "evidence": [
+   "tests/genre-coverage.test.ts",
+   "tests/b22-genre-weights.test.ts",
+   "tests/b21-genre-proof.test.ts",
+   "tests/attributes-matrix.test.ts",
+   "tests/b26-creation-genres.test.ts",
+   "src/engine/systems/engagement.ts:144-307 knownOf, relatedness one link only, relevantGenre: exact knowledge in full, the best related once, nothing passes 1"
+  ]
  },
  "genre.zombie": {
-  "status": "Not Tested"
+  "status": "Verified",
+  "by": [
+   "inspection",
+   "automated"
+  ],
+  "on": "22bfcd35",
+  "note": "Knowledge (familiarity by genre.study, practice by work in it) read by relevantGenre for every material, each requirement’s weights summing to 1, a kind beside its broad genre one demand; all 149 studied, taped and brought to 100 by the coverage tests. Love is read by enjoyment alone, mood and stress, for the 23 genres a play or a project is of; the other 126 are shown only, and creation says so (22bfcd35).",
+  "evidence": [
+   "tests/genre-coverage.test.ts",
+   "tests/b22-genre-weights.test.ts",
+   "tests/b21-genre-proof.test.ts",
+   "tests/attributes-matrix.test.ts",
+   "tests/b26-creation-genres.test.ts",
+   "src/engine/systems/engagement.ts:144-307 knownOf, relatedness one link only, relevantGenre: exact knowledge in full, the best related once, nothing passes 1"
+  ]
  },
  "promise.coursework.approach>coursework.feedback": {
   "status": "Not Tested"
@@ -882,54 +2968,309 @@
   "status": "Not Tested"
  },
  "technique.accents": {
-  "status": "Not Tested"
+  "status": "Verified",
+  "by": [
+   "inspection",
+   "automated"
+  ],
+  "on": "22bfcd35",
+  "note": "Each kept in the craft, trained by classes, coursework steps and one exercise of its own, read by evaluate as level/90 where the work reads it, mastered at 90; the attributes matrix’s table (regenerated and held by its test) names every one’s exercise and consumer.",
+  "evidence": [
+   "tests/attributes-matrix.test.ts",
+   "tests/genre-coverage.test.ts",
+   "tests/attributes-phase-2b.test.ts",
+   "tests/b20-craft-bite.test.ts",
+   "tests/evaluation.test.ts",
+   "src/engine/systems/evaluation.ts:233-246 termsOf: a technique as level/MASTERED where the work’s techniques say",
+   "src/engine/systems/attributes.ts:300-330 grown: a technique grows as an ability does, never past 100"
+  ]
  },
  "technique.audition": {
-  "status": "Not Tested"
+  "status": "Verified",
+  "by": [
+   "inspection",
+   "automated"
+  ],
+  "on": "22bfcd35",
+  "note": "Each kept in the craft, trained by classes, coursework steps and one exercise of its own, read by evaluate as level/90 where the work reads it, mastered at 90; the attributes matrix’s table (regenerated and held by its test) names every one’s exercise and consumer.",
+  "evidence": [
+   "tests/attributes-matrix.test.ts",
+   "tests/genre-coverage.test.ts",
+   "tests/attributes-phase-2b.test.ts",
+   "tests/b20-craft-bite.test.ts",
+   "tests/evaluation.test.ts",
+   "src/engine/systems/evaluation.ts:233-246 termsOf: a technique as level/MASTERED where the work’s techniques say",
+   "src/engine/systems/attributes.ts:300-330 grown: a technique grows as an ability does, never past 100"
+  ]
  },
  "technique.character": {
-  "status": "Not Tested"
+  "status": "Verified",
+  "by": [
+   "inspection",
+   "automated"
+  ],
+  "on": "22bfcd35",
+  "note": "Each kept in the craft, trained by classes, coursework steps and one exercise of its own, read by evaluate as level/90 where the work reads it, mastered at 90; the attributes matrix’s table (regenerated and held by its test) names every one’s exercise and consumer.",
+  "evidence": [
+   "tests/attributes-matrix.test.ts",
+   "tests/genre-coverage.test.ts",
+   "tests/attributes-phase-2b.test.ts",
+   "tests/b20-craft-bite.test.ts",
+   "tests/evaluation.test.ts",
+   "src/engine/systems/evaluation.ts:233-246 termsOf: a technique as level/MASTERED where the work’s techniques say",
+   "src/engine/systems/attributes.ts:300-330 grown: a technique grows as an ability does, never past 100"
+  ]
  },
  "technique.classical": {
-  "status": "Not Tested"
+  "status": "Verified",
+  "by": [
+   "inspection",
+   "automated"
+  ],
+  "on": "22bfcd35",
+  "note": "Each kept in the craft, trained by classes, coursework steps and one exercise of its own, read by evaluate as level/90 where the work reads it, mastered at 90; the attributes matrix’s table (regenerated and held by its test) names every one’s exercise and consumer.",
+  "evidence": [
+   "tests/attributes-matrix.test.ts",
+   "tests/genre-coverage.test.ts",
+   "tests/attributes-phase-2b.test.ts",
+   "tests/b20-craft-bite.test.ts",
+   "tests/evaluation.test.ts",
+   "src/engine/systems/evaluation.ts:233-246 termsOf: a technique as level/MASTERED where the work’s techniques say",
+   "src/engine/systems/attributes.ts:300-330 grown: a technique grows as an ability does, never past 100"
+  ]
  },
  "technique.clown": {
-  "status": "Not Tested"
+  "status": "Verified",
+  "by": [
+   "inspection",
+   "automated"
+  ],
+  "on": "22bfcd35",
+  "note": "Each kept in the craft, trained by classes, coursework steps and one exercise of its own, read by evaluate as level/90 where the work reads it, mastered at 90; the attributes matrix’s table (regenerated and held by its test) names every one’s exercise and consumer.",
+  "evidence": [
+   "tests/attributes-matrix.test.ts",
+   "tests/genre-coverage.test.ts",
+   "tests/attributes-phase-2b.test.ts",
+   "tests/b20-craft-bite.test.ts",
+   "tests/evaluation.test.ts",
+   "src/engine/systems/evaluation.ts:233-246 termsOf: a technique as level/MASTERED where the work’s techniques say",
+   "src/engine/systems/attributes.ts:300-330 grown: a technique grows as an ability does, never past 100"
+  ]
  },
  "technique.coldReading": {
-  "status": "Not Tested"
+  "status": "Verified",
+  "by": [
+   "inspection",
+   "automated"
+  ],
+  "on": "22bfcd35",
+  "note": "Each kept in the craft, trained by classes, coursework steps and one exercise of its own, read by evaluate as level/90 where the work reads it, mastered at 90; the attributes matrix’s table (regenerated and held by its test) names every one’s exercise and consumer.",
+  "evidence": [
+   "tests/attributes-matrix.test.ts",
+   "tests/genre-coverage.test.ts",
+   "tests/attributes-phase-2b.test.ts",
+   "tests/b20-craft-bite.test.ts",
+   "tests/evaluation.test.ts",
+   "src/engine/systems/evaluation.ts:233-246 termsOf: a technique as level/MASTERED where the work’s techniques say",
+   "src/engine/systems/attributes.ts:300-330 grown: a technique grows as an ability does, never past 100"
+  ]
  },
  "technique.combat": {
-  "status": "Not Tested"
+  "status": "Verified",
+  "by": [
+   "inspection",
+   "automated"
+  ],
+  "on": "22bfcd35",
+  "note": "Each kept in the craft, trained by classes, coursework steps and one exercise of its own, read by evaluate as level/90 where the work reads it, mastered at 90; the attributes matrix’s table (regenerated and held by its test) names every one’s exercise and consumer.",
+  "evidence": [
+   "tests/attributes-matrix.test.ts",
+   "tests/genre-coverage.test.ts",
+   "tests/attributes-phase-2b.test.ts",
+   "tests/b20-craft-bite.test.ts",
+   "tests/evaluation.test.ts",
+   "src/engine/systems/evaluation.ts:233-246 termsOf: a technique as level/MASTERED where the work’s techniques say",
+   "src/engine/systems/attributes.ts:300-330 grown: a technique grows as an ability does, never past 100"
+  ]
  },
  "technique.comedy": {
-  "status": "Not Tested"
+  "status": "Verified",
+  "by": [
+   "inspection",
+   "automated"
+  ],
+  "on": "22bfcd35",
+  "note": "Each kept in the craft, trained by classes, coursework steps and one exercise of its own, read by evaluate as level/90 where the work reads it, mastered at 90; the attributes matrix’s table (regenerated and held by its test) names every one’s exercise and consumer.",
+  "evidence": [
+   "tests/attributes-matrix.test.ts",
+   "tests/genre-coverage.test.ts",
+   "tests/attributes-phase-2b.test.ts",
+   "tests/b20-craft-bite.test.ts",
+   "tests/evaluation.test.ts",
+   "src/engine/systems/evaluation.ts:233-246 termsOf: a technique as level/MASTERED where the work’s techniques say",
+   "src/engine/systems/attributes.ts:300-330 grown: a technique grows as an ability does, never past 100"
+  ]
  },
  "technique.dance": {
-  "status": "Not Tested"
+  "status": "Verified",
+  "by": [
+   "inspection",
+   "automated"
+  ],
+  "on": "22bfcd35",
+  "note": "Each kept in the craft, trained by classes, coursework steps and one exercise of its own, read by evaluate as level/90 where the work reads it, mastered at 90; the attributes matrix’s table (regenerated and held by its test) names every one’s exercise and consumer.",
+  "evidence": [
+   "tests/attributes-matrix.test.ts",
+   "tests/genre-coverage.test.ts",
+   "tests/attributes-phase-2b.test.ts",
+   "tests/b20-craft-bite.test.ts",
+   "tests/evaluation.test.ts",
+   "src/engine/systems/evaluation.ts:233-246 termsOf: a technique as level/MASTERED where the work’s techniques say",
+   "src/engine/systems/attributes.ts:300-330 grown: a technique grows as an ability does, never past 100"
+  ]
  },
  "technique.improv": {
-  "status": "Not Tested"
+  "status": "Verified",
+  "by": [
+   "inspection",
+   "automated"
+  ],
+  "on": "22bfcd35",
+  "note": "Each kept in the craft, trained by classes, coursework steps and one exercise of its own, read by evaluate as level/90 where the work reads it, mastered at 90; the attributes matrix’s table (regenerated and held by its test) names every one’s exercise and consumer.",
+  "evidence": [
+   "tests/attributes-matrix.test.ts",
+   "tests/genre-coverage.test.ts",
+   "tests/attributes-phase-2b.test.ts",
+   "tests/b20-craft-bite.test.ts",
+   "tests/evaluation.test.ts",
+   "src/engine/systems/evaluation.ts:233-246 termsOf: a technique as level/MASTERED where the work’s techniques say",
+   "src/engine/systems/attributes.ts:300-330 grown: a technique grows as an ability does, never past 100"
+  ]
  },
  "technique.intimacy": {
-  "status": "Not Tested"
+  "status": "Verified",
+  "by": [
+   "inspection",
+   "automated"
+  ],
+  "on": "22bfcd35",
+  "note": "Each kept in the craft, trained by classes, coursework steps and one exercise of its own, read by evaluate as level/90 where the work reads it, mastered at 90; the attributes matrix’s table (regenerated and held by its test) names every one’s exercise and consumer.",
+  "evidence": [
+   "tests/attributes-matrix.test.ts",
+   "tests/genre-coverage.test.ts",
+   "tests/attributes-phase-2b.test.ts",
+   "tests/b20-craft-bite.test.ts",
+   "tests/evaluation.test.ts",
+   "src/engine/systems/evaluation.ts:233-246 termsOf: a technique as level/MASTERED where the work’s techniques say",
+   "src/engine/systems/attributes.ts:300-330 grown: a technique grows as an ability does, never past 100"
+  ]
  },
  "technique.scene": {
-  "status": "Not Tested"
+  "status": "Verified",
+  "by": [
+   "inspection",
+   "automated"
+  ],
+  "on": "22bfcd35",
+  "note": "Each kept in the craft, trained by classes, coursework steps and one exercise of its own, read by evaluate as level/90 where the work reads it, mastered at 90; the attributes matrix’s table (regenerated and held by its test) names every one’s exercise and consumer.",
+  "evidence": [
+   "tests/attributes-matrix.test.ts",
+   "tests/genre-coverage.test.ts",
+   "tests/attributes-phase-2b.test.ts",
+   "tests/b20-craft-bite.test.ts",
+   "tests/evaluation.test.ts",
+   "src/engine/systems/evaluation.ts:233-246 termsOf: a technique as level/MASTERED where the work’s techniques say",
+   "src/engine/systems/attributes.ts:300-330 grown: a technique grows as an ability does, never past 100"
+  ]
  },
  "technique.screen": {
-  "status": "Not Tested"
+  "status": "Verified",
+  "by": [
+   "inspection",
+   "automated"
+  ],
+  "on": "22bfcd35",
+  "note": "Each kept in the craft, trained by classes, coursework steps and one exercise of its own, read by evaluate as level/90 where the work reads it, mastered at 90; the attributes matrix’s table (regenerated and held by its test) names every one’s exercise and consumer.",
+  "evidence": [
+   "tests/attributes-matrix.test.ts",
+   "tests/genre-coverage.test.ts",
+   "tests/attributes-phase-2b.test.ts",
+   "tests/b20-craft-bite.test.ts",
+   "tests/evaluation.test.ts",
+   "src/engine/systems/evaluation.ts:233-246 termsOf: a technique as level/MASTERED where the work’s techniques say",
+   "src/engine/systems/attributes.ts:300-330 grown: a technique grows as an ability does, never past 100"
+  ]
  },
  "technique.script": {
-  "status": "Not Tested"
+  "status": "Verified",
+  "by": [
+   "inspection",
+   "automated"
+  ],
+  "on": "22bfcd35",
+  "note": "Each kept in the craft, trained by classes, coursework steps and one exercise of its own, read by evaluate as level/90 where the work reads it, mastered at 90; the attributes matrix’s table (regenerated and held by its test) names every one’s exercise and consumer.",
+  "evidence": [
+   "tests/attributes-matrix.test.ts",
+   "tests/genre-coverage.test.ts",
+   "tests/attributes-phase-2b.test.ts",
+   "tests/b20-craft-bite.test.ts",
+   "tests/evaluation.test.ts",
+   "src/engine/systems/evaluation.ts:233-246 termsOf: a technique as level/MASTERED where the work’s techniques say",
+   "src/engine/systems/attributes.ts:300-330 grown: a technique grows as an ability does, never past 100"
+  ]
  },
  "technique.singing": {
-  "status": "Not Tested"
+  "status": "Verified",
+  "by": [
+   "inspection",
+   "automated"
+  ],
+  "on": "22bfcd35",
+  "note": "Each kept in the craft, trained by classes, coursework steps and one exercise of its own, read by evaluate as level/90 where the work reads it, mastered at 90; the attributes matrix’s table (regenerated and held by its test) names every one’s exercise and consumer.",
+  "evidence": [
+   "tests/attributes-matrix.test.ts",
+   "tests/genre-coverage.test.ts",
+   "tests/attributes-phase-2b.test.ts",
+   "tests/b20-craft-bite.test.ts",
+   "tests/evaluation.test.ts",
+   "src/engine/systems/evaluation.ts:233-246 termsOf: a technique as level/MASTERED where the work’s techniques say",
+   "src/engine/systems/attributes.ts:300-330 grown: a technique grows as an ability does, never past 100"
+  ]
  },
  "technique.speech": {
-  "status": "Not Tested"
+  "status": "Verified",
+  "by": [
+   "inspection",
+   "automated"
+  ],
+  "on": "22bfcd35",
+  "note": "Each kept in the craft, trained by classes, coursework steps and one exercise of its own, read by evaluate as level/90 where the work reads it, mastered at 90; the attributes matrix’s table (regenerated and held by its test) names every one’s exercise and consumer.",
+  "evidence": [
+   "tests/attributes-matrix.test.ts",
+   "tests/genre-coverage.test.ts",
+   "tests/attributes-phase-2b.test.ts",
+   "tests/b20-craft-bite.test.ts",
+   "tests/evaluation.test.ts",
+   "src/engine/systems/evaluation.ts:233-246 termsOf: a technique as level/MASTERED where the work’s techniques say",
+   "src/engine/systems/attributes.ts:300-330 grown: a technique grows as an ability does, never past 100"
+  ]
  },
  "technique.voiceover": {
-  "status": "Not Tested"
+  "status": "Verified",
+  "by": [
+   "inspection",
+   "automated"
+  ],
+  "on": "22bfcd35",
+  "note": "Each kept in the craft, trained by classes, coursework steps and one exercise of its own, read by evaluate as level/90 where the work reads it, mastered at 90; the attributes matrix’s table (regenerated and held by its test) names every one’s exercise and consumer.",
+  "evidence": [
+   "tests/attributes-matrix.test.ts",
+   "tests/genre-coverage.test.ts",
+   "tests/attributes-phase-2b.test.ts",
+   "tests/b20-craft-bite.test.ts",
+   "tests/evaluation.test.ts",
+   "src/engine/systems/evaluation.ts:233-246 termsOf: a technique as level/MASTERED where the work’s techniques say",
+   "src/engine/systems/attributes.ts:300-330 grown: a technique grows as an ability does, never past 100"
+  ]
  }
 }
