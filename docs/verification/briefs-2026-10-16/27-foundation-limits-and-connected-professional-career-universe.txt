@@ -1,0 +1,1724 @@
+Treat the game’s entire existing world map as the geographic scope. Inventory every represented country, territory, and location, and account for each in the geographic coverage matrix. Research the applicable career processes and local requirements wherever a feature operates. Use shared rules only where they genuinely apply, with jurisdiction-specific differences where necessary. Not every location needs its own studio, festival, or award, but every location must connect logically to the career world. For each lifecycle, research and identify missing stages, decisions, obligations, exceptions, and downstream effects rather than treating my examples as an exhaustive checklist. Document unavailable information and unsupported functionality honestly; never silently omit a location or fabricate local rules to mark it complete.
+
+SLATE — Resolve The Remaining Foundation Limits And Build The Connected Professional Career Universe
+
+Use ONE individual agent throughout this entire task. Do not launch subagents, parallel agents, or separate research/review agents unless I explicitly authorize them.
+
+This instruction preserves the full scope, research quality, implementation depth, and testing requirements. Work sequentially through clear milestones and maintain a durable checkpoint.
+
+My goal is a deeply interactive acting simulation with expansive, extensible options, real-world grounding, continuity, and meaningful downstream effects. Everything must function cohesively and logically, with smooth navigation and understandable feedback.
+
+PART 1 — RECOVER THE CURRENT PROJECT AND RECONCILE EXISTING WORK
+
+1. Read repository instructions, AGENTS.md, the current handoff, architecture, original briefs, research files, coverage matrices, and verification receipts.
+
+Repository: yvcbcjhsy7-prog/1221.
+
+The last checkpoint reviewed was main at d6eba5d5 following PR #64, the connectivity sweep. Verify the actual current state rather than assuming that checkpoint is still latest.
+
+That sweep reported:
+- 1,146 inventory entries.
+- 1,118 Verified.
+- 7 Fixed And Verified.
+- 1 Blocked.
+- 20 Deferred.
+- 5,638 passing tests across 494 files and 23 checks.
+- An existing completion matrix at 634/658.
+
+These are historical reported figures, not fresh results.
+
+2. Inspect the existing career expansion work and original brief 25, including any relevant work on claude/peaceful-hamilton-59zdbb if that branch still exists.
+
+Do not duplicate, overwrite, or blindly merge another session’s work. Identify what is already implemented, what is compatible with main, and what still needs completion. Preserve useful work and reconcile dependencies in a reviewable branch.
+
+3. Establish a dedicated implementation branch and run the required baseline checks. Record the starting SHA and actual results.
+
+4. Preserve the current creation, school, banking, papers, attributes, genres, self-care, time, weather, holidays, tutorials, and career foundation.
+
+Do not restore deleted general personal-life engines such as property ownership, retail shopping, vehicle ownership, or unrestricted lifestyle travel.
+
+Career travel and production accommodation are authorized as work logistics.
+
+5. The already-merged status is not a separate problem to solve. Keep new handoffs accurate as ordinary maintenance.
+
+PART 2 — RESOLVE THE FOUR FOUNDATION LIMITS
+
+AREA A — RESOLVE create.livesWhereBorn
+
+Inspect every declaration, writer, reader, creation control, migration, and test associated with this field.
+
+Separate these concepts correctly:
+- Birthplace.
+- Citizenship.
+- Previous residence.
+- Current residence.
+- Banking history.
+- Work authorization.
+
+Birthplace alone must not grant residency, an existing bank account, citizenship, or work eligibility.
+
+Determine whether livesWhereBorn:
+- Represents a meaningful choice missing from creation.
+- Duplicates information already stored elsewhere.
+- Is obsolete under the current Yale-centered starting scope.
+
+If meaningful, expose the appropriate choice and connect it to justified starting conditions and downstream consumers.
+
+If redundant or obsolete, retire it safely and derive required information from authoritative existing fields.
+
+Do not introduce unrestricted relocation or change the school’s established starting location merely to make the field usable.
+
+Preserve old saves and test different supported backgrounds. If there is a genuinely material choice between incompatible player experiences, present the concrete options while continuing independent work.
+
+Completion: no unexplained unreachable field remains, and the resulting creation behavior is coherent, persisted, and tested.
+
+AREA B — REMOVE THE FINITE CAREER DEAD END
+
+The current career catalog reportedly has eleven parts and can exhaust a character’s applicable opportunities.
+
+Do not merely add a larger fixed list.
+
+Build an ongoing project and opportunity lifecycle that produces appropriate new work over simulation time, including:
+- New projects.
+- New roles within projects.
+- Returning engagements.
+- New seasons.
+- New characters.
+- Renewals.
+- Cancellations.
+- Delays.
+- Recasting where justified.
+- Projects that never proceed.
+- Periods without suitable work.
+
+Preserve history. A previously completed project must not silently reset and return as a brand-new opportunity.
+
+Make opportunity supply responsive to market, location, eligibility, representation access, availability, experience, skills, genres, relationships, and established production circumstances.
+
+The player must not be guaranteed work, but the world must not stop generating opportunities because a small catalog is exhausted.
+
+Complete this area through the career-universe requirements below.
+
+AREA C — RESOLVE THE OUTSTANDING COMPLETION-MATRIX ROWS
+
+Read the exact current outstanding rows before implementing fixes.
+
+The previously reported 24 incomplete in-scope rows consisted of:
+- 20 with verification incomplete.
+- 4 requiring decisions.
+
+Do not confuse these with the sweep register’s deferred entries or the completion matrix’s separately deferred requirements.
+
+For each outstanding row:
+- Quote or reference its actual acceptance requirement.
+- Identify the affected implementation.
+- Determine whether it lacks behavior, proof, a product decision, or external evidence.
+- Complete missing authorized behavior.
+- Add meaningful verification where proof is missing.
+- Resolve routine implementation choices from existing requirements.
+- Escalate only genuinely material product choices that cannot be inferred safely.
+
+Do not lower acceptance criteria, erase rows, relabel deferred work as completed, or count documentation as implementation.
+
+Keep explicitly deferred systems deferred unless this command specifically authorizes their functionality for the career expansion.
+
+Maintain separate accounting for:
+1. The existing foundation matrix.
+2. The new career expansion matrix.
+
+Completion of the old matrix must not be presented as completion of the entire new career build.
+
+AREA D — LANDSCAPE MOBILE WITHOUT THE ROTATE-PHONE BLOCKER, PLUS REAL-ENVIRONMENT VERIFICATION
+
+Preserve the landscape-oriented mobile layout.
+
+REMOVE the “Rotate Your Phone To Play” overlay and mandatory orientation gate.
+
+Remove behavior whose sole purpose is that gate, including any inert state, blocked controls, or forced pause on rotation. Preserve ordinary pause, backgrounding, and save behavior where independently required.
+
+Do not replace the landscape design with a portrait-specific vertically stacked redesign.
+
+When the device is upright:
+- Keep the landscape-oriented game usable and reachable.
+- Do not trap the player behind a rotation message.
+- Use deliberate viewport and scrolling behavior where needed.
+- Do not shrink text into unreadability or clip controls beyond reach.
+- Preserve game state, focus, open panels, and decisions through rotation.
+
+Use supported orientation capabilities when available, but do not assume a browser can force device rotation.
+
+Test landscape as the primary mobile experience and portrait as a non-blocking fallback using the same interface.
+
+Cover:
+- Touch controls.
+- Tab navigation.
+- Help controls.
+- Nested scrolling.
+- Safe areas.
+- Browser chrome.
+- Enlarged text.
+- On-screen keyboard.
+- Rotation with a modal or decision open.
+- Rotation during active time.
+- Backgrounding and returning.
+- Refreshing and reconnecting.
+- Save and continue.
+
+For backend verification, cover:
+- Creating, saving, loading, backing up, restoring, and deleting.
+- Accurate UTF-8 byte reporting, including accented names.
+- Interrupted requests and retries.
+- Duplicate-write prevention.
+- Stale-save protection.
+- Ownership and account isolation.
+- Schema compatibility.
+- Existing-save continuity.
+
+Use an authorized test deployment when available. Do not deploy to production without explicit approval.
+
+If no physical device or deployed test environment is accessible, prepare the exact runnable checks, complete all available local/emulated verification, and report the remaining external verification accurately. Do not mark emulation as physical-phone testing or a fake client as a live-backend test.
+
+PART 3 — RESEARCH THE CAREER UNIVERSE
+
+Claude must perform the extensive research needed for this implementation.
+
+Aim for the highest practical real-world accuracy. Never replace missing evidence with invented certainty.
+
+1. Use primary sources whenever available:
+- Official agencies and professional directories.
+- Studios, production companies, broadcasters, streamers, and distributors.
+- Official production announcements.
+- Unions, guilds, and published agreements.
+- Relevant government authorities.
+- Official festivals and awards organizations.
+- Official audience and chart publications.
+- Appropriate classification bodies.
+
+2. Record:
+- Source URL.
+- Organization.
+- Retrieval date.
+- Applicable year or edition.
+- Territory and jurisdiction.
+- What the source actually establishes.
+- Confidence and any unresolved conflict.
+
+3. Distinguish:
+- Verified real-world facts.
+- Public announcements.
+- Historical facts.
+- Deliberate simulation rules.
+- Estimates.
+- Fictional developments in the game timeline.
+
+4. Use facts appropriate to the simulation date. Do not leak future announcements into an earlier starting year.
+
+5. Maintain a researched starting snapshot. After the simulated world diverges, preserve its own history. A later data update must not overwrite the player’s completed career.
+
+6. Do not fabricate:
+- Confidential contracts.
+- Private streaming retention.
+- Unannounced productions.
+- Real casting vacancies.
+- Real people’s private opinions.
+- Real future award results.
+- Unpublished prices, rules, or dates.
+
+If information is unavailable, use a documented simulation assumption only where appropriate and expose its status clearly.
+
+PART 4 — THE COMPLETE CONNECTED CAREER JOURNEY
+
+Implement:
+
+Training and eligibility
+→ professional materials
+→ representation where applicable
+→ opportunity discovery or invitation
+→ submission, audition, or direct offer
+→ negotiation
+→ contract
+→ preparation
+→ production
+→ payment
+→ post-production
+→ release
+→ weekly performance and reception
+→ festivals and awards where applicable
+→ relationships, reputation, future opportunities, renewal, or work ending.
+
+Support legitimate alternate routes. Not every role requires an agent, audition, callback, festival, or awards campaign.
+
+Respect school commitments, graduation, early graduation where established, and lawful work while enrolled.
+
+Agency representation is an important route, not an invented universal prerequisite for acting.
+
+PART 5 — REAL ENTITIES AND WORLDWIDE COVERAGE
+
+Use verified real names for relevant:
+- Agencies and individual agents.
+- Production companies.
+- Studios.
+- Broadcasters.
+- Streaming services.
+- Distributors.
+- Directors.
+- Showrunners.
+- Casting professionals.
+- Actors and actresses.
+- Film and television properties.
+- Festivals.
+- Awards organizations.
+- Production locations.
+
+Build broad coverage of major film and television markets rather than limiting the world to the United States, United Kingdom, or Australia.
+
+Australia was an example, not the geographic scope.
+
+Define selection criteria for major entities. Do not invent a universal “top ten” ranking across unrelated markets.
+
+Track real organizations’ different functions and ownership relationships. Production, financing, commissioning, distribution, and exhibition are not interchangeable.
+
+Provide a geographic coverage matrix showing researched support, simulated support, and gaps. Shared mechanics may be global, while jurisdiction-specific rules must be sourced or honestly marked unsupported.
+
+Real names must not falsely imply that a real organization or person has actually offered the user employment. Generated offers and alternate-history events are simulation scenarios.
+
+PART 6 — INDIVIDUAL REPRESENTATION
+
+Build relationships with individual agents, not interchangeable agency logos.
+
+Verify public affiliation and professional role when using real agents. Do not invent private contact details or claim simulated behavior represents their actual personal views.
+
+Support relevant:
+- Discovery and approach routes.
+- Submission requirements.
+- Professional materials.
+- Evaluation and meetings.
+- Acceptance, rejection, or no response.
+- Representation offers.
+- Scope, territory, medium, exclusivity, term, and commission.
+- Signing and ending agreements.
+- Agent submissions.
+- Negotiation.
+- Communication and relationship history.
+- Conflicting representation and outstanding obligations.
+
+Differentiate agents, managers, lawyers, publicists, and casting professionals.
+
+Research applicable agreement and commission rules. Do not apply one universal percentage to every arrangement.
+
+Implement each supported representative deeply before expanding the roster superficially.
+
+PART 7 — PROFESSIONAL IDENTITY AND MATERIALS
+
+Connect the professional profile to actual player history.
+
+Support appropriate:
+- Professional name.
+- Headshots.
+- Résumé/CV.
+- Credits.
+- Reel and performance samples.
+- Voice samples.
+- Skills.
+- Languages and accents.
+- Representation.
+- Availability.
+- Work eligibility.
+- Relevant training.
+- Awards and festival history.
+
+Do not invent credits or expertise.
+
+Preparation actions should improve materials through the actual engine. Materials must affect relevant decisions rather than merely appear on a profile.
+
+PART 8 — PROJECTS, ROLES, AND DISTINCT FORMATS
+
+Support distinct workflows for:
+- Studio and independent features.
+- Short films.
+- Student productions where relevant.
+- Broadcast, cable, and streaming scripted series.
+- Pilots.
+- Limited series.
+- Anthologies.
+- Single-camera and multi-camera productions.
+- Animation and voice acting.
+- Motion/performance capture where implemented.
+- Documentary narration, reenactments, and other actual performer work.
+
+Do not treat a documentary subject as a conventional acting role.
+
+Preserve existing theater work and its distinct rules.
+
+Different formats must change relevant auditions, preparation, production tasks, scheduling, compensation, release patterns, and evaluation.
+
+Each project and role should expose applicable details:
+- Title and stable identity.
+- Format and genre combination.
+- Project status.
+- Synopsis.
+- Companies and their functions.
+- Director/showrunner and collaborators.
+- Cast and characters.
+- Role description and billing.
+- Engagement category.
+- Episode order versus the player’s contracted episode count.
+- Runtime estimates versus confirmed runtime.
+- Production locations.
+- Dates and availability.
+- Required skills.
+- Audition route.
+- Compensation and obligations.
+- Eligibility.
+- Content advisories and classification status.
+- Next action.
+
+Respect territory-specific classification systems. An expected rating is not an official assigned classification.
+
+PART 9 — MATCHING, AUDITIONS, AND OFFERS
+
+Generate opportunities using justified factors:
+- Project and role requirements.
+- Attributes and genre proficiency.
+- Experience and credits.
+- Availability.
+- Eligibility.
+- Location and logistics.
+- Representation access.
+- Materials.
+- Relevant professional relationships.
+
+Support:
+- Open calls.
+- Agent-only access.
+- Invitations.
+- Self-tapes.
+- In-person auditions.
+- Callbacks.
+- Chemistry reads.
+- Screen tests.
+- Voice auditions.
+- Direct offers.
+- Returning engagements.
+
+Make preparation and execution interactive:
+- Reading and interpreting material.
+- Selecting an approach.
+- Rehearsal.
+- Reader or partner work.
+- Responding to direction.
+- Accent, language, movement, and vocal preparation.
+- Alternate takes.
+
+Use the established attributes and genre systems. Distinguish genre proficiency from liking a genre.
+
+High relevant mastery should reliably improve expected work quality under comparable conditions. It must not guarantee booking, project success, or awards.
+
+Do not double count overlapping genres. Explain outcomes using factors the engine actually evaluated.
+
+PART 10 — NEGOTIABLE CONTRACTS AND REAL PAYMENT LOGIC
+
+Build interactive simulated contracts grounded in applicable researched arrangements.
+
+Include relevant:
+- Parties.
+- Project and role.
+- Services.
+- Term.
+- Work dates and locations.
+- Guaranteed versus optional work.
+- Compensation structure.
+- Minimums and negotiated amounts.
+- Payment triggers.
+- Rehearsals, fittings, recordings, pickups, ADR, and reshoots.
+- Working conditions and applicable overtime.
+- Expenses, travel, accommodation, and per diem.
+- Billing and credits.
+- Holds, exclusivity, options, renewals, and extensions.
+- Cancellation and termination.
+- Residuals, royalties, or contingent compensation.
+- Publicity obligations.
+- Relevant consent and likeness provisions.
+
+Do not make every contract identical or assert that simulated terms are a real person’s confidential deal.
+
+Allow appropriate review, negotiation through representation, acceptance, decline, and deadline responses.
+
+Connect agreements to calendars, papers, finances, production, and history.
+
+Pay actors according to the applicable contract—not automatically only when the project releases.
+
+Track gross earnings, commissions, withholding where implemented, expenses, currencies, amounts owed, and actual payments.
+
+Avoid duplicated income and unsupported assumptions about residuals or backend participation.
+
+PART 11 — PRODUCTION AND WORK-RELATED TRAVEL
+
+Production must happen at the scheduled location in the simulated world.
+
+Support applicable:
+- Travel time.
+- Time zones and local dates.
+- Work permissions.
+- Required documents.
+- Production-paid versus player-paid arrangements.
+- Accommodation.
+- Expenses and reimbursements.
+- Read-throughs.
+- Rehearsals.
+- Fittings.
+- Training.
+- Call sheets.
+- Assigned scenes or recording sessions.
+- Waiting and revised calls.
+- Delays.
+- Condition and rest.
+- Missed work.
+- Wrap.
+- ADR.
+- Pickups.
+- Reshoots.
+
+Weather should affect production when circumstances justify it.
+
+Do not teleport between conflicting obligations. Do not make indoor voice recording behave like an outdoor action shoot.
+
+Model boundaries and consent appropriately for specialist or sensitive performance requirements, without treating consent as a stat to overcome.
+
+Career logistics are authorized; unrelated lifestyle engines are not.
+
+PART 12 — RELEASE AND WEEKLY INDUSTRY PERFORMANCE
+
+Separate:
+- Production completion.
+- Post-production.
+- Distribution decisions.
+- Release dates.
+- Exhibition.
+- Commercial and audience reporting.
+
+Support applicable:
+- Festival premieres.
+- Theatrical releases.
+- Limited and wider releases.
+- Broadcast schedules.
+- Weekly streaming episodes.
+- Batch releases.
+- Territory-specific releases.
+- Delays and unreleased projects.
+
+Provide weekly rankings with clearly defined reporting periods and sources or simulation status.
+
+Track applicable:
+- Weekend and weekly theatrical gross.
+- Domestic, international, and worldwide totals.
+- Territory and currency.
+- Broadcast audience measures.
+- Published streaming charts.
+- Provider-specific viewing metrics.
+- Critical reception.
+- Audience response.
+
+Do not mix views, hours, viewers, reach, completion, and retention as if they mean the same thing.
+
+Do not invent private “accurate” retention numbers. Where needed, model estimated internal performance and label it as simulated.
+
+Outside projects can initially populate rankings without full autonomous careers for every real performer.
+
+Commercial success must reflect project-level circumstances. A strong player performance must matter without guaranteeing a hit.
+
+PART 13 — RENEWAL, CANCELLATION, AND RETURNING WORK
+
+Support scenarios such as:
+- A current series introducing a new character.
+- An audition or justified direct offer.
+- Guest work leading to a recurring engagement.
+- A recurring character receiving a larger role.
+- A series renewing for one or multiple seasons.
+- A player’s option being exercised or not exercised.
+- A show continuing without the player.
+- Cancellation.
+- Production delays.
+- Revival or a distributor change where plausible.
+
+Renewing a show and renewing the player’s employment are separate events.
+
+Use examples such as 9-1-1 and Slow Horses only with verified starting facts. Generated future offers, characters, renewals, and cancellations must belong explicitly to the simulation.
+
+Keep dates, seasons, cast, contracts, credits, pay, and history consistent.
+
+Renegotiation and pay increases must follow actual simulated agreements.
+
+PART 14 — FESTIVALS
+
+Research real festivals by edition and relevant section.
+
+Model applicable:
+- Submission authority.
+- Deadlines.
+- Completion-date requirements.
+- Runtime and format.
+- Territory.
+- Premiere rules.
+- Sections and competitions.
+- Submission.
+- Selection.
+- Screenings.
+- Attendance.
+- Publicity.
+- Juries.
+- Awards.
+
+Do not assume an actor can submit a film without the necessary authority.
+
+Prevent incompatible premiere commitments and impossible scheduling.
+
+Connect festival decisions to release strategy, expenses, availability, publicity, relationships, and opportunities where justified.
+
+PART 15 — AWARDS AND CEREMONIES
+
+Research major relevant film and television awards across supported markets.
+
+Each award needs edition-specific:
+- Eligibility dates.
+- Qualifying exhibition.
+- Categories.
+- Submission rules.
+- Category placement.
+- Shortlists where applicable.
+- Nomination process.
+- Voting body.
+- Voting stages.
+- Ceremony date.
+- Repeat-eligibility restrictions.
+
+Do not use one generic process for every award.
+
+Do not nominate a project years late by mistake. Later eligibility is permitted only when the applicable rules justify it.
+
+Nomination, campaigning, and winning are distinct. High skill or popularity does not guarantee an award.
+
+Create an interactive ceremony:
+- Invitation and attendance.
+- Schedule conflicts.
+- Preparation.
+- Category announcement.
+- Win or loss.
+- Acceptance interaction.
+- Permanent record.
+- Appropriate career consequences.
+
+For now, competitors may remain anonymous:
+- A loss says the player did not win.
+- A win records the actual award name, category, edition, project, and role.
+- Do not invent a named real-world winner for the simulated field.
+
+Keep simulated results clearly part of the player’s timeline.
+
+PART 16 — SLATE’S INTERACTIVE INDUSTRY REFERENCE
+
+Provide a Slate-designed project and people reference connected to the career engine, using the previously mapped IMDb-style concept where compatible with the current scope.
+
+Use an original interface rather than copying another service’s design.
+
+Provide researched and permitted information such as:
+- Project pages.
+- People and company pages.
+- Cast and character relationships.
+- Filmographies and credits.
+- Seasons and episodes where supported.
+- Production and release status.
+- Genres and classifications.
+- Performance history.
+- Festival and award history.
+- The player’s involvement.
+
+Use public authorized sources or licensed APIs. Do not assume unrestricted access to a commercial database or reproduce copyrighted summaries wholesale.
+
+Do not claim to contain all information another service holds.
+
+The reference must connect to actionable game information where appropriate. It must not become a disconnected encyclopedia or expose confidential/inaccessible opportunities merely because the player can view a project page.
+
+PART 17 — COMMUNICATION, HISTORY, AND FRESHNESS
+
+Use existing mail, notices, decisions, calendar, and time controls.
+
+Provide meaningful responses to:
+- Invitations.
+- Audition requests.
+- Offers.
+- Negotiations.
+- Agreements.
+- Schedule changes.
+- Payment.
+- Renewal.
+- Cancellation.
+- Festival selection.
+- Award nomination and results.
+
+Accepting, declining, negotiating, waiting, and missing deadlines must have context-appropriate consequences. Do not punish every refusal arbitrarily.
+
+Persist the complete professional history.
+
+Resolve stale actions and prevent duplicated notices.
+
+My goal is limitless-feeling depth through extensible systems and varied meaningful combinations—not a claim of literally infinite handcrafted content.
+
+Use project differences, history, relationships, formats, geography, obligations, performance, and outcomes to create freshness.
+
+Do not disguise identical mechanics by changing names. Do not erase continuity to generate novelty.
+
+PART 18 — EVERY FEATURE MUST READ, BITE, AND CONNECT
+
+For every feature, trace:
+
+Trigger
+→ prerequisites
+→ state read
+→ player choice
+→ execution
+→ persistent change
+→ immediate consequence
+→ delayed and cross-system consequences
+→ player-visible feedback
+→ save/load continuity
+→ verification.
+
+No dead controls, fake choices, unused gameplay ratings, placeholder contracts, or unsupported claims of completion.
+
+Connect relevant systems deliberately. Do not force every feature to affect every engine.
+
+Information must be useful and accurate. Navigation must work. Help text does not need an arbitrary financial or stat consequence.
+
+Preserve clear natural language, the established Title Case rules, summary-first screens, and deep drill-down access.
+
+PART 19 — IMPLEMENTATION AND TESTING
+
+Build complete playable slices, with each milestone connected and tested.
+
+Suggested dependency order:
+1. Recover state and reconcile existing work.
+2. Resolve creation semantics and inspect the outstanding foundation rows.
+3. Remove the rotation gate and preserve landscape usability.
+4. Establish career data, lifecycle, research, and geographic rules.
+5. Representation, materials, matching, and auditions.
+6. Contracts, scheduling, production, and payment.
+7. Release, weekly performance, renewal, and cancellation.
+8. Festivals, awards, and industry reference.
+9. Complete outstanding foundation verification.
+10. Full integration, device/backend verification where accessible, and final handoff.
+
+Adapt the sequence to actual dependencies without dropping requirements.
+
+Use stable identities, explicit lifecycle states, centralized shared rules, and tested save migrations.
+
+Define measurable acceptance criteria before balancing.
+
+Test:
+- Different supported backgrounds.
+- School and career conflicts.
+- High and low relevant mastery.
+- Multi-genre roles.
+- Successful and unsuccessful auditions.
+- Direct offers.
+- Rejected and expired offers.
+- Negotiation.
+- Ineligibility.
+- Time zones.
+- Travel conflicts.
+- Different production formats.
+- Production cancellation.
+- Partial work and amounts owed.
+- Residual conditions where implemented.
+- Renewals without automatic rebooking.
+- Festival premiere conflicts.
+- Award eligibility boundaries.
+- Weekly metric consistency.
+- Repeated clicks and retries.
+- Save/load around consequential events.
+- Long careers beyond the original catalog.
+- Desktop and mobile navigation.
+- Rotation without a blocker.
+- Existing-save compatibility.
+
+Use reproducible inputs and controlled comparisons.
+
+Test conservation of money, single execution of events, valid project transitions, and consistent historical records.
+
+Run targeted checks while developing and the required complete gate on the final implementation. Repeat checks when changes or failures justify it.
+
+Do not inflate test counts with meaningless duplicates or change tests merely to accept incorrect behavior.
+
+PART 20 — COVERAGE, RESOURCE USE, AND COMPLETION
+
+Maintain:
+- Current foundation matrix.
+- Career feature matrix.
+- Geographic coverage matrix.
+- Research register.
+- Outstanding decisions.
+- Implementation checkpoint.
+
+For each feature record implementation, downstream consumers, persistence, interface, tests, and evidence status.
+
+Work as ONE agent. Reuse valid research, avoid repeated full-repository reading, and keep progress updates concise.
+
+Continue implementing and fixing authorized work rather than stopping at plans, catalogs, or decorative interfaces.
+
+If session limits interrupt work, save exact continuation instructions. If external access blocks an item, report it honestly and continue independent work.
+
+At the end provide:
+- Starting and final commits.
+- Completed functionality.
+- Coverage totals and remaining gaps.
+- Research and simulation assumptions.
+- Evidence of connected consequence chains.
+- Representative complete careers.
+- Test commands and actual results.
+- Save migration results.
+- UI captures.
+- Device/backend limitations.
+- Deployment requirements.
+- A precise handoff.
+
+The target is complete implementation of this defined scope with evidence. Never substitute claims of “100% realism,” “perfect,” or “zero possible bugs” for verified behavior.
+
+Commit and push reviewable progress according to repository instructions. Do not merge to main or deploy to production without my explicit instruction.
+
+Begin with the current-state reconciliation and then carry out the foundation fixes and career build using ONE agent.
+
+SLATE — Complete Career And Foundation Lifecycle Specification
+
+This supplements the previous foundation-fixes and career-universe command. Implement both as one coherent scope. Do not replace the previous requirements or restart completed work.
+
+Use ONE individual agent. Do not launch subagents.
+
+The purpose of this supplement is to make every supported feature a complete playable lifecycle: how it begins, what the player does, what the world does, how it ends or changes, what remains in history, and what it affects next.
+
+Treat the workflows below as implementation requirements to research and adapt to the applicable production, jurisdiction, agreement, and date. Do not falsely impose one universal industry process.
+
+For EVERY lifecycle, define:
+- Entry conditions.
+- Source of the opportunity or event.
+- Information available to the player.
+- Available decisions and their deadlines.
+- Validation and reasons an action may be unavailable.
+- Time, resource, and scheduling requirements.
+- Immediate and delayed consequences.
+- Other systems that read those consequences.
+- Cancellation, failure, expiry, interruption, and recovery.
+- Save/load behavior.
+- Historical records.
+- Player-visible feedback.
+- Evidence that the complete loop works.
+
+PART 1 — FOUNDATION LOOPS
+
+1. Creation And Starting History
+
+Player enters background
+→ birthplace, citizenship, previous residence, and current residence are represented separately
+→ applicable starting circumstances are established
+→ creation explains consequential choices
+→ player reviews and confirms
+→ the world initializes consistent records
+→ school, money, papers, attributes, and profile read those records
+→ the player begins with coherent obligations and opportunities.
+
+Resolve create.livesWhereBorn through this loop. Do not create contradictory duplicate fields.
+
+When reopening an older save:
+→ recognize the old data
+→ migrate or derive equivalent state where necessary
+→ preserve legitimate history and resources
+→ explain material changes if needed
+→ prevent the migration from applying twice.
+
+2. Outstanding Foundation Requirements
+
+Read each incomplete requirement
+→ identify intended behavior
+→ reproduce or demonstrate the gap
+→ classify missing implementation, missing proof, unresolved decision, or external dependency
+→ resolve the authorized work
+→ test the original acceptance requirement
+→ test relevant downstream behavior
+→ update its evidence and status.
+
+Do not count a requirement complete because a document says it works.
+
+Keep deferred scope separate. Do not resurrect deleted systems to raise a completion percentage.
+
+3. Mobile Orientation And Navigation
+
+Player opens the game
+→ landscape-oriented interface appears
+→ the player navigates and interacts
+→ device rotates
+→ the game remains accessible without a rotate-phone overlay or orientation gate
+→ current decisions, panels, scroll state where practical, and save state remain coherent
+→ returning to landscape restores the intended presentation.
+
+Do not force an orientation-only pause or inert state.
+
+Portrait fallback must keep the same interface reachable without introducing a separate portrait redesign. Use deliberate scrolling where necessary.
+
+Opening the keyboard, browser controls, backgrounding, and returning must not hide essential actions or accidentally advance or duplicate decisions.
+
+4. Save, Resume, And Recovery
+
+Player makes progress
+→ save captures a coherent state
+→ ownership, schema, size, and consistency checks run
+→ a recoverable backup is preserved
+→ the new save is committed safely
+→ the interface confirms the actual result
+→ Continue restores the correct life and moment.
+
+Failure:
+→ show an accurate error
+→ preserve the last valid save
+→ allow a safe retry
+→ prevent duplicate writes or older state overwriting newer progress.
+
+Restore:
+→ identify the backup and its timestamp
+→ restore safely
+→ retain appropriate recovery options
+→ reopen consistently.
+
+Test local and backend paths separately. Do not claim live-backend or physical-device verification without performing it.
+
+PART 2 — SCHOOL INTO PROFESSIONAL WORK
+
+5. Career Readiness While Enrolled
+
+Student develops skills and materials
+→ opportunities become available according to existing rules
+→ proposed work is checked against school requirements, availability, and legal eligibility
+→ any required school approval is requested
+→ approval, refusal, conditions, or expiry is communicated
+→ accepted work enters the calendar
+→ attendance and academic obligations continue to matter.
+
+If circumstances change:
+→ reevaluate affected commitments
+→ notify the player
+→ offer supported remedies
+→ apply justified academic or contractual consequences.
+
+Do not assume that all professional work is forbidden before graduation.
+
+6. Graduation And Career Transition
+
+Academic requirements progress
+→ the game checks actual completion and standing
+→ graduation eligibility is communicated
+→ outstanding requirements remain visible
+→ conferral occurs under the established rules
+→ student-specific benefits, obligations, access, and permissions change on their applicable dates
+→ professional records retain the training and credits
+→ career opportunities continue from existing history.
+
+Early graduation, if supported:
+→ requirements and permission are evaluated
+→ approval is explicit
+→ timing changes are applied consistently
+→ school, papers, money, and career all reflect the revised transition.
+
+Do not equate finishing classes with automatic conferral or automatic work authorization.
+
+PART 3 — MATERIALS AND REPRESENTATION
+
+7. Professional Materials
+
+A role or representative requires materials
+→ the player reviews what is missing or outdated
+→ prepares or updates appropriate materials
+→ spends applicable time and resources
+→ the engine evaluates relevant quality
+→ materials become available for submission
+→ submissions reference a specific version.
+
+New work or training:
+→ new legitimate credits or samples become available
+→ the player updates materials
+→ future submissions use updated versions
+→ earlier submissions and historical records remain intact.
+
+Do not invent credits or make every update automatically improve every audition.
+
+8. Approaching An Individual Agent
+
+Player finds a suitable individual representative
+→ reviews verified agency affiliation, relevant professional scope, and the game’s approach route
+→ checks prerequisites
+→ submits materials or receives a referral/invitation
+→ the approach becomes pending
+→ a response, request for more information, meeting, rejection, or closure follows.
+
+Meeting:
+→ schedule and prepare
+→ attend or reschedule where permitted
+→ respond to the representative’s questions
+→ suitability is evaluated
+→ an offer or refusal is issued.
+
+Agreement:
+→ review scope, term, commission, exclusivity, and obligations
+→ negotiate where supported
+→ accept, decline, or allow expiry
+→ accepted representation becomes active
+→ access, submissions, communication, and financial obligations change.
+
+No response must not create an eternal unresolved action. Use a supported closure or follow-up rule.
+
+9. Active Representation And Ending Representation
+
+Active representative monitors suitable opportunities
+→ submits or contacts the player
+→ communicates casting responses
+→ negotiates appropriate offers
+→ tracks agreements and commissionable income
+→ relationship history updates.
+
+Ending:
+→ player or representative initiates a permitted ending
+→ notice and agreement terms are checked
+→ new submissions stop at the correct point
+→ existing submissions and contracts are handled according to their terms
+→ legitimate continuing commissions or obligations remain
+→ records are archived
+→ the player can pursue other representation without erasing history.
+
+Differentiate agents from managers, lawyers, and publicists wherever those roles are implemented.
+
+PART 4 — THE INDUSTRY’S PROJECT LIFECYCLE
+
+10. Project Development And Opportunity Supply
+
+A project enters the simulation
+→ establish format, market, companies, development status, and plausible resources
+→ financing or commissioning progresses
+→ production may be approved, delayed, revised, or abandoned
+→ roles become available at the appropriate stage
+→ casting proceeds
+→ production begins only when its prerequisites are met.
+
+Not every project reaches production.
+
+An attached performer may be affected by:
+- Project cancellation.
+- Financing failure.
+- Schedule changes.
+- Conditional offers.
+- Expired holds.
+- Changed role requirements.
+
+Generate continuing new projects over time. Preserve old projects as history rather than recycling their identities.
+
+For real properties, distinguish verified starting facts from fictional simulated developments.
+
+11. Discovering And Evaluating A Role
+
+Opportunity is posted, submitted by an agent, or directly offered
+→ player sees an understandable summary
+→ drill-down reveals role, project, collaborators, dates, location, compensation status, eligibility, and requirements
+→ conflicts and uncertainties are identified
+→ player chooses to pursue, decline, save for later if supported, or request information.
+
+Availability and eligibility are checked again when circumstances change. Viewing an opportunity does not reserve it.
+
+A deadline:
+→ expires once
+→ closes the relevant action
+→ preserves the record
+→ does not leave a live submission button behind.
+
+12. Submission
+
+Player selects permitted materials
+→ submission requirements are validated
+→ materials and availability are recorded
+→ submission is sent in the simulation
+→ status becomes pending
+→ casting reviews it
+→ rejection, audition invitation, further information, hold, or direct offer follows as appropriate.
+
+Repeated presses must not create multiple submissions or charges.
+
+A project withdrawing the role:
+→ closes pending submissions
+→ explains the change
+→ resolves related notices and provisional calendar entries.
+
+PART 5 — AUDITION AND SELECTION LOOPS
+
+13. Self-Tape
+
+Invitation arrives
+→ player reviews instructions, material, deadline, and restrictions
+→ schedules preparation
+→ prepares interpretation, lines, accent, movement, or other relevant requirements
+→ records a take
+→ reviews or retries within available time and rules
+→ selects and submits the take
+→ receives confirmation
+→ casting evaluates the submitted performance
+→ callback, further request, offer, or rejection follows.
+
+Track preparation and performance separately. More attempts must not create unlimited free progression or guaranteed improvement.
+
+Missing the deadline:
+→ prevents or flags late submission according to the simulated process
+→ closes or changes the opportunity
+→ records the actual reason.
+
+14. In-Person Audition
+
+Invitation
+→ availability and location check
+→ schedule confirmation
+→ travel and preparation
+→ arrival
+→ audition performance
+→ response to direction where applicable
+→ completion
+→ casting decision.
+
+Support justified rescheduling and withdrawal.
+
+Late arrival, absence, document problems, or conflicts must produce appropriate outcomes, not a universal arbitrary penalty.
+
+15. Callback, Chemistry Read, Or Screen Test
+
+Casting requests another stage
+→ explain its purpose and requirements
+→ identify relevant collaborators
+→ schedule preparation and attendance
+→ evaluate the applicable performance dimensions
+→ update the casting decision
+→ offer, further stage, hold, or rejection.
+
+A chemistry read must depend on the interaction being tested, not simply repeat the first audition score.
+
+16. Direct Offer
+
+Offer arrives without an audition
+→ establish why the player is a plausible candidate
+→ disclose project, role, terms, and conditions
+→ check availability and eligibility
+→ player reviews and negotiates
+→ accepts, declines, or allows expiry.
+
+Do not insert an audition merely because the generic workflow expects one.
+
+17. Rejection And Recovery
+
+Decision occurs
+→ communicate the outcome and supported explanation
+→ release provisional commitments
+→ preserve the submission history
+→ apply only justified relationship or reputation effects
+→ make legitimate next opportunities available.
+
+Do not treat every rejection as lost skill, damaged reputation, or a player failure. Some outcomes reflect competition or project needs.
+
+PART 6 — AGREEMENTS AND ENGAGEMENT
+
+18. Negotiation
+
+Initial terms
+→ player and representative identify negotiable items
+→ propose changes
+→ other party responds
+→ terms may improve, remain unchanged, trade off, expire, or be withdrawn
+→ player reviews the latest coherent version
+→ signs or declines.
+
+Version the agreement. Do not let screens display one version while the engine executes another.
+
+Negotiation is not unlimited rerolling for better pay.
+
+19. Contract Signing And Booking
+
+Final terms accepted
+→ signatures/confirmation complete in the simulation
+→ validate conditions precedent
+→ establish the engagement
+→ reserve definite dates and distinguish them from holds
+→ create preparation and production obligations
+→ schedule contractual payments
+→ update representation, papers, calendar, and career history.
+
+If the agreement is conditional:
+→ keep that condition visible
+→ do not treat uncertain work as guaranteed income
+→ resolve the condition at the appropriate time.
+
+20. Holds, Options, And Conflicts
+
+A hold or option begins
+→ record its scope, dates, and terms
+→ show how it affects availability
+→ a conflicting opportunity arrives
+→ evaluate permitted responses
+→ release, exercise, negotiate, or decline according to the arrangement.
+
+Expiry:
+→ removes restrictions at the correct time
+→ notifies the player where useful
+→ preserves the history.
+
+Do not treat every hold as a signed paid engagement.
+
+PART 7 — PREPARATION AND PRODUCTION
+
+21. Role Preparation
+
+Booking identifies preparation needs
+→ player reviews material and requirements
+→ chooses relevant preparation activities
+→ spends time and resources
+→ preparation changes the dimensions it actually trains
+→ readiness feeds the appropriate work tasks.
+
+Include applicable line learning, script analysis, character work, movement, accent, voice, specialist training, fittings, and rehearsal.
+
+Preparation must interact with existing condition and scheduling systems. Avoid making one generic action optimal for every role.
+
+22. Work Travel And Arrival
+
+Confirmed call requires another location
+→ establish travel responsibility and arrangements
+→ verify documents and work permission
+→ calculate travel time and local dates
+→ resolve conflicts
+→ depart
+→ arrive
+→ check in to appropriate production accommodation if provided
+→ become available for the scheduled call.
+
+Delays or missing authorization:
+→ affect arrival and work eligibility
+→ notify production
+→ create appropriate options and consequences.
+
+Returning home:
+→ occurs only after the relevant work or travel arrangement
+→ respects travel time
+→ updates future availability.
+
+Do not restore unrelated lifestyle-travel engines.
+
+23. Live-Action Production Day
+
+Call sheet arrives or updates
+→ player reviews scenes, location, time, preparation, and relevant requirements
+→ travels and arrives
+→ performs applicable preparation
+→ participates in blocking or rehearsal
+→ performs scheduled work
+→ responds to direction and additional takes
+→ handles justified delays or changes
+→ wraps
+→ work performed is logged
+→ pay, condition, relationships, performance, and progress update.
+
+Production does not have to shoot scenes in narrative order.
+
+Do not equate more takes with bad acting automatically. Technical and creative reasons may also require them.
+
+24. Multi-Camera Or Audience-Based Production
+
+Establish the actual format
+→ rehearsal and blocking cycle
+→ revisions
+→ technical preparation
+→ recording/taping arrangement
+→ audience interaction where applicable
+→ pickups
+→ wrap and evaluation.
+
+Research format-specific workflows rather than copying the feature-film day.
+
+25. Animation And Voice Work
+
+Material and direction arrive
+→ vocal preparation
+→ recording session
+→ individual or ensemble work as appropriate
+→ alternate readings
+→ pickups
+→ session completion
+→ payment and credit conditions update
+→ later recording requests can return the engagement to an appropriate active stage.
+
+Do not create physical location shoots, costume continuity, or screen chemistry requirements where the project does not use them.
+
+26. Performance Capture
+
+Specialist requirements
+→ preparation and safety checks
+→ applicable calibration and rehearsal
+→ capture sessions
+→ movement/voice collaboration
+→ technical or performance retakes
+→ wrap
+→ later pickups where required.
+
+Evaluate the actual skills used by the work.
+
+27. Documentary-Related Performer Work
+
+Identify whether the engagement is narration, reenactment, hosting, or another legitimate performer role
+→ apply the correct preparation and production process
+→ record the contribution accurately
+→ apply the relevant contract and credit.
+
+Do not confuse documentary participation with playing a fictional scripted character.
+
+28. Changes, Absence, And Replacement
+
+A schedule change, illness, conflict, absence, or performance issue occurs
+→ determine its cause and relevant contractual rules
+→ communicate the issue
+→ offer justified remedies
+→ reschedule, excuse, warn, replace, suspend, or end work where applicable
+→ update calendar, pay, condition, permissions, and history.
+
+Do not impose replacement automatically after one universal number of mistakes unless a specific established game arrangement supports it.
+
+29. Wrap And Post-Production Obligations
+
+Principal work ends
+→ record actual services completed
+→ release applicable dates
+→ retain genuine continuing obligations
+→ finalize outstanding work records
+→ calculate owed compensation
+→ establish provisional or confirmed credit status.
+
+ADR, pickups, or reshoots:
+→ request arrives
+→ check contract and availability
+→ schedule and complete the work
+→ update compensation and project status.
+
+Wrap does not necessarily mean release, final payment, or a guaranteed public credit.
+
+PART 8 — FINANCIAL LOOPS
+
+30. Compensation
+
+A contractual payment trigger occurs
+→ calculate the amount due
+→ apply applicable deductions and commissions
+→ create the payable record
+→ payment arrives or becomes overdue
+→ deposit into the correct account
+→ update statements, net worth, taxes where supported, and history.
+
+A retry or reload must not pay twice.
+
+Expenses:
+→ incur an eligible expense
+→ submit or record it through the supported process
+→ approve, question, or reject
+→ reimburse under the applicable arrangement
+→ avoid counting reimbursement as earnings incorrectly.
+
+31. Residuals Or Contingent Compensation
+
+The agreement contains an applicable provision
+→ qualifying exhibition or revenue event occurs
+→ determine entitlement using the supported rules
+→ calculate and record the amount
+→ pay on the applicable schedule
+→ update finances and history.
+
+If required data is unavailable, use an explicit simulation model rather than invented real-world figures.
+
+No provision or qualifying trigger means no automatic payment.
+
+32. Work Ending And Money Still Owed
+
+Cancellation, release, termination, or completion
+→ determine work performed and any applicable guarantees
+→ remove obligations that no longer apply
+→ retain legitimate amounts owed
+→ cancel unearned payments correctly
+→ settle remaining balances
+→ archive the engagement.
+
+Do not delete earned pay when cancelling future work.
+
+PART 9 — RELEASE AND MARKET LOOPS
+
+33. Distribution And Release
+
+Project approaches completion
+→ release pathway is established
+→ rights and territories are represented appropriately
+→ dates and strategy become confirmed or remain provisional
+→ publicity obligations are scheduled
+→ project releases
+→ exhibition and performance reporting begin.
+
+Possible alternatives:
+- Delayed release.
+- Different distributor.
+- Limited release.
+- Direct-to-streaming release.
+- Shelving.
+- No public release.
+
+Do not force every completed project to succeed or release immediately.
+
+34. Publicity
+
+Applicable invitation or obligation
+→ check agreement and availability
+→ prepare
+→ attend or respond
+→ complete the activity
+→ apply justified visibility, relationship, or contractual consequences
+→ record the event.
+
+Publicity should influence exposure where appropriate, not directly manufacture artistic merit or guarantee awards.
+
+35. Weekly Box Office
+
+Release and screen availability establish the opening conditions
+→ weekly reporting period closes
+→ calculate simulated performance or retrieve the applicable verified historical figure
+→ update weekly and cumulative totals
+→ rank comparable releases
+→ adjust future exhibition where justified
+→ continue until the run ends.
+
+Prevent mixing currencies, territories, weekend totals, and full-week totals.
+
+Project success depends on multiple project-level factors, including but not limited to the player’s performance.
+
+36. Weekly Television And Streaming Performance
+
+An episode or batch releases
+→ identify the correct reporting window and metric
+→ calculate or ingest supported performance
+→ update the relevant chart and project history
+→ assess sustained performance through the project’s actual model
+→ feed renewal or strategy decisions where justified.
+
+Distinguish:
+- Hours watched.
+- Views.
+- Audience estimates.
+- Reach.
+- Completion.
+- Retention.
+- Chart rank.
+
+Do not invent private metrics as published facts.
+
+37. Long-Term Project History
+
+Initial release ends or changes phase
+→ preserve credits, reviews, metrics, earnings, and awards
+→ support legitimate later exhibition or rights events
+→ trigger only the obligations actually associated with those events
+→ retain the project as part of the player’s permanent professional record.
+
+A later platform appearance must not automatically restart every award-eligibility period.
+
+PART 10 — SERIES CONTINUITY
+
+38. Renewal Decision
+
+A series reaches a decision point
+→ evaluate the project’s simulated commercial, creative, contractual, and strategic circumstances
+→ renew, delay, conclude, cancel, or leave the decision pending
+→ communicate the decision
+→ update project plans.
+
+Do not reduce every renewal decision to one viewer threshold.
+
+39. Returning Player
+
+Series renewal or new installment
+→ determine whether the player’s character returns
+→ inspect options and prior agreements
+→ issue an option exercise, negotiation, or new offer where appropriate
+→ resolve availability and eligibility
+→ agree new terms
+→ book the next engagement
+→ preserve character and career continuity.
+
+Show renewal does not equal guaranteed player employment.
+
+40. New Character On An Existing Series
+
+A simulated season requires a new role
+→ establish its creative and production context
+→ define episode commitment and engagement type
+→ identify plausible candidates
+→ audition or directly offer
+→ contract and production
+→ release
+→ audience response and future character decisions.
+
+Use real-series starting facts accurately. Generated roles and future events must be clearly simulated.
+
+41. Cancellation And Possible Revival
+
+Cancellation
+→ close future production plans
+→ settle contracts and outstanding pay
+→ release applicable holds
+→ update representation and availability
+→ preserve credits and project history
+→ allow the career to continue elsewhere.
+
+A later revival:
+→ requires a plausible new project event
+→ checks elapsed time, agreements, availability, and character plans
+→ creates a new engagement rather than silently restoring the old one.
+
+PART 11 — FESTIVALS AND AWARDS
+
+42. Festival Submission And Selection
+
+Rights holder or authorized party considers a festival
+→ check edition, section, deadlines, format, and premiere eligibility
+→ submit
+→ await selection
+→ reject, withdraw, or accept selection
+→ resolve screening and attendance commitments
+→ screen
+→ receive applicable festival outcomes
+→ update release strategy and history.
+
+An actor’s interest must not automatically authorize a submission.
+
+43. Festival Attendance
+
+Invitation or obligation
+→ check schedule and work logistics
+→ confirm attendance
+→ travel
+→ participate in appropriate screenings, press, or events
+→ receive any relevant opportunities or feedback
+→ return
+→ settle expenses and preserve history.
+
+Do not award arbitrary career boosts merely for appearing.
+
+44. Award Eligibility And Submission
+
+Project’s qualifying activity occurs
+→ select the applicable award edition
+→ evaluate current rules and category placement
+→ confirm authority and submission route
+→ submit or enter through the organization’s actual process
+→ close eligibility at the appropriate deadline.
+
+Explain ineligibility clearly.
+
+Prevent duplicate or wrong-year submissions unless the rules specifically permit them.
+
+45. Nomination And Voting
+
+Eligible field established
+→ apply the researched organization-specific stages
+→ produce shortlists where applicable
+→ conduct the applicable nomination process
+→ notify nominees
+→ conduct final voting where applicable
+→ lock results for the ceremony.
+
+Do not give the player control of votes they are not entitled to cast.
+
+Do not use a generic public popularity vote for every award.
+
+46. Ceremony
+
+Nomination or invitation
+→ attendance decision
+→ schedule and preparation
+→ ceremony occurs on the appropriate date
+→ category is announced
+→ player wins or loses
+→ acceptance interaction if the player wins
+→ award history updates
+→ justified professional consequences unfold.
+
+For the current scope:
+- A loss may leave the winning competitor unnamed.
+- A win records award, edition, category, project, and role.
+- Do not fabricate a named real-world winner.
+
+47. Post-Award Career Effects
+
+Result becomes part of the record
+→ materials and industry reference update
+→ appropriate representatives and casting processes can consider it
+→ relevant opportunities or negotiation circumstances may change
+→ effects persist without making future work automatic.
+
+Avoid endlessly stacking reputation rewards for the same award or repeatedly announcing it as new.
+
+PART 12 — THE INDUSTRY REFERENCE AND COMMUNICATION LOOPS
+
+48. Interactive Industry Reference
+
+Player opens a project, person, company, season, or episode
+→ sees verified information and clearly marked simulation developments
+→ follows relationships to related records
+→ sees the player’s involvement and relevant history
+→ reaches legitimate available actions where appropriate
+→ returns without losing navigation context.
+
+Keep public information separate from confidential casting access.
+
+Use original presentation and permitted sources. Do not claim a complete copy of another commercial database.
+
+49. Actionable Mail And Notices
+
+Engine event creates a message
+→ message identifies source, context, deadline, and available action
+→ player opens it
+→ follows the relevant action
+→ validation runs
+→ successful action resolves or updates the message
+→ refusal leaves an accurate explanation
+→ expiry closes the action once
+→ history remains readable.
+
+Prioritize urgent actionable decisions separately from general updates.
+
+Reading a message must not automatically accept an offer.
+
+50. Ongoing Opportunity And Relationship Loop
+
+Completed work, auditions, professional conduct, and interactions create history
+→ relevant systems consult that history
+→ new opportunities and responses reflect it where justified
+→ player makes new decisions
+→ additional history develops.
+
+Avoid universal relationship meters that make every person react identically.
+
+Do not invent private opinions attributed to real people. Generated interactions belong to the simulation.
+
+PART 13 — GLOBAL RULES FOR ALL LOOPS
+
+51. Persistent State And Event Order
+
+Every event needs:
+- Stable identity.
+- Clear owning system.
+- Valid lifecycle state.
+- Timestamp and relevant time zone.
+- Dependencies.
+- Cancellation behavior.
+- Duplicate-execution protection.
+- Save/load continuity.
+- Appropriate history.
+
+Prevent impossible transitions and circular chains that trigger themselves indefinitely.
+
+52. Meaningful Variation
+
+Differentiate experiences through actual project circumstances:
+- Format.
+- Role.
+- Genre combination.
+- Collaborators.
+- Territory.
+- Contract.
+- Production scale.
+- Schedule.
+- Preparation requirements.
+- Release route.
+- Player history.
+- Outcomes.
+
+Do not disguise identical gameplay by swapping names.
+
+Recurring routines are legitimate; accidental duplicate content and history-blind scenarios are not.
+
+53. Transparency And Player Understanding
+
+For every consequential action, the player should understand:
+- What they are doing.
+- What is required.
+- What is known and uncertain.
+- What it costs.
+- How long it takes.
+- What can happen next.
+- Why the actual outcome occurred.
+- What they can do afterward.
+
+Use natural language, established Title Case rules, summary-first presentation, and deep drill-down access.
+
+Do not expose unnecessary engine jargon in player-facing screens.
+
+54. Research And Accuracy
+
+Research the rules for each supported lifecycle.
+
+Do not claim all markets follow one agreement, timetable, award calendar, or casting process.
+
+Use verified historical facts for real history and explicit simulation models for generated futures.
+
+Record uncertainties rather than guessing real facts.
+
+55. Coverage And Verification
+
+Create a lifecycle matrix mapping every supported loop to:
+- Code.
+- Entry screen.
+- Decisions.
+- States and transitions.
+- Immediate effects.
+- Downstream consumers.
+- Timed events.
+- Exit and recovery paths.
+- Save/load behavior.
+- Tests and interactive evidence.
+
+Run representative complete journeys across different formats and circumstances, not only the happy path.
+
+Include:
+- Rejection.
+- Withdrawal.
+- Expiry.
+- Cancellation.
+- Delay.
+- Ineligibility.
+- Conflict.
+- Partial completion.
+- Late payment where supported.
+- Interrupted saves.
+- Repeated inputs.
+- Long careers beyond the original fixed catalog.
+
+Verify that changing relevant abilities or circumstances changes the appropriate outcomes without changing unrelated behavior arbitrarily.
+
+56. Execution And Completion
+
+Implement these loops through complete playable milestones.
+
+Use ONE agent and conserve unnecessary token use through persistent checkpoints, focused file reads, reused valid research, and proportionate testing.
+
+Do not stop at a design document or data catalog.
+
+Continue authorized implementation and fixes until the defined scope is accounted for with evidence, or an actual blocker prevents further work. Continue independent work around blockers.
+
+Do not claim universal perfection or zero possible bugs. Report completed behavior, test results, remaining gaps, and external verification honestly.
+
+Preserve existing scope exclusions and deferred work unless the preceding command explicitly authorizes the relevant functionality.
+
+Keep changes reviewable. Do not merge to main or deploy to production without my explicit instruction.
+
+Begin by mapping these lifecycle requirements against the previous command and existing implementation, then build the missing connected behavior.
