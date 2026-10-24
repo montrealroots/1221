@@ -50,7 +50,14 @@ each milestone's end, with the branch, the commit, what's covered, what remains 
   lapse, work called off with its paydays, a request's due date, an agreement's lapse and term) and reloads (payments
   keyed and paid once, days logged once, draws keyed to what they decide). Found no defect; noted an engagement status
   nothing sets and the career's content bound (the receipt's M5). 89 rows Verified. 644 Verified in all.
-- **M6 to M11:** the traces, area by area (the handoff's top section lists them with what each found).
+- **M6, 2026-10-24: money and banking.** Read the banking, credit, lending, payments, cash, finance, bank moves, card
+  life, card offers, security, account life, abroad, spending, round-ups, obligations and statements systems at their
+  handlers, refusals, scheduled kinds and notices, and the six money looks; ran the money area's 69 test files (843
+  tests, green on `bf0ef776`). Found and fixed: a card closed holding a credit balance kept the credit in the closed
+  account for good, and net worth counted a credit as nothing (`closeCard` and `netWorth`;
+  tests/b26-card-credit-on-close.test.ts fails on the old code, 2 of 3). 161 rows: 156 Verified, 5 Fixed And Verified.
+  800 Verified in all.
+- **M7 to M11:** the traces, area by area (the handoff's top section lists them with what each found).
 - **M12:** brief 22's final runs again on the finished commit, the gate, the receipt.
 
 ## The Completion Matrix While The Sweep Runs
@@ -61,6 +68,6 @@ source change until the runs are played again on the finished commit (M12). That
 
 ## Next Step
 
-Begin M6, money and banking: the money area's 160 rows (`node tools/sweep.mjs --todo money`): the bank, the card,
-cash, finance, lending, spending and credit, reading each command, scheduled kind and notice at its handler and
-refusals, and holding every balance to the sum of its postings.
+Begin M7, papers and benefits: the papers area's 103 rows and the benefits area's 77 (`node tools/sweep.mjs --todo
+papers`, `--todo benefits`): documents, permission to work, taxes and the return, benefits and health cover, reading
+each command, scheduled kind and notice at its handler and refusals.

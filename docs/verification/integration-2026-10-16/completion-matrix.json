@@ -11614,7 +11614,7 @@
     "commit": "cb8b19eb",
     "watch": "engine"
    },
-   "missing": "It was measured on cb8b19eb, and what it reads has changed since (src/engine/content/attributes-matrix.ts): measure it again"
+   "missing": "It was measured on cb8b19eb, and what it reads has changed since (src/engine/content/attributes-matrix.ts, src/engine/systems/accountlife.ts, src/engine/systems/cardlife.ts, …): measure it again"
   },
   {
    "id": "advice.F2A10-d",
@@ -11689,7 +11689,7 @@
     "commit": "cb8b19eb",
     "watch": "engine"
    },
-   "missing": "It was measured on cb8b19eb, and what it reads has changed since (src/engine/content/attributes-matrix.ts): measure it again"
+   "missing": "It was measured on cb8b19eb, and what it reads has changed since (src/engine/content/attributes-matrix.ts, src/engine/systems/accountlife.ts, src/engine/systems/cardlife.ts, …): measure it again"
   },
   {
    "id": "advice.F2A10-g",
@@ -11741,7 +11741,7 @@
     "commit": "cb8b19eb",
     "watch": "engine"
    },
-   "missing": "It was measured on cb8b19eb, and what it reads has changed since (src/engine/content/attributes-matrix.ts): measure it again"
+   "missing": "It was measured on cb8b19eb, and what it reads has changed since (src/engine/content/attributes-matrix.ts, src/engine/systems/accountlife.ts, src/engine/systems/cardlife.ts, …): measure it again"
   },
   {
    "id": "advice.F2A10-i",
@@ -11817,7 +11817,7 @@
     "commit": "cb8b19eb",
     "watch": "engine"
    },
-   "missing": "It was measured on cb8b19eb, and what it reads has changed since (src/engine/content/attributes-matrix.ts): measure it again"
+   "missing": "It was measured on cb8b19eb, and what it reads has changed since (src/engine/content/attributes-matrix.ts, src/engine/systems/accountlife.ts, src/engine/systems/cardlife.ts, …): measure it again"
   },
   {
    "id": "advice.harness-hospital",
@@ -14200,7 +14200,7 @@
     "commit": "cb8b19eb",
     "watch": "engine"
    },
-   "missing": "It was measured on cb8b19eb, and what it reads has changed since (src/engine/content/attributes-matrix.ts): measure it again"
+   "missing": "It was measured on cb8b19eb, and what it reads has changed since (src/engine/content/attributes-matrix.ts, src/engine/systems/accountlife.ts, src/engine/systems/cardlife.ts, …): measure it again"
   },
   {
    "source": "docs/verification/integration-2026-10-16/criteria.json",
@@ -14619,7 +14619,7 @@
     "commit": "cb8b19eb",
     "watch": "engine"
    },
-   "missing": "It was measured on cb8b19eb, and what it reads has changed since (src/engine/content/attributes-matrix.ts): measure it again"
+   "missing": "It was measured on cb8b19eb, and what it reads has changed since (src/engine/content/attributes-matrix.ts, src/engine/systems/accountlife.ts, src/engine/systems/cardlife.ts, …): measure it again"
   },
   {
    "source": "docs/verification/integration-2026-10-16/criteria.json",
@@ -14921,7 +14921,7 @@
     "commit": "05060742",
     "watch": "app"
    },
-   "missing": "It was measured on 05060742, and what it reads has changed since (src/engine/content/attributes-matrix.ts, src/styles/app.css): measure it again"
+   "missing": "It was measured on 05060742, and what it reads has changed since (src/engine/content/attributes-matrix.ts, src/engine/systems/accountlife.ts, src/engine/systems/cardlife.ts, …): measure it again"
   },
   {
    "source": "docs/verification/integration-2026-10-16/criteria.json",
@@ -14948,7 +14948,7 @@
     "commit": "05060742",
     "watch": "app"
    },
-   "missing": "It was measured on 05060742, and what it reads has changed since (src/engine/content/attributes-matrix.ts, src/styles/app.css): measure it again"
+   "missing": "It was measured on 05060742, and what it reads has changed since (src/engine/content/attributes-matrix.ts, src/engine/systems/accountlife.ts, src/engine/systems/cardlife.ts, …): measure it again"
   },
   {
    "source": "docs/verification/integration-2026-10-16/criteria.json",
@@ -14975,7 +14975,7 @@
     "commit": "cb8b19eb",
     "watch": "engine"
    },
-   "missing": "It was measured on cb8b19eb, and what it reads has changed since (src/engine/content/attributes-matrix.ts): measure it again"
+   "missing": "It was measured on cb8b19eb, and what it reads has changed since (src/engine/content/attributes-matrix.ts, src/engine/systems/accountlife.ts, src/engine/systems/cardlife.ts, …): measure it again"
   },
   {
    "source": "docs/verification/integration-2026-10-16/criteria.json",
@@ -15002,7 +15002,7 @@
     "commit": "859bacdb",
     "watch": "app"
    },
-   "missing": "It was measured on 859bacdb, and what it reads has changed since (src/engine/content/attributes-matrix.ts, src/styles/app.css): measure it again"
+   "missing": "It was measured on 859bacdb, and what it reads has changed since (src/engine/content/attributes-matrix.ts, src/engine/systems/accountlife.ts, src/engine/systems/cardlife.ts, …): measure it again"
   },
   {
    "source": "docs/verification/integration-2026-10-16/criteria.json",
@@ -15285,7 +15285,7 @@
     "commit": "05060742",
     "watch": "app"
    },
-   "missing": "It was measured on 05060742, and what it reads has changed since (src/engine/content/attributes-matrix.ts, src/styles/app.css): measure it again"
+   "missing": "It was measured on 05060742, and what it reads has changed since (src/engine/content/attributes-matrix.ts, src/engine/systems/accountlife.ts, src/engine/systems/cardlife.ts, …): measure it again"
   },
   {
    "source": "docs/verification/integration-2026-10-16/criteria.json",
@@ -15312,7 +15312,7 @@
     "commit": "05060742",
     "watch": "app"
    },
-   "missing": "It was measured on 05060742, and what it reads has changed since (src/engine/content/attributes-matrix.ts, src/styles/app.css): measure it again"
+   "missing": "It was measured on 05060742, and what it reads has changed since (src/engine/content/attributes-matrix.ts, src/engine/systems/accountlife.ts, src/engine/systems/cardlife.ts, …): measure it again"
   },
   {
    "source": "docs/verification/integration-2026-10-16/criteria.json",
@@ -15339,7 +15339,7 @@
     "commit": "05060742",
     "watch": "app"
    },
-   "missing": "It was measured on 05060742, and what it reads has changed since (src/engine/content/attributes-matrix.ts, src/styles/app.css): measure it again"
+   "missing": "It was measured on 05060742, and what it reads has changed since (src/engine/content/attributes-matrix.ts, src/engine/systems/accountlife.ts, src/engine/systems/cardlife.ts, …): measure it again"
   },
   {
    "source": "docs/verification/integration-2026-10-16/criteria.json",
@@ -15366,7 +15366,7 @@
     "commit": "05060742",
     "watch": "app"
    },
-   "missing": "It was measured on 05060742, and what it reads has changed since (src/engine/content/attributes-matrix.ts, src/styles/app.css): measure it again"
+   "missing": "It was measured on 05060742, and what it reads has changed since (src/engine/content/attributes-matrix.ts, src/engine/systems/accountlife.ts, src/engine/systems/cardlife.ts, …): measure it again"
   },
   {
    "source": "docs/verification/integration-2026-10-16/criteria.json",
@@ -15393,7 +15393,7 @@
     "commit": "cb8b19eb",
     "watch": "engine"
    },
-   "missing": "It was measured on cb8b19eb, and what it reads has changed since (src/engine/content/attributes-matrix.ts): measure it again"
+   "missing": "It was measured on cb8b19eb, and what it reads has changed since (src/engine/content/attributes-matrix.ts, src/engine/systems/accountlife.ts, src/engine/systems/cardlife.ts, …): measure it again"
   },
   {
    "source": "docs/verification/integration-2026-10-16/criteria.json",
@@ -15420,7 +15420,7 @@
     "commit": "cb8b19eb",
     "watch": "engine"
    },
-   "missing": "It was measured on cb8b19eb, and what it reads has changed since (src/engine/content/attributes-matrix.ts): measure it again"
+   "missing": "It was measured on cb8b19eb, and what it reads has changed since (src/engine/content/attributes-matrix.ts, src/engine/systems/accountlife.ts, src/engine/systems/cardlife.ts, …): measure it again"
   },
   {
    "source": "docs/verification/integration-2026-10-16/criteria.json",
@@ -15447,7 +15447,7 @@
     "commit": "cb8b19eb",
     "watch": "engine"
    },
-   "missing": "It was measured on cb8b19eb, and what it reads has changed since (src/engine/content/attributes-matrix.ts): measure it again"
+   "missing": "It was measured on cb8b19eb, and what it reads has changed since (src/engine/content/attributes-matrix.ts, src/engine/systems/accountlife.ts, src/engine/systems/cardlife.ts, …): measure it again"
   },
   {
    "source": "docs/verification/integration-2026-10-16/criteria.json",
@@ -15474,7 +15474,7 @@
     "commit": "cb8b19eb",
     "watch": "engine"
    },
-   "missing": "It was measured on cb8b19eb, and what it reads has changed since (src/engine/content/attributes-matrix.ts): measure it again"
+   "missing": "It was measured on cb8b19eb, and what it reads has changed since (src/engine/content/attributes-matrix.ts, src/engine/systems/accountlife.ts, src/engine/systems/cardlife.ts, …): measure it again"
   },
   {
    "source": "docs/verification/integration-2026-10-16/criteria.json",
@@ -15501,7 +15501,7 @@
     "commit": "cb8b19eb",
     "watch": "engine"
    },
-   "missing": "It was measured on cb8b19eb, and what it reads has changed since (src/engine/content/attributes-matrix.ts): measure it again"
+   "missing": "It was measured on cb8b19eb, and what it reads has changed since (src/engine/content/attributes-matrix.ts, src/engine/systems/accountlife.ts, src/engine/systems/cardlife.ts, …): measure it again"
   },
   {
    "source": "docs/verification/integration-2026-10-16/criteria.json",
@@ -15528,7 +15528,7 @@
     "commit": "cb8b19eb",
     "watch": "engine"
    },
-   "missing": "It was measured on cb8b19eb, and what it reads has changed since (src/engine/content/attributes-matrix.ts): measure it again"
+   "missing": "It was measured on cb8b19eb, and what it reads has changed since (src/engine/content/attributes-matrix.ts, src/engine/systems/accountlife.ts, src/engine/systems/cardlife.ts, …): measure it again"
   },
   {
    "source": "docs/verification/integration-2026-10-16/criteria.json",
@@ -15555,7 +15555,7 @@
     "commit": "cb8b19eb",
     "watch": "engine"
    },
-   "missing": "It was measured on cb8b19eb, and what it reads has changed since (src/engine/content/attributes-matrix.ts): measure it again"
+   "missing": "It was measured on cb8b19eb, and what it reads has changed since (src/engine/content/attributes-matrix.ts, src/engine/systems/accountlife.ts, src/engine/systems/cardlife.ts, …): measure it again"
   },
   {
    "source": "docs/verification/integration-2026-10-16/criteria.json",
@@ -15582,7 +15582,7 @@
     "commit": "cb8b19eb",
     "watch": "engine"
    },
-   "missing": "It was measured on cb8b19eb, and what it reads has changed since (src/engine/content/attributes-matrix.ts): measure it again"
+   "missing": "It was measured on cb8b19eb, and what it reads has changed since (src/engine/content/attributes-matrix.ts, src/engine/systems/accountlife.ts, src/engine/systems/cardlife.ts, …): measure it again"
   },
   {
    "source": "docs/verification/integration-2026-10-16/criteria.json",
@@ -15609,7 +15609,7 @@
     "commit": "cb8b19eb",
     "watch": "engine"
    },
-   "missing": "It was measured on cb8b19eb, and what it reads has changed since (src/engine/content/attributes-matrix.ts): measure it again"
+   "missing": "It was measured on cb8b19eb, and what it reads has changed since (src/engine/content/attributes-matrix.ts, src/engine/systems/accountlife.ts, src/engine/systems/cardlife.ts, …): measure it again"
   },
   {
    "source": "docs/verification/integration-2026-10-16/criteria.json",
@@ -15636,7 +15636,7 @@
     "commit": "cb8b19eb",
     "watch": "engine"
    },
-   "missing": "It was measured on cb8b19eb, and what it reads has changed since (src/engine/content/attributes-matrix.ts): measure it again"
+   "missing": "It was measured on cb8b19eb, and what it reads has changed since (src/engine/content/attributes-matrix.ts, src/engine/systems/accountlife.ts, src/engine/systems/cardlife.ts, …): measure it again"
   },
   {
    "source": "docs/verification/integration-2026-10-16/criteria.json",
@@ -15663,7 +15663,7 @@
     "commit": "cb8b19eb",
     "watch": "engine"
    },
-   "missing": "It was measured on cb8b19eb, and what it reads has changed since (src/engine/content/attributes-matrix.ts): measure it again"
+   "missing": "It was measured on cb8b19eb, and what it reads has changed since (src/engine/content/attributes-matrix.ts, src/engine/systems/accountlife.ts, src/engine/systems/cardlife.ts, …): measure it again"
   },
   {
    "source": "docs/verification/integration-2026-10-16/criteria.json",
@@ -15690,7 +15690,7 @@
     "commit": "cb8b19eb",
     "watch": "engine"
    },
-   "missing": "It was measured on cb8b19eb, and what it reads has changed since (src/engine/content/attributes-matrix.ts): measure it again"
+   "missing": "It was measured on cb8b19eb, and what it reads has changed since (src/engine/content/attributes-matrix.ts, src/engine/systems/accountlife.ts, src/engine/systems/cardlife.ts, …): measure it again"
   },
   {
    "source": "docs/verification/integration-2026-10-16/criteria.json",
@@ -15717,7 +15717,7 @@
     "commit": "cb8b19eb",
     "watch": "engine"
    },
-   "missing": "It was measured on cb8b19eb, and what it reads has changed since (src/engine/content/attributes-matrix.ts): measure it again"
+   "missing": "It was measured on cb8b19eb, and what it reads has changed since (src/engine/content/attributes-matrix.ts, src/engine/systems/accountlife.ts, src/engine/systems/cardlife.ts, …): measure it again"
   },
   {
    "source": "docs/verification/integration-2026-10-16/criteria.json",
@@ -15744,7 +15744,7 @@
     "commit": "cb8b19eb",
     "watch": "engine"
    },
-   "missing": "It was measured on cb8b19eb, and what it reads has changed since (src/engine/content/attributes-matrix.ts): measure it again"
+   "missing": "It was measured on cb8b19eb, and what it reads has changed since (src/engine/content/attributes-matrix.ts, src/engine/systems/accountlife.ts, src/engine/systems/cardlife.ts, …): measure it again"
   },
   {
    "source": "docs/verification/integration-2026-10-16/criteria.json",
@@ -15771,7 +15771,7 @@
     "commit": "cb8b19eb",
     "watch": "engine"
    },
-   "missing": "It was measured on cb8b19eb, and what it reads has changed since (src/engine/content/attributes-matrix.ts): measure it again"
+   "missing": "It was measured on cb8b19eb, and what it reads has changed since (src/engine/content/attributes-matrix.ts, src/engine/systems/accountlife.ts, src/engine/systems/cardlife.ts, …): measure it again"
   },
   {
    "source": "docs/verification/integration-2026-10-16/criteria.json",
@@ -15798,7 +15798,7 @@
     "commit": "cb8b19eb",
     "watch": "engine"
    },
-   "missing": "It was measured on cb8b19eb, and what it reads has changed since (src/engine/content/attributes-matrix.ts): measure it again"
+   "missing": "It was measured on cb8b19eb, and what it reads has changed since (src/engine/content/attributes-matrix.ts, src/engine/systems/accountlife.ts, src/engine/systems/cardlife.ts, …): measure it again"
   },
   {
    "source": "docs/verification/integration-2026-10-16/criteria.json",
@@ -15825,7 +15825,7 @@
     "commit": "cb8b19eb",
     "watch": "engine"
    },
-   "missing": "It was measured on cb8b19eb, and what it reads has changed since (src/engine/content/attributes-matrix.ts): measure it again"
+   "missing": "It was measured on cb8b19eb, and what it reads has changed since (src/engine/content/attributes-matrix.ts, src/engine/systems/accountlife.ts, src/engine/systems/cardlife.ts, …): measure it again"
   },
   {
    "source": "docs/verification/integration-2026-10-16/criteria.json",
@@ -15852,7 +15852,7 @@
     "commit": "cb8b19eb",
     "watch": "engine"
    },
-   "missing": "It was measured on cb8b19eb, and what it reads has changed since (src/engine/content/attributes-matrix.ts): measure it again"
+   "missing": "It was measured on cb8b19eb, and what it reads has changed since (src/engine/content/attributes-matrix.ts, src/engine/systems/accountlife.ts, src/engine/systems/cardlife.ts, …): measure it again"
   },
   {
    "source": "docs/verification/integration-2026-10-16/criteria.json",
@@ -15879,7 +15879,7 @@
     "commit": "cb8b19eb",
     "watch": "engine"
    },
-   "missing": "It was measured on cb8b19eb, and what it reads has changed since (src/engine/content/attributes-matrix.ts): measure it again"
+   "missing": "It was measured on cb8b19eb, and what it reads has changed since (src/engine/content/attributes-matrix.ts, src/engine/systems/accountlife.ts, src/engine/systems/cardlife.ts, …): measure it again"
   },
   {
    "source": "docs/verification/integration-2026-10-16/criteria.json",
@@ -15906,7 +15906,7 @@
     "commit": "cb8b19eb",
     "watch": "engine"
    },
-   "missing": "It was measured on cb8b19eb, and what it reads has changed since (src/engine/content/attributes-matrix.ts): measure it again"
+   "missing": "It was measured on cb8b19eb, and what it reads has changed since (src/engine/content/attributes-matrix.ts, src/engine/systems/accountlife.ts, src/engine/systems/cardlife.ts, …): measure it again"
   },
   {
    "source": "docs/verification/integration-2026-10-16/criteria.json",
@@ -15933,7 +15933,7 @@
     "commit": "cb8b19eb",
     "watch": "engine"
    },
-   "missing": "It was measured on cb8b19eb, and what it reads has changed since (src/engine/content/attributes-matrix.ts): measure it again"
+   "missing": "It was measured on cb8b19eb, and what it reads has changed since (src/engine/content/attributes-matrix.ts, src/engine/systems/accountlife.ts, src/engine/systems/cardlife.ts, …): measure it again"
   },
   {
    "source": "docs/verification/integration-2026-10-16/criteria.json",
@@ -15960,7 +15960,7 @@
     "commit": "cb8b19eb",
     "watch": "engine"
    },
-   "missing": "It was measured on cb8b19eb, and what it reads has changed since (src/engine/content/attributes-matrix.ts): measure it again"
+   "missing": "It was measured on cb8b19eb, and what it reads has changed since (src/engine/content/attributes-matrix.ts, src/engine/systems/accountlife.ts, src/engine/systems/cardlife.ts, …): measure it again"
   },
   {
    "source": "docs/verification/integration-2026-10-16/criteria.json",
@@ -15987,7 +15987,7 @@
     "commit": "cb8b19eb",
     "watch": "engine"
    },
-   "missing": "It was measured on cb8b19eb, and what it reads has changed since (src/engine/content/attributes-matrix.ts): measure it again"
+   "missing": "It was measured on cb8b19eb, and what it reads has changed since (src/engine/content/attributes-matrix.ts, src/engine/systems/accountlife.ts, src/engine/systems/cardlife.ts, …): measure it again"
   },
   {
    "source": "docs/verification/integration-2026-10-16/criteria.json",
@@ -16014,7 +16014,7 @@
     "commit": "cb8b19eb",
     "watch": "engine"
    },
-   "missing": "It was measured on cb8b19eb, and what it reads has changed since (src/engine/content/attributes-matrix.ts): measure it again"
+   "missing": "It was measured on cb8b19eb, and what it reads has changed since (src/engine/content/attributes-matrix.ts, src/engine/systems/accountlife.ts, src/engine/systems/cardlife.ts, …): measure it again"
   },
   {
    "source": "docs/verification/integration-2026-10-16/criteria.json",
@@ -16063,7 +16063,7 @@
     "commit": "cb8b19eb",
     "watch": "engine"
    },
-   "missing": "It was measured on cb8b19eb, and what it reads has changed since (src/engine/content/attributes-matrix.ts): measure it again"
+   "missing": "It was measured on cb8b19eb, and what it reads has changed since (src/engine/content/attributes-matrix.ts, src/engine/systems/accountlife.ts, src/engine/systems/cardlife.ts, …): measure it again"
   },
   {
    "source": "docs/verification/integration-2026-10-16/criteria.json",
@@ -16090,7 +16090,7 @@
     "commit": "cb8b19eb",
     "watch": "engine"
    },
-   "missing": "It was measured on cb8b19eb, and what it reads has changed since (src/engine/content/attributes-matrix.ts): measure it again"
+   "missing": "It was measured on cb8b19eb, and what it reads has changed since (src/engine/content/attributes-matrix.ts, src/engine/systems/accountlife.ts, src/engine/systems/cardlife.ts, …): measure it again"
   },
   {
    "source": "docs/verification/integration-2026-10-16/criteria.json",
@@ -16117,7 +16117,7 @@
     "commit": "cb8b19eb",
     "watch": "engine"
    },
-   "missing": "It was measured on cb8b19eb, and what it reads has changed since (src/engine/content/attributes-matrix.ts): measure it again"
+   "missing": "It was measured on cb8b19eb, and what it reads has changed since (src/engine/content/attributes-matrix.ts, src/engine/systems/accountlife.ts, src/engine/systems/cardlife.ts, …): measure it again"
   },
   {
    "source": "docs/verification/integration-2026-10-16/criteria.json",
@@ -16144,7 +16144,7 @@
     "commit": "cb8b19eb",
     "watch": "engine"
    },
-   "missing": "It was measured on cb8b19eb, and what it reads has changed since (src/engine/content/attributes-matrix.ts): measure it again"
+   "missing": "It was measured on cb8b19eb, and what it reads has changed since (src/engine/content/attributes-matrix.ts, src/engine/systems/accountlife.ts, src/engine/systems/cardlife.ts, …): measure it again"
   },
   {
    "source": "docs/verification/integration-2026-10-16/criteria.json",
@@ -16171,7 +16171,7 @@
     "commit": "cb8b19eb",
     "watch": "engine"
    },
-   "missing": "It was measured on cb8b19eb, and what it reads has changed since (src/engine/content/attributes-matrix.ts): measure it again"
+   "missing": "It was measured on cb8b19eb, and what it reads has changed since (src/engine/content/attributes-matrix.ts, src/engine/systems/accountlife.ts, src/engine/systems/cardlife.ts, …): measure it again"
   },
   {
    "source": "docs/verification/integration-2026-10-16/criteria.json",
@@ -16198,7 +16198,7 @@
     "commit": "cb8b19eb",
     "watch": "engine"
    },
-   "missing": "It was measured on cb8b19eb, and what it reads has changed since (src/engine/content/attributes-matrix.ts): measure it again"
+   "missing": "It was measured on cb8b19eb, and what it reads has changed since (src/engine/content/attributes-matrix.ts, src/engine/systems/accountlife.ts, src/engine/systems/cardlife.ts, …): measure it again"
   },
   {
    "source": "docs/verification/integration-2026-10-16/criteria.json",
@@ -16225,7 +16225,7 @@
     "commit": "cb8b19eb",
     "watch": "engine"
    },
-   "missing": "It was measured on cb8b19eb, and what it reads has changed since (src/engine/content/attributes-matrix.ts): measure it again"
+   "missing": "It was measured on cb8b19eb, and what it reads has changed since (src/engine/content/attributes-matrix.ts, src/engine/systems/accountlife.ts, src/engine/systems/cardlife.ts, …): measure it again"
   },
   {
    "source": "docs/verification/integration-2026-10-16/criteria.json",
@@ -16252,7 +16252,7 @@
     "commit": "cb8b19eb",
     "watch": "engine"
    },
-   "missing": "It was measured on cb8b19eb, and what it reads has changed since (src/engine/content/attributes-matrix.ts): measure it again"
+   "missing": "It was measured on cb8b19eb, and what it reads has changed since (src/engine/content/attributes-matrix.ts, src/engine/systems/accountlife.ts, src/engine/systems/cardlife.ts, …): measure it again"
   },
   {
    "source": "docs/verification/integration-2026-10-16/criteria.json",

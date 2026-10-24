@@ -566,7 +566,7 @@
  },
  {
   "surface": "A card’s statement and due-date notices, in the order they come",
-  "where": "What Needs You: Statement Ready for a card, A Card Payment Bounced, A Late Card Payment, Your Card Is Suspended, A Penalty Rate Is Coming, A Penalty Rate, A Default Notice, Your Card Was Charged Off, The Penalty Rate Is Off, Your Card Works Again, Persistent Debt",
+  "where": "What Needs You: Statement Ready for a card, A Card Payment Bounced, A Late Card Payment, Your Card Is Suspended, A Penalty Rate Is Coming, A Penalty Rate, A Default Notice, Your Card Was Charged Off, The Penalty Rate Is Off, Your Card Works Again, Persistent Debt, Card Closed",
   "sources": [
    "src/engine/systems/credit.ts#registerCredit",
    "src/engine/systems/credit.ts#statementWords",
@@ -576,7 +576,8 @@
    "src/engine/systems/credit.ts#persistentDebt",
    "src/engine/systems/credit.ts#scheduleStatement",
    "src/engine/systems/credit.ts#scheduleDue",
-   "src/engine/systems/credit.ts#refundCredit"
+   "src/engine/systems/credit.ts#refundCredit",
+   "src/engine/systems/credit.ts#closeCard"
   ],
   "states": [
    "notification",
@@ -614,6 +615,10 @@
    {
     "kind": "test",
     "ref": "tests/editorial17-money.test.ts: 'six due dates missed at Chase'"
+   },
+   {
+    "kind": "test",
+    "ref": "tests/b26-card-credit-on-close.test.ts"
    }
   ]
  },

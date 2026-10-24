@@ -3347,6 +3347,41 @@
    "readAt": "bf632759"
   },
   {
+   "id": "notice.systems/credit#closeCard",
+   "kind": "notice",
+   "area": "money",
+   "mechanic": true,
+   "where": "A card closing (`closeCard`): Close The Card with nothing owed, a cancellation in its cooling-off period, or the statement once a card being closed is paid off.",
+   "prerequisites": "A card of the player’s owing nothing, being closed.",
+   "reads": "What the card holds: a credit balance, where more was paid than owed (`payCard`, C23), and the current account.",
+   "changes": "The credit sent back to the current account (`refundCredit`), the card closed, the everyday card chosen again (`ensurePrimary`).",
+   "consumers": [
+    {
+     "what": "Money’s cash and net worth count the credit as it moves, never losing it",
+     "at": "src/engine/systems/finance.ts:64"
+    }
+   ],
+   "experienced": "“Card Closed”: at the statement, as it always said, with the credit’s clause where one went back; at once only where a credit went back (“The Chase Freedom Unlimited is closed, and the $500.00 it held as a credit went back to your Chase Total Checking.”).",
+   "saveLoad": "The notice in the save’s notifications; the refund a posting in the ledger, so a load shows it once.",
+   "evidence": {
+    "tests": [
+     "tests/b26-card-credit-on-close.test.ts",
+     "tests/evidence-g11-money.test.ts"
+    ],
+    "comparisons": [
+     "b26 card credit on close: $500.00 over, Close The Card: the checking account up $500.00 and net worth as it stood, where until 2026-10-24 the card closed with the $500.00 on it"
+    ],
+    "mutations": [],
+    "journeys": []
+   },
+   "missing": "None found. Until 2026-10-24 each close set `closedAt` itself and a credit on the card stayed in the closed account, which `cardsOf` and `cardFor` no longer read: Send The Credit To My Account refused it and net worth was down by it for good (found by brief 26’s money trace).",
+   "status": "Implemented And Verified",
+   "why": "",
+   "seeded": false,
+   "readBy": "money",
+   "readAt": "bf0ef776"
+  },
+  {
    "id": "notice.systems/credit#persistentDebt",
    "kind": "notice",
    "area": "money",

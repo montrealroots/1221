@@ -997,11 +997,9 @@ export function registerCredit(sim: Simulation): void {
       }
       if (credit.hardship && card.balance >= 0) { delete credit.hardship; if (credit.suspended === 'hardship' || credit.suspended === 'persistent') delete credit.suspended; }
     }
-    // A card the holder closed is finished once nothing is owed on it.
+    // A card the holder closed is finished once nothing is owed on it, a credit on it sent back first (`closeCard`).
     if (credit.closing !== undefined && card.balance >= 0) {
-      card.closedAt = s.now;
-      ensurePrimary(s, person);
-      if (person.id === s.universe.playerId) s.notify({ category: 'bank', title: 'Card Closed', body: `The ${card.name} is paid off and closed.`, importance: 40 });
+      closeCard(s, person, card, 'statement');
       return;
     }
     statementReady(s, person, card, credit.statementBalance > 0
@@ -1290,7 +1288,25 @@ function refundCredit(sim: Simulation, person: Person, card: Account): Money {
   return credit;
 }
 
-/** What autopay can take: the current account, and savings where it's linked to it. */
+/**
+ * Closes a card now, a credit balance it holds sent back to the current account first (`refundCredit`), as a bank refunds
+ * one when it closes a card. Close The Card with nothing owed and a cancellation in its cooling-off period close through
+ * here at once (`'now'`), and the statement once a card being closed is paid off (`'statement'`, which says so as it
+ * always has). From 2026-10-24 (brief 26's money trace): until then each set `closedAt` itself, and a credit on the card
+ * stayed in the closed account, which `cardsOf` and `cardFor` no longer read, so Send The Credit To My Account refused
+ * it, Money's cash and net worth were down by it, and nothing could reach it again. Measured before the fix on a Chase
+ * card: $500.00 paid over what was owed, Close The Card pressed, the card closed with the $500.00 still on it.
+ */
+export function closeCard(sim: Simulation, person: Person, card: Account, how: 'now' | 'statement'): void {
+  const credit = card.balance > 0 ? refundCredit(sim, person, card) : 0;
+  card.closedAt = sim.now;
+  ensurePrimary(sim, person);
+  if (person.id !== sim.universe.playerId || (how === 'now' && credit <= 0)) return;
+  const into = person.primaryAccountId ? sim.universe.accounts[person.primaryAccountId] : undefined;
+  const back = credit > 0 && into ? `, and the ${formatMoney(credit, saveCurrency(sim.universe))} it held as a credit went back to your ${into.name}` : '';
+  sim.notify({ category: 'bank', title: 'Card Closed', body: `The ${card.name} is ${how === 'statement' ? 'paid off and ' : ''}closed${back}.`, importance: 40 });
+}
+
 /**
  * The account a card's autopay pays from: the one it was set up on (from 2026-10-10; a card from before is pinned to
  * the primary account the first time it's asked). Until then it was whichever account was primary on the due date.

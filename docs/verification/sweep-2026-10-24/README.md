@@ -152,6 +152,45 @@ Brief 25, on the other account's branch, is the career's expansion and isn't beg
 postings' passage, the Equity event, 9 notices and 37 of the Career chapter's promises. Running total: 644 Verified,
 1 Fixed And Verified, 1 Blocked, 499 Not Tested.
 
+### M6: Money And Banking
+
+**Read:** `systems/banking.ts` whole (interest by the day at the nominal rate its crediting earns, the fee and its
+waivers, the month's end, a savings account opened and closed, every move's refusals); `systems/credit.ts` at the
+statement, the due date, the day's interest, the commands and the delinquency, charge-off and persistent-debt paths;
+`systems/lending.ts` at the offers, the switch, the day's overdraft, sixty days below zero and every command;
+`systems/payments.ts`, `cash.ts`, `finance.ts`, `bankmoves.ts`, `cardlife.ts`, `security.ts` and `statements.ts`
+whole or at their handlers; `cardoffers.ts`, `accountlife.ts`, `abroad.ts`, `spending.ts`, `roundups.ts`,
+`obligations.ts` and `homeaccount.ts` at their handlers, refusals and notices; the six money looks. **Ran:** the money
+area's 69 test files, 843 tests, green on `bf0ef776`; with the fix below, the 23 files the card's close and net worth
+touch, and the new test, green.
+
+**Traced for the brief's three questions.** *Repeated presses:* every command refuses its second press in its own
+words (a savings account already open or already on notice, a standing order gone, a card on its way, a switch under
+way, a term already closing on its notice, a dispute reported, a credit with none to send, a cancellation past its
+days). *Cancellation:* closing an account drops the orders into it and the payments to or from it; a bank's own close
+ends the orders from it and says so once; a switch moves every instruction to the new accounts; a cancelled switch
+cancels its review; a repaid loan cancels its item; an order or a payment cancelled is cancelled once. *Reloads and
+jumps:* interest, fees, round-ups, statements, due dates, loan months and the day's draws each run from the item or the
+day they belong to, once; a bill's key, a refund's record and a transfer's arrival are each one thing. **Every balance
+is the sum of its postings** (`netWorth` and each look add them up again each time).
+
+**Found and fixed (1, two parts):** a card closed while it held a credit balance (more paid than owed, `payCard`, C23)
+kept the credit in the closed account, which `cardsOf` and `cardFor` no longer read, so Send The Credit To My Account
+refused it ("The card holds no credit to send back.") and the money was gone from every total for good; and while the
+card was open, net worth counted that credit as nothing. Measured on a Chase card before the fix: $500.00 paid over,
+Close The Card pressed, the card closed with the $500.00 still on it and net worth $500.00 short; a card being closed,
+paid $120.00 over before its statement, closed at the statement with the $120.00 on it. From 2026-10-24 every close of a
+card goes through `closeCard` (`credit.ts`), which sends a credit back to the current account first, from Close The
+Card, the statement and a cancellation in the cooling-off period, and Card Closed says where it went; and `netWorth`
+counts a liability account's credit with the cash. `tests/b26-card-credit-on-close.test.ts` fails on the old code (2 of
+3) and passes with the fix; the 23 related files pass unchanged, the statement's "paid off and closed" among them. The
+notice is a new source of player text, marked in the inventory and claimed by the surfaces matrix; the effects matrix
+has its row. **Found nothing else.**
+
+**Register:** 161 more rows (the money area's 160 and the new notice): 156 Verified and 5 Fixed And Verified
+(`card.close`, `card.statement`, `bank.cancel_new`, `look.networth`, `notice.systems/credit#closeCard`), by inspection
+and the tests named on each. Running total: 800 Verified, 6 Fixed And Verified, 1 Blocked, 339 Not Tested.
+
 ## Final Runs, Gate And Report (M12)
 
 (Written at the close.)

@@ -47,6 +47,11 @@ nothing here builds on it.
     and by the career's 32 test files (423 tests, green); no defect found; two things noted and not changed (an
     engagement status nothing sets; the career's content bound of eleven parts, each once). 644 Verified in all, 499 Not
     Tested.
+  - **M6, money and banking (read on `bf0ef776`):** 161 rows verified by reading and the money area's 69 test files
+    (843 tests, green); 1 defect found and fixed, in two parts: a card closed holding a credit balance kept the credit
+    in the closed account for good, and net worth counted a card's credit as nothing (`closeCard` in `credit.ts`,
+    `netWorth` in `finance.ts`; `tests/b26-card-credit-on-close.test.ts` fails on the old code and passes with the
+    fix). 800 Verified, 6 Fixed And Verified in all, 339 Not Tested.
 - **M12, at the close:** brief 22's final runs again on the finished commit (back to 634), the gate in a clean clone of
   it, the receipt with everything brief 26's §13 asks.
 - **Not merged, not deployed.** The schema stays 94.

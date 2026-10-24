@@ -62,7 +62,10 @@ export function netWorth(sim: Simulation, ownerId: Id): Worth {
   // A deposit counted as money in the bank, and Home said 343,750 kr was in
   // the bank when 112,750 of it was with the landlord.
   for (const account of sim.ledger.accountsOf(ownerId)) {
-    if (isLiability(account.kind)) liabilities += Math.max(0, -account.balance);
+    // A card paid past what it owed holds the difference as a credit, the holder's money (`payCard`, C23): counted with
+    // the cash from 2026-10-24 (brief 26's money trace). Until then a liability account counted only what was owed on
+    // it, so $500.00 paid over on a card took $500.00 off net worth until it was sent back.
+    if (isLiability(account.kind)) { if (account.balance < 0) liabilities += -account.balance; else cash += account.balance; }
     else if (account.kind === 'escrow') {
       held += account.balance;
       const as = account.category ?? '';

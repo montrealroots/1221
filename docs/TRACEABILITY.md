@@ -68,13 +68,13 @@ SLATE has no tests of its screens, and nothing is deployed.
 | `calendar.schedule` | Verified (journey) | Your Own Plans | CalendarWorkspace.tsx | `world/plans.ts` | — | — | — | life.commitment | 34 | journey-life.test.ts |
 | `calendar.skip` | Implemented But Unverified | What’s Coming | TimeControls.tsx | `world/plans.ts` | — | status; resolvedAt | — | — | 4 | — |
 | `card.apply` | Implemented But Unverified | Your Bank | BankCard.tsx | `systems/cardlife.ts` | You have no credit record to apply with.; A card is already on its way.; You need a bank to apply to.; That bank isn’t in the game.; and 3 more (also abroadRefusal, transferRefusal) | — | — | card.arrives | 19 | — |
-| `card.close` | Implemented But Unverified | Your Bank | BankCard.tsx | `systems/cardlife.ts` | You don’t have a card.; It’s already being closed. | — | — | — | 8 | — |
+| `card.close` | Implemented But Unverified | Your Bank | BankCard.tsx | `systems/cardlife.ts` | You don’t have a card.; It’s already being closed. | — | — | — | 9 | — |
 | `card.dispute` | Implemented But Unverified | Your Bank | BankSecurity.tsx | `systems/security.ts` | — (also disputeRefusal) | — | — | bank.fraud_refund | 6 | — |
 | `card.lock` | Verified (journey) | Your Bank | BankSecurity.tsx | `systems/security.ts` | That card is stopped, and a new one is on its way. | — | — | — | 19 | journey-money.test.ts |
 | `card.money_transfer` | Implemented But Unverified | Your Bank | BankCardOffers.tsx | `systems/cardoffers.ts` | You don’t have a card.; The … doesn’t offer money transfers.; You need a checking account for the money to go into.; Enter an amount.; and 1 more | — | Yes | money | 4 | — |
 | `card.plan` | Implemented But Unverified | Your Bank | BankCardOffers.tsx | `systems/cardoffers.ts` | You don’t have a card.; No payment plan terms were found for the ….; A plan runs for ${lengths.length < 2 ? lengths.join('') : ; Only … of purchases can go into a plan.; and 1 more | — | — | — | 4 | — |
 | `card.redeem_rewards` | Verified (journey) | Your Bank | BankCardOffers.tsx | `systems/cardoffers.ts` | The card has no rewards to redeem. | — | Yes | — | 2 | journey-money.test.ts |
-| `card.refund_credit` | Implemented But Unverified | Your Bank | BankCard.tsx | `systems/credit.ts` | The card holds no credit to send back. | — | — | — | 2 | — |
+| `card.refund_credit` | Implemented But Unverified | Your Bank | BankCard.tsx | `systems/credit.ts` | The card holds no credit to send back. | — | — | — | 3 | — |
 | `card.report` | Implemented But Unverified | Your Bank | BankSecurity.tsx | `systems/security.ts` | Choose why: lost, stolen or damaged.; That card is already stopped, and a new one is on its way.; … doesn’t publish what it charges to rush a card, so the game can’t send a rushed one.; No rushed replacement was found for …. | — | Yes | — | 8 | — |
 | `card.request_hardship` | Implemented But Unverified | Your Bank | BankCard.tsx | `systems/cardlife.ts` | You don’t have a card.; You’re already on a payment plan.; You don’t owe anything on the card.; You could pay it off today. A hardship plan is for when you can’t. | — | — | — | 8 | — |
 | `card.request_limit` | Implemented But Unverified | Your Bank | BankCard.tsx | `systems/cardlife.ts` | You don’t have a card.; Enter the limit you want. (also askRefusal) | — | — | — | 4 | — |
@@ -97,7 +97,7 @@ SLATE has no tests of its screens, and nothing is deployed.
 | `documents.report_lost` | Verified (journey) | Passports And ID | Documents.tsx | `systems/documents.ts` | That isn’t a document you hold in force.; You can’t report a status lost. It stays in force whatever happens to the paper. | — | — | — | 17 | journey-life.test.ts |
 | `documents.residence` | Implemented But Unverified | Passports And ID | Documents.tsx | `systems/residence.ts` | — (also routeRefusal) | — | — | — | 5 | — |
 | `documents.settle` | Implemented But Unverified | Passports And ID | Documents.tsx | `systems/residence.ts` | Your bank can’t cover …, so nothing was charged. (also settleRefusal) | — | Yes | — | 3 | — |
-| `finance.pay_card` | Implemented But Unverified | Your Bank | BankCard.tsx | `systems/credit.ts` | You don’t have a card.; You don’t owe anything on it.; Enter an amount to pay.; Your bank accounts have nothing available to pay it with, so nothing was paid. | — | — | — | 19 | — |
+| `finance.pay_card` | Implemented But Unverified | Your Bank | BankCard.tsx | `systems/credit.ts` | You don’t have a card.; You don’t owe anything on it.; Enter an amount to pay.; Your bank accounts have nothing available to pay it with, so nothing was paid. | — | — | — | 20 | — |
 | `finance.set_autopay` | Verified (journey) | Your Bank | BankCard.tsx | `systems/credit.ts` | Autopay pays the minimum or the whole statement.; You don’t have a card.; … takes the whole statement from your account each month. The … can’t carry a balance. | — | — | — | 15 | journey-money.test.ts |
 | `genre.study` | Implemented But Unverified | You As An Actor | BriefPane.tsx ProfileWorkspace.tsx | `systems/engagement.ts` | — (also studyRefusal) | — | — | — | 17 | — |
 | `health.appeal` | Implemented But Unverified | Cover, Benefits And Returns | PapersWorkspace.tsx | `systems/health.ts` | — (also appealRefusal) | — | Yes | school.leave_appeal | 9 | — |
@@ -234,7 +234,7 @@ money, what it sets going next, and how many test files name it or its constant.
 | `card.arrives` | `systems/cardlife.ts` | systems/abroad.ts; systems/bankmoves.ts; systems/cardlife.ts | — | — | credit_card; card.arrives | 1 |
 | `card.due` | `systems/credit.ts` | systems/credit.ts | — | Yes | — | 46 |
 | `card.replaced` | `systems/security.ts` | systems/bankmoves.ts; systems/security.ts | last4; issued; expiresAt | — | — | 8 |
-| `card.statement` | `systems/credit.ts` | systems/credit.ts | — | Yes | — | 29 |
+| `card.statement` | `systems/credit.ts` | systems/credit.ts | — | Yes | — | 31 |
 | `citizenship.decided` | `systems/citizenship.ts` | systems/citizenship.ts | naturalized | — | — | 4 |
 | `documents.decided` | `systems/documents.ts` | systems/documents.ts | documentsOf (added to) | Yes | passport; documents.decided | 5 |
 | `documents.idcard_arrives` | `systems/identity.ts` | systems/identity.ts | documentsOf (added to) | Yes | idcard; documents.idcard_arrives | 1 |
