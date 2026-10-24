@@ -48,3 +48,23 @@ it's shown.
 | C10 | A drawn part in Los Angeles is a trip from home, as work abroad is: the production's flights and hotel (its assumption), the player away for the whole of it, the US rule for permission, and no visa. | GEO-13, GEO-21 |
 | C11 | Casting's draw is keyed by the posting itself (the project, when it was posted, the round), not by the opportunity's place in the save's numbering, so a role added to the game changes no other role's casting. | CAST-11 |
 | C12 | Played: a represented life is put up for a drawn part, tapes, is decided, and booked work and its credit read as any other's; saved and loaded, the same. | CAT-14, CONT-01 |
+
+## Module 3: Real Agencies And Their Agents (2026-10-24)
+
+Part 4, at the owner's word on 2026-10-24: "Use real agents." These checks were drafted before the code, in the session's
+notes, and written here with the module. An agency is a record of its own, and so is each agent, a real one from what
+its agency publishes: a name, a role, a department, an office, the office's own way in, and the day this build read it.
+What a real agent does in a life is the save's own invention and says so; nothing is said of a real agent's
+preferences, list or clients.
+
+| # | Check | Rows |
+|---|---|---|
+| A1 | Agencies and agents are separate records. Each real field is a page's words, held to `sources.json`, or unknown with why. The game's own agent and agency stay, and say they're invented. | REP-01, REP-02, REP-03, PROV-01 |
+| A2 | Stewart Talent's four offices, each its own way in as its page gives it: Chicago's Film/TV/Theatre division takes a picture, a résumé and a reel by mail or email; New York's and Los Angeles' take no unsolicited submissions; Atlanta's two undated pages disagree, so its way in is unknown. Print's form is never an actor's route. | REP-09, REP-07 |
+| A3 | The theatrical agents the New York office's page names are in the game, each in the page's words for name and role, with no specialties, clients, list or room given. Jordan Parente is left out: the owner chose on 2026-10-21 not to depict him, and the plan they agreed on 2026-10-24 left him out. | REP-02, REP-05, REP-10, PROV-06 |
+| A4 | By office: an unsolicited submission to New York is refused in its page's words, and a referral from someone the player worked with reaches its agents, the game's reading that a referral isn't unsolicited, said as one. WME takes no submissions of any kind (its terms); CAA's, UTA's and Curtis Brown's ways in aren't in the pages read; United Agents' is shown, and no one there is in the game while work in the UK isn't. No agency is ranked. | REP-07, REP-13, REP-04 |
+| A5 | A real agent's answer is the game's: how likely an office is to take an actor further is one assumption for every real agent, never a fact about one, and room on a real agent's list is unknown, so it's no factor. | REP-10, PROV-05 |
+| A6 | One agent at a time: a second agent's agreement can't be signed while one is in force, it can be declined, and no pay is ever under two agreements, so commission is never taken twice. | REP-11, REP-08 |
+| A7 | A real agent's words carry no pronoun the pages don't give: the agent's name, and "the office". The game's own agent's sentences stay word for word. | (house rule) |
+| A8 | Played: a life referred to a real New York agent, met, offered, signed, and put up for a role through the office's breakdowns; saved and loaded on the way. | REP-06, REP-05, CONT-01 |
+

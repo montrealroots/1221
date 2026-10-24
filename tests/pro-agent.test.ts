@@ -131,8 +131,9 @@ describe('G1: the notice where he first appears', () => {
     expect(run(sim, 'pro.agent_check').error).toBe('Read the notice about Thomas Ashgrove first: it’s at the top of his panel.');
     expect(run(sim, 'pro.send_materials').error).toBe('Read the notice about Thomas Ashgrove first: it’s at the top of his panel.');
     // Until 2026-10-24 the notice said every project and casting office was invented too, untrue once parts were drawn
-    // from real productions (brief 25's Module 2).
-    expect(AGENT.notice).toBe('Thomas Ashgrove and Halberd Talent are invented for the game, as every agency in it is. His office takes no submissions it hasn’t asked for: it sees your materials through the School’s follow-up after the showcase, or a referral from someone you’ve worked with. He never gets in touch first.');
+    // from real productions (brief 25's Module 2), and then every agency, untrue once Stewart Talent's New York office
+    // and its agents came in (Module 3).
+    expect(AGENT.notice).toBe('Thomas Ashgrove and Halberd Talent are invented for the game. His office takes no submissions it hasn’t asked for: it sees your materials through the School’s follow-up after the showcase, or a referral from someone you’ve worked with. He never gets in touch first.');
     sim.must({ kind: 'pro.agent_notice', payload: {} });
     const r = rel(sim);
     expect(r.stage).toBe('discovered');
@@ -260,7 +261,7 @@ describe('G4 and G6: the factors, the draw, and a reload that can’t redraw', (
       const n = y.reduce((s, o) => s + o.count, 0);
       expect(n).toBeGreaterThanOrEqual(1);
       expect(n).toBeLessThanOrEqual(3);
-      for (const o of y) expect(AGENT.roster.types).toContainEqual(o.type);
+      for (const o of y) expect(AGENT.roster!.types).toContainEqual(o.type);
     }
     expect(new Set(years.map((y) => JSON.stringify(y.map((o) => [o.type, o.count])))).size).toBeGreaterThan(1);
     expect(rosterFor(reload(sim), AGENT, 2027)).toEqual(years[1]);

@@ -1,6 +1,6 @@
 {
  "brief": 25,
- "note": "The dossier’s source register (S01 to S110), parsed from the brief as given, with what this build has itself retrieved. dossier-located: listed by the dossier, not yet read here. read: retrieved here, its facts quoted. blocked: refused here, each attempt kept. excerpt: only an indexed excerpt seen.",
+ "note": "The dossier’s source register (S01 to S110), parsed from the brief as given, with what this build has itself retrieved. dossier-located: listed by the dossier, not yet read here. read: retrieved here, its facts quoted. blocked: refused here, each attempt kept. unreadable: retrieved here, but its words load only in a browser, so its text holds none of them. N01 on: pages this build found that the register didn’t list. excerpt: only an indexed excerpt seen.",
  "sources": [
   {
    "id": "S01",
@@ -387,13 +387,19 @@
    "id": "S24",
    "title": "SAG-AFTRA Los Angeles Commission Guidance",
    "url": "https://www.sagaftra.org/agency-bulletin-la-commission-limitations",
-   "status": "dossier-located",
+   "status": "blocked",
    "dossier": "Listed in the dossier’s register; access date 23 October 2026 unless noted.",
    "retrieved": null,
    "published": null,
    "effective": null,
    "territory": null,
-   "attempts": [],
+   "attempts": [
+    {
+     "at": "2026-10-23",
+     "how": "curl with a browser user agent",
+     "result": "HTTP 403"
+    }
+   ],
    "facts": []
   },
   {
@@ -1478,40 +1484,70 @@
    "id": "S89",
    "title": "CAA Motion Pictures",
    "url": "https://www.caa.com/entertainmenttalent/motion-pictures",
-   "status": "dossier-located",
+   "status": "read",
    "dossier": "Listed in the dossier’s register; access date 23 October 2026 unless noted.",
-   "retrieved": null,
+   "retrieved": "2026-10-23",
    "published": null,
    "effective": null,
-   "territory": null,
-   "attempts": [],
-   "facts": []
+   "territory": "US",
+   "attempts": [
+    {
+     "at": "2026-10-23",
+     "how": "curl with a browser user agent",
+     "result": "HTTP 200"
+    }
+   ],
+   "facts": [
+    {
+     "field": "department",
+     "value": "CAA Motion Pictures represents actors, directors, writers and producers",
+     "quote": "CAA represents the world's premier actors, directors, writers, and producers."
+    }
+   ]
   },
   {
    "id": "S90",
    "title": "UTA Talent",
    "url": "https://www.unitedtalent.com/talent",
-   "status": "dossier-located",
+   "status": "unreadable",
    "dossier": "Listed in the dossier’s register; access date 23 October 2026 unless noted.",
    "retrieved": null,
    "published": null,
    "effective": null,
    "territory": null,
-   "attempts": [],
+   "attempts": [
+    {
+     "at": "2026-10-23",
+     "how": "curl with a browser user agent",
+     "result": "HTTP 200, but the page loads in the browser: its text holds nothing"
+    }
+   ],
    "facts": []
   },
   {
    "id": "S91",
    "title": "WME Acting Talent",
    "url": "https://www.wmeagency.com/expertise/acting-talent/",
-   "status": "dossier-located",
+   "status": "read",
    "dossier": "Listed in the dossier’s register; access date 23 October 2026 unless noted.",
-   "retrieved": null,
+   "retrieved": "2026-10-23",
    "published": null,
    "effective": null,
-   "territory": null,
-   "attempts": [],
-   "facts": []
+   "territory": "US",
+   "attempts": [
+    {
+     "at": "2026-10-23",
+     "how": "curl with a browser user agent",
+     "result": "HTTP 200"
+    }
+   ],
+   "facts": [
+    {
+     "field": "department",
+     "value": "WME represents actors on screen and in voice work",
+     "quote": "WME represents generations of actors who routinely garner major awards."
+    }
+   ]
   },
   {
    "id": "S92",
@@ -1595,78 +1631,149 @@
    "id": "S98",
    "title": "United Agents Roster",
    "url": "https://www.unitedagents.co.uk/agents/",
-   "status": "dossier-located",
+   "status": "read",
    "dossier": "Listed in the dossier’s register; access date 23 October 2026 unless noted.",
-   "retrieved": null,
+   "retrieved": "2026-10-23",
    "published": null,
    "effective": null,
-   "territory": null,
-   "attempts": [],
-   "facts": []
+   "territory": "UK",
+   "attempts": [
+    {
+     "at": "2026-10-23",
+     "how": "curl with a browser user agent",
+     "result": "HTTP 200"
+    }
+   ],
+   "facts": [
+    {
+     "field": "actors",
+     "value": "The Actors department’s agents, each with a title",
+     "quote": "Agents Actors Jess Alford Agent Sophie Austin Agent Joshua Baumring-Gledhill Associate Agent Ellie Blackford Agent Alex Campbell Agent Gabriella Capisani Agent Olivia Carlile Agent Charlotte Davies Agent Lorna Fallowfield Agent Sean Gascoine Agent Duncan Hayes Agent Olivia Homan Agent John Hyslop Agent Ellie James Associate Agent Joel Keating Agent Lindy King Agent Kitty Laing Agent Donovan Mathews Associate Agent Stephanie Moore Agent Cat Palethorpe Associate Agent Lucia Pallaris Agent Carly Peters Agent Alexandra Rae Associate Agent Sarah Roberts Agent Helen Robinson Agent Tessa Schiller Associate Agent Dallas Smith Agent Isaac Storm Agent Maureen Vincent Agent Kirk Whelan-Foran Agent Ruth Young Agent Books"
+    },
+    {
+     "field": "office",
+     "value": "12-26 Lexington Street, London W1F 0LE",
+     "quote": "12-26 Lexington Street, London W1F 0LE"
+    }
+   ]
   },
   {
    "id": "S99",
    "title": "United Agents Submissions",
    "url": "https://www.unitedagents.co.uk/submission-guidelines/",
-   "status": "dossier-located",
+   "status": "read",
    "dossier": "Listed in the dossier’s register; access date 23 October 2026 unless noted.",
-   "retrieved": null,
+   "retrieved": "2026-10-23",
    "published": null,
    "effective": null,
-   "territory": null,
-   "attempts": [],
-   "facts": []
+   "territory": "UK",
+   "attempts": [
+    {
+     "at": "2026-10-23",
+     "how": "curl with a browser user agent",
+     "result": "HTTP 200"
+    }
+   ],
+   "facts": [
+    {
+     "field": "actors-route",
+     "value": "An actor emails a CV, headshot and showreel to one agent; no reply in four to six weeks means unsuccessful",
+     "quote": "To submit your work as an Actor, email your CV, headshot and showreel to one agent only. Contact details can be found on their individual pages. If you have not received a reply within 4-6 weeks, your application has been unsuccessful. We do not accept submission enquiries over the telephone."
+    }
+   ]
   },
   {
    "id": "S100",
    "title": "United Agents: Lindy King",
    "url": "https://www.unitedagents.co.uk/agent/lindy-king/",
-   "status": "dossier-located",
+   "status": "read",
    "dossier": "Listed in the dossier’s register; access date 23 October 2026 unless noted.",
-   "retrieved": null,
+   "retrieved": "2026-10-23",
    "published": null,
    "effective": null,
-   "territory": null,
-   "attempts": [],
-   "facts": []
+   "territory": "UK",
+   "attempts": [
+    {
+     "at": "2026-10-23",
+     "how": "curl with a browser user agent",
+     "result": "HTTP 200"
+    }
+   ],
+   "facts": [
+    {
+     "field": "role",
+     "value": "Lindy King, Agent",
+     "quote": "Lindy King Agent"
+    }
+   ]
   },
   {
    "id": "S101",
    "title": "Stewart Talent About",
    "url": "https://print.stewarttalent.com/about",
-   "status": "dossier-located",
+   "status": "read",
    "dossier": "Listed in the dossier’s register; access date 23 October 2026 unless noted.",
-   "retrieved": null,
+   "retrieved": "2026-10-23",
    "published": null,
    "effective": null,
-   "territory": null,
-   "attempts": [],
-   "facts": []
+   "territory": "US",
+   "attempts": [
+    {
+     "at": "2026-10-23",
+     "how": "curl with a browser user agent",
+     "result": "HTTP 200"
+    }
+   ],
+   "facts": [
+    {
+     "field": "founded",
+     "value": "Founded in Chicago in 1984; offices in Atlanta, Los Angeles and New York",
+     "quote": "Founded in Chicago in 1984, and now with offices in Atlanta, Los Angeles, and New York."
+    }
+   ]
   },
   {
    "id": "S102",
    "title": "Stewart Talent Print Submissions",
    "url": "https://print.stewarttalent.com/submissions",
-   "status": "dossier-located",
+   "status": "read",
    "dossier": "Listed in the dossier’s register; access date 23 October 2026 unless noted.",
-   "retrieved": null,
+   "retrieved": "2026-10-23",
    "published": null,
    "effective": null,
-   "territory": null,
-   "attempts": [],
-   "facts": []
+   "territory": "US",
+   "attempts": [
+    {
+     "at": "2026-10-23",
+     "how": "curl with a browser user agent",
+     "result": "HTTP 200"
+    }
+   ],
+   "facts": [
+    {
+     "field": "print-route",
+     "value": "The print division’s online form: images and measurements",
+     "quote": "The quickest & easiest way is to send your images to us via this page."
+    }
+   ]
   },
   {
    "id": "S103",
    "title": "Curtis Brown UK Actor Submissions",
    "url": "https://www.curtisbrown.co.uk/page/actors-becoming-a-client",
-   "status": "dossier-located",
+   "status": "unreadable",
    "dossier": "Indexed official excerpt consulted; direct retrieval was blocked.",
    "retrieved": null,
    "published": null,
    "effective": null,
    "territory": null,
-   "attempts": [],
+   "attempts": [
+    {
+     "at": "2026-10-23",
+     "how": "curl with a browser user agent",
+     "result": "HTTP 200, but the page loads in the browser: its text holds only its template"
+    }
+   ],
    "facts": []
   },
   {
@@ -1951,6 +2058,236 @@
      "field": "seasons-listed",
      "value": "The page lists seasons one to five, season five’s actors without their characters",
      "quote": "Season 5 Season 4 Season 3 Season 2 Season 1 Season 5 Sir Gary Oldman as Kristin Scott Thomas as Jack Lowden as"
+    }
+   ]
+  },
+  {
+   "id": "N05",
+   "title": "Stewart Talent: Contact, New York",
+   "url": "https://www.stewarttalent.com/site/contact_new_york",
+   "status": "read",
+   "dossier": "Found by this build; not in the dossier’s register.",
+   "retrieved": "2026-10-24",
+   "published": null,
+   "effective": null,
+   "territory": "US",
+   "attempts": [
+    {
+     "at": "2026-10-24",
+     "how": "curl with a browser user agent",
+     "result": "HTTP 200"
+    }
+   ],
+   "facts": [
+    {
+     "field": "office",
+     "value": "1430 Broadway Suite 601, New York, NY 10018",
+     "quote": "NEW YORK 1430 Broadway Suite 601 , New York, NY 10018"
+    },
+    {
+     "field": "route",
+     "value": "Legit and commercial: no unsolicited submissions",
+     "quote": "Submissions Legit / Commercial We do not accept unsolicited submissions at this time."
+    },
+    {
+     "field": "agent",
+     "value": "Dan Patack, Theatrical Agent",
+     "quote": "Dan Patack Theatrical Agent"
+    },
+    {
+     "field": "agent",
+     "value": "Jay Schachter, Theatrical Agent",
+     "quote": "Jay Schachter Theatrical Agent"
+    },
+    {
+     "field": "agent",
+     "value": "Rachel Grandizio, Theatrical Agent",
+     "quote": "Rachel Grandizio Theatrical Agent"
+    },
+    {
+     "field": "agent",
+     "value": "Tim Marshall, Theatrical Agent",
+     "quote": "Tim Marshall Theatrical Agent"
+    },
+    {
+     "field": "agent",
+     "value": "Jordan Parente, Theatrical Agent (not depicted: the owner, 2026-10-21)",
+     "quote": "Jordan Parente Theatrical Agent"
+    },
+    {
+     "field": "director",
+     "value": "Don Birge, Director",
+     "quote": "Don Birge Director"
+    }
+   ]
+  },
+  {
+   "id": "N06",
+   "title": "Stewart Talent: Contact, Los Angeles",
+   "url": "https://www.stewarttalent.com/site/contact_los_angeles",
+   "status": "read",
+   "dossier": "Found by this build; not in the dossier’s register.",
+   "retrieved": "2026-10-24",
+   "published": null,
+   "effective": null,
+   "territory": "US",
+   "attempts": [
+    {
+     "at": "2026-10-24",
+     "how": "curl with a browser user agent",
+     "result": "HTTP 200"
+    }
+   ],
+   "facts": [
+    {
+     "field": "office",
+     "value": "5700 Wilshire Blvd Suite 470, Los Angeles, California 90036",
+     "quote": "LOS ANGELES 5700 Wilshire BLVD Suite 470, Los Angeles, California 90036"
+    },
+    {
+     "field": "route",
+     "value": "Theatrical and commercial: no unsolicited submissions",
+     "quote": "Submissions Theatrical / Commercial We do not accept unsolicited submissions at this time."
+    },
+    {
+     "field": "agents",
+     "value": "Its theatrical agents",
+     "quote": "Daniel Ortega Theatrical Agent"
+    }
+   ]
+  },
+  {
+   "id": "N07",
+   "title": "Stewart Talent: Contact, Chicago",
+   "url": "https://www.stewarttalent.com/contact",
+   "status": "read",
+   "dossier": "Found by this build; not in the dossier’s register.",
+   "retrieved": "2026-10-24",
+   "published": null,
+   "effective": null,
+   "territory": "US",
+   "attempts": [
+    {
+     "at": "2026-10-24",
+     "how": "curl with a browser user agent",
+     "result": "HTTP 200"
+    }
+   ],
+   "facts": [
+    {
+     "field": "office",
+     "value": "400 N. Michigan Ave Suite 700, Chicago, IL 60611",
+     "quote": "CHICAGO 400 N. Michigan Ave Suite 700 , Chicago , IL 60611"
+    },
+    {
+     "field": "route",
+     "value": "Film/TV/Theatre: a picture, a résumé and a reel if you have one, by mail or email",
+     "quote": "Stewart Talent Chicago's Film/TV/Theatre division represents actors from ages 8 to 100. For consideration, please submit a picture, resume and reel (if you have one) via mail or email."
+    }
+   ]
+  },
+  {
+   "id": "N08",
+   "title": "Stewart Talent: Contact, Atlanta",
+   "url": "https://www.stewarttalent.com/site/contact_atlanta",
+   "status": "read",
+   "dossier": "Found by this build; not in the dossier’s register.",
+   "retrieved": "2026-10-24",
+   "published": null,
+   "effective": null,
+   "territory": "US",
+   "attempts": [
+    {
+     "at": "2026-10-24",
+     "how": "curl with a browser user agent",
+     "result": "HTTP 200"
+    }
+   ],
+   "facts": [
+    {
+     "field": "route",
+     "value": "Referrals only",
+     "quote": "Stewart Talent Atlanta is now only accepting talent submissions via referrals."
+    }
+   ]
+  },
+  {
+   "id": "N09",
+   "title": "Stewart Talent: Talent Submission",
+   "url": "https://www.stewarttalent.com/scouting",
+   "status": "read",
+   "dossier": "Found by this build; not in the dossier’s register.",
+   "retrieved": "2026-10-24",
+   "published": null,
+   "effective": null,
+   "territory": "US",
+   "attempts": [
+    {
+     "at": "2026-10-24",
+     "how": "curl with a browser user agent",
+     "result": "HTTP 200"
+    }
+   ],
+   "facts": [
+    {
+     "field": "route-ny",
+     "value": "New York legit: no unsolicited submissions",
+     "quote": "New York Legit We do not accept unsolicited submissions at this time."
+    },
+    {
+     "field": "route-atlanta",
+     "value": "Atlanta Film/TV/Theatre: by email only, full-time residents of the Southeast (against the Atlanta contact page, N08)",
+     "quote": "Stewart Talent Atlanta's Film/TV/Theatre division accepts submissions only via email."
+    }
+   ]
+  },
+  {
+   "id": "N10",
+   "title": "WME: Terms Of Use",
+   "url": "https://www.wmeagency.com/terms",
+   "status": "read",
+   "dossier": "Found by this build; not in the dossier’s register.",
+   "retrieved": "2026-10-24",
+   "published": null,
+   "effective": null,
+   "territory": "US",
+   "attempts": [
+    {
+     "at": "2026-10-24",
+     "how": "curl with a browser user agent",
+     "result": "HTTP 200"
+    }
+   ],
+   "facts": [
+    {
+     "field": "route",
+     "value": "No submissions of any kind",
+     "quote": "WME does not accept submissions of any kind through the Website, email, or otherwise"
+    }
+   ]
+  },
+  {
+   "id": "N11",
+   "title": "Stewart Talent: New York",
+   "url": "https://www.stewarttalent.com/section/new-york",
+   "status": "read",
+   "dossier": "Found by this build; not in the dossier’s register.",
+   "retrieved": "2026-10-24",
+   "published": null,
+   "effective": null,
+   "territory": "US",
+   "attempts": [
+    {
+     "at": "2026-10-24",
+     "how": "curl with a browser user agent",
+     "result": "HTTP 200"
+    }
+   ],
+   "facts": [
+    {
+     "field": "departments",
+     "value": "The New York office’s sections: film/tv/theatre, voiceover, commercial, comedy and others",
+     "quote": "film/tv/theatre voiceover commercial comedy"
     }
    ]
   }

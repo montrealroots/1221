@@ -19,8 +19,8 @@ The state of the work, kept so a session that's interrupted can pick it up. The 
 |---|---|---|
 | 0 | Starting point, register, sources, checker | Done: `f341b3b1` |
 | 1 | The overseas engagement: Sydney, travel, presence, stay, permission, work, pay, return | Done: `6261883e`, `880d4231` (W1 to W12; see below) |
-| 2 | The real industry catalog and simulated roles drawn from it | Done in this commit (C1 to C12; see below) |
-| 3 | Real agencies and agents in the representation engine | Waiting |
+| 2 | The real industry catalog and simulated roles drawn from it | Done: `de50c6e0` (C1 to C12; see below) |
+| 3 | Real agencies and agents in the representation engine | Done in this commit (A1 to A8; see below) |
 | 4 | Contracts, options, episode guarantees, payment states, residuals, renewal and cancellation | Waiting |
 | 5 | Distinct production workflows | Waiting |
 | 6 | Weekly charts, festivals, awards and the anonymous field | Waiting |
@@ -33,6 +33,8 @@ The state of the work, kept so a session that's interrupted can pick it up. The 
 | The ATO's foreign-resident withholding pages (S28) | curl with a browser's user agent, WebFetch, the ATO's public content API: each HTTP 403, 2026-10-23 | Australian tax on pay for work in Australia (GEO-06, GEO-19) | The indexed summary is kept in `sources.json` as an excerpt and not used as a verified rule. Australian tax is shown as not worked out by the game, never as nil. |
 | Cast pages for 9-1-1 (S88) and Abbott Elementary (S86), and Universal's upcoming films (S83) | Each read 2026-10-23: HTTP 200, but the page loads its list in the browser, and its text holds none of it | Characters for those casts; a second studio's slate (CAT-03, CAT-09) | Recorded as unresolved in `CATALOG.md`. 9-1-1's and Abbott Elementary's casts come from their press pages (S80, S109), which name characters; no film from Universal is in the catalog. |
 | Amazon MGM Studios' press dossier (S84) | Located, not read | Per-film details beyond the slate's lines | The slate's own line for each film is the record; what it doesn't give is unknown. |
+| CAA's, UTA's and Curtis Brown's pages (S89's agents, S90, S103), and CAA's home and terms | Each read 2026-10-23 and 2026-10-24: HTTP 200, but the agents and routes load in the browser | Real agents and routes at those three (REP-03) | Each is in Agencies with what its pages gave, and what they didn't as unknown; no one there is in the game. |
+| Stewart Talent's Atlanta office | Its contact page (N08) says referrals only; its submissions page (N09) says email from Southeast residents; neither is dated | Atlanta's way in | Unknown, both pages said. |
 | The 408 visa's charge and processing time (S01) | The page read in full on 2026-10-23; both are loaded by the department's estimator tools, not in the page | What the visa costs and how long it takes | Shown as not known to the game. Any time the game takes for a decision is its labeled assumption. |
 
 ## Module 1, As Built (2026-10-23)
@@ -98,7 +100,39 @@ The state of the work, kept so a session that's interrupted can pick it up. The 
   (CAT-01); a second studio's slate (CAT-03, CAT-09); rechecking a fact when a later module puts it to use (PROV-03); a
   real director's fictional offer (PROV-05); a data update that never erases a save's history (PROV-07).
 
+## Module 3, As Built (2026-10-24)
+
+- **The owner's word**, 2026-10-24: "Use real agents." The plan put to them: Stewart Talent's New York theatrical agents,
+  reached by referral, Jordan Parente left out as on 2026-10-21, Thomas Ashgrove kept as the game's own, and nothing
+  said of a real agent's list, clients or preferences.
+- **The agencies** (`content/agencies.ts`): the six the brief names, each as its own pages had it, office by office:
+  what it does for actors, each office's way in, the agents it names for acting, and what the game does with it. Every
+  field is a page's words held to `sources.json` or unknown with why. Stewart Talent's four offices (New York and Los
+  Angeles take no unsolicited submissions; Chicago takes them by mail or email; Atlanta's two undated pages disagree);
+  United Agents' London route; WME's terms (no submissions of any kind); CAA, UTA and Curtis Brown, whose pages load
+  only in a browser. No agency is ranked, and print's form is never an actor's route.
+- **The agents** (`content/agents.ts`): Dan Patack, Jay Schachter, Rachel Grandizio and Tim Marshall, Theatrical Agents
+  at Stewart Talent's New York office, beside Thomas Ashgrove. A referral is the one way in; a real agent's list isn't
+  a factor (six, not seven), and the chance reads one assumption for every real agent. Each is named, never given a
+  pronoun: the engine's words became the agent's own (`agent.words`), and Ashgrove's sentences stayed word for word.
+- **One agent at a time** (`signRefusal`): a second agreement can't start while one runs; it can be declined.
+- **The tab**: Agents, a chooser that opens on the agent who represents you or one under way, the chosen agent's
+  panels, and Agencies at the foot. The guide's four representation chapters and the tutorial's speak of agents, not
+  of one.
+- **Defects found and fixed**: Ashgrove's notice said "as every agency in it is", untrue once Stewart Talent came in;
+  the agreement's Ending It term said "through him" for every agent; a drawn part's breakdown read "The production’s
+  casting office’s breakdown"; and the agencies' records first showed the player source ids for Atlanta.
+- **Measured**: the full gate in the clone: 492 of 493 test files and 5,659 of 5,660 tests passed. The one failure was
+  the guide's wiring readings again, whose handler lines the breakdown sentence's fix had moved three lines down in
+  `projobs.ts`; recomputed, its two test files pass (44 tests), and so do the gate's 23 checks, which the failure had
+  stopped. The new tests/career-agents.test.ts (11 tests) holds four mutations: the real room read as near, one agent at
+  a time removed, a real agent given pronouns, and the showcase route said for every agent; each fails it..
+- **Left for later, each a register row**: negotiating terms and renewing (REP-06); a direct inquiry to an office that
+  takes one, Chicago's (REP-07); skills as a material and territory beyond New York (REP-08); a submission to United
+  Agents, once UK work is in (REP-13); a real director's offer (PROV-05).
+
 ## Next Concrete Action
 
-Module 3: real agencies and individual agents in the representation engine (Part 7), from their own published pages,
-with agency-specific routes, its criteria written before any code.
+Module 4: contracts and payments (Part 7): what a contract distinguishes and only where it applies, estimated, earned,
+due and settled pay, disputes, reimbursements, residuals as their own records, renewal, cancellation and revival; its
+criteria written before any code.

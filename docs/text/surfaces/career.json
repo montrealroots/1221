@@ -270,7 +270,7 @@
   "evidence": [
    {
     "kind": "test",
-    "ref": "tests/pro-core.test.ts: 'holds one fictional agent and agency, the game’s rule on submissions, the routes it allows and the notice that says they’re invented'"
+    "ref": "tests/pro-core.test.ts: 'holds the game’s own agent and agency, the game’s rule on submissions, the routes it allows and the notice that says they’re invented'"
    }
   ]
  },

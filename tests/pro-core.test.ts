@@ -413,9 +413,10 @@ describe('the history and the bounds', () => {
 });
 
 describe('the agent and the work, as data', () => {
-  it('holds one fictional agent and agency, the game’s rule on submissions, the routes it allows and the notice that says they’re invented', () => {
+  it('holds the game’s own agent and agency, the game’s rule on submissions, the routes it allows and the notice that says they’re invented', () => {
     // Until 2026-10-21 the agent was a real person, held only as published and quoted; the owner chose a fictional one.
-    expect(AGENTS).toHaveLength(1);
+    // Until 2026-10-24 he was the only agent; brief 25's Module 3 put the real ones beside him (tests/career-agents.test.ts).
+    expect(AGENTS.filter((a) => !a.real).map((a) => a.id)).toEqual(['thomas-ashgrove']);
     const agent = agentById('thomas-ashgrove')!;
     const agency = agencyOf(agent);
     expect([agent.name, agency.name, agency.office.city, agency.department.called]).toEqual(['Thomas Ashgrove', 'Halberd Talent', 'New York', 'Legit']);
@@ -423,13 +424,15 @@ describe('the agent and the work, as data', () => {
     expect(agency.policy.words).toBe('His office takes no submissions it hasn’t asked for.');
     expect(agency.policy.unsolicited).toBe('refused');
     expect(agent.routes).toEqual(['showcase', 'referral']);
-    expect(agent.notice).toBe('Thomas Ashgrove and Halberd Talent are invented for the game, as every agency in it is. His office takes no submissions it hasn’t asked for: it sees your materials through the School’s follow-up after the showcase, or a referral from someone you’ve worked with. He never gets in touch first.');
-    expect(agent.roster.basis).toBe('assumption');
+    expect(agent.notice).toBe('Thomas Ashgrove and Halberd Talent are invented for the game. His office takes no submissions it hasn’t asked for: it sees your materials through the School’s follow-up after the showcase, or a referral from someone you’ve worked with. He never gets in touch first.');
+    expect(agent.roster!.basis).toBe('assumption');
     // Nothing private: no contact detail of any kind in the agent's or the agency's data.
     const text = JSON.stringify([AGENTS, AGENCIES]);
     expect(text).not.toMatch(/@|\bphone\b|\(\d{3}\) ?\d{3}-\d{4}|\b\d{3}[-.]\d{3}[-.]\d{4}\b|\bStreet\b|\bAvenue\b|\bclients?\b/i);
-    // Nor the real agent's or agency's names, nor their pages (the research keeps them, as history).
-    expect(text).not.toMatch(/Parente|Stewart Talent|stewarttalent|https?:/);
+    // Nor the real agent brief 19 depicted, nor the agency's pages (the research keeps them, as history).
+    // Until 2026-10-24 Stewart Talent couldn't appear either; from then its New York office and four of its agents do, at
+    // the owner's word ("Use real agents."), and Jordan Parente still doesn't (tests/career-agents.test.ts).
+    expect(text).not.toMatch(/Parente|stewarttalent|https?:/);
   });
 
   it('prices each SAG-AFTRA day rate by its contract year, Low Budget at 65% and Ultra Low Budget at 20% of the day performer’s, and holds the rest at the figure on file', () => {
@@ -494,9 +497,13 @@ describe('the agent and the work, as data', () => {
   });
 
   it('says Equity’s 90 days one way in the agreement’s Ending It term, the button’s refusal, the ending’s record and the guide: no real offer of covered work through him', () => {
-    expect(AGREEMENT_TERMS.find((t) => t.id === 'termination')!.words).toContain('if 90 days pass with no real offer of covered work through him,');
-    expect(readFileSync('src/engine/systems/proagent.ts', 'utf8').match(/no real offer of covered work[^`’,.]*/g)!.map((x) => x.trim())).toEqual(Array(2).fill('no real offer of covered work through him'));
-    expect(readFileSync('src/engine/content/guide/career.ts', 'utf8').match(/no real offer of covered work[^`’,.]*/g)!.map((x) => x.trim())).toEqual(Array(2).fill('no real offer of covered work through him'));
+    // The term is every agent's, so it names none (from 2026-10-24, brief 25's Module 3; until then "through him").
+    expect(AGREEMENT_TERMS.find((t) => t.id === 'termination')!.words).toContain('if 90 days pass with no real offer of covered work through the agent,');
+    // The engine's two say it in the agent's words (from 2026-10-24): "through him" for the game's own agent, the name for
+    // a real one, which tests/career-agents.test.ts holds.
+    expect(readFileSync('src/engine/systems/proagent.ts', 'utf8').match(/no real offer of covered work[^`’,.]*/g)!.map((x) => x.trim())).toEqual(Array(2).fill('no real offer of covered work through ${agent'));
+    // The guide says the rule of any agent, and quotes the game's own words to Thomas Ashgrove's client (from 2026-10-24).
+    expect(readFileSync('src/engine/content/guide/career.ts', 'utf8').match(/no real offer of covered work[^`’,.]*/g)!.map((x) => x.trim())).toEqual(['no real offer of covered work through the agent', 'no real offer of covered work through him']);
   });
 
   it('gives every project a fictional company and casting office but a part drawn from a real production, the game’s genres, a rate that is verified or assumed, and every agreement term a basis', () => {

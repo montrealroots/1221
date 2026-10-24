@@ -288,17 +288,17 @@
  },
  "src/engine/systems/projobs.ts#post": {
   "status": "Rewritten",
-  "hash": "a28720469422",
-  "on": "2026-10-21",
-  "evidence": "Written for brief 20's D4 to docs/STYLE.md and docs/GLOSSARY.md; read where the player meets it in tests/b20-career-history.test.ts (the record's line, the card's line and his notice) and tests/pro-work.test.ts",
-  "first": "Rewritten And Verified"
+  "hash": "c2b730d4009b",
+  "on": "2026-10-24",
+  "evidence": "Written for brief 25's Module 3 (real agencies and agents) to docs/STYLE.md and docs/GLOSSARY.md, with no pronoun for a real agent and the game's own agent's words unchanged; read where the player meets it in tests/career-agents.test.ts (the Representation tab drawn with Dan Patack chosen, the notices and history of a played referral, meeting, offer and signing) and in tests/pro-representation-screen.test.ts, tests/journey-agent.test.ts and tests/pro-agent.test.ts for Thomas Ashgrove, with tools/voice-check.mjs, tools/tics.mjs, tools/title-case.mjs, tools/plural-check.mjs and tools/spelling.mjs passing",
+  "first": "Pending"
  },
  "src/engine/systems/projobs.ts#post [opportunity]": {
   "status": "Rewritten",
-  "hash": "07808f5bb0eb",
-  "on": "2026-10-21",
-  "evidence": "Written for brief 20's D4 to docs/STYLE.md and docs/GLOSSARY.md; read where the player meets it in tests/b20-career-history.test.ts (the record's line, the card's line and his notice) and tests/pro-work.test.ts",
-  "first": "Rewritten And Verified"
+  "hash": "56e0f233f468",
+  "on": "2026-10-24",
+  "evidence": "Written for brief 25's Module 3 (real agencies and agents) to docs/STYLE.md and docs/GLOSSARY.md, with no pronoun for a real agent and the game's own agent's words unchanged; read where the player meets it in tests/career-agents.test.ts (the Representation tab drawn with Dan Patack chosen, the notices and history of a played referral, meeting, offer and signing) and in tests/pro-representation-screen.test.ts, tests/journey-agent.test.ts and tests/pro-agent.test.ts for Thomas Ashgrove, with tools/voice-check.mjs, tools/tics.mjs, tools/title-case.mjs, tools/plural-check.mjs and tools/spelling.mjs passing",
+  "first": "Pending"
  },
  "src/engine/systems/projobs.ts#prepareRefusal": {
   "status": "Rewritten",

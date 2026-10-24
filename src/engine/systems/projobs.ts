@@ -1083,7 +1083,10 @@ function post(sim: Simulation, person: Person, t: ProjectTemplate, at: Instant, 
   (pro.lastPosted ??= {})[t.id] = { id: o.id, postedAt: at, status: 'open' };
   const agent = agentFor(o);
   const again = o.again ? ` again, a new casting of the part. ${lastTimeWords(o.again)}` : '.';
-  note(sim, person, o, { kind: 'opportunity', key: 'posted', words: agent ? `${castingAs(t)}’s breakdown for ${t.role.part} in ${t.project} came to ${agent.name}${again}` : `${castingAs(t)} posted ${t.role.part} in ${t.project}${again}` });
+  // A casting office named by its role ("the production’s casting office", a part drawn from a real production) takes no
+  // second possessive: until 2026-10-24 it read "The production’s casting office’s breakdown for Reese Pike".
+  const breakdown = t.casting.startsWith('the ') ? `The breakdown for ${t.role.part} in ${t.project}, from ${t.casting},` : `${castingAs(t)}’s breakdown for ${t.role.part} in ${t.project}`;
+  note(sim, person, o, { kind: 'opportunity', key: 'posted', words: agent ? `${breakdown} came to ${agent.name}${again}` : `${castingAs(t)} posted ${t.role.part} in ${t.project}${again}` });
   return o;
 }
 

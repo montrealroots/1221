@@ -1,4 +1,4 @@
-# Read First: Brief 25, The Master Career Build, Modules 1 (Work Abroad) And 2 (The Real Catalog) Done, 2026-10-24
+# Read First: Brief 25, The Master Career Build, Modules 1 To 3 (Work Abroad, The Real Catalog, Real Agents) Done, 2026-10-24
 
 **This section is the current status, and where a new session starts.** The owner gave brief 25, "SLATE — Master
 Career Build Command", with its research dossier (Sections 1 to 29), on `main` after #63. It is kept verbatim at
@@ -50,13 +50,24 @@ occupations or parental leave.
   The one failure was the guide's wiring readings, whose handler lines the text fix's comments had moved down six lines
   in `projobs.ts`; recomputed, its two test files pass (44 tests), and so do the gate's 23 checks, which the failure had
   stopped.
-- **Register:** 43 of 290 rows Implemented And Verified (24 at Module 1's end).
-- **Next:** Module 3, real agencies and agents (Part 4), from their own pages: Stewart Talent's four offices and their
-  routes, WME's terms, United Agents' route, the others' unknown. The owner said on 2026-10-24 to use real agents, on the
-  plan put to them: Stewart Talent's New York theatrical agents reached by referral, Jordan Parente left out as on
-  2026-10-21, Thomas Ashgrove kept as the game's own, and nothing said of a real agent's list, clients or preferences;
-  then contracts and residuals, production workflows,
-  charts and awards, and the time loop, tutorials, playthroughs and the final gate, each in the checkpoint's table.
+- **Module 3, real agencies and agents** (the commit after `de50c6e0`): at the owner's word on 2026-10-24 ("Use
+  real agents."), Stewart Talent's New York theatrical agents Dan Patack, Jay Schachter, Rachel Grandizio and Tim
+  Marshall are in the game beside Thomas Ashgrove, reached by a referral, named and never given a pronoun, with nothing
+  said of a list, clients or preferences; Jordan Parente is left out, as the owner chose on 2026-10-21. Agencies, on the
+  Representation tab, gives the six agencies the brief names as their own pages had them, office by office. One agent at
+  a time: a second agreement can't start while one runs.
+- **Defects found on the way and fixed:** Ashgrove's notice said "as every agency in it is"; the agreement's Ending It
+  term said "through him" for every agent; a drawn part's breakdown read "The production’s casting office’s breakdown".
+- **Measured (Module 3):** the full gate in the clone: 492 of 493 test files and 5,659 of 5,660 tests passed. The one
+  failure was the guide's wiring readings again, whose handler lines the breakdown sentence's fix had moved three lines
+  down in `projobs.ts`; recomputed, its two test files pass (44 tests), and so do the gate's 23 checks, which the
+  failure had stopped. The new tests/career-agents.test.ts (11 tests) holds four mutations: the real room read as near,
+  one agent at a time removed, a real agent given pronouns, and the showcase route said for every agent; each fails it.
+- **Register:** 52 of 290 rows Implemented And Verified (43 at Module 2's end, 24 at Module 1's).
+- **Next:** Module 4, contracts and payments (Part 7): what a contract distinguishes and only where it applies,
+  estimated, earned, due and settled pay, disputes, reimbursements, residuals as their own records, renewal,
+  cancellation and revival; then production workflows, charts and awards, and the time loop, tutorials, playthroughs
+  and the final gate, each in the checkpoint's table.
 
 # Earlier: Brief 24, UI Alignment, Home Spacing And Navigation Cleanup, Merged, 2026-10-23
 

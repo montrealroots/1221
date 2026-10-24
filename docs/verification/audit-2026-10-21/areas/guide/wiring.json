@@ -569,7 +569,7 @@
    "kind": "pro.prepare",
    "payload": "{ ...target, step }",
    "verdict": "Right",
-   "handler": "src/engine/systems/projobs.ts:1743"
+   "handler": "src/engine/systems/projobs.ts:1746"
   },
   {
    "file": "src/ui/career/OpportunitiesPane.tsx",
@@ -579,7 +579,7 @@
    "kind": "pro.accept_offer",
    "payload": "{ opportunityId: o.id }",
    "verdict": "Right",
-   "handler": "src/engine/systems/projobs.ts:1786"
+   "handler": "src/engine/systems/projobs.ts:1789"
   },
   {
    "file": "src/ui/career/OpportunitiesPane.tsx",
@@ -589,7 +589,7 @@
    "kind": "pro.move_audition",
    "payload": "{ opportunityId: o.id }",
    "verdict": "Right",
-   "handler": "src/engine/systems/projobs.ts:1768"
+   "handler": "src/engine/systems/projobs.ts:1771"
   },
   {
    "file": "src/ui/career/OpportunitiesPane.tsx",
@@ -599,7 +599,7 @@
    "kind": "pro.request_outside_work",
    "payload": "{ opportunityId: o.id }",
    "verdict": "Right",
-   "handler": "src/engine/systems/projobs.ts:1835"
+   "handler": "src/engine/systems/projobs.ts:1838"
   },
   {
    "file": "src/ui/career/OpportunitiesPane.tsx",
@@ -609,7 +609,7 @@
    "kind": "pro.decline_offer",
    "payload": "{ opportunityId: o.id }",
    "verdict": "Right",
-   "handler": "src/engine/systems/projobs.ts:1823"
+   "handler": "src/engine/systems/projobs.ts:1826"
   },
   {
    "file": "src/ui/career/OpportunitiesPane.tsx",
@@ -619,7 +619,7 @@
    "kind": "pro.submit",
    "payload": "{ opportunityId: o.id }",
    "verdict": "Right",
-   "handler": "src/engine/systems/projobs.ts:1734"
+   "handler": "src/engine/systems/projobs.ts:1737"
   },
   {
    "file": "src/ui/career/OpportunitiesPane.tsx",
@@ -629,7 +629,18 @@
    "kind": "pro.tape_audition",
    "payload": "{ opportunityId: o.id }",
    "verdict": "Right",
-   "handler": "src/engine/systems/projobs.ts:1753"
+   "handler": "src/engine/systems/projobs.ts:1756"
+  },
+  {
+   "file": "src/ui/career/RepresentationPane.tsx",
+   "control": "<Gated onClick>",
+   "feature": "pro.supply_material",
+   "label": "{`Send What ${officeTitle(agent)} Asked For`}",
+   "kind": "pro.supply_material",
+   "payload": "{ agentId: agent.id }",
+   "verdict": "Right",
+   "handler": "src/engine/systems/proagent.ts:1124",
+   "note": "The label names the office as the agent’s panel does: His Office for the game’s own agent, The Office for a real one (from 2026-10-24). It sends what that office asked for, and nothing else."
   },
   {
    "file": "src/ui/career/RepresentationPane.tsx",
@@ -639,7 +650,7 @@
    "kind": "pro.end_agreement",
    "payload": "{ agentId: agent.id, how }",
    "verdict": "Right",
-   "handler": "src/engine/systems/proagent.ts:1146",
+   "handler": "src/engine/systems/proagent.ts:1193",
    "note": "One button for each way an agreement ends (`ends`: by agreement, no offer in its days, under ten days' work), each sending its own `how`."
   },
   {
@@ -650,7 +661,7 @@
    "kind": "pro.accept_agreement",
    "payload": "{ agentId: agent.id }",
    "verdict": "Right",
-   "handler": "src/engine/systems/proagent.ts:1113"
+   "handler": "src/engine/systems/proagent.ts:1160"
   },
   {
    "file": "src/ui/career/RepresentationPane.tsx",
@@ -660,7 +671,7 @@
    "kind": "pro.ask_referral",
    "payload": "{ agentId: agent.id, engagementId: j.engagementId }",
    "verdict": "Right",
-   "handler": "src/engine/systems/proagent.ts:1037"
+   "handler": "src/engine/systems/proagent.ts:1084"
   },
   {
    "file": "src/ui/career/RepresentationPane.tsx",
@@ -670,7 +681,7 @@
    "kind": "pro.ask_to_move",
    "payload": "{ meetingId: m.id }",
    "verdict": "Right",
-   "handler": "src/engine/systems/proagent.ts:1097"
+   "handler": "src/engine/systems/proagent.ts:1144"
   },
   {
    "file": "src/ui/career/RepresentationPane.tsx",
@@ -680,7 +691,7 @@
    "kind": "pro.agent_check",
    "payload": "{ agentId: agent.id }",
    "verdict": "Right",
-   "handler": "src/engine/systems/proagent.ts:1021"
+   "handler": "src/engine/systems/proagent.ts:1068"
   },
   {
    "file": "src/ui/career/RepresentationPane.tsx",
@@ -690,7 +701,7 @@
    "kind": "pro.decline_agreement",
    "payload": "{ agentId: agent.id }",
    "verdict": "Right",
-   "handler": "src/engine/systems/proagent.ts:1132"
+   "handler": "src/engine/systems/proagent.ts:1179"
   },
   {
    "file": "src/ui/career/RepresentationPane.tsx",
@@ -700,17 +711,7 @@
    "kind": "pro.agent_notice",
    "payload": "{ agentId: agent.id }",
    "verdict": "Right",
-   "handler": "src/engine/systems/proagent.ts:1010"
-  },
-  {
-   "file": "src/ui/career/RepresentationPane.tsx",
-   "control": "<Gated onClick>",
-   "feature": "pro.supply_material",
-   "label": "Send What His Office Asked For",
-   "kind": "pro.supply_material",
-   "payload": "{ agentId: agent.id }",
-   "verdict": "Right",
-   "handler": "src/engine/systems/proagent.ts:1077"
+   "handler": "src/engine/systems/proagent.ts:1057"
   },
   {
    "file": "src/ui/career/RepresentationPane.tsx",
@@ -720,7 +721,7 @@
    "kind": "pro.send_materials",
    "payload": "{ agentId: agent.id }",
    "verdict": "Right",
-   "handler": "src/engine/systems/proagent.ts:1054"
+   "handler": "src/engine/systems/proagent.ts:1101"
   },
   {
    "file": "src/ui/career/SchoolShowcase.tsx",
@@ -2033,7 +2034,7 @@
    "kind": "pro.accept_offer",
    "payload": "{ opportunityId: o.id }",
    "verdict": "Right",
-   "handler": "src/engine/systems/projobs.ts:1786"
+   "handler": "src/engine/systems/projobs.ts:1789"
   },
   {
    "file": "src/engine/systems/projobs.ts",
@@ -2041,7 +2042,7 @@
    "kind": "pro.decline_offer",
    "payload": "{ opportunityId: o.id }",
    "verdict": "Right",
-   "handler": "src/engine/systems/projobs.ts:1823"
+   "handler": "src/engine/systems/projobs.ts:1826"
   },
   {
    "file": "src/engine/systems/taxreturn.ts",
@@ -2060,7 +2061,7 @@
    "kind": "pro.ask_to_move",
    "payload": "(item) => ({ meetingId: item.payload.meetingId })",
    "verdict": "Right",
-   "handler": "src/engine/systems/proagent.ts:1097"
+   "handler": "src/engine/systems/proagent.ts:1144"
   },
   {
    "file": "src/engine/world/clock.ts",

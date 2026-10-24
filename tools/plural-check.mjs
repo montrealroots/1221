@@ -43,6 +43,9 @@ const ALLOWED = {
   'src/engine/systems/feedback.ts': ['${ordinal(run)} time', '${p.label} piece', '${ordinal(n)} time', '${cap(aOrdinal(n))} time', '${aOrdinal(n)} time',
     // Ordinals (from 2026-10-20, brief 17): "the seventh note on your lines", "the fourth piece running".
     '${ordinal(n)} note', '${ordinal(n)} piece running', '${cap(ordinal(n))} piece running'],
+  // A possessive, not a count: "his offer", or "Dan Patack’s offer" for a real agent (from 2026-10-24, brief 25's
+  // Module 3, the agent's words in `content/agents.ts`).
+  'src/engine/systems/proagent.ts': ['${agent.words.his} offer', '${capital(agent.words.his)} offer'],
   // "the 2nd time they’ve asked", from the count kept on the classmate (brief 17, `asked`); until then the moments'.
   'src/engine/systems/classmates.ts': ['${nth(n + 1)} time'],
   // Figures printed to a decimal place read correctly at one: "1.0 hours".
