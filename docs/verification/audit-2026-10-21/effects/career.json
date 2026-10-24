@@ -2168,6 +2168,100 @@
    "status": "Implemented And Verified",
    "why": "",
    "prior": null
+  },
+  {
+   "id": "pro.ask_pay",
+   "kind": "command",
+   "area": "career",
+   "mechanic": true,
+   "seeded": false,
+   "readBy": "career",
+   "readAt": "brief 25",
+   "where": "Career, Work: Ask About It under a payment that's Overdue, grayed with askRefusal's words.",
+   "prerequisites": "A payment past its payday and unpaid, not asked about already (`askRefusal`).",
+   "reads": "The payment's due, its record (received, in trust) and whether it was asked about.",
+   "changes": "The payment marked asked, with the answer: paid within three business days (the game's assumption); its payday moved up to the answer where it was later; a line in the engagement's history.",
+   "consumers": [
+    {
+     "what": "the payment's state reads Disputed",
+     "at": "src/engine/systems/contracts.ts:220"
+    },
+    {
+     "what": "the Work tab says who was asked and when it'll pay",
+     "at": "src/ui/career/WorkPane.tsx:100"
+    },
+    {
+     "what": "the payroll pays it at the moved payday, once",
+     "at": "src/engine/systems/propay.ts:764"
+    }
+   ],
+   "experienced": "The row's state turns Disputed with the answer's date, and the pay lands on that day.",
+   "saveLoad": "The professional record (`person.pro`: each engagement's `contract`, `allowances` and payments, and `residuals`) and the calendar's pending `pro.*` items are in the save; every handler reads its record's own state (a status, a key, a paid settlement) before acting, so a load runs nothing twice; the series' seasons are worked out from the seed, so a reload decides them the same. Held across a save and a load at each stage by tests/career-contracts.test.ts.",
+   "evidence": {
+    "tests": [
+     "tests/career-contracts.test.ts"
+    ],
+    "comparisons": [],
+    "mutations": [],
+    "journeys": [
+     "tests/career-contracts.test.ts"
+    ]
+   },
+   "missing": "A producer who never pays, a claim with the state's labor department and a lawyer's letter aren't modeled.",
+   "status": "Implemented And Verified",
+   "why": "",
+   "prior": null
+  },
+  {
+   "id": "pro.series",
+   "kind": "reactor",
+   "area": "career",
+   "mechanic": true,
+   "seeded": false,
+   "readBy": "career",
+   "readAt": "brief 25",
+   "where": "The clock, at the first stop after each May 15 from 2030 (`onPassage`): the network's word on The Calloway Files, as a notice and on the Work tab.",
+   "prerequisites": "The player's life; a decision moment passed since the last stop; the series' order run out (seasons through the one beginning in 2029 are ordered).",
+   "reads": "The series' decisions worked out from the seed (`decisionsTo`, decider `pro.series`), the player's castings, bookings and options in it.",
+   "changes": "Canceled: castings in it closed as withdrawn, work booked for days not yet done called off with nothing owed, an option on its next season lapsed once; renewed or revived: nothing booked, the player told where they've worked in it, an open option's contract noting it.",
+   "consumers": [
+    {
+     "what": "the week's postings cast a series part only while a season is made",
+     "at": "src/engine/systems/projobs.ts:522"
+    },
+    {
+     "what": "a casting closed",
+     "at": "src/engine/systems/series.ts:217"
+    },
+    {
+     "what": "work called off, its days worked still paid",
+     "at": "src/engine/systems/series.ts:221"
+    },
+    {
+     "what": "the option lapses with the series",
+     "at": "src/engine/systems/series.ts:226"
+    },
+    {
+     "what": "the contract's fold says the series' word so far",
+     "at": "src/ui/career/WorkPane.tsx:280"
+    }
+   ],
+   "experienced": "A notice the day the network speaks (“The Calloway Files Is Canceled”, “Is Renewed”, “Is Back”); a casting closed and booked work called off with the reason; the series' seasons under The Contract.",
+   "saveLoad": "The professional record (`person.pro`: each engagement's `contract`, `allowances` and payments, and `residuals`) and the calendar's pending `pro.*` items are in the save; every handler reads its record's own state (a status, a key, a paid settlement) before acting, so a load runs nothing twice; the series' seasons are worked out from the seed, so a reload decides them the same. Held across a save and a load at each stage by tests/career-contracts.test.ts.",
+   "evidence": {
+    "tests": [
+     "tests/career-contracts.test.ts"
+    ],
+    "comparisons": [],
+    "mutations": [],
+    "journeys": [
+     "tests/career-contracts.test.ts"
+    ]
+   },
+   "missing": "A real series' renewals aren't simulated: 9-1-1's and Abbott Elementary's parts are guest parts in seasons the game imagines.",
+   "status": "Implemented And Verified",
+   "why": "",
+   "prior": null
   }
  ],
  "promises": [

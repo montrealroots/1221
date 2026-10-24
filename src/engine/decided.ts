@@ -47,6 +47,10 @@ import { AGENTS } from './content/agents';
 import { GATE, LEVELS, chancesFor, drawOf, offerOutcome, replyOutcome, rosterFor } from './systems/proagent';
 import { castingDraw, postingsAt } from './systems/projobs';
 import { PROJECTS } from './content/careerwork';
+import { SERIES } from './content/series';
+import { decisionsTo, episodeDrawn, optionDrawn } from './systems/series';
+import { lateDays, rerunDrawn } from './systems/contracts';
+import type { Engagement } from './systems/pro';
 
 // ---------------------------------------------------------------------------
 // The sky
@@ -650,4 +654,80 @@ defineDecider<{ sim: Simulation; band: number; fit: number; kind: number }, stri
     const b = (['unready', 'working', 'strong', 'exceptional'] as const)[band]!;
     return (['callback', 'final'] as const).map((round) => Array.from({ length: 40 }, (_, n) => (castingDraw(sim, { postedAt: sim.now + n * 7 * 86_400_000, projectId: PROJECTS[kind]!.id }, round, b, fit).yes ? '1' : '0')).join('')).join(' ');
   },
+});
+
+// ---------------------------------------------------------------------------------------------------------------------
+// A series' seasons and what a contract brings (from 2026-10-24, brief 25's Module 4, `systems/series.ts`,
+// `systems/contracts.ts`)
+// ---------------------------------------------------------------------------------------------------------------------
+
+/** TEST SETUP for the sweep: an engagement judged at a band on its one day worked, or with none worked. */
+const judged = (id: string, band: number): Engagement => ({
+  id, opportunityId: `o-${id}`, projectId: 'calloway-files-whitlock', role: 'Assistant DA Whitlock', status: 'working', days: [], pay: [], history: [], counts: {},
+  log: band < 0 ? [] : [{ day: 0, at: 0, status: 'worked', band: (['unready', 'working', 'strong', 'exceptional'] as const)[band]! }],
+});
+
+defineDecider<{ sim: Simulation; year: number; renew: number }, string>({
+  id: 'pro.series',
+  decides: 'The network’s word on a series each May after its order runs out: another season, no more, or a canceled one back, by the series and the year, at its chances.',
+  drawnIn: 'src/engine/systems/series.ts',
+  reads: {
+    // How far on: each May adds its own word.
+    year: (o, t) => ({ ...o, year: 2030 + Math.round(t * 15) }),
+    // The network's chance of another season.
+    renew: (o, t) => ({ ...o, renew: t }),
+    world: (o, t) => ({ ...o, sim: atYale(Math.round(t * 20)) }),
+  },
+  sample: (seed) => ({ sim: atYale(seed), year: 2034 + (seed % 6), renew: SERIES[0]!.chance.renew }),
+  decide: ({ sim, year, renew }) => decisionsTo(sim, { ...SERIES[0]!, chance: { ...SERIES[0]!.chance, renew } }, year).map((d) => `${d.year}:${d.what}`).join(' '),
+});
+
+defineDecider<{ sim: Simulation; band: number }, string>({
+  id: 'pro.episode',
+  decides: 'A recurring part called for a further episode or not: its chance by the best the work was judged at, and a draw by the engagement and the episode.',
+  drawnIn: 'src/engine/systems/series.ts',
+  reads: {
+    // The best band so far, or none worked: a part that plays well is written for again.
+    band: (o, t) => ({ ...o, band: Math.round(t * 4) - 1 }),
+    world: (o, t) => ({ ...o, sim: atYale(Math.round(t * 20)) }),
+  },
+  sample: (seed) => ({ sim: atYale(seed), band: (seed % 5) - 1 }),
+  decide: ({ sim, band }) => Array.from({ length: 40 }, (_, n) => (episodeDrawn(sim, judged(`e${n}`, band), 5 + (n % 8)) ? '1' : '0')).join(''),
+});
+
+defineDecider<{ sim: Simulation; band: number }, string>({
+  id: 'pro.option',
+  decides: 'An option on a recurring part for the next season, taken up or let go: its chance by the best the work was judged at, and a draw by the engagement.',
+  drawnIn: 'src/engine/systems/series.ts',
+  reads: {
+    band: (o, t) => ({ ...o, band: Math.round(t * 4) - 1 }),
+    world: (o, t) => ({ ...o, sim: atYale(Math.round(t * 20)) }),
+  },
+  sample: (seed) => ({ sim: atYale(seed), band: (seed % 5) - 1 }),
+  decide: ({ sim, band }) => Array.from({ length: 40 }, (_, n) => (optionDrawn(sim, judged(`e${n}`, band)) ? '1' : '0')).join(''),
+});
+
+defineDecider<{ sim: Simulation; first: number }, string>({
+  id: 'pro.rerun',
+  decides: 'A network rerun of an episode with the player’s work in it, which pays a residual: half the time, by the engagement.',
+  drawnIn: 'src/engine/systems/contracts.ts',
+  reads: {
+    // Which engagements: each its own draw.
+    first: (o, t) => ({ ...o, first: Math.round(t * 100) }),
+    world: (o, t) => ({ ...o, sim: atYale(Math.round(t * 20)) }),
+  },
+  sample: (seed) => ({ sim: atYale(seed), first: seed * 7 }),
+  decide: ({ sim, first }) => Array.from({ length: 40 }, (_, n) => (rerunDrawn(sim, `e${first + n}`) ? '1' : '0')).join(''),
+});
+
+defineDecider<{ sim: Simulation; first: number }, string>({
+  id: 'pro.late_pay',
+  decides: 'How many days late a non-union producer pays a payment, none seven times in ten, by the payment.',
+  drawnIn: 'src/engine/systems/contracts.ts',
+  reads: {
+    first: (o, t) => ({ ...o, first: Math.round(t * 100) }),
+    world: (o, t) => ({ ...o, sim: atYale(Math.round(t * 20)) }),
+  },
+  sample: (seed) => ({ sim: atYale(seed), first: seed * 7 }),
+  decide: ({ sim, first }) => Array.from({ length: 40 }, (_, n) => lateDays(sim, `e${first + n}:1`)).join(','),
 });

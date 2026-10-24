@@ -465,15 +465,19 @@ describe('the agent and the work, as data', () => {
     expect(files.filter((f) => /Parente|jordan-parente|Stewart Talent|Ashgrove|thomas-ashgrove|Halberd/.test(readFileSync(f, 'utf8')))).toEqual([]);
   });
 
-  it('writes each part for an actor, an actress or either, five for either and five for each, so an actor and an actress each have a part in all ten projects, of every size and kind as often (the owner’s word, 2026-10-21)', () => {
+  it('writes each part for an actor, an actress or either, six for either and five for each, so an actor and an actress each have a part in all ten projects, of every size and kind as often (the owner’s word, 2026-10-21)', () => {
     const forWhom = (title: 'actor' | 'actress') => PROJECTS.filter((p) => p.role.for === 'either' || p.role.for === title);
     // Four for each until 2026-10-23, when brief 25's Sydney feature, Harbor Line, brought a part for each; three for
-    // either until its Module 2 drew a part for either from each of two real series.
-    expect(PROJECTS.map((p) => p.role.for).sort()).toEqual([...Array(5).fill('either'), ...Array(5).fill('actor'), ...Array(5).fill('actress')].sort());
+    // either until its Module 2 drew a part for either from each of two real series, and five until its Module 4 brought
+    // a recurring part in The Calloway Files, for either.
+    expect(PROJECTS.map((p) => p.role.for).sort()).toEqual([...Array(6).fill('either'), ...Array(5).fill('actor'), ...Array(5).fill('actress')].sort());
     const actor = forWhom('actor');
     const actress = forWhom('actress');
     // Each sees every project once, and the same kinds, sizes, ways in and pay: the counterpart is the same work for the other.
-    for (const seen of [actor, actress]) expect(seen.map((p) => p.project).sort()).toEqual([...new Set(PROJECTS.map((p) => p.project))].sort());
+    // Every project at least once: The Calloway Files twice from 2026-10-24, its recurring part beside the co-star's, both
+    // for either.
+    for (const seen of [actor, actress]) expect([...new Set(seen.map((p) => p.project))].sort()).toEqual([...new Set(PROJECTS.map((p) => p.project))].sort());
+    expect(new Set(PROJECTS.map((p) => p.project)).size).toBe(10);
     const shape = (p: (typeof PROJECTS)[number]) => JSON.stringify([p.project, p.kind, p.role.size, p.role.task, p.role.stakes, p.access, p.pay, p.stages, p.schedule, p.place]);
     expect(actor.map(shape).sort()).toEqual(actress.map(shape).sort());
     // A part written for one is its own person, not the other renamed: its own name and its own breakdown.

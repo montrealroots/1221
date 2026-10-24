@@ -569,7 +569,7 @@
    "kind": "pro.prepare",
    "payload": "{ ...target, step }",
    "verdict": "Right",
-   "handler": "src/engine/systems/projobs.ts:1746"
+   "handler": "src/engine/systems/projobs.ts:1920"
   },
   {
    "file": "src/ui/career/OpportunitiesPane.tsx",
@@ -579,7 +579,7 @@
    "kind": "pro.accept_offer",
    "payload": "{ opportunityId: o.id }",
    "verdict": "Right",
-   "handler": "src/engine/systems/projobs.ts:1789"
+   "handler": "src/engine/systems/projobs.ts:1963"
   },
   {
    "file": "src/ui/career/OpportunitiesPane.tsx",
@@ -589,7 +589,7 @@
    "kind": "pro.move_audition",
    "payload": "{ opportunityId: o.id }",
    "verdict": "Right",
-   "handler": "src/engine/systems/projobs.ts:1771"
+   "handler": "src/engine/systems/projobs.ts:1945"
   },
   {
    "file": "src/ui/career/OpportunitiesPane.tsx",
@@ -599,7 +599,7 @@
    "kind": "pro.request_outside_work",
    "payload": "{ opportunityId: o.id }",
    "verdict": "Right",
-   "handler": "src/engine/systems/projobs.ts:1838"
+   "handler": "src/engine/systems/projobs.ts:2016"
   },
   {
    "file": "src/ui/career/OpportunitiesPane.tsx",
@@ -609,7 +609,7 @@
    "kind": "pro.decline_offer",
    "payload": "{ opportunityId: o.id }",
    "verdict": "Right",
-   "handler": "src/engine/systems/projobs.ts:1826"
+   "handler": "src/engine/systems/projobs.ts:2004"
   },
   {
    "file": "src/ui/career/OpportunitiesPane.tsx",
@@ -619,7 +619,7 @@
    "kind": "pro.submit",
    "payload": "{ opportunityId: o.id }",
    "verdict": "Right",
-   "handler": "src/engine/systems/projobs.ts:1737"
+   "handler": "src/engine/systems/projobs.ts:1911"
   },
   {
    "file": "src/ui/career/OpportunitiesPane.tsx",
@@ -629,7 +629,7 @@
    "kind": "pro.tape_audition",
    "payload": "{ opportunityId: o.id }",
    "verdict": "Right",
-   "handler": "src/engine/systems/projobs.ts:1756"
+   "handler": "src/engine/systems/projobs.ts:1930"
   },
   {
    "file": "src/ui/career/RepresentationPane.tsx",
@@ -741,8 +741,19 @@
    "kind": "pro.apply_work_visa",
    "payload": "{ engagementId: e.id }",
    "verdict": "Right",
-   "handler": "src/engine/systems/worktrip.ts:494",
+   "handler": "src/engine/systems/worktrip.ts:497",
    "note": "Apply For The Visa on a booking abroad applies for the visa that booking needs, tied to it; its refusal (visaRefusal) is said under it before it is pressed. Read 2026-10-23, brief 25."
+  },
+  {
+   "file": "src/ui/career/WorkPane.tsx",
+   "control": "<Gated onClick>",
+   "feature": "pro.ask_pay",
+   "label": "Ask About It",
+   "kind": "pro.ask_pay",
+   "payload": "{ engagementId: e.id, key: r.key }",
+   "verdict": "Right",
+   "handler": "src/engine/systems/contracts.ts:411",
+   "note": "Ask About It under an overdue payment asks the producer about that payment, by its engagement and key; its refusal (askRefusal) is its title before it is pressed, and the row then reads Disputed with the answer. Read 2026-10-24, brief 25."
   },
   {
    "file": "src/ui/career/WorkPane.tsx",
@@ -752,7 +763,7 @@
    "kind": "pro.join_sag",
    "payload": "",
    "verdict": "Right",
-   "handler": "src/engine/systems/propay.ts:798"
+   "handler": "src/engine/systems/propay.ts:812"
   },
   {
    "file": "src/ui/components/BriefPane.tsx",
@@ -1245,7 +1256,7 @@
    "kind": "documents.apply_opt",
    "payload": "{}",
    "verdict": "Right",
-   "handler": "src/engine/systems/permission.ts:376"
+   "handler": "src/engine/systems/permission.ts:377"
   },
   {
    "file": "src/ui/papers/Documents.tsx",
@@ -1255,7 +1266,7 @@
    "kind": "documents.apply_opt",
    "payload": "{ premium: true }",
    "verdict": "Right",
-   "handler": "src/engine/systems/permission.ts:376"
+   "handler": "src/engine/systems/permission.ts:377"
   },
   {
    "file": "src/ui/papers/Documents.tsx",
@@ -1516,7 +1527,7 @@
    "kind": "pro.update_resume",
    "payload": "",
    "verdict": "Right",
-   "handler": "src/engine/systems/pro.ts:1057"
+   "handler": "src/engine/systems/pro.ts:1136"
   },
   {
    "file": "src/ui/workspaces/CareerWorkspace.tsx",
@@ -1526,7 +1537,7 @@
    "kind": "pro.headshots",
    "payload": "",
    "verdict": "Right",
-   "handler": "src/engine/systems/pro.ts:1040"
+   "handler": "src/engine/systems/pro.ts:1119"
   },
   {
    "file": "src/ui/workspaces/CareerWorkspace.tsx",
@@ -1536,7 +1547,7 @@
    "kind": "pro.cut_reel",
    "payload": "{ pieces: chosen }",
    "verdict": "Right",
-   "handler": "src/engine/systems/pro.ts:1069"
+   "handler": "src/engine/systems/pro.ts:1148"
   },
   {
    "file": "src/ui/workspaces/CareerWorkspace.tsx",
@@ -1546,7 +1557,7 @@
    "kind": "pro.set_name",
    "payload": "{ name }",
    "verdict": "Right",
-   "handler": "src/engine/systems/pro.ts:1028"
+   "handler": "src/engine/systems/pro.ts:1107"
   },
   {
    "file": "src/ui/workspaces/PapersWorkspace.tsx",
@@ -2018,7 +2029,7 @@
    "kind": "documents.apply_opt",
    "payload": "{}",
    "verdict": "Right",
-   "handler": "src/engine/systems/permission.ts:376"
+   "handler": "src/engine/systems/permission.ts:377"
   },
   {
    "file": "src/engine/systems/permission.ts",
@@ -2026,7 +2037,7 @@
    "kind": "documents.apply_opt",
    "payload": "{ premium: true }",
    "verdict": "Right",
-   "handler": "src/engine/systems/permission.ts:376"
+   "handler": "src/engine/systems/permission.ts:377"
   },
   {
    "file": "src/engine/systems/projobs.ts",
@@ -2034,7 +2045,7 @@
    "kind": "pro.accept_offer",
    "payload": "{ opportunityId: o.id }",
    "verdict": "Right",
-   "handler": "src/engine/systems/projobs.ts:1789"
+   "handler": "src/engine/systems/projobs.ts:1963"
   },
   {
    "file": "src/engine/systems/projobs.ts",
@@ -2042,7 +2053,7 @@
    "kind": "pro.decline_offer",
    "payload": "{ opportunityId: o.id }",
    "verdict": "Right",
-   "handler": "src/engine/systems/projobs.ts:1826"
+   "handler": "src/engine/systems/projobs.ts:2004"
   },
   {
    "file": "src/engine/systems/taxreturn.ts",

@@ -1,4 +1,4 @@
-# Read First: Brief 25, The Master Career Build, Modules 1 To 3 (Work Abroad, The Real Catalog, Real Agents) Done, 2026-10-24
+# Read First: Brief 25, The Master Career Build, Modules 1 To 4 (Work Abroad, The Real Catalog, Real Agents, Contracts) Done, 2026-10-24
 
 **This section is the current status, and where a new session starts.** The owner gave brief 25, "SLATE — Master
 Career Build Command", with its research dossier (Sections 1 to 29), on `main` after #63. It is kept verbatim at
@@ -8,12 +8,12 @@ is worked on `claude/peaceful-hamilton-59zdbb` from `b46ee301`, pushed and never
 owner says otherwise, no contact with real people, no purchased data, and none of housing, vehicles, shopping, other
 occupations or parental leave.
 
-**Completion, by the matrix:** 588 of 659 rows in scope Implemented And Verified (89.2%); 67 Implemented, Verification Incomplete, 0 Partially Implemented, 0 Not Implemented, 0 Blocked Externally, 4 Decision Required, 41 Explicitly Deferred.
+**Completion, by the matrix:** 588 of 660 rows in scope Implemented And Verified (89.0%); 68 Implemented, Verification Incomplete, 0 Partially Implemented, 0 Not Implemented, 0 Blocked Externally, 4 Decision Required, 41 Explicitly Deferred.
 
   (634 at brief 24's close. The 46 rows brief 22's final runs measured fall behind whenever `src/engine` changes, as
   they did through briefs 23 and 24, and are held again by playing those runs on the brief's last tested commit; the
-  659th row is work abroad's capability, Implemented, its verified layer Partial, as every row added after the review
-  of 2026-10-13 is.)
+  659th row is work abroad's capability, and the 660th Module 4's contracts, each Implemented, its verified layer Partial,
+  as every row added after the review of 2026-10-13 is.)
 
 - **Read first:** `docs/verification/career-world-2026-10-23/CHECKPOINT.md` (where the work is, module by module, and the
   blockers met), `criteria.md` (each module's checks, written before its code), `REGISTER.md` (290 rows: the brief's
@@ -63,11 +63,25 @@ occupations or parental leave.
   down in `projobs.ts`; recomputed, its two test files pass (44 tests), and so do the gate's 23 checks, which the
   failure had stopped. The new tests/career-agents.test.ts (11 tests) holds four mutations: the real room read as near,
   one agent at a time removed, a real agent given pronouns, and the showcase route said for every agent; each fails it.
-- **Register:** 52 of 290 rows Implemented And Verified (43 at Module 2's end, 24 at Module 1's).
-- **Next:** Module 4, contracts and payments (Part 7): what a contract distinguishes and only where it applies,
-  estimated, earned, due and settled pay, disputes, reimbursements, residuals as their own records, renewal,
-  cancellation and revival; then production workflows, charts and awards, and the time loop, tutorials, playthroughs
-  and the final gate, each in the checkpoint's table.
+- **Module 4, contracts and pay, a recurring part and a series' seasons:** every engagement carries its contract from
+  acceptance (`systems/contracts.ts`), with only the clauses that apply, its estimate said as gross and never cash; each
+  payment's state, Estimated to Settled, Overdue and Disputed where a non-union producer pays late, with Ask About It; a
+  SAG-AFTRA day's overtime (the eleven-hour day's ninth and tenth hours, N13 Schedule A §9); the producer's pension and
+  health contribution shown and never posted (19.5%, 20.5% from September 6, 2026); a trip's per diem, $60 a day, apart
+  from wages; residuals as four records, a rerun paying 100% of total actual compensation up to $3,668 or $2,578 within
+  thirty days, once. The Calloway Files has seasons (ordered through 2029's, then the network's keyed word each May) and a
+  recurring part, Assistant DA Whitlock: two episodes guaranteed, more called or not, and an option on the next season
+  taken up into the contract's next version or let go once. The rules are the AMPTP-published agreements (N12 to N17);
+  SAG-AFTRA's pages refused this build.
+- **Moved with it:** the seeded career journey's Desk Clerk now pays its overtime ($4,241.06 where it paid $3,084.40);
+  the series casts nothing for work in its hiatus, June to mid-July; a recurring part's episodes average under twenty
+  hours a week, so alone they aren't OPT employment, and the Work tab says so.
+- **Measured (Module 4):** the full gate, exit 0: 494 of 494 test files, 5,691 of 5,691 tests, the 23 checks. On the way,
+  brief 19's pay test learned that a non-union producer can pay late, the Work tab's pay table stopped saying a
+  payment's state twice, and `pro.ask_pay` was traced and its capability given its builder's review.
+- **Register:** 73 of 290 rows Implemented And Verified (52 at Module 3's end, 43 at Module 2's, 24 at Module 1's).
+- **Next:** Module 5, distinct production workflows (Part 8); then charts and awards, and the time loop, tutorials,
+  playthroughs and the final gate, each in the checkpoint's table.
 
 # Earlier: Brief 24, UI Alignment, Home Spacing And Navigation Cleanup, Merged, 2026-10-23
 

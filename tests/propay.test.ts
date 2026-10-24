@@ -214,7 +214,9 @@ describe('commission, only when owed, checked to the cent against the postings',
     schedulePay(sim, sim.player, e);
     tended(sim, at(2026, 9, 8, 12));
     signed(sim, at(2026, 9, 8, 12));
-    tended(sim, at(2026, 9, 24, 13));
+    // A non-union producer may pay late (from 2026-10-24, brief 25's Module 4, D2): this seed's first payment comes days
+    // after its due, so the clock runs to its payday, late or not. Until then every payment here came on its due.
+    tended(sim, at(2026, 9, 24, 13) + (e.pay[0]!.late?.days ?? 0) * MS_DAY);
     const r = e.pay[0]!.received!;
     expect(r).toMatchObject({ gross: 250_00, commission: 0, via: 'direct' });
     expect(txn(sim, r.txnId!).postings.some((p) => p.accountId === nominal(sim, 'Agent’s Commission')?.id)).toBe(false);

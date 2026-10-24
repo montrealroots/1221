@@ -252,8 +252,12 @@ export interface ProjectTemplate {
   };
   /** The stages it uses: how it's auditioned, and whether there's a callback. */
   stages: { audition: 'self-tape' | 'in-person'; callback: boolean };
-  /** A run's rehearsal and performance weeks, or a shoot's days. */
-  schedule: { kind: 'run'; rehearsalWeeks: number; performanceWeeks: number } | { kind: 'shoot'; days: number };
+  /**
+   * A run's rehearsal and performance weeks, a shoot's days, or a recurring part's episodes in a season of its series
+   * (`content/series.ts`, from 2026-10-24, brief 25's Module 4, D7): the episodes its contract guarantees, the next ones
+   * in the season, and how many it's expected in, each further one paid only if it's called for.
+   */
+  schedule: { kind: 'run'; rehearsalWeeks: number; performanceWeeks: number } | { kind: 'shoot'; days: number } | { kind: 'episodes'; guaranteed: number; expected: number };
   /** Who can put the actor up for it: an agent, and the actor's own submission where it's open. */
   access: { agent: boolean; open: false | 'anyone' | 'equity-members' };
   pay: RateId;
@@ -261,6 +265,11 @@ export interface ProjectTemplate {
   trip?: TripTerms;
   /** Days from the posting to the work's first day, where it isn't `WORK.leadDays`: work abroad needs time for its visa. */
   leadDays?: number;
+  /**
+   * The series it's a part in (`content/series.ts`), where its seasons are the game's: cast only while a season is being
+   * made, and called off where the network stops making it (from 2026-10-24, brief 25's Module 4, D8).
+   */
+  series?: string;
 }
 
 /**
@@ -328,7 +337,7 @@ export const PROJECTS: readonly ProjectTemplate[] = [
     access: { agent: true, open: 'equity-members' }, pay: 'lort-c',
   },
   {
-    id: 'calloway-files', kind: 'network-drama', fictional: true,
+    id: 'calloway-files', kind: 'network-drama', fictional: true, series: 'calloway-files',
     project: 'The Calloway Files', company: 'Bright Harbor Television', casting: 'Kettering Casting',
     medium: 'television', genres: ['police_procedural', 'crime'],
     place: { city: 'New York', cityId: 'us-ny-newyork', venue: 'a studio in Queens' },
@@ -337,6 +346,21 @@ export const PROJECTS: readonly ProjectTemplate[] = [
     requirements: { ages: [22, 35], sends: ['headshot', 'resume', 'reel'] },
     stages: { audition: 'self-tape', callback: false },
     schedule: { kind: 'shoot', days: 2 },
+    access: { agent: true, open: false }, pay: 'sag-tv-day',
+  },
+  // A recurring part (from 2026-10-24, brief 25's Module 4, D7): guaranteed two episodes of a season, expected in up to
+  // five, paid the day rate for each shoot day of an episode it's called for, with an option on the next season. Its
+  // terms are the game's, and its contract says so.
+  {
+    id: 'calloway-files-whitlock', kind: 'network-drama', fictional: true, series: 'calloway-files',
+    project: 'The Calloway Files', company: 'Bright Harbor Television', casting: 'Kettering Casting',
+    medium: 'television', genres: ['police_procedural', 'crime'],
+    place: { city: 'New York', cityId: 'us-ny-newyork', venue: 'a studio in Queens' },
+    role: { part: 'Assistant DA Whitlock', size: 'co-star', for: 'either', about: 'A new prosecutor at the precinct who needs the detectives’ cases to hold up in court, and tells them when they won’t.', task: 'camera', families: ['crime', 'drama'], techniques: { screen: 2, scene: 1, speech: 1 }, stakes: 2 },
+    union: 'sag-aftra', contract: 'SAG-AFTRA TV/Theatrical',
+    requirements: { ages: [25, 40], sends: ['headshot', 'resume', 'reel'] },
+    stages: { audition: 'self-tape', callback: true },
+    schedule: { kind: 'episodes', guaranteed: 2, expected: 5 },
     access: { agent: true, open: false }, pay: 'sag-tv-day',
   },
   {

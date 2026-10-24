@@ -1833,6 +1833,13 @@
   "reason": "Weekday and month names, the seasons’ names, and the short durations a chip or a stat shows, as the glossary keeps them.",
   "first": "Reviewed And Retained"
  },
+ "src/engine/decided.ts#judged": {
+  "status": "Retained",
+  "hash": "1def28fb0bbd",
+  "on": "2026-10-24",
+  "reason": "Developer notes on each random draw, read only by tests/deciders.test.ts and tools/deciders.mjs; nothing the game ships imports decided.ts.",
+  "first": "Pending"
+ },
  "src/engine/decided.ts#skyFor": {
   "status": "Retained",
   "hash": "ad07cf6a779e",
@@ -1966,6 +1973,27 @@
   "reason": "A decider's description, read by tests/deciders.test.ts and tools/deciders.mjs and never shown to a player: it says what the draw decides and what moves it.",
   "first": "Reviewed And Retained"
  },
+ "src/engine/decided.ts#top [pro.episode]": {
+  "status": "Retained",
+  "hash": "986d428b8445",
+  "on": "2026-10-24",
+  "reason": "Developer notes on each random draw, read only by tests/deciders.test.ts and tools/deciders.mjs; nothing the game ships imports decided.ts.",
+  "first": "Pending"
+ },
+ "src/engine/decided.ts#top [pro.late_pay]": {
+  "status": "Retained",
+  "hash": "4cbf32288284",
+  "on": "2026-10-24",
+  "reason": "Developer notes on each random draw, read only by tests/deciders.test.ts and tools/deciders.mjs; nothing the game ships imports decided.ts.",
+  "first": "Pending"
+ },
+ "src/engine/decided.ts#top [pro.option]": {
+  "status": "Retained",
+  "hash": "6178793ecb7a",
+  "on": "2026-10-24",
+  "reason": "Developer notes on each random draw, read only by tests/deciders.test.ts and tools/deciders.mjs; nothing the game ships imports decided.ts.",
+  "first": "Pending"
+ },
  "src/engine/decided.ts#top [pro.posting]": {
   "status": "Retained",
   "hash": "b4e89d347068",
@@ -1973,12 +2001,26 @@
   "reason": "A decider's description, read by tests/deciders.test.ts and tools/deciders.mjs and never shown to a player: it says what the draw decides and what moves it, from 2026-10-21 who the part is written for among them.",
   "first": "Reviewed And Retained"
  },
+ "src/engine/decided.ts#top [pro.rerun]": {
+  "status": "Retained",
+  "hash": "64fe3d227edf",
+  "on": "2026-10-24",
+  "reason": "Developer notes on each random draw, read only by tests/deciders.test.ts and tools/deciders.mjs; nothing the game ships imports decided.ts.",
+  "first": "Pending"
+ },
  "src/engine/decided.ts#top [pro.roster]": {
   "status": "Rewritten",
   "hash": "d02a5a6b6572",
   "on": "2026-10-21",
   "evidence": "Written for brief 19: what the agent's two deciders decide, in a sentence each, read by tests/deciders.test.ts, which sweeps every input they declare, and by tools/deciders.mjs and tools/tics.mjs passing",
   "first": "Rewritten And Verified"
+ },
+ "src/engine/decided.ts#top [pro.series]": {
+  "status": "Retained",
+  "hash": "0f5ab221069a",
+  "on": "2026-10-24",
+  "reason": "Developer notes on each random draw, read only by tests/deciders.test.ts and tools/deciders.mjs; nothing the game ships imports decided.ts.",
+  "first": "Pending"
  },
  "src/engine/decided.ts#top [production.direction]": {
   "status": "Retained",

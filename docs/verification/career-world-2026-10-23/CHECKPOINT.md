@@ -20,8 +20,8 @@ The state of the work, kept so a session that's interrupted can pick it up. The 
 | 0 | Starting point, register, sources, checker | Done: `f341b3b1` |
 | 1 | The overseas engagement: Sydney, travel, presence, stay, permission, work, pay, return | Done: `6261883e`, `880d4231` (W1 to W12; see below) |
 | 2 | The real industry catalog and simulated roles drawn from it | Done: `de50c6e0` (C1 to C12; see below) |
-| 3 | Real agencies and agents in the representation engine | Done in this commit (A1 to A8; see below) |
-| 4 | Contracts, options, episode guarantees, payment states, residuals, renewal and cancellation | Waiting |
+| 3 | Real agencies and agents in the representation engine | Done: `0978f022` (A1 to A8; see below) |
+| 4 | Contracts, options, episode guarantees, payment states, residuals, renewal and cancellation | Done in this commit (D1 to D9; see below) |
 | 5 | Distinct production workflows | Waiting |
 | 6 | Weekly charts, festivals, awards and the anonymous field | Waiting |
 | 7 | The time loop's deadlines, drill-downs, tutorials, balance seeds, playthroughs, the final gate | Waiting |
@@ -131,8 +131,53 @@ The state of the work, kept so a session that's interrupted can pick it up. The 
   takes one, Chicago's (REP-07); skills as a material and territory beyond New York (REP-08); a submission to United
   Agents, once UK work is in (REP-13); a real director's offer (PROV-05).
 
+## Module 4, As Built (2026-10-24)
+
+- **The rules read**: the AMPTP-published agreements (N12, the 2026 memorandum; N13, the 2014 Codified Basic Agreement;
+  N14, the 2014 Television Agreement; N15 to N17, the 2017, 2020 and 2023 memoranda); SAG-AFTRA's own pages refused this
+  build (S21, S41, S95, S96: HTTP 403). The ratification's date is from press reports (N18).
+- **The contract** (`systems/contracts.ts`): made when an offer is accepted, kept on the engagement: classification and
+  billing, format, agreement, the day made, service dates, place, basis and rate, the estimated gross (said as an
+  estimate, never cash) and the payments it promised; clauses only where they apply: a SAG-AFTRA day's overtime, residuals
+  on television, the producer's pension and health contribution, a trip and its per diem, a recurring part's episodes
+  and its option, deferred pay. The Work tab's The Contract shows it.
+- **Each payment's state**: Estimated, Earned, Due, Overdue, Disputed, Held For You, Settled, Deferred, read from the
+  record and the clock; payments the work no longer owes listed apart. A non-union producer pays late three times in ten
+  (the game's), and Ask About It brings the pay to the answer.
+- **Overtime** (N13 Schedule A §9): the eleven-hour shoot day, an hour of it lunch, pays two hours at time and one-half.
+  **Contribution** (N16, N12): 19.5%, then 20.5% from September 6, 2026, shown and never posted to the player. **Per diem**
+  (N13 §35.B(2)): $60 a day away, paid once home, not wages. **Residuals** (N14 §18): four records, the first telecast
+  paid by the salary, a network prime-time rerun 100% of total actual compensation (overtime at straight time) up to
+  $3,668 or $2,578, within thirty days, paid once by its key.
+- **A series' seasons** (`content/series.ts`, `systems/series.ts`): The Calloway Files shoots each season from mid-July
+  to May; its seasons are ordered through 2029's, and from May 2030 the network decides each May by a draw keyed by the
+  series and the year (decider `pro.series`), a canceled series able to come back from its second year off. Canceled, its
+  castings close, work not yet done is called off with nothing owed, the pay earned stays, an option lapses once; renewed,
+  nothing is booked by itself; revived, it's cast again with the old work unchanged.
+- **A recurring part**: Assistant DA Whitlock, guaranteed two episodes of thirteen, expected in up to five, each further
+  episode called or not two weeks ahead (decider `pro.episode`), the work not over while one is pending; an option on the
+  next season at 5% more a day, taken up or let go by June 30 (decider `pro.option`), taken up into the contract's next
+  version through the same agreement, its commission owed as a renewal's.
+- **Moved with the code**: a recurring part's episodes three weeks apart average under twenty hours a week, so alone they
+  aren't employment for OPT, and the Work tab's permission line says so; the seeded career journey's Desk Clerk pays its
+  overtime, $4,241.06 where it paid $3,084.40, with its commission and dues after it.
+- **Mutations**: 22 run against tests/career-contracts.test.ts (`m4mut/run.py` in the session's scratchpad), every one
+  caught: among them the overtime's premium, the Health Plan's 1%, the contribution unrecorded, a first telecast that
+  pays, a settlement or a per diem paid twice, the work wrapping with episodes pending, the option always taken up or
+  raising nothing, a cancellation calling nothing off, a series always in production, asking moving no payday, the
+  residual's base taking the overtime premium, no ceiling, a renewal booking work, the season's order guaranteed.
+- **Left for later, each a register row**: negotiation beyond scale plus ten and onboarding (CON-01); publicity, riders and
+  expenses beyond the per diem (CON-02); box office and charts (CON-10, Module 6); an award cycle for a revived series
+  (T93, Module 6).
+- **Measured**: the full gate in the Module 4 tree, exit 0: 494 of 494 test files, 5,691 of 5,691 tests, and the 23
+  checks. Two runs before it failed, and what they found was fixed first: a test of brief 19's, written when every
+  non-union producer paid on its due, now runs the clock to the payday late pay sets (tests/propay.test.ts); and the
+  later checks, which the first failure had stopped, found the capabilities page spelling "canceled" the British way, the Work tab's pay table
+  saying a payment's state twice ("Estimated" in its State column and again opening Where It Stands, now said once),
+  `pro.ask_pay` traced nowhere (now in docs/verification/connected-journey/TRACE.md, regenerated), and the contracts
+  capability unreviewed (now its builder's reading in docs/verification/review-2026-10-13/capabilities.json).
+
 ## Next Concrete Action
 
-Module 4: contracts and payments (Part 7): what a contract distinguishes and only where it applies, estimated, earned,
-due and settled pay, disputes, reimbursements, residuals as their own records, renewal, cancellation and revival; its
-criteria written before any code.
+Module 5: distinct production workflows (Part 8), each with real entry points, preparation, work units, decisions,
+feedback, completion and consequences; its criteria written before any code.

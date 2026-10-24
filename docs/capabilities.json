@@ -3233,7 +3233,54 @@
         "interaction": "Implemented",
         "verified": "Partial"
       },
-      "limits": "Built on 2026-10-23 for brief 25's first module. pro.apply_work_visa is played through its command and the clock (tests/career-world-sydney.test.ts): the visa applied for from the engagement, refused a second time, granted ten days on, the trip flown, the work done in Sydney and paid, the trip home, each stage saved and loaded; and without it, the release at the flight. It isn’t called Verified because tools/capabilities.mjs and tools/coverage.mjs count a command’s row as read only by the review of 2026-10-13. Flight delays, missed connections, a stay extended, weather on the day, allowances, Australian tax and jet lag aren’t in the game"
+      "limits": "Built on 2026-10-23 for brief 25's first module. pro.apply_work_visa is played through its command and the clock (tests/career-world-sydney.test.ts): the visa applied for from the engagement, refused a second time, granted ten days on, the trip flown, the work done in Sydney and paid, the trip home, each stage saved and loaded; and without it, the release at the flight. It isn’t called Verified because tools/capabilities.mjs and tools/coverage.mjs count a command’s row as read only by the review of 2026-10-13. Flight delays, missed connections, a stay extended, weather on the day, Australian tax and jet lag aren’t in the game. Allowances weren’t either until 2026-10-24, when brief 25's Module 4 brought a SAG-AFTRA trip's per diem (the career-contracts row)"
+    },
+    {
+      "id": "career-contracts",
+      "goal": "Contracts and the money they bring: each engagement's contract made at acceptance with only the clauses that apply, each payment's state from estimated to settled, a day performer's overtime, the producer's pension and health contribution kept off the player's money, a trip's per diem apart from wages, residuals in four records paid once, a non-union producer's late pay asked about, and a recurring part's season in a series renewed, canceled and revived by the world",
+      "entry": "Career, Opportunities (the offer's terms); Career, Work, an engagement's The Contract, Pay (each payment's State, Ask About It on an overdue one, the per diem) and Residuals; Home's notices (a further episode called or not, the option, the network's word, a telecast, a rerun, a residual, a per diem)",
+      "entities": [
+        "Contract",
+        "ContractClause",
+        "Residual",
+        "Allowance",
+        "ProPayment (overtime, contribution, late, asked)",
+        "SeriesTemplate",
+        "SeasonDecision"
+      ],
+      "state": "src/engine/systems/contracts.ts",
+      "preconditions": "A contract is made by pro.accept_offer for every offer accepted, and by an option taken up for the next season; Ask About It needs a payment past its payday and unpaid (askRefusal); a further episode or an option taken up needs permission to work, SAG-AFTRA membership from its thirtieth day and no clash (the season hooks' refusal)",
+      "commands": [
+        "pro.ask_pay"
+      ],
+      "effects": "Accepting writes the contract (contractFor) and, for a recurring part, the production's word on each further episode and the option's last day on the clock (scheduleSeason); promisedPay adds a SAG-AFTRA day's two hours of overtime; paying records the producer's contribution on the payment and posts none of it; a trip home pays the per diem once (payPerDiem); television work done makes the residual entitlement and its first telecast (entitle), whose airing pays nothing and draws a rerun (pro.residual.air), and the rerun's residual is paid once within thirty days (pro.residual.pay); a non-union payment drawn late is on the clock days after its due, and pro.ask_pay moves it up to the answer; each May after the order the network's word (pro.series, a passage reactor) closes castings, calls off work and lapses options of a canceled series, and a revived one is cast again; a further episode called adds its days and pay (pro.series.episode); an option taken up books the next season's engagement through the same agreement (pro.series.option). The rules are the AMPTP agreements' (N12 to N17); the telecasts, the rerun's chance, the seasons, the series' chances, the option's raise and the late pay are the game's assumptions, said so",
+      "persists": "Person.pro.engagements[].contract, .allowances and .pay[].overtime, .contribution, .late, .asked; Person.pro.residuals; the opportunity an option makes; nothing of the series' seasons, which are worked out from the seed",
+      "readers": [
+        "payState: the Work tab's State column and Where It Stands",
+        "notOwed: the Work tab's line for payments the work no longer owes",
+        "clauseOf: overtime in the offer's words, residuals at the wrap, the per diem at home, episodes and the option in the season's handlers and the wrap's wait",
+        "contributionOn: the payment's record, the Work tab's line beside the pay",
+        "inProduction and seriesPosts: the week's postings of a series part",
+        "totalActualCompensation: the residual's base"
+      ],
+      "looks": [],
+      "routes": [
+        "/workspace/career"
+      ],
+      "saveLoad": "tests/career-contracts.test.ts",
+      "provenance": "docs/verification/career-world-2026-10-23/sources.json (N12, the 2026 memorandum; N13, the 2014 Codified Basic Agreement; N14, the 2014 Television Agreement; N15 to N17, the 2017, 2020 and 2023 memoranda; N18, the ratification's date as reported); criteria.md, Module 4, D1 to D9; the series, its network and its parts are fictional, said so",
+      "tests": [
+        "tests/career-contracts.test.ts"
+      ],
+      "manual": "",
+      "status": "Implemented",
+      "layers": {
+        "schema": "Implemented",
+        "content": "Implemented",
+        "interaction": "Implemented",
+        "verified": "Partial"
+      },
+      "limits": "Built on 2026-10-24 for brief 25's Module 4. pro.ask_pay and the rest are played through the commands and the clock (tests/career-contracts.test.ts), each stage saved and loaded. It isn’t called Verified because tools/capabilities.mjs and tools/coverage.mjs count a command’s row as read only by the review of 2026-10-13. Syndication and streaming residuals, a weekly performer’s and the Low Budget agreements’ overtime, the contribution under SAGindie’s agreements and Equity’s, residuals on stage and film work, and profit participation aren’t in the game: no participation is invented"
     }
   ]
 }

@@ -1857,6 +1857,51 @@
    "seeded": false,
    "readBy": "brief-23",
    "readAt": "55543f7c"
+  },
+  {
+   "id": "promise.career.contracts>career.pay",
+   "kind": "scheduled",
+   "claim": "Each payment the contract promised is paid on its payday, and its state says where it stands.",
+   "entryFile": "src/engine/content/guide/career.ts",
+   "holds": "Each promised payment is on the clock for its payday (`schedulePay`, src/engine/systems/propay.ts) and its state is read from the record and the clock (`payState`, src/engine/systems/contracts.ts:207).",
+   "tests": [
+    "tests/career-contracts.test.ts"
+   ],
+   "status": "Implemented And Verified",
+   "why": "",
+   "seeded": false,
+   "readBy": "career",
+   "readAt": "brief 25"
+  },
+  {
+   "id": "promise.career.contracts>career.offers",
+   "kind": "prerequisite",
+   "claim": "Accepting an offer makes its contract.",
+   "entryFile": "src/engine/content/guide/career.ts",
+   "holds": "pro.accept_offer writes the engagement's contract (`contractFor`, src/engine/systems/contracts.ts), as an option taken up does the next season's.",
+   "tests": [
+    "tests/career-contracts.test.ts"
+   ],
+   "status": "Implemented And Verified",
+   "why": "",
+   "seeded": false,
+   "readBy": "career",
+   "readAt": "brief 25"
+  },
+  {
+   "id": "promise.career.contracts>career.unions",
+   "kind": "prerequisite",
+   "claim": "A further episode or an option taken up past SAG-AFTRA’s thirty days needs you to be a member.",
+   "entryFile": "src/engine/content/guide/career.ts",
+   "holds": "The season's refusal reads `sagWorkRefusal` for a further episode's days and an option's (src/engine/systems/projobs.ts, SEASON_HOOKS.refusal), so a non-member past the thirtieth day isn't called and the option lapses with why.",
+   "tests": [
+    "tests/career-contracts.test.ts"
+   ],
+   "status": "Implemented And Verified",
+   "why": "",
+   "seeded": false,
+   "readBy": "career",
+   "readAt": "brief 25"
   }
  ]
 }

@@ -31,7 +31,9 @@
  * - **Continuing:** owed on a contract made during the term, whoever represents the player when it's paid, after the
  *   agreement ends (Equity, S29: "entered into by the Actor prior to the effective date"); and on an offer the agent
  *   conveyed in the term and the player accepted within sixty days of it after the term (Equity's form, S30 ¶4).
- *   Renewals aren't a thing an engagement does in the game, so their rule has nothing to read.
+ *   Renewals were nothing an engagement did in the game until 2026-10-24 (brief 25's Module 4): an option taken up on a
+ *   recurring part makes the next season's engagement through the same agreement (`renewFromOption`, `systems/projobs.ts`),
+ *   so its commission is owed as the first's.
  *
  * **Wages, as wages.** Union work is W-2 employment (`work.md` S22: "Union actors are not independent contractors; they
  * are employees of the production"), and the game pays non-union work the same way, its producers using a payroll
@@ -100,7 +102,9 @@ import { payeeAccount } from './cash';
 import { homeOf, recordWages, stateOf, yearOf } from './earnings';
 import { nonresidentFor, connecticutTax } from './taxreturn';
 import { inTheBank, owe, payFromBank } from './spending';
-import { businessDaysOn, f1Of, usWorkAuthorized } from './permission';
+import { contributionOn, lateDays } from './contracts';
+import { businessDaysOn, f1Of, usWorkAuthorized, weeklyHours } from './permission';
+import { WORK_RULES } from '../content/workrules';
 import { addYears, citizenOf, documentsOf } from './documents';
 import { residenceIn } from './residence';
 import { schoolEnded } from './school';
@@ -233,7 +237,9 @@ export function eligibilityRead(person: Person, days: readonly { from: Instant; 
   if (opt && (opt.issuedAt ?? Infinity) <= (dates[0] ?? at) + 12 * MS_HOUR) {
     // What counts for OPT said as it's counted (from 2026-10-22, the owner's brief 22): until then "Each day of this work
     // counts as a day worked", whether or not the work began.
-    if (refused === undefined) return { ...base, basis: 'opt', words: `On OPT you can work in the US until ${formatDate(opt.expiresAt!, zone)}. Once this work begins, every day to its last counts as a day with work, not one of OPT’s days without work.` };
+    // Work under OPT's twenty hours a week isn't employment for it (`employmentSpan`, from 2026-10-24, brief 25's Module 4):
+    // a recurring part's episodes three weeks apart average under fourteen, and until then this said every day counted.
+    if (refused === undefined) return { ...base, basis: 'opt', words: weeklyHours({ days }) < WORK_RULES.opt.weeklyHours ? `On OPT you can work in the US until ${formatDate(opt.expiresAt!, zone)}. This work averages under ${WORK_RULES.opt.weeklyHours} hours a week, so on its own its days don’t count as days with work for OPT.` : `On OPT you can work in the US until ${formatDate(opt.expiresAt!, zone)}. Once this work begins, every day to its last counts as a day with work, not one of OPT’s days without work.` };
     return { ...base, basis: 'opt', words: `This work runs to ${formatDate(last ?? refused, zone)}, past the end of your OPT on ${formatDate(opt.expiresAt ?? refused, zone)}.` };
   }
   const studying = person.school !== undefined && !schoolEnded(person.school.standing);
@@ -489,6 +495,10 @@ function payDue(s: Simulation, person: Person, e: Engagement, p: ProPayment, pro
   const dues = duesOn(person, project, gross, s.now);
   const w = withholdingOn(s, person, gross, s.now, project.place.cityId);
   const kept = gross - w.total - dues.amount;
+  // The producer's pension and health contribution, on top of the pay and never from it (`contributionOn`,
+  // `systems/contracts.ts`, from 2026-10-24, brief 25's Module 4, D4): kept on the payment, posted to nobody's account here.
+  const contribution = contributionOn(project, s.now, gross);
+  if (contribution) p.contribution = contribution;
   const week = weekOf(p, workZone);
   const days = engagementDaysIn(e, week.from, week.to, workZone);
   const hours = days ? `, ${days * PAY.hoursPerDay} hours` : '';
@@ -564,7 +574,11 @@ export function schedulePay(sim: Simulation, person: Person, e: Engagement): { s
   for (const p of e.pay) {
     if (p.deferred) { deferred += 1; continue; }
     if (p.received || p.inTrust || scheduledFor(sim, PAY_KIND, p.key)) continue;
-    sim.schedule({ at: Math.max(p.due, sim.now + 60_000), kind: PAY_KIND, label: `Payday: ${project?.project ?? 'Your Work'}`, category: 'home', priority: 30, refType: 'engagement', refId: e.id, payload: { personId: person.id, engagementId: e.id, key: p.key } });
+    // A non-union producer pays late at times (`lateDays`, `systems/contracts.ts`, from 2026-10-24, brief 25's Module 4,
+    // D2): the payday comes that many days after its due, and the payment reads overdue in between.
+    if (project?.union === 'none' && p.late === undefined) { const days = lateDays(sim, p.key); if (days) p.late = { days }; }
+    const at = p.due + (p.late?.days ?? 0) * MS_DAY;
+    sim.schedule({ at: Math.max(at, sim.now + 60_000), kind: PAY_KIND, label: `Payday: ${project?.project ?? 'Your Work'}`, category: 'home', priority: 30, refType: 'engagement', refId: e.id, payload: { personId: person.id, engagementId: e.id, key: p.key } });
     scheduled += 1;
   }
   const pro = ensurePro(sim, person);

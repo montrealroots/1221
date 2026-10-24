@@ -99,6 +99,7 @@ import { beginOnOpening, registerShowcase } from './systems/proshowcase';
 import { registerProAgent } from './systems/proagent';
 import { dropPaydays, equityOnOpening, registerProPay } from './systems/propay';
 import { registerProJobs } from './systems/projobs';
+import { registerContracts } from './systems/contracts';
 import { YALE_DRAMA } from './content/school';
 import { CARDS } from './content/cards';
 import { registerWorld } from './world/world';
@@ -172,6 +173,7 @@ export function registerAllSystems(sim: Simulation): void {
   registerProAgent(sim);
   registerProPay(sim);
   registerProJobs(sim);
+  registerContracts(sim);
 }
 
 /** Recurring world processes every save needs running. */

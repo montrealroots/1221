@@ -33,6 +33,7 @@ import type { ProjectTemplate } from '../content/careerwork';
 import { citizenOf, documentsOf, inForce, numberFor, passportOf, type PersonDocument } from './documents';
 import { ensurePro, noteEvent, type EligibilityRead, type Engagement, type ProId, type TripLeg, type WorkStay, type WorkTrip } from './pro';
 import { eligibilityRead } from './propay';
+import { payPerDiem } from './contracts';
 
 const MIN = 60_000;
 
@@ -488,6 +489,8 @@ export function registerWorkTrips(sim: Simulation, hooks: TripHooks): void {
       trip.status = 'home';
       noteEvent(s, trip, { kind: 'home', key: 'home', words: `You were home in ${nameOf(person.currentLocationId)}.` });
       hooks.tell(s, person, `You’re Home From ${nameOf(trip.cityId)}`, `You’re back in ${nameOf(person.currentLocationId)} after ${t.project}.`, 60);
+      // The per diem for the days away, once home (from 2026-10-24, brief 25's Module 4, D6), where the contract has one.
+      payPerDiem(s, person, e, trip);
     }
   });
 

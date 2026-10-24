@@ -49,6 +49,7 @@ import { createSave, loadSave } from '@/engine';
 import type { Simulation } from '@/engine/core/simulation';
 import type { ScheduledItem } from '@/engine/core/scheduler';
 import { MS_DAY, MS_HOUR, addDays, formatDate, instantFromZoned, zonedParts } from '@/engine/core/time';
+import { overtimeOf } from '@/engine/systems/contracts';
 import { formatMoney } from '@/engine/core/money';
 import { newLifeConfig } from '@/engine/world/bootstrap';
 import { deserialise, serialise } from '@/engine/persistence/adapter';
@@ -427,7 +428,7 @@ describe('V1 and A1: a graduating student carried into the career, played whole 
     for (const l of his) expect(l).not.toMatch(/Fictional:/);
   });
 
-  it('through him: his breakdowns and his submissions with her portfolio, the network co-star’s self-tape taped, its offer at scale plus ten accepted from What Needs You, the two shoot days played, the pay into Halberd Talent’s client trust account and on to her less $280.40 commission, and the credit on her résumé', () => {
+  it('through him: his breakdowns and his submissions with her portfolio, the network co-star’s self-tape taped, its offer at scale plus ten accepted from What Needs You, the two shoot days played, the pay into Halberd Talent’s client trust account and on to her less $385.55 commission, and the credit on her résumé', () => {
     const au = opened('audition');
     const o = deskClerk(au)!;
     const agreementId = au.player.pro!.agreements[0]!.id;
@@ -454,7 +455,9 @@ describe('V1 and A1: a graduating student carried into the career, played whole 
     const e = bk.player.pro!.engagements.find((x) => x.opportunityId === o.id)!;
     expect([e.agreementId, e.agentId, e.status]).toEqual([agreementId, AGENT.id, 'booked']);
     expect(e.days.map((d) => formatDate(d.from, zone))).toEqual(['October 1, 2029', 'October 2, 2029']);
-    expect(e.pay.map((x) => [x.promised, formatDate(x.due, zone), x.received ?? null, x.inTrust ?? null])).toEqual([[2 * 1_542_20, 'October 4, 2029', null, null]]);
+    // With each day's two hours of overtime (from 2026-10-24, brief 25's Module 4: until then the day rate alone).
+    expect(e.pay.map((x) => [x.promised, formatDate(x.due, zone), x.received ?? null, x.inTrust ?? null])).toEqual([[2 * (1_542_20 + overtimeOf(1_542_20)), 'October 4, 2029', null, null]]);
+    expect(e.contract).toMatchObject({ classification: 'SAG-AFTRA Day Performer', estimate: 4_241_06, series: { id: 'calloway-files', year: 2029, season: 11 } });
     expect(bk.universe.scheduled.filter((i) => i.kind === WORK_DAY_KIND && i.refId === e.id).map((i) => [i.requiresPlayer, i.travelMinutes])).toEqual([[true, 120], [true, 120]]);
     // Worked and judged, the credit shot; and, the J6 rule, each day is work in the project's genres (content/engagement.ts).
     // Until brief 21 (2026-10-22) a day's practice was shared between police procedural and crime, 100 x 0.1 x a half of
@@ -470,19 +473,23 @@ describe('V1 and A1: a graduating student carried into the career, played whole 
     expect(wr.player.engagement!.byGenre.police_procedural!.practice).toBeCloseTo(day1 + 100 * ENGAGEMENT.genre.practice * (1 - day1 / 100), 2);
     expect(wr.player.engagement!.byGenre.police_procedural!.practice).toBeCloseTo(19, 2);
     expect(wr.player.engagement?.byGenre.crime?.practice ?? 0).toBe(0);
-    // The payday: into the trust account. Commission is only what's over scale, ($1,542.20 - $1,402.00) x 2 = $280.40
-    // (representation.md S3), and, a member by then, SAG-AFTRA's working dues of 1.575% (work.md S20): $48.58.
+    // The payday: into the trust account. Each day pays $1,542.20 and two hours' overtime at time and one-half, $578.33
+    // (an eighth of the day an hour, N13 Schedule A §9): $4,241.06 for the two. Until 2026-10-24 (brief 25's Module 4)
+    // the eleven-hour day paid its day rate alone, $3,084.40, $280.40 of commission and $48.58 of dues. Commission is only
+    // what's over scale (representation.md S3), the scale the same share of the overtime as of the day: $4,241.06 less
+    // $4,241.06 x 1,402.00/1,542.20, $385.55; and, a member by then, SAG-AFTRA's working dues of 1.575% (work.md S20): $66.80.
     const tr = opened('in-trust').player.pro!.engagements.find((x) => x.id === e.id)!.pay[0]!;
-    expect(tr.inTrust).toMatchObject({ agency: 'Halberd Talent', gross: 3_084_40, commission: 280_40, dues: 48_58 });
-    expect((1_542_20 - 1_402_00) * 2).toBe(280_40);
-    expect(Math.round(3_084_40 * UNIONS.sagAftra.workingDues)).toBe(48_58);
-    expect(tr.inTrust!.held).toBe(3_084_40 - tr.inTrust!.withheld - 48_58);
+    expect(tr.inTrust).toMatchObject({ agency: 'Halberd Talent', gross: 4_241_06, commission: 385_55, dues: 66_80 });
+    expect(2 * (1_542_20 + overtimeOf(1_542_20))).toBe(4_241_06);
+    expect(4_241_06 - Math.round(4_241_06 * (1_402_00 / 1_542_20))).toBe(385_55);
+    expect(Math.round(4_241_06 * UNIONS.sagAftra.workingDues)).toBe(66_80);
+    expect(tr.inTrust!.held).toBe(4_241_06 - tr.inTrust!.withheld - 66_80);
     expect(formatDate(tr.inTrust!.releaseAt, zone)).toBe('October 10, 2029');
     // Passed on three business days later (Columbus Day, October 8, not among them; Christmas Day until 2026-10-23, when
-    // the shoot was in December), less the commission, into her checking: what was held, less $280.40.
+    // the shoot was in December), less the commission, into her checking: what was held, less $385.55.
     const po = opened('paid-on');
     const r = po.player.pro!.engagements.find((x) => x.id === e.id)!.pay[0]!.received!;
-    expect(r).toMatchObject({ via: 'trust', gross: 3_084_40, commission: 280_40, dues: 48_58, net: tr.inTrust!.held - 280_40 });
+    expect(r).toMatchObject({ via: 'trust', gross: 4_241_06, commission: 385_55, dues: 66_80, net: tr.inTrust!.held - 385_55 });
     const passed = po.universe.transactions.find((x) => x.id === r.txnId)!;
     expect(passed.postings.some((x) => x.amount === r.net && po.universe.accounts[x.accountId]?.ownerId === po.player.id)).toBe(true);
     // Her first pay through the trust is this job's, and the next her part in Abbott Elementary's, drawn by the game from
@@ -492,7 +499,7 @@ describe('V1 and A1: a graduating student carried into the career, played whole 
     expect(met(A.lines, /^(NOTICE \| (Pay Held|Paid On))/).slice(0, 4)).toEqual(['October 4, 2029 at 12:00 PM | NOTICE: Pay Held For You At Halberd Talent', 'October 10, 2029 at 12:00 PM | NOTICE: Paid On From Halberd Talent', 'October 18, 2029 at 12:00 PM | NOTICE: Pay Held For You At Halberd Talent', 'October 23, 2029 at 12:00 PM | NOTICE: Paid On From Halberd Talent']);
     // This job's, found by its project: the first paid on, Abbott Elementary's after it.
     const paidOn = A.lines.find((l) => l.includes('| NOTICE | Paid On From Halberd Talent |') && l.includes('The Calloway Files'))!;
-    expect(paidOn).toContain('$280.40');
+    expect(paidOn).toContain('$385.55');
     expect(paidOn).toContain(`${money(r.net)} went into your`);
     // The credit on the résumé, made from the record by Update Your Résumé.
     expect(currentOf(opened('resume').player.pro, 'resume')!.contains).toContain('Desk Clerk, The Calloway Files, Bright Harbor Television, 2029 (not yet released)');
@@ -515,7 +522,7 @@ describe('V1 and A1: a graduating student carried into the career, played whole 
     expect(fee[0]!.postings.filter((x) => own.includes(x.accountId)).map((x) => x.amount)).toEqual([-3_244_07]);
     expect(sj.player.pro!.unionBills!.find((b) => b.key === 'sag-aftra:dues:2029-11')).toMatchObject({ amount: 123_07, due: at(2029, 11, 1) });
     // The Calloway Files' pay, found by its project, as other engagements came beside it from brief 25 (2026-10-23).
-    expect(opened('in-trust').player.pro!.engagements.find((x) => x.projectId === 'calloway-files')!.pay[0]!.inTrust!.dues).toBe(48_58);
+    expect(opened('in-trust').player.pro!.engagements.find((x) => x.projectId === 'calloway-files')!.pay[0]!.inTrust!.dues).toBe(66_80);
     const may = opened('may');
     expect(may.player.pro!.unionBills!.filter((b) => b.due === at(2030, 5, 1)).map((b) => [b.key, b.amount, b.settled?.how])).toEqual([['equity:dues:2030-05', 88_00, 'paid'], ['sag-aftra:dues:2030-05', 123_07, 'paid']]);
     expect(may.universe.transactions.filter((x) => x.memo === 'SAG-AFTRA: initiation fee and half a year’s base dues')).toHaveLength(1);
@@ -591,7 +598,7 @@ describe('V1 and A1: a graduating student carried into the career, played whole 
     const twin = opened('paid-on').player.pro!.engagements.find((e) => e.id === job.id)!;
     const here = sim.player.pro!.engagements.find((e) => e.id === job.id)!;
     expect(here.pay.map((x) => [x.received!.commission, x.received!.via])).toEqual(twin.pay.map((x) => [x.received!.commission, x.received!.via]));
-    expect(here.pay.reduce((n, x) => n + x.received!.commission, 0)).toBe(280_40);
+    expect(here.pay.reduce((n, x) => n + x.received!.commission, 0)).toBe(385_55);
   });
 
   it('L1: each career command and each of the career’s steps on the clock wrote nothing outside the professional record but its own, and from the last term’s first morning to the end nothing was reset: who she is, the School’s record, the work and its journey, her abilities and genres, her papers and her money', () => {

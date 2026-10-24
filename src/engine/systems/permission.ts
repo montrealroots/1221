@@ -250,9 +250,10 @@ export const PERMISSION_ENDED = 'documents.work_permission_ended';
  * month, it should average out to at least 20 hours per week" (`WORK_RULES.opt.weeklyHours`). Averaged over the
  * engagement, not a month, SLATE's reading: a performance's record is its two and a half hours on stage, not the calls
  * around it, so a run's performance weeks read fifteen hours, which a month's window would take for unemployment.
- * Every engagement the game has averages 22 or more.
+ * Every engagement the game had averaged 22 or more until 2026-10-24, when brief 25's Module 4 brought a recurring part:
+ * its guaranteed episodes, three weeks apart, average under fourteen, so on their own they aren't employment for OPT.
  */
-export function weeklyHours(e: Pick<Engagement, 'days'>): number {
+export function weeklyHours(e: { days: readonly { from: Instant; to: Instant }[] }): number {
   if (!e.days.length) return 0;
   const hours = e.days.reduce((a, d) => a + (d.to - d.from) / MS_HOUR, 0);
   return hours / Math.max(1, (e.days[e.days.length - 1]!.to - e.days[0]!.from) / (7 * MS_DAY));

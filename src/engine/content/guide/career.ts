@@ -35,6 +35,8 @@ import { ESTIMATE } from '../../systems/school';
 import { PAY, sagJoinUsd } from '../../systems/propay';
 import { OUTSIDE_WORK, WORK } from '../../systems/projobs';
 import { TRIP, routeSourceWords } from '../../systems/worktrip';
+import { CONTRIBUTION, LATE, OPTION_RAISE, PER_DIEM, RERUN_CEILING, RESIDUALS, contributionRate, overtimeOf } from '../../systems/contracts';
+import { SERIES } from '../series';
 import { JURISDICTIONS } from '../jurisdictions';
 import { BRIEF } from '../../systems/briefs';
 import type { GuideEntry } from './types';
@@ -506,7 +508,8 @@ export const CAREER_GUIDE: readonly GuideEntry[] = [
       'Each payment counts on your tax return as wages, with what was withheld, the commission and the dues.',
     ],
     interpret: [
-      'Promised means it’s owed and not yet paid. In Trust means the production has paid and your agency holds it. Received gives the figures as they were posted.',
+      // Until 2026-10-24 (brief 25's Module 4) a payment not yet paid read Promised, whatever its days and its payday.
+      'Estimated, Earned and Due mean it’s owed and not yet paid: its days still to come, worked, or its payday today. Held For You means the production has paid and your agency holds it. Settled gives the figures as they were posted.',
       'Deferred pay is shown and never paid: a student film pays its actors only if it earns money later, and no film in the game does.',
       'On an F-1 while you’re a student, outside acting work isn’t open to you: Yale grants CPT only for training the whole program requires, and Acting has none. On OPT after your degree, every day from a job’s first day to its last counts as a day with work, and the days before a booked job begins count as days without work. If your permission to work ends with work still booked, the company releases you: the days you worked are still paid, and the rest are called off.',
     ],
@@ -832,6 +835,65 @@ export const CAREER_GUIDE: readonly GuideEntry[] = [
       setup: 'A first-year in good standing, and a two-day shoot in October posted five weeks ahead.',
       steps: ['Press Ask The School on the role.', 'A week later, read the dean’s answer.'],
       result: 'The chair recommends it and the dean approves it: two working days, asked well ahead, a paid professional role, no School call and at most two class days. Those class days are excused.',
+    },
+  },
+  // From 2026-10-24 (the owner's brief 25, Module 4): the contract, each payment's state, the money beside the wages, and
+  // a recurring part's season (`systems/contracts.ts`, `systems/series.ts`). Every figure is the rules' own, imported.
+  {
+    id: 'career.contracts',
+    title: 'Contracts, Residuals And A Series’ Seasons',
+    goal: 'career',
+    covers: ['pro.ask_pay'],
+    synonyms: ['contract', 'overtime', 'residuals', 'rerun', 'per diem', 'pension and health', 'option', 'renewal', 'canceled series', 'overdue pay', 'episode guarantee'],
+    questions: ['What does my contract say?', 'Why is my pay more than the day rate?', 'What are residuals?', 'Is the series coming back?', 'Why wasn’t I paid for every episode?', 'What do I do if pay is late?'],
+    where: on('work', 'Career, Work, The Contract'),
+    available: `From the guide’s chapter “${WORK_CHAPTER}”, once you’ve accepted work.`,
+    short: `Accepting work makes its contract: the part, the dates, the pay and only the terms that apply. Its estimated pay is gross, before tax, commission and dues, and none of it is in your accounts until it’s paid.\n\nEach payment says where it stands: Estimated before its days, Earned once they’re worked, Due on its payday, Held For You in your agency’s trust account, Settled once it reaches you. A payment past its payday is Overdue: press Ask About It, and it’s Disputed until it’s paid.`,
+    steps: [
+      'Open Career, then Work, and open The Contract on an engagement.',
+      'Read its terms: overtime, residuals, the producer’s pension and health contribution, a per diem, a recurring part’s episodes and its option, where each applies.',
+      'Under Pay, read each payment’s state. If one is Overdue, press Ask About It.',
+    ],
+    needs: ['Work you’ve accepted. Ask About It needs a payment past its payday and still unpaid.'],
+    costs: [
+      { label: 'Overtime', value: `On a SAG-AFTRA day, the ninth and tenth hours of work at time and one-half: ${usd(overtimeOf(1_283_00))} a day on the $1,283 minimum` },
+      { label: 'Pension And Health', value: `The producer pays ${pct(contributionRate(Date.UTC(2027, 0, 1)))} of SAG-AFTRA pay on top of it, ${pct(CONTRIBUTION.rate)} before September 6, 2026. Your pay keeps all of it` },
+      { label: 'Per Diem', value: `${usd(PER_DIEM.perDay)} a day for meals on a trip for SAG-AFTRA work, paid when you’re home, apart from your wages` },
+      { label: 'A Rerun', value: `All your pay for the time you worked, overtime at straight time, up to ${usd(RERUN_CEILING.hour)} for an hour’s program or ${usd(RERUN_CEILING['half-hour'])} for a half-hour’s, paid within ${RESIDUALS.payWithinDays} days` },
+    ],
+    reads: [
+      { label: 'The Agreement', value: 'The union contract the work is under, which sets which terms apply' },
+      { label: 'The Days Worked', value: 'What each payment is for: a day not worked is a day not paid' },
+      { label: 'How The Work Went', value: 'Whether a production calls a recurring part for more episodes and takes up its option', estimate: true },
+    ],
+    now: ['Accepting puts the contract under The Contract and each payment under Pay as Estimated. Your accounts don’t change.'],
+    later: [
+      'Each payment moves to Earned, Due and Settled as its days and its payday come.',
+      `Television work under SAG-AFTRA carries residuals: its first telecast is paid for by your pay, and a network rerun in prime time pays again, within ${RESIDUALS.payWithinDays} days of it.`,
+      `${SERIES[0]!.title} shoots each season from mid-July to May. From May 2030 the network says each May whether there’s another season. A canceled series stops that day: casting for it closes, and work not yet done is called off with nothing owed. It can come back years later.`,
+      `A recurring part guarantees some episodes and is expected in more: a further episode is paid only if the production calls you for it. The option on the next season, at ${Math.round(OPTION_RAISE * 100)}% more a day, is taken up or let go by June 30, once.`,
+    ],
+    interpret: [
+      'The overtime, the contribution’s rates, the per diem and the rerun’s share and ceiling are SAG-AFTRA’s agreements’ own, as AMPTP publishes them. The eleven-hour shoot day’s hour for lunch is estimated.',
+      `When an episode is on the air, whether it’s rerun, the series’ seasons and how late a non-union producer pays, ${Math.round(LATE.chance * 10)} times in ten, by one to four weeks, are the game’s own.`,
+      'A renewal brings no contract by itself: a part in a renewed series comes only through its option or a new casting.',
+    ],
+    unavailable: ['“You can ask about a payment once it’s past its payday and unpaid.”'],
+    mistakes: [
+      'Counting a contract’s estimated pay as money you have.',
+      'Counting every episode of a season as paid: only those the contract guarantees, and those you’re called for.',
+    ],
+    next: ['Read Your Unions: SAG-AFTRA work from the thirtieth day after your first job under it needs you to join.'],
+    related: ['career.pay', 'career.commission', 'career.unions', 'career.offers'],
+    connections: [
+      { to: 'career.pay', kind: 'scheduled', why: 'Each payment the contract promised is paid on its payday, and its state says where it stands.' },
+      { to: 'career.offers', kind: 'prerequisite', why: 'Accepting an offer makes its contract.' },
+      { to: 'career.unions', kind: 'prerequisite', why: 'A further episode or an option taken up past SAG-AFTRA’s thirty days needs you to be a member.' },
+    ],
+    example: {
+      setup: 'A graduate accepts Assistant DA Whitlock in The Calloway Files at the $1,283 minimum, guaranteed two episodes of its season.',
+      steps: ['Open The Contract and read its episodes and its option.', 'Work the four shoot days, and join SAG-AFTRA after the first.', 'Read each further episode’s word as it comes.'],
+      result: `Each day pays ${usd(1_283_00 + overtimeOf(1_283_00))} with its overtime, a further episode is paid only if you’re called for it, and by June 30 the production takes up its option or lets it go.`,
     },
   },
   // From 2026-10-23 (the owner's brief 25): work abroad, Sydney first, its visa and its trip (`systems/worktrip.ts`).

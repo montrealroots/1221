@@ -304,6 +304,17 @@ export interface ProPayment {
    * week doesn't match.
    */
   week?: { from: Instant; to: Instant };
+  /**
+   * The part of `promised` that's overtime, in its currency (from 2026-10-24, brief 25's Module 4, D3): two hours at time
+   * and one-half on each day of a SAG-AFTRA day performer's week (`systems/contracts.ts`). A residual reads it to take the
+   * overtime hours at straight time.
+   */
+  overtime?: Money;
+  /** The producer's pension and health contribution on it, worked out when it's paid: shown, never posted to the player (D4). */
+  contribution?: { rate: number; amount: Money };
+  /** How many days late a non-union producer pays it (D2), and when the player asked about it, with the answer given. */
+  late?: { days: number };
+  asked?: { at: Instant; answer: Instant };
   /** `dues`: the union's working dues taken from it, where it's union work and they're a member (`systems/propay.ts`). */
   received?: { at: Instant; gross: Money; withheld: Money; commission: Money; net: Money; via: 'trust' | 'direct'; txnId?: string; dues?: Money };
   /**
@@ -369,6 +380,72 @@ export interface Engagement extends HasHistory {
   school?: 'approved' | 'unapproved' | 'reported';
   /** Work abroad: its trip (`systems/worktrip.ts`, from 2026-10-23, the owner's brief 25). */
   tripId?: ProId;
+  /** The contract made when it was accepted (`systems/contracts.ts`, from 2026-10-24, brief 25's Module 4, D1). */
+  contract?: Contract;
+  /** Money paid beside the wages, each once by its key: a per diem (D6). */
+  allowances?: Allowance[];
+}
+
+/**
+ * A contract's clauses, each only where it applies (`systems/contracts.ts`, from 2026-10-24, brief 25's Module 4, D1):
+ * deferred pay; a day performer's overtime; residuals; the producer's pension and health contribution; the trip and its
+ * per diem; a recurring part's episodes, guaranteed and further; and an option on the next season.
+ */
+export type ContractClause =
+  | { kind: 'deferred' }
+  | { kind: 'overtime'; hourly: Money; hours: number; premium: number; perDay: Money }
+  | { kind: 'residuals'; program: 'hour' | 'half-hour'; ceiling: Money }
+  | { kind: 'contributions'; rate: number }
+  | { kind: 'trip'; words: string }
+  | { kind: 'per-diem'; perDay: Money; days: number }
+  | { kind: 'episodes'; ordered: number; guaranteed: number; expected: number; daysEach: number; numbers: number[]; further: { n: number; status: 'pending' | 'called' | 'not-called' | 'off'; at?: Instant }[] }
+  | { kind: 'option'; season: number; year: number; by: Instant; raise: number; status: 'open' | 'exercised' | 'expired'; settled?: { at: Instant; why: string; engagementId?: ProId } };
+
+/** An engagement's contract (D1), its money in US cents as the offer's: a gross estimate, never cash. */
+export interface Contract {
+  /** 1, and one more for each season an option carried it into. */
+  version: number;
+  madeAt: Instant;
+  classification: string;
+  billing: string;
+  format: string;
+  agreement: string;
+  service: { from: Instant; to: Instant };
+  place: string;
+  basis: 'day' | 'week' | 'episode' | 'deferred';
+  rate?: Money;
+  per: 'day' | 'week';
+  units: number;
+  /** The gross it promised when it was made: before withholding, commission and dues. */
+  estimate: Money;
+  /** Every payment it promised, by key: one gone from the engagement is one the work no longer owes. */
+  payKeys: string[];
+  series?: { id: string; year: number; season: number };
+  /** The engagement whose option made it. */
+  renews?: ProId;
+  clauses: ContractClause[];
+}
+
+/** A per diem, paid once (D6): for how many days, at what a day, how much, when, and its transaction. */
+export interface Allowance { key: string; kind: 'per-diem'; days: number; perDay: Money; amount: Money; at: Instant; txnId: string }
+
+/**
+ * Residuals for one engagement (D5), four records kept apart: the entitlement (this record's own fields, made when the
+ * work was done), each exploitation (a telecast the game imagines), each calculation, and each settlement, paid once.
+ */
+export interface Residual {
+  id: ProId;
+  engagementId: ProId;
+  projectId: string;
+  role: string;
+  at: Instant;
+  program: 'hour' | 'half-hour';
+  /** In US cents: the rerun's ceiling, and the work's total actual compensation. */
+  ceiling: Money;
+  base: Money;
+  exploitations: { key: string; kind: 'first-telecast' | 'network-rerun'; at: Instant; status: 'planned' | 'aired' }[];
+  calculations: { key: string; at: Instant; base: Money; share: number; ceiling: Money; amount: Money }[];
+  settlements: { key: string; due: Instant; amount: Money; paid?: { at: Instant; gross: Money; withheld: Money; net: Money; txnId: string } }[];
 }
 
 /**
@@ -479,6 +556,8 @@ export interface ProRecord {
   sag?: { eligibleSince?: Instant; memberSince?: Instant };
   /** The unions' bills, each charged once (`systems/propay.ts`): the unsettled, and the last `BILLS_KEPT` settled. */
   unionBills?: UnionBill[];
+  /** Residuals, one record for each piece of television work that carries them (`systems/contracts.ts`, from 2026-10-24). */
+  residuals?: Residual[];
   // `trimmed`, how many resolved opportunities and finished engagements the bounds had dropped, went on 2026-10-21
   // (brief 20's D1, a value written and read by nothing but a test). What a dropped posting said that matters later is
   // kept in `lastPosted`. A save that has it keeps it, unread.

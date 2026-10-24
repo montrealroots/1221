@@ -217,7 +217,8 @@ describe('J1: fictional roles, posted on a schedule', () => {
       expect([p.weekday, p.hour, p.minute]).toEqual([1, 9, 0]);
       expect(o.submitBy - o.postedAt).toBe(7 * MS_DAY);
       const days = datesOf(o);
-      expect(days.length).toBe(t.schedule.kind === 'shoot' ? t.schedule.days : (t.schedule.rehearsalWeeks * 5 + t.schedule.performanceWeeks * 6));
+      // Open postings only (a recurring part, from 2026-10-24, is cast through an agent), so a shoot's days or a run's.
+      expect(days.length).toBe(t.schedule.kind === 'shoot' ? t.schedule.days : t.schedule.kind === 'run' ? t.schedule.rehearsalWeeks * 5 + t.schedule.performanceWeeks * 6 : -1);
       expect(Math.round((startOfDay(days[0]!.from, zone) - startOfDay(o.postedAt, zone)) / MS_DAY)).toBeGreaterThanOrEqual(WORK.leadDays);
       // A part posted before says it's posted again and what came of it the last time (from 2026-10-21, brief 20's D4).
       expect(o.history[0]!.words).toBe(`${t.casting.charAt(0).toUpperCase()}${t.casting.slice(1)} posted ${t.role.part} in ${t.project}${o.again ? ` again, a new casting of the part. The last time it was posted to you, on ${formatDate(o.again.postedAt, zone)}: ${o.again.outcome}` : '.'}`);

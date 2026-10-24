@@ -127,9 +127,9 @@
  },
  "src/engine/content/tutorial.ts#CHAPTERS [finding-work]": {
   "status": "Rewritten",
-  "hash": "203a98924e2e",
-  "on": "2026-10-23",
-  "evidence": "Corrected on 2026-10-24 where it said every project, company and casting office was invented for the game, untrue once parts were drawn from real productions (brief 25's Module 2); read to docs/STYLE.md where the player meets it in tests/pro-opportunities-screen.test.ts, tests/propay-screen.test.ts, tests/pro-agent.test.ts, tests/b20-guide-chapters.test.ts and tests/career-drawn.test.ts, with tools/voice-check.mjs, tools/tics.mjs, tools/title-case.mjs, tools/plural-check.mjs and tools/spelling.mjs passing",
+  "hash": "cff9eadd2ac5",
+  "on": "2026-10-24",
+  "evidence": "Written for brief 25's Module 4 (contracts, pay states, overtime, the producer's contribution, residuals, the per diem, a recurring part's season and a series' seasons) to docs/STYLE.md and docs/GLOSSARY.md, every rule's figure the agreements' own and every invention said as the game's; read where the player meets it in tests/career-contracts.test.ts (the offer, the contract, each payment's state, the notices of each episode, option, decision, telecast, rerun, residual and per diem, through a played recurring part), with tools/voice-check.mjs, tools/tics.mjs and tools/title-case.mjs clean.",
   "first": "Pending"
  },
  "src/engine/content/tutorial.ts#CHAPTERS [life]": {

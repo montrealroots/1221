@@ -17,9 +17,9 @@ Implemented**: no screen offers it, or no test runs it. No status here says a sc
 SLATE has no tests of its screens, and nothing is deployed.
 
 - Verified (journey): 61
-- Implemented But Unverified: 120
+- Implemented But Unverified: 121
 - Partially Implemented: 0
-- Commands in all: 181
+- Commands in all: 182
 
 ## Commands
 
@@ -128,10 +128,11 @@ SLATE has no tests of its screens, and nothing is deployed.
 | `practice.exercise` | Implemented But Unverified | You As An Actor | ProfileWorkspace.tsx | `systems/practice.ts` | There’s no such tier. (also practiceRefusal, focusRefusal) | — | — | — | 32 | — |
 | `practice.self_tape` | Verified (journey) | You As An Actor | BriefPane.tsx | `systems/briefs.ts` | — (also tapeRefusal) | — | — | — | 45 | journey-agent.test.ts |
 | `pro.accept_agreement` | Verified (journey) | Representation | RepresentationPane.tsx | `systems/proagent.ts` | — (also signRefusal) | — | — | pro.agent_term_end | 6 | journey-agent.test.ts |
-| `pro.accept_offer` | Implemented But Unverified | Finding Work | OpportunitiesPane.tsx | `systems/projobs.ts` | — (also acceptRefusal) | engagements (added to) | — | booked | 14 | — |
+| `pro.accept_offer` | Implemented But Unverified | Finding Work | OpportunitiesPane.tsx | `systems/projobs.ts` | — (also acceptRefusal) | engagements (added to) | — | booked | 15 | — |
 | `pro.agent_check` | Verified (journey) | Representation | RepresentationPane.tsx | `systems/proagent.ts` | — (also checkRefusal) | — | — | — | 10 | journey-agent.test.ts |
 | `pro.agent_notice` | Verified (journey) | Representation | RepresentationPane.tsx | `systems/proagent.ts` | — (also noticeRefusal) | — | — | — | 8 | journey-agent.test.ts |
 | `pro.apply_work_visa` | Implemented But Unverified | Finding Work | WorkPane.tsx | `systems/worktrip.ts` | — (also visaRefusal) | — | — | — | 1 | — |
+| `pro.ask_pay` | Implemented But Unverified | Finding Work | WorkPane.tsx | `systems/contracts.ts` | — (also askRefusal) | — | — | pro.pay.payday; problem | 1 | — |
 | `pro.ask_referral` | Verified (journey) | Representation | RepresentationPane.tsx | `systems/proagent.ts` | — (also referralRefusal) | — | — | — | 7 | journey-agent.test.ts |
 | `pro.ask_to_move` | Verified (journey) | Representation | RepresentationPane.tsx TimeControls.tsx | `systems/proagent.ts` | — (also moveRefusal) | — | — | — | 3 | journey-agent.test.ts |
 | `pro.cut_reel` | Verified (journey) | Your Career | CareerWorkspace.tsx | `systems/pro.ts` | Your bank can’t cover …, so nothing was charged. (also reelRefusal) | — | Yes | reel | 5 | journey-agent.test.ts |
@@ -139,7 +140,7 @@ SLATE has no tests of its screens, and nothing is deployed.
 | `pro.decline_offer` | Implemented But Unverified | Finding Work | OpportunitiesPane.tsx | `systems/projobs.ts` | There’s no offer to decline. | — | — | declined | 4 | — |
 | `pro.end_agreement` | Verified (journey) | Representation | RepresentationPane.tsx | `systems/proagent.ts` | — (also endRefusal) | — | — | pro.agent_decision | 3 | journey-agent.test.ts |
 | `pro.headshots` | Verified (journey) | Your Career | CareerWorkspace.tsx | `systems/pro.ts` | Your bank can’t cover …, so nothing was charged. (also headshotRefusal) | — | Yes | headshot | 12 | journey-agent.test.ts |
-| `pro.join_sag` | Implemented But Unverified | Your Career | WorkPane.tsx | `systems/propay.ts` | Your bank can’t cover …, so nothing was charged. (also joinSagRefusal) | — | Yes | — | 3 | — |
+| `pro.join_sag` | Implemented But Unverified | Your Career | WorkPane.tsx | `systems/propay.ts` | Your bank can’t cover …, so nothing was charged. (also joinSagRefusal) | — | Yes | — | 4 | — |
 | `pro.move_audition` | Implemented But Unverified | Finding Work | OpportunitiesPane.tsx | `systems/projobs.ts` | — (also moveRefusal) | — | — | — | 1 | — |
 | `pro.prepare` | Implemented But Unverified | Finding Work | OpportunitiesPane.tsx | `systems/projobs.ts` | — (also prepareRefusal) | — | — | — | 2 | — |
 | `pro.request_outside_work` | Implemented But Unverified | Finding Work | OpportunitiesPane.tsx | `systems/projobs.ts` | — (also requestRefusal) | — | — | pro.school_answer; requested | 1 | — |
@@ -272,11 +273,15 @@ money, what it sets going next, and how many test files name it or its constant.
 | `pro.casting_decision` | `systems/projobs.ts` | systems/projobs.ts | — | — | — | 3 |
 | `pro.offer_lapse` | `systems/projobs.ts` | systems/projobs.ts | — | — | lapsed | 0 |
 | `pro.pay.dues` | `systems/propay.ts` | systems/propay.ts | — | — | — | 4 |
-| `pro.pay.payday` | `systems/propay.ts` | systems/propay.ts | — | — | — | 6 |
+| `pro.pay.payday` | `systems/propay.ts` | systems/contracts.ts; systems/propay.ts | — | — | — | 8 |
 | `pro.pay.release` | `systems/propay.ts` | systems/projobs.ts; systems/propay.ts | — | — | — | 4 |
 | `pro.pay.sag_eligible` | `systems/propay.ts` | systems/propay.ts | — | Yes | pro.pay.sag_eligible; success | 4 |
 | `pro.reply` | `systems/projobs.ts` | systems/proagent.ts; systems/projobs.ts | — | — | — | 4 |
+| `pro.residual.air` | `systems/contracts.ts` | systems/contracts.ts | — | — | — | 0 |
+| `pro.residual.pay` | `systems/contracts.ts` | systems/contracts.ts | — | — | pro.pay.payday; problem | 2 |
 | `pro.school_answer` | `systems/projobs.ts` | systems/projobs.ts | engagements (added to) | — | booked; declined; pro.school_answer; and 1 more | 0 |
+| `pro.series.episode` | `systems/series.ts` | systems/series.ts | — | — | booked; problem | 2 |
+| `pro.series.option` | `systems/series.ts` | systems/series.ts | — | — | problem; booked | 2 |
 | `pro.tape_due` | `systems/projobs.ts` | systems/projobs.ts | — | — | — | 2 |
 | `pro.trip_arrive` | `systems/worktrip.ts` | systems/worktrip.ts | — | — | arrived; home | 0 |
 | `pro.trip_depart` | `systems/worktrip.ts` | systems/worktrip.ts | — | — | departed | 0 |
@@ -285,7 +290,7 @@ money, what it sets going next, and how many test files name it or its constant.
 | `school.account_due` | `systems/leave.ts` | systems/leave.ts | — | — | — | 14 |
 | `school.aid_decide` | `systems/leave.ts` | systems/leave.ts | — | — | — | 0 |
 | `school.cabaret` | `systems/school.ts` | systems/school.ts | status | — | cabaret; school.summer; school.stipend | 30 |
-| `school.call` | `systems/school.ts` | systems/school.ts | status | — | school.call | 73 |
+| `school.call` | `systems/school.ts` | systems/school.ts | status | — | school.call | 74 |
 | `school.classes` | `systems/school.ts` | systems/school.ts | status | — | — | 40 |
 | `school.commencement` | `systems/school.ts` | systems/school.ts | — | — | — | 26 |
 | `school.company` | `systems/school.ts` | systems/school.ts | — | — | — | 8 |

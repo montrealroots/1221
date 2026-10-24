@@ -348,13 +348,19 @@
    "id": "S21",
    "title": "SAG-AFTRA 2026 TV/Theatrical Contracts",
    "url": "https://www.sagaftra.org/contracts-industry-resources/contracts/2026-tvtheatrical-contracts",
-   "status": "dossier-located",
+   "status": "blocked",
    "dossier": "Listed in the dossier’s register; access date 23 October 2026 unless noted.",
    "retrieved": null,
    "published": null,
    "effective": null,
    "territory": null,
-   "attempts": [],
+   "attempts": [
+    {
+     "at": "2026-10-24",
+     "how": "curl with a browser user agent",
+     "result": "HTTP 403"
+    }
+   ],
    "facts": []
   },
   {
@@ -630,13 +636,19 @@
    "id": "S41",
    "title": "SAG-AFTRA Residuals",
    "url": "https://www.sagaftra.org/membership-benefits/residuals",
-   "status": "dossier-located",
+   "status": "blocked",
    "dossier": "Listed in the dossier’s register; access date 23 October 2026 unless noted.",
    "retrieved": null,
    "published": null,
    "effective": null,
    "territory": null,
-   "attempts": [],
+   "attempts": [
+    {
+     "at": "2026-10-24",
+     "how": "curl with a browser user agent",
+     "result": "HTTP 403"
+    }
+   ],
    "facts": []
   },
   {
@@ -1592,26 +1604,38 @@
    "id": "S95",
    "title": "SAG-AFTRA Standard Television",
    "url": "https://www.sagaftra.org/industry-resources/rates-agreements/standard-television",
-   "status": "dossier-located",
+   "status": "blocked",
    "dossier": "High-level overview, not a universal current rate card.",
    "retrieved": null,
    "published": null,
    "effective": null,
    "territory": null,
-   "attempts": [],
+   "attempts": [
+    {
+     "at": "2026-10-24",
+     "how": "curl with a browser user agent",
+     "result": "HTTP 403"
+    }
+   ],
    "facts": []
   },
   {
    "id": "S96",
    "title": "SAG-AFTRA Residuals Quick Guide",
    "url": "https://www.sagaftra.org/sag-aftra-tv-and-theatrical-residuals-quick-guide",
-   "status": "dossier-located",
+   "status": "blocked",
    "dossier": "Published 28 January 2021. Conceptual background only; current agreement controls.",
    "retrieved": null,
    "published": null,
    "effective": null,
    "territory": null,
-   "attempts": [],
+   "attempts": [
+    {
+     "at": "2026-10-24",
+     "how": "curl with a browser user agent and WebFetch",
+     "result": "HTTP 403"
+    }
+   ],
    "facts": []
   },
   {
@@ -2288,6 +2312,271 @@
      "field": "departments",
      "value": "The New York office’s sections: film/tv/theatre, voiceover, commercial, comedy and others",
      "quote": "film/tv/theatre voiceover commercial comedy"
+    }
+   ]
+  },
+  {
+   "id": "N12",
+   "title": "AMPTP: 2026 SAG-AFTRA Memorandum Of Agreement (fully executed 27 May 2026)",
+   "url": "https://amptp.org/wp-content/themes/amptp/assets/pdf/SAG-AFTRA/2026%20SAG-AFTRA%20Memorandum%20of%20Agreement%20FULLY%20EXECUTED%202026-05-27.pdf",
+   "status": "read",
+   "dossier": "Found by this build; not in the dossier’s register.",
+   "retrieved": "2026-10-24",
+   "published": "2026-05-27",
+   "effective": null,
+   "territory": "US",
+   "attempts": [
+    {
+     "at": "2026-10-24",
+     "how": "curl with a browser user agent, then pdftotext",
+     "result": "HTTP 200"
+    }
+   ],
+   "facts": [
+    {
+     "field": "rerun-ceilings",
+     "value": "The network prime time rerun ceilings kept as they were",
+     "quote": "Stet the network prime time rerun ceilings in Section 18(b)(l)b) of the Television"
+    },
+    {
+     "field": "health-plan",
+     "value": "The Health Plan contribution rate up one percent, from July 1, 2026 or the first Sunday ninety days after ratification notice, whichever is later",
+     "quote": "Increase the contribution rate to the SAG-AFTRA Health Plan by one percent (1.0%) effective on [July 1, 2026 or the first Sunday that is ninety (90) days following the business day on which the AMPTP receives notice of ratification, whichever is later]"
+    },
+    {
+     "field": "allowances",
+     "value": "Allowances kept as they were",
+     "quote": "Stet all allowances and adjustments in the SAG-AFTRA Codified Basic"
+    },
+    {
+     "field": "minimums",
+     "value": "Minimums up 3% a year, compounded",
+     "quote": "Increase the minimum salary rates in the 2023 SAG-AFTRA Codified Basic Agreement and the 2023 SAG-AFTRA Television Agreement by three percent (3%)"
+    },
+    {
+     "field": "sideletter-k",
+     "value": "The Health Plan increase isn’t applied to Sideletter K’s rate for pilots and a new series’ first two seasons",
+     "quote": "the increase described in the preceding sentence shall not apply to the contribution rate under Sideletter K"
+    }
+   ]
+  },
+  {
+   "id": "N13",
+   "title": "AMPTP: 2014 SAG-AFTRA Codified Basic Agreement",
+   "url": "https://amptp.org/wp-content/themes/amptp/assets/pdf/SAG-AFTRA/2014%20Codified%20Basic%20Agreement%20(%E2%80%9CCBA%E2%80%9D).pdf",
+   "status": "read",
+   "dossier": "Found by this build; not in the dossier’s register.",
+   "retrieved": "2026-10-24",
+   "published": null,
+   "effective": null,
+   "territory": "US",
+   "attempts": [
+    {
+     "at": "2026-10-24",
+     "how": "curl with a browser user agent, then pdftotext",
+     "result": "HTTP 200"
+    }
+   ],
+   "facts": [
+    {
+     "field": "overtime",
+     "value": "A day performer: time and one-half for the ninth and tenth hours of work time",
+     "quote": "A day performer shall receive time and one-half for the ninth and tenth hours of work time, and double time thereafter"
+    },
+    {
+     "field": "overtime-example",
+     "value": "The worked example: a day performer at $880 a day, eleven hours of work time after an hour for lunch, paid two hours at time and one-half ($330) and one at double time ($220), an hour an eighth of the day rate",
+     "quote": "(1) Two hours at time and one-half..... $330.00"
+    },
+    {
+     "field": "per-diem",
+     "value": "A per diem for meals on overnight locations: $60 a day",
+     "quote": "All performers shall be entitled to a basic per diem allowance for meals on overnight locations"
+    },
+    {
+     "field": "per-diem-total",
+     "value": "Breakfast $12, lunch $18, dinner $30",
+     "quote": "TOTAL: $60.00"
+    },
+    {
+     "field": "pension-health-2014",
+     "value": "Pension and health contributions in 2014: 17% of gross compensation",
+     "quote": "seventeen percent (17.0%) of all gross compensation"
+    }
+   ]
+  },
+  {
+   "id": "N14",
+   "title": "AMPTP: 2014 SAG-AFTRA Television Agreement",
+   "url": "https://amptp.org/wp-content/themes/amptp/assets/pdf/SAG-AFTRA/2014%20Television%20Agreement%20(%E2%80%9CTVA%E2%80%9D).pdf",
+   "status": "read",
+   "dossier": "Found by this build; not in the dossier’s register.",
+   "retrieved": "2026-10-24",
+   "published": null,
+   "effective": null,
+   "territory": "US",
+   "attempts": [
+    {
+     "at": "2026-10-24",
+     "how": "curl with a browser user agent, then pdftotext",
+     "result": "HTTP 200"
+    }
+   ],
+   "facts": [
+    {
+     "field": "first-run",
+     "value": "The salary pays for the first telecast",
+     "quote": "The salary paid to the performer for his services in a television motion picture shall constitute payment in full for the telecasting of such motion picture once"
+    },
+    {
+     "field": "prime-time-rerun",
+     "value": "A network prime-time rerun: 100% of total actual compensation, up to the ceiling",
+     "quote": "Performer shall be paid one hundred percent (100%) of his “total actual compensation” for each such rerun, not exceeding the ceilings"
+    },
+    {
+     "field": "ceiling-half-hour",
+     "value": "The half-hour ceiling, $2,578 from July 1, 2016",
+     "quote": "½ hour program $2,477 $2,527 $2,578"
+    },
+    {
+     "field": "ceiling-hour",
+     "value": "The one-hour ceiling, $3,668 from July 1, 2016",
+     "quote": "1 hour program 3,525 3,596 3,668"
+    },
+    {
+     "field": "rerun-due",
+     "value": "A network rerun is paid within thirty days of its telecast",
+     "quote": "the Producer shall make the appropriate rerun payment not later than thirty (30) days after the telecast of such rerun"
+    },
+    {
+     "field": "total-actual-compensation",
+     "value": "Total actual compensation: pay for time worked or guaranteed, overtime hours at straight time without their premium, and no penalties or allowances",
+     "quote": "including overtime hours worked, but excluding any premium portions of pay for such overtime hours and (ii) excluding also all penalties and allowances"
+    }
+   ]
+  },
+  {
+   "id": "N15",
+   "title": "AMPTP: 2017 SAG-AFTRA CBA And TVA Memorandum Of Agreement",
+   "url": "https://amptp.org/wp-content/themes/amptp/assets/pdf/SAG-AFTRA/2017%20CBA%20and%20TVA%20Memorandum%20of%20Agreement%20(%E2%80%9CMOA%E2%80%9D).pdf",
+   "status": "read",
+   "dossier": "Found by this build; not in the dossier’s register.",
+   "retrieved": "2026-10-24",
+   "published": null,
+   "effective": null,
+   "territory": "US",
+   "attempts": [
+    {
+     "at": "2026-10-24",
+     "how": "curl with a browser user agent, then pdftotext",
+     "result": "HTTP 200"
+    }
+   ],
+   "facts": [
+    {
+     "field": "rerun-ceilings",
+     "value": "The network prime time rerun ceilings frozen",
+     "quote": "Freeze the network prime time rerun ceilings in Section 18(b)(1)b) of the Television Agreement."
+    },
+    {
+     "field": "pension-health",
+     "value": "17% to 17.5% from July 1, 2017",
+     "quote": "total aggregate pension and health contribution rate increases from seventeen percent (17%) to seventeen and one-half percent (17.5%)"
+    }
+   ]
+  },
+  {
+   "id": "N16",
+   "title": "AMPTP: 2020 SAG-AFTRA CBA And TVA Memorandum Of Agreement",
+   "url": "https://amptp.org/wp-content/themes/amptp/assets/pdf/SAG-AFTRA/2020%20CBA%20and%20TVA%20MOA.pdf",
+   "status": "read",
+   "dossier": "Found by this build; not in the dossier’s register.",
+   "retrieved": "2026-10-24",
+   "published": null,
+   "effective": null,
+   "territory": "US",
+   "attempts": [
+    {
+     "at": "2026-10-24",
+     "how": "curl with a browser user agent, then pdftotext",
+     "result": "HTTP 200"
+    }
+   ],
+   "facts": [
+    {
+     "field": "rerun-ceilings",
+     "value": "The network prime time rerun ceilings frozen",
+     "quote": "Freeze the network prime time rerun ceilings in Section 18(b)(l)b) of the Television Agreement."
+    },
+    {
+     "field": "pension-health",
+     "value": "18.5% to 19.5% from July 1, 2020",
+     "quote": "pension and health contribution rate increases from eighteen and one-half percent (18.5%) to nineteen and one-half percent (19.5%)"
+    },
+    {
+     "field": "allowances",
+     "value": "Allowances frozen",
+     "quote": "Freeze all allowances and adjustments in the SAG-AFTRA Codified Basic Agreement and Television Agreement."
+    }
+   ]
+  },
+  {
+   "id": "N17",
+   "title": "AMPTP: 2023 SAG-AFTRA CBA And TVA Memorandum Of Agreement",
+   "url": "https://amptp.org/wp-content/themes/amptp/assets/pdf/SAG-AFTRA/2023%20CBA%20and%20TVA%20MOA.pdf",
+   "status": "read",
+   "dossier": "Found by this build; not in the dossier’s register.",
+   "retrieved": "2026-10-24",
+   "published": null,
+   "effective": null,
+   "territory": "US",
+   "attempts": [
+    {
+     "at": "2026-10-24",
+     "how": "curl with a browser user agent, then pdftotext",
+     "result": "HTTP 200"
+    }
+   ],
+   "facts": [
+    {
+     "field": "rerun-ceilings",
+     "value": "The network prime time rerun ceilings frozen",
+     "quote": "Freeze the network prime time rerun ceilings in Section 1 8(b)(l)b) of the Television Agreement."
+    },
+    {
+     "field": "allowances",
+     "value": "Allowances frozen",
+     "quote": "Freeze all allowances and adjustments in the SAG-AFTRA Codified Basic Agreement and Television Agreement"
+    },
+    {
+     "field": "contribution-ceiling",
+     "value": "The one-hour contribution ceiling, $35,000, from July 1, 2024",
+     "quote": "One-hour television motion picture or covered new media program 36-65 minutes in length: $35,000."
+    }
+   ]
+  },
+  {
+   "id": "N18",
+   "title": "Press reports of the 2026 ratification vote (LA Magazine, Senal News), by web search",
+   "url": "https://lamag.com/arts-and-entertainment/sag-aftra-approves-amptp-deal-with-expanded-ai-protections-in-landslide-vote/",
+   "status": "excerpt",
+   "dossier": "Found by this build; not in the dossier’s register.",
+   "retrieved": "2026-10-24",
+   "published": null,
+   "effective": null,
+   "territory": "US",
+   "attempts": [
+    {
+     "at": "2026-10-24",
+     "how": "web search; the page itself not opened",
+     "result": "HTTP 200"
+    }
+   ],
+   "facts": [
+    {
+     "field": "ratified",
+     "value": "Members ratified the 2026 TV/Theatrical agreement in a national vote that closed on June 4, 2026",
+     "quote": "The national vote closed on June 4, 2026"
     }
    ]
   }

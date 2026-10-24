@@ -68,3 +68,30 @@ preferences, list or clients.
 | A7 | A real agent's words carry no pronoun the pages don't give: the agent's name, and "the office". The game's own agent's sentences stay word for word. | (house rule) |
 | A8 | Played: a life referred to a real New York agent, met, offered, signed, and put up for a role through the office's breakdowns; saved and loaded on the way. | REP-06, REP-05, CONT-01 |
 
+## Module 4: Contracts, Pay, Residuals, And A Series' Seasons (2026-10-24)
+
+Part 7, with Part 13's renewal, cancellation and revival. Written before the code. The rules come from the agreements
+themselves, as AMPTP publishes them (N12, the 2026 memorandum; N13, the 2014 Codified Basic Agreement; N14, the 2014
+Television Agreement; N15 to N17, the 2017, 2020 and 2023 memoranda), SAG-AFTRA's own pages refusing this build
+(S21, S41, S95, S96: HTTP 403). What the game imagines (a rerun, a season's renewal, a call for another episode) is its
+own, said as one.
+
+| # | Check | Rows |
+|---|---|---|
+| D1 | Every engagement carries its contract from acceptance: the role's classification, the production's format, the governing agreement, the effective date, the service dates, the place, the basis (a day, a week, an episode or deferred) and the estimated pay, said as an estimate before withholding, commission and dues and not as cash. It holds only the clauses that apply: overtime and residuals for SAG-AFTRA television work, a per diem and the trip for overnight work away, an episode guarantee, expected appearances and an option for a recurring part. | CON-02, CON-03, CON-01 |
+| D2 | Each payment says where it stands, from the record: estimated before its days, earned once they're worked, due on its payday, settled (or held in trust) when paid, deferred, or not owed where the work was called off first; a late one is overdue, and asked about, disputed, until it's paid. | CON-05 |
+| D3 | A SAG-AFTRA television day performer's eleven-hour shoot day, an hour of it lunch, is ten hours of work time, so it pays two hours at time and one-half of the day rate's hour (N13, Schedule A §9, its own example). | CON-02 |
+| D4 | The producer's pension and health contribution on SAG-AFTRA pay, 19.5% of it (N16), and 20.5% from the 2026 memorandum's date for the Health Plan's added 1% (N12), is shown as the producer's and never taken from the pay: net is gross less withholding, commission and dues, and nothing else. | CON-06, CON-05 |
+| D5 | Residuals as four records: the entitlement, made when SAG-AFTRA television work is done; each exploitation (the first telecast, which the salary pays for, N14 §18(a), and a network prime-time rerun, which the game decides); the calculation (100% of total actual compensation, up to the ceiling, $3,668 for an hour and $2,578 for a half-hour, N14 §18(b)(1), frozen by N15 to N17 and kept by N12); and the settlement, due within thirty days of the rerun (N14 §18(b)(5)), paid once by its key whatever is replayed or reloaded. A telecast alone pays nothing. | CON-09, CON-10, CON-08, T42, T96, T43 |
+| D6 | A per diem for meals on overnight locations, $60 a day (N13 §35.B(2), its allowances frozen since), is paid apart from wages, and isn't wages. | T45, CON-05 |
+| D7 | A recurring part in a fictional series: guaranteed two of a season's thirteen episodes and expected in up to five, paid by the episode for the episodes it's called for, never for every episode ordered; an option on the next season at 5% more an episode, exercised or left to expire once, by June 30 (the game's own terms, said as such). | CON-04, T86, T89, T90 |
+| D8 | Each season is renewed or cancelled on May 15 by a draw keyed by the series and the year, so a reload decides it the same. Renewed without the option exercised, no engagement comes. Cancelled, its earned pay and history stay, an open role in it closes without pay, and a role booked for work not yet done is called off, not owed. A cancelled series can come back years later, posting new roles, its history unchanged. | T58, T62, T85, T59, T91, T93, T10, T100 |
+| D9 | Played: a represented life cast in the recurring part, its guaranteed episodes worked with their overtime, a further episode called or not, the season ended and decided, the option exercised into the next season's contract or let expire, and a rerun's residual paid once; saved and loaded at each stage. | CON-01, CONT-01 |
+
+Two readings moved with the code, said here rather than rewritten above: the network's first word is in May 2030, the
+seasons through the one beginning in 2029 being ordered (the game's story, so a life played to 2029 meets the series as
+brief 19 left it); and each season shoots from mid-July to May, its thirteen episodes over by April, so the word in May
+never cuts a guaranteed episode short and the guarantee is never paid for work not done. Work in the series booked for
+days after a cancellation, a co-star's, is what's called off. A recurring part's further episodes and an option taken up
+also read SAG-AFTRA's thirty days: a non-member past them isn't called, and the option lapses, each with why.
+

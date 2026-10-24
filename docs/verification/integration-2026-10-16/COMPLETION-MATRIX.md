@@ -16,7 +16,7 @@ repository stops it. *Decision Required*: the question, the evidence and the rec
 an area's disposition, a criterion's Met or Not Met). Until brief 09 the page carried those words alone and said "none
 open"; documenting, classifying or giving a row to the owner never made it done.
 
-**Completion, by the matrix:** 588 of 659 rows in scope Implemented And Verified (89.2%); 67 Implemented, Verification Incomplete, 0 Partially Implemented, 0 Not Implemented, 0 Blocked Externally, 4 Decision Required, 41 Explicitly Deferred.
+**Completion, by the matrix:** 588 of 660 rows in scope Implemented And Verified (89.0%); 68 Implemented, Verification Incomplete, 0 Partially Implemented, 0 Not Implemented, 0 Blocked Externally, 4 Decision Required, 41 Explicitly Deferred.
 
 ## Totals
 
@@ -29,7 +29,7 @@ Only Implemented And Verified counts as done, out of every row not Explicitly De
 | Papers | 51 | 33 | 4 |  |  |  |  | 14 |
 | School | 101 | 101 |  |  |  |  |  |  |
 | Creation, Profile, Home And The Looks | 71 | 70 |  |  |  |  |  | 1 |
-| Commands Traced Outside The Audit | 1 |  | 1 |  |  |  |  |  |
+| Commands Traced Outside The Audit | 2 |  | 2 |  |  |  |  |  |
 | Remaining Area: banking | 16 | 16 |  |  |  |  |  |  |
 | Remaining Area: coverage | 11 | 11 |  |  |  |  |  |  |
 | Remaining Area: health-billing | 3 | 3 |  |  |  |  |  |  |
@@ -57,7 +57,7 @@ Only Implemented And Verified counts as done, out of every row not Explicitly De
 | Brief 13 Area: interface | 4 |  | 4 |  |  |  |  |  |
 | Brief 13 Area: journeys | 33 | 1 | 32 |  |  |  |  |  |
 | Brief 22: Replacement Criteria | 1 | 1 |  |  |  |  |  |  |
-| **All** | **700** | **588** | **67** | **0** | **0** | **0** | **4** | **41** |
+| **All** | **701** | **588** | **68** | **0** | **0** | **0** | **4** | **41** |
 
 ## Life, Health And Time
 
@@ -450,6 +450,7 @@ Only Implemented And Verified counts as done, out of every row not Explicitly De
 | Row | Goal | Status | Source's Word | Evidence |
 |---|---|---|---|---|
 | `pro.apply_work_visa` | Work abroad: a role in Sydney found, auditioned for on tape and accepted as a contract; the 408 visa it needs applied for and granted; the … | Implemented, Verification Incomplete | capability Implemented | `pro.apply_work_visa`: `tests/career-world-sydney.test.ts` / 1 test files |
+| `pro.ask_pay` | Contracts and the money they bring: each engagement's contract made at acceptance with only the clauses that apply, each payment's state fr… | Implemented, Verification Incomplete | capability Implemented | `pro.ask_pay`: `tests/career-contracts.test.ts` / 1 test files |
 
 ## Remaining Area: banking
 
@@ -928,7 +929,7 @@ Only Implemented And Verified counts as done, out of every row not Explicitly De
 
 Every row in scope not Implemented And Verified, with what its status says it needs.
 
-### Implemented, Verification Incomplete (67)
+### Implemented, Verification Incomplete (68)
 
 - **`bank.arrange_overdraft`** (Money): Unreachable as an arrangement. No New Haven bank arranges an overdraft (Chase, Bank of America and Wells Fargo charge by the item; Citi and Capital One have no overdraft terms), so a student’s request is refused in her bank’s words with nothing set or posted, across a reload, and Chase’s panel draws no Arrange It (tests/scope-money.test.ts ‘PLAYER JOURNEY: at each New Haven bank the request is refused in the bank’s words…’). From 2026-10-16 a student may keep an account at a bank in the country she lived in before Yale (systems/homeaccount.ts), and it doesn’t reach this either: a bank abroad …
 - **`bank.cancel_new`** (Money): Unreachable. Canceling needs an account in its cooling-off, and the US gives none (content/accountlife.ts), so a New Haven account draws no Cancel It and the command is refused with the account kept (tests/scope-money.test.ts ‘PLAYER JOURNEY: a New Haven savings account opened that morning can’t be canceled new…’). From 2026-10-16 a student may keep an account at a bank in the country she lived in before Yale (systems/homeaccount.ts), and it doesn’t reach this either: it was opened before Yale (openingDayOf; homeAccountRefusal refuses one opened on or after the first day of the term), on 1 Au…
@@ -943,6 +944,7 @@ Every row in scope not Implemented And Verified, with what its status says it ne
 - **`tax.lien_dispute`** (Papers): Unreachable: Connecticut’s lien always secures tax still owed, since a payment goes to the penalty and interest first, a lien is filed only while something is owed, and DRS assesses from the return’s own figures. Since 2026-10-16 the button is drawn only on a lien filed in error; on a played student’s Connecticut lien Papers says why in the engine’s words and the command is refused (tests/remaining-tax.test.ts ‘PLAYER JOURNEY: her Connecticut lien, filed by the clock 60 days after the due date…’). Read again on 2026-10-16 (brief 09): unchanged. An Inherited family’s student who files nothing …
 - **`tax.request_waiver`** (Papers): Unreachable: only Oregon charges the three-year penalty, and every life files in Connecticut; shown on the played life, the refusal and no row drawn (tests/scope-taxpapers.test.ts ‘tax.request_waiver: only Oregon charges the three-year penalty…’). Read again on 2026-10-16 (brief 09): unchanged; every life still files in Connecticut alone. / tested on fixtures: tests/remaining-tax.test.ts ‘FIXTURE: her own 2001 return filed before any notice…’ (70%, refunded), ‘FIXTURE: its Demand To File sent, then her own return, unpaid…’ (50%) and ‘FIXTURE: assessed, $990 paid toward its $1,000 of penalties…
 - **`pro.apply_work_visa`** (Commands Traced Outside The Audit): No audit row has read it against the standard on docs/GAMEPLAY-COVERAGE.md; its capability’s limits say what no test checks
+- **`pro.ask_pay`** (Commands Traced Outside The Audit): No audit row has read it against the standard on docs/GAMEPLAY-COVERAGE.md; its capability’s limits say what no test checks
 - **`banking.2.arrange_overdraft`** (Brief 09 Area: banking): owner decision
 - **`banking.2.cancel_new`** (Brief 09 Area: banking): owner decision (its last unfinished item implemented: banking.1.pro-rata)
 - **`banking.2.switch`** (Brief 09 Area: banking): owner decision
@@ -951,52 +953,52 @@ Every row in scope not Implemented And Verified, with what its status says it ne
 - **`banking.2.stop_balance_transfer`** (Brief 09 Area: banking): owner decision
 - **`banking.2.take_overrun_loan`** (Brief 09 Area: banking): owner decision
 - **`banking.2.money_transfer`** (Brief 09 Area: banking): owner decision
-- **`advice.F2A10-c`** (Brief 10 Area: advice): It was measured on cb8b19eb, and what it reads has changed since (src/engine/content/agents.ts, src/engine/content/careerwork.ts, src/engine/content/catalog.ts, …): measure it again
-- **`advice.F2A10-f`** (Brief 10 Area: advice): It was measured on cb8b19eb, and what it reads has changed since (src/engine/content/agents.ts, src/engine/content/careerwork.ts, src/engine/content/catalog.ts, …): measure it again
-- **`advice.F2A10-h`** (Brief 10 Area: advice): It was measured on cb8b19eb, and what it reads has changed since (src/engine/content/agents.ts, src/engine/content/careerwork.ts, src/engine/content/catalog.ts, …): measure it again
-- **`advice.heldout`** (Brief 10 Area: advice): It was measured on cb8b19eb, and what it reads has changed since (src/engine/content/agents.ts, src/engine/content/careerwork.ts, src/engine/content/catalog.ts, …): measure it again
-- **`F2-A`** (Criteria: The Attributes): It was measured on cb8b19eb, and what it reads has changed since (src/engine/content/agents.ts, src/engine/content/careerwork.ts, src/engine/content/catalog.ts, …): measure it again
-- **`MA5`** (Criteria: Mastery Through Play): It was measured on cb8b19eb, and what it reads has changed since (src/engine/content/agents.ts, src/engine/content/careerwork.ts, src/engine/content/catalog.ts, …): measure it again
-- **`INT-skipped`** (Integration): It was measured on 05060742, and what it reads has changed since (src/engine/content/agents.ts, src/engine/content/careerwork.ts, src/engine/content/catalog.ts, …): measure it again
-- **`INT-navigation`** (Integration): It was measured on 05060742, and what it reads has changed since (src/engine/content/agents.ts, src/engine/content/careerwork.ts, src/engine/content/catalog.ts, …): measure it again
-- **`INT-long-runs`** (Integration): It was measured on cb8b19eb, and what it reads has changed since (src/engine/content/agents.ts, src/engine/content/careerwork.ts, src/engine/content/catalog.ts, …): measure it again
-- **`INT-gate`** (Integration): It was measured on 859bacdb, and what it reads has changed since (src/engine/content/agents.ts, src/engine/content/careerwork.ts, src/engine/content/catalog.ts, …): measure it again
-- **`B13-UI.normal`** (Brief 13 Area: interface): It was measured on 05060742, and what it reads has changed since (src/engine/content/agents.ts, src/engine/content/careerwork.ts, src/engine/content/catalog.ts, …): measure it again
-- **`B13-UI.setback`** (Brief 13 Area: interface): It was measured on 05060742, and what it reads has changed since (src/engine/content/agents.ts, src/engine/content/careerwork.ts, src/engine/content/catalog.ts, …): measure it again
-- **`B13-UI.specialist`** (Brief 13 Area: interface): It was measured on 05060742, and what it reads has changed since (src/engine/content/agents.ts, src/engine/content/careerwork.ts, src/engine/content/catalog.ts, …): measure it again
-- **`B13-UI.walkthrough`** (Brief 13 Area: interface): It was measured on 05060742, and what it reads has changed since (src/engine/content/agents.ts, src/engine/content/careerwork.ts, src/engine/content/catalog.ts, …): measure it again
-- **`journeys.4-complete-journeys`** (Brief 13 Area: journeys): It was measured on cb8b19eb, and what it reads has changed since (src/engine/content/agents.ts, src/engine/content/careerwork.ts, src/engine/content/catalog.ts, …): measure it again
-- **`journeys.4-profiles`** (Brief 13 Area: journeys): It was measured on cb8b19eb, and what it reads has changed since (src/engine/content/agents.ts, src/engine/content/careerwork.ts, src/engine/content/catalog.ts, …): measure it again
-- **`journeys.4-expected-first`** (Brief 13 Area: journeys): It was measured on cb8b19eb, and what it reads has changed since (src/engine/content/agents.ts, src/engine/content/careerwork.ts, src/engine/content/catalog.ts, …): measure it again
-- **`journeys.4-neglect`** (Brief 13 Area: journeys): It was measured on cb8b19eb, and what it reads has changed since (src/engine/content/agents.ts, src/engine/content/careerwork.ts, src/engine/content/catalog.ts, …): measure it again
-- **`journeys.4-recovery`** (Brief 13 Area: journeys): It was measured on cb8b19eb, and what it reads has changed since (src/engine/content/agents.ts, src/engine/content/careerwork.ts, src/engine/content/catalog.ts, …): measure it again
-- **`journeys.4-check-1`** (Brief 13 Area: journeys): It was measured on cb8b19eb, and what it reads has changed since (src/engine/content/agents.ts, src/engine/content/careerwork.ts, src/engine/content/catalog.ts, …): measure it again
-- **`journeys.4-check-2`** (Brief 13 Area: journeys): It was measured on cb8b19eb, and what it reads has changed since (src/engine/content/agents.ts, src/engine/content/careerwork.ts, src/engine/content/catalog.ts, …): measure it again
-- **`journeys.4-check-3`** (Brief 13 Area: journeys): It was measured on cb8b19eb, and what it reads has changed since (src/engine/content/agents.ts, src/engine/content/careerwork.ts, src/engine/content/catalog.ts, …): measure it again
-- **`journeys.4-check-4`** (Brief 13 Area: journeys): It was measured on cb8b19eb, and what it reads has changed since (src/engine/content/agents.ts, src/engine/content/careerwork.ts, src/engine/content/catalog.ts, …): measure it again
-- **`journeys.4-check-5`** (Brief 13 Area: journeys): It was measured on cb8b19eb, and what it reads has changed since (src/engine/content/agents.ts, src/engine/content/careerwork.ts, src/engine/content/catalog.ts, …): measure it again
-- **`journeys.4-check-6`** (Brief 13 Area: journeys): It was measured on cb8b19eb, and what it reads has changed since (src/engine/content/agents.ts, src/engine/content/careerwork.ts, src/engine/content/catalog.ts, …): measure it again
-- **`journeys.4-check-7`** (Brief 13 Area: journeys): It was measured on cb8b19eb, and what it reads has changed since (src/engine/content/agents.ts, src/engine/content/careerwork.ts, src/engine/content/catalog.ts, …): measure it again
-- **`journeys.4-check-8`** (Brief 13 Area: journeys): It was measured on cb8b19eb, and what it reads has changed since (src/engine/content/agents.ts, src/engine/content/careerwork.ts, src/engine/content/catalog.ts, …): measure it again
-- **`journeys.4-check-9`** (Brief 13 Area: journeys): It was measured on cb8b19eb, and what it reads has changed since (src/engine/content/agents.ts, src/engine/content/careerwork.ts, src/engine/content/catalog.ts, …): measure it again
-- **`journeys.4-check-10`** (Brief 13 Area: journeys): It was measured on cb8b19eb, and what it reads has changed since (src/engine/content/agents.ts, src/engine/content/careerwork.ts, src/engine/content/catalog.ts, …): measure it again
-- **`journeys.4-focused`** (Brief 13 Area: journeys): It was measured on cb8b19eb, and what it reads has changed since (src/engine/content/agents.ts, src/engine/content/careerwork.ts, src/engine/content/catalog.ts, …): measure it again
-- **`journeys.6-completed-stay`** (Brief 13 Area: journeys): It was measured on cb8b19eb, and what it reads has changed since (src/engine/content/agents.ts, src/engine/content/careerwork.ts, src/engine/content/catalog.ts, …): measure it again
-- **`journeys.6-once`** (Brief 13 Area: journeys): It was measured on cb8b19eb, and what it reads has changed since (src/engine/content/agents.ts, src/engine/content/careerwork.ts, src/engine/content/catalog.ts, …): measure it again
-- **`journeys.6-advice-acknowledges`** (Brief 13 Area: journeys): It was measured on cb8b19eb, and what it reads has changed since (src/engine/content/agents.ts, src/engine/content/careerwork.ts, src/engine/content/catalog.ts, …): measure it again
-- **`journeys.6-feedback-current`** (Brief 13 Area: journeys): It was measured on cb8b19eb, and what it reads has changed since (src/engine/content/agents.ts, src/engine/content/careerwork.ts, src/engine/content/catalog.ts, …): measure it again
-- **`journeys.6-variety`** (Brief 13 Area: journeys): It was measured on cb8b19eb, and what it reads has changed since (src/engine/content/agents.ts, src/engine/content/careerwork.ts, src/engine/content/catalog.ts, …): measure it again
-- **`journeys.6-words-alone`** (Brief 13 Area: journeys): It was measured on cb8b19eb, and what it reads has changed since (src/engine/content/agents.ts, src/engine/content/careerwork.ts, src/engine/content/catalog.ts, …): measure it again
-- **`journeys.6-repetition-record`** (Brief 13 Area: journeys): It was measured on cb8b19eb, and what it reads has changed since (src/engine/content/agents.ts, src/engine/content/careerwork.ts, src/engine/content/catalog.ts, …): measure it again
-- **`journeys.6-defects-fixed`** (Brief 13 Area: journeys): It was measured on cb8b19eb, and what it reads has changed since (src/engine/content/agents.ts, src/engine/content/careerwork.ts, src/engine/content/catalog.ts, …): measure it again
-- **`journeys.7-mastery`** (Brief 13 Area: journeys): It was measured on cb8b19eb, and what it reads has changed since (src/engine/content/agents.ts, src/engine/content/careerwork.ts, src/engine/content/catalog.ts, …): measure it again
-- **`journeys.7-attributes`** (Brief 13 Area: journeys): It was measured on cb8b19eb, and what it reads has changed since (src/engine/content/agents.ts, src/engine/content/careerwork.ts, src/engine/content/catalog.ts, …): measure it again
-- **`journeys.7-genres`** (Brief 13 Area: journeys): It was measured on cb8b19eb, and what it reads has changed since (src/engine/content/agents.ts, src/engine/content/careerwork.ts, src/engine/content/catalog.ts, …): measure it again
-- **`journeys.7-specialists`** (Brief 13 Area: journeys): It was measured on cb8b19eb, and what it reads has changed since (src/engine/content/agents.ts, src/engine/content/careerwork.ts, src/engine/content/catalog.ts, …): measure it again
-- **`journeys.7-advice-forecasts`** (Brief 13 Area: journeys): It was measured on cb8b19eb, and what it reads has changed since (src/engine/content/agents.ts, src/engine/content/careerwork.ts, src/engine/content/catalog.ts, …): measure it again
-- **`journeys.7-stamina`** (Brief 13 Area: journeys): It was measured on cb8b19eb, and what it reads has changed since (src/engine/content/agents.ts, src/engine/content/careerwork.ts, src/engine/content/catalog.ts, …): measure it again
-- **`journeys.7-ledger`** (Brief 13 Area: journeys): It was measured on cb8b19eb, and what it reads has changed since (src/engine/content/agents.ts, src/engine/content/careerwork.ts, src/engine/content/catalog.ts, …): measure it again
-- **`journeys.7-save`** (Brief 13 Area: journeys): It was measured on cb8b19eb, and what it reads has changed since (src/engine/content/agents.ts, src/engine/content/careerwork.ts, src/engine/content/catalog.ts, …): measure it again
+- **`advice.F2A10-c`** (Brief 10 Area: advice): It was measured on cb8b19eb, and what it reads has changed since (src/engine/content/agencies.ts, src/engine/content/agents.ts, src/engine/content/careerwork.ts, …): measure it again
+- **`advice.F2A10-f`** (Brief 10 Area: advice): It was measured on cb8b19eb, and what it reads has changed since (src/engine/content/agencies.ts, src/engine/content/agents.ts, src/engine/content/careerwork.ts, …): measure it again
+- **`advice.F2A10-h`** (Brief 10 Area: advice): It was measured on cb8b19eb, and what it reads has changed since (src/engine/content/agencies.ts, src/engine/content/agents.ts, src/engine/content/careerwork.ts, …): measure it again
+- **`advice.heldout`** (Brief 10 Area: advice): It was measured on cb8b19eb, and what it reads has changed since (src/engine/content/agencies.ts, src/engine/content/agents.ts, src/engine/content/careerwork.ts, …): measure it again
+- **`F2-A`** (Criteria: The Attributes): It was measured on cb8b19eb, and what it reads has changed since (src/engine/content/agencies.ts, src/engine/content/agents.ts, src/engine/content/careerwork.ts, …): measure it again
+- **`MA5`** (Criteria: Mastery Through Play): It was measured on cb8b19eb, and what it reads has changed since (src/engine/content/agencies.ts, src/engine/content/agents.ts, src/engine/content/careerwork.ts, …): measure it again
+- **`INT-skipped`** (Integration): It was measured on 05060742, and what it reads has changed since (src/engine/content/agencies.ts, src/engine/content/agents.ts, src/engine/content/careerwork.ts, …): measure it again
+- **`INT-navigation`** (Integration): It was measured on 05060742, and what it reads has changed since (src/engine/content/agencies.ts, src/engine/content/agents.ts, src/engine/content/careerwork.ts, …): measure it again
+- **`INT-long-runs`** (Integration): It was measured on cb8b19eb, and what it reads has changed since (src/engine/content/agencies.ts, src/engine/content/agents.ts, src/engine/content/careerwork.ts, …): measure it again
+- **`INT-gate`** (Integration): It was measured on 859bacdb, and what it reads has changed since (src/engine/content/agencies.ts, src/engine/content/agents.ts, src/engine/content/careerwork.ts, …): measure it again
+- **`B13-UI.normal`** (Brief 13 Area: interface): It was measured on 05060742, and what it reads has changed since (src/engine/content/agencies.ts, src/engine/content/agents.ts, src/engine/content/careerwork.ts, …): measure it again
+- **`B13-UI.setback`** (Brief 13 Area: interface): It was measured on 05060742, and what it reads has changed since (src/engine/content/agencies.ts, src/engine/content/agents.ts, src/engine/content/careerwork.ts, …): measure it again
+- **`B13-UI.specialist`** (Brief 13 Area: interface): It was measured on 05060742, and what it reads has changed since (src/engine/content/agencies.ts, src/engine/content/agents.ts, src/engine/content/careerwork.ts, …): measure it again
+- **`B13-UI.walkthrough`** (Brief 13 Area: interface): It was measured on 05060742, and what it reads has changed since (src/engine/content/agencies.ts, src/engine/content/agents.ts, src/engine/content/careerwork.ts, …): measure it again
+- **`journeys.4-complete-journeys`** (Brief 13 Area: journeys): It was measured on cb8b19eb, and what it reads has changed since (src/engine/content/agencies.ts, src/engine/content/agents.ts, src/engine/content/careerwork.ts, …): measure it again
+- **`journeys.4-profiles`** (Brief 13 Area: journeys): It was measured on cb8b19eb, and what it reads has changed since (src/engine/content/agencies.ts, src/engine/content/agents.ts, src/engine/content/careerwork.ts, …): measure it again
+- **`journeys.4-expected-first`** (Brief 13 Area: journeys): It was measured on cb8b19eb, and what it reads has changed since (src/engine/content/agencies.ts, src/engine/content/agents.ts, src/engine/content/careerwork.ts, …): measure it again
+- **`journeys.4-neglect`** (Brief 13 Area: journeys): It was measured on cb8b19eb, and what it reads has changed since (src/engine/content/agencies.ts, src/engine/content/agents.ts, src/engine/content/careerwork.ts, …): measure it again
+- **`journeys.4-recovery`** (Brief 13 Area: journeys): It was measured on cb8b19eb, and what it reads has changed since (src/engine/content/agencies.ts, src/engine/content/agents.ts, src/engine/content/careerwork.ts, …): measure it again
+- **`journeys.4-check-1`** (Brief 13 Area: journeys): It was measured on cb8b19eb, and what it reads has changed since (src/engine/content/agencies.ts, src/engine/content/agents.ts, src/engine/content/careerwork.ts, …): measure it again
+- **`journeys.4-check-2`** (Brief 13 Area: journeys): It was measured on cb8b19eb, and what it reads has changed since (src/engine/content/agencies.ts, src/engine/content/agents.ts, src/engine/content/careerwork.ts, …): measure it again
+- **`journeys.4-check-3`** (Brief 13 Area: journeys): It was measured on cb8b19eb, and what it reads has changed since (src/engine/content/agencies.ts, src/engine/content/agents.ts, src/engine/content/careerwork.ts, …): measure it again
+- **`journeys.4-check-4`** (Brief 13 Area: journeys): It was measured on cb8b19eb, and what it reads has changed since (src/engine/content/agencies.ts, src/engine/content/agents.ts, src/engine/content/careerwork.ts, …): measure it again
+- **`journeys.4-check-5`** (Brief 13 Area: journeys): It was measured on cb8b19eb, and what it reads has changed since (src/engine/content/agencies.ts, src/engine/content/agents.ts, src/engine/content/careerwork.ts, …): measure it again
+- **`journeys.4-check-6`** (Brief 13 Area: journeys): It was measured on cb8b19eb, and what it reads has changed since (src/engine/content/agencies.ts, src/engine/content/agents.ts, src/engine/content/careerwork.ts, …): measure it again
+- **`journeys.4-check-7`** (Brief 13 Area: journeys): It was measured on cb8b19eb, and what it reads has changed since (src/engine/content/agencies.ts, src/engine/content/agents.ts, src/engine/content/careerwork.ts, …): measure it again
+- **`journeys.4-check-8`** (Brief 13 Area: journeys): It was measured on cb8b19eb, and what it reads has changed since (src/engine/content/agencies.ts, src/engine/content/agents.ts, src/engine/content/careerwork.ts, …): measure it again
+- **`journeys.4-check-9`** (Brief 13 Area: journeys): It was measured on cb8b19eb, and what it reads has changed since (src/engine/content/agencies.ts, src/engine/content/agents.ts, src/engine/content/careerwork.ts, …): measure it again
+- **`journeys.4-check-10`** (Brief 13 Area: journeys): It was measured on cb8b19eb, and what it reads has changed since (src/engine/content/agencies.ts, src/engine/content/agents.ts, src/engine/content/careerwork.ts, …): measure it again
+- **`journeys.4-focused`** (Brief 13 Area: journeys): It was measured on cb8b19eb, and what it reads has changed since (src/engine/content/agencies.ts, src/engine/content/agents.ts, src/engine/content/careerwork.ts, …): measure it again
+- **`journeys.6-completed-stay`** (Brief 13 Area: journeys): It was measured on cb8b19eb, and what it reads has changed since (src/engine/content/agencies.ts, src/engine/content/agents.ts, src/engine/content/careerwork.ts, …): measure it again
+- **`journeys.6-once`** (Brief 13 Area: journeys): It was measured on cb8b19eb, and what it reads has changed since (src/engine/content/agencies.ts, src/engine/content/agents.ts, src/engine/content/careerwork.ts, …): measure it again
+- **`journeys.6-advice-acknowledges`** (Brief 13 Area: journeys): It was measured on cb8b19eb, and what it reads has changed since (src/engine/content/agencies.ts, src/engine/content/agents.ts, src/engine/content/careerwork.ts, …): measure it again
+- **`journeys.6-feedback-current`** (Brief 13 Area: journeys): It was measured on cb8b19eb, and what it reads has changed since (src/engine/content/agencies.ts, src/engine/content/agents.ts, src/engine/content/careerwork.ts, …): measure it again
+- **`journeys.6-variety`** (Brief 13 Area: journeys): It was measured on cb8b19eb, and what it reads has changed since (src/engine/content/agencies.ts, src/engine/content/agents.ts, src/engine/content/careerwork.ts, …): measure it again
+- **`journeys.6-words-alone`** (Brief 13 Area: journeys): It was measured on cb8b19eb, and what it reads has changed since (src/engine/content/agencies.ts, src/engine/content/agents.ts, src/engine/content/careerwork.ts, …): measure it again
+- **`journeys.6-repetition-record`** (Brief 13 Area: journeys): It was measured on cb8b19eb, and what it reads has changed since (src/engine/content/agencies.ts, src/engine/content/agents.ts, src/engine/content/careerwork.ts, …): measure it again
+- **`journeys.6-defects-fixed`** (Brief 13 Area: journeys): It was measured on cb8b19eb, and what it reads has changed since (src/engine/content/agencies.ts, src/engine/content/agents.ts, src/engine/content/careerwork.ts, …): measure it again
+- **`journeys.7-mastery`** (Brief 13 Area: journeys): It was measured on cb8b19eb, and what it reads has changed since (src/engine/content/agencies.ts, src/engine/content/agents.ts, src/engine/content/careerwork.ts, …): measure it again
+- **`journeys.7-attributes`** (Brief 13 Area: journeys): It was measured on cb8b19eb, and what it reads has changed since (src/engine/content/agencies.ts, src/engine/content/agents.ts, src/engine/content/careerwork.ts, …): measure it again
+- **`journeys.7-genres`** (Brief 13 Area: journeys): It was measured on cb8b19eb, and what it reads has changed since (src/engine/content/agencies.ts, src/engine/content/agents.ts, src/engine/content/careerwork.ts, …): measure it again
+- **`journeys.7-specialists`** (Brief 13 Area: journeys): It was measured on cb8b19eb, and what it reads has changed since (src/engine/content/agencies.ts, src/engine/content/agents.ts, src/engine/content/careerwork.ts, …): measure it again
+- **`journeys.7-advice-forecasts`** (Brief 13 Area: journeys): It was measured on cb8b19eb, and what it reads has changed since (src/engine/content/agencies.ts, src/engine/content/agents.ts, src/engine/content/careerwork.ts, …): measure it again
+- **`journeys.7-stamina`** (Brief 13 Area: journeys): It was measured on cb8b19eb, and what it reads has changed since (src/engine/content/agencies.ts, src/engine/content/agents.ts, src/engine/content/careerwork.ts, …): measure it again
+- **`journeys.7-ledger`** (Brief 13 Area: journeys): It was measured on cb8b19eb, and what it reads has changed since (src/engine/content/agencies.ts, src/engine/content/agents.ts, src/engine/content/careerwork.ts, …): measure it again
+- **`journeys.7-save`** (Brief 13 Area: journeys): It was measured on cb8b19eb, and what it reads has changed since (src/engine/content/agencies.ts, src/engine/content/agents.ts, src/engine/content/careerwork.ts, …): measure it again
 
 ### Partially Implemented (0)
 

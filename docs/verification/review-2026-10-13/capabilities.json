@@ -4805,5 +4805,46 @@
   ],
   "rows": "pro.apply_work_visa is traced in docs/verification/connected-journey/TRACE.md (the guide’s career.work-abroad), not a row of the audit.",
   "weakTests": []
+ },
+ {
+  "on": "2026-10-24",
+  "against": "0978f022",
+  "by": "its builder",
+  "id": "career-contracts",
+  "claim": "Brief 25’s Module 4: each engagement’s contract made at acceptance with only the clauses that apply; each payment’s state from estimated to settled, with Ask About It on an overdue one (pro.ask_pay); a SAG-AFTRA day performer’s overtime; the producer’s pension and health contribution kept off the player’s money; a trip’s per diem apart from wages; residuals in four records paid once; a recurring part’s guaranteed and further episodes and its option; a series’ seasons renewed, canceled and revived by the world.",
+  "implementation": "src/engine/systems/contracts.ts (contractFor, payState, entitle, the residual and pay handlers, pro.ask_pay); src/engine/systems/series.ts (the pro.series reactor, the episode call and the option); src/engine/content/series.ts; src/engine/systems/projobs.ts (promisedPay, callOff, renewFromOption); src/engine/systems/propay.ts (payDue, schedulePay); src/ui/career/WorkPane.tsx (The Contract, the State column, Residuals).",
+  "consumers": "The Work tab; the payroll (propay); the wrap (finish); the trip home (worktrip); the week’s postings of a series part; Money’s statements; the tax return’s wages.",
+  "uiEvidence": {
+   "needed": true,
+   "have": "tests/propay-screen.test.ts draws the Work tab’s pay with its State column; tests/career-contracts.test.ts reads the contract, the payments’ states and the residual records through the engine at each stage of a played recurring part, saved and loaded."
+  },
+  "evidence": [
+   {
+    "kind": "command",
+    "where": "tests/career-contracts.test.ts ‘T43: marks a non-union producer’s late payment overdue, disputed once asked, and pays it once by the answer’",
+    "asserts": "pro.ask_pay refused before the payment is overdue and a second time; asked, the payment reads disputed and is paid by the answer’s day, once, the posting equal to its net.",
+    "reachesAction": true,
+    "checksConsequence": true,
+    "independent": false,
+    "problem": "Written by the builder of the code it reads."
+   },
+   {
+    "kind": "journey",
+    "where": "tests/career-contracts.test.ts ‘D9 PLAYER JOURNEY: put up by the agent, offered the part with its terms, accepted, worked with overtime, called or not for more, paid less commission, its option decided, its episode on the air; saved and loaded at each stage’",
+    "asserts": "The contract’s clauses, the overtime in each week’s pay, the commission and dues, the further episodes and the option, the residual records, each across a save and a load.",
+    "reachesAction": true,
+    "checksConsequence": true,
+    "independent": false,
+    "problem": "Written by the builder."
+   }
+  ],
+  "verdict": "partial",
+  "partialClass": "missing-evidence",
+  "gaps": [
+   "No reader independent of the builder has read it against the standard: this entry is the builder’s own reading, made on 2026-10-24.",
+   "The registry can’t call it Verified while its rows were added after 2026-10-13: tools/capabilities.mjs and tools/coverage.mjs count a row as read only by that day’s review."
+  ],
+  "rows": "pro.ask_pay is traced in docs/verification/connected-journey/TRACE.md (the guide’s career.contracts), not a row of the audit.",
+  "weakTests": []
  }
 ]
