@@ -52,6 +52,15 @@ nothing here builds on it.
     in the closed account for good, and net worth counted a card's credit as nothing (`closeCard` in `credit.ts`,
     `netWorth` in `finance.ts`; `tests/b26-card-credit-on-close.test.ts` fails on the old code and passes with the
     fix). 800 Verified, 6 Fixed And Verified in all, 339 Not Tested.
+  - **M7, papers and benefits (read on `388d9a1e`):** 180 rows: 160 verified by reading the documents, identity,
+    tax-id, permission, residence, citizenship, visits, appointments, health, therapy, assistance, unemployment,
+    universal credit, home benefits, pension, federal and state tax systems at their handlers, by the two areas' 70
+    test files (507 tests, green) and by a repeat, reload and call-off probe on a New Haven life
+    (`tests/b26-papers-repeats.test.ts`); 20 kept Deferred as the owner's scope reset of 2026-10-09 left them (the
+    pensions and their payments, EI, Jobseeker's Allowance, Universal Credit and its close, residence abroad, settling,
+    renewing, naturalizing and its decision, England's prepayment certificate). No defect found; noted and not changed:
+    EI's posting category (`'benefits'` where every other benefit posts `'benefit'`, unreachable) and `idCardRefusal`'s
+    order. 960 Verified, 6 Fixed And Verified, 20 Deferred in all, 159 Not Tested.
 - **M12, at the close:** brief 22's final runs again on the finished commit (back to 634), the gate in a clean clone of
   it, the receipt with everything brief 26's §13 asks.
 - **Not merged, not deployed.** The schema stays 94.

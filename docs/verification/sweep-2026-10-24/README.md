@@ -191,6 +191,52 @@ has its row. **Found nothing else.**
 (`card.close`, `card.statement`, `bank.cancel_new`, `look.networth`, `notice.systems/credit#closeCard`), by inspection
 and the tests named on each. Running total: 800 Verified, 6 Fixed And Verified, 1 Blocked, 339 Not Tested.
 
+### M7: Papers And Benefits
+
+**Read:** `systems/documents.ts` and `permission.ts` whole; `identity.ts`, `taxid.ts`, `residence.ts`,
+`citizenship.ts`, `papervisits.ts`, `appointments.ts` and `therapy.ts` at their commands, refusals, scheduled kinds and
+notices; `health.ts` at the month, the week, the bill, the appeal, every command and its refusal, and the notices from
+onset to the care priced again; `taxreturn.ts` at the season, the due date, the IRS's substitute, its letters and levy,
+the refund, the plan's four kinds and three commands, filing, paying, amending and the reconsideration, the federal
+lien and the UK years; `statetax.ts` at a state's letters, levy, lien, plan and waiver; `assistance.ts`,
+`unemployment.ts`, `universalcredit.ts`, `homebenefits.ts`, `eiself.ts` and the four pension systems at their handlers;
+the document, place, region and country looks; the guide's thirteen entries whose promises the two areas hold. **Ran:**
+the two areas' 70 test files, 507 tests, green on `388d9a1e`; and a probe written for the brief's section 4 on a New
+Haven life (`tests/b26-papers-repeats.test.ts`): Connecticut's card and a passport each applied for twice, charged once,
+arriving once across a reload; the card reported lost, its police report and its replacement each once; an appointment
+booked, called off with nothing left on the calendar, and booked again. Green.
+
+**Traced for the brief's three questions.** *Repeated presses:* every command refuses its second press in its own words
+(a card on its way, a passport being decided, a police report already filed, a card not lost, OPT applied for, a number
+on its way, a claim open, a plan with the IRS or in force, a year already paid, an amendment with the IRS, enrolled
+already, dropped already, in a course already, an appeal filed; Book An Appointment's second press says there's nothing
+to see a doctor about, because the booking took the need, and books nothing). *Cancellation:* an appointment called off
+leaves nothing on the calendar and the need owed, so it books again; a program dropped takes its renewal's notice and
+decision with it; a plan ended or paid off cancels its payments and its default; a return filed cancels the IRS's
+substitute and the state's letters; a payment that clears a year cancels its next letter and starts its lien's release;
+OPT ended releases the work booked past it (`PERMISSION_ENDED`, `projobs.ts`). *Reloads and jumps:* each arrival, each
+letter, each payment and each decision runs from the item it belongs to, once (`b20-papers-ids`, `b20-papers-health`
+and `integration-tax-reload` hold each across a save; the probe holds the card, the passport and the appointment).
+
+**Kept Deferred (20):** what the owner's scope reset of 2026-10-09 explicitly deferred stays so, with the effects row
+that records it on each: the four pensions and their payments (Social Security, the State Pension, Ireland's, Mexico's
+Bienestar and IMSS), EI for the self-employed, Jobseeker's Allowance, Universal Credit and its closing notice, residence
+abroad, settling, renewing Mexico's card, naturalizing and its decision, and England's prescription prepayment
+certificate. Each is read at its handler and held by a quick-save test all the same, so a save that holds one keeps it.
+
+**Found no defect.** Three things noted and not changed: EI's sickness benefit posts under `'benefits'` where every
+other benefit posts `'benefit'`, which a bank's count of electronic deposits reads (`ELECTRONIC`, `banking.ts:254`);
+it is a Canadian's, deferred, and no life reaches it. Ten features the effects matrix calls Implemented, Verification
+Incomplete (an amendment and its processing, a state's amended return, Oregon's three-year penalty and its waiver, a
+lien disputed as filed in error, a UK tax year settled, Mexico City's claim paid out, a visit booked before the reset, a
+prescription running out) are each read at their handler and held by a fixture test, and the register says so on each;
+no current life reaches them, which is the matrix's point, not a defect. And a non-citizen already holding
+Connecticut's card is told what the DMV asks before "You already hold one in force" (`idCardRefusal`'s order), one
+refusal where another would be plainer; Papers draws no Get for a card held, so nobody reads it.
+
+**Register:** 180 more rows: 160 Verified and 20 Deferred, by inspection and the tests named on each. Running total:
+960 Verified, 6 Fixed And Verified, 1 Blocked, 20 Deferred, 159 Not Tested.
+
 ## Final Runs, Gate And Report (M12)
 
 (Written at the close.)

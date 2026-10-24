@@ -57,7 +57,15 @@ each milestone's end, with the branch, the commit, what's covered, what remains 
   account for good, and net worth counted a credit as nothing (`closeCard` and `netWorth`;
   tests/b26-card-credit-on-close.test.ts fails on the old code, 2 of 3). 161 rows: 156 Verified, 5 Fixed And Verified.
   800 Verified in all.
-- **M7 to M11:** the traces, area by area (the handoff's top section lists them with what each found).
+- **M7, 2026-10-24: papers and benefits.** Read the documents, identity, tax-id, permission, residence, citizenship,
+  visits, appointments, health, therapy, assistance, unemployment, universal credit, home benefits, pension, federal
+  and state tax systems at their handlers, refusals, scheduled kinds and notices, the four papers looks and the guide's
+  thirteen entries; ran the two areas' 70 test files (507 tests, green on `388d9a1e`) and a repeat, reload and call-off
+  probe on a New Haven life (`tests/b26-papers-repeats.test.ts`). Found no defect; noted EI's posting category and
+  `idCardRefusal`'s order (the README's M7). 180 rows: 160 Verified, 20 kept Deferred as the owner's scope reset of
+  2026-10-09 left them (the pensions, EI, Jobseeker's, Universal Credit, residence and naturalizing, England's
+  prepayment certificate). 960 Verified in all.
+- **M8 to M11:** the traces, area by area (the handoff's top section lists them with what each found).
 - **M12:** brief 22's final runs again on the finished commit, the gate, the receipt.
 
 ## The Completion Matrix While The Sweep Runs
@@ -68,6 +76,6 @@ source change until the runs are played again on the finished commit (M12). That
 
 ## Next Step
 
-Begin M7, papers and benefits: the papers area's 103 rows and the benefits area's 77 (`node tools/sweep.mjs --todo
-papers`, `--todo benefits`): documents, permission to work, taxes and the return, benefits and health cover, reading
-each command, scheduled kind and notice at its handler and refusals.
+Begin M8, life and the world: the life area's 84 rows (`node tools/sweep.mjs --todo life`): the body and its needs,
+self-care, the conditions, the weather, the holidays, the clock and the calendar, reading each command, scheduled kind,
+reactor and notice at its handler and refusals, and the day, weather and wellbeing looks.
