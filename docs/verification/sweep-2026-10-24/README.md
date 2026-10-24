@@ -271,6 +271,55 @@ either way (`refusalOf`, `world/clock.ts`), and the probe reads both forms.
 **Register:** 84 more rows, all Verified, by inspection and the tests named on each. Running total: 1044 Verified,
 6 Fixed And Verified, 1 Blocked, 20 Deferred, 75 Not Tested (the guide's 63 and persistence's 12).
 
+### M9: Notices, Decisions, Scheduled Events, Continuity And Freshness
+
+**Read:** `world/world.ts` whole (the tick, the questions' two commands, the preferences, Mark Read, the two orders);
+`requireDecision` and `notify` in `core/simulation.ts`, and the clock's own failure notice; the game provider
+(`app/game-context.tsx`: the halt, every way of moving the clock, `run`, the live tick, autosave and the save on
+leaving); the time controls whole (Play and Pause, Sleep, Look After Yourself, Advance and On The Way, the stop's
+dialog, Skip To Event); Home's What Needs You, Recent Updates and Up Next; Updates whole; the calendar's plan form and
+entry; the decision and notice looks; the destinations. And, as one list across every area, the opening guard of each
+of the 121 scheduled handlers (117 kinds) and the nine functions that arm clock items when a save opens. **Ran:** the
+shell's, the guide's and the decisions' 55 test files, 850 tests, green on `86890e43`; and a probe for the
+brief's section 4 on a New Haven life (`tests/b26-needs-repeats.test.ts`): a question raised twice is one row, answered
+once and refused the second time as settled; Dismiss taken once and refused the second time, and a dismissed question
+not answerable from Home; raised again after a dismissal, a fresh row; Mark Read marking once and nothing the second
+time, and every unread at once; a question left to its date closed once by the tick after it and still closed across a
+reload; a setting the game doesn't have refused. Green.
+
+**Scheduled events, read as one list.** Every handler either re-reads its subject from the save and returns when it is
+gone or already settled (a status, a pending flag, the item's own time or id against the record), or is one of the
+world's own clocks (the midnight, the world tick, the tax season, the health month and week, the bank's month end, a
+pension's or a claim's next payment), which runs its stretch and books the next once. The nine systems that arm clock
+items on load (`armWorldClock`'s `armed`, `armTaxes`, `armCollection`, `armHealth`, `armBirthdays`, `armBanking`,
+`armPayments`, `armCardLife`, `armCredit`, `armHomeAccounts`) each look for a pending item first, so a save opened
+twice arms nothing twice. An item of a kind no build handles is marked missed and nothing else happens; a handler that
+throws marks its item missed and says so once, in the player's words, a refusal kept as the reason. A command raised
+while the clock runs that fails is said once the same way.
+
+**Notices and questions.** An identical unread notice is brought up to now, not added; the save keeps the latest 500; a
+command's rollback cuts the log back to where it was. A question is raised once per thing it's about while it's open,
+and raised again only updates its urgency, words and date; it closes by an answer on Home, by its own screen, by
+Dismiss or by the tick after its date, and is pruned 180 days after closing; Home lists the open ones, overdue first,
+then by urgency, then by date; Updates lists every notice, a run of one notice as one row.
+
+**Continuity.** Every way of moving the clock from a screen, the live tick among them, goes through one `advanceTo`
+that stops at what wants the player; the stop pauses the save and holds what the clock stood at, where it was headed
+and where it was sent from, so Go carries the same jump on; a dialog that reads the clock holds it; a fault in the clock
+pauses it once and says so; the save is written every 45 seconds when something changed, and on leaving.
+
+**Found no defect in the game.** Found and corrected in the records: M6's change to `credit.ts`, `cardlife.ts`,
+`accountlife.ts` and `finance.ts` moved the lines that ten rows of the guide area's wiring list and the money area's
+register cite, and `tests/b20-guide-wiring.test.ts`, which holds the wiring list to the line each command is registered
+on, caught the first of them here (`bank.claim_unclaimed` at `accountlife.ts:689`, now 690); M6 ran the money area's
+tests and the fix's neighbors, not that one. The ten citations and the register's ranges in those four files are at
+the code's lines as it stands. One thing noted and not changed: `world.dismiss_decision` takes a question already
+answered (it reads only whether it was dismissed), which nothing offers, since Home lists open questions alone and a
+closed one's look says there is nothing to press; dismissed after an answer, its closing date stays the answer's.
+
+**Register:** 14 more rows, all Verified, by inspection and the tests named on each. Running total: 1058 Verified,
+6 Fixed And Verified, 1 Blocked, 20 Deferred, 61 Not Tested (the guide's 49 and persistence's 12).
+
 ## Final Runs, Gate And Report (M12)
 
 (Written at the close.)

@@ -68,6 +68,14 @@ nothing here builds on it.
     (`tests/b26-life-repeats.test.ts`: a plan called off and skipped once each, a retried hour lived once, a night's
     refusals). No defect found; noted and not changed: the birthday notice's missing player check, which nothing
     needs. 1044 Verified, 6 Fixed And Verified, 20 Deferred in all, 75 Not Tested (the guide's 63, persistence's 12).
+  - **M9, notices, decisions, scheduled events, continuity and freshness (read on `86890e43`):** 14 rows verified by
+    reading the world's commands, `requireDecision` and `notify`, the game provider, the time controls, What Needs You,
+    Updates, the calendar's forms and the two looks, and every scheduled handler's opening guard and the nine arm
+    functions as one list (each re-reads its subject or runs its own clock once; each arm looks for a pending item
+    first); by the shell's 55 test files (green) and a probe (`tests/b26-needs-repeats.test.ts`: a question raised
+    twice, answered and dismissed twice, marked read twice, left to its date and reloaded). No defect found; noted and
+    not changed: Dismiss takes a question already answered, which nothing offers. 1058 Verified, 6 Fixed And Verified,
+    20 Deferred in all, 61 Not Tested (the guide's 49, persistence's 12).
 - **M12, at the close:** brief 22's final runs again on the finished commit (back to 634), the gate in a clean clone of
   it, the receipt with everything brief 26's §13 asks.
 - **Not merged, not deployed.** The schema stays 94.

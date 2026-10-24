@@ -95,7 +95,7 @@
    "tests/accountlife.test.ts",
    "tests/defects5.test.ts",
    "tests/remaining-09-banking.test.ts",
-   "src/engine/systems/accountlife.ts:625-687 the command: in its cooling-off (src/engine/systems/accountlife.ts:414-433), a card through closeCard; a current account on Close It’s refusals and the fees owed (src/engine/systems/accountlife.ts:343-369); settled by the country’s rule, charges refunded where the law refunds them, what it holds sent back",
+   "src/engine/systems/accountlife.ts:625-688 the command: in its cooling-off (src/engine/systems/accountlife.ts:414-433), a card through closeCard; a current account on Close It’s refusals and the fees owed (src/engine/systems/accountlife.ts:343-369); settled by the country’s rule, charges refunded where the law refunds them, what it holds sent back",
    "tests/accountlife.test.ts",
    "tests/b26-card-credit-on-close.test.ts"
   ],
@@ -157,7 +157,7 @@
   "evidence": [
    "tests/b20-money-clock.test.ts",
    "tests/evidence-g10-money.test.ts",
-   "src/engine/systems/accountlife.ts:689-701 the command: what was handed to the state claimed back once",
+   "src/engine/systems/accountlife.ts:690-702 the command: what was handed to the state claimed back once",
    "tests/accountlife.test.ts",
    "tests/banking.test.ts the money area’s 69 test files, 843 tests, run on bf0ef776: all green; the 23 files the card’s close and net worth touch, and tests/b26-card-credit-on-close.test.ts, green with the fix"
   ]
@@ -804,7 +804,7 @@
    "tests/evidence-g11-money.test.ts",
    "tests/cardlife.test.ts",
    "tests/several-cards.test.ts",
-   "src/engine/systems/cardlife.ts:180-189 the command: closing once; owing nothing, closed now through closeCard (src/engine/systems/credit.ts:1300)",
+   "src/engine/systems/cardlife.ts:180-190 the command: closing once; owing nothing, closed now through closeCard (src/engine/systems/credit.ts:1300)",
    "tests/cardlife.test.ts",
    "tests/b26-card-credit-on-close.test.ts"
   ],
@@ -840,7 +840,7 @@
    "tests/b20-money-clock.test.ts",
    "tests/b20-money-defects.test.ts",
    "tests/cardlife.test.ts",
-   "src/engine/systems/credit.ts:1016-1161 the due date: autopay from its account and linked savings, a bounce’s one fee, the grace period kept or lost, the late fee by the law’s rule, the record, the suspension and the charge-off by the days or the misses (src/engine/systems/credit.ts:1379-1481), each notice naming its date",
+   "src/engine/systems/credit.ts:1014-1159 the due date: autopay from its account and linked savings, a bounce’s one fee, the grace period kept or lost, the late fee by the law’s rule, the record, the suspension and the charge-off by the days or the misses (src/engine/systems/credit.ts:1395-1497), each notice naming its date",
    "tests/editorial17-money.test.ts",
    "tests/evidence-g10-money.test.ts",
    "tests/banking.test.ts the money area’s 69 test files, 843 tests, run on bf0ef776: all green; the 23 files the card’s close and net worth touch, and tests/b26-card-credit-on-close.test.ts, green with the fix"
@@ -921,7 +921,7 @@
   "evidence": [
    "tests/evidence-g13-money.test.ts",
    "tests/interest.test.ts",
-   "src/engine/systems/credit.ts:1209-1214 the command; src/engine/systems/credit.ts:1284-1291 refundCredit sends a credit back once and refuses with none",
+   "src/engine/systems/credit.ts:1207-1212 the command; src/engine/systems/credit.ts:1282-1289 refundCredit sends a credit back once and refuses with none",
    "tests/interest.test.ts",
    "tests/evidence-g13-money.test.ts",
    "tests/banking.test.ts the money area’s 69 test files, 843 tests, run on bf0ef776: all green; the 23 files the card’s close and net worth touch, and tests/b26-card-credit-on-close.test.ts, green with the fix"
@@ -970,7 +970,7 @@
    "tests/evidence-g12-money.test.ts",
    "tests/evidence2-b04.test.ts",
    "tests/cardlife.test.ts",
-   "src/engine/systems/cardlife.ts:262-287 the command: once, something owed, not for one who could pay today",
+   "src/engine/systems/cardlife.ts:263-288 the command: once, something owed, not for one who could pay today",
    "tests/cardlife.test.ts",
    "tests/banking.test.ts the money area’s 69 test files, 843 tests, run on bf0ef776: all green; the 23 files the card’s close and net worth touch, and tests/b26-card-credit-on-close.test.ts, green with the fix"
   ]
@@ -987,7 +987,7 @@
    "tests/cardlife.test.ts",
    "tests/evidence-g12-money.test.ts",
    "tests/language-crossarea-raise.test.ts",
-   "src/engine/systems/cardlife.ts:212-243 the command: lower always, higher six months apart (src/engine/systems/cardlife.ts:68-73) and as the income carries",
+   "src/engine/systems/cardlife.ts:213-244 the command: lower always, higher six months apart (src/engine/systems/cardlife.ts:68-73) and as the income carries",
    "tests/cardlife.test.ts",
    "tests/banking.test.ts the money area’s 69 test files, 843 tests, run on bf0ef776: all green; the 23 files the card’s close and net worth touch, and tests/b26-card-credit-on-close.test.ts, green with the fix"
   ]
@@ -1002,7 +1002,7 @@
   "evidence": [
    "tests/evidence-g13-money.test.ts",
    "tests/cardlife.test.ts",
-   "src/engine/systems/cardlife.ts:245-250 the command",
+   "src/engine/systems/cardlife.ts:246-251 the command",
    "tests/cardlife.test.ts",
    "tests/banking.test.ts the money area’s 69 test files, 843 tests, run on bf0ef776: all green; the 23 files the card’s close and net worth touch, and tests/b26-card-credit-on-close.test.ts, green with the fix"
   ]
@@ -1035,7 +1035,7 @@
    "tests/evidence-g12-money.test.ts",
    "tests/journey-money.test.ts",
    "tests/several-cards.test.ts",
-   "src/engine/systems/credit.ts:1247-1256 the command: not a card being closed",
+   "src/engine/systems/credit.ts:1245-1254 the command: not a card being closed",
    "tests/several-cards.test.ts",
    "tests/banking.test.ts the money area’s 69 test files, 843 tests, run on bf0ef776: all green; the 23 files the card’s close and net worth touch, and tests/b26-card-credit-on-close.test.ts, green with the fix"
   ]
@@ -1050,7 +1050,7 @@
   "evidence": [
    "tests/evidence-g12-money.test.ts",
    "tests/cardlife.test.ts",
-   "src/engine/systems/cardlife.ts:252-260 the command: a US card’s",
+   "src/engine/systems/cardlife.ts:253-261 the command: a US card’s",
    "tests/cardlife.test.ts",
    "tests/banking.test.ts the money area’s 69 test files, 843 tests, run on bf0ef776: all green; the 23 files the card’s close and net worth touch, and tests/b26-card-credit-on-close.test.ts, green with the fix"
   ]
@@ -1066,7 +1066,7 @@
    "tests/evidence-g13-money.test.ts",
    "tests/cardlife.test.ts",
    "tests/journey-money.test.ts",
-   "src/engine/systems/cardlife.ts:191-210 the command: 1 to 28, once a cycle, the statement rebooked",
+   "src/engine/systems/cardlife.ts:192-211 the command: 1 to 28, once a cycle, the statement rebooked",
    "tests/cardlife.test.ts",
    "tests/banking.test.ts the money area’s 69 test files, 843 tests, run on bf0ef776: all green; the 23 files the card’s close and net worth touch, and tests/b26-card-credit-on-close.test.ts, green with the fix"
   ]
@@ -1084,7 +1084,7 @@
    "tests/b20-money-funds.test.ts",
    "tests/b20-money-interest.test.ts",
    "tests/evidence-g13-money.test.ts",
-   "src/engine/systems/credit.ts:895-1014 the statement: a due date still to come kept as it stood, interest where the grace period is lost, the offers, the yearly fee once in its month, the review every six months, the card closed through closeCard once paid off; src/engine/systems/credit.ts:1300-1309 closeCard",
+   "src/engine/systems/credit.ts:895-1012 the statement: a due date still to come kept as it stood, interest where the grace period is lost, the offers, the yearly fee once in its month, the review every six months, the card closed through closeCard once paid off; src/engine/systems/credit.ts:1300-1308 closeCard",
    "tests/interest.test.ts",
    "tests/cards.test.ts",
    "tests/b26-card-credit-on-close.test.ts",
@@ -1136,7 +1136,7 @@
    "tests/b20-money-interest.test.ts",
    "tests/evidence-g13-money.test.ts",
    "tests/cardlife.test.ts",
-   "src/engine/systems/credit.ts:1216-1233 the command: full, the minimum the due date judges, or a sum, paid as far as the bank reaches; src/engine/systems/credit.ts:734-780 payCard, the payment split by the law (src/engine/systems/cash.ts:182-218)",
+   "src/engine/systems/credit.ts:1214-1231 the command: full, the minimum the due date judges, or a sum, paid as far as the bank reaches; src/engine/systems/credit.ts:734-780 payCard, the payment split by the law (src/engine/systems/cash.ts:182-218)",
    "tests/cards.test.ts",
    "tests/evidence-g11-money.test.ts",
    "tests/banking.test.ts the money area’s 69 test files, 843 tests, run on bf0ef776: all green; the 23 files the card’s close and net worth touch, and tests/b26-card-credit-on-close.test.ts, green with the fix"
@@ -1153,7 +1153,7 @@
    "tests/b20-money-interest.test.ts",
    "tests/evidence-g13-money.test.ts",
    "tests/journey-money.test.ts",
-   "src/engine/systems/credit.ts:1235-1245 the command: minimum or full, never the minimum on a charge card",
+   "src/engine/systems/credit.ts:1233-1243 the command: minimum or full, never the minimum on a charge card",
    "tests/cards.test.ts",
    "tests/banking.test.ts the money area’s 69 test files, 843 tests, run on bf0ef776: all green; the 23 files the card’s close and net worth touch, and tests/b26-card-credit-on-close.test.ts, green with the fix"
   ]
@@ -1231,7 +1231,7 @@
    "tests/b20-money-looks.test.ts",
    "tests/language-money.test.ts",
    "tests/defects-r5-2.test.ts",
-   "src/ui/looks/money.tsx:331-382 net worth from netWorth (src/engine/systems/finance.ts:56-77), which counts a card’s credit with the cash from 2026-10-24",
+   "src/ui/looks/money.tsx:331-382 net worth from netWorth (src/engine/systems/finance.ts:56-80), which counts a card’s credit with the cash from 2026-10-24",
    "tests/b20-money-looks.test.ts",
    "tests/b26-card-credit-on-close.test.ts"
   ],
@@ -1308,7 +1308,7 @@
    "tests/b20-money-promises.test.ts",
    "tests/evidence-g10-money.test.ts",
    "tests/accountlife.test.ts",
-   "src/engine/systems/accountlife.ts:722-759 dormant by the bank’s months, the warning as a decision, the balance handed over after the years",
+   "src/engine/systems/accountlife.ts:723-760 dormant by the bank’s months, the warning as a decision, the balance handed over after the years",
    "tests/accountlife.test.ts",
    "tests/home-account-idle.test.ts",
    "tests/banking.test.ts the money area’s 69 test files, 843 tests, run on bf0ef776: all green; the 23 files the card’s close and net worth touch, and tests/b26-card-credit-on-close.test.ts, green with the fix"
@@ -1355,7 +1355,7 @@
    "tests/b20-money-funds.test.ts",
    "tests/cardlife.test.ts",
    "tests/evidence2-b11.test.ts",
-   "src/engine/systems/credit.ts:1379-1413 the set-off, the suspension at the misses, the default notice and the charge-off, each once",
+   "src/engine/systems/credit.ts:1395-1429 the set-off, the suspension at the misses, the default notice and the charge-off, each once",
    "tests/editorial17-money.test.ts",
    "tests/banking.test.ts the money area’s 69 test files, 843 tests, run on bf0ef776: all green; the 23 files the card’s close and net worth touch, and tests/b26-card-credit-on-close.test.ts, green with the fix"
   ]
@@ -1370,7 +1370,7 @@
   "evidence": [
    "tests/evidence-g10-money.test.ts",
    "tests/cardlife.test.ts",
-   "src/engine/systems/credit.ts:1456-1481 the card closed, the debt in collections once, the record marked, the notice with its years",
+   "src/engine/systems/credit.ts:1472-1497 the card closed, the debt in collections once, the record marked, the notice with its years",
    "tests/evidence-g10-money.test.ts",
    "tests/banking.test.ts the money area’s 69 test files, 843 tests, run on bf0ef776: all green; the 23 files the card’s close and net worth touch, and tests/b26-card-credit-on-close.test.ts, green with the fix"
   ]
@@ -1385,7 +1385,7 @@
   "evidence": [
    "tests/b26-card-credit-on-close.test.ts",
    "tests/evidence-g11-money.test.ts",
-   "src/engine/systems/credit.ts:1300-1309 closeCard: the credit refunded first, the card closed, the everyday card chosen again, Card Closed said with the credit’s clause",
+   "src/engine/systems/credit.ts:1300-1308 closeCard: the credit refunded first, the card closed, the everyday card chosen again, Card Closed said with the credit’s clause",
    "tests/b26-card-credit-on-close.test.ts",
    "tests/evidence-g11-money.test.ts"
   ],
@@ -1404,7 +1404,7 @@
    "tests/interest.test.ts",
    "tests/cardoffers.test.ts",
    "tests/evidence3-home.test.ts",
-   "src/engine/systems/credit.ts:1424-1453 a US card’s days past due: the notice at 61, the penalty rate and the introduction’s end, the default notice at 150, the charge-off at 180, each once for its due date",
+   "src/engine/systems/credit.ts:1440-1469 a US card’s days past due: the notice at 61, the penalty rate and the introduction’s end, the default notice at 150, the charge-off at 180, each once for its due date",
    "tests/editorial17-money.test.ts",
    "tests/banking.test.ts the money area’s 69 test files, 843 tests, run on bf0ef776: all green; the 23 files the card’s close and net worth touch, and tests/b26-card-credit-on-close.test.ts, green with the fix"
   ]
@@ -1418,7 +1418,7 @@
   "on": "bf0ef776",
   "evidence": [
    "tests/cardlife.test.ts",
-   "src/engine/systems/credit.ts:1494-1520 Britain’s eighteen and thirty-six months",
+   "src/engine/systems/credit.ts:1510-1536 Britain’s eighteen and thirty-six months",
    "tests/cards.test.ts",
    "tests/banking.test.ts the money area’s 69 test files, 843 tests, run on bf0ef776: all green; the 23 files the card’s close and net worth touch, and tests/b26-card-credit-on-close.test.ts, green with the fix"
   ]
@@ -1843,7 +1843,7 @@
   "evidence": [
    "tests/evidence-g13-money.test.ts",
    "tests/evidence-g10-money.test.ts",
-   "src/engine/systems/credit.ts:895-1161 the statement and the due date; src/engine/systems/credit.ts:734-780 payCard; src/engine/systems/cardlife.ts:132-287 the card’s commands",
+   "src/engine/systems/credit.ts:895-1159 the statement and the due date; src/engine/systems/credit.ts:734-780 payCard; src/engine/systems/cardlife.ts:132-288 the card’s commands",
    "tests/cards.test.ts",
    "tests/banking.test.ts the money area’s 69 test files, 843 tests, run on bf0ef776: all green; the 23 files the card’s close and net worth touch, and tests/b26-card-credit-on-close.test.ts, green with the fix"
   ]
@@ -1857,7 +1857,7 @@
   "on": "bf0ef776",
   "evidence": [
    "tests/cardoffers.test.ts",
-   "src/engine/systems/credit.ts:895-1161 the statement and the due date; src/engine/systems/credit.ts:734-780 payCard; src/engine/systems/cardlife.ts:132-287 the card’s commands",
+   "src/engine/systems/credit.ts:895-1159 the statement and the due date; src/engine/systems/credit.ts:734-780 payCard; src/engine/systems/cardlife.ts:132-288 the card’s commands",
    "tests/cards.test.ts",
    "tests/banking.test.ts the money area’s 69 test files, 843 tests, run on bf0ef776: all green; the 23 files the card’s close and net worth touch, and tests/b26-card-credit-on-close.test.ts, green with the fix"
   ]
@@ -1872,7 +1872,7 @@
   "evidence": [
    "tests/evidence-g11-money.test.ts",
    "tests/evidence-g12-money.test.ts",
-   "src/engine/systems/credit.ts:895-1161 the statement and the due date; src/engine/systems/credit.ts:734-780 payCard; src/engine/systems/cardlife.ts:132-287 the card’s commands",
+   "src/engine/systems/credit.ts:895-1159 the statement and the due date; src/engine/systems/credit.ts:734-780 payCard; src/engine/systems/cardlife.ts:132-288 the card’s commands",
    "tests/cards.test.ts",
    "tests/banking.test.ts the money area’s 69 test files, 843 tests, run on bf0ef776: all green; the 23 files the card’s close and net worth touch, and tests/b26-card-credit-on-close.test.ts, green with the fix"
   ]
@@ -1887,7 +1887,7 @@
   "evidence": [
    "tests/b20-money-interest.test.ts",
    "tests/evidence-g11-money.test.ts",
-   "src/engine/systems/credit.ts:895-1161 the statement and the due date; src/engine/systems/credit.ts:734-780 payCard; src/engine/systems/cardlife.ts:132-287 the card’s commands",
+   "src/engine/systems/credit.ts:895-1159 the statement and the due date; src/engine/systems/credit.ts:734-780 payCard; src/engine/systems/cardlife.ts:132-288 the card’s commands",
    "tests/cards.test.ts",
    "tests/banking.test.ts the money area’s 69 test files, 843 tests, run on bf0ef776: all green; the 23 files the card’s close and net worth touch, and tests/b26-card-credit-on-close.test.ts, green with the fix"
   ]
@@ -1903,7 +1903,7 @@
    "tests/b20-money-funds.test.ts",
    "tests/evidence-g11-money.test.ts",
    "tests/evidence-g13-money.test.ts",
-   "src/engine/systems/credit.ts:895-1161 the statement and the due date; src/engine/systems/credit.ts:734-780 payCard; src/engine/systems/cardlife.ts:132-287 the card’s commands",
+   "src/engine/systems/credit.ts:895-1159 the statement and the due date; src/engine/systems/credit.ts:734-780 payCard; src/engine/systems/cardlife.ts:132-288 the card’s commands",
    "tests/cards.test.ts",
    "tests/banking.test.ts the money area’s 69 test files, 843 tests, run on bf0ef776: all green; the 23 files the card’s close and net worth touch, and tests/b26-card-credit-on-close.test.ts, green with the fix"
   ]
@@ -1918,7 +1918,7 @@
   "evidence": [
    "tests/b20-money-looks.test.ts",
    "tests/guide-examples-money.test.ts",
-   "src/engine/systems/credit.ts:895-1161 the statement and the due date; src/engine/systems/credit.ts:734-780 payCard; src/engine/systems/cardlife.ts:132-287 the card’s commands",
+   "src/engine/systems/credit.ts:895-1159 the statement and the due date; src/engine/systems/credit.ts:734-780 payCard; src/engine/systems/cardlife.ts:132-288 the card’s commands",
    "tests/cards.test.ts",
    "tests/banking.test.ts the money area’s 69 test files, 843 tests, run on bf0ef776: all green; the 23 files the card’s close and net worth touch, and tests/b26-card-credit-on-close.test.ts, green with the fix"
   ]
@@ -2260,7 +2260,7 @@
   "evidence": [
    "tests/evidence-g10-money.test.ts",
    "tests/b20-money-promises.test.ts",
-   "src/engine/systems/lending.ts:1584-1609 opened; src/engine/systems/lending.ts:1275-1317 matured; src/engine/systems/accountlife.ts:497-526 broken; src/engine/systems/accountlife.ts:803-830 ended",
+   "src/engine/systems/lending.ts:1584-1609 opened; src/engine/systems/lending.ts:1275-1317 matured; src/engine/systems/accountlife.ts:497-526 broken; src/engine/systems/accountlife.ts:804-831 ended",
    "tests/accountlife.test.ts",
    "tests/banking.test.ts the money area’s 69 test files, 843 tests, run on bf0ef776: all green; the 23 files the card’s close and net worth touch, and tests/b26-card-credit-on-close.test.ts, green with the fix"
   ]
@@ -2274,7 +2274,7 @@
   "on": "bf0ef776",
   "evidence": [
    "tests/accountlife.test.ts",
-   "src/engine/systems/lending.ts:1584-1609 opened; src/engine/systems/lending.ts:1275-1317 matured; src/engine/systems/accountlife.ts:497-526 broken; src/engine/systems/accountlife.ts:803-830 ended",
+   "src/engine/systems/lending.ts:1584-1609 opened; src/engine/systems/lending.ts:1275-1317 matured; src/engine/systems/accountlife.ts:497-526 broken; src/engine/systems/accountlife.ts:804-831 ended",
    "tests/accountlife.test.ts",
    "tests/banking.test.ts the money area’s 69 test files, 843 tests, run on bf0ef776: all green; the 23 files the card’s close and net worth touch, and tests/b26-card-credit-on-close.test.ts, green with the fix"
   ]
@@ -2290,7 +2290,7 @@
    "tests/accountlife.test.ts",
    "tests/evidence-g11-money.test.ts",
    "tests/evidence3-lifepapers.test.ts",
-   "src/engine/systems/lending.ts:1584-1609 opened; src/engine/systems/lending.ts:1275-1317 matured; src/engine/systems/accountlife.ts:497-526 broken; src/engine/systems/accountlife.ts:803-830 ended",
+   "src/engine/systems/lending.ts:1584-1609 opened; src/engine/systems/lending.ts:1275-1317 matured; src/engine/systems/accountlife.ts:497-526 broken; src/engine/systems/accountlife.ts:804-831 ended",
    "tests/accountlife.test.ts",
    "tests/banking.test.ts the money area’s 69 test files, 843 tests, run on bf0ef776: all green; the 23 files the card’s close and net worth touch, and tests/b26-card-credit-on-close.test.ts, green with the fix"
   ]
@@ -2304,7 +2304,7 @@
   "on": "bf0ef776",
   "evidence": [
    "tests/b20-money-promises.test.ts",
-   "src/engine/systems/lending.ts:1584-1609 opened; src/engine/systems/lending.ts:1275-1317 matured; src/engine/systems/accountlife.ts:497-526 broken; src/engine/systems/accountlife.ts:803-830 ended",
+   "src/engine/systems/lending.ts:1584-1609 opened; src/engine/systems/lending.ts:1275-1317 matured; src/engine/systems/accountlife.ts:497-526 broken; src/engine/systems/accountlife.ts:804-831 ended",
    "tests/accountlife.test.ts",
    "tests/banking.test.ts the money area’s 69 test files, 843 tests, run on bf0ef776: all green; the 23 files the card’s close and net worth touch, and tests/b26-card-credit-on-close.test.ts, green with the fix"
   ]
@@ -2383,7 +2383,7 @@
   "evidence": [
    "tests/b20-money-defects.test.ts",
    "tests/account-alerts.test.ts",
-   "src/engine/systems/banking.ts:280-322 feeFor; src/engine/systems/banking.ts:932-1000 the month’s end; src/engine/systems/accountlife.ts:722-759 dormancy",
+   "src/engine/systems/banking.ts:280-322 feeFor; src/engine/systems/banking.ts:932-1000 the month’s end; src/engine/systems/accountlife.ts:723-760 dormancy",
    "tests/bank-fees.test.ts",
    "tests/banking.test.ts the money area’s 69 test files, 843 tests, run on bf0ef776: all green; the 23 files the card’s close and net worth touch, and tests/b26-card-credit-on-close.test.ts, green with the fix"
   ]
@@ -2397,7 +2397,7 @@
   "on": "bf0ef776",
   "evidence": [
    "tests/evidence-g11-money.test.ts",
-   "src/engine/systems/banking.ts:280-322 feeFor; src/engine/systems/banking.ts:932-1000 the month’s end; src/engine/systems/accountlife.ts:722-759 dormancy",
+   "src/engine/systems/banking.ts:280-322 feeFor; src/engine/systems/banking.ts:932-1000 the month’s end; src/engine/systems/accountlife.ts:723-760 dormancy",
    "tests/bank-fees.test.ts",
    "tests/banking.test.ts the money area’s 69 test files, 843 tests, run on bf0ef776: all green; the 23 files the card’s close and net worth touch, and tests/b26-card-credit-on-close.test.ts, green with the fix"
   ]
@@ -2412,7 +2412,7 @@
   "evidence": [
    "tests/b20-money-promises.test.ts",
    "tests/b20-money-defects.test.ts",
-   "src/engine/systems/banking.ts:280-322 feeFor; src/engine/systems/banking.ts:932-1000 the month’s end; src/engine/systems/accountlife.ts:722-759 dormancy",
+   "src/engine/systems/banking.ts:280-322 feeFor; src/engine/systems/banking.ts:932-1000 the month’s end; src/engine/systems/accountlife.ts:723-760 dormancy",
    "tests/bank-fees.test.ts",
    "tests/banking.test.ts the money area’s 69 test files, 843 tests, run on bf0ef776: all green; the 23 files the card’s close and net worth touch, and tests/b26-card-credit-on-close.test.ts, green with the fix"
   ]
@@ -2426,7 +2426,7 @@
   "on": "bf0ef776",
   "evidence": [
    "tests/evidence-g11-money.test.ts",
-   "src/engine/systems/banking.ts:280-322 feeFor; src/engine/systems/banking.ts:932-1000 the month’s end; src/engine/systems/accountlife.ts:722-759 dormancy",
+   "src/engine/systems/banking.ts:280-322 feeFor; src/engine/systems/banking.ts:932-1000 the month’s end; src/engine/systems/accountlife.ts:723-760 dormancy",
    "tests/bank-fees.test.ts",
    "tests/banking.test.ts the money area’s 69 test files, 843 tests, run on bf0ef776: all green; the 23 files the card’s close and net worth touch, and tests/b26-card-credit-on-close.test.ts, green with the fix"
   ]
@@ -2441,7 +2441,7 @@
   "evidence": [
    "tests/evidence-g10-money.test.ts",
    "tests/evidence-g11-money.test.ts",
-   "src/engine/systems/banking.ts:280-322 feeFor; src/engine/systems/banking.ts:932-1000 the month’s end; src/engine/systems/accountlife.ts:722-759 dormancy",
+   "src/engine/systems/banking.ts:280-322 feeFor; src/engine/systems/banking.ts:932-1000 the month’s end; src/engine/systems/accountlife.ts:723-760 dormancy",
    "tests/bank-fees.test.ts",
    "tests/banking.test.ts the money area’s 69 test files, 843 tests, run on bf0ef776: all green; the 23 files the card’s close and net worth touch, and tests/b26-card-credit-on-close.test.ts, green with the fix"
   ]
@@ -2456,7 +2456,7 @@
   "evidence": [
    "tests/b20-money-clock.test.ts",
    "tests/evidence2-b11.test.ts",
-   "src/engine/systems/banking.ts:280-322 feeFor; src/engine/systems/banking.ts:932-1000 the month’s end; src/engine/systems/accountlife.ts:722-759 dormancy",
+   "src/engine/systems/banking.ts:280-322 feeFor; src/engine/systems/banking.ts:932-1000 the month’s end; src/engine/systems/accountlife.ts:723-760 dormancy",
    "tests/bank-fees.test.ts",
    "tests/banking.test.ts the money area’s 69 test files, 843 tests, run on bf0ef776: all green; the 23 files the card’s close and net worth touch, and tests/b26-card-credit-on-close.test.ts, green with the fix"
   ]
@@ -2470,7 +2470,7 @@
   "on": "bf0ef776",
   "evidence": [
    "tests/evidence2-b12.test.ts",
-   "src/engine/systems/finance.ts:56-77 netWorth; src/engine/systems/spending.ts:461-493 troubles; src/engine/systems/spending.ts:502-511 the day’s worry",
+   "src/engine/systems/finance.ts:56-80 netWorth; src/engine/systems/spending.ts:461-493 troubles; src/engine/systems/spending.ts:502-511 the day’s worry",
    "tests/finance-paths.test.ts",
    "tests/banking.test.ts the money area’s 69 test files, 843 tests, run on bf0ef776: all green; the 23 files the card’s close and net worth touch, and tests/b26-card-credit-on-close.test.ts, green with the fix"
   ]
@@ -2486,7 +2486,7 @@
    "tests/evidence-g11-money.test.ts",
    "tests/several-cards.test.ts",
    "tests/evidence-g12-money.test.ts",
-   "src/engine/systems/finance.ts:56-77 netWorth; src/engine/systems/spending.ts:461-493 troubles; src/engine/systems/spending.ts:502-511 the day’s worry",
+   "src/engine/systems/finance.ts:56-80 netWorth; src/engine/systems/spending.ts:461-493 troubles; src/engine/systems/spending.ts:502-511 the day’s worry",
    "tests/finance-paths.test.ts",
    "tests/banking.test.ts the money area’s 69 test files, 843 tests, run on bf0ef776: all green; the 23 files the card’s close and net worth touch, and tests/b26-card-credit-on-close.test.ts, green with the fix"
   ]
@@ -2501,7 +2501,7 @@
   "evidence": [
    "tests/b20-money-promises.test.ts",
    "tests/evidence-g08-life.test.ts",
-   "src/engine/systems/finance.ts:56-77 netWorth; src/engine/systems/spending.ts:461-493 troubles; src/engine/systems/spending.ts:502-511 the day’s worry",
+   "src/engine/systems/finance.ts:56-80 netWorth; src/engine/systems/spending.ts:461-493 troubles; src/engine/systems/spending.ts:502-511 the day’s worry",
    "tests/finance-paths.test.ts",
    "tests/banking.test.ts the money area’s 69 test files, 843 tests, run on bf0ef776: all green; the 23 files the card’s close and net worth touch, and tests/b26-card-credit-on-close.test.ts, green with the fix"
   ]
@@ -2515,7 +2515,7 @@
   "on": "bf0ef776",
   "evidence": [
    "tests/evidence2-b11.test.ts",
-   "src/engine/systems/finance.ts:56-77 netWorth; src/engine/systems/spending.ts:461-493 troubles; src/engine/systems/spending.ts:502-511 the day’s worry",
+   "src/engine/systems/finance.ts:56-80 netWorth; src/engine/systems/spending.ts:461-493 troubles; src/engine/systems/spending.ts:502-511 the day’s worry",
    "tests/finance-paths.test.ts",
    "tests/banking.test.ts the money area’s 69 test files, 843 tests, run on bf0ef776: all green; the 23 files the card’s close and net worth touch, and tests/b26-card-credit-on-close.test.ts, green with the fix"
   ]

@@ -60,10 +60,38 @@
   "status": "Not Tested"
  },
  "look.decision": {
-  "status": "Not Tested"
+  "status": "Verified",
+  "by": [
+   "inspection",
+   "automated"
+  ],
+  "on": "86890e43",
+  "evidence": [
+   "tests/b20-guide-screens.test.ts",
+   "tests/looks.test.ts",
+   "tests/language-dynamic.test.ts",
+   "src/ui/looks/attention.tsx:204-302 a question: its stage, its place on Home, its answers, when it closes and what it’s about; src/engine/world/world.ts:162-173 openDecisions’ order",
+   "tests/decisions-2026-10-14.test.ts",
+   "tests/looks.test.ts",
+   "tests/time-controls.test.ts the shell’s, the guide’s and the decisions’ 55 test files, run on 86890e43: all green; tests/b26-needs-repeats.test.ts, a question raised twice, answered and dismissed twice, marked read twice, left to its date and reloaded, green"
+  ]
  },
  "look.notification": {
-  "status": "Not Tested"
+  "status": "Verified",
+  "by": [
+   "inspection",
+   "automated"
+  ],
+  "on": "86890e43",
+  "evidence": [
+   "tests/b20-guide-screens.test.ts",
+   "tests/language-dynamic.test.ts",
+   "tests/looks.test.ts",
+   "src/ui/looks/attention.tsx:308-389 a notice: read or unread, its place, what Mark Read does, what it’s about and the question beside it; src/engine/world/world.ts:175-179 the unread’s order",
+   "tests/looks.test.ts",
+   "tests/evidence-g33-ui.test.ts",
+   "tests/time-controls.test.ts the shell’s, the guide’s and the decisions’ 55 test files, run on 86890e43: all green; tests/b26-needs-repeats.test.ts, a question raised twice, answered and dismissed twice, marked read twice, left to its date and reloaded, green"
+  ]
  },
  "promise.start.find>day.needs": {
   "status": "Not Tested"
@@ -117,13 +145,43 @@
   "status": "Not Tested"
  },
  "ui.advance": {
-  "status": "Not Tested"
+  "status": "Verified",
+  "by": [
+   "inspection",
+   "automated"
+  ],
+  "on": "86890e43",
+  "evidence": [
+   "tests/b20-guide-chapters.test.ts",
+   "tests/time-controls.test.ts",
+   "tests/time-stops.test.ts",
+   "tests/guide-examples-start-day-body.test.ts",
+   "src/ui/shell/TimeControls.tsx:555-640 the Advance menu’s lines, each saying where it lands (src/engine/world/clock.ts:151-174); src/ui/shell/TimeControls.tsx:147-160 On The Way before a jump that passes a commitment (src/ui/shell/TimeControls.tsx:197-240); src/app/game-context.tsx:226-253 every jump stops at what wants the player",
+   "tests/time-controls.test.ts",
+   "tests/time-stops.test.ts",
+   "tests/whynot-time.test.ts",
+   "tests/time-controls.test.ts the shell’s, the guide’s and the decisions’ 55 test files, run on 86890e43: all green; tests/b26-needs-repeats.test.ts, a question raised twice, answered and dismissed twice, marked read twice, left to its date and reloaded, green"
+  ]
  },
  "ui.bank": {
   "status": "Not Tested"
  },
  "ui.calendar": {
-  "status": "Not Tested"
+  "status": "Verified",
+  "by": [
+   "inspection",
+   "automated"
+  ],
+  "on": "86890e43",
+  "evidence": [
+   "tests/b20-guide-chapters.test.ts",
+   "tests/b20-guide-promises.test.ts",
+   "tests/b20-guide-screens.test.ts",
+   "src/ui/workspaces/CalendarWorkspace.tsx:300-392 the plan form sends calendar.schedule and shows a refusal beside the field; src/ui/workspaces/CalendarWorkspace.tsx:403-456 an entry opened, Call It Off on a plan of your own; src/engine/world/calendar.ts:113-198 the month and its clashes",
+   "tests/calendar.test.ts",
+   "tests/b20-guide-screens.test.ts",
+   "tests/time-controls.test.ts the shell’s, the guide’s and the decisions’ 55 test files, run on 86890e43: all green; tests/b26-needs-repeats.test.ts, a question raised twice, answered and dismissed twice, marked read twice, left to its date and reloaded, green"
+  ]
  },
  "ui.career": {
   "status": "Not Tested"
@@ -132,7 +190,21 @@
   "status": "Not Tested"
  },
  "ui.go": {
-  "status": "Not Tested"
+  "status": "Verified",
+  "by": [
+   "inspection",
+   "automated"
+  ],
+  "on": "86890e43",
+  "evidence": [
+   "tests/b20-guide-chapters.test.ts",
+   "tests/time-stops.test.ts",
+   "tests/guide-examples-start-day-body.test.ts",
+   "src/ui/shell/TimeControls.tsx:316-420 the stop: Go through the commitment’s hours as the same jump (src/engine/world/clock.ts:92-97), Stand Here with the clock paused, a kind’s own choice run and the jump carried on or the refusal said; src/app/game-context.tsx:220-224 halt",
+   "tests/time-stops.test.ts",
+   "tests/time-controls.test.ts",
+   "tests/time-controls.test.ts the shell’s, the guide’s and the decisions’ 55 test files, run on 86890e43: all green; tests/b26-needs-repeats.test.ts, a question raised twice, answered and dismissed twice, marked read twice, left to its date and reloaded, green"
+  ]
  },
  "ui.how": {
   "status": "Not Tested"
@@ -144,16 +216,60 @@
   "status": "Not Tested"
  },
  "ui.needs": {
-  "status": "Not Tested"
+  "status": "Verified",
+  "by": [
+   "inspection",
+   "automated"
+  ],
+  "on": "86890e43",
+  "evidence": [
+   "tests/b20-guide-screens.test.ts",
+   "tests/b20-guide-chapters.test.ts",
+   "tests/evidence2-b01.test.ts",
+   "tests/guide-examples-start-day-body.test.ts",
+   "src/ui/screens/Home.tsx:218-269 What Needs You: the questions by openDecisions’ order, what needs doing, Show All; src/ui/screens/Home.tsx:272-326 Recent Updates and View All Updates; src/ui/screens/Updates.tsx:60-178 Updates: every notice, unread or all, by what it’s about, runs of one notice as one row, Mark Read once",
+   "tests/b20-guide-screens.test.ts",
+   "tests/evidence-g33-ui.test.ts",
+   "tests/b23-pages.test.ts",
+   "tests/time-controls.test.ts the shell’s, the guide’s and the decisions’ 55 test files, run on 86890e43: all green; tests/b26-needs-repeats.test.ts, a question raised twice, answered and dismissed twice, marked read twice, left to its date and reloaded, green"
+  ]
  },
  "ui.open-calendar": {
-  "status": "Not Tested"
+  "status": "Verified",
+  "by": [
+   "inspection",
+   "automated"
+  ],
+  "on": "86890e43",
+  "evidence": [
+   "tests/b20-guide-screens.test.ts",
+   "tests/b20-guide-chapters.test.ts",
+   "src/ui/screens/Home.tsx:436-441 Up Next’s Open Calendar, gated by the chapter, the one way into the month from Home since brief 24",
+   "tests/b20-guide-screens.test.ts",
+   "tests/navigation.test.ts",
+   "tests/time-controls.test.ts the shell’s, the guide’s and the decisions’ 55 test files, run on 86890e43: all green; tests/b26-needs-repeats.test.ts, a question raised twice, answered and dismissed twice, marked read twice, left to its date and reloaded, green"
+  ]
  },
  "ui.papers": {
   "status": "Not Tested"
  },
  "ui.play": {
-  "status": "Not Tested"
+  "status": "Verified",
+  "by": [
+   "inspection",
+   "automated"
+  ],
+  "on": "86890e43",
+  "evidence": [
+   "tests/b20-guide-screens.test.ts",
+   "tests/b20-guide-promises.test.ts",
+   "tests/b20-guide-chapters.test.ts",
+   "tests/evidence2-b01.test.ts",
+   "src/ui/shell/TimeControls.tsx:138-146 Play and Pause through world.set_preferences; src/app/game-context.tsx:343-411 the live clock: a world second a real second, caught up in bounded steps, stopped at what wants the player, held while a dialog reads the clock, paused once on a fault",
+   "tests/time-controls.test.ts",
+   "tests/realclock.test.ts",
+   "tests/time-controls.test.ts the shell’s, the guide’s and the decisions’ 55 test files, run on 86890e43: all green; tests/b26-needs-repeats.test.ts, a question raised twice, answered and dismissed twice, marked read twice, left to its date and reloaded, green"
+  ]
  },
  "ui.profile": {
   "status": "Not Tested"
@@ -162,7 +278,22 @@
   "status": "Not Tested"
  },
  "ui.skip": {
-  "status": "Not Tested"
+  "status": "Verified",
+  "by": [
+   "inspection",
+   "automated"
+  ],
+  "on": "86890e43",
+  "evidence": [
+   "tests/b20-guide-chapters.test.ts",
+   "tests/b20-guide-screens.test.ts",
+   "tests/whynot-time.test.ts",
+   "tests/time-controls.test.ts",
+   "src/ui/shell/TimeControls.tsx:422-553 Skip To Event: the events ahead, the stops on the way, those not on the calendar yet foreseen, the jump through the one clock",
+   "tests/whynot-time.test.ts",
+   "tests/time-controls.test.ts",
+   "tests/time-controls.test.ts the shell’s, the guide’s and the decisions’ 55 test files, run on 86890e43: all green; tests/b26-needs-repeats.test.ts, a question raised twice, answered and dismissed twice, marked read twice, left to its date and reloaded, green"
+  ]
  },
  "ui.sleep": {
   "status": "Not Tested"
@@ -174,18 +305,91 @@
   "status": "Not Tested"
  },
  "world.day_rollover": {
-  "status": "Not Tested"
+  "status": "Verified",
+  "by": [
+   "inspection",
+   "automated"
+  ],
+  "on": "86890e43",
+  "evidence": [
+   "tests/b20-guide-chapters.test.ts",
+   "tests/b20-guide-startup.test.ts",
+   "src/engine/systems/life.ts:1010-1025 emitted once at each midnight after the bodies settle; fourteen consumers read it (the banks’ day, the cards’ day, the day’s groceries, OPT’s day, a claim’s days, an injury’s day, the end band), each reading its own state",
+   "tests/b20-life-time.test.ts",
+   "tests/evidence-g04-life.test.ts",
+   "tests/time-controls.test.ts the shell’s, the guide’s and the decisions’ 55 test files, run on 86890e43: all green; tests/b26-needs-repeats.test.ts, a question raised twice, answered and dismissed twice, marked read twice, left to its date and reloaded, green"
+  ]
  },
  "world.dismiss_decision": {
-  "status": "Not Tested"
+  "status": "Verified",
+  "by": [
+   "inspection",
+   "automated"
+  ],
+  "on": "86890e43",
+  "evidence": [
+   "tests/b20-guide-screens.test.ts",
+   "tests/evidence2-b01.test.ts",
+   "tests/guide-examples-start-day-body.test.ts",
+   "src/engine/world/world.ts:37-47 the command: a question the save holds, dismissed once, a second press refused; src/ui/screens/Home.tsx:401-407 Dismiss on each row Home prints",
+   "tests/b26-needs-repeats.test.ts",
+   "tests/decisions-2026-10-14.test.ts",
+   "tests/time-controls.test.ts the shell’s, the guide’s and the decisions’ 55 test files, run on 86890e43: all green; tests/b26-needs-repeats.test.ts, a question raised twice, answered and dismissed twice, marked read twice, left to its date and reloaded, green"
+  ]
  },
  "world.mark_read": {
-  "status": "Not Tested"
+  "status": "Verified",
+  "by": [
+   "inspection",
+   "automated"
+  ],
+  "on": "86890e43",
+  "evidence": [
+   "tests/b20-guide-screens.test.ts",
+   "tests/b20-guide-chapters.test.ts",
+   "tests/b20-guide-firsts.test.ts",
+   "tests/evidence2-b01.test.ts",
+   "src/engine/world/world.ts:100-110 the command: the ids named or every unread, each read once, the count answered; src/ui/screens/Home.tsx:285-315 and src/ui/screens/Updates.tsx:78-150 Mark Read on Home and Updates; src/engine/core/simulation.ts:691-712 an identical unread notice brought up to now, not said twice",
+   "tests/b26-needs-repeats.test.ts",
+   "tests/notices-rollback.test.ts",
+   "tests/time-controls.test.ts the shell’s, the guide’s and the decisions’ 55 test files, run on 86890e43: all green; tests/b26-needs-repeats.test.ts, a question raised twice, answered and dismissed twice, marked read twice, left to its date and reloaded, green"
+  ]
  },
  "world.set_preferences": {
-  "status": "Not Tested"
+  "status": "Verified",
+  "by": [
+   "inspection",
+   "automated"
+  ],
+  "on": "86890e43",
+  "evidence": [
+   "tests/b20-guide-screens.test.ts",
+   "tests/b20-guide-chapters.test.ts",
+   "tests/b20-guide-promises.test.ts",
+   "tests/evidence2-b01.test.ts",
+   "tests/tutorial.test.ts",
+   "src/engine/world/world.ts:85-98 the command: the clock’s speed alone, Play or Pause, anything else refused; src/ui/shell/TimeControls.tsx:138-146 Play and Pause; src/app/game-context.tsx:220-224 the stop pauses it; src/app/game-context.tsx:393-397 a clock that faults pauses it once",
+   "tests/b26-needs-repeats.test.ts",
+   "tests/time-controls.test.ts",
+   "tests/time-controls.test.ts the shell’s, the guide’s and the decisions’ 55 test files, run on 86890e43: all green; tests/b26-needs-repeats.test.ts, a question raised twice, answered and dismissed twice, marked read twice, left to its date and reloaded, green"
+  ]
  },
  "world.take_decision_action": {
-  "status": "Not Tested"
+  "status": "Verified",
+  "by": [
+   "inspection",
+   "automated"
+  ],
+  "on": "86890e43",
+  "evidence": [
+   "tests/b20-guide-screens.test.ts",
+   "tests/b20-guide-wiring.test.ts",
+   "tests/evidence-g02-life.test.ts",
+   "tests/life-fixes.test.ts",
+   "src/engine/world/world.ts:49-82 the command: settled or dismissed refused, the answer’s command run through the guide’s guard, a refusal in its answer kept open with the reason; src/engine/core/simulation.ts:737-770 requireDecision raises a question once and updates it while open; src/ui/screens/Home.tsx:385-395 the answers on Home",
+   "tests/b26-needs-repeats.test.ts",
+   "tests/decisions-2026-10-14.test.ts",
+   "tests/time-controls.test.ts the shell’s, the guide’s and the decisions’ 55 test files, run on 86890e43: all green; tests/b26-needs-repeats.test.ts, a question raised twice, answered and dismissed twice, marked read twice, left to its date and reloaded, green"
+  ]
  }
 }

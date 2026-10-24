@@ -72,7 +72,14 @@ each milestone's end, with the branch, the commit, what's covered, what remains 
   Haven life (`tests/b26-life-repeats.test.ts`). Found no defect; noted the birthday notice's missing player check,
   which nothing needs (the README's M8). 84 rows Verified. 1044 Verified in all; 75 Not Tested remain, the guide's 63
   and persistence's 12.
-- **M9 to M11:** the traces, area by area (the handoff's top section lists them with what each found).
+- **M9, 2026-10-24: notices, decisions, scheduled events, continuity and freshness.** Read the world's tick and
+  commands, `requireDecision` and `notify`, the game provider, the time controls, Home's What Needs You and Up Next,
+  Updates, the calendar's forms, the decision and notice looks, and every scheduled handler's opening guard with the
+  nine arm functions as one list; ran the shell's 55 test files (green on `86890e43`) and a What Needs You probe
+  (`tests/b26-needs-repeats.test.ts`). Found no defect; noted that Dismiss takes a question already answered, which
+  nothing offers (the README's M9). 14 rows Verified. 1058 Verified in all; 61 Not Tested remain, the guide's 49 and
+  persistence's 12.
+- **M10 and M11:** the traces, area by area (the handoff's top section lists them with what each found).
 - **M12:** brief 22's final runs again on the finished commit, the gate, the receipt.
 
 ## The Completion Matrix While The Sweep Runs
@@ -83,8 +90,8 @@ source change until the runs are played again on the finished commit (M12). That
 
 ## Next Step
 
-Begin M9, notices, decisions, scheduled events, continuity and freshness: the guide area's rows that are the shell's
-(`node tools/sweep.mjs --todo guide`: the routes and the `ui.*` features the guide names, among them What Needs You, the
-notices, the Calendar and Updates), reading each at its screen and its command; and across every area, the scheduled
-kinds' handlers read again for the three questions as one list (`tools/sweep.mjs --seed` names them), so that no item
-runs twice, nothing stale survives a reload, and every notice is sent once.
+Begin M10, the guide, the tutorial, the help links, the looks, navigation and the journeys: the guide area's 49 rows
+left (`node tools/sweep.mjs --todo guide`: the twenty chapters, `tutorial.read`, the eight routes, the eleven `ui.*`
+features of the screens and panels, the start entries' promises), reading each at its chapter, its screen and its gate;
+then the journeys on the built app at a desktop width and at 844×390, with the approved Home, sidebar, Title Case and
+portrait left as they are.

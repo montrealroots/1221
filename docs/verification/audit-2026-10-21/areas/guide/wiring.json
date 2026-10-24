@@ -39,7 +39,7 @@
    "kind": "bank.claim_unclaimed",
    "payload": "{}",
    "verdict": "Right",
-   "handler": "src/engine/systems/accountlife.ts:689"
+   "handler": "src/engine/systems/accountlife.ts:690"
   },
   {
    "file": "src/ui/bank/BankAccountLife.tsx",
@@ -79,7 +79,7 @@
    "kind": "finance.pay_card",
    "payload": "{ amount: 'full', accountId: card.id }",
    "verdict": "Right",
-   "handler": "src/engine/systems/credit.ts:1216"
+   "handler": "src/engine/systems/credit.ts:1214"
   },
   {
    "file": "src/ui/bank/BankCard.tsx",
@@ -89,7 +89,7 @@
    "kind": "card.request_hardship",
    "payload": "{ accountId: card.id }",
    "verdict": "Right",
-   "handler": "src/engine/systems/cardlife.ts:262"
+   "handler": "src/engine/systems/cardlife.ts:263"
   },
   {
    "file": "src/ui/bank/BankCard.tsx",
@@ -99,7 +99,7 @@
    "kind": "card.request_limit",
    "payload": "{ limit: centsFromTyped(limitWanted), accountId: card.id }",
    "verdict": "Right",
-   "handler": "src/engine/systems/cardlife.ts:212"
+   "handler": "src/engine/systems/cardlife.ts:213"
   },
   {
    "file": "src/ui/bank/BankCard.tsx",
@@ -109,7 +109,7 @@
    "kind": "finance.set_autopay",
    "payload": "{ mode: state.autopay === 'full' ? 'minimum' : 'full', accountId: card.id }",
    "verdict": "Right",
-   "handler": "src/engine/systems/credit.ts:1235"
+   "handler": "src/engine/systems/credit.ts:1233"
   },
   {
    "file": "src/ui/bank/BankCard.tsx",
@@ -119,7 +119,7 @@
    "kind": "card.set_statement_day",
    "payload": "{ day: dayWanted, accountId: card.id }",
    "verdict": "Right",
-   "handler": "src/engine/systems/cardlife.ts:191"
+   "handler": "src/engine/systems/cardlife.ts:192"
   },
   {
    "file": "src/ui/bank/BankCard.tsx",
@@ -139,7 +139,7 @@
    "kind": "card.set_over_limit",
    "payload": "{ on: !state.overLimitOptIn, accountId: card.id }",
    "verdict": "Right",
-   "handler": "src/engine/systems/cardlife.ts:252"
+   "handler": "src/engine/systems/cardlife.ts:253"
   },
   {
    "file": "src/ui/bank/BankCard.tsx",
@@ -149,7 +149,7 @@
    "kind": "card.set_everyday",
    "payload": "{ accountId: card.id }",
    "verdict": "Right",
-   "handler": "src/engine/systems/credit.ts:1247"
+   "handler": "src/engine/systems/credit.ts:1245"
   },
   {
    "file": "src/ui/bank/BankCard.tsx",
@@ -159,7 +159,7 @@
    "kind": "card.set_auto_raise",
    "payload": "{ on: Boolean(state.noAutoRaise), accountId: card.id }",
    "verdict": "Right",
-   "handler": "src/engine/systems/cardlife.ts:245"
+   "handler": "src/engine/systems/cardlife.ts:246"
   },
   {
    "file": "src/ui/bank/BankCard.tsx",
@@ -169,7 +169,7 @@
    "kind": "card.refund_credit",
    "payload": "{ accountId: card.id }",
    "verdict": "Right",
-   "handler": "src/engine/systems/credit.ts:1209"
+   "handler": "src/engine/systems/credit.ts:1207"
   },
   {
    "file": "src/ui/bank/BankCardOffers.tsx",
