@@ -167,7 +167,9 @@ for (const area of ['life', 'money', 'papers', 'school', 'ui']) {
     // A deferred row's `settled` too (from 2026-10-16, brief 09's journeys' follow-up: the Mexican residence rows' settlement,
     // which until then no input could correct).
     const df = docFields[it.id];
-    if (df) for (const [k, v] of Object.entries(df)) if (['entry', 'reads', 'changes', 'downstream', 'persistent', 'explanation', 'tests', 'issue', 'settled'].includes(k)) it[k] = v;
+    // `claim` (from 2026-10-24, brief 26): what the row claims as the code stands, where it moved since the review of
+    // 2026-10-13 whose claim the completion matrix otherwise shows as the row's goal (fix-citations-1024.cjs).
+    if (df) for (const [k, v] of Object.entries(df)) if (['entry', 'reads', 'changes', 'downstream', 'persistent', 'explanation', 'tests', 'issue', 'settled', 'claim'].includes(k)) it[k] = v;
     // The Note a re-audit of 2026-10-12 left (corrected.now), where what it cites moved or what it says went (from 2026-10-14).
     if (df?.['corrected.now'] !== undefined && it.corrected) it.corrected.now = df['corrected.now'];
     // A row out of a current player's reach says so in four parts (from 2026-10-16, the brief of that day's item 3):

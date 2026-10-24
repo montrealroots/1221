@@ -1,0 +1,269 @@
+{
+ "notice.systems/proagent#tell": {
+  "status": "Not Tested"
+ },
+ "notice.systems/projobs#tell": {
+  "status": "Not Tested"
+ },
+ "notice.systems/propay#equityJoined": {
+  "status": "Not Tested"
+ },
+ "notice.systems/propay#equityOnOpening": {
+  "status": "Not Tested"
+ },
+ "notice.systems/propay#payDue": {
+  "status": "Not Tested"
+ },
+ "notice.systems/propay#release": {
+  "status": "Not Tested"
+ },
+ "notice.systems/propay#settle": {
+  "status": "Not Tested"
+ },
+ "notice.systems/proshowcase#beginShowcase": {
+  "status": "Not Tested"
+ },
+ "notice.systems/proshowcase#decide": {
+  "status": "Not Tested"
+ },
+ "pro.accept_agreement": {
+  "status": "Not Tested"
+ },
+ "pro.accept_offer": {
+  "status": "Not Tested"
+ },
+ "pro.agent_ask_lapse": {
+  "status": "Not Tested"
+ },
+ "pro.agent_check": {
+  "status": "Not Tested"
+ },
+ "pro.agent_decision": {
+  "status": "Not Tested"
+ },
+ "pro.agent_follow_up": {
+  "status": "Not Tested"
+ },
+ "pro.agent_meeting": {
+  "status": "Not Tested"
+ },
+ "pro.agent_notice": {
+  "status": "Not Tested"
+ },
+ "pro.agent_offer_lapse": {
+  "status": "Not Tested"
+ },
+ "pro.agent_reply": {
+  "status": "Not Tested"
+ },
+ "pro.agent_request_due": {
+  "status": "Not Tested"
+ },
+ "pro.agent_silence": {
+  "status": "Not Tested"
+ },
+ "pro.agent_term_end": {
+  "status": "Not Tested"
+ },
+ "pro.ask_referral": {
+  "status": "Not Tested"
+ },
+ "pro.ask_to_move": {
+  "status": "Not Tested"
+ },
+ "pro.audition": {
+  "status": "Not Tested"
+ },
+ "pro.casting_decision": {
+  "status": "Not Tested"
+ },
+ "pro.cut_reel": {
+  "status": "Not Tested"
+ },
+ "pro.decline_agreement": {
+  "status": "Not Tested"
+ },
+ "pro.decline_offer": {
+  "status": "Not Tested"
+ },
+ "pro.end_agreement": {
+  "status": "Not Tested"
+ },
+ "pro.equity_joined": {
+  "status": "Not Tested"
+ },
+ "pro.headshots": {
+  "status": "Not Tested"
+ },
+ "pro.join_sag": {
+  "status": "Not Tested"
+ },
+ "pro.move_audition": {
+  "status": "Not Tested"
+ },
+ "pro.offer_lapse": {
+  "status": "Not Tested"
+ },
+ "pro.postings": {
+  "status": "Not Tested"
+ },
+ "pro.prepare": {
+  "status": "Not Tested"
+ },
+ "pro.release": {
+  "status": "Not Tested"
+ },
+ "pro.reply": {
+  "status": "Not Tested"
+ },
+ "pro.request_outside_work": {
+  "status": "Not Tested"
+ },
+ "pro.school_answer": {
+  "status": "Not Tested"
+ },
+ "pro.send_materials": {
+  "status": "Not Tested"
+ },
+ "pro.set_name": {
+  "status": "Not Tested"
+ },
+ "pro.submit": {
+  "status": "Not Tested"
+ },
+ "pro.supply_material": {
+  "status": "Not Tested"
+ },
+ "pro.tape_audition": {
+  "status": "Not Tested"
+ },
+ "pro.tape_due": {
+  "status": "Not Tested"
+ },
+ "pro.update_resume": {
+  "status": "Not Tested"
+ },
+ "pro.work_day": {
+  "status": "Not Tested"
+ },
+ "promise.career.agent-answers>career.reasons": {
+  "status": "Not Tested"
+ },
+ "promise.career.agent-answers>day.clock": {
+  "status": "Not Tested"
+ },
+ "promise.career.agent>career.agent-answers": {
+  "status": "Not Tested"
+ },
+ "promise.career.agent>career.headshots": {
+  "status": "Not Tested"
+ },
+ "promise.career.agent>career.resume": {
+  "status": "Not Tested"
+ },
+ "promise.career.agreement>career.agent": {
+  "status": "Not Tested"
+ },
+ "promise.career.agreement>documents.work": {
+  "status": "Not Tested"
+ },
+ "promise.career.auditions>career.offers": {
+  "status": "Not Tested"
+ },
+ "promise.career.auditions>day.calendar": {
+  "status": "Not Tested"
+ },
+ "promise.career.commission>career.pay": {
+  "status": "Not Tested"
+ },
+ "promise.career.commission>taxes.return": {
+  "status": "Not Tested"
+ },
+ "promise.career.headshots>bank.accounts": {
+  "status": "Not Tested"
+ },
+ "promise.career.headshots>career.overview": {
+  "status": "Not Tested"
+ },
+ "promise.career.offers>career.resume": {
+  "status": "Not Tested"
+ },
+ "promise.career.offers>day.calendar": {
+  "status": "Not Tested"
+ },
+ "promise.career.offers>documents.work": {
+  "status": "Not Tested"
+ },
+ "promise.career.opportunities>career.auditions": {
+  "status": "Not Tested"
+ },
+ "promise.career.opportunities>career.headshots": {
+  "status": "Not Tested"
+ },
+ "promise.career.outside-work>career.offers": {
+  "status": "Not Tested"
+ },
+ "promise.career.outside-work>school.standing": {
+  "status": "Not Tested"
+ },
+ "promise.career.overview>career.headshots": {
+  "status": "Not Tested"
+ },
+ "promise.career.overview>documents.work": {
+  "status": "Not Tested"
+ },
+ "promise.career.pay>bank.accounts": {
+  "status": "Not Tested"
+ },
+ "promise.career.pay>documents.work": {
+  "status": "Not Tested"
+ },
+ "promise.career.pay>taxes.return": {
+  "status": "Not Tested"
+ },
+ "promise.career.profile>career.resume": {
+  "status": "Not Tested"
+ },
+ "promise.career.profile>craft.profile": {
+  "status": "Not Tested"
+ },
+ "promise.career.reasons>career.agent": {
+  "status": "Not Tested"
+ },
+ "promise.career.reasons>career.reel": {
+  "status": "Not Tested"
+ },
+ "promise.career.reel>career.overview": {
+  "status": "Not Tested"
+ },
+ "promise.career.reel>craft.brief-tape": {
+  "status": "Not Tested"
+ },
+ "promise.career.resume>career.overview": {
+  "status": "Not Tested"
+ },
+ "promise.career.resume>productions.nights": {
+  "status": "Not Tested"
+ },
+ "promise.career.unions>bank.accounts": {
+  "status": "Not Tested"
+ },
+ "promise.career.unions>career.resume": {
+  "status": "Not Tested"
+ },
+ "promise.career.unions>taxes.return": {
+  "status": "Not Tested"
+ },
+ "promise.coursework.showcase>career.overview": {
+  "status": "Not Tested"
+ },
+ "promise.coursework.showcase>coursework.feedback": {
+  "status": "Not Tested"
+ },
+ "promise.coursework.showcase>coursework.prepare": {
+  "status": "Not Tested"
+ },
+ "promise.coursework.showcase>school.repeat": {
+  "status": "Not Tested"
+ }
+}

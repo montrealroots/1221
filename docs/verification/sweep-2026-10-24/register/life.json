@@ -1,0 +1,254 @@
+{
+ "calendar.cancel": {
+  "status": "Not Tested"
+ },
+ "calendar.schedule": {
+  "status": "Not Tested"
+ },
+ "calendar.skip": {
+  "status": "Not Tested"
+ },
+ "dial.condition": {
+  "status": "Not Tested"
+ },
+ "dial.energy": {
+  "status": "Not Tested"
+ },
+ "dial.fitness": {
+  "status": "Not Tested"
+ },
+ "dial.hygiene": {
+  "status": "Not Tested"
+ },
+ "dial.morale": {
+  "status": "Not Tested"
+ },
+ "dial.nourishment": {
+  "status": "Not Tested"
+ },
+ "dial.sleepDebt": {
+  "status": "Not Tested"
+ },
+ "dial.stress": {
+  "status": "Not Tested"
+ },
+ "injury.comp": {
+  "status": "Not Tested"
+ },
+ "life.birthday": {
+  "status": "Not Tested"
+ },
+ "life.commitment": {
+  "status": "Not Tested"
+ },
+ "life.day_rollover": {
+  "status": "Not Tested"
+ },
+ "life.end": {
+  "status": "Not Tested"
+ },
+ "life.look_after": {
+  "status": "Not Tested"
+ },
+ "life.night_alone": {
+  "status": "Not Tested"
+ },
+ "life.sleep": {
+  "status": "Not Tested"
+ },
+ "life.waking": {
+  "status": "Not Tested"
+ },
+ "look.condition": {
+  "status": "Not Tested"
+ },
+ "look.day": {
+  "status": "Not Tested"
+ },
+ "look.daylight": {
+  "status": "Not Tested"
+ },
+ "look.dial": {
+  "status": "Not Tested"
+ },
+ "look.entry": {
+  "status": "Not Tested"
+ },
+ "look.forecastday": {
+  "status": "Not Tested"
+ },
+ "look.hours": {
+  "status": "Not Tested"
+ },
+ "look.plans": {
+  "status": "Not Tested"
+ },
+ "look.season": {
+  "status": "Not Tested"
+ },
+ "look.skyhour": {
+  "status": "Not Tested"
+ },
+ "look.skyweek": {
+  "status": "Not Tested"
+ },
+ "look.stretch": {
+  "status": "Not Tested"
+ },
+ "look.weather": {
+  "status": "Not Tested"
+ },
+ "notice.core/simulation#top": {
+  "status": "Not Tested"
+ },
+ "notice.systems/injury#mayHurt": {
+  "status": "Not Tested"
+ },
+ "promise.body.how>body.look-after": {
+  "status": "Not Tested"
+ },
+ "promise.body.how>body.sleep": {
+  "status": "Not Tested"
+ },
+ "promise.body.how>coursework.class": {
+  "status": "Not Tested"
+ },
+ "promise.body.how>papers.conditions": {
+  "status": "Not Tested"
+ },
+ "promise.body.how>productions.nights": {
+  "status": "Not Tested"
+ },
+ "promise.body.how>school.sick": {
+  "status": "Not Tested"
+ },
+ "promise.body.look-after>bank.payments": {
+  "status": "Not Tested"
+ },
+ "promise.body.look-after>body.how": {
+  "status": "Not Tested"
+ },
+ "promise.body.look-after>craft.profile": {
+  "status": "Not Tested"
+ },
+ "promise.body.look-after>day.weather": {
+  "status": "Not Tested"
+ },
+ "promise.body.look-after>papers.doctor": {
+  "status": "Not Tested"
+ },
+ "promise.body.sleep>body.how": {
+  "status": "Not Tested"
+ },
+ "promise.body.sleep>day.advance": {
+  "status": "Not Tested"
+ },
+ "promise.body.sleep>day.calendar": {
+  "status": "Not Tested"
+ },
+ "promise.body.sleep>day.needs": {
+  "status": "Not Tested"
+ },
+ "promise.body.sleep>school.standing": {
+  "status": "Not Tested"
+ },
+ "promise.day.advance>body.look-after": {
+  "status": "Not Tested"
+ },
+ "promise.day.advance>body.sleep": {
+  "status": "Not Tested"
+ },
+ "promise.day.advance>day.calendar": {
+  "status": "Not Tested"
+ },
+ "promise.day.advance>day.clock": {
+  "status": "Not Tested"
+ },
+ "promise.day.calendar>coursework.partners": {
+  "status": "Not Tested"
+ },
+ "promise.day.calendar>day.advance": {
+  "status": "Not Tested"
+ },
+ "promise.day.calendar>day.clock": {
+  "status": "Not Tested"
+ },
+ "promise.day.calendar>day.plans": {
+  "status": "Not Tested"
+ },
+ "promise.day.calendar>school.sick": {
+  "status": "Not Tested"
+ },
+ "promise.day.calendar>school.standing": {
+  "status": "Not Tested"
+ },
+ "promise.day.clock>body.how": {
+  "status": "Not Tested"
+ },
+ "promise.day.clock>body.sleep": {
+  "status": "Not Tested"
+ },
+ "promise.day.clock>day.advance": {
+  "status": "Not Tested"
+ },
+ "promise.day.clock>day.calendar": {
+  "status": "Not Tested"
+ },
+ "promise.day.needs>bank.upkeep": {
+  "status": "Not Tested"
+ },
+ "promise.day.needs>body.sleep": {
+  "status": "Not Tested"
+ },
+ "promise.day.needs>documents.work": {
+  "status": "Not Tested"
+ },
+ "promise.day.needs>start.find": {
+  "status": "Not Tested"
+ },
+ "promise.day.needs>taxes.return": {
+  "status": "Not Tested"
+ },
+ "promise.day.plans>body.look-after": {
+  "status": "Not Tested"
+ },
+ "promise.day.plans>body.sleep": {
+  "status": "Not Tested"
+ },
+ "promise.day.plans>craft.practice": {
+  "status": "Not Tested"
+ },
+ "promise.day.plans>day.calendar": {
+  "status": "Not Tested"
+ },
+ "promise.day.plans>day.needs": {
+  "status": "Not Tested"
+ },
+ "promise.day.plans>day.weather": {
+  "status": "Not Tested"
+ },
+ "promise.day.weather>body.look-after": {
+  "status": "Not Tested"
+ },
+ "promise.day.weather>school.sick": {
+  "status": "Not Tested"
+ },
+ "promise.day.weather>start.home": {
+  "status": "Not Tested"
+ },
+ "world.holidays": {
+  "status": "Not Tested"
+ },
+ "world.running-clock": {
+  "status": "Not Tested"
+ },
+ "world.stops": {
+  "status": "Not Tested"
+ },
+ "world.tick": {
+  "status": "Not Tested"
+ },
+ "world.zones": {
+  "status": "Not Tested"
+ }
+}

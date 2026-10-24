@@ -1,0 +1,1221 @@
+# The Connectivity Sweep’s Register
+
+Written by `node tools/sweep.mjs --write` from `register/*.json` and the feature-to-effect matrix; don’t edit it by hand. One row a
+feature the game has (the owner’s brief 26, 2026-10-24, §2 and §11), found in the code: the feature-to-effect matrix’s rows and
+promises (`../audit-2026-10-21/EFFECTS.md`, held to the code by the gate), and the techniques, genres, Profile sections, places,
+persistence and world mechanics that matrix has no row for. Each carries the sweep’s own status, how it was verified (by reading the
+code, by a test the gate runs, by playing the built app), the commit, the evidence and what was found. Only Verified and Fixed And
+Verified count as done, out of every row not Deferred. Not Tested is the honest default: nothing is counted done for having a row.
+
+**Coverage:** 0 of 1145 in scope Verified or Fixed And Verified (0.0%); 0 Verified, 0 Fixed And Verified, 0 Failed, 0 Blocked, 0 Deferred, 1145 Not Tested. By inspection 0, automated 0, interactive 0.
+
+## Totals
+
+| Area | Rows | Verified | Fixed And Verified | Failed | Blocked | Deferred | Not Tested | Inspection | Automated | Interactive |
+|---|---|---|---|---|---|---|---|---|---|---|
+| creation | 101 |  |  |  |  |  | 101 |  |  |  |
+| school | 145 |  |  |  |  |  | 145 |  |  |  |
+| craft | 311 |  |  |  |  |  | 311 |  |  |  |
+| money | 160 |  |  |  |  |  | 160 |  |  |  |
+| benefits | 77 |  |  |  |  |  | 77 |  |  |  |
+| papers | 103 |  |  |  |  |  | 103 |  |  |  |
+| life | 84 |  |  |  |  |  | 84 |  |  |  |
+| career | 89 |  |  |  |  |  | 89 |  |  |  |
+| guide | 63 |  |  |  |  |  | 63 |  |  |  |
+| persistence | 12 |  |  |  |  |  | 12 |  |  |  |
+| **All** | **1145** | **0** | **0** | **0** | **0** | **0** | **1145** | **0** | **0** | **0** |
+
+## Creation
+
+| Feature | Kind | Where | Effects matrix | Sweep | By | On | Evidence | Found |
+|---|---|---|---|---|---|---|---|---|
+| `create.firstName` | creation | Identity: First Name (CharacterCreation.tsx:381) | Implemented And Verified | Not Tested |  |  |  |  |
+| `create.middleName` | creation | Identity: Middle Name, optional (CharacterCreation.tsx:385) | Implemented And Verified | Not Tested |  |  |  |  |
+| `create.lastName` | creation | Identity: Last Name (CharacterCreation.tsx:389) | Implemented And Verified | Not Tested |  |  |  |  |
+| `create.displayName` | creation | Identity: What You’re Called, its placeholder the first and last name (CharacterCreation.tsx:398-399) | Implemented And Verified | Not Tested |  |  |  |  |
+| `create.pronouns` | creation | Identity: Pronouns (CharacterCreation.tsx:408); choosing them sets the title where they settle it (settledTitle, core/p… | Implemented And Verified | Not Tested |  |  |  |  |
+| `create.performerTitle` | creation | Identity: Billed As, Actor or Actress, chosen under they/them and settled by she/her and he/him (CharacterCreation.tsx:… | Implemented And Verified | Not Tested |  |  |  |  |
+| `create.heightCm` | creation | Starting Point: Your Body, height (BodyFields, CharacterCreation.tsx:268) | Implemented And Verified | Not Tested |  |  |  |  |
+| `create.weightKg` | creation | Starting Point: Your Body, weight (BodyFields, CharacterCreation.tsx:268) | Implemented And Verified | Not Tested |  |  |  |  |
+| `create.birthYear` | creation | Identity: Year Of Birth (CharacterCreation.tsx:510) | Implemented And Verified | Not Tested |  |  |  |  |
+| `create.birthMonth` | creation | Identity: Month Of Birth (CharacterCreation.tsx:517) | Implemented And Verified | Not Tested |  |  |  |  |
+| `create.birthDay` | creation | Identity: Day Of Birth, capped to the month’s days (CharacterCreation.tsx:524) | Implemented And Verified | Not Tested |  |  |  |  |
+| `create.raceEthnicity` | creation | Identity: Race Or Ethnicity, the eight to press (CharacterCreation.tsx:471) | Implemented And Verified | Not Tested |  |  |  |  |
+| `create.raceEthnicityOwn` | creation | Identity: In Your Own Words, under Another (CharacterCreation.tsx:496) | Implemented And Verified | Not Tested |  |  |  |  |
+| `create.homeRegionId` | creation | Identity: Place Of Birth (LocationPicker born, CharacterCreation.tsx:546), its citizenship shown under it | Implemented And Verified | Not Tested |  |  |  |  |
+| `create.livesWhereBorn` | creation | Starting Point: I Still Live Where I Was Born (CharacterCreation.tsx:970), drawn only where config.school is unset; wri… | Implemented, Verification Incomplete | Not Tested |  |  |  |  |
+| `create.portrait` | creation | Identity: the portrait picker, fitted to the frame (PortraitPicker, CharacterCreation.tsx:371) | Implemented And Verified | Not Tested |  |  |  |  |
+| `create.personality` | creation | Dispositions & Traits: the seven sliders, 5 to 95 (CharacterCreation.tsx:666) | Implemented And Verified | Not Tested |  |  |  |  |
+| `create.personalityTraits` | creation | Dispositions & Traits: the 35 traits in opposing pairs, up to four (CharacterCreation.tsx:733) | Implemented And Verified | Not Tested |  |  |  |  |
+| `create.genres` | creation | Genres & Background: the 149 genres, Select All and Clear These (Chips, CharacterCreation.tsx:839); a genre no play is … | Implemented And Verified | Not Tested |  |  |  |  |
+| `create.background` | creation | Genres & Background: Background (CharacterCreation.tsx:858) | Implemented And Verified | Not Tested |  |  |  |  |
+| `create.school` | creation | Not a control: atSchool sets it for every life creation begins (bootstrap.ts:171-180), and Starting Point’s Where It Be… | Implemented And Verified | Not Tested |  |  |  |  |
+| `create.family` | creation | Genres & Background: Your Family, the six families, with the need it finds said under it (FamilyChoice, CharacterCreati… | Implemented And Verified | Not Tested |  |  |  |  |
+| `create.startLocationId` | creation | Not a choice in a life creation begins: atSchool sets New Haven (bootstrap.ts:176); Starting Point’s Where You Live pic… | Implemented And Verified | Not Tested |  |  |  |  |
+| `create.wealth` | creation | Genres & Background: Your Family (FamilyChoice, CharacterCreation.tsx:896), with the money it starts with said under it… | Implemented And Verified | Not Tested |  |  |  |  |
+| `create.bankId` | creation | Starting Point: Your Bank (BankChoice, CharacterCreation.tsx:1235) | Implemented And Verified | Not Tested |  |  |  |  |
+| `create.priorResidence` | creation | Starting Point: Before Yale, the place and the month and year (BeforeYale, CharacterCreation.tsx:1101) | Implemented And Verified | Not Tested |  |  |  |  |
+| `create.homeBankId` | creation | Starting Point: Before Yale, Keep An Account There and its bank (CharacterCreation.tsx:1174) | Implemented And Verified | Not Tested |  |  |  |  |
+| `create.savingsAtHome` | creation | Starting Point: Before Yale, your savings kept there or moved here (CharacterCreation.tsx:1193) | Implemented And Verified | Not Tested |  |  |  |  |
+| `create.startYear` | creation | Not a control: the fall term’s first day, set by atSchool (bootstrap.ts:178) | Implemented And Verified | Not Tested |  |  |  |  |
+| `create.startMonth` | creation | Not a control: the fall term’s first day, set by atSchool (bootstrap.ts:178) | Implemented And Verified | Not Tested |  |  |  |  |
+| `create.startDay` | creation | Not a control: the fall term’s first day, set by atSchool (bootstrap.ts:178) | Implemented And Verified | Not Tested |  |  |  |  |
+| `create.tutorial` | creation | Review: Guide Me Through It or I Know SLATE (CharacterCreation.tsx:1397); SlateApp begins the life with tutorial unless… | Implemented And Verified | Not Tested |  |  |  |  |
+| `create.paused` | creation | Not a control: SlateApp begins every life paused (SlateApp.tsx:63); Review says so | Implemented And Verified | Not Tested |  |  |  |  |
+| `axis.openness` | axis | Dispositions & Traits: the Openness slider, 5 to 95, its line on what it does above the sliders (CharacterCreation.tsx:… | Implemented And Verified | Not Tested |  |  |  |  |
+| `axis.conscientiousness` | axis | Dispositions & Traits: the Conscientiousness slider, 5 to 95, its line on what it does above the sliders (CharacterCrea… | Implemented And Verified | Not Tested |  |  |  |  |
+| `axis.extraversion` | axis | Dispositions & Traits: the Extraversion slider, 5 to 95, its line on what it does above the sliders (CharacterCreation.… | Implemented And Verified | Not Tested |  |  |  |  |
+| `axis.agreeableness` | axis | Dispositions & Traits: the Agreeableness slider, 5 to 95, its line on what it does above the sliders (CharacterCreation… | Implemented And Verified | Not Tested |  |  |  |  |
+| `axis.emotionalStability` | axis | Dispositions & Traits: the Emotional Stability slider, 5 to 95, its line on what it does above the sliders (CharacterCr… | Implemented And Verified | Not Tested |  |  |  |  |
+| `axis.ambition` | axis | Dispositions & Traits: the Ambition slider, 5 to 95, its line on what it does above the sliders (CharacterCreation.tsx:… | Implemented And Verified | Not Tested |  |  |  |  |
+| `axis.riskTolerance` | axis | Dispositions & Traits: the Risk Tolerance slider, 5 to 95, its line on what it does above the sliders (CharacterCreatio… | Implemented And Verified | Not Tested |  |  |  |  |
+| `ability.emotionalDepth` | ability | Player Profile: Attributes And Craft, its row and its look; drawn at creation, grown by classes, nights, coursework and… | Implemented And Verified | Not Tested |  |  |  |  |
+| `ability.presence` | ability | Player Profile: Attributes And Craft, its row and its look; drawn at creation, grown by classes, nights, coursework and… | Implemented And Verified | Not Tested |  |  |  |  |
+| `ability.listening` | ability | Player Profile: Attributes And Craft, its row and its look; drawn at creation, grown by classes, nights, coursework and… | Implemented And Verified | Not Tested |  |  |  |  |
+| `ability.imagination` | ability | Player Profile: Attributes And Craft, its row and its look; drawn at creation, grown by classes, nights, coursework and… | Implemented And Verified | Not Tested |  |  |  |  |
+| `ability.focus` | ability | Player Profile: Attributes And Craft, its row and its look; drawn at creation, grown by classes, nights, coursework and… | Implemented And Verified | Not Tested |  |  |  |  |
+| `ability.memory` | ability | Player Profile: Attributes And Craft, its row and its look; drawn at creation, grown by classes, nights, coursework and… | Implemented And Verified | Not Tested |  |  |  |  |
+| `ability.adaptability` | ability | Player Profile: Attributes And Craft, its row and its look; drawn at creation, grown by classes, nights, coursework and… | Implemented And Verified | Not Tested |  |  |  |  |
+| `ability.composure` | ability | Player Profile: Attributes And Craft, its row and its look; drawn at creation, grown by classes, nights, coursework and… | Implemented And Verified | Not Tested |  |  |  |  |
+| `ability.vocal` | ability | Player Profile: Attributes And Craft, its row and its look; drawn at creation, grown by classes, nights, coursework and… | Implemented And Verified | Not Tested |  |  |  |  |
+| `ability.physical` | ability | Player Profile: Attributes And Craft, its row and its look; drawn at creation, grown by classes, nights, coursework and… | Implemented And Verified | Not Tested |  |  |  |  |
+| `ability.discipline` | ability | Player Profile: Attributes And Craft, its row and its look; drawn at creation, grown by classes, nights, coursework and… | Implemented And Verified | Not Tested |  |  |  |  |
+| `ability.stamina` | ability | Player Profile: Attributes And Craft, its row and its look; drawn at creation, grown by classes, nights, coursework and… | Implemented And Verified | Not Tested |  |  |  |  |
+| `trait.even_tempered` | trait | Dispositions & Traits: Even Tempered, beside the trait it rules out (CharacterCreation.tsx:733); its look on the Player… | Implemented And Verified | Not Tested |  |  |  |  |
+| `trait.quick_tempered` | trait | Dispositions & Traits: Quick Tempered, beside the trait it rules out (CharacterCreation.tsx:733); its look on the Playe… | Implemented And Verified | Not Tested |  |  |  |  |
+| `trait.highly_strung` | trait | Dispositions & Traits: Highly Strung, beside the trait it rules out (CharacterCreation.tsx:733); its look on the Player… | Implemented And Verified | Not Tested |  |  |  |  |
+| `trait.unshakeable` | trait | Dispositions & Traits: Unshakeable, beside the trait it rules out (CharacterCreation.tsx:733); its look on the Player P… | Implemented And Verified | Not Tested |  |  |  |  |
+| `trait.sentimental` | trait | Dispositions & Traits: Sentimental, beside the trait it rules out (CharacterCreation.tsx:733); its look on the Player P… | Implemented And Verified | Not Tested |  |  |  |  |
+| `trait.detached` | trait | Dispositions & Traits: Detached, beside the trait it rules out (CharacterCreation.tsx:733); its look on the Player Prof… | Implemented And Verified | Not Tested |  |  |  |  |
+| `trait.early_riser` | trait | Dispositions & Traits: Early Riser, beside the trait it rules out (CharacterCreation.tsx:733); its look on the Player P… | Implemented And Verified | Not Tested |  |  |  |  |
+| `trait.night_owl` | trait | Dispositions & Traits: Night Owl, beside the trait it rules out (CharacterCreation.tsx:733); its look on the Player Pro… | Implemented And Verified | Not Tested |  |  |  |  |
+| `trait.orderly` | trait | Dispositions & Traits: Orderly, beside the trait it rules out (CharacterCreation.tsx:733); its look on the Player Profi… | Implemented And Verified | Not Tested |  |  |  |  |
+| `trait.chaotic` | trait | Dispositions & Traits: Chaotic, beside the trait it rules out (CharacterCreation.tsx:733); its look on the Player Profi… | Implemented And Verified | Not Tested |  |  |  |  |
+| `trait.homebody` | trait | Dispositions & Traits: Homebody, beside the trait it rules out (CharacterCreation.tsx:733); its look on the Player Prof… | Implemented And Verified | Not Tested |  |  |  |  |
+| `trait.restless` | trait | Dispositions & Traits: Restless, beside the trait it rules out (CharacterCreation.tsx:733); its look on the Player Prof… | Implemented And Verified | Not Tested |  |  |  |  |
+| `trait.disciplined_body` | trait | Dispositions & Traits: Disciplined, beside the trait it rules out (CharacterCreation.tsx:733); its look on the Player P… | Implemented And Verified | Not Tested |  |  |  |  |
+| `trait.indulgent` | trait | Dispositions & Traits: Indulgent, beside the trait it rules out (CharacterCreation.tsx:733); its look on the Player Pro… | Implemented And Verified | Not Tested |  |  |  |  |
+| `trait.resilient` | trait | Dispositions & Traits: Resilient, beside the trait it rules out (CharacterCreation.tsx:733); its look on the Player Pro… | Implemented And Verified | Not Tested |  |  |  |  |
+| `trait.burns_out` | trait | Dispositions & Traits: Burns Out, beside the trait it rules out (CharacterCreation.tsx:733); its look on the Player Pro… | Implemented And Verified | Not Tested |  |  |  |  |
+| `trait.light_sleeper` | trait | Dispositions & Traits: Light Sleeper, beside the trait it rules out (CharacterCreation.tsx:733); its look on the Player… | Implemented And Verified | Not Tested |  |  |  |  |
+| `trait.sleeps_anywhere` | trait | Dispositions & Traits: Sleeps Anywhere, beside the trait it rules out (CharacterCreation.tsx:733); its look on the Play… | Implemented And Verified | Not Tested |  |  |  |  |
+| `trait.frugal` | trait | Dispositions & Traits: Frugal, beside the trait it rules out (CharacterCreation.tsx:733); its look on the Player Profile | Implemented And Verified | Not Tested |  |  |  |  |
+| `trait.spender` | trait | Dispositions & Traits: Spender, beside the trait it rules out (CharacterCreation.tsx:733); its look on the Player Profi… | Implemented And Verified | Not Tested |  |  |  |  |
+| `trait.generous` | trait | Dispositions & Traits: Generous, beside the trait it rules out (CharacterCreation.tsx:733); its look on the Player Prof… | Implemented And Verified | Not Tested |  |  |  |  |
+| `trait.keeps_accounts` | trait | Dispositions & Traits: Keeps Accounts, beside the trait it rules out (CharacterCreation.tsx:733); its look on the Playe… | Implemented And Verified | Not Tested |  |  |  |  |
+| `trait.loyal` | trait | Dispositions & Traits: Loyal, beside the trait it rules out (CharacterCreation.tsx:733); its look on the Player Profile | Implemented And Verified | Not Tested |  |  |  |  |
+| `trait.independent` | trait | Dispositions & Traits: Independent, beside the trait it rules out (CharacterCreation.tsx:733); its look on the Player P… | Implemented And Verified | Not Tested |  |  |  |  |
+| `trait.needs_people` | trait | Dispositions & Traits: Needs People, beside the trait it rules out (CharacterCreation.tsx:733); its look on the Player … | Implemented And Verified | Not Tested |  |  |  |  |
+| `trait.guarded` | trait | Dispositions & Traits: Guarded, beside the trait it rules out (CharacterCreation.tsx:733); its look on the Player Profi… | Implemented And Verified | Not Tested |  |  |  |  |
+| `trait.open_book` | trait | Dispositions & Traits: An Open Book, beside the trait it rules out (CharacterCreation.tsx:733); its look on the Player … | Implemented And Verified | Not Tested |  |  |  |  |
+| `trait.peacemaker` | trait | Dispositions & Traits: Peacemaker, beside the trait it rules out (CharacterCreation.tsx:733); its look on the Player Pr… | Implemented And Verified | Not Tested |  |  |  |  |
+| `trait.holds_grudges` | trait | Dispositions & Traits: Holds Grudges, beside the trait it rules out (CharacterCreation.tsx:733); its look on the Player… | Implemented And Verified | Not Tested |  |  |  |  |
+| `trait.forgiving` | trait | Dispositions & Traits: Forgiving, beside the trait it rules out (CharacterCreation.tsx:733); its look on the Player Pro… | Implemented And Verified | Not Tested |  |  |  |  |
+| `trait.curious` | trait | Dispositions & Traits: Curious, beside the trait it rules out (CharacterCreation.tsx:733); its look on the Player Profi… | Implemented And Verified | Not Tested |  |  |  |  |
+| `trait.single_minded` | trait | Dispositions & Traits: Single Minded, beside the trait it rules out (CharacterCreation.tsx:733); its look on the Player… | Implemented And Verified | Not Tested |  |  |  |  |
+| `trait.scattered` | trait | Dispositions & Traits: Scattered, beside the trait it rules out (CharacterCreation.tsx:733); its look on the Player Pro… | Implemented And Verified | Not Tested |  |  |  |  |
+| `trait.self_critical` | trait | Dispositions & Traits: Self Critical, beside the trait it rules out (CharacterCreation.tsx:733); its look on the Player… | Implemented And Verified | Not Tested |  |  |  |  |
+| `trait.self_assured` | trait | Dispositions & Traits: Self Assured, beside the trait it rules out (CharacterCreation.tsx:733); its look on the Player … | Implemented And Verified | Not Tested |  |  |  |  |
+| `look.ability` | look | An ability’s look, from its row on the Player Profile (ProfileWorkspace.tsx:361) or a way from another look | Implemented And Verified | Not Tested |  |  |  |  |
+| `look.genre` | look | A genre’s look, from Genres on the Player Profile or a brief | Implemented And Verified | Not Tested |  |  |  |  |
+| `look.skill` | look | A technique’s look, from Techniques on the Player Profile or a course | Implemented And Verified | Not Tested |  |  |  |  |
+| `look.person` | look | The player’s own look, from Home’s name or the Profile | Implemented And Verified | Not Tested |  |  |  |  |
+| `look.readiness` | look | Readiness’s look, from the person look or a dial | Implemented And Verified | Not Tested |  |  |  |  |
+| `look.trait` | look | A trait’s look, from the player’s own look or the Profile | Implemented And Verified | Not Tested |  |  |  |  |
+| `profile.profile-identity` | profile | Player Profile, On This Page (src/ui/workspaces/ProfileWorkspace.tsx, SECTIONS) | — | Not Tested |  |  |  |  |
+| `profile.profile-readiness` | profile | Player Profile, On This Page (src/ui/workspaces/ProfileWorkspace.tsx, SECTIONS) | — | Not Tested |  |  |  |  |
+| `profile.profile-abilities` | profile | Player Profile, On This Page (src/ui/workspaces/ProfileWorkspace.tsx, SECTIONS) | — | Not Tested |  |  |  |  |
+| `profile.profile-techniques` | profile | Player Profile, On This Page (src/ui/workspaces/ProfileWorkspace.tsx, SECTIONS) | — | Not Tested |  |  |  |  |
+| `profile.profile-genres` | profile | Player Profile, On This Page (src/ui/workspaces/ProfileWorkspace.tsx, SECTIONS) | — | Not Tested |  |  |  |  |
+| `profile.profile-journey` | profile | Player Profile, On This Page (src/ui/workspaces/ProfileWorkspace.tsx, SECTIONS) | — | Not Tested |  |  |  |  |
+| `profile.profile-work` | profile | Player Profile, On This Page (src/ui/workspaces/ProfileWorkspace.tsx, SECTIONS) | — | Not Tested |  |  |  |  |
+| `profile.profile-history` | profile | Player Profile, On This Page (src/ui/workspaces/ProfileWorkspace.tsx, SECTIONS) | — | Not Tested |  |  |  |  |
+
+## School
+
+| Feature | Kind | Where | Effects matrix | Sweep | By | On | Evidence | Found |
+|---|---|---|---|---|---|---|---|---|
+| `brief.choose` | command | A brief’s pane: Your Reading’s Choose It and How You’ll Play It (BriefPane.tsx:228, :235), opened from the Profile’s Ge… | Implemented And Verified | Not Tested |  |  |  |  |
+| `brief.prepare` | command | A brief’s pane: Read It Through, Learn The Lines and Rehearse It (BriefPane.tsx:135); the command at briefs.ts:830. | Implemented And Verified | Not Tested |  |  |  |  |
+| `brief.reader` | command | A brief’s pane, Read With (BriefPane.tsx:41, :61): a classmate or A Recording; the command at briefs.ts:844. | Implemented And Verified | Not Tested |  |  |  |  |
+| `genre.study` | command | Study It on the Profile’s Genres panel (ProfileWorkspace.tsx:487) and Study The Genre in a brief’s pane (BriefPane.tsx:… | Implemented And Verified | Not Tested |  |  |  |  |
+| `plays.read` | command | Read It, under the Coursework tab’s Plays To Read (SchoolWorkspace.tsx:911, :942); the command at playreading.ts:120. | Implemented And Verified | Not Tested |  |  |  |  |
+| `plays.research` | command | Research It, shown after a read (SchoolWorkspace.tsx:912, :943); the command at playreading.ts:158. | Implemented And Verified | Not Tested |  |  |  |  |
+| `practice.exercise` | command | Practice An Hour (ProfileWorkspace.tsx:268, PracticeControl, under Attributes And Craft, Techniques and a brief’s pane)… | Implemented And Verified | Not Tested |  |  |  |  |
+| `practice.self_tape` | command | A brief’s pane, Tape It (BriefPane.tsx:246); the command at briefs.ts:850. | Implemented And Verified | Not Tested |  |  |  |  |
+| `school.answer_partner` | command | Say Yes and Say No to a partner’s ask (CourseworkPane.tsx:268, :270); the command at coursework.ts:2000. | Implemented And Verified | Not Tested |  |  |  |  |
+| `school.appeal_leave` | command | Appeal To The Dean on a leave the dean imposed (StudyPlanPanels.tsx:187); the command at leave.ts:1122. | Implemented And Verified | Not Tested |  |  |  |  |
+| `school.approach` | command | A piece’s way to work on a recurring note (CourseworkPane.tsx:424); the command at coursework.ts:1933. | Implemented And Verified | Not Tested |  |  |  |  |
+| `school.ask_partner` | command | Ask for an evening under Rehearsing With a partner (CourseworkPane.tsx:257); the command at coursework.ts:1988. | Implemented And Verified | Not Tested |  |  |  |  |
+| `school.buy_affiliate` | command | Buy It on the leave panel (StudyPlanPanels.tsx:84); the command at leave.ts:1277. | Implemented And Verified | Not Tested |  |  |  |  |
+| `school.buy_ppe` | command | Buy The Equipment on the Shifts And Pay tab (SchoolWorkspace.tsx:791); the command at school.ts:3545. The first assigne… | Implemented And Verified | Not Tested |  |  |  |  |
+| `school.cabaret` | command | Join A Cabaret Show, on the Casting tab and the day look (looks/day.tsx:197); the command at school.ts:3964. | Implemented And Verified | Not Tested |  |  |  |  |
+| `school.call_in_sick` | command | Call In Sick on the School’s Classes tab (SchoolWorkspace.tsx:332); the command at school.ts:4309. | Implemented And Verified | Not Tested |  |  |  |  |
+| `school.cancel_leave` | command | Call It Off on a leave asked for (StudyPlanPanels.tsx:101); the command at leave.ts:1216. | Implemented And Verified | Not Tested |  |  |  |  |
+| `school.cancel_rehearsal` | command | Call It Off on a booked rehearsal (CourseworkPane.tsx:280) and at its stop (world/clock.ts, declareOwn); the command at… | Implemented And Verified | Not Tested |  |  |  |  |
+| `school.cancel_repeat` | command | Call Off The Request…, then Call It Off, under Finishing The Degree (StudyPlanPanels.tsx:250); the command at leave.ts:… | Implemented And Verified | Not Tested |  |  |  |  |
+| `school.choose_part_playing` | command | How You’ll Play It on the Casting tab (RehearsalProcess.tsx:150); the command at production.ts:624. | Implemented And Verified | Not Tested |  |  |  |  |
+| `school.choose_playing` | command | How You’ll Play It on a piece with a scene (CourseworkPane.tsx:182); the command at coursework.ts:1946. | Implemented And Verified | Not Tested |  |  |  |  |
+| `school.choose_showcase` | command | The Actor Showcase’s Choose These Scenes on the Coursework tab (SchoolShowcase.tsx:135); the command at proshowcase.ts:… | Implemented And Verified | Not Tested |  |  |  |  |
+| `school.choose` | command | The table work’s questions on a piece (CourseworkPane.tsx:196, :207); the command at coursework.ts:1962. | Implemented And Verified | Not Tested |  |  |  |  |
+| `school.extend_incomplete` | command | Ask For A Month More beside an Incomplete (SchoolWorkspace.tsx:667); the command at courserecord.ts:280. | Implemented And Verified | Not Tested |  |  |  |  |
+| `school.learn_part` | command | Learn The Part, on the Casting tab’s rehearsal process (RehearsalProcess.tsx:139); the command at production.ts:593. | Implemented And Verified | Not Tested |  |  |  |  |
+| `school.make_amends` | command | Make Amends beside a partner (CourseworkPane.tsx:390); the command at classmates.ts:671. | Implemented And Verified | Not Tested |  |  |  |  |
+| `school.make_up` | command | Make Up A Session beside an Incomplete on the Standing And Craft tab (SchoolWorkspace.tsx:666); the command at coursere… | Implemented And Verified | Not Tested |  |  |  |  |
+| `school.orientation` | command | Catch Up beside a session missed, under Orientation on the Coursework tab (CourseworkPane.tsx:102); the command at cour… | Implemented And Verified | Not Tested |  |  |  |  |
+| `school.pay_balance` | command | Pay From Your Bank, under Owed On Your Yale Account on the Terms And Award tab (StudyPlanPanels.tsx:291); the command a… | Implemented And Verified | Not Tested |  |  |  |  |
+| `school.prepare` | command | A piece’s steps on the Coursework tab (CourseworkPane.tsx:171); the command at coursework.ts:1925. | Implemented And Verified | Not Tested |  |  |  |  |
+| `school.read_feedback` | command | Mark As Read on a piece’s feedback (CourseworkPane.tsx:300); the command at coursework.ts:1980. | Implemented And Verified | Not Tested |  |  |  |  |
+| `school.request_aid_review` | command | Ask For An Aid Review on the Terms And Award tab (StudyPlanPanels.tsx:308); the command at leave.ts:1192. | Implemented And Verified | Not Tested |  |  |  |  |
+| `school.request_conversion` | command | Ask For Conversion To Grant Aid on the Shifts And Pay tab (StudyPlanPanels.tsx:337); the command at school.ts:3614. | Implemented And Verified | Not Tested |  |  |  |  |
+| `school.request_extra_term` | command | Ask For An Additional Term under Finishing The Degree (StudyPlanPanels.tsx:240); the command at leave.ts:1157. | Implemented And Verified | Not Tested |  |  |  |  |
+| `school.request_leave` | command | A Leave Of Absence, Ask, on the Standing And Craft tab (StudyPlanPanels.tsx:136); the command at leave.ts:1057. | Implemented And Verified | Not Tested |  |  |  |  |
+| `school.request_repeat` | command | Ask To Repeat The Year…, then Ask, under Finishing The Degree (StudyPlanPanels.tsx:229); the command at leave.ts:1315. | Implemented And Verified | Not Tested |  |  |  |  |
+| `school.reregister` | command | Register on the Standing And Craft tab (StudyPlanPanels.tsx:108); the command at leave.ts:1301. | Implemented And Verified | Not Tested |  |  |  |  |
+| `school.respond` | command | A classmate’s moment, under Your Class (ClassMoments.tsx:59); the command at classmates.ts:590. | Implemented And Verified | Not Tested |  |  |  |  |
+| `school.return_notice` | command | Give Notice Of Return on the leave panel (StudyPlanPanels.tsx:78); the command at leave.ts:1266. | Implemented And Verified | Not Tested |  |  |  |  |
+| `school.review_blocking` | command | Catch Up The Blocking (RehearsalProcess.tsx:140); the command at production.ts:610. | Implemented And Verified | Not Tested |  |  |  |  |
+| `school.summer_cabaret` | command | Join The Summer Company on the Casting tab (SchoolWorkspace.tsx:731); the command at school.ts:4040. | Implemented And Verified | Not Tested |  |  |  |  |
+| `school.take_shift` | command | Take An Elective Shift on the Shifts And Pay tab (SchoolWorkspace.tsx:772); the command at school.ts:4318. | Implemented And Verified | Not Tested |  |  |  |  |
+| `school.withdraw` | command | Withdraw From The School… then Withdraw on the Standing And Craft tab (SchoolWorkspace.tsx:689, :709); the command at s… | Implemented And Verified | Not Tested |  |  |  |  |
+| `school.work_note` | command | Work On It beside a director’s note (RehearsalProcess.tsx:65); the command at production.ts:640. | Implemented And Verified | Not Tested |  |  |  |  |
+| `work.identify` | command | Work It Through (WorkThrough.tsx:109, a problem’s button) under a brief with a reading, a scene for class while open, a… | Implemented And Verified | Not Tested |  |  |  |  |
+| `work.settle` | command | Work It Through, Keep It and Put It Back (WorkThrough.tsx:78, :79); the command at workbook.ts:364. | Implemented And Verified | Not Tested |  |  |  |  |
+| `work.try` | command | Work It Through (WorkThrough.tsx:69, a way’s button) under the problem named; the command at workbook.ts:357. | Implemented And Verified | Not Tested |  |  |  |  |
+| `school.account_due` | scheduled | The clock: ACCOUNT_DUE_KIND thirty days after a charge on the Yale account (leave.ts:1387), and again each month while … | Implemented And Verified | Not Tested |  |  |  |  |
+| `school.aid_decide` | scheduled | The clock: AID_DECIDE_KIND five working days after school.request_aid_review (leave.ts:1203). | Implemented And Verified | Not Tested |  |  |  |  |
+| `school.call` | scheduled | The clock: CALL_KIND, a production’s rehearsal and performance calls and an understudy’s nights on call (school.ts:3771… | Implemented And Verified | Not Tested |  |  |  |  |
+| `school.classes` | scheduled | The clock: CLASSES_KIND at nine on each class day (school.ts:3470), booked by planWeek; the calendar’s Classes and its … | Implemented And Verified | Not Tested |  |  |  |  |
+| `school.commencement` | scheduled | The clock: COMMENCEMENT_KIND, the Monday before Memorial Day at ten (school.ts:3932), booked by the last review. | Implemented And Verified | Not Tested |  |  |  |  |
+| `school.company` | scheduled | The clock: COMPANY_KIND at a run’s or show’s end (school.ts:3753), booked by the casting and the class Cabaret. | Implemented And Verified | Not Tested |  |  |  |  |
+| `school.conferral` | scheduled | The clock: CONFERRAL_KIND at ten on 22 December (school.ts:3954), booked by an additional term’s fall review. | Implemented And Verified | Not Tested |  |  |  |  |
+| `school.convert` | scheduled | The clock: CONVERT_KIND at noon on 15 January or 15 May (school.ts:3625), booked by school.request_conversion. | Implemented And Verified | Not Tested |  |  |  |  |
+| `school.evaluation` | scheduled | The clock: EVALUATION_KIND at five on a term’s last class day (school.ts:3900), booked by the term. | Implemented And Verified | Not Tested |  |  |  |  |
+| `school.extra_decide` | scheduled | The clock: EXTRA_DECIDE_KIND (leave.ts:1168). | Implemented And Verified | Not Tested |  |  |  |  |
+| `school.former_class` | scheduled | The clock: FORMER_KIND at a first class’s term end (leave.ts:1067), for a student a year behind. | Implemented And Verified | Not Tested |  |  |  |  |
+| `school.incomplete_due` | scheduled | The clock: INCOMPLETE_DUE_KIND a week before an Incomplete’s deadline and at it (courserecord.ts:292). | Implemented And Verified | Not Tested |  |  |  |  |
+| `school.lab` | scheduled | The clock: LAB_KIND, a lab’s session (school.ts:4160), booked by the term’s labs. | Implemented And Verified | Not Tested |  |  |  |  |
+| `school.leave_appeal` | scheduled | The clock: APPEAL_KIND after the dean’s working days (leave.ts:1134). | Implemented And Verified | Not Tested |  |  |  |  |
+| `school.leave_decide` | scheduled | The clock: LEAVE_DECIDE_KIND five of Yale’s working days after a leave is asked for (leave.ts:1232). | Implemented And Verified | Not Tested |  |  |  |  |
+| `school.leave_notice` | scheduled | The clock: LEAVE_NOTICE_KIND two weeks before a leave’s notice date and at it (leave.ts:1256). | Implemented And Verified | Not Tested |  |  |  |  |
+| `school.moment` | scheduled | The clock: MOMENT_KIND at a classmate’s moment’s hour (classmates.ts:685), booked by classMoment. | Implemented And Verified | Not Tested |  |  |  |  |
+| `school.partner_ask` | scheduled | The clock: ASK_KIND at a partner’s ask’s answer-by time (coursework.ts:2018), the ask drawn at a class meeting (partner… | Implemented And Verified | Not Tested |  |  |  |  |
+| `school.partner_rehearsal` | scheduled | The clock: PARTNER_KIND at a booked rehearsal (coursework.ts:2044), a stop with Call It Off. | Implemented And Verified | Not Tested |  |  |  |  |
+| `school.payday` | scheduled | The clock: PAYDAY_KIND the Friday after hours are worked, at five (school.ts:3648). | Implemented And Verified | Not Tested |  |  |  |  |
+| `school.recess` | scheduled | The clock: RECESS_KIND at a first or second year’s spring’s recess (school.ts:4204). | Implemented And Verified | Not Tested |  |  |  |  |
+| `school.repeat_decide` | scheduled | The clock: REPEAT_DECIDE_KIND five working days after a repeat is asked for (leave.ts:1334). | Implemented And Verified | Not Tested |  |  |  |  |
+| `school.repeat_due` | scheduled | The clock: REPEAT_DUE_KIND at a last year’s thirty days’ end (leave.ts:1369). | Implemented And Verified | Not Tested |  |  |  |  |
+| `school.shift` | scheduled | The clock: SHIFT_KIND at a shift’s hour (school.ts:3553), booked by planWeek (assigned Saturdays) and school.take_shift… | Implemented And Verified | Not Tested |  |  |  |  |
+| `school.showcase_check` | scheduled | The clock: SHOWCASE_CHECK_KIND at the last term’s fourth week’s end (proshowcase.ts:573). | Implemented And Verified | Not Tested |  |  |  |  |
+| `school.showcase` | scheduled | The clock: SHOWCASE_KIND, the showcase’s rehearsal calls and its days in New York and Los Angeles (proshowcase.ts:580). | Implemented And Verified | Not Tested |  |  |  |  |
+| `school.stipend` | scheduled | The clock: STIPEND_KIND each Friday of the Summer Cabaret (school.ts:4214). | Implemented And Verified | Not Tested |  |  |  |  |
+| `school.study_session` | scheduled | The clock: STUDY_KIND, an evening running lines agreed with a classmate (classmates.ts:693), booked by school.respond. | Implemented And Verified | Not Tested |  |  |  |  |
+| `school.summer` | scheduled | The clock: SUMMER_KIND, the Summer Cabaret’s calls (school.ts:4090). | Implemented And Verified | Not Tested |  |  |  |  |
+| `school.term` | scheduled | The clock: TERM_KIND at nine on a term’s first day (school.ts:3359), booked at enrollment and by each term for the next. | Implemented And Verified | Not Tested |  |  |  |  |
+| `school.week` | scheduled | The clock: WEEK_KIND each Sunday at six in the evening (school.ts:3465), booked by planWeek. | Implemented And Verified | Not Tested |  |  |  |  |
+| `school.welfare_decide` | scheduled | The clock: WELFARE_DECIDE_KIND (leave.ts:1101). | Implemented And Verified | Not Tested |  |  |  |  |
+| `school.welfare` | scheduled | The clock: WELFARE_KIND, Yale Health’s assessment, booked by considerWelfare after stays in hospital or most of a term’… | Implemented And Verified | Not Tested |  |  |  |  |
+| `look.work` | look | Opened from the Profile’s work record, a take and a showing (looks/actor.tsx:245). | Implemented And Verified | Not Tested |  |  |  |  |
+| `look.classmate` | look | Opened from Your Class and a partner on the Coursework tab (looks/classmate.tsx:36). | Implemented And Verified | Not Tested |  |  |  |  |
+| `look.school` | look | Opened from the School workspace, a course, the calendar and the person look (looks/school.tsx:125). | Implemented And Verified | Not Tested |  |  |  |  |
+| `look.course` | look | Opened from the School look, an assignment and the timetable (looks/school.tsx:205). | Implemented And Verified | Not Tested |  |  |  |  |
+| `look.assignment` | look | Opened from a course, the calendar’s due day and the Coursework tab (looks/school.tsx:342). | Implemented And Verified | Not Tested |  |  |  |  |
+| `notice.systems/classmates#classMoment` | notice | classMoment (classmates.ts:338), at a class meeting. | Implemented And Verified | Not Tested |  |  |  |  |
+| `notice.systems/courserecord#settleCourses` | notice | settleCourses (courserecord.ts), at a term’s review. | Implemented And Verified | Not Tested |  |  |  |  |
+| `notice.systems/courserecord#tellFails` | notice | tellFails (courserecord.ts), after the standing’s own notice at a review. | Implemented And Verified | Not Tested |  |  |  |  |
+| `notice.systems/coursework#setWork` | notice | setWork (coursework.ts), when a course sets a piece. | Implemented And Verified | Not Tested |  |  |  |  |
+| `notice.systems/coursework#termWarning` | notice | termWarning (coursework.ts:1401), once a term, six pieces in. | Implemented And Verified | Not Tested |  |  |  |  |
+| `notice.systems/coursework#meetingWeight` | notice | meetingWeight (coursework.ts:1468), at a class meeting with a piece due. | Implemented And Verified | Not Tested |  |  |  |  |
+| `notice.systems/coursework#rehearsalOutcome` | notice | rehearsalOutcome (coursework.ts:1739), at a booked rehearsal. | Implemented And Verified | Not Tested |  |  |  |  |
+| `notice.systems/coursework#partnerAsks` | notice | partnerAsks (coursework.ts), at a class meeting. | Implemented And Verified | Not Tested |  |  |  |  |
+| `notice.systems/leave#notify` | notice | leave.ts’s notify, from the leave, the account, the repeat and the faculty review. | Implemented And Verified | Not Tested |  |  |  |  |
+| `notice.systems/production#reflect` | notice | reflect (production.ts:704), at a run’s close. | Implemented And Verified | Not Tested |  |  |  |  |
+| `notice.systems/school#nameTheCover` | notice | nameTheCover (school.ts:1730), once on opening a save from before 2026-10-20 with a Rep understudy covering no named pa… | Implemented And Verified | Not Tested |  |  |  |  |
+| `notice.systems/school#enroll` | notice | enroll (school.ts), at a new life’s creation. | Implemented And Verified | Not Tested |  |  |  |  |
+| `notice.systems/school#setStanding` | notice | setStanding (school.ts:1992), each time the standing moves. | Implemented And Verified | Not Tested |  |  |  |  |
+| `notice.systems/school#leaveCabaret` | notice | leaveCabaret (school.ts:2080), on warning or a leave. | Implemented And Verified | Not Tested |  |  |  |  |
+| `notice.systems/school#missedCallsOut` | notice | missedCallsOut (school.ts:2097), at a missed call. | Implemented And Verified | Not Tested |  |  |  |  |
+| `notice.systems/school#cast` | notice | cast (school.ts), at a term’s start from the first spring. | Implemented And Verified | Not Tested |  |  |  |  |
+| `notice.systems/school#registerSchool` | notice | The close of a run (school.ts, closeRun inside registerSchool), at a run’s last night. | Implemented And Verified | Not Tested |  |  |  |  |
+| `promise.school.standing>school.sick` | promise | src/engine/content/guide/school.ts | Implemented And Verified | Not Tested |  |  |  |  |
+| `promise.school.standing>productions.nights` | promise | src/engine/content/guide/school.ts | Implemented And Verified | Not Tested |  |  |  |  |
+| `promise.school.standing>coursework.feedback` | promise | src/engine/content/guide/school.ts | Implemented And Verified | Not Tested |  |  |  |  |
+| `promise.school.standing>productions.casting` | promise | src/engine/content/guide/school.ts | Implemented And Verified | Not Tested |  |  |  |  |
+| `promise.school.standing>school.repeat` | promise | src/engine/content/guide/school.ts | Implemented And Verified | Not Tested |  |  |  |  |
+| `promise.school.standing>craft.profile` | promise | src/engine/content/guide/school.ts | Implemented And Verified | Not Tested |  |  |  |  |
+| `promise.school.standing>body.how` | promise | src/engine/content/guide/school.ts | Implemented And Verified | Not Tested |  |  |  |  |
+| `promise.school.sick>body.how` | promise | src/engine/content/guide/school.ts | Implemented And Verified | Not Tested |  |  |  |  |
+| `promise.school.sick>school.standing` | promise | src/engine/content/guide/school.ts | Implemented And Verified | Not Tested |  |  |  |  |
+| `promise.school.sick>school.repeat` | promise | src/engine/content/guide/school.ts | Implemented And Verified | Not Tested |  |  |  |  |
+| `promise.school.sick>school.shifts` | promise | src/engine/content/guide/school.ts | Implemented And Verified | Not Tested |  |  |  |  |
+| `promise.school.sick>school.leave` | promise | src/engine/content/guide/school.ts | Implemented And Verified | Not Tested |  |  |  |  |
+| `promise.school.sick>productions.part` | promise | src/engine/content/guide/school.ts | Implemented And Verified | Not Tested |  |  |  |  |
+| `promise.school.sick>coursework.partners` | promise | src/engine/content/guide/school.ts | Implemented And Verified | Not Tested |  |  |  |  |
+| `promise.school.orientation>school.standing` | promise | src/engine/content/guide/school.ts | Implemented And Verified | Not Tested |  |  |  |  |
+| `promise.school.orientation>school.shifts` | promise | src/engine/content/guide/school.ts | Implemented And Verified | Not Tested |  |  |  |  |
+| `promise.school.orientation>coursework.partners` | promise | src/engine/content/guide/school.ts | Implemented And Verified | Not Tested |  |  |  |  |
+| `promise.school.orientation>coursework.prepare` | promise | src/engine/content/guide/school.ts | Implemented And Verified | Not Tested |  |  |  |  |
+| `promise.school.orientation>day.calendar` | promise | src/engine/content/guide/school.ts | Implemented And Verified | Not Tested |  |  |  |  |
+| `promise.school.leave>papers.health-cover` | promise | src/engine/content/guide/school.ts | Implemented And Verified | Not Tested |  |  |  |  |
+| `promise.school.leave>school.money` | promise | src/engine/content/guide/school.ts | Implemented And Verified | Not Tested |  |  |  |  |
+| `promise.school.leave>school.standing` | promise | src/engine/content/guide/school.ts | Implemented And Verified | Not Tested |  |  |  |  |
+| `promise.school.leave>school.repeat` | promise | src/engine/content/guide/school.ts | Implemented And Verified | Not Tested |  |  |  |  |
+| `promise.school.leave>body.how` | promise | src/engine/content/guide/school.ts | Implemented And Verified | Not Tested |  |  |  |  |
+| `promise.school.leave>documents.work` | promise | src/engine/content/guide/school.ts | Implemented And Verified | Not Tested |  |  |  |  |
+| `promise.school.leave>productions.casting` | promise | src/engine/content/guide/school.ts | Implemented And Verified | Not Tested |  |  |  |  |
+| `promise.school.repeat>school.standing` | promise | src/engine/content/guide/school.ts | Implemented And Verified | Not Tested |  |  |  |  |
+| `promise.school.repeat>school.money` | promise | src/engine/content/guide/school.ts | Implemented And Verified | Not Tested |  |  |  |  |
+| `promise.school.repeat>school.sick` | promise | src/engine/content/guide/school.ts | Implemented And Verified | Not Tested |  |  |  |  |
+| `promise.school.repeat>school.leave` | promise | src/engine/content/guide/school.ts | Implemented And Verified | Not Tested |  |  |  |  |
+| `promise.school.repeat>documents.work` | promise | src/engine/content/guide/school.ts | Implemented And Verified | Not Tested |  |  |  |  |
+| `promise.school.money>school.repeat` | promise | src/engine/content/guide/school.ts | Implemented And Verified | Not Tested |  |  |  |  |
+| `promise.school.money>school.leave` | promise | src/engine/content/guide/school.ts | Implemented And Verified | Not Tested |  |  |  |  |
+| `promise.school.money>school.shifts` | promise | src/engine/content/guide/school.ts | Implemented And Verified | Not Tested |  |  |  |  |
+| `promise.school.money>bank.accounts` | promise | src/engine/content/guide/school.ts | Implemented And Verified | Not Tested |  |  |  |  |
+| `promise.school.money>taxes.return` | promise | src/engine/content/guide/school.ts | Implemented And Verified | Not Tested |  |  |  |  |
+| `promise.school.money>school.standing` | promise | src/engine/content/guide/school.ts | Implemented And Verified | Not Tested |  |  |  |  |
+| `promise.school.shifts>school.standing` | promise | src/engine/content/guide/school.ts | Implemented And Verified | Not Tested |  |  |  |  |
+| `promise.school.shifts>bank.accounts` | promise | src/engine/content/guide/school.ts | Implemented And Verified | Not Tested |  |  |  |  |
+| `promise.school.shifts>school.money` | promise | src/engine/content/guide/school.ts | Implemented And Verified | Not Tested |  |  |  |  |
+| `promise.school.shifts>taxes.return` | promise | src/engine/content/guide/school.ts | Implemented And Verified | Not Tested |  |  |  |  |
+| `promise.school.shifts>body.how` | promise | src/engine/content/guide/school.ts | Implemented, Verification Incomplete | Not Tested |  |  |  |  |
+| `promise.school.shifts>school.orientation` | promise | src/engine/content/guide/school.ts | Implemented And Verified | Not Tested |  |  |  |  |
+
+## Craft
+
+| Feature | Kind | Where | Effects matrix | Sweep | By | On | Evidence | Found |
+|---|---|---|---|---|---|---|---|---|
+| `promise.coursework.prepare>school.orientation` | promise | src/engine/content/guide/coursework.ts | Implemented And Verified | Not Tested |  |  |  |  |
+| `promise.coursework.prepare>coursework.playing` | promise | src/engine/content/guide/coursework.ts | Implemented And Verified | Not Tested |  |  |  |  |
+| `promise.coursework.prepare>craft.profile` | promise | src/engine/content/guide/coursework.ts | Implemented And Verified | Not Tested |  |  |  |  |
+| `promise.coursework.prepare>coursework.feedback` | promise | src/engine/content/guide/coursework.ts | Implemented And Verified | Not Tested |  |  |  |  |
+| `promise.coursework.prepare>school.standing` | promise | src/engine/content/guide/coursework.ts | Implemented And Verified | Not Tested |  |  |  |  |
+| `promise.coursework.prepare>body.how` | promise | src/engine/content/guide/coursework.ts | Implemented And Verified | Not Tested |  |  |  |  |
+| `promise.coursework.prepare>craft.identity` | promise | src/engine/content/guide/coursework.ts | Implemented And Verified | Not Tested |  |  |  |  |
+| `promise.coursework.table>coursework.prepare` | promise | src/engine/content/guide/coursework.ts | Implemented And Verified | Not Tested |  |  |  |  |
+| `promise.coursework.table>coursework.class` | promise | src/engine/content/guide/coursework.ts | Implemented And Verified | Not Tested |  |  |  |  |
+| `promise.coursework.table>coursework.feedback` | promise | src/engine/content/guide/coursework.ts | Implemented And Verified | Not Tested |  |  |  |  |
+| `promise.coursework.table>coursework.partners` | promise | src/engine/content/guide/coursework.ts | Implemented And Verified | Not Tested |  |  |  |  |
+| `promise.coursework.table>coursework.workbook` | promise | src/engine/content/guide/coursework.ts | Implemented And Verified | Not Tested |  |  |  |  |
+| `promise.coursework.playing>coursework.prepare` | promise | src/engine/content/guide/coursework.ts | Implemented And Verified | Not Tested |  |  |  |  |
+| `promise.coursework.playing>coursework.partners` | promise | src/engine/content/guide/coursework.ts | Implemented And Verified | Not Tested |  |  |  |  |
+| `promise.coursework.playing>coursework.feedback` | promise | src/engine/content/guide/coursework.ts | Implemented And Verified | Not Tested |  |  |  |  |
+| `promise.coursework.playing>coursework.workbook` | promise | src/engine/content/guide/coursework.ts | Implemented And Verified | Not Tested |  |  |  |  |
+| `promise.coursework.playing>craft.identity` | promise | src/engine/content/guide/coursework.ts | Implemented And Verified | Not Tested |  |  |  |  |
+| `promise.coursework.feedback>coursework.approach` | promise | src/engine/content/guide/coursework.ts | Implemented And Verified | Not Tested |  |  |  |  |
+| `promise.coursework.feedback>coursework.prepare` | promise | src/engine/content/guide/coursework.ts | Implemented And Verified | Not Tested |  |  |  |  |
+| `promise.coursework.feedback>craft.profile` | promise | src/engine/content/guide/coursework.ts | Implemented And Verified | Not Tested |  |  |  |  |
+| `promise.coursework.feedback>school.standing` | promise | src/engine/content/guide/coursework.ts | Implemented And Verified | Not Tested |  |  |  |  |
+| `promise.coursework.feedback>coursework.partners` | promise | src/engine/content/guide/coursework.ts | Implemented And Verified | Not Tested |  |  |  |  |
+| `promise.coursework.feedback>craft.identity` | promise | src/engine/content/guide/coursework.ts | Implemented And Verified | Not Tested |  |  |  |  |
+| `promise.coursework.approach>coursework.feedback` | promise | src/engine/content/guide/coursework.ts | Implemented And Verified | Not Tested |  |  |  |  |
+| `promise.coursework.approach>coursework.prepare` | promise | src/engine/content/guide/coursework.ts | Implemented And Verified | Not Tested |  |  |  |  |
+| `promise.coursework.approach>coursework.partners` | promise | src/engine/content/guide/coursework.ts | Implemented And Verified | Not Tested |  |  |  |  |
+| `promise.coursework.approach>school.standing` | promise | src/engine/content/guide/coursework.ts | Implemented And Verified | Not Tested |  |  |  |  |
+| `promise.coursework.partners>school.orientation` | promise | src/engine/content/guide/coursework.ts | Implemented And Verified | Not Tested |  |  |  |  |
+| `promise.coursework.partners>day.calendar` | promise | src/engine/content/guide/coursework.ts | Implemented And Verified | Not Tested |  |  |  |  |
+| `promise.coursework.partners>coursework.prepare` | promise | src/engine/content/guide/coursework.ts | Implemented And Verified | Not Tested |  |  |  |  |
+| `promise.coursework.partners>coursework.class` | promise | src/engine/content/guide/coursework.ts | Implemented And Verified | Not Tested |  |  |  |  |
+| `promise.coursework.partners>coursework.feedback` | promise | src/engine/content/guide/coursework.ts | Implemented And Verified | Not Tested |  |  |  |  |
+| `promise.coursework.partners>craft.identity` | promise | src/engine/content/guide/coursework.ts | Implemented And Verified | Not Tested |  |  |  |  |
+| `promise.coursework.partners>school.sick` | promise | src/engine/content/guide/coursework.ts | Implemented And Verified | Not Tested |  |  |  |  |
+| `promise.coursework.partners>coursework.playing` | promise | src/engine/content/guide/coursework.ts | Implemented And Verified | Not Tested |  |  |  |  |
+| `promise.coursework.class>school.orientation` | promise | src/engine/content/guide/coursework.ts | Implemented And Verified | Not Tested |  |  |  |  |
+| `promise.coursework.class>coursework.table` | promise | src/engine/content/guide/coursework.ts | Implemented And Verified | Not Tested |  |  |  |  |
+| `promise.coursework.class>coursework.partners` | promise | src/engine/content/guide/coursework.ts | Implemented And Verified | Not Tested |  |  |  |  |
+| `promise.coursework.class>coursework.prepare` | promise | src/engine/content/guide/coursework.ts | Implemented And Verified | Not Tested |  |  |  |  |
+| `promise.coursework.class>body.how` | promise | src/engine/content/guide/coursework.ts | Implemented And Verified | Not Tested |  |  |  |  |
+| `promise.coursework.workbook>coursework.prepare` | promise | src/engine/content/guide/coursework.ts | Implemented And Verified | Not Tested |  |  |  |  |
+| `promise.coursework.workbook>coursework.feedback` | promise | src/engine/content/guide/coursework.ts | Implemented And Verified | Not Tested |  |  |  |  |
+| `promise.coursework.workbook>craft.brief-prepare` | promise | src/engine/content/guide/coursework.ts | Implemented And Verified | Not Tested |  |  |  |  |
+| `promise.coursework.workbook>craft.brief-reader` | promise | src/engine/content/guide/coursework.ts | Implemented And Verified | Not Tested |  |  |  |  |
+| `promise.coursework.workbook>productions.notes` | promise | src/engine/content/guide/coursework.ts | Implemented And Verified | Not Tested |  |  |  |  |
+| `promise.coursework.workbook>coursework.playing` | promise | src/engine/content/guide/coursework.ts | Implemented And Verified | Not Tested |  |  |  |  |
+| `promise.coursework.workbook>craft.profile` | promise | src/engine/content/guide/coursework.ts | Implemented And Verified | Not Tested |  |  |  |  |
+| `promise.craft.profile>start.guide` | promise | src/engine/content/guide/craft.ts | Implemented And Verified | Not Tested |  |  |  |  |
+| `promise.craft.profile>craft.practice` | promise | src/engine/content/guide/craft.ts | Implemented And Verified | Not Tested |  |  |  |  |
+| `promise.craft.profile>craft.work` | promise | src/engine/content/guide/craft.ts | Implemented And Verified | Not Tested |  |  |  |  |
+| `promise.craft.profile>craft.identity` | promise | src/engine/content/guide/craft.ts | Implemented And Verified | Not Tested |  |  |  |  |
+| `promise.craft.profile>body.how` | promise | src/engine/content/guide/craft.ts | Implemented And Verified | Not Tested |  |  |  |  |
+| `promise.craft.profile>start.find` | promise | src/engine/content/guide/craft.ts | Implemented And Verified | Not Tested |  |  |  |  |
+| `promise.craft.practice>craft.profile` | promise | src/engine/content/guide/craft.ts | Implemented And Verified | Not Tested |  |  |  |  |
+| `promise.craft.practice>day.clock` | promise | src/engine/content/guide/craft.ts | Implemented And Verified | Not Tested |  |  |  |  |
+| `promise.craft.practice>craft.work` | promise | src/engine/content/guide/craft.ts | Implemented And Verified | Not Tested |  |  |  |  |
+| `promise.craft.practice>craft.brief-prepare` | promise | src/engine/content/guide/craft.ts | Implemented And Verified | Not Tested |  |  |  |  |
+| `promise.craft.practice>craft.identity` | promise | src/engine/content/guide/craft.ts | Implemented And Verified | Not Tested |  |  |  |  |
+| `promise.craft.practice>body.look-after` | promise | src/engine/content/guide/craft.ts | Implemented And Verified | Not Tested |  |  |  |  |
+| `promise.craft.practice>body.sleep` | promise | src/engine/content/guide/craft.ts | Implemented And Verified | Not Tested |  |  |  |  |
+| `promise.craft.genre>craft.profile` | promise | src/engine/content/guide/craft.ts | Implemented And Verified | Not Tested |  |  |  |  |
+| `promise.craft.genre>craft.brief-tape` | promise | src/engine/content/guide/craft.ts | Implemented And Verified | Not Tested |  |  |  |  |
+| `promise.craft.genre>coursework.prepare` | promise | src/engine/content/guide/craft.ts | Implemented And Verified | Not Tested |  |  |  |  |
+| `promise.craft.genre>productions.part` | promise | src/engine/content/guide/craft.ts | Implemented And Verified | Not Tested |  |  |  |  |
+| `promise.craft.genre>craft.brief-prepare` | promise | src/engine/content/guide/craft.ts | Implemented And Verified | Not Tested |  |  |  |  |
+| `promise.craft.genre>craft.identity` | promise | src/engine/content/guide/craft.ts | Implemented And Verified | Not Tested |  |  |  |  |
+| `promise.craft.brief-prepare>craft.genre` | promise | src/engine/content/guide/craft.ts | Implemented And Verified | Not Tested |  |  |  |  |
+| `promise.craft.brief-prepare>craft.brief-tape` | promise | src/engine/content/guide/craft.ts | Implemented And Verified | Not Tested |  |  |  |  |
+| `promise.craft.brief-prepare>craft.brief-choose` | promise | src/engine/content/guide/craft.ts | Implemented And Verified | Not Tested |  |  |  |  |
+| `promise.craft.brief-prepare>craft.brief-reader` | promise | src/engine/content/guide/craft.ts | Implemented And Verified | Not Tested |  |  |  |  |
+| `promise.craft.brief-prepare>craft.profile` | promise | src/engine/content/guide/craft.ts | Implemented And Verified | Not Tested |  |  |  |  |
+| `promise.craft.brief-prepare>coursework.workbook` | promise | src/engine/content/guide/craft.ts | Implemented And Verified | Not Tested |  |  |  |  |
+| `promise.craft.brief-choose>craft.brief-prepare` | promise | src/engine/content/guide/craft.ts | Implemented And Verified | Not Tested |  |  |  |  |
+| `promise.craft.brief-choose>craft.brief-tape` | promise | src/engine/content/guide/craft.ts | Implemented And Verified | Not Tested |  |  |  |  |
+| `promise.craft.brief-choose>craft.identity` | promise | src/engine/content/guide/craft.ts | Implemented And Verified | Not Tested |  |  |  |  |
+| `promise.craft.brief-choose>coursework.playing` | promise | src/engine/content/guide/craft.ts | Implemented And Verified | Not Tested |  |  |  |  |
+| `promise.craft.brief-choose>coursework.workbook` | promise | src/engine/content/guide/craft.ts | Implemented And Verified | Not Tested |  |  |  |  |
+| `promise.craft.brief-reader>craft.brief-tape` | promise | src/engine/content/guide/craft.ts | Implemented And Verified | Not Tested |  |  |  |  |
+| `promise.craft.brief-reader>coursework.partners` | promise | src/engine/content/guide/craft.ts | Implemented And Verified | Not Tested |  |  |  |  |
+| `promise.craft.brief-reader>coursework.workbook` | promise | src/engine/content/guide/craft.ts | Implemented And Verified | Not Tested |  |  |  |  |
+| `promise.craft.brief-reader>craft.identity` | promise | src/engine/content/guide/craft.ts | Implemented And Verified | Not Tested |  |  |  |  |
+| `promise.craft.brief-tape>craft.brief-choose` | promise | src/engine/content/guide/craft.ts | Implemented And Verified | Not Tested |  |  |  |  |
+| `promise.craft.brief-tape>craft.work` | promise | src/engine/content/guide/craft.ts | Implemented And Verified | Not Tested |  |  |  |  |
+| `promise.craft.brief-tape>craft.genre` | promise | src/engine/content/guide/craft.ts | Implemented And Verified | Not Tested |  |  |  |  |
+| `promise.craft.brief-tape>craft.profile` | promise | src/engine/content/guide/craft.ts | Implemented And Verified | Not Tested |  |  |  |  |
+| `promise.craft.brief-tape>craft.identity` | promise | src/engine/content/guide/craft.ts | Implemented And Verified | Not Tested |  |  |  |  |
+| `promise.craft.brief-tape>coursework.workbook` | promise | src/engine/content/guide/craft.ts | Implemented And Verified | Not Tested |  |  |  |  |
+| `promise.craft.brief-tape>body.sleep` | promise | src/engine/content/guide/craft.ts | Implemented And Verified | Not Tested |  |  |  |  |
+| `promise.craft.work>craft.profile` | promise | src/engine/content/guide/craft.ts | Implemented And Verified | Not Tested |  |  |  |  |
+| `promise.craft.work>craft.identity` | promise | src/engine/content/guide/craft.ts | Implemented And Verified | Not Tested |  |  |  |  |
+| `promise.craft.work>craft.practice` | promise | src/engine/content/guide/craft.ts | Implemented And Verified | Not Tested |  |  |  |  |
+| `promise.craft.work>coursework.feedback` | promise | src/engine/content/guide/craft.ts | Implemented And Verified | Not Tested |  |  |  |  |
+| `promise.craft.work>productions.nights` | promise | src/engine/content/guide/craft.ts | Implemented And Verified | Not Tested |  |  |  |  |
+| `promise.craft.work>body.how` | promise | src/engine/content/guide/craft.ts | Implemented And Verified | Not Tested |  |  |  |  |
+| `promise.craft.identity>craft.work` | promise | src/engine/content/guide/craft.ts | Implemented And Verified | Not Tested |  |  |  |  |
+| `promise.craft.identity>craft.brief-tape` | promise | src/engine/content/guide/craft.ts | Implemented And Verified | Not Tested |  |  |  |  |
+| `promise.craft.identity>coursework.partners` | promise | src/engine/content/guide/craft.ts | Implemented And Verified | Not Tested |  |  |  |  |
+| `promise.craft.identity>productions.notes` | promise | src/engine/content/guide/craft.ts | Implemented And Verified | Not Tested |  |  |  |  |
+| `promise.craft.identity>craft.profile` | promise | src/engine/content/guide/craft.ts | Implemented And Verified | Not Tested |  |  |  |  |
+| `promise.productions.casting>school.standing` | promise | src/engine/content/guide/productions.ts | Implemented And Verified | Not Tested |  |  |  |  |
+| `promise.productions.casting>productions.part` | promise | src/engine/content/guide/productions.ts | Implemented And Verified | Not Tested |  |  |  |  |
+| `promise.productions.casting>day.calendar` | promise | src/engine/content/guide/productions.ts | Implemented And Verified | Not Tested |  |  |  |  |
+| `promise.productions.casting>productions.nights` | promise | src/engine/content/guide/productions.ts | Implemented And Verified | Not Tested |  |  |  |  |
+| `promise.productions.casting>coursework.partners` | promise | src/engine/content/guide/productions.ts | Implemented And Verified | Not Tested |  |  |  |  |
+| `promise.productions.casting>body.how` | promise | src/engine/content/guide/productions.ts | Implemented And Verified | Not Tested |  |  |  |  |
+| `promise.productions.casting>productions.cabaret` | promise | src/engine/content/guide/productions.ts | Implemented And Verified | Not Tested |  |  |  |  |
+| `promise.productions.part>productions.casting` | promise | src/engine/content/guide/productions.ts | Implemented And Verified | Not Tested |  |  |  |  |
+| `promise.productions.part>productions.notes` | promise | src/engine/content/guide/productions.ts | Implemented And Verified | Not Tested |  |  |  |  |
+| `promise.productions.part>productions.nights` | promise | src/engine/content/guide/productions.ts | Implemented And Verified | Not Tested |  |  |  |  |
+| `promise.productions.part>school.standing` | promise | src/engine/content/guide/productions.ts | Implemented And Verified | Not Tested |  |  |  |  |
+| `promise.productions.part>craft.profile` | promise | src/engine/content/guide/productions.ts | Implemented And Verified | Not Tested |  |  |  |  |
+| `promise.productions.part>coursework.workbook` | promise | src/engine/content/guide/productions.ts | Implemented And Verified | Not Tested |  |  |  |  |
+| `promise.productions.notes>productions.part` | promise | src/engine/content/guide/productions.ts | Implemented And Verified | Not Tested |  |  |  |  |
+| `promise.productions.notes>coursework.workbook` | promise | src/engine/content/guide/productions.ts | Implemented And Verified | Not Tested |  |  |  |  |
+| `promise.productions.notes>productions.nights` | promise | src/engine/content/guide/productions.ts | Implemented And Verified | Not Tested |  |  |  |  |
+| `promise.productions.notes>craft.identity` | promise | src/engine/content/guide/productions.ts | Implemented And Verified | Not Tested |  |  |  |  |
+| `promise.productions.notes>coursework.feedback` | promise | src/engine/content/guide/productions.ts | Implemented And Verified | Not Tested |  |  |  |  |
+| `promise.productions.notes>craft.profile` | promise | src/engine/content/guide/productions.ts | Implemented And Verified | Not Tested |  |  |  |  |
+| `promise.productions.notes>productions.playing` | promise | src/engine/content/guide/productions.ts | Implemented And Verified | Not Tested |  |  |  |  |
+| `promise.productions.playing>productions.casting` | promise | src/engine/content/guide/productions.ts | Implemented And Verified | Not Tested |  |  |  |  |
+| `promise.productions.playing>productions.part` | promise | src/engine/content/guide/productions.ts | Implemented And Verified | Not Tested |  |  |  |  |
+| `promise.productions.playing>productions.notes` | promise | src/engine/content/guide/productions.ts | Implemented And Verified | Not Tested |  |  |  |  |
+| `promise.productions.playing>productions.nights` | promise | src/engine/content/guide/productions.ts | Implemented And Verified | Not Tested |  |  |  |  |
+| `promise.productions.playing>craft.identity` | promise | src/engine/content/guide/productions.ts | Implemented And Verified | Not Tested |  |  |  |  |
+| `promise.productions.playing>coursework.playing` | promise | src/engine/content/guide/productions.ts | Implemented And Verified | Not Tested |  |  |  |  |
+| `promise.productions.nights>productions.part` | promise | src/engine/content/guide/productions.ts | Implemented And Verified | Not Tested |  |  |  |  |
+| `promise.productions.nights>school.standing` | promise | src/engine/content/guide/productions.ts | Implemented And Verified | Not Tested |  |  |  |  |
+| `promise.productions.nights>productions.casting` | promise | src/engine/content/guide/productions.ts | Implemented And Verified | Not Tested |  |  |  |  |
+| `promise.productions.nights>craft.work` | promise | src/engine/content/guide/productions.ts | Implemented And Verified | Not Tested |  |  |  |  |
+| `promise.productions.nights>craft.identity` | promise | src/engine/content/guide/productions.ts | Implemented And Verified | Not Tested |  |  |  |  |
+| `promise.productions.nights>body.how` | promise | src/engine/content/guide/productions.ts | Implemented And Verified | Not Tested |  |  |  |  |
+| `promise.productions.nights>craft.profile` | promise | src/engine/content/guide/productions.ts | Implemented And Verified | Not Tested |  |  |  |  |
+| `promise.productions.nights>coursework.feedback` | promise | src/engine/content/guide/productions.ts | Implemented And Verified | Not Tested |  |  |  |  |
+| `promise.productions.cabaret>school.standing` | promise | src/engine/content/guide/productions.ts | Implemented And Verified | Not Tested |  |  |  |  |
+| `promise.productions.cabaret>productions.casting#prerequisite` | promise | src/engine/content/guide/productions.ts | Implemented And Verified | Not Tested |  |  |  |  |
+| `promise.productions.cabaret>day.calendar` | promise | src/engine/content/guide/productions.ts | Implemented And Verified | Not Tested |  |  |  |  |
+| `promise.productions.cabaret>productions.part` | promise | src/engine/content/guide/productions.ts | Implemented And Verified | Not Tested |  |  |  |  |
+| `promise.productions.cabaret>productions.nights` | promise | src/engine/content/guide/productions.ts | Implemented And Verified | Not Tested |  |  |  |  |
+| `promise.productions.cabaret>productions.casting#evaluation` | promise | src/engine/content/guide/productions.ts | Implemented And Verified | Not Tested |  |  |  |  |
+| `promise.productions.cabaret>money.affairs` | promise | src/engine/content/guide/productions.ts | Implemented And Verified | Not Tested |  |  |  |  |
+| `promise.productions.cabaret>taxes.return` | promise | src/engine/content/guide/productions.ts | Implemented And Verified | Not Tested |  |  |  |  |
+| `promise.productions.plays>school.orientation` | promise | src/engine/content/guide/productions.ts | Implemented And Verified | Not Tested |  |  |  |  |
+| `promise.productions.plays>craft.profile` | promise | src/engine/content/guide/productions.ts | Implemented And Verified | Not Tested |  |  |  |  |
+| `promise.productions.plays>coursework.prepare` | promise | src/engine/content/guide/productions.ts | Implemented And Verified | Not Tested |  |  |  |  |
+| `promise.craft.genre>career.auditions` | promise | src/engine/content/guide/craft.ts | Implemented And Verified | Not Tested |  |  |  |  |
+| `technique.accents` | technique | Player Profile, Techniques; the School’s classes and a piece’s demands (src/engine/content/abilities.ts, TECHNIQUES) | — | Not Tested |  |  |  |  |
+| `technique.audition` | technique | Player Profile, Techniques; the School’s classes and a piece’s demands (src/engine/content/abilities.ts, TECHNIQUES) | — | Not Tested |  |  |  |  |
+| `technique.character` | technique | Player Profile, Techniques; the School’s classes and a piece’s demands (src/engine/content/abilities.ts, TECHNIQUES) | — | Not Tested |  |  |  |  |
+| `technique.classical` | technique | Player Profile, Techniques; the School’s classes and a piece’s demands (src/engine/content/abilities.ts, TECHNIQUES) | — | Not Tested |  |  |  |  |
+| `technique.clown` | technique | Player Profile, Techniques; the School’s classes and a piece’s demands (src/engine/content/abilities.ts, TECHNIQUES) | — | Not Tested |  |  |  |  |
+| `technique.coldReading` | technique | Player Profile, Techniques; the School’s classes and a piece’s demands (src/engine/content/abilities.ts, TECHNIQUES) | — | Not Tested |  |  |  |  |
+| `technique.comedy` | technique | Player Profile, Techniques; the School’s classes and a piece’s demands (src/engine/content/abilities.ts, TECHNIQUES) | — | Not Tested |  |  |  |  |
+| `technique.dance` | technique | Player Profile, Techniques; the School’s classes and a piece’s demands (src/engine/content/abilities.ts, TECHNIQUES) | — | Not Tested |  |  |  |  |
+| `technique.improv` | technique | Player Profile, Techniques; the School’s classes and a piece’s demands (src/engine/content/abilities.ts, TECHNIQUES) | — | Not Tested |  |  |  |  |
+| `technique.intimacy` | technique | Player Profile, Techniques; the School’s classes and a piece’s demands (src/engine/content/abilities.ts, TECHNIQUES) | — | Not Tested |  |  |  |  |
+| `technique.screen` | technique | Player Profile, Techniques; the School’s classes and a piece’s demands (src/engine/content/abilities.ts, TECHNIQUES) | — | Not Tested |  |  |  |  |
+| `technique.scene` | technique | Player Profile, Techniques; the School’s classes and a piece’s demands (src/engine/content/abilities.ts, TECHNIQUES) | — | Not Tested |  |  |  |  |
+| `technique.script` | technique | Player Profile, Techniques; the School’s classes and a piece’s demands (src/engine/content/abilities.ts, TECHNIQUES) | — | Not Tested |  |  |  |  |
+| `technique.singing` | technique | Player Profile, Techniques; the School’s classes and a piece’s demands (src/engine/content/abilities.ts, TECHNIQUES) | — | Not Tested |  |  |  |  |
+| `technique.speech` | technique | Player Profile, Techniques; the School’s classes and a piece’s demands (src/engine/content/abilities.ts, TECHNIQUES) | — | Not Tested |  |  |  |  |
+| `technique.combat` | technique | Player Profile, Techniques; the School’s classes and a piece’s demands (src/engine/content/abilities.ts, TECHNIQUES) | — | Not Tested |  |  |  |  |
+| `technique.voiceover` | technique | Player Profile, Techniques; the School’s classes and a piece’s demands (src/engine/content/abilities.ts, TECHNIQUES) | — | Not Tested |  |  |  |  |
+| `genre.absurdist` | genre | Player Profile, Genres; a brief’s and a part’s genre (src/engine/content/film-genres.ts, src/engine/content/genres.ts) | — | Not Tested |  |  |  |  |
+| `genre.action` | genre | Player Profile, Genres; a brief’s and a part’s genre (src/engine/content/film-genres.ts, src/engine/content/genres.ts) | — | Not Tested |  |  |  |  |
+| `genre.action_comedy` | genre | Player Profile, Genres; a brief’s and a part’s genre (src/engine/content/film-genres.ts, src/engine/content/genres.ts) | — | Not Tested |  |  |  |  |
+| `genre.adventure` | genre | Player Profile, Genres; a brief’s and a part’s genre (src/engine/content/film-genres.ts, src/engine/content/genres.ts) | — | Not Tested |  |  |  |  |
+| `genre.alternate_history` | genre | Player Profile, Genres; a brief’s and a part’s genre (src/engine/content/film-genres.ts, src/engine/content/genres.ts) | — | Not Tested |  |  |  |  |
+| `genre.animated` | genre | Player Profile, Genres; a brief’s and a part’s genre (src/engine/content/film-genres.ts, src/engine/content/genres.ts) | — | Not Tested |  |  |  |  |
+| `genre.anime` | genre | Player Profile, Genres; a brief’s and a part’s genre (src/engine/content/film-genres.ts, src/engine/content/genres.ts) | — | Not Tested |  |  |  |  |
+| `genre.anthology` | genre | Player Profile, Genres; a brief’s and a part’s genre (src/engine/content/film-genres.ts, src/engine/content/genres.ts) | — | Not Tested |  |  |  |  |
+| `genre.apocalyptic` | genre | Player Profile, Genres; a brief’s and a part’s genre (src/engine/content/film-genres.ts, src/engine/content/genres.ts) | — | Not Tested |  |  |  |  |
+| `genre.art_house` | genre | Player Profile, Genres; a brief’s and a part’s genre (src/engine/content/film-genres.ts, src/engine/content/genres.ts) | — | Not Tested |  |  |  |  |
+| `genre.avant_garde` | genre | Player Profile, Genres; a brief’s and a part’s genre (src/engine/content/film-genres.ts, src/engine/content/genres.ts) | — | Not Tested |  |  |  |  |
+| `genre.backstage_musical` | genre | Player Profile, Genres; a brief’s and a part’s genre (src/engine/content/film-genres.ts, src/engine/content/genres.ts) | — | Not Tested |  |  |  |  |
+| `genre.biker` | genre | Player Profile, Genres; a brief’s and a part’s genre (src/engine/content/film-genres.ts, src/engine/content/genres.ts) | — | Not Tested |  |  |  |  |
+| `genre.biographical` | genre | Player Profile, Genres; a brief’s and a part’s genre (src/engine/content/film-genres.ts, src/engine/content/genres.ts) | — | Not Tested |  |  |  |  |
+| `genre.black_comedy` | genre | Player Profile, Genres; a brief’s and a part’s genre (src/engine/content/film-genres.ts, src/engine/content/genres.ts) | — | Not Tested |  |  |  |  |
+| `genre.blaxploitation` | genre | Player Profile, Genres; a brief’s and a part’s genre (src/engine/content/film-genres.ts, src/engine/content/genres.ts) | — | Not Tested |  |  |  |  |
+| `genre.body_horror` | genre | Player Profile, Genres; a brief’s and a part’s genre (src/engine/content/film-genres.ts, src/engine/content/genres.ts) | — | Not Tested |  |  |  |  |
+| `genre.buddy_comedy` | genre | Player Profile, Genres; a brief’s and a part’s genre (src/engine/content/film-genres.ts, src/engine/content/genres.ts) | — | Not Tested |  |  |  |  |
+| `genre.buddy_cop` | genre | Player Profile, Genres; a brief’s and a part’s genre (src/engine/content/film-genres.ts, src/engine/content/genres.ts) | — | Not Tested |  |  |  |  |
+| `genre.caper` | genre | Player Profile, Genres; a brief’s and a part’s genre (src/engine/content/film-genres.ts, src/engine/content/genres.ts) | — | Not Tested |  |  |  |  |
+| `genre.chanbara` | genre | Player Profile, Genres; a brief’s and a part’s genre (src/engine/content/film-genres.ts, src/engine/content/genres.ts) | — | Not Tested |  |  |  |  |
+| `genre.chase` | genre | Player Profile, Genres; a brief’s and a part’s genre (src/engine/content/film-genres.ts, src/engine/content/genres.ts) | — | Not Tested |  |  |  |  |
+| `genre.childrens` | genre | Player Profile, Genres; a brief’s and a part’s genre (src/engine/content/film-genres.ts, src/engine/content/genres.ts) | — | Not Tested |  |  |  |  |
+| `genre.christmas` | genre | Player Profile, Genres; a brief’s and a part’s genre (src/engine/content/film-genres.ts, src/engine/content/genres.ts) | — | Not Tested |  |  |  |  |
+| `genre.comedy` | genre | Player Profile, Genres; a brief’s and a part’s genre (src/engine/content/film-genres.ts, src/engine/content/genres.ts) | — | Not Tested |  |  |  |  |
+| `genre.coming_of_age` | genre | Player Profile, Genres; a brief’s and a part’s genre (src/engine/content/film-genres.ts, src/engine/content/genres.ts) | — | Not Tested |  |  |  |  |
+| `genre.concert_film` | genre | Player Profile, Genres; a brief’s and a part’s genre (src/engine/content/film-genres.ts, src/engine/content/genres.ts) | — | Not Tested |  |  |  |  |
+| `genre.conspiracy_thriller` | genre | Player Profile, Genres; a brief’s and a part’s genre (src/engine/content/film-genres.ts, src/engine/content/genres.ts) | — | Not Tested |  |  |  |  |
+| `genre.cosmic_horror` | genre | Player Profile, Genres; a brief’s and a part’s genre (src/engine/content/film-genres.ts, src/engine/content/genres.ts) | — | Not Tested |  |  |  |  |
+| `genre.costume_drama` | genre | Player Profile, Genres; a brief’s and a part’s genre (src/engine/content/film-genres.ts, src/engine/content/genres.ts) | — | Not Tested |  |  |  |  |
+| `genre.courtroom_drama` | genre | Player Profile, Genres; a brief’s and a part’s genre (src/engine/content/film-genres.ts, src/engine/content/genres.ts) | — | Not Tested |  |  |  |  |
+| `genre.creature_feature` | genre | Player Profile, Genres; a brief’s and a part’s genre (src/engine/content/film-genres.ts, src/engine/content/genres.ts) | — | Not Tested |  |  |  |  |
+| `genre.crime` | genre | Player Profile, Genres; a brief’s and a part’s genre (src/engine/content/film-genres.ts, src/engine/content/genres.ts) | — | Not Tested |  |  |  |  |
+| `genre.cyberpunk` | genre | Player Profile, Genres; a brief’s and a part’s genre (src/engine/content/film-genres.ts, src/engine/content/genres.ts) | — | Not Tested |  |  |  |  |
+| `genre.dance` | genre | Player Profile, Genres; a brief’s and a part’s genre (src/engine/content/film-genres.ts, src/engine/content/genres.ts) | — | Not Tested |  |  |  |  |
+| `genre.dark_fantasy` | genre | Player Profile, Genres; a brief’s and a part’s genre (src/engine/content/film-genres.ts, src/engine/content/genres.ts) | — | Not Tested |  |  |  |  |
+| `genre.detective` | genre | Player Profile, Genres; a brief’s and a part’s genre (src/engine/content/film-genres.ts, src/engine/content/genres.ts) | — | Not Tested |  |  |  |  |
+| `genre.disaster` | genre | Player Profile, Genres; a brief’s and a part’s genre (src/engine/content/film-genres.ts, src/engine/content/genres.ts) | — | Not Tested |  |  |  |  |
+| `genre.docudrama` | genre | Player Profile, Genres; a brief’s and a part’s genre (src/engine/content/film-genres.ts, src/engine/content/genres.ts) | — | Not Tested |  |  |  |  |
+| `genre.docufiction` | genre | Player Profile, Genres; a brief’s and a part’s genre (src/engine/content/film-genres.ts, src/engine/content/genres.ts) | — | Not Tested |  |  |  |  |
+| `genre.documentary` | genre | Player Profile, Genres; a brief’s and a part’s genre (src/engine/content/film-genres.ts, src/engine/content/genres.ts) | — | Not Tested |  |  |  |  |
+| `genre.domestic_drama` | genre | Player Profile, Genres; a brief’s and a part’s genre (src/engine/content/film-genres.ts, src/engine/content/genres.ts) | — | Not Tested |  |  |  |  |
+| `genre.drama` | genre | Player Profile, Genres; a brief’s and a part’s genre (src/engine/content/film-genres.ts, src/engine/content/genres.ts) | — | Not Tested |  |  |  |  |
+| `genre.dystopian` | genre | Player Profile, Genres; a brief’s and a part’s genre (src/engine/content/film-genres.ts, src/engine/content/genres.ts) | — | Not Tested |  |  |  |  |
+| `genre.eco_horror` | genre | Player Profile, Genres; a brief’s and a part’s genre (src/engine/content/film-genres.ts, src/engine/content/genres.ts) | — | Not Tested |  |  |  |  |
+| `genre.epic` | genre | Player Profile, Genres; a brief’s and a part’s genre (src/engine/content/film-genres.ts, src/engine/content/genres.ts) | — | Not Tested |  |  |  |  |
+| `genre.erotic_thriller` | genre | Player Profile, Genres; a brief’s and a part’s genre (src/engine/content/film-genres.ts, src/engine/content/genres.ts) | — | Not Tested |  |  |  |  |
+| `genre.espionage` | genre | Player Profile, Genres; a brief’s and a part’s genre (src/engine/content/film-genres.ts, src/engine/content/genres.ts) | — | Not Tested |  |  |  |  |
+| `genre.experimental` | genre | Player Profile, Genres; a brief’s and a part’s genre (src/engine/content/film-genres.ts, src/engine/content/genres.ts) | — | Not Tested |  |  |  |  |
+| `genre.exploitation` | genre | Player Profile, Genres; a brief’s and a part’s genre (src/engine/content/film-genres.ts, src/engine/content/genres.ts) | — | Not Tested |  |  |  |  |
+| `genre.fairy_tale` | genre | Player Profile, Genres; a brief’s and a part’s genre (src/engine/content/film-genres.ts, src/engine/content/genres.ts) | — | Not Tested |  |  |  |  |
+| `genre.family` | genre | Player Profile, Genres; a brief’s and a part’s genre (src/engine/content/film-genres.ts, src/engine/content/genres.ts) | — | Not Tested |  |  |  |  |
+| `genre.fantasy` | genre | Player Profile, Genres; a brief’s and a part’s genre (src/engine/content/film-genres.ts, src/engine/content/genres.ts) | — | Not Tested |  |  |  |  |
+| `genre.farce` | genre | Player Profile, Genres; a brief’s and a part’s genre (src/engine/content/film-genres.ts, src/engine/content/genres.ts) | — | Not Tested |  |  |  |  |
+| `genre.film_noir` | genre | Player Profile, Genres; a brief’s and a part’s genre (src/engine/content/film-genres.ts, src/engine/content/genres.ts) | — | Not Tested |  |  |  |  |
+| `genre.folk_horror` | genre | Player Profile, Genres; a brief’s and a part’s genre (src/engine/content/film-genres.ts, src/engine/content/genres.ts) | — | Not Tested |  |  |  |  |
+| `genre.found_footage` | genre | Player Profile, Genres; a brief’s and a part’s genre (src/engine/content/film-genres.ts, src/engine/content/genres.ts) | — | Not Tested |  |  |  |  |
+| `genre.gangster` | genre | Player Profile, Genres; a brief’s and a part’s genre (src/engine/content/film-genres.ts, src/engine/content/genres.ts) | — | Not Tested |  |  |  |  |
+| `genre.giallo` | genre | Player Profile, Genres; a brief’s and a part’s genre (src/engine/content/film-genres.ts, src/engine/content/genres.ts) | — | Not Tested |  |  |  |  |
+| `genre.gothic_horror` | genre | Player Profile, Genres; a brief’s and a part’s genre (src/engine/content/film-genres.ts, src/engine/content/genres.ts) | — | Not Tested |  |  |  |  |
+| `genre.grindhouse` | genre | Player Profile, Genres; a brief’s and a part’s genre (src/engine/content/film-genres.ts, src/engine/content/genres.ts) | — | Not Tested |  |  |  |  |
+| `genre.hangout` | genre | Player Profile, Genres; a brief’s and a part’s genre (src/engine/content/film-genres.ts, src/engine/content/genres.ts) | — | Not Tested |  |  |  |  |
+| `genre.heist` | genre | Player Profile, Genres; a brief’s and a part’s genre (src/engine/content/film-genres.ts, src/engine/content/genres.ts) | — | Not Tested |  |  |  |  |
+| `genre.historical_drama` | genre | Player Profile, Genres; a brief’s and a part’s genre (src/engine/content/film-genres.ts, src/engine/content/genres.ts) | — | Not Tested |  |  |  |  |
+| `genre.historical_fiction` | genre | Player Profile, Genres; a brief’s and a part’s genre (src/engine/content/film-genres.ts, src/engine/content/genres.ts) | — | Not Tested |  |  |  |  |
+| `genre.holiday` | genre | Player Profile, Genres; a brief’s and a part’s genre (src/engine/content/film-genres.ts, src/engine/content/genres.ts) | — | Not Tested |  |  |  |  |
+| `genre.hood_film` | genre | Player Profile, Genres; a brief’s and a part’s genre (src/engine/content/film-genres.ts, src/engine/content/genres.ts) | — | Not Tested |  |  |  |  |
+| `genre.horror` | genre | Player Profile, Genres; a brief’s and a part’s genre (src/engine/content/film-genres.ts, src/engine/content/genres.ts) | — | Not Tested |  |  |  |  |
+| `genre.horror_comedy` | genre | Player Profile, Genres; a brief’s and a part’s genre (src/engine/content/film-genres.ts, src/engine/content/genres.ts) | — | Not Tested |  |  |  |  |
+| `genre.isekai` | genre | Player Profile, Genres; a brief’s and a part’s genre (src/engine/content/film-genres.ts, src/engine/content/genres.ts) | — | Not Tested |  |  |  |  |
+| `genre.jidaigeki` | genre | Player Profile, Genres; a brief’s and a part’s genre (src/engine/content/film-genres.ts, src/engine/content/genres.ts) | — | Not Tested |  |  |  |  |
+| `genre.jukebox_musical` | genre | Player Profile, Genres; a brief’s and a part’s genre (src/engine/content/film-genres.ts, src/engine/content/genres.ts) | — | Not Tested |  |  |  |  |
+| `genre.kaiju` | genre | Player Profile, Genres; a brief’s and a part’s genre (src/engine/content/film-genres.ts, src/engine/content/genres.ts) | — | Not Tested |  |  |  |  |
+| `genre.kitchen_sink` | genre | Player Profile, Genres; a brief’s and a part’s genre (src/engine/content/film-genres.ts, src/engine/content/genres.ts) | — | Not Tested |  |  |  |  |
+| `genre.legal_drama` | genre | Player Profile, Genres; a brief’s and a part’s genre (src/engine/content/film-genres.ts, src/engine/content/genres.ts) | — | Not Tested |  |  |  |  |
+| `genre.magical_realism` | genre | Player Profile, Genres; a brief’s and a part’s genre (src/engine/content/film-genres.ts, src/engine/content/genres.ts) | — | Not Tested |  |  |  |  |
+| `genre.martial_arts` | genre | Player Profile, Genres; a brief’s and a part’s genre (src/engine/content/film-genres.ts, src/engine/content/genres.ts) | — | Not Tested |  |  |  |  |
+| `genre.medical_drama` | genre | Player Profile, Genres; a brief’s and a part’s genre (src/engine/content/film-genres.ts, src/engine/content/genres.ts) | — | Not Tested |  |  |  |  |
+| `genre.melodrama` | genre | Player Profile, Genres; a brief’s and a part’s genre (src/engine/content/film-genres.ts, src/engine/content/genres.ts) | — | Not Tested |  |  |  |  |
+| `genre.military` | genre | Player Profile, Genres; a brief’s and a part’s genre (src/engine/content/film-genres.ts, src/engine/content/genres.ts) | — | Not Tested |  |  |  |  |
+| `genre.mockumentary` | genre | Player Profile, Genres; a brief’s and a part’s genre (src/engine/content/film-genres.ts, src/engine/content/genres.ts) | — | Not Tested |  |  |  |  |
+| `genre.monster_movie` | genre | Player Profile, Genres; a brief’s and a part’s genre (src/engine/content/film-genres.ts, src/engine/content/genres.ts) | — | Not Tested |  |  |  |  |
+| `genre.mumblecore` | genre | Player Profile, Genres; a brief’s and a part’s genre (src/engine/content/film-genres.ts, src/engine/content/genres.ts) | — | Not Tested |  |  |  |  |
+| `genre.musical` | genre | Player Profile, Genres; a brief’s and a part’s genre (src/engine/content/film-genres.ts, src/engine/content/genres.ts) | — | Not Tested |  |  |  |  |
+| `genre.mystery` | genre | Player Profile, Genres; a brief’s and a part’s genre (src/engine/content/film-genres.ts, src/engine/content/genres.ts) | — | Not Tested |  |  |  |  |
+| `genre.nature_documentary` | genre | Player Profile, Genres; a brief’s and a part’s genre (src/engine/content/film-genres.ts, src/engine/content/genres.ts) | — | Not Tested |  |  |  |  |
+| `genre.neo_noir` | genre | Player Profile, Genres; a brief’s and a part’s genre (src/engine/content/film-genres.ts, src/engine/content/genres.ts) | — | Not Tested |  |  |  |  |
+| `genre.neorealism` | genre | Player Profile, Genres; a brief’s and a part’s genre (src/engine/content/film-genres.ts, src/engine/content/genres.ts) | — | Not Tested |  |  |  |  |
+| `genre.new_wave` | genre | Player Profile, Genres; a brief’s and a part’s genre (src/engine/content/film-genres.ts, src/engine/content/genres.ts) | — | Not Tested |  |  |  |  |
+| `genre.nordic_noir` | genre | Player Profile, Genres; a brief’s and a part’s genre (src/engine/content/film-genres.ts, src/engine/content/genres.ts) | — | Not Tested |  |  |  |  |
+| `genre.occult` | genre | Player Profile, Genres; a brief’s and a part’s genre (src/engine/content/film-genres.ts, src/engine/content/genres.ts) | — | Not Tested |  |  |  |  |
+| `genre.parody` | genre | Player Profile, Genres; a brief’s and a part’s genre (src/engine/content/film-genres.ts, src/engine/content/genres.ts) | — | Not Tested |  |  |  |  |
+| `genre.period_drama` | genre | Player Profile, Genres; a brief’s and a part’s genre (src/engine/content/film-genres.ts, src/engine/content/genres.ts) | — | Not Tested |  |  |  |  |
+| `genre.picaresque` | genre | Player Profile, Genres; a brief’s and a part’s genre (src/engine/content/film-genres.ts, src/engine/content/genres.ts) | — | Not Tested |  |  |  |  |
+| `genre.police_procedural` | genre | Player Profile, Genres; a brief’s and a part’s genre (src/engine/content/film-genres.ts, src/engine/content/genres.ts) | — | Not Tested |  |  |  |  |
+| `genre.political_drama` | genre | Player Profile, Genres; a brief’s and a part’s genre (src/engine/content/film-genres.ts, src/engine/content/genres.ts) | — | Not Tested |  |  |  |  |
+| `genre.political_thriller` | genre | Player Profile, Genres; a brief’s and a part’s genre (src/engine/content/film-genres.ts, src/engine/content/genres.ts) | — | Not Tested |  |  |  |  |
+| `genre.post_apocalyptic` | genre | Player Profile, Genres; a brief’s and a part’s genre (src/engine/content/film-genres.ts, src/engine/content/genres.ts) | — | Not Tested |  |  |  |  |
+| `genre.prison_film` | genre | Player Profile, Genres; a brief’s and a part’s genre (src/engine/content/film-genres.ts, src/engine/content/genres.ts) | — | Not Tested |  |  |  |  |
+| `genre.psychological_horror` | genre | Player Profile, Genres; a brief’s and a part’s genre (src/engine/content/film-genres.ts, src/engine/content/genres.ts) | — | Not Tested |  |  |  |  |
+| `genre.psychological_thriller` | genre | Player Profile, Genres; a brief’s and a part’s genre (src/engine/content/film-genres.ts, src/engine/content/genres.ts) | — | Not Tested |  |  |  |  |
+| `genre.queer_cinema` | genre | Player Profile, Genres; a brief’s and a part’s genre (src/engine/content/film-genres.ts, src/engine/content/genres.ts) | — | Not Tested |  |  |  |  |
+| `genre.revenge` | genre | Player Profile, Genres; a brief’s and a part’s genre (src/engine/content/film-genres.ts, src/engine/content/genres.ts) | — | Not Tested |  |  |  |  |
+| `genre.road_movie` | genre | Player Profile, Genres; a brief’s and a part’s genre (src/engine/content/film-genres.ts, src/engine/content/genres.ts) | — | Not Tested |  |  |  |  |
+| `genre.rockumentary` | genre | Player Profile, Genres; a brief’s and a part’s genre (src/engine/content/film-genres.ts, src/engine/content/genres.ts) | — | Not Tested |  |  |  |  |
+| `genre.romance` | genre | Player Profile, Genres; a brief’s and a part’s genre (src/engine/content/film-genres.ts, src/engine/content/genres.ts) | — | Not Tested |  |  |  |  |
+| `genre.romantic_comedy` | genre | Player Profile, Genres; a brief’s and a part’s genre (src/engine/content/film-genres.ts, src/engine/content/genres.ts) | — | Not Tested |  |  |  |  |
+| `genre.romantic_drama` | genre | Player Profile, Genres; a brief’s and a part’s genre (src/engine/content/film-genres.ts, src/engine/content/genres.ts) | — | Not Tested |  |  |  |  |
+| `genre.samurai` | genre | Player Profile, Genres; a brief’s and a part’s genre (src/engine/content/film-genres.ts, src/engine/content/genres.ts) | — | Not Tested |  |  |  |  |
+| `genre.satire` | genre | Player Profile, Genres; a brief’s and a part’s genre (src/engine/content/film-genres.ts, src/engine/content/genres.ts) | — | Not Tested |  |  |  |  |
+| `genre.science_fantasy` | genre | Player Profile, Genres; a brief’s and a part’s genre (src/engine/content/film-genres.ts, src/engine/content/genres.ts) | — | Not Tested |  |  |  |  |
+| `genre.science_fiction` | genre | Player Profile, Genres; a brief’s and a part’s genre (src/engine/content/film-genres.ts, src/engine/content/genres.ts) | — | Not Tested |  |  |  |  |
+| `genre.screwball_comedy` | genre | Player Profile, Genres; a brief’s and a part’s genre (src/engine/content/film-genres.ts, src/engine/content/genres.ts) | — | Not Tested |  |  |  |  |
+| `genre.sea_adventure` | genre | Player Profile, Genres; a brief’s and a part’s genre (src/engine/content/film-genres.ts, src/engine/content/genres.ts) | — | Not Tested |  |  |  |  |
+| `genre.silent_film` | genre | Player Profile, Genres; a brief’s and a part’s genre (src/engine/content/film-genres.ts, src/engine/content/genres.ts) | — | Not Tested |  |  |  |  |
+| `genre.slapstick` | genre | Player Profile, Genres; a brief’s and a part’s genre (src/engine/content/film-genres.ts, src/engine/content/genres.ts) | — | Not Tested |  |  |  |  |
+| `genre.slasher` | genre | Player Profile, Genres; a brief’s and a part’s genre (src/engine/content/film-genres.ts, src/engine/content/genres.ts) | — | Not Tested |  |  |  |  |
+| `genre.slice_of_life` | genre | Player Profile, Genres; a brief’s and a part’s genre (src/engine/content/film-genres.ts, src/engine/content/genres.ts) | — | Not Tested |  |  |  |  |
+| `genre.social_realism` | genre | Player Profile, Genres; a brief’s and a part’s genre (src/engine/content/film-genres.ts, src/engine/content/genres.ts) | — | Not Tested |  |  |  |  |
+| `genre.space_opera` | genre | Player Profile, Genres; a brief’s and a part’s genre (src/engine/content/film-genres.ts, src/engine/content/genres.ts) | — | Not Tested |  |  |  |  |
+| `genre.spaghetti_western` | genre | Player Profile, Genres; a brief’s and a part’s genre (src/engine/content/film-genres.ts, src/engine/content/genres.ts) | — | Not Tested |  |  |  |  |
+| `genre.splatter` | genre | Player Profile, Genres; a brief’s and a part’s genre (src/engine/content/film-genres.ts, src/engine/content/genres.ts) | — | Not Tested |  |  |  |  |
+| `genre.sports` | genre | Player Profile, Genres; a brief’s and a part’s genre (src/engine/content/film-genres.ts, src/engine/content/genres.ts) | — | Not Tested |  |  |  |  |
+| `genre.spy` | genre | Player Profile, Genres; a brief’s and a part’s genre (src/engine/content/film-genres.ts, src/engine/content/genres.ts) | — | Not Tested |  |  |  |  |
+| `genre.steampunk` | genre | Player Profile, Genres; a brief’s and a part’s genre (src/engine/content/film-genres.ts, src/engine/content/genres.ts) | — | Not Tested |  |  |  |  |
+| `genre.stoner_comedy` | genre | Player Profile, Genres; a brief’s and a part’s genre (src/engine/content/film-genres.ts, src/engine/content/genres.ts) | — | Not Tested |  |  |  |  |
+| `genre.superhero` | genre | Player Profile, Genres; a brief’s and a part’s genre (src/engine/content/film-genres.ts, src/engine/content/genres.ts) | — | Not Tested |  |  |  |  |
+| `genre.supernatural` | genre | Player Profile, Genres; a brief’s and a part’s genre (src/engine/content/film-genres.ts, src/engine/content/genres.ts) | — | Not Tested |  |  |  |  |
+| `genre.surrealist` | genre | Player Profile, Genres; a brief’s and a part’s genre (src/engine/content/film-genres.ts, src/engine/content/genres.ts) | — | Not Tested |  |  |  |  |
+| `genre.survival` | genre | Player Profile, Genres; a brief’s and a part’s genre (src/engine/content/film-genres.ts, src/engine/content/genres.ts) | — | Not Tested |  |  |  |  |
+| `genre.swashbuckler` | genre | Player Profile, Genres; a brief’s and a part’s genre (src/engine/content/film-genres.ts, src/engine/content/genres.ts) | — | Not Tested |  |  |  |  |
+| `genre.sword_and_sandal` | genre | Player Profile, Genres; a brief’s and a part’s genre (src/engine/content/film-genres.ts, src/engine/content/genres.ts) | — | Not Tested |  |  |  |  |
+| `genre.sword_and_sorcery` | genre | Player Profile, Genres; a brief’s and a part’s genre (src/engine/content/film-genres.ts, src/engine/content/genres.ts) | — | Not Tested |  |  |  |  |
+| `genre.techno_thriller` | genre | Player Profile, Genres; a brief’s and a part’s genre (src/engine/content/film-genres.ts, src/engine/content/genres.ts) | — | Not Tested |  |  |  |  |
+| `genre.teen` | genre | Player Profile, Genres; a brief’s and a part’s genre (src/engine/content/film-genres.ts, src/engine/content/genres.ts) | — | Not Tested |  |  |  |  |
+| `genre.thriller` | genre | Player Profile, Genres; a brief’s and a part’s genre (src/engine/content/film-genres.ts, src/engine/content/genres.ts) | — | Not Tested |  |  |  |  |
+| `genre.time_travel` | genre | Player Profile, Genres; a brief’s and a part’s genre (src/engine/content/film-genres.ts, src/engine/content/genres.ts) | — | Not Tested |  |  |  |  |
+| `genre.tokusatsu` | genre | Player Profile, Genres; a brief’s and a part’s genre (src/engine/content/film-genres.ts, src/engine/content/genres.ts) | — | Not Tested |  |  |  |  |
+| `genre.tragedy` | genre | Player Profile, Genres; a brief’s and a part’s genre (src/engine/content/film-genres.ts, src/engine/content/genres.ts) | — | Not Tested |  |  |  |  |
+| `genre.tragicomedy` | genre | Player Profile, Genres; a brief’s and a part’s genre (src/engine/content/film-genres.ts, src/engine/content/genres.ts) | — | Not Tested |  |  |  |  |
+| `genre.true_crime` | genre | Player Profile, Genres; a brief’s and a part’s genre (src/engine/content/film-genres.ts, src/engine/content/genres.ts) | — | Not Tested |  |  |  |  |
+| `genre.vampire` | genre | Player Profile, Genres; a brief’s and a part’s genre (src/engine/content/film-genres.ts, src/engine/content/genres.ts) | — | Not Tested |  |  |  |  |
+| `genre.war` | genre | Player Profile, Genres; a brief’s and a part’s genre (src/engine/content/film-genres.ts, src/engine/content/genres.ts) | — | Not Tested |  |  |  |  |
+| `genre.werewolf` | genre | Player Profile, Genres; a brief’s and a part’s genre (src/engine/content/film-genres.ts, src/engine/content/genres.ts) | — | Not Tested |  |  |  |  |
+| `genre.western` | genre | Player Profile, Genres; a brief’s and a part’s genre (src/engine/content/film-genres.ts, src/engine/content/genres.ts) | — | Not Tested |  |  |  |  |
+| `genre.whodunit` | genre | Player Profile, Genres; a brief’s and a part’s genre (src/engine/content/film-genres.ts, src/engine/content/genres.ts) | — | Not Tested |  |  |  |  |
+| `genre.wuxia` | genre | Player Profile, Genres; a brief’s and a part’s genre (src/engine/content/film-genres.ts, src/engine/content/genres.ts) | — | Not Tested |  |  |  |  |
+| `genre.yakuza` | genre | Player Profile, Genres; a brief’s and a part’s genre (src/engine/content/film-genres.ts, src/engine/content/genres.ts) | — | Not Tested |  |  |  |  |
+| `genre.zombie` | genre | Player Profile, Genres; a brief’s and a part’s genre (src/engine/content/film-genres.ts, src/engine/content/genres.ts) | — | Not Tested |  |  |  |  |
+
+## Money
+
+| Feature | Kind | Where | Effects matrix | Sweep | By | On | Evidence | Found |
+|---|---|---|---|---|---|---|---|---|
+| `bank.add_standing_order` | command | Your Bank, Payments And Cash, How You Pay, Set Up A Standing Order Into Savings (src/ui/bank/BankPayments.tsx:47) | Implemented And Verified | Not Tested |  |  |  |  |
+| `bank.arrange_overdraft` | command | Your Bank, Borrowing, Overdraft, Arrange It / Close The Overdraft (src/ui/bank/BankLending.tsx:210) | Implemented, Verification Incomplete | Not Tested |  |  |  |  |
+| `bank.borrow` | command | Your Bank, Borrowing, Personal Loan, Borrow It (its quote, or why not, said first) (src/ui/bank/BankLending.tsx:384) | Implemented And Verified | Not Tested |  |  |  |  |
+| `bank.break_term` | command | Your Bank, Accounts, Your Accounts Over Time, the term deposit, Break It (src/ui/bank/BankAccountLife.tsx:84) | Implemented And Verified | Not Tested |  |  |  |  |
+| `bank.cancel_new` | command | Your Bank, Accounts, Your Accounts Over Time, Cancel It (src/ui/bank/BankAccountLife.tsx:131) | Implemented, Verification Incomplete | Not Tested |  |  |  |  |
+| `bank.cancel_scheduled` | command | Your Bank, Payments And Cash, How You Pay, Cancel on the payment (src/ui/bank/BankPayments.tsx:124) | Implemented And Verified | Not Tested |  |  |  |  |
+| `bank.cancel_standing_order` | command | Your Bank, Payments And Cash, How You Pay, Cancel on the order (src/ui/bank/BankPayments.tsx:98) | Implemented And Verified | Not Tested |  |  |  |  |
+| `bank.cancel_switch` | command | Your Bank, Borrowing, Switch Bank, Call It Off (src/ui/bank/BankLending.tsx:422) | Implemented, Verification Incomplete | Not Tested |  |  |  |  |
+| `bank.claim_unclaimed` | command | Your Bank, Accounts, Your Accounts Over Time, Claim It Back (src/ui/bank/BankAccountLife.tsx:138) | Implemented And Verified | Not Tested |  |  |  |  |
+| `bank.close_current` | command | Your Bank, Accounts, Your Banks, Close It (src/ui/bank/BankMoves.tsx:177) | Implemented And Verified | Not Tested |  |  |  |  |
+| `bank.close_savings` | command | Your Bank, Accounts, the savings account’s Close Savings (src/ui/workspaces/BankWorkspace.tsx:187) | Implemented And Verified | Not Tested |  |  |  |  |
+| `bank.debit_overdraft` | command | Your Bank, Borrowing, Overdraft, Debit Card Coverage (src/ui/bank/BankLending.tsx:160) | Implemented And Verified | Not Tested |  |  |  |  |
+| `bank.new_number` | command | Your Bank, Cards, Your Cards, Move To A New Number (src/ui/bank/BankSecurity.tsx:149) | Implemented And Verified | Not Tested |  |  |  |  |
+| `bank.open_current` | command | Your Bank, Accounts, Open An Account At Another Bank, Apply (src/ui/bank/BankMoves.tsx:66) | Implemented And Verified | Not Tested |  |  |  |  |
+| `bank.open_savings` | command | Your Bank, Accounts, Open Savings (src/ui/workspaces/BankWorkspace.tsx:204) | Implemented And Verified | Not Tested |  |  |  |  |
+| `bank.open_term` | command | Your Bank, Borrowing, the bank’s CD panel, Put It Away (src/ui/bank/BankLending.tsx:280) | Implemented And Verified | Not Tested |  |  |  |  |
+| `bank.pay_collections` | command | Your Bank, Borrowing, In Collections, Pay It (src/ui/bank/BankLending.tsx:304) | Implemented And Verified | Not Tested |  |  |  |  |
+| `bank.reactivate` | command | Your Bank, Accounts, Your Accounts Over Time, Reactivate; or the bank’s letter’s Keep The Account in What Needs You (sr… | Implemented And Verified | Not Tested |  |  |  |  |
+| `bank.redirect_deposits` | command | Your Bank, Accounts, Your Banks, Have Wages Paid Here (src/ui/bank/BankMoves.tsx:163) | Implemented And Verified | Not Tested |  |  |  |  |
+| `bank.repay_loan` | command | Your Bank, Borrowing, Personal Loan, Pay It Off (src/ui/bank/BankLending.tsx:335) | Implemented And Verified | Not Tested |  |  |  |  |
+| `bank.schedule_payment` | command | Your Bank, Payments And Cash, How You Pay, Set A Payment For A Date (src/ui/bank/BankPayments.tsx:56) | Implemented And Verified | Not Tested |  |  |  |  |
+| `bank.set_alerts` | command | Your Bank, Statements, Alerts, Save Alerts (src/ui/bank/BankStatements.tsx:226) | Implemented And Verified | Not Tested |  |  |  |  |
+| `bank.set_loan_repayment` | command | Your Bank, Borrowing, Personal Loan, Repay From There (src/ui/bank/BankLending.tsx:334) | Implemented And Verified | Not Tested |  |  |  |  |
+| `bank.set_order_source` | command | Your Bank, Accounts, What Pays From Where, Pay From There (src/ui/bank/BankMoves.tsx:217) | Implemented And Verified | Not Tested |  |  |  |  |
+| `bank.set_payments` | command | Your Bank, Payments And Cash, How You Pay: The Day’s Spending, and Savings Covers The Checking Account (src/ui/bank/Ban… | Implemented And Verified | Not Tested |  |  |  |  |
+| `bank.set_primary` | command | Your Bank, Accounts, Your Banks, Make Primary (src/ui/bank/BankMoves.tsx:158) | Implemented And Verified | Not Tested |  |  |  |  |
+| `bank.set_round_ups` | command | Your Bank, Accounts, Your Accounts Over Time, Round-Ups (src/ui/bank/RoundUps.tsx:82) | Implemented And Verified | Not Tested |  |  |  |  |
+| `bank.set_term_end` | command | Your Bank, Accounts, Your Accounts Over Time, the term deposit, At Its End (src/ui/bank/BankAccountLife.tsx:80) | Implemented And Verified | Not Tested |  |  |  |  |
+| `bank.stop_balance_transfer` | command | Your Bank, Borrowing, Switch Bank, Keep The Balance (src/ui/bank/BankLending.tsx:419) | Implemented, Verification Incomplete | Not Tested |  |  |  |  |
+| `bank.switch` | command | Your Bank, Borrowing, Switch Bank (drawn only where the country has a switching service) (src/ui/bank/BankLending.tsx:4… | Implemented, Verification Incomplete | Not Tested |  |  |  |  |
+| `bank.take_overrun_loan` | command | Your Bank, Borrowing, A Loan For The Overrun (src/ui/bank/BankLending.tsx:314) | Implemented, Verification Incomplete | Not Tested |  |  |  |  |
+| `bank.take_term_interest` | command | Your Bank, Accounts, Your Accounts Over Time, the term deposit, Take The Interest (src/ui/bank/BankAccountLife.tsx:86) | Implemented And Verified | Not Tested |  |  |  |  |
+| `bank.transfer` | command | Your Bank, Accounts, Move Money (src/ui/workspaces/BankWorkspace.tsx:119) | Implemented And Verified | Not Tested |  |  |  |  |
+| `card.apply` | command | Your Bank, Cards, Another Card, Apply For This Card (with the card’s rate, fee and limit said before it’s pressed) (src… | Implemented And Verified | Not Tested |  |  |  |  |
+| `card.close` | command | Your Bank, Cards, the card’s panel, Close This Card (src/ui/bank/BankCard.tsx:353) | Implemented And Verified | Not Tested |  |  |  |  |
+| `card.dispute` | command | Your Bank, Cards, Your Cards, It Wasn’t Me (src/ui/bank/BankSecurity.tsx:136) | Implemented And Verified | Not Tested |  |  |  |  |
+| `card.lock` | command | Your Bank, Cards, Your Cards, Lock It / Unlock It (src/ui/bank/BankSecurity.tsx:98) | Implemented And Verified | Not Tested |  |  |  |  |
+| `card.money_transfer` | command | Your Bank, Cards, The Card’s Offers, Money Transfer (src/ui/bank/BankCardOffers.tsx:102) | Implemented, Verification Incomplete | Not Tested |  |  |  |  |
+| `card.plan` | command | Your Bank, Cards, The Card’s Offers, Pay A Purchase In Equal Months (src/ui/bank/BankCardOffers.tsx:128) | Implemented And Verified | Not Tested |  |  |  |  |
+| `card.redeem_rewards` | command | Your Bank, Cards, The Card’s Offers, Redeem (src/ui/bank/BankCardOffers.tsx:93) | Implemented And Verified | Not Tested |  |  |  |  |
+| `card.refund_credit` | command | Your Bank, Cards, the card’s panel, Send The Credit Back (src/ui/bank/BankCard.tsx:347) | Implemented And Verified | Not Tested |  |  |  |  |
+| `card.report` | command | Your Bank, Cards, Your Cards, Report Lost / Report Stolen (rushed where the bank publishes it) (src/ui/bank/BankSecurit… | Implemented And Verified | Not Tested |  |  |  |  |
+| `card.request_hardship` | command | Your Bank, Cards, the card’s panel, Ask For Help With Payments (src/ui/bank/BankCard.tsx:356) | Implemented And Verified | Not Tested |  |  |  |  |
+| `card.request_limit` | command | Your Bank, Cards, the card’s panel, A Different Limit, Ask For It (src/ui/bank/BankCard.tsx:388) | Implemented And Verified | Not Tested |  |  |  |  |
+| `card.set_auto_raise` | command | Your Bank, Cards, the card’s panel, Raise The Limit Unasked (src/ui/bank/BankCard.tsx:394) | Implemented And Verified | Not Tested |  |  |  |  |
+| `card.set_autopay_from` | command | Your Bank, Accounts, What Pays From Where, the card’s autopay, Pay From There (src/ui/bank/BankMoves.tsx:231) | Implemented And Verified | Not Tested |  |  |  |  |
+| `card.set_everyday` | command | Your Bank, Cards, the card’s panel, Make It The Everyday Card (src/ui/bank/BankCard.tsx:350) | Implemented And Verified | Not Tested |  |  |  |  |
+| `card.set_over_limit` | command | Your Bank, Cards, the card’s panel, Going Over The Limit (src/ui/bank/BankCard.tsx:398) | Implemented And Verified | Not Tested |  |  |  |  |
+| `card.set_statement_day` | command | Your Bank, Cards, the card’s panel, Statement Day (src/ui/bank/BankCard.tsx:377) | Implemented And Verified | Not Tested |  |  |  |  |
+| `cash.deposit` | command | Your Bank, Payments And Cash, Cash, Pay It In (src/ui/bank/BankCash.tsx:42) | Implemented And Verified | Not Tested |  |  |  |  |
+| `cash.withdraw` | command | Your Bank, Payments And Cash, Cash, Take It Out (src/ui/bank/BankCash.tsx:35) | Implemented And Verified | Not Tested |  |  |  |  |
+| `finance.pay_card` | command | Your Bank, Cards, the card’s panel, Pay Card In Full / Pay What You Can (src/ui/bank/BankCard.tsx:343) | Implemented And Verified | Not Tested |  |  |  |  |
+| `finance.set_autopay` | command | Your Bank, Cards, the card’s panel, Autopay: The Whole Statement / The Minimum (src/ui/bank/BankCard.tsx:362) | Implemented And Verified | Not Tested |  |  |  |  |
+| `bank.application` | scheduled | The clock, on the bank’s review day (Bank of America’s two business days). | Implemented And Verified | Not Tested |  |  |  |  |
+| `bank.current_closes` | scheduled | The clock, the day a closing kept open for pending items closes (Citi). | Implemented And Verified | Not Tested |  |  |  |  |
+| `bank.fraud_refund` | scheduled | The clock, the bank’s days after a dispute. | Implemented And Verified | Not Tested |  |  |  |  |
+| `bank.home_closes` | scheduled | The clock, on the day a bank kept at home closes the account of a customer abroad (Barclays’ 60 days), retried each day… | Implemented And Verified | Not Tested |  |  |  |  |
+| `bank.loan_due` | scheduled | The clock, monthly on the day the loan was taken (systems/lending.ts). | Implemented And Verified | Not Tested |  |  |  |  |
+| `bank.month_end` | scheduled | The clock, at 11 PM on the month’s last day, weekend or holiday alike (systems/banking.ts). | Implemented And Verified | Not Tested |  |  |  |  |
+| `bank.savings_notice` | scheduled | The clock, three calendar months after Close Savings past Germany’s €2,000 a month (systems/banking.ts). | Implemented And Verified | Not Tested |  |  |  |  |
+| `bank.scheduled_payment` | scheduled | The clock, on the date set (systems/payments.ts). | Implemented And Verified | Not Tested |  |  |  |  |
+| `bank.standing_order` | scheduled | The clock, at 9 AM on the order’s day each month (systems/payments.ts). | Implemented And Verified | Not Tested |  |  |  |  |
+| `bank.switch_complete` | scheduled | The clock, on the switching service’s completion day. | Implemented, Verification Incomplete | Not Tested |  |  |  |  |
+| `bank.switch_debt` | scheduled | The clock, after a switch that left the old account in debt. | Implemented, Verification Incomplete | Not Tested |  |  |  |  |
+| `bank.switch_review` | scheduled | The clock, the new bank’s first look at a switch. | Implemented, Verification Incomplete | Not Tested |  |  |  |  |
+| `bank.term_notice` | scheduled | The clock, when a notice to close a term deposit runs out. | Implemented, Verification Incomplete | Not Tested |  |  |  |  |
+| `card.arrives` | scheduled | The clock, a week after an approved application (systems/cardlife.ts). | Implemented And Verified | Not Tested |  |  |  |  |
+| `card.due` | scheduled | The clock, at noon on the due date: the bank’s days after the statement, or the 15th of the next month. | Implemented And Verified | Not Tested |  |  |  |  |
+| `card.replaced` | scheduled | The clock, on the day the bank’s new card arrives. | Implemented And Verified | Not Tested |  |  |  |  |
+| `card.statement` | scheduled | The clock, on the card’s statement day at 9 AM (the 20th, or the day moved to). | Implemented And Verified | Not Tested |  |  |  |  |
+| `look.bank` | look | Opened from a name anywhere it’s underlined, or the Money line on Home, as a look: a sheet that says what something is … | Implemented And Verified | Not Tested |  |  |  |  |
+| `look.transaction` | look | Opened from a name anywhere it’s underlined, or the Money line on Home, as a look: a sheet that says what something is … | Implemented And Verified | Not Tested |  |  |  |  |
+| `look.account` | look | Opened from a name anywhere it’s underlined, or the Money line on Home, as a look: a sheet that says what something is … | Implemented And Verified | Not Tested |  |  |  |  |
+| `look.networth` | look | Opened from a name anywhere it’s underlined, or the Money line on Home, as a look: a sheet that says what something is … | Implemented And Verified | Not Tested |  |  |  |  |
+| `look.debt` | look | Opened from a name anywhere it’s underlined, or the Money line on Home, as a look: a sheet that says what something is … | Implemented And Verified | Not Tested |  |  |  |  |
+| `look.currency` | look | Opened from a name anywhere it’s underlined, or the Money line on Home, as a look: a sheet that says what something is … | Implemented And Verified | Not Tested |  |  |  |  |
+| `notice.systems/abroad#arriveFromAbroad` | notice | The clock: a payment abroad lands, or comes back (`arriveFromAbroad`, systems/abroad.ts). | Implemented And Verified | Not Tested |  |  |  |  |
+| `notice.systems/abroad#armHomeAccounts` | notice | The first morning of a life keeping an account at a home bank that closes a customer abroad’s (`armHomeAccounts`). | Implemented And Verified | Not Tested |  |  |  |  |
+| `notice.systems/abroad#homeCloses` | notice | The clock: the home bank’s closing (`homeCloses`). | Implemented And Verified | Not Tested |  |  |  |  |
+| `notice.systems/accountlife#idleAccounts` | notice | The 1st of each month (`idleAccounts`, from the day’s lending pass). | Implemented And Verified | Not Tested |  |  |  |  |
+| `notice.systems/bankmoves#closedByBank` | notice | The day’s pass: a new account never funded in the bank’s days, or at zero too long (`closedByBank`). | Implemented And Verified | Not Tested |  |  |  |  |
+| `notice.systems/cardoffers#transferOnArrival` | notice | The new card’s arrival with a balance transfer asked for (`transferOnArrival`). | Implemented And Verified | Not Tested |  |  |  |  |
+| `notice.systems/credit#afterMissed` | notice | A due date short of the minimum (`afterMissed`). | Implemented And Verified | Not Tested |  |  |  |  |
+| `notice.systems/credit#delinquency` | notice | Each night, on a US card with a minimum short at a due date (`delinquency`, from 2026-10-22, brief 21). | Implemented And Verified | Not Tested |  |  |  |  |
+| `notice.systems/credit#chargeOff` | notice | The sixth missed due date (`chargeOff`). | Implemented And Verified | Not Tested |  |  |  |  |
+| `notice.systems/credit#persistentDebt` | notice | A British card’s statement after 18 and 36 months of more to interest and fees than off the card (`persistentDebt`). | Implemented, Verification Incomplete | Not Tested |  |  |  |  |
+| `notice.systems/lending#frenchOverrun` | notice | The day’s pass on a French checking account past its limit (`frenchOverrun`). | Implemented And Verified | Not Tested |  |  |  |  |
+| `notice.systems/lending#completeSwitch` | notice | A switch’s completion (`completeSwitch`). | Implemented, Verification Incomplete | Not Tested |  |  |  |  |
+| `notice.systems/lending#refundInterestTax` | notice | Iceland’s assessment day, 1 June (`refundInterestTax`). | Implemented, Verification Incomplete | Not Tested |  |  |  |  |
+| `notice.systems/lending#closeForOverdraft` | notice | The day’s pass: an account below its limit past the bank’s days (`closeForOverdraft`). | Implemented And Verified | Not Tested |  |  |  |  |
+| `notice.systems/obligations#accountAlerts` | notice | The day’s alerts at each midnight (`accountAlerts`). | Implemented And Verified | Not Tested |  |  |  |  |
+| `notice.systems/roundups#moveRoundUps` | notice | The day’s pass: round-ups moved on the bank’s day (`moveRoundUps`). | Implemented And Verified | Not Tested |  |  |  |  |
+| `notice.systems/security#somebodyElse` | notice | The day’s pass: the day’s draw of somebody else using a card (`somebodyElse`). | Implemented And Verified | Not Tested |  |  |  |  |
+| `notice.systems/security#attemptOnNumber` | notice | The day’s pass on an exposed account number (`attemptOnNumber`). | Implemented, Verification Incomplete | Not Tested |  |  |  |  |
+| `notice.systems/spending#buyTheDaysFood` | notice | Each midnight: the day’s groceries (`buyTheDaysFood`). | Implemented And Verified | Not Tested |  |  |  |  |
+| `notice.systems/statements#statementReady` | notice | A statement cut, a card’s or the month’s checking (`statementReady`). | Implemented And Verified | Not Tested |  |  |  |  |
+| `bank.transfer_arrives` | scheduled | The clock, the day money sent between two of the player’s banks lands (systems/bankmoves.ts `ARRIVES_KIND`). | Implemented And Verified | Not Tested |  |  |  |  |
+| `promise.money.affairs>bank.accounts` | promise | src/engine/content/guide/money.ts | Implemented And Verified | Not Tested |  |  |  |  |
+| `promise.money.affairs>bank.card` | promise | src/engine/content/guide/money.ts | Implemented And Verified | Not Tested |  |  |  |  |
+| `promise.money.affairs>body.how` | promise | src/engine/content/guide/money.ts | Implemented And Verified | Not Tested |  |  |  |  |
+| `promise.money.affairs>taxes.pay` | promise | src/engine/content/guide/money.ts | Implemented, Verification Incomplete | Not Tested |  |  |  |  |
+| `promise.bank.accounts>money.affairs` | promise | src/engine/content/guide/money.ts | Implemented And Verified | Not Tested |  |  |  |  |
+| `promise.bank.accounts>bank.payments` | promise | src/engine/content/guide/money.ts | Implemented And Verified | Not Tested |  |  |  |  |
+| `promise.bank.accounts>bank.transfer` | promise | src/engine/content/guide/money.ts | Implemented, Verification Incomplete | Not Tested |  |  |  |  |
+| `promise.bank.accounts>bank.borrowing` | promise | src/engine/content/guide/money.ts | Implemented And Verified | Not Tested |  |  |  |  |
+| `promise.bank.accounts>bank.cash` | promise | src/engine/content/guide/money.ts | Implemented And Verified | Not Tested |  |  |  |  |
+| `promise.bank.accounts>bank.upkeep` | promise | src/engine/content/guide/money.ts | Implemented And Verified | Not Tested |  |  |  |  |
+| `promise.bank.transfer>bank.accounts` | promise | src/engine/content/guide/money.ts | Implemented, Verification Incomplete | Not Tested |  |  |  |  |
+| `promise.bank.transfer>bank.other-banks` | promise | src/engine/content/guide/money.ts | Implemented And Verified | Not Tested |  |  |  |  |
+| `promise.bank.transfer>bank.upkeep` | promise | src/engine/content/guide/money.ts | Implemented And Verified | Not Tested |  |  |  |  |
+| `promise.bank.transfer>bank.payments` | promise | src/engine/content/guide/money.ts | Implemented And Verified | Not Tested |  |  |  |  |
+| `promise.bank.term>bank.accounts` | promise | src/engine/content/guide/money.ts | Implemented And Verified | Not Tested |  |  |  |  |
+| `promise.bank.term>money.affairs` | promise | src/engine/content/guide/money.ts | Implemented And Verified | Not Tested |  |  |  |  |
+| `promise.bank.term>day.needs` | promise | src/engine/content/guide/money.ts | Implemented And Verified | Not Tested |  |  |  |  |
+| `promise.bank.term>bank.upkeep` | promise | src/engine/content/guide/money.ts | Implemented, Verification Incomplete | Not Tested |  |  |  |  |
+| `promise.bank.upkeep>bank.card-security` | promise | src/engine/content/guide/money.ts | Implemented And Verified | Not Tested |  |  |  |  |
+| `promise.bank.upkeep>bank.payments` | promise | src/engine/content/guide/money.ts | Implemented And Verified | Not Tested |  |  |  |  |
+| `promise.bank.upkeep>bank.card` | promise | src/engine/content/guide/money.ts | Implemented And Verified | Not Tested |  |  |  |  |
+| `promise.bank.upkeep>day.needs` | promise | src/engine/content/guide/money.ts | Implemented And Verified | Not Tested |  |  |  |  |
+| `promise.bank.upkeep>bank.term` | promise | src/engine/content/guide/money.ts | Implemented And Verified | Not Tested |  |  |  |  |
+| `promise.bank.upkeep>bank.round-ups` | promise | src/engine/content/guide/money.ts | Implemented And Verified | Not Tested |  |  |  |  |
+| `promise.bank.round-ups>bank.payments` | promise | src/engine/content/guide/money.ts | Implemented And Verified | Not Tested |  |  |  |  |
+| `promise.bank.round-ups>bank.accounts` | promise | src/engine/content/guide/money.ts | Implemented And Verified | Not Tested |  |  |  |  |
+| `promise.bank.round-ups>bank.upkeep` | promise | src/engine/content/guide/money.ts | Implemented And Verified | Not Tested |  |  |  |  |
+| `promise.bank.payments>bank.cash` | promise | src/engine/content/guide/money.ts | Implemented And Verified | Not Tested |  |  |  |  |
+| `promise.bank.payments>bank.card` | promise | src/engine/content/guide/money.ts | Implemented And Verified | Not Tested |  |  |  |  |
+| `promise.bank.payments>bank.borrowing` | promise | src/engine/content/guide/money.ts | Implemented And Verified | Not Tested |  |  |  |  |
+| `promise.bank.payments>body.look-after` | promise | src/engine/content/guide/money.ts | Implemented And Verified | Not Tested |  |  |  |  |
+| `promise.bank.payments>school.shifts` | promise | src/engine/content/guide/money.ts | Implemented And Verified | Not Tested |  |  |  |  |
+| `promise.bank.payments>bank.upkeep` | promise | src/engine/content/guide/money.ts | Implemented And Verified | Not Tested |  |  |  |  |
+| `promise.bank.cash>bank.payments` | promise | src/engine/content/guide/money.ts | Implemented And Verified | Not Tested |  |  |  |  |
+| `promise.bank.cash>bank.card` | promise | src/engine/content/guide/money.ts | Implemented And Verified | Not Tested |  |  |  |  |
+| `promise.bank.cash>bank.card-security` | promise | src/engine/content/guide/money.ts | Implemented And Verified | Not Tested |  |  |  |  |
+| `promise.bank.cash>money.affairs` | promise | src/engine/content/guide/money.ts | Implemented And Verified | Not Tested |  |  |  |  |
+| `promise.bank.card>money.affairs` | promise | src/engine/content/guide/money.ts | Implemented And Verified | Not Tested |  |  |  |  |
+| `promise.bank.card>bank.payments` | promise | src/engine/content/guide/money.ts | Implemented And Verified | Not Tested |  |  |  |  |
+| `promise.bank.card>bank.card-offers` | promise | src/engine/content/guide/money.ts | Implemented, Verification Incomplete | Not Tested |  |  |  |  |
+| `promise.bank.card>bank.card-security` | promise | src/engine/content/guide/money.ts | Implemented And Verified | Not Tested |  |  |  |  |
+| `promise.bank.card>bank.borrowing` | promise | src/engine/content/guide/money.ts | Implemented And Verified | Not Tested |  |  |  |  |
+| `promise.bank.card>day.needs` | promise | src/engine/content/guide/money.ts | Implemented And Verified | Not Tested |  |  |  |  |
+| `promise.bank.card-offers>bank.card` | promise | src/engine/content/guide/money.ts | Implemented And Verified | Not Tested |  |  |  |  |
+| `promise.bank.card-offers>money.affairs` | promise | src/engine/content/guide/money.ts | Implemented, Verification Incomplete | Not Tested |  |  |  |  |
+| `promise.bank.card-security>bank.upkeep` | promise | src/engine/content/guide/money.ts | Implemented And Verified | Not Tested |  |  |  |  |
+| `promise.bank.card-security>bank.card` | promise | src/engine/content/guide/money.ts | Implemented And Verified | Not Tested |  |  |  |  |
+| `promise.bank.card-security>bank.payments` | promise | src/engine/content/guide/money.ts | Implemented And Verified | Not Tested |  |  |  |  |
+| `promise.bank.card-security>bank.cash` | promise | src/engine/content/guide/money.ts | Implemented And Verified | Not Tested |  |  |  |  |
+| `promise.bank.borrowing>money.affairs` | promise | src/engine/content/guide/money.ts | Implemented And Verified | Not Tested |  |  |  |  |
+| `promise.bank.borrowing>bank.card` | promise | src/engine/content/guide/money.ts | Implemented And Verified | Not Tested |  |  |  |  |
+| `promise.bank.borrowing>bank.other-banks` | promise | src/engine/content/guide/money.ts | Implemented And Verified | Not Tested |  |  |  |  |
+| `promise.bank.borrowing>bank.payments` | promise | src/engine/content/guide/money.ts | Implemented And Verified | Not Tested |  |  |  |  |
+| `promise.bank.borrowing>body.how` | promise | src/engine/content/guide/money.ts | Implemented And Verified | Not Tested |  |  |  |  |
+| `promise.bank.other-banks>documents.passport-id` | promise | src/engine/content/guide/money.ts | Implemented And Verified | Not Tested |  |  |  |  |
+| `promise.bank.other-banks>bank.payments` | promise | src/engine/content/guide/money.ts | Implemented And Verified | Not Tested |  |  |  |  |
+| `promise.bank.other-banks>bank.transfer` | promise | src/engine/content/guide/money.ts | Implemented And Verified | Not Tested |  |  |  |  |
+| `promise.bank.other-banks>bank.accounts` | promise | src/engine/content/guide/money.ts | Implemented And Verified | Not Tested |  |  |  |  |
+| `promise.bank.other-banks>bank.borrowing` | promise | src/engine/content/guide/money.ts | Implemented And Verified | Not Tested |  |  |  |  |
+| `promise.bank.home-account>bank.accounts` | promise | src/engine/content/guide/money.ts | Implemented And Verified | Not Tested |  |  |  |  |
+| `promise.bank.home-account>bank.upkeep` | promise | src/engine/content/guide/money.ts | Implemented And Verified | Not Tested |  |  |  |  |
+| `promise.bank.home-account>bank.transfer` | promise | src/engine/content/guide/money.ts | Implemented And Verified | Not Tested |  |  |  |  |
+| `promise.bank.home-account>taxes.return` | promise | src/engine/content/guide/money.ts | Implemented And Verified | Not Tested |  |  |  |  |
+
+## Benefits
+
+| Feature | Kind | Where | Effects matrix | Sweep | By | On | Evidence | Found |
+|---|---|---|---|---|---|---|---|---|
+| `benefits.assistance` | command | Papers, Benefits: the SNAP panel’s Apply (PapersWorkspace AssistancePanel), drawn only where nothing refuses it. | Implemented And Verified | Not Tested |  |  |  |  |
+| `benefits.claim` | command | Papers, Unemployment: File A Claim (PapersWorkspace UnemploymentPanel), drawn only while no claim is open, the base per… | Implemented And Verified | Not Tested |  |  |  |  |
+| `benefits.ei_register` | command | Papers, Benefits: EI’s Register (PapersWorkspace EiPanel), drawn only for someone living in Canada. | Explicitly Deferred | Not Tested |  |  |  |  |
+| `pension.bienestar` | command | Papers, Pensions: the Pensión Para El Bienestar panel’s claim (PapersWorkspace PensionsPanel), drawn only where nothing… | Explicitly Deferred | Not Tested |  |  |  |  |
+| `pension.ie_state` | command | Papers, Pensions: the State Pension (Ireland) panel’s claim (PapersWorkspace PensionsPanel), drawn only where nothing r… | Explicitly Deferred | Not Tested |  |  |  |  |
+| `pension.imss` | command | Papers, Pensions: the IMSS Pension panel’s claim (PapersWorkspace PensionsPanel), drawn only where nothing refuses it. | Explicitly Deferred | Not Tested |  |  |  |  |
+| `pension.social_security` | command | Papers, Pensions: the Social Security panel’s claim (PapersWorkspace PensionsPanel), drawn only where nothing refuses i… | Explicitly Deferred | Not Tested |  |  |  |  |
+| `pension.state` | command | Papers, Pensions: the State Pension (UK) panel’s claim (PapersWorkspace PensionsPanel), drawn only where nothing refuse… | Explicitly Deferred | Not Tested |  |  |  |  |
+| `tax.amend` | command | Papers, Tax Returns: a filed year’s Amend The Return…, then File The Amendment (PapersWorkspace ReturnLife). | Implemented, Verification Incomplete | Not Tested |  |  |  |  |
+| `tax.apply_plan` | command | Papers, Tax Returns: the IRS Payment Plan panel’s Apply (PapersWorkspace), with Monthly Payments or Paid Within 180 Day… | Implemented And Verified | Not Tested |  |  |  |  |
+| `tax.apply_state_plan` | command | Papers, Tax Returns: a state’s own plan panel, Apply For The Plan (PapersWorkspace StatePlanPanel), Connecticut’s or Ne… | Implemented And Verified | Not Tested |  |  |  |  |
+| `tax.catch_up_plan` | command | Papers, Tax Returns: the IRS plan panel’s Catch Up, drawn while a payment is missed (PapersWorkspace). | Implemented And Verified | Not Tested |  |  |  |  |
+| `tax.catch_up_state_plan` | command | Papers, Tax Returns: a state plan panel’s Catch Up, drawn while a payment is missed (PapersWorkspace StatePlanPanel). | Implemented And Verified | Not Tested |  |  |  |  |
+| `tax.federal_lien_withdraw` | command | Papers, Tax Returns: the IRS’s lien panel, Ask For Its Withdrawal (Form 12277) or Ask For Its Release As Erroneous (Lie… | Implemented And Verified | Not Tested |  |  |  |  |
+| `tax.file` | command | Papers, Tax Returns: a year’s File It, or File Your Own In Its Place (PapersWorkspace), and the year’s item in What Nee… | Implemented And Verified | Not Tested |  |  |  |  |
+| `tax.lien_dispute` | command | Papers, Tax Returns: a state lien’s Ask For Its Withdrawal As Filed In Error, drawn only on a lien filed in error (Lien… | Implemented, Verification Incomplete | Not Tested |  |  |  |  |
+| `tax.lien_release` | command | Papers, Tax Returns: a state lien’s Ask For Its Release (LienPanels StateLienAndPenalty), drawn shut with its reason un… | Implemented And Verified | Not Tested |  |  |  |  |
+| `tax.pay_state` | command | Papers, Tax Returns: Owed To a state’s agency, Pay (PapersWorkspace WhoIsOwed), the box blank for all. | Implemented And Verified | Not Tested |  |  |  |  |
+| `tax.pay` | command | Papers, Tax Returns: Owed To The IRS, Pay (PapersWorkspace ReturnLife), the box blank for all. | Implemented And Verified | Not Tested |  |  |  |  |
+| `tax.request_waiver` | command | Papers, Tax Returns: Oregon’s three-year penalty row, Ask For Its Waiver (LienPanels StateLienAndPenalty). | Implemented, Verification Incomplete | Not Tested |  |  |  |  |
+| `tax.revise_plan` | command | Papers, Tax Returns: the IRS plan panel’s Revise The Plan (PapersWorkspace), on a monthly plan in force or behind. | Implemented And Verified | Not Tested |  |  |  |  |
+| `benefits.assistance_month` | scheduled | The clock: a week after applying, then every 30 days. | Implemented And Verified | Not Tested |  |  |  |  |
+| `benefits.desempleo_month` | scheduled | The clock, monthly, on a claim a save already holds. | Implemented, Verification Incomplete | Not Tested |  |  |  |  |
+| `benefits.ja_week` | scheduled | The clock: Ireland’s Jobseeker’s Allowance week, on a claim made living there. | Explicitly Deferred | Not Tested |  |  |  |  |
+| `benefits.uc_period` | scheduled | The clock: Universal Credit’s monthly assessment, on a claim made living there. | Explicitly Deferred | Not Tested |  |  |  |  |
+| `benefits.week` | scheduled | The clock: each Sunday at eight in the evening while a claim is open. | Implemented And Verified | Not Tested |  |  |  |  |
+| `pension.bienestar_payment` | scheduled | The clock: a claimed pension’s payment, on its cycle. | Explicitly Deferred | Not Tested |  |  |  |  |
+| `pension.ie_week` | scheduled | The clock: a claimed pension’s payment, on its cycle. | Explicitly Deferred | Not Tested |  |  |  |  |
+| `pension.imss_month` | scheduled | The clock: a claimed pension’s payment, on its cycle. | Explicitly Deferred | Not Tested |  |  |  |  |
+| `pension.ss_month` | scheduled | The clock: a claimed pension’s payment, on its cycle. | Explicitly Deferred | Not Tested |  |  |  |  |
+| `pension.state_payment` | scheduled | The clock: a claimed pension’s payment, on its cycle. | Explicitly Deferred | Not Tested |  |  |  |  |
+| `tax.amended` | scheduled | The clock: ten weeks after an amendment is filed. | Implemented, Verification Incomplete | Not Tested |  |  |  |  |
+| `tax.due` | scheduled | The clock: a return’s due date, mid-April (a 1040-NR with no wages, mid-June). | Implemented And Verified | Not Tested |  |  |  |  |
+| `tax.federal_lien` | scheduled | The clock: a federal lien’s release 30 days after payment in full, or its withdrawal’s decision. | Implemented And Verified | Not Tested |  |  |  |  |
+| `tax.notice` | scheduled | The clock: the IRS’s letters on a balance owed, five weeks apart from the due date (or filing where later), the LT11’s … | Implemented And Verified | Not Tested |  |  |  |  |
+| `tax.plan_decide` | scheduled | The clock: a minute after applying online, or 30 days by mail. | Implemented And Verified | Not Tested |  |  |  |  |
+| `tax.plan_default` | scheduled | The clock: 30 days after CP523. | Implemented And Verified | Not Tested |  |  |  |  |
+| `tax.plan_payment` | scheduled | The clock: every 30 days from approval (a short plan’s on its 180th day). | Implemented And Verified | Not Tested |  |  |  |  |
+| `tax.refund` | scheduled | The clock: 21 days after filing, 70 on a 1040-NR without a Social Security number; a state’s on its own day. | Implemented And Verified | Not Tested |  |  |  |  |
+| `tax.season` | scheduled | The clock: each 1 February at nine. | Implemented And Verified | Not Tested |  |  |  |  |
+| `tax.state_lien` | scheduled | The clock: a state lien filed after its notice of intent, released after payment, or a dispute decided. | Implemented And Verified | Not Tested |  |  |  |  |
+| `tax.state_nonfiler` | scheduled | The clock: a state’s letters on a return never filed, then its assessment. | Implemented And Verified | Not Tested |  |  |  |  |
+| `tax.state_notice` | scheduled | The clock: a state’s bill, notice and levy, from its due date. | Implemented And Verified | Not Tested |  |  |  |  |
+| `tax.state_plan_end` | scheduled | The clock: a missed state plan payment’s last day to catch up. | Implemented And Verified | Not Tested |  |  |  |  |
+| `tax.state_plan_payment` | scheduled | The clock: a state plan’s decision, then every 30 days. | Implemented And Verified | Not Tested |  |  |  |  |
+| `tax.substitute` | scheduled | The clock: a year after the due date (CP2566), then 120 days on (assessed). | Implemented And Verified | Not Tested |  |  |  |  |
+| `tax.three_year` | scheduled | The clock: Oregon’s extended due date. | Implemented, Verification Incomplete | Not Tested |  |  |  |  |
+| `notice.systems/statetax#notifyPlayer` | notice | Notices from every state’s collection, plans, liens and refunds (statetax.ts notifyPlayer). | Implemented And Verified | Not Tested |  |  |  |  |
+| `notice.systems/taxreturn#federalLienStep` | notice | The IRS’s lien notice at the LT11. | Implemented And Verified | Not Tested |  |  |  |  |
+| `notice.systems/taxreturn#billed` | notice | A Bill From The IRS, at filing with a balance unpaid. | Implemented And Verified | Not Tested |  |  |  |  |
+| `notice.systems/taxreturn#refusePlan` | notice | The IRS Declined Your Payment Plan. | Implemented And Verified | Not Tested |  |  |  |  |
+| `notice.systems/taxreturn#newLiability` | notice | Notice CP523: Your Payment Plan. | Implemented And Verified | Not Tested |  |  |  |  |
+| `notice.systems/taxreturn#settleUkYears` | notice | The UK Refunded Tax, or The UK Collected Its Balance, each 1 February. | Implemented, Verification Incomplete | Not Tested |  |  |  |  |
+| `notice.systems/taxreturn#reconsider` | notice | Your 2026 Return Replaces The IRS’s. | Implemented And Verified | Not Tested |  |  |  |  |
+| `notice.systems/taxreturn#amendState` | notice | A state’s Processed Your Amended Return. | Implemented, Verification Incomplete | Not Tested |  |  |  |  |
+| `notice.systems/unemployment#close` | notice | Your Unemployment Claim Ended. | Implemented And Verified | Not Tested |  |  |  |  |
+| `notice.systems/universalcredit#close` | notice | Universal Credit Closed. | Explicitly Deferred | Not Tested |  |  |  |  |
+| `promise.taxes.return>bank.accounts#immediate` | promise | src/engine/content/guide/taxes.ts | Implemented And Verified | Not Tested |  |  |  |  |
+| `promise.taxes.return>day.needs` | promise | src/engine/content/guide/taxes.ts | Implemented And Verified | Not Tested |  |  |  |  |
+| `promise.taxes.return>taxes.pay` | promise | src/engine/content/guide/taxes.ts | Implemented And Verified | Not Tested |  |  |  |  |
+| `promise.taxes.return>bank.accounts#scheduled` | promise | src/engine/content/guide/taxes.ts | Implemented And Verified | Not Tested |  |  |  |  |
+| `promise.taxes.return>papers.overview` | promise | src/engine/content/guide/taxes.ts | Implemented And Verified | Not Tested |  |  |  |  |
+| `promise.taxes.return>documents.work` | promise | src/engine/content/guide/taxes.ts | Implemented And Verified | Not Tested |  |  |  |  |
+| `promise.taxes.pay>taxes.return` | promise | src/engine/content/guide/taxes.ts | Implemented And Verified | Not Tested |  |  |  |  |
+| `promise.taxes.pay>bank.accounts#immediate` | promise | src/engine/content/guide/taxes.ts | Implemented And Verified | Not Tested |  |  |  |  |
+| `promise.taxes.pay>taxes.lien` | promise | src/engine/content/guide/taxes.ts | Implemented And Verified | Not Tested |  |  |  |  |
+| `promise.taxes.pay>bank.accounts#scheduled` | promise | src/engine/content/guide/taxes.ts | Implemented And Verified | Not Tested |  |  |  |  |
+| `promise.taxes.pay>body.how` | promise | src/engine/content/guide/taxes.ts | Implemented And Verified | Not Tested |  |  |  |  |
+| `promise.taxes.pay>taxes.plan` | promise | src/engine/content/guide/taxes.ts | Implemented And Verified | Not Tested |  |  |  |  |
+| `promise.taxes.plan>taxes.return` | promise | src/engine/content/guide/taxes.ts | Implemented And Verified | Not Tested |  |  |  |  |
+| `promise.taxes.plan>taxes.pay` | promise | src/engine/content/guide/taxes.ts | Implemented And Verified | Not Tested |  |  |  |  |
+| `promise.taxes.plan>taxes.lien` | promise | src/engine/content/guide/taxes.ts | Implemented And Verified | Not Tested |  |  |  |  |
+| `promise.taxes.plan>bank.accounts` | promise | src/engine/content/guide/taxes.ts | Implemented And Verified | Not Tested |  |  |  |  |
+| `promise.taxes.plan>documents.work` | promise | src/engine/content/guide/taxes.ts | Implemented And Verified | Not Tested |  |  |  |  |
+| `promise.taxes.lien>taxes.pay` | promise | src/engine/content/guide/taxes.ts | Implemented And Verified | Not Tested |  |  |  |  |
+| `promise.taxes.lien>taxes.return` | promise | src/engine/content/guide/taxes.ts | Implemented And Verified | Not Tested |  |  |  |  |
+| `promise.taxes.lien>taxes.plan` | promise | src/engine/content/guide/taxes.ts | Implemented And Verified | Not Tested |  |  |  |  |
+
+## Papers
+
+| Feature | Kind | Where | Effects matrix | Sweep | By | On | Evidence | Found |
+|---|---|---|---|---|---|---|---|---|
+| `documents.apply_idcard` | command | Papers > Passport And ID > Your ID: Get Non-Driver Identification Card (ui/papers/Documents.tsx:227); its row in the li… | Implemented And Verified | Not Tested |  |  |  |  |
+| `documents.apply_opt` | command | Papers > Permission To Work > OPT: Apply For OPT and Apply With Premium Processing (ui/papers/Documents.tsx:311); What … | Implemented And Verified | Not Tested |  |  |  |  |
+| `documents.apply_passport` | command | Papers > Passport And ID > Your Passport: Apply For One or Renew It, and Apply Faster or Renew It Faster where the offi… | Implemented And Verified | Not Tested |  |  |  |  |
+| `documents.apply_ssn` | command | Papers > Permission To Work > Social Security Number: Apply At The Social Security Office (ui/papers/Documents.tsx:376). | Implemented And Verified | Not Tested |  |  |  |  |
+| `documents.naturalize` | command | Papers > Permission To Work > Residence Abroad: Naturalize, on a country's row where residence is held (ui/papers/Docum… | Explicitly Deferred | Not Tested |  |  |  |  |
+| `documents.police_report` | command | Papers > Passport And ID: a lost or stolen document's row, File A Police Report (ui/papers/Documents.tsx:104). | Implemented And Verified | Not Tested |  |  |  |  |
+| `documents.renew_residence` | command | Papers > Permission To Work > Residence Abroad: Renew, on Mexico's row where a temporary card is held (ui/papers/Docume… | Explicitly Deferred | Not Tested |  |  |  |  |
+| `documents.replace_idcard` | command | Papers > Passport And ID: a lost ID card's row, Replace It, $… (ui/papers/Documents.tsx:106). | Implemented And Verified | Not Tested |  |  |  |  |
+| `documents.replace_license` | command | Papers > Passport And ID: a lost license's row, Replace It, $… (ui/papers/Documents.tsx:105). | Implemented And Verified | Not Tested |  |  |  |  |
+| `documents.report_lost` | command | Papers > Passport And ID and Permission To Work: a document's row, Report Lost… or Report Stolen…, then Cancel It (ui/p… | Implemented And Verified | Not Tested |  |  |  |  |
+| `documents.residence` | command | Papers > Permission To Work > Residence Abroad: each country's row says its rule; Mexico's Apply (ui/papers/Documents.t… | Explicitly Deferred | Not Tested |  |  |  |  |
+| `documents.settle` | command | Papers > Permission To Work > Residence Abroad: Settle, on Britain's row where its residence is held (ui/papers/Documen… | Explicitly Deferred | Not Tested |  |  |  |  |
+| `health.appeal` | command | Papers > Health Cover > Care And Its Bills: a denied claim's row, Appeal It (ui/workspaces/PapersWorkspace.tsx:708). | Implemented And Verified | Not Tested |  |  |  |  |
+| `health.apply_aid` | command | Papers > Health Cover > Care And Its Bills: a Connecticut hospital bill's row, Apply For Assistance (ui/workspaces/Pape… | Implemented And Verified | Not Tested |  |  |  |  |
+| `health.apply` | command | Papers > Health Cover: Apply For HUSKY D, where Enroll can't verify its work rules (ui/workspaces/PapersWorkspace.tsx:6… | Implemented And Verified | Not Tested |  |  |  |  |
+| `health.book` | command | Papers > Health Cover > Your Doctor: Book An Appointment, shown with a visit owed (ui/workspaces/PapersWorkspace.tsx:11… | Implemented And Verified | Not Tested |  |  |  |  |
+| `health.cancel_appointment` | command | Papers > Health Cover > Your Doctor: an appointment's Call It Off (ui/workspaces/PapersWorkspace.tsx:1108). | Implemented And Verified | Not Tested |  |  |  |  |
+| `health.choose_clinic` | command | Papers > Health Cover > Your Doctor: the practice select (ui/workspaces/PapersWorkspace.tsx:1081). | Implemented And Verified | Not Tested |  |  |  |  |
+| `health.choose_pharmacy` | command | Papers > Health Cover > Your Pharmacy: the chain select (ui/workspaces/PapersWorkspace.tsx:1090). | Implemented And Verified | Not Tested |  |  |  |  |
+| `health.dental` | command | Papers > Health Cover > Teeth And Eyes: Buy It or Cancel It for a dental plan (ui/workspaces/PapersWorkspace.tsx:829-83… | Implemented And Verified | Not Tested |  |  |  |  |
+| `health.drop` | command | Papers > Health Cover: Drop It, beside a plan of her own (ui/workspaces/PapersWorkspace.tsx:644). | Implemented And Verified | Not Tested |  |  |  |  |
+| `health.enroll` | command | Papers > Health Cover: Enroll (ui/workspaces/PapersWorkspace.tsx:645). | Implemented And Verified | Not Tested |  |  |  |  |
+| `health.extra_supply` | command | Papers > Health Cover > Your Conditions: Fill A Longer Supply (ui/workspaces/PapersWorkspace.tsx:802). | Implemented And Verified | Not Tested |  |  |  |  |
+| `health.pay_bill` | command | Papers > Health Cover > Owed For Medical Care: Pay It Off (ui/workspaces/PapersWorkspace.tsx:699). | Implemented And Verified | Not Tested |  |  |  |  |
+| `health.prepay` | command | Papers > Health Cover: England's prescription prepayment certificate, three months or twelve. | Explicitly Deferred | Not Tested |  |  |  |  |
+| `health.request_hardship` | command | Papers > Health Cover: Request A Hardship Exception, under a notice of noncompliance (ui/workspaces/PapersWorkspace.tsx… | Implemented And Verified | Not Tested |  |  |  |  |
+| `health.therapy` | command | Papers > Health Cover > Your Conditions: Depression's Begin A Course Of 8 at a therapist where she lives (ui/workspaces… | Implemented And Verified | Not Tested |  |  |  |  |
+| `health.treat` | command | Papers > Health Cover > Your Conditions: Keep It Up or Let It Go (ui/workspaces/PapersWorkspace.tsx:796). | Implemented And Verified | Not Tested |  |  |  |  |
+| `citizenship.decided` | scheduled | The clock: a naturalization's decision on its day (systems/citizenship.ts:100), with 'A Citizen Of …'. | Explicitly Deferred | Not Tested |  |  |  |  |
+| `documents.decided` | scheduled | The clock: each pending document's decision on its day (systems/documents.ts:313); '<name> Issued' sent to Papers. | Implemented And Verified | Not Tested |  |  |  |  |
+| `documents.idcard_arrives` | scheduled | The clock: an ID card or a replaced license comes by mail on its day (systems/identity.ts:304); '<name> Arrived'. | Implemented And Verified | Not Tested |  |  |  |  |
+| `documents.opt_week` | scheduled | The clock: a save from before brief 22 holds its next week on the calendar (systems/permission.ts, `OPT_WEEK_KIND`); fr… | Implemented And Verified | Not Tested |  |  |  |  |
+| `documents.permission` | scheduled | The clock: OPT decided on its day (systems/permission.ts:288); 'OPT Approved' or 'OPT Denied'. | Implemented And Verified | Not Tested |  |  |  |  |
+| `documents.ssn_arrives` | scheduled | The clock: the Social Security card comes 21 days after the visit (systems/taxid.ts:73); 'Your Social Security Card Has… | Implemented And Verified | Not Tested |  |  |  |  |
+| `documents.us_status` | scheduled | The clock: a graduate's US status looked at when permission runs out and when its grace ends (systems/permission.ts:323… | Implemented And Verified | Not Tested |  |  |  |  |
+| `documents.visit` | scheduled | The clock: an interview or biometrics an application waits on, kept or missed (systems/papervisits.ts:159). | Implemented, Verification Incomplete | Not Tested |  |  |  |  |
+| `health.appointment` | scheduled | The clock: a doctor's appointment at its hour (systems/appointments.ts:242), a commitment the clock stops at. | Implemented And Verified | Not Tested |  |  |  |  |
+| `health.bill` | scheduled | The clock: a medical bill's due date, 30 days after the care (systems/health.ts:2177). | Implemented And Verified | Not Tested |  |  |  |  |
+| `health.month` | scheduled | The clock: each month's first at half past midnight (systems/health.ts:2128). | Implemented And Verified | Not Tested |  |  |  |  |
+| `health.therapy_session` | scheduled | The clock: a course's session at five on a working day (systems/therapy.ts:128), a commitment. | Implemented And Verified | Not Tested |  |  |  |  |
+| `health.week` | scheduled | The clock: each Monday at nine (systems/health.ts:2136). | Implemented And Verified | Not Tested |  |  |  |  |
+| `health.work_decided` | scheduled | The clock: a notice of noncompliance's thirty days over (systems/health.ts:2322). | Implemented And Verified | Not Tested |  |  |  |  |
+| `look.document` | look | Papers: every document's name, number or Status opens it (ui/papers/Documents.tsx:79-86); notices' Go There; the person… | Implemented And Verified | Not Tested |  |  |  |  |
+| `look.place` | look | Home's Where You Are; a town named anywhere opens it. | Implemented And Verified | Not Tested |  |  |  |  |
+| `look.region` | look | A town's page (look.place), a license's or an ID card's page (look.document's issuer). | Implemented And Verified | Not Tested |  |  |  |  |
+| `look.country` | look | A region's page, a document's issuer or destination (look.document), Papers' rows and Going Abroad. | Implemented And Verified | Not Tested |  |  |  |  |
+| `notice.systems/appointments#bookIn` | notice | What Needs You and the notices, from `bookIn` (systems/appointments.ts:188): 'A Doctor’s Appointment' and 'A Referral'. | Implemented And Verified | Not Tested |  |  |  |  |
+| `notice.systems/documents#issue` | notice | The notices, from `issue` (systems/documents.ts:571): '<name> Issued'. | Implemented And Verified | Not Tested |  |  |  |  |
+| `notice.systems/health#onsetMonth` | notice | The notices, from `onsetMonth` (systems/health.ts:824): 'Diagnosed: <condition>'. | Implemented And Verified | Not Tested |  |  |  |  |
+| `notice.systems/health#healthMonth` | notice | The notices, from `healthMonth` (systems/health.ts:843): 'Your Marketplace Plan Has Ended' or 'Won’t Begin', 'Your Publ… | Implemented And Verified | Not Tested |  |  |  |  |
+| `notice.systems/health#applyRenewal` | notice | The notices, from `applyRenewal` (systems/health.ts:1062): 'Your Public Cover Is Renewed' and 'Your Public Cover Change… | Implemented And Verified | Not Tested |  |  |  |  |
+| `notice.systems/health#endAhead` | notice | The notices, from `endAhead` (systems/health.ts:1087): 'Your Public Cover Ends'. | Implemented And Verified | Not Tested |  |  |  |  |
+| `notice.systems/health#noticeOfNoncompliance` | notice | The notices, from `noticeOfNoncompliance` (systems/health.ts:1112): 'A Notice Of Noncompliance'. | Implemented And Verified | Not Tested |  |  |  |  |
+| `notice.systems/health#grantPending` | notice | The notices, from `grantPending` (systems/health.ts:1136): 'Public Cover Approved' (a renewal granted is said by applyR… | Implemented And Verified | Not Tested |  |  |  |  |
+| `notice.systems/health#renewalDue` | notice | The notices, from `renewalDue` (systems/health.ts:1367): 'A Prescription Ran Out'. | Implemented, Verification Incomplete | Not Tested |  |  |  |  |
+| `notice.systems/health#careFor` | notice | The notices, from `careFor` (systems/health.ts:1835): 'A Doctor’s Visit', 'In Hospital', 'The Emergency Room', 'You Hav… | Implemented And Verified | Not Tested |  |  |  |  |
+| `notice.systems/health#repriceCare` | notice | The notices, from `repriceCare` (systems/health.ts:1974): 'Care Billed Again' and 'Care Credited'. | Implemented And Verified | Not Tested |  |  |  |  |
+| `health.appeal_decided` | scheduled | The clock: a denied claim's appeal decided 60 days after it's filed (systems/health.ts:2203). A scheduled kind the inve… | Implemented And Verified | Not Tested |  |  |  |  |
+| `documents.work_permission_ended` | event | An event (`PERMISSION_ENDED`, systems/permission.ts): raised when OPT ends for its days without work (`endOpt`), at tha… | Implemented And Verified | Not Tested |  |  |  |  |
+| `notice.systems/permission#endOpt` | notice | What Needs You and the notices, from `endOpt` (systems/permission.ts): 'OPT Ended'. | Implemented And Verified | Not Tested |  |  |  |  |
+| `promise.documents.passport-id>bank.other-banks` | promise | src/engine/content/guide/documents.ts | Implemented And Verified | Not Tested |  |  |  |  |
+| `promise.documents.passport-id>documents.work#evaluation` | promise | src/engine/content/guide/documents.ts | Implemented And Verified | Not Tested |  |  |  |  |
+| `promise.documents.passport-id>documents.work#prerequisite` | promise | src/engine/content/guide/documents.ts | Implemented And Verified | Not Tested |  |  |  |  |
+| `promise.documents.passport-id>documents.work#prerequisite-2` | promise | src/engine/content/guide/documents.ts | Implemented And Verified | Not Tested |  |  |  |  |
+| `promise.documents.passport-id>bank.accounts` | promise | src/engine/content/guide/documents.ts | Implemented And Verified | Not Tested |  |  |  |  |
+| `promise.documents.work>school.orientation` | promise | src/engine/content/guide/documents.ts | Implemented And Verified | Not Tested |  |  |  |  |
+| `promise.documents.work>documents.passport-id` | promise | src/engine/content/guide/documents.ts | Implemented And Verified | Not Tested |  |  |  |  |
+| `promise.documents.work>taxes.return` | promise | src/engine/content/guide/documents.ts | Implemented And Verified | Not Tested |  |  |  |  |
+| `promise.documents.work>taxes.plan` | promise | src/engine/content/guide/documents.ts | Implemented And Verified | Not Tested |  |  |  |  |
+| `promise.documents.work>bank.other-banks` | promise | src/engine/content/guide/documents.ts | Implemented And Verified | Not Tested |  |  |  |  |
+| `promise.documents.work>papers.benefits` | promise | src/engine/content/guide/documents.ts | Implemented And Verified | Not Tested |  |  |  |  |
+| `promise.documents.work>papers.health-cover` | promise | src/engine/content/guide/documents.ts | Implemented And Verified | Not Tested |  |  |  |  |
+| `promise.documents.residence>bank.accounts` | promise | src/engine/content/guide/documents.ts | Explicitly Deferred | Not Tested |  |  |  |  |
+| `promise.documents.residence>documents.passport-id` | promise | src/engine/content/guide/documents.ts | Explicitly Deferred | Not Tested |  |  |  |  |
+| `promise.documents.residence>documents.work` | promise | src/engine/content/guide/documents.ts | Implemented And Verified | Not Tested |  |  |  |  |
+| `promise.papers.overview>start.guide` | promise | src/engine/content/guide/papers.ts | Implemented And Verified | Not Tested |  |  |  |  |
+| `promise.papers.overview>papers.health-cover` | promise | src/engine/content/guide/papers.ts | Implemented And Verified | Not Tested |  |  |  |  |
+| `promise.papers.overview>taxes.return` | promise | src/engine/content/guide/papers.ts | Implemented And Verified | Not Tested |  |  |  |  |
+| `promise.papers.overview>day.needs` | promise | src/engine/content/guide/papers.ts | Implemented And Verified | Not Tested |  |  |  |  |
+| `promise.papers.health-cover>school.leave` | promise | src/engine/content/guide/papers.ts | Implemented And Verified | Not Tested |  |  |  |  |
+| `promise.papers.health-cover>school.money` | promise | src/engine/content/guide/papers.ts | Implemented And Verified | Not Tested |  |  |  |  |
+| `promise.papers.health-cover>papers.doctor` | promise | src/engine/content/guide/papers.ts | Implemented And Verified | Not Tested |  |  |  |  |
+| `promise.papers.health-cover>papers.conditions` | promise | src/engine/content/guide/papers.ts | Implemented And Verified | Not Tested |  |  |  |  |
+| `promise.papers.health-cover>taxes.return` | promise | src/engine/content/guide/papers.ts | Implemented, Verification Incomplete | Not Tested |  |  |  |  |
+| `promise.papers.health-cover>money.affairs` | promise | src/engine/content/guide/papers.ts | Implemented And Verified | Not Tested |  |  |  |  |
+| `promise.papers.health-cover>school.sick` | promise | src/engine/content/guide/papers.ts | Implemented And Verified | Not Tested |  |  |  |  |
+| `promise.papers.doctor>day.calendar` | promise | src/engine/content/guide/papers.ts | Implemented And Verified | Not Tested |  |  |  |  |
+| `promise.papers.doctor>papers.health-cover` | promise | src/engine/content/guide/papers.ts | Implemented And Verified | Not Tested |  |  |  |  |
+| `promise.papers.doctor>papers.conditions` | promise | src/engine/content/guide/papers.ts | Implemented And Verified | Not Tested |  |  |  |  |
+| `promise.papers.doctor>day.needs` | promise | src/engine/content/guide/papers.ts | Implemented And Verified | Not Tested |  |  |  |  |
+| `promise.papers.conditions>body.how` | promise | src/engine/content/guide/papers.ts | Implemented And Verified | Not Tested |  |  |  |  |
+| `promise.papers.conditions>day.calendar` | promise | src/engine/content/guide/papers.ts | Implemented And Verified | Not Tested |  |  |  |  |
+| `promise.papers.conditions>papers.doctor` | promise | src/engine/content/guide/papers.ts | Implemented And Verified | Not Tested |  |  |  |  |
+| `promise.papers.conditions>bank.accounts` | promise | src/engine/content/guide/papers.ts | Implemented And Verified | Not Tested |  |  |  |  |
+| `promise.papers.benefits>productions.cabaret` | promise | src/engine/content/guide/papers.ts | Implemented, Verification Incomplete | Not Tested |  |  |  |  |
+| `promise.papers.benefits>school.standing` | promise | src/engine/content/guide/papers.ts | Implemented And Verified | Not Tested |  |  |  |  |
+| `promise.papers.benefits>taxes.return` | promise | src/engine/content/guide/papers.ts | Implemented And Verified | Not Tested |  |  |  |  |
+| `promise.papers.benefits>body.look-after` | promise | src/engine/content/guide/papers.ts | Implemented And Verified | Not Tested |  |  |  |  |
+| `promise.papers.benefits>school.shifts` | promise | src/engine/content/guide/papers.ts | Implemented And Verified | Not Tested |  |  |  |  |
+| `promise.papers.pensions>productions.cabaret` | promise | src/engine/content/guide/papers.ts | Implemented And Verified | Not Tested |  |  |  |  |
+| `promise.papers.pensions>taxes.return` | promise | src/engine/content/guide/papers.ts | Implemented, Verification Incomplete | Not Tested |  |  |  |  |
+| `promise.papers.pensions>bank.accounts` | promise | src/engine/content/guide/papers.ts | Implemented, Verification Incomplete | Not Tested |  |  |  |  |
+| `promise.papers.pensions>documents.work` | promise | src/engine/content/guide/papers.ts | Implemented And Verified | Not Tested |  |  |  |  |
+
+## Life
+
+| Feature | Kind | Where | Effects matrix | Sweep | By | On | Evidence | Found |
+|---|---|---|---|---|---|---|---|---|
+| `calendar.cancel` | command | Calendar screen: a plan of your own opened from its day or Next Thirty Days, Call It Off (CalendarWorkspace.tsx, EntryD… | Implemented And Verified | Not Tested |  |  |  |  |
+| `calendar.schedule` | command | Calendar screen: a day, Put Something On It, the plan form’s Put It On (CalendarWorkspace.tsx PlanForm’s put, run('cale… | Implemented And Verified | Not Tested |  |  |  |  |
+| `calendar.skip` | command | The stop at a plan of your own (TimeControls.tsx DueNow, its Skip It choice, `stopChoices` from world/clock.ts:105, run… | Implemented And Verified | Not Tested |  |  |  |  |
+| `life.look_after` | command | The top bar’s Look After Yourself menu (TimeControls.tsx LookAfterMenu’s act, run('life.look_after', { action })): Eat … | Implemented And Verified | Not Tested |  |  |  |  |
+| `life.sleep` | command | The top bar’s Sleep (TimeControls.tsx SleepDialog; its button runs life.sleep with the hours on the slider, suggested b… | Implemented And Verified | Not Tested |  |  |  |  |
+| `injury.comp` | scheduled | The clock: a week after an injury at work that keeps the player off work (mayHurt with work, e.g. a work-study shift or… | Implemented And Verified | Not Tested |  |  |  |  |
+| `life.birthday` | scheduled | The clock: at nine in the morning of the birthday where the player lives (armBirthdays, then each birthday puts on the … | Implemented And Verified | Not Tested |  |  |  |  |
+| `life.commitment` | scheduled | The clock, at a plan of your own’s start (registerPlans in world/plans.ts); the stop’s Go answers it. | Implemented And Verified | Not Tested |  |  |  |  |
+| `life.day_rollover` | scheduled | The clock, at each midnight where the player lives (armed by armWorldClock, then each rollover arms the next). | Implemented And Verified | Not Tested |  |  |  |  |
+| `life.end` | scheduled | The clock, at the end a birthday’s draw put on the calendar (a system item, never shown), or a minute after a midnight … | Implemented And Verified | Not Tested |  |  |  |  |
+| `world.tick` | scheduled | The clock, every two days (armed by armWorldClock). | Implemented And Verified | Not Tested |  |  |  |  |
+| `life.night_alone` | reactor | The clock: at every stop of an advance (a passage reactor), for a jump of more than an hour through a night the player … | Implemented And Verified | Not Tested |  |  |  |  |
+| `life.waking` | reactor | The clock: every stretch the clock crosses, a second of live play or a week skipped (a passage reactor). | Implemented And Verified | Not Tested |  |  |  |  |
+| `dial.energy` | dial | How You Are on Home, the Energy dial (look.dial), the Look After Yourself menu’s figures. | Implemented And Verified | Not Tested |  |  |  |  |
+| `dial.stress` | dial | How You Are, the Stress dial, the menu’s Unwind and Shower lines. | Implemented And Verified | Not Tested |  |  |  |  |
+| `dial.sleepDebt` | dial | How You Are, the Sleep Debt dial, the Sleep dialog’s suggestion. | Implemented And Verified | Not Tested |  |  |  |  |
+| `dial.morale` | dial | How You Are, the Morale dial. | Implemented And Verified | Not Tested |  |  |  |  |
+| `dial.condition` | dial | How You Are, the Condition dial. | Implemented And Verified | Not Tested |  |  |  |  |
+| `dial.fitness` | dial | The Fitness dial, and Stamina on the Player Profile; Work Out on the menu. | Implemented And Verified | Not Tested |  |  |  |  |
+| `dial.nourishment` | dial | How You Are, the Nourishment dial, Eat A Meal and Order In. | Implemented And Verified | Not Tested |  |  |  |  |
+| `dial.hygiene` | dial | How You Are, the Hygiene dial, Shower. | Implemented And Verified | Not Tested |  |  |  |  |
+| `look.day` | look | Home’s date and the Calendar panel’s title, a day’s cell; ui/looks/day.tsx. | Implemented And Verified | Not Tested |  |  |  |  |
+| `look.entry` | look | A thing on the calendar, from the Day look, Home and the Calendar; day.tsx. | Implemented And Verified | Not Tested |  |  |  |  |
+| `look.season` | look | The season beside the date on Home and on a day; day.tsx. | Implemented And Verified | Not Tested |  |  |  |  |
+| `look.daylight` | look | Daylight on a day and on a place; place.tsx. | Implemented And Verified | Not Tested |  |  |  |  |
+| `look.stretch` | look | A commitment’s hours, from its entry; plans.tsx. | Implemented And Verified | Not Tested |  |  |  |  |
+| `look.plans` | look | Your Own Plans, from a plan’s entry and the person; plans.tsx. | Implemented And Verified | Not Tested |  |  |  |  |
+| `look.weather` | look | The weather on Home’s first line; weather.tsx. | Implemented And Verified | Not Tested |  |  |  |  |
+| `look.forecastday` | look | A day of the week ahead, from the weather and a day; weather.tsx. | Implemented And Verified | Not Tested |  |  |  |  |
+| `look.hours` | look | The Rest Of Today and a day’s Hour By Hour; weather.tsx. | Implemented And Verified | Not Tested |  |  |  |  |
+| `look.skyhour` | look | One hour from a day’s hours or a commitment’s; weather.tsx. | Implemented And Verified | Not Tested |  |  |  |  |
+| `look.skyweek` | look | The Week Ahead, from the weather; weather.tsx. | Implemented And Verified | Not Tested |  |  |  |  |
+| `look.dial` | look | Each dial on How You Are and the person look; wellbeing.tsx. | Implemented And Verified | Not Tested |  |  |  |  |
+| `look.condition` | look | An injury or a long-term condition, from the person look and How You Are; wellbeing.tsx. | Implemented And Verified | Not Tested |  |  |  |  |
+| `notice.core/simulation#top` | notice | What Needs You and Home’s notices: “Something Didn’t Go Through” or “<label> Didn’t Go Through”, sent from core/simulat… | Implemented, Verification Incomplete | Not Tested |  |  |  |  |
+| `notice.systems/injury#mayHurt` | notice | What Needs You and Home’s notices, the injury’s label as its title, sent by mayHurt (systems/injury.ts) when a workout,… | Implemented And Verified | Not Tested |  |  |  |  |
+| `promise.body.how>body.sleep` | promise | src/engine/content/guide/body.ts | Implemented And Verified | Not Tested |  |  |  |  |
+| `promise.body.how>body.look-after` | promise | src/engine/content/guide/body.ts | Implemented And Verified | Not Tested |  |  |  |  |
+| `promise.body.how>coursework.class` | promise | src/engine/content/guide/body.ts | Implemented And Verified | Not Tested |  |  |  |  |
+| `promise.body.how>productions.nights` | promise | src/engine/content/guide/body.ts | Implemented, Verification Incomplete | Not Tested |  |  |  |  |
+| `promise.body.how>school.sick` | promise | src/engine/content/guide/body.ts | Implemented And Verified | Not Tested |  |  |  |  |
+| `promise.body.how>papers.conditions` | promise | src/engine/content/guide/body.ts | Implemented And Verified | Not Tested |  |  |  |  |
+| `promise.body.sleep>body.how` | promise | src/engine/content/guide/body.ts | Implemented And Verified | Not Tested |  |  |  |  |
+| `promise.body.sleep>day.calendar` | promise | src/engine/content/guide/body.ts | Implemented And Verified | Not Tested |  |  |  |  |
+| `promise.body.sleep>day.needs` | promise | src/engine/content/guide/body.ts | Implemented And Verified | Not Tested |  |  |  |  |
+| `promise.body.sleep>school.standing` | promise | src/engine/content/guide/body.ts | Implemented And Verified | Not Tested |  |  |  |  |
+| `promise.body.sleep>day.advance` | promise | src/engine/content/guide/body.ts | Implemented And Verified | Not Tested |  |  |  |  |
+| `promise.body.look-after>body.how` | promise | src/engine/content/guide/body.ts | Implemented And Verified | Not Tested |  |  |  |  |
+| `promise.body.look-after>day.weather` | promise | src/engine/content/guide/body.ts | Implemented And Verified | Not Tested |  |  |  |  |
+| `promise.body.look-after>bank.payments` | promise | src/engine/content/guide/body.ts | Implemented And Verified | Not Tested |  |  |  |  |
+| `promise.body.look-after>craft.profile` | promise | src/engine/content/guide/body.ts | Implemented And Verified | Not Tested |  |  |  |  |
+| `promise.body.look-after>papers.doctor` | promise | src/engine/content/guide/body.ts | Implemented And Verified | Not Tested |  |  |  |  |
+| `promise.day.calendar>day.clock` | promise | src/engine/content/guide/day.ts | Implemented And Verified | Not Tested |  |  |  |  |
+| `promise.day.calendar>day.advance` | promise | src/engine/content/guide/day.ts | Implemented And Verified | Not Tested |  |  |  |  |
+| `promise.day.calendar>day.plans` | promise | src/engine/content/guide/day.ts | Implemented And Verified | Not Tested |  |  |  |  |
+| `promise.day.calendar>school.standing` | promise | src/engine/content/guide/day.ts | Implemented And Verified | Not Tested |  |  |  |  |
+| `promise.day.calendar>school.sick` | promise | src/engine/content/guide/day.ts | Implemented And Verified | Not Tested |  |  |  |  |
+| `promise.day.calendar>coursework.partners` | promise | src/engine/content/guide/day.ts | Implemented And Verified | Not Tested |  |  |  |  |
+| `promise.day.clock>day.calendar` | promise | src/engine/content/guide/day.ts | Implemented And Verified | Not Tested |  |  |  |  |
+| `promise.day.clock>body.how` | promise | src/engine/content/guide/day.ts | Implemented And Verified | Not Tested |  |  |  |  |
+| `promise.day.clock>day.advance` | promise | src/engine/content/guide/day.ts | Implemented And Verified | Not Tested |  |  |  |  |
+| `promise.day.clock>body.sleep` | promise | src/engine/content/guide/day.ts | Implemented And Verified | Not Tested |  |  |  |  |
+| `promise.day.advance>day.calendar` | promise | src/engine/content/guide/day.ts | Implemented And Verified | Not Tested |  |  |  |  |
+| `promise.day.advance>body.sleep` | promise | src/engine/content/guide/day.ts | Implemented And Verified | Not Tested |  |  |  |  |
+| `promise.day.advance>body.look-after` | promise | src/engine/content/guide/day.ts | Implemented And Verified | Not Tested |  |  |  |  |
+| `promise.day.advance>day.clock` | promise | src/engine/content/guide/day.ts | Implemented And Verified | Not Tested |  |  |  |  |
+| `promise.day.needs>taxes.return` | promise | src/engine/content/guide/day.ts | Implemented And Verified | Not Tested |  |  |  |  |
+| `promise.day.needs>documents.work` | promise | src/engine/content/guide/day.ts | Implemented And Verified | Not Tested |  |  |  |  |
+| `promise.day.needs>bank.upkeep` | promise | src/engine/content/guide/day.ts | Implemented And Verified | Not Tested |  |  |  |  |
+| `promise.day.needs>body.sleep` | promise | src/engine/content/guide/day.ts | Implemented And Verified | Not Tested |  |  |  |  |
+| `promise.day.needs>start.find` | promise | src/engine/content/guide/day.ts | Implemented And Verified | Not Tested |  |  |  |  |
+| `promise.day.plans>day.calendar` | promise | src/engine/content/guide/day.ts | Implemented And Verified | Not Tested |  |  |  |  |
+| `promise.day.plans>body.sleep` | promise | src/engine/content/guide/day.ts | Implemented And Verified | Not Tested |  |  |  |  |
+| `promise.day.plans>body.look-after` | promise | src/engine/content/guide/day.ts | Implemented And Verified | Not Tested |  |  |  |  |
+| `promise.day.plans>craft.practice` | promise | src/engine/content/guide/day.ts | Implemented And Verified | Not Tested |  |  |  |  |
+| `promise.day.plans>day.needs` | promise | src/engine/content/guide/day.ts | Implemented And Verified | Not Tested |  |  |  |  |
+| `promise.day.plans>day.weather` | promise | src/engine/content/guide/day.ts | Implemented And Verified | Not Tested |  |  |  |  |
+| `promise.day.weather>body.look-after` | promise | src/engine/content/guide/day.ts | Implemented And Verified | Not Tested |  |  |  |  |
+| `promise.day.weather>start.home` | promise | src/engine/content/guide/day.ts | Implemented And Verified | Not Tested |  |  |  |  |
+| `promise.day.weather>school.sick` | promise | src/engine/content/guide/day.ts | Implemented And Verified | Not Tested |  |  |  |  |
+| `world.holidays` | mechanic | src/engine/content/holidays.ts, holidaysOn | — | Not Tested |  |  |  |  |
+| `world.stops` | mechanic | src/engine/world/clock.ts, answerStop | — | Not Tested |  |  |  |  |
+| `world.running-clock` | mechanic | src/engine/core/realclock.ts, createClockStepper | — | Not Tested |  |  |  |  |
+| `world.zones` | mechanic | src/engine/core/time.ts, zoneAbbreviation | — | Not Tested |  |  |  |  |
+
+## Career
+
+| Feature | Kind | Where | Effects matrix | Sweep | By | On | Evidence | Found |
+|---|---|---|---|---|---|---|---|---|
+| `pro.accept_agreement` | command | Career, Representation, The Agreement: Accept The Agreement, grayed with answerRefusal's words; behind the guide's chap… | Implemented And Verified | Not Tested |  |  |  |  |
+| `pro.accept_offer` | command | Career, Opportunities, Offers: Accept The Offer, and What Needs You's question with the same action; grayed with accept… | Implemented And Verified | Not Tested |  |  |  |  |
+| `pro.agent_check` | command | Career, Representation, How To Reach Him: Check Your Materials, grayed with checkRefusal's words. | Implemented And Verified | Not Tested |  |  |  |  |
+| `pro.agent_notice` | command | Career, Representation: the notice that he and his agency are invented, at the top of his panel, and I've Read This. | Implemented And Verified | Not Tested |  |  |  |  |
+| `pro.ask_referral` | command | Career, Representation, How To Reach Him: Ask For A Referral beside each finished job, grayed with its reason. | Implemented And Verified | Not Tested |  |  |  |  |
+| `pro.ask_to_move` | command | The stop at his meeting: Ask To Move (`defineStop`), and the Representation tab's Ask To Move. | Implemented And Verified | Not Tested |  |  |  |  |
+| `pro.cut_reel` | command | Career, Portfolio: Cut A Reel, choosing up to four recorded pieces; grayed with reelRefusal's words. | Implemented And Verified | Not Tested |  |  |  |  |
+| `pro.decline_agreement` | command | Career, Representation, The Agreement: Decline The Agreement, grayed with answerRefusal's words. | Implemented And Verified | Not Tested |  |  |  |  |
+| `pro.decline_offer` | command | Career, Opportunities, Offers: Decline The Offer, and What Needs You's Decline action. | Implemented And Verified | Not Tested |  |  |  |  |
+| `pro.end_agreement` | command | Career, Representation, The Agreement: End It By Agreement, End It: No Offer In 90 Days, End It: Too Little Work, each … | Implemented And Verified | Not Tested |  |  |  |  |
+| `pro.headshots` | command | Career, Portfolio: Book A Headshot Session, grayed with headshotRefusal's words. | Implemented And Verified | Not Tested |  |  |  |  |
+| `pro.join_sag` | command | Career, Work, Your Unions: Join SAG-AFTRA, grayed with joinSagRefusal's words. | Implemented And Verified | Not Tested |  |  |  |  |
+| `pro.move_audition` | command | Career, Opportunities, In Progress: Ask For Another Time, grayed with moveRefusal's words. | Implemented And Verified | Not Tested |  |  |  |  |
+| `pro.prepare` | command | Career, Opportunities: Break It Down, Learn The Lines, Rehearse It On Your Feet, on the sides of an audition to come an… | Implemented And Verified | Not Tested |  |  |  |  |
+| `pro.request_outside_work` | command | Career, Opportunities: Ask The School under In Term At The School, grayed with requestRefusal's words. | Implemented And Verified | Not Tested |  |  |  |  |
+| `pro.send_materials` | command | Career, Representation: Send Your Materials, grayed with sendRefusal's words. | Implemented And Verified | Not Tested |  |  |  |  |
+| `pro.set_name` | command | Career, Portfolio, Your Professional Name: Use This Name, grayed with nameRefusal's words. | Implemented And Verified | Not Tested |  |  |  |  |
+| `pro.submit` | command | Career, Opportunities, Open Calls: Submit Yourself, grayed with submitRefusal's words. | Implemented And Verified | Not Tested |  |  |  |  |
+| `pro.supply_material` | command | Career, Representation: Send What His Office Asked For, grayed with supplyRefusal's words. | Implemented And Verified | Not Tested |  |  |  |  |
+| `pro.tape_audition` | command | Career, Opportunities, In Progress: Tape It, grayed with tapeRefusal's words. | Implemented And Verified | Not Tested |  |  |  |  |
+| `pro.update_resume` | command | Career, Portfolio: Make Your Résumé or Update Your Résumé, grayed with resumeRefusal's words. | Implemented And Verified | Not Tested |  |  |  |  |
+| `pro.agent_decision` | scheduled | The clock, five weekdays after a meeting kept (`DECISION_KIND`). | Implemented And Verified | Not Tested |  |  |  |  |
+| `pro.agent_follow_up` | scheduled | The clock, three days after the showcase's last performance (`FOLLOW_UP_KIND`), put on by the showcase. | Implemented And Verified | Not Tested |  |  |  |  |
+| `pro.agent_meeting` | scheduled | The clock at the meeting, a stop with Go, Stand Here and Ask To Move (`MEETING_KIND`). | Implemented And Verified | Not Tested |  |  |  |  |
+| `pro.agent_offer_lapse` | scheduled | The clock, the agreement's last day (`OFFER_LAPSE_KIND`). | Implemented And Verified | Not Tested |  |  |  |  |
+| `pro.agent_request_due` | scheduled | The clock, the request's last day (`REQUEST_DUE_KIND`). | Implemented And Verified | Not Tested |  |  |  |  |
+| `pro.agent_ask_lapse` | scheduled | The clock, the last day of the request to meet the School passed on after the showcase (`ASK_LAPSE_KIND`), scheduled by… | Implemented And Verified | Not Tested |  |  |  |  |
+| `pro.agent_silence` | scheduled | The clock, six weeks after a send left unanswered (`SILENCE_KIND`). | Implemented And Verified | Not Tested |  |  |  |  |
+| `pro.agent_term_end` | scheduled | The clock, the agreement's year's end (`TERM_END_KIND`). | Implemented And Verified | Not Tested |  |  |  |  |
+| `pro.audition` | scheduled | The clock at an audition in person, a stop with its trip (`AUDITION_KIND`). | Implemented And Verified | Not Tested |  |  |  |  |
+| `pro.casting_decision` | scheduled | The clock, a day after a round casting cuts from, three after the last (`CASTING_KIND`). | Implemented And Verified | Not Tested |  |  |  |  |
+| `pro.offer_lapse` | scheduled | The clock, the offer's last moment (`OFFER_KIND`). | Implemented And Verified | Not Tested |  |  |  |  |
+| `pro.release` | scheduled | The clock, a screen project's release, months after its wrap (`RELEASE_KIND` in projobs). | Implemented And Verified | Not Tested |  |  |  |  |
+| `pro.reply` | scheduled | The clock, two days after a submission (`REPLY_KIND` in projobs). | Implemented And Verified | Not Tested |  |  |  |  |
+| `pro.school_answer` | scheduled | The clock, a week after a request to the School (`SCHOOL_ANSWER_KIND`). | Implemented And Verified | Not Tested |  |  |  |  |
+| `pro.tape_due` | scheduled | The clock, the self-tape's deadline (`TAPE_DUE_KIND`). | Implemented And Verified | Not Tested |  |  |  |  |
+| `pro.work_day` | scheduled | The clock at each booked day, a stop with its trip (`WORK_DAY_KIND`). | Implemented And Verified | Not Tested |  |  |  |  |
+| `pro.postings` | reactor | The clock, every Monday at nine it passes (`onPassage`): the Opportunities tab's Open Calls and Through An Agent. | Implemented And Verified | Not Tested |  |  |  |  |
+| `pro.equity_joined` | event | An event: said by the School at the degree (`setStanding`) and, from brief 20, by the work loop at an Equity contract's… | Implemented And Verified | Not Tested |  |  |  |  |
+| `notice.systems/proagent#tell` | notice | What Needs You, from the agent's steps (`tell`), routed to the Representation tab. | Implemented And Verified | Not Tested |  |  |  |  |
+| `notice.systems/projobs#tell` | notice | What Needs You, from the work loop's steps (`tell`), routed to the Career screen. | Implemented And Verified | Not Tested |  |  |  |  |
+| `notice.systems/propay#payDue` | notice | What Needs You, at a payday: paid, or held in the agency's trust account. | Implemented And Verified | Not Tested |  |  |  |  |
+| `notice.systems/propay#release` | notice | What Needs You, when the agency passes pay on. | Implemented And Verified | Not Tested |  |  |  |  |
+| `notice.systems/propay#settle` | notice | What Needs You, at a union bill. | Implemented And Verified | Not Tested |  |  |  |  |
+| `notice.systems/propay#equityJoined` | notice | What Needs You, when Equity's membership begins. | Implemented And Verified | Not Tested |  |  |  |  |
+| `notice.systems/propay#equityOnOpening` | notice | What Needs You, once, on an older graduate's first opening. | Implemented And Verified | Not Tested |  |  |  |  |
+| `notice.systems/proshowcase#beginShowcase` | notice | What Needs You, at the final term's start. | Implemented And Verified | Not Tested |  |  |  |  |
+| `notice.systems/proshowcase#decide` | notice | What Needs You, at the fourth week's end. | Implemented And Verified | Not Tested |  |  |  |  |
+| `pro.agent_reply` | scheduled | The clock: the agent's office answers an approach on its own day at its answer hour (`AGENT_TIMES.replyDays`, or `after… | Implemented And Verified | Not Tested |  |  |  |  |
+| `promise.career.overview>career.headshots` | promise | src/engine/content/guide/career.ts | Implemented And Verified | Not Tested |  |  |  |  |
+| `promise.career.overview>documents.work` | promise | src/engine/content/guide/career.ts | Implemented And Verified | Not Tested |  |  |  |  |
+| `promise.career.profile>career.resume` | promise | src/engine/content/guide/career.ts | Implemented And Verified | Not Tested |  |  |  |  |
+| `promise.career.profile>craft.profile` | promise | src/engine/content/guide/career.ts | Implemented And Verified | Not Tested |  |  |  |  |
+| `promise.career.headshots>career.overview` | promise | src/engine/content/guide/career.ts | Implemented And Verified | Not Tested |  |  |  |  |
+| `promise.career.headshots>bank.accounts` | promise | src/engine/content/guide/career.ts | Implemented And Verified | Not Tested |  |  |  |  |
+| `promise.career.resume>career.overview` | promise | src/engine/content/guide/career.ts | Implemented And Verified | Not Tested |  |  |  |  |
+| `promise.career.resume>productions.nights` | promise | src/engine/content/guide/career.ts | Implemented And Verified | Not Tested |  |  |  |  |
+| `promise.career.reel>craft.brief-tape` | promise | src/engine/content/guide/career.ts | Implemented And Verified | Not Tested |  |  |  |  |
+| `promise.career.reel>career.overview` | promise | src/engine/content/guide/career.ts | Implemented And Verified | Not Tested |  |  |  |  |
+| `promise.career.agent>career.headshots` | promise | src/engine/content/guide/career.ts | Implemented And Verified | Not Tested |  |  |  |  |
+| `promise.career.agent>career.resume` | promise | src/engine/content/guide/career.ts | Implemented And Verified | Not Tested |  |  |  |  |
+| `promise.career.agent>career.agent-answers` | promise | src/engine/content/guide/career.ts | Implemented And Verified | Not Tested |  |  |  |  |
+| `promise.career.agent-answers>career.reasons` | promise | src/engine/content/guide/career.ts | Implemented And Verified | Not Tested |  |  |  |  |
+| `promise.career.agent-answers>day.clock` | promise | src/engine/content/guide/career.ts | Implemented And Verified | Not Tested |  |  |  |  |
+| `promise.career.reasons>career.reel` | promise | src/engine/content/guide/career.ts | Implemented And Verified | Not Tested |  |  |  |  |
+| `promise.career.reasons>career.agent` | promise | src/engine/content/guide/career.ts | Implemented And Verified | Not Tested |  |  |  |  |
+| `promise.career.agreement>documents.work` | promise | src/engine/content/guide/career.ts | Implemented And Verified | Not Tested |  |  |  |  |
+| `promise.career.agreement>career.agent` | promise | src/engine/content/guide/career.ts | Implemented And Verified | Not Tested |  |  |  |  |
+| `promise.career.pay>bank.accounts` | promise | src/engine/content/guide/career.ts | Implemented And Verified | Not Tested |  |  |  |  |
+| `promise.career.pay>taxes.return` | promise | src/engine/content/guide/career.ts | Implemented And Verified | Not Tested |  |  |  |  |
+| `promise.career.pay>documents.work` | promise | src/engine/content/guide/career.ts | Implemented And Verified | Not Tested |  |  |  |  |
+| `promise.career.commission>career.pay` | promise | src/engine/content/guide/career.ts | Implemented And Verified | Not Tested |  |  |  |  |
+| `promise.career.commission>taxes.return` | promise | src/engine/content/guide/career.ts | Implemented, Verification Incomplete | Not Tested |  |  |  |  |
+| `promise.career.unions>bank.accounts` | promise | src/engine/content/guide/career.ts | Implemented And Verified | Not Tested |  |  |  |  |
+| `promise.career.unions>career.resume` | promise | src/engine/content/guide/career.ts | Implemented And Verified | Not Tested |  |  |  |  |
+| `promise.career.unions>taxes.return` | promise | src/engine/content/guide/career.ts | Implemented, Verification Incomplete | Not Tested |  |  |  |  |
+| `promise.career.opportunities>career.headshots` | promise | src/engine/content/guide/career.ts | Implemented And Verified | Not Tested |  |  |  |  |
+| `promise.career.opportunities>career.auditions` | promise | src/engine/content/guide/career.ts | Implemented And Verified | Not Tested |  |  |  |  |
+| `promise.career.auditions>career.offers` | promise | src/engine/content/guide/career.ts | Implemented And Verified | Not Tested |  |  |  |  |
+| `promise.career.auditions>day.calendar` | promise | src/engine/content/guide/career.ts | Implemented And Verified | Not Tested |  |  |  |  |
+| `promise.career.offers>documents.work` | promise | src/engine/content/guide/career.ts | Implemented And Verified | Not Tested |  |  |  |  |
+| `promise.career.offers>career.resume` | promise | src/engine/content/guide/career.ts | Implemented And Verified | Not Tested |  |  |  |  |
+| `promise.career.offers>day.calendar` | promise | src/engine/content/guide/career.ts | Implemented And Verified | Not Tested |  |  |  |  |
+| `promise.career.outside-work>school.standing` | promise | src/engine/content/guide/career.ts | Implemented And Verified | Not Tested |  |  |  |  |
+| `promise.career.outside-work>career.offers` | promise | src/engine/content/guide/career.ts | Implemented And Verified | Not Tested |  |  |  |  |
+| `promise.coursework.showcase>coursework.prepare` | promise | src/engine/content/guide/showcase.ts | Implemented And Verified | Not Tested |  |  |  |  |
+| `promise.coursework.showcase>coursework.feedback` | promise | src/engine/content/guide/showcase.ts | Implemented And Verified | Not Tested |  |  |  |  |
+| `promise.coursework.showcase>school.repeat` | promise | src/engine/content/guide/showcase.ts | Implemented And Verified | Not Tested |  |  |  |  |
+| `promise.coursework.showcase>career.overview` | promise | src/engine/content/guide/showcase.ts | Implemented And Verified | Not Tested |  |  |  |  |
+
+## Guide
+
+| Feature | Kind | Where | Effects matrix | Sweep | By | On | Evidence | Found |
+|---|---|---|---|---|---|---|---|---|
+| `tutorial.read` | command | The guide: I’ve Read It at the foot of the chapter that’s next (ui/guide/Guide.tsx, `markRead`), opened by Guide in the… | Implemented And Verified | Not Tested |  |  |  |  |
+| `world.dismiss_decision` | command | Home, What Needs You: Dismiss on each question the panel draws (src/ui/screens/Home.tsx, the six at the top, every one … | Implemented And Verified | Not Tested |  |  |  |  |
+| `world.mark_read` | command | Home, Recent Updates: Mark N Read in its head, and Mark Read beside each notice (src/ui/screens/Home.tsx); Updates: Mar… | Implemented And Verified | Not Tested |  |  |  |  |
+| `world.set_preferences` | command | The top bar: Play and Pause (src/ui/shell/TimeControls.tsx, `setSpeed`). The provider sends paused itself when the cloc… | Implemented And Verified | Not Tested |  |  |  |  |
+| `world.take_decision_action` | command | Home, What Needs You: each answer’s button on a question, labeled with the answer (src/ui/screens/Home.tsx), which send… | Implemented And Verified | Not Tested |  |  |  |  |
+| `world.day_rollover` | event | The clock: emitted at each local midnight by the day’s rollover (`life.day_rollover`, src/engine/systems/life.ts). No c… | Implemented And Verified | Not Tested |  |  |  |  |
+| `look.decision` | look | Home, What Needs You: a question’s title or its date, pressed (src/ui/screens/Home.tsx); the look is src/ui/looks/atten… | Implemented And Verified | Not Tested |  |  |  |  |
+| `look.notification` | look | Home, Recent Updates, and Updates: a notice’s title, pressed (src/ui/screens/Home.tsx, src/ui/screens/Updates.tsx); the… | Implemented And Verified | Not Tested |  |  |  |  |
+| `ui.how` | ui | Home, How You Are (src/ui/screens/Home.tsx). | Implemented And Verified | Not Tested |  |  |  |  |
+| `ui.sleep` | ui | The top bar: Sleep (src/ui/shell/TimeControls.tsx). | Implemented And Verified | Not Tested |  |  |  |  |
+| `ui.look-after` | ui | The top bar: Look After Yourself (src/ui/shell/TimeControls.tsx). | Implemented And Verified | Not Tested |  |  |  |  |
+| `ui.career` | ui | The rail’s Career, under Your Work (src/ui/shell/destinations.ts), and the screen’s address (src/ui/workspaces/Workspac… | Implemented And Verified | Not Tested |  |  |  |  |
+| `ui.career-reasons` | ui | Career, Representation: Show The Reasons under Why It Went This Way (src/ui/career/RepresentationPane.tsx). | Implemented And Verified | Not Tested |  |  |  |  |
+| `ui.profile` | ui | The rail’s Player Profile, under You, and your name at the rail’s foot (src/ui/shell/destinations.ts, src/ui/shell/Game… | Implemented And Verified | Not Tested |  |  |  |  |
+| `ui.calendar` | ui | Home, Up Next (src/ui/screens/Home.tsx:274, drawn by UpNext at :423-513), with Back To Home at the Calendar’s head (src… | Implemented And Verified | Not Tested |  |  |  |  |
+| `ui.go` | ui | A stop’s dialog: Go (src/ui/shell/TimeControls.tsx, `onGo`), when the clock stops at a commitment. | Implemented And Verified | Not Tested |  |  |  |  |
+| `ui.play` | ui | The top bar (src/ui/shell/TimeControls.tsx). | Implemented And Verified | Not Tested |  |  |  |  |
+| `ui.advance` | ui | The top bar: Advance, its lines One Hour, This Evening, Tonight, Tomorrow Morning, Next Event, Next Monday and One Week… | Implemented And Verified | Not Tested |  |  |  |  |
+| `ui.skip` | ui | The top bar: Advance, Choose An Event, which opens Skip To Event (src/ui/shell/TimeControls.tsx, SkipDialog). | Implemented And Verified | Not Tested |  |  |  |  |
+| `ui.needs` | ui | Home, What Needs You and Recent Updates (src/ui/screens/Home.tsx:218-328); Updates from Recent Updates’ View All Update… | Implemented And Verified | Not Tested |  |  |  |  |
+| `ui.open-calendar` | ui | Home, Up Next’s head: Open Calendar (src/ui/screens/Home.tsx:438); C from anywhere but a text box, and Back To Home at … | Implemented And Verified | Not Tested |  |  |  |  |
+| `ui.weather` | ui | Home, Today: the weather beside the line under the greeting (src/ui/screens/Home.tsx:144); Weather, a locked button the… | Implemented And Verified | Not Tested |  |  |  |  |
+| `ui.money` | ui | Money’s head: Worth (src/ui/components/Glance.tsx:33), and What Needs You on Home for what money needs putting right (s… | Implemented And Verified | Not Tested |  |  |  |  |
+| `ui.bank` | ui | The menu’s Money, under Your Affairs (src/ui/shell/destinations.ts); Open Money beside a money line under What Needs Yo… | Implemented And Verified | Not Tested |  |  |  |  |
+| `ui.papers` | ui | Papers’ head (src/ui/components/Glance.tsx:114), and What Needs You on Home with Open Papers (src/ui/screens/Home.tsx);… | Implemented And Verified | Not Tested |  |  |  |  |
+| `ui.school` | ui | The School’s head (src/ui/components/Glance.tsx:51), and What Needs You on Home with Open School when the standing drop… | Implemented And Verified | Not Tested |  |  |  |  |
+| `ui.where` | ui | Home, Today: the line under the greeting (src/ui/screens/Home.tsx:99); Where You Are, a locked button there until its c… | Implemented And Verified | Not Tested |  |  |  |  |
+| `chapter.welcome` | chapter | The guide, chapter 1, “Your Life, Hour By Hour” (src/engine/content/tutorial.ts), opened from Guide in the top bar, Rea… | Implemented And Verified | Not Tested |  |  |  |  |
+| `chapter.calendar` | chapter | The guide, chapter 2, “What’s Coming” (src/engine/content/tutorial.ts), opened from Guide in the top bar, Read on the s… | Implemented And Verified | Not Tested |  |  |  |  |
+| `chapter.clock` | chapter | The guide, chapter 3, “The Clock” (src/engine/content/tutorial.ts), opened from Guide in the top bar, Read on the strip… | Implemented And Verified | Not Tested |  |  |  |  |
+| `chapter.advance` | chapter | The guide, chapter 4, “Moving Time On” (src/engine/content/tutorial.ts), opened from Guide in the top bar, Read on the … | Implemented And Verified | Not Tested |  |  |  |  |
+| `chapter.needs` | chapter | The guide, chapter 5, “What Needs You” (src/engine/content/tutorial.ts), opened from Guide in the top bar, Read on the … | Implemented And Verified | Not Tested |  |  |  |  |
+| `chapter.body` | chapter | The guide, chapter 6, “How You Are” (src/engine/content/tutorial.ts), opened from Guide in the top bar, Read on the str… | Implemented And Verified | Not Tested |  |  |  |  |
+| `chapter.sleep` | chapter | The guide, chapter 7, “Sleep” (src/engine/content/tutorial.ts), opened from Guide in the top bar, Read on the strip und… | Implemented And Verified | Not Tested |  |  |  |  |
+| `chapter.looking-after` | chapter | The guide, chapter 8, “Looking After Yourself” (src/engine/content/tutorial.ts), opened from Guide in the top bar, Read… | Implemented And Verified | Not Tested |  |  |  |  |
+| `chapter.plans` | chapter | The guide, chapter 9, “Your Own Plans” (src/engine/content/tutorial.ts), opened from Guide in the top bar, Read on the … | Implemented And Verified | Not Tested |  |  |  |  |
+| `chapter.weather` | chapter | The guide, chapter 10, “Weather” (src/engine/content/tutorial.ts), opened from Guide in the top bar, Read on the strip … | Implemented And Verified | Not Tested |  |  |  |  |
+| `chapter.school` | chapter | The guide, chapter 11, “Drama School” (src/engine/content/tutorial.ts), opened from Guide in the top bar, Read on the s… | Implemented And Verified | Not Tested |  |  |  |  |
+| `chapter.profile` | chapter | The guide, chapter 12, “You As An Actor” (src/engine/content/tutorial.ts), opened from Guide in the top bar, Read on th… | Implemented And Verified | Not Tested |  |  |  |  |
+| `chapter.career` | chapter | The guide, chapter 13, “Your Career” (src/engine/content/tutorial.ts), opened from Guide in the top bar, Read on the st… | Implemented And Verified | Not Tested |  |  |  |  |
+| `chapter.representation` | chapter | The guide, chapter 14, “Representation” (src/engine/content/tutorial.ts), opened from Guide in the top bar, Read on the… | Implemented And Verified | Not Tested |  |  |  |  |
+| `chapter.finding-work` | chapter | The guide, chapter 15, “Finding Work” (src/engine/content/tutorial.ts), opened from Guide in the top bar, Read on the s… | Implemented And Verified | Not Tested |  |  |  |  |
+| `chapter.papers` | chapter | The guide, chapter 16, “Cover, Benefits And Returns” (src/engine/content/tutorial.ts), opened from Guide in the top bar… | Implemented And Verified | Not Tested |  |  |  |  |
+| `chapter.documents` | chapter | The guide, chapter 17, “Passports And ID” (src/engine/content/tutorial.ts), opened from Guide in the top bar, Read on t… | Implemented And Verified | Not Tested |  |  |  |  |
+| `chapter.money` | chapter | The guide, chapter 18, “Money” (src/engine/content/tutorial.ts), opened from Guide in the top bar, Read on the strip un… | Implemented And Verified | Not Tested |  |  |  |  |
+| `chapter.bank` | chapter | The guide, chapter 19, “Your Bank” (src/engine/content/tutorial.ts), opened from Guide in the top bar, Read on the stri… | Implemented And Verified | Not Tested |  |  |  |  |
+| `chapter.life` | chapter | The guide, chapter 20, “A Whole Life” (src/engine/content/tutorial.ts), opened from Guide in the top bar, Read on the s… | Implemented And Verified | Not Tested |  |  |  |  |
+| `promise.start.home>start.guide` | promise | src/engine/content/guide/start.ts | Implemented And Verified | Not Tested |  |  |  |  |
+| `promise.start.home>day.weather` | promise | src/engine/content/guide/start.ts | Implemented And Verified | Not Tested |  |  |  |  |
+| `promise.start.home>day.clock` | promise | src/engine/content/guide/start.ts | Implemented And Verified | Not Tested |  |  |  |  |
+| `promise.start.guide>start.home` | promise | src/engine/content/guide/start.ts | Implemented And Verified | Not Tested |  |  |  |  |
+| `promise.start.guide>day.calendar` | promise | src/engine/content/guide/start.ts | Implemented And Verified | Not Tested |  |  |  |  |
+| `promise.start.guide>day.clock` | promise | src/engine/content/guide/start.ts | Implemented And Verified | Not Tested |  |  |  |  |
+| `promise.start.find>start.guide` | promise | src/engine/content/guide/start.ts | Implemented And Verified | Not Tested |  |  |  |  |
+| `promise.start.find>day.needs` | promise | src/engine/content/guide/start.ts | Implemented And Verified | Not Tested |  |  |  |  |
+| `route./home` | route | Home: the rail’s top, the brand, H (src/app/game-context.tsx) | — | Not Tested |  |  |  |  |
+| `route./workspace/profile` | route | Player Profile: the menu (src/ui/shell/destinations.ts) | — | Not Tested |  |  |  |  |
+| `route./workspace/calendar` | route | Calendar: from Home alone, with Back To Home (src/ui/shell/destinations.ts) | — | Not Tested |  |  |  |  |
+| `route./workspace/updates` | route | Updates: from Home alone, with Back To Home (src/ui/shell/destinations.ts) | — | Not Tested |  |  |  |  |
+| `route./workspace/school` | route | School: the menu (src/ui/shell/destinations.ts) | — | Not Tested |  |  |  |  |
+| `route./workspace/career` | route | Career: the menu (src/ui/shell/destinations.ts) | — | Not Tested |  |  |  |  |
+| `route./workspace/bank` | route | Money: the menu (src/ui/shell/destinations.ts) | — | Not Tested |  |  |  |  |
+| `route./workspace/papers` | route | Papers: the menu (src/ui/shell/destinations.ts) | — | Not Tested |  |  |  |  |
+
+## Persistence
+
+| Feature | Kind | Where | Effects matrix | Sweep | By | On | Evidence | Found |
+|---|---|---|---|---|---|---|---|---|
+| `persist.create` | persistence | src/engine/index.ts, createSave | — | Not Tested |  |  |  |  |
+| `persist.load` | persistence | src/engine/index.ts, loadSave | — | Not Tested |  |  |  |  |
+| `persist.migrate` | persistence | src/engine/index.ts, migrate | — | Not Tested |  |  |  |  |
+| `persist.validate` | persistence | src/engine/index.ts, validateUniverse | — | Not Tested |  |  |  |  |
+| `persist.open-slot` | persistence | src/engine/index.ts, openSlot | — | Not Tested |  |  |  |  |
+| `persist.serialise` | persistence | src/engine/persistence/adapter.ts, serialise | — | Not Tested |  |  |  |  |
+| `persist.local-store` | persistence | src/engine/persistence/local.ts, movingStore | — | Not Tested |  |  |  |  |
+| `persist.base44` | persistence | src/engine/persistence/base44.ts, resolveAdapter | — | Not Tested |  |  |  |  |
+| `persist.guard` | persistence | base44/shared/guard.js, inspectPayload | — | Not Tested |  |  |  |  |
+| `persist.schema` | persistence | src/engine/domain/model.ts, SAVE_SCHEMA_VERSION | — | Not Tested |  |  |  |  |
+| `persist.slots` | persistence | src/ui/saves/SaveSlots.tsx, SaveSlots | — | Not Tested |  |  |  |  |
+| `persist.startup` | persistence | src/ui/startup/StartupSequence.tsx, StartupSequence | — | Not Tested |  |  |  |  |

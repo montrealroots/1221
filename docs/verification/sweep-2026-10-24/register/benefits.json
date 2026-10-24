@@ -1,0 +1,233 @@
+{
+ "benefits.assistance": {
+  "status": "Not Tested"
+ },
+ "benefits.assistance_month": {
+  "status": "Not Tested"
+ },
+ "benefits.claim": {
+  "status": "Not Tested"
+ },
+ "benefits.desempleo_month": {
+  "status": "Not Tested"
+ },
+ "benefits.ei_register": {
+  "status": "Not Tested"
+ },
+ "benefits.ja_week": {
+  "status": "Not Tested"
+ },
+ "benefits.uc_period": {
+  "status": "Not Tested"
+ },
+ "benefits.week": {
+  "status": "Not Tested"
+ },
+ "notice.systems/statetax#notifyPlayer": {
+  "status": "Not Tested"
+ },
+ "notice.systems/taxreturn#amendState": {
+  "status": "Not Tested"
+ },
+ "notice.systems/taxreturn#billed": {
+  "status": "Not Tested"
+ },
+ "notice.systems/taxreturn#federalLienStep": {
+  "status": "Not Tested"
+ },
+ "notice.systems/taxreturn#newLiability": {
+  "status": "Not Tested"
+ },
+ "notice.systems/taxreturn#reconsider": {
+  "status": "Not Tested"
+ },
+ "notice.systems/taxreturn#refusePlan": {
+  "status": "Not Tested"
+ },
+ "notice.systems/taxreturn#settleUkYears": {
+  "status": "Not Tested"
+ },
+ "notice.systems/unemployment#close": {
+  "status": "Not Tested"
+ },
+ "notice.systems/universalcredit#close": {
+  "status": "Not Tested"
+ },
+ "pension.bienestar": {
+  "status": "Not Tested"
+ },
+ "pension.bienestar_payment": {
+  "status": "Not Tested"
+ },
+ "pension.ie_state": {
+  "status": "Not Tested"
+ },
+ "pension.ie_week": {
+  "status": "Not Tested"
+ },
+ "pension.imss": {
+  "status": "Not Tested"
+ },
+ "pension.imss_month": {
+  "status": "Not Tested"
+ },
+ "pension.social_security": {
+  "status": "Not Tested"
+ },
+ "pension.ss_month": {
+  "status": "Not Tested"
+ },
+ "pension.state": {
+  "status": "Not Tested"
+ },
+ "pension.state_payment": {
+  "status": "Not Tested"
+ },
+ "promise.taxes.lien>taxes.pay": {
+  "status": "Not Tested"
+ },
+ "promise.taxes.lien>taxes.plan": {
+  "status": "Not Tested"
+ },
+ "promise.taxes.lien>taxes.return": {
+  "status": "Not Tested"
+ },
+ "promise.taxes.pay>bank.accounts#immediate": {
+  "status": "Not Tested"
+ },
+ "promise.taxes.pay>bank.accounts#scheduled": {
+  "status": "Not Tested"
+ },
+ "promise.taxes.pay>body.how": {
+  "status": "Not Tested"
+ },
+ "promise.taxes.pay>taxes.lien": {
+  "status": "Not Tested"
+ },
+ "promise.taxes.pay>taxes.plan": {
+  "status": "Not Tested"
+ },
+ "promise.taxes.pay>taxes.return": {
+  "status": "Not Tested"
+ },
+ "promise.taxes.plan>bank.accounts": {
+  "status": "Not Tested"
+ },
+ "promise.taxes.plan>documents.work": {
+  "status": "Not Tested"
+ },
+ "promise.taxes.plan>taxes.lien": {
+  "status": "Not Tested"
+ },
+ "promise.taxes.plan>taxes.pay": {
+  "status": "Not Tested"
+ },
+ "promise.taxes.plan>taxes.return": {
+  "status": "Not Tested"
+ },
+ "promise.taxes.return>bank.accounts#immediate": {
+  "status": "Not Tested"
+ },
+ "promise.taxes.return>bank.accounts#scheduled": {
+  "status": "Not Tested"
+ },
+ "promise.taxes.return>day.needs": {
+  "status": "Not Tested"
+ },
+ "promise.taxes.return>documents.work": {
+  "status": "Not Tested"
+ },
+ "promise.taxes.return>papers.overview": {
+  "status": "Not Tested"
+ },
+ "promise.taxes.return>taxes.pay": {
+  "status": "Not Tested"
+ },
+ "tax.amend": {
+  "status": "Not Tested"
+ },
+ "tax.amended": {
+  "status": "Not Tested"
+ },
+ "tax.apply_plan": {
+  "status": "Not Tested"
+ },
+ "tax.apply_state_plan": {
+  "status": "Not Tested"
+ },
+ "tax.catch_up_plan": {
+  "status": "Not Tested"
+ },
+ "tax.catch_up_state_plan": {
+  "status": "Not Tested"
+ },
+ "tax.due": {
+  "status": "Not Tested"
+ },
+ "tax.federal_lien": {
+  "status": "Not Tested"
+ },
+ "tax.federal_lien_withdraw": {
+  "status": "Not Tested"
+ },
+ "tax.file": {
+  "status": "Not Tested"
+ },
+ "tax.lien_dispute": {
+  "status": "Not Tested"
+ },
+ "tax.lien_release": {
+  "status": "Not Tested"
+ },
+ "tax.notice": {
+  "status": "Not Tested"
+ },
+ "tax.pay": {
+  "status": "Not Tested"
+ },
+ "tax.pay_state": {
+  "status": "Not Tested"
+ },
+ "tax.plan_decide": {
+  "status": "Not Tested"
+ },
+ "tax.plan_default": {
+  "status": "Not Tested"
+ },
+ "tax.plan_payment": {
+  "status": "Not Tested"
+ },
+ "tax.refund": {
+  "status": "Not Tested"
+ },
+ "tax.request_waiver": {
+  "status": "Not Tested"
+ },
+ "tax.revise_plan": {
+  "status": "Not Tested"
+ },
+ "tax.season": {
+  "status": "Not Tested"
+ },
+ "tax.state_lien": {
+  "status": "Not Tested"
+ },
+ "tax.state_nonfiler": {
+  "status": "Not Tested"
+ },
+ "tax.state_notice": {
+  "status": "Not Tested"
+ },
+ "tax.state_plan_end": {
+  "status": "Not Tested"
+ },
+ "tax.state_plan_payment": {
+  "status": "Not Tested"
+ },
+ "tax.substitute": {
+  "status": "Not Tested"
+ },
+ "tax.three_year": {
+  "status": "Not Tested"
+ }
+}

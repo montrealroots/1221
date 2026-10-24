@@ -1,0 +1,311 @@
+{
+ "citizenship.decided": {
+  "status": "Not Tested"
+ },
+ "documents.apply_idcard": {
+  "status": "Not Tested"
+ },
+ "documents.apply_opt": {
+  "status": "Not Tested"
+ },
+ "documents.apply_passport": {
+  "status": "Not Tested"
+ },
+ "documents.apply_ssn": {
+  "status": "Not Tested"
+ },
+ "documents.decided": {
+  "status": "Not Tested"
+ },
+ "documents.idcard_arrives": {
+  "status": "Not Tested"
+ },
+ "documents.naturalize": {
+  "status": "Not Tested"
+ },
+ "documents.opt_week": {
+  "status": "Not Tested"
+ },
+ "documents.permission": {
+  "status": "Not Tested"
+ },
+ "documents.police_report": {
+  "status": "Not Tested"
+ },
+ "documents.renew_residence": {
+  "status": "Not Tested"
+ },
+ "documents.replace_idcard": {
+  "status": "Not Tested"
+ },
+ "documents.replace_license": {
+  "status": "Not Tested"
+ },
+ "documents.report_lost": {
+  "status": "Not Tested"
+ },
+ "documents.residence": {
+  "status": "Not Tested"
+ },
+ "documents.settle": {
+  "status": "Not Tested"
+ },
+ "documents.ssn_arrives": {
+  "status": "Not Tested"
+ },
+ "documents.us_status": {
+  "status": "Not Tested"
+ },
+ "documents.visit": {
+  "status": "Not Tested"
+ },
+ "documents.work_permission_ended": {
+  "status": "Not Tested"
+ },
+ "health.appeal": {
+  "status": "Not Tested"
+ },
+ "health.appeal_decided": {
+  "status": "Not Tested"
+ },
+ "health.apply": {
+  "status": "Not Tested"
+ },
+ "health.apply_aid": {
+  "status": "Not Tested"
+ },
+ "health.appointment": {
+  "status": "Not Tested"
+ },
+ "health.bill": {
+  "status": "Not Tested"
+ },
+ "health.book": {
+  "status": "Not Tested"
+ },
+ "health.cancel_appointment": {
+  "status": "Not Tested"
+ },
+ "health.choose_clinic": {
+  "status": "Not Tested"
+ },
+ "health.choose_pharmacy": {
+  "status": "Not Tested"
+ },
+ "health.dental": {
+  "status": "Not Tested"
+ },
+ "health.drop": {
+  "status": "Not Tested"
+ },
+ "health.enroll": {
+  "status": "Not Tested"
+ },
+ "health.extra_supply": {
+  "status": "Not Tested"
+ },
+ "health.month": {
+  "status": "Not Tested"
+ },
+ "health.pay_bill": {
+  "status": "Not Tested"
+ },
+ "health.prepay": {
+  "status": "Not Tested"
+ },
+ "health.request_hardship": {
+  "status": "Not Tested"
+ },
+ "health.therapy": {
+  "status": "Not Tested"
+ },
+ "health.therapy_session": {
+  "status": "Not Tested"
+ },
+ "health.treat": {
+  "status": "Not Tested"
+ },
+ "health.week": {
+  "status": "Not Tested"
+ },
+ "health.work_decided": {
+  "status": "Not Tested"
+ },
+ "look.country": {
+  "status": "Not Tested"
+ },
+ "look.document": {
+  "status": "Not Tested"
+ },
+ "look.place": {
+  "status": "Not Tested"
+ },
+ "look.region": {
+  "status": "Not Tested"
+ },
+ "notice.systems/appointments#bookIn": {
+  "status": "Not Tested"
+ },
+ "notice.systems/documents#issue": {
+  "status": "Not Tested"
+ },
+ "notice.systems/health#applyRenewal": {
+  "status": "Not Tested"
+ },
+ "notice.systems/health#careFor": {
+  "status": "Not Tested"
+ },
+ "notice.systems/health#endAhead": {
+  "status": "Not Tested"
+ },
+ "notice.systems/health#grantPending": {
+  "status": "Not Tested"
+ },
+ "notice.systems/health#healthMonth": {
+  "status": "Not Tested"
+ },
+ "notice.systems/health#noticeOfNoncompliance": {
+  "status": "Not Tested"
+ },
+ "notice.systems/health#onsetMonth": {
+  "status": "Not Tested"
+ },
+ "notice.systems/health#renewalDue": {
+  "status": "Not Tested"
+ },
+ "notice.systems/health#repriceCare": {
+  "status": "Not Tested"
+ },
+ "notice.systems/permission#endOpt": {
+  "status": "Not Tested"
+ },
+ "promise.documents.passport-id>bank.accounts": {
+  "status": "Not Tested"
+ },
+ "promise.documents.passport-id>bank.other-banks": {
+  "status": "Not Tested"
+ },
+ "promise.documents.passport-id>documents.work#evaluation": {
+  "status": "Not Tested"
+ },
+ "promise.documents.passport-id>documents.work#prerequisite": {
+  "status": "Not Tested"
+ },
+ "promise.documents.passport-id>documents.work#prerequisite-2": {
+  "status": "Not Tested"
+ },
+ "promise.documents.residence>bank.accounts": {
+  "status": "Not Tested"
+ },
+ "promise.documents.residence>documents.passport-id": {
+  "status": "Not Tested"
+ },
+ "promise.documents.residence>documents.work": {
+  "status": "Not Tested"
+ },
+ "promise.documents.work>bank.other-banks": {
+  "status": "Not Tested"
+ },
+ "promise.documents.work>documents.passport-id": {
+  "status": "Not Tested"
+ },
+ "promise.documents.work>papers.benefits": {
+  "status": "Not Tested"
+ },
+ "promise.documents.work>papers.health-cover": {
+  "status": "Not Tested"
+ },
+ "promise.documents.work>school.orientation": {
+  "status": "Not Tested"
+ },
+ "promise.documents.work>taxes.plan": {
+  "status": "Not Tested"
+ },
+ "promise.documents.work>taxes.return": {
+  "status": "Not Tested"
+ },
+ "promise.papers.benefits>body.look-after": {
+  "status": "Not Tested"
+ },
+ "promise.papers.benefits>productions.cabaret": {
+  "status": "Not Tested"
+ },
+ "promise.papers.benefits>school.shifts": {
+  "status": "Not Tested"
+ },
+ "promise.papers.benefits>school.standing": {
+  "status": "Not Tested"
+ },
+ "promise.papers.benefits>taxes.return": {
+  "status": "Not Tested"
+ },
+ "promise.papers.conditions>bank.accounts": {
+  "status": "Not Tested"
+ },
+ "promise.papers.conditions>body.how": {
+  "status": "Not Tested"
+ },
+ "promise.papers.conditions>day.calendar": {
+  "status": "Not Tested"
+ },
+ "promise.papers.conditions>papers.doctor": {
+  "status": "Not Tested"
+ },
+ "promise.papers.doctor>day.calendar": {
+  "status": "Not Tested"
+ },
+ "promise.papers.doctor>day.needs": {
+  "status": "Not Tested"
+ },
+ "promise.papers.doctor>papers.conditions": {
+  "status": "Not Tested"
+ },
+ "promise.papers.doctor>papers.health-cover": {
+  "status": "Not Tested"
+ },
+ "promise.papers.health-cover>money.affairs": {
+  "status": "Not Tested"
+ },
+ "promise.papers.health-cover>papers.conditions": {
+  "status": "Not Tested"
+ },
+ "promise.papers.health-cover>papers.doctor": {
+  "status": "Not Tested"
+ },
+ "promise.papers.health-cover>school.leave": {
+  "status": "Not Tested"
+ },
+ "promise.papers.health-cover>school.money": {
+  "status": "Not Tested"
+ },
+ "promise.papers.health-cover>school.sick": {
+  "status": "Not Tested"
+ },
+ "promise.papers.health-cover>taxes.return": {
+  "status": "Not Tested"
+ },
+ "promise.papers.overview>day.needs": {
+  "status": "Not Tested"
+ },
+ "promise.papers.overview>papers.health-cover": {
+  "status": "Not Tested"
+ },
+ "promise.papers.overview>start.guide": {
+  "status": "Not Tested"
+ },
+ "promise.papers.overview>taxes.return": {
+  "status": "Not Tested"
+ },
+ "promise.papers.pensions>bank.accounts": {
+  "status": "Not Tested"
+ },
+ "promise.papers.pensions>documents.work": {
+  "status": "Not Tested"
+ },
+ "promise.papers.pensions>productions.cabaret": {
+  "status": "Not Tested"
+ },
+ "promise.papers.pensions>taxes.return": {
+  "status": "Not Tested"
+ }
+}

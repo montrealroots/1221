@@ -1,0 +1,38 @@
+{
+ "persist.base44": {
+  "status": "Not Tested"
+ },
+ "persist.create": {
+  "status": "Not Tested"
+ },
+ "persist.guard": {
+  "status": "Not Tested"
+ },
+ "persist.load": {
+  "status": "Not Tested"
+ },
+ "persist.local-store": {
+  "status": "Not Tested"
+ },
+ "persist.migrate": {
+  "status": "Not Tested"
+ },
+ "persist.open-slot": {
+  "status": "Not Tested"
+ },
+ "persist.schema": {
+  "status": "Not Tested"
+ },
+ "persist.serialise": {
+  "status": "Not Tested"
+ },
+ "persist.slots": {
+  "status": "Not Tested"
+ },
+ "persist.startup": {
+  "status": "Not Tested"
+ },
+ "persist.validate": {
+  "status": "Not Tested"
+ }
+}

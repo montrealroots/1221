@@ -53,6 +53,9 @@ clean clone, its exit read from its file: 0, 488 of 488 test files, 5,616 of 5,6
 22's, on `576a0e88`, stood there until then and is in git). Folded, 634 of 658; run again on `1ba6ac00`, which holds
 that: the same (`gate-receipt.txt`, brief 22's in git as gate.txt's is).
 
+Brief 23's stopped browser lanes (`113765a6`) left 21 `fail-*.jpg` under `../interface-final/`, the runners' pictures of the
+interface they no longer read. They stayed through the replay above, whose every step is ok, and went on 2026-10-24 (brief 26).
+
 ## Played Again On The Paydays Fix, 2026-10-22 And 23
 
 After #54's merge, the paydays fix (`a2af3b46`, the receipt's After The Merge) changed `src/engine`, and the 46 rows these

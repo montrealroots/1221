@@ -1,6 +1,48 @@
-# Read First: Brief 24, UI Alignment, Home Spacing And Navigation Cleanup, Merged, 2026-10-23
+# Read First: Brief 26, The Complete Game Connectivity, Logic And Functionality Sweep, In Progress, 2026-10-24
 
-**This section is the current status, and where a new session starts.** The owner gave brief 24
+**This section is the current status, and where a new session starts.** The owner gave brief 26
+(`docs/verification/briefs-2026-10-16/26-complete-game-connectivity-logic-and-functionality-sweep.txt`, kept as sent) in
+a new session on 2026-10-24, after an account of #62's changes in that session, with "We’re going to work on everything
+here plus starting with fix of whatever and all thats stale" and the instruction to work with one agent and no subagents.
+It is worked on `claude/connectivity-sweep`, from `main` at `b46ee301` (#63), pushed and never force-pushed, and kept out
+of `main` until the owner's word ("Do not merge to main or deploy without my explicit instruction."). Nothing is
+deployed. There is no stash and one worktree. `claude/peaceful-hamilton-59zdbb` holds brief 25, the other account's
+career expansion, eight commits past `main` on 2026-10-24, unmerged; brief 26 says not to begin that expansion, and
+nothing here builds on it.
+
+**Completion, by the matrix:** 588 of 658 rows in scope Implemented And Verified (89.3%); 66 Implemented, Verification Incomplete, 0 Partially Implemented, 0 Not Implemented, 0 Blocked Externally, 4 Decision Required, 41 Explicitly Deferred.
+
+  (634 at `b46ee301`. Brief 26's first change to `src` moved the 46 rows brief 22's final runs measured on the engine's or
+  the app's whole source to Implemented, Verification Incomplete, as briefs 23 and 24 did; they come back when the runs
+  are played again on the finished commit, the sweep's last milestone, M12.)
+
+- **Read first:** `docs/verification/sweep-2026-10-24/README.md` (the receipt), `CHECKPOINT.md` (the trail, with the
+  exact next step) and `REGISTER.md` (every feature's status).
+- **The baseline:** `npm run gate` in a clean clone of `b46ee301`, before any change, its exit read from its file: 0. 488 of 488
+  test files, 5,616 of 5,616 tests, none skipped, all 22 checks, the matrix at 634 of 658
+  (`docs/verification/sweep-2026-10-24/baseline/gate.txt`). Nothing failed before this work, so a failure after it is this
+  work's. (#62's merge message claimed a run on `8d4139de` with no receipt; `src`, `tests`, `tools` and `package.json`
+  are the same at `b46ee301`, so this is that receipt too.)
+- **What was stale after #62, and fixed (M1):** the effects matrix's rows that still had Calendar and Updates on the
+  menu and What Needs You holding every notice; the attributes matrix's destinations ("the rail") and Profile Sections
+  (seven of eight); brief 23's records (the menu's "eight places", a before walk of 2,112 steps that was 2,040, the
+  matrix at 588 with no sequel, the final runs "not made here"); the completion matrix's descriptions of Home's six
+  rows, the review's claim of 2026-10-13, now a `claim` as the code stands through the pipeline's inputs; two
+  stylesheet rules nothing matched; 21 failure pictures brief 23's stopped lanes left; the briefs' README with no row
+  for 23 and 24. The receipt's table has each, with what held it.
+- **The register (M2):** `tools/sweep.mjs` finds 1,145 features in the code (the effects matrix's 541 rows and 406
+  promises, 17 techniques, 149 genres, the Profile's 8 sections, 8 places, 12 persistence behaviours, 4 world
+  mechanics), each with the sweep's status, how it was verified, the commit, the evidence and what was found
+  (`docs/verification/sweep-2026-10-24/register/`). The gate's twenty-third check holds it to the code. Every feature
+  began Not Tested.
+- **The traces (M3 to M11), as they close:** none yet.
+- **M12, at the close:** brief 22's final runs again on the finished commit (back to 634), the gate in a clean clone of
+  it, the receipt with everything brief 26's §13 asks.
+- **Not merged, not deployed.** The schema stays 94.
+
+# Earlier: Brief 24, UI Alignment, Home Spacing And Navigation Cleanup, Merged, 2026-10-23
+
+**This section was the current status until brief 26 (2026-10-24).** The owner gave brief 24
 (`docs/verification/briefs-2026-10-16/24-finish-slates-ui-alignment-home-spacing-and-navigation-cleanup.txt`, kept
 verbatim) on brief 23's line, before it was merged. It was worked on `claude/peaceful-hamilton-59zdbb` from `113765a6`,
 pushed and never force-pushed. Until the owner's word it was kept out of `main` ("Keep the changes reviewable. Do not

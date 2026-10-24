@@ -79,11 +79,13 @@ Each image is under `captures/before/` and `captures/after/` at the same path, s
   the Calendar no place was marked. Home's badge counted notices and questions together (99+ for 500 notices).
 - **Change:** a drawer, closed by default and closed on a choice, at 900 wide or narrower and at 500 tall or shorter.
   Every phone on its side gets the drawer.
-  - The Calendar and Updates are on it: eight places.
+  - The Calendar and Updates are on it: eight places. (Until brief 24, later that day, which took both off the menu for
+    Home alone, Up Next's Open Calendar and Recent Updates' View All Updates, with Back To Home at their heads: six since.
+    This page is brief 23's record; it said eight with no date until 2026-10-24.)
   - Home's badge counts the questions; Updates' counts the unread notices.
   - The place you're on is marked (`aria-current`), and the trail at the page's head ends on the same words.
 - **Desktop:** the rail is shown at every desktop size but 760, where it's the drawer. The keyboard check opened each of
-  the eight places, and your name at the foot, from the keyboard. The menu marked each, and the trail named it the same.
+  the eight places (six since brief 24), and your name at the foot, from the keyboard. The menu marked each, and the trail named it the same.
 - **Phone on its side:** the drawer at 667, 844 and 932, its items 44 pixels.
 - **Images:** `released/667x375m/navigation-open.jpg`, `released/932x430m/navigation-open.jpg`, `released/760x900/navigation-open.jpg`.
 - **Remains:** the trail is the screens visited, not a hierarchy, as it was (`inventory.md`). Its last crumb names the
@@ -333,7 +335,7 @@ The results are in `after/keyboard.json`.
 - **Tab from the top:** 70 Tab presses: the skip link first, then the bar, the menu and the page, in that order. Each
   stop had a ring showing, none was covered by the bar (what's on top at its center is it), and none was out of view.
 - **The skip link:** first, and Enter on it puts the focus in the page.
-- **Where you are:** each of the menu's eight places, and your name at its foot, opened from the keyboard. The menu
+- **Where you are:** each of the menu's eight places (six since brief 24), and your name at its foot, opened from the keyboard. The menu
   marked each (`aria-current`), and the trail at the page's head ended on the same words. Home has no trail.
 - **A menu:** Advance opened on Enter, said so (`aria-expanded`), held its eight items, and closed on Escape with the
   focus back on Advance.
@@ -342,7 +344,7 @@ The results are in `after/keyboard.json`.
 - **A tab bar:** Money's five tabs moved with the right arrow, End and Home, the selected one said (`aria-selected`).
 - **200% zoom** (1280×720 read at 640×360, a desktop's fine pointer):
   - the drawer, with the bar's Menu, Play, Sleep, Look After Yourself and Advance;
-  - Home's four panels, the menu's eight places and every control Home has at 100% (none lost);
+  - Home's four panels, the menu's eight places (six since brief 24) and every control Home has at 100% (none lost);
   - the guide and Save & Exit at the drawer's foot;
   - the page no wider than the window, and the page starting below the bar.
 - **Not checked:** a screen reader's reading of any of it, and a person's own sense of the order.
@@ -364,7 +366,7 @@ keyboard, never a physical phone or a person.
 | Id | Status | What verified it |
 |---|---|---|
 | B1 | Met | Every capture brief 23 names opened (`inventory.md`, before any change) |
-| B2 | Met | The before walk, 2,112 steps, its issues and checks (`inventory.md`, `captures/before/`) |
+| B2 | Met | The before walk, 2,040 steps (2,112 here until 2026-10-24, a figure neither summary held), its issues and checks (`inventory.md`, `captures/before/`) |
 | P1 | Verified, emulated | Walk: Rotate Your Phone To Play shown, the game `inert` and the focus on it, 8 of 8 lives; `tests/b23-turn.test.ts` |
 | P2 | Verified | Test: a live clock paused through Pause's command, a minute upright moves nothing; walk: paused upright, 8 of 8 |
 | P3 | Verified, emulated | Walk: the screen, its tab, its scroll, an open menu, an open dialog and a typed search kept, 8 of 8 each |

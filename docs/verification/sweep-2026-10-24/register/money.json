@@ -1,0 +1,482 @@
+{
+ "bank.add_standing_order": {
+  "status": "Not Tested"
+ },
+ "bank.application": {
+  "status": "Not Tested"
+ },
+ "bank.arrange_overdraft": {
+  "status": "Not Tested"
+ },
+ "bank.borrow": {
+  "status": "Not Tested"
+ },
+ "bank.break_term": {
+  "status": "Not Tested"
+ },
+ "bank.cancel_new": {
+  "status": "Not Tested"
+ },
+ "bank.cancel_scheduled": {
+  "status": "Not Tested"
+ },
+ "bank.cancel_standing_order": {
+  "status": "Not Tested"
+ },
+ "bank.cancel_switch": {
+  "status": "Not Tested"
+ },
+ "bank.claim_unclaimed": {
+  "status": "Not Tested"
+ },
+ "bank.close_current": {
+  "status": "Not Tested"
+ },
+ "bank.close_savings": {
+  "status": "Not Tested"
+ },
+ "bank.current_closes": {
+  "status": "Not Tested"
+ },
+ "bank.debit_overdraft": {
+  "status": "Not Tested"
+ },
+ "bank.fraud_refund": {
+  "status": "Not Tested"
+ },
+ "bank.home_closes": {
+  "status": "Not Tested"
+ },
+ "bank.loan_due": {
+  "status": "Not Tested"
+ },
+ "bank.month_end": {
+  "status": "Not Tested"
+ },
+ "bank.new_number": {
+  "status": "Not Tested"
+ },
+ "bank.open_current": {
+  "status": "Not Tested"
+ },
+ "bank.open_savings": {
+  "status": "Not Tested"
+ },
+ "bank.open_term": {
+  "status": "Not Tested"
+ },
+ "bank.pay_collections": {
+  "status": "Not Tested"
+ },
+ "bank.reactivate": {
+  "status": "Not Tested"
+ },
+ "bank.redirect_deposits": {
+  "status": "Not Tested"
+ },
+ "bank.repay_loan": {
+  "status": "Not Tested"
+ },
+ "bank.savings_notice": {
+  "status": "Not Tested"
+ },
+ "bank.schedule_payment": {
+  "status": "Not Tested"
+ },
+ "bank.scheduled_payment": {
+  "status": "Not Tested"
+ },
+ "bank.set_alerts": {
+  "status": "Not Tested"
+ },
+ "bank.set_loan_repayment": {
+  "status": "Not Tested"
+ },
+ "bank.set_order_source": {
+  "status": "Not Tested"
+ },
+ "bank.set_payments": {
+  "status": "Not Tested"
+ },
+ "bank.set_primary": {
+  "status": "Not Tested"
+ },
+ "bank.set_round_ups": {
+  "status": "Not Tested"
+ },
+ "bank.set_term_end": {
+  "status": "Not Tested"
+ },
+ "bank.standing_order": {
+  "status": "Not Tested"
+ },
+ "bank.stop_balance_transfer": {
+  "status": "Not Tested"
+ },
+ "bank.switch": {
+  "status": "Not Tested"
+ },
+ "bank.switch_complete": {
+  "status": "Not Tested"
+ },
+ "bank.switch_debt": {
+  "status": "Not Tested"
+ },
+ "bank.switch_review": {
+  "status": "Not Tested"
+ },
+ "bank.take_overrun_loan": {
+  "status": "Not Tested"
+ },
+ "bank.take_term_interest": {
+  "status": "Not Tested"
+ },
+ "bank.term_notice": {
+  "status": "Not Tested"
+ },
+ "bank.transfer": {
+  "status": "Not Tested"
+ },
+ "bank.transfer_arrives": {
+  "status": "Not Tested"
+ },
+ "card.apply": {
+  "status": "Not Tested"
+ },
+ "card.arrives": {
+  "status": "Not Tested"
+ },
+ "card.close": {
+  "status": "Not Tested"
+ },
+ "card.dispute": {
+  "status": "Not Tested"
+ },
+ "card.due": {
+  "status": "Not Tested"
+ },
+ "card.lock": {
+  "status": "Not Tested"
+ },
+ "card.money_transfer": {
+  "status": "Not Tested"
+ },
+ "card.plan": {
+  "status": "Not Tested"
+ },
+ "card.redeem_rewards": {
+  "status": "Not Tested"
+ },
+ "card.refund_credit": {
+  "status": "Not Tested"
+ },
+ "card.replaced": {
+  "status": "Not Tested"
+ },
+ "card.report": {
+  "status": "Not Tested"
+ },
+ "card.request_hardship": {
+  "status": "Not Tested"
+ },
+ "card.request_limit": {
+  "status": "Not Tested"
+ },
+ "card.set_auto_raise": {
+  "status": "Not Tested"
+ },
+ "card.set_autopay_from": {
+  "status": "Not Tested"
+ },
+ "card.set_everyday": {
+  "status": "Not Tested"
+ },
+ "card.set_over_limit": {
+  "status": "Not Tested"
+ },
+ "card.set_statement_day": {
+  "status": "Not Tested"
+ },
+ "card.statement": {
+  "status": "Not Tested"
+ },
+ "cash.deposit": {
+  "status": "Not Tested"
+ },
+ "cash.withdraw": {
+  "status": "Not Tested"
+ },
+ "finance.pay_card": {
+  "status": "Not Tested"
+ },
+ "finance.set_autopay": {
+  "status": "Not Tested"
+ },
+ "look.account": {
+  "status": "Not Tested"
+ },
+ "look.bank": {
+  "status": "Not Tested"
+ },
+ "look.currency": {
+  "status": "Not Tested"
+ },
+ "look.debt": {
+  "status": "Not Tested"
+ },
+ "look.networth": {
+  "status": "Not Tested"
+ },
+ "look.transaction": {
+  "status": "Not Tested"
+ },
+ "notice.systems/abroad#armHomeAccounts": {
+  "status": "Not Tested"
+ },
+ "notice.systems/abroad#arriveFromAbroad": {
+  "status": "Not Tested"
+ },
+ "notice.systems/abroad#homeCloses": {
+  "status": "Not Tested"
+ },
+ "notice.systems/accountlife#idleAccounts": {
+  "status": "Not Tested"
+ },
+ "notice.systems/bankmoves#closedByBank": {
+  "status": "Not Tested"
+ },
+ "notice.systems/cardoffers#transferOnArrival": {
+  "status": "Not Tested"
+ },
+ "notice.systems/credit#afterMissed": {
+  "status": "Not Tested"
+ },
+ "notice.systems/credit#chargeOff": {
+  "status": "Not Tested"
+ },
+ "notice.systems/credit#delinquency": {
+  "status": "Not Tested"
+ },
+ "notice.systems/credit#persistentDebt": {
+  "status": "Not Tested"
+ },
+ "notice.systems/lending#closeForOverdraft": {
+  "status": "Not Tested"
+ },
+ "notice.systems/lending#completeSwitch": {
+  "status": "Not Tested"
+ },
+ "notice.systems/lending#frenchOverrun": {
+  "status": "Not Tested"
+ },
+ "notice.systems/lending#refundInterestTax": {
+  "status": "Not Tested"
+ },
+ "notice.systems/obligations#accountAlerts": {
+  "status": "Not Tested"
+ },
+ "notice.systems/roundups#moveRoundUps": {
+  "status": "Not Tested"
+ },
+ "notice.systems/security#attemptOnNumber": {
+  "status": "Not Tested"
+ },
+ "notice.systems/security#somebodyElse": {
+  "status": "Not Tested"
+ },
+ "notice.systems/spending#buyTheDaysFood": {
+  "status": "Not Tested"
+ },
+ "notice.systems/statements#statementReady": {
+  "status": "Not Tested"
+ },
+ "promise.bank.accounts>bank.borrowing": {
+  "status": "Not Tested"
+ },
+ "promise.bank.accounts>bank.cash": {
+  "status": "Not Tested"
+ },
+ "promise.bank.accounts>bank.payments": {
+  "status": "Not Tested"
+ },
+ "promise.bank.accounts>bank.transfer": {
+  "status": "Not Tested"
+ },
+ "promise.bank.accounts>bank.upkeep": {
+  "status": "Not Tested"
+ },
+ "promise.bank.accounts>money.affairs": {
+  "status": "Not Tested"
+ },
+ "promise.bank.borrowing>bank.card": {
+  "status": "Not Tested"
+ },
+ "promise.bank.borrowing>bank.other-banks": {
+  "status": "Not Tested"
+ },
+ "promise.bank.borrowing>bank.payments": {
+  "status": "Not Tested"
+ },
+ "promise.bank.borrowing>body.how": {
+  "status": "Not Tested"
+ },
+ "promise.bank.borrowing>money.affairs": {
+  "status": "Not Tested"
+ },
+ "promise.bank.card-offers>bank.card": {
+  "status": "Not Tested"
+ },
+ "promise.bank.card-offers>money.affairs": {
+  "status": "Not Tested"
+ },
+ "promise.bank.card-security>bank.card": {
+  "status": "Not Tested"
+ },
+ "promise.bank.card-security>bank.cash": {
+  "status": "Not Tested"
+ },
+ "promise.bank.card-security>bank.payments": {
+  "status": "Not Tested"
+ },
+ "promise.bank.card-security>bank.upkeep": {
+  "status": "Not Tested"
+ },
+ "promise.bank.card>bank.borrowing": {
+  "status": "Not Tested"
+ },
+ "promise.bank.card>bank.card-offers": {
+  "status": "Not Tested"
+ },
+ "promise.bank.card>bank.card-security": {
+  "status": "Not Tested"
+ },
+ "promise.bank.card>bank.payments": {
+  "status": "Not Tested"
+ },
+ "promise.bank.card>day.needs": {
+  "status": "Not Tested"
+ },
+ "promise.bank.card>money.affairs": {
+  "status": "Not Tested"
+ },
+ "promise.bank.cash>bank.card": {
+  "status": "Not Tested"
+ },
+ "promise.bank.cash>bank.card-security": {
+  "status": "Not Tested"
+ },
+ "promise.bank.cash>bank.payments": {
+  "status": "Not Tested"
+ },
+ "promise.bank.cash>money.affairs": {
+  "status": "Not Tested"
+ },
+ "promise.bank.home-account>bank.accounts": {
+  "status": "Not Tested"
+ },
+ "promise.bank.home-account>bank.transfer": {
+  "status": "Not Tested"
+ },
+ "promise.bank.home-account>bank.upkeep": {
+  "status": "Not Tested"
+ },
+ "promise.bank.home-account>taxes.return": {
+  "status": "Not Tested"
+ },
+ "promise.bank.other-banks>bank.accounts": {
+  "status": "Not Tested"
+ },
+ "promise.bank.other-banks>bank.borrowing": {
+  "status": "Not Tested"
+ },
+ "promise.bank.other-banks>bank.payments": {
+  "status": "Not Tested"
+ },
+ "promise.bank.other-banks>bank.transfer": {
+  "status": "Not Tested"
+ },
+ "promise.bank.other-banks>documents.passport-id": {
+  "status": "Not Tested"
+ },
+ "promise.bank.payments>bank.borrowing": {
+  "status": "Not Tested"
+ },
+ "promise.bank.payments>bank.card": {
+  "status": "Not Tested"
+ },
+ "promise.bank.payments>bank.cash": {
+  "status": "Not Tested"
+ },
+ "promise.bank.payments>bank.upkeep": {
+  "status": "Not Tested"
+ },
+ "promise.bank.payments>body.look-after": {
+  "status": "Not Tested"
+ },
+ "promise.bank.payments>school.shifts": {
+  "status": "Not Tested"
+ },
+ "promise.bank.round-ups>bank.accounts": {
+  "status": "Not Tested"
+ },
+ "promise.bank.round-ups>bank.payments": {
+  "status": "Not Tested"
+ },
+ "promise.bank.round-ups>bank.upkeep": {
+  "status": "Not Tested"
+ },
+ "promise.bank.term>bank.accounts": {
+  "status": "Not Tested"
+ },
+ "promise.bank.term>bank.upkeep": {
+  "status": "Not Tested"
+ },
+ "promise.bank.term>day.needs": {
+  "status": "Not Tested"
+ },
+ "promise.bank.term>money.affairs": {
+  "status": "Not Tested"
+ },
+ "promise.bank.transfer>bank.accounts": {
+  "status": "Not Tested"
+ },
+ "promise.bank.transfer>bank.other-banks": {
+  "status": "Not Tested"
+ },
+ "promise.bank.transfer>bank.payments": {
+  "status": "Not Tested"
+ },
+ "promise.bank.transfer>bank.upkeep": {
+  "status": "Not Tested"
+ },
+ "promise.bank.upkeep>bank.card": {
+  "status": "Not Tested"
+ },
+ "promise.bank.upkeep>bank.card-security": {
+  "status": "Not Tested"
+ },
+ "promise.bank.upkeep>bank.payments": {
+  "status": "Not Tested"
+ },
+ "promise.bank.upkeep>bank.round-ups": {
+  "status": "Not Tested"
+ },
+ "promise.bank.upkeep>bank.term": {
+  "status": "Not Tested"
+ },
+ "promise.bank.upkeep>day.needs": {
+  "status": "Not Tested"
+ },
+ "promise.money.affairs>bank.accounts": {
+  "status": "Not Tested"
+ },
+ "promise.money.affairs>bank.card": {
+  "status": "Not Tested"
+ },
+ "promise.money.affairs>body.how": {
+  "status": "Not Tested"
+ },
+ "promise.money.affairs>taxes.pay": {
+  "status": "Not Tested"
+ }
+}

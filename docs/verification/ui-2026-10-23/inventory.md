@@ -4,7 +4,7 @@ Made on 2026-10-23 from two sources, before any change to `src`:
 - **The captures** brief 23 names, every image opened: `../career-genre-2026-10-22/captures/` (sixteen pages at 1440,
   each whole) and `captures/mobile/` (the same at 390 upright). They show `main` at `58231c69`, whose `src` is the
   same as `ebac1923`'s, where this work began (`git diff 58231c69 ebac1923 -- src` is empty).
-- **The walk** (`app/capture.mjs`) of the app built from that commit: eight lives, nine sizes, 2,112 steps, each with a
+- **The walk** (`app/capture.mjs`) of the app built from that commit: eight lives, nine sizes, 2,040 steps (2,112 here until 2026-10-24, a figure the summary never held), each with a
   viewport image and its measurements. The sums by size are `before/audit-summary.json`; the images, 185 MB in all, were
   kept outside the repository, and the ones compared with the result are in `captures/before/`.
 

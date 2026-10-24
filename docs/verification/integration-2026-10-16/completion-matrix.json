@@ -9,7 +9,7 @@
   "Decision Required",
   "Explicitly Deferred"
  ],
- "completion": "Completion, by the matrix: 634 of 658 rows in scope Implemented And Verified (96.3%); 20 Implemented, Verification Incomplete, 0 Partially Implemented, 0 Not Implemented, 0 Blocked Externally, 4 Decision Required, 41 Explicitly Deferred.",
+ "completion": "Completion, by the matrix: 588 of 658 rows in scope Implemented And Verified (89.3%); 66 Implemented, Verification Incomplete, 0 Partially Implemented, 0 Not Implemented, 0 Blocked Externally, 4 Decision Required, 41 Explicitly Deferred.",
  "fields": [
   "goal",
   "entry",
@@ -7563,8 +7563,8 @@
    "group": "Creation, Profile, Home And The Looks",
    "kind": "home",
    "source": "audit",
-   "goal": "Home's Calendar section shows the next commitment (relative time, title, date, its own city's clock where it names another city, and 'you’re not in <city>' when away) or 'No plans or commitments ahead', up to five more upcoming entries, and an Open Calendar button navigating to /workspace/calendar; locked until ui.calendar's chapter.",
-   "entry": "Calendar panel (Home.tsx:148-210; another city’s clock and 'you’re not in' at :170-179)",
+   "goal": "Up Next shows the next commitment (its time to go, its title, its date and time, its own city’s clock where it names another, ‘you’re not in <city>’ when away with no trip of its own, and the full night before it while one’s still to be had) or ‘No plans or commitments ahead.’, up to five more, and Open Calendar (open once “What’s Coming” is read) to /workspace/calendar, where Back To Home brings you back (Home.tsx:274, 423-513). Until 2026-10-23 (brief 23) it was Home’s Calendar section, the words the same; until brief 24 that day Open Calendar waited for “Your Own Plans”, the menu’s Calendar bridging the gap.",
+   "entry": "Up Next (Home.tsx:274, drawn at :423-513; another city’s clock and ‘you’re not in’ at :456-471; Open Calendar at :438). Until 2026-10-23 (brief 23) the Calendar panel (Home.tsx:148-210 that day; the clock and ‘you’re not in’ at :170-179); its button opened with “Your Own Plans” until brief 24 later that day",
    "preconditions": "Not recorded",
    "reads": "nextCommitment, upcoming",
    "decisions": "Not recorded",
@@ -7575,7 +7575,7 @@
    "sees": "Not recorded",
    "saveLoad": "Not recorded",
    "failure": "Open: No test renders the section: next commitment, the list below it, the empty-calendar sentence.; The other-city clock and 'you’re not in' branches (Home.tsx:170-176) are untested.; Open Calendar's navigation is checked only as source text.; Row status 'verified' rests on engine tests while the screen is unread.",
-   "implementation": "Calendar panel (Home.tsx:148-210; another city’s clock and 'you’re not in' at :170-179)",
+   "implementation": "Up Next (Home.tsx:274, drawn at :423-513; another city’s clock and ‘you’re not in’ at :456-471; Open Calendar at :438). Until 2026-10-23 (brief 23) the Calendar panel (Home.tsx:148-210 that day; the clock and ‘you’re not in’ at :170-179); its button opened with “Your Own Plans” until brief 24 later that day",
    "evidence": "tests/evidence-g32-ui.test.ts h-calendar: 'PLAYER JOURNEY: a plan made two days out is the next commitment with its time to go, its title and its date…; called off, the day is hers; a time gone by is refused in its own words', 'PLAYER JOURNEY: a call wanting her in Los Angeles is told on its own clock, 4:30 AM PDT, and that she’s not in Los Angeles; missed when it comes…', 'Open Calendar, pressed, goes to /workspace/calendar; a guided life keeps the section and its button locked until “What’s Coming” is read…', 'PLAYER JOURNEY: a plan holds across a save and a reload, on the calendar once'; tests/plans.test.ts ‘puts it on the calendar, where everything else can see it’; tests/defects-g4-2.test.ts ‘is the next commitment on Home, as the list under it says’ (functions, not the screen). Until 2026-10-23 (brief 24) Open Calendar opened with “Your Own Plans”, and the menu’s Calendar was the way in before it; until 2026-10-13 no test rendered the panel.",
    "sourceStatus": "verified",
    "status": "Implemented And Verified"
@@ -7585,7 +7585,7 @@
    "group": "Creation, Profile, Home And The Looks",
    "kind": "home",
    "source": "audit",
-   "goal": "What Needs You lists open decisions (title, due/Overdue, detail) with each action sending world.take_decision_action, Go There navigating, Dismiss sending world.dismiss_decision; unread notices with Go There; 'Mark N Read' sending world.mark_read; with nothing open or unread, 'All Clear' only when troubles() and the next month's calendar clashes are empty, else 'No Decisions Waiting' with what weighs.",
+   "goal": "What Needs You lists the open questions (title, due or Overdue, detail, Read It All past 160 characters), each answer sending world.take_decision_action, Go There navigating and Dismiss sending world.dismiss_decision, six and then Show All N; under them what needs putting right, each with Open <screen> and its How This Works (thingsToDo); with nothing waiting, one All Clear line (Home.tsx:218-275; on a phone on its side the most pressing one and Show All N). The unread notices are Recent Updates’ (the four most important, a repeated one a single line) and Updates’ (every one), Mark N Read and Mark Read sending world.mark_read (Home.tsx:279-328). Until 2026-10-23 (brief 23) the notices were under the questions here, with Mark N Read in this head and Show All N past six.",
    "entry": "What Needs You: the questions, the first six and Show All past them, Dismiss and Go There, and the things to put right with Open and their screen’s How This Works, or All Clear (Home.tsx:178-221; thingsToDo at :506-546, needsLine at :289). Recent Updates: the four most important unread notices, Mark Read, Mark N Read, Go There and View All Updates (Home.tsx:228-274); Updates keeps every notice (Updates.tsx). Until 2026-10-23 (brief 23) every unread notice was under the questions, with Mark Read and Mark N Read there, and the weighing sentences were at Home.tsx:49-75.",
    "preconditions": "Not recorded",
    "reads": "openDecisions, unreadNotifications, troubles(), entriesBetween conflicts",
@@ -7629,7 +7629,7 @@
    "group": "Creation, Profile, Home And The Looks",
    "kind": "home",
    "source": "audit",
-   "goal": "Where You Are shows the city, region and country (each a way in), distance and hours from home when away or 'Home.', the place's tags or kind and size, Local Time and Daylight; Weather shows the current temperature, condition, high/low, humidity, wind, climate, and a strip of the next days from forecastFor, each day opening its forecast look; they change nothing.",
+   "goal": "Today’s line under the greeting names the time, the town, its region, the zone and the season, and once “Your Life, Hour By Hour” is read the daylight, each a way into its look; the sky beside it, once “Weather” is read, shows the temperature, the condition, the high and low and the five days ahead, each opening its day (Home.tsx:134-215); until each chapter, a locked button in its place. The town’s country, money, people and Local Time, and the sky’s humidity, wind and climate, are in their looks. Until 2026-10-23 (brief 23) Where You Are and Weather were panels of their own on Home, the first saying ‘Home.’ of the town.",
    "entry": "Today’s town, region, zone, season and daylight, and the sky beside it with the five days ahead, at the head of Home (Home.tsx:114-136, 142-174). Until 2026-10-23 (brief 23) they were panels of their own, Where You Are and the Weather (Home.tsx:341-388, 390-441 that day); until 2026-10-13 this cited 338-436.",
    "preconditions": "Not recorded",
    "reads": "placeProfile, weatherAt, forecastFor",
@@ -7651,7 +7651,7 @@
    "group": "Creation, Profile, Home And The Looks",
    "kind": "home",
    "source": "audit",
-   "goal": "Your Affairs' Money line reads '<primary account name>: <balance>. Worth <net worth>[, <liabilities> of it owed].', alerts 'Your account is overdrawn.' when the primary balance is negative, and its bank button (Gated ui.bank) navigates to /workspace/bank; locked until ui.money's chapter.",
+   "goal": "The head of Money says the worth, “Worth $…, after $… owed.” (WorthWords, Glance.tsx:33-43, mounted at BankWorkspace.tsx:297), and “Your account is overdrawn.” while the primary balance is negative; what money needs putting right (money owed unpaid, an overdrawn account, a card near its limit or behind, a debt in collections) is a line under What Needs You on Home with Open Money (thingsToDo, Home.tsx:568-608), the button open once “Your Bank” is read. Until 2026-10-23 (brief 23) Home’s Your Affairs had a Money line, ‘<primary account name>: <balance>. Worth <net worth>[, <liabilities> of it owed].’, with its bank button, locked until “Money”.",
    "entry": "The head of Money: the bank’s sum, then Worth, what she has less what she owes and, if she owes anything, how much (WorthWords, Glance.tsx:33-43, mounted at BankWorkspace.tsx:297), and “Your account is overdrawn.” (BankWorkspace.tsx:299); what needs putting right is under What Needs You on Home (thingsToDo, Home.tsx:514-534). Until 2026-10-23 (brief 23) it was Your Affairs’ Money line on Home (Home.tsx:449-457, in Your Affairs at :447).",
    "preconditions": "Not recorded",
    "reads": "ledger.accountsOf, primaryAccountId, netWorth",
@@ -7673,7 +7673,7 @@
    "group": "Creation, Profile, Home And The Looks",
    "kind": "home",
    "source": "audit",
-   "goal": "Home's Your Affairs School line (Home.tsx:480-505) reads '<where>, <standing>, <rank> of 16 in the class. Next: <label>, <date>.' Here <where> is Arriving, Year N, On Leave, Graduated or Left the school, and Next is the first pending school item that wants the player, or else nextClasses, with none on a leave or once the school has ended. It shows an alert when the standing is concern, warning or dismissed, and a Yale button that navigates to /workspace/school. Display only.",
+   "goal": "The head of School reads ‘<where>, <standing>. You’re <rank> of 16 in the class. Next: <label>, <date>.’ (SchoolGlance, Glance.tsx:51-70, mounted at SchoolWorkspace.tsx:89), <where> Arriving, Year N, On Leave, Graduated or Left the School and Next the first pending school item that wants the player, else the next classes; a standing of concern, warning or dismissed is a line under What Needs You on Home with Open School (thingsToDo, Home.tsx:568-608). Until 2026-10-23 (brief 23) Home’s Your Affairs School line (Home.tsx:480-505 that day) said the same.",
    "entry": "The head of School: the year and the standing, then her place in the class and what’s next (SchoolGlance, Glance.tsx:51-70, mounted at SchoolWorkspace.tsx:89); a standing of concern, warning or dismissal is put right from What Needs You on Home (thingsToDo, Home.tsx:537-539). Until 2026-10-23 (brief 23) it was Your Affairs’ School line on Home (SchoolLine, Home.tsx:484-516, mounted at :458).",
    "preconditions": "Not recorded",
    "reads": "person.school, scheduled school items, nextClasses, rankIn",
@@ -7695,7 +7695,7 @@
    "group": "Creation, Profile, Home And The Looks",
    "kind": "home",
    "source": "audit",
-   "goal": "Home's Papers line (Home.tsx:511-540) reads 'Cover: <coverLabel or none>.', plus 'Unemployment, $X a week.' when there is a claim. Alerts: no cover; an open return's due date and what filing it would pay (unassessedBalance, plus latePenaltyAll once past due); tax owed today from owedEverywhere, with interest and penalty to date (the same figure as Papers and troubles(), fixed 2026-10-10). A Papers button navigates to /workspace/papers.",
+   "goal": "The head of Papers reads ‘Cover: <coverLabel or none>.’, ‘Unemployment, $X a week.’ with a claim, and what the returns and taxes ask (PapersGlance and papersAlerts, Glance.tsx:79-129, mounted at PapersWorkspace.tsx:450): no cover, an open return’s due date with what filing it would pay and the late penalty once past due, tax owed and growing; each is a line under What Needs You on Home with Open Papers, a return’s held back while its own question is open (thingsToDo, Home.tsx:568-608). Until 2026-10-23 (brief 23) Home’s Papers line in Your Affairs (Home.tsx:511-540 that day) said the same.",
    "entry": "The head of Papers: what covers her, a claim’s weekly pay, and what the returns and taxes ask (PapersGlance and papersAlerts, Glance.tsx:79-129, mounted at PapersWorkspace.tsx:450); what of it needs doing is under What Needs You on Home (thingsToDo, Home.tsx:542-544), the return’s line held back while its own question is open. Until 2026-10-23 (brief 23) it was Your Affairs’ Papers line on Home (PapersLine, Home.tsx:518-552, mounted at :459).",
    "preconditions": "Not recorded",
    "reads": "coverOn, person.returns, latePenalty, unemployment.claim",
@@ -11607,13 +11607,14 @@
    "implementation": "Not recorded",
    "evidence": "docs/verification/decisions-2026-10-16/advice/held-out-summary.json ‘npx vite-node tools/advice.ts -- --cases <batch> --held-out --out held-out-<id>.json, fifteen batches (held-out-runs.txt), then --summarize’ (measurement (seeded, played through the commands))",
    "sourceStatus": "verified as it stands",
-   "status": "Implemented And Verified",
+   "status": "Implemented, Verification Incomplete",
    "disposition": "verified as it stands",
    "override": "Brief 22, the final area (docs/verification/career-genre-2026-10-22/final-runs/final-result.json): The held-out set, regression coverage from brief 12, on brief 22's commit cb8b19eb (runs22.sh ADVR, every batch exit 0, its tree clean): the advised input's realized gain at or above the median of the others' on 120 of 120 (95% asked), its mean 0.765 against 0.388 for an input chosen at random, 1.969 times (1.5 asked); by stratum beginner 1.868, developing 2.067, advanced 1.961, nearMastery 2.049, firstWeek 1.982, midTerm 1.859, later 2.082; F2-A's 30 held out, 2.187.",
    "measured": {
     "commit": "cb8b19eb",
     "watch": "engine"
-   }
+   },
+   "missing": "It was measured on cb8b19eb, and what it reads has changed since (src/engine/content/attributes-matrix.ts): measure it again"
   },
   {
    "id": "advice.F2A10-d",
@@ -11681,13 +11682,14 @@
    "implementation": "systems/advice.ts",
    "evidence": "tests/decisions-advice.test.ts ‘F2-A10: What To Improve Next, followed through the commands (brief 10) > near mastery, an input’s forecast falls as its level rises, at full precision’ (played tuning case); tests/decisions-advice.test.ts ‘F2-A10: What To Improve Next, followed through the commands (brief 10) > reads a take its own preparation held back most as prepared, and knowing the genre as it’s known today’ (played tuning cases, a brief taped cold); docs/verification/decisions-2026-10-16/advice/held-out-summary.json ‘npx vite-node tools/advice.ts -- --cases <batch> --held-out --out held-out-<id>.json, fifteen batches (held-out-runs.txt), then --summarize’ (measurement (seeded, played through the commands))",
    "sourceStatus": "owner decision",
-   "status": "Implemented And Verified",
+   "status": "Implemented, Verification Incomplete",
    "disposition": "owner decision",
    "override": "Brief 22, the final area (docs/verification/career-genre-2026-10-22/final-runs/final-result.json): The fresh set, adv-v-0 to 119, run again on brief 22's commit cb8b19eb, brief 12 having run it once unseen; every batch exit 0 and its tree clean (runs22.sh ADVF): F1 120, F2 120, F4 120, F5 120 and F6 120 of 120 (120 asked); F3 120 of 120 (96 asked), by band beginner 30, developing 30, advanced 30, nearMastery 30 of 30 (21 asked), by stage firstWeek 40, midTerm 40, later 40 of 40 (28 asked); read as prepared {'asBuilt': 1, 'cold': 102}; the verdicts {'both': 120, 'training': 0, 'preparation': 0, 'neither': 0}, on the cold take {'both': 120, 'training': 0, 'preparation': 0, 'neither': 0}. Reported beside them as written, deciding nothing: (e) 119 of 120, (f)'s ladder falls 30 of 30 near mastery.",
    "measured": {
     "commit": "cb8b19eb",
     "watch": "engine"
-   }
+   },
+   "missing": "It was measured on cb8b19eb, and what it reads has changed since (src/engine/content/attributes-matrix.ts): measure it again"
   },
   {
    "id": "advice.F2A10-g",
@@ -11732,13 +11734,14 @@
    "implementation": "systems/experience.ts recommendations",
    "evidence": "tests/decisions-advice.test.ts ‘F2-A10: What To Improve Next, followed through the commands (brief 10) > PLAYER JOURNEY: once followed, it moves on: the trained input’s forecast falls, and with another’s now ahead, another is named first’ (played tuning case); tests/decisions-advice.test.ts ‘F2-A10: What To Improve Next, followed through the commands (brief 10) > keeps the forecast’s order: the weakness the work keeps coming back to is said where its forecast puts it, never ahead of a higher one’ (FIXTURE forecasts); docs/verification/decisions-2026-10-16/advice/held-out-summary.json ‘npx vite-node tools/advice.ts -- --cases <batch> --held-out --out held-out-<id>.json, fifteen batches (held-out-runs.txt), then --summarize’ (measurement (seeded, played through the commands))",
    "sourceStatus": "owner decision",
-   "status": "Implemented And Verified",
+   "status": "Implemented, Verification Incomplete",
    "disposition": "owner decision",
    "override": "Brief 22, the final area (docs/verification/career-genre-2026-10-22/final-runs/final-result.json): The fresh set on cb8b19eb: H1 to H6 120, 120, 120, 120, 120, 120 of 120 (120 asked); followed, the first-named stayed on 74 and another led on 46, changed on 46; rose 4, attributed 4, explained 4; 1965 reads with 0 stale, 3368 forecast changes (1355 rises) with 0 unexplained. Reported beside them as written, deciding nothing: (h) fell on 116 of 120, its own level's part on 120.",
    "measured": {
     "commit": "cb8b19eb",
     "watch": "engine"
-   }
+   },
+   "missing": "It was measured on cb8b19eb, and what it reads has changed since (src/engine/content/attributes-matrix.ts): measure it again"
   },
   {
    "id": "advice.F2A10-i",
@@ -11807,13 +11810,14 @@
    "implementation": "Not recorded",
    "evidence": "docs/verification/decisions-2026-10-16/advice/held-out-runs.txt ‘each batch and its exit’ (measurement (seeded, played through the commands)); docs/verification/decisions-2026-10-16/advice/held-out-summary.json ‘npx vite-node tools/advice.ts -- --cases <batch> --held-out --out held-out-<id>.json, fifteen batches (held-out-runs.txt), then --summarize’ (measurement (seeded, played through the commands)); docs/verification/decisions-2026-10-16/advice/final/held-out-summary.json ‘npx vite-node tools/advice.ts -- --cases <batch> --held-out, fifteen batches on 2634283b and again on 57b64401 (the tested commit), then --summarize’ (measurement (seeded, played through the commands))",
    "sourceStatus": "implemented",
-   "status": "Implemented And Verified",
+   "status": "Implemented, Verification Incomplete",
    "disposition": "implemented",
    "override": "Brief 22, the final area (docs/verification/career-genre-2026-10-22/final-runs/final-result.json): Brief 10's held-out set, adv-h-0 to 119, and F2-A's adv-10 to 39, run on brief 22's commit cb8b19eb in 16 batches, each exit 0, its commit and a clean tree written in each file, then summarized as regression coverage, the tuning cases apart, each band and stage reported. From brief 12 it isn't unseen validation: its results informed the clarified (f) and (h), and the fresh set took its place.",
    "measured": {
     "commit": "cb8b19eb",
     "watch": "engine"
-   }
+   },
+   "missing": "It was measured on cb8b19eb, and what it reads has changed since (src/engine/content/attributes-matrix.ts): measure it again"
   },
   {
    "id": "advice.harness-hospital",
@@ -14188,14 +14192,15 @@
    "failure": "Before: 40 of 40; the exact best in 38; after: 40 of 40 (designed 10 of 10, held out 30 of 30); the exact best in 39; 529 candidates, forecast against realized 0.894; brief 09 (bcd75970): 40 of 40 advice cases: the first named input the best to raise; brief 10 (57b64401): 40 of 40 advice cases: the first named input the best to raise; brief 11 (3de26e0b): the same; brief 12 (ed24ff3b): the same; brief 13 (7e7a3af6): the same; brief 14 (6d83601a): the same; brief 15 (d6f6527a): the same; brief 16 (4ef5e961): the same; brief 17 (ecd961cc): the same; brief 19 (63fe7391): the same; brief 20 (cbec90d8): the same; brief 21 (fd32e869): the same; brief 22 (cb8b19eb): the same",
    "implementation": "systems/evaluation.ts, systems/piece.ts, content/tasks.ts, content/approaches.ts",
    "evidence": "docs/verification/integration-2026-10-16/runs/advice-cases.json; docs/verification/integration-2026-10-16/runs/advice.txt; docs/verification/advice-2026-10-16/README.md; docs/verification/integration-2026-10-16/runs-09/README.md; docs/verification/integration-2026-10-16/runs-10/README.md; docs/verification/completion-2026-10-16/runs/README.md; docs/verification/resolution-2026-10-17/runs/README.md; docs/verification/playthroughs-2026-10-17/runs/README.md; docs/verification/language-2026-10-17/runs/README.md; docs/verification/editorial-2026-10-19/runs/README.md; docs/verification/voices-2026-10-20/runs/README.md; docs/verification/continuity-2026-10-20/runs/README.md; docs/verification/career-2026-10-20/final-runs/runs/README.md; docs/verification/audit-2026-10-21/final-runs/runs/README.md; docs/verification/genre-banking-2026-10-22/final-runs/runs/README.md; docs/verification/career-genre-2026-10-22/final-runs/runs/README.md",
-   "status": "Implemented And Verified",
+   "status": "Implemented, Verification Incomplete",
    "before": "40 of 40; the exact best in 38",
    "after": "40 of 40 (designed 10 of 10, held out 30 of 30); the exact best in 39; 529 candidates, forecast against realized 0.894",
    "sourceStatus": "Met",
    "measured": {
     "commit": "cb8b19eb",
     "watch": "engine"
-   }
+   },
+   "missing": "It was measured on cb8b19eb, and what it reads has changed since (src/engine/content/attributes-matrix.ts): measure it again"
   },
   {
    "source": "docs/verification/integration-2026-10-16/criteria.json",
@@ -14606,14 +14611,15 @@
    "failure": "Before: all six plans (journeys-2026-10-16); after: all six plans 100, 100, 100; mastered 2 to 3 weeks sooner; breaches 0; brief 09 (bcd75970): musical-m-0: mastered 2030-10-08, payoff [100, 100, 100]; nordic_noir-m-0: mastered 2029-11-15, payoff [100, 100, 100]; nordic_noir-m-1: mastered 2029-11-27, payoff [100, 100, 100]; slapstick-m-0: mastered 2030-12-25, payoff [100, 100, 100]; social_realism-m-0: mastered 2029-11-15, payoff [100, 100, 100]; social_realism-m-1: mastered 2029-11-27, payoff [100, 100, 100]; brief 10 (57b64401): musical-m-0: mastered 2030-10-08, payoff [100, 100, 100]; nordic_noir-m-0: mastered 2029-11-15, payoff [100, 100, 100]; nordic_noir-m-1: mastered 2029-11-27, payoff [100, 100, 100]; slapstick-m-0: mastered 2030-12-28, payoff [100, 100, 100]; social_realism-m-0: mastered 2029-11-15, payoff [100, 100, 100]; social_realism-m-1: mastered 2029-11-27, payoff [100, 100, 100]; brief 11 (3de26e0b): the same; brief 12 (ed24ff3b): the same; brief 13 (7e7a3af6): the same; brief 14 (6d83601a): the same; brief 15 (d6f6527a): the same; brief 16 (4ef5e961): the same; brief 17 (ecd961cc): musical-m-0: mastered 2030-10-08, payoff [100, 100, 100]; nordic_noir-m-0: mastered 2029-11-15, payoff [100, 100, 100]; nordic_noir-m-1: mastered 2029-11-27, payoff [100, 100, 100]; slapstick-m-0: mastered 2030-12-29, payoff [100, 100, 100]; social_realism-m-0: mastered 2029-11-15, payoff [100, 100, 100]; social_realism-m-1: mastered 2029-11-27, payoff [100, 100, 100]; brief 19 (63fe7391): musical-m-0: mastered 2030-10-03, payoff [100, 100, 100]; nordic_noir-m-0: mastered 2029-11-10, payoff [100, 100, 100]; nordic_noir-m-1: mastered 2029-11-24, payoff [100, 100, 100]; slapstick-m-0: mastered 2030-12-22, payoff [100, 100, 100]; social_realism-m-0: mastered 2029-11-10, payoff [100, 100, 100]; social_realism-m-1: mastered 2029-11-24, payoff [100, 100, 100]; brief 20 (cbec90d8): the same; brief 21 (fd32e869): musical-m-0: mastered 2030-10-03, payoff [100, 100, 100]; nordic_noir-m-0: mastered 2029-11-10, payoff [100, 100, 100]; nordic_noir-m-1: mastered 2029-11-23, payoff [100, 100, 100]; slapstick-m-0: mastered 2030-12-22, payoff [100, 100, 100]; social_realism-m-0: mastered 2029-11-10, payoff [100, 100, 100]; social_realism-m-1: mastered 2029-11-23, payoff [100, 100, 100]; brief 22 (cb8b19eb): musical-m-0: mastered 2030-10-04, payoff [100, 100, 100]; nordic_noir-m-0: mastered 2029-11-10, payoff [100, 100, 100]; nordic_noir-m-1: mastered 2029-11-23, payoff [100, 100, 100]; slapstick-m-0: mastered 2030-12-22, payoff [100, 100, 100]; social_realism-m-0: mastered 2029-11-10, payoff [100, 100, 100]; social_realism-m-1: mastered 2029-11-23, payoff [100, 100, 100]",
    "implementation": "systems/evaluation.ts, systems/piece.ts, content/tasks.ts, content/approaches.ts",
    "evidence": "docs/verification/integration-2026-10-16/runs/plan-nordic_noir-m-0.json; docs/verification/integration-2026-10-16/runs/plan-musical-m-0.json; docs/verification/integration-2026-10-16/runs/plan-slapstick-m-0.json; docs/verification/integration-2026-10-16/runs-09/README.md; docs/verification/integration-2026-10-16/runs-10/README.md; docs/verification/completion-2026-10-16/runs/README.md; docs/verification/resolution-2026-10-17/runs/README.md; docs/verification/playthroughs-2026-10-17/runs/README.md; docs/verification/language-2026-10-17/runs/README.md; docs/verification/editorial-2026-10-19/runs/README.md; docs/verification/voices-2026-10-20/runs/README.md; docs/verification/continuity-2026-10-20/runs/README.md; docs/verification/career-2026-10-20/final-runs/runs/README.md; docs/verification/audit-2026-10-21/final-runs/runs/README.md; docs/verification/genre-banking-2026-10-22/final-runs/runs/README.md; docs/verification/career-genre-2026-10-22/final-runs/runs/README.md",
-   "status": "Implemented And Verified",
+   "status": "Implemented, Verification Incomplete",
    "before": "all six plans (journeys-2026-10-16)",
    "after": "all six plans 100, 100, 100; mastered 2 to 3 weeks sooner; breaches 0",
    "sourceStatus": "Met",
    "measured": {
     "commit": "cb8b19eb",
     "watch": "engine"
-   }
+   },
+   "missing": "It was measured on cb8b19eb, and what it reads has changed since (src/engine/content/attributes-matrix.ts): measure it again"
   },
   {
    "source": "docs/verification/integration-2026-10-16/criteria.json",
@@ -14909,12 +14915,13 @@
    "failure": "Each refusal says why, and what comes next; brief 09 (bcd75970): no step skipped at either width: 72 passed, 0 failed, 0 skipped; 0 errors; 0 overflows / 72 passed, 0 failed, 0 skipped; 0 errors; 0 overflows; brief 10 (9c40be73): no step skipped at either width: 72 passed, 0 failed, 0 skipped; 0 errors; 0 overflows / 72 passed, 0 failed, 0 skipped; 0 errors; 0 overflows; brief 11 (43a82efa): the same; brief 12 (ed24ff3b): no step skipped at either width: 76 passed, 0 failed, 0 skipped; 0 errors; 0 overflows / 76 passed, 0 failed, 0 skipped; 0 errors; 0 overflows; brief 13 (51cdd7d6): no step skipped at either width: 77 passed, 0 failed, 0 skipped; 0 errors; 0 overflows / 77 passed, 0 failed, 0 skipped; 0 errors; 0 overflows; brief 14 (edd7be91): the same; brief 15 (d6f6527a): the same; brief 16 (4ef5e961): the same; brief 17 (ecd961cc): the same; brief 19 (ef2ab8b9): the same; brief 20 (cbec90d8): the same; brief 21 (fd32e869): the same; brief 22 (05060742): the same",
    "implementation": "src/engine, src/ui",
    "evidence": "tools/acceptance-ui.mjs; docs/verification/integration-2026-10-16/runs/acceptance/1440.log; docs/verification/integration-2026-10-16/runs/acceptance/390.log; docs/verification/integration-2026-10-16/runs-09/README.md; docs/verification/integration-2026-10-16/runs-10/README.md; docs/verification/completion-2026-10-16/runs/README.md; docs/verification/resolution-2026-10-17/runs/README.md; docs/verification/playthroughs-2026-10-17/runs/README.md; docs/verification/language-2026-10-17/runs/README.md; docs/verification/editorial-2026-10-19/runs/README.md; docs/verification/voices-2026-10-20/runs/README.md; docs/verification/continuity-2026-10-20/runs/README.md; docs/verification/career-2026-10-20/final-runs/runs/README.md; docs/verification/audit-2026-10-21/final-runs/runs/README.md; docs/verification/genre-banking-2026-10-22/final-runs/runs/README.md; docs/verification/career-genre-2026-10-22/final-runs/runs/README.md",
-   "status": "Implemented And Verified",
+   "status": "Implemented, Verification Incomplete",
    "sourceStatus": "Met",
    "measured": {
     "commit": "05060742",
     "watch": "app"
-   }
+   },
+   "missing": "It was measured on 05060742, and what it reads has changed since (src/engine/content/attributes-matrix.ts, src/styles/app.css): measure it again"
   },
   {
    "source": "docs/verification/integration-2026-10-16/criteria.json",
@@ -14935,12 +14942,13 @@
    "failure": "Each refusal says why, and what comes next; brief 09 (bcd75970): the built app at 1440: 72 passed, 0 failed, 0 skipped; 0 errors; 0 overflows; at 390: 72 passed, 0 failed, 0 skipped; 0 errors; 0 overflows; brief 10 (9c40be73): the built app at 1440: 72 passed, 0 failed, 0 skipped; 0 errors; 0 overflows; at 390: 72 passed, 0 failed, 0 skipped; 0 errors; 0 overflows; brief 11 (43a82efa): the same; brief 12 (ed24ff3b): the built app at 1440: 76 passed, 0 failed, 0 skipped; 0 errors; 0 overflows; at 390: 76 passed, 0 failed, 0 skipped; 0 errors; 0 overflows; brief 13 (51cdd7d6): the built app at 1440: 77 passed, 0 failed, 0 skipped; 0 errors; 0 overflows; at 390: 77 passed, 0 failed, 0 skipped; 0 errors; 0 overflows; brief 14 (edd7be91): the same; brief 15 (d6f6527a): the same; brief 16 (4ef5e961): the same; brief 17 (ecd961cc): the same; brief 19 (ef2ab8b9): the same; brief 20 (cbec90d8): the same; brief 21 (fd32e869): the same; brief 22 (05060742): the same",
    "implementation": "src/engine, src/ui",
    "evidence": "tools/acceptance-ui.mjs; docs/verification/integration-2026-10-16/runs/acceptance/1440.log; docs/verification/integration-2026-10-16/runs/acceptance/390.log; docs/verification/integration-2026-10-16/runs-09/README.md; docs/verification/integration-2026-10-16/runs-10/README.md; docs/verification/completion-2026-10-16/runs/README.md; docs/verification/resolution-2026-10-17/runs/README.md; docs/verification/playthroughs-2026-10-17/runs/README.md; docs/verification/language-2026-10-17/runs/README.md; docs/verification/editorial-2026-10-19/runs/README.md; docs/verification/voices-2026-10-20/runs/README.md; docs/verification/continuity-2026-10-20/runs/README.md; docs/verification/career-2026-10-20/final-runs/runs/README.md; docs/verification/audit-2026-10-21/final-runs/runs/README.md; docs/verification/genre-banking-2026-10-22/final-runs/runs/README.md; docs/verification/career-genre-2026-10-22/final-runs/runs/README.md",
-   "status": "Implemented And Verified",
+   "status": "Implemented, Verification Incomplete",
    "sourceStatus": "Met",
    "measured": {
     "commit": "05060742",
     "watch": "app"
-   }
+   },
+   "missing": "It was measured on 05060742, and what it reads has changed since (src/engine/content/attributes-matrix.ts, src/styles/app.css): measure it again"
   },
   {
    "source": "docs/verification/integration-2026-10-16/criteria.json",
@@ -14961,12 +14969,13 @@
    "failure": "Each refusal says why, and what comes next; brief 09 (bcd75970): lives: 24, 20 graduated, 4 dismissed (reykjavik, autopilot), breaches 0, unbalanced 0; workload: 7 of 8 in good standing (london-lives-0-neglect: dismissed), breaches 0; mastery plans: 6 of 6 at 100 on every payoff tape; variety: graduated, breaches 0, 10 distinct top recommendations over 157 weeks, none at full (0), the longest unresolved 2 weeks, the same practice situation 4 in a row at most; freshness: 8 runs, 0 with a take or scene repeated outside the mastered profile; scenario saves 14 of 14; brief 10 (57b64401): lives: 24, 20 graduated, 4 dismissed (reykjavik, autopilot), breaches 0, unbalanced 0, errors 0; workload: 7 of 8 in good standing (london-lives-0-neglect: dismissed), breaches 0; mastery plans: 6 of 6 at 100 on every payoff tape; variety: graduated, breaches 0, 8 distinct top recommendations over 157 weeks, none at full (0), the longest unresolved 2 weeks, the same practice situation 3 in a row at most; freshness: 8 runs, 0 with a take or scene repeated outside the mastered profile; scenario saves 14 of 14; brief 11 (3de26e0b): the same; brief 12 (ed24ff3b): the same; brief 13 (7e7a3af6): the same; brief 14 (6d83601a): lives: 24, 20 graduated, 4 dismissed (reykjavik, autopilot), breaches 0, unbalanced 0, errors 0; workload: 7 of 8 in good standing (london-lives-0-neglect: dismissed), breaches 0; mastery plans: 6 of 6 at 100 on every payoff tape; variety: graduated, breaches 0, 8 distinct top recommendations over 157 weeks, none at full (0), the longest unresolved 2 weeks, the same practice situation 3 in a row at most; freshness: 8 runs, 0 with a take or scene repeated outside the mastered profile; scenario saves 15 of 15; brief 15 (d6f6527a): the same; brief 16 (4ef5e961): the same; brief 17 (ecd961cc): the same; brief 19 (63fe7391): the same; brief 20 (cbec90d8): the same; brief 21 (fd32e869): lives: 24, 20 graduated, 4 dismissed (reykjavik, autopilot), breaches 0, unbalanced 0, errors 0; workload: 6 of 8 in good standing (london-lives-0-neglect: dismissed), breaches 0; mastery plans: 6 of 6 at 100 on every payoff tape; variety: graduated, breaches 0, 8 distinct top recommendations over 157 weeks, none at full (0), the longest unresolved 2 weeks, the same practice situation 3 in a row at most; freshness: 8 runs, 0 with a take or scene repeated outside the mastered profile; scenario saves 15 of 15; brief 22 (cb8b19eb): the same",
    "implementation": "src/engine, src/ui",
    "evidence": "docs/verification/integration-2026-10-16/runs/README.md; docs/verification/integration-2026-10-16/runs/lives.jsonl; docs/verification/integration-2026-10-16/runs/variety-v-0.json; docs/verification/integration-2026-10-16/runs/freshness.json; docs/verification/integration-2026-10-16/runs-09/README.md; docs/verification/integration-2026-10-16/runs-10/README.md; docs/verification/completion-2026-10-16/runs/README.md; docs/verification/resolution-2026-10-17/runs/README.md; docs/verification/playthroughs-2026-10-17/runs/README.md; docs/verification/language-2026-10-17/runs/README.md; docs/verification/editorial-2026-10-19/runs/README.md; docs/verification/voices-2026-10-20/runs/README.md; docs/verification/continuity-2026-10-20/runs/README.md; docs/verification/career-2026-10-20/final-runs/runs/README.md; docs/verification/audit-2026-10-21/final-runs/runs/README.md; docs/verification/genre-banking-2026-10-22/final-runs/runs/README.md; docs/verification/career-genre-2026-10-22/final-runs/runs/README.md",
-   "status": "Implemented And Verified",
+   "status": "Implemented, Verification Incomplete",
    "sourceStatus": "Met",
    "measured": {
     "commit": "cb8b19eb",
     "watch": "engine"
-   }
+   },
+   "missing": "It was measured on cb8b19eb, and what it reads has changed since (src/engine/content/attributes-matrix.ts): measure it again"
   },
   {
    "source": "docs/verification/integration-2026-10-16/criteria.json",
@@ -14987,12 +14996,13 @@
    "failure": "Exit 0 on f68516b0: 361 files, 4,316 tests, none skipped, and all seventeen checks; the build exit 0 on the same commit. What came after it is the account and the handoff, documents the gate’s text checks were run on again; brief 09 (7c1198a2): npm run gate on 7c1198a2: 368 of 368 files, 4401 of 4401 tests passed, none skipped, exit=0, the last check, the completion matrix, holding; brief 10 (d9b631ba): npm run gate on d9b631ba: 375 of 375 files, 4479 of 4479 tests passed, none skipped, exit=0, the last check, the completion matrix, holding; brief 11 (12f58cec): npm run gate on 12f58cec: 376 of 376 files, 4537 of 4537 tests passed, none skipped, exit=0, the last check, the completion matrix, holding; brief 12 (ac79bf4a): npm run gate on ac79bf4a: 376 of 376 files, 4566 of 4566 tests passed, none skipped, exit=0, the last check, the completion matrix, holding; brief 13 (0cf3a9bc): npm run gate on 0cf3a9bc: 376 of 376 files, 4587 of 4587 tests passed, none skipped, exit=0, the last check, the completion matrix, holding; brief 14 (a51b0e15): npm run gate on a51b0e15: 391 of 391 files, 4713 of 4713 tests passed, none skipped, exit=0, the last check, the completion matrix, holding; brief 15 (aabfc1b2): npm run gate on aabfc1b2: 395 of 395 files, 4771 of 4771 tests passed, none skipped, exit=0, the last check, the completion matrix, holding; brief 16 (eabb9ef5): npm run gate on eabb9ef5: 398 of 398 files, 4781 of 4781 tests passed, none skipped, exit=0, the last check, the completion matrix, holding; brief 17 (3fe960df): npm run gate on 3fe960df: 405 of 405 files, 4867 of 4867 tests passed, none skipped, exit=0, the last check, the completion matrix, holding; brief 19 (4aac9a94): npm run gate on 4aac9a94: 423 of 423 files, 5092 of 5092 tests passed, none skipped, exit=0, the last check, the completion matrix, holding; brief 20 (cbec90d8): npm run gate on cbec90d8: 479 of 479 files, 5481 of 5481 tests passed, none skipped, exit=0, the last check, the completion matrix, holding; brief 21 (e8e09123): npm run gate on e8e09123: 482 of 482 files, 5547 of 5547 tests passed, none skipped, exit=0, the last check, the completion matrix, holding; brief 22 (859bacdb): npm run gate on 859bacdb: 488 of 488 files, 5616 of 5616 tests passed, none skipped, exit=0, the last check, the completion matrix, holding",
    "implementation": "src/engine, src/ui",
    "evidence": "docs/verification/integration-2026-10-16/runs/gate.txt; docs/verification/integration-2026-10-16/runs/README.md; docs/verification/integration-2026-10-16/runs-09/README.md; docs/verification/integration-2026-10-16/runs-10/README.md; docs/verification/completion-2026-10-16/runs/README.md; docs/verification/resolution-2026-10-17/runs/README.md; docs/verification/playthroughs-2026-10-17/runs/README.md; docs/verification/language-2026-10-17/runs/README.md; docs/verification/editorial-2026-10-19/runs/README.md; docs/verification/voices-2026-10-20/runs/README.md; docs/verification/continuity-2026-10-20/runs/README.md; docs/verification/career-2026-10-20/final-runs/runs/README.md; docs/verification/audit-2026-10-21/final-runs/runs/README.md; docs/verification/genre-banking-2026-10-22/final-runs/runs/README.md; docs/verification/career-genre-2026-10-22/final-runs/runs/README.md",
-   "status": "Implemented And Verified",
+   "status": "Implemented, Verification Incomplete",
    "sourceStatus": "Met",
    "measured": {
     "commit": "859bacdb",
     "watch": "app"
-   }
+   },
+   "missing": "It was measured on 859bacdb, and what it reads has changed since (src/engine/content/attributes-matrix.ts, src/styles/app.css): measure it again"
   },
   {
    "source": "docs/verification/integration-2026-10-16/criteria.json",
@@ -15269,12 +15279,13 @@
    "failure": "Not recorded",
    "implementation": "Not recorded",
    "evidence": "docs/verification/playthroughs-2026-10-17/interface-result.json; docs/verification/playthroughs-2026-10-17/verification-result.json; docs/verification/language-2026-10-17/verification-result.json; docs/verification/editorial-2026-10-19/verification-result.json; docs/verification/voices-2026-10-20/verification-result.json; docs/verification/continuity-2026-10-20/verification-result.json; docs/verification/career-2026-10-20/final-runs/verification-result.json; docs/verification/audit-2026-10-21/final-runs/verification-result.json; docs/verification/genre-banking-2026-10-22/final-runs/verification-result.json; docs/verification/career-genre-2026-10-22/final-runs/verification-result.json",
-   "status": "Implemented And Verified",
+   "status": "Implemented, Verification Incomplete",
    "sourceStatus": "docs/verification/playthroughs-2026-10-17/interface-result.json",
    "measured": {
     "commit": "05060742",
     "watch": "app"
-   }
+   },
+   "missing": "It was measured on 05060742, and what it reads has changed since (src/engine/content/attributes-matrix.ts, src/styles/app.css): measure it again"
   },
   {
    "source": "docs/verification/integration-2026-10-16/criteria.json",
@@ -15295,12 +15306,13 @@
    "failure": "Not recorded",
    "implementation": "Not recorded",
    "evidence": "docs/verification/playthroughs-2026-10-17/interface-result.json; docs/verification/playthroughs-2026-10-17/verification-result.json; docs/verification/language-2026-10-17/verification-result.json; docs/verification/editorial-2026-10-19/verification-result.json; docs/verification/voices-2026-10-20/verification-result.json; docs/verification/continuity-2026-10-20/verification-result.json; docs/verification/career-2026-10-20/final-runs/verification-result.json; docs/verification/audit-2026-10-21/final-runs/verification-result.json; docs/verification/genre-banking-2026-10-22/final-runs/verification-result.json; docs/verification/career-genre-2026-10-22/final-runs/verification-result.json",
-   "status": "Implemented And Verified",
+   "status": "Implemented, Verification Incomplete",
    "sourceStatus": "docs/verification/playthroughs-2026-10-17/interface-result.json",
    "measured": {
     "commit": "05060742",
     "watch": "app"
-   }
+   },
+   "missing": "It was measured on 05060742, and what it reads has changed since (src/engine/content/attributes-matrix.ts, src/styles/app.css): measure it again"
   },
   {
    "source": "docs/verification/integration-2026-10-16/criteria.json",
@@ -15321,12 +15333,13 @@
    "failure": "Not recorded",
    "implementation": "Not recorded",
    "evidence": "docs/verification/playthroughs-2026-10-17/interface-result.json; docs/verification/playthroughs-2026-10-17/verification-result.json; docs/verification/language-2026-10-17/verification-result.json; docs/verification/editorial-2026-10-19/verification-result.json; docs/verification/voices-2026-10-20/verification-result.json; docs/verification/continuity-2026-10-20/verification-result.json; docs/verification/career-2026-10-20/final-runs/verification-result.json; docs/verification/audit-2026-10-21/final-runs/verification-result.json; docs/verification/genre-banking-2026-10-22/final-runs/verification-result.json; docs/verification/career-genre-2026-10-22/final-runs/verification-result.json",
-   "status": "Implemented And Verified",
+   "status": "Implemented, Verification Incomplete",
    "sourceStatus": "docs/verification/playthroughs-2026-10-17/interface-result.json",
    "measured": {
     "commit": "05060742",
     "watch": "app"
-   }
+   },
+   "missing": "It was measured on 05060742, and what it reads has changed since (src/engine/content/attributes-matrix.ts, src/styles/app.css): measure it again"
   },
   {
    "source": "docs/verification/integration-2026-10-16/criteria.json",
@@ -15347,12 +15360,13 @@
    "failure": "Not recorded",
    "implementation": "Not recorded",
    "evidence": "docs/verification/playthroughs-2026-10-17/interface-result.json; docs/verification/playthroughs-2026-10-17/verification-result.json; docs/verification/language-2026-10-17/verification-result.json; docs/verification/editorial-2026-10-19/verification-result.json; docs/verification/voices-2026-10-20/verification-result.json; docs/verification/continuity-2026-10-20/verification-result.json; docs/verification/career-2026-10-20/final-runs/verification-result.json; docs/verification/audit-2026-10-21/final-runs/verification-result.json; docs/verification/genre-banking-2026-10-22/final-runs/verification-result.json; docs/verification/career-genre-2026-10-22/final-runs/verification-result.json",
-   "status": "Implemented And Verified",
+   "status": "Implemented, Verification Incomplete",
    "sourceStatus": "docs/verification/playthroughs-2026-10-17/interface-result.json",
    "measured": {
     "commit": "05060742",
     "watch": "app"
-   }
+   },
+   "missing": "It was measured on 05060742, and what it reads has changed since (src/engine/content/attributes-matrix.ts, src/styles/app.css): measure it again"
   },
   {
    "source": "docs/verification/integration-2026-10-16/criteria.json",
@@ -15373,12 +15387,13 @@
    "failure": "Measured on 0bc829ec (the engine as 905c39d1 left it; the last commit adds outputs only). It stays Implemented And Verified where the coordinator's run on the integrated commit (forTheCoordinator.measurements) passes the same checks; a journey that doesn't makes it remaining, with that journey.",
    "implementation": "Not recorded",
    "evidence": "docs/verification/playthroughs-2026-10-17/journeys-result.json; docs/verification/playthroughs-2026-10-17/verification-result.json; docs/verification/language-2026-10-17/verification-result.json; docs/verification/editorial-2026-10-19/verification-result.json; docs/verification/voices-2026-10-20/verification-result.json; docs/verification/continuity-2026-10-20/verification-result.json; docs/verification/career-2026-10-20/final-runs/verification-result.json; docs/verification/audit-2026-10-21/final-runs/verification-result.json; docs/verification/genre-banking-2026-10-22/final-runs/verification-result.json; docs/verification/career-genre-2026-10-22/final-runs/verification-result.json",
-   "status": "Implemented And Verified",
+   "status": "Implemented, Verification Incomplete",
    "sourceStatus": "docs/verification/playthroughs-2026-10-17/journeys-result.json",
    "measured": {
     "commit": "cb8b19eb",
     "watch": "engine"
-   }
+   },
+   "missing": "It was measured on cb8b19eb, and what it reads has changed since (src/engine/content/attributes-matrix.ts): measure it again"
   },
   {
    "source": "docs/verification/integration-2026-10-16/criteria.json",
@@ -15399,12 +15414,13 @@
    "failure": "Measured on 0bc829ec (the engine as 905c39d1 left it; the last commit adds outputs only). It stays Implemented And Verified where the coordinator's run on the integrated commit (forTheCoordinator.measurements) passes the same checks; a journey that doesn't makes it remaining, with that journey.",
    "implementation": "Not recorded",
    "evidence": "docs/verification/playthroughs-2026-10-17/journeys-result.json; docs/verification/playthroughs-2026-10-17/verification-result.json; docs/verification/language-2026-10-17/verification-result.json; docs/verification/editorial-2026-10-19/verification-result.json; docs/verification/voices-2026-10-20/verification-result.json; docs/verification/continuity-2026-10-20/verification-result.json; docs/verification/career-2026-10-20/final-runs/verification-result.json; docs/verification/audit-2026-10-21/final-runs/verification-result.json; docs/verification/genre-banking-2026-10-22/final-runs/verification-result.json; docs/verification/career-genre-2026-10-22/final-runs/verification-result.json",
-   "status": "Implemented And Verified",
+   "status": "Implemented, Verification Incomplete",
    "sourceStatus": "docs/verification/playthroughs-2026-10-17/journeys-result.json",
    "measured": {
     "commit": "cb8b19eb",
     "watch": "engine"
-   }
+   },
+   "missing": "It was measured on cb8b19eb, and what it reads has changed since (src/engine/content/attributes-matrix.ts): measure it again"
   },
   {
    "source": "docs/verification/integration-2026-10-16/criteria.json",
@@ -15425,12 +15441,13 @@
    "failure": "Measured on 0bc829ec (the engine as 905c39d1 left it; the last commit adds outputs only). It stays Implemented And Verified where the coordinator's run on the integrated commit (forTheCoordinator.measurements) passes the same checks; a journey that doesn't makes it remaining, with that journey.",
    "implementation": "Not recorded",
    "evidence": "docs/verification/playthroughs-2026-10-17/journeys-result.json; docs/verification/playthroughs-2026-10-17/verification-result.json; docs/verification/language-2026-10-17/verification-result.json; docs/verification/editorial-2026-10-19/verification-result.json; docs/verification/voices-2026-10-20/verification-result.json; docs/verification/continuity-2026-10-20/verification-result.json; docs/verification/career-2026-10-20/final-runs/verification-result.json; docs/verification/audit-2026-10-21/final-runs/verification-result.json; docs/verification/genre-banking-2026-10-22/final-runs/verification-result.json; docs/verification/career-genre-2026-10-22/final-runs/verification-result.json",
-   "status": "Implemented And Verified",
+   "status": "Implemented, Verification Incomplete",
    "sourceStatus": "docs/verification/playthroughs-2026-10-17/journeys-result.json",
    "measured": {
     "commit": "cb8b19eb",
     "watch": "engine"
-   }
+   },
+   "missing": "It was measured on cb8b19eb, and what it reads has changed since (src/engine/content/attributes-matrix.ts): measure it again"
   },
   {
    "source": "docs/verification/integration-2026-10-16/criteria.json",
@@ -15451,12 +15468,13 @@
    "failure": "Measured on 0bc829ec (the engine as 905c39d1 left it; the last commit adds outputs only). It stays Implemented And Verified where the coordinator's run on the integrated commit (forTheCoordinator.measurements) passes the same checks; a journey that doesn't makes it remaining, with that journey.",
    "implementation": "Not recorded",
    "evidence": "docs/verification/playthroughs-2026-10-17/journeys-result.json; docs/verification/playthroughs-2026-10-17/verification-result.json; docs/verification/language-2026-10-17/verification-result.json; docs/verification/editorial-2026-10-19/verification-result.json; docs/verification/voices-2026-10-20/verification-result.json; docs/verification/continuity-2026-10-20/verification-result.json; docs/verification/career-2026-10-20/final-runs/verification-result.json; docs/verification/audit-2026-10-21/final-runs/verification-result.json; docs/verification/genre-banking-2026-10-22/final-runs/verification-result.json; docs/verification/career-genre-2026-10-22/final-runs/verification-result.json",
-   "status": "Implemented And Verified",
+   "status": "Implemented, Verification Incomplete",
    "sourceStatus": "docs/verification/playthroughs-2026-10-17/journeys-result.json",
    "measured": {
     "commit": "cb8b19eb",
     "watch": "engine"
-   }
+   },
+   "missing": "It was measured on cb8b19eb, and what it reads has changed since (src/engine/content/attributes-matrix.ts): measure it again"
   },
   {
    "source": "docs/verification/integration-2026-10-16/criteria.json",
@@ -15477,12 +15495,13 @@
    "failure": "Measured on 0bc829ec (the engine as 905c39d1 left it; the last commit adds outputs only). It stays Implemented And Verified where the coordinator's run on the integrated commit (forTheCoordinator.measurements) passes the same checks; a journey that doesn't makes it remaining, with that journey.",
    "implementation": "Not recorded",
    "evidence": "docs/verification/playthroughs-2026-10-17/journeys-result.json; docs/verification/playthroughs-2026-10-17/verification-result.json; docs/verification/language-2026-10-17/verification-result.json; docs/verification/editorial-2026-10-19/verification-result.json; docs/verification/voices-2026-10-20/verification-result.json; docs/verification/continuity-2026-10-20/verification-result.json; docs/verification/career-2026-10-20/final-runs/verification-result.json; docs/verification/audit-2026-10-21/final-runs/verification-result.json; docs/verification/genre-banking-2026-10-22/final-runs/verification-result.json; docs/verification/career-genre-2026-10-22/final-runs/verification-result.json",
-   "status": "Implemented And Verified",
+   "status": "Implemented, Verification Incomplete",
    "sourceStatus": "docs/verification/playthroughs-2026-10-17/journeys-result.json",
    "measured": {
     "commit": "cb8b19eb",
     "watch": "engine"
-   }
+   },
+   "missing": "It was measured on cb8b19eb, and what it reads has changed since (src/engine/content/attributes-matrix.ts): measure it again"
   },
   {
    "source": "docs/verification/integration-2026-10-16/criteria.json",
@@ -15503,12 +15522,13 @@
    "failure": "Measured on 0bc829ec (the engine as 905c39d1 left it; the last commit adds outputs only). It stays Implemented And Verified where the coordinator's run on the integrated commit (forTheCoordinator.measurements) passes the same checks; a journey that doesn't makes it remaining, with that journey.",
    "implementation": "Not recorded",
    "evidence": "docs/verification/playthroughs-2026-10-17/journeys-result.json; docs/verification/playthroughs-2026-10-17/verification-result.json; docs/verification/language-2026-10-17/verification-result.json; docs/verification/editorial-2026-10-19/verification-result.json; docs/verification/voices-2026-10-20/verification-result.json; docs/verification/continuity-2026-10-20/verification-result.json; docs/verification/career-2026-10-20/final-runs/verification-result.json; docs/verification/audit-2026-10-21/final-runs/verification-result.json; docs/verification/genre-banking-2026-10-22/final-runs/verification-result.json; docs/verification/career-genre-2026-10-22/final-runs/verification-result.json",
-   "status": "Implemented And Verified",
+   "status": "Implemented, Verification Incomplete",
    "sourceStatus": "docs/verification/playthroughs-2026-10-17/journeys-result.json",
    "measured": {
     "commit": "cb8b19eb",
     "watch": "engine"
-   }
+   },
+   "missing": "It was measured on cb8b19eb, and what it reads has changed since (src/engine/content/attributes-matrix.ts): measure it again"
   },
   {
    "source": "docs/verification/integration-2026-10-16/criteria.json",
@@ -15529,12 +15549,13 @@
    "failure": "Measured on 0bc829ec (the engine as 905c39d1 left it; the last commit adds outputs only). It stays Implemented And Verified where the coordinator's run on the integrated commit (forTheCoordinator.measurements) passes the same checks; a journey that doesn't makes it remaining, with that journey.",
    "implementation": "Not recorded",
    "evidence": "docs/verification/playthroughs-2026-10-17/journeys-result.json; docs/verification/playthroughs-2026-10-17/verification-result.json; docs/verification/language-2026-10-17/verification-result.json; docs/verification/editorial-2026-10-19/verification-result.json; docs/verification/voices-2026-10-20/verification-result.json; docs/verification/continuity-2026-10-20/verification-result.json; docs/verification/career-2026-10-20/final-runs/verification-result.json; docs/verification/audit-2026-10-21/final-runs/verification-result.json; docs/verification/genre-banking-2026-10-22/final-runs/verification-result.json; docs/verification/career-genre-2026-10-22/final-runs/verification-result.json",
-   "status": "Implemented And Verified",
+   "status": "Implemented, Verification Incomplete",
    "sourceStatus": "docs/verification/playthroughs-2026-10-17/journeys-result.json",
    "measured": {
     "commit": "cb8b19eb",
     "watch": "engine"
-   }
+   },
+   "missing": "It was measured on cb8b19eb, and what it reads has changed since (src/engine/content/attributes-matrix.ts): measure it again"
   },
   {
    "source": "docs/verification/integration-2026-10-16/criteria.json",
@@ -15555,12 +15576,13 @@
    "failure": "Measured on 0bc829ec (the engine as 905c39d1 left it; the last commit adds outputs only). It stays Implemented And Verified where the coordinator's run on the integrated commit (forTheCoordinator.measurements) passes the same checks; a journey that doesn't makes it remaining, with that journey.",
    "implementation": "Not recorded",
    "evidence": "docs/verification/playthroughs-2026-10-17/journeys-result.json; docs/verification/playthroughs-2026-10-17/verification-result.json; docs/verification/language-2026-10-17/verification-result.json; docs/verification/editorial-2026-10-19/verification-result.json; docs/verification/voices-2026-10-20/verification-result.json; docs/verification/continuity-2026-10-20/verification-result.json; docs/verification/career-2026-10-20/final-runs/verification-result.json; docs/verification/audit-2026-10-21/final-runs/verification-result.json; docs/verification/genre-banking-2026-10-22/final-runs/verification-result.json; docs/verification/career-genre-2026-10-22/final-runs/verification-result.json",
-   "status": "Implemented And Verified",
+   "status": "Implemented, Verification Incomplete",
    "sourceStatus": "docs/verification/playthroughs-2026-10-17/journeys-result.json",
    "measured": {
     "commit": "cb8b19eb",
     "watch": "engine"
-   }
+   },
+   "missing": "It was measured on cb8b19eb, and what it reads has changed since (src/engine/content/attributes-matrix.ts): measure it again"
   },
   {
    "source": "docs/verification/integration-2026-10-16/criteria.json",
@@ -15581,12 +15603,13 @@
    "failure": "Measured on 0bc829ec (the engine as 905c39d1 left it; the last commit adds outputs only). It stays Implemented And Verified where the coordinator's run on the integrated commit (forTheCoordinator.measurements) passes the same checks; a journey that doesn't makes it remaining, with that journey.",
    "implementation": "Not recorded",
    "evidence": "docs/verification/playthroughs-2026-10-17/journeys-result.json; docs/verification/playthroughs-2026-10-17/verification-result.json; docs/verification/language-2026-10-17/verification-result.json; docs/verification/editorial-2026-10-19/verification-result.json; docs/verification/voices-2026-10-20/verification-result.json; docs/verification/continuity-2026-10-20/verification-result.json; docs/verification/career-2026-10-20/final-runs/verification-result.json; docs/verification/audit-2026-10-21/final-runs/verification-result.json; docs/verification/genre-banking-2026-10-22/final-runs/verification-result.json; docs/verification/career-genre-2026-10-22/final-runs/verification-result.json",
-   "status": "Implemented And Verified",
+   "status": "Implemented, Verification Incomplete",
    "sourceStatus": "docs/verification/playthroughs-2026-10-17/journeys-result.json",
    "measured": {
     "commit": "cb8b19eb",
     "watch": "engine"
-   }
+   },
+   "missing": "It was measured on cb8b19eb, and what it reads has changed since (src/engine/content/attributes-matrix.ts): measure it again"
   },
   {
    "source": "docs/verification/integration-2026-10-16/criteria.json",
@@ -15607,12 +15630,13 @@
    "failure": "Measured on 0bc829ec (the engine as 905c39d1 left it; the last commit adds outputs only). It stays Implemented And Verified where the coordinator's run on the integrated commit (forTheCoordinator.measurements) passes the same checks; a journey that doesn't makes it remaining, with that journey.",
    "implementation": "Not recorded",
    "evidence": "docs/verification/playthroughs-2026-10-17/journeys-result.json; docs/verification/playthroughs-2026-10-17/verification-result.json; docs/verification/language-2026-10-17/verification-result.json; docs/verification/editorial-2026-10-19/verification-result.json; docs/verification/voices-2026-10-20/verification-result.json; docs/verification/continuity-2026-10-20/verification-result.json; docs/verification/career-2026-10-20/final-runs/verification-result.json; docs/verification/audit-2026-10-21/final-runs/verification-result.json; docs/verification/genre-banking-2026-10-22/final-runs/verification-result.json; docs/verification/career-genre-2026-10-22/final-runs/verification-result.json",
-   "status": "Implemented And Verified",
+   "status": "Implemented, Verification Incomplete",
    "sourceStatus": "docs/verification/playthroughs-2026-10-17/journeys-result.json",
    "measured": {
     "commit": "cb8b19eb",
     "watch": "engine"
-   }
+   },
+   "missing": "It was measured on cb8b19eb, and what it reads has changed since (src/engine/content/attributes-matrix.ts): measure it again"
   },
   {
    "source": "docs/verification/integration-2026-10-16/criteria.json",
@@ -15633,12 +15657,13 @@
    "failure": "Measured on 0bc829ec (the engine as 905c39d1 left it; the last commit adds outputs only). It stays Implemented And Verified where the coordinator's run on the integrated commit (forTheCoordinator.measurements) passes the same checks; a journey that doesn't makes it remaining, with that journey.",
    "implementation": "Not recorded",
    "evidence": "docs/verification/playthroughs-2026-10-17/journeys-result.json; docs/verification/playthroughs-2026-10-17/verification-result.json; docs/verification/language-2026-10-17/verification-result.json; docs/verification/editorial-2026-10-19/verification-result.json; docs/verification/voices-2026-10-20/verification-result.json; docs/verification/continuity-2026-10-20/verification-result.json; docs/verification/career-2026-10-20/final-runs/verification-result.json; docs/verification/audit-2026-10-21/final-runs/verification-result.json; docs/verification/genre-banking-2026-10-22/final-runs/verification-result.json; docs/verification/career-genre-2026-10-22/final-runs/verification-result.json",
-   "status": "Implemented And Verified",
+   "status": "Implemented, Verification Incomplete",
    "sourceStatus": "docs/verification/playthroughs-2026-10-17/journeys-result.json",
    "measured": {
     "commit": "cb8b19eb",
     "watch": "engine"
-   }
+   },
+   "missing": "It was measured on cb8b19eb, and what it reads has changed since (src/engine/content/attributes-matrix.ts): measure it again"
   },
   {
    "source": "docs/verification/integration-2026-10-16/criteria.json",
@@ -15659,12 +15684,13 @@
    "failure": "Measured on 0bc829ec (the engine as 905c39d1 left it; the last commit adds outputs only). It stays Implemented And Verified where the coordinator's run on the integrated commit (forTheCoordinator.measurements) passes the same checks; a journey that doesn't makes it remaining, with that journey.",
    "implementation": "Not recorded",
    "evidence": "docs/verification/playthroughs-2026-10-17/journeys-result.json; docs/verification/playthroughs-2026-10-17/verification-result.json; docs/verification/language-2026-10-17/verification-result.json; docs/verification/editorial-2026-10-19/verification-result.json; docs/verification/voices-2026-10-20/verification-result.json; docs/verification/continuity-2026-10-20/verification-result.json; docs/verification/career-2026-10-20/final-runs/verification-result.json; docs/verification/audit-2026-10-21/final-runs/verification-result.json; docs/verification/genre-banking-2026-10-22/final-runs/verification-result.json; docs/verification/career-genre-2026-10-22/final-runs/verification-result.json",
-   "status": "Implemented And Verified",
+   "status": "Implemented, Verification Incomplete",
    "sourceStatus": "docs/verification/playthroughs-2026-10-17/journeys-result.json",
    "measured": {
     "commit": "cb8b19eb",
     "watch": "engine"
-   }
+   },
+   "missing": "It was measured on cb8b19eb, and what it reads has changed since (src/engine/content/attributes-matrix.ts): measure it again"
   },
   {
    "source": "docs/verification/integration-2026-10-16/criteria.json",
@@ -15685,12 +15711,13 @@
    "failure": "Measured on 0bc829ec (the engine as 905c39d1 left it; the last commit adds outputs only). It stays Implemented And Verified where the coordinator's run on the integrated commit (forTheCoordinator.measurements) passes the same checks; a journey that doesn't makes it remaining, with that journey.",
    "implementation": "Not recorded",
    "evidence": "docs/verification/playthroughs-2026-10-17/journeys-result.json; docs/verification/playthroughs-2026-10-17/verification-result.json; docs/verification/language-2026-10-17/verification-result.json; docs/verification/editorial-2026-10-19/verification-result.json; docs/verification/voices-2026-10-20/verification-result.json; docs/verification/continuity-2026-10-20/verification-result.json; docs/verification/career-2026-10-20/final-runs/verification-result.json; docs/verification/audit-2026-10-21/final-runs/verification-result.json; docs/verification/genre-banking-2026-10-22/final-runs/verification-result.json; docs/verification/career-genre-2026-10-22/final-runs/verification-result.json",
-   "status": "Implemented And Verified",
+   "status": "Implemented, Verification Incomplete",
    "sourceStatus": "docs/verification/playthroughs-2026-10-17/journeys-result.json",
    "measured": {
     "commit": "cb8b19eb",
     "watch": "engine"
-   }
+   },
+   "missing": "It was measured on cb8b19eb, and what it reads has changed since (src/engine/content/attributes-matrix.ts): measure it again"
   },
   {
    "source": "docs/verification/integration-2026-10-16/criteria.json",
@@ -15711,12 +15738,13 @@
    "failure": "Measured on 0bc829ec (the engine as 905c39d1 left it; the last commit adds outputs only). It stays Implemented And Verified where the coordinator's run on the integrated commit (forTheCoordinator.measurements) passes the same checks; a journey that doesn't makes it remaining, with that journey.",
    "implementation": "Not recorded",
    "evidence": "docs/verification/playthroughs-2026-10-17/journeys-result.json; docs/verification/playthroughs-2026-10-17/verification-result.json; docs/verification/language-2026-10-17/verification-result.json; docs/verification/editorial-2026-10-19/verification-result.json; docs/verification/voices-2026-10-20/verification-result.json; docs/verification/continuity-2026-10-20/verification-result.json; docs/verification/career-2026-10-20/final-runs/verification-result.json; docs/verification/audit-2026-10-21/final-runs/verification-result.json; docs/verification/genre-banking-2026-10-22/final-runs/verification-result.json; docs/verification/career-genre-2026-10-22/final-runs/verification-result.json",
-   "status": "Implemented And Verified",
+   "status": "Implemented, Verification Incomplete",
    "sourceStatus": "docs/verification/playthroughs-2026-10-17/journeys-result.json",
    "measured": {
     "commit": "cb8b19eb",
     "watch": "engine"
-   }
+   },
+   "missing": "It was measured on cb8b19eb, and what it reads has changed since (src/engine/content/attributes-matrix.ts): measure it again"
   },
   {
    "source": "docs/verification/integration-2026-10-16/criteria.json",
@@ -15737,12 +15765,13 @@
    "failure": "Measured on 0bc829ec (the engine as 905c39d1 left it; the last commit adds outputs only). It stays Implemented And Verified where the coordinator's run on the integrated commit (forTheCoordinator.measurements) passes the same checks; a journey that doesn't makes it remaining, with that journey.",
    "implementation": "Not recorded",
    "evidence": "docs/verification/playthroughs-2026-10-17/journeys-result.json; docs/verification/playthroughs-2026-10-17/verification-result.json; docs/verification/language-2026-10-17/verification-result.json; docs/verification/editorial-2026-10-19/verification-result.json; docs/verification/voices-2026-10-20/verification-result.json; docs/verification/continuity-2026-10-20/verification-result.json; docs/verification/career-2026-10-20/final-runs/verification-result.json; docs/verification/audit-2026-10-21/final-runs/verification-result.json; docs/verification/genre-banking-2026-10-22/final-runs/verification-result.json; docs/verification/career-genre-2026-10-22/final-runs/verification-result.json",
-   "status": "Implemented And Verified",
+   "status": "Implemented, Verification Incomplete",
    "sourceStatus": "docs/verification/playthroughs-2026-10-17/journeys-result.json",
    "measured": {
     "commit": "cb8b19eb",
     "watch": "engine"
-   }
+   },
+   "missing": "It was measured on cb8b19eb, and what it reads has changed since (src/engine/content/attributes-matrix.ts): measure it again"
   },
   {
    "source": "docs/verification/integration-2026-10-16/criteria.json",
@@ -15763,12 +15792,13 @@
    "failure": "Measured on 0bc829ec (the engine as 905c39d1 left it; the last commit adds outputs only). It stays Implemented And Verified where the coordinator's run on the integrated commit (forTheCoordinator.measurements) passes the same checks; a journey that doesn't makes it remaining, with that journey.",
    "implementation": "Not recorded",
    "evidence": "docs/verification/playthroughs-2026-10-17/journeys-result.json; docs/verification/playthroughs-2026-10-17/verification-result.json; docs/verification/language-2026-10-17/verification-result.json; docs/verification/editorial-2026-10-19/verification-result.json; docs/verification/voices-2026-10-20/verification-result.json; docs/verification/continuity-2026-10-20/verification-result.json; docs/verification/career-2026-10-20/final-runs/verification-result.json; docs/verification/audit-2026-10-21/final-runs/verification-result.json; docs/verification/genre-banking-2026-10-22/final-runs/verification-result.json; docs/verification/career-genre-2026-10-22/final-runs/verification-result.json",
-   "status": "Implemented And Verified",
+   "status": "Implemented, Verification Incomplete",
    "sourceStatus": "docs/verification/playthroughs-2026-10-17/journeys-result.json",
    "measured": {
     "commit": "cb8b19eb",
     "watch": "engine"
-   }
+   },
+   "missing": "It was measured on cb8b19eb, and what it reads has changed since (src/engine/content/attributes-matrix.ts): measure it again"
   },
   {
    "source": "docs/verification/integration-2026-10-16/criteria.json",
@@ -15789,12 +15819,13 @@
    "failure": "Measured on 0bc829ec (the engine as 905c39d1 left it; the last commit adds outputs only). It stays Implemented And Verified where the coordinator's run on the integrated commit (forTheCoordinator.measurements) passes the same checks; a journey that doesn't makes it remaining, with that journey.",
    "implementation": "Not recorded",
    "evidence": "docs/verification/playthroughs-2026-10-17/journeys-result.json; docs/verification/playthroughs-2026-10-17/verification-result.json; docs/verification/language-2026-10-17/verification-result.json; docs/verification/editorial-2026-10-19/verification-result.json; docs/verification/voices-2026-10-20/verification-result.json; docs/verification/continuity-2026-10-20/verification-result.json; docs/verification/career-2026-10-20/final-runs/verification-result.json; docs/verification/audit-2026-10-21/final-runs/verification-result.json; docs/verification/genre-banking-2026-10-22/final-runs/verification-result.json; docs/verification/career-genre-2026-10-22/final-runs/verification-result.json",
-   "status": "Implemented And Verified",
+   "status": "Implemented, Verification Incomplete",
    "sourceStatus": "docs/verification/playthroughs-2026-10-17/journeys-result.json",
    "measured": {
     "commit": "cb8b19eb",
     "watch": "engine"
-   }
+   },
+   "missing": "It was measured on cb8b19eb, and what it reads has changed since (src/engine/content/attributes-matrix.ts): measure it again"
   },
   {
    "source": "docs/verification/integration-2026-10-16/criteria.json",
@@ -15815,12 +15846,13 @@
    "failure": "Measured on 0bc829ec (the engine as 905c39d1 left it; the last commit adds outputs only). It stays Implemented And Verified where the coordinator's run on the integrated commit (forTheCoordinator.measurements) passes the same checks; a journey that doesn't makes it remaining, with that journey.",
    "implementation": "Not recorded",
    "evidence": "docs/verification/playthroughs-2026-10-17/journeys-result.json; docs/verification/playthroughs-2026-10-17/verification-result.json; docs/verification/language-2026-10-17/verification-result.json; docs/verification/editorial-2026-10-19/verification-result.json; docs/verification/voices-2026-10-20/verification-result.json; docs/verification/continuity-2026-10-20/verification-result.json; docs/verification/career-2026-10-20/final-runs/verification-result.json; docs/verification/audit-2026-10-21/final-runs/verification-result.json; docs/verification/genre-banking-2026-10-22/final-runs/verification-result.json; docs/verification/career-genre-2026-10-22/final-runs/verification-result.json",
-   "status": "Implemented And Verified",
+   "status": "Implemented, Verification Incomplete",
    "sourceStatus": "docs/verification/playthroughs-2026-10-17/journeys-result.json",
    "measured": {
     "commit": "cb8b19eb",
     "watch": "engine"
-   }
+   },
+   "missing": "It was measured on cb8b19eb, and what it reads has changed since (src/engine/content/attributes-matrix.ts): measure it again"
   },
   {
    "source": "docs/verification/integration-2026-10-16/criteria.json",
@@ -15841,12 +15873,13 @@
    "failure": "Measured on 0bc829ec (the engine as 905c39d1 left it; the last commit adds outputs only). It stays Implemented And Verified where the coordinator's run on the integrated commit (forTheCoordinator.measurements) passes the same checks; a journey that doesn't makes it remaining, with that journey.",
    "implementation": "Not recorded",
    "evidence": "docs/verification/playthroughs-2026-10-17/journeys-result.json; docs/verification/playthroughs-2026-10-17/verification-result.json; docs/verification/language-2026-10-17/verification-result.json; docs/verification/editorial-2026-10-19/verification-result.json; docs/verification/voices-2026-10-20/verification-result.json; docs/verification/continuity-2026-10-20/verification-result.json; docs/verification/career-2026-10-20/final-runs/verification-result.json; docs/verification/audit-2026-10-21/final-runs/verification-result.json; docs/verification/genre-banking-2026-10-22/final-runs/verification-result.json; docs/verification/career-genre-2026-10-22/final-runs/verification-result.json",
-   "status": "Implemented And Verified",
+   "status": "Implemented, Verification Incomplete",
    "sourceStatus": "docs/verification/playthroughs-2026-10-17/journeys-result.json",
    "measured": {
     "commit": "cb8b19eb",
     "watch": "engine"
-   }
+   },
+   "missing": "It was measured on cb8b19eb, and what it reads has changed since (src/engine/content/attributes-matrix.ts): measure it again"
   },
   {
    "source": "docs/verification/integration-2026-10-16/criteria.json",
@@ -15867,12 +15900,13 @@
    "failure": "Measured on 0bc829ec (the engine as 905c39d1 left it; the last commit adds outputs only). It stays Implemented And Verified where the coordinator's run on the integrated commit (forTheCoordinator.measurements) passes the same checks; a journey that doesn't makes it remaining, with that journey.",
    "implementation": "Not recorded",
    "evidence": "docs/verification/playthroughs-2026-10-17/journeys-result.json; docs/verification/playthroughs-2026-10-17/verification-result.json; docs/verification/language-2026-10-17/verification-result.json; docs/verification/editorial-2026-10-19/verification-result.json; docs/verification/voices-2026-10-20/verification-result.json; docs/verification/continuity-2026-10-20/verification-result.json; docs/verification/career-2026-10-20/final-runs/verification-result.json; docs/verification/audit-2026-10-21/final-runs/verification-result.json; docs/verification/genre-banking-2026-10-22/final-runs/verification-result.json; docs/verification/career-genre-2026-10-22/final-runs/verification-result.json",
-   "status": "Implemented And Verified",
+   "status": "Implemented, Verification Incomplete",
    "sourceStatus": "docs/verification/playthroughs-2026-10-17/journeys-result.json",
    "measured": {
     "commit": "cb8b19eb",
     "watch": "engine"
-   }
+   },
+   "missing": "It was measured on cb8b19eb, and what it reads has changed since (src/engine/content/attributes-matrix.ts): measure it again"
   },
   {
    "source": "docs/verification/integration-2026-10-16/criteria.json",
@@ -15893,12 +15927,13 @@
    "failure": "Measured on 0bc829ec (the engine as 905c39d1 left it; the last commit adds outputs only). It stays Implemented And Verified where the coordinator's run on the integrated commit (forTheCoordinator.measurements) passes the same checks; a journey that doesn't makes it remaining, with that journey.",
    "implementation": "Not recorded",
    "evidence": "docs/verification/playthroughs-2026-10-17/journeys-result.json; docs/verification/playthroughs-2026-10-17/verification-result.json; docs/verification/language-2026-10-17/verification-result.json; docs/verification/editorial-2026-10-19/verification-result.json; docs/verification/voices-2026-10-20/verification-result.json; docs/verification/continuity-2026-10-20/verification-result.json; docs/verification/career-2026-10-20/final-runs/verification-result.json; docs/verification/audit-2026-10-21/final-runs/verification-result.json; docs/verification/genre-banking-2026-10-22/final-runs/verification-result.json; docs/verification/career-genre-2026-10-22/final-runs/verification-result.json",
-   "status": "Implemented And Verified",
+   "status": "Implemented, Verification Incomplete",
    "sourceStatus": "docs/verification/playthroughs-2026-10-17/journeys-result.json",
    "measured": {
     "commit": "cb8b19eb",
     "watch": "engine"
-   }
+   },
+   "missing": "It was measured on cb8b19eb, and what it reads has changed since (src/engine/content/attributes-matrix.ts): measure it again"
   },
   {
    "source": "docs/verification/integration-2026-10-16/criteria.json",
@@ -15919,12 +15954,13 @@
    "failure": "Measured on 0bc829ec (the engine as 905c39d1 left it; the last commit adds outputs only). It stays Implemented And Verified where the coordinator's run on the integrated commit (forTheCoordinator.measurements) passes the same checks; a journey that doesn't makes it remaining, with that journey.",
    "implementation": "Not recorded",
    "evidence": "docs/verification/playthroughs-2026-10-17/journeys-result.json; docs/verification/playthroughs-2026-10-17/verification-result.json; docs/verification/language-2026-10-17/verification-result.json; docs/verification/editorial-2026-10-19/verification-result.json; docs/verification/voices-2026-10-20/verification-result.json; docs/verification/continuity-2026-10-20/verification-result.json; docs/verification/career-2026-10-20/final-runs/verification-result.json; docs/verification/audit-2026-10-21/final-runs/verification-result.json; docs/verification/genre-banking-2026-10-22/final-runs/verification-result.json; docs/verification/career-genre-2026-10-22/final-runs/verification-result.json",
-   "status": "Implemented And Verified",
+   "status": "Implemented, Verification Incomplete",
    "sourceStatus": "docs/verification/playthroughs-2026-10-17/journeys-result.json",
    "measured": {
     "commit": "cb8b19eb",
     "watch": "engine"
-   }
+   },
+   "missing": "It was measured on cb8b19eb, and what it reads has changed since (src/engine/content/attributes-matrix.ts): measure it again"
   },
   {
    "source": "docs/verification/integration-2026-10-16/criteria.json",
@@ -15945,12 +15981,13 @@
    "failure": "Measured on 0bc829ec (the engine as 905c39d1 left it; the last commit adds outputs only). It stays Implemented And Verified where the coordinator's run on the integrated commit (forTheCoordinator.measurements) passes the same checks; a journey that doesn't makes it remaining, with that journey.",
    "implementation": "Not recorded",
    "evidence": "docs/verification/playthroughs-2026-10-17/journeys-result.json; docs/verification/playthroughs-2026-10-17/verification-result.json; docs/verification/language-2026-10-17/verification-result.json; docs/verification/editorial-2026-10-19/verification-result.json; docs/verification/voices-2026-10-20/verification-result.json; docs/verification/continuity-2026-10-20/verification-result.json; docs/verification/career-2026-10-20/final-runs/verification-result.json; docs/verification/audit-2026-10-21/final-runs/verification-result.json; docs/verification/genre-banking-2026-10-22/final-runs/verification-result.json; docs/verification/career-genre-2026-10-22/final-runs/verification-result.json",
-   "status": "Implemented And Verified",
+   "status": "Implemented, Verification Incomplete",
    "sourceStatus": "docs/verification/playthroughs-2026-10-17/journeys-result.json",
    "measured": {
     "commit": "cb8b19eb",
     "watch": "engine"
-   }
+   },
+   "missing": "It was measured on cb8b19eb, and what it reads has changed since (src/engine/content/attributes-matrix.ts): measure it again"
   },
   {
    "source": "docs/verification/integration-2026-10-16/criteria.json",
@@ -15971,12 +16008,13 @@
    "failure": "Measured on 0bc829ec (the engine as 905c39d1 left it; the last commit adds outputs only). It stays Implemented And Verified where the coordinator's run on the integrated commit (forTheCoordinator.measurements) passes the same checks; a journey that doesn't makes it remaining, with that journey.",
    "implementation": "Not recorded",
    "evidence": "docs/verification/playthroughs-2026-10-17/journeys-result.json; docs/verification/playthroughs-2026-10-17/verification-result.json; docs/verification/language-2026-10-17/verification-result.json; docs/verification/editorial-2026-10-19/verification-result.json; docs/verification/voices-2026-10-20/verification-result.json; docs/verification/continuity-2026-10-20/verification-result.json; docs/verification/career-2026-10-20/final-runs/verification-result.json; docs/verification/audit-2026-10-21/final-runs/verification-result.json; docs/verification/genre-banking-2026-10-22/final-runs/verification-result.json; docs/verification/career-genre-2026-10-22/final-runs/verification-result.json",
-   "status": "Implemented And Verified",
+   "status": "Implemented, Verification Incomplete",
    "sourceStatus": "docs/verification/playthroughs-2026-10-17/journeys-result.json",
    "measured": {
     "commit": "cb8b19eb",
     "watch": "engine"
-   }
+   },
+   "missing": "It was measured on cb8b19eb, and what it reads has changed since (src/engine/content/attributes-matrix.ts): measure it again"
   },
   {
    "source": "docs/verification/integration-2026-10-16/criteria.json",
@@ -16019,12 +16057,13 @@
    "failure": "Measured on 0bc829ec (the engine as 905c39d1 left it; the last commit adds outputs only). It stays Implemented And Verified where the coordinator's run on the integrated commit (forTheCoordinator.measurements) passes the same checks; a journey that doesn't makes it remaining, with that journey.",
    "implementation": "Not recorded",
    "evidence": "docs/verification/playthroughs-2026-10-17/journeys-result.json; docs/verification/playthroughs-2026-10-17/verification-result.json; docs/verification/language-2026-10-17/verification-result.json; docs/verification/editorial-2026-10-19/verification-result.json; docs/verification/voices-2026-10-20/verification-result.json; docs/verification/continuity-2026-10-20/verification-result.json; docs/verification/career-2026-10-20/final-runs/verification-result.json; docs/verification/audit-2026-10-21/final-runs/verification-result.json; docs/verification/genre-banking-2026-10-22/final-runs/verification-result.json; docs/verification/career-genre-2026-10-22/final-runs/verification-result.json",
-   "status": "Implemented And Verified",
+   "status": "Implemented, Verification Incomplete",
    "sourceStatus": "docs/verification/playthroughs-2026-10-17/journeys-result.json",
    "measured": {
     "commit": "cb8b19eb",
     "watch": "engine"
-   }
+   },
+   "missing": "It was measured on cb8b19eb, and what it reads has changed since (src/engine/content/attributes-matrix.ts): measure it again"
   },
   {
    "source": "docs/verification/integration-2026-10-16/criteria.json",
@@ -16045,12 +16084,13 @@
    "failure": "Measured on 0bc829ec (the engine as 905c39d1 left it; the last commit adds outputs only). It stays Implemented And Verified where the coordinator's run on the integrated commit (forTheCoordinator.measurements) passes the same checks; a journey that doesn't makes it remaining, with that journey.",
    "implementation": "Not recorded",
    "evidence": "docs/verification/playthroughs-2026-10-17/journeys-result.json; docs/verification/playthroughs-2026-10-17/verification-result.json; docs/verification/language-2026-10-17/verification-result.json; docs/verification/editorial-2026-10-19/verification-result.json; docs/verification/voices-2026-10-20/verification-result.json; docs/verification/continuity-2026-10-20/verification-result.json; docs/verification/career-2026-10-20/final-runs/verification-result.json; docs/verification/audit-2026-10-21/final-runs/verification-result.json; docs/verification/genre-banking-2026-10-22/final-runs/verification-result.json; docs/verification/career-genre-2026-10-22/final-runs/verification-result.json",
-   "status": "Implemented And Verified",
+   "status": "Implemented, Verification Incomplete",
    "sourceStatus": "docs/verification/playthroughs-2026-10-17/journeys-result.json",
    "measured": {
     "commit": "cb8b19eb",
     "watch": "engine"
-   }
+   },
+   "missing": "It was measured on cb8b19eb, and what it reads has changed since (src/engine/content/attributes-matrix.ts): measure it again"
   },
   {
    "source": "docs/verification/integration-2026-10-16/criteria.json",
@@ -16071,12 +16111,13 @@
    "failure": "Measured on 0bc829ec (the engine as 905c39d1 left it; the last commit adds outputs only). It stays Implemented And Verified where the coordinator's run on the integrated commit (forTheCoordinator.measurements) passes the same checks; a journey that doesn't makes it remaining, with that journey.",
    "implementation": "Not recorded",
    "evidence": "docs/verification/playthroughs-2026-10-17/journeys-result.json; docs/verification/playthroughs-2026-10-17/verification-result.json; docs/verification/language-2026-10-17/verification-result.json; docs/verification/editorial-2026-10-19/verification-result.json; docs/verification/voices-2026-10-20/verification-result.json; docs/verification/continuity-2026-10-20/verification-result.json; docs/verification/career-2026-10-20/final-runs/verification-result.json; docs/verification/audit-2026-10-21/final-runs/verification-result.json; docs/verification/genre-banking-2026-10-22/final-runs/verification-result.json; docs/verification/career-genre-2026-10-22/final-runs/verification-result.json",
-   "status": "Implemented And Verified",
+   "status": "Implemented, Verification Incomplete",
    "sourceStatus": "docs/verification/playthroughs-2026-10-17/journeys-result.json",
    "measured": {
     "commit": "cb8b19eb",
     "watch": "engine"
-   }
+   },
+   "missing": "It was measured on cb8b19eb, and what it reads has changed since (src/engine/content/attributes-matrix.ts): measure it again"
   },
   {
    "source": "docs/verification/integration-2026-10-16/criteria.json",
@@ -16097,12 +16138,13 @@
    "failure": "Measured on 0bc829ec (the engine as 905c39d1 left it; the last commit adds outputs only). It stays Implemented And Verified where the coordinator's run on the integrated commit (forTheCoordinator.measurements) passes the same checks; a journey that doesn't makes it remaining, with that journey.",
    "implementation": "Not recorded",
    "evidence": "docs/verification/playthroughs-2026-10-17/journeys-result.json; docs/verification/playthroughs-2026-10-17/verification-result.json; docs/verification/language-2026-10-17/verification-result.json; docs/verification/editorial-2026-10-19/verification-result.json; docs/verification/voices-2026-10-20/verification-result.json; docs/verification/continuity-2026-10-20/verification-result.json; docs/verification/career-2026-10-20/final-runs/verification-result.json; docs/verification/audit-2026-10-21/final-runs/verification-result.json; docs/verification/genre-banking-2026-10-22/final-runs/verification-result.json; docs/verification/career-genre-2026-10-22/final-runs/verification-result.json",
-   "status": "Implemented And Verified",
+   "status": "Implemented, Verification Incomplete",
    "sourceStatus": "docs/verification/playthroughs-2026-10-17/journeys-result.json",
    "measured": {
     "commit": "cb8b19eb",
     "watch": "engine"
-   }
+   },
+   "missing": "It was measured on cb8b19eb, and what it reads has changed since (src/engine/content/attributes-matrix.ts): measure it again"
   },
   {
    "source": "docs/verification/integration-2026-10-16/criteria.json",
@@ -16123,12 +16165,13 @@
    "failure": "Measured on 0bc829ec (the engine as 905c39d1 left it; the last commit adds outputs only). It stays Implemented And Verified where the coordinator's run on the integrated commit (forTheCoordinator.measurements) passes the same checks; a journey that doesn't makes it remaining, with that journey.",
    "implementation": "Not recorded",
    "evidence": "docs/verification/playthroughs-2026-10-17/journeys-result.json; docs/verification/playthroughs-2026-10-17/verification-result.json; docs/verification/language-2026-10-17/verification-result.json; docs/verification/editorial-2026-10-19/verification-result.json; docs/verification/voices-2026-10-20/verification-result.json; docs/verification/continuity-2026-10-20/verification-result.json; docs/verification/career-2026-10-20/final-runs/verification-result.json; docs/verification/audit-2026-10-21/final-runs/verification-result.json; docs/verification/genre-banking-2026-10-22/final-runs/verification-result.json; docs/verification/career-genre-2026-10-22/final-runs/verification-result.json",
-   "status": "Implemented And Verified",
+   "status": "Implemented, Verification Incomplete",
    "sourceStatus": "docs/verification/playthroughs-2026-10-17/journeys-result.json",
    "measured": {
     "commit": "cb8b19eb",
     "watch": "engine"
-   }
+   },
+   "missing": "It was measured on cb8b19eb, and what it reads has changed since (src/engine/content/attributes-matrix.ts): measure it again"
   },
   {
    "source": "docs/verification/integration-2026-10-16/criteria.json",
@@ -16149,12 +16192,13 @@
    "failure": "Measured on 0bc829ec (the engine as 905c39d1 left it; the last commit adds outputs only). It stays Implemented And Verified where the coordinator's run on the integrated commit (forTheCoordinator.measurements) passes the same checks; a journey that doesn't makes it remaining, with that journey.",
    "implementation": "Not recorded",
    "evidence": "docs/verification/playthroughs-2026-10-17/journeys-result.json; docs/verification/playthroughs-2026-10-17/verification-result.json; docs/verification/language-2026-10-17/verification-result.json; docs/verification/editorial-2026-10-19/verification-result.json; docs/verification/voices-2026-10-20/verification-result.json; docs/verification/continuity-2026-10-20/verification-result.json; docs/verification/career-2026-10-20/final-runs/verification-result.json; docs/verification/audit-2026-10-21/final-runs/verification-result.json; docs/verification/genre-banking-2026-10-22/final-runs/verification-result.json; docs/verification/career-genre-2026-10-22/final-runs/verification-result.json",
-   "status": "Implemented And Verified",
+   "status": "Implemented, Verification Incomplete",
    "sourceStatus": "docs/verification/playthroughs-2026-10-17/journeys-result.json",
    "measured": {
     "commit": "cb8b19eb",
     "watch": "engine"
-   }
+   },
+   "missing": "It was measured on cb8b19eb, and what it reads has changed since (src/engine/content/attributes-matrix.ts): measure it again"
   },
   {
    "source": "docs/verification/integration-2026-10-16/criteria.json",
@@ -16175,12 +16219,13 @@
    "failure": "Measured on 0bc829ec (the engine as 905c39d1 left it; the last commit adds outputs only). It stays Implemented And Verified where the coordinator's run on the integrated commit (forTheCoordinator.measurements) passes the same checks; a journey that doesn't makes it remaining, with that journey.",
    "implementation": "Not recorded",
    "evidence": "docs/verification/playthroughs-2026-10-17/journeys-result.json; docs/verification/playthroughs-2026-10-17/verification-result.json; docs/verification/language-2026-10-17/verification-result.json; docs/verification/editorial-2026-10-19/verification-result.json; docs/verification/voices-2026-10-20/verification-result.json; docs/verification/continuity-2026-10-20/verification-result.json; docs/verification/career-2026-10-20/final-runs/verification-result.json; docs/verification/audit-2026-10-21/final-runs/verification-result.json; docs/verification/genre-banking-2026-10-22/final-runs/verification-result.json; docs/verification/career-genre-2026-10-22/final-runs/verification-result.json",
-   "status": "Implemented And Verified",
+   "status": "Implemented, Verification Incomplete",
    "sourceStatus": "docs/verification/playthroughs-2026-10-17/journeys-result.json",
    "measured": {
     "commit": "cb8b19eb",
     "watch": "engine"
-   }
+   },
+   "missing": "It was measured on cb8b19eb, and what it reads has changed since (src/engine/content/attributes-matrix.ts): measure it again"
   },
   {
    "source": "docs/verification/integration-2026-10-16/criteria.json",
@@ -16201,12 +16246,13 @@
    "failure": "Measured on 0bc829ec (the engine as 905c39d1 left it; the last commit adds outputs only). It stays Implemented And Verified where the coordinator's run on the integrated commit (forTheCoordinator.measurements) passes the same checks; a journey that doesn't makes it remaining, with that journey.",
    "implementation": "Not recorded",
    "evidence": "docs/verification/playthroughs-2026-10-17/journeys-result.json; docs/verification/playthroughs-2026-10-17/verification-result.json; docs/verification/language-2026-10-17/verification-result.json; docs/verification/editorial-2026-10-19/verification-result.json; docs/verification/voices-2026-10-20/verification-result.json; docs/verification/continuity-2026-10-20/verification-result.json; docs/verification/career-2026-10-20/final-runs/verification-result.json; docs/verification/audit-2026-10-21/final-runs/verification-result.json; docs/verification/genre-banking-2026-10-22/final-runs/verification-result.json; docs/verification/career-genre-2026-10-22/final-runs/verification-result.json",
-   "status": "Implemented And Verified",
+   "status": "Implemented, Verification Incomplete",
    "sourceStatus": "docs/verification/playthroughs-2026-10-17/journeys-result.json",
    "measured": {
     "commit": "cb8b19eb",
     "watch": "engine"
-   }
+   },
+   "missing": "It was measured on cb8b19eb, and what it reads has changed since (src/engine/content/attributes-matrix.ts): measure it again"
   },
   {
    "source": "docs/verification/integration-2026-10-16/criteria.json",

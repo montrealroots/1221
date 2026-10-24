@@ -1,0 +1,191 @@
+{
+ "chapter.advance": {
+  "status": "Not Tested"
+ },
+ "chapter.bank": {
+  "status": "Not Tested"
+ },
+ "chapter.body": {
+  "status": "Not Tested"
+ },
+ "chapter.calendar": {
+  "status": "Not Tested"
+ },
+ "chapter.career": {
+  "status": "Not Tested"
+ },
+ "chapter.clock": {
+  "status": "Not Tested"
+ },
+ "chapter.documents": {
+  "status": "Not Tested"
+ },
+ "chapter.finding-work": {
+  "status": "Not Tested"
+ },
+ "chapter.life": {
+  "status": "Not Tested"
+ },
+ "chapter.looking-after": {
+  "status": "Not Tested"
+ },
+ "chapter.money": {
+  "status": "Not Tested"
+ },
+ "chapter.needs": {
+  "status": "Not Tested"
+ },
+ "chapter.papers": {
+  "status": "Not Tested"
+ },
+ "chapter.plans": {
+  "status": "Not Tested"
+ },
+ "chapter.profile": {
+  "status": "Not Tested"
+ },
+ "chapter.representation": {
+  "status": "Not Tested"
+ },
+ "chapter.school": {
+  "status": "Not Tested"
+ },
+ "chapter.sleep": {
+  "status": "Not Tested"
+ },
+ "chapter.weather": {
+  "status": "Not Tested"
+ },
+ "chapter.welcome": {
+  "status": "Not Tested"
+ },
+ "look.decision": {
+  "status": "Not Tested"
+ },
+ "look.notification": {
+  "status": "Not Tested"
+ },
+ "promise.start.find>day.needs": {
+  "status": "Not Tested"
+ },
+ "promise.start.find>start.guide": {
+  "status": "Not Tested"
+ },
+ "promise.start.guide>day.calendar": {
+  "status": "Not Tested"
+ },
+ "promise.start.guide>day.clock": {
+  "status": "Not Tested"
+ },
+ "promise.start.guide>start.home": {
+  "status": "Not Tested"
+ },
+ "promise.start.home>day.clock": {
+  "status": "Not Tested"
+ },
+ "promise.start.home>day.weather": {
+  "status": "Not Tested"
+ },
+ "promise.start.home>start.guide": {
+  "status": "Not Tested"
+ },
+ "route./home": {
+  "status": "Not Tested"
+ },
+ "route./workspace/bank": {
+  "status": "Not Tested"
+ },
+ "route./workspace/calendar": {
+  "status": "Not Tested"
+ },
+ "route./workspace/career": {
+  "status": "Not Tested"
+ },
+ "route./workspace/papers": {
+  "status": "Not Tested"
+ },
+ "route./workspace/profile": {
+  "status": "Not Tested"
+ },
+ "route./workspace/school": {
+  "status": "Not Tested"
+ },
+ "route./workspace/updates": {
+  "status": "Not Tested"
+ },
+ "tutorial.read": {
+  "status": "Not Tested"
+ },
+ "ui.advance": {
+  "status": "Not Tested"
+ },
+ "ui.bank": {
+  "status": "Not Tested"
+ },
+ "ui.calendar": {
+  "status": "Not Tested"
+ },
+ "ui.career": {
+  "status": "Not Tested"
+ },
+ "ui.career-reasons": {
+  "status": "Not Tested"
+ },
+ "ui.go": {
+  "status": "Not Tested"
+ },
+ "ui.how": {
+  "status": "Not Tested"
+ },
+ "ui.look-after": {
+  "status": "Not Tested"
+ },
+ "ui.money": {
+  "status": "Not Tested"
+ },
+ "ui.needs": {
+  "status": "Not Tested"
+ },
+ "ui.open-calendar": {
+  "status": "Not Tested"
+ },
+ "ui.papers": {
+  "status": "Not Tested"
+ },
+ "ui.play": {
+  "status": "Not Tested"
+ },
+ "ui.profile": {
+  "status": "Not Tested"
+ },
+ "ui.school": {
+  "status": "Not Tested"
+ },
+ "ui.skip": {
+  "status": "Not Tested"
+ },
+ "ui.sleep": {
+  "status": "Not Tested"
+ },
+ "ui.weather": {
+  "status": "Not Tested"
+ },
+ "ui.where": {
+  "status": "Not Tested"
+ },
+ "world.day_rollover": {
+  "status": "Not Tested"
+ },
+ "world.dismiss_decision": {
+  "status": "Not Tested"
+ },
+ "world.mark_read": {
+  "status": "Not Tested"
+ },
+ "world.set_preferences": {
+  "status": "Not Tested"
+ },
+ "world.take_decision_action": {
+  "status": "Not Tested"
+ }
+}

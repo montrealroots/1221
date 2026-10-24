@@ -108,7 +108,7 @@ npm run gate
 ```
 
 It runs `npm run validate` (typecheck, lint, the full vitest suite) followed by
-twenty-two checks: title-case, label-sweep, plural-check, voice-check, tics,
+twenty-three checks: title-case, label-sweep, plural-check, voice-check, tics,
 doc-refs, wired, deciders, spelling, typos, geo-check, inventory, devmap,
 traceability, capabilities (added 2026-10-08), coverage (added 2026-10-13,
 which fails an audit row whose cited test or line doesn't hold, and
@@ -140,7 +140,13 @@ names; a row whose feature is gone, still seeded or with an empty field; a statu
 that isn't one of the owner's seven; a mechanic with no consumer at a file and line
 that exists; a verified row or promise with no test the gate runs, or a verified
 command none of whose tests issues it; and an `EFFECTS.md` that isn't the matrix as
-it stands). This said twenty-one until brief 20 on 2026-10-22, twenty until brief 17 on
+it stands) and sweep (added 2026-10-24 at the owner's brief 26, after effects: it fails a feature
+the code has, from the effects matrix's rows and promises to each technique, genre, Profile section, place, persistence
+behaviour and world mechanic, that no row of the connectivity sweep's register in
+`docs/verification/sweep-2026-10-24/register/` names; a row for a feature that's gone; a status not one of the sweep's six
+(Verified, Fixed And Verified, Failed, Blocked, Deferred, Not Tested) or without what it needs, a verified row's evidence
+being a test the gate runs, a measurement that exists or a source line that exists; and a `REGISTER.md` that isn't the
+register as it stands). This said twenty-two until brief 26 on 2026-10-24, twenty-one until brief 20 on 2026-10-22, twenty until brief 17 on
 2026-10-20, nineteen until the end of brief 14 on 2026-10-17, eighteen until 2026-10-17, seventeen until 2026-10-16, sixteen until 2026-10-13, fifteen until 2026-10-10, and fourteen until
 2026-10-08, leaving out traceability, which the gate already ran, and sixteen
 until 2026-10-09, when catalog-coverage (added 2026-10-03) left the gate with

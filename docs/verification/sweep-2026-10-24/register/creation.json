@@ -1,0 +1,305 @@
+{
+ "ability.adaptability": {
+  "status": "Not Tested"
+ },
+ "ability.composure": {
+  "status": "Not Tested"
+ },
+ "ability.discipline": {
+  "status": "Not Tested"
+ },
+ "ability.emotionalDepth": {
+  "status": "Not Tested"
+ },
+ "ability.focus": {
+  "status": "Not Tested"
+ },
+ "ability.imagination": {
+  "status": "Not Tested"
+ },
+ "ability.listening": {
+  "status": "Not Tested"
+ },
+ "ability.memory": {
+  "status": "Not Tested"
+ },
+ "ability.physical": {
+  "status": "Not Tested"
+ },
+ "ability.presence": {
+  "status": "Not Tested"
+ },
+ "ability.stamina": {
+  "status": "Not Tested"
+ },
+ "ability.vocal": {
+  "status": "Not Tested"
+ },
+ "axis.agreeableness": {
+  "status": "Not Tested"
+ },
+ "axis.ambition": {
+  "status": "Not Tested"
+ },
+ "axis.conscientiousness": {
+  "status": "Not Tested"
+ },
+ "axis.emotionalStability": {
+  "status": "Not Tested"
+ },
+ "axis.extraversion": {
+  "status": "Not Tested"
+ },
+ "axis.openness": {
+  "status": "Not Tested"
+ },
+ "axis.riskTolerance": {
+  "status": "Not Tested"
+ },
+ "create.background": {
+  "status": "Not Tested"
+ },
+ "create.bankId": {
+  "status": "Not Tested"
+ },
+ "create.birthDay": {
+  "status": "Not Tested"
+ },
+ "create.birthMonth": {
+  "status": "Not Tested"
+ },
+ "create.birthYear": {
+  "status": "Not Tested"
+ },
+ "create.displayName": {
+  "status": "Not Tested"
+ },
+ "create.family": {
+  "status": "Not Tested"
+ },
+ "create.firstName": {
+  "status": "Not Tested"
+ },
+ "create.genres": {
+  "status": "Not Tested"
+ },
+ "create.heightCm": {
+  "status": "Not Tested"
+ },
+ "create.homeBankId": {
+  "status": "Not Tested"
+ },
+ "create.homeRegionId": {
+  "status": "Not Tested"
+ },
+ "create.lastName": {
+  "status": "Not Tested"
+ },
+ "create.livesWhereBorn": {
+  "status": "Not Tested"
+ },
+ "create.middleName": {
+  "status": "Not Tested"
+ },
+ "create.paused": {
+  "status": "Not Tested"
+ },
+ "create.performerTitle": {
+  "status": "Not Tested"
+ },
+ "create.personality": {
+  "status": "Not Tested"
+ },
+ "create.personalityTraits": {
+  "status": "Not Tested"
+ },
+ "create.portrait": {
+  "status": "Not Tested"
+ },
+ "create.priorResidence": {
+  "status": "Not Tested"
+ },
+ "create.pronouns": {
+  "status": "Not Tested"
+ },
+ "create.raceEthnicity": {
+  "status": "Not Tested"
+ },
+ "create.raceEthnicityOwn": {
+  "status": "Not Tested"
+ },
+ "create.savingsAtHome": {
+  "status": "Not Tested"
+ },
+ "create.school": {
+  "status": "Not Tested"
+ },
+ "create.startDay": {
+  "status": "Not Tested"
+ },
+ "create.startLocationId": {
+  "status": "Not Tested"
+ },
+ "create.startMonth": {
+  "status": "Not Tested"
+ },
+ "create.startYear": {
+  "status": "Not Tested"
+ },
+ "create.tutorial": {
+  "status": "Not Tested"
+ },
+ "create.wealth": {
+  "status": "Not Tested"
+ },
+ "create.weightKg": {
+  "status": "Not Tested"
+ },
+ "look.ability": {
+  "status": "Not Tested"
+ },
+ "look.genre": {
+  "status": "Not Tested"
+ },
+ "look.person": {
+  "status": "Not Tested"
+ },
+ "look.readiness": {
+  "status": "Not Tested"
+ },
+ "look.skill": {
+  "status": "Not Tested"
+ },
+ "look.trait": {
+  "status": "Not Tested"
+ },
+ "profile.profile-abilities": {
+  "status": "Not Tested"
+ },
+ "profile.profile-genres": {
+  "status": "Not Tested"
+ },
+ "profile.profile-history": {
+  "status": "Not Tested"
+ },
+ "profile.profile-identity": {
+  "status": "Not Tested"
+ },
+ "profile.profile-journey": {
+  "status": "Not Tested"
+ },
+ "profile.profile-readiness": {
+  "status": "Not Tested"
+ },
+ "profile.profile-techniques": {
+  "status": "Not Tested"
+ },
+ "profile.profile-work": {
+  "status": "Not Tested"
+ },
+ "trait.burns_out": {
+  "status": "Not Tested"
+ },
+ "trait.chaotic": {
+  "status": "Not Tested"
+ },
+ "trait.curious": {
+  "status": "Not Tested"
+ },
+ "trait.detached": {
+  "status": "Not Tested"
+ },
+ "trait.disciplined_body": {
+  "status": "Not Tested"
+ },
+ "trait.early_riser": {
+  "status": "Not Tested"
+ },
+ "trait.even_tempered": {
+  "status": "Not Tested"
+ },
+ "trait.forgiving": {
+  "status": "Not Tested"
+ },
+ "trait.frugal": {
+  "status": "Not Tested"
+ },
+ "trait.generous": {
+  "status": "Not Tested"
+ },
+ "trait.guarded": {
+  "status": "Not Tested"
+ },
+ "trait.highly_strung": {
+  "status": "Not Tested"
+ },
+ "trait.holds_grudges": {
+  "status": "Not Tested"
+ },
+ "trait.homebody": {
+  "status": "Not Tested"
+ },
+ "trait.independent": {
+  "status": "Not Tested"
+ },
+ "trait.indulgent": {
+  "status": "Not Tested"
+ },
+ "trait.keeps_accounts": {
+  "status": "Not Tested"
+ },
+ "trait.light_sleeper": {
+  "status": "Not Tested"
+ },
+ "trait.loyal": {
+  "status": "Not Tested"
+ },
+ "trait.needs_people": {
+  "status": "Not Tested"
+ },
+ "trait.night_owl": {
+  "status": "Not Tested"
+ },
+ "trait.open_book": {
+  "status": "Not Tested"
+ },
+ "trait.orderly": {
+  "status": "Not Tested"
+ },
+ "trait.peacemaker": {
+  "status": "Not Tested"
+ },
+ "trait.quick_tempered": {
+  "status": "Not Tested"
+ },
+ "trait.resilient": {
+  "status": "Not Tested"
+ },
+ "trait.restless": {
+  "status": "Not Tested"
+ },
+ "trait.scattered": {
+  "status": "Not Tested"
+ },
+ "trait.self_assured": {
+  "status": "Not Tested"
+ },
+ "trait.self_critical": {
+  "status": "Not Tested"
+ },
+ "trait.sentimental": {
+  "status": "Not Tested"
+ },
+ "trait.single_minded": {
+  "status": "Not Tested"
+ },
+ "trait.sleeps_anywhere": {
+  "status": "Not Tested"
+ },
+ "trait.spender": {
+  "status": "Not Tested"
+ },
+ "trait.unshakeable": {
+  "status": "Not Tested"
+ }
+}
