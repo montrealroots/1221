@@ -43,6 +43,10 @@ nothing here builds on it.
     area's 145 promises, the career's 4 Actor Showcase promises); the School's 86 test files green (1,304 tests);
     repeated presses, cancellations and reloads traced at each command, kind and notice; no defect found. 559 Verified
     in all, 584 Not Tested.
+  - **M5, the career (read on `9018cc4e`):** 89 rows verified by reading the four career systems and the content whole
+    and by the career's 32 test files (423 tests, green); no defect found; two things noted and not changed (an
+    engagement status nothing sets; the career's content bound of eleven parts, each once). 644 Verified in all, 499 Not
+    Tested.
 - **M12, at the close:** brief 22's final runs again on the finished commit (back to 634), the gate in a clean clone of
   it, the receipt with everything brief 26's §13 asks.
 - **Not merged, not deployed.** The schema stays 94.

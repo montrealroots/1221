@@ -44,7 +44,13 @@ each milestone's end, with the branch, the commit, what's covered, what remains 
   cancellations (`setStanding`, `startLeave`, `callOff`, `leaveCabaret`, the showcase's `decide`) and reloads (each
   payment, decision and judging once across a save). Found no defect. 294 rows Verified: the School's 145, the craft
   area's 145 promises, the career area's 4 Actor Showcase promises. 559 Verified in all.
-- **M5 to M11:** the traces, area by area (the handoff's top section lists them with what each found).
+- **M5, 2026-10-24: the career.** Read `systems/pro.ts`, `projobs.ts`, `propay.ts`, `proagent.ts` and
+  `content/careerwork.ts` whole; ran the career's 32 test files (423 tests, green on `9018cc4e`). Traced the brief's
+  repeated presses (each refused in its words; a headshot session alone repeats, and is charged), cancellations (an offer's
+  lapse, work called off with its paydays, a request's due date, an agreement's lapse and term) and reloads (payments
+  keyed and paid once, days logged once, draws keyed to what they decide). Found no defect; noted an engagement status
+  nothing sets and the career's content bound (the receipt's M5). 89 rows Verified. 644 Verified in all.
+- **M6 to M11:** the traces, area by area (the handoff's top section lists them with what each found).
 - **M12:** brief 22's final runs again on the finished commit, the gate, the receipt.
 
 ## The Completion Matrix While The Sweep Runs
@@ -55,6 +61,6 @@ source change until the runs are played again on the finished commit (M12). That
 
 ## Next Step
 
-Begin M5, the career: its 85 rows still Not Tested (`node tools/sweep.mjs --todo career`), reading the `pro.*`
-commands and scheduled kinds in `systems/pro*.ts`, the work day and its pay, the permission to work and the project's
-genres in `content/careerwork.ts`, and the career's screens.
+Begin M6, money and banking: the money area's 160 rows (`node tools/sweep.mjs --todo money`): the bank, the card,
+cash, finance, lending, spending and credit, reading each command, scheduled kind and notice at its handler and
+refusals, and holding every balance to the sum of its postings.

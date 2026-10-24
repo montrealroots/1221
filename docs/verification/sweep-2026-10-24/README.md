@@ -113,6 +113,45 @@ promises (the coursework's, the briefs', the genres', the identity's, the practi
 the productions') and the career area's 4 Actor Showcase promises. Running total: 559 Verified, 1 Fixed And Verified,
 1 Blocked, 584 Not Tested.
 
+### M5: The Career
+
+**Read:** `systems/pro.ts` whole (the record and its bounds; the profile worked out from the record and never stored;
+the résumé keyed line by line, so "behind" is a set difference; the reel's sources; each material's refusal and command);
+`systems/projobs.ts` whole (each Monday's postings, a part never posted again while its last casting runs or once it's
+been booked or credited; the agent's try; the submission, the round set in person or on tape, the clash said with the
+way to move it; casting's draw keyed by the opportunity and the round; the offer as a decision with its warning; the
+booking, its promised pay and its days; the work day, logged once, permission read whole, a miss, a replacement, a
+release, unapproved work reported through the School's own standing, the credit at the first night or the wrap; the
+dean's answer); `systems/propay.ts` whole (a payment paid once and never twice, into trust where commission is owed, the
+commission's five rules, the withholding, the unions' bills keyed and settled once, SAG-AFTRA's thirtieth day);
+`systems/proagent.ts` whole (the seven factors against the game's bar, the draws keyed by person, agent, approach and
+step, each stage's refusal, the School's follow-up once a showcase, the meeting, the decision, the agreement's offer,
+acceptance, decline, lapse, term and its three ways of ending); `content/careerwork.ts` (the rates by contract year, the
+unions, the eleven parts, the agreement's terms). **Ran:** the career's 32 test files, 423 tests, green on `9018cc4e`.
+
+**Traced for the brief's three questions.** *Repeated presses:* every career command refuses its second press in its
+own words (a name already set, a résumé with everything on it, a reel of the same pieces, a part submitted already, a
+step of preparation halved for each time today and capped, a tape or a move once, an offer accepted or declined once, a
+request already with the dean, a notice read, a check passed for this approach, a job that has referred once, an approach
+under way, a meeting moved once, an agreement offered, in force or not); a headshot session alone can be had again, and
+is charged again, as its header says. *Cancellation:* accepting or declining an offer calls its lapse off and resolves
+its decision; work called off takes its days and the dropped weeks' paydays off the clock and keeps only the pay for
+days worked; sending what the office asked for cancels the due date; accepting, declining or ending an agreement calls
+its lapse or its term's end off; an agent's breakdown is withdrawn once the agreement it came under has ended.
+*Reloads:* a payment is keyed and paid only with nothing received and nothing in trust; a work day is logged once; a
+round's casting is kept on it; every history event has a stable key; a bill is keyed; the postings, casting and the
+agent's answers are draws keyed to the thing decided, so a reload decides the same. The first SAG-AFTRA work day and
+the eligibility notice fall at one instant, and the scheduler's priority runs the notice first, so the player is told
+(tests/journey-career.test.ts has it at 7:00 AM). **Found:** no defect. **Noted, not changed (2):** an engagement's
+`preparing` status is declared and read by permission's `employmentSpan` but set by nothing (the booking goes from
+`booked` to `working`); and the career is bounded by its content: each of the eleven parts is posted once a cycle and
+never again once booked or credited, so a life that books every part written for it (seven) sees no more postings.
+Brief 25, on the other account's branch, is the career's expansion and isn't begun here.
+
+**Register:** 89 more rows Verified by inspection and the tests named on each: 21 commands, 17 scheduled kinds, the
+postings' passage, the Equity event, 9 notices and 37 of the Career chapter's promises. Running total: 644 Verified,
+1 Fixed And Verified, 1 Blocked, 499 Not Tested.
+
 ## Final Runs, Gate And Report (M12)
 
 (Written at the close.)

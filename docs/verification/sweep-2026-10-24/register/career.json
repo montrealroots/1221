@@ -1,258 +1,1328 @@
 {
  "notice.systems/proagent#tell": {
-  "status": "Not Tested"
+  "status": "Verified",
+  "by": [
+   "inspection",
+   "automated"
+  ],
+  "on": "9018cc4e",
+  "evidence": [
+   "tests/journey-agent.test.ts",
+   "tests/pro-agent.test.ts",
+   "tests/b20-career-history.test.ts",
+   "src/engine/systems/proagent.ts:189-192 the agent’s notices, the player’s only, each to the Representation tab",
+   "tests/pro-agent.test.ts",
+   "tests/pro-core.test.ts the career’s 32 test files, 423 tests, run on this commit: all green"
+  ]
  },
  "notice.systems/projobs#tell": {
-  "status": "Not Tested"
+  "status": "Verified",
+  "by": [
+   "inspection",
+   "automated"
+  ],
+  "on": "9018cc4e",
+  "evidence": [
+   "tests/pro-work.test.ts",
+   "tests/b20-career-history.test.ts",
+   "tests/b20-career-effects.test.ts",
+   "src/engine/systems/projobs.ts:937-940 the work’s notices, the player’s only",
+   "tests/pro-work.test.ts",
+   "tests/pro-core.test.ts the career’s 32 test files, 423 tests, run on this commit: all green"
+  ]
  },
  "notice.systems/propay#equityJoined": {
-  "status": "Not Tested"
+  "status": "Verified",
+  "by": [
+   "inspection",
+   "automated"
+  ],
+  "on": "9018cc4e",
+  "evidence": [
+   "tests/propay.test.ts",
+   "tests/b20-career-defects.test.ts",
+   "src/engine/systems/propay.ts:678-691 the fee and the dues, said once",
+   "tests/propay.test.ts",
+   "tests/pro-core.test.ts the career’s 32 test files, 423 tests, run on this commit: all green"
+  ]
  },
  "notice.systems/propay#equityOnOpening": {
-  "status": "Not Tested"
+  "status": "Verified",
+  "by": [
+   "inspection",
+   "automated"
+  ],
+  "on": "9018cc4e",
+  "evidence": [
+   "tests/propay.test.ts",
+   "tests/journey-career-older.test.ts",
+   "src/engine/systems/propay.ts:698-712 an older graduate’s save told what’s owed, nothing charged for a past date",
+   "tests/propay.test.ts",
+   "tests/b20-career-saveload.test.ts",
+   "tests/pro-core.test.ts the career’s 32 test files, 423 tests, run on this commit: all green"
+  ]
  },
  "notice.systems/propay#payDue": {
-  "status": "Not Tested"
+  "status": "Verified",
+  "by": [
+   "inspection",
+   "automated"
+  ],
+  "on": "9018cc4e",
+  "evidence": [
+   "tests/propay.test.ts",
+   "tests/propay-screen.test.ts",
+   "src/engine/systems/propay.ts:473-521 a payment paid once: never one received, in trust or deferred; into the trust account where commission is owed (src/engine/systems/propay.ts:339-373 commissionOn, src/engine/systems/propay.ts:266-278 owedAgreement), else to the player; the wages recorded, the withholding src/engine/systems/propay.ts:403-434",
+   "tests/propay.test.ts",
+   "tests/pro-core.test.ts the career’s 32 test files, 423 tests, run on this commit: all green"
+  ]
  },
  "notice.systems/propay#release": {
-  "status": "Not Tested"
+  "status": "Verified",
+  "by": [
+   "inspection",
+   "automated"
+  ],
+  "on": "9018cc4e",
+  "evidence": [
+   "tests/propay.test.ts",
+   "src/engine/systems/propay.ts:524-546 pay passed on from trust once, less the commission worked out when it was paid in",
+   "tests/propay.test.ts",
+   "tests/pro-core.test.ts the career’s 32 test files, 423 tests, run on this commit: all green"
+  ]
  },
  "notice.systems/propay#settle": {
-  "status": "Not Tested"
+  "status": "Verified",
+  "by": [
+   "inspection",
+   "automated"
+  ],
+  "on": "9018cc4e",
+  "evidence": [
+   "tests/propay.test.ts",
+   "src/engine/systems/propay.ts:644-655 a union’s bill settled once: paid, or owed; the next half-year’s dues billed",
+   "tests/propay.test.ts",
+   "tests/pro-core.test.ts the career’s 32 test files, 423 tests, run on this commit: all green"
+  ]
  },
  "notice.systems/proshowcase#beginShowcase": {
-  "status": "Not Tested"
+  "status": "Verified",
+  "by": [
+   "inspection",
+   "automated"
+  ],
+  "on": "9018cc4e",
+  "evidence": [
+   "tests/pro-showcase.test.ts",
+   "src/engine/systems/proshowcase.ts:346-375 the showcase begun: the calls, the notice, an older save decided at once",
+   "tests/pro-showcase.test.ts",
+   "tests/pro-core.test.ts the career’s 32 test files, 423 tests, run on this commit: all green"
+  ]
  },
  "notice.systems/proshowcase#decide": {
-  "status": "Not Tested"
+  "status": "Verified",
+  "by": [
+   "inspection",
+   "automated"
+  ],
+  "on": "9018cc4e",
+  "evidence": [
+   "tests/pro-showcase.test.ts",
+   "src/engine/systems/proshowcase.ts:431-455 decide: out with an Incomplete, else in, the faculty choosing where the student didn’t",
+   "tests/pro-showcase.test.ts",
+   "tests/pro-core.test.ts the career’s 32 test files, 423 tests, run on this commit: all green"
+  ]
  },
  "pro.accept_agreement": {
-  "status": "Not Tested"
+  "status": "Verified",
+  "by": [
+   "inspection",
+   "automated"
+  ],
+  "on": "9018cc4e",
+  "evidence": [
+   "tests/journey-agent.test.ts",
+   "tests/journey-career.test.ts",
+   "tests/pro-representation-screen.test.ts",
+   "tests/b20-career-saveload.test.ts",
+   "tests/b20-career-effects.test.ts",
+   "src/engine/systems/proagent.ts:1113-1130 the command: signed, the lapse called off, the term’s end booked; src/engine/systems/proagent.ts:658-663 answerRefusal",
+   "tests/pro-agent.test.ts",
+   "tests/journey-agent.test.ts",
+   "tests/pro-core.test.ts the career’s 32 test files, 423 tests, run on this commit: all green"
+  ]
  },
  "pro.accept_offer": {
-  "status": "Not Tested"
+  "status": "Verified",
+  "by": [
+   "inspection",
+   "automated"
+  ],
+  "on": "9018cc4e",
+  "evidence": [
+   "tests/b20-career-defects.test.ts",
+   "tests/b20-career-effects.test.ts",
+   "tests/b20-career-saveload.test.ts",
+   "tests/b22-authorization.test.ts",
+   "tests/pro-opportunities-screen.test.ts",
+   "tests/pro-work.test.ts",
+   "src/engine/systems/projobs.ts:1647-1677 the command: the engagement, its promised pay, the paydays on the clock, the days booked, the lapse called off, the opportunity settled; src/engine/systems/projobs.ts:858-883 acceptRefusal: lapsed, permission for every day, SAG-AFTRA membership, another booking, the School’s hold; src/engine/systems/projobs.ts:886-904 acceptWarning",
+   "tests/pro-work.test.ts",
+   "tests/permission.test.ts",
+   "tests/pro-core.test.ts the career’s 32 test files, 423 tests, run on this commit: all green"
+  ]
  },
  "pro.agent_ask_lapse": {
-  "status": "Not Tested"
+  "status": "Verified",
+  "by": [
+   "inspection",
+   "automated"
+  ],
+  "on": "9018cc4e",
+  "evidence": [
+   "tests/b20-agent-ask-lapse.test.ts",
+   "src/engine/systems/proagent.ts:1171-1180 the School’s passed-on request lapses, said once",
+   "tests/b20-agent-ask-lapse.test.ts",
+   "tests/pro-core.test.ts the career’s 32 test files, 423 tests, run on this commit: all green"
+  ]
  },
  "pro.agent_check": {
-  "status": "Not Tested"
+  "status": "Verified",
+  "by": [
+   "inspection",
+   "automated"
+  ],
+  "on": "9018cc4e",
+  "evidence": [
+   "tests/journey-agent.test.ts",
+   "tests/pro-representation-screen.test.ts",
+   "tests/b20-career-effects.test.ts",
+   "src/engine/systems/proagent.ts:1021-1035 the command; src/engine/systems/proagent.ts:543-551 checkRefusal: unread, under way, passed already for this approach, what’s missing",
+   "tests/pro-agent.test.ts",
+   "tests/pro-core.test.ts the career’s 32 test files, 423 tests, run on this commit: all green"
+  ]
  },
  "pro.agent_decision": {
-  "status": "Not Tested"
+  "status": "Verified",
+  "by": [
+   "inspection",
+   "automated"
+  ],
+  "on": "9018cc4e",
+  "evidence": [
+   "tests/journey-agent.test.ts",
+   "tests/b20-career-saveload.test.ts",
+   "tests/b20-career-history.test.ts",
+   "src/engine/systems/proagent.ts:1232-1245 the decision after a meeting: an offer at the draw, or a pass; src/engine/systems/proagent.ts:909-924 offerAgreement copies the terms in and books the lapse",
+   "tests/pro-agent.test.ts",
+   "tests/pro-core.test.ts the career’s 32 test files, 423 tests, run on this commit: all green"
+  ]
  },
  "pro.agent_follow_up": {
-  "status": "Not Tested"
+  "status": "Verified",
+  "by": [
+   "inspection",
+   "automated"
+  ],
+  "on": "9018cc4e",
+  "evidence": [
+   "tests/pro-agent.test.ts",
+   "tests/journey-career.test.ts",
+   "tests/journey-career-older.test.ts",
+   "tests/b20-career-saveload.test.ts",
+   "src/engine/systems/proagent.ts:1157-1160 the item; src/engine/systems/proagent.ts:945-981 followUp once a showcase: each agent introduced, a request to meet drawn and its lapse booked; src/engine/systems/proagent.ts:935-943 scheduleShowcaseFollowUp",
+   "tests/pro-agent.test.ts",
+   "tests/pro-showcase.test.ts",
+   "tests/pro-core.test.ts the career’s 32 test files, 423 tests, run on this commit: all green"
+  ]
  },
  "pro.agent_meeting": {
-  "status": "Not Tested"
+  "status": "Verified",
+  "by": [
+   "inspection",
+   "automated"
+  ],
+  "on": "9018cc4e",
+  "evidence": [
+   "tests/journey-agent.test.ts",
+   "tests/b20-career-saveload.test.ts",
+   "tests/pro-work.test.ts",
+   "src/engine/systems/proagent.ts:1203-1230 the meeting kept (the decision booked) or missed (asleep, in hospital, laid up, elsewhere: closed with its year)",
+   "tests/pro-agent.test.ts",
+   "tests/journey-agent.test.ts",
+   "tests/pro-core.test.ts the career’s 32 test files, 423 tests, run on this commit: all green"
+  ]
  },
  "pro.agent_notice": {
-  "status": "Not Tested"
+  "status": "Verified",
+  "by": [
+   "inspection",
+   "automated"
+  ],
+  "on": "9018cc4e",
+  "evidence": [
+   "tests/pro-agent.test.ts",
+   "tests/journey-agent.test.ts",
+   "tests/pro-representation-screen.test.ts",
+   "tests/b20-career-effects.test.ts",
+   "src/engine/systems/proagent.ts:1010-1019 the command; src/engine/systems/proagent.ts:502-505 noticeRefusal: read already",
+   "tests/pro-agent.test.ts",
+   "tests/pro-core.test.ts the career’s 32 test files, 423 tests, run on this commit: all green"
+  ]
  },
  "pro.agent_offer_lapse": {
-  "status": "Not Tested"
+  "status": "Verified",
+  "by": [
+   "inspection",
+   "automated"
+  ],
+  "on": "9018cc4e",
+  "evidence": [
+   "tests/journey-agent.test.ts",
+   "tests/b20-career-history.test.ts",
+   "src/engine/systems/proagent.ts:1247-1257 an offer unanswered lapses once, with its six months",
+   "tests/pro-agent.test.ts",
+   "tests/pro-core.test.ts the career’s 32 test files, 423 tests, run on this commit: all green"
+  ]
  },
  "pro.agent_reply": {
-  "status": "Not Tested"
+  "status": "Verified",
+  "by": [
+   "inspection",
+   "automated"
+  ],
+  "on": "9018cc4e",
+  "evidence": [
+   "tests/journey-agent.test.ts",
+   "tests/pro-agent.test.ts",
+   "tests/b20-career-saveload.test.ts",
+   "tests/b20-career-skill.test.ts",
+   "tests/b20-career-history.test.ts",
+   "src/engine/systems/proagent.ts:1162-1169 the answer to the approach still under way; src/engine/systems/proagent.ts:831-872 answer: a request, a meeting, a pass with its year, or silence; src/engine/systems/proagent.ts:307-397 interestOf, seven factors against the game’s bar; src/engine/systems/proagent.ts:421-426 replyOutcome",
+   "tests/pro-agent.test.ts",
+   "tests/journey-agent.test.ts",
+   "tests/pro-core.test.ts the career’s 32 test files, 423 tests, run on this commit: all green"
+  ]
  },
  "pro.agent_request_due": {
-  "status": "Not Tested"
+  "status": "Verified",
+  "by": [
+   "inspection",
+   "automated"
+  ],
+  "on": "9018cc4e",
+  "evidence": [
+   "tests/journey-agent.test.ts",
+   "src/engine/systems/proagent.ts:1182-1191 material not sent: noted once, the office decides on what it has",
+   "tests/pro-agent.test.ts",
+   "tests/pro-core.test.ts the career’s 32 test files, 423 tests, run on this commit: all green"
+  ]
  },
  "pro.agent_silence": {
-  "status": "Not Tested"
+  "status": "Verified",
+  "by": [
+   "inspection",
+   "automated"
+  ],
+  "on": "9018cc4e",
+  "evidence": [
+   "tests/journey-agent.test.ts",
+   "src/engine/systems/proagent.ts:1193-1201 six weeks with no answer: closed with its six months",
+   "tests/pro-agent.test.ts",
+   "tests/pro-core.test.ts the career’s 32 test files, 423 tests, run on this commit: all green"
+  ]
  },
  "pro.agent_term_end": {
-  "status": "Not Tested"
+  "status": "Verified",
+  "by": [
+   "inspection",
+   "automated"
+  ],
+  "on": "9018cc4e",
+  "evidence": [
+   "tests/journey-agent.test.ts",
+   "src/engine/systems/proagent.ts:1259-1266 the year up; src/engine/systems/proagent.ts:1270-1279 endAgreement",
+   "tests/pro-agent.test.ts",
+   "tests/pro-core.test.ts the career’s 32 test files, 423 tests, run on this commit: all green"
+  ]
  },
  "pro.ask_referral": {
-  "status": "Not Tested"
+  "status": "Verified",
+  "by": [
+   "inspection",
+   "automated"
+  ],
+  "on": "9018cc4e",
+  "evidence": [
+   "tests/journey-agent.test.ts",
+   "tests/journey-career-older.test.ts",
+   "tests/pro-agent.test.ts",
+   "tests/b20-career-effects.test.ts",
+   "src/engine/systems/proagent.ts:1037-1052 the command; src/engine/systems/proagent.ts:573-586 referralRefusal; src/engine/systems/proagent.ts:554-568 referrersOf: a job refers once, strong or better",
+   "tests/referrals.test.ts",
+   "tests/pro-agent.test.ts",
+   "tests/pro-core.test.ts the career’s 32 test files, 423 tests, run on this commit: all green"
+  ]
  },
  "pro.ask_to_move": {
-  "status": "Not Tested"
+  "status": "Verified",
+  "by": [
+   "inspection",
+   "automated"
+  ],
+  "on": "9018cc4e",
+  "evidence": [
+   "tests/journey-agent.test.ts",
+   "tests/pro-representation-screen.test.ts",
+   "tests/journey-career.test.ts",
+   "src/engine/systems/proagent.ts:1097-1111 the command moves the meeting a week, once, the item rescheduled; src/engine/systems/proagent.ts:638-645 moveRefusal",
+   "tests/pro-agent.test.ts",
+   "tests/pro-core.test.ts the career’s 32 test files, 423 tests, run on this commit: all green"
+  ]
  },
  "pro.audition": {
-  "status": "Not Tested"
+  "status": "Verified",
+  "by": [
+   "inspection",
+   "automated"
+  ],
+  "on": "9018cc4e",
+  "evidence": [
+   "tests/pro-work.test.ts",
+   "tests/b20-career-skill.test.ts",
+   "src/engine/systems/projobs.ts:1437-1449 the round: missed asleep, ill, at a booked day (src/engine/systems/projobs.ts:664-674) or elsewhere (src/engine/systems/projobs.ts:605-626), else judged; src/engine/systems/projobs.ts:1109-1120 missRound settles it",
+   "tests/pro-work.test.ts",
+   "tests/pro-core.test.ts the career’s 32 test files, 423 tests, run on this commit: all green"
+  ]
  },
  "pro.casting_decision": {
-  "status": "Not Tested"
+  "status": "Verified",
+  "by": [
+   "inspection",
+   "automated"
+  ],
+  "on": "9018cc4e",
+  "evidence": [
+   "tests/pro-work.test.ts",
+   "tests/b20-career-skill.test.ts",
+   "src/engine/systems/projobs.ts:1457-1477 casting: a booking since passes, else the draw keyed by the opportunity and the round (src/engine/systems/projobs.ts:496-499) at the chance of the band, the fit and the field (src/engine/systems/projobs.ts:384-387, src/engine/systems/projobs.ts:359-367), a callback or the offer; src/engine/systems/projobs.ts:1132-1162 makeOffer: scale plus ten represented, the decision required",
+   "tests/pro-work.test.ts",
+   "tests/b20-career-skill.test.ts",
+   "tests/pro-core.test.ts the career’s 32 test files, 423 tests, run on this commit: all green"
+  ]
  },
  "pro.cut_reel": {
-  "status": "Not Tested"
+  "status": "Verified",
+  "by": [
+   "inspection",
+   "automated"
+  ],
+  "on": "9018cc4e",
+  "evidence": [
+   "tests/pro-core.test.ts",
+   "tests/journey-agent.test.ts",
+   "tests/b20-career-effects.test.ts",
+   "src/engine/systems/pro.ts:1014-1032 the command; src/engine/systems/pro.ts:940-956 reelRefusal: nothing recorded, a piece twice, more than four, a voice tape, the same pieces again, the bank; src/engine/systems/pro.ts:830-854 reelSources",
+   "tests/pro-core.test.ts",
+   "tests/pro-core.test.ts the career’s 32 test files, 423 tests, run on this commit: all green"
+  ]
  },
  "pro.decline_agreement": {
-  "status": "Not Tested"
+  "status": "Verified",
+  "by": [
+   "inspection",
+   "automated"
+  ],
+  "on": "9018cc4e",
+  "evidence": [
+   "tests/journey-agent.test.ts",
+   "tests/journey-career.test.ts",
+   "tests/b20-career-effects.test.ts",
+   "tests/b20-career-history.test.ts",
+   "src/engine/systems/proagent.ts:1132-1144 the command; src/engine/systems/proagent.ts:488-493 closeApproach sets the cooldown",
+   "tests/pro-agent.test.ts",
+   "tests/pro-core.test.ts the career’s 32 test files, 423 tests, run on this commit: all green"
+  ]
  },
  "pro.decline_offer": {
-  "status": "Not Tested"
+  "status": "Verified",
+  "by": [
+   "inspection",
+   "automated"
+  ],
+  "on": "9018cc4e",
+  "evidence": [
+   "tests/pro-work.test.ts",
+   "tests/b20-career-history.test.ts",
+   "tests/b20-career-effects.test.ts",
+   "src/engine/systems/projobs.ts:1679-1689 the command: refused with no offer, the lapse called off, settled",
+   "tests/pro-work.test.ts",
+   "tests/pro-core.test.ts the career’s 32 test files, 423 tests, run on this commit: all green"
+  ]
  },
  "pro.end_agreement": {
-  "status": "Not Tested"
+  "status": "Verified",
+  "by": [
+   "inspection",
+   "automated"
+  ],
+  "on": "9018cc4e",
+  "evidence": [
+   "tests/journey-agent.test.ts",
+   "tests/journey-career.test.ts",
+   "tests/propay.test.ts",
+   "src/engine/systems/proagent.ts:1146-1155 the command; src/engine/systems/proagent.ts:735-755 endRefusal: Equity’s 90 days extended by days employed, not while working, SAG-AFTRA’s 151 and fewer than ten in 91; src/engine/systems/proagent.ts:1270-1279 endAgreement says what stays owed",
+   "tests/pro-agent.test.ts",
+   "tests/b20-career-defects.test.ts",
+   "tests/pro-core.test.ts the career’s 32 test files, 423 tests, run on this commit: all green"
+  ]
  },
  "pro.equity_joined": {
-  "status": "Not Tested"
+  "status": "Verified",
+  "by": [
+   "inspection",
+   "automated"
+  ],
+  "on": "9018cc4e",
+  "evidence": [
+   "tests/propay.test.ts",
+   "tests/b20-career-defects.test.ts",
+   "tests/journey-career-older.test.ts",
+   "src/engine/systems/propay.ts:777-780 the event’s handler; src/engine/systems/propay.ts:678-691 equityJoined bills the fee’s three parts and the dues once; src/engine/systems/projobs.ts:1369-1374 emitted at an Equity contract’s first day; src/engine/systems/propay.ts:124 said by the School at the degree",
+   "tests/propay.test.ts",
+   "tests/b20-career-effects.test.ts",
+   "tests/pro-core.test.ts the career’s 32 test files, 423 tests, run on this commit: all green"
+  ]
  },
  "pro.headshots": {
-  "status": "Not Tested"
+  "status": "Verified",
+  "by": [
+   "inspection",
+   "automated"
+  ],
+  "on": "9018cc4e",
+  "evidence": [
+   "tests/pro-core.test.ts",
+   "tests/pro-work.test.ts",
+   "tests/journey-agent.test.ts",
+   "src/engine/systems/pro.ts:985-1000 the command: charged through spend, four hours on the clock, a material added and the record kept to its bounds (src/engine/systems/pro.ts:544-572); src/engine/systems/pro.ts:924-930 headshotRefusal: busy, by day only, the bank; a second session is allowed and charged, as the header says",
+   "tests/pro-core.test.ts",
+   "tests/pro-screen.test.ts",
+   "tests/pro-core.test.ts the career’s 32 test files, 423 tests, run on this commit: all green"
+  ]
  },
  "pro.join_sag": {
-  "status": "Not Tested"
+  "status": "Verified",
+  "by": [
+   "inspection",
+   "automated"
+  ],
+  "on": "9018cc4e",
+  "evidence": [
+   "tests/journey-career.test.ts",
+   "tests/propay.test.ts",
+   "src/engine/systems/propay.ts:782-793 the command; src/engine/systems/propay.ts:733-741 joinSagRefusal: a member already, not yet eligible, the bank; src/engine/systems/propay.ts:725-730 sagWorkRefusal from the thirtieth day",
+   "tests/propay.test.ts",
+   "tests/journey-career.test.ts",
+   "tests/pro-core.test.ts the career’s 32 test files, 423 tests, run on this commit: all green"
+  ]
  },
  "pro.move_audition": {
-  "status": "Not Tested"
+  "status": "Verified",
+  "by": [
+   "inspection",
+   "automated"
+  ],
+  "on": "9018cc4e",
+  "evidence": [
+   "tests/pro-work.test.ts",
+   "src/engine/systems/projobs.ts:1629-1645 the command moves it once, the item rescheduled; src/engine/systems/projobs.ts:848-855 moveRefusal; src/engine/systems/projobs.ts:814-830 otherTime",
+   "tests/pro-work.test.ts",
+   "tests/pro-core.test.ts the career’s 32 test files, 423 tests, run on this commit: all green"
+  ]
  },
  "pro.offer_lapse": {
-  "status": "Not Tested"
+  "status": "Verified",
+  "by": [
+   "inspection",
+   "automated"
+  ],
+  "on": "9018cc4e",
+  "evidence": [
+   "tests/pro-work.test.ts",
+   "tests/b20-career-history.test.ts",
+   "src/engine/systems/projobs.ts:1479-1487 an offer unanswered lapses once",
+   "tests/pro-work.test.ts",
+   "tests/pro-core.test.ts the career’s 32 test files, 423 tests, run on this commit: all green"
+  ]
  },
  "pro.postings": {
-  "status": "Not Tested"
+  "status": "Verified",
+  "by": [
+   "inspection",
+   "automated"
+  ],
+  "on": "9018cc4e",
+  "evidence": [
+   "tests/pro-work.test.ts",
+   "tests/b20-career-history.test.ts",
+   "tests/b20-career-skill.test.ts",
+   "tests/b20-career-effects.test.ts",
+   "src/engine/systems/projobs.ts:1416-1429 the passage: each Monday’s postings, windows closed, the agent’s try; src/engine/systems/projobs.ts:472-490 postingsAt: who the part is written for, the route, not posted again before postedAgainBy (src/engine/systems/projobs.ts:450-455), never a part booked or credited before, each project’s own draw; src/engine/systems/projobs.ts:954-972 post; src/engine/systems/projobs.ts:992-1007 agentTries",
+   "tests/pro-work.test.ts",
+   "tests/b20-career-effects.test.ts",
+   "tests/pro-core.test.ts the career’s 32 test files, 423 tests, run on this commit: all green"
+  ]
  },
  "pro.prepare": {
-  "status": "Not Tested"
+  "status": "Verified",
+  "by": [
+   "inspection",
+   "automated"
+  ],
+  "on": "9018cc4e",
+  "evidence": [
+   "tests/journey-career.test.ts",
+   "tests/b20-career-effects.test.ts",
+   "tests/b20-career-skill.test.ts",
+   "tests/pro-work.test.ts",
+   "src/engine/systems/projobs.ts:1604-1612 the command; src/engine/systems/projobs.ts:784-800 prepareRefusal; src/engine/systems/projobs.ts:1387-1401 prepareOn: a step halved for each time today, capped at 0.97",
+   "tests/pro-work.test.ts",
+   "tests/pro-core.test.ts the career’s 32 test files, 423 tests, run on this commit: all green"
+  ]
  },
  "pro.release": {
-  "status": "Not Tested"
+  "status": "Verified",
+  "by": [
+   "inspection",
+   "automated"
+  ],
+  "on": "9018cc4e",
+  "evidence": [
+   "tests/b20-career-effects.test.ts",
+   "tests/pro-core.test.ts",
+   "src/engine/systems/projobs.ts:1570-1574 a screen project released; src/engine/systems/pro.ts:588-594 releaseScreenCredit",
+   "tests/pro-work.test.ts",
+   "tests/pro-core.test.ts the career’s 32 test files, 423 tests, run on this commit: all green"
+  ]
  },
  "pro.reply": {
-  "status": "Not Tested"
+  "status": "Verified",
+  "by": [
+   "inspection",
+   "automated"
+  ],
+  "on": "9018cc4e",
+  "evidence": [
+   "tests/pro-work.test.ts",
+   "tests/b20-career-skill.test.ts",
+   "tests/b20-career-effects.test.ts",
+   "tests/b20-career-saveload.test.ts",
+   "src/engine/systems/projobs.ts:1431-1435 the answer; src/engine/systems/projobs.ts:1024-1063 setRound: in person with the trip, or a tape due, the clash said",
+   "tests/pro-work.test.ts",
+   "tests/pro-core.test.ts the career’s 32 test files, 423 tests, run on this commit: all green"
+  ]
  },
  "pro.request_outside_work": {
-  "status": "Not Tested"
+  "status": "Verified",
+  "by": [
+   "inspection",
+   "automated"
+  ],
+  "on": "9018cc4e",
+  "evidence": [
+   "tests/pro-work.test.ts",
+   "src/engine/systems/projobs.ts:1691-1707 the command; src/engine/systems/projobs.ts:907-920 requestRefusal: asked already, decided, not in term, standing, an F-1; src/engine/systems/projobs.ts:691-707 conditionsFor",
+   "tests/pro-work.test.ts",
+   "tests/pro-core.test.ts the career’s 32 test files, 423 tests, run on this commit: all green"
+  ]
  },
  "pro.school_answer": {
-  "status": "Not Tested"
+  "status": "Verified",
+  "by": [
+   "inspection",
+   "automated"
+  ],
+  "on": "9018cc4e",
+  "evidence": [
+   "tests/pro-work.test.ts",
+   "src/engine/systems/projobs.ts:1576-1593 the dean decides once, the engagement approved where one is booked",
+   "tests/pro-work.test.ts",
+   "tests/pro-core.test.ts the career’s 32 test files, 423 tests, run on this commit: all green"
+  ]
  },
  "pro.send_materials": {
-  "status": "Not Tested"
+  "status": "Verified",
+  "by": [
+   "inspection",
+   "automated"
+  ],
+  "on": "9018cc4e",
+  "evidence": [
+   "tests/journey-agent.test.ts",
+   "tests/b20-career-saveload.test.ts",
+   "tests/b20-career-skill.test.ts",
+   "tests/journey-career.test.ts",
+   "src/engine/systems/proagent.ts:1054-1075 the command: the approach numbered, the cooldown cleared, the record considered, the answer booked; src/engine/systems/proagent.ts:599-612 sendRefusal: unread, under way, unsolicited, unchecked, too soon, nothing new",
+   "tests/pro-agent.test.ts",
+   "tests/journey-agent.test.ts",
+   "tests/pro-core.test.ts the career’s 32 test files, 423 tests, run on this commit: all green"
+  ]
  },
  "pro.set_name": {
-  "status": "Not Tested"
+  "status": "Verified",
+  "by": [
+   "inspection",
+   "automated"
+  ],
+  "on": "9018cc4e",
+  "evidence": [
+   "tests/pro-core.test.ts",
+   "tests/pro-app.test.ts",
+   "src/engine/systems/pro.ts:973-983 the command; src/engine/systems/pro.ts:962-970 nameRefusal: the same name, the display name, too long",
+   "tests/pro-core.test.ts",
+   "tests/pro-core.test.ts the career’s 32 test files, 423 tests, run on this commit: all green"
+  ]
  },
  "pro.submit": {
-  "status": "Not Tested"
+  "status": "Verified",
+  "by": [
+   "inspection",
+   "automated"
+  ],
+  "on": "9018cc4e",
+  "evidence": [
+   "tests/pro-work.test.ts",
+   "tests/b20-career-skill.test.ts",
+   "tests/b20-career-effects.test.ts",
+   "tests/b20-career-saveload.test.ts",
+   "src/engine/systems/projobs.ts:1595-1602 the command; src/engine/systems/projobs.ts:759-770 submitRefusal: submitted already, agents only, closed, ineligible, materials; src/engine/systems/projobs.ts:975-989 submit sends what stands and books the answer",
+   "tests/pro-work.test.ts",
+   "tests/pro-opportunities-screen.test.ts",
+   "tests/pro-core.test.ts the career’s 32 test files, 423 tests, run on this commit: all green"
+  ]
  },
  "pro.supply_material": {
-  "status": "Not Tested"
+  "status": "Verified",
+  "by": [
+   "inspection",
+   "automated"
+  ],
+  "on": "9018cc4e",
+  "evidence": [
+   "tests/journey-agent.test.ts",
+   "tests/journey-career.test.ts",
+   "src/engine/systems/proagent.ts:1077-1095 the command cancels the due date and books the answer; src/engine/systems/proagent.ts:615-627 supplyRefusal",
+   "tests/pro-agent.test.ts",
+   "tests/pro-core.test.ts the career’s 32 test files, 423 tests, run on this commit: all green"
+  ]
  },
  "pro.tape_audition": {
-  "status": "Not Tested"
+  "status": "Verified",
+  "by": [
+   "inspection",
+   "automated"
+  ],
+  "on": "9018cc4e",
+  "evidence": [
+   "tests/pro-work.test.ts",
+   "tests/b20-career-skill.test.ts",
+   "tests/b20-career-effects.test.ts",
+   "src/engine/systems/projobs.ts:1614-1627 the command judges at the start and takes the hour; src/engine/systems/projobs.ts:803-811 tapeRefusal; src/engine/systems/projobs.ts:1069-1103 auditionContext and finishRound, the round done once",
+   "tests/pro-work.test.ts",
+   "tests/pro-core.test.ts the career’s 32 test files, 423 tests, run on this commit: all green"
+  ]
  },
  "pro.tape_due": {
-  "status": "Not Tested"
+  "status": "Verified",
+  "by": [
+   "inspection",
+   "automated"
+  ],
+  "on": "9018cc4e",
+  "evidence": [
+   "tests/pro-work.test.ts",
+   "src/engine/systems/projobs.ts:1451-1455 a tape not in lapses the part",
+   "tests/pro-work.test.ts",
+   "tests/pro-core.test.ts the career’s 32 test files, 423 tests, run on this commit: all green"
+  ]
  },
  "pro.update_resume": {
-  "status": "Not Tested"
+  "status": "Verified",
+  "by": [
+   "inspection",
+   "automated"
+  ],
+  "on": "9018cc4e",
+  "evidence": [
+   "tests/pro-core.test.ts",
+   "tests/b20-career-effects.test.ts",
+   "tests/journey-agent.test.ts",
+   "src/engine/systems/pro.ts:1002-1012 the command; src/engine/systems/pro.ts:933-937 resumeRefusal: refused while the current résumé has everything on the record; src/engine/systems/pro.ts:786-811 resumeNow and resumeBehind, keyed line by line",
+   "tests/pro-core.test.ts",
+   "tests/resume-town.test.ts",
+   "tests/pro-core.test.ts the career’s 32 test files, 423 tests, run on this commit: all green"
+  ]
  },
  "pro.work_day": {
-  "status": "Not Tested"
+  "status": "Verified",
+  "by": [
+   "inspection",
+   "automated"
+  ],
+  "on": "9018cc4e",
+  "evidence": [
+   "tests/b20-career-defects.test.ts",
+   "tests/b20-career-effects.test.ts",
+   "tests/b20-career-saveload.test.ts",
+   "tests/b20-career-skill.test.ts",
+   "tests/b22-authorization.test.ts",
+   "tests/pro-work.test.ts",
+   "src/engine/systems/projobs.ts:1489-1556 a work day: logged once, permission read whole (src/engine/systems/projobs.ts:1339-1346 release), missed (src/engine/systems/projobs.ts:1264-1278, the stage’s one, replaced after), unapproved work reported (src/engine/systems/projobs.ts:1353-1361), the unions (src/engine/systems/projobs.ts:1369-1376), a rehearsal’s growth (src/engine/systems/projobs.ts:1228-1233) or a judged day (src/engine/systems/projobs.ts:1210-1219), the genres practised, the mood, the energy, the credit at the first night, finished at the last (src/engine/systems/projobs.ts:1239-1261)",
+   "tests/pro-work.test.ts",
+   "tests/journey-career.test.ts",
+   "tests/b22-genre-weights.test.ts",
+   "tests/pro-core.test.ts the career’s 32 test files, 423 tests, run on this commit: all green"
+  ]
  },
  "promise.career.agent-answers>career.reasons": {
-  "status": "Not Tested"
+  "status": "Verified",
+  "by": [
+   "inspection",
+   "automated"
+  ],
+  "on": "9018cc4e",
+  "evidence": [
+   "tests/journey-agent.test.ts",
+   "tests/pro-agent.test.ts",
+   "src/engine/systems/proagent.ts:831-872 answer; src/engine/systems/proagent.ts:95-99 AGENT_TIMES; src/engine/systems/proagent.ts:1162-1201 the reply, the request due and the silence",
+   "tests/pro-agent.test.ts",
+   "tests/pro-core.test.ts the career’s 32 test files, 423 tests, run on this commit: all green"
+  ]
  },
  "promise.career.agent-answers>day.clock": {
-  "status": "Not Tested"
+  "status": "Verified",
+  "by": [
+   "inspection",
+   "automated"
+  ],
+  "on": "9018cc4e",
+  "evidence": [
+   "tests/journey-agent.test.ts",
+   "src/engine/systems/proagent.ts:831-872 answer; src/engine/systems/proagent.ts:95-99 AGENT_TIMES; src/engine/systems/proagent.ts:1162-1201 the reply, the request due and the silence",
+   "tests/pro-agent.test.ts",
+   "tests/pro-core.test.ts the career’s 32 test files, 423 tests, run on this commit: all green"
+  ]
  },
  "promise.career.agent>career.agent-answers": {
-  "status": "Not Tested"
+  "status": "Verified",
+  "by": [
+   "inspection",
+   "automated"
+  ],
+  "on": "9018cc4e",
+  "evidence": [
+   "tests/journey-agent.test.ts",
+   "tests/b20-career-saveload.test.ts",
+   "src/engine/systems/proagent.ts:307-397 interestOf; src/engine/systems/proagent.ts:599-612 sendRefusal; src/engine/systems/proagent.ts:1054-1075 the command",
+   "tests/pro-agent.test.ts",
+   "tests/pro-core.test.ts the career’s 32 test files, 423 tests, run on this commit: all green"
+  ]
  },
  "promise.career.agent>career.headshots": {
-  "status": "Not Tested"
+  "status": "Verified",
+  "by": [
+   "inspection",
+   "automated"
+  ],
+  "on": "9018cc4e",
+  "evidence": [
+   "tests/journey-agent.test.ts",
+   "src/engine/systems/proagent.ts:307-397 interestOf; src/engine/systems/proagent.ts:599-612 sendRefusal; src/engine/systems/proagent.ts:1054-1075 the command",
+   "tests/pro-agent.test.ts",
+   "tests/pro-core.test.ts the career’s 32 test files, 423 tests, run on this commit: all green"
+  ]
  },
  "promise.career.agent>career.resume": {
-  "status": "Not Tested"
+  "status": "Verified",
+  "by": [
+   "inspection",
+   "automated"
+  ],
+  "on": "9018cc4e",
+  "evidence": [
+   "tests/journey-agent.test.ts",
+   "src/engine/systems/proagent.ts:307-397 interestOf; src/engine/systems/proagent.ts:599-612 sendRefusal; src/engine/systems/proagent.ts:1054-1075 the command",
+   "tests/pro-agent.test.ts",
+   "tests/pro-core.test.ts the career’s 32 test files, 423 tests, run on this commit: all green"
+  ]
  },
  "promise.career.agreement>career.agent": {
-  "status": "Not Tested"
+  "status": "Verified",
+  "by": [
+   "inspection",
+   "automated"
+  ],
+  "on": "9018cc4e",
+  "evidence": [
+   "tests/journey-agent.test.ts",
+   "src/engine/content/careerwork.ts:402-436 AGREEMENT and its terms; src/engine/systems/proagent.ts:909-924 offerAgreement; src/engine/systems/proagent.ts:735-755 endRefusal; src/engine/systems/proagent.ts:1113-1155 the commands",
+   "tests/pro-agent.test.ts",
+   "tests/pro-core.test.ts the career’s 32 test files, 423 tests, run on this commit: all green"
+  ]
  },
  "promise.career.agreement>documents.work": {
-  "status": "Not Tested"
+  "status": "Verified",
+  "by": [
+   "inspection",
+   "automated"
+  ],
+  "on": "9018cc4e",
+  "evidence": [
+   "tests/journey-agent.test.ts",
+   "tests/b20-career-effects.test.ts",
+   "src/engine/content/careerwork.ts:402-436 AGREEMENT and its terms; src/engine/systems/proagent.ts:909-924 offerAgreement; src/engine/systems/proagent.ts:735-755 endRefusal; src/engine/systems/proagent.ts:1113-1155 the commands",
+   "tests/pro-agent.test.ts",
+   "tests/pro-core.test.ts the career’s 32 test files, 423 tests, run on this commit: all green"
+  ]
  },
  "promise.career.auditions>career.offers": {
-  "status": "Not Tested"
+  "status": "Verified",
+  "by": [
+   "inspection",
+   "automated"
+  ],
+  "on": "9018cc4e",
+  "evidence": [
+   "tests/pro-work.test.ts",
+   "tests/b20-career-skill.test.ts",
+   "src/engine/systems/projobs.ts:1024-1063 setRound; src/engine/systems/projobs.ts:1437-1477 the round and casting; src/engine/systems/projobs.ts:784-855 the preparing, taping and moving refusals",
+   "tests/pro-work.test.ts",
+   "tests/pro-core.test.ts the career’s 32 test files, 423 tests, run on this commit: all green"
+  ]
  },
  "promise.career.auditions>day.calendar": {
-  "status": "Not Tested"
+  "status": "Verified",
+  "by": [
+   "inspection",
+   "automated"
+  ],
+  "on": "9018cc4e",
+  "evidence": [
+   "tests/pro-work.test.ts",
+   "tests/pro-app.test.ts",
+   "src/engine/systems/projobs.ts:1024-1063 setRound; src/engine/systems/projobs.ts:1437-1477 the round and casting; src/engine/systems/projobs.ts:784-855 the preparing, taping and moving refusals",
+   "tests/pro-work.test.ts",
+   "tests/pro-core.test.ts the career’s 32 test files, 423 tests, run on this commit: all green"
+  ]
  },
  "promise.career.commission>career.pay": {
-  "status": "Not Tested"
+  "status": "Verified",
+  "by": [
+   "inspection",
+   "automated"
+  ],
+  "on": "9018cc4e",
+  "evidence": [
+   "tests/propay.test.ts",
+   "tests/b20-career-effects.test.ts",
+   "src/engine/systems/propay.ts:339-373 commissionOn: Equity’s tiers, SAG-AFTRA’s above scale, New York’s cap, continuing and the tail; src/engine/systems/propay.ts:524-546 release",
+   "tests/propay.test.ts",
+   "tests/pro-core.test.ts the career’s 32 test files, 423 tests, run on this commit: all green"
+  ]
  },
  "promise.career.commission>taxes.return": {
-  "status": "Not Tested"
+  "status": "Verified",
+  "by": [
+   "inspection",
+   "automated"
+  ],
+  "on": "9018cc4e",
+  "evidence": [
+   "tests/propay.test.ts",
+   "tests/safetynet.test.ts",
+   "src/engine/systems/propay.ts:339-373 commissionOn: Equity’s tiers, SAG-AFTRA’s above scale, New York’s cap, continuing and the tail; src/engine/systems/propay.ts:524-546 release",
+   "tests/propay.test.ts",
+   "tests/pro-core.test.ts the career’s 32 test files, 423 tests, run on this commit: all green"
+  ]
  },
  "promise.career.headshots>bank.accounts": {
-  "status": "Not Tested"
+  "status": "Verified",
+  "by": [
+   "inspection",
+   "automated"
+  ],
+  "on": "9018cc4e",
+  "evidence": [
+   "tests/pro-core.test.ts",
+   "src/engine/systems/pro.ts:924-930 headshotRefusal; src/engine/systems/pro.ts:985-1000 the command through spend",
+   "tests/pro-core.test.ts",
+   "tests/pro-core.test.ts the career’s 32 test files, 423 tests, run on this commit: all green"
+  ]
  },
  "promise.career.headshots>career.overview": {
-  "status": "Not Tested"
+  "status": "Verified",
+  "by": [
+   "inspection",
+   "automated"
+  ],
+  "on": "9018cc4e",
+  "evidence": [
+   "tests/pro-core.test.ts",
+   "tests/journey-agent.test.ts",
+   "src/engine/systems/pro.ts:924-930 headshotRefusal; src/engine/systems/pro.ts:985-1000 the command through spend",
+   "tests/pro-core.test.ts",
+   "tests/pro-core.test.ts the career’s 32 test files, 423 tests, run on this commit: all green"
+  ]
  },
  "promise.career.offers>career.resume": {
-  "status": "Not Tested"
+  "status": "Verified",
+  "by": [
+   "inspection",
+   "automated"
+  ],
+  "on": "9018cc4e",
+  "evidence": [
+   "tests/b20-career-effects.test.ts",
+   "tests/pro-work.test.ts",
+   "src/engine/systems/projobs.ts:1132-1162 makeOffer; src/engine/systems/projobs.ts:858-904 acceptRefusal and acceptWarning; src/engine/systems/projobs.ts:1647-1689 accept and decline",
+   "tests/pro-work.test.ts",
+   "tests/pro-core.test.ts the career’s 32 test files, 423 tests, run on this commit: all green"
+  ]
  },
  "promise.career.offers>day.calendar": {
-  "status": "Not Tested"
+  "status": "Verified",
+  "by": [
+   "inspection",
+   "automated"
+  ],
+  "on": "9018cc4e",
+  "evidence": [
+   "tests/pro-work.test.ts",
+   "tests/pro-opportunities-screen.test.ts",
+   "src/engine/systems/projobs.ts:1132-1162 makeOffer; src/engine/systems/projobs.ts:858-904 acceptRefusal and acceptWarning; src/engine/systems/projobs.ts:1647-1689 accept and decline",
+   "tests/pro-work.test.ts",
+   "tests/pro-core.test.ts the career’s 32 test files, 423 tests, run on this commit: all green"
+  ]
  },
  "promise.career.offers>documents.work": {
-  "status": "Not Tested"
+  "status": "Verified",
+  "by": [
+   "inspection",
+   "automated"
+  ],
+  "on": "9018cc4e",
+  "evidence": [
+   "tests/pro-work.test.ts",
+   "tests/b20-career-effects.test.ts",
+   "src/engine/systems/projobs.ts:1132-1162 makeOffer; src/engine/systems/projobs.ts:858-904 acceptRefusal and acceptWarning; src/engine/systems/projobs.ts:1647-1689 accept and decline",
+   "tests/pro-work.test.ts",
+   "tests/pro-core.test.ts the career’s 32 test files, 423 tests, run on this commit: all green"
+  ]
  },
  "promise.career.opportunities>career.auditions": {
-  "status": "Not Tested"
+  "status": "Verified",
+  "by": [
+   "inspection",
+   "automated"
+  ],
+  "on": "9018cc4e",
+  "evidence": [
+   "tests/pro-work.test.ts",
+   "tests/b20-career-skill.test.ts",
+   "tests/b20-career-effects.test.ts",
+   "src/engine/systems/projobs.ts:472-490 postingsAt; src/engine/systems/projobs.ts:415-418 reachOf; src/engine/systems/projobs.ts:730-770 eligibilityProblems, materialProblems, submitRefusal",
+   "tests/pro-work.test.ts",
+   "tests/pro-opportunities-screen.test.ts",
+   "tests/pro-core.test.ts the career’s 32 test files, 423 tests, run on this commit: all green"
+  ]
  },
  "promise.career.opportunities>career.headshots": {
-  "status": "Not Tested"
+  "status": "Verified",
+  "by": [
+   "inspection",
+   "automated"
+  ],
+  "on": "9018cc4e",
+  "evidence": [
+   "tests/pro-work.test.ts",
+   "src/engine/systems/projobs.ts:472-490 postingsAt; src/engine/systems/projobs.ts:415-418 reachOf; src/engine/systems/projobs.ts:730-770 eligibilityProblems, materialProblems, submitRefusal",
+   "tests/pro-work.test.ts",
+   "tests/pro-opportunities-screen.test.ts",
+   "tests/pro-core.test.ts the career’s 32 test files, 423 tests, run on this commit: all green"
+  ]
  },
  "promise.career.outside-work>career.offers": {
-  "status": "Not Tested"
+  "status": "Verified",
+  "by": [
+   "inspection",
+   "automated"
+  ],
+  "on": "9018cc4e",
+  "evidence": [
+   "tests/pro-work.test.ts",
+   "tests/pro-opportunities-screen.test.ts",
+   "src/engine/systems/projobs.ts:691-707 conditionsFor; src/engine/systems/projobs.ts:907-920 requestRefusal; src/engine/systems/projobs.ts:1576-1593 the dean’s answer; src/engine/systems/projobs.ts:1353-1361 reportUnapproved through setStanding",
+   "tests/pro-work.test.ts",
+   "tests/pro-core.test.ts the career’s 32 test files, 423 tests, run on this commit: all green"
+  ]
  },
  "promise.career.outside-work>school.standing": {
-  "status": "Not Tested"
+  "status": "Verified",
+  "by": [
+   "inspection",
+   "automated"
+  ],
+  "on": "9018cc4e",
+  "evidence": [
+   "tests/pro-work.test.ts",
+   "src/engine/systems/projobs.ts:691-707 conditionsFor; src/engine/systems/projobs.ts:907-920 requestRefusal; src/engine/systems/projobs.ts:1576-1593 the dean’s answer; src/engine/systems/projobs.ts:1353-1361 reportUnapproved through setStanding",
+   "tests/pro-work.test.ts",
+   "tests/pro-core.test.ts the career’s 32 test files, 423 tests, run on this commit: all green"
+  ]
  },
  "promise.career.overview>career.headshots": {
-  "status": "Not Tested"
+  "status": "Verified",
+  "by": [
+   "inspection",
+   "automated"
+  ],
+  "on": "9018cc4e",
+  "evidence": [
+   "tests/pro-screen.test.ts",
+   "src/engine/systems/pro.ts:742-779 pathwayOf and profileOf, worked out from the record and never stored",
+   "tests/pro-screen.test.ts",
+   "tests/pro-core.test.ts the career’s 32 test files, 423 tests, run on this commit: all green"
+  ]
  },
  "promise.career.overview>documents.work": {
-  "status": "Not Tested"
+  "status": "Verified",
+  "by": [
+   "inspection",
+   "automated"
+  ],
+  "on": "9018cc4e",
+  "evidence": [
+   "tests/pro-core.test.ts",
+   "tests/pro-screen.test.ts",
+   "src/engine/systems/pro.ts:742-779 pathwayOf and profileOf, worked out from the record and never stored",
+   "tests/pro-screen.test.ts",
+   "tests/pro-core.test.ts the career’s 32 test files, 423 tests, run on this commit: all green"
+  ]
  },
  "promise.career.pay>bank.accounts": {
-  "status": "Not Tested"
+  "status": "Verified",
+  "by": [
+   "inspection",
+   "automated"
+  ],
+  "on": "9018cc4e",
+  "evidence": [
+   "tests/propay.test.ts",
+   "tests/b20-career-effects.test.ts",
+   "tests/b20-career-saveload.test.ts",
+   "src/engine/systems/propay.ts:473-521 payDue; src/engine/systems/propay.ts:403-434 withholdingOn; src/engine/systems/propay.ts:168-173 paydayAfter; src/engine/systems/projobs.ts:1172-1184 promisedPay",
+   "tests/propay.test.ts",
+   "tests/pro-core.test.ts the career’s 32 test files, 423 tests, run on this commit: all green"
+  ]
  },
  "promise.career.pay>documents.work": {
-  "status": "Not Tested"
+  "status": "Verified",
+  "by": [
+   "inspection",
+   "automated"
+  ],
+  "on": "9018cc4e",
+  "evidence": [
+   "tests/pro-work.test.ts",
+   "tests/b20-career-effects.test.ts",
+   "tests/propay-screen.test.ts",
+   "src/engine/systems/propay.ts:473-521 payDue; src/engine/systems/propay.ts:403-434 withholdingOn; src/engine/systems/propay.ts:168-173 paydayAfter; src/engine/systems/projobs.ts:1172-1184 promisedPay",
+   "tests/propay.test.ts",
+   "tests/pro-core.test.ts the career’s 32 test files, 423 tests, run on this commit: all green"
+  ]
  },
  "promise.career.pay>taxes.return": {
-  "status": "Not Tested"
+  "status": "Verified",
+  "by": [
+   "inspection",
+   "automated"
+  ],
+  "on": "9018cc4e",
+  "evidence": [
+   "tests/propay.test.ts",
+   "src/engine/systems/propay.ts:473-521 payDue; src/engine/systems/propay.ts:403-434 withholdingOn; src/engine/systems/propay.ts:168-173 paydayAfter; src/engine/systems/projobs.ts:1172-1184 promisedPay",
+   "tests/propay.test.ts",
+   "tests/pro-core.test.ts the career’s 32 test files, 423 tests, run on this commit: all green"
+  ]
  },
  "promise.career.profile>career.resume": {
-  "status": "Not Tested"
+  "status": "Verified",
+  "by": [
+   "inspection",
+   "automated"
+  ],
+  "on": "9018cc4e",
+  "evidence": [
+   "tests/pro-core.test.ts",
+   "src/engine/systems/pro.ts:621-779 trainingOf, schoolCreditsOf, skillsOf, unionsOf, eligibilityOf, availabilityOf, profileOf",
+   "tests/pro-screen.test.ts",
+   "tests/pro-core.test.ts the career’s 32 test files, 423 tests, run on this commit: all green"
+  ]
  },
  "promise.career.profile>craft.profile": {
-  "status": "Not Tested"
+  "status": "Verified",
+  "by": [
+   "inspection",
+   "automated"
+  ],
+  "on": "9018cc4e",
+  "evidence": [
+   "tests/pro-app.test.ts",
+   "tests/pro-core.test.ts",
+   "src/engine/systems/pro.ts:621-779 trainingOf, schoolCreditsOf, skillsOf, unionsOf, eligibilityOf, availabilityOf, profileOf",
+   "tests/pro-screen.test.ts",
+   "tests/pro-core.test.ts the career’s 32 test files, 423 tests, run on this commit: all green"
+  ]
  },
  "promise.career.reasons>career.agent": {
-  "status": "Not Tested"
+  "status": "Verified",
+  "by": [
+   "inspection",
+   "automated"
+  ],
+  "on": "9018cc4e",
+  "evidence": [
+   "tests/pro-agent.test.ts",
+   "tests/pro-representation-screen.test.ts",
+   "tests/b20-career-skill.test.ts",
+   "src/engine/systems/proagent.ts:453-460 keepWhy copies the factors in; src/engine/systems/proagent.ts:307-397 interestOf; src/engine/systems/proagent.ts:471-486 caseKeys and newSince",
+   "tests/pro-agent.test.ts",
+   "tests/pro-representation-screen.test.ts",
+   "tests/pro-core.test.ts the career’s 32 test files, 423 tests, run on this commit: all green"
+  ]
  },
  "promise.career.reasons>career.reel": {
-  "status": "Not Tested"
+  "status": "Verified",
+  "by": [
+   "inspection",
+   "automated"
+  ],
+  "on": "9018cc4e",
+  "evidence": [
+   "tests/journey-agent.test.ts",
+   "tests/b20-career-effects.test.ts",
+   "src/engine/systems/proagent.ts:453-460 keepWhy copies the factors in; src/engine/systems/proagent.ts:307-397 interestOf; src/engine/systems/proagent.ts:471-486 caseKeys and newSince",
+   "tests/pro-agent.test.ts",
+   "tests/pro-representation-screen.test.ts",
+   "tests/pro-core.test.ts the career’s 32 test files, 423 tests, run on this commit: all green"
+  ]
  },
  "promise.career.reel>career.overview": {
-  "status": "Not Tested"
+  "status": "Verified",
+  "by": [
+   "inspection",
+   "automated"
+  ],
+  "on": "9018cc4e",
+  "evidence": [
+   "tests/pro-core.test.ts",
+   "src/engine/systems/pro.ts:830-854 reelSources; src/engine/systems/pro.ts:940-956 reelRefusal; src/engine/systems/pro.ts:1014-1032 the command",
+   "tests/pro-core.test.ts",
+   "tests/pro-core.test.ts the career’s 32 test files, 423 tests, run on this commit: all green"
+  ]
  },
  "promise.career.reel>craft.brief-tape": {
-  "status": "Not Tested"
+  "status": "Verified",
+  "by": [
+   "inspection",
+   "automated"
+  ],
+  "on": "9018cc4e",
+  "evidence": [
+   "tests/pro-core.test.ts",
+   "tests/journey-agent.test.ts",
+   "src/engine/systems/pro.ts:830-854 reelSources; src/engine/systems/pro.ts:940-956 reelRefusal; src/engine/systems/pro.ts:1014-1032 the command",
+   "tests/pro-core.test.ts",
+   "tests/pro-core.test.ts the career’s 32 test files, 423 tests, run on this commit: all green"
+  ]
  },
  "promise.career.resume>career.overview": {
-  "status": "Not Tested"
+  "status": "Verified",
+  "by": [
+   "inspection",
+   "automated"
+  ],
+  "on": "9018cc4e",
+  "evidence": [
+   "tests/pro-core.test.ts",
+   "tests/b20-career-effects.test.ts",
+   "src/engine/systems/pro.ts:786-811 resumeNow and resumeBehind; src/engine/systems/pro.ts:1002-1012 the command",
+   "tests/pro-core.test.ts",
+   "tests/resume-town.test.ts",
+   "tests/pro-core.test.ts the career’s 32 test files, 423 tests, run on this commit: all green"
+  ]
  },
  "promise.career.resume>productions.nights": {
-  "status": "Not Tested"
+  "status": "Verified",
+  "by": [
+   "inspection",
+   "automated"
+  ],
+  "on": "9018cc4e",
+  "evidence": [
+   "tests/pro-core.test.ts",
+   "src/engine/systems/pro.ts:786-811 resumeNow and resumeBehind; src/engine/systems/pro.ts:1002-1012 the command",
+   "tests/pro-core.test.ts",
+   "tests/resume-town.test.ts",
+   "tests/pro-core.test.ts the career’s 32 test files, 423 tests, run on this commit: all green"
+  ]
  },
  "promise.career.unions>bank.accounts": {
-  "status": "Not Tested"
+  "status": "Verified",
+  "by": [
+   "inspection",
+   "automated"
+  ],
+  "on": "9018cc4e",
+  "evidence": [
+   "tests/propay.test.ts",
+   "tests/b20-career-defects.test.ts",
+   "src/engine/systems/propay.ts:678-712 Equity’s fee and dues; src/engine/systems/propay.ts:719-741 SAG-AFTRA’s thirtieth day and joining; src/engine/systems/propay.ts:384-389 duesOn; src/engine/content/careerwork.ts:131-148 UNIONS",
+   "tests/propay.test.ts",
+   "tests/pro-core.test.ts the career’s 32 test files, 423 tests, run on this commit: all green"
+  ]
  },
  "promise.career.unions>career.resume": {
-  "status": "Not Tested"
+  "status": "Verified",
+  "by": [
+   "inspection",
+   "automated"
+  ],
+  "on": "9018cc4e",
+  "evidence": [
+   "tests/journey-career.test.ts",
+   "tests/pro-core.test.ts",
+   "src/engine/systems/propay.ts:678-712 Equity’s fee and dues; src/engine/systems/propay.ts:719-741 SAG-AFTRA’s thirtieth day and joining; src/engine/systems/propay.ts:384-389 duesOn; src/engine/content/careerwork.ts:131-148 UNIONS",
+   "tests/propay.test.ts",
+   "tests/pro-core.test.ts the career’s 32 test files, 423 tests, run on this commit: all green"
+  ]
  },
  "promise.career.unions>taxes.return": {
-  "status": "Not Tested"
+  "status": "Verified",
+  "by": [
+   "inspection",
+   "automated"
+  ],
+  "on": "9018cc4e",
+  "evidence": [
+   "tests/propay.test.ts",
+   "tests/b20-career-defects.test.ts",
+   "tests/safetynet.test.ts",
+   "src/engine/systems/propay.ts:678-712 Equity’s fee and dues; src/engine/systems/propay.ts:719-741 SAG-AFTRA’s thirtieth day and joining; src/engine/systems/propay.ts:384-389 duesOn; src/engine/content/careerwork.ts:131-148 UNIONS",
+   "tests/propay.test.ts",
+   "tests/pro-core.test.ts the career’s 32 test files, 423 tests, run on this commit: all green"
+  ]
  },
  "promise.coursework.showcase>career.overview": {
   "status": "Verified",
