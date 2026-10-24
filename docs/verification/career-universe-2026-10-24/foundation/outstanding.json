@@ -1,0 +1,1152 @@
+{
+ "written": "by outstanding.mjs, from completion-matrix.json and criteria.json",
+ "completion": "Completion, by the matrix: 549 of 663 rows in scope Implemented And Verified (82.8%); 110 Implemented, Verification Incomplete, 0 Partially Implemented, 0 Not Implemented, 0 Blocked Externally, 4 Decision Required, 41 Explicitly Deferred.",
+ "byClass": {
+  "Proof in a played life, behind a product decision": 20,
+  "Proof: no audit reading yet": 5,
+  "A product decision": 4,
+  "Proof: a measurement behind the code": 85
+ },
+ "rows": [
+  {
+   "id": "bank.arrange_overdraft",
+   "group": "Money",
+   "status": "Implemented, Verification Incomplete",
+   "requirement": "Arrange an overdraft, borrow and repay a personal loan, and pay a debt in collections | Arranges an overdraft limit on a named current account, or the primary, within overdraftOffer's range: a month of wages less what other banks have arranged, the bank's min and max, and a rate by the record. Sets …",
+   "implementation": "`systems/lending.ts` | BankLending.tsx:187-190 (Arrange It), :201-203 (Close The Overdraft, limit 0)",
+   "class": "Proof in a played life, behind a product decision",
+   "lacks": "Behavior exists and is tested on lives abroad (fixtures); every New Haven bank refuses it or has no such product.",
+   "action": "Waits on KS-bank-rows-scope. Not deferred and not counted verified."
+  },
+  {
+   "id": "bank.cancel_new",
+   "group": "Money",
+   "status": "Implemented, Verification Incomplete",
+   "requirement": "A new account canceled in its cooling-off period, a French overrun loan, a card’s money transfer | Within the country's cooling-off period (inCoolingOff), cancels a newly opened account. Savings or a term deposit: its balance back whole into the primary, closed, accrued zeroed, its standing orders a…",
+   "implementation": "`systems/accountlife.ts` | BankAccountLife.tsx Cancel It, beside a savings account, term deposit, card or (from 2026-10-15) current account other than the prima",
+   "class": "Proof in a played life, behind a product decision",
+   "lacks": "Behavior exists and is tested on lives abroad (fixtures); every New Haven bank refuses it or has no such product.",
+   "action": "Waits on KS-bank-rows-scope. Not deferred and not counted verified."
+  },
+  {
+   "id": "bank.switch",
+   "group": "Money",
+   "status": "Implemented, Verification Incomplete",
+   "requirement": "Switch banks through a country’s switching service, call the switch off, or stop its balance transfer | Where the country has a switching service (SWITCHING), Switch schedules bank.switch_complete on the service's working days, or a later chosen working day, with a review the next working day and a …",
+   "implementation": "`systems/lending.ts` | US: none; Accounts, Open An Account At Another Bank (BankMoves.tsx) says there's no switching service and gives the steps. Abroad: BankLe",
+   "class": "Proof in a played life, behind a product decision",
+   "lacks": "Behavior exists and is tested on lives abroad (fixtures); every New Haven bank refuses it or has no such product.",
+   "action": "Waits on KS-bank-rows-scope. Not deferred and not counted verified."
+  },
+  {
+   "id": "bank.take_overrun_loan",
+   "group": "Money",
+   "status": "Implemented, Verification Incomplete",
+   "requirement": "A new account canceled in its cooling-off period, a French overrun loan, a card’s money transfer | Where a French bank has offered credit for an overrun (three months past the arranged overdraft, frenchOverrun), Take The Loan opens a personal loan at that bank for the offered amount and APR, pays it…",
+   "implementation": "`systems/lending.ts` | BankLending.tsx:279 (panel :277, only when creditOffered)",
+   "class": "Proof in a played life, behind a product decision",
+   "lacks": "Behavior exists and is tested on lives abroad (fixtures); every New Haven bank refuses it or has no such product.",
+   "action": "Waits on KS-bank-rows-scope. Not deferred and not counted verified."
+  },
+  {
+   "id": "card.money_transfer",
+   "group": "Money",
+   "status": "Implemented, Verification Incomplete",
+   "requirement": "A new account canceled in its cooling-off period, a French overrun loan, a card’s money transfer | Move It (BankCardOffers.tsx:88) shows only where cardTerms has a moneyTransferFee. card.money_transfer moves the amount from the card into the current account, takes the card's fee, and pushes a transf…",
+   "implementation": "`systems/cardoffers.ts` | BankCardOffers.tsx:88 (Move It)",
+   "class": "Proof in a played life, behind a product decision",
+   "lacks": "Behavior exists and is tested on lives abroad (fixtures); every New Haven bank refuses it or has no such product.",
+   "action": "Waits on KS-bank-rows-scope. Not deferred and not counted verified."
+  },
+  {
+   "id": "bank.switch_complete",
+   "group": "Money",
+   "status": "Implemented, Verification Incomplete",
+   "requirement": "bank.switch schedules bank.switch_complete on the switching service's working days. completeSwitch then opens accounts at the new bank, moves balances, re-points standing orders, scheduled payments, wages, autopay and loan repayments, and closes the old accounts, with a 'Switched To X' notice.",
+   "implementation": "`systems/lending.ts` | bank.switch",
+   "class": "Proof in a played life, behind a product decision",
+   "lacks": "Behavior exists and is tested on lives abroad (fixtures); every New Haven bank refuses it or has no such product.",
+   "action": "Waits on KS-bank-rows-scope. Not deferred and not counted verified."
+  },
+  {
+   "id": "bank.cancel_switch",
+   "group": "Money",
+   "status": "Implemented, Verification Incomplete",
+   "requirement": "Switch banks through a country’s switching service, call the switch off, or stop its balance transfer | A pending switch can be called off, with confirmation, until seven working days before its date (Britain's CASS). The SWITCH_KIND item and its review are cancelled and the switch noted 'canceled',…",
+   "implementation": "`systems/lending.ts` | Bank, a switch under way: Call Off The Switch…, then Call It Off (BankLending.tsx:382)",
+   "class": "Proof in a played life, behind a product decision",
+   "lacks": "Behavior exists and is tested on lives abroad (fixtures); every New Haven bank refuses it or has no such product.",
+   "action": "Waits on KS-bank-rows-scope. Not deferred and not counted verified."
+  },
+  {
+   "id": "bank.stop_balance_transfer",
+   "group": "Money",
+   "status": "Implemented, Verification Incomplete",
+   "requirement": "Switch banks through a country’s switching service, call the switch off, or stop its balance transfer | Until close of business on the working day before a pending switch's date, with confirmation, the balance transfer alone can be stopped (keepBalance). The switch then moves the payments and leaves…",
+   "implementation": "`systems/lending.ts` | Bank, a switch under way: Stop The Balance Transfer…, then Keep The Balance There (BankLending.tsx:379)",
+   "class": "Proof in a played life, behind a product decision",
+   "lacks": "Behavior exists and is tested on lives abroad (fixtures); every New Haven bank refuses it or has no such product.",
+   "action": "Waits on KS-bank-rows-scope. Not deferred and not counted verified."
+  },
+  {
+   "id": "tax.amend",
+   "group": "Papers",
+   "status": "Implemented, Verification Incomplete",
+   "requirement": "File each year’s tax return, amend it, and pay what’s owed to the IRS and to a state | Form 1040-X (with the 1040-NR for a nonresident), allowed within three years of filing or two of the last payment, one at a time, and only where the year's figures have changed since filing. It records amended[] w…",
+   "implementation": "`systems/taxreturn.ts` | Tax Returns: Amend (PapersWorkspace.tsx:282)",
+   "class": "Proof in a played life, behind a product decision",
+   "lacks": "Behavior exists and is tested on fixtures; no student's life reaches it under Connecticut's rules (the row's Open note).",
+   "action": "Waits on coverage09.3-unresolved. Not deferred and not counted verified."
+  },
+  {
+   "id": "tax.catch_up_state_plan",
+   "group": "Papers",
+   "status": "Implemented, Verification Incomplete",
+   "requirement": "Pay tax owed over time on an IRS or a state payment plan, revise it, and catch up a payment missed | Papers > Tax Returns, a state plan's Catch Up, shown only while status is 'missed' (PapersWorkspace.tsx:197; the row cites :163), runs tax.catch_up_state_plan. It needs a missed plan. It pays min(owe…",
+   "implementation": "`systems/statetax.ts` | Tax Returns: a state plan’s Catch Up (PapersWorkspace.tsx:197)",
+   "class": "Proof in a played life, behind a product decision",
+   "lacks": "Behavior exists and is tested on fixtures; no student's life reaches it under Connecticut's rules (the row's Open note).",
+   "action": "Waits on coverage09.3-unresolved. Not deferred and not counted verified."
+  },
+  {
+   "id": "tax.lien_dispute",
+   "group": "Papers",
+   "status": "Implemented, Verification Incomplete",
+   "requirement": "Ask for a tax lien’s release or its withdrawal, have one filed in error withdrawn, and ask a state to waive a penalty | The lien panel's Ask For Its Withdrawal As Filed In Error (LienPanels.tsx:69) runs tax.lien_dispute. lienDisputeRefusal allows it only for a lien filed, paid or released whose asse…",
+   "implementation": "`systems/statetax.ts` | The lien panel’s Ask For Its Withdrawal As Filed In Error, drawn only on a lien filed in error (LienPanels.tsx, from 2026-10-16)",
+   "class": "Proof in a played life, behind a product decision",
+   "lacks": "Behavior exists and is tested on fixtures; no student's life reaches it under Connecticut's rules (the row's Open note).",
+   "action": "Waits on coverage09.3-unresolved. Not deferred and not counted verified."
+  },
+  {
+   "id": "tax.request_waiver",
+   "group": "Papers",
+   "status": "Implemented, Verification Incomplete",
+   "requirement": "Ask for a tax lien’s release or its withdrawal, have one filed in error withdrawn, and ask a state to waive a penalty | Oregon's 'Three Years Unfiled' row on the lien panel, Ask For Its Waiver (LienPanels.tsx:82), runs tax.request_waiver. waiverRefusal requires a three-year penalty charged (ORS 305.…",
+   "implementation": "`systems/statetax.ts` | The lien panel’s Ask For A Waiver (LienPanels.tsx:82)",
+   "class": "Proof in a played life, behind a product decision",
+   "lacks": "Behavior exists and is tested on fixtures; no student's life reaches it under Connecticut's rules (the row's Open note).",
+   "action": "Waits on coverage09.3-unresolved. Not deferred and not counted verified."
+  },
+  {
+   "id": "pro.apply_work_visa",
+   "group": "Commands Traced Outside The Audit",
+   "status": "Implemented, Verification Incomplete",
+   "requirement": "Work abroad: a role in Sydney found, auditioned for on tape and accepted as a contract; the 408 visa it needs applied for and granted; the production's flights, cars and hotel; the work there, paid as wages earned in Australia; and the trip home | Work Abroad (`career.work-abroad`)",
+   "implementation": "`systems/worktrip.ts` | WorkPane.tsx",
+   "class": "Proof: no audit reading yet",
+   "lacks": "Brief 25's command, traced in connected-journey/TRACE.md and tested, but read by no audit row, so the matrix can't call it verified.",
+   "action": "Read by an audit row once brief 27's career milestones (K2 to K7) settle the command, so the reading isn't made stale by them."
+  },
+  {
+   "id": "pro.ask_pay",
+   "group": "Commands Traced Outside The Audit",
+   "status": "Implemented, Verification Incomplete",
+   "requirement": "Contracts and the money they bring: each engagement's contract made at acceptance with only the clauses that apply, each payment's state from estimated to settled, a day performer's overtime, the producer's pension and health contribution kept off the player's money, a trip's per diem apart from wag…",
+   "implementation": "`systems/contracts.ts` | WorkPane.tsx",
+   "class": "Proof: no audit reading yet",
+   "lacks": "Brief 25's command, traced in connected-journey/TRACE.md and tested, but read by no audit row, so the matrix can't call it verified.",
+   "action": "Read by an audit row once brief 27's career milestones (K2 to K7) settle the command, so the reading isn't made stale by them."
+  },
+  {
+   "id": "pro.award_enter",
+   "group": "Commands Traced Outside The Audit",
+   "status": "Implemented, Verification Incomplete",
+   "requirement": "The published weekly charts read as dated imports, each in its own unit, territory and week; the game's own box office for the player's films, a simulation and never pay; every award and festival the brief names with what this build read of it; the Emmy Awards by the 78th's rules (eligibility, an en…",
+   "implementation": "`systems/awards.ts` | IndustryPane.tsx",
+   "class": "Proof: no audit reading yet",
+   "lacks": "Brief 25's command, traced in connected-journey/TRACE.md and tested, but read by no audit row, so the matrix can't call it verified.",
+   "action": "Read by an audit row once brief 27's career milestones (K2 to K7) settle the command, so the reading isn't made stale by them."
+  },
+  {
+   "id": "pro.watch_ceremony",
+   "group": "Commands Traced Outside The Audit",
+   "status": "Implemented, Verification Incomplete",
+   "requirement": "The published weekly charts read as dated imports, each in its own unit, territory and week; the game's own box office for the player's films, a simulation and never pay; every award and festival the brief names with what this build read of it; the Emmy Awards by the 78th's rules (eligibility, an en…",
+   "implementation": "`systems/awards.ts` | IndustryPane.tsx",
+   "class": "Proof: no audit reading yet",
+   "lacks": "Brief 25's command, traced in connected-journey/TRACE.md and tested, but read by no audit row, so the matrix can't call it verified.",
+   "action": "Read by an audit row once brief 27's career milestones (K2 to K7) settle the command, so the reading isn't made stale by them."
+  },
+  {
+   "id": "pro.work_choice",
+   "group": "Commands Traced Outside The Audit",
+   "status": "Implemented, Verification Incomplete",
+   "requirement": "Each kind of acting work done its own way: a shoot's scenes out of the script's order in takes with the best printed, revised pages the night before, a multicamera week taped before a studio audience, voice work, a dub and a narration in a booth that strain the voice, performance capture called in b…",
+   "implementation": "`systems/workflow.ts` | WorkPane.tsx",
+   "class": "Proof: no audit reading yet",
+   "lacks": "Brief 25's command, traced in connected-journey/TRACE.md and tested, but read by no audit row, so the matrix can't call it verified.",
+   "action": "Read by an audit row once brief 27's career milestones (K2 to K7) settle the command, so the reading isn't made stale by them."
+  },
+  {
+   "id": "banking.2.scope",
+   "group": "Brief 09 Area: banking",
+   "status": "Decision Required",
+   "requirement": "Every remaining banking decision row: the owner's open decision on the nine bank rows (docs/verification/CURRENT-SCOPE-2026-10-15.md, The Owner's Decisions, 2; the completion matrix's KS-bank-rows-scope).",
+   "implementation": "Not recorded",
+   "class": "A product decision",
+   "lacks": "The same decision, as brief 09's banking checklist asks it: six students keeping an account at home are refused each of the eight in its words (tests/remaining-09-banking.test.ts).",
+   "action": "Escalated (CHECKPOINT.md, Outstanding Decisions); nothing implemented ahead of the answer."
+  },
+  {
+   "id": "banking.2.arrange_overdraft",
+   "group": "Brief 09 Area: banking",
+   "status": "Implemented, Verification Incomplete",
+   "requirement": "bank.arrange_overdraft",
+   "implementation": "Not recorded",
+   "class": "Proof in a played life, behind a product decision",
+   "lacks": "Behavior exists and is tested on lives abroad (fixtures); every New Haven bank refuses it or has no such product.",
+   "action": "Waits on KS-bank-rows-scope. Not deferred and not counted verified."
+  },
+  {
+   "id": "banking.2.cancel_new",
+   "group": "Brief 09 Area: banking",
+   "status": "Implemented, Verification Incomplete",
+   "requirement": "bank.cancel_new",
+   "implementation": "Not recorded",
+   "class": "Proof in a played life, behind a product decision",
+   "lacks": "Behavior exists and is tested on lives abroad (fixtures); every New Haven bank refuses it or has no such product.",
+   "action": "Waits on KS-bank-rows-scope. Not deferred and not counted verified."
+  },
+  {
+   "id": "banking.2.switch",
+   "group": "Brief 09 Area: banking",
+   "status": "Implemented, Verification Incomplete",
+   "requirement": "bank.switch",
+   "implementation": "Not recorded",
+   "class": "Proof in a played life, behind a product decision",
+   "lacks": "Behavior exists and is tested on lives abroad (fixtures); every New Haven bank refuses it or has no such product.",
+   "action": "Waits on KS-bank-rows-scope. Not deferred and not counted verified."
+  },
+  {
+   "id": "banking.2.switch_complete",
+   "group": "Brief 09 Area: banking",
+   "status": "Implemented, Verification Incomplete",
+   "requirement": "bank.switch_complete",
+   "implementation": "Not recorded",
+   "class": "Proof in a played life, behind a product decision",
+   "lacks": "Behavior exists and is tested on lives abroad (fixtures); every New Haven bank refuses it or has no such product.",
+   "action": "Waits on KS-bank-rows-scope. Not deferred and not counted verified."
+  },
+  {
+   "id": "banking.2.cancel_switch",
+   "group": "Brief 09 Area: banking",
+   "status": "Implemented, Verification Incomplete",
+   "requirement": "bank.cancel_switch",
+   "implementation": "Not recorded",
+   "class": "Proof in a played life, behind a product decision",
+   "lacks": "Behavior exists and is tested on lives abroad (fixtures); every New Haven bank refuses it or has no such product.",
+   "action": "Waits on KS-bank-rows-scope. Not deferred and not counted verified."
+  },
+  {
+   "id": "banking.2.stop_balance_transfer",
+   "group": "Brief 09 Area: banking",
+   "status": "Implemented, Verification Incomplete",
+   "requirement": "bank.stop_balance_transfer",
+   "implementation": "Not recorded",
+   "class": "Proof in a played life, behind a product decision",
+   "lacks": "Behavior exists and is tested on lives abroad (fixtures); every New Haven bank refuses it or has no such product.",
+   "action": "Waits on KS-bank-rows-scope. Not deferred and not counted verified."
+  },
+  {
+   "id": "banking.2.take_overrun_loan",
+   "group": "Brief 09 Area: banking",
+   "status": "Implemented, Verification Incomplete",
+   "requirement": "bank.take_overrun_loan",
+   "implementation": "Not recorded",
+   "class": "Proof in a played life, behind a product decision",
+   "lacks": "Behavior exists and is tested on lives abroad (fixtures); every New Haven bank refuses it or has no such product.",
+   "action": "Waits on KS-bank-rows-scope. Not deferred and not counted verified."
+  },
+  {
+   "id": "banking.2.money_transfer",
+   "group": "Brief 09 Area: banking",
+   "status": "Implemented, Verification Incomplete",
+   "requirement": "card.money_transfer",
+   "implementation": "Not recorded",
+   "class": "Proof in a played life, behind a product decision",
+   "lacks": "Behavior exists and is tested on lives abroad (fixtures); every New Haven bank refuses it or has no such product.",
+   "action": "Waits on KS-bank-rows-scope. Not deferred and not counted verified."
+  },
+  {
+   "id": "coverage09.3-unresolved",
+   "group": "Brief 09 Area: coverage",
+   "status": "Decision Required",
+   "requirement": "The 13 unresolved rows, each read again: what a Yale player meets now, what can be implemented in scope, and what's unreachable because the owner removed the systems that reached it",
+   "implementation": "Not recorded",
+   "class": "A product decision",
+   "lacks": "The same decision for the three state-tax rows (Connecticut, the only state a student's return owes, has no catch-up, no lien in error a student can reach and no three-year penalty) and for tax.amend, which nothing in scope changes a filed year to reach.",
+   "action": "Escalated (CHECKPOINT.md, Outstanding Decisions); nothing implemented ahead of the answer."
+  },
+  {
+   "id": "genres.7-measured",
+   "group": "Brief 09 Area: genres",
+   "status": "Implemented, Verification Incomplete",
+   "requirement": "Measured again after the changes",
+   "implementation": "Not recorded",
+   "class": "Proof: a measurement behind the code",
+   "lacks": "Measured on 16b50e07 (the judge's lanes); brief 25's merge and brief 27's work changed what it reads.",
+   "action": "Measured again on brief 27's finished commit (milestone F), with each figure beside the last; a figure that moves is read against its criterion before the row is called verified."
+  },
+  {
+   "id": "advice.F2",
+   "group": "Brief 10 Area: advice",
+   "status": "Implemented, Verification Incomplete",
+   "requirement": "F2 as written, kept in the record and still reported.",
+   "implementation": "Not recorded",
+   "class": "Proof: a measurement behind the code",
+   "lacks": "Measured on 16b50e07 (the judge's lanes); brief 25's merge and brief 27's work changed what it reads.",
+   "action": "Measured again on brief 27's finished commit (milestone F), with each figure beside the last; a figure that moves is read against its criterion before the row is called verified."
+  },
+  {
+   "id": "advice.F2A10-c",
+   "group": "Brief 10 Area: advice",
+   "status": "Implemented, Verification Incomplete",
+   "requirement": "F2-A10 (c): better than the alternatives: on the same budget, the advised input's realized gain at or above the median of the other inputs' in at least 95% of held-out cases, and its mean at least 1.5 times the mean of an input chosen at random.",
+   "implementation": "Not recorded",
+   "class": "Proof: a measurement behind the code",
+   "lacks": "Measured on 124bec77 (brief 22's long runs, which read all of src/engine); brief 25's merge and brief 27's work changed what it reads.",
+   "action": "Measured again on brief 27's finished commit (milestone F), with each figure beside the last; a figure that moves is read against its criterion before the row is called verified."
+  },
+  {
+   "id": "advice.F2A10-f",
+   "group": "Brief 10 Area: advice",
+   "status": "Implemented, Verification Incomplete",
+   "requirement": "F2-A10 (f): mastery and preparation: near mastery, a predicted gain falls as the input's level rises (diminishing returns), on every case; where a take's preparation, not an ability, held it back, the advice's figures read the take as prepared.",
+   "implementation": "systems/advice.ts",
+   "class": "Proof: a measurement behind the code",
+   "lacks": "Measured on 124bec77 (brief 22's long runs, which read all of src/engine); brief 25's merge and brief 27's work changed what it reads.",
+   "action": "Measured again on brief 27's finished commit (milestone F), with each figure beside the last; a figure that moves is read against its criterion before the row is called verified."
+  },
+  {
+   "id": "advice.F2A10-h",
+   "group": "Brief 10 Area: advice",
+   "status": "Implemented, Verification Incomplete",
+   "requirement": "F2-A10 (h): it updates: after twenty sessions of the advised exercise through the commands, the advice read again: the trained input's predicted gain falls on every case, and the first-named changes wherever another input's gain now leads.",
+   "implementation": "systems/experience.ts recommendations",
+   "class": "Proof: a measurement behind the code",
+   "lacks": "Measured on 124bec77 (brief 22's long runs, which read all of src/engine); brief 25's merge and brief 27's work changed what it reads.",
+   "action": "Measured again on brief 27's finished commit (milestone F), with each figure beside the last; a figure that moves is read against its criterion before the row is called verified."
+  },
+  {
+   "id": "advice.heldout",
+   "group": "Brief 10 Area: advice",
+   "status": "Implemented, Verification Incomplete",
+   "requirement": "The held-out run, once, on the final code, into docs/verification/decisions-2026-10-16/advice/, the commit recorded, each stratum reported.",
+   "implementation": "Not recorded",
+   "class": "Proof: a measurement behind the code",
+   "lacks": "Measured on 124bec77 (brief 22's long runs, which read all of src/engine); brief 25's merge and brief 27's work changed what it reads.",
+   "action": "Measured again on brief 27's finished commit (milestone F), with each figure beside the last; a figure that moves is read against its criterion before the row is called verified."
+  },
+  {
+   "id": "L3-R.b",
+   "group": "Brief 10 Area: judge",
+   "status": "Implemented, Verification Incomplete",
+   "requirement": "L3-R (b) Enough journeys",
+   "implementation": "Not recorded",
+   "class": "Proof: a measurement behind the code",
+   "lacks": "Measured on 16b50e07 (the judge's lanes); brief 25's merge and brief 27's work changed what it reads.",
+   "action": "Measured again on brief 27's finished commit (milestone F), with each figure beside the last; a figure that moves is read against its criterion before the row is called verified."
+  },
+  {
+   "id": "judge.together",
+   "group": "Brief 10 Area: judge",
+   "status": "Implemented, Verification Incomplete",
+   "requirement": "Every criterion section 5 lists, after the change",
+   "implementation": "Not recorded",
+   "class": "Proof: a measurement behind the code",
+   "lacks": "Measured on 16b50e07 (the judge's lanes); brief 25's merge and brief 27's work changed what it reads.",
+   "action": "Measured again on brief 27's finished commit (milestone F), with each figure beside the last; a figure that moves is read against its criterion before the row is called verified."
+  },
+  {
+   "id": "ST1",
+   "group": "Criteria: The Stage",
+   "status": "Implemented, Verification Incomplete",
+   "requirement": "No universal best: each scale side ahead on at least 25% of materials where both fit, for an even actor",
+   "implementation": "systems/evaluation.ts, systems/piece.ts, content/tasks.ts, content/approaches.ts",
+   "class": "Proof: a measurement behind the code",
+   "lacks": "Measured on 16b50e07 (the judge's lanes); brief 25's merge and brief 27's work changed what it reads.",
+   "action": "Measured again on brief 27's finished commit (milestone F), with each figure beside the last; a figure that moves is read against its criterion before the row is called verified."
+  },
+  {
+   "id": "ST2",
+   "group": "Criteria: The Stage",
+   "status": "Implemented, Verification Incomplete",
+   "requirement": "The house moves no scale; the better side rests on the scene",
+   "implementation": "systems/evaluation.ts, systems/piece.ts, content/tasks.ts, content/approaches.ts",
+   "class": "Proof: a measurement behind the code",
+   "lacks": "Measured on 16b50e07 (the judge's lanes); brief 25's merge and brief 27's work changed what it reads.",
+   "action": "Measured again on brief 27's finished commit (milestone F), with each figure beside the last; a figure that moves is read against its criterion before the row is called verified."
+  },
+  {
+   "id": "ST4",
+   "group": "Criteria: The Stage",
+   "status": "Implemented, Verification Incomplete",
+   "requirement": "Scenes within a genre differ: drama, comedy and tragedy each suit both sides somewhere",
+   "implementation": "content/scenes-public.ts, content/material.ts, content/coursework.ts",
+   "class": "Proof: a measurement behind the code",
+   "lacks": "Measured on 16b50e07 (the judge's lanes); brief 25's merge and brief 27's work changed what it reads.",
+   "action": "Measured again on brief 27's finished commit (milestone F), with each figure beside the last; a figure that moves is read against its criterion before the row is called verified."
+  },
+  {
+   "id": "ST5",
+   "group": "Criteria: The Stage",
+   "status": "Implemented, Verification Incomplete",
+   "requirement": "Mastery: a mastered, prepared actor reaches 100 on every fitting combination",
+   "implementation": "systems/evaluation.ts, systems/piece.ts, content/tasks.ts, content/approaches.ts",
+   "class": "Proof: a measurement behind the code",
+   "lacks": "Measured on 16b50e07 (the judge's lanes); brief 25's merge and brief 27's work changed what it reads.",
+   "action": "Measured again on brief 27's finished commit (milestone F), with each figure beside the last; a figure that moves is read against its criterion before the row is called verified."
+  },
+  {
+   "id": "ST7",
+   "group": "Criteria: The Stage",
+   "status": "Implemented, Verification Incomplete",
+   "requirement": "More than one good way: two or more interpretations within a point of the best",
+   "implementation": "systems/evaluation.ts, systems/piece.ts, content/tasks.ts, content/approaches.ts",
+   "class": "Proof: a measurement behind the code",
+   "lacks": "Measured on 16b50e07 (the judge's lanes); brief 25's merge and brief 27's work changed what it reads.",
+   "action": "Measured again on brief 27's finished commit (milestone F), with each figure beside the last; a figure that moves is read against its criterion before the row is called verified."
+  },
+  {
+   "id": "ST8",
+   "group": "Criteria: The Stage",
+   "status": "Implemented, Verification Incomplete",
+   "requirement": "The even actor follows the scene where the sides are a band apart",
+   "implementation": "systems/evaluation.ts, systems/piece.ts, content/tasks.ts, content/approaches.ts",
+   "class": "Proof: a measurement behind the code",
+   "lacks": "Measured on 16b50e07 (the judge's lanes); brief 25's merge and brief 27's work changed what it reads.",
+   "action": "Measured again on brief 27's finished commit (milestone F), with each figure beside the last; a figure that moves is read against its criterion before the row is called verified."
+  },
+  {
+   "id": "ST9",
+   "group": "Criteria: The Stage",
+   "status": "Implemented, Verification Incomplete",
+   "requirement": "Nothing else lost: I1 to I5, the signature, the camera and microphone briefs, G2",
+   "implementation": "systems/evaluation.ts, systems/piece.ts, content/tasks.ts, content/approaches.ts",
+   "class": "Proof: a measurement behind the code",
+   "lacks": "Measured on 16b50e07 (the judge's lanes); brief 25's merge and brief 27's work changed what it reads.",
+   "action": "Measured again on brief 27's finished commit (milestone F), with each figure beside the last; a figure that moves is read against its criterion before the row is called verified."
+  },
+  {
+   "id": "Stage F1",
+   "group": "Criteria: The Stage",
+   "status": "Implemented, Verification Incomplete",
+   "requirement": "Fresh validation: the plays as a night (ST1, ST5, ST7, ST8)",
+   "implementation": "systems/evaluation.ts, systems/piece.ts, content/tasks.ts, content/approaches.ts",
+   "class": "Proof: a measurement behind the code",
+   "lacks": "Measured on 16b50e07 (the judge's lanes); brief 25's merge and brief 27's work changed what it reads.",
+   "action": "Measured again on brief 27's finished commit (milestone F), with each figure beside the last; a figure that moves is read against its criterion before the row is called verified."
+  },
+  {
+   "id": "Stage F2",
+   "group": "Criteria: The Stage",
+   "status": "Implemented, Verification Incomplete",
+   "requirement": "Fresh validation: even actors at 40 and 75 (ST1, ST8)",
+   "implementation": "systems/evaluation.ts, systems/piece.ts, content/tasks.ts, content/approaches.ts",
+   "class": "Proof: a measurement behind the code",
+   "lacks": "Measured on 16b50e07 (the judge's lanes); brief 25's merge and brief 27's work changed what it reads.",
+   "action": "Measured again on brief 27's finished commit (milestone F), with each figure beside the last; a figure that moves is read against its criterion before the row is called verified."
+  },
+  {
+   "id": "I1",
+   "group": "Criteria: Interpretation",
+   "status": "Implemented, Verification Incomplete",
+   "requirement": "A mastered actor reaches 100 on every fitting combination of briefs and readings",
+   "implementation": "systems/evaluation.ts, systems/piece.ts, content/tasks.ts, content/approaches.ts",
+   "class": "Proof: a measurement behind the code",
+   "lacks": "Measured on 16b50e07 (the judge's lanes); brief 25's merge and brief 27's work changed what it reads.",
+   "action": "Measured again on brief 27's finished commit (milestone F), with each figure beside the last; a figure that moves is read against its criterion before the row is called verified."
+  },
+  {
+   "id": "I2",
+   "group": "Criteria: Interpretation",
+   "status": "Implemented, Verification Incomplete",
+   "requirement": "The better-suited side differs within a genre on each axis",
+   "implementation": "systems/evaluation.ts, systems/piece.ts, content/tasks.ts, content/approaches.ts",
+   "class": "Proof: a measurement behind the code",
+   "lacks": "Measured on 16b50e07 (the judge's lanes); brief 25's merge and brief 27's work changed what it reads.",
+   "action": "Measured again on brief 27's finished commit (milestone F), with each figure beside the last; a figure that moves is read against its criterion before the row is called verified."
+  },
+  {
+   "id": "I3",
+   "group": "Criteria: Interpretation",
+   "status": "Implemented, Verification Incomplete",
+   "requirement": "Suitability spreads results and neither scale side dominates",
+   "implementation": "systems/evaluation.ts, systems/piece.ts, content/tasks.ts, content/approaches.ts",
+   "class": "Proof: a measurement behind the code",
+   "lacks": "Measured on 16b50e07 (the judge's lanes); brief 25's merge and brief 27's work changed what it reads.",
+   "action": "Measured again on brief 27's finished commit (milestone F), with each figure beside the last; a figure that moves is read against its criterion before the row is called verified."
+  },
+  {
+   "id": "I4",
+   "group": "Criteria: Interpretation",
+   "status": "Implemented, Verification Incomplete",
+   "requirement": "The even actor follows suitability where the sides are a band apart",
+   "implementation": "systems/evaluation.ts, systems/piece.ts, content/tasks.ts, content/approaches.ts",
+   "class": "Proof: a measurement behind the code",
+   "lacks": "Measured on 16b50e07 (the judge's lanes); brief 25's merge and brief 27's work changed what it reads.",
+   "action": "Measured again on brief 27's finished commit (milestone F), with each figure beside the last; a figure that moves is read against its criterion before the row is called verified."
+  },
+  {
+   "id": "I5",
+   "group": "Criteria: Interpretation",
+   "status": "Implemented, Verification Incomplete",
+   "requirement": "Two or more ways within a point of the best",
+   "implementation": "systems/evaluation.ts, systems/piece.ts, content/tasks.ts, content/approaches.ts",
+   "class": "Proof: a measurement behind the code",
+   "lacks": "Measured on 16b50e07 (the judge's lanes); brief 25's merge and brief 27's work changed what it reads.",
+   "action": "Measured again on brief 27's finished commit (milestone F), with each figure beside the last; a figure that moves is read against its criterion before the row is called verified."
+  },
+  {
+   "id": "A1",
+   "group": "Criteria: The Attributes",
+   "status": "Implemented, Verification Incomplete",
+   "requirement": "Every ability is causal somewhere",
+   "implementation": "systems/evaluation.ts, systems/piece.ts, content/tasks.ts, content/approaches.ts",
+   "class": "Proof: a measurement behind the code",
+   "lacks": "Measured on 16b50e07 (the judge's lanes); brief 25's merge and brief 27's work changed what it reads.",
+   "action": "Measured again on brief 27's finished commit (milestone F), with each figure beside the last; a figure that moves is read against its criterion before the row is called verified."
+  },
+  {
+   "id": "A2",
+   "group": "Criteria: The Attributes",
+   "status": "Implemented, Verification Incomplete",
+   "requirement": "No two abilities do the same job",
+   "implementation": "systems/evaluation.ts, systems/piece.ts, content/tasks.ts, content/approaches.ts",
+   "class": "Proof: a measurement behind the code",
+   "lacks": "Measured on 16b50e07 (the judge's lanes); brief 25's merge and brief 27's work changed what it reads.",
+   "action": "Measured again on brief 27's finished commit (milestone F), with each figure beside the last; a figure that moves is read against its criterion before the row is called verified."
+  },
+  {
+   "id": "A3",
+   "group": "Criteria: The Attributes",
+   "status": "Implemented, Verification Incomplete",
+   "requirement": "No ability is a universal bonus",
+   "implementation": "systems/evaluation.ts, systems/piece.ts, content/tasks.ts, content/approaches.ts",
+   "class": "Proof: a measurement behind the code",
+   "lacks": "Measured on 16b50e07 (the judge's lanes); brief 25's merge and brief 27's work changed what it reads.",
+   "action": "Measured again on brief 27's finished commit (milestone F), with each figure beside the last; a figure that moves is read against its criterion before the row is called verified."
+  },
+  {
+   "id": "T2",
+   "group": "Criteria: The Attributes",
+   "status": "Implemented, Verification Incomplete",
+   "requirement": "Training resists exploits (a): four hours of one exercise at most half four different ones",
+   "implementation": "systems/evaluation.ts, systems/piece.ts, content/tasks.ts, content/approaches.ts",
+   "class": "Proof: a measurement behind the code",
+   "lacks": "Measured on 16b50e07 (the judge's lanes); brief 25's merge and brief 27's work changed what it reads.",
+   "action": "Measured again on brief 27's finished commit (milestone F), with each figure beside the last; a figure that moves is read against its criterion before the row is called verified."
+  },
+  {
+   "id": "T3",
+   "group": "Criteria: The Attributes",
+   "status": "Implemented, Verification Incomplete",
+   "requirement": "Caps don’t erase progression early (a): the gain an hour at 90 at least 25% of that at 30",
+   "implementation": "systems/evaluation.ts, systems/piece.ts, content/tasks.ts, content/approaches.ts",
+   "class": "Proof: a measurement behind the code",
+   "lacks": "Measured on 16b50e07 (the judge's lanes); brief 25's merge and brief 27's work changed what it reads.",
+   "action": "Measured again on brief 27's finished commit (milestone F), with each figure beside the last; a figure that moves is read against its criterion before the row is called verified."
+  },
+  {
+   "id": "G3",
+   "group": "Criteria: The Attributes",
+   "status": "Implemented, Verification Incomplete",
+   "requirement": "Different genres reward different actors",
+   "implementation": "systems/evaluation.ts, systems/piece.ts, content/tasks.ts, content/approaches.ts",
+   "class": "Proof: a measurement behind the code",
+   "lacks": "Measured on 16b50e07 (the judge's lanes); brief 25's merge and brief 27's work changed what it reads.",
+   "action": "Measured again on brief 27's finished commit (milestone F), with each figure beside the last; a figure that moves is read against its criterion before the row is called verified."
+  },
+  {
+   "id": "G4",
+   "group": "Criteria: The Attributes",
+   "status": "Implemented, Verification Incomplete",
+   "requirement": "Every genre offers enough to play",
+   "implementation": "systems/evaluation.ts, systems/piece.ts, content/tasks.ts, content/approaches.ts",
+   "class": "Proof: a measurement behind the code",
+   "lacks": "Measured on 16b50e07 (the judge's lanes); brief 25's merge and brief 27's work changed what it reads.",
+   "action": "Measured again on brief 27's finished commit (milestone F), with each figure beside the last; a figure that moves is read against its criterion before the row is called verified."
+  },
+  {
+   "id": "G5",
+   "group": "Criteria: The Attributes",
+   "status": "Implemented, Verification Incomplete",
+   "requirement": "Genre proficiency progresses across its range",
+   "implementation": "systems/evaluation.ts, systems/piece.ts, content/tasks.ts, content/approaches.ts",
+   "class": "Proof: a measurement behind the code",
+   "lacks": "Measured on 16b50e07 (the judge's lanes); brief 25's merge and brief 27's work changed what it reads.",
+   "action": "Measured again on brief 27's finished commit (milestone F), with each figure beside the last; a figure that moves is read against its criterion before the row is called verified."
+  },
+  {
+   "id": "M1",
+   "group": "Criteria: The Attributes",
+   "status": "Implemented, Verification Incomplete",
+   "requirement": "Maximum work quality under the qualifying conditions is 100 on every judged piece",
+   "implementation": "systems/evaluation.ts, systems/piece.ts, content/tasks.ts, content/approaches.ts",
+   "class": "Proof: a measurement behind the code",
+   "lacks": "Measured on 16b50e07 (the judge's lanes); brief 25's merge and brief 27's work changed what it reads.",
+   "action": "Measured again on brief 27's finished commit (milestone F), with each figure beside the last; a figure that moves is read against its criterion before the row is called verified."
+  },
+  {
+   "id": "M3",
+   "group": "Criteria: The Attributes",
+   "status": "Implemented, Verification Incomplete",
+   "requirement": "Nobody else can hold a mastered player’s own result under 100",
+   "implementation": "systems/evaluation.ts, systems/piece.ts, content/tasks.ts, content/approaches.ts",
+   "class": "Proof: a measurement behind the code",
+   "lacks": "Measured on 16b50e07 (the judge's lanes); brief 25's merge and brief 27's work changed what it reads.",
+   "action": "Measured again on brief 27's finished commit (milestone F), with each figure beside the last; a figure that moves is read against its criterion before the row is called verified."
+  },
+  {
+   "id": "O1",
+   "group": "Criteria: The Attributes",
+   "status": "Implemented, Verification Incomplete",
+   "requirement": "Your own result is invariant to the reader",
+   "implementation": "systems/evaluation.ts, systems/piece.ts, content/tasks.ts, content/approaches.ts",
+   "class": "Proof: a measurement behind the code",
+   "lacks": "Measured on 16b50e07 (the judge's lanes); brief 25's merge and brief 27's work changed what it reads.",
+   "action": "Measured again on brief 27's finished commit (milestone F), with each figure beside the last; a figure that moves is read against its criterion before the row is called verified."
+  },
+  {
+   "id": "O2",
+   "group": "Criteria: The Attributes",
+   "status": "Implemented, Verification Incomplete",
+   "requirement": "The take together moves with the reader",
+   "implementation": "systems/evaluation.ts, systems/piece.ts, content/tasks.ts, content/approaches.ts",
+   "class": "Proof: a measurement behind the code",
+   "lacks": "Measured on 16b50e07 (the judge's lanes); brief 25's merge and brief 27's work changed what it reads.",
+   "action": "Measured again on brief 27's finished commit (milestone F), with each figure beside the last; a figure that moves is read against its criterion before the row is called verified."
+  },
+  {
+   "id": "H2",
+   "group": "Criteria: The Attributes",
+   "status": "Implemented, Verification Incomplete",
+   "requirement": "No universally dominant allocation",
+   "implementation": "systems/evaluation.ts, systems/piece.ts, content/tasks.ts, content/approaches.ts",
+   "class": "Proof: a measurement behind the code",
+   "lacks": "Measured on 16b50e07 (the judge's lanes); brief 25's merge and brief 27's work changed what it reads.",
+   "action": "Measured again on brief 27's finished commit (milestone F), with each figure beside the last; a figure that moves is read against its criterion before the row is called verified."
+  },
+  {
+   "id": "H5",
+   "group": "Criteria: The Attributes",
+   "status": "Implemented, Verification Incomplete",
+   "requirement": "Generalists are useful",
+   "implementation": "systems/evaluation.ts, systems/piece.ts, content/tasks.ts, content/approaches.ts",
+   "class": "Proof: a measurement behind the code",
+   "lacks": "Measured on 16b50e07 (the judge's lanes); brief 25's merge and brief 27's work changed what it reads.",
+   "action": "Measured again on brief 27's finished commit (milestone F), with each figure beside the last; a figure that moves is read against its criterion before the row is called verified."
+  },
+  {
+   "id": "H7",
+   "group": "Criteria: The Attributes",
+   "status": "Implemented, Verification Incomplete",
+   "requirement": "Randomness doesn’t overwhelm skill, and still exists",
+   "implementation": "systems/evaluation.ts, systems/piece.ts, content/tasks.ts, content/approaches.ts",
+   "class": "Proof: a measurement behind the code",
+   "lacks": "Measured on 16b50e07 (the judge's lanes); brief 25's merge and brief 27's work changed what it reads.",
+   "action": "Measured again on brief 27's finished commit (milestone F), with each figure beside the last; a figure that moves is read against its criterion before the row is called verified."
+  },
+  {
+   "id": "F2-A",
+   "group": "Criteria: The Attributes",
+   "status": "Implemented, Verification Incomplete",
+   "requirement": "The advice’s first-named input is the largest realized gain, played",
+   "implementation": "systems/evaluation.ts, systems/piece.ts, content/tasks.ts, content/approaches.ts",
+   "class": "Proof: a measurement behind the code",
+   "lacks": "Measured on 124bec77 (brief 22's long runs, which read all of src/engine); brief 25's merge and brief 27's work changed what it reads.",
+   "action": "Measured again on brief 27's finished commit (milestone F), with each figure beside the last; a figure that moves is read against its criterion before the row is called verified."
+  },
+  {
+   "id": "L2",
+   "group": "Criteria: Long-Term Continuity",
+   "status": "Implemented, Verification Incomplete",
+   "requirement": "No mindless repetition",
+   "implementation": "systems/evaluation.ts, systems/piece.ts, content/tasks.ts, content/approaches.ts",
+   "class": "Proof: a measurement behind the code",
+   "lacks": "Measured on 16b50e07 (the judge's lanes); brief 25's merge and brief 27's work changed what it reads.",
+   "action": "Measured again on brief 27's finished commit (milestone F), with each figure beside the last; a figure that moves is read against its criterion before the row is called verified."
+  },
+  {
+   "id": "MA5",
+   "group": "Criteria: Mastery Through Play",
+   "status": "Implemented, Verification Incomplete",
+   "requirement": "A played mastery plan reaches 100 on every payoff tape",
+   "implementation": "systems/evaluation.ts, systems/piece.ts, content/tasks.ts, content/approaches.ts",
+   "class": "Proof: a measurement behind the code",
+   "lacks": "Measured on 124bec77 (brief 22's long runs, which read all of src/engine); brief 25's merge and brief 27's work changed what it reads.",
+   "action": "Measured again on brief 27's finished commit (milestone F), with each figure beside the last; a figure that moves is read against its criterion before the row is called verified."
+  },
+  {
+   "id": "S1",
+   "group": "Criteria: The Genres",
+   "status": "Implemented, Verification Incomplete",
+   "requirement": "A genre’s conventions are recognizable across very different scenes",
+   "implementation": "systems/evaluation.ts, systems/piece.ts, content/tasks.ts, content/approaches.ts",
+   "class": "Proof: a measurement behind the code",
+   "lacks": "Measured on 16b50e07 (the judge's lanes); brief 25's merge and brief 27's work changed what it reads.",
+   "action": "Measured again on brief 27's finished commit (milestone F), with each figure beside the last; a figure that moves is read against its criterion before the row is called verified."
+  },
+  {
+   "id": "S2",
+   "group": "Criteria: The Genres",
+   "status": "Implemented, Verification Incomplete",
+   "requirement": "Contrasting genres differ and related ones overlap (revised)",
+   "implementation": "systems/evaluation.ts, systems/piece.ts, content/tasks.ts, content/approaches.ts",
+   "class": "Proof: a measurement behind the code",
+   "lacks": "Measured on 16b50e07 (the judge's lanes); brief 25's merge and brief 27's work changed what it reads.",
+   "action": "Measured again on brief 27's finished commit (milestone F), with each figure beside the last; a figure that moves is read against its criterion before the row is called verified."
+  },
+  {
+   "id": "S3",
+   "group": "Criteria: The Genres",
+   "status": "Implemented, Verification Incomplete",
+   "requirement": "Contrasting genres change outcomes on the same scene (revised), on all four samples",
+   "implementation": "systems/evaluation.ts, systems/piece.ts, content/tasks.ts, content/approaches.ts",
+   "class": "Proof: a measurement behind the code",
+   "lacks": "Measured on 16b50e07 (the judge's lanes); brief 25's merge and brief 27's work changed what it reads.",
+   "action": "Measured again on brief 27's finished commit (milestone F), with each figure beside the last; a figure that moves is read against its criterion before the row is called verified."
+  },
+  {
+   "id": "S4",
+   "group": "Criteria: The Genres",
+   "status": "Implemented, Verification Incomplete",
+   "requirement": "No two briefs of different genres identical in every number a take reads (G2)",
+   "implementation": "systems/evaluation.ts, systems/piece.ts, content/tasks.ts, content/approaches.ts",
+   "class": "Proof: a measurement behind the code",
+   "lacks": "Measured on 16b50e07 (the judge's lanes); brief 25's merge and brief 27's work changed what it reads.",
+   "action": "Measured again on brief 27's finished commit (milestone F), with each figure beside the last; a figure that moves is read against its criterion before the row is called verified."
+  },
+  {
+   "id": "INT-skipped",
+   "group": "Integration",
+   "status": "Implemented, Verification Incomplete",
+   "requirement": "Every skipped check accounted for: the suite skips none; the built app’s two steps played",
+   "implementation": "src/engine, src/ui",
+   "class": "Proof: a measurement behind the code",
+   "lacks": "Measured on 124bec77 (the built app and the gate); brief 25's merge and brief 27's work changed what it reads.",
+   "action": "Measured again on brief 27's finished commit (milestone F), with each figure beside the last; a figure that moves is read against its criterion before the row is called verified."
+  },
+  {
+   "id": "INT-navigation",
+   "group": "Integration",
+   "status": "Implemented, Verification Incomplete",
+   "requirement": "Home readable; Money, School and Papers usable and aligned at 1440 and 390",
+   "implementation": "src/engine, src/ui",
+   "class": "Proof: a measurement behind the code",
+   "lacks": "Measured on 124bec77 (the built app and the gate); brief 25's merge and brief 27's work changed what it reads.",
+   "action": "Measured again on brief 27's finished commit (milestone F), with each figure beside the last; a figure that moves is read against its criterion before the row is called verified."
+  },
+  {
+   "id": "INT-long-runs",
+   "group": "Integration",
+   "status": "Implemented, Verification Incomplete",
+   "requirement": "Played lives through graduation, the workload runs, the mastery plans, the advice cases and three years of variety on the final code",
+   "implementation": "src/engine, src/ui",
+   "class": "Proof: a measurement behind the code",
+   "lacks": "Measured on 124bec77 (brief 22's long runs, which read all of src/engine); brief 25's merge and brief 27's work changed what it reads.",
+   "action": "Measured again on brief 27's finished commit (milestone F), with each figure beside the last; a figure that moves is read against its criterion before the row is called verified."
+  },
+  {
+   "id": "INT-gate",
+   "group": "Integration",
+   "status": "Implemented, Verification Incomplete",
+   "requirement": "The gate and the build on the final revision",
+   "implementation": "src/engine, src/ui",
+   "class": "Proof: a measurement behind the code",
+   "lacks": "Measured on 82b644aa (the built app and the gate); brief 25's merge and brief 27's work changed what it reads.",
+   "action": "Measured again on brief 27's finished commit (milestone F), with each figure beside the last; a figure that moves is read against its criterion before the row is called verified."
+  },
+  {
+   "id": "KS-bank-rows-scope",
+   "group": "Known Shortfalls And Missing Tests",
+   "status": "Decision Required",
+   "requirement": "The nine bank rows no Yale player reaches: kept as unresolved or moved to deferred",
+   "implementation": "Not recorded",
+   "class": "A product decision",
+   "lacks": "Whether the nine bank commands no Yale player reaches (an arranged overdraft, a switch and its steps, a money transfer, a canceled new account, an overrun loan) stay counted against completion or move to Explicitly Deferred, since lives abroad went in the scope reset of 2026-10-09 (docs/verification/CURRENT-SCOPE-2026-10-15.md, The Owner's Decisions, 2).",
+   "action": "Escalated (CHECKPOINT.md, Outstanding Decisions); nothing implemented ahead of the answer."
+  },
+  {
+   "id": "ST6-R2.e",
+   "group": "Brief 12: Replacement Criteria",
+   "status": "Decision Required",
+   "requirement": "docs/verification/resolution-2026-10-17/acting-criteria.md, ST6-R2.e: carries R4 and R5. (e1) where the scene favors restraint, restraint the better choice for the beginner, the even actor, the restrained specialist and the near-master across at least 6 works and 3 register families, no work over a …",
+   "implementation": "Not recorded",
+   "class": "A product decision",
+   "lacks": "A methodology question on brief 12's replacement criterion: whether \"more\" in (e2) reads where there's room above the even actor. On stage the restrained specialist's benefit shows only against the grain (13 of 57 against 0). The recommendation (close it) was seen after the run, so it was proposed, not adopted (docs/verification/resolution-2026-10-17/acting-result.json).",
+   "action": "Escalated (CHECKPOINT.md, Outstanding Decisions); nothing implemented ahead of the answer."
+  },
+  {
+   "id": "B13-UI.normal",
+   "group": "Brief 13 Area: interface",
+   "status": "Implemented, Verification Incomplete",
+   "requirement": "interface-criteria.md, Playthrough 1: a new life made through creation, through orientation week to the first Acting I scene shown and its feedback read, then Papers, Money and save and continue, every step showing what it says, at 1440 and at 390, each of the six exercised by a passed step.",
+   "implementation": "Not recorded",
+   "class": "Proof: a measurement behind the code",
+   "lacks": "Measured on 124bec77 (the built app and the gate); brief 25's merge and brief 27's work changed what it reads.",
+   "action": "Measured again on brief 27's finished commit (milestone F), with each figure beside the last; a figure that moves is read against its criterion before the row is called verified."
+  },
+  {
+   "id": "B13-UI.setback",
+   "group": "Brief 13 Area: interface",
+   "status": "Implemented, Verification Incomplete",
+   "requirement": "interface-criteria.md, Playthrough 2: the workload scenario’s save (no TEST SETUP), the term’s warning on coursework read, opened and followed to the scene it names, its remedy worked each day until the scene is shown Working or better where it stood Unready, then saved and continued, at 1440 and at…",
+   "implementation": "Not recorded",
+   "class": "Proof: a measurement behind the code",
+   "lacks": "Measured on 124bec77 (the built app and the gate); brief 25's merge and brief 27's work changed what it reads.",
+   "action": "Measured again on brief 27's finished commit (milestone F), with each figure beside the last; a figure that moves is read against its criterion before the row is called verified."
+  },
+  {
+   "id": "B13-UI.specialist",
+   "group": "Brief 13 Area: interface",
+   "status": "Implemented, Verification Incomplete",
+   "requirement": "interface-criteria.md, Playthrough 3: the specialist scenario’s save (TEST SETUP: four abilities at 90, the rest at 49), Nordic Noir’s brief prepared, played on the side its scene suits, taped and read, What To Work On read (naming none of the four strengths), its exercise trained to the day’s limit…",
+   "implementation": "Not recorded",
+   "class": "Proof: a measurement behind the code",
+   "lacks": "Measured on 124bec77 (the built app and the gate); brief 25's merge and brief 27's work changed what it reads.",
+   "action": "Measured again on brief 27's finished commit (milestone F), with each figure beside the last; a figure that moves is read against its criterion before the row is called verified."
+  },
+  {
+   "id": "B13-UI.walkthrough",
+   "group": "Brief 13 Area: interface",
+   "status": "Implemented, Verification Incomplete",
+   "requirement": "interface-criteria.md, The Owner’s Walkthrough: PLAYTEST.md, a different route from brief 12’s, about twenty minutes from a new life, carrying a setback the game gives and its recovery, and a specialist’s training, each step saying what to press, what to expect and what to report, and saying plainly…",
+   "implementation": "Not recorded",
+   "class": "Proof: a measurement behind the code",
+   "lacks": "Measured on 124bec77 (the built app and the gate); brief 25's merge and brief 27's work changed what it reads.",
+   "action": "Measured again on brief 27's finished commit (milestone F), with each figure beside the last; a figure that moves is read against its criterion before the row is called verified."
+  },
+  {
+   "id": "journeys.4-complete-journeys",
+   "group": "Brief 13 Area: journeys",
+   "status": "Implemented, Verification Incomplete",
+   "requirement": "Run at least twelve complete school journeys across multiple seeds and distinct player profiles. Reuse existing simulation tools where appropriate, but play through normal commands and progression rather than directly assigning successful outcomes.",
+   "implementation": "Not recorded",
+   "class": "Proof: a measurement behind the code",
+   "lacks": "Measured on 124bec77 (brief 22's long runs, which read all of src/engine); brief 25's merge and brief 27's work changed what it reads.",
+   "action": "Measured again on brief 27's finished commit (milestone F), with each figure beside the last; a figure that moves is read against its criterion before the row is called verified."
+  },
+  {
+   "id": "journeys.4-profiles",
+   "group": "Brief 13 Area: journeys",
+   "status": "Implemented, Verification Incomplete",
+   "requirement": "Include: Beginners. Balanced generalists. Specialists with different strengths. Highly developed or mastered actors. Players who follow advice. Players who partly follow or ignore advice. Players who experience missed work, financial restrictions, or health interruptions.",
+   "implementation": "Not recorded",
+   "class": "Proof: a measurement behind the code",
+   "lacks": "Measured on 124bec77 (brief 22's long runs, which read all of src/engine); brief 25's merge and brief 27's work changed what it reads.",
+   "action": "Measured again on brief 27's finished commit (milestone F), with each figure beside the last; a figure that moves is read against its criterion before the row is called verified."
+  },
+  {
+   "id": "journeys.4-expected-first",
+   "group": "Brief 13 Area: journeys",
+   "status": "Implemented, Verification Incomplete",
+   "requirement": "Set expected outcomes before running each scenario.",
+   "implementation": "Not recorded",
+   "class": "Proof: a measurement behind the code",
+   "lacks": "Measured on 124bec77 (brief 22's long runs, which read all of src/engine); brief 25's merge and brief 27's work changed what it reads.",
+   "action": "Measured again on brief 27's finished commit (milestone F), with each figure beside the last; a figure that moves is read against its criterion before the row is called verified."
+  },
+  {
+   "id": "journeys.4-neglect",
+   "group": "Brief 13 Area: journeys",
+   "status": "Implemented, Verification Incomplete",
+   "requirement": "A deliberate neglect scenario may legitimately fail academically; the game must explain and apply the consequences correctly. Do not count every dismissal as a defect or force every player to graduate.",
+   "implementation": "Not recorded",
+   "class": "Proof: a measurement behind the code",
+   "lacks": "Measured on 124bec77 (brief 22's long runs, which read all of src/engine); brief 25's merge and brief 27's work changed what it reads.",
+   "action": "Measured again on brief 27's finished commit (milestone F), with each figure beside the last; a figure that moves is read against its criterion before the row is called verified."
+  },
+  {
+   "id": "journeys.4-recovery",
+   "group": "Brief 13 Area: journeys",
+   "status": "Implemented, Verification Incomplete",
+   "requirement": "At least some journeys must recover from setbacks through available gameplay.",
+   "implementation": "Not recorded",
+   "class": "Proof: a measurement behind the code",
+   "lacks": "Measured on 124bec77 (brief 22's long runs, which read all of src/engine); brief 25's merge and brief 27's work changed what it reads.",
+   "action": "Measured again on brief 27's finished commit (milestone F), with each figure beside the last; a figure that moves is read against its criterion before the row is called verified."
+  },
+  {
+   "id": "journeys.4-check-1",
+   "group": "Brief 13 Area: journeys",
+   "status": "Implemented, Verification Incomplete",
+   "requirement": "Creation choices affect the intended state.",
+   "implementation": "Not recorded",
+   "class": "Proof: a measurement behind the code",
+   "lacks": "Measured on 124bec77 (brief 22's long runs, which read all of src/engine); brief 25's merge and brief 27's work changed what it reads.",
+   "action": "Measured again on brief 27's finished commit (milestone F), with each figure beside the last; a figure that moves is read against its criterion before the row is called verified."
+  },
+  {
+   "id": "journeys.4-check-2",
+   "group": "Brief 13 Area: journeys",
+   "status": "Implemented, Verification Incomplete",
+   "requirement": "Classes, preparation, rehearsal, interpretation, and showings connect.",
+   "implementation": "Not recorded",
+   "class": "Proof: a measurement behind the code",
+   "lacks": "Measured on 124bec77 (brief 22's long runs, which read all of src/engine); brief 25's merge and brief 27's work changed what it reads.",
+   "action": "Measured again on brief 27's finished commit (milestone F), with each figure beside the last; a figure that moves is read against its criterion before the row is called verified."
+  },
+  {
+   "id": "journeys.4-check-3",
+   "group": "Brief 13 Area: journeys",
+   "status": "Implemented, Verification Incomplete",
+   "requirement": "Attributes and genres develop and influence applicable work.",
+   "implementation": "Not recorded",
+   "class": "Proof: a measurement behind the code",
+   "lacks": "Measured on 124bec77 (brief 22's long runs, which read all of src/engine); brief 25's merge and brief 27's work changed what it reads.",
+   "action": "Measured again on brief 27's finished commit (milestone F), with each figure beside the last; a figure that moves is read against its criterion before the row is called verified."
+  },
+  {
+   "id": "journeys.4-check-4",
+   "group": "Brief 13 Area: journeys",
+   "status": "Implemented, Verification Incomplete",
+   "requirement": "Advice responds to progress and changing circumstances.",
+   "implementation": "Not recorded",
+   "class": "Proof: a measurement behind the code",
+   "lacks": "Measured on 124bec77 (brief 22's long runs, which read all of src/engine); brief 25's merge and brief 27's work changed what it reads.",
+   "action": "Measured again on brief 27's finished commit (milestone F), with each figure beside the last; a figure that moves is read against its criterion before the row is called verified."
+  },
+  {
+   "id": "journeys.4-check-5",
+   "group": "Brief 13 Area: journeys",
+   "status": "Implemented, Verification Incomplete",
+   "requirement": "Health, stamina, and energy remain distinct and interact correctly.",
+   "implementation": "Not recorded",
+   "class": "Proof: a measurement behind the code",
+   "lacks": "Measured on 124bec77 (brief 22's long runs, which read all of src/engine); brief 25's merge and brief 27's work changed what it reads.",
+   "action": "Measured again on brief 27's finished commit (milestone F), with each figure beside the last; a figure that moves is read against its criterion before the row is called verified."
+  },
+  {
+   "id": "journeys.4-check-6",
+   "group": "Brief 13 Area: journeys",
+   "status": "Implemented, Verification Incomplete",
+   "requirement": "Money, school charges, holds, and payments reconcile.",
+   "implementation": "Not recorded",
+   "class": "Proof: a measurement behind the code",
+   "lacks": "Measured on 124bec77 (brief 22's long runs, which read all of src/engine); brief 25's merge and brief 27's work changed what it reads.",
+   "action": "Measured again on brief 27's finished commit (milestone F), with each figure beside the last; a figure that moves is read against its criterion before the row is called verified."
+  },
+  {
+   "id": "journeys.4-check-7",
+   "group": "Brief 13 Area: journeys",
+   "status": "Implemented, Verification Incomplete",
+   "requirement": "Papers and document status affect the appropriate actions.",
+   "implementation": "Not recorded",
+   "class": "Proof: a measurement behind the code",
+   "lacks": "Measured on 124bec77 (brief 22's long runs, which read all of src/engine); brief 25's merge and brief 27's work changed what it reads.",
+   "action": "Measured again on brief 27's finished commit (milestone F), with each figure beside the last; a figure that moves is read against its criterion before the row is called verified."
+  },
+  {
+   "id": "journeys.4-check-8",
+   "group": "Brief 13 Area: journeys",
+   "status": "Implemented, Verification Incomplete",
+   "requirement": "Warnings arrive consistently with later evaluations.",
+   "implementation": "Not recorded",
+   "class": "Proof: a measurement behind the code",
+   "lacks": "Measured on 124bec77 (brief 22's long runs, which read all of src/engine); brief 25's merge and brief 27's work changed what it reads.",
+   "action": "Measured again on brief 27's finished commit (milestone F), with each figure beside the last; a figure that moves is read against its criterion before the row is called verified."
+  },
+  {
+   "id": "journeys.4-check-9",
+   "group": "Brief 13 Area: journeys",
+   "status": "Implemented, Verification Incomplete",
+   "requirement": "Term progression and the school endpoint work.",
+   "implementation": "Not recorded",
+   "class": "Proof: a measurement behind the code",
+   "lacks": "Measured on 124bec77 (brief 22's long runs, which read all of src/engine); brief 25's merge and brief 27's work changed what it reads.",
+   "action": "Measured again on brief 27's finished commit (milestone F), with each figure beside the last; a figure that moves is read against its criterion before the row is called verified."
+  },
+  {
+   "id": "journeys.4-check-10",
+   "group": "Brief 13 Area: journeys",
+   "status": "Implemented, Verification Incomplete",
+   "requirement": "Saving, exiting, reloading, and continuing preserve the journey.",
+   "implementation": "Not recorded",
+   "class": "Proof: a measurement behind the code",
+   "lacks": "Measured on 124bec77 (brief 22's long runs, which read all of src/engine); brief 25's merge and brief 27's work changed what it reads.",
+   "action": "Measured again on brief 27's finished commit (milestone F), with each figure beside the last; a figure that moves is read against its criterion before the row is called verified."
+  },
+  {
+   "id": "journeys.4-focused",
+   "group": "Brief 13 Area: journeys",
+   "status": "Implemented, Verification Incomplete",
+   "requirement": "Use additional focused scenarios where a full school journey cannot naturally reach an important financial, document, or health branch.",
+   "implementation": "Not recorded",
+   "class": "Proof: a measurement behind the code",
+   "lacks": "Measured on 124bec77 (brief 22's long runs, which read all of src/engine); brief 25's merge and brief 27's work changed what it reads.",
+   "action": "Measured again on brief 27's finished commit (milestone F), with each figure beside the last; a figure that moves is read against its criterion before the row is called verified."
+  },
+  {
+   "id": "journeys.6-completed-stay",
+   "group": "Brief 13 Area: journeys",
+   "status": "Implemented, Verification Incomplete",
+   "requirement": "Previously completed actions remain completed.",
+   "implementation": "Not recorded",
+   "class": "Proof: a measurement behind the code",
+   "lacks": "Measured on 124bec77 (brief 22's long runs, which read all of src/engine); brief 25's merge and brief 27's work changed what it reads.",
+   "action": "Measured again on brief 27's finished commit (milestone F), with each figure beside the last; a figure that moves is read against its criterion before the row is called verified."
+  },
+  {
+   "id": "journeys.6-once",
+   "group": "Brief 13 Area: journeys",
+   "status": "Implemented, Verification Incomplete",
+   "requirement": "Consequences and scheduled events occur once.",
+   "implementation": "Not recorded",
+   "class": "Proof: a measurement behind the code",
+   "lacks": "Measured on 124bec77 (brief 22's long runs, which read all of src/engine); brief 25's merge and brief 27's work changed what it reads.",
+   "action": "Measured again on brief 27's finished commit (milestone F), with each figure beside the last; a figure that moves is read against its criterion before the row is called verified."
+  },
+  {
+   "id": "journeys.6-advice-acknowledges",
+   "group": "Brief 13 Area: journeys",
+   "status": "Implemented, Verification Incomplete",
+   "requirement": "Advice acknowledges what has changed.",
+   "implementation": "Not recorded",
+   "class": "Proof: a measurement behind the code",
+   "lacks": "Measured on 124bec77 (brief 22's long runs, which read all of src/engine); brief 25's merge and brief 27's work changed what it reads.",
+   "action": "Measured again on brief 27's finished commit (milestone F), with each figure beside the last; a figure that moves is read against its criterion before the row is called verified."
+  },
+  {
+   "id": "journeys.6-feedback-current",
+   "group": "Brief 13 Area: journeys",
+   "status": "Implemented, Verification Incomplete",
+   "requirement": "Repeated feedback reflects the current state.",
+   "implementation": "Not recorded",
+   "class": "Proof: a measurement behind the code",
+   "lacks": "Measured on 124bec77 (brief 22's long runs, which read all of src/engine); brief 25's merge and brief 27's work changed what it reads.",
+   "action": "Measured again on brief 27's finished commit (milestone F), with each figure beside the last; a figure that moves is read against its criterion before the row is called verified."
+  },
+  {
+   "id": "journeys.6-variety",
+   "group": "Brief 13 Area: journeys",
+   "status": "Implemented, Verification Incomplete",
+   "requirement": "Exercises and situations vary where the current catalog supports variation.",
+   "implementation": "Not recorded",
+   "class": "Proof: a measurement behind the code",
+   "lacks": "Measured on 124bec77 (brief 22's long runs, which read all of src/engine); brief 25's merge and brief 27's work changed what it reads.",
+   "action": "Measured again on brief 27's finished commit (milestone F), with each figure beside the last; a figure that moves is read against its criterion before the row is called verified."
+  },
+  {
+   "id": "journeys.6-words-alone",
+   "group": "Brief 13 Area: journeys",
+   "status": "Implemented, Verification Incomplete",
+   "requirement": "Repetition is not disguised by changing words alone.",
+   "implementation": "Not recorded",
+   "class": "Proof: a measurement behind the code",
+   "lacks": "Measured on 124bec77 (brief 22's long runs, which read all of src/engine); brief 25's merge and brief 27's work changed what it reads.",
+   "action": "Measured again on brief 27's finished commit (milestone F), with each figure beside the last; a figure that moves is read against its criterion before the row is called verified."
+  },
+  {
+   "id": "journeys.6-repetition-record",
+   "group": "Brief 13 Area: journeys",
+   "status": "Implemented, Verification Incomplete",
+   "requirement": "Record repeated situations and recommendations, their frequency, and whether they remain justified. Do not rotate to inferior advice just to make a repetition count smaller.",
+   "implementation": "Not recorded",
+   "class": "Proof: a measurement behind the code",
+   "lacks": "Measured on 124bec77 (brief 22's long runs, which read all of src/engine); brief 25's merge and brief 27's work changed what it reads.",
+   "action": "Measured again on brief 27's finished commit (milestone F), with each figure beside the last; a figure that moves is read against its criterion before the row is called verified."
+  },
+  {
+   "id": "journeys.6-defects-fixed",
+   "group": "Brief 13 Area: journeys",
+   "status": "Implemented, Verification Incomplete",
+   "requirement": "Fix concrete defects found during these journeys. Add regression tests and rerun the affected scenarios.",
+   "implementation": "Not recorded",
+   "class": "Proof: a measurement behind the code",
+   "lacks": "Measured on 124bec77 (brief 22's long runs, which read all of src/engine); brief 25's merge and brief 27's work changed what it reads.",
+   "action": "Measured again on brief 27's finished commit (milestone F), with each figure beside the last; a figure that moves is read against its criterion before the row is called verified."
+  },
+  {
+   "id": "journeys.7-mastery",
+   "group": "Brief 13 Area: journeys",
+   "status": "Implemented, Verification Incomplete",
+   "requirement": "Maximum-quality prepared mastery.",
+   "implementation": "Not recorded",
+   "class": "Proof: a measurement behind the code",
+   "lacks": "Measured on 124bec77 (brief 22's long runs, which read all of src/engine); brief 25's merge and brief 27's work changed what it reads.",
+   "action": "Measured again on brief 27's finished commit (milestone F), with each figure beside the last; a figure that moves is read against its criterion before the row is called verified."
+  },
+  {
+   "id": "journeys.7-attributes",
+   "group": "Brief 13 Area: journeys",
+   "status": "Implemented, Verification Incomplete",
+   "requirement": "Relevant attribute improvement without unintended regression.",
+   "implementation": "Not recorded",
+   "class": "Proof: a measurement behind the code",
+   "lacks": "Measured on 124bec77 (brief 22's long runs, which read all of src/engine); brief 25's merge and brief 27's work changed what it reads.",
+   "action": "Measured again on brief 27's finished commit (milestone F), with each figure beside the last; a figure that moves is read against its criterion before the row is called verified."
+  },
+  {
+   "id": "journeys.7-genres",
+   "group": "Brief 13 Area: journeys",
+   "status": "Implemented, Verification Incomplete",
+   "requirement": "Genre-specific benefits without unrelated leakage.",
+   "implementation": "Not recorded",
+   "class": "Proof: a measurement behind the code",
+   "lacks": "Measured on 124bec77 (brief 22's long runs, which read all of src/engine); brief 25's merge and brief 27's work changed what it reads.",
+   "action": "Measured again on brief 27's finished commit (milestone F), with each figure beside the last; a figure that moves is read against its criterion before the row is called verified."
+  },
+  {
+   "id": "journeys.7-specialists",
+   "group": "Brief 13 Area: journeys",
+   "status": "Implemented, Verification Incomplete",
+   "requirement": "Specialist opportunities and valid limitations.",
+   "implementation": "Not recorded",
+   "class": "Proof: a measurement behind the code",
+   "lacks": "Measured on 124bec77 (brief 22's long runs, which read all of src/engine); brief 25's merge and brief 27's work changed what it reads.",
+   "action": "Measured again on brief 27's finished commit (milestone F), with each figure beside the last; a figure that moves is read against its criterion before the row is called verified."
+  },
+  {
+   "id": "journeys.7-advice-forecasts",
+   "group": "Brief 13 Area: journeys",
+   "status": "Implemented, Verification Incomplete",
+   "requirement": "Accurate advice forecasts.",
+   "implementation": "Not recorded",
+   "class": "Proof: a measurement behind the code",
+   "lacks": "Measured on 124bec77 (brief 22's long runs, which read all of src/engine); brief 25's merge and brief 27's work changed what it reads.",
+   "action": "Measured again on brief 27's finished commit (milestone F), with each figure beside the last; a figure that moves is read against its criterion before the row is called verified."
+  },
+  {
+   "id": "journeys.7-stamina",
+   "group": "Brief 13 Area: journeys",
+   "status": "Implemented, Verification Incomplete",
+   "requirement": "Stamina's duration, participation, intensity, and recovery behavior.",
+   "implementation": "Not recorded",
+   "class": "Proof: a measurement behind the code",
+   "lacks": "Measured on 124bec77 (brief 22's long runs, which read all of src/engine); brief 25's merge and brief 27's work changed what it reads.",
+   "action": "Measured again on brief 27's finished commit (milestone F), with each figure beside the last; a figure that moves is read against its criterion before the row is called verified."
+  },
+  {
+   "id": "journeys.7-ledger",
+   "group": "Brief 13 Area: journeys",
+   "status": "Implemented, Verification Incomplete",
+   "requirement": "Ledger balance.",
+   "implementation": "Not recorded",
+   "class": "Proof: a measurement behind the code",
+   "lacks": "Measured on 124bec77 (brief 22's long runs, which read all of src/engine); brief 25's merge and brief 27's work changed what it reads.",
+   "action": "Measured again on brief 27's finished commit (milestone F), with each figure beside the last; a figure that moves is read against its criterion before the row is called verified."
+  },
+  {
+   "id": "journeys.7-save",
+   "group": "Brief 13 Area: journeys",
+   "status": "Implemented, Verification Incomplete",
+   "requirement": "Save compatibility and historical results.",
+   "implementation": "Not recorded",
+   "class": "Proof: a measurement behind the code",
+   "lacks": "Measured on 124bec77 (brief 22's long runs, which read all of src/engine); brief 25's merge and brief 27's work changed what it reads.",
+   "action": "Measured again on brief 27's finished commit (milestone F), with each figure beside the last; a figure that moves is read against its criterion before the row is called verified."
+  },
+  {
+   "id": "Genre Audit-R",
+   "group": "Brief 22: Replacement Criteria",
+   "status": "Implemented, Verification Incomplete",
+   "requirement": "Every genre in the code (149): knowing it helps its own work; no unrelated-genre contribution; only documented, bounded transfer across approved direct relationships (the owner's brief 22, 2026-10-22)",
+   "implementation": "systems/engagement.ts (`relatedness`, `relevantGenre`), content/engagement.ts (`ENGAGEMENT.related`), tools/genre-audit.ts",
+   "class": "Proof: a measurement behind the code",
+   "lacks": "Measured on 16b50e07 (the judge's lanes); brief 25's merge and brief 27's work changed what it reads.",
+   "action": "Measured again on brief 27's finished commit (milestone F), with each figure beside the last; a figure that moves is read against its criterion before the row is called verified."
+  }
+ ]
+}

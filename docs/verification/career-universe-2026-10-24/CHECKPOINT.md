@@ -40,8 +40,8 @@ commit, what's done, what remains and the exact next step. `README.md` is the re
 | R | The reconciliation: the baseline, brief 25 merged, the gate's checks on the merged tree | Done (`5dc466c9`, `23ac6c66`); the merge's gate exit 1 on one stale test, corrected with A and D |
 | A | `create.livesWhereBorn` resolved; birthplace, citizenship, residences, banking history and work authorization apart | Done (the commit after `23ac6c66`) |
 | D | The rotate gate removed; portrait the same interface; the turn, the backend and their checks | Done (the same commit); emulation and a fake platform, said as such |
-| C | The foundation matrix's outstanding rows (110 IVI, 4 Decision Required after the merge) | Next after A and D |
-| K1 | The geographic coverage matrix and the research register | Waiting |
+| C | The foundation matrix's outstanding rows (110 IVI, 4 Decision Required after the merge) | Classified (`foundation/OUTSTANDING.md`): 4 decisions escalated, 20 behind them, 85 measured again in F, 5 read by an audit after K |
+| K1 | The geographic coverage matrix and the research register | Next |
 | K2 | The ongoing project and opportunity lifecycle (Area B) | Waiting |
 | K3 | Representation depth and versioned materials | Waiting |
 | K4 | Discovery, submission, auditions, direct offers, negotiation, holds and options | Waiting |
@@ -60,8 +60,14 @@ commit, what's done, what remains and the exact next step. `README.md` is the re
 2. **The citizenship reversal.** Brief 27 reversed the owner's directive of 2026-09-22 that the birthplace decide
    citizenship; followed as the later instruction, and said here in case it wasn't meant to reach that far.
 
+3. **The bank and tax rows' scope** (KS-bank-rows-scope, banking.2.scope, coverage09.3-unresolved): whether the commands
+   only lives abroad reach stay counted against completion or move to Explicitly Deferred. Open since 2026-10-15; 20 rows
+   wait on it (`foundation/OUTSTANDING.md`).
+4. **ST6-R2.e's reading of "more"**, with the recommendation brief 12's account proposed and didn't adopt.
+
 ## Next Step
 
-Begin C: read each of the matrix's 110 incomplete and 4 decision rows as they stand after the merge, classify each
-(missing behavior, missing proof, a decision, external evidence), and plan the replays of brief 22's final runs and the
-judge's lanes on the finished commit. Then K1 (the geographic coverage matrix) and K2 (the ongoing project lifecycle).
+K1: the geographic coverage matrix. Inventory every country, territory and place the world map holds (COUNTRIES, the
+cities), say for each what the career world gives it (researched rules, simulated support by a shared rule, or a gap said
+as one), and start the research register (source, organization, date, edition, territory, confidence). Then K2, the
+ongoing project and opportunity lifecycle that ends brief 25's finite catalog.

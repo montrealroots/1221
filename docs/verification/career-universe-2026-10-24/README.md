@@ -172,6 +172,25 @@ backup (`base44/functions/loadUniverse/entry.js`).
 `npm run base44:smoke -- --slot 3` against a test deployment is the check that would be. Nothing here is called a live
 backend.
 
+## Area C: The Foundation Matrix's Outstanding Rows
+
+Read as they stand after the merge, each classified by what it lacks (`foundation/OUTSTANDING.md`, written by
+`foundation/outstanding.mjs` from the matrix; nothing typed per row). The foundation matrix reads **549 of 663** (82.8%);
+the career expansion is counted in its own matrix (milestone F), and neither figure stands for the other.
+
+| Class | Rows | What happens |
+|---|---|---|
+| A product decision | 4 | Escalated: KS-bank-rows-scope, banking.2.scope and coverage09.3-unresolved are the owner's one open scope question (do commands reached only by lives abroad stay counted, or move to Explicitly Deferred); ST6-R2.e is a methodology question on brief 12's criterion, its recommendation proposed, not adopted |
+| Proof in a played life, behind that decision | 20 | The 16 bank rows (eight commands, each in the audit and in brief 09's checklist) and four tax rows: built and tested on lives abroad, refused or absent at every New Haven bank and under Connecticut's rules. Not deferred and not counted verified until the owner decides |
+| Proof: a measurement behind the code | 85 | Brief 22's long runs (which read all of `src/engine`), the built app and the judge's lanes, measured on `124bec77` and `16b50e07`; brief 25's merge and this brief's work changed what they read. Measured again on the finished commit (F); none is a defect found |
+| Proof: no audit reading yet | 5 | Brief 25's commands (`pro.apply_work_visa`, `pro.ask_pay`, `pro.award_enter`, `pro.watch_ceremony`, `pro.work_choice`): traced and tested, read by no audit row. Read once the career milestones settle them |
+
+The 24 rows of the baseline (634 of 658) are the first two classes; the 90 others came with brief 25's merge. Nothing
+was lowered, erased or relabeled. The one legitimate way in a Yale life has, a bank account kept abroad from Before Yale,
+was probed by brief 09 and still holds: six students keeping an account at home (HSBC UK, BNP Paribas, RBC, BBVA México,
+Deutsche Bank, NatWest) are refused each of the eight in its bank's words (`tests/remaining-09-banking.test.ts`,
+banking.2, run in this brief's targeted creation run), so no routine implementation closes them.
+
 ## Defects Found And Fixed
 
 | # | Where | What stood | What stands | Held by |
