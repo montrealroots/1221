@@ -17,7 +17,7 @@ function withCard(bankId: string, product: CardProduct) { if (!kept.has(bankId))
 afterEach(() => { for (const [k, v] of kept) { if (v) cards[k] = v as CardProduct; else delete cards[k]; } kept.clear(); });
 
 const lifeIn = (cityId: string, extra: Record<string, unknown> = {}, seed = 'cash') =>
-  quickSave({ startLocationId: cityId, homeRegionId: cityId, livesWhereBorn: true, wealth: 'comfortable', ...extra }, seed);
+  quickSave({ startLocationId: cityId, homeRegionId: cityId, wealth: 'comfortable', ...extra }, seed);
 const current = (sim: Simulation) => sim.universe.accounts[sim.player.primaryAccountId!]!;
 const give = (sim: Simulation, accountId: string, amount: number) => sim.post({ memo: 'test', category: 'test', postings: [{ accountId, amount }, { accountId: sim.nominalAccount('income', 'Test').id, amount: -amount }] });
 const run = (sim: Simulation, kind: string, payload: Record<string, unknown>) => sim.execute({ kind, payload });

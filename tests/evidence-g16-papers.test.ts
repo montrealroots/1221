@@ -615,7 +615,7 @@ describe('documents.permission', () => {
     expect(run(left, 'school.withdraw', { confirm: true }).ok).toBe(true);
     expect(run(left, 'documents.apply_opt')).toMatchObject({ ok: false, error: 'OPT follows a completed degree, and you left without one.' });
     // A life in London that was never a student in the US: a place a New Haven life doesn't live, so a quick save there.
-    const never = quickSave({ startLocationId: 'uk-eng-london', homeRegionId: 'uk-eng-london', livesWhereBorn: true }, 'g16-opt-never');
+    const never = quickSave({ startLocationId: 'uk-eng-london', homeRegionId: 'uk-eng-london' }, 'g16-opt-never');
     expect(run(never, 'documents.apply_opt')).toMatchObject({ ok: false, error: 'OPT is for a student on an F-1, and you haven’t held one.' });
     const late = graduateOf2029('g16-opt-late');
     late.advanceTo(Date.UTC(2029, 6, 31, 16));
@@ -864,7 +864,7 @@ describe('benefits.assistance_month', () => {
   }, 60_000);
 
   it('Ontario Works, in Toronto, where a New Haven life never lives: CAD 343 a month by the clock into the account, six days after applying and every thirty after, refused over CAD 10,000 of assets', () => {
-    const sim = quickSave({ startLocationId: 'ca-on-toronto', homeRegionId: 'ca-on-toronto', livesWhereBorn: true, wealth: 'nothing' }, 'g16-ow');
+    const sim = quickSave({ startLocationId: 'ca-on-toronto', homeRegionId: 'ca-on-toronto', wealth: 'nothing' }, 'g16-ow');
     const asked = sim.now;
     expect(run(sim, 'benefits.assistance')).toMatchObject({ ok: true, value: { scheme: 'ontario-works', firstPaymentAt: asked + 6 * MS_DAY } });
     sim.advanceTo(asked + 37 * MS_DAY);
@@ -875,7 +875,7 @@ describe('benefits.assistance_month', () => {
     ]);
     expect(sim.player.assistance!.months).toBe(2);
     expect(titled(sim, 'Assistance Paid').map((n) => n.body)).toEqual(['C$343.00 for the month.']);
-    const rich = quickSave({ startLocationId: 'ca-on-toronto', homeRegionId: 'ca-on-toronto', livesWhereBorn: true, wealth: 'wealthy' }, 'g16-ow-rich');
+    const rich = quickSave({ startLocationId: 'ca-on-toronto', homeRegionId: 'ca-on-toronto', wealth: 'wealthy' }, 'g16-ow-rich');
     expect(run(rich, 'benefits.assistance')).toMatchObject({ ok: false, error: 'Ontario Works asks for liquid assets under CAD 10,000.' });
   }, 60_000);
 });
@@ -1068,7 +1068,7 @@ describe('tax.season', () => {
   }, 60_000);
 
   it('a life in London that earned nothing in the US, a place a New Haven life never lives, is asked for no US return, and the season is armed again', () => {
-    const sim = quickSave({ startLocationId: 'uk-eng-london', homeRegionId: 'uk-eng-london', livesWhereBorn: true }, 'g16-season-uk');
+    const sim = quickSave({ startLocationId: 'uk-eng-london', homeRegionId: 'uk-eng-london' }, 'g16-season-uk');
     sim.advanceTo(Date.UTC(2027, 1, 2, 12));
     expect(returnsOf(sim.player)).toEqual({});
     expect(openDecisions(sim).filter((d) => d.title.endsWith('Tax Return'))).toEqual([]);

@@ -41,7 +41,7 @@ const { PassportPane, WorkPane } = await import('@/ui/papers/Documents');
 
 const YEAR = 365.25 * MS_DAY;
 /** A New Yorker with no papers yet, so each test hands it exactly the ones it means. */
-const life = (seed: string) => { const sim = quickSave({ startLocationId: 'us-ny-newyork', homeRegionId: 'us-ny-newyork', livesWhereBorn: true, wealth: 'wealthy' }, seed); sim.player.documents = []; return sim; };
+const life = (seed: string) => { const sim = quickSave({ startLocationId: 'us-ny-newyork', homeRegionId: 'us-ny-newyork', wealth: 'wealthy' }, seed); sim.player.documents = []; return sim; };
 const rest = (sim: Simulation) => {
   for (const item of sim.universe.scheduled) if (item.status === 'pending' && item.requiresPlayer) sim.timeline.cancel(item.id, sim.now);
 };

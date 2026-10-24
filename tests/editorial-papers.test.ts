@@ -75,7 +75,7 @@ const YEAR = 365.25 * MS_DAY;
 const onScreen = (html: string) => html.replace(/\stitle="[^"]*"/g, '').replace(/<!-- -->/g, '').replace(/<[^>]+>/g, ' ')
   .replace(/&quot;/g, '"').replace(/&#x27;/g, '\'').replace(/&lt;/g, '<').replace(/&gt;/g, '>').replace(/&amp;/g, '&').replace(/\s+/g, ' ');
 /** A life with no papers yet, so each test hands it exactly the ones it means (as tests/documents.test.ts makes one). */
-const life = (seed: string, where = 'us-ny-newyork') => { const sim = quickSave({ startLocationId: where, homeRegionId: where, livesWhereBorn: true, wealth: 'wealthy' }, seed); sim.player.documents = []; return sim; };
+const life = (seed: string, where = 'us-ny-newyork') => { const sim = quickSave({ startLocationId: where, homeRegionId: where, wealth: 'wealthy' }, seed); sim.player.documents = []; return sim; };
 const titled = (sim: Simulation, title: string) => sim.universe.notifications.filter((n) => n.title === title);
 
 function drawn(sim: Simulation, pane: FunctionComponent): string {
@@ -308,7 +308,7 @@ describe('batch 2: the Tax Returns tab, played', () => {
   it('California’s plan says its fee and what a missed payment does, and its estimate is the monthly payment the plan then makes', async () => {
     const { PapersWorkspace } = await import('@/ui/workspaces/PapersWorkspace');
     const NY = 'America/New_York';
-    const sim = quickSave({ startLocationId: 'us-ca-losangeles', homeRegionId: 'us-ca-losangeles', livesWhereBorn: true, wealth: 'wealthy' }, 'ed16-ca-plan');
+    const sim = quickSave({ startLocationId: 'us-ca-losangeles', homeRegionId: 'us-ca-losangeles', wealth: 'wealthy' }, 'ed16-ca-plan');
     recordWages(sim.player, instantFromZoned({ year: 2026, month: 5, day: 1, hour: 9, minute: 0 }, NY), NY, { gross: 40_000_00 });
     sim.advanceTo(instantFromZoned({ year: 2027, month: 2, day: 1, hour: 12, minute: 0 }, NY));
     for (const a of Object.values(sim.universe.accounts)) if (a.ownerId === sim.player.id && a.balance > 0 && (a.kind === 'checking' || a.kind === 'savings')) sim.post({ memo: 'TEST SETUP', category: 'test', postings: [{ accountId: a.id, amount: -a.balance }, { accountId: sim.nominalAccount('expense', 'Test').id, amount: a.balance }] });

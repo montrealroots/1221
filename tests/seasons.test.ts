@@ -30,7 +30,7 @@ describe('the flu', () => {
     // New York's July carries next to none.
     expect(fluByWeek('us-ny-newyork')[weekOfYear(7, 20)]).toBeLessThan(0.002);
     // Drawn week by week, New York's Januaries bring it and its Julys don't; Sydney's the other way round.
-    const sim = quickSave({ startLocationId: 'us-ny-newyork', homeRegionId: 'us-ny-newyork', livesWhereBorn: true }, 'flu-weeks');
+    const sim = quickSave({ startLocationId: 'us-ny-newyork', homeRegionId: 'us-ny-newyork' }, 'flu-weeks');
     const count = (city: string, month: number) => { sim.player.currentLocationId = city; let n = 0; for (let y = 0; y < 400; y += 1) for (const d of [1, 8, 15, 22]) if (illnessWeek(sim, sim.player, instantFromZoned({ year: 2027 + y, month, day: d, hour: 9 }, 'UTC')).some((e) => e.flu)) n += 1; return n; };
     const season = (city: string, months: number[]) => months.reduce((n, m) => n + count(city, m), 0);
     expect(season('us-ny-newyork', [12, 1, 2])).toBeGreaterThan(3 * (season('us-ny-newyork', [6, 7, 8]) + 1));

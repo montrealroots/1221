@@ -53,8 +53,8 @@ const NY = 'America/New_York';
 const at = (year: number, month: number, day: number, hour = 9) => instantFromZoned({ year, month, day, hour }, NY);
 const student = (seed: string) => createSave(1, seed, { ...newLifeConfig(), homeRegionId: 'us-ny-newyork', firstName: 'Ada', lastName: 'Cole', pronouns: 'she/her' });
 /** A life in New Haven with no school, as tests/safetynet.test.ts makes one: it starts on 5 January 2026. */
-const newHaven = (seed: string, wealth: StartingWealth = 'comfortable') => quickSave({ startLocationId: 'us-ct-newhaven', homeRegionId: 'us-ct-newhaven', livesWhereBorn: true, wealth }, seed);
-const lifeIn = (city: string, seed: string, wealth: StartingWealth = 'comfortable') => quickSave({ startLocationId: city, homeRegionId: city, livesWhereBorn: true, wealth }, seed);
+const newHaven = (seed: string, wealth: StartingWealth = 'comfortable') => quickSave({ startLocationId: 'us-ct-newhaven', homeRegionId: 'us-ct-newhaven', wealth }, seed);
+const lifeIn = (city: string, seed: string, wealth: StartingWealth = 'comfortable') => quickSave({ startLocationId: city, homeRegionId: city, wealth }, seed);
 /** Played by somebody who looks after themselves, as tests/leave.test.ts plays one. */
 const tended = (sim: Simulation, until: number) => { while (sim.now < until) { Object.assign(sim.player.wellbeing, { energy: 90, stress: 10, sleepDebt: 0, nourishment: 80, morale: 75, condition: 90 }); sim.player.awakeSince = Math.min(sim.player.awakeSince ?? sim.now, sim.now); sim.advanceTo(Math.min(until, sim.now + 6 * MS_HOUR)); } };
 const titled = (sim: Simulation, title: string) => sim.universe.notifications.filter((n) => n.title === title);

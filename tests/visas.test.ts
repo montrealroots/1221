@@ -10,7 +10,7 @@ import { MS_DAY } from '@/engine/core/time';
 import { documentsOf, mayEnter } from '@/engine/systems/documents';
 
 function citizen(city: string, citizenship: string, seed: string) {
-  const sim = quickSave({ startLocationId: city, homeRegionId: city, livesWhereBorn: true, wealth: 'wealthy' }, seed);
+  const sim = quickSave({ startLocationId: city, homeRegionId: city, wealth: 'wealthy' }, seed);
   sim.player.citizenshipId = citizenship;
   const iso = citizenship.toUpperCase();
   for (const d of documentsOf(sim.player)) if (d.kind === 'passport') d.status = 'cancelled';

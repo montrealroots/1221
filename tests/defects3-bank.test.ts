@@ -147,7 +147,7 @@ describe('a loan payment returned unpaid is charged where it was drawn', () => {
    * of RBC, and TD’s nothing.
    */
   it('LIFE FIXTURE (Toronto): a Citi loan repaid from TD, TD empty at the due date: TD’s $10 from TD, nothing from RBC, the primary', () => {
-    const sim = quickSave({ startLocationId: 'ca-on-toronto', homeRegionId: 'ca-on-toronto', livesWhereBorn: true, wealth: 'comfortable', bankId: 'ca-rbc' }, 'd3-returned');
+    const sim = quickSave({ startLocationId: 'ca-on-toronto', homeRegionId: 'ca-on-toronto', wealth: 'comfortable', bankId: 'ca-rbc' }, 'd3-returned');
     const rbc = primary(sim);
     expect(rbc.bankId).toBe('ca-rbc');
     const td = sim.universe.accounts[must<{ accountId: string }>(sim, 'bank.open_current', { bankId: 'ca-td', fundFrom: rbc.id, amount: 100_00 }).accountId]!;
@@ -245,7 +245,7 @@ describe('card.report rushes only what the bank’s own words make a rush', () =
    * Break tried: Shinhan’s `rushDays: 3` put back: the rush was sent free in three business days.
    */
   it('LIFE FIXTURE (Seoul): Shinhan’s card can’t be rushed, in the words for a bank with none, and Your Cards draws no rush', () => {
-    const sim = quickSave({ startLocationId: 'kr-11-seoul', homeRegionId: 'kr-11-seoul', livesWhereBorn: true, wealth: 'comfortable', bankId: 'kr-shinhan' }, 'd3-shinhan');
+    const sim = quickSave({ startLocationId: 'kr-11-seoul', homeRegionId: 'kr-11-seoul', wealth: 'comfortable', bankId: 'kr-shinhan' }, 'd3-shinhan');
     const checking = primary(sim);
     expect(checking.bankId).toBe('kr-shinhan');
     expect(refused(sim, 'card.report', { which: 'debit', why: 'lost', rush: true })).toBe(`No rushed replacement was found for ${checking.institution}.`);

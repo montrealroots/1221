@@ -14,7 +14,7 @@ import { ENTRY } from '@/engine/content/entry';
 
 const YEAR = 365.25 * MS_DAY;
 /** A life with no papers yet, so each test hands it exactly the ones it means. */
-const life = (seed: string, born = 'us-ny-newyork') => { const sim = quickSave({ startLocationId: 'us-ny-newyork', homeRegionId: born, livesWhereBorn: born === 'us-ny-newyork', wealth: 'wealthy' }, seed); sim.player.documents = []; return sim; };
+const life = (seed: string, born = 'us-ny-newyork') => { const sim = quickSave({ startLocationId: 'us-ny-newyork', homeRegionId: born, wealth: 'wealthy' }, seed); sim.player.documents = []; return sim; };
 function holds(sim: Simulation, doc: Partial<PersonDocument> & Pick<PersonDocument, 'kind' | 'issuer'>): PersonDocument {
   const d: PersonDocument = { id: `d${documentsOf(sim.player).length}`, name: doc.kind, number: 'X1', status: 'valid', issuedAt: sim.now - YEAR, expiresAt: sim.now + 5 * YEAR, ...doc };
   documentsOf(sim.player).push(d);

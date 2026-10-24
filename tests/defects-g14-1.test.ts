@@ -95,7 +95,7 @@ function chaseAndCapitalOne(seed: string): Simulation {
 
 /** An Auckland life, primary at one bank, with a current account and savings opened at the other and money sent to it. */
 function aucklandAt(primary: string, other: string, seed: string): Simulation {
-  const sim = quickSave({ startLocationId: 'nz-akl-auckland', homeRegionId: 'nz-akl-auckland', livesWhereBorn: true, bankId: primary, birthYear: 1985 }, seed);
+  const sim = quickSave({ startLocationId: 'nz-akl-auckland', homeRegionId: 'nz-akl-auckland', bankId: primary, birthYear: 1985 }, seed);
   run(sim, 'bank.open_current', { bankId: other });
   run(sim, 'bank.open_savings', { bankId: other });
   // New Zealand's banks pay at once: it lands as it's sent.

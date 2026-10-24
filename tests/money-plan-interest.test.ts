@@ -16,7 +16,7 @@ import '@/ui/looks/all';
 import { resolveLook, type Looked } from '@/ui/looks/registry';
 import { at } from '@/ui/looks/subject';
 
-const life = (seed: string) => quickSave({ startLocationId: 'us-ny-newyork', homeRegionId: 'us-ny-newyork', livesWhereBorn: true, bankId: 'us-chase', wealth: 'scraping' }, seed);
+const life = (seed: string) => quickSave({ startLocationId: 'us-ny-newyork', homeRegionId: 'us-ny-newyork', bankId: 'us-chase', wealth: 'scraping' }, seed);
 function wordsIn(node: ReactNode, out: string[] = []): string[] {
   if (node === null || node === undefined || typeof node === 'boolean') return out;
   if (typeof node === 'string' || typeof node === 'number') { out.push(String(node)); return out; }

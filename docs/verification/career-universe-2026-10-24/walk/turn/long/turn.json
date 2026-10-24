@@ -1,0 +1,85 @@
+{
+ "life": "long",
+ "base": "http://localhost:4173",
+ "checks": {
+  "running": {
+   "sideways": "Running",
+   "upright": "Running",
+   "uprightLater": "Running",
+   "backOnSide": "Paused",
+   "noGate": true,
+   "keptRunning": true,
+   "menuShownUpright": true,
+   "clockBefore": "7:30 AM",
+   "clockAfter": "8:30 AM",
+   "answeredUpright": null
+  },
+  "dialog": {
+   "before": "How This Works",
+   "upright": "How This Works",
+   "closeInView": true,
+   "escapeClosedUpright": true,
+   "noGate": true
+  },
+  "form": {
+   "typed": "drama",
+   "upright": "drama",
+   "kept": true,
+   "fieldInViewUpright": true
+  },
+  "keyboard": {
+   "find": "drama",
+   "fieldInView": true,
+   "pageWider": 0,
+   "noGate": true
+  },
+  "scroll": {
+   "reached": true,
+   "sideways": 300,
+   "upright": 298,
+   "back": 300,
+   "shareSideways": 0.339,
+   "shareUpright": 0.34,
+   "shareKept": true,
+   "pixelBack": true
+  },
+  "tab": {
+   "focused": [
+    "Where You StandHow This WorksTrainingYou",
+    "How This Works: The Career Screen",
+    "Go To Portfolio",
+    "Skip To ContentMenu🎬SLATECareer8:30 AM·",
+    "Skip To Content",
+    "Menu"
+   ],
+   "moved": true
+  },
+  "layout": {
+   "pageWiderUpright": 0,
+   "controlsOutUpright": [],
+   "bodyFontUpright": 14,
+   "bodyFontSideways": 14,
+   "sameText": true
+  },
+  "largerText": {
+   "pageWiderSideways": 0,
+   "pageWiderUpright": 0,
+   "controlsOutUpright": []
+  },
+  "background": {
+   "questionsBefore": 0,
+   "questionsAfter": 0,
+   "sameQuestions": true,
+   "running": "Paused",
+   "clockBefore": "8:30 AM",
+   "clockAfter": "8:30 AM",
+   "noGate": true
+  },
+  "refresh": {
+   "before": "8:30 AM",
+   "after": "8:30 AM",
+   "running": "Paused"
+  }
+ },
+ "problems": []
+}

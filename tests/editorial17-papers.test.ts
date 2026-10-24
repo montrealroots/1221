@@ -65,7 +65,7 @@ function papers(sim: Simulation, tab: string) {
   return { all: words(html), inSight: words(html.replace(/<details[\s\S]*?<\/details>/g, ' ')) };
 }
 /** A New Haven life with no papers or conditions of its own yet, so each test hands it exactly what it means. */
-const life = (seed: string) => { const sim = quickSave({ startLocationId: 'us-ct-newhaven', homeRegionId: 'us-ct-newhaven', livesWhereBorn: true, wealth: 'wealthy' }, seed); sim.player.documents = []; return sim; };
+const life = (seed: string) => { const sim = quickSave({ startLocationId: 'us-ct-newhaven', homeRegionId: 'us-ct-newhaven', wealth: 'wealthy' }, seed); sim.player.documents = []; return sim; };
 
 describe('brief 17: Health Cover says, in sight, what an action changes', () => {
   it('Your Long-Term Conditions says on each row what leaving it untreated does, from the rule’s figures; high blood pressure, which nothing charges, says nothing', () => {
@@ -107,7 +107,7 @@ describe('brief 17: Health Cover says, in sight, what an action changes', () => 
 describe('brief 17: Unemployment says where none is paid as File A Claim says it', () => {
   it('a life in Berlin, where no state pays a claim, is told what File A Claim’s own refusal says: worked or living in one of the three states', () => {
     // FIXTURE: a Berliner living in Berlin, as a quick-save begins one: no claim of Britain's, Ireland's or Mexico City's.
-    const sim = quickSave({ startLocationId: 'de-be-berlin', homeRegionId: 'de-be-berlin', livesWhereBorn: true, wealth: 'wealthy' }, 'ed17-nostate');
+    const sim = quickSave({ startLocationId: 'de-be-berlin', homeRegionId: 'de-be-berlin', wealth: 'wealthy' }, 'ed17-nostate');
     const said = 'Unemployment is paid in the game only in New York, California and Connecticut, and you’d need to have worked or to live in one of them.';
     expect(papers(sim, 'benefits').inSight).toContain(said);
     expect(sim.execute({ kind: 'benefits.claim', payload: {} }).error).toBe(said);

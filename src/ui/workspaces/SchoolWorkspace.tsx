@@ -538,8 +538,10 @@ function CastingPane() {
       {calls.length > 0 && (
         <Panel title="Calls Ahead">
           <LookRegion className="col gap-2">
+            {/* Wrapping (from 2026-10-24, brief 27's upright walk: at 390 pixels the date held its line and each call's
+                name, Drama 50: The Theatrical Event, ran four lines 73 pixels wide beside it). */}
             {calls.map((c) => (
-              <div key={c.id} className="row-between small">
+              <div key={c.id} className="row-between small wrap">
                 <span><Open subject={at('entry', c.id)}>{c.label}</Open></span>
                 <span className="mono"><Open subject={at('day', dateKey(c.at, sim.homeZone))}>{formatDateTime(c.at, zone())}</Open></span>
               </div>
@@ -910,7 +912,9 @@ function PlaysToRead() {
         <div className="xs dim">Twenty-nine plays first staged since 2000, their facts as their theaters and publishers give them. A copy is borrowed from a library to read and research; none is played here, as their texts are under copyright.</div>
         <WhyNot reasons={[...shut.values()]} />
         <div className="table-scroll">
-          <table>
+          {/* A width its cast lines read at (from 2026-10-24, brief 27's upright walk: until then a cast line was 45 pixels
+              wide on a 390-pixel screen, nine lines of it). */}
+          <table className="plays-shelf">
             <thead><tr><th scope="col">Play</th><th scope="col">Cast</th><th scope="col">Read</th></tr></thead>
             <tbody>
               {plays.map(({ p, st, noRead, noResearch }) => {

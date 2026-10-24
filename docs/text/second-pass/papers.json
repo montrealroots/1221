@@ -8,10 +8,10 @@
  },
  "src/engine/content/guide/documents.ts#DOCUMENTS [documents.residence]": {
   "status": "Rewritten",
-  "hash": "b3fb5a838f31",
-  "on": "2026-10-21",
-  "evidence": "tests/guide.test.ts and tools/guide-quotes.mjs read the entries; tests/guide-examples-papers.test.ts plays their examples",
-  "first": "Rewritten And Verified"
+  "hash": "85a46e2e865f",
+  "on": "2026-10-24",
+  "evidence": "Read 2026-10-24 (brief 27) against docs/STYLE.md: a citizenship naturalized joins the one the player started with, not the one they were born with, since creation asks for it; plain, true, no engine words. tests/citizenship.test.ts, tests/b27-creation-origins.test.ts",
+  "first": "Pending"
  },
  "src/engine/content/guide/documents.ts#DOCUMENTS [documents.work]": {
   "status": "Rewritten",
@@ -35,11 +35,11 @@
   "first": "Reviewed And Retained"
  },
  "src/engine/content/guide/documents.ts#DOCUMENTS [optional]": {
-  "status": "Retained",
-  "hash": "72dfcdc14d59",
-  "on": "2026-10-19",
-  "reason": "Two connections that keep residence apart from US permission to work and say your birth passport stays yours, which players otherwise ask about.",
-  "first": "Rewritten And Verified"
+  "status": "Rewritten",
+  "hash": "193e504ce491",
+  "on": "2026-10-24",
+  "evidence": "Read 2026-10-24 (brief 27): the passport stays the first country's, the citizenship chosen at creation, not the birth country's. tests/b27-creation-origins.test.ts",
+  "first": "Pending"
  },
  "src/engine/content/guide/documents.ts#DOCUMENTS [prerequisite]": {
   "status": "Rewritten",
@@ -189,11 +189,11 @@
   "first": "Pending"
  },
  "src/engine/content/guide/papers.ts#PAPERS [papers.pensions]": {
-  "status": "Retained",
-  "hash": "854fdfeca5db",
-  "on": "2026-10-19",
-  "reason": "Pensions' entry gives the forty credits, the claiming ages and the cut or rise, and says plainly that a school life's record stops near a few credits, so Claim never shows.",
-  "first": "Rewritten And Verified"
+  "status": "Rewritten",
+  "hash": "6d5122c1f27b",
+  "on": "2026-10-24",
+  "evidence": "Read 2026-10-24 (brief 27): a Mexican citizen, wherever born, sees the panel; the quoted refusal is still the game's (node tools/guide-quotes.mjs --check). tests/homepensions.test.ts",
+  "first": "Pending"
  },
  "src/engine/content/guide/papers.ts#PAPERS [prerequisite]": {
   "status": "Retained",

@@ -37,7 +37,7 @@ vi.mock('@/app/game-context', () => {
 const { PassportPane, WorkPane } = await import('@/ui/papers/Documents');
 
 /** A New Haven life, a US citizen, with no papers, so Connecticut's card is theirs to get. */
-const life = (seed: string) => { const sim = quickSave({ startLocationId: 'us-ct-newhaven', homeRegionId: 'us-ct-newhaven', livesWhereBorn: true, wealth: 'wealthy' }, seed); sim.player.documents = []; return sim; };
+const life = (seed: string) => { const sim = quickSave({ startLocationId: 'us-ct-newhaven', homeRegionId: 'us-ct-newhaven', wealth: 'wealthy' }, seed); sim.player.documents = []; return sim; };
 /** The words Papers' Passport And ID shows, its tags (and so its tooltips) stripped. */
 const onScreen = (sim: Simulation, pane: () => ReactNode = PassportPane as () => ReactNode) => { h.sim = sim; return renderToStaticMarkup(createElement(pane)).replace(/<[^>]+>/g, ' ').replace(/\s+/g, ' '); };
 const times = (text: string, words: string) => text.split(words).length - 1;

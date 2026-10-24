@@ -238,20 +238,24 @@ function ChartsPanel() {
               )}
               <div><dt className="strong">Its Figures</dt><dd style={{ margin: 0 }}>{spec.figures}</dd></div>
             </dl>
-            <table className="pay-table">
-              <thead><tr><th className="num">No.</th><th>Title</th><th className="num">Figure</th><th>Since The Week Before</th><th>Also</th></tr></thead>
-              <tbody>
-                {snap.entries.map((e) => (
-                  <tr key={e.rank}>
-                    <td className="num">{e.rank}</td>
-                    <td>{e.name}</td>
-                    <td className="num">{figureWords(chart, e.value)}</td>
-                    <td>{movementWords(movementOf(REFERENCE, week, e.titleId))}</td>
-                    <td>{extraWords(chart, e)}</td>
-                  </tr>
-                ))}
-              </tbody>
-            </table>
+            {/* In its own scrolling region, as every wide table is (from 2026-10-24, brief 27's upright walk: until then its
+                Also column was 107 pixels wide on a 390-pixel screen, five lines a cell). */}
+            <div className="table-scroll">
+              <table className="pay-table">
+                <thead><tr><th className="num">No.</th><th>Title</th><th className="num">Figure</th><th>Since The Week Before</th><th>Also</th></tr></thead>
+                <tbody>
+                  {snap.entries.map((e) => (
+                    <tr key={e.rank}>
+                      <td className="num">{e.rank}</td>
+                      <td>{e.name}</td>
+                      <td className="num">{figureWords(chart, e.value)}</td>
+                      <td>{movementWords(movementOf(REFERENCE, week, e.titleId))}</td>
+                      <td>{extraWords(chart, e)}</td>
+                    </tr>
+                  ))}
+                </tbody>
+              </table>
+            </div>
             {elsewhere.length > 0 && (
               <details className="small">
                 <summary>In Other Charts</summary>

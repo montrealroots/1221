@@ -7,8 +7,8 @@ import './styles/app.css';
 const container = document.getElementById('root');
 if (!container) throw new Error('SLATE couldn’t find its mount point.');
 
-// Every screen, the start and the saves among them, inside the frame a phone held upright covers with Rotate Your Phone
-// To Play (from 2026-10-23, the owner's brief 23): SLATE is played in landscape on a phone.
+// Every screen, the start and the saves among them, inside the frame that puts back what a phone's turn moved. From
+// 2026-10-23 (brief 23) to 2026-10-24 (brief 27) a phone held upright saw Rotate Your Phone To Play over it instead.
 createRoot(container).render(
   <StrictMode>
     <TurnFrame>

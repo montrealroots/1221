@@ -25,8 +25,14 @@ export default async function (req) {
       const rows = await base44.entities.SlateSave.filter({});
       return Response.json(ok({
         slots: [1, 2, 3].map((slot) => {
-          const row = rows.find((r) => Number(r.slot) === slot && !r.deleted_at);
+          const row = rows.find((r) => Number(r.slot) === slot);
           if (!row) return { slot, occupied: false, hasBackup: false };
+          // A cleared slot is empty and keeps its save as the backup (`clearSlot`), so it says so, and Your Saves offers
+          // Restore Backup as the Delete dialog promised (from 2026-10-24, brief 27: until then a cleared row was skipped
+          // as if it weren't there, so the listing said no backup while restoring it would have worked).
+          if (row.deleted_at || !row.payload) {
+            return { slot, occupied: false, hasBackup: Boolean(row.backup_payload), backupDateLabel: row.backup_world_date_label || undefined };
+          }
           return {
             slot,
             occupied: Boolean(row.payload),

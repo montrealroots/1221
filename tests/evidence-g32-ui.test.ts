@@ -562,7 +562,7 @@ describe('h-head: the head of Home', () => {
   });
 
   it('in January in New Haven (a life made with quickSave, which begins on 5 January 2026: a student’s begins in August) the date, the zone and the season follow: Monday, January 5, 2026 · EST · Winter', () => {
-    const sim = quickSave({ startLocationId: NEW_HAVEN, homeRegionId: NEW_HAVEN, livesWhereBorn: true, wealth: 'comfortable' }, 'g32-head-winter');
+    const sim = quickSave({ startLocationId: NEW_HAVEN, homeRegionId: NEW_HAVEN, wealth: 'comfortable' }, 'g32-head-winter');
     const shown = head(sim);
     expect(shown.startsWith('Monday, January 5, 2026 · ')).toBe(true);
     expect(shown).toMatch(/ in New Haven, Connecticut · EST · Winter · Daylight /);
@@ -1212,7 +1212,7 @@ describe('h-where-weather: Where You Are and the Weather on Home', () => {
   });
 
   it('Home profiles where she is: a life in London (quickSave: no student’s life is lived there) reads London, England, 7:30 AM GMT and its short January daylight by the sunrise equation, the town’s look its own tags, and the sky in °C with the wind in km/h', () => {
-    const sim = quickSave({ startLocationId: 'uk-eng-london', homeRegionId: 'uk-eng-london', livesWhereBorn: true, wealth: 'comfortable' }, 'g32-london');
+    const sim = quickSave({ startLocationId: 'uk-eng-london', homeRegionId: 'uk-eng-london', wealth: 'comfortable' }, 'g32-london');
     expect(zonedParts(sim.now, 'Europe/London')).toMatchObject({ year: 2026, month: 1, day: 5, hour: 7, minute: 30 });
     const { text } = drawn(sim, Home);
     const w = weatherAt(sim, 'uk-eng-london')!;

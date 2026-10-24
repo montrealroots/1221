@@ -16,7 +16,7 @@ import { documentsOf } from '@/engine/systems/documents';
 /** A Connecticut-born New Havener's starting license, from the first seed that draws one. */
 function ctLicense(): { realId?: boolean } {
   for (let n = 0; n < 40; n += 1) {
-    const sim = quickSave({ startLocationId: 'us-ct-newhaven', homeRegionId: 'us-ct-newhaven', livesWhereBorn: true }, `g26-license-${n}`);
+    const sim = quickSave({ startLocationId: 'us-ct-newhaven', homeRegionId: 'us-ct-newhaven' }, `g26-license-${n}`);
     const license = documentsOf(sim.player).find((d) => d.kind === 'license' && d.issuer === 'us-ct');
     if (license) return license;
   }

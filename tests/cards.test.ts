@@ -134,7 +134,7 @@ describe('the minimum, the late fee and the due date', () => {
     expect(lateFeeByRule(LATE_FEE_RULES['hk-standard-chartered']!, 100_00, 0, 10_000_00)).toBe(100_00);
     expect(lateFeeByRule(LATE_FEE_RULES['om-sohar-international']!, 100_00, 0, 0)).toBe(3_00 + 3_00);
     // Charged on a missed minimum, in Kuala Lumpur, at Maybank.
-    const sim = quickSave({ startLocationId: 'my-14-kualalumpur', homeRegionId: 'my-14-kualalumpur', livesWhereBorn: true, wealth: 'scraping', bankId: 'my-maybank' }, 'card-my-late');
+    const sim = quickSave({ startLocationId: 'my-14-kualalumpur', homeRegionId: 'my-14-kualalumpur', wealth: 'scraping', bankId: 'my-maybank' }, 'card-my-late');
     const card = cardOf(sim, sim.player)!;
     expect(card.bankId).toBe('my-maybank');
     expect(cardTerms(sim, card, 650).lateRule).toBeDefined();
@@ -151,7 +151,7 @@ describe('the minimum, the late fee and the due date', () => {
   });
 
   it('in Mexico, never asks under 1.25% of the limit, and never more than is owed', () => {
-    const sim = quickSave({ startLocationId: 'mx-cmx-mexicocity', homeRegionId: 'mx-cmx-mexicocity', livesWhereBorn: true, wealth: 'comfortable' }, 'card-mx');
+    const sim = quickSave({ startLocationId: 'mx-cmx-mexicocity', homeRegionId: 'mx-cmx-mexicocity', wealth: 'comfortable' }, 'card-mx');
     const card = cardOf(sim, sim.player)!;
     card.creditLimit = 100_000_00;
     const terms = cardTerms(sim, card, 650);

@@ -152,7 +152,7 @@ const NY = 'America/New_York';
 const MIDDLE = { openness: 50, conscientiousness: 50, extraversion: 50, agreeableness: 50, emotionalStability: 50, ambition: 50, riskTolerance: 50 };
 const student = (seed: string, extra: Partial<NewSaveConfig> = {}): Simulation =>
   createSave(1, seed, { ...newLifeConfig(), homeRegionId: 'us-ny-newyork', firstName: 'Ada', lastName: 'Cole', pronouns: 'she/her', ...extra });
-const lifeIn = (city: string, seed: string, born = city): Simulation => quickSave({ startLocationId: city, homeRegionId: born, livesWhereBorn: born === city, wealth: 'comfortable' }, seed);
+const lifeIn = (city: string, seed: string, born = city): Simulation => quickSave({ startLocationId: city, homeRegionId: born, wealth: 'comfortable' }, seed);
 const reload = (sim: Simulation): Simulation => loadSave(deserialise(serialise(sim.universe)) as never);
 /** An instant on New Haven's clock, Eastern Daylight Time worked out here: UTC−4 to 1 November 2026. */
 const EDT = (y: number, m: number, d: number, hour: number, minute = 0) => Date.UTC(y, m - 1, d, hour + 4, minute);

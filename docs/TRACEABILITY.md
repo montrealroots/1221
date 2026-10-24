@@ -208,7 +208,7 @@ SLATE has no tests of its screens, and nothing is deployed.
 | `work.try` | Implemented But Unverified | Drama School | WorkThrough.tsx | `systems/workbook.ts` | — (also tryRefusal) | — | — | — | 8 | — |
 | `world.dismiss_decision` | Implemented But Unverified | What Needs You | Home.tsx | `world/world.ts` | You’ve already dismissed that question. | — | — | — | 9 | — |
 | `world.mark_read` | Verified (journey) | What Needs You | Home.tsx Updates.tsx attention.tsx | `world/world.ts` | — | — | — | — | 13 | journey-life.test.ts |
-| `world.set_preferences` | Implemented But Unverified | The Clock | TimeControls.tsx game-context.tsx turn.tsx | `world/world.ts` | That isn’t a setting the game has.; The clock can only be set to Play or Pause. | — | — | — | 15 | — |
+| `world.set_preferences` | Implemented But Unverified | The Clock | TimeControls.tsx game-context.tsx | `world/world.ts` | That isn’t a setting the game has.; The clock can only be set to Play or Pause. | — | — | — | 14 | — |
 | `world.take_decision_action` | Implemented But Unverified | What Needs You | Home.tsx | `world/world.ts` | That question is already settled: it was answered, or its date passed.; You dismissed that question, so it can’t be answered from What Needs You.; That isn’t one of this question’s answers. | — | — | — | 17 | — |
 
 ## Scheduled kinds

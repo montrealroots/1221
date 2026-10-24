@@ -157,7 +157,7 @@ const student = (seed: string, extra: Partial<NewSaveConfig> = {}): Simulation =
   createSave(1, seed, { ...newLifeConfig(), homeRegionId: 'us-ny-newyork', firstName: 'Ada', lastName: 'Cole', pronouns: 'she/her', personality: MIDDLE, personalityTraits: [], ...extra });
 /** LIFE FIXTURE: a New Haven life outside the school, getting by, uninsured. */
 const townLife = (seed: string): Simulation =>
-  quickSave({ startLocationId: 'us-ct-newhaven', homeRegionId: 'us-ct-newhaven', livesWhereBorn: true, wealth: 'scraping', personality: MIDDLE, personalityTraits: [] }, seed);
+  quickSave({ startLocationId: 'us-ct-newhaven', homeRegionId: 'us-ct-newhaven', wealth: 'scraping', personality: MIDDLE, personalityTraits: [] }, seed);
 const reload = (sim: Simulation): Simulation => loadSave(deserialise(serialise(sim.universe)) as never);
 const ID = 'person_000001';
 /** The engine's own stream for a draw, as it keys it: what a seed was chosen by. */
@@ -608,7 +608,7 @@ describe('holidays', () => {
   });
 
   it('LIFE FIXTURE (London): England’s repeat ordered on 30 March 2026 is ready on 8 April, past Good Friday and Easter Monday, and collected at the 13 April week', () => {
-    const sim = quickSave({ startLocationId: 'uk-eng-london', homeRegionId: 'uk-eng-london', livesWhereBorn: true, wealth: 'comfortable', personality: MIDDLE, personalityTraits: [] }, 'g07-london');
+    const sim = quickSave({ startLocationId: 'uk-eng-london', homeRegionId: 'uk-eng-london', wealth: 'comfortable', personality: MIDDLE, personalityTraits: [] }, 'g07-london');
     sim.advanceTo(Date.UTC(2026, 2, 24, 12));
     // TEST SETUP: high blood pressure, its supply to run out on 10 April at the health week's hour.
     healthOf(sim.player).chronic = { ...(healthOf(sim.player).chronic ?? {}), hypertension: { treated: true, supplyUntil: Date.UTC(2026, 3, 10, 13), prescribedAt: sim.now } };

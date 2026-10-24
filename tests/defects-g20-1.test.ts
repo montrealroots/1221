@@ -40,7 +40,7 @@ vi.mock('@/app/game-context', () => {
 
 const { BankMoves } = await import('@/ui/bank/BankMoves');
 
-const lifeIn = (cityId: string, bankId: string, seed: string) => quickSave({ startLocationId: cityId, homeRegionId: cityId, livesWhereBorn: true, wealth: 'comfortable', bankId }, seed);
+const lifeIn = (cityId: string, bankId: string, seed: string) => quickSave({ startLocationId: cityId, homeRegionId: cityId, wealth: 'comfortable', bankId }, seed);
 const primary = (sim: Simulation) => sim.universe.accounts[sim.player.primaryAccountId!]!;
 const run = <T = unknown>(sim: Simulation, kind: string, payload: Record<string, unknown>) => {
   const answer = sim.execute<T>({ kind, payload });

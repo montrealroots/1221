@@ -465,6 +465,23 @@
    "src/engine/index.ts:197-259 populateWorld: the family’s money, its card and the score, the bank chosen"
   ]
  },
+ "create.citizenshipId": {
+  "status": "Verified",
+  "by": [
+   "inspection",
+   "automated"
+  ],
+  "on": "23ac6c66 with brief 27's Area A change",
+  "evidence": [
+   "tests/b27-creation-origins.test.ts",
+   "tests/citizenship.test.ts",
+   "tests/creation.test.ts",
+   "src/engine/world/bootstrap.ts:322-330 createUniverse takes the citizenship chosen (citizenshipOf), the birthplace's only for a life made without one, and refuses one nobody holds; src/engine/index.ts:955-970 an opening keeps a valid citizenship and fills only a missing one; src/ui/creation/CharacterCreation.tsx:566-596 Identity asks for it, with Same As Your Place Of Birth and the Fourteenth Amendment's note",
+   "tests/b27-creation-origins.test.ts",
+   "tests/citizenship.test.ts",
+   "tests/b27-creation-origins.test.ts born in New York as a citizen of Japan against born in Tokyo as an American: passport, F-1, permission, license and bank follow the citizenship and the previous residence; three mutations caught (creation ignoring the choice, an opening re-deriving it, the license back to the birth state)"
+  ]
+ },
  "create.displayName": {
   "status": "Verified",
   "by": [
@@ -594,19 +611,6 @@
    "tests/b20-creation-noleak.test.ts",
    "tests/creation.test.ts",
    "tests/evidence-g31-ui.test.ts",
-   "src/engine/world/bootstrap.ts:322-440 createUniverse reads each field once and puts it where the effects row says",
-   "src/engine/index.ts:197-259 populateWorld: the family’s money, its card and the score, the bank chosen"
-  ]
- },
- "create.livesWhereBorn": {
-  "status": "Blocked",
-  "by": [
-   "inspection"
-  ],
-  "on": "22bfcd35",
-  "note": "Written and read by no life a player can make: Starting Point’s Where You Live and I Still Live Where I Was Born are drawn only outside the School, where creation never begins a life (CharacterCreation.tsx:552, 973-976; tests/creation.test.ts). Whether the start outside the School comes back, or the field and its controls go, has been the owner’s decision since brief 20 (effects row create.livesWhereBorn); it decides nothing until then.",
-  "evidence": [
-   "tests/creation.test.ts",
    "src/engine/world/bootstrap.ts:322-440 createUniverse reads each field once and puts it where the effects row says",
    "src/engine/index.ts:197-259 populateWorld: the family’s money, its card and the score, the bank chosen"
   ]

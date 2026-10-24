@@ -1055,7 +1055,7 @@ describe('cash.withdraw', () => {
 
   it('stops at a Kiwibank card’s NZ$1,000 cash limit, the only kind of cash limit a card in SLATE has', () => {
     // LIFE FIXTURE: Auckland at Kiwibank, since none of the American cards a New Haven life holds has a cash limit.
-    const sim = quickSave({ startLocationId: 'nz-akl-auckland', homeRegionId: 'nz-akl-auckland', livesWhereBorn: true, wealth: 'comfortable', bankId: 'nz-kiwibank' }, 'g12-cash-limit');
+    const sim = quickSave({ startLocationId: 'nz-akl-auckland', homeRegionId: 'nz-akl-auckland', wealth: 'comfortable', bankId: 'nz-kiwibank' }, 'g12-cash-limit');
     expect(run(sim, 'cash.withdraw', { amount: 1_000_01, from: 'card' }).error).toBe('The card lets you take NZ$1,000.00 out as cash, and NZ$0.00 is out already.');
     must(sim, 'cash.withdraw', { amount: 600_00, from: 'card' });
     expect(run(sim, 'cash.withdraw', { amount: 400_01, from: 'card' }).error).toBe('The card lets you take NZ$1,000.00 out as cash, and NZ$600.00 is out already.');

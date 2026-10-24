@@ -804,7 +804,7 @@ describe('a body’s units, by where the person lives', () => {
   }
 
   it('a life in London, which no new life at Yale is, reads and is asked centimeters and kilograms, saying why', () => {
-    const config = { ...answers({ homeRegionId: 'uk-eng-london', heightCm: 177.8, weightKg: 72.6 }), school: undefined, startLocationId: 'uk-eng-london', livesWhereBorn: true };
+    const config = { ...answers({ homeRegionId: 'uk-eng-london', heightCm: 177.8, weightKg: 72.6 }), school: undefined, startLocationId: 'uk-eng-london' };
     const step = creation(STEP.StartingPoint, config);
     expect(step.text).toContain('Your height and weight on the first morning. In centimeters and kilograms, the units of the United Kingdom, where you live.');
     expect(['height-cm', 'weight-kg'].map((id) => step.control(id).props.value)).toEqual([177.8, 72.6]);

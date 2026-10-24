@@ -96,7 +96,7 @@ interface Route { sim: Simulation; chase: Account; citi: Account; chaseSavings: 
  * the link On from the screen before any of it, while Chase is primary.
  */
 function citiLoanRepaidFromChase(seed: string, linkFirst: boolean): Route {
-  const sim = quickSave({ startLocationId: 'us-ny-newyork', homeRegionId: 'us-ny-newyork', livesWhereBorn: true, wealth: 'comfortable', bankId: 'us-chase' }, seed);
+  const sim = quickSave({ startLocationId: 'us-ny-newyork', homeRegionId: 'us-ny-newyork', wealth: 'comfortable', bankId: 'us-chase' }, seed);
   const chase = sim.universe.accounts[sim.player.primaryAccountId!]!;
   const chaseSavings = savingsAt(sim, 'us-chase')!;
   expect(chaseSavings).toBeDefined();

@@ -35,7 +35,7 @@
  *   reaches). And every knob a trait declares moves for a life made with it. The review's other finding stays open:
  *   tests/personality.test.ts still holds the declared knobs to a typed list, and `receipts` read nothing a student did
  *   until it went on 2026-10-14.
- * - c-genres: the 149 chips, the 17 a play's kinds name unmarked and the rest marked ·, a chip pressed, Select All and
+ * - c-genres: the 149 chips, the 39 a play's or a project's kinds name unmarked and the rest marked ·, a chip pressed, Select All and
  *   Clear These, Review and the Profile. Then, at a second-year's every call that reads a kind (a Rep understudy
  *   rehearsal, a thesis read-through, a night sent on as an understudy, a thesis curtain, the understudies'
  *   run-through), a life loving a kind of that play has 1.5 more morale and 1.5 less stress than an unread genre's
@@ -609,9 +609,9 @@ describe('c-traits', () => {
 // ---------------------------------------------------------------------------------------------------------------------
 
 /** The kinds the game's plays have, by their chips' names: the theses, Shakespeare, the Rep's and the summer's. */
-// The genres something reads: the School's plays' kinds and, from 2026-10-24 (brief 26), the career's projects' (Crime,
-// Horror, Police Procedural, Psychological Horror, Psychological Thriller and Thriller), which a work day had read since brief 20.
-const READ = ['Comedy', 'Coming Of Age', 'Crime', 'Domestic Drama', 'Drama', 'Fairy Tale', 'Farce', 'Historical Drama', 'Horror', 'Mystery', 'Police Procedural', 'Political Drama', 'Psychological Horror', 'Psychological Thriller', 'Romance', 'Romantic Comedy', 'Romantic Drama', 'Satire', 'Social Realism', 'Supernatural', 'Thriller', 'Tragedy', 'Tragicomedy'];
+// The genres something reads: the plays' kinds and, from 2026-10-24 (brief 26), the projects', which a work day had read since
+// brief 20; brief 25's projects, merged in on 2026-10-24 (brief 27), brought sixteen more than the twenty-three until then.
+const READ = ['Action', 'Adventure', 'Animated', 'Anthology', 'Children’s', 'Christmas', 'Comedy', 'Coming Of Age', 'Conspiracy Thriller', 'Crime', 'Disaster', 'Docudrama', 'Documentary', 'Domestic Drama', 'Drama', 'Fairy Tale', 'Farce', 'Hangout', 'Heist', 'Historical Drama', 'Historical Fiction', 'Horror', 'Musical', 'Mystery', 'Nordic Noir', 'Police Procedural', 'Political Drama', 'Psychological Horror', 'Psychological Thriller', 'Romance', 'Romantic Comedy', 'Romantic Drama', 'Satire', 'Science Fiction', 'Social Realism', 'Supernatural', 'Thriller', 'Tragedy', 'Tragicomedy'];
 
 /**
  * PLAYER JOURNEY: four second-years, alike but for the genre each loves, made on g28-oncall-5 and played by the clock to
@@ -840,7 +840,7 @@ describe('c-body', () => {
   // Yale is asked in feet and pounds (tests/need-paths.test.ts), and the Londoner here lives in London, a life outside
   // the school, which a test can make and the creation screen draws as it would.
   it('PLAYER JOURNEY: Your Body says it in centimeters and kilograms for a Londoner living in London, its index beside them, and the life made out of range is drawn', () => {
-    const london = ada({ homeRegionId: 'uk-eng-london', school: undefined, startLocationId: 'uk-eng-london', livesWhereBorn: true });
+    const london = ada({ homeRegionId: 'uk-eng-london', school: undefined, startLocationId: 'uk-eng-london' });
     const drawnTwin = begun('g28-body-london', london).sim.player.body!;
     let config = london;
     let page = creation(STEP.starting, config);

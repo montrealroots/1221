@@ -13,7 +13,7 @@ import { describe,expect,it } from 'vitest';
 const YEAR = 365.2425 * MS_DAY;
 
 function at(place: string, seed: string) {
-  const sim = quickSave({ startLocationId: place, homeRegionId: place, livesWhereBorn: true, wealth: 'wealthy' }, seed);
+  const sim = quickSave({ startLocationId: place, homeRegionId: place, wealth: 'wealthy' }, seed);
   const cur = saveCurrency(sim.universe);
   const inCur = (x: number, from: string) => (cur === from ? x : exchange(x, from, cur)!);
   return { sim, cur, inCur };

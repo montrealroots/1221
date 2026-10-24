@@ -244,7 +244,7 @@ function begun(seed: string, config: NewSaveConfig): Simulation {
 }
 
 /** Ada, as Identity leaves her: born in New York, named, she/her; everything else as a new life begins. */
-const ada = (extra: Partial<NewSaveConfig> = {}): NewSaveConfig => ({ ...newLifeConfig(), homeRegionId: 'us-ny-newyork', firstName: 'Ada', lastName: 'Cole', pronouns: 'she/her', ...extra });
+const ada = (extra: Partial<NewSaveConfig> = {}): NewSaveConfig => ({ ...newLifeConfig(), homeRegionId: 'us-ny-newyork', citizenshipId: 'us', firstName: 'Ada', lastName: 'Cole', pronouns: 'she/her', ...extra });
 /** PLAYER JOURNEY: Ada through Dispositions & Traits with one slider moved, and on to Begin. */
 function slidTo(seed: string, axis: keyof Personality, value: number): Simulation {
   const base = ada();

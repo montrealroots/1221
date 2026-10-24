@@ -13,7 +13,7 @@ import { checkingsOf, loanOf, loansOf, overdraftOffer, repaymentAccount, SWITCH_
 import { cardsOf, stateOf } from '@/engine/systems/credit';
 import { cardStatement, periodsOf } from '@/engine/systems/statements';
 
-const lifeIn = (cityId: string, extra: Record<string, unknown>, seed: string) => quickSave({ startLocationId: cityId, homeRegionId: cityId, livesWhereBorn: true, ...extra }, seed);
+const lifeIn = (cityId: string, extra: Record<string, unknown>, seed: string) => quickSave({ startLocationId: cityId, homeRegionId: cityId, ...extra }, seed);
 const reload = (sim: Simulation) => loadSave(deserialise(serialise(sim.universe)) as never);
 const primary = (sim: Simulation) => sim.universe.accounts[sim.player.primaryAccountId!]!;
 /** FIXTURE: a month's wages paid in, as a payday posts them. */

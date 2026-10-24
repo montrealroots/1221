@@ -96,7 +96,7 @@ describe('medical debt paid off (the student’s own care bill)', () => {
 
 describe('England’s prescription prepayment certificate (LOCATION FIXTURE: a life in London, not the New Haven student)', () => {
   it('makes prescriptions free while it runs, and charged again after; a second is refused while it runs', () => {
-    let sim = quickSave({ startLocationId: 'uk-eng-london', homeRegionId: 'uk-eng-london', livesWhereBorn: true, wealth: 'comfortable' }, 'gap-ppc');
+    let sim = quickSave({ startLocationId: 'uk-eng-london', homeRegionId: 'uk-eng-london', wealth: 'comfortable' }, 'gap-ppc');
     const charge = () => rxShareOf(sim.player, false, sim.now, 'GBP');
     expect(charge()).toBeGreaterThan(0);
     const { until } = sim.must<{ until: number }>({ kind: 'health.prepay', payload: { months: 3 } });

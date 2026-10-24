@@ -183,7 +183,7 @@ const ada = (seed: string, family: StartingWealth = 'wealthy', extra: Partial<Ne
   createSave(1, seed, { ...withFamily(newLifeConfig(), family), homeRegionId: 'us-ny-newyork', firstName: 'Ada', lastName: 'Cole', pronouns: 'she/her', ...extra });
 /** FIXTURE: a quick-save life banking where no new life lives. */
 const abroad = (cityId: string, bankId: string, seed: string, wealth: StartingWealth = 'comfortable'): Simulation =>
-  quickSave({ startLocationId: cityId, homeRegionId: cityId, livesWhereBorn: true, wealth, bankId }, seed);
+  quickSave({ startLocationId: cityId, homeRegionId: cityId, wealth, bankId }, seed);
 const reload = (sim: Simulation): Simulation => loadSave(deserialise(serialise(sim.universe)) as never);
 const primary = (sim: Simulation): Account => sim.universe.accounts[sim.player.primaryAccountId!]!;
 const mine = (sim: Simulation): Account[] => Object.values(sim.universe.accounts).filter((a) => a.ownerId === sim.player.id);

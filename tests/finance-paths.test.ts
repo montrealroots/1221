@@ -19,7 +19,7 @@ import { CARE_LOG, careFor, healthOf, repriceCare } from '@/engine/systems/healt
 
 const NY = 'America/New_York';
 const at = (year: number, month: number, day: number, hour = 9) => instantFromZoned({ year, month, day, hour }, NY);
-const lifeIn = (cityId: string, extra: Record<string, unknown>, seed: string) => quickSave({ startLocationId: cityId, homeRegionId: cityId, livesWhereBorn: true, ...extra }, seed);
+const lifeIn = (cityId: string, extra: Record<string, unknown>, seed: string) => quickSave({ startLocationId: cityId, homeRegionId: cityId, ...extra }, seed);
 const reload = (sim: Simulation) => loadSave(deserialise(serialise(sim.universe)) as never);
 const primary = (sim: Simulation) => sim.universe.accounts[sim.player.primaryAccountId!]!;
 const fund = (sim: Simulation, id: string, amount: number) => sim.post({ memo: 'TEST SETUP', category: 'test', postings: [{ accountId: id, amount }, { accountId: sim.nominalAccount('income', 'Test').id, amount: -amount }] });

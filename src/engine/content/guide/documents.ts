@@ -333,7 +333,7 @@ export const DOCUMENTS: readonly GuideEntry[] = [
     synonyms: ['residence permit', 'Mexican residence', 'Residente Temporal', 'Residente Permanente', 'naturalization', 'second citizenship', 'green card', 'Global Talent visa', 'settle abroad', 'live abroad'],
     questions: ['Can I live in another country?', 'How do I become a citizen of another country?', 'Why can’t I apply for a green card?', 'Why can’t I apply for Mexican residence?'],
     where: on('work', 'Papers, Permission To Work, Residence Abroad'),
-    available: `From the guide’s chapter “${CHAPTER}”. A country you’re a citizen of, by birth or naturalized, leaves the list.`,
+    available: `From the guide’s chapter “${CHAPTER}”. A country you’re a citizen of, from the start or naturalized, leaves the list.`,
     short: 'Residence Abroad lists Canada, Ireland, Mexico, Britain and the United States, apart from your own country, with your status in each: what the country asks, and why the game grants none of it. Mexico’s temporary residence asks only for savings or income, but moving abroad isn’t part of the game, so none of Mexico’s papers are granted. What an older save holds is kept: a card to its end, and an application for citizenship to its decision.',
     steps: [
       'Open Papers, then Permission To Work, and find the Residence Abroad panel. Your Status There says what each country asks, or what you hold there. Mexico’s Apply, and Renew on a card held, are grayed out with the reason.',
@@ -356,7 +356,7 @@ export const DOCUMENTS: readonly GuideEntry[] = [
       'Settle (Britain) or Naturalize, where an older save’s papers allow it: the fee leaves your bank, and Your Status There shows what’s granted, or the day citizenship is decided.',
     ],
     later: [
-      'A citizenship you’ve applied for is decided on its day. It joins the one you were born with, and its country leaves the list. You keep your birth country’s passport.',
+      'A citizenship you’ve applied for is decided on its day. It joins the one you started with, and its country leaves the list. You keep your first country’s passport.',
       'A Mexican card an older save holds runs out at its end, and isn’t renewed.',
     ],
     interpret: [
@@ -378,7 +378,7 @@ export const DOCUMENTS: readonly GuideEntry[] = [
     related: ['documents.passport-id', 'documents.work', 'bank.accounts'],
     connections: [
       { to: 'bank.accounts', kind: 'immediate', why: 'Settling or naturalizing, where an older save’s papers allow it, takes its fee from your accounts at once.' },
-      { to: 'documents.passport-id', kind: 'optional', why: 'A citizenship by naturalizing joins the one you were born with, and your passport stays your birth country’s.' },
+      { to: 'documents.passport-id', kind: 'optional', why: 'A citizenship by naturalizing joins the one you started with, and your passport stays your first country’s.' },
       { to: 'documents.work', kind: 'optional', why: 'Residence abroad and permission to work in the US are separate: OPT is the US route for a student.' },
     ],
     example: {

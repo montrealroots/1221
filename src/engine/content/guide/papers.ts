@@ -730,7 +730,8 @@ export const PAPERS: readonly GuideEntry[] = [
     interpret: [
       `Credits says “You need forty to qualify, and years at school earn only a few”. At ${usd(STIPEND)} a week, a summer’s stipend of about ${SUMMER_WEEKS} weeks earns ${SUMMER_CREDITS}; four a year is the most any year can earn.`,
       'At 67, A Month is what today’s record would pay; a later, better year replaces a lower one among your best 35.',
-      'A life born in Mexico, a Mexican citizen by its Place Of Birth, sees the Pensión Para El Bienestar panel, and living in New Haven it reads “It’s only for Mexican citizens living in Mexico.”',
+      // Until 2026-10-24 (brief 27) the citizenship was the Place Of Birth's, and this said a life born in Mexico.
+      'A Mexican citizen, wherever they were born, sees the Pensión Para El Bienestar panel, and living in New Haven it reads “It’s only for Mexican citizens living in Mexico.”',
     ],
     unavailable: [
       `“You can claim it from ${SS.earliestAge}. It’s full at ${SS.fullAge}, and more if you wait until ${SS.latestAge}.”`,

@@ -29,7 +29,6 @@ import { Home } from '@/ui/screens/Home';
 import { WorkspaceRouter } from '@/ui/workspaces/WorkspaceRouter';
 import { formatDate, formatTime, zoneAbbreviation } from '@/engine/core/time';
 import { PERFORMER_NOUN } from '@/engine/core/performer';
-import { usePauseWhileUpright } from './turn';
 import { useMedia } from '@/ui/components/media';
 
 /**
@@ -54,8 +53,8 @@ export function GameShell() {
   const profileOpen = useWorld((s) => isOpen(s, 'ui.profile'));
   const running = useWorld((s) => s.universe.preferences.timeSpeed !== 'paused');
   const drawer = useMedia(DRAWER_QUERY);
-  // A phone held upright covers the game and pauses it (`ui/shell/turn.tsx`).
-  usePauseWhileUpright();
+  // A phone held upright covered the game and paused it from 2026-10-23 until brief 27 took the gate out on 2026-10-24
+  // (`ui/shell/turn.tsx`): the game plays upright as it does on its side.
 
   // Escape closes the drawer, the way it closes the dialogs. Without it the
   // only ways out were the Menu button and a shade the drawer covers most of,

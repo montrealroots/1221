@@ -23,7 +23,7 @@ import { describe,expect,it } from 'vitest';
 const YEAR = 365.2425 * MS_DAY;
 const inSave = (sim: Simulation, c: number, from: string) => { const cur = saveCurrency(sim.universe); return cur === from ? c : exchange(c, from, cur)!; };
 /** An American living in New York, wealthy. */
-const american = (seed: string) => quickSave({ startLocationId: 'us-ny-newyork', homeRegionId: 'us-ny-newyork', livesWhereBorn: true, wealth: 'wealthy' }, seed);
+const american = (seed: string) => quickSave({ startLocationId: 'us-ny-newyork', homeRegionId: 'us-ny-newyork', wealth: 'wealthy' }, seed);
 
 describe('a route to residence', () => {
   it('is refused where none is open to an actor, with the reason', () => {

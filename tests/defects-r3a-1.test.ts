@@ -44,7 +44,7 @@ function clearCalendar(sim: Simulation): void {
  * the midnight 20 minutes on.
  */
 function atTwentyToMidnight(payer: Payer, seed: string, money: (meal: number, day: number) => number, action: 'eat' | 'order') {
-  const sim = quickSave({ startLocationId: NYC, homeRegionId: NYC, livesWhereBorn: true, wealth: 'modest', bankId: 'us-chase' }, seed);
+  const sim = quickSave({ startLocationId: NYC, homeRegionId: NYC, wealth: 'modest', bankId: 'us-chase' }, seed);
   clearCalendar(sim);
   sim.must({ kind: 'bank.set_payments', payload: { everyday: payer } });
   const midnight = startOfLocalDay(sim, sim.now + 24 * 3_600_000);

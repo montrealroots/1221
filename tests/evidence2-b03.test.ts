@@ -363,7 +363,7 @@ describe('holidays', () => {
   });
 
   it('LIFE FIXTURE (a New Haven life at Bank of America): round-ups move at a business day’s end, so Saturday’s to Martin Luther King Jr. Day’s wait for the end of Tuesday 20 January', () => {
-    const sim = quickSave({ startLocationId: 'us-ct-newhaven', homeRegionId: 'us-ct-newhaven', livesWhereBorn: true, wealth: 'comfortable', bankId: 'us-bank-of-america', personality: MIDDLE, personalityTraits: [] }, 'b03-hol-ru');
+    const sim = quickSave({ startLocationId: 'us-ct-newhaven', homeRegionId: 'us-ct-newhaven', wealth: 'comfortable', bankId: 'us-bank-of-america', personality: MIDDLE, personalityTraits: [] }, 'b03-hol-ru');
     const checking = sim.player.primaryAccountId!;
     expect(sim.universe.accounts[checking]!.bankId).toBe('us-bank-of-america');
     sim.must({ kind: 'bank.set_payments', payload: { everyday: 'debit' } });
@@ -385,7 +385,7 @@ describe('holidays', () => {
   });
 
   it('LIFE FIXTURE (London, a visa’s enrolment booked as a save from before 2026-10-09 has it): slept through on 26 March 2026, it’s booked again for Thursday 2 April, the last business day before the warning’s tenth, past Good Friday and Easter Monday', () => {
-    const sim = quickSave({ startLocationId: 'uk-eng-london', homeRegionId: 'uk-eng-london', livesWhereBorn: true, wealth: 'wealthy', personality: MIDDLE, personalityTraits: [] }, 'b03-hol-ldn');
+    const sim = quickSave({ startLocationId: 'uk-eng-london', homeRegionId: 'uk-eng-london', wealth: 'wealthy', personality: MIDDLE, personalityTraits: [] }, 'b03-hol-ldn');
     sim.advanceTo(Date.UTC(2026, 2, 20, 12));
     // TEST SETUP: a Global Talent visa pending, its UKVCAS enrolment at 10 AM GMT on Thursday 26 March.
     const at = Date.UTC(2026, 2, 26, 10);
@@ -429,7 +429,7 @@ describe('injuries', () => {
     expect(priced(100_00)).toBe(183_98);
     const care = priced(180_00) + 2 * priced(100_00);
     expect(care).toBe(699_13);
-    const sim = quickSave({ startLocationId: 'us-ct-newhaven', homeRegionId: 'us-ct-newhaven', livesWhereBorn: true, wealth: 'scraping', personality: MIDDLE, personalityTraits: [] }, seed);
+    const sim = quickSave({ startLocationId: 'us-ct-newhaven', homeRegionId: 'us-ct-newhaven', wealth: 'scraping', personality: MIDDLE, personalityTraits: [] }, seed);
     sim.advanceTo(midnight + 1000);
     expect(healthOf(sim.player).injury).toMatchObject({ kind: 'sprain', at: midnight });
     // Named in sentence case, as every other bill is, from 2026-10-13: until then “A Sprained Ankle: its care”.

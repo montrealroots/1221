@@ -13,7 +13,7 @@ import { spend } from '@/engine/systems/spending';
 import { describe,expect,it } from 'vitest';
 
 const lifeIn = (cityId: string, extra: Record<string, unknown> = {}, seed = 'pay') =>
-  quickSave({ startLocationId: cityId, homeRegionId: cityId, livesWhereBorn: true, ...extra }, seed);
+  quickSave({ startLocationId: cityId, homeRegionId: cityId, ...extra }, seed);
 const accountOf = (sim: Simulation, kind: string) => Object.values(sim.universe.accounts).find((a) => a.ownerId === sim.player.id && a.kind === kind && !a.closedAt && a.category !== 'term');
 const current = (sim: Simulation) => sim.universe.accounts[sim.player.primaryAccountId!]!;
 const setCurrent = (sim: Simulation, to: number) => {

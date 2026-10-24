@@ -39,7 +39,7 @@ vi.mock('@/app/game-context', () => {
 const { BankCardOffers } = await import('@/ui/bank/BankCardOffers');
 
 const lifeAt = (bankId: string, seed: string) =>
-  quickSave({ startLocationId: 'us-ny-newyork', homeRegionId: 'us-ny-newyork', livesWhereBorn: true, wealth: 'comfortable', bankId }, seed);
+  quickSave({ startLocationId: 'us-ny-newyork', homeRegionId: 'us-ny-newyork', wealth: 'comfortable', bankId }, seed);
 const card = (sim: Simulation) => cardOf(sim, sim.player)!;
 const give = (sim: Simulation, accountId: string, amount: number) => sim.post({ memo: 'test', category: 'test', postings: [{ accountId, amount }, { accountId: sim.nominalAccount('income', 'Test').id, amount: -amount }] });
 const nextStatement = (sim: Simulation) => sim.timeline.pending().find((i) => i.kind === STATEMENT_KIND && i.payload.personId === sim.player.id)!.at;

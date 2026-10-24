@@ -18,7 +18,7 @@ function withCard(bankId: string, product: CardProduct) { if (!kept.has(bankId))
 afterEach(() => { for (const [k, v] of kept) { if (v) cards[k] = v as CardProduct; else delete cards[k]; } kept.clear(); });
 
 const lifeIn = (cityId: string, extra: Record<string, unknown> = {}, seed = 'int') =>
-  quickSave({ startLocationId: cityId, homeRegionId: cityId, livesWhereBorn: true, wealth: 'scraping', ...extra }, seed);
+  quickSave({ startLocationId: cityId, homeRegionId: cityId, wealth: 'scraping', ...extra }, seed);
 const card = (sim: Simulation) => cardOf(sim, sim.player)!;
 const give = (sim: Simulation, accountId: string, amount: number) => sim.post({ memo: 'test', category: 'test', postings: [{ accountId, amount }, { accountId: sim.nominalAccount('income', 'Test').id, amount: -amount }] });
 const next = (sim: Simulation, kind: string) => sim.timeline.pending().find((i) => i.kind === kind && i.payload.personId === sim.player.id)?.at;

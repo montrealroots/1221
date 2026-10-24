@@ -14,7 +14,7 @@ const pounds = (cur: string, x: number) => (cur === 'GBP' ? x : exchange(x, 'GBP
 
 describe('the NHS', () => {
   it('charges a Londoner nothing for a stay in hospital, £9.90 a prescription item, and the dental bands', () => {
-    const sim = quickSave({ startLocationId: 'uk-eng-london', homeRegionId: 'uk-eng-london', livesWhereBorn: true }, 'nhs');
+    const sim = quickSave({ startLocationId: 'uk-eng-london', homeRegionId: 'uk-eng-london' }, 'nhs');
     const cur = saveCurrency(sim.universe);
     for (const care of ['visit', 'urgent', 'emergency', 'stay'] as const) expect(shareOf(sim.player, care, sim.now, cur)).toBe(0);
     expect(shareOf(sim.player, 'rx-brand', sim.now, cur)).toBe(pounds(cur, 9_90));
@@ -25,11 +25,11 @@ describe('the NHS', () => {
   });
 
   it('charges nothing for a prescription in Scotland, and leaves a New Yorker’s care as it was', () => {
-    const scot = quickSave({ startLocationId: 'uk-sct-glasgow', homeRegionId: 'uk-sct-glasgow', livesWhereBorn: true }, 'nhs-sct');
+    const scot = quickSave({ startLocationId: 'uk-sct-glasgow', homeRegionId: 'uk-sct-glasgow' }, 'nhs-sct');
     expect(shareOf(scot.player, 'rx-generic', scot.now, saveCurrency(scot.universe))).toBe(0);
-    const ny = quickSave({ startLocationId: 'us-ny-newyork', homeRegionId: 'us-ny-newyork', livesWhereBorn: true }, 'nhs-ny');
+    const ny = quickSave({ startLocationId: 'us-ny-newyork', homeRegionId: 'us-ny-newyork' }, 'nhs-ny');
     expect(publicCareShareOf(ny.player, 'stay', ny.now, 'USD')).toBeUndefined();
-    const visaHolder = quickSave({ startLocationId: 'uk-eng-london', homeRegionId: 'uk-eng-london', livesWhereBorn: true }, 'nhs-visa');
+    const visaHolder = quickSave({ startLocationId: 'uk-eng-london', homeRegionId: 'uk-eng-london' }, 'nhs-visa');
     visaHolder.player.citizenshipId = 'us';
     expect(publicCareShareOf(visaHolder.player, 'stay', visaHolder.now, 'USD')).toBeUndefined();
   });

@@ -51,7 +51,7 @@ const CITY: Record<string, string> = {
 
 /** A life at a bank, with savings there and the day paid by debit card. TEST SETUP: the current account set to `funds` whole units. */
 function lifeAt(bankId: string, seed: string, funds = 2_000): Simulation {
-  const sim = quickSave({ startLocationId: CITY[bankId.slice(0, 2)]!, homeRegionId: CITY[bankId.slice(0, 2)]!, livesWhereBorn: true, wealth: 'comfortable', bankId }, seed);
+  const sim = quickSave({ startLocationId: CITY[bankId.slice(0, 2)]!, homeRegionId: CITY[bankId.slice(0, 2)]!, wealth: 'comfortable', bankId }, seed);
   expect(current(sim).bankId).toBe(bankId);
   if (!savingsOf(sim)) sim.must({ kind: 'bank.open_savings', payload: { bankId } });
   sim.must({ kind: 'bank.set_payments', payload: { everyday: 'debit' } });
@@ -203,7 +203,7 @@ describe('a choice the bank leaves to the customer', () => {
     for (const bank of ['us-chase', 'us-capital-one', 'gb-barclays', 'kr-kb-kookmin', 'jp-mufg']) {
       const country = bank.slice(0, 2);
       const city = { ...CITY, jp: 'jp-13-tokyo' }[country]!;
-      const sim = quickSave({ startLocationId: city, homeRegionId: city, livesWhereBorn: true, wealth: 'comfortable', bankId: bank }, `ru-none-${bank}`);
+      const sim = quickSave({ startLocationId: city, homeRegionId: city, wealth: 'comfortable', bankId: bank }, `ru-none-${bank}`);
       expect(sim.execute({ kind: 'bank.set_round_ups', payload: { on: true } }).error, bank).toMatch(/ doesn’t round purchases up into savings\.$/);
     }
     for (const bank of ['is-islandsbanki', 'mx-santander']) expect(ROUND_UPS[bank], bank).toBeDefined();

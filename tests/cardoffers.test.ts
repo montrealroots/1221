@@ -13,7 +13,7 @@ import { payingTheMinimum } from '@/engine/systems/statements';
 import { spend } from '@/engine/systems/spending';
 
 const lifeIn = (cityId: string, extra: Record<string, unknown> = {}, seed = 'co') =>
-  quickSave({ startLocationId: cityId, homeRegionId: cityId, livesWhereBorn: true, wealth: 'comfortable', ...extra }, seed);
+  quickSave({ startLocationId: cityId, homeRegionId: cityId, wealth: 'comfortable', ...extra }, seed);
 const card = (sim: Simulation) => cardOf(sim, sim.player)!;
 const run = (sim: Simulation, kind: string, payload: Record<string, unknown> = {}) => sim.execute({ kind, payload });
 const give = (sim: Simulation, accountId: string, amount: number) => sim.post({ memo: 'test', category: 'test', postings: [{ accountId, amount }, { accountId: sim.nominalAccount('income', 'Test').id, amount: -amount }] });

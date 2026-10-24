@@ -8,7 +8,7 @@ import { quickSave } from '@/engine';
 import { minimumDue, type CardTerms } from '@/engine/systems/credit';
 import { REVOLVING_COURSE } from '@/engine/content/revolving';
 
-const tokyo = quickSave({ startLocationId: 'jp-13-tokyo', homeRegionId: 'jp-13-tokyo', livesWhereBorn: true, wealth: 'modest' }, 'revo');
+const tokyo = quickSave({ startLocationId: 'jp-13-tokyo', homeRegionId: 'jp-13-tokyo', wealth: 'modest' }, 'revo');
 const terms = (bankId: string, score = 700) => ({
   kind: 'revolving', bankId, apr: 0.18, priced: 0.18, annualFee: 0, minimumShare: 0.02, minimumFloor: 0, lateFee: 0, returnedPaymentFee: 0,
   cashFeeShare: 0, cashFeeMin: 0, cashApr: 0, estimated: [], name: 'x', course: REVOLVING_COURSE[bankId], score,

@@ -12,7 +12,7 @@ import { recordWages, earningsOf } from '@/engine/systems/earnings';
 import { STATE_PENSION, qualifyingYears, statePensionAge, statePensionRefusal, weeklyPension } from '@/engine/systems/statepension';
 
 function londoner(seed: string) {
-  const sim = quickSave({ startLocationId: 'uk-eng-london', homeRegionId: 'uk-eng-london', livesWhereBorn: true, wealth: 'wealthy' }, seed);
+  const sim = quickSave({ startLocationId: 'uk-eng-london', homeRegionId: 'uk-eng-london', wealth: 'wealthy' }, seed);
   const cur = saveCurrency(sim.universe);
   const pounds = (x: number) => (cur === 'GBP' ? x : exchange(x, 'GBP', cur)!);
   return { sim, cur, pounds };

@@ -272,7 +272,7 @@ describe('where the life begins', () => {
     // as tests/evidence-g07-life.test.ts reads them.
     addCountryHolidays('us', readFileSync('public/holidays/us.tsv', 'utf8'));
     addCountryHolidays('uk', readFileSync('public/holidays/uk.tsv', 'utf8'));
-    const at = (city: string) => createSave(1, 'b20-c-where', { ...defaultConfig(), homeRegionId: city, startLocationId: city, livesWhereBorn: true, wealth: 'modest', startYear: 2026, startMonth: 8, startDay: 24 });
+    const at = (city: string) => createSave(1, 'b20-c-where', { ...defaultConfig(), homeRegionId: city, startLocationId: city, wealth: 'modest', startYear: 2026, startMonth: 8, startDay: 24 });
     const ny = at('us-ny-newyork');
     const london = at('uk-eng-london');
     expect([ny.universe.meta.currency, london.universe.meta.currency]).toEqual(['USD', 'GBP']);

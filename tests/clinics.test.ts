@@ -10,7 +10,7 @@ import { CARE } from '@/engine/content/safetynet';
 import { clinicFor, clinicRefusal } from '@/engine/systems/clinics';
 import { careFor, healthOf, planOf, shareOf } from '@/engine/systems/health';
 
-const life = (city: string, seed: string) => quickSave({ startLocationId: city, homeRegionId: city, livesWhereBorn: true, wealth: 'wealthy' }, seed);
+const life = (city: string, seed: string) => quickSave({ startLocationId: city, homeRegionId: city, wealth: 'wealthy' }, seed);
 
 describe('where care is had', () => {
   it('a doctor’s visit at a practice, urgent care at a center, an emergency at a hospital, in the town they’re in', () => {

@@ -22,7 +22,7 @@ function withLaw(iso: string, change: Partial<FraudLaw>) { if (!kept.has(iso)) k
 afterEach(() => { for (const [k, v] of kept) laws[k] = v; kept.clear(); });
 
 const lifeIn = (cityId: string, bankId: string, seed: string) =>
-  quickSave({ startLocationId: cityId, homeRegionId: cityId, livesWhereBorn: true, wealth: 'comfortable', bankId }, seed);
+  quickSave({ startLocationId: cityId, homeRegionId: cityId, wealth: 'comfortable', bankId }, seed);
 
 const AMOUNT = 900_00;
 

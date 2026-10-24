@@ -73,7 +73,7 @@ const { PapersWorkspace } = await import('@/ui/workspaces/PapersWorkspace');
 
 const NY = 'America/New_York';
 const at = (year: number, month: number, day: number, hour = 9) => instantFromZoned({ year, month, day, hour }, NY);
-const lifeIn = (city: string, seed: string) => quickSave({ startLocationId: city, homeRegionId: city, livesWhereBorn: true, wealth: 'wealthy' }, seed);
+const lifeIn = (city: string, seed: string) => quickSave({ startLocationId: city, homeRegionId: city, wealth: 'wealthy' }, seed);
 const international = (seed: string) => createSave(1, seed, { ...newLifeConfig(), homeRegionId: 'uk-eng-london', firstName: 'Ada', lastName: 'Cole', pronouns: 'she/her' });
 const play = (sim: Simulation, until: number) => { while (sim.now < until) sim.advanceTo(Math.min(until, sim.now + 6 * MS_HOUR), { stopOnPlayerRequired: true }); };
 /** Played by somebody who looks after themselves, as tests/leave.test.ts plays one. */

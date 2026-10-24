@@ -22,7 +22,7 @@ import { ASK_EVERY } from '@/engine/systems/cardlife';
 import { earningsOf, recordWages } from '@/engine/systems/earnings';
 
 const NY = 'us-ny-newyork';
-const life = (seed: string, extra: Record<string, unknown> = {}) => quickSave({ startLocationId: NY, homeRegionId: NY, livesWhereBorn: true, wealth: 'modest', ...extra }, seed);
+const life = (seed: string, extra: Record<string, unknown> = {}) => quickSave({ startLocationId: NY, homeRegionId: NY, wealth: 'modest', ...extra }, seed);
 const card = (sim: Simulation) => cardOf(sim, sim.player)!;
 const ask = (sim: Simulation, limit: number) => sim.execute({ kind: 'card.request_limit', payload: { limit, accountId: card(sim).id } });
 const give = (sim: Simulation, accountId: string, amount: number) => sim.post({ memo: 'test', category: 'test', postings: [{ accountId, amount }, { accountId: sim.nominalAccount('income', 'Test').id, amount: -amount }] });

@@ -21,7 +21,7 @@ import { describe,expect,it } from 'vitest';
 const NY = 'America/New_York';
 const at = (year: number, month: number, day: number, hour = 9) => instantFromZoned({ year, month, day, hour }, NY);
 function pro(seed: string, city = 'us-ny-newyork'): Simulation {
-  const sim = quickSave({ startLocationId: city, homeRegionId: city, livesWhereBorn: true, wealth: 'wealthy' }, seed);
+  const sim = quickSave({ startLocationId: city, homeRegionId: city, wealth: 'wealthy' }, seed);
   sim.player.craft = evenCraft(50);
   return sim;
 }

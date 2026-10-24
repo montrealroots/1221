@@ -18,7 +18,7 @@ function withLaw(iso: string, change: Partial<FraudLaw>) { if (!kept.has(iso)) k
 afterEach(() => { for (const [k, v] of kept) laws[k] = v; kept.clear(); });
 
 const lifeIn = (cityId: string, bankId: string, seed = 'sec') =>
-  quickSave({ startLocationId: cityId, homeRegionId: cityId, livesWhereBorn: true, wealth: 'comfortable', bankId }, seed);
+  quickSave({ startLocationId: cityId, homeRegionId: cityId, wealth: 'comfortable', bankId }, seed);
 const current = (sim: Simulation) => sim.universe.accounts[sim.player.primaryAccountId!]!;
 const run = (sim: Simulation, kind: string, payload: Record<string, unknown> = {}) => sim.execute({ kind, payload });
 

@@ -23,7 +23,7 @@ import { PLAN, TAX_NOTICE_KIND, applyPayment, deadline, federalLienWithdrawRefus
 
 const NY = 'America/New_York';
 const at = (year: number, month: number, day: number, hour = 9) => instantFromZoned({ year, month, day, hour }, NY);
-const lifeIn = (cityId: string, extra: Record<string, unknown>, seed: string) => quickSave({ startLocationId: cityId, homeRegionId: cityId, livesWhereBorn: true, ...extra }, seed);
+const lifeIn = (cityId: string, extra: Record<string, unknown>, seed: string) => quickSave({ startLocationId: cityId, homeRegionId: cityId, ...extra }, seed);
 const primary = (sim: Simulation) => sim.universe.accounts[sim.player.primaryAccountId!]!;
 const fund = (sim: Simulation, amount: number) => sim.post({ memo: 'TEST SETUP', category: 'test', postings: [{ accountId: primary(sim).id, amount }, { accountId: sim.nominalAccount('income', 'Test').id, amount: -amount }] });
 const play = (sim: Simulation, until: number) => { while (sim.now < until) sim.advanceTo(Math.min(until, sim.now + 6 * MS_HOUR), { stopOnPlayerRequired: true }); };

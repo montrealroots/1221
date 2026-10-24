@@ -32,7 +32,7 @@ function sentences(text: readonly string[]): string[] {
 }
 
 const newYorker = (seed: string) =>
-  quickSave({ startLocationId: 'us-ny-newyork', homeRegionId: 'us-ny-newyork', livesWhereBorn: true, wealth: 'comfortable', bankId: 'us-chase' }, seed);
+  quickSave({ startLocationId: 'us-ny-newyork', homeRegionId: 'us-ny-newyork', wealth: 'comfortable', bankId: 'us-chase' }, seed);
 const run = <T = unknown>(sim: Simulation, kind: string, payload: Record<string, unknown> = {}) => {
   const answer = sim.execute<T>({ kind, payload });
   expect(answer.ok, `${kind}: ${answer.error}`).toBe(true);

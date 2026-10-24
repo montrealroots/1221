@@ -32,7 +32,7 @@ import { APPOINTMENT_KIND, appointmentsOf, book } from '@/engine/systems/appoint
 import { HEALTH_WEEK_KIND, careFor, fillMedicine, healthOf, illnessWeek, keptUp, renewPrescriptions, reviewWhat, reviewed, rxValidUntil } from '@/engine/systems/health';
 import { describe, expect, it } from 'vitest';
 
-const life = (city: string, seed: string) => quickSave({ startLocationId: city, homeRegionId: city, livesWhereBorn: true, wealth: 'wealthy' }, seed);
+const life = (city: string, seed: string) => quickSave({ startLocationId: city, homeRegionId: city, wealth: 'wealthy' }, seed);
 const YEARS_AGO = (sim: Simulation, years: number) => sim.now - years * 365.25 * MS_DAY;
 const VISIT = 'A doctor’s visit';
 const WEEKS = 40;

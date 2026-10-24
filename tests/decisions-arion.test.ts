@@ -128,7 +128,7 @@ async function keeping(seed: string, birthYear: number): Promise<Simulation> {
 }
 /** FIXTURE: a quick-save life in Mosfellsbær, its account at the bank given, from the day given. */
 const inIceland = (bankId: string, seed: string, start?: { startYear: number; startMonth: number; startDay: number }): Simulation =>
-  quickSave({ startLocationId: 'is-39-mosfellsbr', homeRegionId: 'is-39-mosfellsbr', livesWhereBorn: true, wealth: 'comfortable', bankId, birthYear: 1990, ...start }, seed);
+  quickSave({ startLocationId: 'is-39-mosfellsbr', homeRegionId: 'is-39-mosfellsbr', wealth: 'comfortable', bankId, birthYear: 1990, ...start }, seed);
 const mine = (sim: Simulation): Account[] => Object.values(sim.universe.accounts).filter((a) => a.ownerId === sim.player.id && !a.nominal);
 const veltu = (sim: Simulation): Account => mine(sim).find((a) => a.bankId === 'is-arion' && a.kind === 'checking')!;
 const primary = (sim: Simulation): Account => sim.universe.accounts[sim.player.primaryAccountId!]!;

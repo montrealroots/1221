@@ -24,7 +24,7 @@ afterEach(() => { for (const [k, v] of kept) laws[k] = v; kept.clear(); });
 describe('liabilityFor', () => {
   it('reads the use’s own clocks, and takes no bare number of days', () => {
     withLaw('US', { fraudRate: 0 });
-    const sim = quickSave({ startLocationId: 'us-ny-newyork', homeRegionId: 'us-ny-newyork', livesWhereBorn: true, wealth: 'comfortable', bankId: 'us-chase' }, 'r6-clocks');
+    const sim = quickSave({ startLocationId: 'us-ny-newyork', homeRegionId: 'us-ny-newyork', wealth: 'comfortable', bankId: 'us-chase' }, 'r6-clocks');
     const debit = cardAccount(sim, sim.player, 'debit')!;
     // Learned of by an alert 70 days ago, its statement 42 days ago: inside the $500 tier's 60 days from the statement.
     expect(liabilityFor(sim, debit, 'debit', 900_00, { learnedAt: sim.now - 70 * MS_DAY, statedAt: sim.now - 42 * MS_DAY })).toBe(500_00);

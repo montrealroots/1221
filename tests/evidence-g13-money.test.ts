@@ -437,7 +437,7 @@ describe('bank.scheduled_payment', () => {
   });
 
   it('from RBC savings (a Toronto life: no US bank in SLATE charges for a savings withdrawal): the month’s first goes free, the next costs $2.00, and one past what the savings lets out after the fee isn’t made', () => {
-    const sim = quickSave({ homeRegionId: 'ca-on-toronto', startLocationId: 'ca-on-toronto', livesWhereBorn: true, wealth: 'comfortable', bankId: 'ca-rbc' }, 'g13-rbc');
+    const sim = quickSave({ homeRegionId: 'ca-on-toronto', startLocationId: 'ca-on-toronto', wealth: 'comfortable', bankId: 'ca-rbc' }, 'g13-rbc');
     const saver = own(sim, 'savings', 'ca-rbc');
     const current = own(sim, 'checking', 'ca-rbc');
     expect(saver.name).toBe('RBC High Interest eSavings');
@@ -462,7 +462,7 @@ describe('bank.scheduled_payment', () => {
   });
 
   it('from Deutsche Bank savings (a Berlin life: German law’s allowance), €2,000 a month goes without notice and no more', () => {
-    const sim = quickSave({ homeRegionId: 'de-be-berlin', startLocationId: 'de-be-berlin', livesWhereBorn: true, wealth: 'comfortable', bankId: 'de-deutsche-bank' }, 'g13-de');
+    const sim = quickSave({ homeRegionId: 'de-be-berlin', startLocationId: 'de-be-berlin', wealth: 'comfortable', bankId: 'de-deutsche-bank' }, 'g13-de');
     const current = own(sim, 'checking', 'de-deutsche-bank');
     const saver = Object.values(sim.universe.accounts).find((a) => a.ownerId === sim.player.id && a.kind === 'savings' && a.bankId === 'de-deutsche-bank' && a.category !== 'term')
       ?? sim.universe.accounts[run<{ accountId: string }>(sim, 'bank.open_savings', {}).accountId]!;
@@ -547,7 +547,7 @@ describe('card.statement', () => {
 
   it('charges the yearly fee once in its month, though a day moved from the 1st to the 28th gives October two statements (Dublin, Bank of Ireland: no US card in SLATE has a yearly fee)', () => {
     // The life starts 20 November 2025; its card opened 400 days before, 16 October 2024, so October is its month.
-    const sim = quickSave({ homeRegionId: 'ie-lei-dublin', startLocationId: 'ie-lei-dublin', livesWhereBorn: true, wealth: 'comfortable', bankId: 'ie-bank-of-ireland', startYear: 2025, startMonth: 11, startDay: 20 }, 'g13-dublin');
+    const sim = quickSave({ homeRegionId: 'ie-lei-dublin', startLocationId: 'ie-lei-dublin', wealth: 'comfortable', bankId: 'ie-bank-of-ireland', startYear: 2025, startMonth: 11, startDay: 20 }, 'g13-dublin');
     const plastic = own(sim, 'credit_card', 'ie-bank-of-ireland');
     expect(plastic.name).toBe('Bank of Ireland Classic Credit Card');
     run(sim, 'card.set_statement_day', { day: 1 });

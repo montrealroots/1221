@@ -76,7 +76,7 @@ const at = (year: number, month: number, day: number, hour = 9) => instantFromZo
 const student = (seed: string) => createSave(1, seed, { ...newLifeConfig(), homeRegionId: 'us-ny-newyork', firstName: 'Ada', lastName: 'Cole', pronouns: 'she/her' });
 /** A life in New Haven with no school, as tests/safetynet.test.ts makes one: it starts on 5 January 2026, or the day given. */
 const newHaven = (seed: string, wealth: StartingWealth = 'comfortable', start?: { startYear: number; startMonth: number; startDay: number }) =>
-  quickSave({ startLocationId: 'us-ct-newhaven', homeRegionId: 'us-ct-newhaven', livesWhereBorn: true, wealth, ...start }, seed);
+  quickSave({ startLocationId: 'us-ct-newhaven', homeRegionId: 'us-ct-newhaven', wealth, ...start }, seed);
 const titled = (sim: Simulation, title: string) => sim.universe.notifications.filter((n) => n.title === title);
 /** Played by somebody who looks after themselves, as tests/leave.test.ts plays one. */
 const tended = (sim: Simulation, until: number) => { while (sim.now < until) { Object.assign(sim.player.wellbeing, { energy: 90, stress: 10, sleepDebt: 0, nourishment: 80, morale: 75, condition: 90 }); sim.player.awakeSince = Math.min(sim.player.awakeSince ?? sim.now, sim.now); sim.advanceTo(Math.min(until, sim.now + 6 * MS_HOUR)); } };
@@ -145,7 +145,7 @@ describe('SNAP’s At Most is the maximum of the fiscal year in force, in the sa
 
 describe('a specialist booked again after it was called off is told so in plain words', () => {
   it('PLAYER JOURNEY: referred, called off and booked again, each notice reads as a sentence', () => {
-    const sim = quickSave({ startLocationId: 'us-ny-newyork', homeRegionId: 'us-ny-newyork', livesWhereBorn: true, wealth: 'wealthy' }, 'g86-specialist');
+    const sim = quickSave({ startLocationId: 'us-ny-newyork', homeRegionId: 'us-ny-newyork', wealth: 'wealthy' }, 'g86-specialist');
     const zone = CITIES.require(sim.player.currentLocationId).timeZone;
     // The referral, as a kept visit draws one (odds 1 stands in for the draw).
     const a = mayRefer(sim, sim.player, { id: 'v1', at: sim.now, what: 'A checkup' }, 1)!;

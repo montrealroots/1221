@@ -103,7 +103,7 @@ describe('PLAYER JOURNEY: the ID card’s Social Security line, for a graduate o
 // ---------------------------------------------------------------------------
 
 /** A New Yorker with no papers yet, so each test hands it exactly the ones it means. */
-const life = (seed: string) => { const sim = quickSave({ startLocationId: 'us-ny-newyork', homeRegionId: 'us-ny-newyork', livesWhereBorn: true, wealth: 'wealthy' }, seed); sim.player.documents = []; return sim; };
+const life = (seed: string) => { const sim = quickSave({ startLocationId: 'us-ny-newyork', homeRegionId: 'us-ny-newyork', wealth: 'wealthy' }, seed); sim.player.documents = []; return sim; };
 /** The words a node shows. */
 function text(node: ReactNode): string {
   if (typeof node === 'string' || typeof node === 'number') return String(node);

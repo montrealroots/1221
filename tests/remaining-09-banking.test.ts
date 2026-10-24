@@ -152,7 +152,7 @@ const currentAt = (sim: Simulation, bankId: string): Account => mine(sim).find((
 const dated = (sim: Simulation, memo: string, id: string) => sim.universe.transactions.filter((t) => t.memo === memo).flatMap((t) => t.postings.filter((p) => p.accountId === id).map((p) => [t.at, p.amount, p.native]));
 /** FIXTURE: a quick-save life in Berlin, banking at a German bank, which no new life is. */
 const inBerlin = (bankId: string, seed: string): Simulation =>
-  quickSave({ startLocationId: 'de-be-berlin', homeRegionId: 'de-be-berlin', livesWhereBorn: true, wealth: 'comfortable', bankId }, seed);
+  quickSave({ startLocationId: 'de-be-berlin', homeRegionId: 'de-be-berlin', wealth: 'comfortable', bankId }, seed);
 const freeze = (sim: Simulation): string => serialise(sim.universe);
 const thaw = (snap: string): Simulation => loadSave(deserialise(snap) as never);
 const reload = (sim: Simulation): Simulation => thaw(freeze(sim));

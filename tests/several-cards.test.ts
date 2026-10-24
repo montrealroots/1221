@@ -13,7 +13,7 @@ import { troubles } from '@/engine/systems/spending';
 import { cashOwedOn } from '@/engine/systems/cash';
 
 const lifeIn = (seed: string) =>
-  quickSave({ startLocationId: 'us-ny-newyork', homeRegionId: 'us-ny-newyork', livesWhereBorn: true, wealth: 'comfortable', bankId: 'us-chase' }, seed);
+  quickSave({ startLocationId: 'us-ny-newyork', homeRegionId: 'us-ny-newyork', wealth: 'comfortable', bankId: 'us-chase' }, seed);
 const run = (sim: Simulation, kind: string, payload: Record<string, unknown> = {}) => sim.execute({ kind, payload });
 const give = (sim: Simulation, accountId: string, amount: number) => sim.post({ memo: 'test', category: 'test', postings: [{ accountId, amount }, { accountId: sim.nominalAccount('income', 'Test').id, amount: -amount }] });
 const statementsFor = (sim: Simulation, accountId: string) => sim.timeline.pending().filter((i) => i.kind === STATEMENT_KIND && i.payload.accountId === accountId);

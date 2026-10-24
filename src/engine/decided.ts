@@ -235,7 +235,7 @@ defineDecider<Theft, string>({
 });
 
 function livingIn(cityId: string, seed: number): Simulation {
-  return quickSave({ startLocationId: cityId, homeRegionId: cityId, livesWhereBorn: true }, `fraud-${seed}`);
+  return quickSave({ startLocationId: cityId, homeRegionId: cityId }, `fraud-${seed}`);
 }
 
 // ---------------------------------------------------------------------------
@@ -531,9 +531,9 @@ defineDecider<{ sim: Simulation; key: number }, string>({
   reads: {
     // Each booking its own draw.
     key: (o, t) => ({ ...o, key: Math.round(t * 1_000) }),
-    world: (o, t) => ({ ...o, sim: quickSave({ startLocationId: 'uk-eng-london', homeRegionId: 'uk-eng-london', livesWhereBorn: true, wealth: 'modest' }, `appt-${Math.round(t * 20)}`) }),
+    world: (o, t) => ({ ...o, sim: quickSave({ startLocationId: 'uk-eng-london', homeRegionId: 'uk-eng-london', wealth: 'modest' }, `appt-${Math.round(t * 20)}`) }),
   },
-  sample: (seed) => ({ sim: quickSave({ startLocationId: 'uk-eng-london', homeRegionId: 'uk-eng-london', livesWhereBorn: true, wealth: 'modest' }, `appt-${seed}`), key: seed }),
+  sample: (seed) => ({ sim: quickSave({ startLocationId: 'uk-eng-london', homeRegionId: 'uk-eng-london', wealth: 'modest' }, `appt-${seed}`), key: seed }),
   decide: ({ sim, key }) => Array.from({ length: 40 }, (_, n) => waitDays(sim, sim.player, `k${key}-${n}`)).join(' '),
 });
 

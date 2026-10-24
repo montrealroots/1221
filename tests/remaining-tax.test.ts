@@ -322,7 +322,7 @@ describe('tax.ct_filed_in_error', () => {
     // FIXTURE: a New Haven quick-save, its 2001 return assessed by DRS as a non-filer's for $1,000, its lien filed, then
     // replaced by her own return showing nothing owed (each by calling the engine's functions). DRS assesses from the
     // return's own figures, so no played Connecticut lien is ever in error (the journey above).
-    const sim = quickSave({ startLocationId: 'us-ct-newhaven', homeRegionId: 'us-ct-newhaven', livesWhereBorn: true, wealth: 'wealthy' }, 'rt-ct-error');
+    const sim = quickSave({ startLocationId: 'us-ct-newhaven', homeRegionId: 'us-ct-newhaven', wealth: 'wealthy' }, 'rt-ct-error');
     const r = { year: 2001, due: sim.now - 500 * MS_DAY, figures: { income: 50_000_00, balance: 1_000_00, states: [{ state: 'us-ct', tax: 1_000_00, credit: 0 }], owedTo: { irs: 0, states: { 'us-ct': 1_000_00 } } } } as unknown as TaxReturn;
     sim.player.returns = { ...(sim.player.returns ?? {}), '2001': r };
     assessStateNonFiler(sim, sim.player, r, 'us-ct', 1_000_00);
@@ -359,7 +359,7 @@ describe('tax.ct_filed_in_error', () => {
 // FIXTURE lives for what no student reaches
 // ---------------------------------------------------------------------------
 
-const quick = (city: string, seed: string) => quickSave({ startLocationId: city, homeRegionId: city, livesWhereBorn: true, wealth: 'wealthy' }, seed);
+const quick = (city: string, seed: string) => quickSave({ startLocationId: city, homeRegionId: city, wealth: 'wealthy' }, seed);
 /** TEST SETUP: their current account and savings emptied by a posting, as liens-and-arrangements.test.ts's `empty`. */
 const empty = (sim: Simulation) => { for (const a of Object.values(sim.universe.accounts)) if (a.ownerId === sim.player.id && a.balance > 0 && (a.kind === 'checking' || a.kind === 'savings')) sim.post({ memo: 'TEST SETUP', category: 'test', postings: [{ accountId: a.id, amount: -a.balance }, { accountId: sim.nominalAccount('expense', 'Test').id, amount: a.balance }] }); };
 /** TEST SETUP: money put in their current account by a posting. */
@@ -689,7 +689,7 @@ describe('tax.other_refusals', () => {
     london.advanceTo(applied.arrivesAt + MS_HOUR);
     expect(refusal(london, 'documents.apply_ssn')).toBe('Your Social Security card has already come.');
     // FIXTURE: a British citizen living in New York, not at school, so on no F-1: no number to apply for.
-    const visitor = quickSave({ startLocationId: 'us-ny-newyork', homeRegionId: 'uk-eng-london', livesWhereBorn: false, wealth: 'wealthy' }, 'rt-ssn-visitor');
+    const visitor = quickSave({ startLocationId: 'us-ny-newyork', homeRegionId: 'uk-eng-london', wealth: 'wealthy' }, 'rt-ssn-visitor');
     expect(refusal(visitor, 'documents.apply_ssn')).toBe('A number is only for someone allowed to work in the US.');
   });
 });

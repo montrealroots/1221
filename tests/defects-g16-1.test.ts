@@ -19,7 +19,7 @@ import { paymentsOf, SCHEDULED_KIND } from '@/engine/systems/payments';
 import { inTransitOf } from '@/engine/systems/bankmoves';
 
 const lifeAt = (bankId: string, seed: string) =>
-  quickSave({ startLocationId: 'us-ny-newyork', homeRegionId: 'us-ny-newyork', livesWhereBorn: true, wealth: 'comfortable', bankId }, seed);
+  quickSave({ startLocationId: 'us-ny-newyork', homeRegionId: 'us-ny-newyork', wealth: 'comfortable', bankId }, seed);
 const primary = (sim: Simulation) => sim.universe.accounts[sim.player.primaryAccountId!]!;
 const run = <T = unknown>(sim: Simulation, kind: string, payload: Record<string, unknown>) => {
   const answer = sim.execute<T>({ kind, payload });

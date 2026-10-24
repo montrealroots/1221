@@ -237,7 +237,7 @@ describe('documents.replace_license', () => {
 describe('documents.replace_idcard', () => {
   /** LIFE FIXTURE: a Dublin life, born in 1980, whose passport book runs out on 28 February 2026. */
   const dubliner = () => {
-    const sim = quickSave({ startLocationId: 'ie-lei-dublin', homeRegionId: 'ie-lei-dublin', livesWhereBorn: true, wealth: 'comfortable', birthYear: 1980 } as never, 'd3-ie-35');
+    const sim = quickSave({ startLocationId: 'ie-lei-dublin', homeRegionId: 'ie-lei-dublin', wealth: 'comfortable', birthYear: 1980 } as never, 'd3-ie-35');
     const book = documentsOf(sim.player).find((d) => d.kind === 'passport')!;
     expect(book.expiresAt! - on(2026, 2, 28, 0, 0, DUBLIN)).toBeLessThan(MS_HOUR);
     // The passport card, five years or the book’s date, whichever is sooner: the book’s.

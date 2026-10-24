@@ -287,7 +287,7 @@ describe('PLAYER JOURNEY: each source line says each of its days once, and which
     expect(card.source).toMatch(/, September 26, 2026$/);
     expect(card.asOf).toBe('2026-04-10');
     // A Londoner at Lloyds, whose card the panel shows.
-    const londoner = quickSave({ startLocationId: 'uk-eng-london', homeRegionId: 'uk-eng-london', livesWhereBorn: true, bankId: 'gb-lloyds' }, 'data-dates-lloyds');
+    const londoner = quickSave({ startLocationId: 'uk-eng-london', homeRegionId: 'uk-eng-london', bankId: 'gb-lloyds' }, 'data-dates-lloyds');
     const words = drawn(londoner, () => createElement(BankCard, { bankId: 'gb-lloyds' }));
     expect(words).toContain(`Source: ${card.source}. Terms as of April 10, 2026.`);
     expect(notTheGames(words)).toBeUndefined();

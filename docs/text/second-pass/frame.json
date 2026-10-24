@@ -2206,9 +2206,9 @@
  },
  "src/engine/index.ts#migrate": {
   "status": "Rewritten",
-  "hash": "223957465d7d",
-  "on": "2026-10-22",
-  "evidence": "tests/b21-banking-proof.test.ts opens a save from before brief 21 with a US card behind and reads the step it adds to the opening's list",
+  "hash": "b8115fdef120",
+  "on": "2026-10-24",
+  "evidence": "Read 2026-10-24 (brief 27): the opening's step now says it gave people without a citizenship the one their place of birth suggests, said once, in the player's words. tests/citizenship.test.ts",
   "first": "Pending"
  },
  "src/engine/index.ts#openSlot": {
@@ -2479,11 +2479,11 @@
   "first": "Reviewed And Retained"
  },
  "src/engine/world/bootstrap.ts#createUniverse": {
-  "status": "Retained",
-  "hash": "4e72d5095744",
-  "on": "2026-10-19",
-  "reason": "A developer’s error for a place id the gazetteer lacks, thrown before any life exists; creation only offers places that are there.",
-  "first": "Reviewed And Retained"
+  "status": "Rewritten",
+  "hash": "11263a4d312a",
+  "on": "2026-10-24",
+  "evidence": "Read 2026-10-24 (brief 27): a developer's error for a citizenship nobody holds, never shown to a player (creation won't leave Identity without a valid one). tests/citizenship.test.ts",
+  "first": "Pending"
  },
  "src/engine/world/bootstrap.ts#defaultConfig": {
   "status": "Retained",
@@ -2802,9 +2802,9 @@
  },
  "src/ui/creation/CharacterCreation.tsx#IdentityStep": {
   "status": "Rewritten",
-  "hash": "90a98a6619db",
-  "on": "2026-10-19",
-  "evidence": "tests/language-frame-ui.test.ts, 'says each step’s guidance in the player’s words…', and tests/evidence-g27-ui.test.ts, 'PLAYER JOURNEY: Billed As is settled by she/her, open under they/them with Continue refused…'",
+  "hash": "eefa5953b6de",
+  "on": "2026-10-24",
+  "evidence": "Read 2026-10-24 (brief 27) against docs/STYLE.md and docs/GLOSSARY.md: Place Of Birth says it doesn't decide the citizenship; Citizenship is asked with Choose A Country, Same As Your Place Of Birth: <country>, what it decides, and the Fourteenth Amendment's note for the US-born; Title Case labels. tests/citizenship.test.ts, tests/b27-creation-origins.test.ts",
   "first": "Pending"
  },
  "src/ui/creation/CharacterCreation.tsx#MONTHS": {
@@ -2886,9 +2886,9 @@
  },
  "src/ui/creation/CharacterCreation.tsx#StartingPointStep": {
   "status": "Rewritten",
-  "hash": "9c021794a522",
-  "on": "2026-10-20",
-  "evidence": "Read on the built app in docs/verification/continuity-2026-10-20/frame/walk-after-1440.txt and walk-after-390.txt (Creation, Starting Point); held by tests/language-frame-ui.test.ts (the currency line), tests/evidence2-b10.test.ts and tests/evidence3-person.test.ts (the Yale Health line)",
+  "hash": "2cbfffb42d6c",
+  "on": "2026-10-24",
+  "evidence": "Read 2026-10-24 (brief 27): I Still Live Where I Was Born went with livesWhereBorn; Where You Live is the picker alone for a life outside the School. tests/creation.test.ts",
   "first": "Pending"
  },
  "src/ui/creation/CharacterCreation.tsx#STEPS": {
@@ -2900,9 +2900,9 @@
  },
  "src/ui/creation/CharacterCreation.tsx#validate": {
   "status": "Rewritten",
-  "hash": "5d5e2effcc7c",
-  "on": "2026-10-19",
-  "evidence": "tests/evidence-g27-ui.test.ts, the over-95 refusal, tests/home-account-creation.test.ts, 'refuses to go on with a refused bank ticked, or a time before birth…', and tests/language-frame-ui.test.ts, Before Yale's three refusals",
+  "hash": "749934f70994",
+  "on": "2026-10-24",
+  "evidence": "Read 2026-10-24 (brief 27): 'Choose your citizenship.' beside 'Choose the town or city you were born in.', the same form. tests/b27-creation-origins.test.ts",
   "first": "Pending"
  },
  "src/ui/creation/CharacterCreation.tsx#WEALTH_LABEL": {
@@ -3710,12 +3710,12 @@
   "evidence": "Rewritten 2026-10-21 so On The Way counts only the stops the clock makes where career commitments clash (the app's sixth walk), to docs/STYLE.md; read where the player meets it in tests/language-frame-ui.test.ts ('two auditions in person at one hour, their trips meeting…')",
   "first": "Rewritten And Verified"
  },
- "src/ui/shell/turn.tsx#PAUSED_WHILE_UPRIGHT": {
-  "status": "Rewritten",
-  "hash": "834ce36fd716",
-  "on": "2026-10-23",
-  "evidence": "Read against docs/STYLE.md for brief 23; the rotate screen and its toast held by tests/b23-turn.test.ts and the walk in docs/verification/ui-2026-10-23/app/capture.mjs",
-  "first": "Pending"
+ "src/ui/shell/turn.tsx#layoutNow": {
+  "status": "Retained",
+  "hash": "7f44d723942e",
+  "on": "2026-10-24",
+  "reason": "Read 2026-10-24 (brief 27): no player-facing words, only the two layout keys a turn moves between and the scrollers' selectors; nothing here is shown.",
+  "first": "Reviewed And Retained"
  },
  "src/ui/shell/turn.tsx#readDevice": {
   "status": "Retained",
@@ -3724,19 +3724,12 @@
   "reason": "The media queries that tell a phone from a desktop window, read by the browser and never shown to a player",
   "first": "Pending"
  },
- "src/ui/shell/turn.tsx#RotateScreen": {
-  "status": "Rewritten",
-  "hash": "3d6c8a9dc5a8",
-  "on": "2026-10-23",
-  "evidence": "Read against docs/STYLE.md for brief 23; the rotate screen and its toast held by tests/b23-turn.test.ts and the walk in docs/verification/ui-2026-10-23/app/capture.mjs",
-  "first": "Pending"
- },
- "src/ui/shell/turn.tsx#useDeviceUpright": {
+ "src/ui/shell/turn.tsx#TurnFrame": {
   "status": "Retained",
-  "hash": "f729039d7fd5",
-  "on": "2026-10-23",
-  "reason": "The media queries the rotate screen listens to as a phone turns, read by the browser and never shown",
-  "first": "Pending"
+  "hash": "7f44d723942e",
+  "on": "2026-10-24",
+  "reason": "Read 2026-10-24 (brief 27): no player-facing words, only the two layout keys a turn moves between and the scrollers' selectors; nothing here is shown.",
+  "first": "Reviewed And Retained"
  },
  "src/ui/startup/StartupSequence.tsx#currentLabel": {
   "status": "Retained",

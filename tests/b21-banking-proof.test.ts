@@ -46,7 +46,7 @@ const student = (seed: string, bankId: string): Simulation => createSave(1, seed
   ...newLifeConfig(), homeRegionId: 'us-ny-newyork', firstName: 'Ada', lastName: 'Cole', pronouns: 'she/her', bankId,
 });
 const abroad = (cityId: string, bankId: string, seed: string, start?: { startYear: number; startMonth: number; startDay: number }): Simulation =>
-  quickSave({ startLocationId: cityId, homeRegionId: cityId, livesWhereBorn: true, wealth: 'comfortable', bankId, ...start }, seed);
+  quickSave({ startLocationId: cityId, homeRegionId: cityId, wealth: 'comfortable', bankId, ...start }, seed);
 const mine = (sim: Simulation, kind: Account['kind'], bankId?: string): Account => sim.ledger.accountsOf(sim.player.id)
   .find((a) => a.kind === kind && !a.closedAt && !a.nominal && a.category !== 'term' && (!bankId || a.bankId === bankId))!;
 const run = <T = unknown>(sim: Simulation, kind: string, payload: Record<string, unknown> = {}): T => {

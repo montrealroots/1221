@@ -17,7 +17,7 @@ const YEAR = 365.25 * MS_DAY;
 
 /** TEST SETUP: a British graduate in New York, their F-1's program ending a number of days from now. */
 function graduate(seed: string, programEndsIn: number): Simulation {
-  const sim = quickSave({ startLocationId: 'us-ny-newyork', homeRegionId: 'uk-eng-london', livesWhereBorn: false, wealth: 'wealthy' }, seed);
+  const sim = quickSave({ startLocationId: 'us-ny-newyork', homeRegionId: 'uk-eng-london', wealth: 'wealthy' }, seed);
   sim.player.documents = [];
   const end = sim.now + programEndsIn * MS_DAY;
   documentsOf(sim.player).push(

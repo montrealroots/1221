@@ -20,7 +20,7 @@ const T2 = at(2027, 5, 1);
 const reload = (sim: Simulation) => loadSave(deserialise(serialise(sim.universe)) as never);
 
 function owingIndiana(): Simulation {
-  const sim = quickSave({ startLocationId: 'us-in-indianapolis', homeRegionId: 'us-in-indianapolis', livesWhereBorn: true, wealth: 'wealthy' }, 'in-step');
+  const sim = quickSave({ startLocationId: 'us-in-indianapolis', homeRegionId: 'us-in-indianapolis', wealth: 'wealthy' }, 'in-step');
   for (const a of Object.values(sim.universe.accounts)) if (a.ownerId === sim.player.id && a.balance > 0 && (a.kind === 'checking' || a.kind === 'savings')) sim.post({ memo: 'TEST SETUP', category: 'test', postings: [{ accountId: a.id, amount: -a.balance }, { accountId: sim.nominalAccount('expense', 'Test').id, amount: a.balance }] });
   // FIXTURE: a 2025 return due a day ago, Indiana's $3,000 owed with nothing in the bank.
   const r = { year: 2025, due: sim.now - MS_DAY, filedAt: sim.now, figures: { income: 50_000_00, balance: 3_000_00 } } as unknown as TaxReturn;

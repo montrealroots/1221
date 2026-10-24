@@ -455,7 +455,7 @@ describe('c-family: the means go with the family the select last chose', () => {
  */
 function withBea(sim: Simulation): Person {
   const config: NewSaveConfig = {
-    ...newLifeConfig(), school: undefined, homeRegionId: 'uk-eng-london', startLocationId: 'uk-eng-london', livesWhereBorn: true,
+    ...newLifeConfig(), school: undefined, homeRegionId: 'uk-eng-london', startLocationId: 'uk-eng-london',
     firstName: 'Bea', lastName: 'Lane', pronouns: 'they/them', heightCm: 160, weightKg: 55, personalityTraits: ['curious'],
     background: 'Grew up over a shop in Hackney.', startYear: 2026, startMonth: 8, startDay: 24,
   };

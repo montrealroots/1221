@@ -266,7 +266,7 @@ describe('the exploits the old switch allowed', () => {
 
 describe('a country with a switching service', () => {
   it('still switches in Britain, in CASS’s seven working days', () => {
-    const sim = quickSave({ startLocationId: 'uk-eng-london', homeRegionId: 'uk-eng-london', livesWhereBorn: true, bankId: 'gb-barclays' }, 'mv-gb');
+    const sim = quickSave({ startLocationId: 'uk-eng-london', homeRegionId: 'uk-eng-london', bankId: 'gb-barclays' }, 'mv-gb');
     const answer = run<{ at: number }>(sim, 'bank.switch', { bankId: 'gb-hsbc' });
     expect(answer.at - sim.now).toBeGreaterThanOrEqual(7 * MS_DAY);
     // A transfer between two British banks arrives at once, by Faster Payments.

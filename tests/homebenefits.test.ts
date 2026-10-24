@@ -25,20 +25,20 @@ describe('Jobseeker’s Allowance', () => {
   });
 
   it('is claimed by an Irish citizen living in Dublin, and paid weekly', () => {
-    const sim = quickSave({ startLocationId: 'ie-lei-dublin', homeRegionId: 'ie-lei-dublin', livesWhereBorn: true, wealth: 'modest' }, 'ja');
+    const sim = quickSave({ startLocationId: 'ie-lei-dublin', homeRegionId: 'ie-lei-dublin', wealth: 'modest' }, 'ja');
     for (const a of Object.values(sim.universe.accounts)) if (a.ownerId === sim.player.id && !a.nominal) a.balance = Math.min(a.balance, 1_000_00);
     expect(jobseekerRefusal(sim, sim.player)).toBeUndefined();
     expect(sim.execute({ kind: 'benefits.claim', payload: {} }).ok).toBe(true);
     sim.advanceBy(15 * MS_DAY);
     expect(sim.universe.transactions.filter((t) => t.memo === 'Jobseeker’s Allowance, the week').length).toBeGreaterThanOrEqual(1);
-    const ny = quickSave({ startLocationId: 'us-ny-newyork', homeRegionId: 'us-ny-newyork', livesWhereBorn: true }, 'ja-ny');
+    const ny = quickSave({ startLocationId: 'us-ny-newyork', homeRegionId: 'us-ny-newyork' }, 'ja-ny');
     expect(jobseekerRefusal(ny, ny.player)).toMatch(/living in Ireland/);
   });
 });
 
 describe('care at home', () => {
   it('charges a Dubliner €100 for the emergency department, nothing for a stay, €55 for a GP and at most €80 for prescriptions', () => {
-    const sim = quickSave({ startLocationId: 'ie-lei-dublin', homeRegionId: 'ie-lei-dublin', livesWhereBorn: true }, 'ie-care');
+    const sim = quickSave({ startLocationId: 'ie-lei-dublin', homeRegionId: 'ie-lei-dublin' }, 'ie-care');
     const cur = saveCurrency(sim.universe);
     const eur = (x: number) => (cur === 'EUR' ? x : exchange(x, 'EUR', cur)!);
     expect(publicCareShareOf(sim.player, 'stay', sim.now, cur)).toBe(0);
@@ -49,7 +49,7 @@ describe('care at home', () => {
 
   it('charges a Canadian in Toronto or Vancouver nothing for a doctor, the emergency department or a stay, and prescriptions only past OHIP+’s 25', () => {
     for (const city of ['ca-on-toronto', 'ca-bc-vancouver']) {
-      const sim = quickSave({ startLocationId: city, homeRegionId: city, livesWhereBorn: true }, `ca-care-${city}`);
+      const sim = quickSave({ startLocationId: city, homeRegionId: city }, `ca-care-${city}`);
       const cur = saveCurrency(sim.universe);
       for (const care of ['stay', 'emergency', 'urgent', 'visit'] as const) expect(publicCareShareOf(sim.player, care, sim.now, cur)).toBe(0);
       expect(publicCareShareOf(sim.player, 'cleaning', sim.now, cur)).toBeUndefined();
@@ -59,7 +59,7 @@ describe('care at home', () => {
       // Past 25 in Ontario, private.
       expect(publicCareShareOf(sim.player, 'rx-brand', sim.player.birthInstant + 30 * 365.25 * MS_DAY, cur)).toBeUndefined();
     }
-    const young = quickSave({ startLocationId: 'ca-on-toronto', homeRegionId: 'ca-on-toronto', livesWhereBorn: true }, 'ca-care-young');
+    const young = quickSave({ startLocationId: 'ca-on-toronto', homeRegionId: 'ca-on-toronto' }, 'ca-care-young');
     expect(publicCareShareOf(young.player, 'rx-brand', young.player.birthInstant + 20 * 365.25 * MS_DAY, saveCurrency(young.universe))).toBe(0);
     // An American living in Toronto isn't insured by OHIP.
     const us = quickSave({ startLocationId: 'ca-on-toronto', homeRegionId: 'us-ny-newyork' }, 'ca-care-us');
@@ -68,7 +68,7 @@ describe('care at home', () => {
   });
 
   it('charges a Mexican in Mexico City nothing on IMSS-Bienestar, and a foreigner there as before', () => {
-    const sim = quickSave({ startLocationId: 'mx-cmx-mexicocity', homeRegionId: 'mx-cmx-mexicocity', livesWhereBorn: true }, 'mx-care');
+    const sim = quickSave({ startLocationId: 'mx-cmx-mexicocity', homeRegionId: 'mx-cmx-mexicocity' }, 'mx-care');
     expect(publicCareShareOf(sim.player, 'stay', sim.now, 'USD')).toBe(0);
     expect(publicCareShareOf(sim.player, 'rx-generic', sim.now, 'USD')).toBe(0);
     sim.player.citizenshipId = 'us';
@@ -79,7 +79,7 @@ describe('care at home', () => {
 describe('the Seguro de Desempleo', () => {
   // Filing for a Mexican come home was tested here until 2026-10-09: nothing comes home since the career's move went.
   it('isn’t filed for now, and a claim a save already holds is paid its three months, once', () => {
-    const sim = quickSave({ startLocationId: 'mx-cmx-mexicocity', homeRegionId: 'mx-cmx-mexicocity', livesWhereBorn: true }, 'desempleo');
+    const sim = quickSave({ startLocationId: 'mx-cmx-mexicocity', homeRegionId: 'mx-cmx-mexicocity' }, 'desempleo');
     const filed = sim.execute({ kind: 'benefits.claim', payload: {} });
     expect(filed.ok).toBe(false);
     expect(filed.error).toBe(desempleoRefusal());

@@ -630,7 +630,7 @@ describe('life.look_after:exercise', () => {
   });
 
   it('bills an injury’s care where the plan leaves a share, due in 30 days (LIFE FIXTURE: a New Haven life outside the school)', () => {
-    const sim = quickSave({ startLocationId: 'us-ct-newhaven', homeRegionId: 'us-ct-newhaven', livesWhereBorn: true, wealth: 'scraping' }, 'g01-hurt-bill');
+    const sim = quickSave({ startLocationId: 'us-ct-newhaven', homeRegionId: 'us-ct-newhaven', wealth: 'scraping' }, 'g01-hurt-bill');
     clearCalendar(sim); // TEST SETUP
     sim.advanceTo(hurtingStart(sim));
     clearCalendar(sim); // TEST SETUP

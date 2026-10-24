@@ -125,7 +125,7 @@ const { Home } = await import('@/ui/screens/Home');
 const NY = 'America/New_York';
 const at = (year: number, month: number, day: number, hour = 9, minute = 0, zone = NY) => instantFromZoned({ year, month, day, hour, minute }, zone);
 const student = (seed: string): Simulation => createSave(1, seed, { ...newLifeConfig(), homeRegionId: 'us-ny-newyork', firstName: 'Ada', lastName: 'Cole', pronouns: 'she/her' });
-const lifeIn = (city: string, seed: string, born = city): Simulation => quickSave({ startLocationId: city, homeRegionId: born, livesWhereBorn: born === city, wealth: 'comfortable' }, seed);
+const lifeIn = (city: string, seed: string, born = city): Simulation => quickSave({ startLocationId: city, homeRegionId: born, wealth: 'comfortable' }, seed);
 const reload = (sim: Simulation): Simulation => loadSave(deserialise(serialise(sim.universe)) as never);
 
 /** TEST SETUP: the clock moved six hours at a time with the body kept fed, rested and awake, as a player's meals and sleep keep it. */

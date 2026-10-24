@@ -24,7 +24,7 @@ function known(ids: readonly string[] | undefined, table: Readonly<Record<string
   return [...new Set((ids ?? []).filter((id) => table[id] !== undefined))];
 }
 import { freshWellbeing } from '../systems/life';
-import { citizenshipFor } from '../domain/citizenship';
+import { citizenshipFor, citizenshipOf } from '../domain/citizenship';
 import { cleanPersonality, cleanPersonalityTraits, defaultPersonality } from '../systems/personality';
 import { ORIENTATION_2026, YALE_DRAMA, needFor } from '../content/school';
 import { PERFORMER_NOUN, impliedPerformerTitle, isPerformerTitle, type PerformerTitle } from '../core/performer';
@@ -67,21 +67,16 @@ export interface NewSaveConfig {
   raceEthnicityOwn?: string;
   homeRegionId: string;
   /**
-   * Whether they still live where they were born.
-   *
-   * On the config rather than in a component's state because two steps read
-   * it: Place Of Birth on Identity carries the home town with it while this
-   * is true, and Where You Live on Starting Point is what sets it. It also
-   * means a half-filled form remembers the answer instead of guessing it back
-   * from whether the two places happen to match.
-   *
-   * Both steps read it only for a life outside the School, and creation begins every life at it (`newLifeConfig`,
-   * `newLifeFrom`): there Place Of Birth writes it and doesn't read it, Where You Live isn't drawn, and nothing the
-   * engine does reads it (`createUniverse` never has). Found 2026-10-21 (brief 20); whether the start outside the School
-   * comes back or goes, and this and Starting Point's controls for it with it, is the owner's to say
-   * (docs/verification/audit-2026-10-21/effects/creation.json, `create.livesWhereBorn`).
+   * The country they're a citizen of, chosen on Identity (from 2026-10-24, brief 27): the place of birth suggests one
+   * and decides none. Absent on a life a test or a tool makes, which takes the birthplace's (`citizenshipOf`).
    */
-  livesWhereBorn: boolean;
+  citizenshipId?: string;
+  // `livesWhereBorn`, whether they still lived where they were born, was form state here until 2026-10-24 (brief 27):
+  // Place Of Birth carried the home town with it while it was true and Starting Point's I Still Live Where I Was Born set
+  // it, but both read it only for a life outside the School, which creation never begins, and the engine never read it
+  // (found by brief 20 on 2026-10-21, `create.livesWhereBorn`, left Blocked for the owner until brief 27 said to resolve
+  // it). Where a life outside the School still needs it, it is whether `startLocationId` is `homeRegionId`; where a life
+  // at the School lived before it is Before Yale's `priorResidence`, the player's own words.
   /** Headshot as a data URL, already fitted to the portrait frame. */
   portrait?: string;
 
@@ -158,7 +153,7 @@ export function defaultConfig(): NewSaveConfig {
     firstName: 'Alex', lastName: 'Rivera', pronouns: 'they/them',
     birthYear: 2001, birthMonth: 6, birthDay: 14,
     raceEthnicity: [],
-    homeRegionId: DEFAULT_CITY_ID, livesWhereBorn: true,
+    homeRegionId: DEFAULT_CITY_ID,
     personality: defaultPersonality(), personalityTraits: [],
     genres: [],
     background: '',
@@ -180,7 +175,6 @@ export function atSchool(config: NewSaveConfig): NewSaveConfig {
     ...config,
     school: 'yale-drama',
     startLocationId: YALE_DRAMA.cityId,
-    livesWhereBorn: config.homeRegionId === YALE_DRAMA.cityId,
     startYear: begins.year, startMonth: begins.month, startDay: begins.day,
   };
 }
@@ -223,7 +217,7 @@ export const withFamily = (config: NewSaveConfig, wealth: StartingWealth): NewSa
  * choose their own town and day.
  */
 export function newLifeConfig(): NewSaveConfig {
-  return atSchool(withFamily({ ...defaultConfig(), homeRegionId: '', livesWhereBorn: false, birthYear: 2002 }, 'wealthy'));
+  return atSchool(withFamily({ ...defaultConfig(), homeRegionId: '', birthYear: 2002 }, 'wealthy'));
 }
 
 /**
@@ -233,7 +227,9 @@ export function newLifeConfig(): NewSaveConfig {
  */
 export function newLifeFrom(draft: Partial<NewSaveConfig>): NewSaveConfig {
   const wealth = FAMILIES.includes(draft.wealth as StartingWealth) ? draft.wealth! : newLifeConfig().wealth;
-  return atSchool(withFamily({ ...newLifeConfig(), ...draft }, wealth));
+  // A draft kept before 2026-10-24 may carry `livesWhereBorn`; it's left behind with the field.
+  const { livesWhereBorn: _gone, ...kept } = draft as Partial<NewSaveConfig> & { livesWhereBorn?: boolean };
+  return atSchool(withFamily({ ...newLifeConfig(), ...kept }, wealth));
 }
 
 /**
@@ -325,11 +321,12 @@ export interface BootstrapResult {
  */
 export function createUniverse(slot: 1 | 2 | 3, seed: string, config: NewSaveConfig): BootstrapResult {
   const city = CITIES.require(config.startLocationId);
-  // Nobody is asked for a citizenship: it is the country they were born in.
-  // A birthplace naming no real country cannot make a person, the same way a
-  // home that is not on the map cannot.
-  const citizenshipId = citizenshipFor(config.homeRegionId);
-  if (!citizenshipId) throw new Error(`No country has a place with the id ${config.homeRegionId}.`);
+  // The citizenship chosen on Identity, or for a life made without one the birthplace's (`citizenshipOf`; until
+  // 2026-10-24 it was always the birthplace's). A birthplace naming no real country cannot make a person, the same way a
+  // home that is not on the map cannot, and nor can a citizenship nobody holds.
+  if (!citizenshipFor(config.homeRegionId)) throw new Error(`No country has a place with the id ${config.homeRegionId}.`);
+  const citizenshipId = citizenshipOf(config);
+  if (!citizenshipId) throw new Error(`Nobody is a citizen of ${config.citizenshipId}.`);
   const zone = city.timeZone;
   const now = instantFromZoned(
     { year: config.startYear, month: config.startMonth, day: config.startDay, hour: 7, minute: 30 },

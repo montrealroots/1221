@@ -12,7 +12,7 @@ import { exchange } from '@/engine/content/currency';
 import { edMinutes } from '@/engine/content/carevisits';
 import { careFor, inHospital, planKey, rxShareOf } from '@/engine/systems/health';
 
-const life = (city: string, seed: string) => quickSave({ startLocationId: city, homeRegionId: city, livesWhereBorn: true, wealth: 'wealthy' }, seed);
+const life = (city: string, seed: string) => quickSave({ startLocationId: city, homeRegionId: city, wealth: 'wealthy' }, seed);
 const usd = (sim: Simulation, c: number) => { const cur = saveCurrency(sim.universe); return cur === 'USD' ? c : exchange(c, 'USD', cur)!; };
 
 describe('an emergency', () => {

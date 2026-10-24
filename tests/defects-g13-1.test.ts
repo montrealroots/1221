@@ -24,7 +24,7 @@ import { resolveLook, type Looked } from '@/ui/looks/registry';
 import { at } from '@/ui/looks/subject';
 
 const lifeIn = (extra: Record<string, unknown>, seed: string) =>
-  quickSave({ startLocationId: 'us-ny-newyork', homeRegionId: 'us-ny-newyork', livesWhereBorn: true, bankId: 'us-chase', ...extra }, seed);
+  quickSave({ startLocationId: 'us-ny-newyork', homeRegionId: 'us-ny-newyork', bankId: 'us-chase', ...extra }, seed);
 
 /** Every string in a body, joined, the way a page reads it. */
 function wordsIn(node: ReactNode, out: string[] = []): string[] {

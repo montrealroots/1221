@@ -129,7 +129,7 @@ function settled(seed: string): Simulation {
 }
 /** LIFE FIXTURE: a London life banking at Barclays, from Monday 5 January 2026 at 7:30 AM: no New Haven bank asks notice. */
 const londoner = (seed: string): Simulation =>
-  quickSave({ startLocationId: 'uk-eng-london', homeRegionId: 'uk-eng-london', livesWhereBorn: true, bankId: 'gb-barclays', wealth: 'wealthy' }, seed);
+  quickSave({ startLocationId: 'uk-eng-london', homeRegionId: 'uk-eng-london', bankId: 'gb-barclays', wealth: 'wealthy' }, seed);
 
 const primary = (sim: Simulation): Account => sim.universe.accounts[sim.player.primaryAccountId!]!;
 const mine = (sim: Simulation, kind: Account['kind'], bankId = 'us-chase'): Account => Object.values(sim.universe.accounts)

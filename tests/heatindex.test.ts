@@ -28,7 +28,7 @@ describe('the heat index', () => {
   });
 
   it('keeps a run in on a humid afternoon under 32 °C', () => {
-    const sim = quickSave({ startLocationId: 'us-tx-houston', homeRegionId: 'us-tx-houston', livesWhereBorn: true }, 'heat-index');
+    const sim = quickSave({ startLocationId: 'us-tx-houston', homeRegionId: 'us-tx-houston' }, 'heat-index');
     // The first afternoon in Houston's summer that's under the line on temperature and over it humid.
     let found = false;
     for (let d = 150; d < 260 && !found; d += 1) {

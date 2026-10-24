@@ -668,43 +668,37 @@
    "area": "creation",
    "mechanic": true,
    "seeded": false,
-   "where": "Identity: Place Of Birth (LocationPicker born, CharacterCreation.tsx:546), its citizenship shown under it",
-   "prerequisites": "Identity; refused until a town is chosen (CharacterCreation.tsx:1473); a place in no country can’t make a person (bootstrap.ts:331-332).",
+   "where": "Identity: Place Of Birth (LocationPicker born, CharacterCreation.tsx:556), with Same As Your Place Of Birth offered under Citizenship",
+   "prerequisites": "Identity; refused until a town is chosen (CharacterCreation.tsx:1485); a place in no country can’t make a person (bootstrap.ts:327).",
    "reads": "config.homeRegionId",
-   "changes": "Person.homeRegionId and citizenshipId, the birth country’s (bootstrap.ts:331, 390-391)",
+   "changes": "Person.homeRegionId (bootstrap.ts); the citizenship only for a life a test or a tool makes without one (citizenshipOf). Until 2026-10-24 (brief 27) it decided citizenshipId for every life.",
    "consumers": [
     {
-     "what": "the citizenship",
-     "at": "src/engine/world/bootstrap.ts:331"
+     "what": "the citizenship it suggests (Same As Your Place Of Birth), and a test’s or a tool’s life’s citizenship",
+     "at": "src/engine/domain/citizenship.ts:63"
     },
     {
-     "what": "the starting papers: a foreign student’s passport and F-1 visa",
-     "at": "src/engine/systems/documents.ts:416"
-    },
-    {
-     "what": "a US-born citizen’s license, from the birth state",
-     "at": "src/engine/systems/documents.ts:553"
+     "what": "a US-born citizen’s license from the birth state, where Before Yale names no place",
+     "at": "src/engine/systems/documents.ts:567"
     },
     {
      "what": "the body drawn where none is given, from the birth country’s adults",
-     "at": "src/engine/systems/body.ts:84"
-    },
-    {
-     "what": "the bank opened: one kept for US persons only to a US citizen",
-     "at": "src/engine/index.ts:202"
+     "at": "src/engine/systems/body.ts:83"
     }
    ],
-   "experienced": "At once: a New York birth is a US citizen with no visa; a London or Toronto birth that country’s passport and an F-1 student visa to 31 May 2029 and 60 days’ grace, and the F-1 status on the clock (documents.us_status). The drawn body differs. The School, the class and the craft are the same.",
+   "experienced": "The papers, the visa and the banks follow the citizenship chosen, not the birthplace: born in New York and a citizen of Japan, a Japanese passport and an F-1 visa; born in Tokyo and an American, no visa and no state license assumed. The drawn body still follows the birth country.",
    "saveLoad": "Kept in the save as creation wrote it and never moved after; a load reads it back as written. tests/b20-creation-twins.test.ts plays a life saved and opened at its first moment against one played straight, and the two saves are the same to the byte ten weeks on.",
    "evidence": {
     "tests": [
      "tests/b20-creation-twins.test.ts",
+     "tests/b27-creation-origins.test.ts",
      "tests/citizenship.test.ts",
      "tests/documents.test.ts",
      "tests/evidence-g27-ui.test.ts"
     ],
     "comparisons": [
-     "born in New York against London and Toronto: the papers, the visa and the status check differ; the class and the craft are the same (tests/b20-creation-twins.test.ts)"
+     "born in New York against London and Toronto, each with the birthplace’s citizenship: the papers, the visa and the status check differ; the class and the craft are the same (tests/b20-creation-twins.test.ts)",
+     "born in New York as a citizen of Japan against born in Tokyo as an American: the passport, the visa, America’s permission and the license follow the citizenship and the previous residence (tests/b27-creation-origins.test.ts)"
     ],
     "mutations": [
      "B20-CREATION-19"
@@ -719,31 +713,54 @@
    "readAt": "12c04ee1"
   },
   {
-   "id": "create.livesWhereBorn",
+   "id": "create.citizenshipId",
    "kind": "creation",
    "area": "creation",
-   "mechanic": false,
+   "mechanic": true,
    "seeded": false,
-   "where": "Starting Point: I Still Live Where I Was Born (CharacterCreation.tsx:970), drawn only where config.school is unset; written by the birthplace picker (CharacterCreation.tsx:551) and by atSchool (bootstrap.ts:177)",
-   "prerequisites": "A life outside the School, which creation never begins: its config is newLifeConfig or newLifeFrom, both atSchool.",
-   "reads": "config.livesWhereBorn",
-   "changes": "Nothing in the save: config only. For a life outside the School it carries the birthplace into Where You Live (CharacterCreation.tsx:552, 973-976).",
-   "consumers": [],
-   "experienced": "No player meets it: in every life creation begins, Place Of Birth writes it and nothing reads it, and the engine never has (createUniverse doesn’t).",
-   "saveLoad": "Not in the save; a draft keeps it in the browser’s storage with the rest of the config.",
+   "where": "Identity: Citizenship, a list of every country that isn’t another’s territory, with Same As Your Place Of Birth (CharacterCreation.tsx:571)",
+   "prerequisites": "Identity; refused until one is chosen (“Choose your citizenship.”, CharacterCreation.tsx:1486); a citizenship nobody holds can’t make a person (bootstrap.ts:328-329).",
+   "reads": "config.citizenshipId",
+   "changes": "Person.citizenshipId (bootstrap.ts:328), kept by every opening (index.ts:961, which until 2026-10-24 put it back to the birthplace’s).",
+   "consumers": [
+    {
+     "what": "the starting papers: a non-American’s passport and F-1 visa, an American’s passport at its share",
+     "at": "src/engine/systems/documents.ts:548"
+    },
+    {
+     "what": "America’s permission to work",
+     "at": "src/engine/systems/permission.ts:115"
+    },
+    {
+     "what": "the bank opened: one kept for US persons only to a US citizen",
+     "at": "src/engine/index.ts:204"
+    },
+    {
+     "what": "a bank kept abroad that refuses US persons",
+     "at": "src/engine/systems/homeaccount.ts:93"
+    }
+   ],
+   "experienced": "Born in New York and a citizen of Japan: a Japanese passport, an F-1 student visa and no right to work in America by birth. Born in Tokyo and a citizen of the United States: an American passport where one is held, no visa, and the right to work. A US birthplace with another citizenship is said back with the Fourteenth Amendment’s note.",
+   "saveLoad": "Person.citizenshipId is kept as chosen; tests/citizenship.test.ts opens a save twice and the citizenship that disagrees with the birthplace is still the player’s, and tests/b27-creation-origins.test.ts reads it back after a load.",
    "evidence": {
     "tests": [
+     "tests/b27-creation-origins.test.ts",
+     "tests/citizenship.test.ts",
      "tests/creation.test.ts"
     ],
-    "comparisons": [],
-    "mutations": [],
+    "comparisons": [
+     "the same New York birth as a citizen of Japan and of the United States: the papers, the visa, the permission and the bank differ (tests/b27-creation-origins.test.ts, tests/citizenship.test.ts)"
+    ],
+    "mutations": [
+     "creation ignoring the chosen citizenship: 6 tests fail",
+     "an opening putting it back to the birthplace’s: 3 tests fail"
+    ],
     "journeys": []
    },
-   "missing": "Written and never read in any life a player can make (D1). Kept for tests’ and tools’ lives outside the School, which don’t read it either.",
-   "status": "Implemented, Verification Incomplete",
-   "why": "Unreachable for any current life: the branch that reads it is drawn only outside the School, and creation never begins a life there (tests/creation.test.ts holds that, where until 2026-10-21 it held the controls as if a player met them). Whether the start outside the School comes back, or this field and Starting Point’s controls for it go, is the owner’s decision.",
-   "prior": "c-livesWhereBorn",
-   "purpose": "Form state for a life outside the School: whether Where You Live follows the birthplace.",
+   "missing": "None found. Other people in the world (classmates and the rest) still take their birthplace’s citizenship when the game makes them, a simulation shortcut nothing a player chooses depends on.",
+   "status": "Implemented And Verified",
+   "why": "",
+   "prior": "c-citizenship",
    "readBy": "creation",
    "readAt": "12c04ee1"
   },
@@ -1268,14 +1285,19 @@
     {
      "what": "the places and holidays loaded",
      "at": "src/engine/index.ts:1349"
+    },
+    {
+     "what": "a US citizen’s starting license from the state lived in before",
+     "at": "src/engine/systems/documents.ts:567"
     }
    ],
-   "experienced": "Raised in London: HSBC UK or Barclays is offered and kept, in pounds, keeping England’s bank holidays; raised in New York, no bank is offered. The birthplace alone grants none.",
+   "experienced": "Raised in London: HSBC UK or Barclays is offered and kept, in pounds, keeping England’s bank holidays; raised in New York, no bank is offered. The birthplace alone grants none. A US citizen who lived in California before has California’s license, not the birth state’s.",
    "saveLoad": "Person.priorResidence is kept; tests/home-account-creation.test.ts reads it back after a load and plays on.",
    "evidence": {
     "tests": [
-     "tests/home-account-creation.test.ts",
+     "tests/b27-creation-origins.test.ts",
      "tests/home-account-abroad.test.ts",
+     "tests/home-account-creation.test.ts",
      "tests/home-account-tax.test.ts"
     ],
     "comparisons": [],

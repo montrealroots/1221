@@ -144,7 +144,7 @@ describe('a card’s missed payments, read in the order they come', () => {
   }, 600_000);
 
   it('Britain: Barclays puts the first miss on the record, so its late notice and the statement after say what the second brings', () => {
-    const sim = quickSave({ homeRegionId: 'uk-eng-london', startLocationId: 'uk-eng-london', livesWhereBorn: true, wealth: 'comfortable', bankId: 'gb-barclays' }, 'b17-gb');
+    const sim = quickSave({ homeRegionId: 'uk-eng-london', startLocationId: 'uk-eng-london', wealth: 'comfortable', bankId: 'gb-barclays' }, 'b17-gb');
     expect(cardsOf(sim, sim.player)[0]!.name).toBe('Barclaycard Forward');
     sim.must({ kind: 'bank.set_payments', payload: { everyday: 'credit' } });
     const mine = () => Object.values(sim.universe.accounts).filter((a) => a.ownerId === sim.player.id && (a.kind === 'checking' || a.kind === 'savings') && !a.closedAt);
@@ -158,7 +158,7 @@ describe('a card’s missed payments, read in the order they come', () => {
 
 describe('Low Balance, with the account overdrawn', () => {
   it('says how far below zero it is, not a balance with a hyphen for its sign', () => {
-    const sim = quickSave({ homeRegionId: 'us-ny-newyork', startLocationId: 'us-ny-newyork', livesWhereBorn: true, wealth: 'comfortable', bankId: 'us-chase' }, 'b17-low');
+    const sim = quickSave({ homeRegionId: 'us-ny-newyork', startLocationId: 'us-ny-newyork', wealth: 'comfortable', bankId: 'us-chase' }, 'b17-low');
     sim.must({ kind: 'bank.set_alerts', payload: { lowBalance: 100_00 } });
     const checking = sim.universe.accounts[sim.player.primaryAccountId!]!;
     setTo(sim, checking, -12_00);
@@ -218,7 +218,7 @@ describe('applying for a card says what it would come with, before Apply For Thi
   });
 
   it('in Dublin, from AIB: Bank of Ireland’s €30 yearly fee, said before the button', () => {
-    const sim = quickSave({ homeRegionId: 'ie-lei-dublin', startLocationId: 'ie-lei-dublin', livesWhereBorn: true, wealth: 'comfortable', bankId: 'ie-aib' }, 'b17-apply-ie');
+    const sim = quickSave({ homeRegionId: 'ie-lei-dublin', startLocationId: 'ie-lei-dublin', wealth: 'comfortable', bankId: 'ie-aib' }, 'b17-apply-ie');
     const held = cardsOf(sim, sim.player).length;
     const { html, text } = drawn(sim, BankCard as FunctionComponent<Record<string, unknown>>, { bankId: 'ie-aib' }, [...Array.from({ length: held }, () => ['', 0]).flat(), 'ie-bank-of-ireland', '']);
     expect(text).toMatch(/Bank of Ireland Classic Credit Card: 16\.12% a year on any balance you carry\./);
@@ -238,7 +238,7 @@ describe('an introductory rate says what ends it early, by the game’s own coun
   });
 
   it('Barclaycard: one minimum payment missed, as its terms end it, where until 2026-10-20 the panel said nothing of it, and “sixty days late” once it had', () => {
-    const sim = quickSave({ homeRegionId: 'uk-eng-london', startLocationId: 'uk-eng-london', livesWhereBorn: true, wealth: 'comfortable', bankId: 'gb-barclays' }, 'b17-intro-gb');
+    const sim = quickSave({ homeRegionId: 'uk-eng-london', startLocationId: 'uk-eng-london', wealth: 'comfortable', bankId: 'gb-barclays' }, 'b17-intro-gb');
     const card = cardsOf(sim, sim.player)[0]!;
     // TEST SETUP: a new card, its six months ahead of it.
     card.openedAt = sim.now;
@@ -252,13 +252,13 @@ describe('an introductory rate says what ends it early, by the game’s own coun
 
 describe('the overdraft: what it charges and when it charges nothing, then the day the bank acts', () => {
   it('Chase: the fee and its cap in one sentence, when it charges nothing in the next, and the next business day’s wait in a third', () => {
-    const sim = quickSave({ homeRegionId: 'us-ny-newyork', startLocationId: 'us-ny-newyork', livesWhereBorn: true, wealth: 'comfortable', bankId: 'us-chase' }, 'b17-od-words');
+    const sim = quickSave({ homeRegionId: 'us-ny-newyork', startLocationId: 'us-ny-newyork', wealth: 'comfortable', bankId: 'us-chase' }, 'b17-od-words');
     const text = drawn(sim, BankLending as FunctionComponent<Record<string, unknown>>, { bank: bankById('us-chase')!, show: ['borrowing'] }).text;
     expect(text).toContain('Chase pays what the account can’t cover without an arrangement, and charges $34.00 for each item that overdraws it, at most 3 a day. There’s no fee on an item of $5.00 or less, or while the account is overdrawn by $50 or less. A fee waits until the end of the next business day, and if the account is back to −$50.00 or better by then, there’s none. Payments at the same moment post largest first. It covers up to about $500.');
   });
 
   it('PLAYER JOURNEY: an account left overdrawn names the day before the bank closes it, and the bank closes it the midnight after', () => {
-    const sim = quickSave({ homeRegionId: 'us-ny-newyork', startLocationId: 'us-ny-newyork', livesWhereBorn: true, wealth: 'comfortable', bankId: 'us-chase' }, 'b17-od-day');
+    const sim = quickSave({ homeRegionId: 'us-ny-newyork', startLocationId: 'us-ny-newyork', wealth: 'comfortable', bankId: 'us-chase' }, 'b17-od-day');
     const checking = sim.universe.accounts[sim.player.primaryAccountId!]!;
     for (const a of Object.values(sim.universe.accounts)) if (a.ownerId === sim.player.id && a.kind === 'savings') setTo(sim, a, 0);
     // TEST SETUP: the account taken $600 below zero, past Chase's $50 grace.
@@ -280,7 +280,7 @@ describe('the overdraft: what it charges and when it charges nothing, then the d
 
 describe('a term deposit says what breaking it costs before the money is locked, and beside the button that breaks it', () => {
   it('Chase’s CD: the bank’s rule for its seven months before Put It Away, and today’s cost beside Break It Early, not folded under Sources And Estimates', () => {
-    const sim = quickSave({ homeRegionId: 'us-ny-newyork', startLocationId: 'us-ny-newyork', livesWhereBorn: true, wealth: 'comfortable', bankId: 'us-chase' }, 'b17-cd');
+    const sim = quickSave({ homeRegionId: 'us-ny-newyork', startLocationId: 'us-ny-newyork', wealth: 'comfortable', bankId: 'us-chase' }, 'b17-cd');
     const offer = drawn(sim, BankLending as FunctionComponent<Record<string, unknown>>, { bank: bankById('us-chase')!, show: ['term'] });
     const rule = 'Breaking it early costs 180 days’ interest on it, never more than it has earned, and at least 7 days’ interest in its first week. Once it’s open, Break It Early is under Your Accounts Over Time.';
     expect(offer.text).toContain(`Locked for 7 months at a fixed 3.5%. At its end it renews for the same term at the bank’s rate on the day, unless you choose another way the bank allows. ${rule}`);
@@ -293,7 +293,7 @@ describe('a term deposit says what breaking it costs before the money is locked,
   });
 
   it('RBC: it can’t be broken, said before Put It Away, with no button to send the player to', () => {
-    const sim = quickSave({ homeRegionId: 'ca-on-toronto', startLocationId: 'ca-on-toronto', livesWhereBorn: true, wealth: 'comfortable', bankId: 'ca-rbc' }, 'b17-cd-ca');
+    const sim = quickSave({ homeRegionId: 'ca-on-toronto', startLocationId: 'ca-on-toronto', wealth: 'comfortable', bankId: 'ca-rbc' }, 'b17-cd-ca');
     const offer = drawn(sim, BankLending as FunctionComponent<Record<string, unknown>>, { bank: bankById('ca-rbc')!, show: ['term'] }).text;
     expect(offer).toContain('RBC Royal Bank doesn’t let a term deposit be broken before its end.');
     expect(offer).not.toContain('Once it’s open');
@@ -302,7 +302,7 @@ describe('a term deposit says what breaking it costs before the money is locked,
 
 describe('an overdrawn account, wherever Money writes its balance', () => {
   it('has its minus sign and its cents in the head, Your Banks and Statements, never a hyphen', () => {
-    const sim = quickSave({ homeRegionId: 'us-ny-newyork', startLocationId: 'us-ny-newyork', livesWhereBorn: true, wealth: 'comfortable', bankId: 'us-chase' }, 'b17-minus');
+    const sim = quickSave({ homeRegionId: 'us-ny-newyork', startLocationId: 'us-ny-newyork', wealth: 'comfortable', bankId: 'us-chase' }, 'b17-minus');
     const checking = sim.universe.accounts[sim.player.primaryAccountId!]!;
     for (const a of Object.values(sim.universe.accounts)) if (a.ownerId === sim.player.id && a.kind === 'savings') setTo(sim, a, 0);
     // TEST SETUP: the account $600 below zero.
@@ -318,7 +318,7 @@ describe('an overdrawn account, wherever Money writes its balance', () => {
 
 describe('a missed loan payment says the fee the bank charged for it', () => {
   it('RBC: the returned payment fee named in the notice that says the payment was missed', () => {
-    const sim = quickSave({ homeRegionId: 'ca-on-toronto', startLocationId: 'ca-on-toronto', livesWhereBorn: true, wealth: 'comfortable', bankId: 'ca-rbc' }, 'b17-loan');
+    const sim = quickSave({ homeRegionId: 'ca-on-toronto', startLocationId: 'ca-on-toronto', wealth: 'comfortable', bankId: 'ca-rbc' }, 'b17-loan');
     const checking = sim.universe.accounts[sim.player.primaryAccountId!]!;
     for (const a of Object.values(sim.universe.accounts)) if (a.ownerId === sim.player.id && a.kind === 'savings') setTo(sim, a, 0);
     // TEST SETUP: a loan as bank.borrow opens one, its first payment due tomorrow, and nothing to pay it with.

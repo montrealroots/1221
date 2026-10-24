@@ -29,7 +29,7 @@ import { describe,expect,it } from 'vitest';
 const NY = 'America/New_York';
 const at = (year: number, month: number, day: number, hour = 9) => instantFromZoned({ year, month, day, hour }, NY);
 function pro(seed: string, extra: Record<string, unknown> = {}): Simulation {
-  const sim = quickSave({ startLocationId: 'us-ny-newyork', homeRegionId: 'us-ny-newyork', livesWhereBorn: true, wealth: 'wealthy', ...extra }, seed);
+  const sim = quickSave({ startLocationId: 'us-ny-newyork', homeRegionId: 'us-ny-newyork', wealth: 'wealthy', ...extra }, seed);
   sim.player.craft = evenCraft(50);
   return sim;
 }
@@ -120,7 +120,7 @@ describe('what a trait costs, where the game now reaches it', () => {
 
 describe('the banks’ open rules', () => {
   const lifeIn = (cityId: string, bankId: string, seed: string, wealth: 'modest' | 'wealthy' = 'modest') =>
-    quickSave({ startLocationId: cityId, homeRegionId: cityId, livesWhereBorn: true, wealth, bankId }, seed);
+    quickSave({ startLocationId: cityId, homeRegionId: cityId, wealth, bankId }, seed);
   const current = (sim: Simulation) => sim.universe.accounts[sim.player.primaryAccountId!]!;
   const set = (sim: Simulation, account: Account, amount: number) => {
     const diff = amount - account.balance;
@@ -315,7 +315,7 @@ describe('the banks’ open rules', () => {
 });
 
 describe('a card’s bonus categories', () => {
-  const sim = quickSave({ startLocationId: 'us-ny-newyork', homeRegionId: 'us-ny-newyork', livesWhereBorn: true, wealth: 'modest' }, 'bonus');
+  const sim = quickSave({ startLocationId: 'us-ny-newyork', homeRegionId: 'us-ny-newyork', wealth: 'modest' }, 'bonus');
   const card = (bankId: string) => ({ bankId } as unknown as Account);
   const cad = (c: number) => exchange(c, 'CAD', 'USD')!;
 

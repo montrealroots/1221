@@ -83,7 +83,7 @@ describe('Your Cards says what to do, and by when, before the law’s words', ()
 
   it('in each of the thirteen countries, the first amount it gives is what the game leaves you to pay of a payment reported at once', () => {
     for (const [region, bankId] of LIVES) {
-      const sim = quickSave({ homeRegionId: region, startLocationId: region, livesWhereBorn: true, wealth: 'comfortable', bankId }, `ed16-law-${bankId}`);
+      const sim = quickSave({ homeRegionId: region, startLocationId: region, wealth: 'comfortable', bankId }, `ed16-law-${bankId}`);
       const debit = sim.universe.accounts[sim.player.primaryAccountId!]!;
       const law = FRAUD_LAW[bankById(debit.bankId!)!.iso]!;
       const lead = seen(html(sim, BankSecurity as FunctionComponent<{ bankId: string }>, debit.bankId!)).find((p) => /^(If a (debit )?card payment wasn’t you|No law was found here)/.test(p));

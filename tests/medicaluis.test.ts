@@ -16,7 +16,7 @@ const usd = (sim: Simulation, c: number) => { const cur = saveCurrency(sim.unive
 const at = Date.UTC(2026, 2, 1);
 /** A Mexican living in Los Angeles with nothing earned: no satisfactory status. */
 function angeleno(seed: string): Simulation {
-  const sim = quickSave({ startLocationId: 'us-ca-losangeles', homeRegionId: 'us-ca-losangeles', livesWhereBorn: false, wealth: 'inherited' } as never, seed);
+  const sim = quickSave({ startLocationId: 'us-ca-losangeles', homeRegionId: 'us-ca-losangeles', wealth: 'inherited' } as never, seed);
   sim.player.citizenshipId = 'mx';
   return sim;
 }

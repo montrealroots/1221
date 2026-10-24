@@ -11,7 +11,7 @@ import { documentsOf } from '@/engine/systems/documents';
 import { idReplaceFee, idReplaceRefusal } from '@/engine/systems/identity';
 import { inSaveMoney } from '@/engine/systems/banking';
 
-const life = (city: string, seed: string) => quickSave({ startLocationId: city, homeRegionId: city, livesWhereBorn: true, wealth: 'wealthy' }, seed);
+const life = (city: string, seed: string) => quickSave({ startLocationId: city, homeRegionId: city, wealth: 'wealthy' }, seed);
 
 describe('a lost ID card', () => {
   it('is replaced in New York for $8 and comes in three weeks', () => {

@@ -82,7 +82,7 @@ describe('SNAP reads the month before’s income (B1, B3)', () => {
 describe('a pension reads the years worked (B1; the rows are the owner’s deferred ones)', () => {
   /** TEST SETUP, as tests/socialsecurity.test.ts sets it: years of US wages written into the record, and 67 today. */
   function worker(seed: string, years: number): Simulation {
-    const sim = quickSave({ startLocationId: 'us-ny-newyork', homeRegionId: 'us-ny-newyork', livesWhereBorn: true }, seed);
+    const sim = quickSave({ startLocationId: 'us-ny-newyork', homeRegionId: 'us-ny-newyork' }, seed);
     for (let i = 0; i < years; i += 1) recordWages(sim.player, Date.UTC(2030 + i, 5, 1), 'America/New_York', { gross: 50_000_00, where: 'us-ny-newyork' });
     sim.player.birthInstant = sim.now - 67.05 * 365.2425 * MS_DAY;
     return sim;

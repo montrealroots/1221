@@ -21,7 +21,7 @@ import { describe,expect,it } from 'vitest';
 const NY = 'America/New_York';
 const at = (year: number, month: number, day: number, hour = 9) => instantFromZoned({ year, month, day, hour }, NY);
 function pro(seed: string, city = 'us-ny-newyork'): Simulation {
-  const sim = quickSave({ startLocationId: city, homeRegionId: city, livesWhereBorn: true, wealth: 'wealthy' }, seed);
+  const sim = quickSave({ startLocationId: city, homeRegionId: city, wealth: 'wealthy' }, seed);
   // An actor sent abroad holds a passport, and nothing here is about papers (docs/WORLD.md, stage 1b).
   if (!passportOf(sim.player, sim.now)) documentsOf(sim.player).push({ id: 'pp', kind: 'passport', issuer: 'US', name: 'Passport', number: 'P1', status: 'valid', issuedAt: sim.now - 86_400_000, expiresAt: sim.now + 3650 * 86_400_000 });
   return sim;
@@ -309,7 +309,7 @@ describe('conditions carried', () => {
     const cost = keepUp(sim, sim.player, when) + fillMedicine(sim, sim.player, when);
     expect(cost).toBe(2 * PLANS['essential-high']!.visit + 2 * PHARMACY.plans['essential-high']!.generic[0]);
     // With next to nothing and no card, the month's care goes unpaid.
-    const poor = quickSave({ startLocationId: 'us-ny-newyork', homeRegionId: 'us-ny-newyork', livesWhereBorn: true, wealth: 'nothing' }, 'keep-poor');
+    const poor = quickSave({ startLocationId: 'us-ny-newyork', homeRegionId: 'us-ny-newyork', wealth: 'nothing' }, 'keep-poor');
     const ph = healthOf(poor.player);
     ph.chronic = { depression: { treated: true } };
     for (const acct of Object.values(poor.universe.accounts)) if (acct.ownerId === poor.player.id && acct.id === poor.player.primaryAccountId) acct.balance = -5_000_00;

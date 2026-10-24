@@ -32,7 +32,7 @@ import { formatMoneyCompact, saveCurrency } from './core/money';
 import { clamp } from './core/rng';
 import { plural, titleCaseLabel } from './core/text';
 import { PERFORMER_NOUN, impliedPerformerTitle, isPerformerTitle } from './core/performer';
-import { citizenshipFor } from './domain/citizenship';
+import { citizenshipFor, isCitizenship } from './domain/citizenship';
 import { cleanPersonality, cleanPersonalityTraits } from './systems/personality';
 
 import { CITIES, isCountryLoaded, loadCountryCities } from './content/geography';
@@ -950,20 +950,22 @@ export function migrate(universe: SaveUniverse): MigrationResult {
     steps.push(`Gave ${plural(personalised, 'person', 'people')} a personality this build can read.`);
   }
 
-  // Citizenship is the country somebody was born in, and until 82 it was asked
-  // for, so a save can hold one that disagrees with the birthplace. It follows
-  // the birthplace now. A birthplace that names no real country leaves what
-  // was there alone, because there is nothing better to put in its place.
+  // A person with no citizenship anybody holds is given the one their birthplace suggests. From 82 (2026-09-22) to
+  // 2026-10-24 this put every citizenship back to the birthplace's on every opening, since creation didn't ask; brief 27
+  // made it the player's choice, so a citizenship that disagrees with the birthplace is kept, a save from before 82 that
+  // was asked for one among them. A birthplace that names no real country leaves what was there alone, because there
+  // is nothing better to put in its place.
   let rebased = 0;
   for (const person of Object.values(universe.people ?? {})) {
     const p = person as unknown as Record<string, unknown>;
+    if (typeof p.citizenshipId === 'string' && isCitizenship(p.citizenshipId)) continue;
     const born = typeof p.homeRegionId === 'string' ? citizenshipFor(p.homeRegionId) : undefined;
-    if (!born || p.citizenshipId === born) continue;
+    if (!born) continue;
     p.citizenshipId = born;
     rebased += 1;
   }
   if (rebased > 0) {
-    steps.push(`Made ${plural(rebased, 'person', 'people')} a citizen of the country they were born in.`);
+    steps.push(`Gave ${plural(rebased, 'person', 'people')} without a citizenship the one their place of birth suggests.`);
   }
 
   // 88 charges the waking day as the clock moves, from when each person's

@@ -10,7 +10,7 @@ import { MS_DAY } from '@/engine/core/time';
 import { MARK_GONE_GIVES, markRecord, marksFallOff } from '@/engine/systems/credit';
 
 const YEAR = 365.2425 * MS_DAY;
-const save = (city: string, name: string) => quickSave({ startLocationId: city, homeRegionId: city, livesWhereBorn: true, wealth: 'wealthy' }, name);
+const save = (city: string, name: string) => quickSave({ startLocationId: city, homeRegionId: city, wealth: 'wealthy' }, name);
 
 describe('a mark on the record', () => {
   it('takes its points, and leaves an American record after seven years with 25 back', () => {

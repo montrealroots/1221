@@ -14,7 +14,7 @@ const YEAR = 365.25 * MS_DAY;
 
 /** A British actor living in New York with a passport, whose F-1 ends a number of days from now. */
 function graduate(seed: string, programEndsIn: number): Simulation {
-  const sim = quickSave({ startLocationId: 'us-ny-newyork', homeRegionId: 'uk-eng-london', livesWhereBorn: false, wealth: 'wealthy' }, seed);
+  const sim = quickSave({ startLocationId: 'us-ny-newyork', homeRegionId: 'uk-eng-london', wealth: 'wealthy' }, seed);
   sim.player.documents = [];
   const end = sim.now + programEndsIn * MS_DAY;
   documentsOf(sim.player).push(

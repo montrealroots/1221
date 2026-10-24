@@ -13,7 +13,7 @@ import { activity } from '@/engine/systems/statements';
 import { afterBusinessDays } from '@/engine/content/bankdays';
 
 const lifeIn = (cityId: string, bankId: string, seed = 'pend') =>
-  quickSave({ startLocationId: cityId, homeRegionId: cityId, livesWhereBorn: true, wealth: 'comfortable', bankId }, seed);
+  quickSave({ startLocationId: cityId, homeRegionId: cityId, wealth: 'comfortable', bankId }, seed);
 const current = (sim: Simulation) => sim.universe.accounts[sim.player.primaryAccountId!]!;
 /** The bank's business days on from a moment, as time: its weekends and holidays skipped (`content/bankdays.ts`). */
 const calendar = (from: number, business: number) => afterBusinessDays(from, business, 'us', 'America/New_York') - from;

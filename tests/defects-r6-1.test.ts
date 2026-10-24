@@ -80,7 +80,7 @@ function primaryWithAutopay(sim: Simulation, accountId: string): void {
 
 /** A New York life at Chase, with Chase's savings as a new life opens it, and a current account at Capital One. */
 function chaseAndCapitalOne(seed: string): { sim: Simulation; capitalOne: string } {
-  const sim = quickSave({ startLocationId: 'us-ny-newyork', homeRegionId: 'us-ny-newyork', livesWhereBorn: true, wealth: 'comfortable', bankId: 'us-chase' }, seed);
+  const sim = quickSave({ startLocationId: 'us-ny-newyork', homeRegionId: 'us-ny-newyork', wealth: 'comfortable', bankId: 'us-chase' }, seed);
   expect(savingsAt(sim, 'us-chase')).toBeDefined();
   expect(savingsAt(sim, 'us-capital-one')).toBeUndefined();
   return { sim, capitalOne: run<{ accountId: string }>(sim, 'bank.open_current', { bankId: 'us-capital-one' }).accountId };

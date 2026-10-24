@@ -12,7 +12,7 @@ import { creditRefusal } from '@/engine/systems/universalcredit';
 import { describe,expect,it } from 'vitest';
 
 function londoner(seed: string, pounds = 1_000): Simulation {
-  const sim = quickSave({ startLocationId: 'uk-eng-london', homeRegionId: 'uk-eng-london', livesWhereBorn: true, wealth: 'modest' }, seed);
+  const sim = quickSave({ startLocationId: 'uk-eng-london', homeRegionId: 'uk-eng-london', wealth: 'modest' }, seed);
   const cur = saveCurrency(sim.universe);
   const accounts = Object.values(sim.universe.accounts).filter((a) => a.ownerId === sim.player.id && !a.nominal && (a.kind === 'checking' || a.kind === 'savings'));
   for (const a of accounts) a.balance = 0;
@@ -25,7 +25,7 @@ describe('Universal Credit', () => {
   it('isn’t for savings over £16,000, a visa holder, or someone abroad', () => {
     const rich = londoner('uc-rich2', 20_000);
     expect(creditRefusal(rich, rich.player)).toMatch(/16,000/);
-    const ny = quickSave({ startLocationId: 'us-ny-newyork', homeRegionId: 'us-ny-newyork', livesWhereBorn: true }, 'uc-ny');
+    const ny = quickSave({ startLocationId: 'us-ny-newyork', homeRegionId: 'us-ny-newyork' }, 'uc-ny');
     expect(creditRefusal(ny, ny.player)).toMatch(/living in Britain/);
   });
 });

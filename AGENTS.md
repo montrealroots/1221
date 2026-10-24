@@ -38,7 +38,7 @@ env var is also passed through from the platform.
 - `curl localhost:3000` should return the SLATE HTML shell.
 - The app renders a startup screen with three save slots.
 - `npm run validate` runs typecheck + lint + tests.
-- `npm run gate` is the full verification gate: validate, then 17 doc and code checks
-  (`package.json`, `gate`). This said 15 until 2026-10-16, after coverage (2026-10-13)
-  and student-matrix (2026-10-10) had joined it; it was 16 until catalog-coverage left it
-  on 2026-10-09.
+- `npm run gate` is the full verification gate: validate, then 24 doc and code checks
+  (`package.json`, `gate`; CLAUDE.md names each). This said 17 until 2026-10-24, when brief 27 brought it up to the
+  checks the gate had run since briefs 18 to 26 added them; it said 15 until 2026-10-16, after coverage (2026-10-13)
+  and student-matrix (2026-10-10) had joined it; it was 16 until catalog-coverage left it on 2026-10-09.

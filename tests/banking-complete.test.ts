@@ -57,7 +57,7 @@ describe('closing an account with card payments pending', () => {
 
 describe('a switching service', () => {
   it('won’t switch into a bank already kept, and closes the account it was asked about, not whichever is primary on the day', () => {
-    const sim = quickSave({ startLocationId: 'uk-eng-london', homeRegionId: 'uk-eng-london', livesWhereBorn: true, bankId: 'gb-barclays' }, 'bk-cass');
+    const sim = quickSave({ startLocationId: 'uk-eng-london', homeRegionId: 'uk-eng-london', bankId: 'gb-barclays' }, 'bk-cass');
     const barclays = primary(sim);
     const natwest = sim.must<{ accountId: string }>({ kind: 'bank.open_current', payload: { bankId: 'gb-natwest' } }).accountId;
     expect(sim.execute({ kind: 'bank.switch', payload: { bankId: 'gb-natwest' } }).error).toMatch(/already have an account at NatWest/);

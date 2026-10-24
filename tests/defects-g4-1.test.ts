@@ -31,7 +31,7 @@ import { at } from '@/ui/looks/subject';
 
 const NYC = 'us-ny-newyork';
 const lifeAt = (bankId: string, seed: string) =>
-  quickSave({ startLocationId: NYC, homeRegionId: NYC, livesWhereBorn: true, wealth: 'modest', bankId }, seed);
+  quickSave({ startLocationId: NYC, homeRegionId: NYC, wealth: 'modest', bankId }, seed);
 const primary = (sim: Simulation) => sim.universe.accounts[sim.player.primaryAccountId!]!;
 const mine = (sim: Simulation) => Object.values(sim.universe.accounts).filter((a) => a.ownerId === sim.player.id && !a.closedAt && !a.nominal);
 /** Test setup: an account's balance set, against a test equity line. */

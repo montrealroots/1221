@@ -19,7 +19,7 @@ import { VISITS, VISIT_KIND, type VisitRule } from '@/engine/systems/papervisits
 import { describe,expect,it } from 'vitest';
 
 function citizen(city: string, citizenship: string, seed: string): Simulation {
-  const sim = quickSave({ startLocationId: city, homeRegionId: city, livesWhereBorn: true, wealth: 'wealthy' }, seed);
+  const sim = quickSave({ startLocationId: city, homeRegionId: city, wealth: 'wealthy' }, seed);
   sim.player.citizenshipId = citizenship;
   for (const d of documentsOf(sim.player)) if (d.kind === 'passport') d.status = 'cancelled';
   documentsOf(sim.player).push({ id: 'pp', kind: 'passport', issuer: citizenship.toUpperCase(), name: 'Passport', number: 'P1', status: 'valid', issuedAt: sim.now - MS_DAY, expiresAt: sim.now + 3650 * MS_DAY });

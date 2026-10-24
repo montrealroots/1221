@@ -9,7 +9,7 @@ import { MS_DAY } from '@/engine/core/time';
 import { REFERRAL_DAYS, REFERRAL_SHARE, SPECIALIST, appointmentsOf, book, mayRefer, referralDays } from '@/engine/systems/appointments';
 import { healthOf } from '@/engine/systems/health';
 
-const life = (city: string, seed: string) => quickSave({ startLocationId: city, homeRegionId: city, livesWhereBorn: true, wealth: 'wealthy' }, seed);
+const life = (city: string, seed: string) => quickSave({ startLocationId: city, homeRegionId: city, wealth: 'wealthy' }, seed);
 
 describe('a referral', () => {
   it('waits the place’s published time to the specialist', () => {

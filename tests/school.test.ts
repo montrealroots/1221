@@ -199,8 +199,8 @@ describe('a new life', () => {
 
   it('is put at the school whatever town and day a draft had', () => {
     const moved = atSchool({ ...defaultConfig(), startLocationId: 'is-39-mosfellsbr', startYear: 2027, startMonth: 3, startDay: 1 });
-    expect(moved).toMatchObject({ school: 'yale-drama', startLocationId: 'us-ct-newhaven', startYear: 2026, startMonth: 8, startDay: 24, livesWhereBorn: false });
-    expect(atSchool({ ...defaultConfig(), homeRegionId: 'us-ct-newhaven' }).livesWhereBorn).toBe(true);
+    expect(moved).toMatchObject({ school: 'yale-drama', startLocationId: 'us-ct-newhaven', startYear: 2026, startMonth: 8, startDay: 24 });
+    expect('livesWhereBorn' in atSchool({ ...defaultConfig(), homeRegionId: 'us-ct-newhaven' })).toBe(false); // set to whether born in New Haven until brief 27 retired it, 2026-10-24
   });
 
   it('isn’t at school unless it begins there, in the school’s town', () => {

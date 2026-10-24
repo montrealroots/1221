@@ -1,0 +1,103 @@
+{
+ "life": "offer",
+ "base": "http://localhost:4173",
+ "checks": {
+  "running": {
+   "sideways": "Running",
+   "upright": "Running",
+   "uprightLater": "Running",
+   "backOnSide": "Paused",
+   "noGate": true,
+   "keptRunning": true,
+   "menuShownUpright": true,
+   "clockBefore": "5:00 PM",
+   "clockAfter": "6:00 PM",
+   "answeredUpright": null
+  },
+  "dialog": {
+   "before": "How This Works",
+   "upright": "How This Works",
+   "closeInView": true,
+   "escapeClosedUpright": true,
+   "noGate": true
+  },
+  "form": {
+   "typed": "drama",
+   "upright": "drama",
+   "kept": true,
+   "fieldInViewUpright": true
+  },
+  "keyboard": {
+   "find": "drama",
+   "fieldInView": true,
+   "pageWider": 0,
+   "noGate": true
+  },
+  "scroll": {
+   "reached": true,
+   "sideways": 300,
+   "upright": 245,
+   "back": 300,
+   "shareSideways": 0.393,
+   "shareUpright": 0.393,
+   "shareKept": true,
+   "pixelBack": true
+  },
+  "tab": {
+   "focused": [
+    "Where You StandHow This WorksTrainingYou",
+    "How This Works: The Career Screen",
+    "Go To Portfolio",
+    "Skip To ContentMenu🎬SLATECareer6:00 PM·",
+    "Skip To Content",
+    "Menu"
+   ],
+   "moved": true
+  },
+  "layout": {
+   "pageWiderUpright": 0,
+   "controlsOutUpright": [
+    "Home2",
+    "Player Profile",
+    "School",
+    "Career",
+    "Money",
+    "Papers",
+    "Ada ColeActress",
+    "Guide"
+   ],
+   "bodyFontUpright": 14,
+   "bodyFontSideways": 14,
+   "sameText": true
+  },
+  "largerText": {
+   "pageWiderSideways": 0,
+   "pageWiderUpright": 0,
+   "controlsOutUpright": [
+    "Home2",
+    "Player Profile",
+    "School",
+    "Career",
+    "Money",
+    "Papers",
+    "Ada ColeActress",
+    "Guide"
+   ]
+  },
+  "background": {
+   "questionsBefore": 0,
+   "questionsAfter": 0,
+   "sameQuestions": true,
+   "running": "Paused",
+   "clockBefore": "6:00 PM",
+   "clockAfter": "6:00 PM",
+   "noGate": true
+  },
+  "refresh": {
+   "before": "6:00 PM",
+   "after": "6:00 PM",
+   "running": "Paused"
+  }
+ },
+ "problems": []
+}

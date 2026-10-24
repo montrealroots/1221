@@ -14,7 +14,7 @@ import { inSaveMoney } from '@/engine/systems/banking';
 import { healthOf } from '@/engine/systems/health';
 import { SESSION_HOUR, THERAPY, THERAPISTS, sessionPrice, therapyLifts, therapyRefusal } from '@/engine/systems/therapy';
 
-const life = (city: string, seed: string) => quickSave({ startLocationId: city, homeRegionId: city, livesWhereBorn: true, wealth: 'wealthy' }, seed);
+const life = (city: string, seed: string) => quickSave({ startLocationId: city, homeRegionId: city, wealth: 'wealthy' }, seed);
 const depressed = (sim: Simulation) => { (healthOf(sim.player).chronic ??= {}).depression = { treated: false }; };
 
 describe('a course of therapy', () => {

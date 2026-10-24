@@ -342,7 +342,7 @@ describe('bank.break_term', () => {
   });
 
   it('closes NatWest’s on 35 days’ notice by the clock, the button grayed while it runs, and pays the deposit back whole (a London life: no New Haven bank asks notice)', () => {
-    const sim = quickSave({ startLocationId: 'uk-eng-london', homeRegionId: 'uk-eng-london', livesWhereBorn: true, bankId: 'gb-natwest', wealth: 'wealthy' }, 'g10-natwest');
+    const sim = quickSave({ startLocationId: 'uk-eng-london', homeRegionId: 'uk-eng-london', bankId: 'gb-natwest', wealth: 'wealthy' }, 'g10-natwest');
     const current = primary(sim);
     const { accountId } = sim.must<{ accountId: string }>({ kind: 'bank.open_term', payload: { amount: 10_000_00 } });
     const term = sim.universe.accounts[accountId]!;
@@ -581,7 +581,7 @@ describe('bank.open_term', () => {
 
   it('lets MUFG’s overdraft run to 90% of a ¥1,000,000 time deposit and no further: a meal that would pass ¥900,000 overdrawn is refused, one that reaches it is bought', () => {
     const tokyo = (seed: string) => {
-      const sim = quickSave({ startLocationId: 'jp-13-tokyo', homeRegionId: 'jp-13-tokyo', livesWhereBorn: true, bankId: 'jp-mufg', wealth: 'wealthy' }, seed);
+      const sim = quickSave({ startLocationId: 'jp-13-tokyo', homeRegionId: 'jp-13-tokyo', bankId: 'jp-mufg', wealth: 'wealthy' }, seed);
       sim.must({ kind: 'card.lock', payload: { which: 'credit', locked: true } });
       sim.must({ kind: 'bank.open_term', payload: { amount: 1_000_000_00 } });
       return { sim, checking: primary(sim) };
@@ -608,7 +608,7 @@ describe('bank.open_term', () => {
   // Its title named the 90% until 2026-10-13, which its bound didn't test; the test before this one does.
   it('lends against it at MUFG at the deposit’s 0.50% and 0.50% more, so the clock’s groceries go into the overdraft; without one they aren’t bought (a Tokyo life: no New Haven bank lends this way)', () => {
     const play = (withTerm: boolean) => {
-      const sim = quickSave({ startLocationId: 'jp-13-tokyo', homeRegionId: 'jp-13-tokyo', livesWhereBorn: true, bankId: 'jp-mufg', wealth: 'wealthy' }, 'g10-mufg');
+      const sim = quickSave({ startLocationId: 'jp-13-tokyo', homeRegionId: 'jp-13-tokyo', bankId: 'jp-mufg', wealth: 'wealthy' }, 'g10-mufg');
       sim.must({ kind: 'card.lock', payload: { which: 'credit', locked: true } });
       if (withTerm) sim.must({ kind: 'bank.open_term', payload: { amount: 1_000_000_00 } });
       const checking = primary(sim);

@@ -16,7 +16,7 @@ const at = (year: number, month: number, day: number, hour = 9) => instantFromZo
 const play = (sim: Simulation, until: number) => { while (sim.now < until) sim.advanceTo(Math.min(until, sim.now + 6 * MS_HOUR), { stopOnPlayerRequired: true }); };
 const reload = (sim: Simulation) => loadSave(deserialise(serialise(sim.universe)) as never);
 const titled = (sim: Simulation, title: string) => sim.universe.notifications.filter((n) => n.title === title);
-const life = (seed: string) => quickSave({ startLocationId: 'us-ny-newyork', homeRegionId: 'us-ny-newyork', livesWhereBorn: true, wealth: 'wealthy' }, seed);
+const life = (seed: string) => quickSave({ startLocationId: 'us-ny-newyork', homeRegionId: 'us-ny-newyork', wealth: 'wealthy' }, seed);
 /** FIXTURE: every account emptied, as a life with nothing in the bank has them. */
 const broke = (sim: Simulation) => { for (const a of Object.values(sim.universe.accounts)) if (a.ownerId === sim.player.id && a.balance > 0) a.balance = 0; };
 /** The failure-to-pay rate charged by a moment: half a percent a month or part since filing, to a quarter. */

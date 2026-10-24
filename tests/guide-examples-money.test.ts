@@ -91,7 +91,7 @@ const HOUR = 3_600_000;
 
 /** A life begun in New Haven, at Chase, with the means named; on the day named, or the default's Monday 5 January 2026. */
 function life(wealth: 'nothing' | 'modest', start?: { month: number; day: number }): Simulation {
-  return quickSave({ homeRegionId: NEW_HAVEN, startLocationId: NEW_HAVEN, livesWhereBorn: true, wealth, ...(start ? { startMonth: start.month, startDay: start.day } : {}) });
+  return quickSave({ homeRegionId: NEW_HAVEN, startLocationId: NEW_HAVEN, wealth, ...(start ? { startMonth: start.month, startDay: start.day } : {}) });
 }
 
 const primary = (sim: Simulation): Account => sim.universe.accounts[sim.player.primaryAccountId!]!;
@@ -154,7 +154,7 @@ const PLAYS: Record<string, () => void> = {
   'bank.round-ups': () => {
     const { setup, steps, result } = example('bank.round-ups');
     expect(setup).toBe('A life in London at NatWest, with savings there and money in the checking account.');
-    const sim = quickSave({ homeRegionId: 'uk-eng-london', startLocationId: 'uk-eng-london', livesWhereBorn: true, wealth: 'comfortable', bankId: 'gb-natwest' }, 'guide-round-ups');
+    const sim = quickSave({ homeRegionId: 'uk-eng-london', startLocationId: 'uk-eng-london', wealth: 'comfortable', bankId: 'gb-natwest' }, 'guide-round-ups');
     const current = primary(sim);
     const savings = own(sim, 'savings', 'gb-natwest')!;
     expect(current.bankId).toBe('gb-natwest');

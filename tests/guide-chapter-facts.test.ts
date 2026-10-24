@@ -183,7 +183,7 @@ describe('Your Bank on what ends a US card’s introductory rate', () => {
    * introductory rate ended at the second due date missed, and the chapter said so.
    */
   function twoMissed() {
-    const sim = quickSave({ startLocationId: 'us-ny-newyork', homeRegionId: 'us-ny-newyork', livesWhereBorn: true, wealth: 'comfortable', bankId: 'us-chase' }, 'guide-facts-two-missed');
+    const sim = quickSave({ startLocationId: 'us-ny-newyork', homeRegionId: 'us-ny-newyork', wealth: 'comfortable', bankId: 'us-chase' }, 'guide-facts-two-missed');
     const card = cardOf(sim, sim.player)!;
     const credit = sim.player.credit!;
     // TEST SETUP: a new card, its fifteen months ahead of it, so its introductory rate runs past the days read here.

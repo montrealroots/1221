@@ -11,7 +11,7 @@ import { assistanceRefusal,ebtBalance,provincialMonth,snapMonth } from '@/engine
 import { buyTheDaysFood } from '@/engine/systems/spending';
 import { describe,expect,it } from 'vitest';
 const drain = (sim: Simulation) => { for (const a of Object.values(sim.universe.accounts)) if (a.ownerId === sim.player.id && !a.nominal && a.balance > 0 && (a.kind === 'checking' || a.kind === 'savings' || a.kind === 'cash')) a.balance = 0; };
-const life = (city: string, seed: string) => quickSave({ startLocationId: city, homeRegionId: city, livesWhereBorn: true, wealth: 'wealthy' }, seed);
+const life = (city: string, seed: string) => quickSave({ startLocationId: city, homeRegionId: city, wealth: 'wealthy' }, seed);
 
 describe('the rates', () => {
   it('pays Ontario Works’ CAD 343 and the rent to CAD 390, earnings off whole for three months and then all but CAD 200 and half the rest', () => {

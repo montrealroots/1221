@@ -63,7 +63,7 @@ const est = (month: number, day: number, hour: number, minute = 0) => Date.UTC(2
 describe('bank.cancel_new', () => {
   /** LIFE FIXTURE: a Toronto life banking at TD, with an RBC chequing account opened beside it and $5,000 sent across. */
   function rbcBeside(seed: string): { sim: Simulation; td: Account; rbc: Account } {
-    const sim = quickSave({ startLocationId: 'ca-on-toronto', homeRegionId: 'ca-on-toronto', livesWhereBorn: true, wealth: 'wealthy', bankId: 'ca-td' }, seed);
+    const sim = quickSave({ startLocationId: 'ca-on-toronto', homeRegionId: 'ca-on-toronto', wealth: 'wealthy', bankId: 'ca-td' }, seed);
     const td = primary(sim);
     expect(td.bankId).toBe('ca-td');
     const rbc = sim.universe.accounts[must<{ accountId: string }>(sim, 'bank.open_current', { bankId: 'ca-rbc' }).accountId]!;
@@ -137,7 +137,7 @@ describe('statements', () => {
 
 describe('card.due', () => {
   it('judges a Nordea statement due after the next one on its own figures: February’s, paid in full, isn’t taken for March’s', () => {
-    const sim = quickSave({ startLocationId: 'ax-211-mariehamn', homeRegionId: 'ax-211-mariehamn', livesWhereBorn: true, wealth: 'comfortable', bankId: 'ax-nordea' }, 'd5-due-after');
+    const sim = quickSave({ startLocationId: 'ax-211-mariehamn', homeRegionId: 'ax-211-mariehamn', wealth: 'comfortable', bankId: 'ax-nordea' }, 'd5-due-after');
     const card = cardOf(sim, sim.player)!;
     expect(card.bankId).toBe('ax-nordea');
     must(sim, 'finance.set_autopay', { mode: 'minimum' });

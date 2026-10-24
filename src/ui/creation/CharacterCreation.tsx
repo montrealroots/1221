@@ -31,7 +31,7 @@ import { OPENING } from '@/engine/content/bankopening';
 import { SAVE_SCHEMA_VERSION } from '@/engine/domain/model';
 import { formatPeople } from '@/engine/world/place';
 import { ageOnDate, formatDate, instantFromZoned, zoneAbbreviation } from '@/engine/core/time';
-import { citizenshipFor } from '@/engine/domain/citizenship';
+import { citizenshipFor, citizenshipOf, citizenships, isCitizenship } from '@/engine/domain/citizenship';
 import {
   ETHNICITIES, ETHNICITY_NOTE, ETHNICITY_OTHER, describeEthnicity,
 } from '@/engine/content/ethnicity';
@@ -345,11 +345,23 @@ function billedAs(config: NewSaveConfig): string {
 
 type Setter = <K extends keyof NewSaveConfig>(key: K, value: NewSaveConfig[K]) => void;
 
-/** The country somebody born where the config says is a citizen of, by name. */
-export function citizenshipName(config: Pick<NewSaveConfig, 'homeRegionId'>): string | undefined {
-  const country = citizenshipFor(config.homeRegionId);
-  return country ? COUNTRIES.get(country)?.name : undefined;
+/**
+ * The citizenship chosen, by name, or nothing until one is (from 2026-10-24, brief 27: until then the country somebody
+ * born where the config said was a citizen of, since creation didn't ask).
+ */
+export function citizenshipName(config: Pick<NewSaveConfig, 'citizenshipId'>): string | undefined {
+  return isCitizenship(config.citizenshipId) ? COUNTRIES.get(config.citizenshipId!)?.name : undefined;
 }
+
+/** The citizenship a place of birth suggests, by id and name, for Same As Your Place Of Birth. */
+export function suggestedCitizenship(config: Pick<NewSaveConfig, 'homeRegionId'>): { id: string; name: string } | undefined {
+  const id = config.homeRegionId ? citizenshipFor(config.homeRegionId) : undefined;
+  const name = id ? COUNTRIES.get(id)?.name : undefined;
+  return id && name ? { id, name } : undefined;
+}
+
+/** Every citizenship a person can hold, by name, for the picker. */
+const CITIZENSHIP_CHOICES = citizenships().map((id) => ({ id, name: COUNTRIES.get(id)!.name })).sort((a, b) => a.name.localeCompare(b.name));
 
 function IdentityStep({ config, set, setConfig }: {
   config: NewSaveConfig;
@@ -357,6 +369,7 @@ function IdentityStep({ config, set, setConfig }: {
   setConfig: React.Dispatch<React.SetStateAction<NewSaveConfig>>;
 }) {
   const settled = settledTitle(config.pronouns);
+  const suggested = suggestedCitizenship(config);
 
   return (
     <div className="card">
@@ -536,8 +549,8 @@ function IdentityStep({ config, set, setConfig }: {
         <div>
           <h3>Place Of Birth</h3>
           <p className="muted small">
-            Where you’re from, which isn’t always where you live now. It’s what you tell people when they
-            ask, and it decides your citizenship.
+            Where you were born, which isn’t always where you live now. It’s what you tell people when they
+            ask. It doesn’t decide your citizenship or where you lived before Yale: you say those yourself.
           </p>
         </div>
       </div>
@@ -545,24 +558,39 @@ function IdentityStep({ config, set, setConfig }: {
       <LocationPicker
         idPrefix="born"
         cityId={config.homeRegionId}
-        // Where you were born, and where you live with it while you still live
-        // there. Starting Point is where the two come apart.
+        // Where you were born. A life outside the School that lived there carries Where You Live with it, read from the
+        // two places themselves (until 2026-10-24 from `livesWhereBorn`, retired by brief 27).
         onPick={(picked) => setConfig((c) => (c.school
-          ? { ...c, homeRegionId: picked.id, livesWhereBorn: picked.id === c.startLocationId }
-          : { ...c, homeRegionId: picked.id, ...(c.livesWhereBorn ? { startLocationId: picked.id } : {}) }))}
+          ? { ...c, homeRegionId: picked.id }
+          : { ...c, homeRegionId: picked.id, ...(c.startLocationId === c.homeRegionId ? { startLocationId: picked.id } : {}) }))}
       />
 
-      {/* Not asked: the place of birth decides it, so it sits under the
-          picker that does the deciding and moves when it does. */}
+      {/* Asked from 2026-10-24 (brief 27): until then the place of birth decided it and this said so back. */}
       <div className="field" style={{ marginTop: 'var(--s4)' }}>
-        <span className="label" id="citizenship">Citizenship</span>
-        <output className="settled-title" aria-labelledby="citizenship">
-          {citizenshipName(config) ?? '—'}
-        </output>
+        <label htmlFor="citizenship">Citizenship</label>
+        <select
+          id="citizenship"
+          value={isCitizenship(config.citizenshipId) ? config.citizenshipId : ''}
+          onChange={(e) => setConfig((c) => ({ ...c, citizenshipId: e.target.value || undefined }))}
+        >
+          <option value="">Choose A Country</option>
+          {CITIZENSHIP_CHOICES.map((c) => <option key={c.id} value={c.id}>{c.name}</option>)}
+        </select>
+        {suggested && suggested.id !== config.citizenshipId && (
+          <button type="button" className="btn btn-ghost btn-sm" style={{ marginTop: 'var(--s2)' }} onClick={() => set('citizenshipId', suggested.id)}>
+            Same As Your Place Of Birth: {suggested.name}
+          </button>
+        )}
         <p className="xs dim" style={{ marginTop: 4 }}>
-          You’re a citizen of the country you were born in, so there’s nothing to pick.
-          Change your place of birth and this changes with it.
+          The country whose citizen you are. It decides the passport you start with, whether you need a visa and
+          permission to work in America, how America taxes you, and which banks keep an account for you.
         </p>
+        {suggested?.id === 'us' && isCitizenship(config.citizenshipId) && config.citizenshipId !== 'us' && (
+          <p className="xs" style={{ marginTop: 4 }}>
+            Nearly everyone born in the United States is a US citizen from birth (the Fourteenth Amendment). Choose
+            another country only if that’s true of you.
+          </p>
+        )}
       </div>
 
       <div className="callout">
@@ -925,7 +953,6 @@ export function StartingPointStep({ config, set, setConfig }: {
   setConfig: React.Dispatch<React.SetStateAction<NewSaveConfig>>;
 }) {
   const city = CITIES.get(config.startLocationId);
-  const birthplace = CITIES.get(config.homeRegionId);
   const cur = currencyFor(config.startLocationId);
   const wealth = wealthIn(config.wealth, cur);
   const country = city ? COUNTRIES.get(city.countryId) : undefined;
@@ -965,33 +992,15 @@ export function StartingPointStep({ config, set, setConfig }: {
           </div>
         </div>
 
-        {!config.school && (<>
-        <label className="check" htmlFor="live-here">
-          <input
-            id="live-here"
-            type="checkbox"
-            checked={config.livesWhereBorn}
-            onChange={(e) => {
-              const on = e.target.checked;
-              setConfig((c) => (on
-                ? { ...c, livesWhereBorn: true, startLocationId: c.homeRegionId }
-                : { ...c, livesWhereBorn: false }));
-            }}
-          />
-          <span>
-            I Still Live Where I Was Born
-            {birthplace && <span className="dim"> — {placeLine(birthplace)}</span>}
-          </span>
-        </label>
-
-        {!config.livesWhereBorn && (
+        {/* A life outside the School, which a test or a tool makes, picks where it lives. Until 2026-10-24 (brief 27) an
+            I Still Live Where I Was Born box carried the birthplace here first (`livesWhereBorn`, retired). */}
+        {!config.school && (
           <LocationPicker
             idPrefix="live"
             cityId={config.startLocationId}
             onPick={(picked) => set('startLocationId', picked.id)}
           />
         )}
-        </>)}
 
         {city && (
           <div className="grid grid-3" style={{ marginTop: 'var(--s4)' }}>
@@ -1110,7 +1119,7 @@ export function BeforeYale({ config, setConfig, split }: { config: NewSaveConfig
   const offered = banks.filter((b) => homeAccountRefusal(config, b.id) === undefined);
   const refused = banks.filter((b) => !offered.includes(b));
   const home = homeBankOf(config);
-  const usBank = startingBank(config.startLocationId, config.bankId, CITIES.get(config.homeRegionId ?? '')?.countryId === 'us');
+  const usBank = startingBank(config.startLocationId, config.bankId, citizenshipOf(config) === 'us');
   const live = (cityId: string, fromYear: number, fromMonth: number) => setConfig((c) => ({ ...c, priorResidence: { cityId, fromYear, fromMonth }, homeBankId: undefined }));
 
   return (
@@ -1221,8 +1230,9 @@ export function BeforeYale({ config, setConfig, split }: { config: NewSaveConfig
  * account costs, as the bank publishes them.
  */
 function BankChoice({ config, set }: { config: NewSaveConfig; set: <K extends keyof NewSaveConfig>(key: K, value: NewSaveConfig[K]) => void }) {
-  // Born outside the US, a student on an F-1: the banks that open for them (`startingBank`, from 2026-10-10).
-  const usPerson = CITIES.get(config.homeRegionId ?? '')?.countryId === 'us';
+  // Not a US citizen, a student on an F-1: the banks that open for them (`startingBank`, from 2026-10-10; read from the
+  // birthplace until 2026-10-24, when brief 27 made the citizenship the player's choice).
+  const usPerson = citizenshipOf(config) === 'us';
   const banks = banksFor(config.startLocationId).filter((b) => usPerson || !OPENING[b.id]?.usPersonsOnly);
   const bank = startingBank(config.startLocationId, config.bankId, usPerson);
   if (!bank) {
@@ -1321,7 +1331,7 @@ export function ReviewStep({ config, setConfig }: { config: NewSaveConfig; setCo
           <div className="eyebrow" style={{ marginBottom: 'var(--s3)' }}>Starting Point</div>
           {config.school && <Line label="School" value={`${YALE_DRAMA.degree} in ${YALE_DRAMA.program}, class of ${config.startYear + 3}`} />}
           <Line label="Where You Live" value={city ? shortPlace(city) : '—'} />
-          <Line label="Bank" value={startingBank(config.startLocationId, config.bankId, CITIES.get(config.homeRegionId ?? '')?.countryId === 'us')?.name ?? 'None On Record'} />
+          <Line label="Bank" value={startingBank(config.startLocationId, config.bankId, citizenshipOf(config) === 'us')?.name ?? 'None On Record'} />
           <Line label="Checking" value={money(split.checking)} />
           <Line label="Savings" value={money(split.savings)} />
           {/* What was said on Before Yale, and the bank kept there (from 2026-10-16). */}
@@ -1472,6 +1482,7 @@ export function validate(config: NewSaveConfig, step: StepIndex): string[] {
     // A day the month has (from 2026-10-13: until then any day to 31 passed, and 31 February became 3 March).
     if (!Number.isInteger(config.birthDay) || config.birthDay < 1 || config.birthDay > daysInMonth(config.birthYear, config.birthMonth)) issues.push(`${MONTHS[config.birthMonth - 1]} ${config.birthYear} has no day ${config.birthDay}.`);
     if (!CITIES.get(config.homeRegionId)) issues.push('Choose the town or city you were born in.');
+    if (!isCitizenship(config.citizenshipId)) issues.push('Choose your citizenship.');
   }
   if (step === STEP['Starting Point']) {
     if (!CITIES.get(config.startLocationId)) issues.push('Choose the town or city you live in.');

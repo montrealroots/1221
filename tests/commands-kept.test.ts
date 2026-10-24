@@ -14,7 +14,7 @@ import { documentsOf } from '@/engine/systems/documents';
 import { courseworkOf, setWork, trustOf } from '@/engine/systems/coursework';
 
 const student = (seed: string) => createSave(1, seed, { ...newLifeConfig(), homeRegionId: 'us-ny-newyork', firstName: 'Ada', lastName: 'Cole', pronouns: 'she/her' });
-const lifeIn = (city: string, seed: string, extra: Record<string, unknown> = {}) => quickSave({ startLocationId: city, homeRegionId: city, livesWhereBorn: true, wealth: 'comfortable', ...extra }, seed);
+const lifeIn = (city: string, seed: string, extra: Record<string, unknown> = {}) => quickSave({ startLocationId: city, homeRegionId: city, wealth: 'comfortable', ...extra }, seed);
 const unread = (sim: Simulation) => sim.universe.notifications.filter((n) => !n.read).length;
 
 describe('what needs you', () => {
@@ -204,7 +204,7 @@ describe('a life in Mexico', () => {
   // citizenship applied for. Mexico's residence went unsold that day, nothing outside its own papers reading it.
   it('is refused Mexican residence in Mexico’s rule and why SLATE grants none; with a card an older save holds (FIXTURE), settling past four years and naturalizing past five are refused in their rules and the same reason, nothing paid', () => {
     // TEST SETUP: a life begun in Mexico City by somebody born in New York, wealthy enough for the solvency test.
-    const sim = quickSave({ startLocationId: 'mx-cmx-mexicocity', homeRegionId: 'us-ny-newyork', livesWhereBorn: false, wealth: 'wealthy' }, 'mx-settle');
+    const sim = quickSave({ startLocationId: 'mx-cmx-mexicocity', homeRegionId: 'us-ny-newyork', wealth: 'wealthy' }, 'mx-settle');
     const why = 'Moving abroad isn’t part of the game, so you can’t get Mexico’s papers here.';
     const balance = () => sim.universe.accounts[sim.player.primaryAccountId!]!.balance;
     const held = balance();
@@ -227,7 +227,7 @@ describe('a life in Mexico', () => {
   it('pays the Pensión para el Bienestar every two months to a Mexican of 65 living there, and nobody younger', () => {
     expect(lifeIn('mx-cmx-mexicocity', 'bienestar-young').execute({ kind: 'pension.bienestar', payload: {} }).error).toBe('You can claim it from 65.');
     // TEST SETUP: a life begun at sixty-six, which creation's school can't make.
-    const sim = quickSave({ startLocationId: 'mx-cmx-mexicocity', homeRegionId: 'mx-cmx-mexicocity', livesWhereBorn: true, wealth: 'modest', birthYear: 1960 }, 'bienestar');
+    const sim = quickSave({ startLocationId: 'mx-cmx-mexicocity', homeRegionId: 'mx-cmx-mexicocity', wealth: 'modest', birthYear: 1960 }, 'bienestar');
     const r = sim.must<{ bimonthly: number }>({ kind: 'pension.bienestar', payload: {} });
     expect(r.bimonthly).toBeGreaterThan(0);
     expect(sim.execute({ kind: 'pension.bienestar', payload: {} }).error).toBe('You’ve already claimed it.');
@@ -242,7 +242,7 @@ describe('a life in Mexico', () => {
 describe('a French bank', () => {
   it('offers a loan for an overrun three months past the overdraft, and taking it clears the overrun into a loan', () => {
     // TEST SETUP: a life banking in Paris, which a student's New Haven life doesn't; and the overrun posted by hand.
-    const sim = quickSave({ startLocationId: 'fr-idf-paris', homeRegionId: 'fr-idf-paris', livesWhereBorn: true, wealth: 'modest', bankId: 'fr-bnp-paribas' }, 'fr-overrun');
+    const sim = quickSave({ startLocationId: 'fr-idf-paris', homeRegionId: 'fr-idf-paris', wealth: 'modest', bankId: 'fr-bnp-paribas' }, 'fr-overrun');
     expect(sim.execute({ kind: 'bank.take_overrun_loan', payload: {} }).error).toBe('Your bank has offered no loan for an overrun.');
     const current = sim.universe.accounts[sim.player.primaryAccountId!]!;
     const to = -((current.overdraftLimit ?? 0) + 2_000_00);
@@ -276,7 +276,7 @@ describe('what papers open, in the kept world (from 2026-10-09)', () => {
 
   it('sells marketplace cover only to somebody lawfully present, and ends a plan held when status is lost', () => {
     // TEST SETUP: a Mexican citizen living in New York, as a graduate of the school who stayed on would be.
-    const sim = quickSave({ startLocationId: 'us-ny-newyork', homeRegionId: 'mx-cmx-mexicocity', livesWhereBorn: false, wealth: 'wealthy' }, 'lawful');
+    const sim = quickSave({ startLocationId: 'us-ny-newyork', homeRegionId: 'mx-cmx-mexicocity', wealth: 'wealthy' }, 'lawful');
     const h = healthOf(sim.player);
     // Test setup: a marketplace plan held, then the status a graduate loses by staying past it (`usOutOfStatus`).
     h.marketplace = { from: sim.now - MS_DAY, state: 'ny' };

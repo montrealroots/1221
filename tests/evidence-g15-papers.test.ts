@@ -861,7 +861,7 @@ describe('benefits.assistance', () => {
     // is about a province. Ontario Works' basic needs for a single adult, $343 (O. Reg. 134/98); BC's support for a
     // single adult, $560; no shelter counted, the home having gone on 2026-10-09.
     for (const [city, seed, memo, monthly, days] of [['ca-on-toronto', 'g15-ow', 'Ontario Works, the month', 343_00, 6], ['ca-bc-vancouver', 'g15-bc', 'Income assistance, the month', 560_00, 21]] as const) {
-      const sim = quickSave({ startLocationId: city, homeRegionId: city, livesWhereBorn: true, wealth: 'nothing' }, seed);
+      const sim = quickSave({ startLocationId: city, homeRegionId: city, wealth: 'nothing' }, seed);
       const applied = sim.now;
       const r = sim.must<{ scheme: string; firstPaymentAt: number }>({ kind: 'benefits.assistance', payload: {} });
       expect(r.firstPaymentAt - applied).toBe(days * MS_DAY);
@@ -871,7 +871,7 @@ describe('benefits.assistance', () => {
       expect(memos(sim, memo).map((t) => [t.at, -taken(sim, t)])).toEqual([[applied + days * MS_DAY, monthly], [applied + (days + 30) * MS_DAY, monthly]]);
       expect(sim.player.assistance).toMatchObject({ months: 2 });
     }
-    const comfortable = quickSave({ startLocationId: 'ca-on-toronto', homeRegionId: 'ca-on-toronto', livesWhereBorn: true, wealth: 'comfortable' }, 'g15-ow-rich');
+    const comfortable = quickSave({ startLocationId: 'ca-on-toronto', homeRegionId: 'ca-on-toronto', wealth: 'comfortable' }, 'g15-ow-rich');
     expect(comfortable.execute({ kind: 'benefits.assistance', payload: {} }).error).toBe('Ontario Works asks for liquid assets under CAD 10,000.');
     expect(comfortable.player.assistance).toBeUndefined();
   });

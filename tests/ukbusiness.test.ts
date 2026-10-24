@@ -11,7 +11,7 @@ import { owesUsReturn } from '@/engine/systems/taxreturn';
 import { describe,expect,it } from 'vitest';
 
 function londoner(seed: string): Simulation {
-  const sim = quickSave({ startLocationId: 'uk-eng-london', homeRegionId: 'uk-eng-london', livesWhereBorn: true, wealth: 'wealthy' }, seed);
+  const sim = quickSave({ startLocationId: 'uk-eng-london', homeRegionId: 'uk-eng-london', wealth: 'wealthy' }, seed);
   sim.player.craft = evenCraft(80);
   return sim;
 }

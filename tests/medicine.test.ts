@@ -9,7 +9,7 @@ import { MS_DAY } from '@/engine/core/time';
 import { fillMedicine,healthOf,longestFillOf,renewPrescriptions,rxValidUntil } from '@/engine/systems/health';
 import { describe,expect,it } from 'vitest';
 
-const life = (city: string, seed: string) => quickSave({ startLocationId: city, homeRegionId: city, livesWhereBorn: true, wealth: 'wealthy' }, seed);
+const life = (city: string, seed: string) => quickSave({ startLocationId: city, homeRegionId: city, wealth: 'wealthy' }, seed);
 
 describe('medicine for a condition', () => {
   it('fills 28 days in England, 30 in America, and only with a week left', () => {

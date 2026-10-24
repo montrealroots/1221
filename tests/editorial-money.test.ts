@@ -25,7 +25,7 @@ const setTo = (sim: Simulation, account: Account, to: number) => {
 
 describe('m1: a limit Move Money gives in a refusal is the limit, to the cent', () => {
   it('Deutsche Bank savings with €1,999.50 of the month’s €2,000 left says €1,999.50, not €2,000', () => {
-    const sim = quickSave({ homeRegionId: 'de-be-berlin', startLocationId: 'de-be-berlin', livesWhereBorn: true, wealth: 'comfortable', bankId: 'de-deutsche-bank' }, 'ed15-m1-de');
+    const sim = quickSave({ homeRegionId: 'de-be-berlin', startLocationId: 'de-be-berlin', wealth: 'comfortable', bankId: 'de-deutsche-bank' }, 'ed15-m1-de');
     const current = own(sim, 'checking', 'de-deutsche-bank');
     // A comfortable life starts with Flexgeld beside the AktivKonto, holding far more than the month's €2,000.
     const saver = own(sim, 'savings', 'de-deutsche-bank');
@@ -38,7 +38,7 @@ describe('m1: a limit Move Money gives in a refusal is the limit, to the cent', 
   });
 
   it('RBC savings holding C$100.50 with its C$2.00 fee due says at most C$98.50, not C$99', () => {
-    const sim = quickSave({ homeRegionId: 'ca-on-toronto', startLocationId: 'ca-on-toronto', livesWhereBorn: true, wealth: 'comfortable', bankId: 'ca-rbc' }, 'ed15-m1-rbc');
+    const sim = quickSave({ homeRegionId: 'ca-on-toronto', startLocationId: 'ca-on-toronto', wealth: 'comfortable', bankId: 'ca-rbc' }, 'ed15-m1-rbc');
     const saver = own(sim, 'savings', 'ca-rbc');
     const current = own(sim, 'checking', 'ca-rbc');
     // The month's free withdrawal used, so the next costs the bank's fee.
@@ -69,7 +69,7 @@ describe('the month’s statement notice says how the account ended the period, 
   });
 
   it('a Deutsche Bank AktivKonto, closed each quarter, says it ended the quarter, and only at the quarter’s end', () => {
-    const sim = quickSave({ homeRegionId: 'de-be-berlin', startLocationId: 'de-be-berlin', livesWhereBorn: true, wealth: 'comfortable', bankId: 'de-deutsche-bank' }, 'ed15-statement-de');
+    const sim = quickSave({ homeRegionId: 'de-be-berlin', startLocationId: 'de-be-berlin', wealth: 'comfortable', bankId: 'de-deutsche-bank' }, 'ed15-statement-de');
     run(sim, 'bank.set_alerts', { statements: true });
     const giro = own(sim, 'checking', 'de-deutsche-bank');
     sim.advanceTo(sim.now + 100 * 24 * 60 * 60_000);
@@ -169,7 +169,7 @@ describe('the card’s notices and refusals, in their new words', () => {
 
 describe('borrowing’s refusals, in their new words', () => {
   it('an overdraft asked for under the score floor says the score the game arranges one from', () => {
-    const sim = quickSave({ startLocationId: 'fr-idf-paris', homeRegionId: 'fr-idf-paris', livesWhereBorn: true, bankId: 'fr-societe-generale' }, 'ed15-od-score');
+    const sim = quickSave({ startLocationId: 'fr-idf-paris', homeRegionId: 'fr-idf-paris', bankId: 'fr-societe-generale' }, 'ed15-od-score');
     sim.post({ memo: 'Wages', category: 'salary', postings: [{ accountId: sim.player.primaryAccountId!, amount: 2_000_00 }, { accountId: sim.nominalAccount('income', 'Wages').id, amount: -2_000_00 }] });
     // TEST SETUP: a score under the floor, as a charged-off debt leaves one.
     sim.player.credit!.score = 500;
@@ -190,7 +190,7 @@ describe('accounts over time, cards and cash: refusals and notices in their new 
   const ny = (seed: string) => quickSave({ homeRegionId: 'us-ny-newyork', startLocationId: 'us-ny-newyork', wealth: 'comfortable', bankId: 'us-chase' }, seed);
 
   it('a new account that is the primary one can’t be canceled, and says to make another primary', () => {
-    const sim = quickSave({ homeRegionId: 'ca-on-toronto', startLocationId: 'ca-on-toronto', livesWhereBorn: true, wealth: 'comfortable', bankId: 'ca-td' }, 'ed15-cancel-primary');
+    const sim = quickSave({ homeRegionId: 'ca-on-toronto', startLocationId: 'ca-on-toronto', wealth: 'comfortable', bankId: 'ca-td' }, 'ed15-cancel-primary');
     const rbc = sim.universe.accounts[sim.must<{ accountId: string }>({ kind: 'bank.open_current', payload: { bankId: 'ca-rbc' } }).accountId]!;
     sim.must({ kind: 'bank.set_primary', payload: { accountId: rbc.id } });
     expect(run(sim, 'bank.cancel_new', { accountId: rbc.id }).error).toBe('You can’t cancel your primary account. Make another account primary first.');

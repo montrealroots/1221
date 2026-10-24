@@ -34,7 +34,7 @@ describe('the AFORE account', () => {
 
 describe('the pension', () => {
   it('is paid from 65 on the year’s weeks, the Fondo topping it to the last year’s wage, and refused short of the weeks', () => {
-    const sim = quickSave({ startLocationId: 'mx-cmx-mexicocity', homeRegionId: 'mx-cmx-mexicocity', livesWhereBorn: true }, 'imss-claim');
+    const sim = quickSave({ startLocationId: 'mx-cmx-mexicocity', homeRegionId: 'mx-cmx-mexicocity' }, 'imss-claim');
     const cur = saveCurrency(sim.universe);
     const pesos = (x: number) => (cur === 'MXN' ? x : exchange(x, 'MXN', cur)!);
     sim.player.birthInstant = sim.now - 65.2 * YEAR;

@@ -25,7 +25,7 @@ import { fileState, statePlanRefusal } from '@/engine/systems/statetax';
 import type { TaxReturn } from '@/engine/systems/taxreturn';
 import { DENTAL_PLANS, NHS } from '@/engine/content/safetynet';
 
-const life = (city: string, seed: string) => quickSave({ startLocationId: city, homeRegionId: city, livesWhereBorn: true, wealth: 'comfortable' }, seed);
+const life = (city: string, seed: string) => quickSave({ startLocationId: city, homeRegionId: city, wealth: 'comfortable' }, seed);
 const current = (sim: Simulation) => sim.universe.accounts[sim.player.primaryAccountId!]!;
 const posted = (sim: Simulation, accountId: string, amount: number) => sim.post({ memo: 'TEST SETUP', category: 'test', postings: [{ accountId, amount }, { accountId: sim.nominalAccount(amount > 0 ? 'income' : 'expense', 'Test').id, amount: -amount }] });
 

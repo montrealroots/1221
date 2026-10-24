@@ -16,7 +16,7 @@ import { armHealth,rxShareOf } from '@/engine/systems/health';
 import { describe,expect,it } from 'vitest';
 
 const YEAR = 365.2425 * MS_DAY;
-const life = (city: string, seed: string) => quickSave({ startLocationId: city, homeRegionId: city, livesWhereBorn: true, wealth: 'wealthy' }, seed);
+const life = (city: string, seed: string) => quickSave({ startLocationId: city, homeRegionId: city, wealth: 'wealthy' }, seed);
 const inSave = (sim: Simulation, c: number, from: string) => { const cur = saveCurrency(sim.universe); return cur === from ? c : exchange(c, from, cur)!; };
 const aged = (sim: Simulation, years: number) => { (sim.player as { birthInstant: number }).birthInstant = sim.now - years * YEAR; };
 const earned = (sim: Simulation, cad: number) => { yearOf(sim.player, new Date(sim.now).getUTCFullYear() - 1).acting = inSave(sim, cad * 100, 'CAD'); };

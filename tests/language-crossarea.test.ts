@@ -180,7 +180,7 @@ const empty = (sim: Simulation) => { for (const a of Object.values(sim.universe.
 let owing: string | undefined;
 const owingSave = (): Simulation => {
   if (!owing) {
-    const sim = quickSave({ startLocationId: 'us-ny-newyork', homeRegionId: 'us-ny-newyork', livesWhereBorn: true, wealth: 'wealthy' }, 'xarea-plan');
+    const sim = quickSave({ startLocationId: 'us-ny-newyork', homeRegionId: 'us-ny-newyork', wealth: 'wealthy' }, 'xarea-plan');
     recordWages(sim.player, at(2026, 5, 1), NY, { gross: 60_000_00 });
     while (sim.now < at(2027, 2, 1, 12)) sim.advanceTo(Math.min(at(2027, 2, 1, 12), sim.now + 6 * MS_HOUR), { stopOnPlayerRequired: true });
     empty(sim);

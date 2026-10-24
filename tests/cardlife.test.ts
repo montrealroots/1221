@@ -19,7 +19,7 @@ function withCard(bankId: string, product: CardProduct | { none: true; source: s
 afterEach(() => { for (const [k, v] of kept) { if (v) cards[k] = v as CardProduct; else delete cards[k]; } kept.clear(); });
 
 const lifeIn = (cityId: string, extra: Record<string, unknown> = {}, seed = 'cl') =>
-  quickSave({ startLocationId: cityId, homeRegionId: cityId, livesWhereBorn: true, ...extra }, seed);
+  quickSave({ startLocationId: cityId, homeRegionId: cityId, ...extra }, seed);
 const card = (sim: Simulation) => cardOf(sim, sim.player);
 const run = (sim: Simulation, kind: string, payload: Record<string, unknown> = {}) => {
   const answer = sim.execute({ kind, payload });

@@ -71,7 +71,7 @@ describe('the card’s panels', () => {
   });
 
   it('says a charge card is paid from the checking account, and a capped rate under the law, the law named in the source line', () => {
-    const sim = quickSave({ homeRegionId: 'fr-idf-paris', startLocationId: 'fr-idf-paris', livesWhereBorn: true, wealth: 'comfortable', bankId: 'fr-bnp-paribas' }, 'ed15-charge');
+    const sim = quickSave({ homeRegionId: 'fr-idf-paris', startLocationId: 'fr-idf-paris', wealth: 'comfortable', bankId: 'fr-bnp-paribas' }, 'ed15-charge');
     const card = cardsOf(sim, sim.player)[0]!;
     const bank = bankById(card.bankId!)!;
     const kept = { card: cards[bank.id], law: laws[bank.iso] };
@@ -100,14 +100,14 @@ describe('the Statements tab', () => {
 
 describe('the Accounts and Cards tabs’ term and card words', () => {
   it('a French debit card’s spending limit is labelled an estimate in a sentence, not a fragment', () => {
-    const sim = quickSave({ homeRegionId: 'fr-idf-paris', startLocationId: 'fr-idf-paris', livesWhereBorn: true, wealth: 'comfortable', bankId: 'fr-bnp-paribas' }, 'ed15-ceiling');
+    const sim = quickSave({ homeRegionId: 'fr-idf-paris', startLocationId: 'fr-idf-paris', wealth: 'comfortable', bankId: 'fr-bnp-paribas' }, 'ed15-ceiling');
     const words = drawn(sim, BankSecurity, 'fr-bnp-paribas');
     expect(words).toMatch(/It pays up to €[\d,.]+ (a calendar month|over any 30 days)\./);
     expect(words).toContain('The limit shown is the lowest the bank sets, which is estimated.');
   });
 
   it('a TD term deposit, paid out at its end, says it goes into the checking account', () => {
-    const sim = quickSave({ homeRegionId: 'ca-on-toronto', startLocationId: 'ca-on-toronto', livesWhereBorn: true, wealth: 'comfortable', bankId: 'ca-td' }, 'ed15-term-end');
+    const sim = quickSave({ homeRegionId: 'ca-on-toronto', startLocationId: 'ca-on-toronto', wealth: 'comfortable', bankId: 'ca-td' }, 'ed15-term-end');
     h.sim = sim;
     const words = onScreen(renderToStaticMarkup(createElement(BankLending, { bank: bankById('ca-td')!, show: ['term'] })));
     expect(words).toMatch(/At its end it is paid, with its interest, into your checking account, unless you choose another way the bank allows\./);
@@ -116,7 +116,7 @@ describe('the Accounts and Cards tabs’ term and card words', () => {
 
 describe('m1, on the Accounts tab: Move Money’s hint gives the month’s allowance to the cent', () => {
   it('Deutsche Bank savings with €1,999.50 of the month’s €2,000 left says €1,999.50 under Move Money, not €2,000', () => {
-    const sim = quickSave({ homeRegionId: 'de-be-berlin', startLocationId: 'de-be-berlin', livesWhereBorn: true, wealth: 'comfortable', bankId: 'de-deutsche-bank' }, 'ed15-m1-hint');
+    const sim = quickSave({ homeRegionId: 'de-be-berlin', startLocationId: 'de-be-berlin', wealth: 'comfortable', bankId: 'de-deutsche-bank' }, 'ed15-m1-hint');
     const mine = Object.values(sim.universe.accounts).filter((a) => a.ownerId === sim.player.id && !a.closedAt && a.bankId === 'de-deutsche-bank' && a.category !== 'term');
     const saver = mine.find((a) => a.kind === 'savings')!;
     const current = mine.find((a) => a.kind === 'checking')!;
@@ -133,7 +133,7 @@ describe('m1, on the Accounts tab: Move Money’s hint gives the month’s allow
 
 describe('a card’s published plans and rewards, in English, with the bank’s own names kept', () => {
   it('MUFG’s plans and Global Point read as sentences, the Japanese names beside them, every figure kept', () => {
-    const sim = quickSave({ homeRegionId: 'jp-13-tokyo', startLocationId: 'jp-13-tokyo', livesWhereBorn: true, wealth: 'comfortable', bankId: 'jp-mufg' }, 'ed15-mufg-plans');
+    const sim = quickSave({ homeRegionId: 'jp-13-tokyo', startLocationId: 'jp-13-tokyo', wealth: 'comfortable', bankId: 'jp-mufg' }, 'ed15-mufg-plans');
     expect(cardsOf(sim, sim.player).map((c) => c.bankId)).toContain('jp-mufg');
     const words = drawn(sim, BankCardOffers, 'jp-mufg');
     // Until brief 15: "分割払い 3-24回 at 14.75-18.00%/yr (3回 ¥2.46, 12回 ¥9.84 per ¥100); 2回 free; リボ 18.00%/yr".

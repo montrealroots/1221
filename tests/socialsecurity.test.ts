@@ -12,7 +12,7 @@ import { recordWages } from '@/engine/systems/earnings';
 import { claimFactor, socialSecurityOf, socialSecurityRefusal } from '@/engine/systems/socialsecurity';
 
 function worker(seed: string, perYear: number, years = 35, where = 'us-ny-newyork') {
-  const sim = quickSave({ startLocationId: 'us-ny-newyork', homeRegionId: 'us-ny-newyork', livesWhereBorn: true }, seed);
+  const sim = quickSave({ startLocationId: 'us-ny-newyork', homeRegionId: 'us-ny-newyork' }, seed);
   const cur = saveCurrency(sim.universe);
   const d = (x: number) => (cur === 'USD' ? x : exchange(x, 'USD', cur)!);
   for (let i = 0; i < years; i += 1) recordWages(sim.player, Date.UTC(2030 + i, 5, 1), 'America/New_York', { gross: d(perYear * 100), where });

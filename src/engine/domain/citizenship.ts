@@ -1,9 +1,12 @@
 /**
  * SLATE — citizenship.
  *
- * A person is a citizen of one country: the one they were born in. It is not
- * asked. The place of birth decides it, creation says it back, and the save
- * keeps it on the person.
+ * A person is a citizen of one country, and the player says which at creation (from 2026-10-24, the owner's brief 27:
+ * "Birthplace alone must not grant residency, an existing bank account, citizenship, or work eligibility"). Until then it
+ * wasn't asked: from 2026-09-22 (schema 82, the owner's "whatever you put your place of birth it generates what country
+ * citizenship you're under") the place of birth decided it, creation said it back, and every opening put it back to
+ * the birthplace's. The birthplace still suggests one, and a life made by a test or a tool without a citizenship takes
+ * the birthplace's (`citizenshipOf`), but nothing the player chose is changed by it.
  *
  * "The country" means the state whose citizenship a place gives, which is not
  * always the entry the place is listed under. The gazetteer lists territories
@@ -19,7 +22,7 @@
  * Tasman, and a work visa anywhere else.
  */
 
-import { countryOfPlace } from '../content/geography';
+import { COUNTRIES, countryOfPlace } from '../content/geography';
 
 /**
  * Territories whose people hold another country's citizenship, by the country
@@ -54,10 +57,29 @@ export const TERRITORY_CITIZENSHIP: Readonly<Record<string, string>> = {
 };
 
 /**
- * The country somebody born in this place is a citizen of, or undefined when
+ * The citizenship a place suggests: the country it belongs to, a territory's being the country's. Creation offers it as
+ * Same As Your Place Of Birth, and a life made without a chosen citizenship takes it (`citizenshipOf`). Undefined when
  * the place names no real country.
  */
 export function citizenshipFor(birthplaceId: string): string | undefined {
   const listed = countryOfPlace(birthplaceId);
   return listed ? TERRITORY_CITIZENSHIP[listed] ?? listed : undefined;
+}
+
+/** Entries nobody is a citizen of: the continent with no people of its own (the uninhabited territories are their country's above). */
+const NO_CITIZENS = new Set(['aq']);
+
+/** Every citizenship a person can hold, by the gazetteer's country id: every country that isn't a territory of another. */
+export function citizenships(): string[] {
+  return COUNTRIES.all().map((c) => c.id).filter((id) => !TERRITORY_CITIZENSHIP[id] && !NO_CITIZENS.has(id));
+}
+
+/** Whether an id names a citizenship a person can hold. */
+export function isCitizenship(id: string | undefined): boolean {
+  return id !== undefined && COUNTRIES.get(id) !== undefined && !TERRITORY_CITIZENSHIP[id] && !NO_CITIZENS.has(id);
+}
+
+/** A new life's citizenship: the one chosen, or, for a life a test or a tool makes without one, the birthplace's. */
+export function citizenshipOf(config: { citizenshipId?: string; homeRegionId: string }): string | undefined {
+  return isCitizenship(config.citizenshipId) ? config.citizenshipId : config.citizenshipId === undefined ? citizenshipFor(config.homeRegionId) : undefined;
 }

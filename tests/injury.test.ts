@@ -10,7 +10,7 @@ import { INJURY, INJURY_KIND, WORKERS_COMP } from '@/engine/content/injury';
 import { chanceOver, compWeek, compWeekly, everydayInjury, injuryOf, laidUp, mayHurt, trainingRefusal } from '@/engine/systems/injury';
 import { healthOf } from '@/engine/systems/health';
 
-const life = (seed: string, city = 'us-ny-newyork') => quickSave({ startLocationId: city, homeRegionId: city, livesWhereBorn: true, wealth: 'wealthy' }, seed);
+const life = (seed: string, city = 'us-ny-newyork') => quickSave({ startLocationId: city, homeRegionId: city, wealth: 'wealthy' }, seed);
 
 describe('getting hurt', () => {
   it('comes in everyday life at the NHIS’s 94 a thousand a year', { timeout: 300_000 }, () => {

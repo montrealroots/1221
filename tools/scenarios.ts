@@ -189,7 +189,7 @@ const SCENARIOS: Record<string, Hook> = {
   },
   'switch-uk': {
     // A Londoner who lives there, not a student: a student banks where the School is.
-    years: 2, config: { startLocationId: 'uk-eng-london', homeRegionId: 'uk-eng-london', livesWhereBorn: true, bankId: 'gb-barclays' }, resident: true,
+    years: 2, config: { startLocationId: 'uk-eng-london', homeRegionId: 'uk-eng-london', bankId: 'gb-barclays' }, resident: true,
     daily(sim, log) {
       const n = sim.player.payments?.switches?.length ?? 0;
       const pending = sim.universe.scheduled.some((i) => i.kind === SWITCH_KIND && i.status === 'pending');

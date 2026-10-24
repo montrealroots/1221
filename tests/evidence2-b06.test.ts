@@ -154,7 +154,7 @@ const on = (year: number, month: number, day: number, hour = 12, minute = 0): nu
 const student = (seed: string, home = 'us-ny-newyork'): Simulation =>
   createSave(1, seed, { ...newLifeConfig(), homeRegionId: home, firstName: 'Ada', lastName: 'Cole', pronouns: 'she/her' });
 /** A life in a city a New Haven student never lives in, or at a balance hers never reaches: a `quickSave` life there. */
-const elsewhere = (seed: string, cityId = 'us-ny-newyork', wealth = 'wealthy'): Simulation => quickSave({ startLocationId: cityId, homeRegionId: cityId, livesWhereBorn: true, wealth } as never, seed);
+const elsewhere = (seed: string, cityId = 'us-ny-newyork', wealth = 'wealthy'): Simulation => quickSave({ startLocationId: cityId, homeRegionId: cityId, wealth } as never, seed);
 const reload = (sim: Simulation): Simulation => loadSave(deserialise(serialise(sim.universe)) as never);
 /** A life kept at a moment, and a copy of it to play on, opened as the save is opened. */
 const freeze = (sim: Simulation): string => JSON.stringify(sim.universe);

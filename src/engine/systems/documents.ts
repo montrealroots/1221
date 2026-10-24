@@ -558,10 +558,15 @@ export function startingDocuments(sim: Simulation, person: Person): void {
   } else if (iso === 'US' && rng.next() < STARTING.usPassportShare) {
     docs.push(passport(years));
   }
-  // A US-born citizen's license from their birth state, renewed to its term.
+  // A US citizen's license, renewed to its term, from the state they lived in before (Before Yale's place, where it's in
+  // the US), or for a US-born citizen who said nothing of it, from the birth state, the game's assumption that they grew
+  // up there. Until 2026-10-24 (brief 27, which keeps the previous residence apart from the birthplace) it was always the
+  // birth state's, so a citizen born in Ohio who said they'd lived in California had Ohio's.
+  const before = person.priorResidence ? CITIES.get(person.priorResidence.cityId) : undefined;
   const born = CITIES.get(person.homeRegionId);
-  if (iso === 'US' && born && isoOfCountry(born.countryId) === 'US' && rng.next() < STARTING.usLicenseShare) {
-    const jurisdiction = born.parentId.toLowerCase();
+  const licensedIn = before && isoOfCountry(before.countryId) === 'US' ? before : !before && born && isoOfCountry(born.countryId) === 'US' ? born : undefined;
+  if (iso === 'US' && licensedIn && rng.next() < STARTING.usLicenseShare) {
+    const jurisdiction = licensedIn.parentId.toLowerCase();
     const term = LICENSES[jurisdiction]?.validityYears ?? 8;
     let issuedAt = addYears(person.birthInstant, 18);
     while (addYears(issuedAt, term) <= sim.now) issuedAt = addYears(issuedAt, term);

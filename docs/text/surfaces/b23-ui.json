@@ -67,23 +67,21 @@
   ]
  },
  {
-  "surface": "Rotate Your Phone To Play",
-  "where": "Over everything on a phone held upright, and the toast when it turns back while the clock was running",
+  "surface": "A Phone Turned Upright",
+  "where": "Nothing over the game: a phone held upright plays the same interface a narrow window has, and nothing is said when it turns",
   "sources": [
    "src/ui/shell/turn.tsx#*"
   ],
   "states": [
-   "unavailable",
-   "returning",
-   "confirmation"
+   "returning"
   ],
   "outcome": "Revised",
   "why": "",
-  "changes": "New in brief 23: “Rotate Your Phone To Play” and “SLATE is designed for landscape play. Turn your phone on its side and everything is as you left it.”; on return, once, “Paused while your phone was upright. Press Play to carry on.”",
+  "changes": "Removed in brief 27 (2026-10-24): “Rotate Your Phone To Play”, its line “SLATE is designed for landscape play. Turn your phone on its side and everything is as you left it.”, and the toast “Paused while your phone was upright. Press Play to carry on.”, which brief 23 had added on 2026-10-23. The frame shows no words now; the turn keeps the scroll and the focus and leaves the clock as the player set it.",
   "evidence": [
    {
     "kind": "test",
-    "ref": "tests/b23-turn.test.ts: 'live, turned upright: paused through the command'"
+    "ref": "tests/b23-turn.test.ts: 'has no rotate screen, no pause on a turn and no word of one to say'"
    },
    {
     "kind": "walk",

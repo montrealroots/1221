@@ -44,7 +44,7 @@ vi.mock('@/app/game-context', () => {
 
 const { PapersWorkspace } = await import('@/ui/workspaces/PapersWorkspace');
 
-const lifeIn = (city: string, seed: string, guided = false) => quickSave({ startLocationId: city, homeRegionId: city, livesWhereBorn: true, wealth: 'comfortable', tutorial: guided }, seed);
+const lifeIn = (city: string, seed: string, guided = false) => quickSave({ startLocationId: city, homeRegionId: city, wealth: 'comfortable', tutorial: guided }, seed);
 
 /** Papers' Health tab as the player has it: its markup, and the words it shows with every title taken out. */
 function shown(sim: Simulation): { html: string; words: string } {

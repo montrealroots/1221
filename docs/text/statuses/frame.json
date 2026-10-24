@@ -2867,6 +2867,18 @@
   "on": "2026-10-21",
   "evidence": "Rewritten 2026-10-21 so On The Way counts only the stops the clock makes where career commitments clash (the app's sixth walk), to docs/STYLE.md; read where the player meets it in tests/language-frame-ui.test.ts ('two auditions in person at one hour, their trips meeting…')"
  },
+ "src/ui/shell/turn.tsx#layoutNow": {
+  "status": "Reviewed And Retained",
+  "hash": "7f44d723942e",
+  "on": "2026-10-24",
+  "reason": "Read 2026-10-24 (brief 27): no player-facing words, only the two layout keys a turn moves between and the scrollers' selectors; nothing here is shown."
+ },
+ "src/ui/shell/turn.tsx#TurnFrame": {
+  "status": "Reviewed And Retained",
+  "hash": "7f44d723942e",
+  "on": "2026-10-24",
+  "reason": "Read 2026-10-24 (brief 27): no player-facing words, only the two layout keys a turn moves between and the scrollers' selectors; nothing here is shown."
+ },
  "src/ui/startup/StartupSequence.tsx#currentLabel": {
   "status": "Reviewed And Retained",
   "hash": "7725e05476ed",

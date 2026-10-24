@@ -229,7 +229,7 @@ describe('PLAYER JOURNEY: a New York student closes Citi while its groceries are
 });
 
 describe('PLAYER JOURNEY: Other Charges and the sources line, at banks around the world', () => {
-  const lifeAt = (cityId: string, bankId: string, seed: string) => quickSave({ startLocationId: cityId, homeRegionId: cityId, livesWhereBorn: true, wealth: 'comfortable', bankId }, seed);
+  const lifeAt = (cityId: string, bankId: string, seed: string) => quickSave({ startLocationId: cityId, homeRegionId: cityId, wealth: 'comfortable', bankId }, seed);
   it('says a returned payment’s fee by the shortfall the bank reads, a dormant account’s and a quiet month’s, each with its source', () => {
     expect(drawn(lifeAt('ca-on-toronto', 'ca-rbc', 'lang14-rbc'), BankWorkspace)).toMatch(/A payment the bank returns unpaid costs [^.]*\$10(\.00)?, or nothing when the account is less than [^.]*\$10(\.00)? short, at most once every 2 business days\. Source: canada\.ca/);
     expect(drawn(lifeAt('jp-13-tokyo', 'jp-resona', 'lang14-resona'), BankWorkspace)).toMatch(/An account left unused for 2 years costs [^ ]+ a year while it holds less than [^ ]+\. Source: resona/);

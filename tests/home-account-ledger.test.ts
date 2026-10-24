@@ -26,7 +26,7 @@ function inPounds(sim: Simulation, extra: Partial<Account> = {}): Account {
   });
 }
 /** A Yale student's save, kept in dollars. */
-const yale = () => quickSave({ startLocationId: 'us-ct-newhaven', homeRegionId: 'us-ct-newhaven', livesWhereBorn: true, wealth: 'comfortable' }, 'home-account-ledger');
+const yale = () => quickSave({ startLocationId: 'us-ct-newhaven', homeRegionId: 'us-ct-newhaven', wealth: 'comfortable' }, 'home-account-ledger');
 const usd = (sim: Simulation) => sim.universe.accounts[sim.player.primaryAccountId!]!;
 const outside = (sim: Simulation) => sim.nominalAccount('equity', 'Opening Balances').id;
 const move = (sim: Simulation, account: Account, amount: number, native?: number) => sim.post({

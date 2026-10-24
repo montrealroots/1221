@@ -292,7 +292,7 @@ describe('mortality', () => {
       ended[city] = 0;
       reached[city] = 0;
       for (let n = 0; n < 100; n += 1) {
-        const sim = quickSave({ startLocationId: city, homeRegionId: city, livesWhereBorn: true, birthYear: 1931, birthMonth: 1, birthDay: 7, heightCm: 160, weightKg: 60 }, `g08-abroad-${n}`);
+        const sim = quickSave({ startLocationId: city, homeRegionId: city, birthYear: 1931, birthMonth: 1, birthDay: 7, heightCm: 160, weightKg: 60 }, `g08-abroad-${n}`);
         expect(pendingOf(sim, BIRTHDAY_KIND).map((i) => i.at)).toEqual([day]);
         sim.advanceTo(day - 60_000);
         // The two days from the first morning are a share of a year drawn too: a life they end has no birthday draw.

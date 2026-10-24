@@ -15,7 +15,7 @@ import {
 import { cardOf, cardTerms } from '@/engine/systems/credit';
 
 const lifeIn = (cityId: string, extra: Record<string, unknown> = {}, seed = 'st') =>
-  quickSave({ startLocationId: cityId, homeRegionId: cityId, livesWhereBorn: true, ...extra }, seed);
+  quickSave({ startLocationId: cityId, homeRegionId: cityId, ...extra }, seed);
 const current = (sim: Simulation) => sim.universe.accounts[sim.player.primaryAccountId!]!;
 const give = (sim: Simulation, amount: number) => sim.post({
   memo: 'test', category: 'test',

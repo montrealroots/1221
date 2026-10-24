@@ -18,7 +18,7 @@ import { STATE_NOTICE_KIND, federalOffsetToState, owedToState, statePartsOn, sta
 
 const NY = 'America/New_York';
 const at = (y: number, m: number, d: number, h = 9) => instantFromZoned({ year: y, month: m, day: d, hour: h }, NY);
-const life = (city: string, seed: string) => quickSave({ startLocationId: city, homeRegionId: city, livesWhereBorn: true, wealth: 'wealthy' }, seed);
+const life = (city: string, seed: string) => quickSave({ startLocationId: city, homeRegionId: city, wealth: 'wealthy' }, seed);
 const play = (sim: Simulation, until: number) => { while (sim.now < until) sim.advanceTo(Math.min(until, sim.now + 6 * MS_HOUR), { stopOnPlayerRequired: true }); };
 const reload = (sim: Simulation) => loadSave(deserialise(serialise(sim.universe)) as never);
 const titled = (sim: Simulation, title: string) => sim.universe.notifications.filter((n) => n.title === title);

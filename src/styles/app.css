@@ -1688,23 +1688,8 @@ td, th { overflow-wrap: break-word; }
   .modal-foot { padding: var(--s2) var(--s4); }
 }
 
-/* ---------- Rotate Your Phone To Play (`ui/shell/turn.tsx`) ---------- */
-
-.turn-frame[inert] { pointer-events: none; user-select: none; }
-.rotate-screen {
-  position: fixed; inset: 0; z-index: 1000; display: flex; flex-direction: column; align-items: center; justify-content: center;
-  gap: var(--s3); text-align: center; background: var(--bg); color: var(--text);
-  padding: max(var(--s5), env(safe-area-inset-top)) max(var(--s5), env(safe-area-inset-right)) max(var(--s5), env(safe-area-inset-bottom)) max(var(--s5), env(safe-area-inset-left));
-}
-.rotate-screen:focus { outline: none; }
-.rotate-screen h1 { font-size: var(--size-xl); }
-.rotate-screen p { max-width: 30ch; color: var(--text-muted); margin: 0; }
-.rotate-glyph {
-  width: 72px; height: 72px; fill: none; stroke: var(--accent); stroke-width: 2.4; stroke-linecap: round; stroke-linejoin: round;
-  animation: rotate-hint 2.4s ease-in-out infinite;
-}
-@keyframes rotate-hint { 0%, 35% { transform: rotate(0); } 60%, 100% { transform: rotate(-90deg); } }
-@media (prefers-reduced-motion: reduce) { .rotate-glyph { animation: none; transform: rotate(-90deg); } }
+/* Rotate Your Phone To Play (`ui/shell/turn.tsx`) was styled here from 2026-10-23 until brief 27 took the gate out on
+   2026-10-24: the frame under it went inert, and the screen covered the game with a turning phone. */
 
 /* ---------- Summary, then the detail that opens (brief 23, section 8) ---------- */
 
@@ -1735,6 +1720,9 @@ details.section-fold[open] > summary { margin-bottom: var(--s2); }
 .table-scroll > table:has(th:nth-child(4)) { min-width: 520px; }
 .table-scroll > table:has(th:nth-child(5)) { min-width: 680px; }
 .table-scroll > table:has(th:nth-child(7)) { min-width: 880px; }
+/* The plays a student may borrow, given the width their cast lines read at (2026-10-24, brief 27's upright walk: at
+   390 pixels a cast line ran nine lines deep, and at a 460-pixel table still four). */
+.table-scroll > table.plays-shelf { min-width: 620px; }
 .table-scroll {
   -webkit-overflow-scrolling: touch;
   background:

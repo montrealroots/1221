@@ -67,7 +67,7 @@ function played(): Simulation {
  */
 function seeded(sim: Simulation, firstName: string, pronouns: string, id = 'person_000002'): Person {
   const config: NewSaveConfig = {
-    ...newLifeConfig(), school: undefined, homeRegionId: 'uk-eng-london', startLocationId: 'uk-eng-london', livesWhereBorn: true,
+    ...newLifeConfig(), school: undefined, homeRegionId: 'uk-eng-london', startLocationId: 'uk-eng-london',
     firstName, lastName: 'Lane', pronouns, heightCm: 160, weightKg: 55, personalityTraits: ['curious', 'frugal'],
     raceEthnicity: ['asian'], genres: ['comedy', 'horror'], background: 'Grew up over a shop in Hackney.',
     startYear: 2026, startMonth: 8, startDay: 24,

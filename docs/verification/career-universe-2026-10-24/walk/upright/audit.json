@@ -1,0 +1,2942 @@
+[
+ {
+  "life": "long",
+  "size": "390x844m",
+  "step": "Home",
+  "files": [],
+  "vw": 390,
+  "vh": 844,
+  "dialog": null,
+  "headerH": 105,
+  "mainTop": 105,
+  "mainW": 390,
+  "contentShare": 88,
+  "railShown": false,
+  "pageWider": 0,
+  "bleed": [],
+  "bleedCount": 0,
+  "cut": [],
+  "cutCount": 0,
+  "cutTitledCount": 0,
+  "squeezed": [],
+  "squeezedCount": 0,
+  "clipped": [],
+  "clippedCount": 0,
+  "controls": 69,
+  "inlineLinks": 7,
+  "small": [],
+  "smallCount": 0,
+  "textLinkCount": 34,
+  "tabs": [],
+  "wideTables": [],
+  "clock": "7:30 AM",
+  "timeButton": "Pause",
+  "rotate": false,
+  "textLen": 3035
+ },
+ {
+  "life": "long",
+  "size": "390x844m",
+  "step": "Navigation Open",
+  "files": [],
+  "vw": 390,
+  "vh": 844,
+  "dialog": null,
+  "headerH": 105,
+  "mainTop": 105,
+  "mainW": 390,
+  "contentShare": 88,
+  "railShown": true,
+  "pageWider": 0,
+  "bleed": [],
+  "bleedCount": 0,
+  "cut": [],
+  "cutCount": 0,
+  "cutTitledCount": 0,
+  "squeezed": [],
+  "squeezedCount": 0,
+  "clipped": [],
+  "clippedCount": 0,
+  "controls": 78,
+  "inlineLinks": 7,
+  "small": [],
+  "smallCount": 0,
+  "textLinkCount": 34,
+  "tabs": [],
+  "wideTables": [],
+  "clock": "7:30 AM",
+  "timeButton": "Pause",
+  "rotate": false,
+  "textLen": 3035
+ },
+ {
+  "life": "long",
+  "size": "390x844m",
+  "step": "Player Profile",
+  "files": [],
+  "vw": 390,
+  "vh": 844,
+  "dialog": null,
+  "headerH": 105,
+  "mainTop": 105,
+  "mainW": 390,
+  "contentShare": 88,
+  "railShown": false,
+  "pageWider": 0,
+  "bleed": [],
+  "bleedCount": 0,
+  "cut": [],
+  "cutCount": 0,
+  "cutTitledCount": 0,
+  "squeezed": [],
+  "squeezedCount": 0,
+  "clipped": [],
+  "clippedCount": 0,
+  "controls": 137,
+  "inlineLinks": 45,
+  "small": [
+   "button \"Home\" 40×44"
+  ],
+  "smallCount": 1,
+  "textLinkCount": 0,
+  "tabs": [],
+  "wideTables": [
+   {
+    "scrolls": true,
+    "by": 905
+   },
+   {
+    "scrolls": true,
+    "by": 372
+   },
+   {
+    "scrolls": true,
+    "by": 394
+   }
+  ],
+  "clock": "7:30 AM",
+  "timeButton": "Pause",
+  "rotate": false,
+  "textLen": 7307
+ },
+ {
+  "life": "long",
+  "size": "390x844m",
+  "step": "Calendar",
+  "files": [],
+  "vw": 390,
+  "vh": 844,
+  "dialog": null,
+  "headerH": 105,
+  "mainTop": 105,
+  "mainW": 390,
+  "contentShare": 88,
+  "railShown": false,
+  "pageWider": 0,
+  "bleed": [],
+  "bleedCount": 0,
+  "cut": [],
+  "cutCount": 0,
+  "cutTitledCount": 0,
+  "squeezed": [],
+  "squeezedCount": 0,
+  "clipped": [],
+  "clippedCount": 0,
+  "controls": 59,
+  "inlineLinks": 0,
+  "small": [
+   "button.cal-day \"26\" 43×62",
+   "button.cal-day \"27\" 43×62",
+   "button.cal-day \"28\" 43×62",
+   "button.cal-day \"29\" 43×62",
+   "button.cal-day \"30\" 43×62",
+   "button.cal-day \"31\" 43×62",
+   "button.cal-day \"1\" 43×62",
+   "button.cal-day \"2\" 43×62",
+   "button.cal-day \"3\" 43×62",
+   "button.cal-day \"4\" 43×62",
+   "button.cal-day \"5\" 43×62",
+   "button.cal-day \"6\" 43×62",
+   "button.cal-day \"7\" 43×62",
+   "button.cal-day \"8\" 43×62",
+   "button.cal-day \"9\" 43×62",
+   "button.cal-day \"10\" 43×62"
+  ],
+  "smallCount": 42,
+  "textLinkCount": 0,
+  "tabs": [],
+  "wideTables": [],
+  "clock": "7:30 AM",
+  "timeButton": "Pause",
+  "rotate": false,
+  "textLen": 1068
+ },
+ {
+  "life": "long",
+  "size": "390x844m",
+  "step": "Updates",
+  "files": [],
+  "vw": 390,
+  "vh": 844,
+  "dialog": null,
+  "headerH": 105,
+  "mainTop": 105,
+  "mainW": 390,
+  "contentShare": 88,
+  "railShown": false,
+  "pageWider": 0,
+  "bleed": [],
+  "bleedCount": 0,
+  "cut": [],
+  "cutCount": 0,
+  "cutTitledCount": 0,
+  "squeezed": [],
+  "squeezedCount": 0,
+  "clipped": [],
+  "clippedCount": 0,
+  "controls": 32,
+  "inlineLinks": 5,
+  "small": [],
+  "smallCount": 0,
+  "textLinkCount": 0,
+  "tabs": [],
+  "wideTables": [],
+  "clock": "7:30 AM",
+  "timeButton": "Pause",
+  "rotate": false,
+  "textLen": 2606
+ },
+ {
+  "life": "long",
+  "size": "390x844m",
+  "step": "School Standing And Craft",
+  "files": [],
+  "vw": 390,
+  "vh": 844,
+  "dialog": null,
+  "headerH": 105,
+  "mainTop": 105,
+  "mainW": 390,
+  "contentShare": 88,
+  "railShown": false,
+  "pageWider": 0,
+  "bleed": [],
+  "bleedCount": 0,
+  "cut": [],
+  "cutCount": 0,
+  "cutTitledCount": 0,
+  "squeezed": [],
+  "squeezedCount": 0,
+  "clipped": [],
+  "clippedCount": 0,
+  "controls": 72,
+  "inlineLinks": 43,
+  "small": [
+   "button \"Home\" 40×44"
+  ],
+  "smallCount": 1,
+  "textLinkCount": 0,
+  "tabs": [
+   {
+    "name": "School",
+    "tabs": 6,
+    "overflows": true,
+    "activeVisible": true,
+    "halfShown": [
+     "Casting"
+    ],
+    "cue": true
+   }
+  ],
+  "wideTables": [
+   {
+    "scrolls": true,
+    "by": 372
+   }
+  ],
+  "clock": "7:30 AM",
+  "timeButton": "Pause",
+  "rotate": false,
+  "textLen": 4191
+ },
+ {
+  "life": "long",
+  "size": "390x844m",
+  "step": "School Classes",
+  "files": [],
+  "vw": 390,
+  "vh": 844,
+  "dialog": null,
+  "headerH": 105,
+  "mainTop": 105,
+  "mainW": 390,
+  "contentShare": 88,
+  "railShown": false,
+  "pageWider": 0,
+  "bleed": [],
+  "bleedCount": 0,
+  "cut": [],
+  "cutCount": 0,
+  "cutTitledCount": 0,
+  "squeezed": [],
+  "squeezedCount": 0,
+  "clipped": [],
+  "clippedCount": 0,
+  "controls": 67,
+  "inlineLinks": 49,
+  "small": [
+   "button \"Home\" 40×44"
+  ],
+  "smallCount": 1,
+  "textLinkCount": 0,
+  "tabs": [
+   {
+    "name": "School",
+    "tabs": 6,
+    "overflows": true,
+    "activeVisible": true,
+    "halfShown": [
+     "Casting"
+    ],
+    "cue": true
+   }
+  ],
+  "wideTables": [
+   {
+    "scrolls": true,
+    "by": 291
+   },
+   {
+    "scrolls": true,
+    "by": 372
+   }
+  ],
+  "clock": "7:30 AM",
+  "timeButton": "Pause",
+  "rotate": false,
+  "textLen": 2187
+ },
+ {
+  "life": "long",
+  "size": "390x844m",
+  "step": "School Coursework",
+  "files": [
+   "long/390x844m/08-school-coursework.jpg"
+  ],
+  "vw": 390,
+  "vh": 844,
+  "dialog": null,
+  "headerH": 105,
+  "mainTop": 105,
+  "mainW": 390,
+  "contentShare": 88,
+  "railShown": false,
+  "pageWider": 0,
+  "bleed": [],
+  "bleedCount": 0,
+  "cut": [],
+  "cutCount": 0,
+  "cutTitledCount": 0,
+  "squeezed": [],
+  "squeezedCount": 0,
+  "clipped": [],
+  "clippedCount": 0,
+  "controls": 49,
+  "inlineLinks": 1,
+  "small": [
+   "button \"Home\" 40×44"
+  ],
+  "smallCount": 1,
+  "textLinkCount": 0,
+  "tabs": [
+   {
+    "name": "School",
+    "tabs": 6,
+    "overflows": true,
+    "activeVisible": true,
+    "halfShown": [
+     "Casting"
+    ],
+    "cue": true
+   }
+  ],
+  "wideTables": [
+   {
+    "scrolls": true,
+    "by": 312
+   }
+  ],
+  "clock": "7:30 AM",
+  "timeButton": "Pause",
+  "rotate": false,
+  "textLen": 5405
+ },
+ {
+  "life": "long",
+  "size": "390x844m",
+  "step": "School Casting",
+  "files": [
+   "long/390x844m/09-school-casting.jpg"
+  ],
+  "vw": 390,
+  "vh": 844,
+  "dialog": null,
+  "headerH": 105,
+  "mainTop": 105,
+  "mainW": 390,
+  "contentShare": 88,
+  "railShown": false,
+  "pageWider": 0,
+  "bleed": [],
+  "bleedCount": 0,
+  "cut": [],
+  "cutCount": 0,
+  "cutTitledCount": 0,
+  "squeezed": [],
+  "squeezedCount": 0,
+  "clipped": [],
+  "clippedCount": 0,
+  "controls": 39,
+  "inlineLinks": 1,
+  "small": [
+   "button \"Home\" 40×44"
+  ],
+  "smallCount": 1,
+  "textLinkCount": 16,
+  "tabs": [
+   {
+    "name": "School",
+    "tabs": 6,
+    "overflows": true,
+    "activeVisible": true,
+    "halfShown": [
+     "Classes",
+     "Terms And Award"
+    ],
+    "cue": true
+   }
+  ],
+  "wideTables": [
+   {
+    "scrolls": true,
+    "by": 372
+   }
+  ],
+  "clock": "7:30 AM",
+  "timeButton": "Pause",
+  "rotate": false,
+  "textLen": 1847
+ },
+ {
+  "life": "long",
+  "size": "390x844m",
+  "step": "School Shifts And Pay",
+  "files": [],
+  "vw": 390,
+  "vh": 844,
+  "dialog": null,
+  "headerH": 105,
+  "mainTop": 105,
+  "mainW": 390,
+  "contentShare": 88,
+  "railShown": false,
+  "pageWider": 0,
+  "bleed": [],
+  "bleedCount": 0,
+  "cut": [],
+  "cutCount": 0,
+  "cutTitledCount": 0,
+  "squeezed": [],
+  "squeezedCount": 0,
+  "clipped": [],
+  "clippedCount": 0,
+  "controls": 23,
+  "inlineLinks": 1,
+  "small": [
+   "button \"Home\" 40×44"
+  ],
+  "smallCount": 1,
+  "textLinkCount": 0,
+  "tabs": [
+   {
+    "name": "School",
+    "tabs": 6,
+    "overflows": true,
+    "activeVisible": true,
+    "halfShown": [
+     "Classes",
+     "Terms And Award"
+    ],
+    "cue": true
+   }
+  ],
+  "wideTables": [],
+  "clock": "7:30 AM",
+  "timeButton": "Pause",
+  "rotate": false,
+  "textLen": 1400
+ },
+ {
+  "life": "long",
+  "size": "390x844m",
+  "step": "School Terms And Award",
+  "files": [],
+  "vw": 390,
+  "vh": 844,
+  "dialog": null,
+  "headerH": 105,
+  "mainTop": 105,
+  "mainW": 390,
+  "contentShare": 88,
+  "railShown": false,
+  "pageWider": 0,
+  "bleed": [],
+  "bleedCount": 0,
+  "cut": [],
+  "cutCount": 0,
+  "cutTitledCount": 0,
+  "squeezed": [],
+  "squeezedCount": 0,
+  "clipped": [],
+  "clippedCount": 0,
+  "controls": 26,
+  "inlineLinks": 1,
+  "small": [
+   "button \"Home\" 40×44"
+  ],
+  "smallCount": 1,
+  "textLinkCount": 6,
+  "tabs": [
+   {
+    "name": "School",
+    "tabs": 6,
+    "overflows": true,
+    "activeVisible": true,
+    "halfShown": [
+     "Coursework"
+    ],
+    "cue": true
+   }
+  ],
+  "wideTables": [],
+  "clock": "7:30 AM",
+  "timeButton": "Pause",
+  "rotate": false,
+  "textLen": 1563
+ },
+ {
+  "life": "long",
+  "size": "390x844m",
+  "step": "Career Overview",
+  "files": [],
+  "vw": 390,
+  "vh": 844,
+  "dialog": null,
+  "headerH": 105,
+  "mainTop": 105,
+  "mainW": 390,
+  "contentShare": 88,
+  "railShown": false,
+  "pageWider": 0,
+  "bleed": [],
+  "bleedCount": 0,
+  "cut": [],
+  "cutCount": 0,
+  "cutTitledCount": 0,
+  "squeezed": [],
+  "squeezedCount": 0,
+  "clipped": [],
+  "clippedCount": 0,
+  "controls": 17,
+  "inlineLinks": 0,
+  "small": [
+   "button \"Home\" 40×44"
+  ],
+  "smallCount": 1,
+  "textLinkCount": 0,
+  "tabs": [
+   {
+    "name": "Career",
+    "tabs": 6,
+    "overflows": true,
+    "activeVisible": true,
+    "halfShown": [
+     "Opportunities"
+    ],
+    "cue": true
+   }
+  ],
+  "wideTables": [],
+  "clock": "7:30 AM",
+  "timeButton": "Pause",
+  "rotate": false,
+  "textLen": 1609
+ },
+ {
+  "life": "long",
+  "size": "390x844m",
+  "step": "Career Portfolio",
+  "files": [],
+  "vw": 390,
+  "vh": 844,
+  "dialog": null,
+  "headerH": 105,
+  "mainTop": 105,
+  "mainW": 390,
+  "contentShare": 88,
+  "railShown": false,
+  "pageWider": 0,
+  "bleed": [],
+  "bleedCount": 0,
+  "cut": [],
+  "cutCount": 0,
+  "cutTitledCount": 0,
+  "squeezed": [],
+  "squeezedCount": 0,
+  "clipped": [],
+  "clippedCount": 0,
+  "controls": 27,
+  "inlineLinks": 0,
+  "small": [
+   "button \"Home\" 40×44"
+  ],
+  "smallCount": 1,
+  "textLinkCount": 0,
+  "tabs": [
+   {
+    "name": "Career",
+    "tabs": 6,
+    "overflows": true,
+    "activeVisible": true,
+    "halfShown": [
+     "Opportunities"
+    ],
+    "cue": true
+   }
+  ],
+  "wideTables": [],
+  "clock": "7:30 AM",
+  "timeButton": "Pause",
+  "rotate": false,
+  "textLen": 2203
+ },
+ {
+  "life": "long",
+  "size": "390x844m",
+  "step": "Career Representation",
+  "files": [],
+  "vw": 390,
+  "vh": 844,
+  "dialog": null,
+  "headerH": 105,
+  "mainTop": 105,
+  "mainW": 390,
+  "contentShare": 88,
+  "railShown": false,
+  "pageWider": 0,
+  "bleed": [],
+  "bleedCount": 0,
+  "cut": [],
+  "cutCount": 0,
+  "cutTitledCount": 0,
+  "squeezed": [],
+  "squeezedCount": 0,
+  "clipped": [],
+  "clippedCount": 0,
+  "controls": 33,
+  "inlineLinks": 0,
+  "small": [
+   "button \"Home\" 40×44"
+  ],
+  "smallCount": 1,
+  "textLinkCount": 0,
+  "tabs": [
+   {
+    "name": "Career",
+    "tabs": 6,
+    "overflows": true,
+    "activeVisible": true,
+    "halfShown": [
+     "Opportunities"
+    ],
+    "cue": true
+   }
+  ],
+  "wideTables": [],
+  "clock": "7:30 AM",
+  "timeButton": "Pause",
+  "rotate": false,
+  "textLen": 1552
+ },
+ {
+  "life": "long",
+  "size": "390x844m",
+  "step": "Career Opportunities",
+  "files": [],
+  "vw": 390,
+  "vh": 844,
+  "dialog": null,
+  "headerH": 105,
+  "mainTop": 105,
+  "mainW": 390,
+  "contentShare": 88,
+  "railShown": false,
+  "pageWider": 0,
+  "bleed": [],
+  "bleedCount": 0,
+  "cut": [],
+  "cutCount": 0,
+  "cutTitledCount": 0,
+  "squeezed": [],
+  "squeezedCount": 0,
+  "clipped": [],
+  "clippedCount": 0,
+  "controls": 30,
+  "inlineLinks": 0,
+  "small": [
+   "button \"Home\" 40×44"
+  ],
+  "smallCount": 1,
+  "textLinkCount": 0,
+  "tabs": [
+   {
+    "name": "Career",
+    "tabs": 6,
+    "overflows": true,
+    "activeVisible": true,
+    "halfShown": [
+     "Overview"
+    ],
+    "cue": true
+   }
+  ],
+  "wideTables": [],
+  "clock": "7:30 AM",
+  "timeButton": "Pause",
+  "rotate": false,
+  "textLen": 6768
+ },
+ {
+  "life": "long",
+  "size": "390x844m",
+  "step": "Career Work",
+  "files": [],
+  "vw": 390,
+  "vh": 844,
+  "dialog": null,
+  "headerH": 105,
+  "mainTop": 105,
+  "mainW": 390,
+  "contentShare": 88,
+  "railShown": false,
+  "pageWider": 0,
+  "bleed": [],
+  "bleedCount": 0,
+  "cut": [],
+  "cutCount": 0,
+  "cutTitledCount": 0,
+  "squeezed": [],
+  "squeezedCount": 0,
+  "clipped": [],
+  "clippedCount": 0,
+  "controls": 20,
+  "inlineLinks": 0,
+  "small": [
+   "button \"Home\" 40×44"
+  ],
+  "smallCount": 1,
+  "textLinkCount": 0,
+  "tabs": [
+   {
+    "name": "Career",
+    "tabs": 6,
+    "overflows": true,
+    "activeVisible": true,
+    "halfShown": [
+     "Representation"
+    ],
+    "cue": true
+   }
+  ],
+  "wideTables": [],
+  "clock": "7:30 AM",
+  "timeButton": "Pause",
+  "rotate": false,
+  "textLen": 824
+ },
+ {
+  "life": "long",
+  "size": "390x844m",
+  "step": "Career Charts And Awards",
+  "files": [
+   "long/390x844m/17-career-charts-and-awards.jpg"
+  ],
+  "vw": 390,
+  "vh": 844,
+  "dialog": null,
+  "headerH": 105,
+  "mainTop": 105,
+  "mainW": 390,
+  "contentShare": 88,
+  "railShown": false,
+  "pageWider": 0,
+  "bleed": [],
+  "bleedCount": 0,
+  "cut": [],
+  "cutCount": 0,
+  "cutTitledCount": 0,
+  "squeezed": [],
+  "squeezedCount": 0,
+  "clipped": [],
+  "clippedCount": 0,
+  "controls": 26,
+  "inlineLinks": 0,
+  "small": [
+   "button \"Home\" 40×44"
+  ],
+  "smallCount": 1,
+  "textLinkCount": 0,
+  "tabs": [
+   {
+    "name": "Career",
+    "tabs": 6,
+    "overflows": true,
+    "activeVisible": true,
+    "halfShown": [
+     "Representation"
+    ],
+    "cue": true
+   }
+  ],
+  "wideTables": [],
+  "clock": "7:30 AM",
+  "timeButton": "Pause",
+  "rotate": false,
+  "textLen": 1263
+ },
+ {
+  "life": "long",
+  "size": "390x844m",
+  "step": "Money Accounts",
+  "files": [],
+  "vw": 390,
+  "vh": 844,
+  "dialog": null,
+  "headerH": 105,
+  "mainTop": 105,
+  "mainW": 390,
+  "contentShare": 88,
+  "railShown": false,
+  "pageWider": 0,
+  "bleed": [],
+  "bleedCount": 0,
+  "cut": [],
+  "cutCount": 0,
+  "cutTitledCount": 0,
+  "squeezed": [],
+  "squeezedCount": 0,
+  "clipped": [],
+  "clippedCount": 0,
+  "controls": 48,
+  "inlineLinks": 5,
+  "small": [
+   "button \"Home\" 40×44"
+  ],
+  "smallCount": 1,
+  "textLinkCount": 2,
+  "tabs": [
+   {
+    "name": "Your Bank",
+    "tabs": 5,
+    "overflows": true,
+    "activeVisible": true,
+    "halfShown": [
+     "Borrowing"
+    ],
+    "cue": true
+   }
+  ],
+  "wideTables": [],
+  "clock": "7:30 AM",
+  "timeButton": "Pause",
+  "rotate": false,
+  "textLen": 3587
+ },
+ {
+  "life": "long",
+  "size": "390x844m",
+  "step": "Money Cards",
+  "files": [],
+  "vw": 390,
+  "vh": 844,
+  "dialog": null,
+  "headerH": 105,
+  "mainTop": 105,
+  "mainW": 390,
+  "contentShare": 88,
+  "railShown": false,
+  "pageWider": 0,
+  "bleed": [],
+  "bleedCount": 0,
+  "cut": [],
+  "cutCount": 0,
+  "cutTitledCount": 0,
+  "squeezed": [],
+  "squeezedCount": 0,
+  "clipped": [],
+  "clippedCount": 0,
+  "controls": 64,
+  "inlineLinks": 5,
+  "small": [
+   "button \"Home\" 40×44"
+  ],
+  "smallCount": 1,
+  "textLinkCount": 6,
+  "tabs": [
+   {
+    "name": "Your Bank",
+    "tabs": 5,
+    "overflows": true,
+    "activeVisible": true,
+    "halfShown": [
+     "Borrowing"
+    ],
+    "cue": true
+   }
+  ],
+  "wideTables": [],
+  "clock": "7:30 AM",
+  "timeButton": "Pause",
+  "rotate": false,
+  "textLen": 4624
+ },
+ {
+  "life": "long",
+  "size": "390x844m",
+  "step": "Money Payments And Cash",
+  "files": [],
+  "vw": 390,
+  "vh": 844,
+  "dialog": null,
+  "headerH": 105,
+  "mainTop": 105,
+  "mainW": 390,
+  "contentShare": 88,
+  "railShown": false,
+  "pageWider": 0,
+  "bleed": [],
+  "bleedCount": 0,
+  "cut": [],
+  "cutCount": 0,
+  "cutTitledCount": 0,
+  "squeezed": [],
+  "squeezedCount": 0,
+  "clipped": [],
+  "clippedCount": 0,
+  "controls": 35,
+  "inlineLinks": 3,
+  "small": [
+   "button \"Home\" 40×44"
+  ],
+  "smallCount": 1,
+  "textLinkCount": 1,
+  "tabs": [
+   {
+    "name": "Your Bank",
+    "tabs": 5,
+    "overflows": true,
+    "activeVisible": true,
+    "halfShown": [
+     "Borrowing"
+    ],
+    "cue": true
+   }
+  ],
+  "wideTables": [],
+  "clock": "7:30 AM",
+  "timeButton": "Pause",
+  "rotate": false,
+  "textLen": 1044
+ },
+ {
+  "life": "long",
+  "size": "390x844m",
+  "step": "Money Borrowing",
+  "files": [],
+  "vw": 390,
+  "vh": 844,
+  "dialog": null,
+  "headerH": 105,
+  "mainTop": 105,
+  "mainW": 390,
+  "contentShare": 88,
+  "railShown": false,
+  "pageWider": 0,
+  "bleed": [],
+  "bleedCount": 0,
+  "cut": [],
+  "cutCount": 0,
+  "cutTitledCount": 0,
+  "squeezed": [],
+  "squeezedCount": 0,
+  "clipped": [],
+  "clippedCount": 0,
+  "controls": 23,
+  "inlineLinks": 3,
+  "small": [
+   "button \"Home\" 40×44"
+  ],
+  "smallCount": 1,
+  "textLinkCount": 1,
+  "tabs": [
+   {
+    "name": "Your Bank",
+    "tabs": 5,
+    "overflows": true,
+    "activeVisible": true,
+    "halfShown": [
+     "Accounts"
+    ],
+    "cue": true
+   }
+  ],
+  "wideTables": [],
+  "clock": "7:30 AM",
+  "timeButton": "Pause",
+  "rotate": false,
+  "textLen": 1031
+ },
+ {
+  "life": "long",
+  "size": "390x844m",
+  "step": "Money Statements",
+  "files": [],
+  "vw": 390,
+  "vh": 844,
+  "dialog": null,
+  "headerH": 105,
+  "mainTop": 105,
+  "mainW": 390,
+  "contentShare": 88,
+  "railShown": false,
+  "pageWider": 0,
+  "bleed": [],
+  "bleedCount": 0,
+  "cut": [],
+  "cutCount": 0,
+  "cutTitledCount": 0,
+  "squeezed": [],
+  "squeezedCount": 0,
+  "clipped": [],
+  "clippedCount": 0,
+  "controls": 51,
+  "inlineLinks": 3,
+  "small": [
+   "button \"Home\" 40×44"
+  ],
+  "smallCount": 1,
+  "textLinkCount": 20,
+  "tabs": [
+   {
+    "name": "Your Bank",
+    "tabs": 5,
+    "overflows": true,
+    "activeVisible": true,
+    "halfShown": [
+     "Cards"
+    ],
+    "cue": true
+   }
+  ],
+  "wideTables": [],
+  "clock": "7:30 AM",
+  "timeButton": "Pause",
+  "rotate": false,
+  "textLen": 1628
+ },
+ {
+  "life": "long",
+  "size": "390x844m",
+  "step": "Papers Tax Returns",
+  "files": [],
+  "vw": 390,
+  "vh": 844,
+  "dialog": null,
+  "headerH": 105,
+  "mainTop": 105,
+  "mainW": 390,
+  "contentShare": 88,
+  "railShown": false,
+  "pageWider": 0,
+  "bleed": [],
+  "bleedCount": 0,
+  "cut": [],
+  "cutCount": 0,
+  "cutTitledCount": 0,
+  "squeezed": [],
+  "squeezedCount": 0,
+  "clipped": [],
+  "clippedCount": 0,
+  "controls": 19,
+  "inlineLinks": 1,
+  "small": [
+   "button \"Home\" 40×44"
+  ],
+  "smallCount": 1,
+  "textLinkCount": 0,
+  "tabs": [
+   {
+    "name": "Papers",
+    "tabs": 5,
+    "overflows": true,
+    "activeVisible": true,
+    "halfShown": [
+     "Passport And ID"
+    ],
+    "cue": true
+   }
+  ],
+  "wideTables": [],
+  "clock": "7:30 AM",
+  "timeButton": "Pause",
+  "rotate": false,
+  "textLen": 485
+ },
+ {
+  "life": "long",
+  "size": "390x844m",
+  "step": "Papers Health Cover",
+  "files": [],
+  "vw": 390,
+  "vh": 844,
+  "dialog": null,
+  "headerH": 105,
+  "mainTop": 105,
+  "mainW": 390,
+  "contentShare": 88,
+  "railShown": false,
+  "pageWider": 0,
+  "bleed": [],
+  "bleedCount": 0,
+  "cut": [],
+  "cutCount": 0,
+  "cutTitledCount": 0,
+  "squeezed": [],
+  "squeezedCount": 0,
+  "clipped": [],
+  "clippedCount": 0,
+  "controls": 33,
+  "inlineLinks": 0,
+  "small": [
+   "button \"Home\" 40×44"
+  ],
+  "smallCount": 1,
+  "textLinkCount": 0,
+  "tabs": [
+   {
+    "name": "Papers",
+    "tabs": 5,
+    "overflows": true,
+    "activeVisible": true,
+    "halfShown": [
+     "Passport And ID"
+    ],
+    "cue": true
+   }
+  ],
+  "wideTables": [],
+  "clock": "7:30 AM",
+  "timeButton": "Pause",
+  "rotate": false,
+  "textLen": 2091
+ },
+ {
+  "life": "long",
+  "size": "390x844m",
+  "step": "Papers Unemployment",
+  "files": [],
+  "vw": 390,
+  "vh": 844,
+  "dialog": null,
+  "headerH": 105,
+  "mainTop": 105,
+  "mainW": 390,
+  "contentShare": 88,
+  "railShown": false,
+  "pageWider": 0,
+  "bleed": [],
+  "bleedCount": 0,
+  "cut": [],
+  "cutCount": 0,
+  "cutTitledCount": 0,
+  "squeezed": [],
+  "squeezedCount": 0,
+  "clipped": [],
+  "clippedCount": 0,
+  "controls": 21,
+  "inlineLinks": 0,
+  "small": [
+   "button \"Home\" 40×44"
+  ],
+  "smallCount": 1,
+  "textLinkCount": 0,
+  "tabs": [
+   {
+    "name": "Papers",
+    "tabs": 5,
+    "overflows": true,
+    "activeVisible": true,
+    "halfShown": [
+     "Passport And ID"
+    ],
+    "cue": true
+   }
+  ],
+  "wideTables": [],
+  "clock": "7:30 AM",
+  "timeButton": "Pause",
+  "rotate": false,
+  "textLen": 1235
+ },
+ {
+  "life": "long",
+  "size": "390x844m",
+  "step": "Papers Passport And ID",
+  "files": [],
+  "vw": 390,
+  "vh": 844,
+  "dialog": null,
+  "headerH": 105,
+  "mainTop": 105,
+  "mainW": 390,
+  "contentShare": 88,
+  "railShown": false,
+  "pageWider": 0,
+  "bleed": [],
+  "bleedCount": 0,
+  "cut": [],
+  "cutCount": 0,
+  "cutTitledCount": 0,
+  "squeezed": [],
+  "squeezedCount": 0,
+  "clipped": [],
+  "clippedCount": 0,
+  "controls": 31,
+  "inlineLinks": 5,
+  "small": [
+   "button \"Home\" 40×44"
+  ],
+  "smallCount": 1,
+  "textLinkCount": 0,
+  "tabs": [
+   {
+    "name": "Papers",
+    "tabs": 5,
+    "overflows": true,
+    "activeVisible": true,
+    "halfShown": [
+     "Tax Returns"
+    ],
+    "cue": true
+   }
+  ],
+  "wideTables": [
+   {
+    "scrolls": true,
+    "by": 372
+   }
+  ],
+  "clock": "7:30 AM",
+  "timeButton": "Pause",
+  "rotate": false,
+  "textLen": 1616
+ },
+ {
+  "life": "long",
+  "size": "390x844m",
+  "step": "Papers Permission To Work",
+  "files": [],
+  "vw": 390,
+  "vh": 844,
+  "dialog": null,
+  "headerH": 105,
+  "mainTop": 105,
+  "mainW": 390,
+  "contentShare": 88,
+  "railShown": false,
+  "pageWider": 0,
+  "bleed": [],
+  "bleedCount": 0,
+  "cut": [],
+  "cutCount": 0,
+  "cutTitledCount": 0,
+  "squeezed": [],
+  "squeezedCount": 0,
+  "clipped": [],
+  "clippedCount": 0,
+  "controls": 30,
+  "inlineLinks": 4,
+  "small": [
+   "button \"Home\" 40×44"
+  ],
+  "smallCount": 1,
+  "textLinkCount": 0,
+  "tabs": [
+   {
+    "name": "Papers",
+    "tabs": 5,
+    "overflows": true,
+    "activeVisible": true,
+    "halfShown": [
+     "Unemployment"
+    ],
+    "cue": true
+   }
+  ],
+  "wideTables": [
+   {
+    "scrolls": true,
+    "by": 18
+   }
+  ],
+  "clock": "7:30 AM",
+  "timeButton": "Pause",
+  "rotate": false,
+  "textLen": 2195
+ },
+ {
+  "life": "long",
+  "size": "390x844m",
+  "step": "Look After Yourself Menu",
+  "files": [],
+  "vw": 390,
+  "vh": 844,
+  "dialog": null,
+  "headerH": 105,
+  "mainTop": 105,
+  "mainW": 390,
+  "contentShare": 88,
+  "railShown": false,
+  "pageWider": 0,
+  "bleed": [],
+  "bleedCount": 0,
+  "cut": [],
+  "cutCount": 0,
+  "cutTitledCount": 0,
+  "squeezed": [],
+  "squeezedCount": 0,
+  "clipped": [],
+  "clippedCount": 0,
+  "controls": 75,
+  "inlineLinks": 7,
+  "small": [],
+  "smallCount": 0,
+  "textLinkCount": 34,
+  "tabs": [],
+  "wideTables": [],
+  "clock": "7:30 AM",
+  "timeButton": "Pause",
+  "rotate": false,
+  "textLen": 3035
+ },
+ {
+  "life": "long",
+  "size": "390x844m",
+  "step": "Advance Menu",
+  "files": [],
+  "vw": 390,
+  "vh": 844,
+  "dialog": null,
+  "headerH": 105,
+  "mainTop": 105,
+  "mainW": 390,
+  "contentShare": 88,
+  "railShown": false,
+  "pageWider": 0,
+  "bleed": [],
+  "bleedCount": 0,
+  "cut": [],
+  "cutCount": 0,
+  "cutTitledCount": 0,
+  "squeezed": [],
+  "squeezedCount": 0,
+  "clipped": [],
+  "clippedCount": 0,
+  "controls": 79,
+  "inlineLinks": 7,
+  "small": [],
+  "smallCount": 0,
+  "textLinkCount": 34,
+  "tabs": [],
+  "wideTables": [],
+  "clock": "7:30 AM",
+  "timeButton": "Pause",
+  "rotate": false,
+  "textLen": 3035
+ },
+ {
+  "life": "long",
+  "size": "390x844m",
+  "step": "How This Works",
+  "files": [],
+  "vw": 390,
+  "vh": 844,
+  "dialog": "How This Works",
+  "dialogFits": true,
+  "dialogFootVisible": true,
+  "headerH": 105,
+  "mainTop": 105,
+  "mainW": 390,
+  "contentShare": 88,
+  "railShown": false,
+  "pageWider": 0,
+  "bleed": [],
+  "bleedCount": 0,
+  "cut": [],
+  "cutCount": 0,
+  "cutTitledCount": 0,
+  "squeezed": [],
+  "squeezedCount": 0,
+  "clipped": [],
+  "clippedCount": 0,
+  "controls": 176,
+  "inlineLinks": 7,
+  "small": [],
+  "smallCount": 0,
+  "textLinkCount": 34,
+  "tabs": [],
+  "wideTables": [],
+  "clock": "7:30 AM",
+  "timeButton": "Pause",
+  "rotate": false,
+  "textLen": 3035
+ },
+ {
+  "life": "long",
+  "size": "390x844m",
+  "step": "Sleep Dialog",
+  "files": [],
+  "vw": 390,
+  "vh": 844,
+  "dialog": "Sleep",
+  "dialogFits": true,
+  "dialogFootVisible": true,
+  "headerH": 105,
+  "mainTop": 105,
+  "mainW": 390,
+  "contentShare": 88,
+  "railShown": false,
+  "pageWider": 0,
+  "bleed": [],
+  "bleedCount": 0,
+  "cut": [],
+  "cutCount": 0,
+  "cutTitledCount": 0,
+  "squeezed": [],
+  "squeezedCount": 0,
+  "clipped": [],
+  "clippedCount": 0,
+  "controls": 74,
+  "inlineLinks": 7,
+  "small": [],
+  "smallCount": 0,
+  "textLinkCount": 34,
+  "tabs": [],
+  "wideTables": [],
+  "clock": "7:30 AM",
+  "timeButton": "Pause",
+  "rotate": false,
+  "textLen": 3035
+ },
+ {
+  "life": "long",
+  "size": "390x844m",
+  "step": "(problems)",
+  "problems": []
+ },
+ {
+  "life": "offer",
+  "size": "390x844m",
+  "step": "Home",
+  "files": [],
+  "vw": 390,
+  "vh": 844,
+  "dialog": null,
+  "headerH": 105,
+  "mainTop": 105,
+  "mainW": 390,
+  "contentShare": 88,
+  "railShown": false,
+  "pageWider": 0,
+  "bleed": [],
+  "bleedCount": 0,
+  "cut": [],
+  "cutCount": 0,
+  "cutTitledCount": 0,
+  "squeezed": [],
+  "squeezedCount": 0,
+  "clipped": [],
+  "clippedCount": 0,
+  "controls": 86,
+  "inlineLinks": 7,
+  "small": [],
+  "smallCount": 0,
+  "textLinkCount": 39,
+  "tabs": [],
+  "wideTables": [],
+  "clock": "5:00 PM",
+  "timeButton": "Pause",
+  "rotate": false,
+  "textLen": 3230
+ },
+ {
+  "life": "offer",
+  "size": "390x844m",
+  "step": "Navigation Open",
+  "files": [],
+  "vw": 390,
+  "vh": 844,
+  "dialog": null,
+  "headerH": 105,
+  "mainTop": 105,
+  "mainW": 390,
+  "contentShare": 88,
+  "railShown": true,
+  "pageWider": 0,
+  "bleed": [],
+  "bleedCount": 0,
+  "cut": [],
+  "cutCount": 0,
+  "cutTitledCount": 0,
+  "squeezed": [],
+  "squeezedCount": 0,
+  "clipped": [],
+  "clippedCount": 0,
+  "controls": 95,
+  "inlineLinks": 7,
+  "small": [],
+  "smallCount": 0,
+  "textLinkCount": 39,
+  "tabs": [],
+  "wideTables": [],
+  "clock": "5:00 PM",
+  "timeButton": "Pause",
+  "rotate": false,
+  "textLen": 3230
+ },
+ {
+  "life": "offer",
+  "size": "390x844m",
+  "step": "Player Profile",
+  "files": [],
+  "vw": 390,
+  "vh": 844,
+  "dialog": null,
+  "headerH": 105,
+  "mainTop": 105,
+  "mainW": 390,
+  "contentShare": 88,
+  "railShown": false,
+  "pageWider": 0,
+  "bleed": [],
+  "bleedCount": 0,
+  "cut": [],
+  "cutCount": 0,
+  "cutTitledCount": 0,
+  "squeezed": [],
+  "squeezedCount": 0,
+  "clipped": [],
+  "clippedCount": 0,
+  "controls": 167,
+  "inlineLinks": 72,
+  "small": [
+   "button \"Home\" 40×44"
+  ],
+  "smallCount": 1,
+  "textLinkCount": 0,
+  "tabs": [],
+  "wideTables": [
+   {
+    "scrolls": true,
+    "by": 912
+   },
+   {
+    "scrolls": true,
+    "by": 372
+   },
+   {
+    "scrolls": true,
+    "by": 394
+   },
+   {
+    "scrolls": true,
+    "by": 2037
+   },
+   {
+    "scrolls": true,
+    "by": 372
+   }
+  ],
+  "clock": "5:00 PM",
+  "timeButton": "Pause",
+  "rotate": false,
+  "textLen": 12886
+ },
+ {
+  "life": "offer",
+  "size": "390x844m",
+  "step": "Calendar",
+  "files": [],
+  "vw": 390,
+  "vh": 844,
+  "dialog": null,
+  "headerH": 105,
+  "mainTop": 105,
+  "mainW": 390,
+  "contentShare": 88,
+  "railShown": false,
+  "pageWider": 0,
+  "bleed": [],
+  "bleedCount": 0,
+  "cut": [],
+  "cutCount": 0,
+  "cutTitledCount": 0,
+  "squeezed": [],
+  "squeezedCount": 0,
+  "clipped": [],
+  "clippedCount": 0,
+  "controls": 55,
+  "inlineLinks": 0,
+  "small": [
+   "button.cal-day \"29\" 43×62",
+   "button.cal-day \"30 Audition: Ivy, Paper Moons\" 43×62",
+   "button.cal-day \"31\" 43×62",
+   "button.cal-day \"1 Casting Answers: Hester Vane\" 43×62",
+   "button.cal-day \"2 Casting Decides: Ivy\" 43×62",
+   "button.cal-day \"3\" 43×62",
+   "button.cal-day \"4\" 43×62",
+   "button.cal-day \"5\" 43×62",
+   "button.cal-day \"6 Audition: Hester Vane, The Winter Ledger\" 43×62",
+   "button.cal-day \"7 Casting Decides: Hester Vane\" 43×62",
+   "button.cal-day \"8\" 43×62",
+   "button.cal-day \"9\" 43×62",
+   "button.cal-day \"10\" 43×62",
+   "button.cal-day \"11\" 43×62",
+   "button.cal-day \"12\" 43×62",
+   "button.cal-day \"13 Callback: Hester Vane, The Winter Ledger\" 43×62"
+  ],
+  "smallCount": 35,
+  "textLinkCount": 0,
+  "tabs": [],
+  "wideTables": [],
+  "clock": "5:00 PM",
+  "timeButton": "Pause",
+  "rotate": false,
+  "textLen": 1379
+ },
+ {
+  "life": "offer",
+  "size": "390x844m",
+  "step": "Updates",
+  "files": [],
+  "vw": 390,
+  "vh": 844,
+  "dialog": null,
+  "headerH": 105,
+  "mainTop": 105,
+  "mainW": 390,
+  "contentShare": 88,
+  "railShown": false,
+  "pageWider": 0,
+  "bleed": [],
+  "bleedCount": 0,
+  "cut": [],
+  "cutCount": 0,
+  "cutTitledCount": 0,
+  "squeezed": [],
+  "squeezedCount": 0,
+  "clipped": [],
+  "clippedCount": 0,
+  "controls": 170,
+  "inlineLinks": 40,
+  "small": [],
+  "smallCount": 0,
+  "textLinkCount": 0,
+  "tabs": [],
+  "wideTables": [],
+  "clock": "5:00 PM",
+  "timeButton": "Pause",
+  "rotate": false,
+  "textLen": 13323
+ },
+ {
+  "life": "offer",
+  "size": "390x844m",
+  "step": "School Standing And Craft",
+  "files": [],
+  "vw": 390,
+  "vh": 844,
+  "dialog": null,
+  "headerH": 105,
+  "mainTop": 105,
+  "mainW": 390,
+  "contentShare": 88,
+  "railShown": false,
+  "pageWider": 0,
+  "bleed": [],
+  "bleedCount": 0,
+  "cut": [],
+  "cutCount": 0,
+  "cutTitledCount": 0,
+  "squeezed": [],
+  "squeezedCount": 0,
+  "clipped": [],
+  "clippedCount": 0,
+  "controls": 67,
+  "inlineLinks": 43,
+  "small": [
+   "button \"Home\" 40×44"
+  ],
+  "smallCount": 1,
+  "textLinkCount": 0,
+  "tabs": [
+   {
+    "name": "School",
+    "tabs": 6,
+    "overflows": true,
+    "activeVisible": true,
+    "halfShown": [
+     "Casting"
+    ],
+    "cue": true
+   }
+  ],
+  "wideTables": [
+   {
+    "scrolls": true,
+    "by": 372
+   },
+   {
+    "scrolls": true,
+    "by": 372
+   }
+  ],
+  "clock": "5:00 PM",
+  "timeButton": "Pause",
+  "rotate": false,
+  "textLen": 6222
+ },
+ {
+  "life": "offer",
+  "size": "390x844m",
+  "step": "School Classes",
+  "files": [],
+  "vw": 390,
+  "vh": 844,
+  "dialog": null,
+  "headerH": 105,
+  "mainTop": 105,
+  "mainW": 390,
+  "contentShare": 88,
+  "railShown": false,
+  "pageWider": 0,
+  "bleed": [],
+  "bleedCount": 0,
+  "cut": [],
+  "cutCount": 0,
+  "cutTitledCount": 0,
+  "squeezed": [],
+  "squeezedCount": 0,
+  "clipped": [],
+  "clippedCount": 0,
+  "controls": 17,
+  "inlineLinks": 1,
+  "small": [
+   "button \"Home\" 40×44"
+  ],
+  "smallCount": 1,
+  "textLinkCount": 0,
+  "tabs": [
+   {
+    "name": "School",
+    "tabs": 6,
+    "overflows": true,
+    "activeVisible": true,
+    "halfShown": [
+     "Casting"
+    ],
+    "cue": true
+   }
+  ],
+  "wideTables": [],
+  "clock": "5:00 PM",
+  "timeButton": "Pause",
+  "rotate": false,
+  "textLen": 408
+ },
+ {
+  "life": "offer",
+  "size": "390x844m",
+  "step": "School Coursework",
+  "files": [
+   "offer/390x844m/08-school-coursework.jpg"
+  ],
+  "vw": 390,
+  "vh": 844,
+  "dialog": null,
+  "headerH": 105,
+  "mainTop": 105,
+  "mainW": 390,
+  "contentShare": 88,
+  "railShown": false,
+  "pageWider": 0,
+  "bleed": [],
+  "bleedCount": 0,
+  "cut": [],
+  "cutCount": 0,
+  "cutTitledCount": 0,
+  "squeezed": [],
+  "squeezedCount": 0,
+  "clipped": [],
+  "clippedCount": 0,
+  "controls": 73,
+  "inlineLinks": 1,
+  "small": [
+   "button \"Home\" 40×44"
+  ],
+  "smallCount": 1,
+  "textLinkCount": 15,
+  "tabs": [
+   {
+    "name": "School",
+    "tabs": 6,
+    "overflows": true,
+    "activeVisible": true,
+    "halfShown": [
+     "Casting"
+    ],
+    "cue": true
+   }
+  ],
+  "wideTables": [
+   {
+    "scrolls": true,
+    "by": 212
+   },
+   {
+    "scrolls": true,
+    "by": 312
+   }
+  ],
+  "clock": "5:00 PM",
+  "timeButton": "Pause",
+  "rotate": false,
+  "textLen": 12882
+ },
+ {
+  "life": "offer",
+  "size": "390x844m",
+  "step": "School Casting",
+  "files": [
+   "offer/390x844m/09-school-casting.jpg"
+  ],
+  "vw": 390,
+  "vh": 844,
+  "dialog": null,
+  "headerH": 105,
+  "mainTop": 105,
+  "mainW": 390,
+  "contentShare": 88,
+  "railShown": false,
+  "pageWider": 0,
+  "bleed": [],
+  "bleedCount": 0,
+  "cut": [],
+  "cutCount": 0,
+  "cutTitledCount": 0,
+  "squeezed": [],
+  "squeezedCount": 0,
+  "clipped": [],
+  "clippedCount": 0,
+  "controls": 24,
+  "inlineLinks": 1,
+  "small": [
+   "button \"Home\" 40×44"
+  ],
+  "smallCount": 1,
+  "textLinkCount": 0,
+  "tabs": [
+   {
+    "name": "School",
+    "tabs": 6,
+    "overflows": true,
+    "activeVisible": true,
+    "halfShown": [
+     "Classes",
+     "Terms And Award"
+    ],
+    "cue": true
+   }
+  ],
+  "wideTables": [
+   {
+    "scrolls": true,
+    "by": 372
+   }
+  ],
+  "clock": "5:00 PM",
+  "timeButton": "Pause",
+  "rotate": false,
+  "textLen": 1947
+ },
+ {
+  "life": "offer",
+  "size": "390x844m",
+  "step": "School Shifts And Pay",
+  "files": [],
+  "vw": 390,
+  "vh": 844,
+  "dialog": null,
+  "headerH": 105,
+  "mainTop": 105,
+  "mainW": 390,
+  "contentShare": 88,
+  "railShown": false,
+  "pageWider": 0,
+  "bleed": [],
+  "bleedCount": 0,
+  "cut": [],
+  "cutCount": 0,
+  "cutTitledCount": 0,
+  "squeezed": [],
+  "squeezedCount": 0,
+  "clipped": [],
+  "clippedCount": 0,
+  "controls": 21,
+  "inlineLinks": 1,
+  "small": [
+   "button \"Home\" 40×44"
+  ],
+  "smallCount": 1,
+  "textLinkCount": 0,
+  "tabs": [
+   {
+    "name": "School",
+    "tabs": 6,
+    "overflows": true,
+    "activeVisible": true,
+    "halfShown": [
+     "Classes",
+     "Terms And Award"
+    ],
+    "cue": true
+   }
+  ],
+  "wideTables": [],
+  "clock": "5:00 PM",
+  "timeButton": "Pause",
+  "rotate": false,
+  "textLen": 1175
+ },
+ {
+  "life": "offer",
+  "size": "390x844m",
+  "step": "School Terms And Award",
+  "files": [],
+  "vw": 390,
+  "vh": 844,
+  "dialog": null,
+  "headerH": 105,
+  "mainTop": 105,
+  "mainW": 390,
+  "contentShare": 88,
+  "railShown": false,
+  "pageWider": 0,
+  "bleed": [],
+  "bleedCount": 0,
+  "cut": [],
+  "cutCount": 0,
+  "cutTitledCount": 0,
+  "squeezed": [],
+  "squeezedCount": 0,
+  "clipped": [],
+  "clippedCount": 0,
+  "controls": 25,
+  "inlineLinks": 1,
+  "small": [
+   "button \"Home\" 40×44"
+  ],
+  "smallCount": 1,
+  "textLinkCount": 6,
+  "tabs": [
+   {
+    "name": "School",
+    "tabs": 6,
+    "overflows": true,
+    "activeVisible": true,
+    "halfShown": [
+     "Coursework"
+    ],
+    "cue": true
+   }
+  ],
+  "wideTables": [],
+  "clock": "5:00 PM",
+  "timeButton": "Pause",
+  "rotate": false,
+  "textLen": 1108
+ },
+ {
+  "life": "offer",
+  "size": "390x844m",
+  "step": "Career Overview",
+  "files": [],
+  "vw": 390,
+  "vh": 844,
+  "dialog": null,
+  "headerH": 105,
+  "mainTop": 105,
+  "mainW": 390,
+  "contentShare": 88,
+  "railShown": false,
+  "pageWider": 0,
+  "bleed": [],
+  "bleedCount": 0,
+  "cut": [],
+  "cutCount": 0,
+  "cutTitledCount": 0,
+  "squeezed": [],
+  "squeezedCount": 0,
+  "clipped": [],
+  "clippedCount": 0,
+  "controls": 17,
+  "inlineLinks": 0,
+  "small": [
+   "button \"Home\" 40×44"
+  ],
+  "smallCount": 1,
+  "textLinkCount": 0,
+  "tabs": [
+   {
+    "name": "Career",
+    "tabs": 6,
+    "overflows": true,
+    "activeVisible": true,
+    "halfShown": [
+     "Opportunities"
+    ],
+    "cue": true
+   }
+  ],
+  "wideTables": [],
+  "clock": "5:00 PM",
+  "timeButton": "Pause",
+  "rotate": false,
+  "textLen": 1147
+ },
+ {
+  "life": "offer",
+  "size": "390x844m",
+  "step": "Career Portfolio",
+  "files": [],
+  "vw": 390,
+  "vh": 844,
+  "dialog": null,
+  "headerH": 105,
+  "mainTop": 105,
+  "mainW": 390,
+  "contentShare": 88,
+  "railShown": false,
+  "pageWider": 0,
+  "bleed": [],
+  "bleedCount": 0,
+  "cut": [],
+  "cutCount": 0,
+  "cutTitledCount": 0,
+  "squeezed": [],
+  "squeezedCount": 0,
+  "clipped": [],
+  "clippedCount": 0,
+  "controls": 29,
+  "inlineLinks": 0,
+  "small": [
+   "button \"Home\" 40×44"
+  ],
+  "smallCount": 1,
+  "textLinkCount": 0,
+  "tabs": [
+   {
+    "name": "Career",
+    "tabs": 6,
+    "overflows": true,
+    "activeVisible": true,
+    "halfShown": [
+     "Opportunities"
+    ],
+    "cue": true
+   }
+  ],
+  "wideTables": [],
+  "clock": "5:00 PM",
+  "timeButton": "Pause",
+  "rotate": false,
+  "textLen": 3091
+ },
+ {
+  "life": "offer",
+  "size": "390x844m",
+  "step": "Career Representation",
+  "files": [],
+  "vw": 390,
+  "vh": 844,
+  "dialog": null,
+  "headerH": 105,
+  "mainTop": 105,
+  "mainW": 390,
+  "contentShare": 88,
+  "railShown": false,
+  "pageWider": 0,
+  "bleed": [],
+  "bleedCount": 0,
+  "cut": [],
+  "cutCount": 0,
+  "cutTitledCount": 0,
+  "squeezed": [],
+  "squeezedCount": 0,
+  "clipped": [],
+  "clippedCount": 0,
+  "controls": 43,
+  "inlineLinks": 0,
+  "small": [
+   "button \"Home\" 40×44"
+  ],
+  "smallCount": 1,
+  "textLinkCount": 0,
+  "tabs": [
+   {
+    "name": "Career",
+    "tabs": 6,
+    "overflows": true,
+    "activeVisible": true,
+    "halfShown": [
+     "Opportunities"
+    ],
+    "cue": true
+   }
+  ],
+  "wideTables": [],
+  "clock": "5:00 PM",
+  "timeButton": "Pause",
+  "rotate": false,
+  "textLen": 2782
+ },
+ {
+  "life": "offer",
+  "size": "390x844m",
+  "step": "Career Opportunities",
+  "files": [],
+  "vw": 390,
+  "vh": 844,
+  "dialog": null,
+  "headerH": 105,
+  "mainTop": 105,
+  "mainW": 390,
+  "contentShare": 88,
+  "railShown": false,
+  "pageWider": 0,
+  "bleed": [],
+  "bleedCount": 0,
+  "cut": [],
+  "cutCount": 0,
+  "cutTitledCount": 0,
+  "squeezed": [],
+  "squeezedCount": 0,
+  "clipped": [],
+  "clippedCount": 0,
+  "controls": 32,
+  "inlineLinks": 0,
+  "small": [
+   "button \"Home\" 40×44"
+  ],
+  "smallCount": 1,
+  "textLinkCount": 0,
+  "tabs": [
+   {
+    "name": "Career",
+    "tabs": 6,
+    "overflows": true,
+    "activeVisible": true,
+    "halfShown": [
+     "Overview"
+    ],
+    "cue": true
+   }
+  ],
+  "wideTables": [],
+  "clock": "5:00 PM",
+  "timeButton": "Pause",
+  "rotate": false,
+  "textLen": 2877
+ },
+ {
+  "life": "offer",
+  "size": "390x844m",
+  "step": "Career Work",
+  "files": [],
+  "vw": 390,
+  "vh": 844,
+  "dialog": null,
+  "headerH": 105,
+  "mainTop": 105,
+  "mainW": 390,
+  "contentShare": 88,
+  "railShown": false,
+  "pageWider": 0,
+  "bleed": [],
+  "bleedCount": 0,
+  "cut": [],
+  "cutCount": 0,
+  "cutTitledCount": 0,
+  "squeezed": [],
+  "squeezedCount": 0,
+  "clipped": [],
+  "clippedCount": 0,
+  "controls": 28,
+  "inlineLinks": 0,
+  "small": [
+   "button \"Home\" 40×44"
+  ],
+  "smallCount": 1,
+  "textLinkCount": 0,
+  "tabs": [
+   {
+    "name": "Career",
+    "tabs": 6,
+    "overflows": true,
+    "activeVisible": true,
+    "halfShown": [
+     "Representation"
+    ],
+    "cue": true
+   }
+  ],
+  "wideTables": [
+   {
+    "scrolls": true,
+    "by": 504
+   }
+  ],
+  "clock": "5:00 PM",
+  "timeButton": "Pause",
+  "rotate": false,
+  "textLen": 1387
+ },
+ {
+  "life": "offer",
+  "size": "390x844m",
+  "step": "Career Charts And Awards",
+  "files": [
+   "offer/390x844m/17-career-charts-and-awards.jpg"
+  ],
+  "vw": 390,
+  "vh": 844,
+  "dialog": null,
+  "headerH": 105,
+  "mainTop": 105,
+  "mainW": 390,
+  "contentShare": 88,
+  "railShown": false,
+  "pageWider": 0,
+  "bleed": [],
+  "bleedCount": 0,
+  "cut": [],
+  "cutCount": 0,
+  "cutTitledCount": 0,
+  "squeezed": [],
+  "squeezedCount": 0,
+  "clipped": [],
+  "clippedCount": 0,
+  "controls": 27,
+  "inlineLinks": 0,
+  "small": [
+   "button \"Home\" 40×44"
+  ],
+  "smallCount": 1,
+  "textLinkCount": 0,
+  "tabs": [
+   {
+    "name": "Career",
+    "tabs": 6,
+    "overflows": true,
+    "activeVisible": true,
+    "halfShown": [
+     "Representation"
+    ],
+    "cue": true
+   }
+  ],
+  "wideTables": [
+   {
+    "scrolls": true,
+    "by": 372
+   }
+  ],
+  "clock": "5:00 PM",
+  "timeButton": "Pause",
+  "rotate": false,
+  "textLen": 2977
+ },
+ {
+  "life": "offer",
+  "size": "390x844m",
+  "step": "Money Accounts",
+  "files": [],
+  "vw": 390,
+  "vh": 844,
+  "dialog": null,
+  "headerH": 105,
+  "mainTop": 105,
+  "mainW": 390,
+  "contentShare": 88,
+  "railShown": false,
+  "pageWider": 0,
+  "bleed": [],
+  "bleedCount": 0,
+  "cut": [],
+  "cutCount": 0,
+  "cutTitledCount": 0,
+  "squeezed": [],
+  "squeezedCount": 0,
+  "clipped": [],
+  "clippedCount": 0,
+  "controls": 51,
+  "inlineLinks": 5,
+  "small": [
+   "button \"Home\" 40×44"
+  ],
+  "smallCount": 1,
+  "textLinkCount": 3,
+  "tabs": [
+   {
+    "name": "Your Bank",
+    "tabs": 5,
+    "overflows": true,
+    "activeVisible": true,
+    "halfShown": [
+     "Borrowing"
+    ],
+    "cue": true
+   }
+  ],
+  "wideTables": [],
+  "clock": "5:00 PM",
+  "timeButton": "Pause",
+  "rotate": false,
+  "textLen": 4835
+ },
+ {
+  "life": "offer",
+  "size": "390x844m",
+  "step": "Money Cards",
+  "files": [],
+  "vw": 390,
+  "vh": 844,
+  "dialog": null,
+  "headerH": 105,
+  "mainTop": 105,
+  "mainW": 390,
+  "contentShare": 88,
+  "railShown": false,
+  "pageWider": 0,
+  "bleed": [],
+  "bleedCount": 0,
+  "cut": [],
+  "cutCount": 0,
+  "cutTitledCount": 0,
+  "squeezed": [],
+  "squeezedCount": 0,
+  "clipped": [],
+  "clippedCount": 0,
+  "controls": 64,
+  "inlineLinks": 5,
+  "small": [
+   "button \"Home\" 40×44"
+  ],
+  "smallCount": 1,
+  "textLinkCount": 6,
+  "tabs": [
+   {
+    "name": "Your Bank",
+    "tabs": 5,
+    "overflows": true,
+    "activeVisible": true,
+    "halfShown": [
+     "Borrowing"
+    ],
+    "cue": true
+   }
+  ],
+  "wideTables": [],
+  "clock": "5:00 PM",
+  "timeButton": "Pause",
+  "rotate": false,
+  "textLen": 4498
+ },
+ {
+  "life": "offer",
+  "size": "390x844m",
+  "step": "Money Payments And Cash",
+  "files": [],
+  "vw": 390,
+  "vh": 844,
+  "dialog": null,
+  "headerH": 105,
+  "mainTop": 105,
+  "mainW": 390,
+  "contentShare": 88,
+  "railShown": false,
+  "pageWider": 0,
+  "bleed": [],
+  "bleedCount": 0,
+  "cut": [],
+  "cutCount": 0,
+  "cutTitledCount": 0,
+  "squeezed": [],
+  "squeezedCount": 0,
+  "clipped": [],
+  "clippedCount": 0,
+  "controls": 35,
+  "inlineLinks": 3,
+  "small": [
+   "button \"Home\" 40×44"
+  ],
+  "smallCount": 1,
+  "textLinkCount": 1,
+  "tabs": [
+   {
+    "name": "Your Bank",
+    "tabs": 5,
+    "overflows": true,
+    "activeVisible": true,
+    "halfShown": [
+     "Borrowing"
+    ],
+    "cue": true
+   }
+  ],
+  "wideTables": [],
+  "clock": "5:00 PM",
+  "timeButton": "Pause",
+  "rotate": false,
+  "textLen": 1040
+ },
+ {
+  "life": "offer",
+  "size": "390x844m",
+  "step": "Money Borrowing",
+  "files": [],
+  "vw": 390,
+  "vh": 844,
+  "dialog": null,
+  "headerH": 105,
+  "mainTop": 105,
+  "mainW": 390,
+  "contentShare": 88,
+  "railShown": false,
+  "pageWider": 0,
+  "bleed": [],
+  "bleedCount": 0,
+  "cut": [],
+  "cutCount": 0,
+  "cutTitledCount": 0,
+  "squeezed": [],
+  "squeezedCount": 0,
+  "clipped": [],
+  "clippedCount": 0,
+  "controls": 23,
+  "inlineLinks": 3,
+  "small": [
+   "button \"Home\" 40×44"
+  ],
+  "smallCount": 1,
+  "textLinkCount": 1,
+  "tabs": [
+   {
+    "name": "Your Bank",
+    "tabs": 5,
+    "overflows": true,
+    "activeVisible": true,
+    "halfShown": [
+     "Accounts"
+    ],
+    "cue": true
+   }
+  ],
+  "wideTables": [],
+  "clock": "5:00 PM",
+  "timeButton": "Pause",
+  "rotate": false,
+  "textLen": 1027
+ },
+ {
+  "life": "offer",
+  "size": "390x844m",
+  "step": "Money Statements",
+  "files": [],
+  "vw": 390,
+  "vh": 844,
+  "dialog": null,
+  "headerH": 105,
+  "mainTop": 105,
+  "mainW": 390,
+  "contentShare": 88,
+  "railShown": false,
+  "pageWider": 0,
+  "bleed": [],
+  "bleedCount": 0,
+  "cut": [],
+  "cutCount": 0,
+  "cutTitledCount": 0,
+  "squeezed": [],
+  "squeezedCount": 0,
+  "clipped": [],
+  "clippedCount": 0,
+  "controls": 87,
+  "inlineLinks": 3,
+  "small": [
+   "button \"Home\" 40×44"
+  ],
+  "smallCount": 1,
+  "textLinkCount": 57,
+  "tabs": [
+   {
+    "name": "Your Bank",
+    "tabs": 5,
+    "overflows": true,
+    "activeVisible": true,
+    "halfShown": [
+     "Cards"
+    ],
+    "cue": true
+   }
+  ],
+  "wideTables": [],
+  "clock": "5:00 PM",
+  "timeButton": "Pause",
+  "rotate": false,
+  "textLen": 2584
+ },
+ {
+  "life": "offer",
+  "size": "390x844m",
+  "step": "Papers Tax Returns",
+  "files": [],
+  "vw": 390,
+  "vh": 844,
+  "dialog": null,
+  "headerH": 105,
+  "mainTop": 105,
+  "mainW": 390,
+  "contentShare": 88,
+  "railShown": false,
+  "pageWider": 0,
+  "bleed": [],
+  "bleedCount": 0,
+  "cut": [],
+  "cutCount": 0,
+  "cutTitledCount": 0,
+  "squeezed": [],
+  "squeezedCount": 0,
+  "clipped": [],
+  "clippedCount": 0,
+  "controls": 34,
+  "inlineLinks": 3,
+  "small": [
+   "button \"Home\" 40×44"
+  ],
+  "smallCount": 1,
+  "textLinkCount": 0,
+  "tabs": [
+   {
+    "name": "Papers",
+    "tabs": 5,
+    "overflows": true,
+    "activeVisible": true,
+    "halfShown": [
+     "Passport And ID"
+    ],
+    "cue": true
+   }
+  ],
+  "wideTables": [],
+  "clock": "5:00 PM",
+  "timeButton": "Pause",
+  "rotate": false,
+  "textLen": 3697
+ },
+ {
+  "life": "offer",
+  "size": "390x844m",
+  "step": "Papers Health Cover",
+  "files": [],
+  "vw": 390,
+  "vh": 844,
+  "dialog": null,
+  "headerH": 105,
+  "mainTop": 105,
+  "mainW": 390,
+  "contentShare": 88,
+  "railShown": false,
+  "pageWider": 0,
+  "bleed": [],
+  "bleedCount": 0,
+  "cut": [],
+  "cutCount": 0,
+  "cutTitledCount": 0,
+  "squeezed": [],
+  "squeezedCount": 0,
+  "clipped": [],
+  "clippedCount": 0,
+  "controls": 28,
+  "inlineLinks": 0,
+  "small": [
+   "button \"Home\" 40×44"
+  ],
+  "smallCount": 1,
+  "textLinkCount": 0,
+  "tabs": [
+   {
+    "name": "Papers",
+    "tabs": 5,
+    "overflows": true,
+    "activeVisible": true,
+    "halfShown": [
+     "Passport And ID"
+    ],
+    "cue": true
+   }
+  ],
+  "wideTables": [
+   {
+    "scrolls": true,
+    "by": 372
+   }
+  ],
+  "clock": "5:00 PM",
+  "timeButton": "Pause",
+  "rotate": false,
+  "textLen": 2262
+ },
+ {
+  "life": "offer",
+  "size": "390x844m",
+  "step": "Papers Unemployment",
+  "files": [],
+  "vw": 390,
+  "vh": 844,
+  "dialog": null,
+  "headerH": 105,
+  "mainTop": 105,
+  "mainW": 390,
+  "contentShare": 88,
+  "railShown": false,
+  "pageWider": 0,
+  "bleed": [],
+  "bleedCount": 0,
+  "cut": [],
+  "cutCount": 0,
+  "cutTitledCount": 0,
+  "squeezed": [],
+  "squeezedCount": 0,
+  "clipped": [],
+  "clippedCount": 0,
+  "controls": 20,
+  "inlineLinks": 0,
+  "small": [
+   "button \"Home\" 40×44"
+  ],
+  "smallCount": 1,
+  "textLinkCount": 0,
+  "tabs": [
+   {
+    "name": "Papers",
+    "tabs": 5,
+    "overflows": true,
+    "activeVisible": true,
+    "halfShown": [
+     "Passport And ID"
+    ],
+    "cue": true
+   }
+  ],
+  "wideTables": [],
+  "clock": "5:00 PM",
+  "timeButton": "Pause",
+  "rotate": false,
+  "textLen": 1432
+ },
+ {
+  "life": "offer",
+  "size": "390x844m",
+  "step": "Papers Passport And ID",
+  "files": [],
+  "vw": 390,
+  "vh": 844,
+  "dialog": null,
+  "headerH": 105,
+  "mainTop": 105,
+  "mainW": 390,
+  "contentShare": 88,
+  "railShown": false,
+  "pageWider": 0,
+  "bleed": [],
+  "bleedCount": 0,
+  "cut": [],
+  "cutCount": 0,
+  "cutTitledCount": 0,
+  "squeezed": [],
+  "squeezedCount": 0,
+  "clipped": [],
+  "clippedCount": 0,
+  "controls": 39,
+  "inlineLinks": 11,
+  "small": [
+   "button \"Home\" 40×44"
+  ],
+  "smallCount": 1,
+  "textLinkCount": 1,
+  "tabs": [
+   {
+    "name": "Papers",
+    "tabs": 5,
+    "overflows": true,
+    "activeVisible": true,
+    "halfShown": [
+     "Tax Returns"
+    ],
+    "cue": true
+   }
+  ],
+  "wideTables": [
+   {
+    "scrolls": true,
+    "by": 372
+   }
+  ],
+  "clock": "5:00 PM",
+  "timeButton": "Pause",
+  "rotate": false,
+  "textLen": 2063
+ },
+ {
+  "life": "offer",
+  "size": "390x844m",
+  "step": "Papers Permission To Work",
+  "files": [],
+  "vw": 390,
+  "vh": 844,
+  "dialog": null,
+  "headerH": 105,
+  "mainTop": 105,
+  "mainW": 390,
+  "contentShare": 88,
+  "railShown": false,
+  "pageWider": 0,
+  "bleed": [],
+  "bleedCount": 0,
+  "cut": [],
+  "cutCount": 0,
+  "cutTitledCount": 0,
+  "squeezed": [],
+  "squeezedCount": 0,
+  "clipped": [],
+  "clippedCount": 0,
+  "controls": 44,
+  "inlineLinks": 16,
+  "small": [
+   "button \"Home\" 40×44"
+  ],
+  "smallCount": 1,
+  "textLinkCount": 0,
+  "tabs": [
+   {
+    "name": "Papers",
+    "tabs": 5,
+    "overflows": true,
+    "activeVisible": true,
+    "halfShown": [
+     "Unemployment"
+    ],
+    "cue": true
+   }
+  ],
+  "wideTables": [
+   {
+    "scrolls": true,
+    "by": 372
+   },
+   {
+    "scrolls": true,
+    "by": 212
+   },
+   {
+    "scrolls": true,
+    "by": 18
+   }
+  ],
+  "clock": "5:00 PM",
+  "timeButton": "Pause",
+  "rotate": false,
+  "textLen": 4139
+ },
+ {
+  "life": "offer",
+  "size": "390x844m",
+  "step": "Look After Yourself Menu",
+  "files": [],
+  "vw": 390,
+  "vh": 844,
+  "dialog": null,
+  "headerH": 105,
+  "mainTop": 105,
+  "mainW": 390,
+  "contentShare": 88,
+  "railShown": false,
+  "pageWider": 0,
+  "bleed": [],
+  "bleedCount": 0,
+  "cut": [],
+  "cutCount": 0,
+  "cutTitledCount": 0,
+  "squeezed": [],
+  "squeezedCount": 0,
+  "clipped": [],
+  "clippedCount": 0,
+  "controls": 92,
+  "inlineLinks": 7,
+  "small": [],
+  "smallCount": 0,
+  "textLinkCount": 39,
+  "tabs": [],
+  "wideTables": [],
+  "clock": "5:00 PM",
+  "timeButton": "Pause",
+  "rotate": false,
+  "textLen": 3230
+ },
+ {
+  "life": "offer",
+  "size": "390x844m",
+  "step": "Advance Menu",
+  "files": [],
+  "vw": 390,
+  "vh": 844,
+  "dialog": null,
+  "headerH": 105,
+  "mainTop": 105,
+  "mainW": 390,
+  "contentShare": 88,
+  "railShown": false,
+  "pageWider": 0,
+  "bleed": [],
+  "bleedCount": 0,
+  "cut": [],
+  "cutCount": 0,
+  "cutTitledCount": 0,
+  "squeezed": [],
+  "squeezedCount": 0,
+  "clipped": [],
+  "clippedCount": 0,
+  "controls": 96,
+  "inlineLinks": 7,
+  "small": [],
+  "smallCount": 0,
+  "textLinkCount": 39,
+  "tabs": [],
+  "wideTables": [],
+  "clock": "5:00 PM",
+  "timeButton": "Pause",
+  "rotate": false,
+  "textLen": 3230
+ },
+ {
+  "life": "offer",
+  "size": "390x844m",
+  "step": "How This Works",
+  "files": [],
+  "vw": 390,
+  "vh": 844,
+  "dialog": "How This Works",
+  "dialogFits": true,
+  "dialogFootVisible": true,
+  "headerH": 105,
+  "mainTop": 105,
+  "mainW": 390,
+  "contentShare": 88,
+  "railShown": false,
+  "pageWider": 0,
+  "bleed": [],
+  "bleedCount": 0,
+  "cut": [],
+  "cutCount": 0,
+  "cutTitledCount": 0,
+  "squeezed": [],
+  "squeezedCount": 0,
+  "clipped": [],
+  "clippedCount": 0,
+  "controls": 193,
+  "inlineLinks": 7,
+  "small": [],
+  "smallCount": 0,
+  "textLinkCount": 39,
+  "tabs": [],
+  "wideTables": [],
+  "clock": "5:00 PM",
+  "timeButton": "Pause",
+  "rotate": false,
+  "textLen": 3230
+ },
+ {
+  "life": "offer",
+  "size": "390x844m",
+  "step": "Sleep Dialog",
+  "files": [],
+  "vw": 390,
+  "vh": 844,
+  "dialog": "Sleep",
+  "dialogFits": true,
+  "dialogFootVisible": true,
+  "headerH": 105,
+  "mainTop": 105,
+  "mainW": 390,
+  "contentShare": 88,
+  "railShown": false,
+  "pageWider": 0,
+  "bleed": [],
+  "bleedCount": 0,
+  "cut": [],
+  "cutCount": 0,
+  "cutTitledCount": 0,
+  "squeezed": [],
+  "squeezedCount": 0,
+  "clipped": [],
+  "clippedCount": 0,
+  "controls": 91,
+  "inlineLinks": 7,
+  "small": [],
+  "smallCount": 0,
+  "textLinkCount": 39,
+  "tabs": [],
+  "wideTables": [],
+  "clock": "5:00 PM",
+  "timeButton": "Pause",
+  "rotate": false,
+  "textLen": 3230
+ },
+ {
+  "life": "offer",
+  "size": "390x844m",
+  "step": "(problems)",
+  "problems": []
+ }
+]

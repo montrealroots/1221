@@ -68,7 +68,7 @@ describe('a marketplace claim denied, told in its visit’s notice at the bill�
   function claims(): { denied?: Simulation; paid?: Simulation } {
     const out: { denied?: Simulation; paid?: Simulation } = {};
     for (let i = 0; i < 60 && !(out.denied && out.paid); i += 1) {
-      const sim = quickSave({ startLocationId: 'us-ny-newyork', homeRegionId: 'us-ny-newyork', livesWhereBorn: true, wealth: 'wealthy' }, `lang17-claim-${i}`);
+      const sim = quickSave({ startLocationId: 'us-ny-newyork', homeRegionId: 'us-ny-newyork', wealth: 'wealthy' }, `lang17-claim-${i}`);
       healthOf(sim.player).marketplace = { from: sim.now - MS_DAY, state: 'ny' }; // TEST SETUP
       if (coverOn(sim.player, sim.now) !== 'marketplace') continue;
       const bill = careFor(sim, sim.player, { care: 'visit', what: 'A doctor’s visit' }, sim.now);

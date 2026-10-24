@@ -125,7 +125,7 @@ const student = (seed: string, extra: Partial<NewSaveConfig> = {}): Simulation =
 /** The same life born in London: at Yale on an F-1, a nonresident alien for US tax. */
 const international = (seed: string): Simulation => student(seed, { homeRegionId: 'uk-eng-london' });
 /** A life in a city a New Haven student's never reaches, or at a balance hers never does: a `quickSave` life there. */
-const elsewhere = (seed: string, cityId = 'us-ny-newyork'): Simulation => quickSave({ startLocationId: cityId, homeRegionId: cityId, livesWhereBorn: true, wealth: 'wealthy' }, seed);
+const elsewhere = (seed: string, cityId = 'us-ny-newyork'): Simulation => quickSave({ startLocationId: cityId, homeRegionId: cityId, wealth: 'wealthy' }, seed);
 const reload = (sim: Simulation): Simulation => loadSave(deserialise(serialise(sim.universe)) as never);
 const titled = (sim: Simulation, title: string) => sim.universe.notifications.filter((n) => n.title === title);
 /** What's on the calendar of a kind for the player, of a return's year where one is named. */

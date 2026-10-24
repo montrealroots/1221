@@ -12,8 +12,9 @@
  *    never guessed.
  * 4. The account must have been open before Yale: opened on the later of the day they began living there and the day
  *    they reached the bank's opening age.
- * 5. A bank that never opens a US person's account, and a US citizen: refused. The place of birth is read here and
- *    nowhere else, as the citizenship it gives (`citizenshipFor`). It never grants an account.
+ * 5. A bank that never opens a US person's account, and a US citizen: refused. The citizenship is read here
+ *    (`citizenshipOf`): the one chosen at creation from 2026-10-24 (brief 27), the place of birth's until then. The place
+ *    of birth never grants an account.
  * 6. Otherwise offered, and the screen says what follows (`whatFollows`).
  *
  * The starting money is split as the screen says (`splitOf`): what was saved stays where it was saved, the everyday
@@ -30,7 +31,7 @@ import { COUNTRIES, countryOfPlace, CITIES } from '../content/geography';
 import { exchange } from '../content/currency';
 import { bankById, type Bank } from '../content/banks';
 import { RETENTION_CONFIDENCE, homeTerms, noticeFor, type HomeTerms } from '../content/homeaccounts';
-import { citizenshipFor } from '../domain/citizenship';
+import { citizenshipOf } from '../domain/citizenship';
 import { addDays, ageOnDate, formatDate, instantFromZoned, type Instant } from '../core/time';
 import { accountNumber } from './banknumber';
 
@@ -87,8 +88,9 @@ export function homeAccountRefusal(config: NewSaveConfig, bankId: string | undef
       ? (config.school ? 'You moved there after Yale began.' : 'You moved there after you came here.')
       : `${bank.name} opens an account from age ${terms.openFromAge}, and you left at ${age}.`;
   }
-  // 5. The birthplace, read only as the citizenship it gives.
-  if (terms.usPersons === 'refuses' && citizenshipFor(config.homeRegionId) === 'us') {
+  // 5. The citizenship (until 2026-10-24 the birthplace, read as the citizenship it gave, before brief 27 made the
+  // citizenship the player's choice).
+  if (terms.usPersons === 'refuses' && citizenshipOf(config) === 'us') {
     return `${bank.name} doesn’t open an account for a US citizen, so you never held one there.`;
   }
   // 6. Offered.
@@ -108,7 +110,7 @@ function startOf(config: NewSaveConfig): Instant {
 
 /** The day the bank closes a kept account, for a bank that closes one: the start and its notice. */
 export function closesOn(config: NewSaveConfig, terms: HomeTerms): Instant | undefined {
-  const days = terms.nonResident === 'closes' || (terms.usPersons === 'closes' && citizenshipFor(config.homeRegionId) === 'us')
+  const days = terms.nonResident === 'closes' || (terms.usPersons === 'closes' && citizenshipOf(config) === 'us')
     ? noticeFor(terms, openingDayOf(config, terms))
     : undefined;
   if (days === undefined) return undefined;

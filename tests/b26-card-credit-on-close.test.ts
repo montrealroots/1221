@@ -20,7 +20,7 @@ import { cardOf, STATEMENT_KIND } from '@/engine/systems/credit';
 import { netWorth } from '@/engine/systems/finance';
 
 /** A New Yorker banking at Chase, comfortable, as tests/interest.test.ts makes one. */
-const lifeIn = (seed: string) => quickSave({ startLocationId: 'us-ny-newyork', homeRegionId: 'us-ny-newyork', livesWhereBorn: true, bankId: 'us-chase', wealth: 'comfortable' } as never, seed);
+const lifeIn = (seed: string) => quickSave({ startLocationId: 'us-ny-newyork', homeRegionId: 'us-ny-newyork', bankId: 'us-chase', wealth: 'comfortable' } as never, seed);
 const give = (sim: Simulation, accountId: string, amount: number) => sim.post({ memo: 'test', category: 'test', postings: [{ accountId, amount }, { accountId: sim.nominalAccount('income', 'Test').id, amount: -amount }] });
 const current = (sim: Simulation) => sim.universe.accounts[sim.player.primaryAccountId!]!;
 const refunds = (sim: Simulation) => sim.universe.transactions.filter((t) => t.memo.startsWith('Credit refunded'));

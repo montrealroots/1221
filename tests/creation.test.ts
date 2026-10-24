@@ -39,7 +39,7 @@ function filled() {
     personalityTraits: ['early_riser', 'orderly'],
     birthYear: 1998, birthMonth: 11, birthDay: 3,
     raceEthnicity: ['white', 'asian'],
-    homeRegionId: 'is-1-reykjavik', livesWhereBorn: false,
+    homeRegionId: 'is-1-reykjavik',
     startLocationId: 'us-ny-newyork',
     genres: ['film_noir', 'western'],
     background: 'Raised by the sea.',
@@ -235,20 +235,23 @@ describe('Starting Point', () => {
 
   // Until 2026-10-21 (brief 20) this was called "asks where you live and what you start with", and held that the step's
   // source had the controls: no player meets them. They're drawn only for a life outside the School, and creation begins
-  // every life at it (`newLifeConfig`, `newLifeFrom`), the family chosen on Genres & Background, so `livesWhereBorn` is
-  // written there and read by nothing a player's life reaches (docs/verification/audit-2026-10-21/effects/creation.json,
-  // `create.livesWhereBorn`).
+  // every life at it (`newLifeConfig`, `newLifeFrom`), the family chosen on Genres & Background. Until 2026-10-24 (brief
+  // 27) it held an I Still Live Where I Was Born box there too, writing `livesWhereBorn`, which nothing a player's life
+  // reached read; the field and the box went, and Where You Live is the picker alone.
   it('asks where you live and what you start with only for a life outside the School, which creation never begins', () => {
     const step = stepSource('function StartingPointStep', 'function ReviewStep');
-    const outside = step.slice(step.indexOf('{!config.school && (<>'));
-    expect(outside.indexOf('id="live-here"')).toBeGreaterThan(0);
+    const outside = step.slice(step.indexOf('{!config.school && ('));
     expect(outside.indexOf('idPrefix="live"')).toBeGreaterThan(0);
+    expect(step).not.toContain('id="live-here"');
+    expect(SOURCE).not.toMatch(/livesWhereBorn\s*:/);
     expect(step).toContain('{choosesWealth(config) && (');
     expect(step.indexOf('id="wealth"')).toBeGreaterThan(step.indexOf('{choosesWealth(config) && ('));
     for (const config of [newLifeConfig(), newLifeFrom({}), newLifeFrom({ school: undefined, startLocationId: 'us-ny-newyork' })]) {
       expect(config.school).toBe('yale-drama');
       expect(choosesWealth(config)).toBe(false);
     }
+    // A draft kept before the field went comes back without it.
+    expect('livesWhereBorn' in newLifeFrom({ livesWhereBorn: true } as never)).toBe(false);
   });
 
   it('puts the player where they said they live, on that place’s clock', () => {

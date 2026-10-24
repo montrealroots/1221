@@ -33,7 +33,7 @@ vi.mock('@/app/game-context', () => {
 
 const { BankMoves } = await import('@/ui/bank/BankMoves');
 
-const lifeIn = (cityId: string, bankId: string, seed: string) => quickSave({ startLocationId: cityId, homeRegionId: cityId, livesWhereBorn: true, wealth: 'comfortable', bankId }, seed);
+const lifeIn = (cityId: string, bankId: string, seed: string) => quickSave({ startLocationId: cityId, homeRegionId: cityId, wealth: 'comfortable', bankId }, seed);
 const screen = (sim: Simulation): string => {
   h.sim = sim;
   return renderToStaticMarkup(createElement(BankMoves)).replace(/<[^>]+>/g, ' ').replace(/\s+/g, ' ');

@@ -12,7 +12,7 @@ import { cardOf, DUE_KIND, MIN_CYCLE_DAYS, STATEMENT_KIND, stateOf } from '@/eng
 import { bankAccountsOf } from '@/engine/systems/banking';
 
 const lifeIn = (cityId: string, extra: Record<string, unknown> = {}, seed = 'mf') =>
-  quickSave({ startLocationId: cityId, homeRegionId: cityId, livesWhereBorn: true, ...extra }, seed);
+  quickSave({ startLocationId: cityId, homeRegionId: cityId, ...extra }, seed);
 const give = (sim: Simulation, accountId: string, amount: number) => sim.post({ memo: 'test', category: 'test', postings: [{ accountId, amount }, { accountId: sim.nominalAccount('income', 'Test').id, amount: -amount }] });
 const statements = (sim: Simulation) => sim.universe.scheduled.filter((i) => i.kind === STATEMENT_KIND && i.status === 'done' && i.payload.personId === sim.player.id).length;
 const nextStatement = (sim: Simulation) => sim.timeline.pending().find((i) => i.kind === STATEMENT_KIND && i.payload.personId === sim.player.id)!.at;
@@ -84,7 +84,7 @@ describe('a hardship plan', () => {
 
 describe('an account canceled new', () => {
   it('takes its standing orders with it', () => {
-    const sim = quickSave({ startLocationId: 'ca-on-toronto', homeRegionId: 'ca-on-toronto', livesWhereBorn: true, wealth: 'comfortable', bankId: 'ca-td' }, 'mf-cancel');
+    const sim = quickSave({ startLocationId: 'ca-on-toronto', homeRegionId: 'ca-on-toronto', wealth: 'comfortable', bankId: 'ca-td' }, 'mf-cancel');
     for (const a of bankAccountsOf(sim, sim.player)) if (a.kind === 'savings') sim.must({ kind: 'bank.close_savings', payload: { accountId: a.id } });
     const opened = sim.universe.accounts[sim.must<{ accountId: string }>({ kind: 'bank.open_savings', payload: {} }).accountId]!;
     sim.must({ kind: 'bank.add_standing_order', payload: { toId: opened.id, amount: 100_00, day: 15 } });

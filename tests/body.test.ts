@@ -28,7 +28,7 @@ describe('a body', () => {
     const mean = (city: string, f: (p: Person) => number) => {
       let sum = 0;
       for (let i = 0; i < 60; i += 1) {
-        const sim = quickSave({ startLocationId: city, homeRegionId: city, livesWhereBorn: true }, `body-${city}-${i}`);
+        const sim = quickSave({ startLocationId: city, homeRegionId: city }, `body-${city}-${i}`);
         delete sim.player.body;
         sum += f(Object.assign(sim.player, { body: bodyOf(sim, sim.player) }));
       }
@@ -39,7 +39,7 @@ describe('a body', () => {
     // The country's adults, both sides of them: a spread of heights wider than either side's own 6.3 cm.
     const heights: number[] = [];
     for (let i = 0; i < 80; i += 1) {
-      const sim = quickSave({ startLocationId: 'is-39-mosfellsbr', homeRegionId: 'is-39-mosfellsbr', livesWhereBorn: true }, `spread-${i}`);
+      const sim = quickSave({ startLocationId: 'is-39-mosfellsbr', homeRegionId: 'is-39-mosfellsbr' }, `spread-${i}`);
       delete sim.player.body;
       heights.push(bodyOf(sim, sim.player).heightCm);
     }

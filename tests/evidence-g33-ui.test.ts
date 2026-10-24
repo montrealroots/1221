@@ -535,7 +535,7 @@ describe('l-person', () => {
 
   it('the units are where she lives: the same 170 cm and 65 kg read “170 cm and 65.0 kg” for a life in London', () => {
     // A life in London, which a New Haven life doesn't reach: quickSave.
-    const sim = quickSave({ homeRegionId: 'uk-eng-london', startLocationId: 'uk-eng-london', livesWhereBorn: true, heightCm: 170, weightKg: 65 }, 'g33-person-london');
+    const sim = quickSave({ homeRegionId: 'uk-eng-london', startLocationId: 'uk-eng-london', heightCm: 170, weightKg: 65 }, 'g33-person-london');
     const { lines } = personLook(drawn(sim, [subject('person', sim.player.id)]).html);
     // The units' why after the figures, from 2026-10-14 (`bodyUnits`).
     expect(lines.find(([label]) => label === 'Your body. ')).toEqual(['Your body. ', '170 cm and 65.0 kg, with a body mass index of 22.5, in the healthy weight range. In centimeters and kilograms, the units of the United Kingdom, where you live.']);

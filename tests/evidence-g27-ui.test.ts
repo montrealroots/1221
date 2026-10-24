@@ -33,11 +33,13 @@
  *   feet, inches and pounds for the US-born and in centimeters and kilograms for the Tokyo-born, both living in New
  *   Haven. The papers: a license from the birth state (California, not Connecticut), and for the Tokyo-born a Japanese
  *   passport and an F-1 to 30 July 2029.
- * - `c-citizenship`: the Citizenship output on Identity follows the birthplace picked through the picker's own onPick
- *   (Japan, then United Kingdom), and reads a dash for a birthplace in no country, which Continue refuses and a save
- *   can't be made from; Review says it again. The save holds the birthplace's country, the papers it gives, the Profile's "A citizen of Japan", kept
- *   through a reload; and on the first morning the living-expense scholarship withholds 14% of its taxable part from a
- *   Tokyo-born student and nothing from a New York-born one, once.
+ * - `c-citizenship`: the Citizenship asked on Identity (from 2026-10-24, brief 27): Continue refused until one is chosen,
+ *   the birthplace picked through the picker's own onPick suggesting its country (Same As Your Place Of Birth: Japan) and
+ *   choosing none, Same As pressed choosing Japan, a later birthplace leaving it as chosen, and a birthplace in no country
+ *   suggesting nothing, which Continue refuses and a save can't be made from; Review says it again. Until then an output
+ *   followed the birthplace (Japan, then United Kingdom). The save holds the citizenship, the papers it gives, the
+ *   Profile's "A citizen of Japan", kept through a reload; and on the first morning the living-expense scholarship
+ *   withholds 14% of its taxable part from a Tokyo-born citizen of Japan and nothing from a New York-born American, once.
  * - `c-disp-emotionalStability`: composure 26.8 and 58.3 at stability 5 and 95; the same performance, fired by the
  *   clock, takes stress from 20 to 25.330 and 21.463; two waking hours take it from 40 to 39.486 and 39.118, through a
  *   reload.
@@ -69,6 +71,7 @@ import { renderToStaticMarkup } from 'react-dom/server';
 import { createSave, loadSave, quickSave, refreshMeta } from '@/engine';
 import type { Simulation } from '@/engine/core/simulation';
 import { newLifeConfig, type NewSaveConfig } from '@/engine/world/bootstrap';
+import { citizenshipFor } from '@/engine/domain/citizenship';
 import { deserialise, serialise } from '@/engine/persistence/adapter';
 import { instantFromZoned, zonedParts } from '@/engine/core/time';
 import { CITIES } from '@/engine/content/geography';
@@ -148,7 +151,9 @@ const NY = 'America/New_York';
 /** A minute of New Haven's clock. */
 const ET = (year: number, month: number, day: number, hour = 9, minute = 0): number => instantFromZoned({ year, month, day, hour, minute }, NY);
 /** Ada Cole's answers, as the screen sends them: a new life at Yale, born in New York unless the row says otherwise. */
-const answers = (extra: Partial<NewSaveConfig> = {}): NewSaveConfig => ({ ...newLifeConfig(), homeRegionId: 'us-ny-newyork', firstName: 'Ada', lastName: 'Cole', pronouns: 'she/her', ...extra });
+// TEST SETUP: the citizenship is the birthplace's, as Same As Your Place Of Birth chooses it (from 2026-10-24, brief 27, when
+// creation began asking; until then the birthplace decided it and nothing was chosen).
+const answers = (extra: Partial<NewSaveConfig> = {}): NewSaveConfig => ({ ...newLifeConfig(), homeRegionId: 'us-ny-newyork', citizenshipId: citizenshipFor(extra.homeRegionId ?? 'us-ny-newyork'), firstName: 'Ada', lastName: 'Cole', pronouns: 'she/her', ...extra });
 const ada = (seed: string, extra: Partial<NewSaveConfig> = {}): Simulation => createSave(1, seed, answers(extra));
 /** The dispositions as the sliders leave them: newLifeConfig's, with one moved. */
 const leaning = (axis: string, value: number): Partial<NewSaveConfig> => ({ personality: { ...newLifeConfig().personality, [axis]: value } });
@@ -489,7 +494,7 @@ describe('c-birthplace', () => {
       expect(side, `${seed}: ${overJp.toFixed(2)} cm over the Tokyo-born`).not.toBe(-1);
       expect(near(overUs, side === 0 ? 5.2 : 5.6), `${seed}: ${overUs.toFixed(2)} cm over the New York-born`).toBe(true);
       // Born in Tokyo and living there (a life a New Haven student's doesn't reach, so `quickSave`): the same body.
-      const home = quickSave({ startLocationId: 'jp-13-tokyo', homeRegionId: 'jp-13-tokyo', livesWhereBorn: true }, seed);
+      const home = quickSave({ startLocationId: 'jp-13-tokyo', homeRegionId: 'jp-13-tokyo' }, seed);
       expect([home.player.body!.heightCm, home.player.body!.weightKg]).toEqual([jp.player.body!.heightCm, jp.player.body!.weightKg]);
     }
     // And as the review asked it: sixty seeds each, the Iceland-born more than 5 cm taller on average.
@@ -518,7 +523,7 @@ describe('c-birthplace', () => {
     const jpAtYale = creation(STEP.StartingPoint, answers({ homeRegionId: 'jp-13-tokyo', ...body }));
     expect(jpAtYale.text).toContain('Height (Feet)');
     expect([input(jpAtYale, 'height-ft'), input(jpAtYale, 'height-in'), input(jpAtYale, 'weight-lb')]).toEqual([5, 10, 160]);
-    const jp = creation(STEP.StartingPoint, answers({ homeRegionId: 'jp-13-tokyo', school: undefined, startLocationId: 'jp-13-tokyo', livesWhereBorn: true, ...body }));
+    const jp = creation(STEP.StartingPoint, answers({ homeRegionId: 'jp-13-tokyo', school: undefined, startLocationId: 'jp-13-tokyo', ...body }));
     expect(jp.text).toContain('Height (Centimeters)');
     expect(jp.text).toContain('Weight (Kilograms)');
     expect(jp.text).not.toContain('Feet');
@@ -548,26 +553,38 @@ describe('c-birthplace', () => {
 // ---------------------------------------------------------------------------
 
 describe('c-citizenship', () => {
-  it('PLAYER JOURNEY: says the citizenship back under the birthplace picked, Japan then United Kingdom, a dash for no country which Continue refuses, and Review says it again', () => {
-    const step = creation(STEP.Identity, answers());
-    expect(step.text).toContain('Citizenship United States You’re a citizen of the country you were born in, so there’s nothing to pick.');
-    // Tokyo picked through the birthplace picker's own onPick, living in New Haven.
+  // Until 2026-10-24 (brief 27) this was "says the citizenship back under the birthplace picked, Japan then United Kingdom, a
+  // dash for no country which Continue refuses, and Review says it again": the birthplace decided it.
+  it('PLAYER JOURNEY: asks for the citizenship under the birthplace, never moves it with the birthplace, offers the birthplace’s with Same As, refuses Continue without one, and Review says it again', () => {
+    const unchosen = answers({ citizenshipId: undefined });
+    const step = creation(STEP.Identity, unchosen);
+    expect(step.text).toContain('Citizenship Choose A Country');
+    expect(step.text).toContain('Same As Your Place Of Birth: United States');
+    expect(issuesOn(step.html)).toEqual(['Choose your citizenship.']);
+    expect(step.continues()).toBe(false);
+    // Tokyo picked through the birthplace picker's own onPick, living in New Haven: no citizenship is chosen by it.
     const picker = () => step.els.find((e) => e.type === 'LocationPicker' && e.props.idPrefix === 'born')!;
     const tokyo = step.press(() => (picker().props.onPick as (c: unknown) => void)(CITIES.get('jp-13-tokyo')));
     expect(tokyo).toMatchObject({ homeRegionId: 'jp-13-tokyo', startLocationId: 'us-ct-newhaven' });
-    const japan = creation(STEP.Identity, tokyo);
-    expect(japan.text).toContain('Citizenship Japan You’re a citizen');
-    expect(japan.continues()).toBe(true);
-    const londonPicker = japan.els.find((e) => e.type === 'LocationPicker' && e.props.idPrefix === 'born')!;
-    const london = japan.press(() => (londonPicker.props.onPick as (c: unknown) => void)(CITIES.get('uk-eng-london')));
-    expect(creation(STEP.Identity, london).text).toContain('Citizenship United Kingdom You’re a citizen');
-    // A birthplace in no country: nothing to say, and nobody to make.
-    const nowhere = creation(STEP.Identity, answers({ homeRegionId: 'zz-1-nowhere' }));
-    expect(nowhere.text).toContain('Citizenship — You’re a citizen');
-    expect(issuesOn(nowhere.html)).toEqual(['Choose the town or city you were born in.']);
+    expect(tokyo.citizenshipId).toBeUndefined();
+    const japanOffered = creation(STEP.Identity, tokyo);
+    expect(japanOffered.text).toContain('Same As Your Place Of Birth: Japan');
+    // Same As pressed: Japan, and Continue goes on.
+    const same = japanOffered.els.find((e) => e.type === 'button' && String(e.text ?? '').startsWith('Same As Your Place Of Birth'))!;
+    const japan = japanOffered.press(() => (same.props.onClick as () => void)());
+    expect(japan.citizenshipId).toBe('jp');
+    expect(creation(STEP.Identity, japan).continues()).toBe(true);
+    // The birthplace moved to London afterwards leaves Japan as chosen.
+    const londonPicker = creation(STEP.Identity, japan).els.find((e) => e.type === 'LocationPicker' && e.props.idPrefix === 'born')!;
+    const london = creation(STEP.Identity, japan).press(() => (londonPicker.props.onPick as (c: unknown) => void)(CITIES.get('uk-eng-london')));
+    expect(london).toMatchObject({ homeRegionId: 'uk-eng-london', citizenshipId: 'jp' });
+    // A birthplace in no country: nothing to suggest, and nobody to make.
+    const nowhere = creation(STEP.Identity, answers({ homeRegionId: 'zz-1-nowhere', citizenshipId: undefined }));
+    expect(nowhere.text).not.toContain('Same As Your Place Of Birth');
+    expect(issuesOn(nowhere.html)).toEqual(['Choose the town or city you were born in.', 'Choose your citizenship.']);
     expect(nowhere.continues()).toBe(false);
     expect(() => ada('g27-nowhere', { homeRegionId: 'zz-1-nowhere' })).toThrow('No country has a place with the id zz-1-nowhere.');
-    expect(creation(STEP.Review, tokyo).text).toContain('Citizenship Japan');
+    expect(creation(STEP.Review, japan).text).toContain('Citizenship Japan');
   });
 
   it('PLAYER JOURNEY: holds Japan for a Tokyo-born student in New Haven, with the papers it gives and the Profile’s words, kept through a reload', () => {

@@ -528,7 +528,7 @@ describe('creation, step by step', () => {
   it('says each step’s guidance in the player’s words, with what each choice does, and why Continue waits', () => {
     let text = step(0, ada());
     expect(text).toContain('Your legal name is the one on your documents. What people call you can be different.');
-    expect(text).toContain('Where you’re from, which isn’t always where you live now. It’s what you tell people when they ask, and it decides your citizenship.');
+    expect(text).toContain('Where you were born, which isn’t always where you live now. It’s what you tell people when they ask. It doesn’t decide your citizenship or where you lived before Yale: you say those yourself.');
     expect(text).toMatch(/You’ll be \d+ when you start\./);
     expect(text).toContain('Any size or shape works. SLATE crops it to a headshot and keeps a small copy in the save. It’s only for show: the game never looks at what’s in it.');
     expect(text).toContain('Choose as many as are true. It’s part of who your character is and nothing more: it changes no ability, nothing in the game uses it, and the game never guesses it from a name or a country.');

@@ -23,7 +23,7 @@ import '@/ui/looks/all';
 import { resolveLook, type Looked } from '@/ui/looks/registry';
 import { at } from '@/ui/looks/subject';
 
-const lifeIn = (cityId: string, bankId: string, seed: string) => quickSave({ startLocationId: cityId, homeRegionId: cityId, livesWhereBorn: true, wealth: 'comfortable', bankId }, seed);
+const lifeIn = (cityId: string, bankId: string, seed: string) => quickSave({ startLocationId: cityId, homeRegionId: cityId, wealth: 'comfortable', bankId }, seed);
 const run = <T = unknown>(sim: Simulation, kind: string, payload: Record<string, unknown> = {}) => {
   const answer = sim.execute<T>({ kind, payload });
   expect(answer.ok, `${kind}: ${answer.error}`).toBe(true);

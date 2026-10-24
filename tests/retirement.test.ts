@@ -13,7 +13,7 @@ import { payFromBank } from '@/engine/systems/spending';
 import { SUBSTITUTE,TAX_NOTICE_KIND,armCollection,latePenalty,owedOn,returnsOf } from '@/engine/systems/taxreturn';
 import { describe,expect,it } from 'vitest';
 
-const life = (seed: string): Simulation => quickSave({ startLocationId: 'us-ny-newyork', homeRegionId: 'us-ny-newyork', livesWhereBorn: true, wealth: 'wealthy' }, seed);
+const life = (seed: string): Simulation => quickSave({ startLocationId: 'us-ny-newyork', homeRegionId: 'us-ny-newyork', wealth: 'wealthy' }, seed);
 
 describe('a bill the person pays', () => {
   it('reaches savings when checking is short, linked or not', () => {
@@ -50,7 +50,7 @@ function irsGrown(from: number, to: number): number {
 describe('a balance left owing', () => {
   /** A 2026 return filed with nothing in the bank to pay it. */
   function owing(seed: string): { sim: Simulation; zero: () => void } {
-    const sim = quickSave({ startLocationId: 'us-ny-newyork', homeRegionId: 'us-ny-newyork', livesWhereBorn: true, wealth: 'wealthy' }, seed);
+    const sim = quickSave({ startLocationId: 'us-ny-newyork', homeRegionId: 'us-ny-newyork', wealth: 'wealthy' }, seed);
     recordWages(sim.player, instantFromZoned({ year: 2026, month: 5, day: 1, hour: 9 }, 'America/New_York'), 'America/New_York', { gross: 90_000_00 });
     const zero = () => { for (const a of Object.values(sim.universe.accounts)) if (a.ownerId === sim.player.id && !a.nominal && a.balance > 0 && (a.kind === 'checking' || a.kind === 'savings')) sim.post({ memo: 'test', category: 'test', postings: [{ accountId: a.id, amount: -a.balance }, { accountId: sim.nominalAccount('expense', 'Test').id, amount: a.balance }] }); };
     while (sim.now < instantFromZoned({ year: 2027, month: 2, day: 1, hour: 12 }, 'America/New_York')) sim.advanceTo(sim.now + 6 * 3_600_000);
@@ -110,7 +110,7 @@ describe('a balance left owing', () => {
 describe('a return never filed', () => {
   it('is filed by the IRS a year after it was due, answerable for 120 days, then assessed and collected', () => {
     // Until 2026-09-28 a return never filed was never asked for.
-    const sim = quickSave({ startLocationId: 'us-ny-newyork', homeRegionId: 'us-ny-newyork', livesWhereBorn: true, wealth: 'wealthy' }, 'never-filed');
+    const sim = quickSave({ startLocationId: 'us-ny-newyork', homeRegionId: 'us-ny-newyork', wealth: 'wealthy' }, 'never-filed');
     recordWages(sim.player, instantFromZoned({ year: 2026, month: 5, day: 1, hour: 9 }, 'America/New_York'), 'America/New_York', { gross: 90_000_00 });
     const step = (until: number) => { while (sim.now < until) sim.advanceTo(Math.min(until, sim.now + 12 * 3_600_000)); };
     step(instantFromZoned({ year: 2027, month: 2, day: 2, hour: 12 }, 'America/New_York'));
@@ -138,7 +138,7 @@ describe('a return never filed', () => {
   });
 
   it('is left to them if they file in the months the IRS gives', () => {
-    const sim = quickSave({ startLocationId: 'us-ny-newyork', homeRegionId: 'us-ny-newyork', livesWhereBorn: true, wealth: 'wealthy' }, 'files-late');
+    const sim = quickSave({ startLocationId: 'us-ny-newyork', homeRegionId: 'us-ny-newyork', wealth: 'wealthy' }, 'files-late');
     recordWages(sim.player, instantFromZoned({ year: 2026, month: 5, day: 1, hour: 9 }, 'America/New_York'), 'America/New_York', { gross: 90_000_00 });
     const step = (until: number) => { while (sim.now < until) sim.advanceTo(Math.min(until, sim.now + 12 * 3_600_000)); };
     step(instantFromZoned({ year: 2027, month: 2, day: 2, hour: 12 }, 'America/New_York'));

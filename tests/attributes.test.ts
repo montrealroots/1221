@@ -16,7 +16,7 @@ import { describe,expect,it } from 'vitest';
 const craft = (level: number): Craft => (evenCraft(level));
 const life = (seed: string) => createSave(1, seed, { ...newLifeConfig(), homeRegionId: 'us-ny-newyork', firstName: 'Ada', lastName: 'Cole', pronouns: 'she/her' });
 function pro(seed: string): Simulation {
-  const sim = quickSave({ startLocationId: 'us-ny-newyork', homeRegionId: 'us-ny-newyork', livesWhereBorn: true, wealth: 'wealthy' }, seed);
+  const sim = quickSave({ startLocationId: 'us-ny-newyork', homeRegionId: 'us-ny-newyork', wealth: 'wealthy' }, seed);
   sim.player.craft = craft(75);
   return sim;
 }

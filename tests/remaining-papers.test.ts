@@ -214,7 +214,7 @@ describe('tax.s8.passport', () => {
   // From 2026-10-17 (brief 14's cross-area pass): a day's wait was printed “1 days”, found by the health area on a life in
   // Vancouver, where Canada's faster service takes a day.
   it('a passport office’s days and years are said in the right number: Canada’s faster service in Vancouver takes “1 day”', () => {
-    const sim = quickSave({ startLocationId: 'ca-bc-vancouver', homeRegionId: 'ca-bc-vancouver', livesWhereBorn: true, wealth: 'comfortable' } as never, 'rp-ca-van', 1);
+    const sim = quickSave({ startLocationId: 'ca-bc-vancouver', homeRegionId: 'ca-bc-vancouver', wealth: 'comfortable' } as never, 'rp-ca-van', 1);
     const screen = drawn(sim, PassportPane);
     expect(screen).toMatch(/ Faster C\$[\d,.]+ 1 day Renew It /);
     expect(screen).not.toMatch(/\b1 (?:days|years)\b/);

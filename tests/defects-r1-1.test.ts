@@ -36,7 +36,7 @@ type Payer = 'debit' | 'credit' | 'cash';
 const NYC = 'us-ny-newyork';
 const PARIS = 'fr-idf-paris';
 const lifeAt = (cityId: string, bankId: string, seed: string) =>
-  quickSave({ startLocationId: cityId, homeRegionId: cityId, livesWhereBorn: true, wealth: 'modest', bankId }, seed);
+  quickSave({ startLocationId: cityId, homeRegionId: cityId, wealth: 'modest', bankId }, seed);
 const primary = (sim: Simulation) => sim.universe.accounts[sim.player.primaryAccountId!]!;
 const mine = (sim: Simulation) => Object.values(sim.universe.accounts).filter((a) => a.ownerId === sim.player.id && !a.closedAt && !a.nominal);
 const savings = (sim: Simulation) => mine(sim).find((a) => a.kind === 'savings' && a.category !== 'term');

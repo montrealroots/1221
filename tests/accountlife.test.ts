@@ -20,7 +20,7 @@ import { roundUpOf } from '@/engine/systems/roundups';
 import { yearOf } from '@/engine/systems/earnings';
 
 const lifeIn = (cityId: string, bankId: string, seed = 'life') =>
-  quickSave({ startLocationId: cityId, homeRegionId: cityId, livesWhereBorn: true, wealth: 'comfortable', bankId }, seed);
+  quickSave({ startLocationId: cityId, homeRegionId: cityId, wealth: 'comfortable', bankId }, seed);
 const current = (sim: Simulation) => sim.universe.accounts[sim.player.primaryAccountId!]!;
 const savings = (sim: Simulation) => bankAccountsOf(sim, sim.player).find((a) => a.kind === 'savings');
 const give = (sim: Simulation, account: Account, amount: number) => sim.post({ memo: 'test', category: 'test', postings: [{ accountId: account.id, amount }, { accountId: sim.nominalAccount('income', 'Test').id, amount: -amount }] });

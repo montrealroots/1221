@@ -10,7 +10,7 @@ import { alertsOf,statementReady } from '@/engine/systems/statements';
 import { describe,expect,it } from 'vitest';
 
 const pro = (seed: string) => {
-  const sim = quickSave({ startLocationId: 'us-ny-newyork', homeRegionId: 'us-ny-newyork', livesWhereBorn: true, wealth: 'wealthy' }, seed);
+  const sim = quickSave({ startLocationId: 'us-ny-newyork', homeRegionId: 'us-ny-newyork', wealth: 'wealthy' }, seed);
   sim.player.craft = evenCraft(75);
   return sim;
 };

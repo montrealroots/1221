@@ -24,7 +24,7 @@ const craft = (level: number): Craft => (evenCraft(level));
 const play = (sim: Simulation, until: number) => { while (sim.now < until) sim.advanceTo(Math.min(until, sim.now + 6 * MS_HOUR), { stopOnPlayerRequired: true }); };
 
 function pro(seed: string, city = 'us-ny-newyork', level = 75): Simulation {
-  const sim = quickSave({ startLocationId: city, homeRegionId: city, livesWhereBorn: true, wealth: 'wealthy' }, seed);
+  const sim = quickSave({ startLocationId: city, homeRegionId: city, wealth: 'wealthy' }, seed);
   sim.player.craft = craft(level);
   return sim;
 }

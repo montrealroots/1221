@@ -134,7 +134,7 @@ const { Home } = await import('@/ui/screens/Home');
 const student = (seed: string, extra: Partial<NewSaveConfig> = {}): Simulation =>
   createSave(1, seed, { ...newLifeConfig(), homeRegionId: 'us-ny-newyork', firstName: 'Ada', lastName: 'Cole', pronouns: 'she/her', ...extra });
 /** A New York life outside the school, from Monday 5 January 2026: where a session is charged, as Yale's never is. */
-const newYorker = (seed: string): Simulation => quickSave({ startLocationId: 'us-ny-newyork', homeRegionId: 'us-ny-newyork', livesWhereBorn: true, wealth: 'wealthy' }, seed);
+const newYorker = (seed: string): Simulation => quickSave({ startLocationId: 'us-ny-newyork', homeRegionId: 'us-ny-newyork', wealth: 'wealthy' }, seed);
 const reload = (sim: Simulation): Simulation => loadSave(deserialise(serialise(sim.universe)) as never);
 /** An instant on the clocks of New York and New Haven, Eastern time worked out here: EDT is UTC−4 to 1 November 2026, EST UTC−5 after. */
 const EDT = (y: number, m: number, d: number, hour: number, minute = 0) => Date.UTC(y, m - 1, d, hour + 4, minute);

@@ -2,7 +2,7 @@
 
 Every surface a player can reach that shows text, written by `tools/surfaces.mjs` from `surfaces/*.json` (from 2026-10-20, the owner's brief 17, section 2). Each row says where the player meets it, the sources it draws on, the states it's met in, what reading it in context found, what changed, and the evidence. `--check` fails a source no row claims.
 
-**336 surfaces; 4933 of 4933 sources claimed; 197 revised, 139 kept.**
+**336 surfaces; 4932 of 4932 sources claimed; 197 revised, 139 kept.**
 
 | Area | Sources | Claimed |
 |---|---|---|
@@ -12,13 +12,13 @@ Every surface a player can reach that shows text, written by `tools/surfaces.mjs
 | career-showcase | 23 | 23 |
 | career-work | 79 | 79 |
 | career-world | 72 | 72 |
-| frame | 531 | 531 |
+| frame | 528 | 528 |
 | health | 178 | 178 |
 | material-a | 507 | 507 |
 | material-b | 492 | 492 |
 | money | 266 | 266 |
 | money-data | 522 | 522 |
-| new | 233 | 233 |
+| new | 235 | 235 |
 | papers | 477 | 477 |
 | profile | 634 | 634 |
 | school | 638 | 638 |
@@ -36,7 +36,7 @@ Every surface a player can reach that shows text, written by `tools/surfaces.mjs
 |---|---|---|---|---|---|
 | Updates | View All Updates, at the foot of Recent Updates on Home: every notice, read and unread, newest first, a run about one thing as one row with its count. Until 2026-10-23’s brief 24 it was on the menu too, under Your Day | first use, ordinary, empty, notification, history, details | Revised |  **Changed:** New in brief 23: until then a notice once read was on no screen. Each row says its title, what it’s about and when, its words in two lines with Read It All, Go There and Mark Read; Unread and All, About, and Mark N Read for what the filter shows. Its line says reading one answers nothing. | test: tests/evidence-g32-ui.test.ts: 'PLAYER JOURNEY: more unread than Recent Updates’ four'; test: tests/evidence2-b11.test.ts: 'Updates keeps a word on each term’s coursework as one row of two'; walk: docs/verification/ui-2026-10-23/app/capture.mjs |
 | The heads of Money, School and Papers | Under each screen’s name: the worth on Money, the place in the class and what’s next on School, the cover, a claim’s weekly pay and what the returns ask on Papers | ordinary, warning, overdue, details, history | Revised |  **Changed:** Home’s Your Affairs lines, moved on 2026-10-23 (brief 23) to the heads of their own screens: “Worth $505,434.”, “You’re 1st of 16 in the class. Next: …”, “Cover: Yale Health.”; Papers’ alerts in the words Home’s What Needs You says them. | test: tests/evidence-g33-ui.test.ts: 'a new student’s Money says a worth of $505,434 at its head'; test: tests/evidence-g33-ui.test.ts: 'a day in, “Year 1 of 3, good standing”'; test: tests/evidence-g33-ui.test.ts: 'three days past its day unfiled'; test: tests/evidence2-b12.test.ts: '“Unemployment, $93 a week.”' |
-| Rotate Your Phone To Play | Over everything on a phone held upright, and the toast when it turns back while the clock was running | unavailable, returning, confirmation | Revised |  **Changed:** New in brief 23: “Rotate Your Phone To Play” and “SLATE is designed for landscape play. Turn your phone on its side and everything is as you left it.”; on return, once, “Paused while your phone was upright. Press Play to carry on.” | test: tests/b23-turn.test.ts: 'live, turned upright: paused through the command'; walk: docs/verification/ui-2026-10-23/rotation.md |
+| A Phone Turned Upright | Nothing over the game: a phone held upright plays the same interface a narrow window has, and nothing is said when it turns | returning | Revised |  **Changed:** Removed in brief 27 (2026-10-24): “Rotate Your Phone To Play”, its line “SLATE is designed for landscape play. Turn your phone on its side and everything is as you left it.”, and the toast “Paused while your phone was upright. Press Play to carry on.”, which brief 23 had added on 2026-10-23. The frame shows no words now; the turn keeps the scroll and the focus and leaves the clock as the player set it. | test: tests/b23-turn.test.ts: 'has no rotate screen, no pause on a turn and no word of one to say'; walk: docs/verification/ui-2026-10-23/rotation.md |
 | The bar, the menu as a drawer, and the tab bars | The top bar’s Running or Paused, its save group (in the drawer’s foot on a small screen), each tab bar, and the look-after toast | ordinary, confirmation | Revised |  **Changed:** Brief 23: the save group gathered (Guide, its state, Save & Exit), Running or Paused said in words beside the clock, the menu a drawer below 900 wide or 500 high, a tab bar with ‹ and › where its tabs run past it; the look-after toast shared by the bar’s menu and How You Are. | test: tests/navigation.test.ts: 'gives the calendar and Updates to Home, by Up Next and Recent Updates'; test: tests/evidence-g32-ui.test.ts: 'a meal, eaten through Look After Yourself on How You Are'; walk: docs/verification/ui-2026-10-23/app/capture.mjs |
 | Player Profile, On This Page | Under your name at the head of the Player Profile: the page's eight sections, each a press away, in the order the page has them | first use, ordinary, details | Revised |  **Changed:** New in brief 23: until then the Profile opened on its name and ran 6,400 pixels at 1440, Readiness Today fifth under the 54 genres. Readiness Today is second now, under Identity And Background, and each section is a button that brings it to the top and gives it the focus. Nothing is folded away. | test: tests/b23-pages.test.ts: 'PLAYER JOURNEY: a played student’s Profile opens on who she is and Readiness Today'; test: tests/b23-pages.test.ts: 'a press on the index brings its section to the top'; walk: docs/verification/ui-2026-10-23/app/capture.mjs |
 

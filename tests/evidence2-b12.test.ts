@@ -573,7 +573,7 @@ describe('l-person', () => {
     // The country picked from its list, then London from the towns it shows.
     play.type('born-country', CITIES.get('uk-eng-london')!.countryId);
     let page = play.option('London');
-    expect(page).toContain('Citizenship United Kingdom');
+    press('Same As Your Place Of Birth: United Kingdom'); expect(play.draw()).not.toContain('Same As Your Place Of Birth');
     play.next('Continue');
     play.next('Continue');
     page = play.next('Continue');
@@ -587,7 +587,7 @@ describe('l-person', () => {
     play.next('Continue');
     play.next('Begin');
     const config = play.started()!;
-    expect(config).toMatchObject({ homeRegionId: 'uk-eng-london', startLocationId: 'us-ct-newhaven', heightCm: 170.2, weightKg: 64.9 });
+    expect(config).toMatchObject({ homeRegionId: 'uk-eng-london', citizenshipId: CITIES.get('uk-eng-london')!.countryId, startLocationId: 'us-ct-newhaven', heightCm: 170.2, weightKg: 64.9 });
     const sim = createSave(1, 'b12-born-london', config);
     expect(openedFromHome(sim).lines).toContainEqual(['Your body. ', '5 ft 7 in and 143 lb, with a body mass index of 22.4, in the healthy weight range. In feet, inches and pounds, the units of the United States, where you live.']);
   });
@@ -598,7 +598,7 @@ describe('l-person', () => {
     play.type('first', 'Ada');
     play.type('last', 'Cole');
     play.type('pronouns', 'she/her');
-    play.option('New York');
+    play.option('New York'); press('Same As Your Place Of Birth: United States'); play.draw();
     play.next('Continue');
     play.next('Continue');
     const page = play.next('Continue');

@@ -172,7 +172,7 @@ const student = (seed: string, bankId: string, extra: Partial<NewSaveConfig> = {
   createSave(1, seed, { ...newLifeConfig(), homeRegionId: 'us-ny-newyork', firstName: 'Ada', lastName: 'Cole', pronouns: 'she/her', bankId, ...extra });
 /** A quick-save life in Dublin at AIB: where a New Haven life doesn't reach. */
 const dubliner = (seed: string): Simulation =>
-  quickSave({ startLocationId: 'ie-lei-dublin', homeRegionId: 'ie-lei-dublin', livesWhereBorn: true, wealth: 'comfortable', bankId: 'ie-aib' }, seed);
+  quickSave({ startLocationId: 'ie-lei-dublin', homeRegionId: 'ie-lei-dublin', wealth: 'comfortable', bankId: 'ie-aib' }, seed);
 const reload = (sim: Simulation): Simulation => loadSave(deserialise(serialise(sim.universe)) as never);
 const primary = (sim: Simulation): Account => sim.universe.accounts[sim.player.primaryAccountId!]!;
 const account = (sim: Simulation, id: string): Account => sim.universe.accounts[id]!;
