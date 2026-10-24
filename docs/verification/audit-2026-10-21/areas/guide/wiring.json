@@ -1504,16 +1504,6 @@
    "note": "The hours on the button are the slider's, and the same `hours` is sent."
   },
   {
-   "file": "src/ui/shell/turn.tsx",
-   "control": "(none)",
-   "label": "(none)",
-   "kind": "world.set_preferences",
-   "payload": "{ timeSpeed: 'paused' }",
-   "verdict": "Right",
-   "handler": "src/engine/world/world.ts:86",
-   "note": "No control, by design (brief 23): an effect pauses a live clock while a phone is upright (`usePauseWhileUpright`), with the same command as Pause, so it stays paused until Play and the minutes upright are never added on."
-  },
-  {
    "file": "src/ui/workspaces/BankWorkspace.tsx",
    "control": "<Gated onClick>",
    "feature": "bank.close_savings",

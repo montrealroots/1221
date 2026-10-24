@@ -172,6 +172,15 @@ backup (`base44/functions/loadUniverse/entry.js`).
 `npm run base44:smoke -- --slot 3` against a test deployment is the check that would be. Nothing here is called a live
 backend.
 
+### The Gate On Areas A And D
+
+`c5db2be2` in a clean clone (`ad-gate/gate.txt`, `ad-gate/gate-exit.txt`): **exit 1**, 505 of 506 test files and 5,806 of
+5,807 tests. The one failure was `tests/b20-guide-wiring.test.ts`: the guide's wiring list
+(`../audit-2026-10-21/areas/guide/wiring.json`) still held the line for the pause the rotate gate issued
+(`world.set_preferences` from `turn.tsx`), which Area D took out. The list was written again from the code
+(`node tools/wiring.mjs --write`, 203 controls), the line gone and every other reading kept; the test passes. The targeted
+runs before that commit hadn't included it, since it reads every screen rather than the ones changed.
+
 ## Area C: The Foundation Matrix's Outstanding Rows
 
 Read as they stand after the merge, each classified by what it lacks (`foundation/OUTSTANDING.md`, written by
