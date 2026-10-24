@@ -14,35 +14,35 @@
    "part": 1,
    "from": "2026-08-24",
    "to": "2027-06-01",
-   "secs": 31,
+   "secs": 24,
    "reloads": 9
   },
   {
    "part": 2,
    "from": "2027-06-01",
    "to": "2028-06-01",
-   "secs": 95,
+   "secs": 77,
    "reloads": 12
   },
   {
    "part": 3,
    "from": "2028-06-01",
    "to": "2029-06-04",
-   "secs": 140,
+   "secs": 111,
    "reloads": 12
   },
   {
    "part": 4,
    "from": "2029-06-04",
    "to": "2029-11-01",
-   "secs": 112,
+   "secs": 99,
    "reloads": 5
   },
   {
    "part": 5,
    "from": "2029-11-01",
    "to": "2030-03-01",
-   "secs": 78,
+   "secs": 75,
    "reloads": 4,
    "done": true
   }
@@ -11470,7 +11470,7 @@
      ],
      "transactions": 29
     },
-    "secs": 1
+    "secs": 2
    },
    {
     "why": "a union bill due 2030-05-21T14:00: Initiation fee, part 2 of 3",
@@ -11507,7 +11507,7 @@
      "work": [],
      "transactions": 1167
     },
-    "secs": 21
+    "secs": 19
    },
    {
     "why": "an audition (in-person) set for 2029-09-10T15:00, Felix in Paper Moons",
@@ -11550,7 +11550,7 @@
      ],
      "transactions": 1283
     },
-    "secs": 17
+    "secs": 15
    },
    {
     "why": "an offer standing: An Offer For Felix",
@@ -11585,7 +11585,7 @@
      "work": [],
      "transactions": 1367
     },
-    "secs": 19
+    "secs": 17
    }
   ],
   "workDays": [],

@@ -1,15 +1,15 @@
-at cb8b19eb, 0 tracked files uncommitted, 2026-10-23T16:52:35Z
-life-p0-lives-0 exit=0 secs=189 cmd: npx vite-node tools/lives.ts -- --why --profile new-york, attentive --seed lives-0 --years 3.2
-life-p0-lives-1 exit=0 secs=195 cmd: npx vite-node tools/lives.ts -- --why --profile new-york, attentive --seed lives-1 --years 3.2
-life-p0-lives-2 exit=0 secs=182 cmd: npx vite-node tools/lives.ts -- --why --profile new-york, attentive --seed lives-2 --years 3.2
-life-p0-lives-3 exit=0 secs=173 cmd: npx vite-node tools/lives.ts -- --why --profile new-york, attentive --seed lives-3 --years 3.2
-life-p1-lives-0 exit=0 secs=195 cmd: npx vite-node tools/lives.ts -- --why --profile mexico-city, attentive --seed lives-0 --years 3.2
-life-p1-lives-1 exit=0 secs=186 cmd: npx vite-node tools/lives.ts -- --why --profile mexico-city, attentive --seed lives-1 --years 3.2
-life-p1-lives-2 exit=0 secs=199 cmd: npx vite-node tools/lives.ts -- --why --profile mexico-city, attentive --seed lives-2 --years 3.2
-life-p1-lives-3 exit=0 secs=188 cmd: npx vite-node tools/lives.ts -- --why --profile mexico-city, attentive --seed lives-3 --years 3.2
-life-p2-lives-0 exit=0 secs=213 cmd: npx vite-node tools/lives.ts -- --why --profile london, early riser and curious, attentive --seed lives-0 --years 3.2
-life-p2-lives-1 exit=0 secs=198 cmd: npx vite-node tools/lives.ts -- --why --profile london, early riser and curious, attentive --seed lives-1 --years 3.2
-life-p2-lives-2 exit=0 secs=199 cmd: npx vite-node tools/lives.ts -- --why --profile london, early riser and curious, attentive --seed lives-2 --years 3.2
-life-p2-lives-3 exit=0 secs=204 cmd: npx vite-node tools/lives.ts -- --why --profile london, early riser and curious, attentive --seed lives-3 --years 3.2
-variety exit=0 secs=605 cmd: npx vite-node tools/variety.ts -- --seed v-0 --years 3
-DONE 2026-10-23T17:41:21Z
+at 124bec77, 0 tracked files uncommitted, 2026-10-24T14:19:31Z
+life-p0-lives-0 exit=0 secs=206 cmd: npx vite-node tools/lives.ts -- --why --profile new-york, attentive --seed lives-0 --years 3.2
+life-p0-lives-1 exit=0 secs=216 cmd: npx vite-node tools/lives.ts -- --why --profile new-york, attentive --seed lives-1 --years 3.2
+life-p0-lives-2 exit=0 secs=193 cmd: npx vite-node tools/lives.ts -- --why --profile new-york, attentive --seed lives-2 --years 3.2
+life-p0-lives-3 exit=0 secs=197 cmd: npx vite-node tools/lives.ts -- --why --profile new-york, attentive --seed lives-3 --years 3.2
+life-p1-lives-0 exit=0 secs=207 cmd: npx vite-node tools/lives.ts -- --why --profile mexico-city, attentive --seed lives-0 --years 3.2
+life-p1-lives-1 exit=0 secs=197 cmd: npx vite-node tools/lives.ts -- --why --profile mexico-city, attentive --seed lives-1 --years 3.2
+life-p1-lives-2 exit=0 secs=210 cmd: npx vite-node tools/lives.ts -- --why --profile mexico-city, attentive --seed lives-2 --years 3.2
+life-p1-lives-3 exit=0 secs=198 cmd: npx vite-node tools/lives.ts -- --why --profile mexico-city, attentive --seed lives-3 --years 3.2
+life-p2-lives-0 exit=0 secs=228 cmd: npx vite-node tools/lives.ts -- --why --profile london, early riser and curious, attentive --seed lives-0 --years 3.2
+life-p2-lives-1 exit=0 secs=251 cmd: npx vite-node tools/lives.ts -- --why --profile london, early riser and curious, attentive --seed lives-1 --years 3.2
+life-p2-lives-2 exit=0 secs=190 cmd: npx vite-node tools/lives.ts -- --why --profile london, early riser and curious, attentive --seed lives-2 --years 3.2
+life-p2-lives-3 exit=0 secs=198 cmd: npx vite-node tools/lives.ts -- --why --profile london, early riser and curious, attentive --seed lives-3 --years 3.2
+variety exit=0 secs=460 cmd: npx vite-node tools/variety.ts -- --seed v-0 --years 3
+DONE 2026-10-24T15:08:42Z

@@ -2,13 +2,13 @@
  "playthrough": "normal",
  "width": 1440,
  "base": "http://localhost:4217",
- "commit": "05060742",
+ "commit": "124bec77",
  "uncommitted": 3,
- "startedAt": "2026-10-23T18:53:36.258Z",
+ "startedAt": "2026-10-24T15:22:31.300Z",
  "startingPoint": {
   "kind": "new life",
   "how": "creation in a browser with no saves: billed as Actress, the first name as offered, born in New York, the rest as offered",
-  "seed": "1-AlexRivera-mvlbwh97"
+  "seed": "1-AlexRivera-mvmjsuwn"
  },
  "steps": [
   {
@@ -222,11 +222,11 @@
    "pressed": [
     "School",
     "Coursework (tab)",
-    "Table Work: A winter afternoon going dark in their Washington Square stu",
-    "Table Work: Husband and wife of a few years; she has been reading his ev",
-    "Table Work: Find out what the analysis said",
-    "Table Work: Her own creed: she has preached that the unconscious can’t b",
-    "Table Work: Cross-examine him: did the doctor know he was married to her",
+    "Table Work: An October morning, the house emptied and the carriages wait",
+    "Table Work: Two people everyone expects to marry, who have never said a ",
+    "Table Work: Hear him ask, without asking him to",
+    "Table Work: Neither of them can say it, and there’s no time left",
+    "Table Work: Look for something in the luggage, to have something to do",
     "Read The Scene",
     "Read The Scene",
     "Read The Scene",
@@ -257,13 +257,11 @@
     "Classes: Go",
     "School",
     "Coursework (tab)",
-    "Say Yes",
     "Rehearse Alone",
     "Advance",
     "Tomorrow Morning",
     "On The Way: Advance",
     "Classes: Go",
-    "Rehearsal With Isaiah: Go",
     "School",
     "Coursework (tab)",
     "Rehearse Alone",
@@ -318,18 +316,18 @@
     "Coursework (tab)"
    ],
    "said": [
-    "August 29, 2026 11:55 AM: 22.2 → 29.6 (10 steps: Table Work, Table Work, Table Work, Table Work, Table Work, Read The Scene, Read The Scene, Read The Scene, Read The Scene, Learn Lines)",
-    "August 30, 2026 2:45 PM: 29.6 → 36.6 (10 steps: Learn Lines, Learn Lines, Learn Lines, Learn Lines, Learn Lines, Learn Lines, Learn Lines, Learn Lines, Learn Lines, Rehearse Alone)",
-    "August 31, 2026 8:00 AM: 36.6 → 39.2 (1 steps: Rehearse Alone)",
-    "September 1, 2026 8:00 AM: 39.2 → 41.1 (2 steps: answered yes, Rehearse Alone)",
-    "September 2, 2026 8:00 AM: 46.9 → 48.2 (1 steps: Rehearse Alone)",
-    "September 3, 2026 8:00 AM: 48.3 → 49.2 (1 steps: Rehearse Alone)",
-    "September 4, 2026 8:00 AM: 49.2 → 49.9 (1 steps: Rehearse Alone)",
-    "September 5, 2026 9:00 AM: 49.9 → 50.5 (2 steps: Rehearse Alone, Rehearse Alone)",
-    "September 6, 2026 11:00 AM: 50.5 → 55.4 (4 steps: Rehearse Alone, Rehearse Alone, Rehearse Alone, Run It With A Reader)",
-    "September 7, 2026 8:00 AM: 55.4 → 59.2 (1 steps: Run It With A Reader)",
-    "September 8, 2026 8:00 AM: 59.2 → 61.8 (1 steps: Run It With A Reader)",
-    "11 days; Shown Today 22.2 → 61.8"
+    "August 29, 2026 11:55 AM: 21.3 → 28.5 (10 steps: Table Work, Table Work, Table Work, Table Work, Table Work, Read The Scene, Read The Scene, Read The Scene, Read The Scene, Learn Lines)",
+    "August 30, 2026 2:45 PM: 28.5 → 36 (10 steps: Learn Lines, Learn Lines, Learn Lines, Learn Lines, Learn Lines, Learn Lines, Learn Lines, Learn Lines, Learn Lines, Rehearse Alone)",
+    "August 31, 2026 8:00 AM: 36 → 38.6 (1 steps: Rehearse Alone)",
+    "September 1, 2026 8:00 AM: 38.6 → 40.5 (1 steps: Rehearse Alone)",
+    "September 2, 2026 8:00 AM: 40.5 → 41.8 (1 steps: Rehearse Alone)",
+    "September 3, 2026 8:00 AM: 41.8 → 42.8 (1 steps: Rehearse Alone)",
+    "September 4, 2026 8:00 AM: 42.8 → 43.4 (1 steps: Rehearse Alone)",
+    "September 5, 2026 9:00 AM: 43.4 → 44.1 (2 steps: Rehearse Alone, Rehearse Alone)",
+    "September 6, 2026 11:00 AM: 44.1 → 49.9 (4 steps: Rehearse Alone, Rehearse Alone, Rehearse Alone, Run It With A Reader)",
+    "September 7, 2026 8:00 AM: 49.9 → 54.4 (1 steps: Run It With A Reader)",
+    "September 8, 2026 8:00 AM: 54.4 → 57.4 (1 steps: Run It With A Reader)",
+    "11 days; Shown Today 21.3 → 57.4"
    ],
    "ok": true,
    "date": "September 9, 2026",
@@ -352,9 +350,9 @@
     "Work On The Note"
    ],
    "said": [
-    "notice “Shown: Scene Study, Working”: Simulated note from Acting I: Most of all, the two of you weren’t playing the same scene yet: it needed time together. You and Isaiah had rehearsed together once. You ran it with a reader 3 times. (With Your Partner: 76% prepared.) You played Henrietta in Suppressed Desires.",
-    "To Show Again: refused “Not now: There’s new feedback on this piece. Read it, then press Mark As Read.”, then Mark As Read, and Work On The Note: Work On The Note: 60 minutes, 49% further on the note.",
-    "feedback: FEEDBACK: WORKING, 62 OF 100 · A NEW NOTE",
+    "notice “Shown: Scene Study, Working”: Simulated note from Acting I: Most of all, the two of you weren’t playing the same scene yet: it needed time together. You and Aaliyah hadn’t rehearsed together. You ran it with a reader 3 times. (With Your Partner: 67% prepared.) You played Varya in The Cherry Orchard.",
+    "To Show Again: refused “Not now: There’s new feedback on this piece. Read it, then press Mark As Read.”, then Mark As Read, and Work On The Note: Work On The Note: 60 minutes, 50% further on the note.",
+    "feedback: FEEDBACK: WORKING, 58 OF 100 · A NEW NOTE",
     "Shown: Scene Study, Working"
    ],
    "ok": true,
@@ -506,12 +504,6 @@
    "step": 11,
    "title": "Classes",
    "pressed": "Go",
-   "after": "September 1, 2026 7:00 PM"
-  },
-  {
-   "step": 11,
-   "title": "Rehearsal With Isaiah",
-   "pressed": "Go",
    "after": "September 2, 2026 7:00 AM"
   },
   {
@@ -621,5 +613,5 @@
   "errors": 0,
   "overflows": 0
  },
- "finishedAt": "2026-10-23T18:57:00.089Z"
+ "finishedAt": "2026-10-24T15:25:53.259Z"
 }

@@ -6,22 +6,23 @@ ok   advance: One Hour moves the clock an hour: 7:30 AM → 8:30 AM
 ok   look after yourself: an item from its menu, and what it says: "Eat A MealMost Worth It": Eat A Meal: done at 9:10 AM.
 ok   advance: Next Monday, to term, until coursework is set: August 31, 2026 3:00 PM; dialogs: On The Way, Registration And Your Account, Meeting Your Class, Meeting The Acting Faculty, The Building, The Studios And The L
 ok   school: registration and orientation are findable, and say what they ask: orientation panel shown; Register button absent (registered)
-ok   coursework: a step of preparation done from its button, the clock moved and the step counted: “Read The Scene”: 3:00 PM → 3:40 PM; Knows The Scene 0% → 42%; Read The Scene: 40 minutes, Knows The Scene up 42%.
-ok   coursework: a way of playing it chosen and rehearsed in: Read The Scene: 40 minutes, Knows The Scene up 42%. | Chosen. You’ve rehearsed this way of playing it to 0% so far.
-ok   coursework: table work answered from its select: 4 options, “departure” taken; Read The Scene: 40 minutes, Knows The Scene up 42%. | Chosen. You’ve rehearsed this way of playing it to 0% so far. | Answer chose
+ok   coursework: a step of preparation done from its button, the clock moved and the step counted: grayed first (Read The Scene: Isaiah has asked to rehearse. Answer them first, under Rehearsing With Isaiah.
+Learn Lines: Isaiah has asked to rehearse. Answer t
+ok   coursework: a way of playing it chosen and rehearsed in: It’s on your calendar. | Read The Scene: 40 minutes, Knows The Scene up 38%. | Chosen. You’ve rehearsed this way of playing it to 0% so far.
+ok   coursework: table work answered from its select: 4 options, “quay” taken; Read The Scene: 40 minutes, Knows The Scene up 38%. | Chosen. You’ve rehearsed this way of playing it to 0% so far. | Answer chosen.
 ok   coursework: Work It Through: a problem named, a way tried, its evidence shown, then kept or put back: told to learn some of the lines first: Learn Lines: Chosen. You’ve rehearsed this way of playing it to 0% so far. | Answer chosen. |; Learn Lines: Learn Lines: 
-ok   help: How This Works beside Coursework opens its entry, a connected system followed, Back, Escape keeps the tab and the focus: Preparing Coursework → Orientation Week → Back; the tab and the focus kept; August 31, 2026 5:50 PM
+ok   help: How This Works beside Coursework opens its entry, a connected system followed, Back, Escape keeps the tab and the focus: Preparing Coursework → Orientation Week → Back; the tab and the focus kept; August 31, 2026 8:50 PM
 ok   help: the keyboard: ? opens the contents, / goes to the search, a word finds entries: 7 entries for "partner"
 ok   help: Show Me Where goes to the entry’s screen and tab, Back To Help returns to the same trail: “A Card’s Offers”: Accounts → #/workspace/bank, Cards; back to Contents › Search: transfer › A Card’s Offers
 ok   help: a half-typed amount kept across How This Works, closed with Escape and with Close: kept: 12.34, closed with Escape and with Close
 ok   help: opened from the Advance and Look After Yourself menus, closed with Close and with Escape: the menu still open, the focus on its How This Works: Advance Time: Close; Advance Time: Escape; Look After Yourself: Close; Look After Yourself: Escape
 ok   navigation keeps context: School’s tab kept across Money and back: Casting
 ok   casting: with no part yet, the tab says when casting comes; with one, its rehearsal controls: Not Cast Yet How This Works The chair casts every student each term from the first spring: the Carlotta Festival then; a thesis or the Hughes Festival in a seco
-ok   practice: an exercise opened, its tier and focus set, an hour practised, and the hour explained: 5:50 PM → 6:50 PM: Sense Memory: +0.13. | Sense Memory. Real feeling from imagined detail, not from pushing. Tier Foundation Developing (Your Level) Advanced A 
-ok   profile: the development history shows the hour: August 31, 2026: Emotional Depth +0.127, Sense Memory
-ok   money: a transfer refused for more than the account holds, in the engine’s words, then made: Chase Total Checking has only $90,434.00 available, so nothing was moved. / Chase Total Checking has only $90,434.00 available, so nothing was moved. | Moved $1
+ok   practice: an exercise opened, its tier and focus set, an hour practised, and the hour explained: 8:50 PM → 9:50 PM: Sense Memory: +0.10. | Sense Memory. Real feeling from imagined detail, not from pushing. Tier Foundation Developing (Your Level) Advanced A 
+ok   profile: the development history shows the hour: August 31, 2026: Emotional Depth +0.099, Sense Memory
+ok   money: a transfer refused for more than the account holds, in the engine’s words, then made: Chase Total Checking has only $90,424.00 available, so nothing was moved. / Chase Total Checking has only $90,424.00 available, so nothing was moved. | Moved $1
 ok   papers: its five tabs open: all five
-ok   save and exit, then Continue: the same day and hour: August 31, 2026 6:50 PM
+ok   save and exit, then Continue: the same day and hour: August 31, 2026 9:50 PM
 ok   address: School’s Coursework loaded by its address opens School at Coursework, not Home; an entry it names opens over School: #/workspace/school at Coursework; #/workspace/school?help=school.repeat, then #/workspace/school
 ok   address: Skip To Content, from the keyboard, moves the focus to the content and leaves School where it is: #/workspace/school, the focus on #main
 ok   interruption: an advance past a commitment stops at it and asks; Stand Here leaves the clock where it is: stopped at September 1, 2026 9:00 AM; Stand Here kept it there

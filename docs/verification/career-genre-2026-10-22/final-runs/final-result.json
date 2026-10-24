@@ -1,14 +1,14 @@
 {
  "area": "final",
  "on": "2026-10-22",
- "tested": "cb8b19eb",
+ "tested": "124bec77",
  "rows": [
   {
    "id": "advice.F2A10-f",
    "group": "Brief 10 Area: advice",
    "disposition": "closed",
    "status": "Implemented And Verified",
-   "exercised": "The fresh set, adv-v-0 to 119, run again on brief 22's commit cb8b19eb, brief 12 having run it once unseen; every batch exit 0 and its tree clean (runs22.sh ADVF): F1 120, F2 120, F4 120, F5 120 and F6 120 of 120 (120 asked); F3 120 of 120 (96 asked), by band beginner 30, developing 30, advanced 30, nearMastery 30 of 30 (21 asked), by stage firstWeek 40, midTerm 40, later 40 of 40 (28 asked); read as prepared {'asBuilt': 1, 'cold': 102}; the verdicts {'both': 120, 'training': 0, 'preparation': 0, 'neither': 0}, on the cold take {'both': 120, 'training': 0, 'preparation': 0, 'neither': 0}. Reported beside them as written, deciding nothing: (e) 119 of 120, (f)'s ladder falls 30 of 30 near mastery.",
+   "exercised": "The fresh set, adv-v-0 to 119, run again on brief 22's commit 124bec77, brief 12 having run it once unseen; every batch exit 0 and its tree clean (runs22.sh ADVF): F1 120, F2 120, F4 120, F5 120 and F6 120 of 120 (120 asked); F3 120 of 120 (96 asked), by band beginner 30, developing 30, advanced 30, nearMastery 30 of 30 (21 asked), by stage firstWeek 40, midTerm 40, later 40 of 40 (28 asked); read as prepared {'asBuilt': 1, 'cold': 102}; the verdicts {'both': 120, 'training': 0, 'preparation': 0, 'neither': 0}, on the cold take {'both': 120, 'training': 0, 'preparation': 0, 'neither': 0}. Reported beside them as written, deciding nothing: (e) 119 of 120, (f)'s ladder falls 30 of 30 near mastery.",
    "evidence": [
     {
      "file": "docs/verification/career-genre-2026-10-22/final-runs/advice/fresh-summary.json",
@@ -68,7 +68,7 @@
     }
    ],
    "measured": {
-    "commit": "cb8b19eb",
+    "commit": "124bec77",
     "watch": "engine"
    }
   },
@@ -77,7 +77,7 @@
    "group": "Brief 10 Area: advice",
    "disposition": "closed",
    "status": "Implemented And Verified",
-   "exercised": "The fresh set on cb8b19eb: H1 to H6 120, 120, 120, 120, 120, 120 of 120 (120 asked); followed, the first-named stayed on 74 and another led on 46, changed on 46; rose 4, attributed 4, explained 4; 1965 reads with 0 stale, 3368 forecast changes (1355 rises) with 0 unexplained. Reported beside them as written, deciding nothing: (h) fell on 116 of 120, its own level's part on 120.",
+   "exercised": "The fresh set on 124bec77: H1 to H6 120, 120, 120, 120, 120, 120 of 120 (120 asked); followed, the first-named stayed on 74 and another led on 46, changed on 46; rose 4, attributed 4, explained 4; 1965 reads with 0 stale, 3368 forecast changes (1355 rises) with 0 unexplained. Reported beside them as written, deciding nothing: (h) fell on 116 of 120, its own level's part on 120.",
    "evidence": [
     {
      "file": "docs/verification/career-genre-2026-10-22/final-runs/advice/fresh-summary.json",
@@ -137,7 +137,7 @@
     }
    ],
    "measured": {
-    "commit": "cb8b19eb",
+    "commit": "124bec77",
     "watch": "engine"
    }
   },
@@ -146,7 +146,7 @@
    "group": "Brief 10 Area: advice",
    "disposition": "closed",
    "status": "Implemented And Verified",
-   "exercised": "The held-out set, regression coverage from brief 12, on brief 22's commit cb8b19eb (runs22.sh ADVR, every batch exit 0, its tree clean): the advised input's realized gain at or above the median of the others' on 120 of 120 (95% asked), its mean 0.765 against 0.388 for an input chosen at random, 1.969 times (1.5 asked); by stratum beginner 1.868, developing 2.067, advanced 1.961, nearMastery 2.049, firstWeek 1.982, midTerm 1.859, later 2.082; F2-A's 30 held out, 2.187.",
+   "exercised": "The held-out set, regression coverage from brief 12, on brief 22's commit 124bec77 (runs22.sh ADVR, every batch exit 0, its tree clean): the advised input's realized gain at or above the median of the others' on 120 of 120 (95% asked), its mean 0.765 against 0.388 for an input chosen at random, 1.969 times (1.5 asked); by stratum beginner 1.868, developing 2.067, advanced 1.961, nearMastery 2.049, firstWeek 1.982, midTerm 1.859, later 2.082; F2-A's 30 held out, 2.187.",
    "evidence": [
     {
      "file": "docs/verification/career-genre-2026-10-22/final-runs/advice/regression-summary.json",
@@ -222,7 +222,7 @@
     }
    ],
    "measured": {
-    "commit": "cb8b19eb",
+    "commit": "124bec77",
     "watch": "engine"
    }
   },
@@ -231,7 +231,7 @@
    "group": "Brief 10 Area: advice",
    "disposition": "closed",
    "status": "Implemented And Verified",
-   "exercised": "Brief 10's held-out set, adv-h-0 to 119, and F2-A's adv-10 to 39, run on brief 22's commit cb8b19eb in 16 batches, each exit 0, its commit and a clean tree written in each file, then summarized as regression coverage, the tuning cases apart, each band and stage reported. From brief 12 it isn't unseen validation: its results informed the clarified (f) and (h), and the fresh set took its place.",
+   "exercised": "Brief 10's held-out set, adv-h-0 to 119, and F2-A's adv-10 to 39, run on brief 22's commit 124bec77 in 16 batches, each exit 0, its commit and a clean tree written in each file, then summarized as regression coverage, the tuning cases apart, each band and stage reported. From brief 12 it isn't unseen validation: its results informed the clarified (f) and (h), and the fresh set took its place.",
    "evidence": [
     {
      "file": "docs/verification/career-genre-2026-10-22/final-runs/advice/regression-summary.json",
@@ -307,7 +307,7 @@
     }
    ],
    "measured": {
-    "commit": "cb8b19eb",
+    "commit": "124bec77",
     "watch": "engine"
    }
   }

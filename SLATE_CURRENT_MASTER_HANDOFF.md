@@ -10,11 +10,11 @@ deployed. There is no stash and one worktree. `claude/peaceful-hamilton-59zdbb` 
 career expansion, eight commits past `main` on 2026-10-24, unmerged; brief 26 says not to begin that expansion, and
 nothing here builds on it.
 
-**Completion, by the matrix:** 588 of 658 rows in scope Implemented And Verified (89.3%); 66 Implemented, Verification Incomplete, 0 Partially Implemented, 0 Not Implemented, 0 Blocked Externally, 4 Decision Required, 41 Explicitly Deferred.
+**Completion, by the matrix:** 633 of 658 rows in scope Implemented And Verified (96.2%); 21 Implemented, Verification Incomplete, 0 Partially Implemented, 0 Not Implemented, 0 Blocked Externally, 4 Decision Required, 41 Explicitly Deferred.
 
-  (634 at `b46ee301`. Brief 26's first change to `src` moved the 46 rows brief 22's final runs measured on the engine's or
-  the app's whole source to Implemented, Verification Incomplete, as briefs 23 and 24 did; they come back when the runs
-  are played again on the finished commit, the sweep's last milestone, M12.)
+  (634 at `b46ee301`; 588 from M1's first change to `src` until M12, when brief 22's final runs were played again on
+  `124bec77`, the sweep's last source commit, and the 46 rows measured on the whole source came back; 633 until the gate
+  on the commit that holds the fold adds its own row, `INT-gate`, as at every close since brief 22.)
 
 - **Read first:** `docs/verification/sweep-2026-10-24/README.md` (the receipt), `CHECKPOINT.md` (the trail, with the
   exact next step) and `REGISTER.md` (every feature's status).
@@ -174,7 +174,7 @@ force-pushed. Until the owner's word it was kept out of `main` ("Keep the change
 without my instruction."); it went to `main` with brief 24, in #62, merged as `a4e6795a` (above). Nothing is deployed.
 There is no stash and one worktree.
 
-**Completion, by the matrix:** 588 of 658 rows in scope Implemented And Verified (89.3%); 66 Implemented, Verification Incomplete, 0 Partially Implemented, 0 Not Implemented, 0 Blocked Externally, 4 Decision Required, 41 Explicitly Deferred.
+**Completion, by the matrix:** 633 of 658 rows in scope Implemented And Verified (96.2%); 21 Implemented, Verification Incomplete, 0 Partially Implemented, 0 Not Implemented, 0 Blocked Externally, 4 Decision Required, 41 Explicitly Deferred.
 
   (634 at brief 22's close. Brief 23 changed `src` (the interface, the guide's and the tutorial's words, and
   `content/attributes-matrix.ts`'s navigation table). So the 46 rows brief 22's final runs measured on the engine's or the

@@ -2149,7 +2149,7 @@
    "systems": "Every judged piece: briefs, class scenes, nights, casting reads, coursework",
    "sees": "Its figures on the screens that show a take, a scene or a part (the account says which)",
    "saveLoad": "A result kept under its ruleset (`RULESET` evaluation-9) is shown as it was",
-   "failure": "Before: 40 of 40; the exact best in 38; after: 40 of 40 (designed 10 of 10, held out 30 of 30); the exact best in 39; 529 candidates, forecast against realized 0.894; brief 09 (bcd75970): 40 of 40 advice cases: the first named input the best to raise; brief 10 (57b64401): 40 of 40 advice cases: the first named input the best to raise; brief 11 (3de26e0b): the same; brief 12 (ed24ff3b): the same; brief 13 (7e7a3af6): the same; brief 14 (6d83601a): the same; brief 15 (d6f6527a): the same; brief 16 (4ef5e961): the same; brief 17 (ecd961cc): the same; brief 19 (63fe7391): the same; brief 20 (cbec90d8): the same; brief 21 (fd32e869): the same; brief 22 (cb8b19eb): the same",
+   "failure": "Before: 40 of 40; the exact best in 38; after: 40 of 40 (designed 10 of 10, held out 30 of 30); the exact best in 39; 529 candidates, forecast against realized 0.894; brief 09 (bcd75970): 40 of 40 advice cases: the first named input the best to raise; brief 10 (57b64401): 40 of 40 advice cases: the first named input the best to raise; brief 11 (3de26e0b): the same; brief 12 (ed24ff3b): the same; brief 13 (7e7a3af6): the same; brief 14 (6d83601a): the same; brief 15 (d6f6527a): the same; brief 16 (4ef5e961): the same; brief 17 (ecd961cc): the same; brief 19 (63fe7391): the same; brief 20 (cbec90d8): the same; brief 21 (fd32e869): the same; brief 22 (124bec77): the same",
    "implementation": "systems/evaluation.ts, systems/piece.ts, content/tasks.ts, content/approaches.ts",
    "evidence": "docs/verification/integration-2026-10-16/runs/advice-cases.json; docs/verification/integration-2026-10-16/runs/advice.txt; docs/verification/advice-2026-10-16/README.md; docs/verification/integration-2026-10-16/runs-09/README.md; docs/verification/integration-2026-10-16/runs-10/README.md; docs/verification/completion-2026-10-16/runs/README.md; docs/verification/resolution-2026-10-17/runs/README.md; docs/verification/playthroughs-2026-10-17/runs/README.md; docs/verification/language-2026-10-17/runs/README.md; docs/verification/editorial-2026-10-19/runs/README.md; docs/verification/voices-2026-10-20/runs/README.md; docs/verification/continuity-2026-10-20/runs/README.md; docs/verification/career-2026-10-20/final-runs/runs/README.md; docs/verification/audit-2026-10-21/final-runs/runs/README.md; docs/verification/genre-banking-2026-10-22/final-runs/runs/README.md; docs/verification/career-genre-2026-10-22/final-runs/runs/README.md",
    "status": "Implemented And Verified",
@@ -2204,7 +2204,7 @@
    "after": "40 of 40 (designed 10 of 10, held out 30 of 30); the exact best in 39; 529 candidates, forecast against realized 0.894",
    "sourceStatus": "Met",
    "measured": {
-    "commit": "cb8b19eb",
+    "commit": "124bec77",
     "watch": "engine"
    }
   },
@@ -2898,7 +2898,7 @@
    "systems": "Every judged piece: briefs, class scenes, nights, casting reads, coursework",
    "sees": "Its figures on the screens that show a take, a scene or a part (the account says which)",
    "saveLoad": "A result kept under its ruleset (`RULESET` evaluation-9) is shown as it was",
-   "failure": "Before: all six plans (journeys-2026-10-16); after: all six plans 100, 100, 100; mastered 2 to 3 weeks sooner; breaches 0; brief 09 (bcd75970): musical-m-0: mastered 2030-10-08, payoff [100, 100, 100]; nordic_noir-m-0: mastered 2029-11-15, payoff [100, 100, 100]; nordic_noir-m-1: mastered 2029-11-27, payoff [100, 100, 100]; slapstick-m-0: mastered 2030-12-25, payoff [100, 100, 100]; social_realism-m-0: mastered 2029-11-15, payoff [100, 100, 100]; social_realism-m-1: mastered 2029-11-27, payoff [100, 100, 100]; brief 10 (57b64401): musical-m-0: mastered 2030-10-08, payoff [100, 100, 100]; nordic_noir-m-0: mastered 2029-11-15, payoff [100, 100, 100]; nordic_noir-m-1: mastered 2029-11-27, payoff [100, 100, 100]; slapstick-m-0: mastered 2030-12-28, payoff [100, 100, 100]; social_realism-m-0: mastered 2029-11-15, payoff [100, 100, 100]; social_realism-m-1: mastered 2029-11-27, payoff [100, 100, 100]; brief 11 (3de26e0b): the same; brief 12 (ed24ff3b): the same; brief 13 (7e7a3af6): the same; brief 14 (6d83601a): the same; brief 15 (d6f6527a): the same; brief 16 (4ef5e961): the same; brief 17 (ecd961cc): musical-m-0: mastered 2030-10-08, payoff [100, 100, 100]; nordic_noir-m-0: mastered 2029-11-15, payoff [100, 100, 100]; nordic_noir-m-1: mastered 2029-11-27, payoff [100, 100, 100]; slapstick-m-0: mastered 2030-12-29, payoff [100, 100, 100]; social_realism-m-0: mastered 2029-11-15, payoff [100, 100, 100]; social_realism-m-1: mastered 2029-11-27, payoff [100, 100, 100]; brief 19 (63fe7391): musical-m-0: mastered 2030-10-03, payoff [100, 100, 100]; nordic_noir-m-0: mastered 2029-11-10, payoff [100, 100, 100]; nordic_noir-m-1: mastered 2029-11-24, payoff [100, 100, 100]; slapstick-m-0: mastered 2030-12-22, payoff [100, 100, 100]; social_realism-m-0: mastered 2029-11-10, payoff [100, 100, 100]; social_realism-m-1: mastered 2029-11-24, payoff [100, 100, 100]; brief 20 (cbec90d8): the same; brief 21 (fd32e869): musical-m-0: mastered 2030-10-03, payoff [100, 100, 100]; nordic_noir-m-0: mastered 2029-11-10, payoff [100, 100, 100]; nordic_noir-m-1: mastered 2029-11-23, payoff [100, 100, 100]; slapstick-m-0: mastered 2030-12-22, payoff [100, 100, 100]; social_realism-m-0: mastered 2029-11-10, payoff [100, 100, 100]; social_realism-m-1: mastered 2029-11-23, payoff [100, 100, 100]; brief 22 (cb8b19eb): musical-m-0: mastered 2030-10-04, payoff [100, 100, 100]; nordic_noir-m-0: mastered 2029-11-10, payoff [100, 100, 100]; nordic_noir-m-1: mastered 2029-11-23, payoff [100, 100, 100]; slapstick-m-0: mastered 2030-12-22, payoff [100, 100, 100]; social_realism-m-0: mastered 2029-11-10, payoff [100, 100, 100]; social_realism-m-1: mastered 2029-11-23, payoff [100, 100, 100]",
+   "failure": "Before: all six plans (journeys-2026-10-16); after: all six plans 100, 100, 100; mastered 2 to 3 weeks sooner; breaches 0; brief 09 (bcd75970): musical-m-0: mastered 2030-10-08, payoff [100, 100, 100]; nordic_noir-m-0: mastered 2029-11-15, payoff [100, 100, 100]; nordic_noir-m-1: mastered 2029-11-27, payoff [100, 100, 100]; slapstick-m-0: mastered 2030-12-25, payoff [100, 100, 100]; social_realism-m-0: mastered 2029-11-15, payoff [100, 100, 100]; social_realism-m-1: mastered 2029-11-27, payoff [100, 100, 100]; brief 10 (57b64401): musical-m-0: mastered 2030-10-08, payoff [100, 100, 100]; nordic_noir-m-0: mastered 2029-11-15, payoff [100, 100, 100]; nordic_noir-m-1: mastered 2029-11-27, payoff [100, 100, 100]; slapstick-m-0: mastered 2030-12-28, payoff [100, 100, 100]; social_realism-m-0: mastered 2029-11-15, payoff [100, 100, 100]; social_realism-m-1: mastered 2029-11-27, payoff [100, 100, 100]; brief 11 (3de26e0b): the same; brief 12 (ed24ff3b): the same; brief 13 (7e7a3af6): the same; brief 14 (6d83601a): the same; brief 15 (d6f6527a): the same; brief 16 (4ef5e961): the same; brief 17 (ecd961cc): musical-m-0: mastered 2030-10-08, payoff [100, 100, 100]; nordic_noir-m-0: mastered 2029-11-15, payoff [100, 100, 100]; nordic_noir-m-1: mastered 2029-11-27, payoff [100, 100, 100]; slapstick-m-0: mastered 2030-12-29, payoff [100, 100, 100]; social_realism-m-0: mastered 2029-11-15, payoff [100, 100, 100]; social_realism-m-1: mastered 2029-11-27, payoff [100, 100, 100]; brief 19 (63fe7391): musical-m-0: mastered 2030-10-03, payoff [100, 100, 100]; nordic_noir-m-0: mastered 2029-11-10, payoff [100, 100, 100]; nordic_noir-m-1: mastered 2029-11-24, payoff [100, 100, 100]; slapstick-m-0: mastered 2030-12-22, payoff [100, 100, 100]; social_realism-m-0: mastered 2029-11-10, payoff [100, 100, 100]; social_realism-m-1: mastered 2029-11-24, payoff [100, 100, 100]; brief 20 (cbec90d8): the same; brief 21 (fd32e869): musical-m-0: mastered 2030-10-03, payoff [100, 100, 100]; nordic_noir-m-0: mastered 2029-11-10, payoff [100, 100, 100]; nordic_noir-m-1: mastered 2029-11-23, payoff [100, 100, 100]; slapstick-m-0: mastered 2030-12-22, payoff [100, 100, 100]; social_realism-m-0: mastered 2029-11-10, payoff [100, 100, 100]; social_realism-m-1: mastered 2029-11-23, payoff [100, 100, 100]; brief 22 (124bec77): musical-m-0: mastered 2030-10-04, payoff [100, 100, 100]; nordic_noir-m-0: mastered 2029-11-10, payoff [100, 100, 100]; nordic_noir-m-1: mastered 2029-11-23, payoff [100, 100, 100]; slapstick-m-0: mastered 2030-12-22, payoff [100, 100, 100]; social_realism-m-0: mastered 2029-11-10, payoff [100, 100, 100]; social_realism-m-1: mastered 2029-11-23, payoff [100, 100, 100]",
    "implementation": "systems/evaluation.ts, systems/piece.ts, content/tasks.ts, content/approaches.ts",
    "evidence": "docs/verification/integration-2026-10-16/runs/plan-nordic_noir-m-0.json; docs/verification/integration-2026-10-16/runs/plan-musical-m-0.json; docs/verification/integration-2026-10-16/runs/plan-slapstick-m-0.json; docs/verification/integration-2026-10-16/runs-09/README.md; docs/verification/integration-2026-10-16/runs-10/README.md; docs/verification/completion-2026-10-16/runs/README.md; docs/verification/resolution-2026-10-17/runs/README.md; docs/verification/playthroughs-2026-10-17/runs/README.md; docs/verification/language-2026-10-17/runs/README.md; docs/verification/editorial-2026-10-19/runs/README.md; docs/verification/voices-2026-10-20/runs/README.md; docs/verification/continuity-2026-10-20/runs/README.md; docs/verification/career-2026-10-20/final-runs/runs/README.md; docs/verification/audit-2026-10-21/final-runs/runs/README.md; docs/verification/genre-banking-2026-10-22/final-runs/runs/README.md; docs/verification/career-genre-2026-10-22/final-runs/runs/README.md",
    "status": "Implemented And Verified",
@@ -2965,7 +2965,7 @@
    "after": "all six plans 100, 100, 100; mastered 2 to 3 weeks sooner; breaches 0",
    "sourceStatus": "Met",
    "measured": {
-    "commit": "cb8b19eb",
+    "commit": "124bec77",
     "watch": "engine"
    }
   },
@@ -3519,7 +3519,7 @@
    "systems": "Every retained system the journey passes through",
    "sees": "The screens the journey plays",
    "saveLoad": "Saved and opened again where the evidence says",
-   "failure": "Each refusal says why, and what comes next; brief 09 (bcd75970): no step skipped at either width: 72 passed, 0 failed, 0 skipped; 0 errors; 0 overflows / 72 passed, 0 failed, 0 skipped; 0 errors; 0 overflows; brief 10 (9c40be73): no step skipped at either width: 72 passed, 0 failed, 0 skipped; 0 errors; 0 overflows / 72 passed, 0 failed, 0 skipped; 0 errors; 0 overflows; brief 11 (43a82efa): the same; brief 12 (ed24ff3b): no step skipped at either width: 76 passed, 0 failed, 0 skipped; 0 errors; 0 overflows / 76 passed, 0 failed, 0 skipped; 0 errors; 0 overflows; brief 13 (51cdd7d6): no step skipped at either width: 77 passed, 0 failed, 0 skipped; 0 errors; 0 overflows / 77 passed, 0 failed, 0 skipped; 0 errors; 0 overflows; brief 14 (edd7be91): the same; brief 15 (d6f6527a): the same; brief 16 (4ef5e961): the same; brief 17 (ecd961cc): the same; brief 19 (ef2ab8b9): the same; brief 20 (cbec90d8): the same; brief 21 (fd32e869): the same; brief 22 (05060742): the same",
+   "failure": "Each refusal says why, and what comes next; brief 09 (bcd75970): no step skipped at either width: 72 passed, 0 failed, 0 skipped; 0 errors; 0 overflows / 72 passed, 0 failed, 0 skipped; 0 errors; 0 overflows; brief 10 (9c40be73): no step skipped at either width: 72 passed, 0 failed, 0 skipped; 0 errors; 0 overflows / 72 passed, 0 failed, 0 skipped; 0 errors; 0 overflows; brief 11 (43a82efa): the same; brief 12 (ed24ff3b): no step skipped at either width: 76 passed, 0 failed, 0 skipped; 0 errors; 0 overflows / 76 passed, 0 failed, 0 skipped; 0 errors; 0 overflows; brief 13 (51cdd7d6): no step skipped at either width: 77 passed, 0 failed, 0 skipped; 0 errors; 0 overflows / 77 passed, 0 failed, 0 skipped; 0 errors; 0 overflows; brief 14 (edd7be91): the same; brief 15 (d6f6527a): the same; brief 16 (4ef5e961): the same; brief 17 (ecd961cc): the same; brief 19 (ef2ab8b9): the same; brief 20 (cbec90d8): the same; brief 21 (fd32e869): the same; brief 22 (124bec77): the same",
    "implementation": "src/engine, src/ui",
    "evidence": "tools/acceptance-ui.mjs; docs/verification/integration-2026-10-16/runs/acceptance/1440.log; docs/verification/integration-2026-10-16/runs/acceptance/390.log; docs/verification/integration-2026-10-16/runs-09/README.md; docs/verification/integration-2026-10-16/runs-10/README.md; docs/verification/completion-2026-10-16/runs/README.md; docs/verification/resolution-2026-10-17/runs/README.md; docs/verification/playthroughs-2026-10-17/runs/README.md; docs/verification/language-2026-10-17/runs/README.md; docs/verification/editorial-2026-10-19/runs/README.md; docs/verification/voices-2026-10-20/runs/README.md; docs/verification/continuity-2026-10-20/runs/README.md; docs/verification/career-2026-10-20/final-runs/runs/README.md; docs/verification/audit-2026-10-21/final-runs/runs/README.md; docs/verification/genre-banking-2026-10-22/final-runs/runs/README.md; docs/verification/career-genre-2026-10-22/final-runs/runs/README.md",
    "status": "Implemented And Verified",
@@ -3575,7 +3575,7 @@
    ],
    "sourceStatus": "Met",
    "measured": {
-    "commit": "05060742",
+    "commit": "124bec77",
     "watch": "app"
    }
   },
@@ -3594,7 +3594,7 @@
    "systems": "Every retained system the journey passes through",
    "sees": "The screens the journey plays",
    "saveLoad": "Saved and opened again where the evidence says",
-   "failure": "Each refusal says why, and what comes next; brief 09 (bcd75970): the built app at 1440: 72 passed, 0 failed, 0 skipped; 0 errors; 0 overflows; at 390: 72 passed, 0 failed, 0 skipped; 0 errors; 0 overflows; brief 10 (9c40be73): the built app at 1440: 72 passed, 0 failed, 0 skipped; 0 errors; 0 overflows; at 390: 72 passed, 0 failed, 0 skipped; 0 errors; 0 overflows; brief 11 (43a82efa): the same; brief 12 (ed24ff3b): the built app at 1440: 76 passed, 0 failed, 0 skipped; 0 errors; 0 overflows; at 390: 76 passed, 0 failed, 0 skipped; 0 errors; 0 overflows; brief 13 (51cdd7d6): the built app at 1440: 77 passed, 0 failed, 0 skipped; 0 errors; 0 overflows; at 390: 77 passed, 0 failed, 0 skipped; 0 errors; 0 overflows; brief 14 (edd7be91): the same; brief 15 (d6f6527a): the same; brief 16 (4ef5e961): the same; brief 17 (ecd961cc): the same; brief 19 (ef2ab8b9): the same; brief 20 (cbec90d8): the same; brief 21 (fd32e869): the same; brief 22 (05060742): the same",
+   "failure": "Each refusal says why, and what comes next; brief 09 (bcd75970): the built app at 1440: 72 passed, 0 failed, 0 skipped; 0 errors; 0 overflows; at 390: 72 passed, 0 failed, 0 skipped; 0 errors; 0 overflows; brief 10 (9c40be73): the built app at 1440: 72 passed, 0 failed, 0 skipped; 0 errors; 0 overflows; at 390: 72 passed, 0 failed, 0 skipped; 0 errors; 0 overflows; brief 11 (43a82efa): the same; brief 12 (ed24ff3b): the built app at 1440: 76 passed, 0 failed, 0 skipped; 0 errors; 0 overflows; at 390: 76 passed, 0 failed, 0 skipped; 0 errors; 0 overflows; brief 13 (51cdd7d6): the built app at 1440: 77 passed, 0 failed, 0 skipped; 0 errors; 0 overflows; at 390: 77 passed, 0 failed, 0 skipped; 0 errors; 0 overflows; brief 14 (edd7be91): the same; brief 15 (d6f6527a): the same; brief 16 (4ef5e961): the same; brief 17 (ecd961cc): the same; brief 19 (ef2ab8b9): the same; brief 20 (cbec90d8): the same; brief 21 (fd32e869): the same; brief 22 (124bec77): the same",
    "implementation": "src/engine, src/ui",
    "evidence": "tools/acceptance-ui.mjs; docs/verification/integration-2026-10-16/runs/acceptance/1440.log; docs/verification/integration-2026-10-16/runs/acceptance/390.log; docs/verification/integration-2026-10-16/runs-09/README.md; docs/verification/integration-2026-10-16/runs-10/README.md; docs/verification/completion-2026-10-16/runs/README.md; docs/verification/resolution-2026-10-17/runs/README.md; docs/verification/playthroughs-2026-10-17/runs/README.md; docs/verification/language-2026-10-17/runs/README.md; docs/verification/editorial-2026-10-19/runs/README.md; docs/verification/voices-2026-10-20/runs/README.md; docs/verification/continuity-2026-10-20/runs/README.md; docs/verification/career-2026-10-20/final-runs/runs/README.md; docs/verification/audit-2026-10-21/final-runs/runs/README.md; docs/verification/genre-banking-2026-10-22/final-runs/runs/README.md; docs/verification/career-genre-2026-10-22/final-runs/runs/README.md",
    "status": "Implemented And Verified",
@@ -3647,7 +3647,7 @@
    ],
    "sourceStatus": "Met",
    "measured": {
-    "commit": "05060742",
+    "commit": "124bec77",
     "watch": "app"
    }
   },
@@ -3666,7 +3666,7 @@
    "systems": "Every retained system the journey passes through",
    "sees": "The screens the journey plays",
    "saveLoad": "Saved and opened again where the evidence says",
-   "failure": "Each refusal says why, and what comes next; brief 09 (bcd75970): lives: 24, 20 graduated, 4 dismissed (reykjavik, autopilot), breaches 0, unbalanced 0; workload: 7 of 8 in good standing (london-lives-0-neglect: dismissed), breaches 0; mastery plans: 6 of 6 at 100 on every payoff tape; variety: graduated, breaches 0, 10 distinct top recommendations over 157 weeks, none at full (0), the longest unresolved 2 weeks, the same practice situation 4 in a row at most; freshness: 8 runs, 0 with a take or scene repeated outside the mastered profile; scenario saves 14 of 14; brief 10 (57b64401): lives: 24, 20 graduated, 4 dismissed (reykjavik, autopilot), breaches 0, unbalanced 0, errors 0; workload: 7 of 8 in good standing (london-lives-0-neglect: dismissed), breaches 0; mastery plans: 6 of 6 at 100 on every payoff tape; variety: graduated, breaches 0, 8 distinct top recommendations over 157 weeks, none at full (0), the longest unresolved 2 weeks, the same practice situation 3 in a row at most; freshness: 8 runs, 0 with a take or scene repeated outside the mastered profile; scenario saves 14 of 14; brief 11 (3de26e0b): the same; brief 12 (ed24ff3b): the same; brief 13 (7e7a3af6): the same; brief 14 (6d83601a): lives: 24, 20 graduated, 4 dismissed (reykjavik, autopilot), breaches 0, unbalanced 0, errors 0; workload: 7 of 8 in good standing (london-lives-0-neglect: dismissed), breaches 0; mastery plans: 6 of 6 at 100 on every payoff tape; variety: graduated, breaches 0, 8 distinct top recommendations over 157 weeks, none at full (0), the longest unresolved 2 weeks, the same practice situation 3 in a row at most; freshness: 8 runs, 0 with a take or scene repeated outside the mastered profile; scenario saves 15 of 15; brief 15 (d6f6527a): the same; brief 16 (4ef5e961): the same; brief 17 (ecd961cc): the same; brief 19 (63fe7391): the same; brief 20 (cbec90d8): the same; brief 21 (fd32e869): lives: 24, 20 graduated, 4 dismissed (reykjavik, autopilot), breaches 0, unbalanced 0, errors 0; workload: 6 of 8 in good standing (london-lives-0-neglect: dismissed), breaches 0; mastery plans: 6 of 6 at 100 on every payoff tape; variety: graduated, breaches 0, 8 distinct top recommendations over 157 weeks, none at full (0), the longest unresolved 2 weeks, the same practice situation 3 in a row at most; freshness: 8 runs, 0 with a take or scene repeated outside the mastered profile; scenario saves 15 of 15; brief 22 (cb8b19eb): the same",
+   "failure": "Each refusal says why, and what comes next; brief 09 (bcd75970): lives: 24, 20 graduated, 4 dismissed (reykjavik, autopilot), breaches 0, unbalanced 0; workload: 7 of 8 in good standing (london-lives-0-neglect: dismissed), breaches 0; mastery plans: 6 of 6 at 100 on every payoff tape; variety: graduated, breaches 0, 10 distinct top recommendations over 157 weeks, none at full (0), the longest unresolved 2 weeks, the same practice situation 4 in a row at most; freshness: 8 runs, 0 with a take or scene repeated outside the mastered profile; scenario saves 14 of 14; brief 10 (57b64401): lives: 24, 20 graduated, 4 dismissed (reykjavik, autopilot), breaches 0, unbalanced 0, errors 0; workload: 7 of 8 in good standing (london-lives-0-neglect: dismissed), breaches 0; mastery plans: 6 of 6 at 100 on every payoff tape; variety: graduated, breaches 0, 8 distinct top recommendations over 157 weeks, none at full (0), the longest unresolved 2 weeks, the same practice situation 3 in a row at most; freshness: 8 runs, 0 with a take or scene repeated outside the mastered profile; scenario saves 14 of 14; brief 11 (3de26e0b): the same; brief 12 (ed24ff3b): the same; brief 13 (7e7a3af6): the same; brief 14 (6d83601a): lives: 24, 20 graduated, 4 dismissed (reykjavik, autopilot), breaches 0, unbalanced 0, errors 0; workload: 7 of 8 in good standing (london-lives-0-neglect: dismissed), breaches 0; mastery plans: 6 of 6 at 100 on every payoff tape; variety: graduated, breaches 0, 8 distinct top recommendations over 157 weeks, none at full (0), the longest unresolved 2 weeks, the same practice situation 3 in a row at most; freshness: 8 runs, 0 with a take or scene repeated outside the mastered profile; scenario saves 15 of 15; brief 15 (d6f6527a): the same; brief 16 (4ef5e961): the same; brief 17 (ecd961cc): the same; brief 19 (63fe7391): the same; brief 20 (cbec90d8): the same; brief 21 (fd32e869): lives: 24, 20 graduated, 4 dismissed (reykjavik, autopilot), breaches 0, unbalanced 0, errors 0; workload: 6 of 8 in good standing (london-lives-0-neglect: dismissed), breaches 0; mastery plans: 6 of 6 at 100 on every payoff tape; variety: graduated, breaches 0, 8 distinct top recommendations over 157 weeks, none at full (0), the longest unresolved 2 weeks, the same practice situation 3 in a row at most; freshness: 8 runs, 0 with a take or scene repeated outside the mastered profile; scenario saves 15 of 15; brief 22 (124bec77): the same",
    "implementation": "src/engine, src/ui",
    "evidence": "docs/verification/integration-2026-10-16/runs/README.md; docs/verification/integration-2026-10-16/runs/lives.jsonl; docs/verification/integration-2026-10-16/runs/variety-v-0.json; docs/verification/integration-2026-10-16/runs/freshness.json; docs/verification/integration-2026-10-16/runs-09/README.md; docs/verification/integration-2026-10-16/runs-10/README.md; docs/verification/completion-2026-10-16/runs/README.md; docs/verification/resolution-2026-10-17/runs/README.md; docs/verification/playthroughs-2026-10-17/runs/README.md; docs/verification/language-2026-10-17/runs/README.md; docs/verification/editorial-2026-10-19/runs/README.md; docs/verification/voices-2026-10-20/runs/README.md; docs/verification/continuity-2026-10-20/runs/README.md; docs/verification/career-2026-10-20/final-runs/runs/README.md; docs/verification/audit-2026-10-21/final-runs/runs/README.md; docs/verification/genre-banking-2026-10-22/final-runs/runs/README.md; docs/verification/career-genre-2026-10-22/final-runs/runs/README.md",
    "status": "Implemented And Verified",
@@ -3725,7 +3725,7 @@
    ],
    "sourceStatus": "Met",
    "measured": {
-    "commit": "cb8b19eb",
+    "commit": "124bec77",
     "watch": "engine"
    }
   },
@@ -4805,7 +4805,7 @@
     }
    ],
    "measured": {
-    "commit": "05060742",
+    "commit": "124bec77",
     "watch": "app"
    }
   },
@@ -5047,7 +5047,7 @@
     }
    ],
    "measured": {
-    "commit": "05060742",
+    "commit": "124bec77",
     "watch": "app"
    }
   },
@@ -5289,7 +5289,7 @@
     }
    ],
    "measured": {
-    "commit": "05060742",
+    "commit": "124bec77",
     "watch": "app"
    }
   },
@@ -5491,7 +5491,7 @@
     }
    ],
    "measured": {
-    "commit": "05060742",
+    "commit": "124bec77",
     "watch": "app"
    }
   },
@@ -5815,7 +5815,7 @@
     }
    ],
    "measured": {
-    "commit": "cb8b19eb",
+    "commit": "124bec77",
     "watch": "engine"
    }
   },
@@ -6099,7 +6099,7 @@
     }
    ],
    "measured": {
-    "commit": "cb8b19eb",
+    "commit": "124bec77",
     "watch": "engine"
    }
   },
@@ -6383,7 +6383,7 @@
     }
    ],
    "measured": {
-    "commit": "cb8b19eb",
+    "commit": "124bec77",
     "watch": "engine"
    }
   },
@@ -6787,7 +6787,7 @@
     }
    ],
    "measured": {
-    "commit": "cb8b19eb",
+    "commit": "124bec77",
     "watch": "engine"
    }
   },
@@ -7151,7 +7151,7 @@
     }
    ],
    "measured": {
-    "commit": "cb8b19eb",
+    "commit": "124bec77",
     "watch": "engine"
    }
   },
@@ -7475,7 +7475,7 @@
     }
    ],
    "measured": {
-    "commit": "cb8b19eb",
+    "commit": "124bec77",
     "watch": "engine"
    }
   },
@@ -7879,7 +7879,7 @@
     }
    ],
    "measured": {
-    "commit": "cb8b19eb",
+    "commit": "124bec77",
     "watch": "engine"
    }
   },
@@ -8203,7 +8203,7 @@
     }
    ],
    "measured": {
-    "commit": "cb8b19eb",
+    "commit": "124bec77",
     "watch": "engine"
    }
   },
@@ -8527,7 +8527,7 @@
     }
    ],
    "measured": {
-    "commit": "cb8b19eb",
+    "commit": "124bec77",
     "watch": "engine"
    }
   },
@@ -8891,7 +8891,7 @@
     }
    ],
    "measured": {
-    "commit": "cb8b19eb",
+    "commit": "124bec77",
     "watch": "engine"
    }
   },
@@ -9215,7 +9215,7 @@
     }
    ],
    "measured": {
-    "commit": "cb8b19eb",
+    "commit": "124bec77",
     "watch": "engine"
    }
   },
@@ -9539,7 +9539,7 @@
     }
    ],
    "measured": {
-    "commit": "cb8b19eb",
+    "commit": "124bec77",
     "watch": "engine"
    }
   },
@@ -10063,7 +10063,7 @@
     }
    ],
    "measured": {
-    "commit": "cb8b19eb",
+    "commit": "124bec77",
     "watch": "engine"
    }
   },
@@ -10427,7 +10427,7 @@
     }
    ],
    "measured": {
-    "commit": "cb8b19eb",
+    "commit": "124bec77",
     "watch": "engine"
    }
   },
@@ -10751,7 +10751,7 @@
     }
    ],
    "measured": {
-    "commit": "cb8b19eb",
+    "commit": "124bec77",
     "watch": "engine"
    }
   },
@@ -11035,7 +11035,7 @@
     }
    ],
    "measured": {
-    "commit": "cb8b19eb",
+    "commit": "124bec77",
     "watch": "engine"
    }
   },
@@ -11279,7 +11279,7 @@
     }
    ],
    "measured": {
-    "commit": "cb8b19eb",
+    "commit": "124bec77",
     "watch": "engine"
    }
   },
@@ -11563,7 +11563,7 @@
     }
    ],
    "measured": {
-    "commit": "cb8b19eb",
+    "commit": "124bec77",
     "watch": "engine"
    }
   },
@@ -11847,7 +11847,7 @@
     }
    ],
    "measured": {
-    "commit": "cb8b19eb",
+    "commit": "124bec77",
     "watch": "engine"
    }
   },
@@ -12131,7 +12131,7 @@
     }
    ],
    "measured": {
-    "commit": "cb8b19eb",
+    "commit": "124bec77",
     "watch": "engine"
    }
   },
@@ -12375,7 +12375,7 @@
     }
    ],
    "measured": {
-    "commit": "cb8b19eb",
+    "commit": "124bec77",
     "watch": "engine"
    }
   },
@@ -12619,7 +12619,7 @@
     }
    ],
    "measured": {
-    "commit": "cb8b19eb",
+    "commit": "124bec77",
     "watch": "engine"
    }
   },
@@ -12863,7 +12863,7 @@
     }
    ],
    "measured": {
-    "commit": "cb8b19eb",
+    "commit": "124bec77",
     "watch": "engine"
    }
   },
@@ -13467,7 +13467,7 @@
     }
    ],
    "measured": {
-    "commit": "cb8b19eb",
+    "commit": "124bec77",
     "watch": "engine"
    }
   },
@@ -13794,7 +13794,7 @@
     }
    ],
    "measured": {
-    "commit": "cb8b19eb",
+    "commit": "124bec77",
     "watch": "engine"
    }
   },
@@ -14078,7 +14078,7 @@
     }
    ],
    "measured": {
-    "commit": "cb8b19eb",
+    "commit": "124bec77",
     "watch": "engine"
    }
   },
@@ -14362,7 +14362,7 @@
     }
    ],
    "measured": {
-    "commit": "cb8b19eb",
+    "commit": "124bec77",
     "watch": "engine"
    }
   },
@@ -14686,7 +14686,7 @@
     }
    ],
    "measured": {
-    "commit": "cb8b19eb",
+    "commit": "124bec77",
     "watch": "engine"
    }
   },
@@ -15010,7 +15010,7 @@
     }
    ],
    "measured": {
-    "commit": "cb8b19eb",
+    "commit": "124bec77",
     "watch": "engine"
    }
   },
@@ -15294,7 +15294,7 @@
     }
    ],
    "measured": {
-    "commit": "cb8b19eb",
+    "commit": "124bec77",
     "watch": "engine"
    }
   },
@@ -15578,7 +15578,7 @@
     }
    ],
    "measured": {
-    "commit": "cb8b19eb",
+    "commit": "124bec77",
     "watch": "engine"
    }
   },
@@ -15902,7 +15902,7 @@
     }
    ],
    "measured": {
-    "commit": "cb8b19eb",
+    "commit": "124bec77",
     "watch": "engine"
    }
   },
@@ -16858,7 +16858,7 @@
   {
    "id": "advice.F2A10-f",
    "status": "Implemented And Verified",
-   "why": "Brief 22, the final area (docs/verification/career-genre-2026-10-22/final-runs/final-result.json): The fresh set, adv-v-0 to 119, run again on brief 22's commit cb8b19eb, brief 12 having run it once unseen; every batch exit 0 and its tree clean (runs22.sh ADVF): F1 120, F2 120, F4 120, F5 120 and F6 120 of 120 (120 asked); F3 120 of 120 (96 asked), by band beginner 30, developing 30, advanced 30, nearMastery 30 of 30 (21 asked), by stage firstWeek 40, midTerm 40, later 40 of 40 (28 asked); read as prepared {'asBuilt': 1, 'cold': 102}; the verdicts {'both': 120, 'training': 0, 'preparation': 0, 'neither': 0}, on the cold take {'both': 120, 'training': 0, 'preparation': 0, 'neither': 0}. Reported beside them as written, deciding nothing: (e) 119 of 120, (f)'s ladder falls 30 of 30 near mastery.",
+   "why": "Brief 22, the final area (docs/verification/career-genre-2026-10-22/final-runs/final-result.json): The fresh set, adv-v-0 to 119, run again on brief 22's commit 124bec77, brief 12 having run it once unseen; every batch exit 0 and its tree clean (runs22.sh ADVF): F1 120, F2 120, F4 120, F5 120 and F6 120 of 120 (120 asked); F3 120 of 120 (96 asked), by band beginner 30, developing 30, advanced 30, nearMastery 30 of 30 (21 asked), by stage firstWeek 40, midTerm 40, later 40 of 40 (28 asked); read as prepared {'asBuilt': 1, 'cold': 102}; the verdicts {'both': 120, 'training': 0, 'preparation': 0, 'neither': 0}, on the cold take {'both': 120, 'training': 0, 'preparation': 0, 'neither': 0}. Reported beside them as written, deciding nothing: (e) 119 of 120, (f)'s ladder falls 30 of 30 near mastery.",
    "citations": [
     {
      "file": "docs/verification/career-genre-2026-10-22/final-runs/advice/fresh-summary.json"
@@ -16904,14 +16904,14 @@
     }
    ],
    "measured": {
-    "commit": "cb8b19eb",
+    "commit": "124bec77",
     "watch": "engine"
    }
   },
   {
    "id": "advice.F2A10-h",
    "status": "Implemented And Verified",
-   "why": "Brief 22, the final area (docs/verification/career-genre-2026-10-22/final-runs/final-result.json): The fresh set on cb8b19eb: H1 to H6 120, 120, 120, 120, 120, 120 of 120 (120 asked); followed, the first-named stayed on 74 and another led on 46, changed on 46; rose 4, attributed 4, explained 4; 1965 reads with 0 stale, 3368 forecast changes (1355 rises) with 0 unexplained. Reported beside them as written, deciding nothing: (h) fell on 116 of 120, its own level's part on 120.",
+   "why": "Brief 22, the final area (docs/verification/career-genre-2026-10-22/final-runs/final-result.json): The fresh set on 124bec77: H1 to H6 120, 120, 120, 120, 120, 120 of 120 (120 asked); followed, the first-named stayed on 74 and another led on 46, changed on 46; rose 4, attributed 4, explained 4; 1965 reads with 0 stale, 3368 forecast changes (1355 rises) with 0 unexplained. Reported beside them as written, deciding nothing: (h) fell on 116 of 120, its own level's part on 120.",
    "citations": [
     {
      "file": "docs/verification/career-genre-2026-10-22/final-runs/advice/fresh-summary.json"
@@ -16957,14 +16957,14 @@
     }
    ],
    "measured": {
-    "commit": "cb8b19eb",
+    "commit": "124bec77",
     "watch": "engine"
    }
   },
   {
    "id": "advice.F2A10-c",
    "status": "Implemented And Verified",
-   "why": "Brief 22, the final area (docs/verification/career-genre-2026-10-22/final-runs/final-result.json): The held-out set, regression coverage from brief 12, on brief 22's commit cb8b19eb (runs22.sh ADVR, every batch exit 0, its tree clean): the advised input's realized gain at or above the median of the others' on 120 of 120 (95% asked), its mean 0.765 against 0.388 for an input chosen at random, 1.969 times (1.5 asked); by stratum beginner 1.868, developing 2.067, advanced 1.961, nearMastery 2.049, firstWeek 1.982, midTerm 1.859, later 2.082; F2-A's 30 held out, 2.187.",
+   "why": "Brief 22, the final area (docs/verification/career-genre-2026-10-22/final-runs/final-result.json): The held-out set, regression coverage from brief 12, on brief 22's commit 124bec77 (runs22.sh ADVR, every batch exit 0, its tree clean): the advised input's realized gain at or above the median of the others' on 120 of 120 (95% asked), its mean 0.765 against 0.388 for an input chosen at random, 1.969 times (1.5 asked); by stratum beginner 1.868, developing 2.067, advanced 1.961, nearMastery 2.049, firstWeek 1.982, midTerm 1.859, later 2.082; F2-A's 30 held out, 2.187.",
    "citations": [
     {
      "file": "docs/verification/career-genre-2026-10-22/final-runs/advice/regression-summary.json"
@@ -17022,14 +17022,14 @@
     }
    ],
    "measured": {
-    "commit": "cb8b19eb",
+    "commit": "124bec77",
     "watch": "engine"
    }
   },
   {
    "id": "advice.heldout",
    "status": "Implemented And Verified",
-   "why": "Brief 22, the final area (docs/verification/career-genre-2026-10-22/final-runs/final-result.json): Brief 10's held-out set, adv-h-0 to 119, and F2-A's adv-10 to 39, run on brief 22's commit cb8b19eb in 16 batches, each exit 0, its commit and a clean tree written in each file, then summarized as regression coverage, the tuning cases apart, each band and stage reported. From brief 12 it isn't unseen validation: its results informed the clarified (f) and (h), and the fresh set took its place.",
+   "why": "Brief 22, the final area (docs/verification/career-genre-2026-10-22/final-runs/final-result.json): Brief 10's held-out set, adv-h-0 to 119, and F2-A's adv-10 to 39, run on brief 22's commit 124bec77 in 16 batches, each exit 0, its commit and a clean tree written in each file, then summarized as regression coverage, the tuning cases apart, each band and stage reported. From brief 12 it isn't unseen validation: its results informed the clarified (f) and (h), and the fresh set took its place.",
    "citations": [
     {
      "file": "docs/verification/career-genre-2026-10-22/final-runs/advice/regression-summary.json"
@@ -17087,7 +17087,7 @@
     }
    ],
    "measured": {
-    "commit": "cb8b19eb",
+    "commit": "124bec77",
     "watch": "engine"
    }
   },

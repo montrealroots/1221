@@ -56,6 +56,37 @@ that: the same (`gate-receipt.txt`, brief 22's in git as gate.txt's is).
 Brief 23's stopped browser lanes (`113765a6`) left 21 `fail-*.jpg` under `../interface-final/`, the runners' pictures of the
 interface they no longer read. They stayed through the replay above, whose every step is ok, and went on 2026-10-24 (brief 26).
 
+## Played Again On Brief 26's Finished Source, 2026-10-24
+
+Brief 26 (the connectivity sweep, `../../../sweep-2026-10-24/`) changed `src` three times (creation's Genres step reading
+the career projects' genres, a closed card sending its credit back and net worth counting a credit, and `base44/shared/
+guard.js`'s reported size), and the 46 rows these runs measure on the engine's or the app's whole source read as measured
+before what they read last changed. Every lane but the judge's, whose watched files the sweep didn't touch, prefix `f26`,
+on `124bec77` (the sweep's last source commit, M11's), each in a clean clone (`git clone --shared`, every record
+"at 124bec77, 0 tracked files uncommitted"), four at a time by `queue22.sh` from 13:34 to 15:53 UTC: JR1 to JR3, BJ1 to
+BJ3, B, C, D, J, A, ADVF, ADVR, UI, APP, then JRC. Every step exit 0 but JRC's `b19-lives-diff`, which exits 1 as on
+every commit since brief 19 (948 lines, as before: its four changed lines name this run's folder). The queue and the
+gatherer take the scratchpad from the environment from this run (`S=`); until then they named brief 22's session's
+folder. Gathered by `collect22.sh` with `P=f26`.
+
+**Against the runs as committed at `b46ee301`** (brief 24's replay, the sweep's starting point;
+`../../../sweep-2026-10-24/final-runs/compare.py`, its results beside it):
+- **The same in every number:** the judge's outputs (35 files, not run again), the runs (17), the interface (1); the
+  advice (31), brief 13's journeys (102), brief 20's journeys (74), the older-save, brief 21's and brief 22's app walks
+  (2 each), each differing only in the run's own record (its commit, its clean tree, its seconds). No file differs in a
+  number a player's life makes.
+- **The text outputs:** 849 the same byte for byte; 86 differ: the lanes' own records (the 17 `exits-*.txt`, the build
+  logs, the saves and acceptance logs, this README), the walks' pictures (41 of the app walk's, 8 of the interface's, 8
+  of brief 14's journeys', 4 of the older saves', 1 of brief 21's), which real-time walks redraw, and brief 19's lives'
+  diff log (its folder's name); 21 missing, the `fail-*.jpg` brief 23's stopped lanes left, which the sweep's M1 removed.
+- **The acceptance walk:** 77 of 77 at 1440 and at 390, no error and no overflow, as before.
+
+Folded by `../verify.py` (25 journeys played to the end, every check passed, each ending as brief 21's final run ended;
+36 rows held on `124bec77`), `../advice/close.py` (every advice row Implemented And Verified on `124bec77`) and
+`../../../integration-2026-10-16/criteria.py`: the 46 rows hold again, 633 of 658 before the gate's own figure. The gate
+in a clean clone of the commit that holds the fold, and its figure folded in, are in the sweep's receipt
+(`../../../sweep-2026-10-24/README.md`, The Gate).
+
 ## Played Again On The Paydays Fix, 2026-10-22 And 23
 
 After #54's merge, the paydays fix (`a2af3b46`, the receipt's After The Merge) changed `src/engine`, and the 46 rows these

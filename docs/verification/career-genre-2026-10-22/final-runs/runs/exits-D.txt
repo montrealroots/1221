@@ -1,16 +1,16 @@
-at cb8b19eb, 0 tracked files uncommitted, 2026-10-23T17:03:09Z
-workload-london-lives-0-attentive exit=0 secs=62 cmd: npx vite-node tools/workload.ts -- --seed lives-0 --profile london --years 1.4 --policy attentive --out docs/verification/career-genre-2026-10-22/final-runs/runs/workload-london-lives-0-attentive.json
-workload-london-lives-1-attentive exit=0 secs=63 cmd: npx vite-node tools/workload.ts -- --seed lives-1 --profile london --years 1.4 --policy attentive --out docs/verification/career-genre-2026-10-22/final-runs/runs/workload-london-lives-1-attentive.json
-workload-london-lives-2-attentive exit=0 secs=68 cmd: npx vite-node tools/workload.ts -- --seed lives-2 --profile london --years 1.4 --policy attentive --out docs/verification/career-genre-2026-10-22/final-runs/runs/workload-london-lives-2-attentive.json
-workload-london-lives-3-attentive exit=0 secs=67 cmd: npx vite-node tools/workload.ts -- --seed lives-3 --profile london --years 1.4 --policy attentive --out docs/verification/career-genre-2026-10-22/final-runs/runs/workload-london-lives-3-attentive.json
-workload-london-lives-0-neglect exit=0 secs=20 cmd: npx vite-node tools/workload.ts -- --seed lives-0 --profile london --years 1.4 --policy neglect --out docs/verification/career-genre-2026-10-22/final-runs/runs/workload-london-lives-0-neglect.json
-workload-mexico-city-lives-0-attentive exit=0 secs=66 cmd: npx vite-node tools/workload.ts -- --seed lives-0 --profile mexico-city --years 1.4 --policy attentive --out docs/verification/career-genre-2026-10-22/final-runs/runs/workload-mexico-city-lives-0-attentive.json
-workload-new-york-lives-0-attentive exit=0 secs=61 cmd: npx vite-node tools/workload.ts -- --seed lives-0 --profile new-york --years 1.4 --policy attentive --out docs/verification/career-genre-2026-10-22/final-runs/runs/workload-new-york-lives-0-attentive.json
-workload-scraping-lives-0-attentive exit=0 secs=66 cmd: npx vite-node tools/workload.ts -- --seed lives-0 --profile scraping --years 1.4 --policy attentive --out docs/verification/career-genre-2026-10-22/final-runs/runs/workload-scraping-lives-0-attentive.json
-plan-musical-m-0 exit=0 secs=306 cmd: npx vite-node tools/mastery.ts -- --mode plan --genre musical --seed m-0 --years 8
-plan-nordic_noir-m-0 exit=0 secs=266 cmd: npx vite-node tools/mastery.ts -- --mode plan --genre nordic_noir --seed m-0 --years 8
-plan-nordic_noir-m-1 exit=0 secs=253 cmd: npx vite-node tools/mastery.ts -- --mode plan --genre nordic_noir --seed m-1 --years 8
-plan-slapstick-m-0 exit=0 secs=303 cmd: npx vite-node tools/mastery.ts -- --mode plan --genre slapstick --seed m-0 --years 8
-plan-social_realism-m-0 exit=0 secs=256 cmd: npx vite-node tools/mastery.ts -- --mode plan --genre social_realism --seed m-0 --years 8
-plan-social_realism-m-1 exit=0 secs=413 cmd: npx vite-node tools/mastery.ts -- --mode plan --genre social_realism --seed m-1 --years 8
-DONE 2026-10-23T17:40:59Z
+at 124bec77, 0 tracked files uncommitted, 2026-10-24T14:31:38Z
+workload-london-lives-0-attentive exit=0 secs=66 cmd: npx vite-node tools/workload.ts -- --seed lives-0 --profile london --years 1.4 --policy attentive --out docs/verification/career-genre-2026-10-22/final-runs/runs/workload-london-lives-0-attentive.json
+workload-london-lives-1-attentive exit=0 secs=67 cmd: npx vite-node tools/workload.ts -- --seed lives-1 --profile london --years 1.4 --policy attentive --out docs/verification/career-genre-2026-10-22/final-runs/runs/workload-london-lives-1-attentive.json
+workload-london-lives-2-attentive exit=0 secs=67 cmd: npx vite-node tools/workload.ts -- --seed lives-2 --profile london --years 1.4 --policy attentive --out docs/verification/career-genre-2026-10-22/final-runs/runs/workload-london-lives-2-attentive.json
+workload-london-lives-3-attentive exit=0 secs=72 cmd: npx vite-node tools/workload.ts -- --seed lives-3 --profile london --years 1.4 --policy attentive --out docs/verification/career-genre-2026-10-22/final-runs/runs/workload-london-lives-3-attentive.json
+workload-london-lives-0-neglect exit=0 secs=21 cmd: npx vite-node tools/workload.ts -- --seed lives-0 --profile london --years 1.4 --policy neglect --out docs/verification/career-genre-2026-10-22/final-runs/runs/workload-london-lives-0-neglect.json
+workload-mexico-city-lives-0-attentive exit=0 secs=64 cmd: npx vite-node tools/workload.ts -- --seed lives-0 --profile mexico-city --years 1.4 --policy attentive --out docs/verification/career-genre-2026-10-22/final-runs/runs/workload-mexico-city-lives-0-attentive.json
+workload-new-york-lives-0-attentive exit=0 secs=67 cmd: npx vite-node tools/workload.ts -- --seed lives-0 --profile new-york --years 1.4 --policy attentive --out docs/verification/career-genre-2026-10-22/final-runs/runs/workload-new-york-lives-0-attentive.json
+workload-scraping-lives-0-attentive exit=0 secs=67 cmd: npx vite-node tools/workload.ts -- --seed lives-0 --profile scraping --years 1.4 --policy attentive --out docs/verification/career-genre-2026-10-22/final-runs/runs/workload-scraping-lives-0-attentive.json
+plan-musical-m-0 exit=0 secs=317 cmd: npx vite-node tools/mastery.ts -- --mode plan --genre musical --seed m-0 --years 8
+plan-nordic_noir-m-0 exit=0 secs=286 cmd: npx vite-node tools/mastery.ts -- --mode plan --genre nordic_noir --seed m-0 --years 8
+plan-nordic_noir-m-1 exit=0 secs=311 cmd: npx vite-node tools/mastery.ts -- --mode plan --genre nordic_noir --seed m-1 --years 8
+plan-slapstick-m-0 exit=0 secs=297 cmd: npx vite-node tools/mastery.ts -- --mode plan --genre slapstick --seed m-0 --years 8
+plan-social_realism-m-0 exit=0 secs=247 cmd: npx vite-node tools/mastery.ts -- --mode plan --genre social_realism --seed m-0 --years 8
+plan-social_realism-m-1 exit=0 secs=254 cmd: npx vite-node tools/mastery.ts -- --mode plan --genre social_realism --seed m-1 --years 8
+DONE 2026-10-24T15:08:21Z

@@ -405,7 +405,28 @@ Verified, 1 Blocked, 20 Deferred, 0 Not Tested. Every feature the register lists
 
 ### Brief 22's Final Runs Again
 
-§FILL-RUNS§
+Every lane of brief 22's final runs but the judge's (whose watched files the sweep didn't touch), prefix `f26`, on
+`124bec77`, the sweep's last source commit, each in a clean clone, four at a time from 13:34 to 15:53 UTC on
+2026-10-24: brief 13's journeys (JR1 to JR3), brief 20's (BJ1 to BJ3), the six lives of 3.2 years (B, C), the mastery
+plans (D), the acting area (J), the acceptance walk (A), the advice's fresh and held-out sets (ADVF, ADVR), the
+interface walks (UI), the app walks (APP), then the journeys' compare and brief 19's lives (JRC). Every step exit 0 but
+JRC's `b19-lives-diff`, which exits 1 as on every commit since brief 19 (948 lines, as before). The lanes' records are
+`../career-genre-2026-10-22/final-runs/runs/exits-*.txt`; the account is that folder's `README.md` ("Played Again On
+Brief 26's Finished Source").
+
+**Against the runs as committed at `b46ee301`** (`final-runs/compare.py`, `numbers-same-22.json`, `text-same-22.json`):
+the same in every number a life makes, in every folder (the judge's 35 files, the runs' 17, the interface's 1, the
+advice's 31, brief 13's journeys' 102, brief 20's 74, the app walks' 6), the only differences each run's own record (its
+commit, its clean tree, its seconds); 849 text outputs the same byte for byte, 86 differing (the lanes' records and
+logs, the walks' pictures, which real-time walks redraw, brief 19's lives' diff log naming this run's folder), 21 missing
+(the `fail-*.jpg` M1 removed). The acceptance walk 77 of 77 at 1440 and at 390, no error, no overflow. The sweep's three
+source changes moved no number: creation's list is read by the screen alone, no run closes a card holding a credit, and
+the guard runs on the server.
+
+**Folded** by `verify.py` (25 journeys played to the end, every check passed, each ending as brief 21's final run
+ended; 36 rows held on `124bec77`), `advice/close.py` (every advice row Implemented And Verified on `124bec77`) and
+`criteria.py`: the 46 rows hold again. The matrix reads 633 of 658 before the gate's own figure (`INT-gate`), as at
+every close since brief 22; the gate below adds it.
 
 ### The Gate
 
@@ -495,7 +516,7 @@ content bound of eleven parts; `openSlot`'s explicit backup on Base44, spent twi
 - The browser: `walk/README.md` (the commands, the checks, the counts) and the images beside it.
 
 **Representative playthroughs.** Brief 22's final runs again (above): brief 13's journeys, brief 20's, the six lives of
-3.2 years, the acceptance walk at 1440 and 390, the advice's sets, the interface walks and the app walks, §FILL-PLAY§.
+3.2 years, the acceptance walk at 1440 and 390, the advice's sets, the interface walks and the app walks, every number as before (above).
 The sweep's own: a New Haven life through its papers, plans, questions and a doctor's visit with each press repeated
 and each reload (the b26 probes); thirty days reopened through the slot every five, the same to the byte as the life
 played straight; a new life through creation and the guide's first five chapters on a desktop window and a phone on

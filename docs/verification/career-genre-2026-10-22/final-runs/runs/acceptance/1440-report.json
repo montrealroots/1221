@@ -44,27 +44,27 @@
   {
    "name": "coursework: a step of preparation done from its button, the clock moved and the step counted",
    "ok": true,
-   "note": "“Read The Scene”: 3:00 PM → 3:40 PM; Knows The Scene 0% → 43%; Read The Scene: 40 minutes, Knows The Scene up 43%."
+   "note": "grayed first (Read The Scene: Mateo has asked to rehearse. Answer them first, under Rehearsing With Mateo.\nLearn Lines: Mateo has asked to rehearse. Answer them first, under Rehearsing With Mateo.\nRehearse Alone: Mateo has asked to rehearse. Answer them first, under Rehearsing With Mateo.\nWork On The Note: You can revise once it’s been shown and you have a note to work on.\nRun It With A Reader: Ma"
   },
   {
    "name": "coursework: a way of playing it chosen and rehearsed in",
    "ok": true,
-   "note": "Read The Scene: 40 minutes, Knows The Scene up 43%. | Chosen. You’ve rehearsed this way of playing it to 0% so far."
+   "note": "It’s on your calendar. | Read The Scene: 40 minutes, Knows The Scene up 38%. | Chosen. You’ve rehearsed this way of playing it to 0% so far."
   },
   {
    "name": "coursework: table work answered from its select",
    "ok": true,
-   "note": "4 options, “quay” taken; Read The Scene: 40 minutes, Knows The Scene up 43%. | Chosen. You’ve rehearsed this way of playing it to 0% so far. | Answer chosen."
+   "note": "4 options, “departure” taken; Read The Scene: 40 minutes, Knows The Scene up 38%. | Chosen. You’ve rehearsed this way of playing it to 0% so far. | Answer chosen."
   },
   {
    "name": "coursework: Work It Through: a problem named, a way tried, its evidence shown, then kept or put back",
    "ok": true,
-   "note": "told to learn some of the lines first: Learn Lines: Answer chosen. | Learn Lines: 45 minutes, Lines up 24%.; Learn Lines: Learn Lines: 45 minutes, Lines up 24%. | Learn Lines: 45 minutes, Lines up 18%.; then \"The Turn Into Part 2\" → Work It Slowly (30 Min), 5:20 PM → 5:50 PM: Learn Lines: 45 minutes, Lines up 24%. | Learn Lines: 45 minutes, Lines up 18%. | Work It Slowly: 22.1 to 27.3."
+   "note": "told to learn some of the lines first: Learn Lines: Chosen. You’ve rehearsed this way of playing it to 0% so far. | Answer chosen. |; Learn Lines: Learn Lines: 45 minutes, Lines up 21%. | Learn Lines: 45 minutes, Lines up 16%.; then \"The Turn Into The Middle\" → Work It Slowly (30 Min), 8:20 PM → 8:50 PM: Learn Lines: 45 minutes, Lines up 21%. | Learn Lines: 45 minutes, Lines up 16%. | Work It Slow"
   },
   {
    "name": "help: How This Works beside Coursework opens its entry, a connected system followed, Back, Escape keeps the tab and the focus",
    "ok": true,
-   "note": "Preparing Coursework → Orientation Week → Back; the tab and the focus kept; August 31, 2026 5:50 PM"
+   "note": "Preparing Coursework → Orientation Week → Back; the tab and the focus kept; August 31, 2026 8:50 PM"
   },
   {
    "name": "help: the keyboard: ? opens the contents, / goes to the search, a word finds entries",
@@ -89,7 +89,7 @@
   {
    "name": "help: reading it holds the live clock: a minute open, the same minute; closed, it moves; Pause stops it a minute",
    "ok": true,
-   "note": "open: 5:50 PM → 5:50 PM; closed: → 5:51 PM; paused: 5:51 PM, a minute on 5:51 PM"
+   "note": "open: 8:50 PM → 8:50 PM; closed: → 8:51 PM; paused: 8:51 PM, a minute on 8:51 PM"
   },
   {
    "name": "navigation keeps context: School’s tab kept across Money and back",
@@ -104,17 +104,17 @@
   {
    "name": "practice: an exercise opened, its tier and focus set, an hour practised, and the hour explained",
    "ok": true,
-   "note": "5:51 PM → 6:51 PM: Sense Memory: +0.11. | Sense Memory. Real feeling from imagined detail, not from pushing. Tier Foundation Developing (Your Level) Advanced A remembered place, all five senses, until it moves you Focus Steady Precision Spaced Variation Live Wit"
+   "note": "8:51 PM → 9:51 PM: Sense Memory: +0.11. | Sense Memory. Real feeling from imagined detail, not from pushing. Tier Foundation Developing (Your Level) Advanced A remembered place, all five senses, until it moves you Focus Steady Precision Spaced Variation Live Wit"
   },
   {
    "name": "profile: the development history shows the hour",
    "ok": true,
-   "note": "August 31, 2026: Emotional Depth +0.113, Sense Memory"
+   "note": "August 31, 2026: Emotional Depth +0.112, Sense Memory"
   },
   {
    "name": "money: a transfer refused for more than the account holds, in the engine’s words, then made",
    "ok": true,
-   "note": "Chase Total Checking has only $90,434.00 available, so nothing was moved. / Chase Total Checking has only $90,434.00 available, so nothing was moved. | Moved $1 to Chase Savings."
+   "note": "Chase Total Checking has only $90,424.00 available, so nothing was moved. / Chase Total Checking has only $90,424.00 available, so nothing was moved. | Moved $1 to Chase Savings."
   },
   {
    "name": "papers: its five tabs open",
@@ -124,7 +124,7 @@
   {
    "name": "save and exit, then Continue: the same day and hour",
    "ok": true,
-   "note": "August 31, 2026 6:51 PM"
+   "note": "August 31, 2026 9:51 PM"
   },
   {
    "name": "address: School’s Coursework loaded by its address opens School at Coursework, not Home; an entry it names opens over School",
