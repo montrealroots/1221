@@ -403,4 +403,125 @@ Verified, 1 Blocked, 20 Deferred, 0 Not Tested. Every feature the register lists
 
 ## Final Runs, Gate And Report (M12)
 
-(Written at the close.)
+### Brief 22's Final Runs Again
+
+§FILL-RUNS§
+
+### The Gate
+
+§FILL-GATE§
+
+### The Report Brief 26's §13 Asks For
+
+**Starting and final commits.** `main` at `b46ee301` (#63), `src` as #62's head left it; the sweep on
+`claude/connectivity-sweep`, §FILL-COMMITS§ commits to `§FILL-FINAL§`, pushed after each milestone and never
+force-pushed, not merged to `main` and not deployed (the owner's word on both). The schema stays 94.
+
+**Features audited and coverage.** 1,146 features in the register (`REGISTER.md`): the 1,145 `tools/sweep.mjs` found in
+the code at M2 and the notice M6's fix added. Every one has a status read from the code and the tests, none Not Tested:
+1,118 Verified, 7 Fixed And Verified, 0 Failed, 1 Blocked, 20 Deferred. By inspection 1,146; by a test the gate runs
+1,145 (the Blocked row has none); by a browser walk as well 34. By area: creation 101 (99 Verified, 1 Fixed And Verified, 1 Blocked), the School 145, craft 311, money 161 (156 Verified, 5 Fixed And Verified), benefits 77 (63 Verified, 14
+Deferred), papers 103 (97, 6 Deferred), life 84, the career 89, the guide 63, persistence 12 (11, 1 Fixed And Verified).
+The completion matrix, which brief 26 said to keep: §FILL-MATRIX§.
+
+**Confirmed defects and fixes.** Three in the game, each with its reproduction, its cause, its fix, a test that fails
+without the fix, and its text read again:
+1. Creation's Genres step marked six genres the career's projects carry as shown only, while a shoot day on one had
+   lifted the mood since brief 20 (`genresRead` read the School's plays' kinds alone). One list for the screen and the
+   engine; `tests/b26-creation-genres.test.ts` fails with the projects' genres dropped, 2 of 2 (M3, `22bfcd35`).
+2. A card closed holding a credit balance kept the credit in the closed account, where nothing read it, and net worth
+   counted a card's credit as nothing (measured: $500.00 paid over, Close The Card, net worth $500.00 short for good).
+   Every close goes through `closeCard`, which sends the credit to the current account first and says where it went;
+   `netWorth` counts a liability's credit with the cash. `tests/b26-card-credit-on-close.test.ts` fails on the old code,
+   2 of 3 (M6, `388d9a1e`).
+3. The deployment's guard measured its 24 MiB limit in UTF-8 bytes and reported the size in the string's length, a byte
+   short per accented character on the row and the slot card. It reports the count it measured;
+   `tests/server-guards.test.ts` fails on the old guard, 2 of 24 (M11, `124bec77`; takes effect when the functions are
+   next deployed).
+And in the records and the tools, each said in the past tense where it stood: nine records stale after #62 (M1's
+table); three effects rows that still recorded brief 20's gap (M3); ten wiring citations and fifty register ranges M6's
+change had moved, which `tests/b20-guide-wiring.test.ts` caught (M9); `tools/cohesion-walk.mjs`, stale since 2026-09-24
+against the birthplace picker and the guide's locks (M10). Nothing was found Failed and left.
+
+**Consequence chains, each traced end to end and held by a test the gate runs:**
+- *A genre loved at creation reaches a working day.* Genres And Background marks Horror loved → `enjoyment.ts` reads
+  it on a shoot day of a horror film (`enjoyWork`) → the day's mood and stress move, and nothing else does (love is
+  read by enjoyment alone, never by a result) → How You Are and the Profile say so. `tests/b26-creation-genres.test.ts`,
+  `tests/b20-career-defects.test.ts`.
+- *Money paid over a card comes back.* Pay A Card past the balance → a credit on the card (a posting) → Close The Card →
+  `closeCard` posts the credit to the current account → Card Closed names where it went (a notice, in Recent Updates
+  and Updates) → the account's balance, net worth, Money's Worth head and the slot card's Net Worth each the sum of the
+  postings. `tests/b26-card-credit-on-close.test.ts`, `tests/bank-lifecycle.test.ts`.
+- *A plan becomes a stop, a stop a notice.* A plan on the Calendar at 21:30 → the calendar's clash check → a stop on
+  the clock at its hour (every jump, Play's live tick included, goes through `advanceTo`) → Go or Stand Here, or Skip →
+  the plan kept or missed → "You Didn’t Go To …" once → Recent Updates, Updates and Mark Read once.
+  `tests/b26-life-repeats.test.ts`, `tests/time-stops.test.ts`.
+- *A question raised by a system is answered by a command.* `requireDecision` raises a question once per thing it's
+  about → What Needs You lists it, overdue first → an answer runs its command through the guide's gate → a refusal keeps
+  the question open with the reason, an answer closes it → the tick after its date closes an unanswered one → gone 180
+  days after. `tests/b26-needs-repeats.test.ts`, `tests/decisions-2026-10-14.test.ts`.
+- *A doctor's visit owed becomes an appointment, and only one.* An injury or illness sets a visit owed → Book A Visit →
+  an appointment on the clock and the calendar → a second press refused in words → cancelled once → booked again
+  across a reload, one notice. `tests/b26-papers-repeats.test.ts`.
+- *A life saved is the life continued.* Save & Exit → the card refreshed and written (a backup first, the slot's key
+  last) → Your Saves shows the life → Continue → `openSlot` (nothing to bring forward, nothing written) → the same
+  moment, the chapters read kept, the clock paused where it stood. `tests/b26-persistence-repeats.test.ts`,
+  `tests/b20-guide-startup.test.ts`, and the walk at both sizes (`walk/README.md`).
+
+**Decorative, disconnected, misleading or unverified features still remaining.** None found and left as a defect. What
+stands by the owner's own word or decision: 1 Blocked, `create.livesWhereBorn` (written and read by no life a player
+can make, as since brief 20; the owner's); 20 Deferred by the owner's scope reset of 2026-10-09 (the pensions and their
+payments, EI, Jobseeker's Allowance, Universal Credit and its close, residence abroad, settling, renewing, naturalizing
+and its decision, England's prepayment certificate), each still in the code and refusing or paying as it did, none
+started; the completion matrix's 4 Decision Required and 41 Explicitly Deferred rows. Noted in the traces and not
+changed, none of which changes an outcome a player meets: EI's sickness benefit posts under `'benefits'` where every
+other posts `'benefit'` (unreachable); `idCardRefusal`'s order of refusals; the birthday notice's missing player check;
+Dismiss taking a question already answered, which nothing offers; an engagement status nothing sets; the career's
+content bound of eleven parts; `openSlot`'s explicit backup on Base44, spent twice and losing nothing.
+`docs/UNWIRED.json` reads 2, as at the start; `docs/UNBITTEN.md` is unchanged.
+
+**Test commands, results, counts and evidence.**
+- The gate, in a clean clone, its exit read from its file: `npm run gate` → §FILL-GATE-SHORT§ (`final-runs/gate.txt`,
+  `final-runs/gate-exit.txt`); the baseline on `b46ee301`: exit 0, 488 files, 5,616 tests, 22 checks
+  (`baseline/gate.txt`).
+- The sweep's own probes, `npx vitest run tests/b26-*.test.ts`: 6 files, 21 tests (creation-genres 2,
+  card-credit-on-close 3, papers-repeats 3, life-repeats 3, needs-repeats 4, persistence-repeats 6), green; the three
+  fixes' tests fail on the code before each fix (2 of 2, 2 of 3, 2 of 24); M11's three mutations each caught.
+- Each area's test files run at its milestone, every run green, the commit on each row of the register: creation 37
+  files (449 tests), the School 86 (1,304), the career 32 (423), money 69 (843), papers and benefits 70 (507), life 55
+  (732), the shell 55, the guide 32 (413), persistence 19 (172).
+- The records: the gate's 23 checks, `node tools/sweep.mjs --check` among them (every feature a row; every Verified row
+  a test the gate runs, a commit and evidence at a line that exists).
+- The browser: `walk/README.md` (the commands, the checks, the counts) and the images beside it.
+
+**Representative playthroughs.** Brief 22's final runs again (above): brief 13's journeys, brief 20's, the six lives of
+3.2 years, the acceptance walk at 1440 and 390, the advice's sets, the interface walks and the app walks, §FILL-PLAY§.
+The sweep's own: a New Haven life through its papers, plans, questions and a doctor's visit with each press repeated
+and each reload (the b26 probes); thirty days reopened through the slot every five, the same to the byte as the life
+played straight; a new life through creation and the guide's first five chapters on a desktop window and a phone on
+its side, 27 steps each, every check true; two played lives' every screen at three sizes, 132 entries, no problem.
+
+**Save compatibility.** The schema is 94 in `model.ts` and `guard.js` both, as at the start; no migration was added.
+`migrate` reads a save's shape on every open, so a save from any commit of this line opens on this one; the seven
+fixtures (brief 20's and the acceptance pass's played lives) open at their moment and play on a day
+(`tests/b20-guide-startup.test.ts`); a save a step changes is written back once after a backup, a current one never; a
+save from a newer build is refused with nothing changed (`tests/b26-persistence-repeats.test.ts`). A deployment made
+before this line (§10 of the handoff) still refuses this line's saves; the guard's fix reaches a deployment with the
+functions' next deploy, after the gate and the owner.
+
+**UI evidence.** `walk/README.md`: the creation journey at 1440×900 and 844×390 (`walk/creation/<size>/`, the Genres
+step at step 4 showing M3's one list), every screen of two lives at three sizes (`walk/capture/`), the turn suite, the
+cohesion walk. The approved Home, the sidebar, Title Case and the portrait handling were left as they are; no interface
+was changed by the sweep beyond the Genres step's words.
+
+**Blockers, limitations and deferred requirements.** No blocker stopped work. Limits: one agent, as asked; the Base44
+path was verified against a fake client and the guard's own tests, not a deployment (none was authorized); the browser
+walks ran at three sizes in one Chromium, not on devices; chapters 6 to 20 were read in the code and the tests, not
+pressed in a browser; the final runs' browser lanes measure a build in real time, so their seconds vary. Deferred stays
+deferred: the 20 register rows and the matrix's 41, the career expansion on `claude/peaceful-hamilton-59zdbb`, and the
+personal-life systems brief 26 said not to restore.
+
+**Handoff.** `SLATE_CURRENT_MASTER_HANDOFF.md`'s top section (where the branch stands, the gate, the fixes, what waits
+on the owner), `CHECKPOINT.md` (each milestone, the next step: none left on this brief) and `REGISTER.md`. What waits
+on the owner: the merge of `claude/connectivity-sweep` to `main`; a deployment of the functions after the gate (the
+guard's fix); `create.livesWhereBorn`; and the next brief.

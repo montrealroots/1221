@@ -6,7 +6,9 @@
 # only that prefix's lanes are gathered, and the judge's outputs (final/), which those lanes don't make, are left as they
 # are.
 set -u
-S=/tmp/claude-0/-home-user-1221/ae4b55a6-159b-5760-be37-d57f1bd5bd30/scratchpad
+# The scratchpad is the session's own (from 2026-10-24, brief 26): until then brief 22's session's path was written here,
+# and a later session ran the lanes in a folder it could not read back.
+S="${S:-/tmp/claude-0/-home-user-1221/ae4b55a6-159b-5760-be37-d57f1bd5bd30/scratchpad}"
 B=/home/user/1221/docs/verification/career-genre-2026-10-22/final-runs
 if [ -n "${P:-}" ]; then
   # Only what each lane wrote, as its clone's git reads it changed or new: a clone of a later commit holds every lane's
