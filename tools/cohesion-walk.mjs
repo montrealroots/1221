@@ -70,7 +70,9 @@ async function inspect(screen) {
     const toasts = [...document.querySelectorAll('.toast')].map((t) => t.textContent?.trim() ?? '');
     const boundary = /Something went wrong|Something Went Wrong|has crashed|An error occurred/i.test(body);
     const missing = /(doesn’t|does(n’t| not)) exist\. Use Go Anywhere/.test(body);
-    return { body, heading, rail, emptyHeadings, toasts, boundary, missing };
+    // The guide's dialog: since brief 20 a locked entry opens its chapter there rather than toasting.
+    const guide = Boolean(document.querySelector('[role=dialog][aria-label="Guide"]'));
+    return { body, heading, rail, emptyHeadings, toasts, boundary, missing, guide };
   });
   for (const [re, label] of LEAKS) {
     const m = facts.body.match(re);
@@ -110,6 +112,14 @@ for (const [label, value] of [[/first name/i, FIRST], [/last name/i, 'Castellano
 const billed = page.getByRole('button', { name: /^(actor|actress)$/i }).first();
 if (await billed.count()) { await billed.click({ timeout: 3000 }).catch(() => {}); await settle(300); }
 else note('02-creation-identity', 'flow', 'Identity does not offer a billing to answer');
+// Identity also asks where the character was born (brief 20's picker): a walk that
+// types nothing stays on the first step, as this one did until 2026-10-24.
+const born = page.locator('#born-search').first();
+if (await born.count()) {
+  await born.fill('New York').catch(() => {}); await settle(900);
+  await page.getByRole('listbox', { name: 'Matching Places' }).getByRole('option').first().click({ timeout: 3000 }).catch(() => {});
+  await settle(300);
+}
 await seen('02-creation-identity');
 
 const stepName = () => page.locator('.creation-step[data-state="active"]').first().innerText().catch(() => '');
@@ -143,7 +153,7 @@ if (!/^Home/.test(home.rail)) note('07-home', 'rail', `the rail marks "${home.ra
 // --- Every destination in the rail, and every tab behind it -------------------
 const items = await page.evaluate(() => [...document.querySelectorAll('.rail .rail-item')].map((el) => ({
   label: (el.querySelector('.grow')?.textContent ?? el.textContent ?? '').trim(),
-  locked: Boolean(el.querySelector('.rail-lock')),
+  locked: Boolean(el.querySelector('.rail-lock')) || /^Locked/.test(el.getAttribute('title') ?? ''),
 })));
 // The rail had eighteen destinations before the first cleanup, and after the
 // revamp it has Home alone: the calendar is a section of Home rather than a
@@ -159,7 +169,8 @@ for (const item of items) {
   const s = slug(item.label);
   const facts = await seen(s);
   if (item.locked) {
-    if (!facts.toasts.some((t) => /under construction|locked/i.test(t))) note(s, 'locked', 'a locked destination did not say why it would not open');
+    if (!facts.guide && !facts.toasts.some((t) => /under construction|locked/i.test(t))) note(s, 'locked', 'a locked destination did not say why it would not open');
+    if (facts.guide) { await page.keyboard.press('Escape'); await settle(300); }
     continue;
   }
   if (!facts.rail.startsWith(item.label)) note(s, 'rail', `after opening ${item.label} the rail marks "${facts.rail}"`);

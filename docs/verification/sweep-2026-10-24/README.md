@@ -320,6 +320,44 @@ closed one's look says there is nothing to press; dismissed after an answer, its
 **Register:** 14 more rows, all Verified, by inspection and the tests named on each. Running total: 1058 Verified,
 6 Fixed And Verified, 1 Blocked, 20 Deferred, 61 Not Tested (the guide's 49 and persistence's 12).
 
+### M10: The Guide, The Tutorial, The Help, Navigation And The Journeys
+
+**Read on `691556f0`.** The guide's content whole (`src/engine/content/tutorial.ts`: the twenty chapters and each
+one's `opens` list, 234 entries between them), its gate (`src/engine/world/tutorial.ts`: `isOpen`, which opens a
+feature with no chapter and everything once the guide is finished; `lockedBecause`, which names the chapter and its
+place in the order; `tutorial.read`, which marks a chapter once and names the next; and the command bus's check before
+every command while guided), the guide's parts (`src/ui/guide/Guide.tsx`: Gated, which opens the chapter on a locked
+press; LockedPanel, which says what the panel will show and offers Read About It; the strip's n Of 20; Guide in the
+bar; the dialog with I’ve Read It, Next and Try It), the reference (`Help.tsx`: ? opens it on this screen's entries,
+/ finds, an entry's links open as their chapters are read, How This Works beside a feature), the shell
+(`GameShell.tsx`: the rail and its current mark, the drawer under 56.25em or 500px, your name at the foot locked until
+"You As An Actor", Save & Exit), the router (a screen, Locked, or no such screen), the menu's entries with their groups
+and features (Calendar and Updates from Home alone since brief 24), Home's panels and buttons, the time controls'
+gates, Why It Went This Way's button, the three heads (Worth, the School's, Papers'), the keyboard (H, C, P), the turn
+frame, and the start entries' three pages with their eight promises; ran the area's 32 test files (413 tests, green).
+
+**Walked on the built app** (`walk/README.md`, the images beside it): a new life from The Start through creation and
+the guide's first five chapters at 1440×900 and at 844×390 on touch, 27 steps each, every check true (opens paused on
+chapter 1 with Play, Sleep, Advance, Where You Are and Weather locked; I’ve Read It opens what the chapter names and
+nothing more; Next is the one after; Play runs and Pause stops the clock; Advance's eight lines; Tomorrow Morning
+through On The Way to the stop at Registration And Your Account with Go and Stand Here; Sleep unread opens its chapter;
+Save & Exit and Continue keep the moment and the chapters); brief 23's capture of every screen of two played lives at
+1440×900, 844×390 and upright 390×844 (132 entries: no page or console problem, nothing wider than the window, nothing
+clipped, cut without a title, bleeding or squeezed; the turn suite true on both lives); and the cohesion walk's eleven
+screens (nothing broke the thread: no errors, no leaks, every handoff landed).
+
+**Found no defect in the game.** Found and corrected in the tools: `tools/cohesion-walk.mjs` hadn't run since the
+Windows hygiene commit of 2026-09-24 and predated brief 20's birthplace picker and the guide's locks; as it stood it
+never left Identity and reported the four screens it never reached as broken, and with the birthplace typed it pressed
+the locked name at the rail's foot and reported that the rail still marked Home. It types the birthplace, reads a
+`title` that begins "Locked" as a lock and takes the guide's dialog as the lock's reason now. The creation walk's own
+first run misread Play for the same reason (it asked for a button reading exactly "Play" where the button reads "Play"
+and "Locked" until "The Clock"); the check was corrected before the run kept. Nothing noted and left.
+
+**Register:** 49 more rows, all Verified; 25 of them by the walks as well as by inspection and the tests, the rest by
+inspection and the tests alone (chapters 6 to 20, Show The Reasons, the start entries' promises). Running total: 1107
+Verified, 6 Fixed And Verified, 1 Blocked, 20 Deferred, 12 Not Tested (persistence's 12).
+
 ## Final Runs, Gate And Report (M12)
 
 (Written at the close.)

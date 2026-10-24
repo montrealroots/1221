@@ -79,7 +79,16 @@ each milestone's end, with the branch, the commit, what's covered, what remains 
   (`tests/b26-needs-repeats.test.ts`). Found no defect; noted that Dismiss takes a question already answered, which
   nothing offers (the README's M9). 14 rows Verified. 1058 Verified in all; 61 Not Tested remain, the guide's 49 and
   persistence's 12.
-- **M10 and M11:** the traces, area by area (the handoff's top section lists them with what each found).
+- **M10, 2026-10-24: the guide, the tutorial, the help, navigation and the journeys.** Read the twenty chapters and
+  their `opens` lists, the gate (`isOpen`, `lockedBecause`, `tutorial.read`, the bus's check while guided), Gated,
+  LockedPanel, the strip and the dialog, the reference and How This Works, the shell's rail, drawer and foot, the
+  router, the menu, Home's panels, the time controls' gates and the start entries; ran the area's 32 test files (413
+  tests, green on `691556f0`); walked the built app (`walk/README.md`): a new life through creation and five chapters
+  at 1440×900 and 844×390, every check true; every screen of two played lives at three sizes, 132 entries with no
+  problem; the cohesion walk's eleven screens, nothing broken. Found no defect in the game; corrected
+  `tools/cohesion-walk.mjs`, stale since 2026-09-24 against the birthplace picker and the guide's locks. 49 rows
+  Verified, 25 by the walks as well. 1107 Verified in all; 12 Not Tested remain, persistence's.
+- **M11:** persistence and the longer playthroughs (the handoff's top section lists it with what it found).
 - **M12:** brief 22's final runs again on the finished commit, the gate, the receipt.
 
 ## The Completion Matrix While The Sweep Runs
@@ -90,8 +99,9 @@ source change until the runs are played again on the finished commit (M12). That
 
 ## Next Step
 
-Begin M10, the guide, the tutorial, the help links, the looks, navigation and the journeys: the guide area's 49 rows
-left (`node tools/sweep.mjs --todo guide`: the twenty chapters, `tutorial.read`, the eight routes, the eleven `ui.*`
-features of the screens and panels, the start entries' promises), reading each at its chapter, its screen and its gate;
-then the journeys on the built app at a desktop width and at 844×390, with the approved Home, sidebar, Title Case and
-portrait left as they are.
+Begin M11, persistence: the 12 rows left (`node tools/sweep.mjs --todo persistence`: create, load, migrate, validate,
+open-slot, serialise, the local store, Base44, the guard, the schema, the slots and startup), reading each at its code
+and its tests; the fixtures under `tests/fixtures` (the `old-*` saves) loaded and migrated on the current schema, 94 in
+`model.ts` and in `guard.js` both; then the longer playthroughs on a played career, reloaded at intervals, each number
+read before and after, and the brief's repeated loads and saves (a slot opened twice, a save written twice) traced for
+anything made twice.

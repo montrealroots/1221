@@ -76,6 +76,17 @@ nothing here builds on it.
     twice, answered and dismissed twice, marked read twice, left to its date and reloaded). No defect found; noted and
     not changed: Dismiss takes a question already answered, which nothing offers. 1058 Verified, 6 Fixed And Verified,
     20 Deferred in all, 61 Not Tested (the guide's 49, persistence's 12).
+  - **M10, the guide, the tutorial, the help, navigation and the journeys (read on `691556f0`):** 49 rows verified by
+    reading the twenty chapters and their `opens` lists, the gate (`isOpen`, `lockedBecause`, `tutorial.read`, the
+    command bus's check while guided), Gated, LockedPanel, the strip and the dialog, the reference (?, /, How This
+    Works), the shell's rail, drawer and foot, the router, the menu's entries, Home's panels, the time controls' gates
+    and the start entries; by the area's 32 test files (413 tests, green); and by three browser walks on the built app
+    (`docs/verification/sweep-2026-10-24/walk/README.md`): a new life through creation and five chapters at 1440×900
+    and 844×390, every check true; every screen of two played lives at 1440×900, 844×390 and upright 390×844, 132
+    entries with no page or console problem and nothing wider, clipped, bleeding or squeezed; the cohesion walk's
+    eleven screens, nothing broken. No defect found; corrected `tools/cohesion-walk.mjs`, which hadn't run since
+    2026-09-24 and predated brief 20's birthplace picker and the guide's locks. 1107 Verified, 6 Fixed And Verified,
+    20 Deferred in all, 12 Not Tested (persistence's).
 - **M12, at the close:** brief 22's final runs again on the finished commit (back to 634), the gate in a clean clone of
   it, the receipt with everything brief 26's §13 asks.
 - **Not merged, not deployed.** The schema stays 94.
