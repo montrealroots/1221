@@ -237,6 +237,40 @@ refusal where another would be plainer; Papers draws no Get for a card held, so 
 **Register:** 180 more rows: 160 Verified and 20 Deferred, by inspection and the tests named on each. Running total:
 960 Verified, 6 Fixed And Verified, 1 Blocked, 20 Deferred, 159 Not Tested.
 
+### M8: Life, The Body, The Day And The World
+
+**Read:** `systems/life.ts` whole (the waking charge, the night chosen and the night nobody chose, the hour of looking
+after yourself and its menu, the day's rollover, the sleep suggestion and the full night before a commitment);
+`world/plans.ts`, `world/clock.ts`, `world/calendar.ts` and `world/world.ts` whole; `systems/body.ts`, `injury.ts`,
+`birthdays.ts`, `mortality.ts`, `weather.ts` and `seasons.ts` whole; the clock's arming and its repair on load
+(`engine/index.ts`), the clock's failure notice (`core/simulation.ts`), the running clock (`core/realclock.ts`), the
+holidays (`content/holidays.ts`) and the zones (`core/time.ts`); the thirteen life looks and the eight dials' table; the
+guide's nine entries whose promises the area holds. **Ran:** the life area's 55 test files, 732 tests, green on
+`27369727`; and a probe for the brief's section 4 on a New Haven life (`tests/b26-life-repeats.test.ts`): a plan called
+off once and refused the second time, skipped before it starts refused with the way, skipped at its stop once and said
+once, a third kept once across a reload; Eat A Meal sent twice with one `actionId`, lived and paid once; a night in the
+past, more than a day ahead or without hours refused. Green.
+
+**Traced for the brief's three questions.** *Repeated presses:* a plan's second Call It Off or Skip It is refused as
+already over; a retried hour with one `actionId` is lived once (`alreadyApplied`); a meal when full, a shower when
+clean, a workout spent, hurt or with the flu, and a night at a commitment are each refused in their words, the night's
+refusal putting the clock back; a question in What Needs You is dismissed or answered once. *Cancellation:* a plan
+called off is off the calendar; a plan skipped at its stop is missed once and said once, and the jump carries on; a
+night slept through a commitment marks it missed and says so once; a commitment under way refuses the hour (`occupiedAt`,
+`commitmentWithin`); an injury's compensation ends at the time off's end. *Reloads and jumps:* a plan comes back with its
+handler and is done once; the day's rollover and the world tick are armed once on load, never twice; a night nobody
+chose is paid once in full once the clock is an hour into it, and forfeit where the player keeps them up; the same
+afternoon costs the same dials in one jump or in one-second steps (`b20-life-time`); the weather is a function of the
+seed, the town and the day, never stored, so it reads the same before and after a save.
+
+**Found no defect.** Two things noted and not changed: the birthday's "Happy Birthday" notice has no check that the
+person is the player, and none is needed, since only the player's birthday is ever armed (`armBirthdays`); and
+`calendar.skip` and `calendar.cancel` answer a refusal in their value rather than by failing, which the stop reads
+either way (`refusalOf`, `world/clock.ts`), and the probe reads both forms.
+
+**Register:** 84 more rows, all Verified, by inspection and the tests named on each. Running total: 1044 Verified,
+6 Fixed And Verified, 1 Blocked, 20 Deferred, 75 Not Tested (the guide's 63 and persistence's 12).
+
 ## Final Runs, Gate And Report (M12)
 
 (Written at the close.)

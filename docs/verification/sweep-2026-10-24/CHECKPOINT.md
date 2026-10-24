@@ -65,7 +65,14 @@ each milestone's end, with the branch, the commit, what's covered, what remains 
   `idCardRefusal`'s order (the README's M7). 180 rows: 160 Verified, 20 kept Deferred as the owner's scope reset of
   2026-10-09 left them (the pensions, EI, Jobseeker's, Universal Credit, residence and naturalizing, England's
   prepayment certificate). 960 Verified in all.
-- **M8 to M11:** the traces, area by area (the handoff's top section lists them with what each found).
+- **M8, 2026-10-24: life, the body, the day and the world.** Read the life system whole, the plans, the clock, the
+  calendar and the world, the body, injury, birthdays, mortality, weather and seasons systems, the clock's arming and
+  failure notice, the running clock, the holidays and the zones, the thirteen life looks and the guide's nine entries;
+  ran the life area's 55 test files (732 tests, green on `27369727`) and a repeat, reload and call-off probe on a New
+  Haven life (`tests/b26-life-repeats.test.ts`). Found no defect; noted the birthday notice's missing player check,
+  which nothing needs (the README's M8). 84 rows Verified. 1044 Verified in all; 75 Not Tested remain, the guide's 63
+  and persistence's 12.
+- **M9 to M11:** the traces, area by area (the handoff's top section lists them with what each found).
 - **M12:** brief 22's final runs again on the finished commit, the gate, the receipt.
 
 ## The Completion Matrix While The Sweep Runs
@@ -76,6 +83,8 @@ source change until the runs are played again on the finished commit (M12). That
 
 ## Next Step
 
-Begin M8, life and the world: the life area's 84 rows (`node tools/sweep.mjs --todo life`): the body and its needs,
-self-care, the conditions, the weather, the holidays, the clock and the calendar, reading each command, scheduled kind,
-reactor and notice at its handler and refusals, and the day, weather and wellbeing looks.
+Begin M9, notices, decisions, scheduled events, continuity and freshness: the guide area's rows that are the shell's
+(`node tools/sweep.mjs --todo guide`: the routes and the `ui.*` features the guide names, among them What Needs You, the
+notices, the Calendar and Updates), reading each at its screen and its command; and across every area, the scheduled
+kinds' handlers read again for the three questions as one list (`tools/sweep.mjs --seed` names them), so that no item
+runs twice, nothing stale survives a reload, and every notice is sent once.

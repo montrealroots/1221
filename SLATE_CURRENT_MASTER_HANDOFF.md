@@ -61,6 +61,13 @@ nothing here builds on it.
     renewing, naturalizing and its decision, England's prepayment certificate). No defect found; noted and not changed:
     EI's posting category (`'benefits'` where every other benefit posts `'benefit'`, unreachable) and `idCardRefusal`'s
     order. 960 Verified, 6 Fixed And Verified, 20 Deferred in all, 159 Not Tested.
+  - **M8, life, the body, the day and the world (read on `27369727`):** 84 rows verified by reading the life system
+    whole, the plans, the clock, the calendar, the world, the body, injury, birthdays, mortality, weather and seasons
+    systems, the clock's arming on load, the running clock, the holidays and the zones, by the life area's 55 test
+    files (732 tests, green) and by a repeat, reload and call-off probe on a New Haven life
+    (`tests/b26-life-repeats.test.ts`: a plan called off and skipped once each, a retried hour lived once, a night's
+    refusals). No defect found; noted and not changed: the birthday notice's missing player check, which nothing
+    needs. 1044 Verified, 6 Fixed And Verified, 20 Deferred in all, 75 Not Tested (the guide's 63, persistence's 12).
 - **M12, at the close:** brief 22's final runs again on the finished commit (back to 634), the gate in a clean clone of
   it, the receipt with everything brief 26's §13 asks.
 - **Not merged, not deployed.** The schema stays 94.
