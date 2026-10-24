@@ -1,20 +1,20 @@
-# Read First: Brief 26, The Complete Game Connectivity, Logic And Functionality Sweep, In Progress, 2026-10-24
+# Read First: Brief 26, The Complete Game Connectivity, Logic And Functionality Sweep, Complete, 2026-10-24
 
 **This section is the current status, and where a new session starts.** The owner gave brief 26
 (`docs/verification/briefs-2026-10-16/26-complete-game-connectivity-logic-and-functionality-sweep.txt`, kept as sent) in
 a new session on 2026-10-24, after an account of #62's changes in that session, with "We’re going to work on everything
 here plus starting with fix of whatever and all thats stale" and the instruction to work with one agent and no subagents.
-It is worked on `claude/connectivity-sweep`, from `main` at `b46ee301` (#63), pushed and never force-pushed, and kept out
-of `main` until the owner's word ("Do not merge to main or deploy without my explicit instruction."). Nothing is
-deployed. There is no stash and one worktree. `claude/peaceful-hamilton-59zdbb` holds brief 25, the other account's
+It was worked on `claude/connectivity-sweep`, from `main` at `b46ee301` (#63), in twelve milestones, complete on
+2026-10-24 at `§FILL-FINAL§`, pushed after each and never force-pushed, and kept out of `main` until the owner's word
+("Do not merge to main or deploy without my explicit instruction."). Nothing is deployed. There is no stash and one worktree. `claude/peaceful-hamilton-59zdbb` holds brief 25, the other account's
 career expansion, eight commits past `main` on 2026-10-24, unmerged; brief 26 says not to begin that expansion, and
 nothing here builds on it.
 
-**Completion, by the matrix:** 633 of 658 rows in scope Implemented And Verified (96.2%); 21 Implemented, Verification Incomplete, 0 Partially Implemented, 0 Not Implemented, 0 Blocked Externally, 4 Decision Required, 41 Explicitly Deferred.
+**Completion, by the matrix:** 634 of 658 rows in scope Implemented And Verified (96.3%); 20 Implemented, Verification Incomplete, 0 Partially Implemented, 0 Not Implemented, 0 Blocked Externally, 4 Decision Required, 41 Explicitly Deferred.
 
   (634 at `b46ee301`; 588 from M1's first change to `src` until M12, when brief 22's final runs were played again on
   `124bec77`, the sweep's last source commit, and the 46 rows measured on the whole source came back; 633 until the gate
-  on the commit that holds the fold adds its own row, `INT-gate`, as at every close since brief 22.)
+  on the commit that holds the fold, `82b644aa`, added its own row, `INT-gate`; 634 since.)
 
 - **Read first:** `docs/verification/sweep-2026-10-24/README.md` (the receipt), `CHECKPOINT.md` (the trail, with the
   exact next step) and `REGISTER.md` (every feature's status).
@@ -99,8 +99,16 @@ nothing here builds on it.
     length where it measured its limit in UTF-8 bytes, a byte short per accented character on the row and the slot
     card (`base44/shared/guard.js`; `tests/server-guards.test.ts`); it takes effect on the functions' next deployment.
     1118 Verified, 7 Fixed And Verified, 20 Deferred, 1 Blocked in all; nothing Not Tested.
-- **M12, at the close:** brief 22's final runs again on the finished commit (back to 634), the gate in a clean clone of
-  it, the receipt with everything brief 26's §13 asks.
+- **M12, the final runs, the gate and the receipt (2026-10-24):** brief 22's fifteen lanes again on `124bec77`, the
+  sweep's last source commit, in clean clones: every step exit 0 but brief 19's lives diff, as since brief 19; against
+  the runs as committed at `b46ee301`, every number the same, only each lane's record and the real-time walks' pictures
+  differing (`docs/verification/career-genre-2026-10-22/final-runs/runs/README.md`). Folded, 633 of 658 (`82b644aa`);
+  the gate in a clean clone of it, its exit read from its file: exit 0; 494 of 494 test files, 5,638 of 5,638 tests, none skipped, all 23 checks, the matrix at 633 before its own row (`docs/verification/sweep-2026-10-24/final-runs/gate.txt`). Its figure folded, 634 of 658; the gate
+  again on the commit that holds it: §FILL-GATE2-H§. The receipt's last section is the report brief 26's §13 asks for.
+- **What waits on the owner:** the merge of `claude/connectivity-sweep` to `main`; a deployment of the functions after
+  the gate (`base44/shared/guard.js`'s reported size, M11); `create.livesWhereBorn` (Blocked since brief 20); the next
+  brief. The 20 Deferred rows and the matrix's 41 stay as the owner's scope reset left them; brief 25's career expansion
+  stays on `claude/peaceful-hamilton-59zdbb`, unmerged and not built on.
 - **Not merged, not deployed.** The schema stays 94.
 
 # Earlier: Brief 24, UI Alignment, Home Spacing And Navigation Cleanup, Merged, 2026-10-23
@@ -174,7 +182,7 @@ force-pushed. Until the owner's word it was kept out of `main` ("Keep the change
 without my instruction."); it went to `main` with brief 24, in #62, merged as `a4e6795a` (above). Nothing is deployed.
 There is no stash and one worktree.
 
-**Completion, by the matrix:** 633 of 658 rows in scope Implemented And Verified (96.2%); 21 Implemented, Verification Incomplete, 0 Partially Implemented, 0 Not Implemented, 0 Blocked Externally, 4 Decision Required, 41 Explicitly Deferred.
+**Completion, by the matrix:** 634 of 658 rows in scope Implemented And Verified (96.3%); 20 Implemented, Verification Incomplete, 0 Partially Implemented, 0 Not Implemented, 0 Blocked Externally, 4 Decision Required, 41 Explicitly Deferred.
 
   (634 at brief 22's close. Brief 23 changed `src` (the interface, the guide's and the tutorial's words, and
   `content/attributes-matrix.ts`'s navigation table). So the 46 rows brief 22's final runs measured on the engine's or the

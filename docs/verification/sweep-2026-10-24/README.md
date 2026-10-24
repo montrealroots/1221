@@ -430,7 +430,17 @@ every close since brief 22; the gate below adds it.
 
 ### The Gate
 
-§FILL-GATE§
+The full gate in a clean clone, its exit read from its file, as M1's baseline ran it (`git clone --shared`, the commit
+checked out, `npm run gate` with its output and npm's exit written to files before anything else runs):
+- **On the commit that holds the fold, `82b644aa`:** exit 0; 494 of 494 test files and 5,638 of 5,638 tests, none
+  skipped, in 1,246 seconds; all 23 checks, the completion matrix at 633 and the sweep's register after it
+  (`final-runs/gate.txt`, `final-runs/gate-exit.txt`; the same receipt at
+  `../career-genre-2026-10-22/final-runs/runs/gate.txt`, where the runs' `figures.py` reads it; brief 24's, on
+  `859bacdb`, stood there until then and is in git). Its figure folded in after it, the matrix moved from 633 to 634.
+- **On the commit that holds that fold, `§FILL-FINAL§`:** run again after these records were written: §FILL-GATE2§
+  (`final-runs/gate-receipt.txt`, `final-runs/gate-receipt-exit.txt`). Only that receipt was written after it.
+- **Brief 26 added:** 6 test files and 22 tests to the baseline's 488 and 5,616: the six `b26-*` probes (21 tests) and
+  the guard's accented case. The gate's twenty-third check, the register's, was added by M2.
 
 ### The Report Brief 26's §13 Asks For
 
@@ -443,7 +453,9 @@ the code at M2 and the notice M6's fix added. Every one has a status read from t
 1,118 Verified, 7 Fixed And Verified, 0 Failed, 1 Blocked, 20 Deferred. By inspection 1,146; by a test the gate runs
 1,145 (the Blocked row has none); by a browser walk as well 34. By area: creation 101 (99 Verified, 1 Fixed And Verified, 1 Blocked), the School 145, craft 311, money 161 (156 Verified, 5 Fixed And Verified), benefits 77 (63 Verified, 14
 Deferred), papers 103 (97, 6 Deferred), life 84, the career 89, the guide 63, persistence 12 (11, 1 Fixed And Verified).
-The completion matrix, which brief 26 said to keep: §FILL-MATRIX§.
+The completion matrix, which brief 26 said to keep: 634 of 658 rows in scope Implemented And Verified (96.3%), as at the sweep's start, with 20 Implemented, Verification
+Incomplete, 4 Decision Required and 41 Explicitly Deferred (`../integration-2026-10-16/COMPLETION-MATRIX.md`); the 46
+rows measured on the whole source stand on `124bec77`, the gate's own on `82b644aa`.
 
 **Confirmed defects and fixes.** Three in the game, each with its reproduction, its cause, its fix, a test that fails
 without the fix, and its text read again:
@@ -502,7 +514,7 @@ content bound of eleven parts; `openSlot`'s explicit backup on Base44, spent twi
 `docs/UNWIRED.json` reads 2, as at the start; `docs/UNBITTEN.md` is unchanged.
 
 **Test commands, results, counts and evidence.**
-- The gate, in a clean clone, its exit read from its file: `npm run gate` → §FILL-GATE-SHORT§ (`final-runs/gate.txt`,
+- The gate, in a clean clone, its exit read from its file: `npm run gate` → exit 0 on `82b644aa`, 494 of 494 files, 5,638 of 5,638 tests, all 23 checks; and again on `§FILL-FINAL§`, §FILL-GATE2-SHORT§ (`final-runs/gate.txt`,
   `final-runs/gate-exit.txt`); the baseline on `b46ee301`: exit 0, 488 files, 5,616 tests, 22 checks
   (`baseline/gate.txt`).
 - The sweep's own probes, `npx vitest run tests/b26-*.test.ts`: 6 files, 21 tests (creation-genres 2,

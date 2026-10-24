@@ -97,19 +97,25 @@ each milestone's end, with the branch, the commit, what's covered, what remains 
   guard reported a save's size in the string's length where it measured the limit in UTF-8 bytes
   (`base44/shared/guard.js`; `tests/server-guards.test.ts` fails on the old code). 12 rows: 11 Verified, 1 Fixed And
   Verified. 1118 Verified, 7 Fixed And Verified in all; nothing Not Tested.
-- **M12:** brief 22's final runs again on the finished commit, the gate, the receipt.
+- **M12, 2026-10-24: the final runs, the gate and the receipt.** Brief 22's fifteen lanes again on `124bec77`, the
+  sweep's last source commit, each in a clean clone, four at a time from 13:34 to 15:53 UTC, every step exit 0 but brief
+  19's lives diff (exit 1, as since brief 19, its four changed lines this run's folder); against the runs as committed
+  at `b46ee301`, every number the same, only each lane's own record and the real-time walks' pictures differing
+  (`../career-genre-2026-10-22/final-runs/runs/README.md`, `final-runs/compare.py`); folded, the matrix back to 633
+  before the gate's own row (`82b644aa`). The gate in a clean clone of `82b644aa`, its exit read from its file:
+  exit 0, 494 of 494 test files, 5,638 of 5,638 tests, none skipped, in 1,246 seconds, all 23 checks (`final-runs/gate.txt`, `final-runs/gate-exit.txt`). Its figure folded, 634 of 658; the gate again on the commit that holds it: §FILL-GATE2-CP§. The
+  report brief 26's §13 asks for is the README's last section.
 
 ## The Completion Matrix While The Sweep Runs
 
-Touching `src` at all moves the 46 rows brief 22's final runs measured on the engine's or the app's whole source to
-Implemented, Verification Incomplete, as it did through briefs 23 and 24: the matrix reads 588 of 658 from M1's first
-source change until the runs are played again on the finished commit (M12). That is the rule working, not a loss.
+Touching `src` at all moved the 46 rows brief 22's final runs measured on the engine's or the app's whole source to
+Implemented, Verification Incomplete, as it did through briefs 23 and 24: the matrix read 588 of 658 from M1's first
+source change until M12 played the runs again on `124bec77`, 633 with the fold, and 634 with the gate's own row. That
+was the rule working, not a loss.
 
 ## Next Step
 
-Begin M12: brief 22's final runs again on the finished commit (prefix `f26`, the scripts under
-`../career-genre-2026-10-22/final-runs/runs/`), so the completion matrix's 46 rows measured on the whole source are
-measured on it; then `npm run gate` in a clean clone of that commit, its exit read from a file; then the receipt with
-everything brief 26's §13 asks (the SHAs, the totals, the defects, the chains, the decorative features left, the test
-commands and results, the playthroughs, save compatibility, the UI evidence, the blockers, the handoff), the handoff
-brought up to it, and the push. Nothing merges to `main` and nothing deploys without the owner.
+None on brief 26: its twelve milestones are done and pushed. What waits on the owner: the merge of
+`claude/connectivity-sweep` to `main` (never without the owner); a deployment of the functions after the gate, which
+carries the guard's fix; `create.livesWhereBorn`; and the next brief. A new session starts from the handoff's top section
+and this file, and inspects the tree first (CLAUDE.md, rules 2 and 3).
