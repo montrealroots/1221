@@ -200,6 +200,87 @@ was probed by brief 09 and still holds: six students keeping an account at home 
 Deutsche Bank, NatWest) are refused each of the eight in its bank's words (`tests/remaining-09-banking.test.ts`,
 banking.2, run in this brief's targeted creation run), so no routine implementation closes them.
 
+## Research, Asked For Again With The Network Full
+
+The owner on 2026-10-24: "Network access is now Full. Retry blocked sources and continue the worldwide research using one
+agent. Verify previously unread sources before treating their claims as confirmed." The register is
+`research/register.json`, written as a page by `research/register.mjs` (`research/REGISTER.md`) and held by
+`tests/b27-research-register.test.ts`: a page not read establishes nothing, a page read keeps its bytes' SHA-256 and the
+facts read from it in its own words, and every brief 27 source the game cites is a page read with facts.
+
+- **124 pages asked for:** 82 read, 25 blocked, 10 unreadable, 7 unreached; 67 facts, from 25 pages.
+- **Brief 25's 99 unread sources,** each asked for again (all 42 that hadn't come back were tried once more that evening):
+  60 came back whole, and each claim the game makes from one was checked against it (11 of them carry the facts the game
+  uses; the rest it cites only as what isn't in it yet). 39 didn't: SAG-AFTRA's pages, USCIS, the Academy, BAFTA,
+  France-Visas, Japan's foreign ministry and the Australian Taxation Office refused (HTTP 403); canada.ca,
+  classification.gov.au and AACTA gave empty replies or reset the connection; Annecy's certificate failed verification
+  even with the proxy's bundle named; New Zealand's immigration pages, TIFF, the Annies, ABC's cast pages, UTA, Curtis
+  Brown and Universal load their words only in a browser. Their claims stay unconfirmed, and the game says so where it
+  names them. None was worked around: a script that hid the browser's automation from a bot check was refused by the
+  environment earlier in the session and taken out, and nothing like it was tried again.
+- **One claim brief 25 made on a page it had only an excerpt of,** NATAS's four Emmy competitions, now read and held: the
+  52nd Daytime, the 4th Children's & Family, the 47th News & Documentary and the 47th Sports.
+- **Official pages read in place of the ones that refused,** for the four countries brief 25 left partly researched:
+  Canada's Immigration and Refugee Protection Regulations, section 186 (Justice Laws, current to 2026-09-30); France's
+  talent card for an artist (service-public.gouv.fr, verified 1 June 2026); New Zealand's operational manual, WS2.1 and
+  WS3, and form INZ 1187; Japan's Immigration Services Agency page on the Entertainer status. Each says who a route is for
+  and none gives its fee or timing, so the four stay partly researched, their gaps sharpened (Canada's exemption leaves
+  out film and television; France's talent card asks for three months of contracts in a year; New Zealand's fee and
+  timing load only in a browser; Japan's criteria are set by an ordinance not read). Work there still can't be accepted,
+  and the refusal now says the sources are "found and only partly read", where it said "not yet read".
+
+## K1: The Geographic Coverage Matrix
+
+`npx vite-node tools/geo-coverage.mjs --write` writes `geography/COVERAGE.md` and `coverage.json` from the code;
+`tests/b27-geo-coverage.test.ts` fails when either is behind it, when a country or place goes unaccounted, and when the
+places counted aren't the gazetteer's.
+
+- **Scope:** the gazetteer's 252 countries and territories (51 territories) and its 170,911 places, every place counted
+  once under its country, the total the gazetteer's own.
+- **Coverage:** 3 researched (the United States, the United Kingdom, Australia: verified rules and the game's markets), 66
+  partly researched (rules located and partly read, or an official list names an organization there), 183 simulated (the
+  shared rules only: time zone, currency, travel by distance and a self-tape from anywhere). **Work rules:** the US package,
+  2 verified, 5 partly researched, 244 unsupported, each unsupported row saying its rules aren't in the game.
+- **How every place connects,** by one rule said as the game's: work in any market is a journey from home within 500 km
+  and a trip the production books beyond it; an open in-person audition beyond that reaches nobody there, and an agent
+  puts a client up for one half as often; work needs the rules of the market's country.
+- **The industry's organizations,** chosen by official lists, never ranked (Part 5): the 87 performers' unions in 61
+  countries that FIA lists as members, and the 50 festivals in 29 countries FIAPF accredits, each in its own name
+  (`src/engine/content/industry.ts`). Shown on the Career screen's Charts And Awards tab, Unions And Festivals Around The
+  World, where the actor lives first, with the note that naming them says nothing about the player.
+
+## The UK's Rules, Verified
+
+From GOV.UK's pages (the register's `b25-S02`, `b25-S104`, `b27-UK-print`, `b27-UK-CTA`, `b27-UK-eta`, `b27-UK-eta-apply`,
+`b27-UK-ihs`, `b27-UK-visa-national`): an Irish citizen works under the Common Travel Area with no permission; a
+national who doesn't need a visa to visit, with work of three months or less, comes in under the Creative Worker
+concession with an ETA (£20, decided the day after, as the game reads "usually within a day", lasting two years or to
+the passport's end) and sees an immigration officer at the border; anyone else, or longer work, needs the Creative Worker
+visa (£340, about three weeks from outside the UK, the certificate's time and 28 days more). The fee comes from the
+player's bank in the save's currency. `tests/b27-slate-screens.test.ts` plays it: a London part's ETA asked for on the
+Work tab, applied for with its fee, granted the next day, and every condition the concession asks shown.
+
+## K2: The Slate (Area B)
+
+The work the world keeps making (`src/engine/systems/slate.ts`, `src/engine/content/slate.ts`), beside brief 25's fixed
+parts: each Monday, each of 12 markets makes each kind of work at its own rate for the time of year, each production with
+its title, company, casting office, genres, parts, place, schedule and fate; each year adds new series, each season
+ordered or not by the network's draw (brief 25's series machinery). Drawn from the save's seed, so a save makes the same
+world on every asking and another save another.
+
+- **Measured,** 2027 on two saves by `productionsOf` and `seriesOfYear`: 229 and 198 productions, 408 and 344 parts, 16
+  kinds, in all 12 markets (New York 121 and 96, Los Angeles 48 and 52, London 5 and 1, Sydney 2 and 4); 186 and 160 made,
+  23 and 24 pushed back, 20 and 14 never made; 15 and 10 new series in 2027, 10 and 13 in 2030.
+- **History kept:** a part posted is kept in the save as it was posted, and a save's copy is read over anything a later
+  build makes; a production is cast once, and none is posted twice in two years.
+- **Fates reach booked work:** never made, the work is called off before its first day with nothing owed, said once;
+  pushed back, the actor is released from the old dates and offered the part again for the new ones.
+- **Reach responds** to representation, the part's fit, the playing age, professional credits, the companies worked for,
+  where the actor lives and when they're booked (`SLATE_REACH`, the `pro.slate_reach` decider). Change any one and the
+  chance moves (`tests/b27-slate.test.ts`); a represented graduate played by the clock is posted more than ten of the slate's parts in each year from 2027 to 2030.
+- **Away from home:** every slate part carries the production's trip, used where the actor lives too far to go daily, so
+  a New Haven actor flies to Los Angeles and an Angeleno doesn't.
+
 ## Defects Found And Fixed
 
 | # | Where | What stood | What stands | Held by |
@@ -208,3 +289,6 @@ banking.2, run in this brief's targeted creation run), so no routine implementat
 | 2 | School's plays shelf and Calls Ahead, Career's published chart, at 390 pixels upright | a cast line nine lines deep; a call's name four lines beside its date; the published chart squeezed | each given its width or allowed to wrap | `walk/upright/audit.json` |
 | 3 | `turn.tsx` | the gate over an upright phone, the frame inert, the clock paused | none of it; the scroll and focus put back | `tests/b23-turn.test.ts`, the walk |
 | 4 | `loadUniverse` listing | a cleared slot's backup unlisted | listed, so Restore Backup is offered | `tests/b27-backend.test.ts` |
+| 5 | A slate part in Los Angeles, read by a New Haven actor | "Getting there takes about three hours each way from where you live": a daily journey to Los Angeles, since only parts abroad carried a trip | every slate part carries the production's trip, used where the actor lives too far away | `tests/b27-slate-screens.test.ts` |
+| 6 | `propay.ts`, a non-union producer's late pay | drawn by the payment's key, which carries the engagement's number, so the slate's postings moved a played life's documentary pay from January 10 to February 7, 2030 | drawn by the work: its part, its first day and the payment's number | `tests/journey-career-older.test.ts` |
+

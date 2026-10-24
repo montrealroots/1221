@@ -375,5 +375,62 @@
     "ref": "tests/career-awards.test.ts: 'AWD-02, AWD-03, AWD-04, AWD-05: fourteen awards and eight festivals'"
    }
   ]
+ },
+ {
+  "surface": "The trip to London: the ETA or visa the UK's routes ask for, its fee, its decision and what it asks",
+  "where": "Career, Work, the trip's Permission, Flights And Hotel; the booking's history; Papers, the ETA",
+  "sources": [
+   "src/engine/systems/worktrip.ts#applicationFee",
+   "src/engine/systems/worktrip.ts#applyVisa",
+   "src/engine/systems/worktrip.ts#applyVisa [visa-applied]",
+   "src/engine/systems/worktrip.ts#grantVisa [visa-granted]",
+   "src/engine/content/jurisdictions.ts#UK_CONCESSION*",
+   "src/engine/content/jurisdictions.ts#UK_CREATIVE*",
+   "src/engine/content/jurisdictions.ts#UK_IRISH*",
+   "src/engine/content/jurisdictions.ts#UK_SHARED*",
+   "src/ui/career/WorkPane.tsx#TripView"
+  ],
+  "states": [
+   "first use",
+   "confirmation",
+   "details",
+   "explanation",
+   "history"
+  ],
+  "outcome": "Revised",
+  "why": "New with brief 27's UK routes: the trip asks for an ETA under the concession, says its fee from the bank, who decides and when, and every condition from the GOV.UK pages.",
+  "changes": "Written new from the GOV.UK pages: the three routes' conditions, the ETA's application with its fee, its decision and its grant. Read on the Work tab, the ETA's history line, which said An ETA for the project, applied for, became You applied for an ETA, as the visa's lines say it.",
+  "evidence": [
+   {
+    "kind": "test",
+    "ref": "tests/b27-slate-screens.test.ts: 'PLAYER JOURNEY: the role card says it’s the game’s own, the offer warns of the trip, the ETA is applied for and paid for, and granted the next day'"
+   },
+   {
+    "kind": "test",
+    "ref": "tests/b27-slate.test.ts: 'an American’s three months or less comes under the concession with an ETA; more under the Creative Worker visa; an Irish citizen needs nothing; a visa national the visa'"
+   }
+  ]
+ },
+ {
+  "surface": "Unions And Festivals Around The World",
+  "where": "Career, Charts And Awards, the last panel",
+  "sources": [
+   "src/ui/career/IndustryPane.tsx#WorldPanel",
+   "src/engine/content/industry.ts#*"
+  ],
+  "states": [
+   "details",
+   "explanation",
+   "empty"
+  ],
+  "outcome": "Revised",
+  "why": "New with brief 27's Part 5: says what two federations' own lists name where the actor lives and in every country they cover, never ranks them, and says none has dealt with the actor.",
+  "changes": "Written new: the panel, its sentence for where the actor lives, the list by country and its note on how the organizations were chosen. Each organization's name is kept as its federation's list prints it.",
+  "evidence": [
+   {
+    "kind": "test",
+    "ref": "tests/b27-slate-screens.test.ts: 'says what FIA and FIAPF list where the actor lives, then every country either list names, each in its own name'"
+   }
+  ]
  }
 ]

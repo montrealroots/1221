@@ -194,12 +194,15 @@ describe('J1: fictional roles, posted on a schedule', () => {
       // Never a part written for someone else: every posting is the player's or either's.
       for (const p of [...open, ...through]) expect(p.project.role.for === 'either' || p.project.role.for === sim.player.performerTitle).toBe(true);
       // And every part that is the player's comes round, each way it can reach them.
-      const ids = (list: typeof open, via: 'open' | 'agent') => [...new Set(list.filter((p) => p.via === via).map((p) => p.project.id))].sort();
+      // The fixed parts, each way they can reach; the slate's parts (from 2026-10-24, brief 27) are held to the same rule above.
+      const ids = (list: typeof open, via: 'open' | 'agent') => [...new Set(list.filter((p) => p.via === via && !p.project.slate).map((p) => p.project.id))].sort();
       expect(ids(open, 'open')).toEqual(PROJECTS.filter((t) => writtenFor(t, sim.player) && reachOf(t, undefined) === 'open').map((t) => t.id).sort());
       expect(ids(through, 'agent')).toEqual(PROJECTS.filter((t) => writtenFor(t, sim.player) && reachOf(t, agreement) === 'agent').map((t) => t.id).sort());
     }
     // The same projects reach each, the parts in them their own.
-    const projects = (x: typeof actor, via: 'open' | 'agent') => [...new Set([...x.open, ...x.through].filter((p) => p.via === via).map((p) => p.project.project))].sort();
+    // The fixed parts' projects: the slate's productions (from 2026-10-24, brief 27) are each its own, its parts written as
+    // it draws them, so an actor and an actress meet different ones.
+    const projects = (x: typeof actor, via: 'open' | 'agent') => [...new Set([...x.open, ...x.through].filter((p) => p.via === via && !p.project.slate).map((p) => p.project.project))].sort();
     for (const via of ['open', 'agent'] as const) expect(projects(actor, via)).toEqual(projects(actress, via));
     expect(actor.open.map((p) => p.project.role.part)).toContain('Felix');
     expect(actress.open.map((p) => p.project.role.part)).toContain('Ivy');
@@ -223,7 +226,7 @@ describe('J1: fictional roles, posted on a schedule', () => {
       // Open postings only (a recurring part, from 2026-10-24, is cast through an agent), so a shoot's days, a run's, or
       // from Module 5 a booth's sessions.
       expect(days.length).toBe(t.schedule.kind === 'shoot' ? t.schedule.days + (t.schedule.rehearsalDays ?? 0) : t.schedule.kind === 'run' ? t.schedule.rehearsalWeeks * 5 + t.schedule.performanceWeeks * 6 : t.schedule.kind === 'sessions' ? t.schedule.sessions : -1);
-      expect(Math.round((startOfDay(days[0]!.from, zone) - startOfDay(o.postedAt, zone)) / MS_DAY)).toBeGreaterThanOrEqual(WORK.leadDays);
+      expect(Math.round((startOfDay(days[0]!.from, zone) - startOfDay(o.postedAt, zone)) / MS_DAY)).toBeGreaterThanOrEqual(t.leadDays ?? WORK.leadDays);
       // A part posted before says it's posted again and what came of it the last time (from 2026-10-21, brief 20's D4).
       expect(o.history[0]!.words).toBe(`${t.casting.charAt(0).toUpperCase()}${t.casting.slice(1)} posted ${t.role.part} in ${t.project}${o.again ? ` again, a new casting of the part. The last time it was posted to you, on ${formatDate(o.again.postedAt, zone)}: ${o.again.outcome}` : '.'}`);
       // A project casts once a cycle: no second posting of it within ten weeks.
@@ -362,7 +365,8 @@ describe('J5: casting decided apart from quality', () => {
   it('PLAYER JOURNEY: over seeds, a skilled actor loses a role and a developing actor books one, each through the whole loop', () => {
     const outcomes = (make: (seed: string) => Simulation, seeds: readonly string[]) => seeds.map((seed) => {
       const sim = make(seed);
-      const o = waitFor(sim, (x) => projectById(x.projectId)!.access.open === 'anyone' && !projectById(x.projectId)!.trip);
+      // An open part a student without a reel can send for: the slate's screen parts ask for one (from 2026-10-24, brief 27).
+      const o = waitFor(sim, (x) => projectById(x.projectId)!.access.open === 'anyone' && !projectById(x.projectId)!.trip && !projectById(x.projectId)!.requirements.sends.includes('reel'));
       if (!o) return 'none';
       playToOffer(sim, o);
       return o.status;
@@ -873,7 +877,7 @@ describe('V3 and A4: a player who left before the degree', () => {
       played(s, at(2026, 9, 9, 10));
       s.must({ kind: 'school.withdraw', payload: { confirm: true } });
       return s;
-    }, (x) => projectOf(x).access.open === 'anyone' && !projectOf(x).trip);
+    }, (x) => projectOf(x).access.open === 'anyone' && !projectOf(x).trip && !projectOf(x).requirements.sends.includes('reel'));
     expect(sim.player.school!.standing).toBe('withdrawn');
     expect(acceptWarning(sim, sim.player, o)).toBeUndefined();
     expect(requestRefusal(sim, sim.player, o)).toBe('The School’s rule on outside work is for its students.');

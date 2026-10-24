@@ -769,6 +769,17 @@
   {
    "file": "src/ui/career/WorkPane.tsx",
    "control": "<Gated onClick>",
+   "feature": "pro.apply_work_visa",
+   "label": "{`Apply For The ${asks}`}",
+   "kind": "pro.apply_work_visa",
+   "payload": "{ engagementId: e.id }",
+   "verdict": "Right",
+   "handler": "src/engine/systems/worktrip.ts:580",
+   "note": "Apply For The Visa on a booking abroad applies for the visa that booking needs, tied to it; its refusal (visaRefusal) is said under it before it is pressed. Read 2026-10-23, brief 25. From 2026-10-24 (brief 27) it reads Apply For The ETA where the route is the UK’s concession, and the same command applies for the ETA the route needs, its £20 paid from the bank."
+  },
+  {
+   "file": "src/ui/career/WorkPane.tsx",
+   "control": "<Gated onClick>",
    "feature": "pro.work_choice",
    "label": "{o.label}",
    "kind": "pro.work_choice",
@@ -776,17 +787,6 @@
    "verdict": "Right",
    "handler": "src/engine/systems/workflow.ts:697",
    "note": "Each option's button under How The Work Is Done sets that choice on that engagement, by its decision and option ids; its refusal (choiceRefusal) is the button's title and grays it, and the option in force says now beside it. Read on 2026-10-24 by its builder (brief 25's Module 5), pressed through the command in tests/career-workflows-screen.test.ts."
-  },
-  {
-   "file": "src/ui/career/WorkPane.tsx",
-   "control": "<Gated onClick>",
-   "feature": "pro.apply_work_visa",
-   "label": "Apply For The Visa",
-   "kind": "pro.apply_work_visa",
-   "payload": "{ engagementId: e.id }",
-   "verdict": "Right",
-   "handler": "src/engine/systems/worktrip.ts:497",
-   "note": "Apply For The Visa on a booking abroad applies for the visa that booking needs, tied to it; its refusal (visaRefusal) is said under it before it is pressed. Read 2026-10-23, brief 25."
   },
   {
    "file": "src/ui/career/WorkPane.tsx",

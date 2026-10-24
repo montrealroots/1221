@@ -92,10 +92,26 @@ export function inProduction(sim: Simulation, seriesId: string, days: readonly {
   });
 }
 
-/** The decisions whose moment falls in a stretch of the clock, across every series, in order. */
+/**
+ * The series a save's decisions are read for: the fixed ones, and (from 2026-10-24, brief 27) the slate's the player has met,
+ * as the save keeps them (`ProRecord.series`). A slate series the player never met decides its seasons all the same, but
+ * nothing of theirs turns on it.
+ */
+export function seriesInPlay(sim: Simulation): SeriesTemplate[] {
+  const kept = sim.universe.people[sim.universe.playerId]?.pro?.series;
+  return [...SERIES, ...Object.values(kept ?? {})];
+}
+
+/** The parts of a series the save knows: the fixed parts, and the slate parts the player was shown. */
+function partsOf(sim: Simulation, seriesId: string): Set<string> {
+  const kept = sim.universe.people[sim.universe.playerId]?.pro?.projects ?? {};
+  return new Set([...PROJECTS.filter((t) => t.series === seriesId).map((t) => t.id), ...Object.values(kept).filter((t) => t.series === seriesId).map((t) => t.id)]);
+}
+
+/** The decisions whose moment falls in a stretch of the clock, across every series in play, in order. */
 export function decisionsBetween(sim: Simulation, from: Instant, to: Instant): { s: SeriesTemplate; d: SeasonDecision }[] {
   const out: { s: SeriesTemplate; d: SeasonDecision }[] = [];
-  for (const s of SERIES) {
+  for (const s of seriesInPlay(sim)) {
     const last = new Date(to).getUTCFullYear() + 1;
     for (const d of decisionsTo(sim, s, last)) if (d.at > from && d.at <= to) out.push({ s, d });
   }
@@ -208,7 +224,7 @@ export function registerSeries(sim: Simulation, hooks: SeriesHooks): void {
     const pro = person?.pro;
     if (!person || !pro) return;
     for (const { s: series, d } of decisionsBetween(s, from, s.now)) {
-      const ids = new Set(PROJECTS.filter((t) => t.series === series.id).map((t) => t.id));
+      const ids = partsOf(s, series.id);
       const words = decisionWords(s, series, d);
       const touched = pro.engagements.filter((e) => ids.has(e.projectId));
       if (d.what === 'canceled') {

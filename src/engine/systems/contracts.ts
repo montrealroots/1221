@@ -282,7 +282,10 @@ export function askRefusal(sim: Simulation, e: Engagement | undefined, p: ProPay
   return undefined;
 }
 
-/** How late a non-union producer pays a payment, in days, by its key: none seven times in ten (decider `pro.late_pay`). */
+/**
+ * How late a non-union producer pays a payment, in days, by a key naming it: none seven times in ten (decider
+ * `pro.late_pay`). The pay system names a payment by its work, its first day and its number (`schedulePay`).
+ */
 export function lateDays(sim: Simulation, key: string): number {
   const r = sim.rng('pro.late_pay', key);
   return r.next() < LATE.chance ? LATE.minDays + Math.floor(r.next() * LATE.spanDays) : 0;

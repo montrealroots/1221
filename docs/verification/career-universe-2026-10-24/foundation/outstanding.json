@@ -72,7 +72,7 @@
    "id": "bank.cancel_switch",
    "group": "Money",
    "status": "Implemented, Verification Incomplete",
-   "requirement": "Switch banks through a country’s switching service, call the switch off, or stop its balance transfer | A pending switch can be called off, with confirmation, until seven working days before its date (Britain's CASS). The SWITCH_KIND item and its review are cancelled and the switch noted 'canceled',…",
+   "requirement": "Switch banks through a country’s switching service, call the switch off, or stop its balance transfer | A pending switch can be called off, with confirmation, until seven working days before its date (Britain's CASS). The SWITCH_KIND item and its review are canceled and the switch noted 'canceled', …",
    "implementation": "`systems/lending.ts` | Bank, a switch under way: Call Off The Switch…, then Call It Off (BankLending.tsx:382)",
    "class": "Proof in a played life, behind a product decision",
    "lacks": "Behavior exists and is tested on lives abroad (fixtures); every New Haven bank refuses it or has no such product.",

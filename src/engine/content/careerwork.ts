@@ -314,6 +314,27 @@ export interface ProjectTemplate {
   others?: readonly (readonly string[])[];
   /** An anthology's next story, offered only to an actor whose work in this earlier one was strong (Module 5). */
   invitedFrom?: string;
+  /**
+   * A part the slate made (from 2026-10-24, the owner's brief 27, Area B; `systems/slate.ts`): the production it's in, the
+   * week and market that made it, the generator's version, and what becomes of the production. Absent on the fixed parts.
+   */
+  slate?: SlateMark;
+}
+
+/** What becomes of a production the slate made: made as planned, pushed back some weeks, or never made, and when it's known. */
+export type SlateFate = { kind: 'made' } | { kind: 'pushed'; at: number; weeks: number } | { kind: 'dropped'; at: number };
+
+/** A slate part's provenance and fate (`ProjectTemplate.slate`). */
+export interface SlateMark {
+  version: number;
+  /** The production's id: every part of it shares one. */
+  production: string;
+  /** The Monday it was made for, `YYYY-MM-DD` in New York, and the market. */
+  week: string;
+  market: string;
+  fate: SlateFate;
+  /** A part pushed and offered again for its new dates: the part it was first. */
+  pushedFrom?: string;
 }
 
 /**
@@ -747,7 +768,17 @@ export const PROJECTS: readonly ProjectTemplate[] = [
   },
 ];
 
-export const projectById = (id: string): ProjectTemplate | undefined => PROJECTS.find((p) => p.id === id);
+/**
+ * The slate's parts this session knows (from 2026-10-24, brief 27): each added once, a save's own copy first when it's
+ * opened (`systems/slate.ts`, `restoreSlate`), so a part a save holds always reads as the save holds it, whatever a later
+ * build would make under its id. Never the fixed parts, which `PROJECTS` holds.
+ */
+const SLATE_PARTS = new Map<string, ProjectTemplate>();
+export function addProjects(parts: readonly ProjectTemplate[]): void {
+  for (const t of parts) if (!SLATE_PARTS.has(t.id) && !PROJECTS.some((p) => p.id === t.id)) SLATE_PARTS.set(t.id, t);
+}
+
+export const projectById = (id: string): ProjectTemplate | undefined => PROJECTS.find((p) => p.id === id) ?? SLATE_PARTS.get(id);
 
 /**
  * The towns an audition in person is held in, as the help says them: "New York or Hudson" (from 2026-10-21, read from the

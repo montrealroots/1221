@@ -45,7 +45,8 @@ import { therapyLifts } from './systems/therapy';
 import { priorityOf } from './systems/classmates';
 import { AGENTS } from './content/agents';
 import { GATE, LEVELS, chancesFor, drawOf, offerOutcome, replyOutcome, rosterFor } from './systems/proagent';
-import { castingDraw, postingsAt } from './systems/projobs';
+import { castingDraw, postingsAt, slateReach } from './systems/projobs';
+import { productionsOf, seriesOfYear, slatePartsAt } from './systems/slate';
 import { PROJECTS } from './content/careerwork';
 import { SERIES } from './content/series';
 import { decisionsTo, episodeDrawn, optionDrawn } from './systems/series';
@@ -636,6 +637,51 @@ defineDecider<{ sim: Simulation; week: number; represented: number; title: numbe
     represent(sim, represented === 1);
     sim.player.performerTitle = title === 1 ? 'actress' : 'actor';
     return Array.from({ length: 12 }, (_, n) => postingsAt(sim, sim.player, sim.now + (week + n) * 7 * MS_DAY).map((x) => `${x.project.id}:${x.via}`).join('+') || '-').join(' ');
+  },
+});
+
+defineDecider<{ sim: Simulation; week: number }, string>({
+  id: 'pro.slate',
+  decides: 'What work the world makes (brief 27, Area B): each market\u2019s productions of each kind in a week at its rate for the time of year, each one\u2019s parts, place, schedule and fate, and each year\u2019s new series.',
+  drawnIn: 'src/engine/systems/slate.ts',
+  reads: {
+    // Which week: each Monday makes its own work, and the time of year moves each kind's rate.
+    week: (o, t) => ({ ...o, week: Math.round(t * 50) }),
+    // Which world: the save's seed makes its own slate.
+    world: (o, t) => ({ ...o, sim: atYale(Math.round(t * 20)) }),
+  },
+  sample: (seed) => ({ sim: atYale(seed), week: seed * 3 }),
+  decide: ({ sim, week }) => {
+    const at = sim.now + week * 7 * MS_DAY;
+    const made = productionsOf(sim, at).map((p) => `${p.kind}:${p.parts.length}:${p.parts[0]!.slate!.fate.kind}`).join('+') || '-';
+    return `${made} | ${seriesOfYear(sim, 2027).map((s) => s.id.split('.').slice(3).join('.')).join(',')}`;
+  },
+});
+
+defineDecider<{ sim: Simulation; represented: number; credits: number; skill: number }, string>({
+  id: 'pro.slate_reach',
+  decides: 'Which of the slate\u2019s parts reach the actor in a week (SLATE_REACH): an agent\u2019s breakdown or an open posting, the part\u2019s fit, the playing age, the actor\u2019s credits, the companies they\u2019ve worked for, where they live and when they\u2019re booked.',
+  drawnIn: 'src/engine/systems/projobs.ts',
+  reads: {
+    // Represented or not: an agent's breakdowns reach a client more often than open postings reach anyone.
+    represented: (o, t) => ({ ...o, represented: Math.round(t) }),
+    // Professional credits: a lead in screen work comes to an actor with three or more.
+    credits: (o, t) => ({ ...o, credits: Math.round(t * 4) }),
+    // Craft: an agent puts up a client the part fits.
+    skill: (o, t) => ({ ...o, skill: t }),
+  },
+  sample: (seed) => ({ sim: atYale(seed), represented: seed % 2, credits: seed % 5, skill: (seed % 7) / 6 }),
+  decide: ({ sim, represented, credits, skill }) => {
+    represent(sim, represented === 1);
+    const p = sim.player;
+    p.pro!.credits = Array.from({ length: credits }, (_, i) => ({ id: `c${i}`, kind: 'screen' as const, project: `Credit ${i}`, role: 'A Part', company: `Company ${i}`, year: 2026, medium: 'film' as const, status: 'released' as const, at: sim.now }));
+    for (const k of Object.keys(p.craft ?? {}) as (keyof NonNullable<typeof p.craft>)[]) p.craft![k] = Math.round(skill * 100);
+    const out: string[] = [];
+    for (let n = 0; n < 16; n += 1) {
+      const at = sim.now + n * 7 * MS_DAY;
+      out.push(slatePartsAt(sim, at).filter((t) => t.access.agent || t.access.open).map((t) => Math.round(slateReach(sim, p, t, represented === 1 && t.access.agent ? 'agent' : 'open', at) * 100)).join(','));
+    }
+    return out.join(' ');
   },
 });
 

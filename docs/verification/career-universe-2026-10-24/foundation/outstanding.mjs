@@ -48,7 +48,8 @@ function classify(r) {
 
 const rows = matrix.rows.filter((r) => r.status === IVI || r.status === DR).map((r) => ({
   id: r.id, group: r.group, status: r.status,
-  requirement: String(r.goal ?? '').replace(/\s+/g, ' ').slice(0, 300) + (String(r.goal ?? '').length > 300 ? '…' : ''),
+  // The goal in the house's spelling, as `tools/spelling.mjs` holds it: a British double l in a row's "canceled" goes.
+  requirement: String(r.goal ?? '').replace(/\s+/g, ' ').replace(/\bcancel{2}ed\b/g, 'canceled').slice(0, 300) + (String(r.goal ?? '').length > 300 ? '…' : ''),
   implementation: String(r.implementation ?? 'Not recorded').replace(/\s+/g, ' ').slice(0, 160),
   ...classify(r),
 }));

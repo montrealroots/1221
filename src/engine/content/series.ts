@@ -57,7 +57,16 @@ export const SERIES: readonly SeriesTemplate[] = [
   },
 ];
 
-export const seriesById = (id: string): SeriesTemplate | undefined => SERIES.find((s) => s.id === id);
+/**
+ * The slate's series this session knows (from 2026-10-24, brief 27, `systems/slate.ts`), a save's own copy first: each a
+ * series the game invents as `SERIES`' are, its seasons decided by the same rules (`systems/series.ts`).
+ */
+const SLATE_SERIES = new Map<string, SeriesTemplate>();
+export function addSeries(list: readonly SeriesTemplate[]): void {
+  for (const s of list) if (!SLATE_SERIES.has(s.id) && !SERIES.some((x) => x.id === s.id)) SLATE_SERIES.set(s.id, s);
+}
+
+export const seriesById = (id: string): SeriesTemplate | undefined => SERIES.find((s) => s.id === id) ?? SLATE_SERIES.get(id);
 
 /** The first day of the season beginning in `year`, and its last, at the start and end of those days in New York. */
 export function seasonWindow(s: SeriesTemplate, year: number): { from: Instant; to: Instant } {

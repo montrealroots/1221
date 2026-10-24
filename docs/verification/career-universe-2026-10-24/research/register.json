@@ -1,0 +1,4081 @@
+{
+ "written": "by hand and by the fetch log (brief 27); each entry is a page this build asked for",
+ "sources": [
+  {
+   "id": "b27-",
+   "register": "b27",
+   "was": null,
+   "previously": null,
+   "title": null,
+   "url": "https://www.gov.uk/creative-worker-visa",
+   "final": "https://www.gov.uk/creative-worker-visa",
+   "status": "read",
+   "http": "200",
+   "bytes": 110802,
+   "sha256": "5bacb3f3674648eb8a67ef71f37334b112c5308501628f769b6560c2a8fb1628",
+   "retrieved": "2026-10-24T19:14Z",
+   "attempts": [
+    {
+     "at": "2026-10-24T19:14Z",
+     "http": "200",
+     "bytes": 110802,
+     "error": ""
+    }
+   ],
+   "organization": null,
+   "territory": null,
+   "updated": null,
+   "establishes": [],
+   "confidence": null,
+   "usedBy": []
+  },
+  {
+   "id": "b25-N18",
+   "register": "b25",
+   "was": "N18",
+   "previously": "excerpt",
+   "title": "LA Magazine: SAG-AFTRA Approves AMPTP Deal (June 5, 2026)",
+   "url": "https://lamag.com/arts-and-entertainment/sag-aftra-approves-amptp-deal-with-expanded-ai-protections-in-landslide-vote/",
+   "final": "https://lamag.com/arts-and-entertainment/sag-aftra-approves-amptp-deal-with-expanded-ai-protections-in-landslide-vote/",
+   "status": "read",
+   "http": "200",
+   "bytes": 197816,
+   "sha256": "c05f02f9bb5075f631e501d0f38ac2ed6540b5647961bf634e37d5d9671905b9",
+   "retrieved": "2026-10-24T19:18Z",
+   "attempts": [
+    {
+     "at": "2026-10-24T19:18Z",
+     "http": "200",
+     "bytes": 197816,
+     "error": ""
+    }
+   ],
+   "organization": "Los Angeles Magazine (press)",
+   "territory": "US",
+   "updated": null,
+   "establishes": [
+    {
+     "fact": "SAG-AFTRA members ratified the 2026 TV/Theatrical Agreement in a national vote on June 4, 2026 (a press report).",
+     "quote": "ratified the 2026 TV/Theatrical Agreement with the Alliance of Motion Picture and Television Producers in a national vote on June 4."
+    },
+    {
+     "fact": "The agreement runs July 1, 2026 to June 30, 2030 (a press report).",
+     "quote": "The agreement will go into effect on July 1, 2026, and expire June 30, 2030."
+    }
+   ],
+   "confidence": "medium",
+   "usedBy": [
+    "src/engine/systems/contracts.ts:24"
+   ],
+   "kind": "press-report"
+  },
+  {
+   "id": "b25-N27",
+   "register": "b25",
+   "was": "N27",
+   "previously": "excerpt",
+   "title": "NATAS: the Emmy competitions’ rules page",
+   "url": "https://theemmys.tv/rules/",
+   "final": "https://theemmys.tv/rules/",
+   "status": "read",
+   "http": "200",
+   "bytes": 130978,
+   "sha256": "1fb04588585050429c038ba7fdc86ee8e04e67cd4a3f7956eafd6b305e710966",
+   "retrieved": "2026-10-24T19:18Z",
+   "attempts": [
+    {
+     "at": "2026-10-24T19:18Z",
+     "http": "200",
+     "bytes": 130978,
+     "error": ""
+    }
+   ],
+   "organization": "National Academy of Television Arts and Sciences",
+   "territory": "US",
+   "updated": null,
+   "establishes": [
+    {
+     "fact": "NATAS runs Emmy competitions of its own: the 52nd Daytime Emmy Awards.",
+     "quote": "52nd Annual Daytime Emmy Awards"
+    },
+    {
+     "fact": "NATAS runs Emmy competitions of its own: the 4th Children’s & Family.",
+     "quote": "4th Annual Children’s & Family"
+    },
+    {
+     "fact": "NATAS runs Emmy competitions of its own: the 47th News & Documentary Emmy Awards.",
+     "quote": "47th Annual News & Documentary Emmy Awards"
+    },
+    {
+     "fact": "NATAS runs Emmy competitions of its own: the 47th Sports Emmy Awards.",
+     "quote": "47th Annual Sports Emmy Awards"
+    }
+   ],
+   "confidence": "high",
+   "usedBy": [
+    "src/engine/content/awards.ts (natas)"
+   ]
+  },
+  {
+   "id": "b25-N28",
+   "register": "b25",
+   "was": "N28",
+   "previously": "blocked",
+   "title": "Rules pages that refused this build or weren’t there: the Academy Awards, BAFTA, the Actor Awards, the Golden Globes, the Gotham Awards, the Annie Awards, AACTA, TIFF and Annecy",
+   "url": "https://www.oscars.org/oscars/rules-eligibility",
+   "final": "https://www.oscars.org/oscars/rules-eligibility",
+   "status": "blocked",
+   "http": "403",
+   "bytes": 398,
+   "sha256": "da4e6724dc113e65d3c4d339cd49ab077e0b8f7510ea17f67dbb1487b42b7f73",
+   "retrieved": "2026-10-24T20:46Z",
+   "attempts": [
+    {
+     "at": "2026-10-24T19:18Z",
+     "http": "403",
+     "bytes": 398,
+     "error": ""
+    },
+    {
+     "at": "2026-10-24T20:46Z",
+     "http": "403",
+     "bytes": 398,
+     "error": ""
+    }
+   ],
+   "organization": null,
+   "territory": "various",
+   "updated": null,
+   "establishes": [],
+   "confidence": null,
+   "usedBy": []
+  },
+  {
+   "id": "b25-N29",
+   "register": "b25",
+   "was": "N29",
+   "previously": "excerpt",
+   "title": "Home pages read without their rules: the Spirit Awards, the Critics Choice Awards, the César, the Goya Awards, the Busan International Film Festival",
+   "url": "https://www.filmindependent.org/spirit-awards/",
+   "final": "https://www.filmindependent.org/spirit-awards/",
+   "status": "read",
+   "http": "200",
+   "bytes": 110498,
+   "sha256": "8f4f4364a98a7d7dabcbc8dc5d0ed6ef0d8a1f5328ff127d7e6a50ea4b46e371",
+   "retrieved": "2026-10-24T19:18Z",
+   "attempts": [
+    {
+     "at": "2026-10-24T19:18Z",
+     "http": "200",
+     "bytes": 110498,
+     "error": ""
+    }
+   ],
+   "organization": null,
+   "territory": "various",
+   "updated": null,
+   "establishes": [],
+   "confidence": null,
+   "usedBy": []
+  },
+  {
+   "id": "b25-N30",
+   "register": "b25",
+   "was": "N30",
+   "previously": "excerpt",
+   "title": "Festival regulations read in part: Cannes, Venice, the Berlinale and IDFA",
+   "url": "https://www.festival-cannes.com/en/take-part/submit-a-film/",
+   "final": "https://www.festival-cannes.com/en/take-part/submit-a-film/",
+   "status": "read",
+   "http": "200",
+   "bytes": 146653,
+   "sha256": "872b06e2998e8733965ec02d9300ddd35457497842acbae24fcf7f36fc005f11",
+   "retrieved": "2026-10-24T19:18Z",
+   "attempts": [
+    {
+     "at": "2026-10-24T19:18Z",
+     "http": "200",
+     "bytes": 146653,
+     "error": ""
+    }
+   ],
+   "organization": null,
+   "territory": "various",
+   "updated": null,
+   "establishes": [],
+   "confidence": null,
+   "usedBy": []
+  },
+  {
+   "id": "b25-S02",
+   "register": "b25",
+   "was": "S02",
+   "previously": "dossier-located",
+   "title": "UK Creative Worker visa (Temporary Work): Overview",
+   "url": "https://www.gov.uk/creative-worker-visa",
+   "final": "https://www.gov.uk/creative-worker-visa",
+   "status": "read",
+   "http": "200",
+   "bytes": 110802,
+   "sha256": "5bacb3f3674648eb8a67ef71f37334b112c5308501628f769b6560c2a8fb1628",
+   "retrieved": "2026-10-24T19:14Z",
+   "attempts": [
+    {
+     "at": "2026-10-24T19:14Z",
+     "http": "200",
+     "bytes": 110802,
+     "error": ""
+    }
+   ],
+   "organization": "UK Home Office (GOV.UK)",
+   "territory": "GB",
+   "updated": "2026-09-09",
+   "establishes": [
+    {
+     "fact": "Actors working in the UK need the Temporary Work - Creative Worker visa, unless the concession applies.",
+     "quote": "A creative worker is someone who works in the creative industries, for example an actor, dancer, musician or film crew member."
+    },
+    {
+     "fact": "A certificate of sponsorship from a licensed sponsor comes first.",
+     "quote": "You need to have a certificate of sponsorship from a licensed sponsor before you can apply to come to the UK to work."
+    },
+    {
+     "fact": "Applied for up to 3 months ahead; a decision usually within 3 weeks from outside the UK.",
+     "quote": "3 weeks, if you’re outside the UK"
+    },
+    {
+     "fact": "The application fee is £340.",
+     "quote": "The application fee for each person applying is £340."
+    },
+    {
+     "fact": "The healthcare surcharge is usually £1,035 a year.",
+     "quote": "pay the healthcare surcharge , which is usually £1,035 per year"
+    },
+    {
+     "fact": "A stay of up to 12 months, or the certificate’s period plus 28 days, whichever is shorter; it starts no more than 14 days before the certificate’s start date.",
+     "quote": "You can come to the UK for a maximum of up to 12 months, or the time given in your certificate of sponsorship plus up to 28 days, whichever is shorter."
+    },
+    {
+     "fact": "Work of 3 months or less may use the concession instead.",
+     "quote": "If you intend to work in the UK for 3 months or less, you may be able to use the Creative Worker visa concession instead of applying for the visa."
+    },
+    {
+     "fact": "A creative worker works for the sponsor in the job the certificate describes.",
+     "quote": "work for your sponsor in the job described in your certificate of sponsorship"
+    }
+   ],
+   "confidence": "high",
+   "usedBy": [],
+   "kind": "verified-fact"
+  },
+  {
+   "id": "b25-S03",
+   "register": "b25",
+   "was": "S03",
+   "previously": "dossier-located",
+   "title": "New Zealand Entertainers Work Visa",
+   "url": "https://immigration.govt.nz/visas/entertainers-work-visa",
+   "final": "https://www.immigration.govt.nz/visas/entertainers-work-visa",
+   "status": "unreadable",
+   "http": "200",
+   "bytes": 212,
+   "sha256": "d02032286070b4dd9d8fbd985a7bdca8af8edf52b89ff177db3bfcb2c8a9c43d",
+   "retrieved": "2026-10-24T20:46Z",
+   "attempts": [
+    {
+     "at": "2026-10-24T19:15Z",
+     "http": "200",
+     "bytes": 846,
+     "error": ""
+    },
+    {
+     "at": "2026-10-24T20:46Z",
+     "http": "200",
+     "bytes": 212,
+     "error": ""
+    }
+   ],
+   "organization": null,
+   "territory": null,
+   "updated": null,
+   "establishes": [],
+   "confidence": null,
+   "usedBy": []
+  },
+  {
+   "id": "b25-S04",
+   "register": "b25",
+   "was": "S04",
+   "previously": "dossier-located",
+   "title": "New Zealand: Support an Entertainers Work Visa Candidate",
+   "url": "https://immigration.govt.nz/visas/entertainers-work-visa-eo",
+   "final": "https://www.immigration.govt.nz/visas/entertainers-work-visa-eo",
+   "status": "unreadable",
+   "http": "200",
+   "bytes": 212,
+   "sha256": "d02032286070b4dd9d8fbd985a7bdca8af8edf52b89ff177db3bfcb2c8a9c43d",
+   "retrieved": "2026-10-24T20:46Z",
+   "attempts": [
+    {
+     "at": "2026-10-24T19:15Z",
+     "http": "200",
+     "bytes": 212,
+     "error": ""
+    },
+    {
+     "at": "2026-10-24T20:46Z",
+     "http": "200",
+     "bytes": 212,
+     "error": ""
+    }
+   ],
+   "organization": null,
+   "territory": null,
+   "updated": null,
+   "establishes": [],
+   "confidence": null,
+   "usedBy": []
+  },
+  {
+   "id": "b25-S05",
+   "register": "b25",
+   "was": "S05",
+   "previously": "dossier-located",
+   "title": "USCIS O-1",
+   "url": "https://www.uscis.gov/working-in-the-united-states/temporary-workers/o-1-visa-individuals-with-extraordinary-ability-or-achievement",
+   "final": "https://www.uscis.gov/working-in-the-united-states/temporary-workers/o-1-visa-individuals-with-extraordinary-ability-or-achievement",
+   "status": "blocked",
+   "http": "403",
+   "bytes": 536,
+   "sha256": "ae651f176c8fef3c17e61994824bcc7e0956ff1fd4d76eb31fa237038cc5c497",
+   "retrieved": "2026-10-24T20:46Z",
+   "attempts": [
+    {
+     "at": "2026-10-24T19:15Z",
+     "http": "403",
+     "bytes": 536,
+     "error": ""
+    },
+    {
+     "at": "2026-10-24T20:46Z",
+     "http": "403",
+     "bytes": 536,
+     "error": ""
+    }
+   ],
+   "organization": null,
+   "territory": null,
+   "updated": null,
+   "establishes": [],
+   "confidence": null,
+   "usedBy": []
+  },
+  {
+   "id": "b25-S06",
+   "register": "b25",
+   "was": "S06",
+   "previously": "dossier-located",
+   "title": "USCIS Policy Manual: O-1 Beneficiaries",
+   "url": "https://www.uscis.gov/policy-manual/volume-2-part-m-chapter-4",
+   "final": "https://www.uscis.gov/policy-manual/volume-2-part-m-chapter-4",
+   "status": "blocked",
+   "http": "403",
+   "bytes": 434,
+   "sha256": "be6a4ca8c07011ceff722e011e2c82b7656a8fcaffd668e2f3b2c5afad6d6d4e",
+   "retrieved": "2026-10-24T20:46Z",
+   "attempts": [
+    {
+     "at": "2026-10-24T19:15Z",
+     "http": "403",
+     "bytes": 434,
+     "error": ""
+    },
+    {
+     "at": "2026-10-24T20:46Z",
+     "http": "403",
+     "bytes": 434,
+     "error": ""
+    }
+   ],
+   "organization": null,
+   "territory": null,
+   "updated": null,
+   "establishes": [],
+   "confidence": null,
+   "usedBy": []
+  },
+  {
+   "id": "b25-S07",
+   "register": "b25",
+   "was": "S07",
+   "previously": "dossier-located",
+   "title": "Canada: Who Can Work Without a Work Permit",
+   "url": "https://www.canada.ca/en/immigration-refugees-citizenship/services/work-canada/work-without-permit.html",
+   "final": "https://www.canada.ca/en/immigration-refugees-citizenship/services/work-canada/work-without-permit.html",
+   "status": "unreached",
+   "http": "000",
+   "bytes": 0,
+   "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+   "retrieved": "2026-10-24T20:47Z",
+   "attempts": [
+    {
+     "at": "2026-10-24T19:15Z",
+     "http": "000",
+     "bytes": 0,
+     "error": "curl: (92) HTTP/2 stream 1 was not closed cleanly: INTERNAL_ERROR (err 2)"
+    },
+    {
+     "at": "2026-10-24T20:47Z",
+     "http": "000",
+     "bytes": 0,
+     "error": "curl: (52) Empty reply from server"
+    }
+   ],
+   "organization": null,
+   "territory": null,
+   "updated": null,
+   "establishes": [],
+   "confidence": null,
+   "usedBy": []
+  },
+  {
+   "id": "b25-S08",
+   "register": "b25",
+   "was": "S08",
+   "previously": "dossier-located",
+   "title": "France-Visas: International Talents",
+   "url": "https://france-visas.gouv.fr/en/talents-internationaux-et-attractivite-economique",
+   "final": "https://france-visas.gouv.fr/en/talents-internationaux-et-attractivite-economique",
+   "status": "blocked",
+   "http": "403",
+   "bytes": 21884,
+   "sha256": "83a0b403df9e53612cd8bc7c1b2f385e44524b0e6b42f3c80fd6652d1f114481",
+   "retrieved": "2026-10-24T20:47Z",
+   "attempts": [
+    {
+     "at": "2026-10-24T19:15Z",
+     "http": "403",
+     "bytes": 21884,
+     "error": ""
+    },
+    {
+     "at": "2026-10-24T20:47Z",
+     "http": "403",
+     "bytes": 21884,
+     "error": ""
+    }
+   ],
+   "organization": null,
+   "territory": null,
+   "updated": null,
+   "establishes": [],
+   "confidence": null,
+   "usedBy": []
+  },
+  {
+   "id": "b25-S09",
+   "register": "b25",
+   "was": "S09",
+   "previously": "dossier-located",
+   "title": "France-Visas: Salaried Employment",
+   "url": "https://www.france-visas.gouv.fr/en/activite-salariee",
+   "final": "https://www.france-visas.gouv.fr/en/activite-salariee",
+   "status": "blocked",
+   "http": "403",
+   "bytes": 21749,
+   "sha256": "ffa3e485a41bead9400c83d03e59df217a440f8e642b0ddd0db498f2ef8436e6",
+   "retrieved": "2026-10-24T20:47Z",
+   "attempts": [
+    {
+     "at": "2026-10-24T19:15Z",
+     "http": "403",
+     "bytes": 21748,
+     "error": ""
+    },
+    {
+     "at": "2026-10-24T20:47Z",
+     "http": "403",
+     "bytes": 21749,
+     "error": ""
+    }
+   ],
+   "organization": null,
+   "territory": null,
+   "updated": null,
+   "establishes": [],
+   "confidence": null,
+   "usedBy": []
+  },
+  {
+   "id": "b25-S10",
+   "register": "b25",
+   "was": "S10",
+   "previously": "dossier-located",
+   "title": "Japan: Entertainer Working Visa",
+   "url": "https://www.mofa.go.jp/j_info/visit/visa/long/visa3.html",
+   "final": "https://www.mofa.go.jp/j_info/visit/visa/long/visa3.html",
+   "status": "blocked",
+   "http": "403",
+   "bytes": 429,
+   "sha256": "eddf1dfc743faa6356048f91c271b188566302536980ac63d98ade0306829fcf",
+   "retrieved": "2026-10-24T20:47Z",
+   "attempts": [
+    {
+     "at": "2026-10-24T19:15Z",
+     "http": "403",
+     "bytes": 429,
+     "error": ""
+    },
+    {
+     "at": "2026-10-24T20:47Z",
+     "http": "403",
+     "bytes": 429,
+     "error": ""
+    }
+   ],
+   "organization": null,
+   "territory": null,
+   "updated": null,
+   "establishes": [],
+   "confidence": null,
+   "usedBy": []
+  },
+  {
+   "id": "b25-S103",
+   "register": "b25",
+   "was": "S103",
+   "previously": "unreadable",
+   "title": "Curtis Brown UK Actor Submissions",
+   "url": "https://www.curtisbrown.co.uk/page/actors-becoming-a-client",
+   "final": "https://www.curtisbrown.co.uk/page/actors-becoming-a-client",
+   "status": "unreadable",
+   "http": "200",
+   "bytes": 21161,
+   "sha256": "1c31e8c438b36241ebebea9edeacded16b40ed93e17e88a82d738b0f87a3cb25",
+   "retrieved": "2026-10-24T20:47Z",
+   "attempts": [
+    {
+     "at": "2026-10-24T19:17Z",
+     "http": "200",
+     "bytes": 21161,
+     "error": ""
+    },
+    {
+     "at": "2026-10-24T20:47Z",
+     "http": "200",
+     "bytes": 21161,
+     "error": ""
+    }
+   ],
+   "organization": null,
+   "territory": null,
+   "updated": null,
+   "establishes": [],
+   "confidence": null,
+   "usedBy": []
+  },
+  {
+   "id": "b25-S104",
+   "register": "b25",
+   "was": "S104",
+   "previously": "dossier-located",
+   "title": "UK Creative Worker visa: Eligibility",
+   "url": "https://www.gov.uk/creative-worker-visa/eligibility",
+   "final": "https://www.gov.uk/creative-worker-visa/eligibility",
+   "status": "read",
+   "http": "200",
+   "bytes": 76977,
+   "sha256": "f0f7b11542fffdd6939fb7c125f07fb38f093167f2ae558c0e0cae6539014fe4",
+   "retrieved": "2026-10-24T19:18Z",
+   "attempts": [
+    {
+     "at": "2026-10-24T19:18Z",
+     "http": "200",
+     "bytes": 76977,
+     "error": ""
+    }
+   ],
+   "organization": "UK Home Office (GOV.UK)",
+   "territory": "GB",
+   "updated": "2026-09-09",
+   "establishes": [
+    {
+     "fact": "Paid at least the Equity, Pact or BECTU minimum.",
+     "quote": "be paid the minimum salary as set by Equity , PACT or BECTU (except for models, musicians or circuses)"
+    },
+    {
+     "fact": "£1,270 held for 28 days, unless the employer certifies maintenance.",
+     "quote": "You must have at least £1,270 in your bank account to show you can support yourself in the UK."
+    },
+    {
+     "fact": "The employer may cover the first month instead.",
+     "quote": "your employer can cover your costs during your first month in the UK, up to £1,270"
+    },
+    {
+     "fact": "The certificate is valid for 3 months from its assignment.",
+     "quote": "Your certificate of sponsorship is valid for 3 months from the date it is assigned to you."
+    }
+   ],
+   "confidence": "high",
+   "usedBy": [],
+   "kind": "verified-fact"
+  },
+  {
+   "id": "b25-S105",
+   "register": "b25",
+   "was": "S105",
+   "previously": "dossier-located",
+   "title": "Canada Employer-Specific Work Permits",
+   "url": "https://www.canada.ca/en/immigration-refugees-citizenship/services/work-canada/employer-specific.html",
+   "final": "https://www.canada.ca/en/immigration-refugees-citizenship/services/work-canada/employer-specific.html",
+   "status": "unreached",
+   "http": "000",
+   "bytes": 0,
+   "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+   "retrieved": "2026-10-24T20:47Z",
+   "attempts": [
+    {
+     "at": "2026-10-24T19:18Z",
+     "http": "000",
+     "bytes": 0,
+     "error": "curl: (92) HTTP/2 stream 1 was not closed cleanly: INTERNAL_ERROR (err 2)"
+    },
+    {
+     "at": "2026-10-24T20:47Z",
+     "http": "000",
+     "bytes": 0,
+     "error": "curl: (52) Empty reply from server"
+    }
+   ],
+   "organization": null,
+   "territory": null,
+   "updated": null,
+   "establishes": [],
+   "confidence": null,
+   "usedBy": []
+  },
+  {
+   "id": "b25-S106",
+   "register": "b25",
+   "was": "S106",
+   "previously": "dossier-located",
+   "title": "99th Oscars Key Dates",
+   "url": "https://www.oscars.org/99th-oscars-and-academy-key-dates",
+   "final": "https://www.oscars.org/99th-oscars-and-academy-key-dates",
+   "status": "blocked",
+   "http": "403",
+   "bytes": 419,
+   "sha256": "27fc306c0419506e2c1a2f666ea2af5070d75b2e4ff00dbc53c7c0a220df7b6b",
+   "retrieved": "2026-10-24T20:48Z",
+   "attempts": [
+    {
+     "at": "2026-10-24T19:18Z",
+     "http": "403",
+     "bytes": 419,
+     "error": ""
+    },
+    {
+     "at": "2026-10-24T20:48Z",
+     "http": "403",
+     "bytes": 419,
+     "error": ""
+    }
+   ],
+   "organization": null,
+   "territory": null,
+   "updated": null,
+   "establishes": [],
+   "confidence": null,
+   "usedBy": []
+  },
+  {
+   "id": "b25-S107",
+   "register": "b25",
+   "was": "S107",
+   "previously": "dossier-located",
+   "title": "SAG-AFTRA 2026 Low Budget Theatrical Rate Sheet",
+   "url": "https://www.sagaftra.org/sites/default/files/2026-06/Current%20Low%20Budget%20Agreement%20%28LBA%29%20Rate%20Sheet.pdf",
+   "final": "https://www.sagaftra.org/sites/default/files/2026-06/Current%20Low%20Budget%20Agreement%20%28LBA%29%20Rate%20Sheet.pdf",
+   "status": "blocked",
+   "http": "403",
+   "bytes": 775,
+   "sha256": "b47fe2f5fa3508886d014f2f50d7cc2c15d6d29534d64efcebf057e64db688e1",
+   "retrieved": "2026-10-24T20:48Z",
+   "attempts": [
+    {
+     "at": "2026-10-24T19:18Z",
+     "http": "403",
+     "bytes": 775,
+     "error": ""
+    },
+    {
+     "at": "2026-10-24T20:48Z",
+     "http": "403",
+     "bytes": 775,
+     "error": ""
+    }
+   ],
+   "organization": null,
+   "territory": null,
+   "updated": null,
+   "establishes": [],
+   "confidence": null,
+   "usedBy": []
+  },
+  {
+   "id": "b25-S108",
+   "register": "b25",
+   "was": "S108",
+   "previously": "dossier-located",
+   "title": "IMDb: Box Office Mojo FAQ",
+   "url": "https://help.imdb.com/article/imdbpro/industry-research/box-office-mojo-by-imdbpro-faq/GCWTV4MQKGWRAUAP",
+   "final": "https://help.imdb.com/article/imdbpro/industry-research/box-office-mojo-by-imdbpro-faq/GCWTV4MQKGWRAUAP",
+   "status": "read",
+   "http": "200",
+   "bytes": 59357,
+   "sha256": "3d81be90f855f31b0f7452af2e9d05adb231bd46c2a6ebab842c5537dc6e22fa",
+   "retrieved": "2026-10-24T19:18Z",
+   "attempts": [
+    {
+     "at": "2026-10-24T19:18Z",
+     "http": "200",
+     "bytes": 59357,
+     "error": ""
+    }
+   ],
+   "organization": null,
+   "territory": null,
+   "updated": null,
+   "establishes": [],
+   "confidence": null,
+   "usedBy": []
+  },
+  {
+   "id": "b25-S11",
+   "register": "b25",
+   "was": "S11",
+   "previously": "dossier-located",
+   "title": "India Cine Hub: Applying for Film Visa",
+   "url": "https://indiacinehub.gov.in/applying-for-film-visa",
+   "final": "https://indiacinehub.gov.in/applying-for-film-visa",
+   "status": "read",
+   "http": "200",
+   "bytes": 54917,
+   "sha256": "638a96a250916828a92db48526cdb5030587ab634bd3ee0758db103d347a1d8d",
+   "retrieved": "2026-10-24T19:15Z",
+   "attempts": [
+    {
+     "at": "2026-10-24T19:15Z",
+     "http": "200",
+     "bytes": 54917,
+     "error": ""
+    }
+   ],
+   "organization": "India Cine Hub, Ministry of Information and Broadcasting",
+   "territory": "IN",
+   "updated": null,
+   "establishes": [
+    {
+     "fact": "A foreign production’s cast applies for India’s Film Visa after the India Cine Hub grants permission to shoot.",
+     "quote": "Film Visa can be applied after receiving permission of shooting from The India Cine Hub (ICH), Ministry of Information & Broadcasting."
+    },
+    {
+     "fact": "The international cast is employed by the foreign company that sought the permission.",
+     "quote": "The international cast and crew coming to India on a Film Visa shall be employed by the foreign company that sought permission to shoot the film in India."
+    },
+    {
+     "fact": "No FRRO registration for stays of up to 180 days a visit.",
+     "quote": "No registration will be required with FRRO/FRO concerned if the stay during each visit does not exceed 180 days."
+    },
+    {
+     "fact": "A notice on the page prices an online application at the INR equivalent of USD 225; it doesn’t say whether that’s the shooting permission’s or the visa’s, so the game charges neither.",
+     "quote": "An application along with processing fee of INR equivalent to USD 225 is required to be made online"
+    }
+   ],
+   "confidence": "high",
+   "usedBy": [],
+   "kind": "verified-fact",
+   "conflicts": "The fee notice names no application; read as the India Cine Hub permission the production applies for."
+  },
+  {
+   "id": "b25-S12",
+   "register": "b25",
+   "was": "S12",
+   "previously": "dossier-located",
+   "title": "India: Documentary Filming",
+   "url": "https://www.mea.gov.in/documentary-filming-in-india",
+   "final": "https://www.mea.gov.in/documentary-filming-in-india",
+   "status": "read",
+   "http": "200",
+   "bytes": 40858,
+   "sha256": "9a019f48fe9b837e33bbc5d748c1495b2aa7fc6404602ad053369db455cd03e7",
+   "retrieved": "2026-10-24T19:15Z",
+   "attempts": [
+    {
+     "at": "2026-10-24T19:15Z",
+     "http": "200",
+     "bytes": 40858,
+     "error": ""
+    }
+   ],
+   "organization": null,
+   "territory": null,
+   "updated": null,
+   "establishes": [],
+   "confidence": null,
+   "usedBy": []
+  },
+  {
+   "id": "b25-S13",
+   "register": "b25",
+   "was": "S13",
+   "previously": "dossier-located",
+   "title": "MEAA Resources",
+   "url": "https://www.meaa.org/resources/",
+   "final": "https://www.meaa.org/Public/Contents/Resources.aspx",
+   "status": "read",
+   "http": "200",
+   "bytes": 597740,
+   "sha256": "daeaff7be0f07e1262b0f3672413b3cbaf6a66b10a9363e8292885636bc143ee",
+   "retrieved": "2026-10-24T19:15Z",
+   "attempts": [
+    {
+     "at": "2026-10-24T19:15Z",
+     "http": "200",
+     "bytes": 597740,
+     "error": ""
+    }
+   ],
+   "organization": null,
+   "territory": null,
+   "updated": null,
+   "establishes": [],
+   "confidence": null,
+   "usedBy": []
+  },
+  {
+   "id": "b25-S14",
+   "register": "b25",
+   "was": "S14",
+   "previously": "dossier-located",
+   "title": "MEAA Performer Resources",
+   "url": "https://www.meaa.org/public/Hub/Contents/Portal/Resources.aspx?hkey=e938710c-a2d7-452d-b59c-b1a1cccba2eb&section=Equity",
+   "final": "https://www.meaa.org/public/Hub/Contents/Portal/Resources.aspx?hkey=e938710c-a2d7-452d-b59c-b1a1cccba2eb&section=Equity",
+   "status": "read",
+   "http": "200",
+   "bytes": 596989,
+   "sha256": "241f7f045087605ce2f01ec705fe2aaabc96582432ecca24d0168ae022e89b68",
+   "retrieved": "2026-10-24T19:15Z",
+   "attempts": [
+    {
+     "at": "2026-10-24T19:15Z",
+     "http": "200",
+     "bytes": 596989,
+     "error": ""
+    }
+   ],
+   "organization": null,
+   "territory": null,
+   "updated": null,
+   "establishes": [],
+   "confidence": null,
+   "usedBy": []
+  },
+  {
+   "id": "b25-S15",
+   "register": "b25",
+   "was": "S15",
+   "previously": "dossier-located",
+   "title": "ACTRA Independent Production Agreement",
+   "url": "https://www.actra.ca/agreements/ipa/",
+   "final": "https://www.actra.ca/agreements/ipa/",
+   "status": "read",
+   "http": "200",
+   "bytes": 202363,
+   "sha256": "f644078dfdc327cb96e114ad18e89365ea9193951c74d380b94905b5a1ad760f",
+   "retrieved": "2026-10-24T19:15Z",
+   "attempts": [
+    {
+     "at": "2026-10-24T19:15Z",
+     "http": "200",
+     "bytes": 202363,
+     "error": ""
+    }
+   ],
+   "organization": null,
+   "territory": null,
+   "updated": null,
+   "establishes": [],
+   "confidence": null,
+   "usedBy": []
+  },
+  {
+   "id": "b25-S16",
+   "register": "b25",
+   "was": "S16",
+   "previously": "dossier-located",
+   "title": "ACTRA 2025–2027 IPA",
+   "url": "https://www.actra.ca/wp-content/uploads/2025/06/ACTRA-CMPA-AQPM-Independent-Production-Agreement-2025-2027_OFFICIAL-COPY.pdf",
+   "final": "https://www.actra.ca/wp-content/uploads/2025/06/ACTRA-CMPA-AQPM-Independent-Production-Agreement-2025-2027_OFFICIAL-COPY.pdf",
+   "status": "read",
+   "http": "200",
+   "bytes": 3539073,
+   "sha256": "1ef2786cc81536c520c360bb8ecab7b44aea5ced852122df02bd5b03abc5c5e1",
+   "retrieved": "2026-10-24T19:15Z",
+   "attempts": [
+    {
+     "at": "2026-10-24T19:15Z",
+     "http": "200",
+     "bytes": 3539073,
+     "error": ""
+    }
+   ],
+   "organization": null,
+   "territory": null,
+   "updated": null,
+   "establishes": [],
+   "confidence": null,
+   "usedBy": []
+  },
+  {
+   "id": "b25-S17",
+   "register": "b25",
+   "was": "S17",
+   "previously": "dossier-located",
+   "title": "Pact: Contracting On-Screen Talent",
+   "url": "https://www.pact.co.uk/resource-hub/contracting-on-screen-talent.html",
+   "final": "https://www.pact.co.uk/resource-hub/contracting-on-screen-talent.html",
+   "status": "read",
+   "http": "200",
+   "bytes": 89491,
+   "sha256": "ed3c054c0c85d706fe6a4c091fe002faba8207417fbdb2d7c00981715605d277",
+   "retrieved": "2026-10-24T19:15Z",
+   "attempts": [
+    {
+     "at": "2026-10-24T19:15Z",
+     "http": "200",
+     "bytes": 89491,
+     "error": ""
+    }
+   ],
+   "organization": null,
+   "territory": null,
+   "updated": null,
+   "establishes": [],
+   "confidence": null,
+   "usedBy": []
+  },
+  {
+   "id": "b25-S18",
+   "register": "b25",
+   "was": "S18",
+   "previously": "dossier-located",
+   "title": "Pact/Equity Television Rates 2024–2026",
+   "url": "https://www.pact.co.uk/static/5ba494d5-7e25-4185-a6aaf2d71f000ff7/Pact-Equity-TV-Agreement-rate-card-2024-to-2026.pdf",
+   "final": "https://www.pact.co.uk/static/5ba494d5-7e25-4185-a6aaf2d71f000ff7/Pact-Equity-TV-Agreement-rate-card-2024-to-2026.pdf",
+   "status": "read",
+   "http": "200",
+   "bytes": 107976,
+   "sha256": "04c9a66b6e9ff24010ef753f6d41dfb0382c24323d3c9f31bd77a420a9ebe0b2",
+   "retrieved": "2026-10-24T19:15Z",
+   "attempts": [
+    {
+     "at": "2026-10-24T19:15Z",
+     "http": "200",
+     "bytes": 107976,
+     "error": ""
+    }
+   ],
+   "organization": null,
+   "territory": null,
+   "updated": null,
+   "establishes": [],
+   "confidence": null,
+   "usedBy": []
+  },
+  {
+   "id": "b25-S19",
+   "register": "b25",
+   "was": "S19",
+   "previously": "dossier-located",
+   "title": "Equity Rates and Agreements",
+   "url": "https://www.equity.org.uk/advice-and-support/rates-and-agreements",
+   "final": "https://www.equity.org.uk/advice-and-support/rates-and-agreements",
+   "status": "read",
+   "http": "200",
+   "bytes": 70078,
+   "sha256": "6e864b910dcccf6f29d0df2694970f1982a32c7e5812852bfc132fd1f07401cd",
+   "retrieved": "2026-10-24T19:15Z",
+   "attempts": [
+    {
+     "at": "2026-10-24T19:15Z",
+     "http": "200",
+     "bytes": 70078,
+     "error": ""
+    }
+   ],
+   "organization": null,
+   "territory": null,
+   "updated": null,
+   "establishes": [],
+   "confidence": null,
+   "usedBy": []
+  },
+  {
+   "id": "b25-S20",
+   "register": "b25",
+   "was": "S20",
+   "previously": "dossier-located",
+   "title": "SAG-AFTRA 2026 Ratification Announcement",
+   "url": "https://www.sagaftra.org/sag-aftra-members-approve-2026-tvtheatrical-contracts-tentative-agreement",
+   "final": "https://www.sagaftra.org/sag-aftra-members-approve-2026-tvtheatrical-contracts-tentative-agreement",
+   "status": "blocked",
+   "http": "403",
+   "bytes": 775,
+   "sha256": "0cfd0fdf05301a7366ebc14ebf648c86f7be696a903ada672b20c24780038c3f",
+   "retrieved": "2026-10-24T20:48Z",
+   "attempts": [
+    {
+     "at": "2026-10-24T19:15Z",
+     "http": "403",
+     "bytes": 775,
+     "error": ""
+    },
+    {
+     "at": "2026-10-24T20:48Z",
+     "http": "403",
+     "bytes": 775,
+     "error": ""
+    }
+   ],
+   "organization": null,
+   "territory": null,
+   "updated": null,
+   "establishes": [],
+   "confidence": null,
+   "usedBy": []
+  },
+  {
+   "id": "b25-S21",
+   "register": "b25",
+   "was": "S21",
+   "previously": "blocked",
+   "title": "SAG-AFTRA 2026 TV/Theatrical Contracts",
+   "url": "https://www.sagaftra.org/contracts-industry-resources/contracts/2026-tvtheatrical-contracts",
+   "final": "https://www.sagaftra.org/contracts-industry-resources/contracts/2026-tvtheatrical-contracts",
+   "status": "blocked",
+   "http": "403",
+   "bytes": 775,
+   "sha256": "b0cde437f86e391be89f7c18ebd16049516f9ae9b275dbf7324d7b21ad6feee5",
+   "retrieved": "2026-10-24T20:48Z",
+   "attempts": [
+    {
+     "at": "2026-10-24T19:15Z",
+     "http": "403",
+     "bytes": 775,
+     "error": ""
+    },
+    {
+     "at": "2026-10-24T20:48Z",
+     "http": "403",
+     "bytes": 775,
+     "error": ""
+    }
+   ],
+   "organization": null,
+   "territory": null,
+   "updated": null,
+   "establishes": [],
+   "confidence": null,
+   "usedBy": []
+  },
+  {
+   "id": "b25-S22",
+   "register": "b25",
+   "was": "S22",
+   "previously": "dossier-located",
+   "title": "SAG-AFTRA Self-Tape Guidelines",
+   "url": "https://www.sagaftra.org/self-tape-guidelines-members",
+   "final": "https://www.sagaftra.org/self-tape-guidelines-members",
+   "status": "blocked",
+   "http": "403",
+   "bytes": 775,
+   "sha256": "b5d0aa33885c1af76aab199484c72c78bec7c4c7530884cfbb24a6a5eff334b5",
+   "retrieved": "2026-10-24T20:48Z",
+   "attempts": [
+    {
+     "at": "2026-10-24T19:15Z",
+     "http": "403",
+     "bytes": 775,
+     "error": ""
+    },
+    {
+     "at": "2026-10-24T20:48Z",
+     "http": "403",
+     "bytes": 775,
+     "error": ""
+    }
+   ],
+   "organization": null,
+   "territory": null,
+   "updated": null,
+   "establishes": [],
+   "confidence": null,
+   "usedBy": []
+  },
+  {
+   "id": "b25-S23",
+   "register": "b25",
+   "was": "S23",
+   "previously": "dossier-located",
+   "title": "SAG-AFTRA Self-Tape Bulletin",
+   "url": "https://www.sagaftra.org/sites/default/files/sa_documents/Contract%20Bulletin%20-%20Self%20Tapes.pdf",
+   "final": "https://www.sagaftra.org/sites/default/files/sa_documents/Contract%20Bulletin%20-%20Self%20Tapes.pdf",
+   "status": "blocked",
+   "http": "403",
+   "bytes": 775,
+   "sha256": "869638e43d1cc47e355622355d0b1c1456836b12ab901b4e01146afaaa6e5a93",
+   "retrieved": "2026-10-24T20:48Z",
+   "attempts": [
+    {
+     "at": "2026-10-24T19:15Z",
+     "http": "403",
+     "bytes": 775,
+     "error": ""
+    },
+    {
+     "at": "2026-10-24T20:48Z",
+     "http": "403",
+     "bytes": 775,
+     "error": ""
+    }
+   ],
+   "organization": null,
+   "territory": null,
+   "updated": null,
+   "establishes": [],
+   "confidence": null,
+   "usedBy": []
+  },
+  {
+   "id": "b25-S24",
+   "register": "b25",
+   "was": "S24",
+   "previously": "blocked",
+   "title": "SAG-AFTRA Los Angeles Commission Guidance",
+   "url": "https://www.sagaftra.org/agency-bulletin-la-commission-limitations",
+   "final": "https://www.sagaftra.org/agency-bulletin-la-commission-limitations",
+   "status": "blocked",
+   "http": "403",
+   "bytes": 775,
+   "sha256": "fcfe5d141550a3e06d91976ce0e2278bc16487002f5c2d49005e55d692f3ab17",
+   "retrieved": "2026-10-24T20:48Z",
+   "attempts": [
+    {
+     "at": "2026-10-24T19:15Z",
+     "http": "403",
+     "bytes": 775,
+     "error": ""
+    },
+    {
+     "at": "2026-10-24T20:48Z",
+     "http": "403",
+     "bytes": 775,
+     "error": ""
+    }
+   ],
+   "organization": null,
+   "territory": null,
+   "updated": null,
+   "establishes": [],
+   "confidence": null,
+   "usedBy": []
+  },
+  {
+   "id": "b25-S25",
+   "register": "b25",
+   "was": "S25",
+   "previously": "dossier-located",
+   "title": "Screen Safe Australia",
+   "url": "https://www.screensafety.com.au/safety-guidelines",
+   "final": "https://www.screensafety.com.au/safety-guidelines",
+   "status": "read",
+   "http": "200",
+   "bytes": 210503,
+   "sha256": "7442ab4bc2e504174c00d5cabbb5fbbdeaa86ac4bfd026421500f6ed876e7cca",
+   "retrieved": "2026-10-24T19:15Z",
+   "attempts": [
+    {
+     "at": "2026-10-24T19:15Z",
+     "http": "200",
+     "bytes": 210503,
+     "error": ""
+    }
+   ],
+   "organization": null,
+   "territory": null,
+   "updated": null,
+   "establishes": [],
+   "confidence": null,
+   "usedBy": []
+  },
+  {
+   "id": "b25-S26",
+   "register": "b25",
+   "was": "S26",
+   "previously": "dossier-located",
+   "title": "Screen NSW Filming Regulations",
+   "url": "https://www.screen.nsw.gov.au/make-it-in-nsw/filming-regulations-resources",
+   "final": "https://www.screen.nsw.gov.au/make-it-in-nsw/filming-regulations-resources",
+   "status": "read",
+   "http": "200",
+   "bytes": 201694,
+   "sha256": "611904322925b8ca50d8b24b5fe6ded3aedb4f2e7edc194dcbba69600842f985",
+   "retrieved": "2026-10-24T19:15Z",
+   "attempts": [
+    {
+     "at": "2026-10-24T19:15Z",
+     "http": "200",
+     "bytes": 201694,
+     "error": ""
+    }
+   ],
+   "organization": null,
+   "territory": null,
+   "updated": null,
+   "establishes": [],
+   "confidence": null,
+   "usedBy": []
+  },
+  {
+   "id": "b25-S27",
+   "register": "b25",
+   "was": "S27",
+   "previously": "dossier-located",
+   "title": "City of Sydney Filming Permit",
+   "url": "https://www.cityofsydney.nsw.gov.au/business-permits-approvals-tenders/apply-for-filming-or-photography-permit",
+   "final": "https://www.cityofsydney.nsw.gov.au/business-permits-approvals-tenders/apply-for-filming-or-photography-permit",
+   "status": "read",
+   "http": "200",
+   "bytes": 190669,
+   "sha256": "10ec729aef5353c2af909bbf41dd681682516ac010651ffd97e0b336cae206b2",
+   "retrieved": "2026-10-24T19:15Z",
+   "attempts": [
+    {
+     "at": "2026-10-24T19:15Z",
+     "http": "200",
+     "bytes": 190669,
+     "error": ""
+    }
+   ],
+   "organization": null,
+   "territory": null,
+   "updated": null,
+   "establishes": [],
+   "confidence": null,
+   "usedBy": []
+  },
+  {
+   "id": "b25-S28",
+   "register": "b25",
+   "was": "S28",
+   "previously": "blocked",
+   "title": "ATO Foreign-Resident Withholding",
+   "url": "https://www.ato.gov.au/individuals-and-families/coming-to-australia-or-going-overseas/australian-income-of-foreign-residents/foreign-resident-payg-withholding-individual-entities",
+   "final": "https://www.ato.gov.au/individuals-and-families/coming-to-australia-or-going-overseas/australian-income-of-foreign-residents/foreign-resident-payg-withholding-individual-entities",
+   "status": "blocked",
+   "http": "403",
+   "bytes": 601,
+   "sha256": "9bc6a5d062a5924793324ab9fb3601cf9b1aca78c21c5b219f9c6642efe6ae2d",
+   "retrieved": "2026-10-24T20:48Z",
+   "attempts": [
+    {
+     "at": "2026-10-24T19:15Z",
+     "http": "403",
+     "bytes": 601,
+     "error": ""
+    },
+    {
+     "at": "2026-10-24T20:48Z",
+     "http": "403",
+     "bytes": 601,
+     "error": ""
+    }
+   ],
+   "organization": null,
+   "territory": "AU",
+   "updated": null,
+   "establishes": [],
+   "confidence": null,
+   "usedBy": []
+  },
+  {
+   "id": "b25-S29",
+   "register": "b25",
+   "was": "S29",
+   "previously": "dossier-located",
+   "title": "UK Foreign Entertainer Tax",
+   "url": "https://www.gov.uk/guidance/pay-tax-in-the-uk-as-a-foreign-performer",
+   "final": "https://www.gov.uk/guidance/pay-tax-in-the-uk-as-a-foreign-performer",
+   "status": "read",
+   "http": "200",
+   "bytes": 107530,
+   "sha256": "e5bca16598e187db26fb4fe178fb62f8a0e70cf8d005b2cae9983b67512d5ca5",
+   "retrieved": "2026-10-24T19:15Z",
+   "attempts": [
+    {
+     "at": "2026-10-24T19:15Z",
+     "http": "200",
+     "bytes": 107530,
+     "error": ""
+    }
+   ],
+   "organization": null,
+   "territory": null,
+   "updated": null,
+   "establishes": [],
+   "confidence": null,
+   "usedBy": []
+  },
+  {
+   "id": "b25-S30",
+   "register": "b25",
+   "was": "S30",
+   "previously": "dossier-located",
+   "title": "IRS Foreign Artists and Athletes Withholding",
+   "url": "https://www.irs.gov/individuals/international-taxpayers/withholding-tax-on-payments-to-foreign-artists-and-athletes",
+   "final": "https://www.irs.gov/individuals/international-taxpayers/withholding-tax-on-payments-to-foreign-artists-and-athletes",
+   "status": "read",
+   "http": "200",
+   "bytes": 109542,
+   "sha256": "7348f36be843a46d95b80ce2fc8e0e818f41a90c97bcb54b54c89505d82fb023",
+   "retrieved": "2026-10-24T19:15Z",
+   "attempts": [
+    {
+     "at": "2026-10-24T19:15Z",
+     "http": "200",
+     "bytes": 109542,
+     "error": ""
+    }
+   ],
+   "organization": null,
+   "territory": null,
+   "updated": null,
+   "establishes": [],
+   "confidence": null,
+   "usedBy": []
+  },
+  {
+   "id": "b25-S31",
+   "register": "b25",
+   "was": "S31",
+   "previously": "dossier-located",
+   "title": "Yale F-1 Employment",
+   "url": "https://oiss.yale.edu/employment-taxes/employment-for-international-students/employment-for-f-1-students",
+   "final": "https://oiss.yale.edu/employment-taxes/employment-for-international-students/employment-for-f-1-students",
+   "status": "read",
+   "http": "200",
+   "bytes": 46942,
+   "sha256": "be70fd11c42d31c4130e70dadc9112c6d97b59526655359a2f31f1601a408b6f",
+   "retrieved": "2026-10-24T19:15Z",
+   "attempts": [
+    {
+     "at": "2026-10-24T19:15Z",
+     "http": "200",
+     "bytes": 46942,
+     "error": ""
+    }
+   ],
+   "organization": null,
+   "territory": null,
+   "updated": null,
+   "establishes": [],
+   "confidence": null,
+   "usedBy": []
+  },
+  {
+   "id": "b25-S32",
+   "register": "b25",
+   "was": "S32",
+   "previously": "dossier-located",
+   "title": "Yale CPT",
+   "url": "https://oiss.yale.edu/employment-taxes/employment-for-international-students/f-1-students/f-1-curricular-practical-training",
+   "final": "https://oiss.yale.edu/employment-taxes/employment-for-international-students/f-1-students/f-1-curricular-practical-training",
+   "status": "read",
+   "http": "200",
+   "bytes": 48681,
+   "sha256": "2f611521a30526f674908aeb7b2937cc49418111a3f2be13725fcc60504bb56e",
+   "retrieved": "2026-10-24T19:16Z",
+   "attempts": [
+    {
+     "at": "2026-10-24T19:16Z",
+     "http": "200",
+     "bytes": 48681,
+     "error": ""
+    }
+   ],
+   "organization": null,
+   "territory": null,
+   "updated": null,
+   "establishes": [],
+   "confidence": null,
+   "usedBy": []
+  },
+  {
+   "id": "b25-S33",
+   "register": "b25",
+   "was": "S33",
+   "previously": "dossier-located",
+   "title": "IANA Time Zones",
+   "url": "https://www.iana.org/time-zones",
+   "final": "https://www.iana.org/time-zones",
+   "status": "read",
+   "http": "200",
+   "bytes": 7964,
+   "sha256": "82bf47985a233e63e1ac0ba825d57785664e8f1be542c026d27575d431986ebd",
+   "retrieved": "2026-10-24T19:16Z",
+   "attempts": [
+    {
+     "at": "2026-10-24T19:16Z",
+     "http": "200",
+     "bytes": 7964,
+     "error": ""
+    }
+   ],
+   "organization": null,
+   "territory": null,
+   "updated": null,
+   "establishes": [],
+   "confidence": null,
+   "usedBy": []
+  },
+  {
+   "id": "b25-S34",
+   "register": "b25",
+   "was": "S34",
+   "previously": "dossier-located",
+   "title": "Australian Bureau of Meteorology Climate Data",
+   "url": "https://www.bom.gov.au/climate/data/",
+   "final": "https://www.bom.gov.au/climate/data/",
+   "status": "read",
+   "http": "200",
+   "bytes": 73749,
+   "sha256": "19b11c3e793b0e066a882717fe4a7fc6bbf40d80ab747f221b4c8a9eadd8af2e",
+   "retrieved": "2026-10-24T19:16Z",
+   "attempts": [
+    {
+     "at": "2026-10-24T19:16Z",
+     "http": "200",
+     "bytes": 73749,
+     "error": ""
+    }
+   ],
+   "organization": null,
+   "territory": null,
+   "updated": null,
+   "establishes": [],
+   "confidence": null,
+   "usedBy": []
+  },
+  {
+   "id": "b25-S35",
+   "register": "b25",
+   "was": "S35",
+   "previously": "dossier-located",
+   "title": "Australian Bureau of Meteorology Daily Observations",
+   "url": "https://www.bom.gov.au/climate/dwo/",
+   "final": "https://www.bom.gov.au/climate/dwo/",
+   "status": "read",
+   "http": "200",
+   "bytes": 29477,
+   "sha256": "41e919c5cd85f2b4d7d2165300609c4429186d8c3ec92740c5cc37e31ce1ab8f",
+   "retrieved": "2026-10-24T19:16Z",
+   "attempts": [
+    {
+     "at": "2026-10-24T19:16Z",
+     "http": "200",
+     "bytes": 29477,
+     "error": ""
+    }
+   ],
+   "organization": null,
+   "territory": null,
+   "updated": null,
+   "establishes": [],
+   "confidence": null,
+   "usedBy": []
+  },
+  {
+   "id": "b25-S36",
+   "register": "b25",
+   "was": "S36",
+   "previously": "dossier-located",
+   "title": "Australian Classification Ratings",
+   "url": "https://www.classification.gov.au/classification-ratings/what-are-ratings",
+   "final": "https://www.classification.gov.au/classification-ratings/what-are-ratings",
+   "status": "unreached",
+   "http": "000",
+   "bytes": 0,
+   "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+   "retrieved": "2026-10-24T20:48Z",
+   "attempts": [
+    {
+     "at": "2026-10-24T19:16Z",
+     "http": "000",
+     "bytes": 0,
+     "error": "curl: (92) HTTP/2 stream 1 was not closed cleanly: INTERNAL_ERROR (err 2)"
+    },
+    {
+     "at": "2026-10-24T20:48Z",
+     "http": "000",
+     "bytes": 0,
+     "error": "curl: (52) Empty reply from server"
+    }
+   ],
+   "organization": null,
+   "territory": null,
+   "updated": null,
+   "establishes": [],
+   "confidence": null,
+   "usedBy": []
+  },
+  {
+   "id": "b25-S37",
+   "register": "b25",
+   "was": "S37",
+   "previously": "dossier-located",
+   "title": "Nielsen Top Ten",
+   "url": "https://www.nielsen.com/data-center/top-ten/",
+   "final": "https://www.nielsen.com/data-center/top-ten/",
+   "status": "read",
+   "http": "200",
+   "bytes": 1301682,
+   "sha256": "35ba40d78a1e522f3a852b912f014ea2274a056f77871cdef1bca204f928204d",
+   "retrieved": "2026-10-24T19:16Z",
+   "attempts": [
+    {
+     "at": "2026-10-24T19:16Z",
+     "http": "200",
+     "bytes": 1301682,
+     "error": ""
+    }
+   ],
+   "organization": null,
+   "territory": null,
+   "updated": null,
+   "establishes": [],
+   "confidence": null,
+   "usedBy": []
+  },
+  {
+   "id": "b25-S38",
+   "register": "b25",
+   "was": "S38",
+   "previously": "dossier-located",
+   "title": "Nielsen 2026 Streaming Delivery Announcement",
+   "url": "https://www.nielsen.com/news-center/2026/nielsen-accelerates-streaming-data-delivery-with-enhancements-to-streaming-content-ratings/",
+   "final": "https://www.nielsen.com/news-center/2026/nielsen-accelerates-streaming-data-delivery-with-enhancements-to-streaming-content-ratings/",
+   "status": "read",
+   "http": "200",
+   "bytes": 781440,
+   "sha256": "402a1c7ea0ef15ffc48a329094e17d6a164a02749c9ebcbc980e9218110bad57",
+   "retrieved": "2026-10-24T19:16Z",
+   "attempts": [
+    {
+     "at": "2026-10-24T19:16Z",
+     "http": "200",
+     "bytes": 781440,
+     "error": ""
+    }
+   ],
+   "organization": null,
+   "territory": null,
+   "updated": null,
+   "establishes": [],
+   "confidence": null,
+   "usedBy": []
+  },
+  {
+   "id": "b25-S39",
+   "register": "b25",
+   "was": "S39",
+   "previously": "dossier-located",
+   "title": "Netflix Top Ten Background",
+   "url": "https://about.netflix.com/en/news/top-10-things-about-netflix-top-10",
+   "final": "https://about.netflix.com/en/news/top-10-things-about-netflix-top-10",
+   "status": "read",
+   "http": "200",
+   "bytes": 70576,
+   "sha256": "00348502eede4a0479758c5404c64eed6ae569686a0736400e36d6028498f1ea",
+   "retrieved": "2026-10-24T19:16Z",
+   "attempts": [
+    {
+     "at": "2026-10-24T19:16Z",
+     "http": "200",
+     "bytes": 70576,
+     "error": ""
+    }
+   ],
+   "organization": null,
+   "territory": null,
+   "updated": null,
+   "establishes": [],
+   "confidence": null,
+   "usedBy": []
+  },
+  {
+   "id": "b25-S40",
+   "register": "b25",
+   "was": "S40",
+   "previously": "dossier-located",
+   "title": "Netflix Television Top Ten",
+   "url": "https://www.netflix.com/tudum/top10/tv",
+   "final": "https://www.netflix.com/tudum/top10/tv",
+   "status": "read",
+   "http": "200",
+   "bytes": 844375,
+   "sha256": "a20859e8cdb843284e1e6b010fc9cc4f9133955838de09d0d06f83a8bd3dcb30",
+   "retrieved": "2026-10-24T19:16Z",
+   "attempts": [
+    {
+     "at": "2026-10-24T19:16Z",
+     "http": "200",
+     "bytes": 844375,
+     "error": ""
+    }
+   ],
+   "organization": null,
+   "territory": null,
+   "updated": null,
+   "establishes": [],
+   "confidence": null,
+   "usedBy": []
+  },
+  {
+   "id": "b25-S41",
+   "register": "b25",
+   "was": "S41",
+   "previously": "blocked",
+   "title": "SAG-AFTRA Residuals",
+   "url": "https://www.sagaftra.org/membership-benefits/residuals",
+   "final": "https://www.sagaftra.org/membership-benefits/residuals",
+   "status": "blocked",
+   "http": "403",
+   "bytes": 775,
+   "sha256": "edea570d4dd1949c9071b8c31adb01ac80c3d42e936311369d0fa545cab3c417",
+   "retrieved": "2026-10-24T20:48Z",
+   "attempts": [
+    {
+     "at": "2026-10-24T19:16Z",
+     "http": "403",
+     "bytes": 775,
+     "error": ""
+    },
+    {
+     "at": "2026-10-24T20:48Z",
+     "http": "403",
+     "bytes": 775,
+     "error": ""
+    }
+   ],
+   "organization": null,
+   "territory": null,
+   "updated": null,
+   "establishes": [],
+   "confidence": null,
+   "usedBy": []
+  },
+  {
+   "id": "b25-S42",
+   "register": "b25",
+   "was": "S42",
+   "previously": "dossier-located",
+   "title": "Oscars Rules and Eligibility",
+   "url": "https://www.oscars.org/oscars/rules-eligibility",
+   "final": "https://www.oscars.org/oscars/rules-eligibility",
+   "status": "blocked",
+   "http": "403",
+   "bytes": 398,
+   "sha256": "b2365cc5961dd3aaadb0669b170d2c2227375b55ed6dd662050fd4744a79e274",
+   "retrieved": "2026-10-24T20:48Z",
+   "attempts": [
+    {
+     "at": "2026-10-24T19:16Z",
+     "http": "403",
+     "bytes": 398,
+     "error": ""
+    },
+    {
+     "at": "2026-10-24T20:48Z",
+     "http": "403",
+     "bytes": 398,
+     "error": ""
+    }
+   ],
+   "organization": null,
+   "territory": null,
+   "updated": null,
+   "establishes": [],
+   "confidence": null,
+   "usedBy": []
+  },
+  {
+   "id": "b25-S43",
+   "register": "b25",
+   "was": "S43",
+   "previously": "dossier-located",
+   "title": "99th Oscars Rule Changes",
+   "url": "https://press.oscars.org/news/awards-rules-and-campaign-promotional-regulations-approved-99th-oscarsr",
+   "final": "https://press.oscars.org/news/awards-rules-and-campaign-promotional-regulations-approved-99th-oscarsr",
+   "status": "blocked",
+   "http": "403",
+   "bytes": 480,
+   "sha256": "8fec27aded5e6390c8bdef41bf8f31b474283e129fffc9f76dfedd867f2fa73e",
+   "retrieved": "2026-10-24T20:48Z",
+   "attempts": [
+    {
+     "at": "2026-10-24T19:16Z",
+     "http": "403",
+     "bytes": 480,
+     "error": ""
+    },
+    {
+     "at": "2026-10-24T20:48Z",
+     "http": "403",
+     "bytes": 480,
+     "error": ""
+    }
+   ],
+   "organization": null,
+   "territory": null,
+   "updated": null,
+   "establishes": [],
+   "confidence": null,
+   "usedBy": []
+  },
+  {
+   "id": "b25-S44",
+   "register": "b25",
+   "was": "S44",
+   "previously": "dossier-located",
+   "title": "99th and 100th Oscars Dates",
+   "url": "https://press.oscars.org/news/academy-and-abc-announce-show-dates-99th-and-100th-oscarsr",
+   "final": "https://press.oscars.org/news/academy-and-abc-announce-show-dates-99th-and-100th-oscarsr",
+   "status": "blocked",
+   "http": "403",
+   "bytes": 471,
+   "sha256": "8740a281a9211939e3fcc07a5990b2cd9920a94570c03903140dc8891aff5355",
+   "retrieved": "2026-10-24T20:48Z",
+   "attempts": [
+    {
+     "at": "2026-10-24T19:16Z",
+     "http": "403",
+     "bytes": 471,
+     "error": ""
+    },
+    {
+     "at": "2026-10-24T20:48Z",
+     "http": "403",
+     "bytes": 471,
+     "error": ""
+    }
+   ],
+   "organization": null,
+   "territory": null,
+   "updated": null,
+   "establishes": [],
+   "confidence": null,
+   "usedBy": []
+  },
+  {
+   "id": "b25-S45",
+   "register": "b25",
+   "was": "S45",
+   "previously": "dossier-located",
+   "title": "Television Academy 2026 Rules, Version 4",
+   "url": "https://www.televisionacademy.com/files/assets/Downloads/2026-rules-procedures-v4.pdf",
+   "final": "https://www.televisionacademy.com/files/assets/Downloads/2026-rules-procedures-v4.pdf",
+   "status": "read",
+   "http": "200",
+   "bytes": 1841317,
+   "sha256": "dd53240a87574ab50ad934b39c84fbea19839adad579444dc62742eaba4e2d90",
+   "retrieved": "2026-10-24T19:16Z",
+   "attempts": [
+    {
+     "at": "2026-10-24T19:16Z",
+     "http": "200",
+     "bytes": 1841317,
+     "error": ""
+    }
+   ],
+   "organization": null,
+   "territory": null,
+   "updated": null,
+   "establishes": [],
+   "confidence": null,
+   "usedBy": []
+  },
+  {
+   "id": "b25-S46",
+   "register": "b25",
+   "was": "S46",
+   "previously": "dossier-located",
+   "title": "BAFTA Film Awards Information",
+   "url": "https://www.bafta.org/awards/awards-information/film/",
+   "final": "https://www.bafta.org/awards/awards-information/film/",
+   "status": "blocked",
+   "http": "403",
+   "bytes": 1470,
+   "sha256": "3021e7b8d82da00200e1340c9e6ed054b425d12357718fcfd6ceb649fc82742e",
+   "retrieved": "2026-10-24T20:48Z",
+   "attempts": [
+    {
+     "at": "2026-10-24T19:16Z",
+     "http": "403",
+     "bytes": 1470,
+     "error": ""
+    },
+    {
+     "at": "2026-10-24T20:48Z",
+     "http": "403",
+     "bytes": 1470,
+     "error": ""
+    }
+   ],
+   "organization": null,
+   "territory": null,
+   "updated": null,
+   "establishes": [],
+   "confidence": null,
+   "usedBy": []
+  },
+  {
+   "id": "b25-S47",
+   "register": "b25",
+   "was": "S47",
+   "previously": "dossier-located",
+   "title": "BAFTA Film Rules",
+   "url": "https://www.bafta.org/awards/film-rules/",
+   "final": "https://www.bafta.org/awards/film-rules/",
+   "status": "blocked",
+   "http": "403",
+   "bytes": 1405,
+   "sha256": "4acedaa2bdb76daba3f19716dce6cd7c8f1c1d244eb05272dc150b57a698b8c0",
+   "retrieved": "2026-10-24T20:48Z",
+   "attempts": [
+    {
+     "at": "2026-10-24T19:16Z",
+     "http": "403",
+     "bytes": 1405,
+     "error": ""
+    },
+    {
+     "at": "2026-10-24T20:48Z",
+     "http": "403",
+     "bytes": 1405,
+     "error": ""
+    }
+   ],
+   "organization": null,
+   "territory": null,
+   "updated": null,
+   "establishes": [],
+   "confidence": null,
+   "usedBy": []
+  },
+  {
+   "id": "b25-S48",
+   "register": "b25",
+   "was": "S48",
+   "previously": "dossier-located",
+   "title": "33rd Actor Awards Rules",
+   "url": "https://www.actorawards.org/sites/default/files/33rd%20Annual%20Actor%20Awards%20Presented%20by%20SAG-AFTRA%20Rules%20%26%20Regulations.pdf",
+   "final": "https://www.actorawards.org/sites/default/files/33rd%20Annual%20Actor%20Awards%20Presented%20by%20SAG-AFTRA%20Rules%20%26%20Regulations.pdf",
+   "status": "read",
+   "http": "200",
+   "bytes": 518273,
+   "sha256": "b77fdd09fa9b7f09ff4c9c2141939498f589bed6f45fe2c133bd94af5a4bc308",
+   "retrieved": "2026-10-24T19:16Z",
+   "attempts": [
+    {
+     "at": "2026-10-24T19:16Z",
+     "http": "200",
+     "bytes": 518273,
+     "error": ""
+    }
+   ],
+   "organization": null,
+   "territory": null,
+   "updated": null,
+   "establishes": [],
+   "confidence": null,
+   "usedBy": []
+  },
+  {
+   "id": "b25-S49",
+   "register": "b25",
+   "was": "S49",
+   "previously": "dossier-located",
+   "title": "84th Golden Globes Rules",
+   "url": "https://goldenglobes.com/wp-content/uploads/2026/08/FINAL_84th-ANNUAL-GOLDEN-GLOBES-ELIGIBILITY-AND-CONSIDERATION-RULES_8_3_2026.pdf",
+   "final": "https://goldenglobes.com/wp-content/uploads/2026/08/FINAL_84th-ANNUAL-GOLDEN-GLOBES-ELIGIBILITY-AND-CONSIDERATION-RULES_8_3_2026.pdf",
+   "status": "read",
+   "http": "200",
+   "bytes": 1226410,
+   "sha256": "a423ab148294044f427dc43397c54047fd4253fef8e5668302b3473d98628af4",
+   "retrieved": "2026-10-24T19:16Z",
+   "attempts": [
+    {
+     "at": "2026-10-24T19:16Z",
+     "http": "200",
+     "bytes": 1226410,
+     "error": ""
+    }
+   ],
+   "organization": null,
+   "territory": null,
+   "updated": null,
+   "establishes": [],
+   "confidence": null,
+   "usedBy": []
+  },
+  {
+   "id": "b25-S50",
+   "register": "b25",
+   "was": "S50",
+   "previously": "dossier-located",
+   "title": "84th Golden Globes Calendar and Guidelines",
+   "url": "https://goldenglobes.com/articles/the-84th-annual-golden-globes-timetable-eligibility-rules-and-campaign-guidelines-announced/",
+   "final": "https://goldenglobes.com/articles/the-84th-annual-golden-globes-timetable-eligibility-rules-and-campaign-guidelines-announced/",
+   "status": "read",
+   "http": "200",
+   "bytes": 77746,
+   "sha256": "4511cc7916504ddaa8eec2beee954404173fc3197bdc389af0a5830e8f655e28",
+   "retrieved": "2026-10-24T19:16Z",
+   "attempts": [
+    {
+     "at": "2026-10-24T19:16Z",
+     "http": "200",
+     "bytes": 77746,
+     "error": ""
+    }
+   ],
+   "organization": null,
+   "territory": null,
+   "updated": null,
+   "establishes": [],
+   "confidence": null,
+   "usedBy": []
+  },
+  {
+   "id": "b25-S51",
+   "register": "b25",
+   "was": "S51",
+   "previously": "dossier-located",
+   "title": "2026 International Emmy Rules",
+   "url": "https://www.iemmys.tv/wp-content/uploads/2025/11/2026-International-Emmy-Awards-Rules-Regulations-.pdf",
+   "final": "https://www.iemmys.tv/wp-content/uploads/2025/11/2026-International-Emmy-Awards-Rules-Regulations-.pdf",
+   "status": "read",
+   "http": "200",
+   "bytes": 329064,
+   "sha256": "3cd820165750b17ff0a1a7134129b5cfdc12ccfc18004711fff7380d602b047f",
+   "retrieved": "2026-10-24T19:16Z",
+   "attempts": [
+    {
+     "at": "2026-10-24T19:16Z",
+     "http": "200",
+     "bytes": 329064,
+     "error": ""
+    }
+   ],
+   "organization": null,
+   "territory": null,
+   "updated": null,
+   "establishes": [],
+   "confidence": null,
+   "usedBy": []
+  },
+  {
+   "id": "b25-S52",
+   "register": "b25",
+   "was": "S52",
+   "previously": "dossier-located",
+   "title": "International Emmy Judging",
+   "url": "https://www.iemmys.tv/entries-judging/judging-process/",
+   "final": "https://www.iemmys.tv/entries-judging/judging-process/",
+   "status": "read",
+   "http": "200",
+   "bytes": 223817,
+   "sha256": "ab74a6498d445fdf6df6948a3e40a36f066f436b89267eff75599fc0940468d7",
+   "retrieved": "2026-10-24T19:16Z",
+   "attempts": [
+    {
+     "at": "2026-10-24T19:16Z",
+     "http": "200",
+     "bytes": 223817,
+     "error": ""
+    }
+   ],
+   "organization": null,
+   "territory": null,
+   "updated": null,
+   "establishes": [],
+   "confidence": null,
+   "usedBy": []
+  },
+  {
+   "id": "b25-S53",
+   "register": "b25",
+   "was": "S53",
+   "previously": "dossier-located",
+   "title": "Spirit Awards FAQ",
+   "url": "https://www.filmindependent.org/spirit-awards/faq/",
+   "final": "https://www.filmindependent.org/spirit-awards/faq/",
+   "status": "read",
+   "http": "200",
+   "bytes": 118136,
+   "sha256": "b546624c1b3003c0cd76fcee043f56b4441005f04fc4ed324cd2b859dc89f99a",
+   "retrieved": "2026-10-24T19:16Z",
+   "attempts": [
+    {
+     "at": "2026-10-24T19:16Z",
+     "http": "200",
+     "bytes": 118136,
+     "error": ""
+    }
+   ],
+   "organization": null,
+   "territory": null,
+   "updated": null,
+   "establishes": [],
+   "confidence": null,
+   "usedBy": []
+  },
+  {
+   "id": "b25-S54",
+   "register": "b25",
+   "was": "S54",
+   "previously": "dossier-located",
+   "title": "Spirit Awards Submissions",
+   "url": "https://www.filmindependent.org/spirit-awards/submissions/",
+   "final": "https://www.filmindependent.org/spirit-awards/submissions/",
+   "status": "read",
+   "http": "200",
+   "bytes": 101660,
+   "sha256": "c71d238aeb82c39545c22f90f30d8db8864f5d0c194b10662febfa62e776939a",
+   "retrieved": "2026-10-24T19:16Z",
+   "attempts": [
+    {
+     "at": "2026-10-24T19:16Z",
+     "http": "200",
+     "bytes": 101660,
+     "error": ""
+    }
+   ],
+   "organization": "Film Independent",
+   "territory": "US",
+   "updated": null,
+   "establishes": [
+    {
+     "fact": "The 42nd Spirit Awards: March 6, 2027.",
+     "quote": "The 42nd Film Independent Spirit Awards will take place on Saturday, March 6, 2027."
+    }
+   ],
+   "confidence": "high",
+   "usedBy": [
+    "src/engine/content/awards.ts:45"
+   ],
+   "kind": "verified-fact"
+  },
+  {
+   "id": "b25-S55",
+   "register": "b25",
+   "was": "S55",
+   "previously": "dossier-located",
+   "title": "AACTA 2027 Voting",
+   "url": "https://www.aacta.org/aacta-awards/voting-2027/",
+   "final": "https://www.aacta.org/aacta-awards/voting-2027/",
+   "status": "unreached",
+   "http": "000",
+   "bytes": 0,
+   "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+   "retrieved": "2026-10-24T20:48Z",
+   "attempts": [
+    {
+     "at": "2026-10-24T19:16Z",
+     "http": "000",
+     "bytes": 0,
+     "error": "curl: (35) Recv failure: Connection reset by peer"
+    },
+    {
+     "at": "2026-10-24T20:48Z",
+     "http": "000",
+     "bytes": 0,
+     "error": "curl: (35) Recv failure: Connection reset by peer"
+    }
+   ],
+   "organization": null,
+   "territory": null,
+   "updated": null,
+   "establishes": [],
+   "confidence": null,
+   "usedBy": []
+  },
+  {
+   "id": "b25-S56",
+   "register": "b25",
+   "was": "S56",
+   "previously": "dossier-located",
+   "title": "AACTA 2027 Rulebook",
+   "url": "https://s3-ap-southeast-2.amazonaws.com/aacta-org-assets/Uploads/2027-AACTA-Awards-Rule-Book.pdf",
+   "final": "https://s3-ap-southeast-2.amazonaws.com/aacta-org-assets/Uploads/2027-AACTA-Awards-Rule-Book.pdf",
+   "status": "read",
+   "http": "200",
+   "bytes": 664776,
+   "sha256": "5372e94ddfbf1e06af2192087697db7d127b5c4c3f2924c6208619a6c763ca89",
+   "retrieved": "2026-10-24T19:16Z",
+   "attempts": [
+    {
+     "at": "2026-10-24T19:16Z",
+     "http": "200",
+     "bytes": 664776,
+     "error": ""
+    }
+   ],
+   "organization": null,
+   "territory": null,
+   "updated": null,
+   "establishes": [],
+   "confidence": null,
+   "usedBy": []
+  },
+  {
+   "id": "b25-S57",
+   "register": "b25",
+   "was": "S57",
+   "previously": "dossier-located",
+   "title": "Critics Choice Categories and Submissions",
+   "url": "https://www.criticschoice.com/critics-choice-awards-submissions-and-categories/",
+   "final": "https://www.criticschoice.com/critics-choice-awards-submissions-and-categories/",
+   "status": "read",
+   "http": "200",
+   "bytes": 197949,
+   "sha256": "bb8fcf9bd4491a1d4c980bb7a4d6b7eb0af4876af7034517bda4a86648bbf32e",
+   "retrieved": "2026-10-24T19:16Z",
+   "attempts": [
+    {
+     "at": "2026-10-24T19:16Z",
+     "http": "200",
+     "bytes": 197949,
+     "error": ""
+    }
+   ],
+   "organization": null,
+   "territory": null,
+   "updated": null,
+   "establishes": [],
+   "confidence": null,
+   "usedBy": []
+  },
+  {
+   "id": "b25-S58",
+   "register": "b25",
+   "was": "S58",
+   "previously": "dossier-located",
+   "title": "Gotham Film Criteria",
+   "url": "https://awards.thegotham.org/criteria/",
+   "final": "https://awards.thegotham.org/criteria/",
+   "status": "read",
+   "http": "200",
+   "bytes": 198485,
+   "sha256": "4fccec76a599de67743e66f558fbb0431bb741e377143de3a4aa7ec782fb46c1",
+   "retrieved": "2026-10-24T19:16Z",
+   "attempts": [
+    {
+     "at": "2026-10-24T19:16Z",
+     "http": "200",
+     "bytes": 198485,
+     "error": ""
+    }
+   ],
+   "organization": null,
+   "territory": null,
+   "updated": null,
+   "establishes": [],
+   "confidence": null,
+   "usedBy": []
+  },
+  {
+   "id": "b25-S59",
+   "register": "b25",
+   "was": "S59",
+   "previously": "dossier-located",
+   "title": "Gotham Television Criteria",
+   "url": "https://televisionawards.thegotham.org/criteria/",
+   "final": "https://televisionawards.thegotham.org/criteria/",
+   "status": "read",
+   "http": "200",
+   "bytes": 125814,
+   "sha256": "693a0f3d86fef37da208c6fed759453780a3b2697e2c68c60eb2afce6e1768ac",
+   "retrieved": "2026-10-24T19:17Z",
+   "attempts": [
+    {
+     "at": "2026-10-24T19:17Z",
+     "http": "200",
+     "bytes": 125814,
+     "error": ""
+    }
+   ],
+   "organization": null,
+   "territory": null,
+   "updated": null,
+   "establishes": [],
+   "confidence": null,
+   "usedBy": []
+  },
+  {
+   "id": "b25-S60",
+   "register": "b25",
+   "was": "S60",
+   "previously": "dossier-located",
+   "title": "NATAS Rules",
+   "url": "https://theemmys.tv/rules/",
+   "final": "https://theemmys.tv/rules/",
+   "status": "read",
+   "http": "200",
+   "bytes": 130978,
+   "sha256": "1fb04588585050429c038ba7fdc86ee8e04e67cd4a3f7956eafd6b305e710966",
+   "retrieved": "2026-10-24T19:17Z",
+   "attempts": [
+    {
+     "at": "2026-10-24T19:17Z",
+     "http": "200",
+     "bytes": 130978,
+     "error": ""
+    }
+   ],
+   "organization": null,
+   "territory": null,
+   "updated": null,
+   "establishes": [],
+   "confidence": null,
+   "usedBy": []
+  },
+  {
+   "id": "b25-S61",
+   "register": "b25",
+   "was": "S61",
+   "previously": "dossier-located",
+   "title": "César Regulations",
+   "url": "https://www.academie-cinema.org/lacademie/reglement/",
+   "final": "https://www.academie-cinema.org/lacademie/reglement/",
+   "status": "read",
+   "http": "200",
+   "bytes": 60865,
+   "sha256": "38a6b463f4b070a8bd8ddc343c36793f8d4f2311a9761cec5b9c3d90050afeb3",
+   "retrieved": "2026-10-24T19:17Z",
+   "attempts": [
+    {
+     "at": "2026-10-24T19:17Z",
+     "http": "200",
+     "bytes": 60865,
+     "error": ""
+    }
+   ],
+   "organization": null,
+   "territory": null,
+   "updated": null,
+   "establishes": [],
+   "confidence": null,
+   "usedBy": []
+  },
+  {
+   "id": "b25-S62",
+   "register": "b25",
+   "was": "S62",
+   "previously": "dossier-located",
+   "title": "César Voting",
+   "url": "https://www.academie-cinema.org/le-vote/",
+   "final": "https://www.academie-cinema.org/le-vote/",
+   "status": "read",
+   "http": "200",
+   "bytes": 72166,
+   "sha256": "3ddd8af4455df281428f24f3f9cf2e6d82e9cb779efcbe0a4f94f581b0553b47",
+   "retrieved": "2026-10-24T19:17Z",
+   "attempts": [
+    {
+     "at": "2026-10-24T19:17Z",
+     "http": "200",
+     "bytes": 72166,
+     "error": ""
+    }
+   ],
+   "organization": null,
+   "territory": null,
+   "updated": null,
+   "establishes": [],
+   "confidence": null,
+   "usedBy": []
+  },
+  {
+   "id": "b25-S63",
+   "register": "b25",
+   "was": "S63",
+   "previously": "dossier-located",
+   "title": "Goya Bases",
+   "url": "https://www.premiosgoya.com/bases/",
+   "final": "https://www.premiosgoya.com/bases/",
+   "status": "read",
+   "http": "200",
+   "bytes": 44882,
+   "sha256": "8095cf0ef2e420dab3d190ec028a42e275ce851f75b02e07cabec34f6ae39469",
+   "retrieved": "2026-10-24T19:17Z",
+   "attempts": [
+    {
+     "at": "2026-10-24T19:17Z",
+     "http": "200",
+     "bytes": 44882,
+     "error": ""
+    }
+   ],
+   "organization": null,
+   "territory": null,
+   "updated": null,
+   "establishes": [],
+   "confidence": null,
+   "usedBy": []
+  },
+  {
+   "id": "b25-S64",
+   "register": "b25",
+   "was": "S64",
+   "previously": "dossier-located",
+   "title": "Annie Awards",
+   "url": "https://annieawards.org/",
+   "final": "https://annieawards.org/",
+   "status": "unreadable",
+   "http": "200",
+   "bytes": 3427,
+   "sha256": "b1cd592d51d9c8d1d0493bffa89b1108dd9547a39bd69bdec59f7d89acae75eb",
+   "retrieved": "2026-10-24T20:48Z",
+   "attempts": [
+    {
+     "at": "2026-10-24T19:17Z",
+     "http": "200",
+     "bytes": 3427,
+     "error": ""
+    },
+    {
+     "at": "2026-10-24T20:48Z",
+     "http": "200",
+     "bytes": 3427,
+     "error": ""
+    }
+   ],
+   "organization": null,
+   "territory": null,
+   "updated": null,
+   "establishes": [],
+   "confidence": null,
+   "usedBy": []
+  },
+  {
+   "id": "b25-S65",
+   "register": "b25",
+   "was": "S65",
+   "previously": "dossier-located",
+   "title": "Cannes Submission Rules",
+   "url": "https://www.festival-cannes.com/en/take-part/submit-a-film/",
+   "final": "https://www.festival-cannes.com/en/take-part/submit-a-film/",
+   "status": "read",
+   "http": "200",
+   "bytes": 146653,
+   "sha256": "29c16ad7063280b92566cb834d302d4d990d87b2eca147370e4ac0d199f1cdc7",
+   "retrieved": "2026-10-24T19:17Z",
+   "attempts": [
+    {
+     "at": "2026-10-24T19:17Z",
+     "http": "200",
+     "bytes": 146653,
+     "error": ""
+    }
+   ],
+   "organization": "Festival de Cannes",
+   "territory": "FR",
+   "updated": null,
+   "establishes": [
+    {
+     "fact": "Cannes 2026: features registered by March 13, 2026.",
+     "quote": "The registration deadline is March 13th, 2026"
+    },
+    {
+     "fact": "Cannes 2026: shorts by March 2, 2026.",
+     "quote": "The deadline to submit short films is 2nd March 2026"
+    }
+   ],
+   "confidence": "high",
+   "usedBy": [
+    "src/engine/content/awards.ts:52"
+   ],
+   "kind": "verified-fact"
+  },
+  {
+   "id": "b25-S66",
+   "register": "b25",
+   "was": "S66",
+   "previously": "dossier-located",
+   "title": "Venice 2026 Regulations",
+   "url": "https://www.labiennale.org/en/cinema/2026/regulations",
+   "final": "https://www.labiennale.org/en/cinema/2026/regulations",
+   "status": "read",
+   "http": "200",
+   "bytes": 85716,
+   "sha256": "f598ebff26b5a7933ed72987fbe83069faee07e1d3a14c005d198aa9cc227f74",
+   "retrieved": "2026-10-24T19:17Z",
+   "attempts": [
+    {
+     "at": "2026-10-24T19:17Z",
+     "http": "200",
+     "bytes": 85716,
+     "error": ""
+    }
+   ],
+   "organization": "La Biennale di Venezia",
+   "territory": "IT",
+   "updated": null,
+   "establishes": [
+    {
+     "fact": "Venice 2026: the Lido, 2 to 12 September 2026.",
+     "quote": "will be held on the Lido di Venezia from 2 to 12 September 2026"
+    },
+    {
+     "fact": "Venice: world premieres only.",
+     "quote": "Only films presented as world premieres that meet the following criteria are eligible for selection:"
+    },
+    {
+     "fact": "Venice: at most 21 films in competition.",
+     "quote": "An International competition comprising a maximum of 21 feature-length films presented as world premieres."
+    }
+   ],
+   "confidence": "high",
+   "usedBy": [
+    "src/engine/content/awards.ts:53"
+   ],
+   "kind": "verified-fact"
+  },
+  {
+   "id": "b25-S67",
+   "register": "b25",
+   "was": "S67",
+   "previously": "dossier-located",
+   "title": "Berlin General Guidelines",
+   "url": "https://www.berlinale.de/en/film-entry/guidelines/general-guidelines.html",
+   "final": "https://www.berlinale.de/en/film-entry/guidelines/general-guidelines.html",
+   "status": "read",
+   "http": "200",
+   "bytes": 230341,
+   "sha256": "3b3bf488ac88b69b58e2a99b69eb3a2519ccbe13fb5135e61258a613810bfe00",
+   "retrieved": "2026-10-24T19:17Z",
+   "attempts": [
+    {
+     "at": "2026-10-24T19:17Z",
+     "http": "200",
+     "bytes": 230341,
+     "error": ""
+    }
+   ],
+   "organization": "Berlinale (Internationale Filmfestspiele Berlin)",
+   "territory": "DE",
+   "updated": null,
+   "establishes": [
+    {
+     "fact": "Berlinale: a film shown on television, the internet or VOD isn’t eligible.",
+     "quote": "Films that have been broadcasted on television or presented on the internet/on VOD are not eligible."
+    }
+   ],
+   "confidence": "high",
+   "usedBy": [
+    "src/engine/content/awards.ts:54"
+   ],
+   "kind": "verified-fact"
+  },
+  {
+   "id": "b25-S68",
+   "register": "b25",
+   "was": "S68",
+   "previously": "dossier-located",
+   "title": "Berlin Film Entry",
+   "url": "https://www.berlinale.de/en/film-entry/submission/start.html",
+   "final": "https://www.berlinale.de/en/film-entry/submission/start.html",
+   "status": "read",
+   "http": "200",
+   "bytes": 201997,
+   "sha256": "3ccbae0984c637a88c032251687e1853f67f3bd988c592fd07bcbb778589b5ef",
+   "retrieved": "2026-10-24T19:17Z",
+   "attempts": [
+    {
+     "at": "2026-10-24T19:17Z",
+     "http": "200",
+     "bytes": 201997,
+     "error": ""
+    }
+   ],
+   "organization": null,
+   "territory": null,
+   "updated": null,
+   "establishes": [],
+   "confidence": null,
+   "usedBy": []
+  },
+  {
+   "id": "b25-S69",
+   "register": "b25",
+   "was": "S69",
+   "previously": "dossier-located",
+   "title": "Sundance Submissions",
+   "url": "https://www.sundance.org/festivals/sundance-film-festival/submit/",
+   "final": "https://www.sundance.org/festivals/sundance-film-festival/submit/",
+   "status": "read",
+   "http": "200",
+   "bytes": 350608,
+   "sha256": "46f4bb497429152ab3a2413c56d21c5134196e289676a0fc8442e6d68a419c46",
+   "retrieved": "2026-10-24T19:17Z",
+   "attempts": [
+    {
+     "at": "2026-10-24T19:17Z",
+     "http": "200",
+     "bytes": 350608,
+     "error": ""
+    }
+   ],
+   "organization": null,
+   "territory": null,
+   "updated": null,
+   "establishes": [],
+   "confidence": null,
+   "usedBy": []
+  },
+  {
+   "id": "b25-S70",
+   "register": "b25",
+   "was": "S70",
+   "previously": "dossier-located",
+   "title": "Sundance 2027 Submission FAQ",
+   "url": "https://www.sundance.org/wp-content/uploads/2026/06/2027_Submissions_FAQ.pdf",
+   "final": "https://www.sundance.org/wp-content/uploads/2026/06/2027_Submissions_FAQ.pdf",
+   "status": "read",
+   "http": "200",
+   "bytes": 177048,
+   "sha256": "b27bf428148123f06a9e68080ab8eb96fdcf2be1fdb3309bb01b7c668392d7cf",
+   "retrieved": "2026-10-24T19:17Z",
+   "attempts": [
+    {
+     "at": "2026-10-24T19:17Z",
+     "http": "200",
+     "bytes": 177048,
+     "error": ""
+    }
+   ],
+   "organization": null,
+   "territory": null,
+   "updated": null,
+   "establishes": [],
+   "confidence": null,
+   "usedBy": []
+  },
+  {
+   "id": "b25-S71",
+   "register": "b25",
+   "was": "S71",
+   "previously": "dossier-located",
+   "title": "Sundance 2027 Boulder Announcement",
+   "url": "https://www.sundance.org/blogs/2027-sundance-film-festival-to-take-place-january-21-31-in-boulder-colorado/",
+   "final": "https://www.sundance.org/blogs/2027-sundance-film-festival-to-take-place-january-21-31-in-boulder-colorado/",
+   "status": "read",
+   "http": "200",
+   "bytes": 248753,
+   "sha256": "190fd0464127c74f58e173c898c5588c82afe7d0bd639a0af92204ab23e111d8",
+   "retrieved": "2026-10-24T19:17Z",
+   "attempts": [
+    {
+     "at": "2026-10-24T19:17Z",
+     "http": "200",
+     "bytes": 248753,
+     "error": ""
+    }
+   ],
+   "organization": null,
+   "territory": null,
+   "updated": null,
+   "establishes": [],
+   "confidence": null,
+   "usedBy": []
+  },
+  {
+   "id": "b25-S72",
+   "register": "b25",
+   "was": "S72",
+   "previously": "dossier-located",
+   "title": "TIFF Submissions",
+   "url": "https://tiff.net/submissions",
+   "final": "https://tiff.net/submissions",
+   "status": "unreadable",
+   "http": "202",
+   "bytes": 2480,
+   "sha256": "43ada09f29f0972f4bb598955ac1acd3f7b8630a883f3f6c344f3dac682ca35e",
+   "retrieved": "2026-10-24T20:48Z",
+   "attempts": [
+    {
+     "at": "2026-10-24T19:17Z",
+     "http": "202",
+     "bytes": 2480,
+     "error": ""
+    },
+    {
+     "at": "2026-10-24T20:48Z",
+     "http": "202",
+     "bytes": 2480,
+     "error": ""
+    }
+   ],
+   "organization": null,
+   "territory": null,
+   "updated": null,
+   "establishes": [],
+   "confidence": null,
+   "usedBy": []
+  },
+  {
+   "id": "b25-S73",
+   "register": "b25",
+   "was": "S73",
+   "previously": "dossier-located",
+   "title": "Annecy Film Submissions",
+   "url": "https://www.annecyfestival.com/en/take-part/submit-film",
+   "final": "https://www.annecyfestival.com/en/take-part/submit-film",
+   "status": "unreached",
+   "http": "000",
+   "bytes": 0,
+   "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+   "retrieved": "2026-10-24T20:48Z",
+   "attempts": [
+    {
+     "at": "2026-10-24T19:17Z",
+     "http": "000",
+     "bytes": 0,
+     "error": "curl: (60) SSL certificate problem: unable to get local issuer certificate\nMore details here: https://curl.se/docs/sslce"
+    },
+    {
+     "at": "2026-10-24T20:48Z",
+     "http": "000",
+     "bytes": 0,
+     "error": "curl: (60) SSL certificate problem: unable to get local issuer certificate\nMore details here: https://curl.se/docs/sslce"
+    }
+   ],
+   "organization": null,
+   "territory": null,
+   "updated": null,
+   "establishes": [],
+   "confidence": null,
+   "usedBy": []
+  },
+  {
+   "id": "b25-S74",
+   "register": "b25",
+   "was": "S74",
+   "previously": "dossier-located",
+   "title": "Annecy Category Regulations",
+   "url": "https://helpdesk.annecyfestival.com/en/article/please-read-the-category-regulations-before-submitting-an-animation-film-1e4l5ur/",
+   "final": "https://helpdesk.annecyfestival.com/en/article/please-read-the-category-regulations-before-submitting-an-animation-film-1e4l5ur/",
+   "status": "unreadable",
+   "http": "200",
+   "bytes": 17023,
+   "sha256": "2fa8c23e0d65476fe340e1995496d280dbd9061dddf731dbe94cd979a04ff36d",
+   "retrieved": "2026-10-24T20:48Z",
+   "attempts": [
+    {
+     "at": "2026-10-24T19:17Z",
+     "http": "200",
+     "bytes": 17023,
+     "error": ""
+    },
+    {
+     "at": "2026-10-24T20:48Z",
+     "http": "200",
+     "bytes": 17023,
+     "error": ""
+    }
+   ],
+   "organization": null,
+   "territory": null,
+   "updated": null,
+   "establishes": [],
+   "confidence": null,
+   "usedBy": []
+  },
+  {
+   "id": "b25-S75",
+   "register": "b25",
+   "was": "S75",
+   "previously": "dossier-located",
+   "title": "IDFA 2026 Entry Regulations",
+   "url": "https://professionals.idfa.nl/program/festival-entries/festival-entry-regulations/",
+   "final": "https://professionals.idfa.nl/program/festival-entries/festival-entry-regulations/",
+   "status": "read",
+   "http": "200",
+   "bytes": 253101,
+   "sha256": "42bd69d72a1c7f7ae62eff7e5ed60e2065616cb7bb5d58855e50d58ccfb2356b",
+   "retrieved": "2026-10-24T19:17Z",
+   "attempts": [
+    {
+     "at": "2026-10-24T19:17Z",
+     "http": "200",
+     "bytes": 253101,
+     "error": ""
+    }
+   ],
+   "organization": "IDFA",
+   "territory": "NL",
+   "updated": null,
+   "establishes": [
+    {
+     "fact": "IDFA 2026: November 12 to 22, 2026.",
+     "quote": "takes place November 12 to 22, 2026."
+    },
+    {
+     "fact": "IDFA 2026: early entry deadline April 23, 2026.",
+     "quote": "Early entry deadline April 23, 2026"
+    }
+   ],
+   "confidence": "high",
+   "usedBy": [
+    "src/engine/content/awards.ts:58"
+   ],
+   "kind": "verified-fact"
+  },
+  {
+   "id": "b25-S76",
+   "register": "b25",
+   "was": "S76",
+   "previously": "dossier-located",
+   "title": "IDFA Festival Entries",
+   "url": "https://professionals.idfa.nl/program/festival-entries/",
+   "final": "https://professionals.idfa.nl/program/festival-entries/",
+   "status": "read",
+   "http": "200",
+   "bytes": 171791,
+   "sha256": "f5a26cb21195b55ba4d17746254686056de1a1337a68316ddb4ef19f6369eb0f",
+   "retrieved": "2026-10-24T19:17Z",
+   "attempts": [
+    {
+     "at": "2026-10-24T19:17Z",
+     "http": "200",
+     "bytes": 171791,
+     "error": ""
+    }
+   ],
+   "organization": null,
+   "territory": null,
+   "updated": null,
+   "establishes": [],
+   "confidence": null,
+   "usedBy": []
+  },
+  {
+   "id": "b25-S77",
+   "register": "b25",
+   "was": "S77",
+   "previously": "dossier-located",
+   "title": "Busan International Film Festival",
+   "url": "https://www.biff.kr/",
+   "final": "https://www.biff.kr/eng/",
+   "status": "read",
+   "http": "200",
+   "bytes": 156255,
+   "sha256": "254fc0028915abdfbc5c8b99c6969b2cf5c3af1d74375c8d7d362b7027f255eb",
+   "retrieved": "2026-10-24T19:17Z",
+   "attempts": [
+    {
+     "at": "2026-10-24T19:17Z",
+     "http": "200",
+     "bytes": 156255,
+     "error": ""
+    }
+   ],
+   "organization": null,
+   "territory": null,
+   "updated": null,
+   "establishes": [],
+   "confidence": null,
+   "usedBy": []
+  },
+  {
+   "id": "b25-S83",
+   "register": "b25",
+   "was": "S83",
+   "previously": "unreadable",
+   "title": "Universal Upcoming Films",
+   "url": "https://www.universalpictures.com/movies/",
+   "final": "https://www.universalpictures.com/movies/",
+   "status": "unreadable",
+   "http": "200",
+   "bytes": 21901,
+   "sha256": "896332ba3bc4991cad3743ff4f92afabc2288f8a182c72049e87cdbb43189430",
+   "retrieved": "2026-10-24T20:48Z",
+   "attempts": [
+    {
+     "at": "2026-10-24T19:17Z",
+     "http": "200",
+     "bytes": 21901,
+     "error": ""
+    },
+    {
+     "at": "2026-10-24T20:48Z",
+     "http": "200",
+     "bytes": 21901,
+     "error": ""
+    }
+   ],
+   "organization": null,
+   "territory": null,
+   "updated": null,
+   "establishes": [],
+   "confidence": null,
+   "usedBy": []
+  },
+  {
+   "id": "b25-S84",
+   "register": "b25",
+   "was": "S84",
+   "previously": "dossier-located",
+   "title": "Amazon MGM Press",
+   "url": "https://press.amazonmgmstudios.com/",
+   "final": "https://press.amazonmgmstudios.com/us/en",
+   "status": "read",
+   "http": "200",
+   "bytes": 124427,
+   "sha256": "908d5f9053c87ed4241c3a86c6aef57ab138497eab9f3362a8b19f6ea840bc5a",
+   "retrieved": "2026-10-24T19:17Z",
+   "attempts": [
+    {
+     "at": "2026-10-24T19:17Z",
+     "http": "200",
+     "bytes": 124427,
+     "error": ""
+    }
+   ],
+   "organization": null,
+   "territory": null,
+   "updated": null,
+   "establishes": [],
+   "confidence": null,
+   "usedBy": []
+  },
+  {
+   "id": "b25-S86",
+   "register": "b25",
+   "was": "S86",
+   "previously": "unreadable",
+   "title": "Abbott Elementary Cast",
+   "url": "https://abc.com/show/e4f28254-2fc4-4cc1-b9bb-eee0564c178e/cast",
+   "final": "https://abc.com/show/e4f28254-2fc4-4cc1-b9bb-eee0564c178e/cast",
+   "status": "unreadable",
+   "http": "200",
+   "bytes": 196993,
+   "sha256": "32ec1eac499150a5c77ba0c43d0f0bd246c21078a31eb06952fcb2ec9f3d052f",
+   "retrieved": "2026-10-24T20:48Z",
+   "attempts": [
+    {
+     "at": "2026-10-24T19:17Z",
+     "http": "200",
+     "bytes": 196993,
+     "error": ""
+    },
+    {
+     "at": "2026-10-24T20:48Z",
+     "http": "200",
+     "bytes": 196993,
+     "error": ""
+    }
+   ],
+   "organization": null,
+   "territory": null,
+   "updated": null,
+   "establishes": [],
+   "confidence": null,
+   "usedBy": []
+  },
+  {
+   "id": "b25-S87",
+   "register": "b25",
+   "was": "S87",
+   "previously": "dossier-located",
+   "title": "The Bear: Hulu Press",
+   "url": "https://press.hulu.com/shows/the-bear/",
+   "final": "https://press.hulu.com/shows/the-bear/",
+   "status": "read",
+   "http": "200",
+   "bytes": 147681,
+   "sha256": "36520aaa5472dcc9ca365a5041f6f864a8c4d1139beccec7318918cd349ecfbd",
+   "retrieved": "2026-10-24T19:17Z",
+   "attempts": [
+    {
+     "at": "2026-10-24T19:17Z",
+     "http": "200",
+     "bytes": 147681,
+     "error": ""
+    }
+   ],
+   "organization": null,
+   "territory": null,
+   "updated": null,
+   "establishes": [],
+   "confidence": null,
+   "usedBy": []
+  },
+  {
+   "id": "b25-S88",
+   "register": "b25",
+   "was": "S88",
+   "previously": "unreadable",
+   "title": "9-1-1 Cast",
+   "url": "https://abc.com/show/42bb0821-68c2-4543-8d0f-51ca8e7dbcf4/cast",
+   "final": "https://abc.com/show/42bb0821-68c2-4543-8d0f-51ca8e7dbcf4/cast",
+   "status": "unreadable",
+   "http": "200",
+   "bytes": 204046,
+   "sha256": "cfd85ce6d861663345cc96e618edf11b05db6dd4fd4cd43867eef2f50f15b06c",
+   "retrieved": "2026-10-24T20:48Z",
+   "attempts": [
+    {
+     "at": "2026-10-24T19:17Z",
+     "http": "200",
+     "bytes": 204046,
+     "error": ""
+    },
+    {
+     "at": "2026-10-24T20:48Z",
+     "http": "200",
+     "bytes": 204046,
+     "error": ""
+    }
+   ],
+   "organization": null,
+   "territory": null,
+   "updated": null,
+   "establishes": [],
+   "confidence": null,
+   "usedBy": []
+  },
+  {
+   "id": "b25-S90",
+   "register": "b25",
+   "was": "S90",
+   "previously": "unreadable",
+   "title": "UTA Talent",
+   "url": "https://www.unitedtalent.com/talent",
+   "final": "https://www.unitedtalent.com/talent",
+   "status": "unreadable",
+   "http": "200",
+   "bytes": 366848,
+   "sha256": "12aa7b09e4144c021b24d254383e34797ce7bf0e30183486183528ee488540fd",
+   "retrieved": "2026-10-24T20:48Z",
+   "attempts": [
+    {
+     "at": "2026-10-24T19:17Z",
+     "http": "200",
+     "bytes": 366848,
+     "error": ""
+    },
+    {
+     "at": "2026-10-24T20:48Z",
+     "http": "200",
+     "bytes": 366848,
+     "error": ""
+    }
+   ],
+   "organization": null,
+   "territory": null,
+   "updated": null,
+   "establishes": [],
+   "confidence": null,
+   "usedBy": []
+  },
+  {
+   "id": "b25-S92",
+   "register": "b25",
+   "was": "S92",
+   "previously": "dossier-located",
+   "title": "Complete 99th Oscars Rules",
+   "url": "https://www.oscars.org/sites/oscars/files/2026-05/99th_oscars_complete_rules.pdf?VersionId=84FilOcTNI7wpFAxl56.8xesZyP5.UWl",
+   "final": "https://www.oscars.org/sites/oscars/files/2026-05/99th_oscars_complete_rules.pdf?VersionId=84FilOcTNI7wpFAxl56.8xesZyP5.UWl",
+   "status": "blocked",
+   "http": "403",
+   "bytes": 464,
+   "sha256": "1b8803f1ca68119e042d3497f602886133c808344f4d0b0430ffaed433953988",
+   "retrieved": "2026-10-24T20:48Z",
+   "attempts": [
+    {
+     "at": "2026-10-24T19:17Z",
+     "http": "403",
+     "bytes": 464,
+     "error": ""
+    },
+    {
+     "at": "2026-10-24T20:48Z",
+     "http": "403",
+     "bytes": 464,
+     "error": ""
+    }
+   ],
+   "organization": null,
+   "territory": null,
+   "updated": null,
+   "establishes": [],
+   "confidence": null,
+   "usedBy": []
+  },
+  {
+   "id": "b25-S93",
+   "register": "b25",
+   "was": "S93",
+   "previously": "dossier-located",
+   "title": "Box Office Mojo: 2026 Week 42",
+   "url": "https://www.boxofficemojo.com/weekly/2026W42/?ref_=bo_wly_table_1",
+   "final": "https://www.boxofficemojo.com/weekly/2026W42/?ref_=bo_wly_table_1",
+   "status": "read",
+   "http": "200",
+   "bytes": 254116,
+   "sha256": "9f6b9ba0382e2161e5c1d55c190363de2c5e47e7eba6a12c4e859850ec21b9aa",
+   "retrieved": "2026-10-24T19:17Z",
+   "attempts": [
+    {
+     "at": "2026-10-24T19:17Z",
+     "http": "200",
+     "bytes": 254116,
+     "error": ""
+    }
+   ],
+   "organization": "Box Office Mojo (IMDbPro)",
+   "territory": "US",
+   "updated": null,
+   "establishes": [
+    {
+     "fact": "Box Office Mojo’s domestic weekend chart for October 16 to 22, 2026, as charts.ts holds it from brief 25’s own reading: Street Fighter first at $38,338,634.",
+     "quote": "$38,338,634"
+    },
+    {
+     "fact": "You Can See Everything second at $25,645,476.",
+     "quote": "$25,645,476"
+    }
+   ],
+   "confidence": "high",
+   "usedBy": [
+    "src/engine/content/charts.ts:133"
+   ],
+   "kind": "published-chart"
+  },
+  {
+   "id": "b25-S94",
+   "register": "b25",
+   "was": "S94",
+   "previously": "dossier-located",
+   "title": "Netflix Global Movie Top Ten",
+   "url": "https://www.netflix.com/tudum/top10",
+   "final": "https://www.netflix.com/tudum/top10",
+   "status": "read",
+   "http": "200",
+   "bytes": 785753,
+   "sha256": "6ceaacf85620271d506c350c0f084873490c5257f3cfa68bccb3078b3b52eb84",
+   "retrieved": "2026-10-24T19:17Z",
+   "attempts": [
+    {
+     "at": "2026-10-24T19:17Z",
+     "http": "200",
+     "bytes": 785753,
+     "error": ""
+    }
+   ],
+   "organization": null,
+   "territory": null,
+   "updated": null,
+   "establishes": [],
+   "confidence": null,
+   "usedBy": []
+  },
+  {
+   "id": "b25-S95",
+   "register": "b25",
+   "was": "S95",
+   "previously": "blocked",
+   "title": "SAG-AFTRA Standard Television",
+   "url": "https://www.sagaftra.org/industry-resources/rates-agreements/standard-television",
+   "final": "https://www.sagaftra.org/industry-resources/rates-agreements/standard-television",
+   "status": "blocked",
+   "http": "403",
+   "bytes": 775,
+   "sha256": "b2ae62038d36e7c320237e4747ecfc4ed3ef4799e644457516f7432142a3a68f",
+   "retrieved": "2026-10-24T20:48Z",
+   "attempts": [
+    {
+     "at": "2026-10-24T19:17Z",
+     "http": "403",
+     "bytes": 775,
+     "error": ""
+    },
+    {
+     "at": "2026-10-24T20:48Z",
+     "http": "403",
+     "bytes": 775,
+     "error": ""
+    }
+   ],
+   "organization": null,
+   "territory": null,
+   "updated": null,
+   "establishes": [],
+   "confidence": null,
+   "usedBy": []
+  },
+  {
+   "id": "b25-S96",
+   "register": "b25",
+   "was": "S96",
+   "previously": "blocked",
+   "title": "SAG-AFTRA Residuals Quick Guide",
+   "url": "https://www.sagaftra.org/sag-aftra-tv-and-theatrical-residuals-quick-guide",
+   "final": "https://www.sagaftra.org/sag-aftra-tv-and-theatrical-residuals-quick-guide",
+   "status": "blocked",
+   "http": "403",
+   "bytes": 775,
+   "sha256": "456ff543792dc67c722059fa220a2f98c0da605ad1ddbe9522423efc4b8479f0",
+   "retrieved": "2026-10-24T20:48Z",
+   "attempts": [
+    {
+     "at": "2026-10-24T19:17Z",
+     "http": "403",
+     "bytes": 775,
+     "error": ""
+    },
+    {
+     "at": "2026-10-24T20:48Z",
+     "http": "403",
+     "bytes": 775,
+     "error": ""
+    }
+   ],
+   "organization": null,
+   "territory": null,
+   "updated": null,
+   "establishes": [],
+   "confidence": null,
+   "usedBy": []
+  },
+  {
+   "id": "b25-S97",
+   "register": "b25",
+   "was": "S97",
+   "previously": "dossier-located",
+   "title": "SAG-AFTRA 2026 Theatrical–Television Memorandum",
+   "url": "https://www.sagaftra.org/sites/default/files/2026-05/2026%20Theatrical-Television%20MOA.pdf",
+   "final": "https://www.sagaftra.org/sites/default/files/2026-05/2026%20Theatrical-Television%20MOA.pdf",
+   "status": "blocked",
+   "http": "403",
+   "bytes": 775,
+   "sha256": "02c038e97d663dd997c973a72a35da3eabc0c94c5725e4af7767b97ef332e4d0",
+   "retrieved": "2026-10-24T20:48Z",
+   "attempts": [
+    {
+     "at": "2026-10-24T19:17Z",
+     "http": "403",
+     "bytes": 775,
+     "error": ""
+    },
+    {
+     "at": "2026-10-24T20:48Z",
+     "http": "403",
+     "bytes": 775,
+     "error": ""
+    }
+   ],
+   "organization": null,
+   "territory": null,
+   "updated": null,
+   "establishes": [],
+   "confidence": null,
+   "usedBy": []
+  },
+  {
+   "id": "b27-UK-concession",
+   "register": "b27",
+   "was": null,
+   "previously": null,
+   "title": null,
+   "url": "https://www.gov.uk/creative-worker-visa/creative-worker-visa-concession",
+   "final": "https://www.gov.uk/creative-worker-visa",
+   "status": "read",
+   "http": "200",
+   "bytes": 110802,
+   "sha256": "d6061d49a7aa47166dc6af99ee388254813051b2635ee385b5a2e2fb43183634",
+   "retrieved": "2026-10-24T19:24Z",
+   "attempts": [
+    {
+     "at": "2026-10-24T19:24Z",
+     "http": "200",
+     "bytes": 110802,
+     "error": ""
+    }
+   ],
+   "organization": null,
+   "territory": null,
+   "updated": null,
+   "establishes": [],
+   "confidence": null,
+   "usedBy": []
+  },
+  {
+   "id": "b27-UK-docs",
+   "register": "b27",
+   "was": null,
+   "previously": null,
+   "title": null,
+   "url": "https://www.gov.uk/creative-worker-visa/documents-you-must-provide",
+   "final": "https://www.gov.uk/creative-worker-visa/documents-you-must-provide",
+   "status": "read",
+   "http": "200",
+   "bytes": 70819,
+   "sha256": "34b8fc8e0e62c7ffaa3ad3bef0544dc15446364dbd0bfda97ed109efaba46040",
+   "retrieved": "2026-10-24T19:24Z",
+   "attempts": [
+    {
+     "at": "2026-10-24T19:24Z",
+     "http": "200",
+     "bytes": 70819,
+     "error": ""
+    }
+   ],
+   "organization": null,
+   "territory": null,
+   "updated": null,
+   "establishes": [],
+   "confidence": null,
+   "usedBy": []
+  },
+  {
+   "id": "b27-UK-eta",
+   "register": "b27",
+   "was": null,
+   "previously": null,
+   "title": "Electronic travel authorisation (ETA)",
+   "url": "https://www.gov.uk/guidance/apply-for-an-electronic-travel-authorisation-eta",
+   "final": "https://www.gov.uk/eta",
+   "status": "read",
+   "http": "200",
+   "bytes": 93580,
+   "sha256": "723d7d69b1473feea001924a3edefe2cd68d70d3457f938b1180cccfa0853926",
+   "retrieved": "2026-10-24T19:24Z",
+   "attempts": [
+    {
+     "at": "2026-10-24T19:24Z",
+     "http": "200",
+     "bytes": 93580,
+     "error": ""
+    }
+   ],
+   "organization": "UK Home Office (GOV.UK)",
+   "territory": "GB",
+   "updated": "2026-10-22",
+   "establishes": [
+    {
+     "fact": "An ETA costs £20.",
+     "quote": "costs £20."
+    },
+    {
+     "fact": "Visitors from Europe, the USA, Australia, Canada and some other countries usually need an ETA rather than a visa.",
+     "quote": "You usually need an ETA rather than a visa if you’re from Europe, the USA, Australia, Canada or certain other countries."
+    },
+    {
+     "fact": "British and Irish passport holders don’t need one.",
+     "quote": "a British or Irish passport"
+    }
+   ],
+   "confidence": "high",
+   "usedBy": [],
+   "kind": "verified-fact"
+  },
+  {
+   "id": "b27-UK-eta-apply",
+   "register": "b27",
+   "was": null,
+   "previously": null,
+   "title": "Apply for an electronic travel authorisation (ETA)",
+   "url": "https://www.gov.uk/eta/apply",
+   "final": "https://www.gov.uk/eta/apply",
+   "status": "read",
+   "http": "200",
+   "bytes": 81208,
+   "sha256": "ea6644d7c31ecb2230d5b550a0017fbe311deb100e9eb287f50872c6e8b002b7",
+   "retrieved": "2026-10-24T19:24Z",
+   "attempts": [
+    {
+     "at": "2026-10-24T19:24Z",
+     "http": "200",
+     "bytes": 81208,
+     "error": ""
+    }
+   ],
+   "organization": "UK Home Office (GOV.UK)",
+   "territory": "GB",
+   "updated": null,
+   "establishes": [
+    {
+     "fact": "A decision usually within a day, up to 3 working days.",
+     "quote": "You’ll usually get a decision by email within a day, but it can take up to 3 working days."
+    },
+    {
+     "fact": "An ETA lasts 2 years or until the passport expires.",
+     "quote": "lasts for 2 years or until your passport expires, whichever is sooner."
+    }
+   ],
+   "confidence": "high",
+   "usedBy": [],
+   "kind": "verified-fact"
+  },
+  {
+   "id": "b27-UK-eta-list",
+   "register": "b27",
+   "was": null,
+   "previously": null,
+   "title": null,
+   "url": "https://www.gov.uk/guidance/immigration-rules/immigration-rules-appendix-eta-electronic-travel-authorisation",
+   "final": "https://www.gov.uk/guidance/immigration-rules/immigration-rules-appendix-eta-electronic-travel-authorisation",
+   "status": "unreached",
+   "http": "404",
+   "bytes": 52491,
+   "sha256": "64a67f7fbff934ec80dcd4e9662b16da7cefed3af7e25dcccb55127e2f243388",
+   "retrieved": "2026-10-24T20:48Z",
+   "attempts": [
+    {
+     "at": "2026-10-24T19:24Z",
+     "http": "404",
+     "bytes": 52491,
+     "error": ""
+    },
+    {
+     "at": "2026-10-24T20:48Z",
+     "http": "404",
+     "bytes": 52491,
+     "error": ""
+    }
+   ],
+   "organization": null,
+   "territory": null,
+   "updated": null,
+   "establishes": [],
+   "confidence": null,
+   "usedBy": []
+  },
+  {
+   "id": "b27-UK-ihs",
+   "register": "b27",
+   "was": null,
+   "previously": null,
+   "title": "Pay for UK healthcare as part of your immigration application: How much you have to pay",
+   "url": "https://www.gov.uk/healthcare-immigration-application/how-much-pay",
+   "final": "https://www.gov.uk/healthcare-immigration-application/how-much-pay",
+   "status": "read",
+   "http": "200",
+   "bytes": 72929,
+   "sha256": "ec4b14f75fa9630af99ce191665f31982ff90c33bb6a26fe61bcc301da2a2a10",
+   "retrieved": "2026-10-24T19:24Z",
+   "attempts": [
+    {
+     "at": "2026-10-24T19:24Z",
+     "http": "200",
+     "bytes": 72929,
+     "error": ""
+    }
+   ],
+   "organization": "UK Home Office (GOV.UK)",
+   "territory": "GB",
+   "updated": "2026-09-18",
+   "establishes": [
+    {
+     "fact": "No surcharge for a visa of 6 months or less applied for from outside the UK.",
+     "quote": "You do not need to pay the surcharge if you’re applying from outside the UK for 6 months or less."
+    },
+    {
+     "fact": "More than 6 months and less than a year: a full year’s cost.",
+     "quote": "More than 6 months but less than one year Wherever you apply from, you’ll have to pay the cost of a full year."
+    },
+    {
+     "fact": "£1,035 a year for applications other than students’ and under-18s’.",
+     "quote": "£1,035 per year for all other visa and immigration applications"
+    }
+   ],
+   "confidence": "high",
+   "usedBy": [],
+   "kind": "verified-fact"
+  },
+  {
+   "id": "b27-UK-print",
+   "register": "b27",
+   "was": null,
+   "previously": null,
+   "title": "UK Creative Worker visa: the whole guide (printable), section 7, the concession",
+   "url": "https://www.gov.uk/creative-worker-visa/print",
+   "final": "https://www.gov.uk/creative-worker-visa/print",
+   "status": "read",
+   "http": "200",
+   "bytes": 88148,
+   "sha256": "94e26efaaa34e554df1885313572ba3ef116dfe7eb6953cb37e62acdb141ed20",
+   "retrieved": "2026-10-24T19:24Z",
+   "attempts": [
+    {
+     "at": "2026-10-24T19:24Z",
+     "http": "200",
+     "bytes": 88148,
+     "error": ""
+    }
+   ],
+   "organization": "UK Home Office (GOV.UK)",
+   "territory": "GB",
+   "updated": "2026-09-09",
+   "establishes": [
+    {
+     "fact": "Non-visa nationals with a Creative Worker certificate may enter without a visa for work of 3 months or less.",
+     "quote": "You can enter the UK without applying for a visa in advance if you:"
+    },
+    {
+     "fact": "The concession is for work of 3 months or less.",
+     "quote": "are coming to work in the UK for 3 months or less"
+    },
+    {
+     "fact": "Only for those who don’t normally need a visa to visit.",
+     "quote": "do not normally need a visa to enter the UK as a visitor"
+    },
+    {
+     "fact": "An ETA is usually needed to travel.",
+     "quote": "You’ll usually need an electronic travel authorisation (ETA) to travel to the UK."
+    },
+    {
+     "fact": "An immigration officer checks the certificate and funds and stamps the passport; the ePassport gates mustn’t be used.",
+     "quote": "Do not use the automatic ePassport gates. You will not be allowed to work if you do not see an immigration officer and get a stamp in your passport."
+    }
+   ],
+   "confidence": "high",
+   "usedBy": [],
+   "kind": "verified-fact"
+  },
+  {
+   "id": "b27-UK-visa-check",
+   "register": "b27",
+   "was": null,
+   "previously": null,
+   "title": null,
+   "url": "https://www.gov.uk/check-uk-visa",
+   "final": "https://www.gov.uk/check-uk-visa",
+   "status": "read",
+   "http": "200",
+   "bytes": 69239,
+   "sha256": "c541485a7407f2ee96455e7969027b93f5a792754251af5195334d971e987f51",
+   "retrieved": "2026-10-24T19:24Z",
+   "attempts": [
+    {
+     "at": "2026-10-24T19:24Z",
+     "http": "200",
+     "bytes": 69239,
+     "error": ""
+    }
+   ],
+   "organization": null,
+   "territory": null,
+   "updated": null,
+   "establishes": [],
+   "confidence": null,
+   "usedBy": []
+  },
+  {
+   "id": "b27-UK-visa-national",
+   "register": "b27",
+   "was": null,
+   "previously": null,
+   "title": "Immigration Rules: Appendix Visitor: Visa national list",
+   "url": "https://www.gov.uk/guidance/immigration-rules/immigration-rules-appendix-visitor-visa-national-list",
+   "final": "https://www.gov.uk/guidance/immigration-rules/immigration-rules-appendix-visitor-visa-national-list",
+   "status": "read",
+   "http": "200",
+   "bytes": 75543,
+   "sha256": "031f7c91bb6a1c48830fdc75a4fd2e6c77ea07b9b5dece06a9e3d3169bb2e41b",
+   "retrieved": "2026-10-24T19:24Z",
+   "attempts": [
+    {
+     "at": "2026-10-24T19:24Z",
+     "http": "200",
+     "bytes": 75543,
+     "error": ""
+    }
+   ],
+   "organization": "UK Home Office (GOV.UK)",
+   "territory": "GB",
+   "updated": "2026-10-22",
+   "establishes": [
+    {
+     "fact": "Nationals of the listed countries need entry clearance (a visa) in advance for any purpose.",
+     "quote": "A person who meets one or more of the criteria below needs entry clearance (a visa) in advance of travel to the UK for any purpose"
+    }
+   ],
+   "confidence": "high",
+   "usedBy": [],
+   "kind": "verified-fact"
+  },
+  {
+   "id": "b27-FIA-home",
+   "register": "b27",
+   "was": null,
+   "previously": null,
+   "title": null,
+   "organization": null,
+   "territory": null,
+   "updated": null,
+   "establishes": [],
+   "confidence": null,
+   "usedBy": [],
+   "url": "https://fia-actors.com/",
+   "final": "https://fia-actors.com/",
+   "status": "read",
+   "http": "200",
+   "bytes": 321616,
+   "sha256": "a162dce04a2d60d58fe6caaa36204db3f1cf59611a0e5fb9a990d150668fa0bd",
+   "retrieved": "2026-10-24T19:30Z",
+   "attempts": [
+    {
+     "at": "2026-10-24T19:30Z",
+     "http": "200",
+     "bytes": 321616,
+     "error": ""
+    }
+   ]
+  },
+  {
+   "id": "b27-FIAPF-home",
+   "register": "b27",
+   "was": null,
+   "previously": null,
+   "title": null,
+   "organization": null,
+   "territory": null,
+   "updated": null,
+   "establishes": [],
+   "confidence": null,
+   "usedBy": [],
+   "url": "https://www.fiapf.org/",
+   "final": "https://fiapf.org/",
+   "status": "read",
+   "http": "200",
+   "bytes": 128187,
+   "sha256": "849903927c1d83294a48e35bcf23d7829bb92d4a0f84809c71d266e1f1083c11",
+   "retrieved": "2026-10-24T19:30Z",
+   "attempts": [
+    {
+     "at": "2026-10-24T19:30Z",
+     "http": "200",
+     "bytes": 128187,
+     "error": ""
+    }
+   ]
+  },
+  {
+   "id": "b27-FIA-members",
+   "register": "b27",
+   "was": null,
+   "previously": null,
+   "title": "FIA: FIA Members",
+   "organization": "International Federation of Actors (FIA)",
+   "territory": "worldwide",
+   "updated": null,
+   "establishes": [
+    {
+     "fact": "FIA’s member list: 87 performers’ organizations in 61 countries, from AAA (Argentina) to SUA (Uruguay), held in src/engine/content/industry.ts.",
+     "quote": "AAA – Asociación Argentina de Actores"
+    },
+    {
+     "fact": "SAG-AFTRA is a member, for the United States.",
+     "quote": "SAG-AFTRA – Screen Actors’ Guild – American Federation of Television and Radio Artists"
+    }
+   ],
+   "confidence": "medium",
+   "usedBy": [
+    "src/engine/content/industry.ts"
+   ],
+   "url": "https://fia-actors.com/about/fia-members/",
+   "final": "https://fia-actors.com/about/fia-members/",
+   "status": "read",
+   "http": "200",
+   "bytes": 361792,
+   "sha256": "954437cb78b5d66adc3a47ccb7a6f1a463ea8e73d6874df4c65368a621785b09",
+   "retrieved": "2026-10-24T19:30Z",
+   "attempts": [
+    {
+     "at": "2026-10-24T19:30Z",
+     "http": "200",
+     "bytes": 361792,
+     "error": ""
+    }
+   ],
+   "kind": "membership-list",
+   "conflicts": "The page carried links to unrelated adult sites in its menus when read: injected into the federation’s site, by the look of them. The member list itself reads as the federation’s own; confidence is medium for that reason."
+  },
+  {
+   "id": "b27-FIAPF-accredited",
+   "register": "b27",
+   "was": null,
+   "previously": null,
+   "title": "FIAPF: Accredited Festivals",
+   "organization": "International Federation of Film Producers Associations (FIAPF)",
+   "territory": "worldwide",
+   "updated": null,
+   "establishes": [
+    {
+     "fact": "FIAPF accredits 50 international film festivals in 29 countries, held in src/engine/content/industry.ts.",
+     "quote": "50 international film festivals | 29 countries | 5 continents"
+    }
+   ],
+   "confidence": "high",
+   "usedBy": [
+    "src/engine/content/industry.ts"
+   ],
+   "url": "https://fiapf.org/accredited-festivals/",
+   "final": "https://fiapf.org/accredited-festivals/",
+   "status": "read",
+   "http": "200",
+   "bytes": 161234,
+   "sha256": "790231035c2bb2dfd1a271385c884b789b0ce82537973ff147dc8cd8c1923eb3",
+   "retrieved": "2026-10-24T19:30Z",
+   "attempts": [
+    {
+     "at": "2026-10-24T19:30Z",
+     "http": "200",
+     "bytes": 161234,
+     "error": ""
+    }
+   ],
+   "kind": "accreditation-list"
+  },
+  {
+   "id": "b27-EBU-members",
+   "register": "b27",
+   "was": null,
+   "previously": null,
+   "title": null,
+   "organization": null,
+   "territory": null,
+   "updated": null,
+   "establishes": [],
+   "confidence": null,
+   "usedBy": [],
+   "url": "https://www.ebu.ch/about/members",
+   "final": "https://www.ebu.ch/about/members",
+   "status": "blocked",
+   "http": "403",
+   "bytes": 5841,
+   "sha256": "a7d15b54d7acded3f6384129cff80a4644653d910fa1588e834ff8053773a517",
+   "retrieved": "2026-10-24T20:48Z",
+   "attempts": [
+    {
+     "at": "2026-10-24T19:31Z",
+     "http": "403",
+     "bytes": 5841,
+     "error": ""
+    },
+    {
+     "at": "2026-10-24T20:48Z",
+     "http": "403",
+     "bytes": 5841,
+     "error": ""
+    }
+   ]
+  },
+  {
+   "id": "b27-ABU-members",
+   "register": "b27",
+   "was": null,
+   "previously": null,
+   "title": null,
+   "organization": null,
+   "territory": null,
+   "updated": null,
+   "establishes": [],
+   "confidence": null,
+   "usedBy": [],
+   "url": "https://www.abu.org.my/members/",
+   "final": "https://www.abu.org.my/news/members-invited-to-share-innovations-in-news/",
+   "status": "read",
+   "http": "200",
+   "bytes": 222229,
+   "sha256": "5c77c9b23b12575818dd36195f42ec36c5b4a7925a31ad9589cc0bc3eb4bb992",
+   "retrieved": "2026-10-24T19:31Z",
+   "attempts": [
+    {
+     "at": "2026-10-24T19:31Z",
+     "http": "200",
+     "bytes": 222229,
+     "error": ""
+    }
+   ]
+  },
+  {
+   "id": "b27-EFAD-members",
+   "register": "b27",
+   "was": null,
+   "previously": null,
+   "title": null,
+   "organization": null,
+   "territory": null,
+   "updated": null,
+   "establishes": [],
+   "confidence": null,
+   "usedBy": [],
+   "url": "https://www.efads.eu/members/",
+   "final": "https://www.efads.eu/members/",
+   "status": "unreached",
+   "http": "000",
+   "bytes": 0,
+   "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+   "retrieved": "2026-10-24T20:49Z",
+   "attempts": [
+    {
+     "at": "2026-10-24T19:32Z",
+     "http": "000",
+     "bytes": 0,
+     "error": "curl: (35) Recv failure: Connection reset by peer"
+    },
+    {
+     "at": "2026-10-24T20:49Z",
+     "http": "000",
+     "bytes": 0,
+     "error": "curl: (35) Recv failure: Connection reset by peer"
+    }
+   ]
+  },
+  {
+   "id": "b27-UK-CTA",
+   "register": "b27",
+   "was": null,
+   "previously": null,
+   "title": "Common Travel Area guidance",
+   "organization": "UK Home Office (GOV.UK)",
+   "territory": "GB",
+   "updated": "2026-10-23",
+   "establishes": [
+    {
+     "fact": "A British or Irish citizen may work in either country without any permission.",
+     "quote": "If you are a British or Irish citizen, you can work in either country, including on a self-employed basis, without needing any permission from the authorities."
+    }
+   ],
+   "confidence": "high",
+   "usedBy": [
+    "src/engine/content/jurisdictions.ts"
+   ],
+   "url": "https://www.gov.uk/government/publications/common-travel-area-guidance/common-travel-area-guidance",
+   "final": "https://www.gov.uk/government/publications/common-travel-area-guidance/common-travel-area-guidance",
+   "status": "read",
+   "http": "200",
+   "bytes": 99582,
+   "sha256": "f4a382629265622e23ef6ca90c516a825e45a9c153988d55839d889637530f01",
+   "retrieved": "2026-10-24T19:38Z",
+   "attempts": [
+    {
+     "at": "2026-10-24T19:38Z",
+     "http": "200",
+     "bytes": 99582,
+     "error": ""
+    }
+   ],
+   "kind": "verified-fact"
+  },
+  {
+   "id": "b27-CA-IRPR-186",
+   "register": "b27",
+   "was": null,
+   "previously": null,
+   "title": "Canada: Immigration and Refugee Protection Regulations, section 186 (work without a permit)",
+   "url": "https://laws-lois.justice.gc.ca/eng/regulations/sor-2002-227/section-186.html",
+   "establishes": [
+    {
+     "fact": "A performing artist may work without a permit for a performance, but not one primarily for a film production or a television or radio broadcast.",
+     "quote": "as a performing artist appearing alone or in a group in an artistic performance — other than a performance that is primarily for a film production or a television or radio broadcast"
+    },
+    {
+     "fact": "Only a time-limited engagement, as part of a foreign production or a guest artist in a Canadian one.",
+     "quote": "they are part of a foreign production or group, or are a guest artist in a Canadian production or group, performing a time-limited engagement"
+    },
+    {
+     "fact": "The regulations are current to 2026-09-30.",
+     "quote": "Regulations are current to 2026-09-30"
+    }
+   ],
+   "usedBy": [
+    "src/engine/content/jurisdictions.ts (ca gaps)"
+   ],
+   "organization": "Department of Justice Canada (Justice Laws Website)",
+   "territory": "CA",
+   "updated": "2026-09-30",
+   "confidence": "high",
+   "kind": "verified-fact",
+   "final": "https://laws-lois.justice.gc.ca/eng/regulations/sor-2002-227/section-186.html",
+   "status": "read",
+   "http": "200",
+   "bytes": 63627,
+   "sha256": "05b4ba8c420a3c475c6e03269c851fae38d4023a9708d373ffd669ca8087502c",
+   "retrieved": "2026-10-24T20:50Z",
+   "attempts": [
+    {
+     "at": "2026-10-24T20:50Z",
+     "http": "200",
+     "bytes": 63627,
+     "error": ""
+    }
+   ]
+  },
+  {
+   "id": "b27-FR-talent",
+   "register": "b27",
+   "was": null,
+   "previously": null,
+   "title": "France: the talent card (carte de séjour pluriannuelle talent), its artistic and cultural profession",
+   "url": "https://www.service-public.gouv.fr/particuliers/vosdroits/F16922?lang=en",
+   "establishes": [
+    {
+     "fact": "The page was verified on 1 June 2026.",
+     "quote": "Verified 01 June 2026 - Public Service / Directorate of Legal and Administrative Information (Prime Minister)"
+    },
+    {
+     "fact": "An artist employed must hold contracts totalling three months or more in twelve, with companies creating or exploiting works.",
+     "quote": "have one or more employment contracts for a total cumulative period of 3 months or more over a period of 12 months"
+    },
+    {
+     "fact": "Resources of at least 70% of the full-time minimum wage a month, at least 51% from the artistic work.",
+     "quote": "coming from your activity as a performer or author of a literary or artistic work"
+    },
+    {
+     "fact": "The employer needn’t apply for a work permit.",
+     "quote": "your employer does not have to apply for a work permit and is exempt from paying the foreigner employment tax"
+    },
+    {
+     "fact": "The card lasts the contract’s length, up to four years.",
+     "quote": "The card is valid for the same period as the employment contract, up to a maximum of 4 years."
+    }
+   ],
+   "usedBy": [
+    "src/engine/content/jurisdictions.ts (fr gaps)"
+   ],
+   "organization": "Directorate of Legal and Administrative Information (service-public.gouv.fr)",
+   "territory": "FR",
+   "updated": "2026-06-01",
+   "confidence": "high",
+   "kind": "verified-fact",
+   "final": "https://www.service-public.gouv.fr/particuliers/vosdroits/F16922?lang=en",
+   "status": "read",
+   "http": "200",
+   "bytes": 296779,
+   "sha256": "87199aa7ca220fea927f7273124a57210dd7bc69c65258290a61037f00bf4e0e",
+   "retrieved": "2026-10-24T20:50Z",
+   "attempts": [
+    {
+     "at": "2026-10-24T20:50Z",
+     "http": "200",
+     "bytes": 296779,
+     "error": ""
+    }
+   ]
+  },
+  {
+   "id": "b27-NZ-WS21",
+   "register": "b27",
+   "was": null,
+   "previously": null,
+   "title": "New Zealand: Operational Manual, WS2.1, who is eligible for a Specific Purpose or Event work visa",
+   "url": "https://www.immigration.govt.nz/opsmanual/88261.htm",
+   "establishes": [
+    {
+     "fact": "Entertainment industry workers, performers and film crew among them, are eligible, for any film or video production in New Zealand.",
+     "quote": "Entertainment industry sector workers (entertainers, performing artists, film and video production crew, and associated support personnel), who intend to engage in any form of private or public performance in New Zealand or work on any film or video production in New Zealand."
+    },
+    {
+     "fact": "Granted for the period of the engagement.",
+     "quote": "For the period of their engagement"
+    }
+   ],
+   "usedBy": [
+    "src/engine/content/jurisdictions.ts (nz gaps)"
+   ],
+   "organization": "Immigration New Zealand",
+   "territory": "NZ",
+   "updated": null,
+   "confidence": "medium",
+   "kind": "verified-fact",
+   "final": "https://www.immigration.govt.nz/opsmanual/88261.htm",
+   "status": "read",
+   "http": "200",
+   "bytes": 35242,
+   "sha256": "61756c05f26eb52f20267b7d91729503e8dbbdc49d21ac1b293c374ef210645d",
+   "retrieved": "2026-10-24T20:50Z",
+   "attempts": [
+    {
+     "at": "2026-10-24T20:50Z",
+     "http": "200",
+     "bytes": 35242,
+     "error": ""
+    }
+   ]
+  },
+  {
+   "id": "b27-NZ-1187",
+   "register": "b27",
+   "was": null,
+   "previously": null,
+   "title": "New Zealand: INZ 1187, the Performing Artists, Entertainers and Entertainment Industry work visa application and guide",
+   "url": "https://www.immigration.govt.nz/assets/inz/documents/forms-and-guides/inz1187.pdf",
+   "establishes": [
+    {
+     "fact": "The employer, production company or promoter completes a supplementary form.",
+     "quote": "your employer/production company/promoter"
+    },
+    {
+     "fact": "A copy goes to the professional association, union or guild unless the contract is for 14 days or less, on an official co-production, or with an accredited company.",
+     "quote": "is for 14 days or less, or"
+    }
+   ],
+   "usedBy": [
+    "src/engine/content/jurisdictions.ts (nz gaps)"
+   ],
+   "organization": "Immigration New Zealand",
+   "territory": "NZ",
+   "updated": null,
+   "confidence": "medium",
+   "kind": "verified-fact",
+   "final": "https://www.immigration.govt.nz/assets/inz/documents/forms-and-guides/inz1187.pdf",
+   "status": "read",
+   "http": "200",
+   "bytes": 756941,
+   "sha256": "ba7a470a316e10f7d0272e5dd94d765c0a690b970d08acc2efc1a75cf44dfd7d",
+   "retrieved": "2026-10-24T20:50Z",
+   "attempts": [
+    {
+     "at": "2026-10-24T20:50Z",
+     "http": "200",
+     "bytes": 756941,
+     "error": ""
+    }
+   ]
+  },
+  {
+   "id": "b27-NZ-WS3",
+   "register": "b27",
+   "was": null,
+   "previously": null,
+   "title": "New Zealand: Operational Manual, WS3, Performing Artists, Entertainers and Entertainment Industry workers (its contents only)",
+   "url": "https://www.immigration.govt.nz/opsmanual/46206.htm",
+   "establishes": [
+    {
+     "fact": "WS3, the manual section the evidence for an entertainment worker comes under, took effect on 8 May 2017; this build read its contents, not its subsections.",
+     "quote": "Effective 08/05/2017"
+    }
+   ],
+   "usedBy": [],
+   "organization": "Immigration New Zealand",
+   "territory": "NZ",
+   "updated": "2017-05-08",
+   "confidence": "medium",
+   "kind": "located",
+   "final": "https://www.immigration.govt.nz/opsmanual/46206.htm",
+   "status": "read",
+   "http": "200",
+   "bytes": 4366,
+   "sha256": "9d4370c971e5b2282f6f432dd9c50341740f5c623e05c62527e7b55daa529035",
+   "retrieved": "2026-10-24T20:50Z",
+   "attempts": [
+    {
+     "at": "2026-10-24T20:50Z",
+     "http": "200",
+     "bytes": 4366,
+     "error": ""
+    }
+   ]
+  },
+  {
+   "id": "b27-JP-entertainer",
+   "register": "b27",
+   "was": null,
+   "previously": null,
+   "title": "Japan: the status of residence Entertainer (興行)",
+   "url": "https://www.moj.go.jp/isa/applications/status/entertainer.html",
+   "establishes": [
+    {
+     "fact": "Actors are among those the Entertainer status is for.",
+     "quote": "該当例としては、俳優、歌手、ダンサー、プロスポーツ選手等。"
+    },
+    {
+     "fact": "Its periods of stay: 3 years, 1 year, 6 months, 3 months or 30 days.",
+     "quote": "３年、１年、６月、３月又は３０日"
+    },
+    {
+     "fact": "It covers work in the production of broadcast programs or films.",
+     "quote": "(2)放送番組（有線放送番組を含む。）又は映画の製作に係る活動"
+    }
+   ],
+   "usedBy": [
+    "src/engine/content/jurisdictions.ts (jp gaps)"
+   ],
+   "organization": "Immigration Services Agency of Japan",
+   "territory": "JP",
+   "updated": null,
+   "confidence": "high",
+   "kind": "verified-fact",
+   "final": "https://www.moj.go.jp/isa/applications/status/entertainer.html",
+   "status": "read",
+   "http": "200",
+   "bytes": 23668,
+   "sha256": "057f0d82e96f82d3165ff5beb43078d123b2ceee0f323cfb5cbc8c41f7a1970a",
+   "retrieved": "2026-10-24T20:51Z",
+   "attempts": [
+    {
+     "at": "2026-10-24T20:51Z",
+     "http": "200",
+     "bytes": 23668,
+     "error": ""
+    }
+   ]
+  },
+  {
+   "id": "b27-JP-status",
+   "register": "b27",
+   "was": null,
+   "previously": null,
+   "title": "Japan: the statuses of residence, index",
+   "url": "https://www.moj.go.jp/isa/applications/status/index.html",
+   "establishes": [],
+   "usedBy": [],
+   "organization": "Immigration Services Agency of Japan",
+   "territory": "JP",
+   "updated": null,
+   "confidence": "high",
+   "kind": "located",
+   "final": "https://www.moj.go.jp/isa/applications/status/index.html",
+   "status": "read",
+   "http": "200",
+   "bytes": 22992,
+   "sha256": "b6c5e26de6b1fa9fcde04918b07f51aa5f2fd5eafa357de8241bcd6431878a46",
+   "retrieved": "2026-10-24T20:50Z",
+   "attempts": [
+    {
+     "at": "2026-10-24T20:50Z",
+     "http": "200",
+     "bytes": 22992,
+     "error": ""
+    }
+   ]
+  }
+ ]
+}

@@ -1,4 +1,228 @@
 {
+ "src/engine/content/slate.ts#AWAY_TRIP": {
+  "status": "Rewritten",
+  "hash": "fb1297cbf837",
+  "on": "2026-10-24",
+  "evidence": "Written for brief 27's Area B (the slate) to docs/STYLE.md and docs/GLOSSARY.md, and read where the player meets it: tests/b27-slate-screens.test.ts draws a London part's role card on the Career screen, its offer's warning, its trip, its ETA applied for and granted on the Work tab, a Los Angeles part read as a trip and a New York one as a journey, and a slate series' words on a recurring part's Work tab; tests/b27-slate.test.ts holds the parts' genres and names and the fates' notices. On reading, a London place that said London twice, a breakdown that ran two who-clauses together and a trip that said the contract the game writes were rewritten. tools/voice-check.mjs, tools/tics.mjs, tools/title-case.mjs, tools/plural-check.mjs and tools/spelling.mjs pass",
+  "first": "Pending"
+ },
+ "src/engine/content/slate.ts#BREAKDOWN .comedy": {
+  "status": "Rewritten",
+  "hash": "c9928df74963",
+  "on": "2026-10-24",
+  "evidence": "Written for brief 27's Area B (the slate) to docs/STYLE.md and docs/GLOSSARY.md, and read where the player meets it: tests/b27-slate-screens.test.ts draws a London part's role card on the Career screen, its offer's warning, its trip, its ETA applied for and granted on the Work tab, a Los Angeles part read as a trip and a New York one as a journey, and a slate series' words on a recurring part's Work tab; tests/b27-slate.test.ts holds the parts' genres and names and the fates' notices. On reading, a London place that said London twice, a breakdown that ran two who-clauses together and a trip that said the contract the game writes were rewritten. tools/voice-check.mjs, tools/tics.mjs, tools/title-case.mjs, tools/plural-check.mjs and tools/spelling.mjs pass",
+  "first": "Pending"
+ },
+ "src/engine/content/slate.ts#BREAKDOWN .crime": {
+  "status": "Rewritten",
+  "hash": "abf77c0837ba",
+  "on": "2026-10-24",
+  "evidence": "Written for brief 27's Area B (the slate) to docs/STYLE.md and docs/GLOSSARY.md, and read where the player meets it: tests/b27-slate-screens.test.ts draws a London part's role card on the Career screen, its offer's warning, its trip, its ETA applied for and granted on the Work tab, a Los Angeles part read as a trip and a New York one as a journey, and a slate series' words on a recurring part's Work tab; tests/b27-slate.test.ts holds the parts' genres and names and the fates' notices. On reading, a London place that said London twice, a breakdown that ran two who-clauses together and a trip that said the contract the game writes were rewritten. tools/voice-check.mjs, tools/tics.mjs, tools/title-case.mjs, tools/plural-check.mjs and tools/spelling.mjs pass",
+  "first": "Pending"
+ },
+ "src/engine/content/slate.ts#BREAKDOWN .documentary": {
+  "status": "Rewritten",
+  "hash": "f2b8a44b0cc9",
+  "on": "2026-10-24",
+  "evidence": "Written for brief 27's Area B (the slate) to docs/STYLE.md and docs/GLOSSARY.md, and read where the player meets it: tests/b27-slate-screens.test.ts draws a London part's role card on the Career screen, its offer's warning, its trip, its ETA applied for and granted on the Work tab, a Los Angeles part read as a trip and a New York one as a journey, and a slate series' words on a recurring part's Work tab; tests/b27-slate.test.ts holds the parts' genres and names and the fates' notices. On reading, a London place that said London twice, a breakdown that ran two who-clauses together and a trip that said the contract the game writes were rewritten. tools/voice-check.mjs, tools/tics.mjs, tools/title-case.mjs, tools/plural-check.mjs and tools/spelling.mjs pass",
+  "first": "Pending"
+ },
+ "src/engine/content/slate.ts#BREAKDOWN .drama": {
+  "status": "Rewritten",
+  "hash": "58bc5d7f7d08",
+  "on": "2026-10-24",
+  "evidence": "Written for brief 27's Area B (the slate) to docs/STYLE.md and docs/GLOSSARY.md, and read where the player meets it: tests/b27-slate-screens.test.ts draws a London part's role card on the Career screen, its offer's warning, its trip, its ETA applied for and granted on the Work tab, a Los Angeles part read as a trip and a New York one as a journey, and a slate series' words on a recurring part's Work tab; tests/b27-slate.test.ts holds the parts' genres and names and the fates' notices. On reading, a London place that said London twice, a breakdown that ran two who-clauses together and a trip that said the contract the game writes were rewritten. tools/voice-check.mjs, tools/tics.mjs, tools/title-case.mjs, tools/plural-check.mjs and tools/spelling.mjs pass",
+  "first": "Pending"
+ },
+ "src/engine/content/slate.ts#BREAKDOWN .fantastic": {
+  "status": "Rewritten",
+  "hash": "bb3504cf21cb",
+  "on": "2026-10-24",
+  "evidence": "Written for brief 27's Area B (the slate) to docs/STYLE.md and docs/GLOSSARY.md, and read where the player meets it: tests/b27-slate-screens.test.ts draws a London part's role card on the Career screen, its offer's warning, its trip, its ETA applied for and granted on the Work tab, a Los Angeles part read as a trip and a New York one as a journey, and a slate series' words on a recurring part's Work tab; tests/b27-slate.test.ts holds the parts' genres and names and the fates' notices. On reading, a London place that said London twice, a breakdown that ran two who-clauses together and a trip that said the contract the game writes were rewritten. tools/voice-check.mjs, tools/tics.mjs, tools/title-case.mjs, tools/plural-check.mjs and tools/spelling.mjs pass",
+  "first": "Pending"
+ },
+ "src/engine/content/slate.ts#BREAKDOWN .horror": {
+  "status": "Rewritten",
+  "hash": "199dfa53b34a",
+  "on": "2026-10-24",
+  "evidence": "Written for brief 27's Area B (the slate) to docs/STYLE.md and docs/GLOSSARY.md, and read where the player meets it: tests/b27-slate-screens.test.ts draws a London part's role card on the Career screen, its offer's warning, its trip, its ETA applied for and granted on the Work tab, a Los Angeles part read as a trip and a New York one as a journey, and a slate series' words on a recurring part's Work tab; tests/b27-slate.test.ts holds the parts' genres and names and the fates' notices. On reading, a London place that said London twice, a breakdown that ran two who-clauses together and a trip that said the contract the game writes were rewritten. tools/voice-check.mjs, tools/tics.mjs, tools/title-case.mjs, tools/plural-check.mjs and tools/spelling.mjs pass",
+  "first": "Pending"
+ },
+ "src/engine/content/slate.ts#BREAKDOWN .musical": {
+  "status": "Rewritten",
+  "hash": "41bf8ea39458",
+  "on": "2026-10-24",
+  "evidence": "Written for brief 27's Area B (the slate) to docs/STYLE.md and docs/GLOSSARY.md, and read where the player meets it: tests/b27-slate-screens.test.ts draws a London part's role card on the Career screen, its offer's warning, its trip, its ETA applied for and granted on the Work tab, a Los Angeles part read as a trip and a New York one as a journey, and a slate series' words on a recurring part's Work tab; tests/b27-slate.test.ts holds the parts' genres and names and the fates' notices. On reading, a London place that said London twice, a breakdown that ran two who-clauses together and a trip that said the contract the game writes were rewritten. tools/voice-check.mjs, tools/tics.mjs, tools/title-case.mjs, tools/plural-check.mjs and tools/spelling.mjs pass",
+  "first": "Pending"
+ },
+ "src/engine/content/slate.ts#BREAKDOWN .romance": {
+  "status": "Rewritten",
+  "hash": "0016bec590c2",
+  "on": "2026-10-24",
+  "evidence": "Written for brief 27's Area B (the slate) to docs/STYLE.md and docs/GLOSSARY.md, and read where the player meets it: tests/b27-slate-screens.test.ts draws a London part's role card on the Career screen, its offer's warning, its trip, its ETA applied for and granted on the Work tab, a Los Angeles part read as a trip and a New York one as a journey, and a slate series' words on a recurring part's Work tab; tests/b27-slate.test.ts holds the parts' genres and names and the fates' notices. On reading, a London place that said London twice, a breakdown that ran two who-clauses together and a trip that said the contract the game writes were rewritten. tools/voice-check.mjs, tools/tics.mjs, tools/title-case.mjs, tools/plural-check.mjs and tools/spelling.mjs pass",
+  "first": "Pending"
+ },
+ "src/engine/content/slate.ts#BREAKDOWN .voice": {
+  "status": "Rewritten",
+  "hash": "357a633ce742",
+  "on": "2026-10-24",
+  "evidence": "Written for brief 27's Area B (the slate) to docs/STYLE.md and docs/GLOSSARY.md, and read where the player meets it: tests/b27-slate-screens.test.ts draws a London part's role card on the Career screen, its offer's warning, its trip, its ETA applied for and granted on the Work tab, a Los Angeles part read as a trip and a New York one as a journey, and a slate series' words on a recurring part's Work tab; tests/b27-slate.test.ts holds the parts' genres and names and the fates' notices. On reading, a London place that said London twice, a breakdown that ran two who-clauses together and a trip that said the contract the game writes were rewritten. tools/voice-check.mjs, tools/tics.mjs, tools/title-case.mjs, tools/plural-check.mjs and tools/spelling.mjs pass",
+  "first": "Pending"
+ },
+ "src/engine/content/slate.ts#CASTING_NAMES": {
+  "status": "Rewritten",
+  "hash": "7a8cd46690f1",
+  "on": "2026-10-24",
+  "evidence": "Written for brief 27's Area B (the slate) to docs/STYLE.md and docs/GLOSSARY.md, and read where the player meets it: tests/b27-slate-screens.test.ts draws a London part's role card on the Career screen, its offer's warning, its trip, its ETA applied for and granted on the Work tab, a Los Angeles part read as a trip and a New York one as a journey, and a slate series' words on a recurring part's Work tab; tests/b27-slate.test.ts holds the parts' genres and names and the fates' notices. On reading, a London place that said London twice, a breakdown that ran two who-clauses together and a trip that said the contract the game writes were rewritten. tools/voice-check.mjs, tools/tics.mjs, tools/title-case.mjs, tools/plural-check.mjs and tools/spelling.mjs pass",
+  "first": "Pending"
+ },
+ "src/engine/content/slate.ts#CLASSMATE_NAMES": {
+  "status": "Rewritten",
+  "hash": "8640665a931c",
+  "on": "2026-10-24",
+  "evidence": "Written for brief 27's Area B (the slate) to docs/STYLE.md and docs/GLOSSARY.md, and read where the player meets it: tests/b27-slate-screens.test.ts draws a London part's role card on the Career screen, its offer's warning, its trip, its ETA applied for and granted on the Work tab, a Los Angeles part read as a trip and a New York one as a journey, and a slate series' words on a recurring part's Work tab; tests/b27-slate.test.ts holds the parts' genres and names and the fates' notices. On reading, a London place that said London twice, a breakdown that ran two who-clauses together and a trip that said the contract the game writes were rewritten. tools/voice-check.mjs, tools/tics.mjs, tools/title-case.mjs, tools/plural-check.mjs and tools/spelling.mjs pass",
+  "first": "Pending"
+ },
+ "src/engine/content/slate.ts#COMPANY_WORDS": {
+  "status": "Rewritten",
+  "hash": "c9acb8ef77e7",
+  "on": "2026-10-24",
+  "evidence": "Written for brief 27's Area B (the slate) to docs/STYLE.md and docs/GLOSSARY.md, and read where the player meets it: tests/b27-slate-screens.test.ts draws a London part's role card on the Career screen, its offer's warning, its trip, its ETA applied for and granted on the Work tab, a Los Angeles part read as a trip and a New York one as a journey, and a slate series' words on a recurring part's Work tab; tests/b27-slate.test.ts holds the parts' genres and names and the fates' notices. On reading, a London place that said London twice, a breakdown that ran two who-clauses together and a trip that said the contract the game writes were rewritten. tools/voice-check.mjs, tools/tics.mjs, tools/title-case.mjs, tools/plural-check.mjs and tools/spelling.mjs pass",
+  "first": "Pending"
+ },
+ "src/engine/content/slate.ts#KIND_PROFILES": {
+  "status": "Rewritten",
+  "hash": "54d4c66b442b",
+  "on": "2026-10-24",
+  "evidence": "Written for brief 27's Area B (the slate) to docs/STYLE.md and docs/GLOSSARY.md, and read where the player meets it: tests/b27-slate-screens.test.ts draws a London part's role card on the Career screen, its offer's warning, its trip, its ETA applied for and granted on the Work tab, a Los Angeles part read as a trip and a New York one as a journey, and a slate series' words on a recurring part's Work tab; tests/b27-slate.test.ts holds the parts' genres and names and the fates' notices. On reading, a London place that said London twice, a breakdown that ran two who-clauses together and a trip that said the contract the game writes were rewritten. tools/voice-check.mjs, tools/tics.mjs, tools/title-case.mjs, tools/plural-check.mjs and tools/spelling.mjs pass",
+  "first": "Pending"
+ },
+ "src/engine/content/slate.ts#MARKETS [atlanta]": {
+  "status": "Rewritten",
+  "hash": "b528e3434d79",
+  "on": "2026-10-24",
+  "evidence": "Written for brief 27's Area B (the slate) to docs/STYLE.md and docs/GLOSSARY.md, and read where the player meets it: tests/b27-slate-screens.test.ts draws a London part's role card on the Career screen, its offer's warning, its trip, its ETA applied for and granted on the Work tab, a Los Angeles part read as a trip and a New York one as a journey, and a slate series' words on a recurring part's Work tab; tests/b27-slate.test.ts holds the parts' genres and names and the fates' notices. On reading, a London place that said London twice, a breakdown that ran two who-clauses together and a trip that said the contract the game writes were rewritten. tools/voice-check.mjs, tools/tics.mjs, tools/title-case.mjs, tools/plural-check.mjs and tools/spelling.mjs pass",
+  "first": "Pending"
+ },
+ "src/engine/content/slate.ts#MARKETS [boston]": {
+  "status": "Rewritten",
+  "hash": "1e377a41311e",
+  "on": "2026-10-24",
+  "evidence": "Written for brief 27's Area B (the slate) to docs/STYLE.md and docs/GLOSSARY.md, and read where the player meets it: tests/b27-slate-screens.test.ts draws a London part's role card on the Career screen, its offer's warning, its trip, its ETA applied for and granted on the Work tab, a Los Angeles part read as a trip and a New York one as a journey, and a slate series' words on a recurring part's Work tab; tests/b27-slate.test.ts holds the parts' genres and names and the fates' notices. On reading, a London place that said London twice, a breakdown that ran two who-clauses together and a trip that said the contract the game writes were rewritten. tools/voice-check.mjs, tools/tics.mjs, tools/title-case.mjs, tools/plural-check.mjs and tools/spelling.mjs pass",
+  "first": "Pending"
+ },
+ "src/engine/content/slate.ts#MARKETS [chicago]": {
+  "status": "Rewritten",
+  "hash": "633cc09656f5",
+  "on": "2026-10-24",
+  "evidence": "Written for brief 27's Area B (the slate) to docs/STYLE.md and docs/GLOSSARY.md, and read where the player meets it: tests/b27-slate-screens.test.ts draws a London part's role card on the Career screen, its offer's warning, its trip, its ETA applied for and granted on the Work tab, a Los Angeles part read as a trip and a New York one as a journey, and a slate series' words on a recurring part's Work tab; tests/b27-slate.test.ts holds the parts' genres and names and the fates' notices. On reading, a London place that said London twice, a breakdown that ran two who-clauses together and a trip that said the contract the game writes were rewritten. tools/voice-check.mjs, tools/tics.mjs, tools/title-case.mjs, tools/plural-check.mjs and tools/spelling.mjs pass",
+  "first": "Pending"
+ },
+ "src/engine/content/slate.ts#MARKETS [london]": {
+  "status": "Rewritten",
+  "hash": "bea1187a4b1e",
+  "on": "2026-10-24",
+  "evidence": "Written for brief 27's Area B (the slate) to docs/STYLE.md and docs/GLOSSARY.md, and read where the player meets it: tests/b27-slate-screens.test.ts draws a London part's role card on the Career screen, its offer's warning, its trip, its ETA applied for and granted on the Work tab, a Los Angeles part read as a trip and a New York one as a journey, and a slate series' words on a recurring part's Work tab; tests/b27-slate.test.ts holds the parts' genres and names and the fates' notices. On reading, a London place that said London twice, a breakdown that ran two who-clauses together and a trip that said the contract the game writes were rewritten. tools/voice-check.mjs, tools/tics.mjs, tools/title-case.mjs, tools/plural-check.mjs and tools/spelling.mjs pass",
+  "first": "Pending"
+ },
+ "src/engine/content/slate.ts#MARKETS [los-angeles]": {
+  "status": "Rewritten",
+  "hash": "00331bedcb4e",
+  "on": "2026-10-24",
+  "evidence": "Written for brief 27's Area B (the slate) to docs/STYLE.md and docs/GLOSSARY.md, and read where the player meets it: tests/b27-slate-screens.test.ts draws a London part's role card on the Career screen, its offer's warning, its trip, its ETA applied for and granted on the Work tab, a Los Angeles part read as a trip and a New York one as a journey, and a slate series' words on a recurring part's Work tab; tests/b27-slate.test.ts holds the parts' genres and names and the fates' notices. On reading, a London place that said London twice, a breakdown that ran two who-clauses together and a trip that said the contract the game writes were rewritten. tools/voice-check.mjs, tools/tics.mjs, tools/title-case.mjs, tools/plural-check.mjs and tools/spelling.mjs pass",
+  "first": "Pending"
+ },
+ "src/engine/content/slate.ts#MARKETS [new-haven]": {
+  "status": "Rewritten",
+  "hash": "6736d53ed813",
+  "on": "2026-10-24",
+  "evidence": "Written for brief 27's Area B (the slate) to docs/STYLE.md and docs/GLOSSARY.md, and read where the player meets it: tests/b27-slate-screens.test.ts draws a London part's role card on the Career screen, its offer's warning, its trip, its ETA applied for and granted on the Work tab, a Los Angeles part read as a trip and a New York one as a journey, and a slate series' words on a recurring part's Work tab; tests/b27-slate.test.ts holds the parts' genres and names and the fates' notices. On reading, a London place that said London twice, a breakdown that ran two who-clauses together and a trip that said the contract the game writes were rewritten. tools/voice-check.mjs, tools/tics.mjs, tools/title-case.mjs, tools/plural-check.mjs and tools/spelling.mjs pass",
+  "first": "Pending"
+ },
+ "src/engine/content/slate.ts#MARKETS [new-york]": {
+  "status": "Rewritten",
+  "hash": "324baa0d42d6",
+  "on": "2026-10-24",
+  "evidence": "Written for brief 27's Area B (the slate) to docs/STYLE.md and docs/GLOSSARY.md, and read where the player meets it: tests/b27-slate-screens.test.ts draws a London part's role card on the Career screen, its offer's warning, its trip, its ETA applied for and granted on the Work tab, a Los Angeles part read as a trip and a New York one as a journey, and a slate series' words on a recurring part's Work tab; tests/b27-slate.test.ts holds the parts' genres and names and the fates' notices. On reading, a London place that said London twice, a breakdown that ran two who-clauses together and a trip that said the contract the game writes were rewritten. tools/voice-check.mjs, tools/tics.mjs, tools/title-case.mjs, tools/plural-check.mjs and tools/spelling.mjs pass",
+  "first": "Pending"
+ },
+ "src/engine/content/slate.ts#MARKETS [philadelphia]": {
+  "status": "Rewritten",
+  "hash": "70ad097f49cd",
+  "on": "2026-10-24",
+  "evidence": "Written for brief 27's Area B (the slate) to docs/STYLE.md and docs/GLOSSARY.md, and read where the player meets it: tests/b27-slate-screens.test.ts draws a London part's role card on the Career screen, its offer's warning, its trip, its ETA applied for and granted on the Work tab, a Los Angeles part read as a trip and a New York one as a journey, and a slate series' words on a recurring part's Work tab; tests/b27-slate.test.ts holds the parts' genres and names and the fates' notices. On reading, a London place that said London twice, a breakdown that ran two who-clauses together and a trip that said the contract the game writes were rewritten. tools/voice-check.mjs, tools/tics.mjs, tools/title-case.mjs, tools/plural-check.mjs and tools/spelling.mjs pass",
+  "first": "Pending"
+ },
+ "src/engine/content/slate.ts#MARKETS [san-diego]": {
+  "status": "Rewritten",
+  "hash": "acb342916471",
+  "on": "2026-10-24",
+  "evidence": "Written for brief 27's Area B (the slate) to docs/STYLE.md and docs/GLOSSARY.md, and read where the player meets it: tests/b27-slate-screens.test.ts draws a London part's role card on the Career screen, its offer's warning, its trip, its ETA applied for and granted on the Work tab, a Los Angeles part read as a trip and a New York one as a journey, and a slate series' words on a recurring part's Work tab; tests/b27-slate.test.ts holds the parts' genres and names and the fates' notices. On reading, a London place that said London twice, a breakdown that ran two who-clauses together and a trip that said the contract the game writes were rewritten. tools/voice-check.mjs, tools/tics.mjs, tools/title-case.mjs, tools/plural-check.mjs and tools/spelling.mjs pass",
+  "first": "Pending"
+ },
+ "src/engine/content/slate.ts#MARKETS [seattle]": {
+  "status": "Rewritten",
+  "hash": "26bcaeae2550",
+  "on": "2026-10-24",
+  "evidence": "Written for brief 27's Area B (the slate) to docs/STYLE.md and docs/GLOSSARY.md, and read where the player meets it: tests/b27-slate-screens.test.ts draws a London part's role card on the Career screen, its offer's warning, its trip, its ETA applied for and granted on the Work tab, a Los Angeles part read as a trip and a New York one as a journey, and a slate series' words on a recurring part's Work tab; tests/b27-slate.test.ts holds the parts' genres and names and the fates' notices. On reading, a London place that said London twice, a breakdown that ran two who-clauses together and a trip that said the contract the game writes were rewritten. tools/voice-check.mjs, tools/tics.mjs, tools/title-case.mjs, tools/plural-check.mjs and tools/spelling.mjs pass",
+  "first": "Pending"
+ },
+ "src/engine/content/slate.ts#MARKETS [sydney]": {
+  "status": "Rewritten",
+  "hash": "518fb358e0b2",
+  "on": "2026-10-24",
+  "evidence": "Written for brief 27's Area B (the slate) to docs/STYLE.md and docs/GLOSSARY.md, and read where the player meets it: tests/b27-slate-screens.test.ts draws a London part's role card on the Career screen, its offer's warning, its trip, its ETA applied for and granted on the Work tab, a Los Angeles part read as a trip and a New York one as a journey, and a slate series' words on a recurring part's Work tab; tests/b27-slate.test.ts holds the parts' genres and names and the fates' notices. On reading, a London place that said London twice, a breakdown that ran two who-clauses together and a trip that said the contract the game writes were rewritten. tools/voice-check.mjs, tools/tics.mjs, tools/title-case.mjs, tools/plural-check.mjs and tools/spelling.mjs pass",
+  "first": "Pending"
+ },
+ "src/engine/content/slate.ts#MARKETS [washington]": {
+  "status": "Rewritten",
+  "hash": "a27a66446545",
+  "on": "2026-10-24",
+  "evidence": "Written for brief 27's Area B (the slate) to docs/STYLE.md and docs/GLOSSARY.md, and read where the player meets it: tests/b27-slate-screens.test.ts draws a London part's role card on the Career screen, its offer's warning, its trip, its ETA applied for and granted on the Work tab, a Los Angeles part read as a trip and a New York one as a journey, and a slate series' words on a recurring part's Work tab; tests/b27-slate.test.ts holds the parts' genres and names and the fates' notices. On reading, a London place that said London twice, a breakdown that ran two who-clauses together and a trip that said the contract the game writes were rewritten. tools/voice-check.mjs, tools/tics.mjs, tools/title-case.mjs, tools/plural-check.mjs and tools/spelling.mjs pass",
+  "first": "Pending"
+ },
+ "src/engine/content/slate.ts#NAMES_ACTOR": {
+  "status": "Rewritten",
+  "hash": "2944a82a2539",
+  "on": "2026-10-24",
+  "evidence": "Written for brief 27's Area B (the slate) to docs/STYLE.md and docs/GLOSSARY.md, and read where the player meets it: tests/b27-slate-screens.test.ts draws a London part's role card on the Career screen, its offer's warning, its trip, its ETA applied for and granted on the Work tab, a Los Angeles part read as a trip and a New York one as a journey, and a slate series' words on a recurring part's Work tab; tests/b27-slate.test.ts holds the parts' genres and names and the fates' notices. On reading, a London place that said London twice, a breakdown that ran two who-clauses together and a trip that said the contract the game writes were rewritten. tools/voice-check.mjs, tools/tics.mjs, tools/title-case.mjs, tools/plural-check.mjs and tools/spelling.mjs pass",
+  "first": "Pending"
+ },
+ "src/engine/content/slate.ts#NAMES_ACTRESS": {
+  "status": "Rewritten",
+  "hash": "ea9cbe980d0a",
+  "on": "2026-10-24",
+  "evidence": "Written for brief 27's Area B (the slate) to docs/STYLE.md and docs/GLOSSARY.md, and read where the player meets it: tests/b27-slate-screens.test.ts draws a London part's role card on the Career screen, its offer's warning, its trip, its ETA applied for and granted on the Work tab, a Los Angeles part read as a trip and a New York one as a journey, and a slate series' words on a recurring part's Work tab; tests/b27-slate.test.ts holds the parts' genres and names and the fates' notices. On reading, a London place that said London twice, a breakdown that ran two who-clauses together and a trip that said the contract the game writes were rewritten. tools/voice-check.mjs, tools/tics.mjs, tools/title-case.mjs, tools/plural-check.mjs and tools/spelling.mjs pass",
+  "first": "Pending"
+ },
+ "src/engine/content/slate.ts#NAMES_EITHER": {
+  "status": "Rewritten",
+  "hash": "553d75abbf0a",
+  "on": "2026-10-24",
+  "evidence": "Written for brief 27's Area B (the slate) to docs/STYLE.md and docs/GLOSSARY.md, and read where the player meets it: tests/b27-slate-screens.test.ts draws a London part's role card on the Career screen, its offer's warning, its trip, its ETA applied for and granted on the Work tab, a Los Angeles part read as a trip and a New York one as a journey, and a slate series' words on a recurring part's Work tab; tests/b27-slate.test.ts holds the parts' genres and names and the fates' notices. On reading, a London place that said London twice, a breakdown that ran two who-clauses together and a trip that said the contract the game writes were rewritten. tools/voice-check.mjs, tools/tics.mjs, tools/title-case.mjs, tools/plural-check.mjs and tools/spelling.mjs pass",
+  "first": "Pending"
+ },
+ "src/engine/content/slate.ts#STAGE_VENUES": {
+  "status": "Rewritten",
+  "hash": "10d8946c26f4",
+  "on": "2026-10-24",
+  "evidence": "Written for brief 27's Area B (the slate) to docs/STYLE.md and docs/GLOSSARY.md, and read where the player meets it: tests/b27-slate-screens.test.ts draws a London part's role card on the Career screen, its offer's warning, its trip, its ETA applied for and granted on the Work tab, a Los Angeles part read as a trip and a New York one as a journey, and a slate series' words on a recurring part's Work tab; tests/b27-slate.test.ts holds the parts' genres and names and the fates' notices. On reading, a London place that said London twice, a breakdown that ran two who-clauses together and a trip that said the contract the game writes were rewritten. tools/voice-check.mjs, tools/tics.mjs, tools/title-case.mjs, tools/plural-check.mjs and tools/spelling.mjs pass",
+  "first": "Pending"
+ },
+ "src/engine/content/slate.ts#SURNAMES": {
+  "status": "Rewritten",
+  "hash": "89f1e3bf34c2",
+  "on": "2026-10-24",
+  "evidence": "Written for brief 27's Area B (the slate) to docs/STYLE.md and docs/GLOSSARY.md, and read where the player meets it: tests/b27-slate-screens.test.ts draws a London part's role card on the Career screen, its offer's warning, its trip, its ETA applied for and granted on the Work tab, a Los Angeles part read as a trip and a New York one as a journey, and a slate series' words on a recurring part's Work tab; tests/b27-slate.test.ts holds the parts' genres and names and the fates' notices. On reading, a London place that said London twice, a breakdown that ran two who-clauses together and a trip that said the contract the game writes were rewritten. tools/voice-check.mjs, tools/tics.mjs, tools/title-case.mjs, tools/plural-check.mjs and tools/spelling.mjs pass",
+  "first": "Pending"
+ },
+ "src/engine/content/slate.ts#TITLE_WORDS": {
+  "status": "Rewritten",
+  "hash": "8fa60eb53606",
+  "on": "2026-10-24",
+  "evidence": "Written for brief 27's Area B (the slate) to docs/STYLE.md and docs/GLOSSARY.md, and read where the player meets it: tests/b27-slate-screens.test.ts draws a London part's role card on the Career screen, its offer's warning, its trip, its ETA applied for and granted on the Work tab, a Los Angeles part read as a trip and a New York one as a journey, and a slate series' words on a recurring part's Work tab; tests/b27-slate.test.ts holds the parts' genres and names and the fates' notices. On reading, a London place that said London twice, a breakdown that ran two who-clauses together and a trip that said the contract the game writes were rewritten. tools/voice-check.mjs, tools/tics.mjs, tools/title-case.mjs, tools/plural-check.mjs and tools/spelling.mjs pass",
+  "first": "Pending"
+ },
  "src/engine/content/workflows.ts#ALTS": {
   "status": "Rewritten",
   "hash": "5d4bb89efccc",
@@ -502,6 +726,20 @@
   "on": "2026-10-21",
   "evidence": "Written for brief 19's work loop to docs/STYLE.md and docs/GLOSSARY.md; read where the player meets it in tests/pro-work.test.ts and tests/pro-opportunities-screen.test.ts, with tools/voice-check.mjs, tools/tics.mjs and tools/title-case.mjs passing",
   "first": "Rewritten And Verified"
+ },
+ "src/engine/systems/projobs.ts#applyFates": {
+  "status": "Rewritten",
+  "hash": "7af3cdca301e",
+  "on": "2026-10-24",
+  "evidence": "Written for brief 27's Area B (a production's fate reaching work booked in it) to docs/STYLE.md; read as the player meets it in tests/b27-slate.test.ts's two PLAYER JOURNEYS (never made: the notice once and the engagement's history line; pushed back: the notice and the offer again). On reading, the call-off notice's reason, which said the game owes nothing more since the agreement's own terms weren't read, was rewritten in the form the residuals' notes use. tools/voice-check.mjs and tools/tics.mjs pass",
+  "first": "Pending"
+ },
+ "src/engine/systems/projobs.ts#applyFates [problem]": {
+  "status": "Rewritten",
+  "hash": "242bf0bd6d98",
+  "on": "2026-10-24",
+  "evidence": "Written for brief 27's Area B (a production's fate reaching work booked in it) to docs/STYLE.md; read as the player meets it in tests/b27-slate.test.ts's two PLAYER JOURNEYS (never made: the notice once and the engagement's history line; pushed back: the notice and the offer again). On reading, the call-off notice's reason, which said the game owes nothing more since the agreement's own terms weren't read, was rewritten in the form the residuals' notes use. tools/voice-check.mjs and tools/tics.mjs pass",
+  "first": "Pending"
  },
  "src/engine/systems/projobs.ts#attendedAcross": {
   "status": "Rewritten",
@@ -1013,6 +1251,34 @@
   "on": "2026-10-21",
   "evidence": "Written 2026-10-21 at the owner's word (parts for an actor, an actress or either) to docs/STYLE.md and docs/GLOSSARY.md; read where the player meets it in tests/pro-opportunities-screen.test.ts and tests/pro-core.test.ts ('writes each part for an actor, an actress or either…'), with tools/voice-check.mjs, tools/tics.mjs and tools/title-case.mjs passing",
   "first": "Rewritten And Verified"
+ },
+ "src/engine/systems/slate.ts#makeProduction": {
+  "status": "Rewritten",
+  "hash": "c232b789c2ec",
+  "on": "2026-10-24",
+  "evidence": "Written for brief 27's Area B (the slate) to docs/STYLE.md and docs/GLOSSARY.md, and read where the player meets it: tests/b27-slate-screens.test.ts draws a London part's role card on the Career screen, its offer's warning, its trip, its ETA applied for and granted on the Work tab, a Los Angeles part read as a trip and a New York one as a journey, and a slate series' words on a recurring part's Work tab; tests/b27-slate.test.ts holds the parts' genres and names and the fates' notices. On reading, a London place that said London twice, a breakdown that ran two who-clauses together and a trip that said the contract the game writes were rewritten. tools/voice-check.mjs, tools/tics.mjs, tools/title-case.mjs, tools/plural-check.mjs and tools/spelling.mjs pass",
+  "first": "Pending"
+ },
+ "src/engine/systems/slate.ts#NY": {
+  "status": "Retained",
+  "hash": "91a5e4a639ea",
+  "on": "2026-10-24",
+  "reason": "A time zone's IANA id (America/New_York), the zone the slate reckons its weeks and dates in; it's never shown to the player, and reads as words only to the inventory's reader.",
+  "first": "Pending"
+ },
+ "src/engine/systems/slate.ts#seriesOfYear": {
+  "status": "Rewritten",
+  "hash": "092ac63ba5bf",
+  "on": "2026-10-24",
+  "evidence": "Written for brief 27's Area B (the slate) to docs/STYLE.md and docs/GLOSSARY.md, and read where the player meets it: tests/b27-slate-screens.test.ts draws a London part's role card on the Career screen, its offer's warning, its trip, its ETA applied for and granted on the Work tab, a Los Angeles part read as a trip and a New York one as a journey, and a slate series' words on a recurring part's Work tab; tests/b27-slate.test.ts holds the parts' genres and names and the fates' notices. On reading, a London place that said London twice, a breakdown that ran two who-clauses together and a trip that said the contract the game writes were rewritten. tools/voice-check.mjs, tools/tics.mjs, tools/title-case.mjs, tools/plural-check.mjs and tools/spelling.mjs pass",
+  "first": "Pending"
+ },
+ "src/engine/systems/slate.ts#titleOf": {
+  "status": "Rewritten",
+  "hash": "4e65e71be945",
+  "on": "2026-10-24",
+  "evidence": "Written for brief 27's Area B (the slate) to docs/STYLE.md and docs/GLOSSARY.md, and read where the player meets it: tests/b27-slate-screens.test.ts draws a London part's role card on the Career screen, its offer's warning, its trip, its ETA applied for and granted on the Work tab, a Los Angeles part read as a trip and a New York one as a journey, and a slate series' words on a recurring part's Work tab; tests/b27-slate.test.ts holds the parts' genres and names and the fates' notices. On reading, a London place that said London twice, a breakdown that ran two who-clauses together and a trip that said the contract the game writes were rewritten. tools/voice-check.mjs, tools/tics.mjs, tools/title-case.mjs, tools/plural-check.mjs and tools/spelling.mjs pass",
+  "first": "Pending"
  },
  "src/engine/systems/workflow.ts#afterWrap": {
   "status": "Rewritten",

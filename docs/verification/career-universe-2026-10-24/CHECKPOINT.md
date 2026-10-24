@@ -41,9 +41,9 @@ commit, what's done, what remains and the exact next step. `README.md` is the re
 | A | `create.livesWhereBorn` resolved; birthplace, citizenship, residences, banking history and work authorization apart | Done (the commit after `23ac6c66`) |
 | D | The rotate gate removed; portrait the same interface; the turn, the backend and their checks | Done (the same commit); emulation and a fake platform, said as such |
 | C | The foundation matrix's outstanding rows (110 IVI, 4 Decision Required after the merge) | Classified (`foundation/OUTSTANDING.md`): 4 decisions escalated, 20 behind them, 85 measured again in F, 5 read by an audit after K |
-| K1 | The geographic coverage matrix and the research register | Next |
-| K2 | The ongoing project and opportunity lifecycle (Area B) | Waiting |
-| K3 | Representation depth and versioned materials | Waiting |
+| K1 | The geographic coverage matrix and the research register | Done (this commit): 252 countries and territories, 170,911 places; 124 pages in the register, brief 25's unread sources asked for again |
+| K2 | The ongoing project and opportunity lifecycle (Area B) | Done (this commit): the slate, with the UK's rules verified for its London work |
+| K3 | Representation depth and versioned materials | Next |
 | K4 | Discovery, submission, auditions, direct offers, negotiation, holds and options | Waiting |
 | K5 | Preparation, production, travel, changes, wrap, compensation, expenses, residuals | Waiting |
 | K6 | Release, publicity, weekly charts, renewal and returning work | Waiting |
@@ -67,7 +67,9 @@ commit, what's done, what remains and the exact next step. `README.md` is the re
 
 ## Next Step
 
-K1: the geographic coverage matrix. Inventory every country, territory and place the world map holds (COUNTRIES, the
-cities), say for each what the career world gives it (researched rules, simulated support by a shared rule, or a gap said
-as one), and start the research register (source, organization, date, edition, territory, confidence). Then K2, the
-ongoing project and opportunity lifecycle that ends brief 25's finite catalog.
+K3: representation depth and versioned professional materials (brief 27, Parts 6 and 7, and the lifecycle supplement's
+loops on representation and materials). Read what brief 25 left in `systems/proagent.ts`, `systems/portfolio.ts` and the
+Portfolio and Representation tabs first; then the agent's search, meetings, offers of representation with their terms,
+the relationship over time, a parting, and materials (headshots, résumé, reel, self-tapes) kept as versions the
+submissions name. Then K4 to K8 and F, as the table says. Before F: the 85 measured criteria are measured again on the
+finished commit, and the four decisions above stay with the owner.

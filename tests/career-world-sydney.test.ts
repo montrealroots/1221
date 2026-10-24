@@ -80,16 +80,27 @@ function offered(): { sim: Simulation; o: Opportunity; seed: string } {
 describe('W1, W2: the countries, as data', () => {
   it('T19: says how far each country is researched; an unsupported or partly researched one never gives permission, and says why', () => {
     expect(jurisdictionOf('au').research).toBe('verified');
-    for (const c of ['uk', 'nz', 'ca', 'fr', 'jp', 'in']) expect(JURISDICTIONS[c]!.research).toBe('partial');
+    // The UK verified from 2026-10-24 (brief 27, GOV.UK read that day); the other five still partly researched.
+    expect(jurisdictionOf('uk').research).toBe('verified');
+    for (const c of ['nz', 'ca', 'fr', 'jp', 'in']) expect(JURISDICTIONS[c]!.research).toBe('partial');
     expect(jurisdictionOf('br').research).toBe('unsupported');
     const sim = graduate('countries');
     const days = [{ from: at(2027, 3, 1, 7), to: at(2027, 3, 1, 18) }];
     const br = abroadRead(sim.player, 'br', days, undefined, sim.now);
     expect(br).toMatchObject({ authorized: false, basis: 'abroad-unsupported', country: 'br' });
     expect(br.words).toBe('The rules for working in Brazil aren’t in the game, so it can’t let you take work there.');
+    // Until 2026-10-24 this said the UK's rules were found and not read. An American's day of work there comes under the
+    // Creative Worker visa concession, which asks for an ETA ahead: said, and not permission.
     const uk = abroadRead(sim.player, 'uk', days, undefined, sim.now);
-    expect(uk).toMatchObject({ authorized: false, basis: 'abroad-unsupported' });
-    expect(uk.words).toMatch(/^The rules for working in the United Kingdom aren’t in the game yet: their sources are found and not yet read/);
+    expect(uk).toMatchObject({ authorized: false, basis: 'abroad-needed' });
+    expect(documentsOf(sim.player).some((d) => d.kind === 'passport')).toBe(false);
+    expect(uk.words).toBe('The Creative Worker visa concession needs a passport in force until your work is done, and you don’t hold one. Papers is where you apply for one.');
+    // PLAYER JOURNEY: a passport applied for on Papers (`passport`), and the same day of work read again.
+    passport(sim);
+    expect(abroadRead(sim.player, 'uk', days, undefined, sim.now).words).toBe('Work in the United Kingdom of three months or less comes under the Creative Worker visa concession, with the production’s certificate of sponsorship and an ETA (£20.00), which you apply for ahead. Apply for it on the Career screen’s Work tab once you’ve accepted.');
+    const nz = abroadRead(sim.player, 'nz', days, undefined, sim.now);
+    expect(nz).toMatchObject({ authorized: false, basis: 'abroad-unsupported' });
+    expect(nz.words).toMatch(/^The rules for working in New Zealand aren’t in the game yet: their sources are found and only partly read/);
     // Australia, for an American with no visa: the route, said, and not permission.
     const au = abroadRead(sim.player, 'au', days, undefined, sim.now);
     expect(au).toMatchObject({ authorized: false, basis: 'abroad-needed' });

@@ -58,7 +58,7 @@ import { breaches } from '@/engine/core/invariants';
 import { stopChoices } from '@/engine/world/clock';
 import { PREP_DIMS } from '@/engine/content/coursework';
 import { AGENTS, agencyOf } from '@/engine/content/agents';
-import { AGREEMENT_TERMS, UNIONS, projectById } from '@/engine/content/careerwork';
+import { AGREEMENT_TERMS, UNIONS, projectById, type ProjectTemplate } from '@/engine/content/careerwork';
 import { ENGAGEMENT } from '@/engine/content/engagement';
 import { courseworkOf } from '@/engine/systems/coursework';
 import { SHOWCASE_COURSE } from '@/engine/systems/proshowcase';
@@ -72,6 +72,13 @@ import { renderToStaticMarkup } from 'react-dom/server';
 import '@/ui/looks/all';
 import { resolveLook, type Looked } from '@/ui/looks/registry';
 import { at as subject } from '@/ui/looks/subject';
+
+/**
+ * The parts this journey's player goes for: the fixed ones it was written on (brief 19, brief 25), never the slate's (from
+ * 2026-10-24, brief 27), which has its own played journey in tests/b27-slate.test.ts. A player chooses the roles they go
+ * for; this one leaves the slate's, so its auditions go untaped and its offers declined.
+ */
+const FIXED = (t: ProjectTemplate): boolean => !t.slate;
 
 // TEST SETUP: the looks' links read the game's context, which a page's provider holds; here it's the save a test opens
 // (as tests/evidence2-b08.test.ts does it, without the original, which imports the looks back).
@@ -266,7 +273,7 @@ beforeAll(() => {
   const items = new Map<string, number>();
   const commands = new Map<string, number>();
   const player: Player = {
-    career: graduatingActor({ joinSag: true }),
+    career: graduatingActor({ only: FIXED, joinSag: true }),
     transcript: t,
     // At the meeting's stop, the first time: Ask To Move, the choice the meeting declares (`defineStop`, proagent.ts).
     stop: (_s, item) => {
@@ -593,7 +600,7 @@ describe('V1 and A1: a graduating student carried into the career, played whole 
     sim = cross(sim);
     const t = transcriptFrom(sim);
     const paidAll = (s: Simulation) => s.player.pro!.engagements.find((e) => e.id === job.id)!.pay.every((x) => x.received !== undefined);
-    playTo(sim, at(2029, 12, 31), { career: graduatingActor({ joinSag: true }), transcript: t }, paidAll);
+    playTo(sim, at(2029, 12, 31), { career: graduatingActor({ only: FIXED, joinSag: true }), transcript: t }, paidAll);
     expect(paidAll(sim)).toBe(true);
     // The same figures as the life that kept him: the agreement's end didn't take the commission off what it was owed on.
     const twin = opened('paid-on').player.pro!.engagements.find((e) => e.id === job.id)!;
@@ -646,7 +653,7 @@ describe('preparation, played as twins from the same moment of life A (the falsi
     const tape = (sides: boolean) => {
       const sim = opened('audition');
       const o = () => deskClerk(sim)!;
-      playTo(sim, sim.now + 6 * MS_DAY, { career: graduatingActor({ joinSag: true, sides }) }, () => o().rounds![0]!.status !== 'set');
+      playTo(sim, sim.now + 6 * MS_DAY, { career: graduatingActor({ only: FIXED, joinSag: true, sides }) }, () => o().rounds![0]!.status !== 'set');
       return { prep: o().prep, round: o().rounds![0]! };
     };
     const prepared = tape(true);
@@ -662,7 +669,7 @@ describe('preparation, played as twins from the same moment of life A (the falsi
     const tape = (sleeps: boolean) => {
       const sim = opened('audition');
       const o = () => deskClerk(sim)!;
-      const player: Player = { career: graduatingActor({ joinSag: true, tape: false }) };
+      const player: Player = { career: graduatingActor({ only: FIXED, joinSag: true, tape: false }) };
       // The tape is due on Sunday 2 September at six; taped the morning before (until 2026-10-23, the November tape's, on
       // 17 November; until 2026-10-21, v1-12's on 30 June).
       playTo(sim, at(2029, 8, 31, 22), player);
@@ -692,7 +699,7 @@ describe('preparation, played as twins from the same moment of life A (the falsi
     const shoot = (part: boolean) => {
       const sim = opened('offer');
       const e = () => sim.player.pro!.engagements.find((x) => x.projectId === 'calloway-files');
-      playTo(sim, at(2029, 10, 4), { career: graduatingActor({ joinSag: true, part }) }, () => e()?.status === 'finished');
+      playTo(sim, at(2029, 10, 4), { career: graduatingActor({ only: FIXED, joinSag: true, part }) }, () => e()?.status === 'finished');
       return e()!;
     };
     const prepared = shoot(true);
@@ -716,7 +723,7 @@ describe('a second graduate (life B, seed v1-7), who cuts her reel only once the
   beforeAll(() => {
     let sim = lastTermMorning(SEED_B);
     const t = transcriptFrom(sim);
-    const player: Player = { career: graduatingActor({ reel: 'after-follow-up', resume: 'when-asked', agreement: 'decline' }), transcript: t };
+    const player: Player = { career: graduatingActor({ only: FIXED, reel: 'after-follow-up', resume: 'when-asked', agreement: 'decline' }), transcript: t };
     const rel = () => relationOf(sim.player, AGENT.id);
     const until = (name: string, by: number, reached: (s: Simulation) => boolean) => {
       playTo(sim, by, player, reached);

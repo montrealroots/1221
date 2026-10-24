@@ -447,6 +447,27 @@
   "evidence": "Written for brief 25's Module 6 (the published charts as dated imports, the game's own box office, the awards and festivals inventory, the Emmy Awards by the 78th's rules and Sundance by its 2027 festival's) to docs/STYLE.md and docs/GLOSSARY.md, every rule the read sources' own and every invention said as the game's; read where the player meets it in tests/career-awards-screen.test.ts (the Charts And Awards tab and the Portfolio drawn before the work, after the wrap, after the entry, at the nominations and after the ceremony, through the clock and a reload at each stage) and tests/career-awards.test.ts (each refusal, notice, recap and festival word), with tools/voice-check.mjs, tools/tics.mjs and tools/title-case.mjs clean.",
   "first": "Pending"
  },
+ "src/engine/content/industry.ts#ACCREDITED_FESTIVALS": {
+  "status": "Retained",
+  "hash": "c069a80190ab",
+  "on": "2026-10-24",
+  "reason": "The performers' unions and accredited festivals as FIA's member list and FIAPF's accredited list publish their names (b27-FIA-members, b27-FIAPF-accredited), with the two lists' register ids: a real organization's name isn't the game's to rewrite. Shown on the Charts And Awards tab (tests/b27-slate-screens.test.ts) and read into the geographic coverage matrix by tools/geo-coverage.mjs.",
+  "first": "Pending"
+ },
+ "src/engine/content/industry.ts#INDUSTRY_SOURCES": {
+  "status": "Retained",
+  "hash": "5160f5f5bd0f",
+  "on": "2026-10-24",
+  "reason": "The performers' unions and accredited festivals as FIA's member list and FIAPF's accredited list publish their names (b27-FIA-members, b27-FIAPF-accredited), with the two lists' register ids: a real organization's name isn't the game's to rewrite. Shown on the Charts And Awards tab (tests/b27-slate-screens.test.ts) and read into the geographic coverage matrix by tools/geo-coverage.mjs.",
+  "first": "Pending"
+ },
+ "src/engine/content/industry.ts#PERFORMER_UNIONS": {
+  "status": "Retained",
+  "hash": "c6c1fea7983b",
+  "on": "2026-10-24",
+  "reason": "The performers' unions and accredited festivals as FIA's member list and FIAPF's accredited list publish their names (b27-FIA-members, b27-FIAPF-accredited), with the two lists' register ids: a real organization's name isn't the game's to rewrite. Shown on the Charts And Awards tab (tests/b27-slate-screens.test.ts) and read into the geographic coverage matrix by tools/geo-coverage.mjs.",
+  "first": "Pending"
+ },
  "src/engine/content/jurisdictions.ts#AU_408": {
   "status": "Rewritten",
   "hash": "00d6a69add1b",
@@ -561,9 +582,163 @@
  },
  "src/engine/content/jurisdictions.ts#JURISDICTIONS": {
   "status": "Rewritten",
-  "hash": "5184aa18ad9b",
-  "on": "2026-10-23",
-  "evidence": "Written for brief 25's work abroad (Module 1) to docs/STYLE.md and docs/GLOSSARY.md; read where the player meets it in tests/career-world-sydney.test.ts (the journey, the release, the missed flight and the Work tab drawn at each stage) and tests/career-world-countries.test.ts, with tools/voice-check.mjs, tools/tics.mjs, tools/title-case.mjs and tools/plural-check.mjs passing",
+  "hash": "80ac97b2a5bc",
+  "on": "2026-10-24",
+  "evidence": "Brief 25's countries, read again on 2026-10-24 after brief 27 read an official page for New Zealand, Canada, France and Japan (b27-NZ-WS21, b27-NZ-1187, b27-CA-IRPR-186, b27-FR-talent, b27-JP-entertainer in the research register, each with its facts quoted): each partly researched country's gaps now say what the page left open, and the refusal says its sources are found and only partly read, which until then said not yet read. Read where the player meets it in tests/career-world-sydney.test.ts (New Zealand's refusal) and tests/career-world-countries.test.ts (each source a page read with its facts, the gaps' sentence, COUNTRIES.md); tools/voice-check.mjs, tools/tics.mjs, tools/title-case.mjs, tools/plural-check.mjs and tools/spelling.mjs pass",
+  "first": "Pending"
+ },
+ "src/engine/content/jurisdictions.ts#UK_CONCESSION": {
+  "status": "Rewritten",
+  "hash": "c6322ae7eb73",
+  "on": "2026-10-24",
+  "evidence": "Written for brief 27's UK routes (the Common Travel Area, the Creative Worker concession with its ETA, and the Creative Worker visa) to docs/STYLE.md and docs/GLOSSARY.md, from the GOV.UK pages the research register keeps (b25-S02, b25-S104, b27-UK-print, b27-UK-CTA, b27-UK-eta-apply, b27-UK-ihs); each condition's quote is the page's own words, kept verbatim as its evidence and never shown. Read where the player meets it: tests/b27-slate-screens.test.ts draws the trip to London, the ETA asked for, applied for with its fee and granted, and every condition the concession asks on the Work tab; tests/b27-slate.test.ts holds the route each citizen comes under; tests/career-world-countries.test.ts holds each quote in its page. tools/voice-check.mjs, tools/tics.mjs, tools/title-case.mjs, tools/plural-check.mjs and tools/spelling.mjs pass",
+  "first": "Pending"
+ },
+ "src/engine/content/jurisdictions.ts#UK_CONCESSION [concession]": {
+  "status": "Rewritten",
+  "hash": "c0c4d67f7ebb",
+  "on": "2026-10-24",
+  "evidence": "Written for brief 27's UK routes (the Common Travel Area, the Creative Worker concession with its ETA, and the Creative Worker visa) to docs/STYLE.md and docs/GLOSSARY.md, from the GOV.UK pages the research register keeps (b25-S02, b25-S104, b27-UK-print, b27-UK-CTA, b27-UK-eta-apply, b27-UK-ihs); each condition's quote is the page's own words, kept verbatim as its evidence and never shown. Read where the player meets it: tests/b27-slate-screens.test.ts draws the trip to London, the ETA asked for, applied for with its fee and granted, and every condition the concession asks on the Work tab; tests/b27-slate.test.ts holds the route each citizen comes under; tests/career-world-countries.test.ts holds each quote in its page. tools/voice-check.mjs, tools/tics.mjs, tools/title-case.mjs, tools/plural-check.mjs and tools/spelling.mjs pass",
+  "first": "Pending"
+ },
+ "src/engine/content/jurisdictions.ts#UK_CONCESSION [eta-decision]": {
+  "status": "Rewritten",
+  "hash": "2d2b6fe70d87",
+  "on": "2026-10-24",
+  "evidence": "Written for brief 27's UK routes (the Common Travel Area, the Creative Worker concession with its ETA, and the Creative Worker visa) to docs/STYLE.md and docs/GLOSSARY.md, from the GOV.UK pages the research register keeps (b25-S02, b25-S104, b27-UK-print, b27-UK-CTA, b27-UK-eta-apply, b27-UK-ihs); each condition's quote is the page's own words, kept verbatim as its evidence and never shown. Read where the player meets it: tests/b27-slate-screens.test.ts draws the trip to London, the ETA asked for, applied for with its fee and granted, and every condition the concession asks on the Work tab; tests/b27-slate.test.ts holds the route each citizen comes under; tests/career-world-countries.test.ts holds each quote in its page. tools/voice-check.mjs, tools/tics.mjs, tools/title-case.mjs, tools/plural-check.mjs and tools/spelling.mjs pass",
+  "first": "Pending"
+ },
+ "src/engine/content/jurisdictions.ts#UK_CONCESSION [eta]": {
+  "status": "Rewritten",
+  "hash": "93b5a3092318",
+  "on": "2026-10-24",
+  "evidence": "Written for brief 27's UK routes (the Common Travel Area, the Creative Worker concession with its ETA, and the Creative Worker visa) to docs/STYLE.md and docs/GLOSSARY.md, from the GOV.UK pages the research register keeps (b25-S02, b25-S104, b27-UK-print, b27-UK-CTA, b27-UK-eta-apply, b27-UK-ihs); each condition's quote is the page's own words, kept verbatim as its evidence and never shown. Read where the player meets it: tests/b27-slate-screens.test.ts draws the trip to London, the ETA asked for, applied for with its fee and granted, and every condition the concession asks on the Work tab; tests/b27-slate.test.ts holds the route each citizen comes under; tests/career-world-countries.test.ts holds each quote in its page. tools/voice-check.mjs, tools/tics.mjs, tools/title-case.mjs, tools/plural-check.mjs and tools/spelling.mjs pass",
+  "first": "Pending"
+ },
+ "src/engine/content/jurisdictions.ts#UK_CONCESSION [months]": {
+  "status": "Rewritten",
+  "hash": "6e65968e10ab",
+  "on": "2026-10-24",
+  "evidence": "Written for brief 27's UK routes (the Common Travel Area, the Creative Worker concession with its ETA, and the Creative Worker visa) to docs/STYLE.md and docs/GLOSSARY.md, from the GOV.UK pages the research register keeps (b25-S02, b25-S104, b27-UK-print, b27-UK-CTA, b27-UK-eta-apply, b27-UK-ihs); each condition's quote is the page's own words, kept verbatim as its evidence and never shown. Read where the player meets it: tests/b27-slate-screens.test.ts draws the trip to London, the ETA asked for, applied for with its fee and granted, and every condition the concession asks on the Work tab; tests/b27-slate.test.ts holds the route each citizen comes under; tests/career-world-countries.test.ts holds each quote in its page. tools/voice-check.mjs, tools/tics.mjs, tools/title-case.mjs, tools/plural-check.mjs and tools/spelling.mjs pass",
+  "first": "Pending"
+ },
+ "src/engine/content/jurisdictions.ts#UK_CONCESSION [officer]": {
+  "status": "Rewritten",
+  "hash": "305a6697c790",
+  "on": "2026-10-24",
+  "evidence": "Written for brief 27's UK routes (the Common Travel Area, the Creative Worker concession with its ETA, and the Creative Worker visa) to docs/STYLE.md and docs/GLOSSARY.md, from the GOV.UK pages the research register keeps (b25-S02, b25-S104, b27-UK-print, b27-UK-CTA, b27-UK-eta-apply, b27-UK-ihs); each condition's quote is the page's own words, kept verbatim as its evidence and never shown. Read where the player meets it: tests/b27-slate-screens.test.ts draws the trip to London, the ETA asked for, applied for with its fee and granted, and every condition the concession asks on the Work tab; tests/b27-slate.test.ts holds the route each citizen comes under; tests/career-world-countries.test.ts holds each quote in its page. tools/voice-check.mjs, tools/tics.mjs, tools/title-case.mjs, tools/plural-check.mjs and tools/spelling.mjs pass",
+  "first": "Pending"
+ },
+ "src/engine/content/jurisdictions.ts#UK_CONCESSION [visitor]": {
+  "status": "Rewritten",
+  "hash": "58f8718d0f7a",
+  "on": "2026-10-24",
+  "evidence": "Written for brief 27's UK routes (the Common Travel Area, the Creative Worker concession with its ETA, and the Creative Worker visa) to docs/STYLE.md and docs/GLOSSARY.md, from the GOV.UK pages the research register keeps (b25-S02, b25-S104, b27-UK-print, b27-UK-CTA, b27-UK-eta-apply, b27-UK-ihs); each condition's quote is the page's own words, kept verbatim as its evidence and never shown. Read where the player meets it: tests/b27-slate-screens.test.ts draws the trip to London, the ETA asked for, applied for with its fee and granted, and every condition the concession asks on the Work tab; tests/b27-slate.test.ts holds the route each citizen comes under; tests/career-world-countries.test.ts holds each quote in its page. tools/voice-check.mjs, tools/tics.mjs, tools/title-case.mjs, tools/plural-check.mjs and tools/spelling.mjs pass",
+  "first": "Pending"
+ },
+ "src/engine/content/jurisdictions.ts#UK_CREATIVE": {
+  "status": "Rewritten",
+  "hash": "004bd9920c78",
+  "on": "2026-10-24",
+  "evidence": "Written for brief 27's UK routes (the Common Travel Area, the Creative Worker concession with its ETA, and the Creative Worker visa) to docs/STYLE.md and docs/GLOSSARY.md, from the GOV.UK pages the research register keeps (b25-S02, b25-S104, b27-UK-print, b27-UK-CTA, b27-UK-eta-apply, b27-UK-ihs); each condition's quote is the page's own words, kept verbatim as its evidence and never shown. Read where the player meets it: tests/b27-slate-screens.test.ts draws the trip to London, the ETA asked for, applied for with its fee and granted, and every condition the concession asks on the Work tab; tests/b27-slate.test.ts holds the route each citizen comes under; tests/career-world-countries.test.ts holds each quote in its page. tools/voice-check.mjs, tools/tics.mjs, tools/title-case.mjs, tools/plural-check.mjs and tools/spelling.mjs pass",
+  "first": "Pending"
+ },
+ "src/engine/content/jurisdictions.ts#UK_CREATIVE [category]": {
+  "status": "Rewritten",
+  "hash": "eae92c23c7f9",
+  "on": "2026-10-24",
+  "evidence": "Written for brief 27's UK routes (the Common Travel Area, the Creative Worker concession with its ETA, and the Creative Worker visa) to docs/STYLE.md and docs/GLOSSARY.md, from the GOV.UK pages the research register keeps (b25-S02, b25-S104, b27-UK-print, b27-UK-CTA, b27-UK-eta-apply, b27-UK-ihs); each condition's quote is the page's own words, kept verbatim as its evidence and never shown. Read where the player meets it: tests/b27-slate-screens.test.ts draws the trip to London, the ETA asked for, applied for with its fee and granted, and every condition the concession asks on the Work tab; tests/b27-slate.test.ts holds the route each citizen comes under; tests/career-world-countries.test.ts holds each quote in its page. tools/voice-check.mjs, tools/tics.mjs, tools/title-case.mjs, tools/plural-check.mjs and tools/spelling.mjs pass",
+  "first": "Pending"
+ },
+ "src/engine/content/jurisdictions.ts#UK_CREATIVE [decision]": {
+  "status": "Rewritten",
+  "hash": "74d15433a123",
+  "on": "2026-10-24",
+  "evidence": "Written for brief 27's UK routes (the Common Travel Area, the Creative Worker concession with its ETA, and the Creative Worker visa) to docs/STYLE.md and docs/GLOSSARY.md, from the GOV.UK pages the research register keeps (b25-S02, b25-S104, b27-UK-print, b27-UK-CTA, b27-UK-eta-apply, b27-UK-ihs); each condition's quote is the page's own words, kept verbatim as its evidence and never shown. Read where the player meets it: tests/b27-slate-screens.test.ts draws the trip to London, the ETA asked for, applied for with its fee and granted, and every condition the concession asks on the Work tab; tests/b27-slate.test.ts holds the route each citizen comes under; tests/career-world-countries.test.ts holds each quote in its page. tools/voice-check.mjs, tools/tics.mjs, tools/title-case.mjs, tools/plural-check.mjs and tools/spelling.mjs pass",
+  "first": "Pending"
+ },
+ "src/engine/content/jurisdictions.ts#UK_CREATIVE [fee]": {
+  "status": "Rewritten",
+  "hash": "0f731ddd2ed2",
+  "on": "2026-10-24",
+  "evidence": "Written for brief 27's UK routes (the Common Travel Area, the Creative Worker concession with its ETA, and the Creative Worker visa) to docs/STYLE.md and docs/GLOSSARY.md, from the GOV.UK pages the research register keeps (b25-S02, b25-S104, b27-UK-print, b27-UK-CTA, b27-UK-eta-apply, b27-UK-ihs); each condition's quote is the page's own words, kept verbatim as its evidence and never shown. Read where the player meets it: tests/b27-slate-screens.test.ts draws the trip to London, the ETA asked for, applied for with its fee and granted, and every condition the concession asks on the Work tab; tests/b27-slate.test.ts holds the route each citizen comes under; tests/career-world-countries.test.ts holds each quote in its page. tools/voice-check.mjs, tools/tics.mjs, tools/title-case.mjs, tools/plural-check.mjs and tools/spelling.mjs pass",
+  "first": "Pending"
+ },
+ "src/engine/content/jurisdictions.ts#UK_CREATIVE [stay]": {
+  "status": "Rewritten",
+  "hash": "2a2960dbf3f1",
+  "on": "2026-10-24",
+  "evidence": "Written for brief 27's UK routes (the Common Travel Area, the Creative Worker concession with its ETA, and the Creative Worker visa) to docs/STYLE.md and docs/GLOSSARY.md, from the GOV.UK pages the research register keeps (b25-S02, b25-S104, b27-UK-print, b27-UK-CTA, b27-UK-eta-apply, b27-UK-ihs); each condition's quote is the page's own words, kept verbatim as its evidence and never shown. Read where the player meets it: tests/b27-slate-screens.test.ts draws the trip to London, the ETA asked for, applied for with its fee and granted, and every condition the concession asks on the Work tab; tests/b27-slate.test.ts holds the route each citizen comes under; tests/career-world-countries.test.ts holds each quote in its page. tools/voice-check.mjs, tools/tics.mjs, tools/title-case.mjs, tools/plural-check.mjs and tools/spelling.mjs pass",
+  "first": "Pending"
+ },
+ "src/engine/content/jurisdictions.ts#UK_CREATIVE [surcharge]": {
+  "status": "Rewritten",
+  "hash": "4a77c20194c4",
+  "on": "2026-10-24",
+  "evidence": "Written for brief 27's UK routes (the Common Travel Area, the Creative Worker concession with its ETA, and the Creative Worker visa) to docs/STYLE.md and docs/GLOSSARY.md, from the GOV.UK pages the research register keeps (b25-S02, b25-S104, b27-UK-print, b27-UK-CTA, b27-UK-eta-apply, b27-UK-ihs); each condition's quote is the page's own words, kept verbatim as its evidence and never shown. Read where the player meets it: tests/b27-slate-screens.test.ts draws the trip to London, the ETA asked for, applied for with its fee and granted, and every condition the concession asks on the Work tab; tests/b27-slate.test.ts holds the route each citizen comes under; tests/career-world-countries.test.ts holds each quote in its page. tools/voice-check.mjs, tools/tics.mjs, tools/title-case.mjs, tools/plural-check.mjs and tools/spelling.mjs pass",
+  "first": "Pending"
+ },
+ "src/engine/content/jurisdictions.ts#UK_CTA": {
+  "status": "Retained",
+  "hash": "d6a240e12ca2",
+  "on": "2026-10-24",
+  "reason": "A research register id (b27-UK-CTA, the Common Travel Area guidance) that the Irish route cites its GOV.UK page by; routeSourceWords shows the page's dates, never the id.",
+  "first": "Pending"
+ },
+ "src/engine/content/jurisdictions.ts#UK_CW": {
+  "status": "Retained",
+  "hash": "3193c301852d",
+  "on": "2026-10-24",
+  "reason": "A research register id (b25-S02, the Creative Worker visa's overview) that the UK routes cite their GOV.UK page by; routeSourceWords shows the page's dates, never the id.",
+  "first": "Pending"
+ },
+ "src/engine/content/jurisdictions.ts#UK_GUIDE": {
+  "status": "Retained",
+  "hash": "bb71d4a9c004",
+  "on": "2026-10-24",
+  "reason": "A research register id (b27-UK-print), the Creative Worker guide's printable page, that the UK routes cite; routeSourceWords shows the page's dates, never the id.",
+  "first": "Pending"
+ },
+ "src/engine/content/jurisdictions.ts#UK_IRISH": {
+  "status": "Rewritten",
+  "hash": "ebbec99eab6f",
+  "on": "2026-10-24",
+  "evidence": "Written for brief 27's UK routes (the Common Travel Area, the Creative Worker concession with its ETA, and the Creative Worker visa) to docs/STYLE.md and docs/GLOSSARY.md, from the GOV.UK pages the research register keeps (b25-S02, b25-S104, b27-UK-print, b27-UK-CTA, b27-UK-eta-apply, b27-UK-ihs); each condition's quote is the page's own words, kept verbatim as its evidence and never shown. Read where the player meets it: tests/b27-slate-screens.test.ts draws the trip to London, the ETA asked for, applied for with its fee and granted, and every condition the concession asks on the Work tab; tests/b27-slate.test.ts holds the route each citizen comes under; tests/career-world-countries.test.ts holds each quote in its page. tools/voice-check.mjs, tools/tics.mjs, tools/title-case.mjs, tools/plural-check.mjs and tools/spelling.mjs pass",
+  "first": "Pending"
+ },
+ "src/engine/content/jurisdictions.ts#UK_IRISH [work]": {
+  "status": "Rewritten",
+  "hash": "6b13b85607f5",
+  "on": "2026-10-24",
+  "evidence": "Written for brief 27's UK routes (the Common Travel Area, the Creative Worker concession with its ETA, and the Creative Worker visa) to docs/STYLE.md and docs/GLOSSARY.md, from the GOV.UK pages the research register keeps (b25-S02, b25-S104, b27-UK-print, b27-UK-CTA, b27-UK-eta-apply, b27-UK-ihs); each condition's quote is the page's own words, kept verbatim as its evidence and never shown. Read where the player meets it: tests/b27-slate-screens.test.ts draws the trip to London, the ETA asked for, applied for with its fee and granted, and every condition the concession asks on the Work tab; tests/b27-slate.test.ts holds the route each citizen comes under; tests/career-world-countries.test.ts holds each quote in its page. tools/voice-check.mjs, tools/tics.mjs, tools/title-case.mjs, tools/plural-check.mjs and tools/spelling.mjs pass",
+  "first": "Pending"
+ },
+ "src/engine/content/jurisdictions.ts#UK_SHARED [job]": {
+  "status": "Rewritten",
+  "hash": "eb1b72ab3446",
+  "on": "2026-10-24",
+  "evidence": "Written for brief 27's UK routes (the Common Travel Area, the Creative Worker concession with its ETA, and the Creative Worker visa) to docs/STYLE.md and docs/GLOSSARY.md, from the GOV.UK pages the research register keeps (b25-S02, b25-S104, b27-UK-print, b27-UK-CTA, b27-UK-eta-apply, b27-UK-ihs); each condition's quote is the page's own words, kept verbatim as its evidence and never shown. Read where the player meets it: tests/b27-slate-screens.test.ts draws the trip to London, the ETA asked for, applied for with its fee and granted, and every condition the concession asks on the Work tab; tests/b27-slate.test.ts holds the route each citizen comes under; tests/career-world-countries.test.ts holds each quote in its page. tools/voice-check.mjs, tools/tics.mjs, tools/title-case.mjs, tools/plural-check.mjs and tools/spelling.mjs pass",
+  "first": "Pending"
+ },
+ "src/engine/content/jurisdictions.ts#UK_SHARED [maintenance]": {
+  "status": "Rewritten",
+  "hash": "1fcd88dd3f96",
+  "on": "2026-10-24",
+  "evidence": "Written for brief 27's UK routes (the Common Travel Area, the Creative Worker concession with its ETA, and the Creative Worker visa) to docs/STYLE.md and docs/GLOSSARY.md, from the GOV.UK pages the research register keeps (b25-S02, b25-S104, b27-UK-print, b27-UK-CTA, b27-UK-eta-apply, b27-UK-ihs); each condition's quote is the page's own words, kept verbatim as its evidence and never shown. Read where the player meets it: tests/b27-slate-screens.test.ts draws the trip to London, the ETA asked for, applied for with its fee and granted, and every condition the concession asks on the Work tab; tests/b27-slate.test.ts holds the route each citizen comes under; tests/career-world-countries.test.ts holds each quote in its page. tools/voice-check.mjs, tools/tics.mjs, tools/title-case.mjs, tools/plural-check.mjs and tools/spelling.mjs pass",
+  "first": "Pending"
+ },
+ "src/engine/content/jurisdictions.ts#UK_SHARED [minimum]": {
+  "status": "Rewritten",
+  "hash": "7469d5e402bf",
+  "on": "2026-10-24",
+  "evidence": "Written for brief 27's UK routes (the Common Travel Area, the Creative Worker concession with its ETA, and the Creative Worker visa) to docs/STYLE.md and docs/GLOSSARY.md, from the GOV.UK pages the research register keeps (b25-S02, b25-S104, b27-UK-print, b27-UK-CTA, b27-UK-eta-apply, b27-UK-ihs); each condition's quote is the page's own words, kept verbatim as its evidence and never shown. Read where the player meets it: tests/b27-slate-screens.test.ts draws the trip to London, the ETA asked for, applied for with its fee and granted, and every condition the concession asks on the Work tab; tests/b27-slate.test.ts holds the route each citizen comes under; tests/career-world-countries.test.ts holds each quote in its page. tools/voice-check.mjs, tools/tics.mjs, tools/title-case.mjs, tools/plural-check.mjs and tools/spelling.mjs pass",
+  "first": "Pending"
+ },
+ "src/engine/content/jurisdictions.ts#UK_SHARED [sponsor]": {
+  "status": "Rewritten",
+  "hash": "fbc37d94f2a2",
+  "on": "2026-10-24",
+  "evidence": "Written for brief 27's UK routes (the Common Travel Area, the Creative Worker concession with its ETA, and the Creative Worker visa) to docs/STYLE.md and docs/GLOSSARY.md, from the GOV.UK pages the research register keeps (b25-S02, b25-S104, b27-UK-print, b27-UK-CTA, b27-UK-eta-apply, b27-UK-ihs); each condition's quote is the page's own words, kept verbatim as its evidence and never shown. Read where the player meets it: tests/b27-slate-screens.test.ts draws the trip to London, the ETA asked for, applied for with its fee and granted, and every condition the concession asks on the Work tab; tests/b27-slate.test.ts holds the route each citizen comes under; tests/career-world-countries.test.ts holds each quote in its page. tools/voice-check.mjs, tools/tics.mjs, tools/title-case.mjs, tools/plural-check.mjs and tools/spelling.mjs pass",
   "first": "Pending"
  },
  "src/engine/systems/awards.ts#ceremonyLines": {
@@ -722,9 +897,9 @@
  },
  "src/engine/systems/worktrip.ts#abroadRead": {
   "status": "Rewritten",
-  "hash": "4dfd47ff7f3a",
-  "on": "2026-10-23",
-  "evidence": "Written for brief 25's work abroad (Module 1) to docs/STYLE.md and docs/GLOSSARY.md; read where the player meets it in tests/career-world-sydney.test.ts (the journey, the release, the missed flight and the Work tab drawn at each stage) and tests/career-world-countries.test.ts, with tools/voice-check.mjs, tools/tics.mjs, tools/title-case.mjs and tools/plural-check.mjs passing",
+  "hash": "e6e8346350d2",
+  "on": "2026-10-24",
+  "evidence": "Brief 25's countries, read again on 2026-10-24 after brief 27 read an official page for New Zealand, Canada, France and Japan (b27-NZ-WS21, b27-NZ-1187, b27-CA-IRPR-186, b27-FR-talent, b27-JP-entertainer in the research register, each with its facts quoted): each partly researched country's gaps now say what the page left open, and the refusal says its sources are found and only partly read, which until then said not yet read. Read where the player meets it in tests/career-world-sydney.test.ts (New Zealand's refusal) and tests/career-world-countries.test.ts (each source a page read with its facts, the gaps' sentence, COUNTRIES.md); tools/voice-check.mjs, tools/tics.mjs, tools/title-case.mjs, tools/plural-check.mjs and tools/spelling.mjs pass",
   "first": "Pending"
  },
  "src/engine/systems/worktrip.ts#airportOf": {
@@ -741,18 +916,25 @@
   "evidence": "Written for brief 25's work abroad (Module 1) to docs/STYLE.md and docs/GLOSSARY.md; read where the player meets it in tests/career-world-sydney.test.ts (the journey, the release, the missed flight and the Work tab drawn at each stage) and tests/career-world-countries.test.ts, with tools/voice-check.mjs, tools/tics.mjs, tools/title-case.mjs and tools/plural-check.mjs passing",
   "first": "Pending"
  },
+ "src/engine/systems/worktrip.ts#applicationFee": {
+  "status": "Rewritten",
+  "hash": "279d18841740",
+  "on": "2026-10-24",
+  "evidence": "Written for brief 27's UK routes (the Common Travel Area, the Creative Worker concession with its ETA, and the Creative Worker visa) to docs/STYLE.md and docs/GLOSSARY.md, from the GOV.UK pages the research register keeps (b25-S02, b25-S104, b27-UK-print, b27-UK-CTA, b27-UK-eta-apply, b27-UK-ihs); each condition's quote is the page's own words, kept verbatim as its evidence and never shown. Read where the player meets it: tests/b27-slate-screens.test.ts draws the trip to London, the ETA asked for, applied for with its fee and granted, and every condition the concession asks on the Work tab; tests/b27-slate.test.ts holds the route each citizen comes under; tests/career-world-countries.test.ts holds each quote in its page. tools/voice-check.mjs, tools/tics.mjs, tools/title-case.mjs, tools/plural-check.mjs and tools/spelling.mjs pass. On reading, the ETA's history line, which said An ETA for the project, applied for, was rewritten as You applied for an ETA, as the visa's lines say it",
+  "first": "Pending"
+ },
  "src/engine/systems/worktrip.ts#applyVisa": {
   "status": "Rewritten",
-  "hash": "a8616274684d",
-  "on": "2026-10-23",
-  "evidence": "Written for brief 25's Module 2 (the reference catalog and the parts drawn from it) to docs/STYLE.md and docs/GLOSSARY.md; read where the player meets it in tests/career-drawn.test.ts (the role card, the offer, the Work tab and the trip to Los Angeles drawn over a played journey) and tests/career-catalog.test.ts (productionWords and CATALOG.md), with tools/voice-check.mjs, tools/tics.mjs, tools/title-case.mjs, tools/plural-check.mjs and tools/spelling.mjs passing",
+  "hash": "a49dac7c0484",
+  "on": "2026-10-24",
+  "evidence": "Written for brief 27's UK routes (the Common Travel Area, the Creative Worker concession with its ETA, and the Creative Worker visa) to docs/STYLE.md and docs/GLOSSARY.md, from the GOV.UK pages the research register keeps (b25-S02, b25-S104, b27-UK-print, b27-UK-CTA, b27-UK-eta-apply, b27-UK-ihs); each condition's quote is the page's own words, kept verbatim as its evidence and never shown. Read where the player meets it: tests/b27-slate-screens.test.ts draws the trip to London, the ETA asked for, applied for with its fee and granted, and every condition the concession asks on the Work tab; tests/b27-slate.test.ts holds the route each citizen comes under; tests/career-world-countries.test.ts holds each quote in its page. tools/voice-check.mjs, tools/tics.mjs, tools/title-case.mjs, tools/plural-check.mjs and tools/spelling.mjs pass. On reading, the ETA's history line, which said An ETA for the project, applied for, was rewritten as You applied for an ETA, as the visa's lines say it",
   "first": "Pending"
  },
  "src/engine/systems/worktrip.ts#applyVisa [visa-applied]": {
   "status": "Rewritten",
-  "hash": "64de7989b993",
-  "on": "2026-10-23",
-  "evidence": "Written for brief 25's Module 2 (the reference catalog and the parts drawn from it) to docs/STYLE.md and docs/GLOSSARY.md; read where the player meets it in tests/career-drawn.test.ts (the role card, the offer, the Work tab and the trip to Los Angeles drawn over a played journey) and tests/career-catalog.test.ts (productionWords and CATALOG.md), with tools/voice-check.mjs, tools/tics.mjs, tools/title-case.mjs, tools/plural-check.mjs and tools/spelling.mjs passing",
+  "hash": "23354c005cbe",
+  "on": "2026-10-24",
+  "evidence": "Written for brief 27's UK routes (the Common Travel Area, the Creative Worker concession with its ETA, and the Creative Worker visa) to docs/STYLE.md and docs/GLOSSARY.md, from the GOV.UK pages the research register keeps (b25-S02, b25-S104, b27-UK-print, b27-UK-CTA, b27-UK-eta-apply, b27-UK-ihs); each condition's quote is the page's own words, kept verbatim as its evidence and never shown. Read where the player meets it: tests/b27-slate-screens.test.ts draws the trip to London, the ETA asked for, applied for with its fee and granted, and every condition the concession asks on the Work tab; tests/b27-slate.test.ts holds the route each citizen comes under; tests/career-world-countries.test.ts holds each quote in its page. tools/voice-check.mjs, tools/tics.mjs, tools/title-case.mjs, tools/plural-check.mjs and tools/spelling.mjs pass. On reading, the ETA's history line, which said An ETA for the project, applied for, was rewritten as You applied for an ETA, as the visa's lines say it",
   "first": "Pending"
  },
  "src/engine/systems/worktrip.ts#callWords": {
@@ -764,16 +946,16 @@
  },
  "src/engine/systems/worktrip.ts#departureWords": {
   "status": "Rewritten",
-  "hash": "9aad8b3991a5",
-  "on": "2026-10-23",
-  "evidence": "Written for brief 25's work abroad (Module 1) to docs/STYLE.md and docs/GLOSSARY.md; read where the player meets it in tests/career-world-sydney.test.ts (the journey, the release, the missed flight and the Work tab drawn at each stage) and tests/career-world-countries.test.ts, with tools/voice-check.mjs, tools/tics.mjs, tools/title-case.mjs and tools/plural-check.mjs passing",
+  "hash": "fde9ea2a2bf9",
+  "on": "2026-10-24",
+  "evidence": "Written for brief 27's UK routes (the Common Travel Area, the Creative Worker concession with its ETA, and the Creative Worker visa) to docs/STYLE.md and docs/GLOSSARY.md, from the GOV.UK pages the research register keeps (b25-S02, b25-S104, b27-UK-print, b27-UK-CTA, b27-UK-eta-apply, b27-UK-ihs); each condition's quote is the page's own words, kept verbatim as its evidence and never shown. Read where the player meets it: tests/b27-slate-screens.test.ts draws the trip to London, the ETA asked for, applied for with its fee and granted, and every condition the concession asks on the Work tab; tests/b27-slate.test.ts holds the route each citizen comes under; tests/career-world-countries.test.ts holds each quote in its page. tools/voice-check.mjs, tools/tics.mjs, tools/title-case.mjs, tools/plural-check.mjs and tools/spelling.mjs pass. On reading, the ETA's history line, which said An ETA for the project, applied for, was rewritten as You applied for an ETA, as the visa's lines say it",
   "first": "Pending"
  },
  "src/engine/systems/worktrip.ts#grantVisa [visa-granted]": {
   "status": "Rewritten",
-  "hash": "56de8d59f6d4",
-  "on": "2026-10-23",
-  "evidence": "Written for brief 25's work abroad (Module 1) to docs/STYLE.md and docs/GLOSSARY.md; read where the player meets it in tests/career-world-sydney.test.ts (the journey, the release, the missed flight and the Work tab drawn at each stage) and tests/career-world-countries.test.ts, with tools/voice-check.mjs, tools/tics.mjs, tools/title-case.mjs and tools/plural-check.mjs passing",
+  "hash": "06a1ad0e120d",
+  "on": "2026-10-24",
+  "evidence": "Written for brief 27's UK routes (the Common Travel Area, the Creative Worker concession with its ETA, and the Creative Worker visa) to docs/STYLE.md and docs/GLOSSARY.md, from the GOV.UK pages the research register keeps (b25-S02, b25-S104, b27-UK-print, b27-UK-CTA, b27-UK-eta-apply, b27-UK-ihs); each condition's quote is the page's own words, kept verbatim as its evidence and never shown. Read where the player meets it: tests/b27-slate-screens.test.ts draws the trip to London, the ETA asked for, applied for with its fee and granted, and every condition the concession asks on the Work tab; tests/b27-slate.test.ts holds the route each citizen comes under; tests/career-world-countries.test.ts holds each quote in its page. tools/voice-check.mjs, tools/tics.mjs, tools/title-case.mjs, tools/plural-check.mjs and tools/spelling.mjs pass. On reading, the ETA's history line, which said An ETA for the project, applied for, was rewritten as You applied for an ETA, as the visa's lines say it",
   "first": "Pending"
  },
  "src/engine/systems/worktrip.ts#legPhrase": {
@@ -792,9 +974,9 @@
  },
  "src/engine/systems/worktrip.ts#registerWorkTrips": {
   "status": "Rewritten",
-  "hash": "42d537f4ea23",
-  "on": "2026-10-23",
-  "evidence": "Written for brief 25's work abroad (Module 1) to docs/STYLE.md and docs/GLOSSARY.md; read where the player meets it in tests/career-world-sydney.test.ts (the journey, the release, the missed flight and the Work tab drawn at each stage) and tests/career-world-countries.test.ts, with tools/voice-check.mjs, tools/tics.mjs, tools/title-case.mjs and tools/plural-check.mjs passing",
+  "hash": "b7756bf06993",
+  "on": "2026-10-24",
+  "evidence": "Written for brief 27's UK routes (the Common Travel Area, the Creative Worker concession with its ETA, and the Creative Worker visa) to docs/STYLE.md and docs/GLOSSARY.md, from the GOV.UK pages the research register keeps (b25-S02, b25-S104, b27-UK-print, b27-UK-CTA, b27-UK-eta-apply, b27-UK-ihs); each condition's quote is the page's own words, kept verbatim as its evidence and never shown. Read where the player meets it: tests/b27-slate-screens.test.ts draws the trip to London, the ETA asked for, applied for with its fee and granted, and every condition the concession asks on the Work tab; tests/b27-slate.test.ts holds the route each citizen comes under; tests/career-world-countries.test.ts holds each quote in its page. tools/voice-check.mjs, tools/tics.mjs, tools/title-case.mjs, tools/plural-check.mjs and tools/spelling.mjs pass. On reading, the ETA's history line, which said An ETA for the project, applied for, was rewritten as You applied for an ETA, as the visa's lines say it",
   "first": "Pending"
  },
  "src/engine/systems/worktrip.ts#registerWorkTrips [arrived]": {
@@ -862,9 +1044,9 @@
  },
  "src/engine/systems/worktrip.ts#visaRefusal": {
   "status": "Rewritten",
-  "hash": "b653025e1e5e",
-  "on": "2026-10-23",
-  "evidence": "Written for brief 25's Module 2 (the reference catalog and the parts drawn from it) to docs/STYLE.md and docs/GLOSSARY.md; read where the player meets it in tests/career-drawn.test.ts (the role card, the offer, the Work tab and the trip to Los Angeles drawn over a played journey) and tests/career-catalog.test.ts (productionWords and CATALOG.md), with tools/voice-check.mjs, tools/tics.mjs, tools/title-case.mjs, tools/plural-check.mjs and tools/spelling.mjs passing",
+  "hash": "66c2d810c0e3",
+  "on": "2026-10-24",
+  "evidence": "Written for brief 27's UK routes (the Common Travel Area, the Creative Worker concession with its ETA, and the Creative Worker visa) to docs/STYLE.md and docs/GLOSSARY.md, from the GOV.UK pages the research register keeps (b25-S02, b25-S104, b27-UK-print, b27-UK-CTA, b27-UK-eta-apply, b27-UK-ihs); each condition's quote is the page's own words, kept verbatim as its evidence and never shown. Read where the player meets it: tests/b27-slate-screens.test.ts draws the trip to London, the ETA asked for, applied for with its fee and granted, and every condition the concession asks on the Work tab; tests/b27-slate.test.ts holds the route each citizen comes under; tests/career-world-countries.test.ts holds each quote in its page. tools/voice-check.mjs, tools/tics.mjs, tools/title-case.mjs, tools/plural-check.mjs and tools/spelling.mjs pass. On reading, the ETA's history line, which said An ETA for the project, applied for, was rewritten as You applied for an ETA, as the visa's lines say it",
   "first": "Pending"
  },
  "src/engine/systems/worktrip.ts#way": {
@@ -928,6 +1110,13 @@
   "hash": "1bf50fd7f2d9",
   "on": "2026-10-24",
   "evidence": "Written for brief 25's Module 6 (the published charts as dated imports, the game's own box office, the awards and festivals inventory, the Emmy Awards by the 78th's rules and Sundance by its 2027 festival's) to docs/STYLE.md and docs/GLOSSARY.md, every rule the read sources' own and every invention said as the game's; read where the player meets it in tests/career-awards-screen.test.ts (the Charts And Awards tab and the Portfolio drawn before the work, after the wrap, after the entry, at the nominations and after the ceremony, through the clock and a reload at each stage) and tests/career-awards.test.ts (each refusal, notice, recap and festival word), with tools/voice-check.mjs, tools/tics.mjs and tools/title-case.mjs clean.",
+  "first": "Pending"
+ },
+ "src/ui/career/IndustryPane.tsx#WorldPanel": {
+  "status": "Rewritten",
+  "hash": "674dcd68076f",
+  "on": "2026-10-24",
+  "evidence": "Written for brief 27's Part 5 (real organizations worldwide, chosen by official lists) to docs/STYLE.md and docs/GLOSSARY.md: the Charts And Awards tab's Unions And Festivals Around The World, read where the player meets it in tests/b27-slate-screens.test.ts (where you live, in the United States, every country either list names and every organization in its own name, and that none has dealt with the player); tools/voice-check.mjs, tools/tics.mjs, tools/title-case.mjs and tools/plural-check.mjs pass",
   "first": "Pending"
  }
 }

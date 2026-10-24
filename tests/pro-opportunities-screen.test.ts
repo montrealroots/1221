@@ -17,7 +17,7 @@ import { MS_DAY, MS_HOUR, instantFromZoned } from '@/engine/core/time';
 import { newLifeConfig } from '@/engine/world/bootstrap';
 import { CHAPTERS } from '@/engine/content/tutorial';
 import { READ_KIND } from '@/engine/world/tutorial';
-import { PROJECTS } from '@/engine/content/careerwork';
+import { projectById, PROJECTS } from '@/engine/content/careerwork';
 import { TECHNIQUE_LABEL } from '@/engine/content/abilities';
 import type { Skill } from '@/engine/content/school';
 import type { Opportunity } from '@/engine/systems/pro';
@@ -89,15 +89,15 @@ function offered(sim: Simulation, projectId: string, posted: number): Opportunit
 describe('the Opportunities tab', () => {
   it('PLAYER JOURNEY: a first-year’s tab lists the open roles posted, each fictional with its facts, Submit Yourself grayed with what’s missing under it, and the School’s conditions for work in term', () => {
     const sim = student('opps-first-year');
-    untilOpen(sim, (x) => PROJECTS.find((t) => t.id === x.projectId)!.access.open === 'anyone' && !PROJECTS.find((t) => t.id === x.projectId)!.trip);
+    untilOpen(sim, (x) => projectById(x.projectId)!.access.open === 'anyone' && !projectById(x.projectId)!.trip);
     const { html, shown } = drawn(sim);
     expect(html).toContain('aria-selected="true" aria-controls="career-pane-opportunities"');
     // Until 2026-10-24 the head said every project, company and casting office was invented, untrue once parts were drawn
     // from real productions (brief 25's Module 2).
     expect(shown).toContain('The projects, companies and casting offices here are invented for the game, except a few parts drawn from real productions, and those say so. No real production is casting.');
-    const open = sim.player.pro!.opportunities.filter((o) => o.status === 'open' && o.via === 'open' && PROJECTS.find((t) => t.id === o.projectId)!.access.open === 'anyone' && !PROJECTS.find((t) => t.id === o.projectId)!.trip);
+    const open = sim.player.pro!.opportunities.filter((o) => o.status === 'open' && o.via === 'open' && projectById(o.projectId)!.access.open === 'anyone' && !projectById(o.projectId)!.trip);
     expect(open.length).toBeGreaterThan(0);
-    const t = PROJECTS.find((x) => x.id === open[0]!.projectId)!;
+    const t = projectById(open[0]!.projectId)!;
     expect(shown).toContain(`${t.role.part}, ${t.project}`);
     expect(shown).toContain(`The Project ${t.project}, a fictional`);
     expect(shown).toContain(`The Part ${t.role.part}: ${t.role.about}`);
@@ -108,7 +108,7 @@ describe('the Opportunities tab', () => {
     expect(shown).toContain(`What It Asks ${requirementWords(projectGenresOf(t))}. ${writtenForWords(t)}`);
     expect(requirementWords(projectGenresOf(t))).toBe(GENRE_BY_ID[Object.keys(PROJECT_GENRES[t.project]!.weights)[0]!]!.label);
     if (t.genres.length > 1) expect(shown).not.toContain(t.genres.map((g) => GENRE_BY_ID[g]!.label).join(', '));
-    expect(open.map((o) => PROJECTS.find((x) => x.id === o.projectId)!.role.for)).not.toContain('actor');
+    expect(open.map((o) => projectById(o.projectId)!.role.for)).not.toContain('actor');
     // What the part asks: its two techniques named once, then the actor's own levels, read from the record.
     const [a, b] = Object.keys(t.role.techniques) as Skill[];
     const level = (k: Skill) => Math.round(sim.player.craft?.[k] ?? 0);
@@ -136,7 +136,7 @@ describe('the Opportunities tab', () => {
     tended(sim, at(2026, 8, 30, 10));
     sim.must({ kind: 'pro.headshots', payload: {} });
     sim.must({ kind: 'pro.update_resume', payload: {} });
-    const o = untilOpen(sim, (x) => PROJECTS.find((t) => t.id === x.projectId)!.access.open === 'anyone' && !PROJECTS.find((t) => t.id === x.projectId)!.trip);
+    const o = untilOpen(sim, (x) => projectById(x.projectId)!.access.open === 'anyone' && !projectById(x.projectId)!.trip);
     sim.must({ kind: 'pro.submit', payload: { opportunityId: o.id } });
     expect(drawn(sim).shown).toMatch(/Submitted\. .+ answers? soon\./);
     tended(sim, sim.now + 3 * MS_DAY);

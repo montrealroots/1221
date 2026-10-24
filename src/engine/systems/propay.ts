@@ -581,8 +581,11 @@ export function schedulePay(sim: Simulation, person: Person, e: Engagement): { s
     if (p.deferred) { deferred += 1; continue; }
     if (p.received || p.inTrust || scheduledFor(sim, PAY_KIND, p.key)) continue;
     // A non-union producer pays late at times (`lateDays`, `systems/contracts.ts`, from 2026-10-24, brief 25's Module 4,
-    // D2): the payday comes that many days after its due, and the payment reads overdue in between.
-    if (project?.union === 'none' && p.late === undefined) { const days = lateDays(sim, p.key); if (days) p.late = { days }; }
+    // D2): the payday comes that many days after its due, and the payment reads overdue in between. Drawn by the work (its
+    // part, its first day and the payment's number) from 2026-10-24 (brief 27): until then by the payment's key, which
+    // carries the engagement's number in the save, so the slate's postings, taking numbers before it, moved a played life's
+    // documentary pay from January 10 to February 7, 2030 (tests/journey-career-older.test.ts).
+    if (project?.union === 'none' && p.late === undefined) { const days = lateDays(sim, `${e.projectId}:${e.days[0]?.from ?? 0}:${p.key.slice(p.key.lastIndexOf(':') + 1)}`); if (days) p.late = { days }; }
     const at = p.due + (p.late?.days ?? 0) * MS_DAY;
     sim.schedule({ at: Math.max(at, sim.now + 60_000), kind: PAY_KIND, label: `Payday: ${project?.project ?? 'Your Work'}`, category: 'home', priority: 30, refType: 'engagement', refId: e.id, payload: { personId: person.id, engagementId: e.id, key: p.key } });
     scheduled += 1;

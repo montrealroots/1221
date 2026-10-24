@@ -30,7 +30,10 @@ import { MS_DAY, MS_HOUR, addDays, formatDate, formatTime, formatWeekdayDate, in
 import { CITIES, COUNTRIES, distanceKm } from '../content/geography';
 import { jurisdictionOf, type WorkRoute } from '../content/jurisdictions';
 import type { ProjectTemplate } from '../content/careerwork';
-import { citizenOf, documentsOf, inForce, numberFor, passportOf, type PersonDocument } from './documents';
+import { authorizationFor, citizenOf, citizenshipsOf, documentsOf, inForce, numberFor, passportOf, type PersonDocument } from './documents';
+import { payFromBank } from './spending';
+import { inSaveMoney } from './banking';
+import { formatMoney, saveCurrency, type Money } from '../core/money';
 import { ensurePro, noteEvent, type EligibilityRead, type Engagement, type ProId, type TripLeg, type WorkStay, type WorkTrip } from './pro';
 import { eligibilityRead } from './propay';
 import { payPerDiem } from './contracts';
@@ -223,16 +226,46 @@ export const countryWords = (name: string): string => (THE.test(name) ? `the ${n
 export const countryIn = (country: string): string => countryWords(countryName(country));
 const titled = (words: string): string => words.replace(/(^|\s)(\p{Ll})/gu, (_, sp: string, c: string) => `${sp}${c.toUpperCase()}`);
 
-/** The work visa a booking holds or waits on, tied to it. */
+/**
+ * The work visa a booking holds or waits on, tied to it: a permit, or (from 2026-10-24, brief 27) the travel authorization
+ * a route on arrival needs, applied for from the booking (the UK's ETA). An ETA held from earlier work is in force on its
+ * own (`authorizationFor`) and needs no new one.
+ */
 export function visaFor(person: Person, engagementId: ProId): PersonDocument | undefined {
-  return documentsOf(person).filter((d) => d.kind === 'permit' && d.bookingId === engagementId && d.status !== 'cancelled').sort((a, b) => (b.appliedAt ?? 0) - (a.appliedAt ?? 0))[0];
+  return documentsOf(person).filter((d) => (d.kind === 'permit' || d.kind === 'authorization') && d.bookingId === engagementId && d.status !== 'cancelled').sort((a, b) => (b.appliedAt ?? 0) - (a.appliedAt ?? 0))[0];
 }
 
-/** The route a person would work under in a country: one granted on arrival to their citizenship, or the one applied for. */
-export function routeFor(person: Person, country: string): WorkRoute | undefined {
-  const j = jurisdictionOf(country);
-  return j.routes.find((r) => r.for.kind === 'citizens-of' && citizenOf(person, r.for.iso)) ?? j.routes.find((r) => r.for.kind === 'non-citizens');
+/** A moment `n` calendar months on, at the same time of day in UTC. */
+function monthsOn(t: Instant, n: number): Instant {
+  const d = new Date(t);
+  return Date.UTC(d.getUTCFullYear(), d.getUTCMonth() + n, d.getUTCDate(), d.getUTCHours(), d.getUTCMinutes());
 }
+
+/** Whether a route takes this person for this work: their citizenship, the visa list, and the work's length. */
+function routeTakes(person: Person, r: WorkRoute, days: readonly { from: Instant; to: Instant }[] | undefined): boolean {
+  if (r.for.kind === 'citizens-of') return citizenOf(person, r.for.iso);
+  if (r.for.kind === 'non-citizens') return true;
+  const list = r.for.visaNationals;
+  if (!citizenshipsOf(person).some((iso) => !list.includes(iso))) return false;
+  if (r.maxMonths !== undefined && days?.length) return days[days.length - 1]!.to <= monthsOn(days[0]!.from, r.maxMonths);
+  return true;
+}
+
+/**
+ * The route a person would work under in a country: one granted on arrival to their citizenship; then (from 2026-10-24,
+ * brief 27) one for citizens of any country off a visa list, where the work is short enough (the UK's concession, three
+ * months); then the one applied for. Without the work's days, a route with a length limit is taken as it would be for short
+ * work.
+ */
+export function routeFor(person: Person, country: string, days?: readonly { from: Instant; to: Instant }[]): WorkRoute | undefined {
+  const j = jurisdictionOf(country);
+  return j.routes.find((r) => r.for.kind === 'citizens-of' && routeTakes(person, r, days))
+    ?? j.routes.find((r) => r.for.kind === 'non-visa-nationals' && routeTakes(person, r, days))
+    ?? j.routes.find((r) => r.for.kind === 'non-citizens');
+}
+
+/** The gazetteer's country for an ISO code: GB's is `uk`. */
+const countryOfIso = (iso: string): string => COUNTRIES.all().find((c) => c.iso2?.toUpperCase() === iso.toUpperCase())?.id ?? iso.toLowerCase();
 
 /**
  * What permission to work reads for work abroad on its days (W2, W4): a citizen of the country; a route granted on
@@ -245,12 +278,22 @@ export function abroadRead(person: Person, country: string, days: readonly { fro
   if (citizenOf(person, j.iso)) return { ...base, authorized: true, basis: 'abroad-citizen', words: `You’re a citizen of ${j.name}, so you can work there.` };
   if (j.research !== 'verified') {
     return { ...base, authorized: false, basis: 'abroad-unsupported', words: j.research === 'partial'
-      ? `The rules for working in ${countryWords(j.name)} aren’t in the game yet: their sources are found and not yet read, so the game can’t let you take work there.`
+      ? `The rules for working in ${countryWords(j.name)} aren’t in the game yet: their sources are found and only partly read, so the game can’t let you take work there.`
       : `The rules for working in ${countryWords(j.name)} aren’t in the game, so it can’t let you take work there.` };
   }
-  const route = routeFor(person, country);
+  const route = routeFor(person, country, days);
   if (!route) return { ...base, authorized: false, basis: 'abroad-unsupported', words: `The game has no way for you to work in ${countryWords(j.name)} with the papers you hold.` };
   const last = days[days.length - 1]?.to ?? now;
+  if (route.how === 'on-arrival' && route.authorization) {
+    // The UK's concession (from 2026-10-24, brief 27): a passport in force for the stay, and the ETA the route needs.
+    const a = route.authorization;
+    const passport = documentsOf(person).some((d) => d.kind === 'passport' && inForce(d, now) && inForce(d, last));
+    if (!passport) return { ...base, authorized: false, basis: 'abroad-needed', words: passportOf(person, now) ? `The ${route.name} needs a passport in force until your work is done, and yours runs out first.` : `The ${route.name} needs a passport in force until your work is done, and you don’t hold one. Papers is where you apply for one.` };
+    if (authorizationFor(person, a.destination, now, last)) return { ...base, authorized: true, basis: 'abroad-route', words: `With your ${shortAuth(a.name)} and the production’s certificate of sponsorship, you come into ${countryWords(j.name)} under the ${route.name}, and it lets you work there.` };
+    const pending = documentsOf(person).find((d) => d.kind === 'authorization' && d.destination === a.destination && d.status === 'pending');
+    if (pending) return { ...base, authorized: false, basis: 'abroad-needed', words: `Your ${shortAuth(a.name)} is with the Home Office, which decides on ${formatDate(pending.readyAt ?? now, zoneOf(person.currentLocationId))}.` };
+    return { ...base, authorized: false, basis: 'abroad-needed', words: `Work in ${countryWords(j.name)} of three months or less comes under the ${route.name}, with the production’s certificate of sponsorship and an ${shortAuth(a.name)} (${formatMoney(a.fee.amount, a.fee.currency)}), which you apply for ahead. Apply for it on the Career screen’s Work tab once you’ve accepted.` };
+  }
   if (route.how === 'on-arrival') {
     const want = route.for.kind === 'citizens-of' ? route.for.iso : undefined;
     const ok = documentsOf(person).some((d) => d.kind === 'passport' && (want === undefined || d.issuer === want) && inForce(d, now) && inForce(d, last));
@@ -263,8 +306,11 @@ export function abroadRead(person: Person, country: string, days: readonly { fro
     return { ...base, authorized: true, basis: 'abroad-route', words: `Your ${route.short} covers this work${visa.expiresAt !== undefined ? `, and runs to ${formatDate(visa.expiresAt, zoneOf(cityIdIn(country)))}` : ''}.` };
   }
   if (visa?.status === 'pending') return { ...base, authorized: false, basis: 'abroad-needed', words: `Your ${route.short} is with the department, which decides on ${formatDate(visa.readyAt ?? now, zoneOf(person.currentLocationId))}.` };
-  return { ...base, authorized: false, basis: 'abroad-needed', words: `Work in ${j.name} needs a ${route.short} (${route.name}), which the production supports. Apply for it on the Career screen’s Work tab once you’ve accepted.` };
+  return { ...base, authorized: false, basis: 'abroad-needed', words: `Work in ${j.name} needs a ${route.short} (${route.name}), which the production supports${route.fee ? `, its fee ${formatMoney(route.fee.amount, route.fee.currency)}` : ''}. Apply for it on the Career screen’s Work tab once you’ve accepted.` };
 }
+
+/** An authorization's short name: "ETA (Electronic Travel Authorisation)" is the ETA. */
+const shortAuth = (name: string): string => name.replace(/\s*\(.*\)$/, '');
 /** The country whose work reads the US rule (brief 19's package, `systems/permission.ts`) rather than a jurisdiction's. */
 export const US_RULES = 'us';
 
@@ -282,17 +328,27 @@ export function visaRefusal(person: Person, e: Engagement | undefined, t: Projec
   if (e.status === 'finished' || e.status === 'canceled') return 'That work is over, so there’s no visa to apply for.';
   const country = cityOf(t.place.cityId)?.countryId ?? '';
   if (country === US_RULES) return 'Work in the US needs no visa, only your permission to work here.';
-  const route = routeFor(person, country);
+  const route = routeFor(person, country, e.days);
   const read = abroadRead(person, country, e.days, e.id, now);
   if (read.basis === 'abroad-citizen' || (route && route.how === 'on-arrival' && read.authorized)) return `You don’t need one: ${read.words.charAt(0).toLowerCase()}${read.words.slice(1)}`;
-  if (!route || route.how !== 'apply-ahead') return read.words;
+  if (!route || (route.how !== 'apply-ahead' && !route.authorization)) return read.words;
+  if (route.authorization && documentsOf(person).some((d) => d.kind === 'authorization' && d.destination === route.authorization!.destination && d.status === 'pending')) return `It’s applied for already. ${read.words}`;
   const visa = visaFor(person, e.id);
   if (visa?.status === 'pending') return `You’ve applied already. ${read.words}`;
-  if (visa?.status === 'valid') return `You hold it already. ${read.words}`;
+  // Said "You hold it already" until 2026-10-24 (brief 27), when the file's sentences leaned too hard on "You".
+  if (visa?.status === 'valid') return `It’s granted already. ${read.words}`;
   const trip = tripOf(person, e);
   const home = trip ? windowOf(trip.legs)?.to ?? now : e.days[e.days.length - 1]?.to ?? now;
   if (!passportOf(person, home)) return `You need a passport in force until you’re home on ${formatDate(home, zoneOf(person.currentLocationId))}. Papers shows yours.`;
   return undefined;
+}
+
+/** What applying costs: the route's ETA where it needs one, else its visa's fee, in the save's money (from 2026-10-24, brief 27). */
+export function applicationFee(sim: Simulation, route: WorkRoute): { amount: Money; words: string } | undefined {
+  const fee = route.authorization?.fee ?? route.fee;
+  if (!fee) return undefined;
+  const amount = inSaveMoney(sim, fee.amount, fee.currency);
+  return { amount, words: `${formatMoney(fee.amount, fee.currency)}${fee.currency === saveCurrency(sim.universe) ? '' : `, ${formatMoney(amount, saveCurrency(sim.universe))} from your bank`}` };
 }
 
 export const VISA_KIND = 'pro.visa_decision';
@@ -302,26 +358,45 @@ export const ARRIVE_KIND = 'pro.trip_arrive';
 /** Applies for the visa (W5): a pending permit in Papers, tied to the booking, and the department's decision on the clock. */
 export function applyVisa(sim: Simulation, person: Person, e: Engagement, t: ProjectTemplate): PersonDocument {
   const country = cityOf(t.place.cityId)!.countryId;
-  const route = routeFor(person, country)!;
+  const route = routeFor(person, country, e.days)!;
   const j = jurisdictionOf(country);
+  // Its fee from the bank first, all of it or none (from 2026-10-24, brief 27: the UK's routes give theirs).
+  const fee = applicationFee(sim, route);
+  const a = route.authorization;
+  const name = a ? a.name : route.name;
+  if (fee && !payFromBank(sim, person, fee.amount, `${name}, for ${t.project}`, 'documents')) throw new CommandError(`Your bank can’t cover ${fee.words}, so nothing was applied for.`);
   const id = sim.nextId('document');
-  const readyAt = sim.now + (route.decisionDays ?? 0) * MS_DAY;
-  const doc: PersonDocument = { id, kind: 'permit', issuer: j.iso, destination: j.iso, name: route.name, number: numberFor('VGN', id), status: 'pending', appliedAt: sim.now, readyAt, bookingId: e.id, passportId: passportOf(person, sim.now)?.id };
+  const readyAt = sim.now + (a ? a.decisionDays : route.decisionDays ?? 0) * MS_DAY;
+  const doc: PersonDocument = a
+    ? { id, kind: 'authorization', issuer: a.destination, destination: a.destination, name: a.name, number: numberFor('ETA', id), status: 'pending', appliedAt: sim.now, readyAt, bookingId: e.id, passportId: passportOf(person, sim.now)?.id }
+    : { id, kind: 'permit', issuer: j.iso, destination: j.iso, name: route.name, number: numberFor('VGN', id), status: 'pending', appliedAt: sim.now, readyAt, bookingId: e.id, passportId: passportOf(person, sim.now)?.id };
   documentsOf(person).push(doc);
-  sim.schedule({ at: readyAt, kind: VISA_KIND, label: `The Decision On Your ${route.short}`, category: 'career', priority: 30, refType: 'pro.engagement', refId: e.id, payload: { personId: person.id, engagementId: e.id, documentId: id } });
-  noteEvent(sim, e, { kind: 'visa-applied', key: `visa:${id}:applied`, words: t.trip?.supporter ? `You applied for the ${route.short} for ${t.project}, with ${t.trip.supporter} as your supporter.` : `You applied for the ${route.short} for ${t.project}.` });
+  const short = a ? shortAuth(a.name) : route.short;
+  sim.schedule({ at: readyAt, kind: VISA_KIND, label: `The Decision On Your ${short}`, category: 'career', priority: 30, refType: 'pro.engagement', refId: e.id, payload: { personId: person.id, engagementId: e.id, documentId: id } });
+  const paid = fee ? `, paying ${fee.words}` : '';
+  noteEvent(sim, e, { kind: 'visa-applied', key: `visa:${id}:applied`, words: a ? `You applied for an ${short} for ${t.project}${paid}.` : t.trip?.supporter ? `You applied for the ${route.short} for ${t.project}, with ${t.trip.supporter} as your ${route.id.startsWith('uk-') ? 'sponsor' : 'supporter'}${paid}.` : `You applied for the ${route.short} for ${t.project}${paid}.` });
   return doc;
 }
 
 /** The department's decision (W5): granted to the last work day and the game's days past it. */
 export function grantVisa(sim: Simulation, person: Person, e: Engagement, t: ProjectTemplate, doc: PersonDocument): void {
-  const route = routeFor(person, cityOf(t.place.cityId)!.countryId)!;
+  const route = routeFor(person, cityOf(t.place.cityId)!.countryId, e.days)!;
   const last = e.days[e.days.length - 1]?.to ?? sim.now;
   doc.status = 'valid';
   doc.issuedAt = sim.now;
+  if (doc.kind === 'authorization') {
+    // An ETA lasts two years or until its passport runs out, whichever is sooner (the ETA's page, `b27-UK-eta-apply`).
+    const years = route.authorization?.validityYears ?? 2;
+    const passport = documentsOf(person).find((d) => d.id === doc.passportId);
+    doc.expiresAt = Math.min(addYearsUtc(sim.now, years), passport?.expiresAt ?? Infinity);
+    noteEvent(sim, e, { kind: 'visa-granted', key: `visa:${doc.id}:granted`, words: `Your ${shortAuth(doc.name)} was granted, to ${formatDate(doc.expiresAt, zoneOf(person.currentLocationId))}.` });
+    return;
+  }
   doc.expiresAt = last + (route.graceDays ?? 0) * MS_DAY;
   noteEvent(sim, e, { kind: 'visa-granted', key: `visa:${doc.id}:granted`, words: `Your ${route.short} for ${t.project} was granted, to ${formatDate(doc.expiresAt, zoneOf(t.place.cityId))}.` });
 }
+
+const addYearsUtc = (t: Instant, n: number): Instant => { const d = new Date(t); return Date.UTC(d.getUTCFullYear() + n, d.getUTCMonth(), d.getUTCDate(), d.getUTCHours(), d.getUTCMinutes()); };
 
 // ---------------------------------------------------------------------------------------------------------------------
 // Booking the trip, and its legs on the clock
@@ -366,9 +441,14 @@ export function cancelTrip(sim: Simulation, trip: WorkTrip): void {
 /** Why a player can't fly out for work abroad, said at the flight: no visa applied for, one still undecided, or no route at all. */
 function departureWords(person: Person, country: string, e: Engagement, now: Instant): string {
   if (country === US_RULES) return tripRead(person, country, e.days, e.id, now).words.replace(/\.$/, '');
-  const route = routeFor(person, country);
+  const route = routeFor(person, country, e.days);
   const where = jurisdictionOf(country, countryName(country)).name;
   const visa = visaFor(person, e.id);
+  if (route?.authorization) {
+    const a = shortAuth(route.authorization.name);
+    if (visa?.status === 'pending') return `By your flight the Home Office hadn’t decided on your ${a}, and you can’t come into ${countryWords(where)} under the ${route.name} without it`;
+    return `Without the ${a} the ${route.name} needs, never applied for, you can’t come into ${countryWords(where)} to work`;
+  }
   if (!route || route.how !== 'apply-ahead') return abroadRead(person, country, e.days, e.id, now).words.replace(/\.$/, '');
   if (visa?.status === 'pending') return `The department hadn’t decided on your ${route.short} by your flight, and you can’t work in ${where} without it`;
   if (visa?.status === 'valid') return `Your ${route.short} doesn’t cover every day of the work, and you can’t work in ${where} without it`;
@@ -410,7 +490,11 @@ export function registerWorkTrips(sim: Simulation, hooks: TripHooks): void {
     const doc = person ? documentsOf(person).find((d) => d.id === item.payload.documentId) : undefined;
     if (!person || !e || !t || !doc || doc.status !== 'pending') return;
     grantVisa(s, person, e, t, doc);
-    hooks.tell(s, person, `Your ${titled(routeFor(person, doc.destination?.toLowerCase() ?? '')?.short ?? 'visa')} Was Granted`, `The department granted your ${doc.name} for ${t.project}. It runs to ${formatDate(doc.expiresAt!, zoneOf(t.place.cityId))}, and it’s in Papers under Permission To Work.`, 75);
+    if (doc.kind === 'authorization') {
+      hooks.tell(s, person, `Your ${shortAuth(doc.name)} Was Granted`, `The Home Office granted your ${doc.name}. It runs to ${formatDate(doc.expiresAt!, zoneOf(person.currentLocationId))}, for this trip and any other to the UK before then, and it’s in Papers.`, 75);
+      return;
+    }
+    hooks.tell(s, person, `Your ${titled(routeFor(person, countryOfIso(doc.destination ?? ''), e.days)?.short ?? 'visa')} Was Granted`, `The department granted your ${doc.name} for ${t.project}. It runs to ${formatDate(doc.expiresAt!, zoneOf(t.place.cityId))}, and it’s in Papers under Permission To Work.`, 75);
   });
 
   sim.onSchedule(DEPART_KIND, (item, s) => {

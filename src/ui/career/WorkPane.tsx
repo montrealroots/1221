@@ -170,7 +170,7 @@ function EngagementPay({ person, e }: { person: Person; e: Engagement }) {
 
 /**
  * Work abroad (from 2026-10-23, the owner's brief 25, `systems/worktrip.ts`): the permission it needs and the visa's
- * state, with Apply For The Visa behind its guide chapter and its refusal said under it; the trip's legs, each in its
+ * state, with Apply For The Visa (Apply For The ETA for the UK's concession, from 2026-10-24) behind its guide chapter and its refusal said under it; the trip's legs, each in its
  * towns' own times, and the hotel; and where the flight times come from.
  */
 function TripView({ person, e }: { person: Person; e: Engagement }) {
@@ -181,8 +181,11 @@ function TripView({ person, e }: { person: Person; e: Engagement }) {
   if (!trip || !project) return null;
   const visa = visaFor(person, e.id);
   const no = visaRefusal(person, e, project, sim.now);
-  const route = routeFor(person, trip.country);
+  const route = routeFor(person, trip.country, e.days);
   const read = tripRead(person, trip.country, e.days, e.id, sim.now);
+  // The UK's concession asks for an ETA rather than a visa (from 2026-10-24, brief 27), decided by the Home Office.
+  const asks = route?.authorization ? 'ETA' : 'Visa';
+  const decider = route?.authorization ? 'The Home Office' : 'The department';
   // A trip in the US (Module 2, C10) needs no visa, and its rules aren't a jurisdiction's gaps.
   const domestic = trip.country === US_RULES;
   const city = CITIES.get(trip.cityId)?.name ?? 'abroad';
@@ -193,13 +196,13 @@ function TripView({ person, e }: { person: Person; e: Engagement }) {
       <div className="col gap-2">
         <SectionHead title={domestic ? 'Flights And Hotel' : 'Permission, Flights And Hotel'} help="career.work-abroad" />
         {!finished(e) && <p className={`small ${read.authorized ? '' : 'callout callout-warning'}`} style={{ margin: 0 }}>{read.words}</p>}
-        {visa && <p className="small" style={{ margin: 0 }}>{visa.status === 'pending' ? `Applied ${formatDate(visa.appliedAt ?? sim.now, zone)}. The department decides on ${formatDate(visa.readyAt ?? sim.now, zone)}.` : visa.status === 'valid' ? `Granted ${formatDate(visa.issuedAt ?? sim.now, zone)}, in force to ${formatDate(visa.expiresAt ?? sim.now, zone)}.` : `${visa.name}: ${visa.status}.`}</p>}
+        {visa && <p className="small" style={{ margin: 0 }}>{visa.status === 'pending' ? `Applied ${formatDate(visa.appliedAt ?? sim.now, zone)}. ${decider} decides on ${formatDate(visa.readyAt ?? sim.now, zone)}.` : visa.status === 'valid' ? `Granted ${formatDate(visa.issuedAt ?? sim.now, zone)}, in force to ${formatDate(visa.expiresAt ?? sim.now, zone)}.` : `${visa.name}: ${visa.status}.`}</p>}
         {needs && !visa && (
           <>
             <div className="row gap-2" style={{ flexWrap: 'wrap' }}>
-              <Gated feature="pro.apply_work_visa" className="btn btn-sm" disabled={!!no} title={no} onClick={() => { const r = run<{ readyAt: number }>('pro.apply_work_visa', { engagementId: e.id }); if (r.ok) toast(`You’ve applied. The department decides on ${formatDate(r.value!.readyAt, zone)}.`, 'positive'); }}>Apply For The Visa</Gated>
+              <Gated feature="pro.apply_work_visa" className="btn btn-sm" disabled={!!no} title={no} onClick={() => { const r = run<{ readyAt: number }>('pro.apply_work_visa', { engagementId: e.id }); if (r.ok) toast(`You’ve applied. ${decider} decides on ${formatDate(r.value!.readyAt, zone)}.`, 'positive'); }}>{`Apply For The ${asks}`}</Gated>
             </div>
-            <WhyNot reasons={[['Apply For The Visa', no]]} />
+            <WhyNot reasons={[[`Apply For The ${asks}`, no]]} />
           </>
         )}
         <ul className="small" style={{ margin: 0, paddingLeft: '1.1rem' }}>

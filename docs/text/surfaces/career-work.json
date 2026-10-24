@@ -473,5 +473,68 @@
     "ref": "tests/career-workflows.test.ts: 'WF-16: a reenactment with no lines to learn'"
    }
   ]
+ },
+ {
+  "surface": "A part the slate made: its card on Opportunities, its offer, its place and its series",
+  "where": "Career, Opportunities, each role's card; the offer's warning; Work, the booking and a series' words",
+  "sources": [
+   "src/engine/content/slate.ts#*",
+   "src/engine/systems/slate.ts#*"
+  ],
+  "states": [
+   "first use",
+   "ordinary",
+   "repeated",
+   "details",
+   "explanation",
+   "warning"
+  ],
+  "outcome": "Revised",
+  "why": "New with brief 27's slate: each part says it's the game's own, what kind of work it is, who makes and casts it, where it's made, and, away from home, that the production books the trip.",
+  "changes": "Written new: the markets' places, the kinds' contracts, the titles', companies' and characters' words, the breakdowns, the trip's words and a series' words. Read on the screens, three were rewritten: a London place that said London twice (a stage at a studio west of London and locations in town in London), a breakdown that ran two who-clauses together (A bartender who hears everything who is covering for a brother), and a trip that said the contract the game writes says so. A Los Angeles part a New Haven actor was told was about three hours each way from where they live is now a trip the production books.",
+  "evidence": [
+   {
+    "kind": "test",
+    "ref": "tests/b27-slate-screens.test.ts: 'PLAYER JOURNEY: the role card says it’s the game’s own, the offer warns of the trip, the ETA is applied for and paid for, and granted the next day'"
+   },
+   {
+    "kind": "test",
+    "ref": "tests/b27-slate-screens.test.ts: 'a part in Los Angeles is a trip the production books for an actor in New Haven, and a part in New York a journey there and back'"
+   },
+   {
+    "kind": "test",
+    "ref": "tests/b27-slate-screens.test.ts: 'PLAYER JOURNEY: a recurring part in a series the slate made says on the Work tab that the series and its seasons are the game’s'"
+   },
+   {
+    "kind": "test",
+    "ref": "tests/b27-slate.test.ts: 'writes its parts from its own lists: genres the game has, names no classmate has, each fictional'"
+   }
+  ]
+ },
+ {
+  "surface": "A production's fate: work booked in it called off, or pushed back and offered again",
+  "where": "The notices; Career, Work, the booking's history; Opportunities and What Needs You, the part offered again for its new dates",
+  "sources": [
+   "src/engine/systems/projobs.ts#applyFates*"
+  ],
+  "states": [
+   "setback",
+   "notification",
+   "history",
+   "explanation"
+  ],
+  "outcome": "Revised",
+  "why": "New with brief 27's slate: says which production, what became of it, that the dates are off the calendar, and what's owed.",
+  "changes": "Written new: the two notices and their history lines. Read in the notices, the call-off's reason, which said the game owes nothing more since the agreement's own terms for that weren't read, became the agreement's terms for a production abandoned before it starts weren't read, so the game pays nothing more, as the residuals' notes say it.",
+  "evidence": [
+   {
+    "kind": "test",
+    "ref": "tests/b27-slate.test.ts: 'PLAYER JOURNEY: never made: work booked in it is called off when that’s known, nothing owed for days never worked, said once'"
+   },
+   {
+    "kind": "test",
+    "ref": "tests/b27-slate.test.ts: 'PLAYER JOURNEY: pushed back: released from the old dates, and offered the part again for dates the weeks later'"
+   }
+  ]
  }
 ]

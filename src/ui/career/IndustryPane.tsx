@@ -8,7 +8,9 @@
  * place at Sundance, which only its production can submit. Your Films In Cinemas: the game's own box office, a
  * simulation, never a published figure or the actor's pay. Published Charts: the reference snapshots, each in its own
  * unit, territory and week, with its movement where the week before is held, and how old it is. Awards And Festivals:
- * every institution the brief names, with what this build read of it.
+ * every institution the brief names, with what this build read of it. From 2026-10-24 (the owner's brief 27, Part 5) a
+ * fifth, Unions And Festivals Around The World: the performers' unions FIA lists and the festivals FIAPF accredits, where
+ * the actor lives first and then by country (`content/industry.ts`).
  */
 
 import { useState } from 'react';
@@ -21,6 +23,10 @@ import type { Person } from '@/engine/domain/model';
 import type { Simulation } from '@/engine/core/simulation';
 import { CHARTS, type ChartEntry, type ChartId } from '@/engine/content/charts';
 import { INSTITUTIONS, type Coverage } from '@/engine/content/awards';
+import { ACCREDITED_FESTIVALS, PERFORMER_UNIONS, festivalsIn, unionsIn } from '@/engine/content/industry';
+import { CITIES, COUNTRIES } from '@/engine/content/geography';
+import { spokenList } from '@/engine/core/text';
+import { countryWords } from '@/engine/systems/worktrip';
 import {
   REFERENCE, currentOf, figureWords, latestOf, longDate, movementOf, movementWords, peakOf, titleAcross, weekEnd, weekWords, weeksBy, weeksSoFar,
 } from '@/engine/systems/charts';
@@ -37,6 +43,7 @@ export function IndustryPane() {
       <BoxOfficePanel />
       <ChartsPanel />
       <InventoryPanel />
+      <WorldPanel />
     </div>
   );
 }
@@ -298,6 +305,42 @@ function InventoryPanel() {
           </details>
         ))}
         <Fine>Each organization’s awards are its own competition: the Television Academy’s Emmy Awards, the National Academy’s and the International Academy’s each have their own rules, and so does each section of a festival.</Fine>
+      </div>
+    </Panel>
+  );
+}
+
+/**
+ * The organizations two federations' own lists name, by country: never ranked, and none of them said to have dealt with
+ * the actor. Where the actor lives comes first, from their city's country.
+ */
+function WorldPanel() {
+  const person = useWorld((s) => s.player);
+  const homeId = CITIES.get(person.currentLocationId)?.countryId;
+  const name = (id: string): string => COUNTRIES.get(id)?.name ?? id.toUpperCase();
+  const countries = [...new Set([...PERFORMER_UNIONS, ...ACCREDITED_FESTIVALS].map((x) => x.country))].sort((a, b) => name(a).localeCompare(name(b)));
+  const home = homeId ? { unions: unionsIn(homeId).map((u) => u.name), festivals: festivalsIn(homeId).map((f) => f.name) } : undefined;
+  return (
+    <Panel title="Unions And Festivals Around The World" help="career.awards">
+      <div className="col gap-3">
+        {home && homeId && (
+          <p className="small" style={{ margin: 0 }}>
+            {`Where you live, in ${countryWords(name(homeId))}, ${home.unions.length ? `FIA lists ${spokenList(home.unions)}` : 'FIA lists no performers’ union'}, and ${home.festivals.length ? `FIAPF accredits ${spokenList(home.festivals)}` : 'FIAPF accredits no festival'}.`}
+          </p>
+        )}
+        <details className="small">
+          <summary>{`By Country: ${countries.length} Countries`}</summary>
+          <ul style={{ margin: 'var(--s2) 0 0', paddingLeft: '1.1rem' }} className="col gap-2">
+            {countries.map((c) => {
+              const unions = unionsIn(c).map((u) => u.name);
+              const festivals = festivalsIn(c).map((f) => f.name);
+              return (
+                <li key={c}><span className="strong">{name(c)}</span>{`: ${[unions.length ? `the ${unions.length === 1 ? 'union' : 'unions'} ${spokenList(unions)}` : '', festivals.length ? `the ${festivals.length === 1 ? 'festival' : 'festivals'} ${spokenList(festivals)}` : ''].filter(Boolean).join('; ')}.`}</li>
+              );
+            })}
+          </ul>
+        </details>
+        <Fine>{`A union is here because FIA, the International Federation of Actors, lists it as a member, and a festival because FIAPF, the International Federation of Film Producers Associations, accredits it, as each federation’s page had them on October 24, 2026: ${PERFORMER_UNIONS.length} unions and ${ACCREDITED_FESTIVALS.length} festivals. A country missing from a list may still have its own: the lists name only their members. Naming them here says nothing about you, and none of them has dealt with you.`}</Fine>
       </div>
     </Panel>
   );

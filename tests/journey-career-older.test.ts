@@ -22,7 +22,7 @@ import type { Simulation } from '@/engine/core/simulation';
 import { MS_DAY, formatDate, instantFromZoned } from '@/engine/core/time';
 import { deserialise, serialise } from '@/engine/persistence/adapter';
 import { breaches } from '@/engine/core/invariants';
-import { UNIONS, projectById } from '@/engine/content/careerwork';
+import { UNIONS, projectById, type ProjectTemplate } from '@/engine/content/careerwork';
 import { currentOf, profileOf, type Engagement } from '@/engine/systems/pro';
 import { SHOWCASE_COURSE, SHOWCASE_KIND } from '@/engine/systems/proshowcase';
 import { FOLLOW_UP_KIND, drawOf, referrersOf, relationOf } from '@/engine/systems/proagent';
@@ -35,6 +35,13 @@ import '@/ui/looks/all';
 import { resolveLook, type Looked } from '@/ui/looks/registry';
 import { at as subject } from '@/ui/looks/subject';
 import { graduatingActor, playTo, press, readNotices, titleShape, unsignedActor, type Player, type Transcript } from '../tools/career-player';
+
+/**
+ * The parts this journey's player goes for: the fixed ones it was written on (brief 19, brief 25), never the slate's (from
+ * 2026-10-24, brief 27), which has its own played journey in tests/b27-slate.test.ts. A player chooses the roles they go
+ * for; this one leaves the slate's, so its auditions go untaped and its offers declined.
+ */
+const FIXED = (t: ProjectTemplate): boolean => !t.slate;
 
 // TEST SETUP: the looks' links read the game's context, which a page's provider holds; here it's the life the J6 test
 // plays (as tests/evidence2-b08.test.ts does it, without the original, which imports the looks back).
@@ -82,7 +89,7 @@ describe('V16: an existing graduate’s save from before brief 19 (J01 at 8283f8
     const raw = deserialise(G.raw) as { notifications: { id: string; at: number }[]; decisions: Record<string, unknown> };
     const t: Transcript = { seen: new Set([...raw.notifications.map((n) => `${n.id}@${n.at}`), ...Object.keys(raw.decisions)]), lines: [] };
     readNotices(sim, t);
-    const player: Player = { career: unsignedActor(), transcript: t };
+    const player: Player = { career: unsignedActor({ only: FIXED }), transcript: t };
     const keep = (name: string) => { G.saves.set(name, serialise(sim.universe)); sim = cross(sim); };
     const until = (name: string, by: number, reached: (s: Simulation) => boolean) => {
       playTo(sim, by, player, reached);
@@ -262,14 +269,14 @@ describe('J6, the calendar: what the career puts on it, drawn and opened (the gr
     const sim = loadSave(deserialise(fixture('journey-j01-degree-8283f80c')) as never);
     // Played as the V16 journey above plays it, first to an audition in person on her calendar.
     const audition = (s: Simulation) => s.universe.scheduled.find((i) => i.kind === AUDITION_KIND && i.status === 'pending');
-    playTo(sim, at(2030, 8, 31), { career: unsignedActor() }, (s) => audition(s) !== undefined);
+    playTo(sim, at(2030, 8, 31), { career: unsignedActor({ only: FIXED }) }, (s) => audition(s) !== undefined);
     const au = audition(sim)!;
     const said = entryWords(sim, au.id);
     expect(said).toContain('You need to be there, awake, when the clock reaches it. If you aren’t, it’s missed: casting moves on without you, and the role is gone.');
     expect(said).toContain('It’s in New York, two hours each way from New Haven, and the trip is part of it.');
     // On to her first booking.
     // Her first paid booking is in the summer of 2030 from 2026-10-23 (brief 25, casting keyed by the posting).
-    playTo(sim, at(2030, 8, 31), { career: unsignedActor() }, (s) => s.player.pro!.engagements.some((e) => e.pay.length > 0 && !e.pay.some((p) => p.deferred)));
+    playTo(sim, at(2030, 8, 31), { career: unsignedActor({ only: FIXED }) }, (s) => s.player.pro!.engagements.some((e) => e.pay.length > 0 && !e.pay.some((p) => p.deferred)));
     const entries = entriesBetween(sim, sim.now, sim.now + 40 * MS_DAY);
     const career = entries.filter((e) => e.category === 'career' && e.requiresPlayer);
     expect(career.length).toBeGreaterThan(0);

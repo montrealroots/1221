@@ -414,9 +414,9 @@
  },
  "src/ui/career/WorkPane.tsx#TripView": {
   "status": "Rewritten",
-  "hash": "96dcc31d0108",
-  "on": "2026-10-23",
-  "evidence": "Written for brief 25's Module 2 (the reference catalog and the parts drawn from it) to docs/STYLE.md and docs/GLOSSARY.md; read where the player meets it in tests/career-drawn.test.ts (the role card, the offer, the Work tab and the trip to Los Angeles drawn over a played journey) and tests/career-catalog.test.ts (productionWords and CATALOG.md), with tools/voice-check.mjs, tools/tics.mjs, tools/title-case.mjs, tools/plural-check.mjs and tools/spelling.mjs passing",
+  "hash": "03815ff9f985",
+  "on": "2026-10-24",
+  "evidence": "Brief 25's trip view, changed for brief 27's UK routes: it asks for an ETA where the route's authorization is one and says the Home Office decides it, the department deciding a visa as before. Read where the player meets it in tests/b27-slate-screens.test.ts (the trip to London with Apply For The ETA, Applied and The Home Office decides on, Granted and in force to, and What The concession Asks), with brief 25's tests/career-drawn.test.ts and tests/career-world-sydney.test.ts still drawing the visa's; tools/voice-check.mjs, tools/tics.mjs, tools/title-case.mjs and tools/plural-check.mjs pass",
   "first": "Pending"
  },
  "src/ui/career/WorkPane.tsx#UnionsPanel": {

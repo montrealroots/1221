@@ -1,0 +1,7904 @@
+{
+ "totals": {
+  "countries": 252,
+  "territories": 51,
+  "places": 170911,
+  "gazetteer": 170911,
+  "coverage": {
+   "researched": 3,
+   "partly": 66,
+   "simulated": 183
+  },
+  "work": {
+   "us-package": 1,
+   "verified": 2,
+   "partial": 5,
+   "unsupported": 244
+  },
+  "markets": 12,
+  "unions": 87,
+  "festivals": 50,
+  "placesInMarketCountries": 25819
+ },
+ "markets": [
+  {
+   "id": "new-york",
+   "city": "New York",
+   "cityId": "us-ny-newyork",
+   "country": "us",
+   "latitude": 40.71,
+   "longitude": -74.01,
+   "nearestTo": 1069
+  },
+  {
+   "id": "los-angeles",
+   "city": "Los Angeles",
+   "cityId": "us-ca-losangeles",
+   "country": "us",
+   "latitude": 34.05,
+   "longitude": -118.24,
+   "nearestTo": 1639
+  },
+  {
+   "id": "atlanta",
+   "city": "Atlanta",
+   "cityId": "us-ga-atlanta",
+   "country": "us",
+   "latitude": 33.75,
+   "longitude": -84.39,
+   "nearestTo": 22528
+  },
+  {
+   "id": "chicago",
+   "city": "Chicago",
+   "cityId": "us-il-chicago",
+   "country": "us",
+   "latitude": 41.88,
+   "longitude": -87.63,
+   "nearestTo": 4667
+  },
+  {
+   "id": "boston",
+   "city": "Boston",
+   "cityId": "us-ma-boston",
+   "country": "us",
+   "latitude": 42.36,
+   "longitude": -71.06,
+   "nearestTo": 3204
+  },
+  {
+   "id": "washington",
+   "city": "Washington",
+   "cityId": "us-dc-washington",
+   "country": "us",
+   "latitude": 38.8951,
+   "longitude": -77.0364,
+   "nearestTo": 2556
+  },
+  {
+   "id": "philadelphia",
+   "city": "Philadelphia",
+   "cityId": "us-pa-philadelphia",
+   "country": "us",
+   "latitude": 39.9524,
+   "longitude": -75.1636,
+   "nearestTo": 1903
+  },
+  {
+   "id": "seattle",
+   "city": "Seattle",
+   "cityId": "us-wa-seattle",
+   "country": "us",
+   "latitude": 47.61,
+   "longitude": -122.33,
+   "nearestTo": 4150
+  },
+  {
+   "id": "san-diego",
+   "city": "San Diego",
+   "cityId": "us-ca-sandiego",
+   "country": "us",
+   "latitude": 32.72,
+   "longitude": -117.16,
+   "nearestTo": 3564
+  },
+  {
+   "id": "new-haven",
+   "city": "New Haven",
+   "cityId": "us-ct-newhaven",
+   "country": "us",
+   "latitude": 41.3081,
+   "longitude": -72.9282,
+   "nearestTo": 803
+  },
+  {
+   "id": "london",
+   "city": "London",
+   "cityId": "uk-eng-london",
+   "country": "uk",
+   "latitude": 51.51,
+   "longitude": -0.13,
+   "nearestTo": 105238
+  },
+  {
+   "id": "sydney",
+   "city": "Sydney",
+   "cityId": "au-nsw-sydney",
+   "country": "au",
+   "latitude": -33.87,
+   "longitude": 151.21,
+   "nearestTo": 19590
+  }
+ ],
+ "rows": [
+  {
+   "id": "af",
+   "iso2": "AF",
+   "name": "Afghanistan",
+   "kind": "country",
+   "continent": "Asia",
+   "currency": "AFN",
+   "regions": 34,
+   "places": 319,
+   "work": "unsupported",
+   "routes": [],
+   "markets": [],
+   "unions": [],
+   "festivals": [],
+   "nearest": {
+    "market": "london",
+    "places": 319
+   },
+   "km": {
+    "min": 5140,
+    "median": 5620,
+    "max": 5851
+   },
+   "trips": 319,
+   "coverage": "simulated",
+   "gaps": [
+    "its rules for working there",
+    "a market of its own"
+   ]
+  },
+  {
+   "id": "ax",
+   "iso2": "AX",
+   "name": "Aland Islands",
+   "kind": "territory of Finland",
+   "continent": "Europe",
+   "currency": "EUR",
+   "regions": 3,
+   "places": 21,
+   "work": "unsupported",
+   "routes": [],
+   "markets": [],
+   "unions": [],
+   "festivals": [],
+   "nearest": {
+    "market": "london",
+    "places": 21
+   },
+   "km": {
+    "min": 1556,
+    "median": 1579,
+    "max": 1636
+   },
+   "trips": 21,
+   "coverage": "simulated",
+   "gaps": [
+    "its rules for working there",
+    "a market of its own"
+   ]
+  },
+  {
+   "id": "al",
+   "iso2": "AL",
+   "name": "Albania",
+   "kind": "country",
+   "continent": "Europe",
+   "currency": "ALL",
+   "regions": 12,
+   "places": 380,
+   "work": "unsupported",
+   "routes": [],
+   "markets": [],
+   "unions": [],
+   "festivals": [],
+   "nearest": {
+    "market": "london",
+    "places": 380
+   },
+   "km": {
+    "min": 1792,
+    "median": 1924,
+    "max": 2046
+   },
+   "trips": 380,
+   "coverage": "simulated",
+   "gaps": [
+    "its rules for working there",
+    "a market of its own"
+   ]
+  },
+  {
+   "id": "dz",
+   "iso2": "DZ",
+   "name": "Algeria",
+   "kind": "country",
+   "continent": "Africa",
+   "currency": "DZD",
+   "regions": 58,
+   "places": 350,
+   "work": "unsupported",
+   "routes": [],
+   "markets": [],
+   "unions": [],
+   "festivals": [],
+   "nearest": {
+    "market": "london",
+    "places": 350
+   },
+   "km": {
+    "min": 1653,
+    "median": 1773,
+    "max": 3588
+   },
+   "trips": 350,
+   "coverage": "simulated",
+   "gaps": [
+    "its rules for working there",
+    "a market of its own"
+   ]
+  },
+  {
+   "id": "as",
+   "iso2": "AS",
+   "name": "American Samoa",
+   "kind": "territory of United States",
+   "continent": "Oceania",
+   "currency": "USD",
+   "regions": 5,
+   "places": 17,
+   "work": "unsupported",
+   "routes": [],
+   "markets": [],
+   "unions": [],
+   "festivals": [],
+   "nearest": {
+    "market": "sydney",
+    "places": 17
+   },
+   "km": {
+    "min": 4389,
+    "median": 4395,
+    "max": 4589
+   },
+   "trips": 17,
+   "coverage": "simulated",
+   "gaps": [
+    "its rules for working there",
+    "a market of its own"
+   ]
+  },
+  {
+   "id": "ad",
+   "iso2": "AD",
+   "name": "Andorra",
+   "kind": "country",
+   "continent": "Europe",
+   "currency": "EUR",
+   "regions": 7,
+   "places": 15,
+   "work": "unsupported",
+   "routes": [],
+   "markets": [],
+   "unions": [],
+   "festivals": [],
+   "nearest": {
+    "market": "london",
+    "places": 15
+   },
+   "km": {
+    "min": 1001,
+    "median": 1006,
+    "max": 1014
+   },
+   "trips": 15,
+   "coverage": "simulated",
+   "gaps": [
+    "its rules for working there",
+    "a market of its own"
+   ]
+  },
+  {
+   "id": "ao",
+   "iso2": "AO",
+   "name": "Angola",
+   "kind": "country",
+   "continent": "Africa",
+   "currency": "AOA",
+   "regions": 21,
+   "places": 565,
+   "work": "unsupported",
+   "routes": [],
+   "markets": [],
+   "unions": [],
+   "festivals": [],
+   "nearest": {
+    "market": "london",
+    "places": 565
+   },
+   "km": {
+    "min": 6344,
+    "median": 7105,
+    "max": 8011
+   },
+   "trips": 565,
+   "coverage": "simulated",
+   "gaps": [
+    "its rules for working there",
+    "a market of its own"
+   ]
+  },
+  {
+   "id": "ai",
+   "iso2": "AI",
+   "name": "Anguilla",
+   "kind": "territory of United Kingdom",
+   "continent": "North America",
+   "currency": "XCD",
+   "regions": 14,
+   "places": 14,
+   "work": "unsupported",
+   "routes": [],
+   "markets": [],
+   "unions": [],
+   "festivals": [],
+   "nearest": {
+    "market": "washington",
+    "places": 14
+   },
+   "km": {
+    "min": 2665,
+    "median": 2667,
+    "max": 2669
+   },
+   "trips": 14,
+   "coverage": "simulated",
+   "gaps": [
+    "its rules for working there",
+    "a market of its own"
+   ]
+  },
+  {
+   "id": "aq",
+   "iso2": "AQ",
+   "name": "Antarctica",
+   "kind": "no citizens",
+   "continent": "Antarctica",
+   "currency": "USD",
+   "regions": 0,
+   "places": 0,
+   "work": "unsupported",
+   "routes": [],
+   "markets": [],
+   "unions": [],
+   "festivals": [],
+   "nearest": null,
+   "km": null,
+   "trips": 0,
+   "coverage": "simulated",
+   "gaps": [
+    "its rules for working there",
+    "a market of its own"
+   ]
+  },
+  {
+   "id": "ag",
+   "iso2": "AG",
+   "name": "Antigua and Barbuda",
+   "kind": "country",
+   "continent": "North America",
+   "currency": "XCD",
+   "regions": 8,
+   "places": 20,
+   "work": "unsupported",
+   "routes": [],
+   "markets": [],
+   "unions": [],
+   "festivals": [],
+   "nearest": {
+    "market": "washington",
+    "places": 20
+   },
+   "km": {
+    "min": 2785,
+    "median": 2838,
+    "max": 2848
+   },
+   "trips": 20,
+   "coverage": "simulated",
+   "gaps": [
+    "its rules for working there",
+    "a market of its own"
+   ]
+  },
+  {
+   "id": "ar",
+   "iso2": "AR",
+   "name": "Argentina",
+   "kind": "country",
+   "continent": "South America",
+   "currency": "ARS",
+   "regions": 24,
+   "places": 1178,
+   "work": "unsupported",
+   "routes": [],
+   "markets": [],
+   "unions": [
+    "AAA – Asociación Argentina de Actores"
+   ],
+   "festivals": [
+    "Mar del Plata International Film Festival"
+   ],
+   "nearest": {
+    "market": "atlanta",
+    "places": 1175
+   },
+   "km": {
+    "min": 6491,
+    "median": 7630,
+    "max": 9608
+   },
+   "trips": 1178,
+   "coverage": "partly researched",
+   "gaps": [
+    "its rules for working there",
+    "a market of its own"
+   ]
+  },
+  {
+   "id": "am",
+   "iso2": "AM",
+   "name": "Armenia",
+   "kind": "country",
+   "continent": "Asia",
+   "currency": "AMD",
+   "regions": 11,
+   "places": 455,
+   "work": "unsupported",
+   "routes": [],
+   "markets": [],
+   "unions": [],
+   "festivals": [
+    "Golden Apricot Yerevan International Film Festival"
+   ],
+   "nearest": {
+    "market": "london",
+    "places": 455
+   },
+   "km": {
+    "min": 3515,
+    "median": 3607,
+    "max": 3818
+   },
+   "trips": 455,
+   "coverage": "partly researched",
+   "gaps": [
+    "its rules for working there",
+    "a market of its own"
+   ]
+  },
+  {
+   "id": "aw",
+   "iso2": "AW",
+   "name": "Aruba",
+   "kind": "territory of The Netherlands",
+   "continent": "North America",
+   "currency": "AWG",
+   "regions": 0,
+   "places": 14,
+   "work": "unsupported",
+   "routes": [],
+   "markets": [],
+   "unions": [],
+   "festivals": [],
+   "nearest": {
+    "market": "atlanta",
+    "places": 14
+   },
+   "km": {
+    "min": 2764,
+    "median": 2772,
+    "max": 2787
+   },
+   "trips": 14,
+   "coverage": "simulated",
+   "gaps": [
+    "its rules for working there",
+    "a market of its own"
+   ]
+  },
+  {
+   "id": "au",
+   "iso2": "AU",
+   "name": "Australia",
+   "kind": "country",
+   "continent": "Oceania",
+   "currency": "AUD",
+   "regions": 8,
+   "places": 3834,
+   "work": "verified",
+   "routes": [
+    "Temporary Activity visa (subclass 408), Entertainment Activities stream",
+    "Special Category visa (subclass 444)"
+   ],
+   "markets": [
+    "Sydney"
+   ],
+   "unions": [
+    "MEAA – Media, Entertainment and Arts Alliance"
+   ],
+   "festivals": [
+    "Sydney Film Festival"
+   ],
+   "nearest": {
+    "market": "sydney",
+    "places": 3834
+   },
+   "km": {
+    "min": 0,
+    "median": 716,
+    "max": 3854
+   },
+   "trips": 2581,
+   "coverage": "researched",
+   "gaps": [
+    "Australian tax on pay for work there",
+    "the agreements of MEAA, the Australian actors’ union, that a production there would use",
+    "permanent residence and the other visas that let you work in Australia"
+   ]
+  },
+  {
+   "id": "at",
+   "iso2": "AT",
+   "name": "Austria",
+   "kind": "country",
+   "continent": "Europe",
+   "currency": "EUR",
+   "regions": 9,
+   "places": 2266,
+   "work": "unsupported",
+   "routes": [],
+   "markets": [],
+   "unions": [
+    "younion_Die Daseinsgewerkschaft"
+   ],
+   "festivals": [
+    "Kitzbuehel Film Festival",
+    "Vienna International Film Festival"
+   ],
+   "nearest": {
+    "market": "london",
+    "places": 2266
+   },
+   "km": {
+    "min": 833,
+    "median": 1157,
+    "max": 1300
+   },
+   "trips": 2266,
+   "coverage": "partly researched",
+   "gaps": [
+    "its rules for working there",
+    "a market of its own"
+   ]
+  },
+  {
+   "id": "az",
+   "iso2": "AZ",
+   "name": "Azerbaijan",
+   "kind": "country",
+   "continent": "Asia",
+   "currency": "AZN",
+   "regions": 71,
+   "places": 218,
+   "work": "unsupported",
+   "routes": [],
+   "markets": [],
+   "unions": [
+    "ACWU – Azerbaijani Cultural Workers’ Union"
+   ],
+   "festivals": [],
+   "nearest": {
+    "market": "london",
+    "places": 218
+   },
+   "km": {
+    "min": 3594,
+    "median": 3819,
+    "max": 4030
+   },
+   "trips": 218,
+   "coverage": "partly researched",
+   "gaps": [
+    "its rules for working there",
+    "a market of its own"
+   ]
+  },
+  {
+   "id": "bs",
+   "iso2": "BS",
+   "name": "Bahamas",
+   "kind": "country",
+   "continent": "North America",
+   "currency": "BSD",
+   "regions": 32,
+   "places": 28,
+   "work": "unsupported",
+   "routes": [],
+   "markets": [],
+   "unions": [],
+   "festivals": [],
+   "nearest": {
+    "market": "atlanta",
+    "places": 28
+   },
+   "km": {
+    "min": 942,
+    "median": 1183,
+    "max": 1771
+   },
+   "trips": 28,
+   "coverage": "simulated",
+   "gaps": [
+    "its rules for working there",
+    "a market of its own"
+   ]
+  },
+  {
+   "id": "bh",
+   "iso2": "BH",
+   "name": "Bahrain",
+   "kind": "country",
+   "continent": "Asia",
+   "currency": "BHD",
+   "regions": 4,
+   "places": 11,
+   "work": "unsupported",
+   "routes": [],
+   "markets": [],
+   "unions": [],
+   "festivals": [],
+   "nearest": {
+    "market": "london",
+    "places": 11
+   },
+   "km": {
+    "min": 5070,
+    "median": 5076,
+    "max": 5081
+   },
+   "trips": 11,
+   "coverage": "simulated",
+   "gaps": [
+    "its rules for working there",
+    "a market of its own"
+   ]
+  },
+  {
+   "id": "bd",
+   "iso2": "BD",
+   "name": "Bangladesh",
+   "kind": "country",
+   "continent": "Asia",
+   "currency": "BDT",
+   "regions": 8,
+   "places": 161,
+   "work": "unsupported",
+   "routes": [],
+   "markets": [],
+   "unions": [],
+   "festivals": [],
+   "nearest": {
+    "market": "london",
+    "places": 161
+   },
+   "km": {
+    "min": 7661,
+    "median": 8001,
+    "max": 8371
+   },
+   "trips": 161,
+   "coverage": "simulated",
+   "gaps": [
+    "its rules for working there",
+    "a market of its own"
+   ]
+  },
+  {
+   "id": "bb",
+   "iso2": "BB",
+   "name": "Barbados",
+   "kind": "country",
+   "continent": "North America",
+   "currency": "BBD",
+   "regions": 11,
+   "places": 14,
+   "work": "unsupported",
+   "routes": [],
+   "markets": [],
+   "unions": [],
+   "festivals": [],
+   "nearest": {
+    "market": "washington",
+    "places": 14
+   },
+   "km": {
+    "min": 3322,
+    "median": 3335,
+    "max": 3349
+   },
+   "trips": 14,
+   "coverage": "simulated",
+   "gaps": [
+    "its rules for working there",
+    "a market of its own"
+   ]
+  },
+  {
+   "id": "by",
+   "iso2": "BY",
+   "name": "Belarus",
+   "kind": "country",
+   "continent": "Europe",
+   "currency": "BYN",
+   "regions": 7,
+   "places": 260,
+   "work": "unsupported",
+   "routes": [],
+   "markets": [],
+   "unions": [
+    "SAGB – Screen Actors’ Guild of Belarus"
+   ],
+   "festivals": [],
+   "nearest": {
+    "market": "london",
+    "places": 260
+   },
+   "km": {
+    "min": 1607,
+    "median": 1881,
+    "max": 2207
+   },
+   "trips": 260,
+   "coverage": "partly researched",
+   "gaps": [
+    "its rules for working there",
+    "a market of its own"
+   ]
+  },
+  {
+   "id": "be",
+   "iso2": "BE",
+   "name": "Belgium",
+   "kind": "country",
+   "continent": "Europe",
+   "currency": "EUR",
+   "regions": 3,
+   "places": 1735,
+   "work": "unsupported",
+   "routes": [],
+   "markets": [],
+   "unions": [
+    "ACOD Cultuur",
+    "CSC / TransCom & Culture",
+    "IRW-CGSP – Interrégionale Wallonne CGSP"
+   ],
+   "festivals": [],
+   "nearest": {
+    "market": "london",
+    "places": 1735
+   },
+   "km": {
+    "min": 195,
+    "median": 338,
+    "max": 474
+   },
+   "trips": 0,
+   "coverage": "partly researched",
+   "gaps": [
+    "its rules for working there",
+    "a market of its own"
+   ]
+  },
+  {
+   "id": "bz",
+   "iso2": "BZ",
+   "name": "Belize",
+   "kind": "country",
+   "continent": "North America",
+   "currency": "BZD",
+   "regions": 6,
+   "places": 81,
+   "work": "unsupported",
+   "routes": [],
+   "markets": [],
+   "unions": [],
+   "festivals": [],
+   "nearest": {
+    "market": "atlanta",
+    "places": 81
+   },
+   "km": {
+    "min": 1752,
+    "median": 1856,
+    "max": 2012
+   },
+   "trips": 81,
+   "coverage": "simulated",
+   "gaps": [
+    "its rules for working there",
+    "a market of its own"
+   ]
+  },
+  {
+   "id": "bj",
+   "iso2": "BJ",
+   "name": "Benin",
+   "kind": "country",
+   "continent": "Africa",
+   "currency": "XOF",
+   "regions": 12,
+   "places": 87,
+   "work": "unsupported",
+   "routes": [],
+   "markets": [],
+   "unions": [],
+   "festivals": [],
+   "nearest": {
+    "market": "london",
+    "places": 87
+   },
+   "km": {
+    "min": 4419,
+    "median": 4934,
+    "max": 5036
+   },
+   "trips": 87,
+   "coverage": "simulated",
+   "gaps": [
+    "its rules for working there",
+    "a market of its own"
+   ]
+  },
+  {
+   "id": "bm",
+   "iso2": "BM",
+   "name": "Bermuda",
+   "kind": "territory of United Kingdom",
+   "continent": "North America",
+   "currency": "BMD",
+   "regions": 11,
+   "places": 11,
+   "work": "unsupported",
+   "routes": [],
+   "markets": [],
+   "unions": [],
+   "festivals": [],
+   "nearest": {
+    "market": "new-haven",
+    "places": 11
+   },
+   "km": {
+    "min": 1231,
+    "median": 1236,
+    "max": 1237
+   },
+   "trips": 11,
+   "coverage": "simulated",
+   "gaps": [
+    "its rules for working there",
+    "a market of its own"
+   ]
+  },
+  {
+   "id": "bt",
+   "iso2": "BT",
+   "name": "Bhutan",
+   "kind": "country",
+   "continent": "Asia",
+   "currency": "BTN",
+   "regions": 20,
+   "places": 30,
+   "work": "unsupported",
+   "routes": [],
+   "markets": [],
+   "unions": [],
+   "festivals": [],
+   "nearest": {
+    "market": "london",
+    "places": 30
+   },
+   "km": {
+    "min": 7593,
+    "median": 7687,
+    "max": 7817
+   },
+   "trips": 30,
+   "coverage": "simulated",
+   "gaps": [
+    "its rules for working there",
+    "a market of its own"
+   ]
+  },
+  {
+   "id": "bo",
+   "iso2": "BO",
+   "name": "Bolivia",
+   "kind": "country",
+   "continent": "South America",
+   "currency": "BOB",
+   "regions": 9,
+   "places": 148,
+   "work": "unsupported",
+   "routes": [],
+   "markets": [],
+   "unions": [],
+   "festivals": [],
+   "nearest": {
+    "market": "atlanta",
+    "places": 148
+   },
+   "km": {
+    "min": 5234,
+    "median": 6085,
+    "max": 6630
+   },
+   "trips": 148,
+   "coverage": "simulated",
+   "gaps": [
+    "its rules for working there",
+    "a market of its own"
+   ]
+  },
+  {
+   "id": "bq",
+   "iso2": "BQ",
+   "name": "Bonaire, Saint Eustatius and Saba",
+   "kind": "territory of The Netherlands",
+   "continent": "North America",
+   "currency": "USD",
+   "regions": 3,
+   "places": 8,
+   "work": "unsupported",
+   "routes": [],
+   "markets": [],
+   "unions": [],
+   "festivals": [],
+   "nearest": {
+    "market": "atlanta",
+    "places": 5
+   },
+   "km": {
+    "min": 2715,
+    "median": 2893,
+    "max": 2907
+   },
+   "trips": 8,
+   "coverage": "simulated",
+   "gaps": [
+    "its rules for working there",
+    "a market of its own"
+   ]
+  },
+  {
+   "id": "ba",
+   "iso2": "BA",
+   "name": "Bosnia and Herzegovina",
+   "kind": "country",
+   "continent": "Europe",
+   "currency": "BAM",
+   "regions": 3,
+   "places": 292,
+   "work": "unsupported",
+   "routes": [],
+   "markets": [],
+   "unions": [],
+   "festivals": [],
+   "nearest": {
+    "market": "london",
+    "places": 292
+   },
+   "km": {
+    "min": 1367,
+    "median": 1565,
+    "max": 1699
+   },
+   "trips": 292,
+   "coverage": "simulated",
+   "gaps": [
+    "its rules for working there",
+    "a market of its own"
+   ]
+  },
+  {
+   "id": "bw",
+   "iso2": "BW",
+   "name": "Botswana",
+   "kind": "country",
+   "continent": "Africa",
+   "currency": "BWP",
+   "regions": 16,
+   "places": 120,
+   "work": "unsupported",
+   "routes": [],
+   "markets": [],
+   "unions": [],
+   "festivals": [],
+   "nearest": {
+    "market": "london",
+    "places": 120
+   },
+   "km": {
+    "min": 8059,
+    "median": 8686,
+    "max": 8925
+   },
+   "trips": 120,
+   "coverage": "simulated",
+   "gaps": [
+    "its rules for working there",
+    "a market of its own"
+   ]
+  },
+  {
+   "id": "bv",
+   "iso2": "BV",
+   "name": "Bouvet Island",
+   "kind": "territory of Norway",
+   "continent": "Antarctica",
+   "currency": "NOK",
+   "regions": 0,
+   "places": 0,
+   "work": "unsupported",
+   "routes": [],
+   "markets": [],
+   "unions": [],
+   "festivals": [],
+   "nearest": null,
+   "km": null,
+   "trips": 0,
+   "coverage": "simulated",
+   "gaps": [
+    "its rules for working there",
+    "a market of its own"
+   ]
+  },
+  {
+   "id": "br",
+   "iso2": "BR",
+   "name": "Brazil",
+   "kind": "country",
+   "continent": "South America",
+   "currency": "BRL",
+   "regions": 27,
+   "places": 5874,
+   "work": "unsupported",
+   "routes": [],
+   "markets": [],
+   "unions": [
+    "SATED/CE – Sindicato dos Artistas e Técnicos em Espetáculos de Diversões do Estado do Ceará",
+    "SATED/MG – Sindicato dos Artistas e Técnicos em Espetáculos de Diversões do Estado do Minas Gerais",
+    "SATED/SP – Sindicato dos Artistas e Técnicos em Espetáculos de Diversões do Estado do São Paulo"
+   ],
+   "festivals": [],
+   "nearest": {
+    "market": "atlanta",
+    "places": 3719
+   },
+   "km": {
+    "min": 4046,
+    "median": 7047,
+    "max": 8165
+   },
+   "trips": 5874,
+   "coverage": "partly researched",
+   "gaps": [
+    "its rules for working there",
+    "a market of its own"
+   ]
+  },
+  {
+   "id": "io",
+   "iso2": "IO",
+   "name": "British Indian Ocean Territory",
+   "kind": "territory of United Kingdom",
+   "continent": "Asia",
+   "currency": "USD",
+   "regions": 0,
+   "places": 1,
+   "work": "unsupported",
+   "routes": [],
+   "markets": [],
+   "unions": [],
+   "festivals": [],
+   "nearest": {
+    "market": "sydney",
+    "places": 1
+   },
+   "km": {
+    "min": 8529,
+    "median": 8529,
+    "max": 8529
+   },
+   "trips": 1,
+   "coverage": "simulated",
+   "gaps": [
+    "its rules for working there",
+    "a market of its own"
+   ]
+  },
+  {
+   "id": "vg",
+   "iso2": "VG",
+   "name": "British Virgin Islands",
+   "kind": "territory of United Kingdom",
+   "continent": "North America",
+   "currency": "USD",
+   "regions": 0,
+   "places": 2,
+   "work": "unsupported",
+   "routes": [],
+   "markets": [],
+   "unions": [],
+   "festivals": [],
+   "nearest": {
+    "market": "washington",
+    "places": 2
+   },
+   "km": {
+    "min": 2572,
+    "median": 2572,
+    "max": 2579
+   },
+   "trips": 2,
+   "coverage": "simulated",
+   "gaps": [
+    "its rules for working there",
+    "a market of its own"
+   ]
+  },
+  {
+   "id": "bn",
+   "iso2": "BN",
+   "name": "Brunei",
+   "kind": "country",
+   "continent": "Asia",
+   "currency": "BND",
+   "regions": 4,
+   "places": 47,
+   "work": "unsupported",
+   "routes": [],
+   "markets": [],
+   "unions": [],
+   "festivals": [],
+   "nearest": {
+    "market": "sydney",
+    "places": 47
+   },
+   "km": {
+    "min": 5726,
+    "median": 5756,
+    "max": 5778
+   },
+   "trips": 47,
+   "coverage": "simulated",
+   "gaps": [
+    "its rules for working there",
+    "a market of its own"
+   ]
+  },
+  {
+   "id": "bg",
+   "iso2": "BG",
+   "name": "Bulgaria",
+   "kind": "country",
+   "continent": "Europe",
+   "currency": "EUR",
+   "regions": 28,
+   "places": 304,
+   "work": "unsupported",
+   "routes": [],
+   "markets": [],
+   "unions": [
+    "UBA – Union of Bulgarian Actors"
+   ],
+   "festivals": [
+    "Sofia International Film Festival"
+   ],
+   "nearest": {
+    "market": "london",
+    "places": 304
+   },
+   "km": {
+    "min": 1876,
+    "median": 2138,
+    "max": 2359
+   },
+   "trips": 304,
+   "coverage": "partly researched",
+   "gaps": [
+    "its rules for working there",
+    "a market of its own"
+   ]
+  },
+  {
+   "id": "bf",
+   "iso2": "BF",
+   "name": "Burkina Faso",
+   "kind": "country",
+   "continent": "Africa",
+   "currency": "XOF",
+   "regions": 13,
+   "places": 113,
+   "work": "unsupported",
+   "routes": [],
+   "markets": [],
+   "unions": [],
+   "festivals": [],
+   "nearest": {
+    "market": "london",
+    "places": 113
+   },
+   "km": {
+    "min": 4064,
+    "median": 4365,
+    "max": 4643
+   },
+   "trips": 113,
+   "coverage": "simulated",
+   "gaps": [
+    "its rules for working there",
+    "a market of its own"
+   ]
+  },
+  {
+   "id": "bi",
+   "iso2": "BI",
+   "name": "Burundi",
+   "kind": "country",
+   "continent": "Africa",
+   "currency": "BIF",
+   "regions": 16,
+   "places": 32,
+   "work": "unsupported",
+   "routes": [],
+   "markets": [],
+   "unions": [],
+   "festivals": [],
+   "nearest": {
+    "market": "london",
+    "places": 32
+   },
+   "km": {
+    "min": 6650,
+    "median": 6714,
+    "max": 6820
+   },
+   "trips": 32,
+   "coverage": "simulated",
+   "gaps": [
+    "its rules for working there",
+    "a market of its own"
+   ]
+  },
+  {
+   "id": "cv",
+   "iso2": "CV",
+   "name": "Cabo Verde",
+   "kind": "country",
+   "continent": "Africa",
+   "currency": "CVE",
+   "regions": 22,
+   "places": 141,
+   "work": "unsupported",
+   "routes": [],
+   "markets": [],
+   "unions": [],
+   "festivals": [],
+   "nearest": {
+    "market": "london",
+    "places": 141
+   },
+   "km": {
+    "min": 4357,
+    "median": 4550,
+    "max": 4624
+   },
+   "trips": 141,
+   "coverage": "simulated",
+   "gaps": [
+    "its rules for working there",
+    "a market of its own"
+   ]
+  },
+  {
+   "id": "kh",
+   "iso2": "KH",
+   "name": "Cambodia",
+   "kind": "country",
+   "continent": "Asia",
+   "currency": "KHR",
+   "regions": 25,
+   "places": 301,
+   "work": "unsupported",
+   "routes": [],
+   "markets": [],
+   "unions": [],
+   "festivals": [],
+   "nearest": {
+    "market": "sydney",
+    "places": 301
+   },
+   "km": {
+    "min": 6895,
+    "median": 7049,
+    "max": 7381
+   },
+   "trips": 301,
+   "coverage": "simulated",
+   "gaps": [
+    "its rules for working there",
+    "a market of its own"
+   ]
+  },
+  {
+   "id": "cm",
+   "iso2": "CM",
+   "name": "Cameroon",
+   "kind": "country",
+   "continent": "Africa",
+   "currency": "XAF",
+   "regions": 10,
+   "places": 142,
+   "work": "unsupported",
+   "routes": [],
+   "markets": [],
+   "unions": [],
+   "festivals": [],
+   "nearest": {
+    "market": "london",
+    "places": 142
+   },
+   "km": {
+    "min": 4505,
+    "median": 5249,
+    "max": 5580
+   },
+   "trips": 142,
+   "coverage": "simulated",
+   "gaps": [
+    "its rules for working there",
+    "a market of its own"
+   ]
+  },
+  {
+   "id": "ca",
+   "iso2": "CA",
+   "name": "Canada",
+   "kind": "country",
+   "continent": "North America",
+   "currency": "CAD",
+   "regions": 13,
+   "places": 2858,
+   "work": "partial",
+   "routes": [],
+   "markets": [],
+   "unions": [
+    "ACTRA – Alliance of Canadian Cinema, Television and Radio Artists",
+    "CAEA – Canadian Actors’ Equity Association",
+    "UDA – Union des Artistes"
+   ],
+   "festivals": [
+    "Festival du Nouveau Cinéma",
+    "Hot Docs",
+    "Toronto International Film Festival"
+   ],
+   "nearest": {
+    "market": "seattle",
+    "places": 1193
+   },
+   "km": {
+    "min": 117,
+    "median": 589,
+    "max": 3394
+   },
+   "trips": 1943,
+   "coverage": "partly researched",
+   "gaps": [
+    "which work permit a film actor needs: the regulations’ exemption for performing artists leaves out film and television, and the government’s pages on permits didn’t answer",
+    "ACTRA’s agreements, and British Columbia’s own",
+    "a market of its own"
+   ]
+  },
+  {
+   "id": "ky",
+   "iso2": "KY",
+   "name": "Cayman Islands",
+   "kind": "territory of United Kingdom",
+   "continent": "North America",
+   "currency": "KYD",
+   "regions": 6,
+   "places": 67,
+   "work": "unsupported",
+   "routes": [],
+   "markets": [],
+   "unions": [],
+   "festivals": [],
+   "nearest": {
+    "market": "atlanta",
+    "places": 67
+   },
+   "km": {
+    "min": 1623,
+    "median": 1634,
+    "max": 1639
+   },
+   "trips": 67,
+   "coverage": "simulated",
+   "gaps": [
+    "its rules for working there",
+    "a market of its own"
+   ]
+  },
+  {
+   "id": "cf",
+   "iso2": "CF",
+   "name": "Central African Republic",
+   "kind": "country",
+   "continent": "Africa",
+   "currency": "XAF",
+   "regions": 20,
+   "places": 51,
+   "work": "unsupported",
+   "routes": [],
+   "markets": [],
+   "unions": [],
+   "festivals": [],
+   "nearest": {
+    "market": "london",
+    "places": 51
+   },
+   "km": {
+    "min": 5034,
+    "median": 5398,
+    "max": 5686
+   },
+   "trips": 51,
+   "coverage": "simulated",
+   "gaps": [
+    "its rules for working there",
+    "a market of its own"
+   ]
+  },
+  {
+   "id": "td",
+   "iso2": "TD",
+   "name": "Chad",
+   "kind": "country",
+   "continent": "Africa",
+   "currency": "XAF",
+   "regions": 23,
+   "places": 72,
+   "work": "unsupported",
+   "routes": [],
+   "markets": [],
+   "unions": [],
+   "festivals": [],
+   "nearest": {
+    "market": "london",
+    "places": 72
+   },
+   "km": {
+    "min": 3631,
+    "median": 4697,
+    "max": 5078
+   },
+   "trips": 72,
+   "coverage": "simulated",
+   "gaps": [
+    "its rules for working there",
+    "a market of its own"
+   ]
+  },
+  {
+   "id": "cl",
+   "iso2": "CL",
+   "name": "Chile",
+   "kind": "country",
+   "continent": "South America",
+   "currency": "CLP",
+   "regions": 16,
+   "places": 305,
+   "work": "unsupported",
+   "routes": [],
+   "markets": [],
+   "unions": [
+    "SIDARTE – Sindicato de Actores de Chile"
+   ],
+   "festivals": [],
+   "nearest": {
+    "market": "atlanta",
+    "places": 300
+   },
+   "km": {
+    "min": 5987,
+    "median": 7795,
+    "max": 9575
+   },
+   "trips": 305,
+   "coverage": "partly researched",
+   "gaps": [
+    "its rules for working there",
+    "a market of its own"
+   ]
+  },
+  {
+   "id": "cn",
+   "iso2": "CN",
+   "name": "China",
+   "kind": "country",
+   "continent": "Asia",
+   "currency": "CNY",
+   "regions": 31,
+   "places": 4970,
+   "work": "unsupported",
+   "routes": [],
+   "markets": [],
+   "unions": [],
+   "festivals": [
+    "Shanghai International Film Festival"
+   ],
+   "nearest": {
+    "market": "sydney",
+    "places": 2534
+   },
+   "km": {
+    "min": 5736,
+    "median": 8127,
+    "max": 8550
+   },
+   "trips": 4970,
+   "coverage": "partly researched",
+   "gaps": [
+    "its rules for working there",
+    "a market of its own"
+   ]
+  },
+  {
+   "id": "cx",
+   "iso2": "CX",
+   "name": "Christmas Island",
+   "kind": "territory of Australia",
+   "continent": "Oceania",
+   "currency": "AUD",
+   "regions": 0,
+   "places": 1,
+   "work": "unsupported",
+   "routes": [],
+   "markets": [],
+   "unions": [],
+   "festivals": [],
+   "nearest": {
+    "market": "sydney",
+    "places": 1
+   },
+   "km": {
+    "min": 5305,
+    "median": 5305,
+    "max": 5305
+   },
+   "trips": 1,
+   "coverage": "simulated",
+   "gaps": [
+    "its rules for working there",
+    "a market of its own"
+   ]
+  },
+  {
+   "id": "cc",
+   "iso2": "CC",
+   "name": "Cocos Islands",
+   "kind": "territory of Australia",
+   "continent": "Asia",
+   "currency": "AUD",
+   "regions": 0,
+   "places": 1,
+   "work": "unsupported",
+   "routes": [],
+   "markets": [],
+   "unions": [],
+   "festivals": [],
+   "nearest": {
+    "market": "sydney",
+    "places": 1
+   },
+   "km": {
+    "min": 5987,
+    "median": 5987,
+    "max": 5987
+   },
+   "trips": 1,
+   "coverage": "simulated",
+   "gaps": [
+    "its rules for working there",
+    "a market of its own"
+   ]
+  },
+  {
+   "id": "co",
+   "iso2": "CO",
+   "name": "Colombia",
+   "kind": "country",
+   "continent": "South America",
+   "currency": "COP",
+   "regions": 33,
+   "places": 1172,
+   "work": "unsupported",
+   "routes": [],
+   "markets": [],
+   "unions": [
+    "ACA – Asociación Colombiana de Actores",
+    "CICA – Círculo Colombiano de Artistas"
+   ],
+   "festivals": [],
+   "nearest": {
+    "market": "atlanta",
+    "places": 1172
+   },
+   "km": {
+    "min": 2285,
+    "median": 3317,
+    "max": 4486
+   },
+   "trips": 1172,
+   "coverage": "partly researched",
+   "gaps": [
+    "its rules for working there",
+    "a market of its own"
+   ]
+  },
+  {
+   "id": "km",
+   "iso2": "KM",
+   "name": "Comoros",
+   "kind": "country",
+   "continent": "Africa",
+   "currency": "KMF",
+   "regions": 3,
+   "places": 93,
+   "work": "unsupported",
+   "routes": [],
+   "markets": [],
+   "unions": [],
+   "festivals": [],
+   "nearest": {
+    "market": "london",
+    "places": 93
+   },
+   "km": {
+    "min": 8142,
+    "median": 8254,
+    "max": 8299
+   },
+   "trips": 93,
+   "coverage": "simulated",
+   "gaps": [
+    "its rules for working there",
+    "a market of its own"
+   ]
+  },
+  {
+   "id": "ck",
+   "iso2": "CK",
+   "name": "Cook Islands",
+   "kind": "territory of New Zealand",
+   "continent": "Oceania",
+   "currency": "NZD",
+   "regions": 11,
+   "places": 2,
+   "work": "unsupported",
+   "routes": [],
+   "markets": [],
+   "unions": [],
+   "festivals": [],
+   "nearest": {
+    "market": "sydney",
+    "places": 2
+   },
+   "km": {
+    "min": 4984,
+    "median": 4984,
+    "max": 4987
+   },
+   "trips": 2,
+   "coverage": "simulated",
+   "gaps": [
+    "its rules for working there",
+    "a market of its own"
+   ]
+  },
+  {
+   "id": "cr",
+   "iso2": "CR",
+   "name": "Costa Rica",
+   "kind": "country",
+   "continent": "North America",
+   "currency": "CRC",
+   "regions": 7,
+   "places": 130,
+   "work": "unsupported",
+   "routes": [],
+   "markets": [],
+   "unions": [],
+   "festivals": [],
+   "nearest": {
+    "market": "atlanta",
+    "places": 130
+   },
+   "km": {
+    "min": 2525,
+    "median": 2645,
+    "max": 2809
+   },
+   "trips": 130,
+   "coverage": "simulated",
+   "gaps": [
+    "its rules for working there",
+    "a market of its own"
+   ]
+  },
+  {
+   "id": "hr",
+   "iso2": "HR",
+   "name": "Croatia",
+   "kind": "country",
+   "continent": "Europe",
+   "currency": "EUR",
+   "regions": 21,
+   "places": 764,
+   "work": "unsupported",
+   "routes": [],
+   "markets": [],
+   "unions": [
+    "HDDU- Hrvatsko Društvo Dramskih Umjetnika"
+   ],
+   "festivals": [],
+   "nearest": {
+    "market": "london",
+    "places": 764
+   },
+   "km": {
+    "min": 1209,
+    "median": 1385,
+    "max": 1701
+   },
+   "trips": 764,
+   "coverage": "partly researched",
+   "gaps": [
+    "its rules for working there",
+    "a market of its own"
+   ]
+  },
+  {
+   "id": "cu",
+   "iso2": "CU",
+   "name": "Cuba",
+   "kind": "country",
+   "continent": "North America",
+   "currency": "CUP",
+   "regions": 16,
+   "places": 207,
+   "work": "unsupported",
+   "routes": [],
+   "markets": [],
+   "unions": [
+    "UNEAC – Unión de Escritores y Artistas de Cuba"
+   ],
+   "festivals": [],
+   "nearest": {
+    "market": "atlanta",
+    "places": 207
+   },
+   "km": {
+    "min": 1195,
+    "median": 1323,
+    "max": 1811
+   },
+   "trips": 207,
+   "coverage": "partly researched",
+   "gaps": [
+    "its rules for working there",
+    "a market of its own"
+   ]
+  },
+  {
+   "id": "cw",
+   "iso2": "CW",
+   "name": "Curacao",
+   "kind": "territory of The Netherlands",
+   "continent": "North America",
+   "currency": "XCG",
+   "regions": 0,
+   "places": 12,
+   "work": "unsupported",
+   "routes": [],
+   "markets": [],
+   "unions": [],
+   "festivals": [],
+   "nearest": {
+    "market": "atlanta",
+    "places": 12
+   },
+   "km": {
+    "min": 2846,
+    "median": 2865,
+    "max": 2879
+   },
+   "trips": 12,
+   "coverage": "simulated",
+   "gaps": [
+    "its rules for working there",
+    "a market of its own"
+   ]
+  },
+  {
+   "id": "cy",
+   "iso2": "CY",
+   "name": "Cyprus",
+   "kind": "country",
+   "continent": "Europe",
+   "currency": "EUR",
+   "regions": 6,
+   "places": 102,
+   "work": "unsupported",
+   "routes": [],
+   "markets": [],
+   "unions": [
+    "AUC – Actors’ Union of Cyprus"
+   ],
+   "festivals": [],
+   "nearest": {
+    "market": "london",
+    "places": 102
+   },
+   "km": {
+    "min": 3168,
+    "median": 3230,
+    "max": 3275
+   },
+   "trips": 102,
+   "coverage": "partly researched",
+   "gaps": [
+    "its rules for working there",
+    "a market of its own"
+   ]
+  },
+  {
+   "id": "cz",
+   "iso2": "CZ",
+   "name": "Czechia",
+   "kind": "country",
+   "continent": "Europe",
+   "currency": "CZK",
+   "regions": 14,
+   "places": 1476,
+   "work": "unsupported",
+   "routes": [],
+   "markets": [],
+   "unions": [
+    "HA – Herecká Asociace"
+   ],
+   "festivals": [
+    "Karlovy Vary International Film Festival"
+   ],
+   "nearest": {
+    "market": "london",
+    "places": 1476
+   },
+   "km": {
+    "min": 872,
+    "median": 1128,
+    "max": 1354
+   },
+   "trips": 1476,
+   "coverage": "partly researched",
+   "gaps": [
+    "its rules for working there",
+    "a market of its own"
+   ]
+  },
+  {
+   "id": "cd",
+   "iso2": "CD",
+   "name": "Democratic Republic of the Congo",
+   "kind": "country",
+   "continent": "Africa",
+   "currency": "CDF",
+   "regions": 26,
+   "places": 118,
+   "work": "unsupported",
+   "routes": [],
+   "markets": [],
+   "unions": [],
+   "festivals": [],
+   "nearest": {
+    "market": "london",
+    "places": 118
+   },
+   "km": {
+    "min": 5525,
+    "median": 6496,
+    "max": 7622
+   },
+   "trips": 118,
+   "coverage": "simulated",
+   "gaps": [
+    "its rules for working there",
+    "a market of its own"
+   ]
+  },
+  {
+   "id": "dk",
+   "iso2": "DK",
+   "name": "Denmark",
+   "kind": "country",
+   "continent": "Europe",
+   "currency": "DKK",
+   "regions": 5,
+   "places": 434,
+   "work": "unsupported",
+   "routes": [],
+   "markets": [],
+   "unions": [
+    "DAF – Dansk Artist Forbund",
+    "DSF – Dansk Skuespillerforbund"
+   ],
+   "festivals": [],
+   "nearest": {
+    "market": "london",
+    "places": 434
+   },
+   "km": {
+    "min": 701,
+    "median": 865,
+    "max": 1097
+   },
+   "trips": 434,
+   "coverage": "partly researched",
+   "gaps": [
+    "its rules for working there",
+    "a market of its own"
+   ]
+  },
+  {
+   "id": "dj",
+   "iso2": "DJ",
+   "name": "Djibouti",
+   "kind": "country",
+   "continent": "Africa",
+   "currency": "DJF",
+   "regions": 6,
+   "places": 26,
+   "work": "unsupported",
+   "routes": [],
+   "markets": [],
+   "unions": [],
+   "festivals": [],
+   "nearest": {
+    "market": "london",
+    "places": 26
+   },
+   "km": {
+    "min": 5806,
+    "median": 5885,
+    "max": 5927
+   },
+   "trips": 26,
+   "coverage": "simulated",
+   "gaps": [
+    "its rules for working there",
+    "a market of its own"
+   ]
+  },
+  {
+   "id": "dm",
+   "iso2": "DM",
+   "name": "Dominica",
+   "kind": "country",
+   "continent": "North America",
+   "currency": "XCD",
+   "regions": 10,
+   "places": 18,
+   "work": "unsupported",
+   "routes": [],
+   "markets": [],
+   "unions": [],
+   "festivals": [],
+   "nearest": {
+    "market": "washington",
+    "places": 18
+   },
+   "km": {
+    "min": 3005,
+    "median": 3028,
+    "max": 3046
+   },
+   "trips": 18,
+   "coverage": "simulated",
+   "gaps": [
+    "its rules for working there",
+    "a market of its own"
+   ]
+  },
+  {
+   "id": "do",
+   "iso2": "DO",
+   "name": "Dominican Republic",
+   "kind": "country",
+   "continent": "North America",
+   "currency": "DOP",
+   "regions": 32,
+   "places": 210,
+   "work": "unsupported",
+   "routes": [],
+   "markets": [],
+   "unions": [],
+   "festivals": [
+    "Festival de Cine Global Santo Domingo"
+   ],
+   "nearest": {
+    "market": "atlanta",
+    "places": 210
+   },
+   "km": {
+    "min": 1994,
+    "median": 2148,
+    "max": 2319
+   },
+   "trips": 210,
+   "coverage": "partly researched",
+   "gaps": [
+    "its rules for working there",
+    "a market of its own"
+   ]
+  },
+  {
+   "id": "ec",
+   "iso2": "EC",
+   "name": "Ecuador",
+   "kind": "country",
+   "continent": "South America",
+   "currency": "USD",
+   "regions": 24,
+   "places": 541,
+   "work": "unsupported",
+   "routes": [],
+   "markets": [],
+   "unions": [],
+   "festivals": [],
+   "nearest": {
+    "market": "atlanta",
+    "places": 541
+   },
+   "km": {
+    "min": 3648,
+    "median": 3951,
+    "max": 4310
+   },
+   "trips": 541,
+   "coverage": "simulated",
+   "gaps": [
+    "its rules for working there",
+    "a market of its own"
+   ]
+  },
+  {
+   "id": "eg",
+   "iso2": "EG",
+   "name": "Egypt",
+   "kind": "country",
+   "continent": "Africa",
+   "currency": "EGP",
+   "regions": 27,
+   "places": 259,
+   "work": "unsupported",
+   "routes": [],
+   "markets": [],
+   "unions": [],
+   "festivals": [
+    "Cairo International Film Festival"
+   ],
+   "nearest": {
+    "market": "london",
+    "places": 259
+   },
+   "km": {
+    "min": 3028,
+    "median": 3507,
+    "max": 4532
+   },
+   "trips": 259,
+   "coverage": "partly researched",
+   "gaps": [
+    "its rules for working there",
+    "a market of its own"
+   ]
+  },
+  {
+   "id": "sv",
+   "iso2": "SV",
+   "name": "El Salvador",
+   "kind": "country",
+   "continent": "North America",
+   "currency": "USD",
+   "regions": 14,
+   "places": 101,
+   "work": "unsupported",
+   "routes": [],
+   "markets": [],
+   "unions": [],
+   "festivals": [],
+   "nearest": {
+    "market": "atlanta",
+    "places": 101
+   },
+   "km": {
+    "min": 2218,
+    "median": 2279,
+    "max": 2315
+   },
+   "trips": 101,
+   "coverage": "simulated",
+   "gaps": [
+    "its rules for working there",
+    "a market of its own"
+   ]
+  },
+  {
+   "id": "gq",
+   "iso2": "GQ",
+   "name": "Equatorial Guinea",
+   "kind": "country",
+   "continent": "Africa",
+   "currency": "XAF",
+   "regions": 8,
+   "places": 25,
+   "work": "unsupported",
+   "routes": [],
+   "markets": [],
+   "unions": [],
+   "festivals": [],
+   "nearest": {
+    "market": "london",
+    "places": 25
+   },
+   "km": {
+    "min": 5374,
+    "median": 5613,
+    "max": 5913
+   },
+   "trips": 25,
+   "coverage": "simulated",
+   "gaps": [
+    "its rules for working there",
+    "a market of its own"
+   ]
+  },
+  {
+   "id": "er",
+   "iso2": "ER",
+   "name": "Eritrea",
+   "kind": "country",
+   "continent": "Africa",
+   "currency": "ERN",
+   "regions": 6,
+   "places": 18,
+   "work": "unsupported",
+   "routes": [],
+   "markets": [],
+   "unions": [],
+   "festivals": [],
+   "nearest": {
+    "market": "london",
+    "places": 18
+   },
+   "km": {
+    "min": 5198,
+    "median": 5309,
+    "max": 5742
+   },
+   "trips": 18,
+   "coverage": "simulated",
+   "gaps": [
+    "its rules for working there",
+    "a market of its own"
+   ]
+  },
+  {
+   "id": "ee",
+   "iso2": "EE",
+   "name": "Estonia",
+   "kind": "country",
+   "continent": "Europe",
+   "currency": "EUR",
+   "regions": 15,
+   "places": 130,
+   "work": "unsupported",
+   "routes": [],
+   "markets": [],
+   "unions": [
+    "ENL – Eesti Näitlejate Liit"
+   ],
+   "festivals": [
+    "Tallinn Black Nights Film Festival"
+   ],
+   "nearest": {
+    "market": "london",
+    "places": 130
+   },
+   "km": {
+    "min": 1603,
+    "median": 1792,
+    "max": 1969
+   },
+   "trips": 130,
+   "coverage": "partly researched",
+   "gaps": [
+    "its rules for working there",
+    "a market of its own"
+   ]
+  },
+  {
+   "id": "sz",
+   "iso2": "SZ",
+   "name": "Eswatini",
+   "kind": "country",
+   "continent": "Africa",
+   "currency": "SZL",
+   "regions": 4,
+   "places": 24,
+   "work": "unsupported",
+   "routes": [],
+   "markets": [],
+   "unions": [],
+   "festivals": [],
+   "nearest": {
+    "market": "london",
+    "places": 24
+   },
+   "km": {
+    "min": 9133,
+    "median": 9197,
+    "max": 9307
+   },
+   "trips": 24,
+   "coverage": "simulated",
+   "gaps": [
+    "its rules for working there",
+    "a market of its own"
+   ]
+  },
+  {
+   "id": "et",
+   "iso2": "ET",
+   "name": "Ethiopia",
+   "kind": "country",
+   "continent": "Africa",
+   "currency": "ETB",
+   "regions": 14,
+   "places": 255,
+   "work": "unsupported",
+   "routes": [],
+   "markets": [],
+   "unions": [],
+   "festivals": [],
+   "nearest": {
+    "market": "london",
+    "places": 255
+   },
+   "km": {
+    "min": 5290,
+    "median": 5929,
+    "max": 6595
+   },
+   "trips": 255,
+   "coverage": "simulated",
+   "gaps": [
+    "its rules for working there",
+    "a market of its own"
+   ]
+  },
+  {
+   "id": "fk",
+   "iso2": "FK",
+   "name": "Falkland Islands",
+   "kind": "territory of United Kingdom",
+   "continent": "South America",
+   "currency": "FKP",
+   "regions": 0,
+   "places": 1,
+   "work": "unsupported",
+   "routes": [],
+   "markets": [],
+   "unions": [],
+   "festivals": [],
+   "nearest": {
+    "market": "atlanta",
+    "places": 1
+   },
+   "km": {
+    "min": 9847,
+    "median": 9847,
+    "max": 9847
+   },
+   "trips": 1,
+   "coverage": "simulated",
+   "gaps": [
+    "its rules for working there",
+    "a market of its own"
+   ]
+  },
+  {
+   "id": "fo",
+   "iso2": "FO",
+   "name": "Faroe Islands",
+   "kind": "territory of Denmark",
+   "continent": "Europe",
+   "currency": "DKK",
+   "regions": 6,
+   "places": 26,
+   "work": "unsupported",
+   "routes": [],
+   "markets": [],
+   "unions": [],
+   "festivals": [],
+   "nearest": {
+    "market": "london",
+    "places": 26
+   },
+   "km": {
+    "min": 1179,
+    "median": 1244,
+    "max": 1270
+   },
+   "trips": 26,
+   "coverage": "simulated",
+   "gaps": [
+    "its rules for working there",
+    "a market of its own"
+   ]
+  },
+  {
+   "id": "fj",
+   "iso2": "FJ",
+   "name": "Fiji",
+   "kind": "country",
+   "continent": "Oceania",
+   "currency": "FJD",
+   "regions": 5,
+   "places": 16,
+   "work": "unsupported",
+   "routes": [],
+   "markets": [],
+   "unions": [],
+   "festivals": [],
+   "nearest": {
+    "market": "sydney",
+    "places": 16
+   },
+   "km": {
+    "min": 3141,
+    "median": 3218,
+    "max": 3532
+   },
+   "trips": 16,
+   "coverage": "simulated",
+   "gaps": [
+    "its rules for working there",
+    "a market of its own"
+   ]
+  },
+  {
+   "id": "fi",
+   "iso2": "FI",
+   "name": "Finland",
+   "kind": "country",
+   "continent": "Europe",
+   "currency": "EUR",
+   "regions": 18,
+   "places": 885,
+   "work": "unsupported",
+   "routes": [],
+   "markets": [],
+   "unions": [
+    "FSSF – Finlands Svenska Skådespelarförbund",
+    "SNL – Suomen Näyttelijäliitto",
+    "STST – Suomen tanssi-ja sirkustaiteilijat"
+   ],
+   "festivals": [
+    "Tampere Film Festival"
+   ],
+   "nearest": {
+    "market": "london",
+    "places": 885
+   },
+   "km": {
+    "min": 1643,
+    "median": 1828,
+    "max": 2478
+   },
+   "trips": 885,
+   "coverage": "partly researched",
+   "gaps": [
+    "its rules for working there",
+    "a market of its own"
+   ]
+  },
+  {
+   "id": "fr",
+   "iso2": "FR",
+   "name": "France",
+   "kind": "country",
+   "continent": "Europe",
+   "currency": "EUR",
+   "regions": 13,
+   "places": 8940,
+   "work": "partial",
+   "routes": [],
+   "markets": [],
+   "unions": [
+    "SFA – Syndicat Français des Artistes-Interprètes"
+   ],
+   "festivals": [
+    "Annecy International Animation Film Festival",
+    "Festival de Cannes",
+    "Clermont-Ferrand International Short Film Festival"
+   ],
+   "nearest": {
+    "market": "london",
+    "places": 8940
+   },
+   "km": {
+    "min": 143,
+    "median": 554,
+    "max": 1329
+   },
+   "trips": 4985,
+   "coverage": "partly researched",
+   "gaps": [
+    "the permit for an engagement shorter than three months: the talent card for an artist asks for contracts of three months or more in a year, and the salaried work page refused this build",
+    "the talent visa’s fee and how long a decision takes",
+    "a market of its own"
+   ]
+  },
+  {
+   "id": "gf",
+   "iso2": "GF",
+   "name": "French Guiana",
+   "kind": "territory of France",
+   "continent": "South America",
+   "currency": "EUR",
+   "regions": 1,
+   "places": 19,
+   "work": "unsupported",
+   "routes": [],
+   "markets": [],
+   "unions": [],
+   "festivals": [],
+   "nearest": {
+    "market": "philadelphia",
+    "places": 16
+   },
+   "km": {
+    "min": 4358,
+    "median": 4516,
+    "max": 4646
+   },
+   "trips": 19,
+   "coverage": "simulated",
+   "gaps": [
+    "its rules for working there",
+    "a market of its own"
+   ]
+  },
+  {
+   "id": "pf",
+   "iso2": "PF",
+   "name": "French Polynesia",
+   "kind": "territory of France",
+   "continent": "Oceania",
+   "currency": "XPF",
+   "regions": 5,
+   "places": 38,
+   "work": "unsupported",
+   "routes": [],
+   "markets": [],
+   "unions": [],
+   "festivals": [],
+   "nearest": {
+    "market": "sydney",
+    "places": 33
+   },
+   "km": {
+    "min": 5229,
+    "median": 6110,
+    "max": 6491
+   },
+   "trips": 38,
+   "coverage": "simulated",
+   "gaps": [
+    "its rules for working there",
+    "a market of its own"
+   ]
+  },
+  {
+   "id": "tf",
+   "iso2": "TF",
+   "name": "French Southern Territories",
+   "kind": "territory of France",
+   "continent": "Antarctica",
+   "currency": "EUR",
+   "regions": 5,
+   "places": 1,
+   "work": "unsupported",
+   "routes": [],
+   "markets": [],
+   "unions": [],
+   "festivals": [],
+   "nearest": {
+    "market": "sydney",
+    "places": 1
+   },
+   "km": {
+    "min": 6616,
+    "median": 6616,
+    "max": 6616
+   },
+   "trips": 1,
+   "coverage": "simulated",
+   "gaps": [
+    "its rules for working there",
+    "a market of its own"
+   ]
+  },
+  {
+   "id": "ga",
+   "iso2": "GA",
+   "name": "Gabon",
+   "kind": "country",
+   "continent": "Africa",
+   "currency": "XAF",
+   "regions": 9,
+   "places": 50,
+   "work": "unsupported",
+   "routes": [],
+   "markets": [],
+   "unions": [],
+   "festivals": [],
+   "nearest": {
+    "market": "london",
+    "places": 50
+   },
+   "km": {
+    "min": 5603,
+    "median": 5969,
+    "max": 6194
+   },
+   "trips": 50,
+   "coverage": "simulated",
+   "gaps": [
+    "its rules for working there",
+    "a market of its own"
+   ]
+  },
+  {
+   "id": "gm",
+   "iso2": "GM",
+   "name": "Gambia",
+   "kind": "country",
+   "continent": "Africa",
+   "currency": "GMD",
+   "regions": 6,
+   "places": 126,
+   "work": "unsupported",
+   "routes": [],
+   "markets": [],
+   "unions": [],
+   "festivals": [],
+   "nearest": {
+    "market": "london",
+    "places": 126
+   },
+   "km": {
+    "min": 4400,
+    "median": 4460,
+    "max": 4525
+   },
+   "trips": 126,
+   "coverage": "simulated",
+   "gaps": [
+    "its rules for working there",
+    "a market of its own"
+   ]
+  },
+  {
+   "id": "ge",
+   "iso2": "GE",
+   "name": "Georgia",
+   "kind": "country",
+   "continent": "Asia",
+   "currency": "GEL",
+   "regions": 12,
+   "places": 175,
+   "work": "unsupported",
+   "routes": [],
+   "markets": [],
+   "unions": [
+    "GICSTEU – Georgian Independent Culture, Sports and Tourism Employees’ Union"
+   ],
+   "festivals": [],
+   "nearest": {
+    "market": "london",
+    "places": 175
+   },
+   "km": {
+    "min": 3109,
+    "median": 3375,
+    "max": 3643
+   },
+   "trips": 175,
+   "coverage": "partly researched",
+   "gaps": [
+    "its rules for working there",
+    "a market of its own"
+   ]
+  },
+  {
+   "id": "de",
+   "iso2": "DE",
+   "name": "Germany",
+   "kind": "country",
+   "continent": "Europe",
+   "currency": "EUR",
+   "regions": 16,
+   "places": 7646,
+   "work": "unsupported",
+   "routes": [],
+   "markets": [],
+   "unions": [
+    "BFFS – Bundesverband Schauspiel",
+    "GDBA – Genossenschaft Deutscher Bühnen-Angehöriger",
+    "VdO – Vereinigung deutscher Opern- und Tanzensembles",
+    "VER.DI – Vereinte Dienstleistungsgewerkschaft"
+   ],
+   "festivals": [
+    "Berlin International Film Festival",
+    "FILMFEST MÜNCHEN",
+    "International Short Film Festival Oberhausen"
+   ],
+   "nearest": {
+    "market": "london",
+    "places": 7646
+   },
+   "km": {
+    "min": 425,
+    "median": 747,
+    "max": 1049
+   },
+   "trips": 7425,
+   "coverage": "partly researched",
+   "gaps": [
+    "its rules for working there",
+    "a market of its own"
+   ]
+  },
+  {
+   "id": "gh",
+   "iso2": "GH",
+   "name": "Ghana",
+   "kind": "country",
+   "continent": "Africa",
+   "currency": "GHS",
+   "regions": 16,
+   "places": 119,
+   "work": "unsupported",
+   "routes": [],
+   "markets": [],
+   "unions": [
+    "GAG – Ghana Actors’ Guild"
+   ],
+   "festivals": [],
+   "nearest": {
+    "market": "london",
+    "places": 119
+   },
+   "km": {
+    "min": 4498,
+    "median": 5040,
+    "max": 5190
+   },
+   "trips": 119,
+   "coverage": "partly researched",
+   "gaps": [
+    "its rules for working there",
+    "a market of its own"
+   ]
+  },
+  {
+   "id": "gi",
+   "iso2": "GI",
+   "name": "Gibraltar",
+   "kind": "territory of United Kingdom",
+   "continent": "Europe",
+   "currency": "GIP",
+   "regions": 0,
+   "places": 6,
+   "work": "unsupported",
+   "routes": [],
+   "markets": [],
+   "unions": [],
+   "festivals": [],
+   "nearest": {
+    "market": "london",
+    "places": 6
+   },
+   "km": {
+    "min": 1758,
+    "median": 1759,
+    "max": 1761
+   },
+   "trips": 6,
+   "coverage": "simulated",
+   "gaps": [
+    "its rules for working there",
+    "a market of its own"
+   ]
+  },
+  {
+   "id": "gr",
+   "iso2": "GR",
+   "name": "Greece",
+   "kind": "country",
+   "continent": "Europe",
+   "currency": "EUR",
+   "regions": 14,
+   "places": 1132,
+   "work": "unsupported",
+   "routes": [],
+   "markets": [],
+   "unions": [
+    "ETE – Greek Singers’ Union",
+    "HAU – Hellenic Actors’ Union"
+   ],
+   "festivals": [],
+   "nearest": {
+    "market": "london",
+    "places": 1132
+   },
+   "km": {
+    "min": 2010,
+    "median": 2257,
+    "max": 2900
+   },
+   "trips": 1132,
+   "coverage": "partly researched",
+   "gaps": [
+    "its rules for working there",
+    "a market of its own"
+   ]
+  },
+  {
+   "id": "gl",
+   "iso2": "GL",
+   "name": "Greenland",
+   "kind": "territory of Denmark",
+   "continent": "North America",
+   "currency": "DKK",
+   "regions": 5,
+   "places": 13,
+   "work": "unsupported",
+   "routes": [],
+   "markets": [],
+   "unions": [],
+   "festivals": [],
+   "nearest": {
+    "market": "boston",
+    "places": 12
+   },
+   "km": {
+    "min": 2599,
+    "median": 2802,
+    "max": 3474
+   },
+   "trips": 13,
+   "coverage": "simulated",
+   "gaps": [
+    "its rules for working there",
+    "a market of its own"
+   ]
+  },
+  {
+   "id": "gd",
+   "iso2": "GD",
+   "name": "Grenada",
+   "kind": "country",
+   "continent": "North America",
+   "currency": "XCD",
+   "regions": 7,
+   "places": 9,
+   "work": "unsupported",
+   "routes": [],
+   "markets": [],
+   "unions": [],
+   "festivals": [],
+   "nearest": {
+    "market": "atlanta",
+    "places": 9
+   },
+   "km": {
+    "min": 3314,
+    "median": 3324,
+    "max": 3336
+   },
+   "trips": 9,
+   "coverage": "simulated",
+   "gaps": [
+    "its rules for working there",
+    "a market of its own"
+   ]
+  },
+  {
+   "id": "gp",
+   "iso2": "GP",
+   "name": "Guadeloupe",
+   "kind": "territory of France",
+   "continent": "North America",
+   "currency": "EUR",
+   "regions": 1,
+   "places": 25,
+   "work": "unsupported",
+   "routes": [],
+   "markets": [],
+   "unions": [],
+   "festivals": [],
+   "nearest": {
+    "market": "washington",
+    "places": 25
+   },
+   "km": {
+    "min": 2915,
+    "median": 2942,
+    "max": 2982
+   },
+   "trips": 25,
+   "coverage": "simulated",
+   "gaps": [
+    "its rules for working there",
+    "a market of its own"
+   ]
+  },
+  {
+   "id": "gu",
+   "iso2": "GU",
+   "name": "Guam",
+   "kind": "territory of United States",
+   "continent": "Oceania",
+   "currency": "USD",
+   "regions": 19,
+   "places": 26,
+   "work": "unsupported",
+   "routes": [],
+   "markets": [],
+   "unions": [],
+   "festivals": [],
+   "nearest": {
+    "market": "sydney",
+    "places": 26
+   },
+   "km": {
+    "min": 5287,
+    "median": 5308,
+    "max": 5318
+   },
+   "trips": 26,
+   "coverage": "simulated",
+   "gaps": [
+    "its rules for working there",
+    "a market of its own"
+   ]
+  },
+  {
+   "id": "gt",
+   "iso2": "GT",
+   "name": "Guatemala",
+   "kind": "country",
+   "continent": "North America",
+   "currency": "GTQ",
+   "regions": 22,
+   "places": 340,
+   "work": "unsupported",
+   "routes": [],
+   "markets": [],
+   "unions": [],
+   "festivals": [],
+   "nearest": {
+    "market": "atlanta",
+    "places": 340
+   },
+   "km": {
+    "min": 1915,
+    "median": 2213,
+    "max": 2298
+   },
+   "trips": 340,
+   "coverage": "simulated",
+   "gaps": [
+    "its rules for working there",
+    "a market of its own"
+   ]
+  },
+  {
+   "id": "gg",
+   "iso2": "GG",
+   "name": "Guernsey",
+   "kind": "territory of United Kingdom",
+   "continent": "Europe",
+   "currency": "GBP",
+   "regions": 11,
+   "places": 11,
+   "work": "unsupported",
+   "routes": [],
+   "markets": [],
+   "unions": [],
+   "festivals": [],
+   "nearest": {
+    "market": "london",
+    "places": 11
+   },
+   "km": {
+    "min": 248,
+    "median": 287,
+    "max": 292
+   },
+   "trips": 0,
+   "coverage": "simulated",
+   "gaps": [
+    "its rules for working there",
+    "a market of its own"
+   ]
+  },
+  {
+   "id": "gn",
+   "iso2": "GN",
+   "name": "Guinea",
+   "kind": "country",
+   "continent": "Africa",
+   "currency": "GNF",
+   "regions": 8,
+   "places": 83,
+   "work": "unsupported",
+   "routes": [],
+   "markets": [],
+   "unions": [],
+   "festivals": [],
+   "nearest": {
+    "market": "london",
+    "places": 83
+   },
+   "km": {
+    "min": 4433,
+    "median": 4644,
+    "max": 4958
+   },
+   "trips": 83,
+   "coverage": "simulated",
+   "gaps": [
+    "its rules for working there",
+    "a market of its own"
+   ]
+  },
+  {
+   "id": "gw",
+   "iso2": "GW",
+   "name": "Guinea-Bissau",
+   "kind": "country",
+   "continent": "Africa",
+   "currency": "XOF",
+   "regions": 9,
+   "places": 50,
+   "work": "unsupported",
+   "routes": [],
+   "markets": [],
+   "unions": [],
+   "festivals": [],
+   "nearest": {
+    "market": "london",
+    "places": 50
+   },
+   "km": {
+    "min": 4500,
+    "median": 4622,
+    "max": 4693
+   },
+   "trips": 50,
+   "coverage": "simulated",
+   "gaps": [
+    "its rules for working there",
+    "a market of its own"
+   ]
+  },
+  {
+   "id": "gy",
+   "iso2": "GY",
+   "name": "Guyana",
+   "kind": "country",
+   "continent": "South America",
+   "currency": "GYD",
+   "regions": 10,
+   "places": 22,
+   "work": "unsupported",
+   "routes": [],
+   "markets": [],
+   "unions": [],
+   "festivals": [],
+   "nearest": {
+    "market": "atlanta",
+    "places": 18
+   },
+   "km": {
+    "min": 3798,
+    "median": 4059,
+    "max": 4231
+   },
+   "trips": 22,
+   "coverage": "simulated",
+   "gaps": [
+    "its rules for working there",
+    "a market of its own"
+   ]
+  },
+  {
+   "id": "ht",
+   "iso2": "HT",
+   "name": "Haiti",
+   "kind": "country",
+   "continent": "North America",
+   "currency": "HTG",
+   "regions": 10,
+   "places": 109,
+   "work": "unsupported",
+   "routes": [],
+   "markets": [],
+   "unions": [],
+   "festivals": [],
+   "nearest": {
+    "market": "atlanta",
+    "places": 109
+   },
+   "km": {
+    "min": 1894,
+    "median": 2006,
+    "max": 2151
+   },
+   "trips": 109,
+   "coverage": "simulated",
+   "gaps": [
+    "its rules for working there",
+    "a market of its own"
+   ]
+  },
+  {
+   "id": "hm",
+   "iso2": "HM",
+   "name": "Heard Island and McDonald Islands",
+   "kind": "territory of Australia",
+   "continent": "Antarctica",
+   "currency": "AUD",
+   "regions": 0,
+   "places": 0,
+   "work": "unsupported",
+   "routes": [],
+   "markets": [],
+   "unions": [],
+   "festivals": [],
+   "nearest": null,
+   "km": null,
+   "trips": 0,
+   "coverage": "simulated",
+   "gaps": [
+    "its rules for working there",
+    "a market of its own"
+   ]
+  },
+  {
+   "id": "hn",
+   "iso2": "HN",
+   "name": "Honduras",
+   "kind": "country",
+   "continent": "North America",
+   "currency": "HNL",
+   "regions": 18,
+   "places": 468,
+   "work": "unsupported",
+   "routes": [],
+   "markets": [],
+   "unions": [],
+   "festivals": [],
+   "nearest": {
+    "market": "atlanta",
+    "places": 468
+   },
+   "km": {
+    "min": 1925,
+    "median": 2132,
+    "max": 2309
+   },
+   "trips": 468,
+   "coverage": "simulated",
+   "gaps": [
+    "its rules for working there",
+    "a market of its own"
+   ]
+  },
+  {
+   "id": "hk",
+   "iso2": "HK",
+   "name": "Hong Kong",
+   "kind": "territory of China",
+   "continent": "Asia",
+   "currency": "HKD",
+   "regions": 18,
+   "places": 325,
+   "work": "unsupported",
+   "routes": [],
+   "markets": [],
+   "unions": [],
+   "festivals": [],
+   "nearest": {
+    "market": "sydney",
+    "places": 325
+   },
+   "km": {
+    "min": 7363,
+    "median": 7375,
+    "max": 7398
+   },
+   "trips": 325,
+   "coverage": "simulated",
+   "gaps": [
+    "its rules for working there",
+    "a market of its own"
+   ]
+  },
+  {
+   "id": "hu",
+   "iso2": "HU",
+   "name": "Hungary",
+   "kind": "country",
+   "continent": "Europe",
+   "currency": "HUF",
+   "regions": 20,
+   "places": 1101,
+   "work": "unsupported",
+   "routes": [],
+   "markets": [],
+   "unions": [
+    "SDS – Színházi Dolgozók Szakszervezete"
+   ],
+   "festivals": [],
+   "nearest": {
+    "market": "london",
+    "places": 1101
+   },
+   "km": {
+    "min": 1269,
+    "median": 1481,
+    "max": 1684
+   },
+   "trips": 1101,
+   "coverage": "partly researched",
+   "gaps": [
+    "its rules for working there",
+    "a market of its own"
+   ]
+  },
+  {
+   "id": "is",
+   "iso2": "IS",
+   "name": "Iceland",
+   "kind": "country",
+   "continent": "Europe",
+   "currency": "ISK",
+   "regions": 8,
+   "places": 35,
+   "work": "unsupported",
+   "routes": [],
+   "markets": [],
+   "unions": [
+    "FÍL – Félag Íslenskra Leikara"
+   ],
+   "festivals": [],
+   "nearest": {
+    "market": "london",
+    "places": 35
+   },
+   "km": {
+    "min": 1665,
+    "median": 1887,
+    "max": 2068
+   },
+   "trips": 35,
+   "coverage": "partly researched",
+   "gaps": [
+    "its rules for working there",
+    "a market of its own"
+   ]
+  },
+  {
+   "id": "in",
+   "iso2": "IN",
+   "name": "India",
+   "kind": "country",
+   "continent": "Asia",
+   "currency": "INR",
+   "regions": 36,
+   "places": 7070,
+   "work": "partial",
+   "routes": [],
+   "markets": [],
+   "unions": [
+    "CINTAA – Cine & TV Artistes Association"
+   ],
+   "festivals": [
+    "Bengaluru International Film Festival",
+    "International Film Festival of India – IFFI Goa",
+    "International Film Festival of Kerala",
+    "Kolkata International Film Festival"
+   ],
+   "nearest": {
+    "market": "london",
+    "places": 7061
+   },
+   "km": {
+    "min": 6023,
+    "median": 7616,
+    "max": 8471
+   },
+   "trips": 7070,
+   "coverage": "partly researched",
+   "gaps": [
+    "the film visa, which follows permission to shoot, and the rules for documentary filming",
+    "a market of its own"
+   ]
+  },
+  {
+   "id": "id",
+   "iso2": "ID",
+   "name": "Indonesia",
+   "kind": "country",
+   "continent": "Asia",
+   "currency": "IDR",
+   "regions": 38,
+   "places": 2014,
+   "work": "unsupported",
+   "routes": [],
+   "markets": [],
+   "unions": [],
+   "festivals": [],
+   "nearest": {
+    "market": "sydney",
+    "places": 2014
+   },
+   "km": {
+    "min": 3030,
+    "median": 5091,
+    "max": 7344
+   },
+   "trips": 2014,
+   "coverage": "simulated",
+   "gaps": [
+    "its rules for working there",
+    "a market of its own"
+   ]
+  },
+  {
+   "id": "ir",
+   "iso2": "IR",
+   "name": "Iran",
+   "kind": "country",
+   "continent": "Asia",
+   "currency": "IRR",
+   "regions": 31,
+   "places": 1984,
+   "work": "unsupported",
+   "routes": [],
+   "markets": [],
+   "unions": [],
+   "festivals": [
+    "Fajr International Film Festival"
+   ],
+   "nearest": {
+    "market": "london",
+    "places": 1984
+   },
+   "km": {
+    "min": 3645,
+    "median": 4497,
+    "max": 5906
+   },
+   "trips": 1984,
+   "coverage": "partly researched",
+   "gaps": [
+    "its rules for working there",
+    "a market of its own"
+   ]
+  },
+  {
+   "id": "iq",
+   "iso2": "IQ",
+   "name": "Iraq",
+   "kind": "country",
+   "continent": "Asia",
+   "currency": "IQD",
+   "regions": 19,
+   "places": 169,
+   "work": "unsupported",
+   "routes": [],
+   "markets": [],
+   "unions": [],
+   "festivals": [],
+   "nearest": {
+    "market": "london",
+    "places": 169
+   },
+   "km": {
+    "min": 3687,
+    "median": 3970,
+    "max": 4628
+   },
+   "trips": 169,
+   "coverage": "simulated",
+   "gaps": [
+    "its rules for working there",
+    "a market of its own"
+   ]
+  },
+  {
+   "id": "ie",
+   "iso2": "IE",
+   "name": "Ireland",
+   "kind": "country",
+   "continent": "Europe",
+   "currency": "EUR",
+   "regions": 4,
+   "places": 370,
+   "work": "unsupported",
+   "routes": [],
+   "markets": [],
+   "unions": [
+    "IEG – Irish Equity Group"
+   ],
+   "festivals": [],
+   "nearest": {
+    "market": "london",
+    "places": 370
+   },
+   "km": {
+    "min": 435,
+    "median": 514,
+    "max": 727
+   },
+   "trips": 208,
+   "coverage": "partly researched",
+   "gaps": [
+    "its rules for working there",
+    "a market of its own"
+   ]
+  },
+  {
+   "id": "im",
+   "iso2": "IM",
+   "name": "Isle of Man",
+   "kind": "territory of United Kingdom",
+   "continent": "Europe",
+   "currency": "GBP",
+   "regions": 24,
+   "places": 21,
+   "work": "unsupported",
+   "routes": [],
+   "markets": [],
+   "unions": [],
+   "festivals": [],
+   "nearest": {
+    "market": "london",
+    "places": 21
+   },
+   "km": {
+    "min": 414,
+    "median": 421,
+    "max": 432
+   },
+   "trips": 0,
+   "coverage": "simulated",
+   "gaps": [
+    "its rules for working there",
+    "a market of its own"
+   ]
+  },
+  {
+   "id": "il",
+   "iso2": "IL",
+   "name": "Israel",
+   "kind": "country",
+   "continent": "Asia",
+   "currency": "ILS",
+   "regions": 7,
+   "places": 433,
+   "work": "unsupported",
+   "routes": [],
+   "markets": [],
+   "unions": [
+    "SHAHAM – The Israeli Screen Actors’ Guild"
+   ],
+   "festivals": [],
+   "nearest": {
+    "market": "london",
+    "places": 433
+   },
+   "km": {
+    "min": 3496,
+    "median": 3552,
+    "max": 3779
+   },
+   "trips": 433,
+   "coverage": "partly researched",
+   "gaps": [
+    "its rules for working there",
+    "a market of its own"
+   ]
+  },
+  {
+   "id": "it",
+   "iso2": "IT",
+   "name": "Italy",
+   "kind": "country",
+   "continent": "Europe",
+   "currency": "EUR",
+   "regions": 20,
+   "places": 10052,
+   "work": "unsupported",
+   "routes": [],
+   "markets": [],
+   "unions": [
+    "SLC- Sindacato Lavoratori Comunicazione"
+   ],
+   "festivals": [
+    "Noir In Film Festival",
+    "Rome Film Fest",
+    "Torino Film Festival",
+    "Venice International Film Festival"
+   ],
+   "nearest": {
+    "market": "london",
+    "places": 10052
+   },
+   "km": {
+    "min": 821,
+    "median": 1130,
+    "max": 2049
+   },
+   "trips": 10052,
+   "coverage": "partly researched",
+   "gaps": [
+    "its rules for working there",
+    "a market of its own"
+   ]
+  },
+  {
+   "id": "ci",
+   "iso2": "CI",
+   "name": "Ivory Coast",
+   "kind": "country",
+   "continent": "Africa",
+   "currency": "XOF",
+   "regions": 14,
+   "places": 3775,
+   "work": "unsupported",
+   "routes": [],
+   "markets": [],
+   "unions": [],
+   "festivals": [],
+   "nearest": {
+    "market": "london",
+    "places": 3775
+   },
+   "km": {
+    "min": 4574,
+    "median": 4970,
+    "max": 5281
+   },
+   "trips": 3775,
+   "coverage": "simulated",
+   "gaps": [
+    "its rules for working there",
+    "a market of its own"
+   ]
+  },
+  {
+   "id": "jm",
+   "iso2": "JM",
+   "name": "Jamaica",
+   "kind": "country",
+   "continent": "North America",
+   "currency": "JMD",
+   "regions": 14,
+   "places": 101,
+   "work": "unsupported",
+   "routes": [],
+   "markets": [],
+   "unions": [],
+   "festivals": [],
+   "nearest": {
+    "market": "atlanta",
+    "places": 101
+   },
+   "km": {
+    "min": 1810,
+    "median": 1877,
+    "max": 1939
+   },
+   "trips": 101,
+   "coverage": "simulated",
+   "gaps": [
+    "its rules for working there",
+    "a market of its own"
+   ]
+  },
+  {
+   "id": "jp",
+   "iso2": "JP",
+   "name": "Japan",
+   "kind": "country",
+   "continent": "Asia",
+   "currency": "JPY",
+   "regions": 47,
+   "places": 2160,
+   "work": "partial",
+   "routes": [],
+   "markets": [],
+   "unions": [
+    "JAU – Japan Actors’ Union"
+   ],
+   "festivals": [
+    "Tokyo International Film Festival"
+   ],
+   "nearest": {
+    "market": "seattle",
+    "places": 1194
+   },
+   "km": {
+    "min": 6728,
+    "median": 7702,
+    "max": 8010
+   },
+   "trips": 2160,
+   "coverage": "partly researched",
+   "gaps": [
+    "the Entertainer status’s criteria and documents for film and broadcast work, which an ordinance this build didn’t read sets, and its fee and timing",
+    "a market of its own"
+   ]
+  },
+  {
+   "id": "je",
+   "iso2": "JE",
+   "name": "Jersey",
+   "kind": "territory of United Kingdom",
+   "continent": "Europe",
+   "currency": "GBP",
+   "regions": 12,
+   "places": 6,
+   "work": "unsupported",
+   "routes": [],
+   "markets": [],
+   "unions": [],
+   "festivals": [],
+   "nearest": {
+    "market": "london",
+    "places": 6
+   },
+   "km": {
+    "min": 289,
+    "median": 289,
+    "max": 294
+   },
+   "trips": 0,
+   "coverage": "simulated",
+   "gaps": [
+    "its rules for working there",
+    "a market of its own"
+   ]
+  },
+  {
+   "id": "jo",
+   "iso2": "JO",
+   "name": "Jordan",
+   "kind": "country",
+   "continent": "Asia",
+   "currency": "JOD",
+   "regions": 12,
+   "places": 146,
+   "work": "unsupported",
+   "routes": [],
+   "markets": [],
+   "unions": [],
+   "festivals": [],
+   "nearest": {
+    "market": "london",
+    "places": 146
+   },
+   "km": {
+    "min": 3566,
+    "median": 3638,
+    "max": 3806
+   },
+   "trips": 146,
+   "coverage": "simulated",
+   "gaps": [
+    "its rules for working there",
+    "a market of its own"
+   ]
+  },
+  {
+   "id": "kz",
+   "iso2": "KZ",
+   "name": "Kazakhstan",
+   "kind": "country",
+   "continent": "Asia",
+   "currency": "KZT",
+   "regions": 21,
+   "places": 344,
+   "work": "unsupported",
+   "routes": [],
+   "markets": [],
+   "unions": [
+    "CSMWUK – Culture, Sports and Media Workers’ Union of Kazakhstan"
+   ],
+   "festivals": [
+    "Eurasia International Film Festival"
+   ],
+   "nearest": {
+    "market": "london",
+    "places": 344
+   },
+   "km": {
+    "min": 3276,
+    "median": 4920,
+    "max": 5843
+   },
+   "trips": 344,
+   "coverage": "partly researched",
+   "gaps": [
+    "its rules for working there",
+    "a market of its own"
+   ]
+  },
+  {
+   "id": "ke",
+   "iso2": "KE",
+   "name": "Kenya",
+   "kind": "country",
+   "continent": "Africa",
+   "currency": "KES",
+   "regions": 47,
+   "places": 334,
+   "work": "unsupported",
+   "routes": [],
+   "markets": [],
+   "unions": [],
+   "festivals": [],
+   "nearest": {
+    "market": "london",
+    "places": 334
+   },
+   "km": {
+    "min": 6151,
+    "median": 6711,
+    "max": 7280
+   },
+   "trips": 334,
+   "coverage": "simulated",
+   "gaps": [
+    "its rules for working there",
+    "a market of its own"
+   ]
+  },
+  {
+   "id": "ki",
+   "iso2": "KI",
+   "name": "Kiribati",
+   "kind": "country",
+   "continent": "Oceania",
+   "currency": "AUD",
+   "regions": 3,
+   "places": 19,
+   "work": "unsupported",
+   "routes": [],
+   "markets": [],
+   "unions": [],
+   "festivals": [],
+   "nearest": {
+    "market": "sydney",
+    "places": 14
+   },
+   "km": {
+    "min": 4527,
+    "median": 4540,
+    "max": 5410
+   },
+   "trips": 19,
+   "coverage": "simulated",
+   "gaps": [
+    "its rules for working there",
+    "a market of its own"
+   ]
+  },
+  {
+   "id": "xk",
+   "iso2": "XK",
+   "name": "Kosovo",
+   "kind": "country",
+   "continent": "Europe",
+   "currency": "EUR",
+   "regions": 7,
+   "places": 65,
+   "work": "unsupported",
+   "routes": [],
+   "markets": [],
+   "unions": [],
+   "festivals": [],
+   "nearest": {
+    "market": "london",
+    "places": 65
+   },
+   "km": {
+    "min": 1823,
+    "median": 1860,
+    "max": 1923
+   },
+   "trips": 65,
+   "coverage": "simulated",
+   "gaps": [
+    "its rules for working there",
+    "a market of its own"
+   ]
+  },
+  {
+   "id": "kw",
+   "iso2": "KW",
+   "name": "Kuwait",
+   "kind": "country",
+   "continent": "Asia",
+   "currency": "KWD",
+   "regions": 6,
+   "places": 28,
+   "work": "unsupported",
+   "routes": [],
+   "markets": [],
+   "unions": [],
+   "festivals": [],
+   "nearest": {
+    "market": "london",
+    "places": 28
+   },
+   "km": {
+    "min": 4572,
+    "median": 4655,
+    "max": 4698
+   },
+   "trips": 28,
+   "coverage": "simulated",
+   "gaps": [
+    "its rules for working there",
+    "a market of its own"
+   ]
+  },
+  {
+   "id": "kg",
+   "iso2": "KG",
+   "name": "Kyrgyzstan",
+   "kind": "country",
+   "continent": "Asia",
+   "currency": "KGS",
+   "regions": 9,
+   "places": 108,
+   "work": "unsupported",
+   "routes": [],
+   "markets": [],
+   "unions": [
+    "CWUK – Cultural Workers’ Union of Kyrghizstan"
+   ],
+   "festivals": [],
+   "nearest": {
+    "market": "london",
+    "places": 108
+   },
+   "km": {
+    "min": 5292,
+    "median": 5478,
+    "max": 5767
+   },
+   "trips": 108,
+   "coverage": "partly researched",
+   "gaps": [
+    "its rules for working there",
+    "a market of its own"
+   ]
+  },
+  {
+   "id": "la",
+   "iso2": "LA",
+   "name": "Laos",
+   "kind": "country",
+   "continent": "Asia",
+   "currency": "LAK",
+   "regions": 18,
+   "places": 94,
+   "work": "unsupported",
+   "routes": [],
+   "markets": [],
+   "unions": [],
+   "festivals": [],
+   "nearest": {
+    "market": "sydney",
+    "places": 94
+   },
+   "km": {
+    "min": 7131,
+    "median": 7747,
+    "max": 8101
+   },
+   "trips": 94,
+   "coverage": "simulated",
+   "gaps": [
+    "its rules for working there",
+    "a market of its own"
+   ]
+  },
+  {
+   "id": "lv",
+   "iso2": "LV",
+   "name": "Latvia",
+   "kind": "country",
+   "continent": "Europe",
+   "currency": "EUR",
+   "regions": 43,
+   "places": 131,
+   "work": "unsupported",
+   "routes": [],
+   "markets": [],
+   "unions": [
+    "LKDAF – Latvijas Kultūras Darbinieku Arodbiedrība Federācija"
+   ],
+   "festivals": [],
+   "nearest": {
+    "market": "london",
+    "places": 131
+   },
+   "km": {
+    "min": 1481,
+    "median": 1701,
+    "max": 1911
+   },
+   "trips": 131,
+   "coverage": "partly researched",
+   "gaps": [
+    "its rules for working there",
+    "a market of its own"
+   ]
+  },
+  {
+   "id": "lb",
+   "iso2": "LB",
+   "name": "Lebanon",
+   "kind": "country",
+   "continent": "Asia",
+   "currency": "LBP",
+   "regions": 8,
+   "places": 50,
+   "work": "unsupported",
+   "routes": [],
+   "markets": [],
+   "unions": [],
+   "festivals": [],
+   "nearest": {
+    "market": "london",
+    "places": 50
+   },
+   "km": {
+    "min": 3437,
+    "median": 3479,
+    "max": 3514
+   },
+   "trips": 50,
+   "coverage": "simulated",
+   "gaps": [
+    "its rules for working there",
+    "a market of its own"
+   ]
+  },
+  {
+   "id": "ls",
+   "iso2": "LS",
+   "name": "Lesotho",
+   "kind": "country",
+   "continent": "Africa",
+   "currency": "LSL",
+   "regions": 10,
+   "places": 47,
+   "work": "unsupported",
+   "routes": [],
+   "markets": [],
+   "unions": [],
+   "festivals": [],
+   "nearest": {
+    "market": "london",
+    "places": 47
+   },
+   "km": {
+    "min": 9348,
+    "median": 9419,
+    "max": 9506
+   },
+   "trips": 47,
+   "coverage": "simulated",
+   "gaps": [
+    "its rules for working there",
+    "a market of its own"
+   ]
+  },
+  {
+   "id": "lr",
+   "iso2": "LR",
+   "name": "Liberia",
+   "kind": "country",
+   "continent": "Africa",
+   "currency": "LRD",
+   "regions": 15,
+   "places": 27,
+   "work": "unsupported",
+   "routes": [],
+   "markets": [],
+   "unions": [],
+   "festivals": [],
+   "nearest": {
+    "market": "london",
+    "places": 27
+   },
+   "km": {
+    "min": 4871,
+    "median": 5083,
+    "max": 5288
+   },
+   "trips": 27,
+   "coverage": "simulated",
+   "gaps": [
+    "its rules for working there",
+    "a market of its own"
+   ]
+  },
+  {
+   "id": "ly",
+   "iso2": "LY",
+   "name": "Libya",
+   "kind": "country",
+   "continent": "Africa",
+   "currency": "LYD",
+   "regions": 22,
+   "places": 119,
+   "work": "unsupported",
+   "routes": [],
+   "markets": [],
+   "unions": [],
+   "festivals": [],
+   "nearest": {
+    "market": "london",
+    "places": 119
+   },
+   "km": {
+    "min": 2281,
+    "median": 2728,
+    "max": 3633
+   },
+   "trips": 119,
+   "coverage": "simulated",
+   "gaps": [
+    "its rules for working there",
+    "a market of its own"
+   ]
+  },
+  {
+   "id": "li",
+   "iso2": "LI",
+   "name": "Liechtenstein",
+   "kind": "country",
+   "continent": "Europe",
+   "currency": "CHF",
+   "regions": 11,
+   "places": 14,
+   "work": "unsupported",
+   "routes": [],
+   "markets": [],
+   "unions": [],
+   "festivals": [],
+   "nearest": {
+    "market": "london",
+    "places": 14
+   },
+   "km": {
+    "min": 844,
+    "median": 848,
+    "max": 855
+   },
+   "trips": 14,
+   "coverage": "simulated",
+   "gaps": [
+    "its rules for working there",
+    "a market of its own"
+   ]
+  },
+  {
+   "id": "lt",
+   "iso2": "LT",
+   "name": "Lithuania",
+   "kind": "country",
+   "continent": "Europe",
+   "currency": "EUR",
+   "regions": 10,
+   "places": 133,
+   "work": "unsupported",
+   "routes": [],
+   "markets": [],
+   "unions": [
+    "LAG – Lietuvos Aktorių Gildija"
+   ],
+   "festivals": [],
+   "nearest": {
+    "market": "london",
+    "places": 133
+   },
+   "km": {
+    "min": 1456,
+    "median": 1637,
+    "max": 1801
+   },
+   "trips": 133,
+   "coverage": "partly researched",
+   "gaps": [
+    "its rules for working there",
+    "a market of its own"
+   ]
+  },
+  {
+   "id": "lu",
+   "iso2": "LU",
+   "name": "Luxembourg",
+   "kind": "country",
+   "continent": "Europe",
+   "currency": "EUR",
+   "regions": 12,
+   "places": 172,
+   "work": "unsupported",
+   "routes": [],
+   "markets": [],
+   "unions": [
+    "Actors.Lu"
+   ],
+   "festivals": [],
+   "nearest": {
+    "market": "london",
+    "places": 172
+   },
+   "km": {
+    "min": 455,
+    "median": 486,
+    "max": 512
+   },
+   "trips": 20,
+   "coverage": "partly researched",
+   "gaps": [
+    "its rules for working there",
+    "a market of its own"
+   ]
+  },
+  {
+   "id": "mo",
+   "iso2": "MO",
+   "name": "Macao",
+   "kind": "territory of China",
+   "continent": "Asia",
+   "currency": "MOP",
+   "regions": 8,
+   "places": 7,
+   "work": "unsupported",
+   "routes": [],
+   "markets": [],
+   "unions": [],
+   "festivals": [],
+   "nearest": {
+    "market": "sydney",
+    "places": 7
+   },
+   "km": {
+    "min": 7392,
+    "median": 7395,
+    "max": 7400
+   },
+   "trips": 7,
+   "coverage": "simulated",
+   "gaps": [
+    "its rules for working there",
+    "a market of its own"
+   ]
+  },
+  {
+   "id": "mg",
+   "iso2": "MG",
+   "name": "Madagascar",
+   "kind": "country",
+   "continent": "Africa",
+   "currency": "MGA",
+   "regions": 23,
+   "places": 152,
+   "work": "unsupported",
+   "routes": [],
+   "markets": [],
+   "unions": [
+    "FMTM – Fikambanan’ny Mpanao Teatra Malagasy"
+   ],
+   "festivals": [],
+   "nearest": {
+    "market": "london",
+    "places": 152
+   },
+   "km": {
+    "min": 8534,
+    "median": 9108,
+    "max": 9672
+   },
+   "trips": 152,
+   "coverage": "partly researched",
+   "gaps": [
+    "its rules for working there",
+    "a market of its own"
+   ]
+  },
+  {
+   "id": "mw",
+   "iso2": "MW",
+   "name": "Malawi",
+   "kind": "country",
+   "continent": "Africa",
+   "currency": "MWK",
+   "regions": 3,
+   "places": 39,
+   "work": "unsupported",
+   "routes": [],
+   "markets": [],
+   "unions": [],
+   "festivals": [],
+   "nearest": {
+    "market": "london",
+    "places": 39
+   },
+   "km": {
+    "min": 7522,
+    "median": 8041,
+    "max": 8348
+   },
+   "trips": 39,
+   "coverage": "simulated",
+   "gaps": [
+    "its rules for working there",
+    "a market of its own"
+   ]
+  },
+  {
+   "id": "my",
+   "iso2": "MY",
+   "name": "Malaysia",
+   "kind": "country",
+   "continent": "Asia",
+   "currency": "MYR",
+   "regions": 16,
+   "places": 731,
+   "work": "unsupported",
+   "routes": [],
+   "markets": [],
+   "unions": [],
+   "festivals": [],
+   "nearest": {
+    "market": "sydney",
+    "places": 731
+   },
+   "km": {
+    "min": 5459,
+    "median": 6616,
+    "max": 7023
+   },
+   "trips": 731,
+   "coverage": "simulated",
+   "gaps": [
+    "its rules for working there",
+    "a market of its own"
+   ]
+  },
+  {
+   "id": "mv",
+   "iso2": "MV",
+   "name": "Maldives",
+   "kind": "country",
+   "continent": "Asia",
+   "currency": "MVR",
+   "regions": 21,
+   "places": 30,
+   "work": "unsupported",
+   "routes": [],
+   "markets": [],
+   "unions": [],
+   "festivals": [],
+   "nearest": {
+    "market": "london",
+    "places": 27
+   },
+   "km": {
+    "min": 8253,
+    "median": 8573,
+    "max": 8876
+   },
+   "trips": 30,
+   "coverage": "simulated",
+   "gaps": [
+    "its rules for working there",
+    "a market of its own"
+   ]
+  },
+  {
+   "id": "ml",
+   "iso2": "ML",
+   "name": "Mali",
+   "kind": "country",
+   "continent": "Africa",
+   "currency": "XOF",
+   "regions": 11,
+   "places": 94,
+   "work": "unsupported",
+   "routes": [],
+   "markets": [],
+   "unions": [],
+   "festivals": [],
+   "nearest": {
+    "market": "london",
+    "places": 94
+   },
+   "km": {
+    "min": 3223,
+    "median": 4269,
+    "max": 4631
+   },
+   "trips": 94,
+   "coverage": "simulated",
+   "gaps": [
+    "its rules for working there",
+    "a market of its own"
+   ]
+  },
+  {
+   "id": "mt",
+   "iso2": "MT",
+   "name": "Malta",
+   "kind": "country",
+   "continent": "Europe",
+   "currency": "EUR",
+   "regions": 68,
+   "places": 68,
+   "work": "unsupported",
+   "routes": [],
+   "markets": [],
+   "unions": [],
+   "festivals": [],
+   "nearest": {
+    "market": "london",
+    "places": 68
+   },
+   "km": {
+    "min": 2060,
+    "median": 2087,
+    "max": 2096
+   },
+   "trips": 68,
+   "coverage": "simulated",
+   "gaps": [
+    "its rules for working there",
+    "a market of its own"
+   ]
+  },
+  {
+   "id": "mh",
+   "iso2": "MH",
+   "name": "Marshall Islands",
+   "kind": "country",
+   "continent": "Oceania",
+   "currency": "USD",
+   "regions": 33,
+   "places": 26,
+   "work": "unsupported",
+   "routes": [],
+   "markets": [],
+   "unions": [],
+   "festivals": [],
+   "nearest": {
+    "market": "sydney",
+    "places": 26
+   },
+   "km": {
+    "min": 4654,
+    "median": 5026,
+    "max": 5388
+   },
+   "trips": 26,
+   "coverage": "simulated",
+   "gaps": [
+    "its rules for working there",
+    "a market of its own"
+   ]
+  },
+  {
+   "id": "mq",
+   "iso2": "MQ",
+   "name": "Martinique",
+   "kind": "territory of France",
+   "continent": "North America",
+   "currency": "EUR",
+   "regions": 1,
+   "places": 21,
+   "work": "unsupported",
+   "routes": [],
+   "markets": [],
+   "unions": [],
+   "festivals": [],
+   "nearest": {
+    "market": "washington",
+    "places": 21
+   },
+   "km": {
+    "min": 3092,
+    "median": 3121,
+    "max": 3147
+   },
+   "trips": 21,
+   "coverage": "simulated",
+   "gaps": [
+    "its rules for working there",
+    "a market of its own"
+   ]
+  },
+  {
+   "id": "mr",
+   "iso2": "MR",
+   "name": "Mauritania",
+   "kind": "country",
+   "continent": "Africa",
+   "currency": "MRU",
+   "regions": 15,
+   "places": 85,
+   "work": "unsupported",
+   "routes": [],
+   "markets": [],
+   "unions": [],
+   "festivals": [],
+   "nearest": {
+    "market": "london",
+    "places": 85
+   },
+   "km": {
+    "min": 3080,
+    "median": 4020,
+    "max": 4226
+   },
+   "trips": 85,
+   "coverage": "simulated",
+   "gaps": [
+    "its rules for working there",
+    "a market of its own"
+   ]
+  },
+  {
+   "id": "mu",
+   "iso2": "MU",
+   "name": "Mauritius",
+   "kind": "country",
+   "continent": "Africa",
+   "currency": "MUR",
+   "regions": 12,
+   "places": 113,
+   "work": "unsupported",
+   "routes": [],
+   "markets": [],
+   "unions": [],
+   "festivals": [],
+   "nearest": {
+    "market": "sydney",
+    "places": 112
+   },
+   "km": {
+    "min": 8609,
+    "median": 9090,
+    "max": 9127
+   },
+   "trips": 113,
+   "coverage": "simulated",
+   "gaps": [
+    "its rules for working there",
+    "a market of its own"
+   ]
+  },
+  {
+   "id": "yt",
+   "iso2": "YT",
+   "name": "Mayotte",
+   "kind": "territory of France",
+   "continent": "Africa",
+   "currency": "EUR",
+   "regions": 17,
+   "places": 57,
+   "work": "unsupported",
+   "routes": [],
+   "markets": [],
+   "unions": [],
+   "festivals": [],
+   "nearest": {
+    "market": "london",
+    "places": 57
+   },
+   "km": {
+    "min": 8359,
+    "median": 8376,
+    "max": 8391
+   },
+   "trips": 57,
+   "coverage": "simulated",
+   "gaps": [
+    "its rules for working there",
+    "a market of its own"
+   ]
+  },
+  {
+   "id": "mx",
+   "iso2": "MX",
+   "name": "Mexico",
+   "kind": "country",
+   "continent": "North America",
+   "currency": "MXN",
+   "regions": 32,
+   "places": 8947,
+   "work": "unsupported",
+   "routes": [],
+   "markets": [],
+   "unions": [
+    "ANDA – Asociación Nacional de Actores"
+   ],
+   "festivals": [],
+   "nearest": {
+    "market": "atlanta",
+    "places": 6009
+   },
+   "km": {
+    "min": 28,
+    "median": 2072,
+    "max": 2438
+   },
+   "trips": 8843,
+   "coverage": "partly researched",
+   "gaps": [
+    "its rules for working there",
+    "a market of its own"
+   ]
+  },
+  {
+   "id": "fm",
+   "iso2": "FM",
+   "name": "Micronesia",
+   "kind": "country",
+   "continent": "Oceania",
+   "currency": "USD",
+   "regions": 4,
+   "places": 51,
+   "work": "unsupported",
+   "routes": [],
+   "markets": [],
+   "unions": [],
+   "festivals": [],
+   "nearest": {
+    "market": "sydney",
+    "places": 51
+   },
+   "km": {
+    "min": 3904,
+    "median": 4595,
+    "max": 5029
+   },
+   "trips": 51,
+   "coverage": "simulated",
+   "gaps": [
+    "its rules for working there",
+    "a market of its own"
+   ]
+  },
+  {
+   "id": "md",
+   "iso2": "MD",
+   "name": "Moldova",
+   "kind": "country",
+   "continent": "Europe",
+   "currency": "MDL",
+   "regions": 37,
+   "places": 98,
+   "work": "unsupported",
+   "routes": [],
+   "markets": [],
+   "unions": [
+    "FSLC – Federaƫia Sindicatelor Lucrătorilor din Cultură"
+   ],
+   "festivals": [],
+   "nearest": {
+    "market": "london",
+    "places": 98
+   },
+   "km": {
+    "min": 1967,
+    "median": 2145,
+    "max": 2261
+   },
+   "trips": 98,
+   "coverage": "partly researched",
+   "gaps": [
+    "its rules for working there",
+    "a market of its own"
+   ]
+  },
+  {
+   "id": "mc",
+   "iso2": "MC",
+   "name": "Monaco",
+   "kind": "country",
+   "continent": "Europe",
+   "currency": "EUR",
+   "regions": 1,
+   "places": 10,
+   "work": "unsupported",
+   "routes": [],
+   "markets": [],
+   "unions": [],
+   "festivals": [],
+   "nearest": {
+    "market": "london",
+    "places": 10
+   },
+   "km": {
+    "min": 1031,
+    "median": 1032,
+    "max": 1033
+   },
+   "trips": 10,
+   "coverage": "simulated",
+   "gaps": [
+    "its rules for working there",
+    "a market of its own"
+   ]
+  },
+  {
+   "id": "mn",
+   "iso2": "MN",
+   "name": "Mongolia",
+   "kind": "country",
+   "continent": "Asia",
+   "currency": "MNT",
+   "regions": 22,
+   "places": 331,
+   "work": "unsupported",
+   "routes": [],
+   "markets": [],
+   "unions": [],
+   "festivals": [],
+   "nearest": {
+    "market": "london",
+    "places": 331
+   },
+   "km": {
+    "min": 5944,
+    "median": 6791,
+    "max": 7578
+   },
+   "trips": 331,
+   "coverage": "simulated",
+   "gaps": [
+    "its rules for working there",
+    "a market of its own"
+   ]
+  },
+  {
+   "id": "me",
+   "iso2": "ME",
+   "name": "Montenegro",
+   "kind": "country",
+   "continent": "Europe",
+   "currency": "EUR",
+   "regions": 25,
+   "places": 41,
+   "work": "unsupported",
+   "routes": [],
+   "markets": [],
+   "unions": [],
+   "festivals": [
+    "Herceg Novi Montenegro Film Festival"
+   ],
+   "nearest": {
+    "market": "london",
+    "places": 41
+   },
+   "km": {
+    "min": 1697,
+    "median": 1765,
+    "max": 1811
+   },
+   "trips": 41,
+   "coverage": "partly researched",
+   "gaps": [
+    "its rules for working there",
+    "a market of its own"
+   ]
+  },
+  {
+   "id": "ms",
+   "iso2": "MS",
+   "name": "Montserrat",
+   "kind": "territory of United Kingdom",
+   "continent": "North America",
+   "currency": "XCD",
+   "regions": 3,
+   "places": 3,
+   "work": "unsupported",
+   "routes": [],
+   "markets": [],
+   "unions": [],
+   "festivals": [],
+   "nearest": {
+    "market": "washington",
+    "places": 3
+   },
+   "km": {
+    "min": 2849,
+    "median": 2850,
+    "max": 2857
+   },
+   "trips": 3,
+   "coverage": "simulated",
+   "gaps": [
+    "its rules for working there",
+    "a market of its own"
+   ]
+  },
+  {
+   "id": "ma",
+   "iso2": "MA",
+   "name": "Morocco",
+   "kind": "country",
+   "continent": "Africa",
+   "currency": "MAD",
+   "regions": 12,
+   "places": 479,
+   "work": "unsupported",
+   "routes": [],
+   "markets": [],
+   "unions": [
+    "SMPAD – Syndicat Marocain des Professionnels des Arts Dramatiques"
+   ],
+   "festivals": [],
+   "nearest": {
+    "market": "london",
+    "places": 479
+   },
+   "km": {
+    "min": 1790,
+    "median": 2115,
+    "max": 3444
+   },
+   "trips": 479,
+   "coverage": "partly researched",
+   "gaps": [
+    "its rules for working there",
+    "a market of its own"
+   ]
+  },
+  {
+   "id": "mz",
+   "iso2": "MZ",
+   "name": "Mozambique",
+   "kind": "country",
+   "continent": "Africa",
+   "currency": "MZN",
+   "regions": 11,
+   "places": 94,
+   "work": "unsupported",
+   "routes": [],
+   "markets": [],
+   "unions": [],
+   "festivals": [],
+   "nearest": {
+    "market": "london",
+    "places": 94
+   },
+   "km": {
+    "min": 7894,
+    "median": 8479,
+    "max": 9292
+   },
+   "trips": 94,
+   "coverage": "simulated",
+   "gaps": [
+    "its rules for working there",
+    "a market of its own"
+   ]
+  },
+  {
+   "id": "mm",
+   "iso2": "MM",
+   "name": "Myanmar",
+   "kind": "country",
+   "continent": "Asia",
+   "currency": "MMK",
+   "regions": 15,
+   "places": 525,
+   "work": "unsupported",
+   "routes": [],
+   "markets": [],
+   "unions": [],
+   "festivals": [],
+   "nearest": {
+    "market": "sydney",
+    "places": 460
+   },
+   "km": {
+    "min": 7390,
+    "median": 8116,
+    "max": 8525
+   },
+   "trips": 525,
+   "coverage": "simulated",
+   "gaps": [
+    "its rules for working there",
+    "a market of its own"
+   ]
+  },
+  {
+   "id": "na",
+   "iso2": "NA",
+   "name": "Namibia",
+   "kind": "country",
+   "continent": "Africa",
+   "currency": "NAD",
+   "regions": 14,
+   "places": 80,
+   "work": "unsupported",
+   "routes": [],
+   "markets": [],
+   "unions": [],
+   "festivals": [],
+   "nearest": {
+    "market": "london",
+    "places": 80
+   },
+   "km": {
+    "min": 7795,
+    "median": 8250,
+    "max": 9089
+   },
+   "trips": 80,
+   "coverage": "simulated",
+   "gaps": [
+    "its rules for working there",
+    "a market of its own"
+   ]
+  },
+  {
+   "id": "nr",
+   "iso2": "NR",
+   "name": "Nauru",
+   "kind": "country",
+   "continent": "Oceania",
+   "currency": "AUD",
+   "regions": 14,
+   "places": 10,
+   "work": "unsupported",
+   "routes": [],
+   "markets": [],
+   "unions": [],
+   "festivals": [],
+   "nearest": {
+    "market": "sydney",
+    "places": 10
+   },
+   "km": {
+    "min": 4051,
+    "median": 4053,
+    "max": 4056
+   },
+   "trips": 10,
+   "coverage": "simulated",
+   "gaps": [
+    "its rules for working there",
+    "a market of its own"
+   ]
+  },
+  {
+   "id": "np",
+   "iso2": "NP",
+   "name": "Nepal",
+   "kind": "country",
+   "continent": "Asia",
+   "currency": "NPR",
+   "regions": 7,
+   "places": 74,
+   "work": "unsupported",
+   "routes": [],
+   "markets": [],
+   "unions": [
+    "FAAN – Film Artists Association of Nepal"
+   ],
+   "festivals": [],
+   "nearest": {
+    "market": "london",
+    "places": 74
+   },
+   "km": {
+    "min": 6841,
+    "median": 7276,
+    "max": 7613
+   },
+   "trips": 74,
+   "coverage": "partly researched",
+   "gaps": [
+    "its rules for working there",
+    "a market of its own"
+   ]
+  },
+  {
+   "id": "an",
+   "iso2": "AN",
+   "name": "Netherlands Antilles",
+   "kind": "country",
+   "continent": "North America",
+   "currency": "ANG",
+   "regions": 0,
+   "places": 0,
+   "work": "unsupported",
+   "routes": [],
+   "markets": [],
+   "unions": [],
+   "festivals": [],
+   "nearest": null,
+   "km": null,
+   "trips": 0,
+   "coverage": "simulated",
+   "gaps": [
+    "its rules for working there",
+    "a market of its own"
+   ]
+  },
+  {
+   "id": "nc",
+   "iso2": "NC",
+   "name": "New Caledonia",
+   "kind": "territory of France",
+   "continent": "Oceania",
+   "currency": "XPF",
+   "regions": 3,
+   "places": 60,
+   "work": "unsupported",
+   "routes": [],
+   "markets": [],
+   "unions": [],
+   "festivals": [],
+   "nearest": {
+    "market": "sydney",
+    "places": 60
+   },
+   "km": {
+    "min": 1952,
+    "median": 1972,
+    "max": 2136
+   },
+   "trips": 60,
+   "coverage": "simulated",
+   "gaps": [
+    "its rules for working there",
+    "a market of its own"
+   ]
+  },
+  {
+   "id": "nz",
+   "iso2": "NZ",
+   "name": "New Zealand",
+   "kind": "country",
+   "continent": "Oceania",
+   "currency": "NZD",
+   "regions": 17,
+   "places": 647,
+   "work": "partial",
+   "routes": [],
+   "markets": [],
+   "unions": [
+    "ENZ – Equity New Zealand"
+   ],
+   "festivals": [],
+   "nearest": {
+    "market": "sydney",
+    "places": 647
+   },
+   "km": {
+    "min": 1903,
+    "median": 2153,
+    "max": 2982
+   },
+   "trips": 647,
+   "coverage": "partly researched",
+   "gaps": [
+    "the visa’s fee and how long a decision takes, which its pages give only in a browser",
+    "what the union’s or guild’s view of an engagement decides",
+    "a market of its own"
+   ]
+  },
+  {
+   "id": "ni",
+   "iso2": "NI",
+   "name": "Nicaragua",
+   "kind": "country",
+   "continent": "North America",
+   "currency": "NIO",
+   "regions": 17,
+   "places": 166,
+   "work": "unsupported",
+   "routes": [],
+   "markets": [],
+   "unions": [],
+   "festivals": [],
+   "nearest": {
+    "market": "atlanta",
+    "places": 166
+   },
+   "km": {
+    "min": 2114,
+    "median": 2365,
+    "max": 2536
+   },
+   "trips": 166,
+   "coverage": "simulated",
+   "gaps": [
+    "its rules for working there",
+    "a market of its own"
+   ]
+  },
+  {
+   "id": "ne",
+   "iso2": "NE",
+   "name": "Niger",
+   "kind": "country",
+   "continent": "Africa",
+   "currency": "XOF",
+   "regions": 8,
+   "places": 74,
+   "work": "unsupported",
+   "routes": [],
+   "markets": [],
+   "unions": [],
+   "festivals": [],
+   "nearest": {
+    "market": "london",
+    "places": 74
+   },
+   "km": {
+    "min": 3685,
+    "median": 4204,
+    "max": 4418
+   },
+   "trips": 74,
+   "coverage": "simulated",
+   "gaps": [
+    "its rules for working there",
+    "a market of its own"
+   ]
+  },
+  {
+   "id": "ng",
+   "iso2": "NG",
+   "name": "Nigeria",
+   "kind": "country",
+   "continent": "Africa",
+   "currency": "NGN",
+   "regions": 37,
+   "places": 927,
+   "work": "unsupported",
+   "routes": [],
+   "markets": [],
+   "unions": [
+    "AGN – Actors’ Guild of Nigeria"
+   ],
+   "festivals": [],
+   "nearest": {
+    "market": "london",
+    "places": 927
+   },
+   "km": {
+    "min": 4229,
+    "median": 4853,
+    "max": 5281
+   },
+   "trips": 927,
+   "coverage": "partly researched",
+   "gaps": [
+    "its rules for working there",
+    "a market of its own"
+   ]
+  },
+  {
+   "id": "nu",
+   "iso2": "NU",
+   "name": "Niue",
+   "kind": "territory of New Zealand",
+   "continent": "Oceania",
+   "currency": "NZD",
+   "regions": 0,
+   "places": 1,
+   "work": "unsupported",
+   "routes": [],
+   "markets": [],
+   "unions": [],
+   "festivals": [],
+   "nearest": {
+    "market": "sydney",
+    "places": 1
+   },
+   "km": {
+    "min": 4174,
+    "median": 4174,
+    "max": 4174
+   },
+   "trips": 1,
+   "coverage": "simulated",
+   "gaps": [
+    "its rules for working there",
+    "a market of its own"
+   ]
+  },
+  {
+   "id": "nf",
+   "iso2": "NF",
+   "name": "Norfolk Island",
+   "kind": "territory of Australia",
+   "continent": "Oceania",
+   "currency": "AUD",
+   "regions": 0,
+   "places": 1,
+   "work": "unsupported",
+   "routes": [],
+   "markets": [],
+   "unions": [],
+   "festivals": [],
+   "nearest": {
+    "market": "sydney",
+    "places": 1
+   },
+   "km": {
+    "min": 1675,
+    "median": 1675,
+    "max": 1675
+   },
+   "trips": 1,
+   "coverage": "simulated",
+   "gaps": [
+    "its rules for working there",
+    "a market of its own"
+   ]
+  },
+  {
+   "id": "kp",
+   "iso2": "KP",
+   "name": "North Korea",
+   "kind": "country",
+   "continent": "Asia",
+   "currency": "KPW",
+   "regions": 13,
+   "places": 127,
+   "work": "unsupported",
+   "routes": [],
+   "markets": [],
+   "unions": [],
+   "festivals": [],
+   "nearest": {
+    "market": "seattle",
+    "places": 127
+   },
+   "km": {
+    "min": 7705,
+    "median": 8162,
+    "max": 8383
+   },
+   "trips": 127,
+   "coverage": "simulated",
+   "gaps": [
+    "its rules for working there",
+    "a market of its own"
+   ]
+  },
+  {
+   "id": "mk",
+   "iso2": "MK",
+   "name": "North Macedonia",
+   "kind": "country",
+   "continent": "Europe",
+   "currency": "MKD",
+   "regions": 71,
+   "places": 202,
+   "work": "unsupported",
+   "routes": [],
+   "markets": [],
+   "unions": [],
+   "festivals": [
+    "Cinedays"
+   ],
+   "nearest": {
+    "market": "london",
+    "places": 202
+   },
+   "km": {
+    "min": 1907,
+    "median": 1958,
+    "max": 2082
+   },
+   "trips": 202,
+   "coverage": "partly researched",
+   "gaps": [
+    "its rules for working there",
+    "a market of its own"
+   ]
+  },
+  {
+   "id": "mp",
+   "iso2": "MP",
+   "name": "Northern Mariana Islands",
+   "kind": "territory of United States",
+   "continent": "Oceania",
+   "currency": "USD",
+   "regions": 4,
+   "places": 6,
+   "work": "unsupported",
+   "routes": [],
+   "markets": [],
+   "unions": [],
+   "festivals": [],
+   "nearest": {
+    "market": "sydney",
+    "places": 6
+   },
+   "km": {
+    "min": 5463,
+    "median": 5485,
+    "max": 5488
+   },
+   "trips": 6,
+   "coverage": "simulated",
+   "gaps": [
+    "its rules for working there",
+    "a market of its own"
+   ]
+  },
+  {
+   "id": "no",
+   "iso2": "NO",
+   "name": "Norway",
+   "kind": "country",
+   "continent": "Europe",
+   "currency": "NOK",
+   "regions": 15,
+   "places": 533,
+   "work": "unsupported",
+   "routes": [],
+   "markets": [],
+   "unions": [
+    "NODA – Norske Dansekunstnere",
+    "NSF – Norsk Skuespillerforbund"
+   ],
+   "festivals": [],
+   "nearest": {
+    "market": "london",
+    "places": 533
+   },
+   "km": {
+    "min": 849,
+    "median": 1169,
+    "max": 2630
+   },
+   "trips": 533,
+   "coverage": "partly researched",
+   "gaps": [
+    "its rules for working there",
+    "a market of its own"
+   ]
+  },
+  {
+   "id": "om",
+   "iso2": "OM",
+   "name": "Oman",
+   "kind": "country",
+   "continent": "Asia",
+   "currency": "OMR",
+   "regions": 11,
+   "places": 38,
+   "work": "unsupported",
+   "routes": [],
+   "markets": [],
+   "unions": [],
+   "festivals": [],
+   "nearest": {
+    "market": "london",
+    "places": 38
+   },
+   "km": {
+    "min": 5460,
+    "median": 5784,
+    "max": 6089
+   },
+   "trips": 38,
+   "coverage": "simulated",
+   "gaps": [
+    "its rules for working there",
+    "a market of its own"
+   ]
+  },
+  {
+   "id": "pk",
+   "iso2": "PK",
+   "name": "Pakistan",
+   "kind": "country",
+   "continent": "Asia",
+   "currency": "PKR",
+   "regions": 7,
+   "places": 566,
+   "work": "unsupported",
+   "routes": [],
+   "markets": [],
+   "unions": [],
+   "festivals": [],
+   "nearest": {
+    "market": "london",
+    "places": 566
+   },
+   "km": {
+    "min": 5609,
+    "median": 6181,
+    "max": 6542
+   },
+   "trips": 566,
+   "coverage": "simulated",
+   "gaps": [
+    "its rules for working there",
+    "a market of its own"
+   ]
+  },
+  {
+   "id": "pw",
+   "iso2": "PW",
+   "name": "Palau",
+   "kind": "country",
+   "continent": "Oceania",
+   "currency": "USD",
+   "regions": 16,
+   "places": 22,
+   "work": "unsupported",
+   "routes": [],
+   "markets": [],
+   "unions": [],
+   "festivals": [],
+   "nearest": {
+    "market": "sydney",
+    "places": 22
+   },
+   "km": {
+    "min": 4609,
+    "median": 4911,
+    "max": 4979
+   },
+   "trips": 22,
+   "coverage": "simulated",
+   "gaps": [
+    "its rules for working there",
+    "a market of its own"
+   ]
+  },
+  {
+   "id": "ps",
+   "iso2": "PS",
+   "name": "Palestinian Territory",
+   "kind": "country",
+   "continent": "Asia",
+   "currency": "ILS",
+   "regions": 2,
+   "places": 378,
+   "work": "unsupported",
+   "routes": [],
+   "markets": [],
+   "unions": [],
+   "festivals": [],
+   "nearest": {
+    "market": "london",
+    "places": 378
+   },
+   "km": {
+    "min": 3545,
+    "median": 3586,
+    "max": 3635
+   },
+   "trips": 378,
+   "coverage": "simulated",
+   "gaps": [
+    "its rules for working there",
+    "a market of its own"
+   ]
+  },
+  {
+   "id": "pa",
+   "iso2": "PA",
+   "name": "Panama",
+   "kind": "country",
+   "continent": "North America",
+   "currency": "PAB",
+   "regions": 14,
+   "places": 643,
+   "work": "unsupported",
+   "routes": [],
+   "markets": [],
+   "unions": [
+    "UNAP – Unión Nacional de Artistas de Panamá"
+   ],
+   "festivals": [],
+   "nearest": {
+    "market": "atlanta",
+    "places": 643
+   },
+   "km": {
+    "min": 2698,
+    "median": 2835,
+    "max": 2986
+   },
+   "trips": 643,
+   "coverage": "partly researched",
+   "gaps": [
+    "its rules for working there",
+    "a market of its own"
+   ]
+  },
+  {
+   "id": "pg",
+   "iso2": "PG",
+   "name": "Papua New Guinea",
+   "kind": "country",
+   "continent": "Oceania",
+   "currency": "PGK",
+   "regions": 22,
+   "places": 52,
+   "work": "unsupported",
+   "routes": [],
+   "markets": [],
+   "unions": [],
+   "festivals": [],
+   "nearest": {
+    "market": "sydney",
+    "places": 52
+   },
+   "km": {
+    "min": 2587,
+    "median": 3147,
+    "max": 3617
+   },
+   "trips": 52,
+   "coverage": "simulated",
+   "gaps": [
+    "its rules for working there",
+    "a market of its own"
+   ]
+  },
+  {
+   "id": "py",
+   "iso2": "PY",
+   "name": "Paraguay",
+   "kind": "country",
+   "continent": "South America",
+   "currency": "PYG",
+   "regions": 18,
+   "places": 151,
+   "work": "unsupported",
+   "routes": [],
+   "markets": [],
+   "unions": [],
+   "festivals": [],
+   "nearest": {
+    "market": "atlanta",
+    "places": 151
+   },
+   "km": {
+    "min": 6471,
+    "median": 7196,
+    "max": 7428
+   },
+   "trips": 151,
+   "coverage": "simulated",
+   "gaps": [
+    "its rules for working there",
+    "a market of its own"
+   ]
+  },
+  {
+   "id": "pe",
+   "iso2": "PE",
+   "name": "Peru",
+   "kind": "country",
+   "continent": "South America",
+   "currency": "PEN",
+   "regions": 26,
+   "places": 1773,
+   "work": "unsupported",
+   "routes": [],
+   "markets": [],
+   "unions": [
+    "SAIP – Sindicato de Artistas Intérpretes del Perú"
+   ],
+   "festivals": [],
+   "nearest": {
+    "market": "atlanta",
+    "places": 1773
+   },
+   "km": {
+    "min": 3928,
+    "median": 5149,
+    "max": 5972
+   },
+   "trips": 1773,
+   "coverage": "partly researched",
+   "gaps": [
+    "its rules for working there",
+    "a market of its own"
+   ]
+  },
+  {
+   "id": "ph",
+   "iso2": "PH",
+   "name": "Philippines",
+   "kind": "country",
+   "continent": "Asia",
+   "currency": "PHP",
+   "regions": 17,
+   "places": 4523,
+   "work": "unsupported",
+   "routes": [],
+   "markets": [],
+   "unions": [],
+   "festivals": [],
+   "nearest": {
+    "market": "sydney",
+    "places": 4523
+   },
+   "km": {
+    "min": 5138,
+    "median": 5891,
+    "max": 6827
+   },
+   "trips": 4523,
+   "coverage": "simulated",
+   "gaps": [
+    "its rules for working there",
+    "a market of its own"
+   ]
+  },
+  {
+   "id": "pn",
+   "iso2": "PN",
+   "name": "Pitcairn",
+   "kind": "territory of United Kingdom",
+   "continent": "Oceania",
+   "currency": "NZD",
+   "regions": 0,
+   "places": 1,
+   "work": "unsupported",
+   "routes": [],
+   "markets": [],
+   "unions": [],
+   "festivals": [],
+   "nearest": {
+    "market": "san-diego",
+    "places": 1
+   },
+   "km": {
+    "min": 6570,
+    "median": 6570,
+    "max": 6570
+   },
+   "trips": 1,
+   "coverage": "simulated",
+   "gaps": [
+    "its rules for working there",
+    "a market of its own"
+   ]
+  },
+  {
+   "id": "pl",
+   "iso2": "PL",
+   "name": "Poland",
+   "kind": "country",
+   "continent": "Europe",
+   "currency": "PLN",
+   "regions": 16,
+   "places": 3022,
+   "work": "unsupported",
+   "routes": [],
+   "markets": [],
+   "unions": [
+    "ZASP – Związek Artystów Scen Polskich",
+    "ZZAP – Związek Zawodowy Aktorów Polskich"
+   ],
+   "festivals": [
+    "Krakow Film Festival",
+    "Warsaw International Film Festival"
+   ],
+   "nearest": {
+    "market": "london",
+    "places": 3022
+   },
+   "km": {
+    "min": 987,
+    "median": 1366,
+    "max": 1685
+   },
+   "trips": 3022,
+   "coverage": "partly researched",
+   "gaps": [
+    "its rules for working there",
+    "a market of its own"
+   ]
+  },
+  {
+   "id": "pt",
+   "iso2": "PT",
+   "name": "Portugal",
+   "kind": "country",
+   "continent": "Europe",
+   "currency": "EUR",
+   "regions": 20,
+   "places": 962,
+   "work": "unsupported",
+   "routes": [],
+   "markets": [],
+   "unions": [
+    "CENA-STE – Sindicato dos Trabalhadores de Espectáculos, do Audiovisual e dos Músicos"
+   ],
+   "festivals": [],
+   "nearest": {
+    "market": "london",
+    "places": 962
+   },
+   "km": {
+    "min": 1190,
+    "median": 1465,
+    "max": 2743
+   },
+   "trips": 962,
+   "coverage": "partly researched",
+   "gaps": [
+    "its rules for working there",
+    "a market of its own"
+   ]
+  },
+  {
+   "id": "pr",
+   "iso2": "PR",
+   "name": "Puerto Rico",
+   "kind": "territory of United States",
+   "continent": "North America",
+   "currency": "USD",
+   "regions": 78,
+   "places": 220,
+   "work": "unsupported",
+   "routes": [],
+   "markets": [],
+   "unions": [],
+   "festivals": [],
+   "nearest": {
+    "market": "atlanta",
+    "places": 219
+   },
+   "km": {
+    "min": 2413,
+    "median": 2487,
+    "max": 2562
+   },
+   "trips": 220,
+   "coverage": "simulated",
+   "gaps": [
+    "its rules for working there",
+    "a market of its own"
+   ]
+  },
+  {
+   "id": "qa",
+   "iso2": "QA",
+   "name": "Qatar",
+   "kind": "country",
+   "continent": "Asia",
+   "currency": "QAR",
+   "regions": 8,
+   "places": 42,
+   "work": "unsupported",
+   "routes": [],
+   "markets": [],
+   "unions": [],
+   "festivals": [],
+   "nearest": {
+    "market": "london",
+    "places": 42
+   },
+   "km": {
+    "min": 5122,
+    "median": 5208,
+    "max": 5240
+   },
+   "trips": 42,
+   "coverage": "simulated",
+   "gaps": [
+    "its rules for working there",
+    "a market of its own"
+   ]
+  },
+  {
+   "id": "cg",
+   "iso2": "CG",
+   "name": "Republic of the Congo",
+   "kind": "country",
+   "continent": "Africa",
+   "currency": "XAF",
+   "regions": 12,
+   "places": 59,
+   "work": "unsupported",
+   "routes": [],
+   "markets": [],
+   "unions": [],
+   "festivals": [],
+   "nearest": {
+    "market": "london",
+    "places": 59
+   },
+   "km": {
+    "min": 5655,
+    "median": 6173,
+    "max": 6387
+   },
+   "trips": 59,
+   "coverage": "simulated",
+   "gaps": [
+    "its rules for working there",
+    "a market of its own"
+   ]
+  },
+  {
+   "id": "re",
+   "iso2": "RE",
+   "name": "Reunion",
+   "kind": "territory of France",
+   "continent": "Africa",
+   "currency": "EUR",
+   "regions": 1,
+   "places": 28,
+   "work": "unsupported",
+   "routes": [],
+   "markets": [],
+   "unions": [],
+   "festivals": [],
+   "nearest": {
+    "market": "sydney",
+    "places": 28
+   },
+   "km": {
+    "min": 9179,
+    "median": 9219,
+    "max": 9246
+   },
+   "trips": 28,
+   "coverage": "simulated",
+   "gaps": [
+    "its rules for working there",
+    "a market of its own"
+   ]
+  },
+  {
+   "id": "ro",
+   "iso2": "RO",
+   "name": "Romania",
+   "kind": "country",
+   "continent": "Europe",
+   "currency": "RON",
+   "regions": 42,
+   "places": 4571,
+   "work": "unsupported",
+   "routes": [],
+   "markets": [],
+   "unions": [
+    "FAIR-MEDIASIND – Federația Cultură și Mass-Media"
+   ],
+   "festivals": [
+    "Transilvania International Film Festival"
+   ],
+   "nearest": {
+    "market": "london",
+    "places": 4571
+   },
+   "km": {
+    "min": 1605,
+    "median": 1975,
+    "max": 2304
+   },
+   "trips": 4571,
+   "coverage": "partly researched",
+   "gaps": [
+    "its rules for working there",
+    "a market of its own"
+   ]
+  },
+  {
+   "id": "ru",
+   "iso2": "RU",
+   "name": "Russia",
+   "kind": "country",
+   "continent": "Europe",
+   "currency": "RUB",
+   "regions": 83,
+   "places": 4933,
+   "work": "unsupported",
+   "routes": [],
+   "markets": [],
+   "unions": [
+    "ITUTCA – Independent Trade Union of Theater and Cinema Actors",
+    "RCWU – Russian Cultural Workers’ Union"
+   ],
+   "festivals": [],
+   "nearest": {
+    "market": "london",
+    "places": 4609
+   },
+   "km": {
+    "min": 1378,
+    "median": 3194,
+    "max": 7685
+   },
+   "trips": 4933,
+   "coverage": "partly researched",
+   "gaps": [
+    "its rules for working there",
+    "a market of its own"
+   ]
+  },
+  {
+   "id": "rw",
+   "iso2": "RW",
+   "name": "Rwanda",
+   "kind": "country",
+   "continent": "Africa",
+   "currency": "RWF",
+   "regions": 5,
+   "places": 51,
+   "work": "unsupported",
+   "routes": [],
+   "markets": [],
+   "unions": [],
+   "festivals": [],
+   "nearest": {
+    "market": "london",
+    "places": 51
+   },
+   "km": {
+    "min": 6519,
+    "median": 6591,
+    "max": 6645
+   },
+   "trips": 51,
+   "coverage": "simulated",
+   "gaps": [
+    "its rules for working there",
+    "a market of its own"
+   ]
+  },
+  {
+   "id": "bl",
+   "iso2": "BL",
+   "name": "Saint Barthelemy",
+   "kind": "territory of France",
+   "continent": "North America",
+   "currency": "EUR",
+   "regions": 0,
+   "places": 1,
+   "work": "unsupported",
+   "routes": [],
+   "markets": [],
+   "unions": [],
+   "festivals": [],
+   "nearest": {
+    "market": "washington",
+    "places": 1
+   },
+   "km": {
+    "min": 2708,
+    "median": 2708,
+    "max": 2708
+   },
+   "trips": 1,
+   "coverage": "simulated",
+   "gaps": [
+    "its rules for working there",
+    "a market of its own"
+   ]
+  },
+  {
+   "id": "sh",
+   "iso2": "SH",
+   "name": "Saint Helena",
+   "kind": "territory of United Kingdom",
+   "continent": "Africa",
+   "currency": "SHP",
+   "regions": 3,
+   "places": 4,
+   "work": "unsupported",
+   "routes": [],
+   "markets": [],
+   "unions": [],
+   "festivals": [],
+   "nearest": {
+    "market": "london",
+    "places": 4
+   },
+   "km": {
+    "min": 6749,
+    "median": 7518,
+    "max": 9921
+   },
+   "trips": 4,
+   "coverage": "simulated",
+   "gaps": [
+    "its rules for working there",
+    "a market of its own"
+   ]
+  },
+  {
+   "id": "kn",
+   "iso2": "KN",
+   "name": "Saint Kitts and Nevis",
+   "kind": "country",
+   "continent": "North America",
+   "currency": "XCD",
+   "regions": 14,
+   "places": 16,
+   "work": "unsupported",
+   "routes": [],
+   "markets": [],
+   "unions": [],
+   "festivals": [],
+   "nearest": {
+    "market": "washington",
+    "places": 16
+   },
+   "km": {
+    "min": 2757,
+    "median": 2768,
+    "max": 2797
+   },
+   "trips": 16,
+   "coverage": "simulated",
+   "gaps": [
+    "its rules for working there",
+    "a market of its own"
+   ]
+  },
+  {
+   "id": "lc",
+   "iso2": "LC",
+   "name": "Saint Lucia",
+   "kind": "country",
+   "continent": "North America",
+   "currency": "XCD",
+   "regions": 10,
+   "places": 37,
+   "work": "unsupported",
+   "routes": [],
+   "markets": [],
+   "unions": [],
+   "festivals": [],
+   "nearest": {
+    "market": "washington",
+    "places": 37
+   },
+   "km": {
+    "min": 3179,
+    "median": 3190,
+    "max": 3215
+   },
+   "trips": 37,
+   "coverage": "simulated",
+   "gaps": [
+    "its rules for working there",
+    "a market of its own"
+   ]
+  },
+  {
+   "id": "mf",
+   "iso2": "MF",
+   "name": "Saint Martin",
+   "kind": "territory of France",
+   "continent": "North America",
+   "currency": "EUR",
+   "regions": 0,
+   "places": 9,
+   "work": "unsupported",
+   "routes": [],
+   "markets": [],
+   "unions": [],
+   "festivals": [],
+   "nearest": {
+    "market": "washington",
+    "places": 9
+   },
+   "km": {
+    "min": 2678,
+    "median": 2680,
+    "max": 2684
+   },
+   "trips": 9,
+   "coverage": "simulated",
+   "gaps": [
+    "its rules for working there",
+    "a market of its own"
+   ]
+  },
+  {
+   "id": "pm",
+   "iso2": "PM",
+   "name": "Saint Pierre and Miquelon",
+   "kind": "territory of France",
+   "continent": "North America",
+   "currency": "EUR",
+   "regions": 2,
+   "places": 2,
+   "work": "unsupported",
+   "routes": [],
+   "markets": [],
+   "unions": [],
+   "festivals": [],
+   "nearest": {
+    "market": "boston",
+    "places": 2
+   },
+   "km": {
+    "min": 1271,
+    "median": 1271,
+    "max": 1275
+   },
+   "trips": 2,
+   "coverage": "simulated",
+   "gaps": [
+    "its rules for working there",
+    "a market of its own"
+   ]
+  },
+  {
+   "id": "vc",
+   "iso2": "VC",
+   "name": "Saint Vincent and the Grenadines",
+   "kind": "country",
+   "continent": "North America",
+   "currency": "XCD",
+   "regions": 6,
+   "places": 20,
+   "work": "unsupported",
+   "routes": [],
+   "markets": [],
+   "unions": [],
+   "festivals": [],
+   "nearest": {
+    "market": "washington",
+    "places": 20
+   },
+   "km": {
+    "min": 3243,
+    "median": 3255,
+    "max": 3272
+   },
+   "trips": 20,
+   "coverage": "simulated",
+   "gaps": [
+    "its rules for working there",
+    "a market of its own"
+   ]
+  },
+  {
+   "id": "ws",
+   "iso2": "WS",
+   "name": "Samoa",
+   "kind": "country",
+   "continent": "Oceania",
+   "currency": "WST",
+   "regions": 11,
+   "places": 32,
+   "work": "unsupported",
+   "routes": [],
+   "markets": [],
+   "unions": [],
+   "festivals": [],
+   "nearest": {
+    "market": "sydney",
+    "places": 32
+   },
+   "km": {
+    "min": 4286,
+    "median": 4330,
+    "max": 4352
+   },
+   "trips": 32,
+   "coverage": "simulated",
+   "gaps": [
+    "its rules for working there",
+    "a market of its own"
+   ]
+  },
+  {
+   "id": "sm",
+   "iso2": "SM",
+   "name": "San Marino",
+   "kind": "country",
+   "continent": "Europe",
+   "currency": "EUR",
+   "regions": 9,
+   "places": 13,
+   "work": "unsupported",
+   "routes": [],
+   "markets": [],
+   "unions": [],
+   "festivals": [],
+   "nearest": {
+    "market": "london",
+    "places": 13
+   },
+   "km": {
+    "min": 1257,
+    "median": 1260,
+    "max": 1264
+   },
+   "trips": 13,
+   "coverage": "simulated",
+   "gaps": [
+    "its rules for working there",
+    "a market of its own"
+   ]
+  },
+  {
+   "id": "st",
+   "iso2": "ST",
+   "name": "Sao Tome and Principe",
+   "kind": "country",
+   "continent": "Africa",
+   "currency": "STN",
+   "regions": 2,
+   "places": 26,
+   "work": "unsupported",
+   "routes": [],
+   "markets": [],
+   "unions": [],
+   "festivals": [],
+   "nearest": {
+    "market": "london",
+    "places": 26
+   },
+   "km": {
+    "min": 5590,
+    "median": 5729,
+    "max": 5748
+   },
+   "trips": 26,
+   "coverage": "simulated",
+   "gaps": [
+    "its rules for working there",
+    "a market of its own"
+   ]
+  },
+  {
+   "id": "sa",
+   "iso2": "SA",
+   "name": "Saudi Arabia",
+   "kind": "country",
+   "continent": "Asia",
+   "currency": "SAR",
+   "regions": 13,
+   "places": 158,
+   "work": "unsupported",
+   "routes": [],
+   "markets": [],
+   "unions": [],
+   "festivals": [],
+   "nearest": {
+    "market": "london",
+    "places": 158
+   },
+   "km": {
+    "min": 3782,
+    "median": 4936,
+    "max": 5635
+   },
+   "trips": 158,
+   "coverage": "simulated",
+   "gaps": [
+    "its rules for working there",
+    "a market of its own"
+   ]
+  },
+  {
+   "id": "sn",
+   "iso2": "SN",
+   "name": "Senegal",
+   "kind": "country",
+   "continent": "Africa",
+   "currency": "XOF",
+   "regions": 14,
+   "places": 151,
+   "work": "unsupported",
+   "routes": [],
+   "markets": [],
+   "unions": [],
+   "festivals": [],
+   "nearest": {
+    "market": "london",
+    "places": 151
+   },
+   "km": {
+    "min": 4082,
+    "median": 4366,
+    "max": 4604
+   },
+   "trips": 151,
+   "coverage": "simulated",
+   "gaps": [
+    "its rules for working there",
+    "a market of its own"
+   ]
+  },
+  {
+   "id": "rs",
+   "iso2": "RS",
+   "name": "Serbia",
+   "kind": "country",
+   "continent": "Europe",
+   "currency": "RSD",
+   "regions": 2,
+   "places": 437,
+   "work": "unsupported",
+   "routes": [],
+   "markets": [],
+   "unions": [],
+   "festivals": [],
+   "nearest": {
+    "market": "london",
+    "places": 437
+   },
+   "km": {
+    "min": 1524,
+    "median": 1671,
+    "max": 1973
+   },
+   "trips": 437,
+   "coverage": "simulated",
+   "gaps": [
+    "its rules for working there",
+    "a market of its own"
+   ]
+  },
+  {
+   "id": "cs",
+   "iso2": "CS",
+   "name": "Serbia and Montenegro",
+   "kind": "country",
+   "continent": "Europe",
+   "currency": "RSD",
+   "regions": 0,
+   "places": 0,
+   "work": "unsupported",
+   "routes": [],
+   "markets": [],
+   "unions": [],
+   "festivals": [],
+   "nearest": null,
+   "km": null,
+   "trips": 0,
+   "coverage": "simulated",
+   "gaps": [
+    "its rules for working there",
+    "a market of its own"
+   ]
+  },
+  {
+   "id": "sc",
+   "iso2": "SC",
+   "name": "Seychelles",
+   "kind": "country",
+   "continent": "Africa",
+   "currency": "SCR",
+   "regions": 28,
+   "places": 26,
+   "work": "unsupported",
+   "routes": [],
+   "markets": [],
+   "unions": [],
+   "festivals": [],
+   "nearest": {
+    "market": "london",
+    "places": 26
+   },
+   "km": {
+    "min": 8138,
+    "median": 8150,
+    "max": 8166
+   },
+   "trips": 26,
+   "coverage": "simulated",
+   "gaps": [
+    "its rules for working there",
+    "a market of its own"
+   ]
+  },
+  {
+   "id": "sl",
+   "iso2": "SL",
+   "name": "Sierra Leone",
+   "kind": "country",
+   "continent": "Africa",
+   "currency": "SLE",
+   "regions": 5,
+   "places": 87,
+   "work": "unsupported",
+   "routes": [],
+   "markets": [],
+   "unions": [],
+   "festivals": [],
+   "nearest": {
+    "market": "london",
+    "places": 87
+   },
+   "km": {
+    "min": 4737,
+    "median": 4918,
+    "max": 5032
+   },
+   "trips": 87,
+   "coverage": "simulated",
+   "gaps": [
+    "its rules for working there",
+    "a market of its own"
+   ]
+  },
+  {
+   "id": "sg",
+   "iso2": "SG",
+   "name": "Singapore",
+   "kind": "country",
+   "continent": "Asia",
+   "currency": "SGD",
+   "regions": 0,
+   "places": 116,
+   "work": "unsupported",
+   "routes": [],
+   "markets": [],
+   "unions": [],
+   "festivals": [],
+   "nearest": {
+    "market": "sydney",
+    "places": 116
+   },
+   "km": {
+    "min": 6294,
+    "median": 6303,
+    "max": 6317
+   },
+   "trips": 116,
+   "coverage": "simulated",
+   "gaps": [
+    "its rules for working there",
+    "a market of its own"
+   ]
+  },
+  {
+   "id": "sx",
+   "iso2": "SX",
+   "name": "Sint Maarten",
+   "kind": "territory of The Netherlands",
+   "continent": "North America",
+   "currency": "XCG",
+   "regions": 0,
+   "places": 6,
+   "work": "unsupported",
+   "routes": [],
+   "markets": [],
+   "unions": [],
+   "festivals": [],
+   "nearest": {
+    "market": "washington",
+    "places": 6
+   },
+   "km": {
+    "min": 2683,
+    "median": 2684,
+    "max": 2686
+   },
+   "trips": 6,
+   "coverage": "simulated",
+   "gaps": [
+    "its rules for working there",
+    "a market of its own"
+   ]
+  },
+  {
+   "id": "sk",
+   "iso2": "SK",
+   "name": "Slovakia",
+   "kind": "country",
+   "continent": "Europe",
+   "currency": "EUR",
+   "regions": 8,
+   "places": 602,
+   "work": "unsupported",
+   "routes": [],
+   "markets": [],
+   "unions": [],
+   "festivals": [],
+   "nearest": {
+    "market": "london",
+    "places": 602
+   },
+   "km": {
+    "min": 1259,
+    "median": 1356,
+    "max": 1614
+   },
+   "trips": 602,
+   "coverage": "simulated",
+   "gaps": [
+    "its rules for working there",
+    "a market of its own"
+   ]
+  },
+  {
+   "id": "si",
+   "iso2": "SI",
+   "name": "Slovenia",
+   "kind": "country",
+   "continent": "Europe",
+   "currency": "EUR",
+   "regions": 212,
+   "places": 301,
+   "work": "unsupported",
+   "routes": [],
+   "markets": [],
+   "unions": [
+    "GLOSA – Sindikat kulture in narave Slovenije",
+    "SAGS – Screen Actors’ Guild of Slovenia",
+    "SVIZ- Education, Science and Culture Trade Union of Slovenia",
+    "ZDUS – Zdruzenje Dramskih Umetnikov Slovenije"
+   ],
+   "festivals": [],
+   "nearest": {
+    "market": "london",
+    "places": 301
+   },
+   "km": {
+    "min": 1151,
+    "median": 1251,
+    "max": 1324
+   },
+   "trips": 301,
+   "coverage": "partly researched",
+   "gaps": [
+    "its rules for working there",
+    "a market of its own"
+   ]
+  },
+  {
+   "id": "sb",
+   "iso2": "SB",
+   "name": "Solomon Islands",
+   "kind": "country",
+   "continent": "Oceania",
+   "currency": "SBD",
+   "regions": 10,
+   "places": 23,
+   "work": "unsupported",
+   "routes": [],
+   "markets": [],
+   "unions": [],
+   "festivals": [],
+   "nearest": {
+    "market": "sydney",
+    "places": 23
+   },
+   "km": {
+    "min": 2823,
+    "median": 2861,
+    "max": 3067
+   },
+   "trips": 23,
+   "coverage": "simulated",
+   "gaps": [
+    "its rules for working there",
+    "a market of its own"
+   ]
+  },
+  {
+   "id": "so",
+   "iso2": "SO",
+   "name": "Somalia",
+   "kind": "country",
+   "continent": "Africa",
+   "currency": "SOS",
+   "regions": 18,
+   "places": 75,
+   "work": "unsupported",
+   "routes": [],
+   "markets": [],
+   "unions": [],
+   "festivals": [],
+   "nearest": {
+    "market": "london",
+    "places": 75
+   },
+   "km": {
+    "min": 5940,
+    "median": 6607,
+    "max": 7091
+   },
+   "trips": 75,
+   "coverage": "simulated",
+   "gaps": [
+    "its rules for working there",
+    "a market of its own"
+   ]
+  },
+  {
+   "id": "za",
+   "iso2": "ZA",
+   "name": "South Africa",
+   "kind": "country",
+   "continent": "Africa",
+   "currency": "ZAR",
+   "regions": 9,
+   "places": 975,
+   "work": "unsupported",
+   "routes": [],
+   "markets": [],
+   "unions": [
+    "SAGA – South African Guild of Actors"
+   ],
+   "festivals": [],
+   "nearest": {
+    "market": "london",
+    "places": 975
+   },
+   "km": {
+    "min": 8725,
+    "median": 9258,
+    "max": 9833
+   },
+   "trips": 975,
+   "coverage": "partly researched",
+   "gaps": [
+    "its rules for working there",
+    "a market of its own"
+   ]
+  },
+  {
+   "id": "gs",
+   "iso2": "GS",
+   "name": "South Georgia and the South Sandwich Islands",
+   "kind": "territory of United Kingdom",
+   "continent": "Antarctica",
+   "currency": "GBP",
+   "regions": 0,
+   "places": 1,
+   "work": "unsupported",
+   "routes": [],
+   "markets": [],
+   "unions": [],
+   "festivals": [],
+   "nearest": {
+    "market": "sydney",
+    "places": 1
+   },
+   "km": {
+    "min": 10185,
+    "median": 10185,
+    "max": 10185
+   },
+   "trips": 1,
+   "coverage": "simulated",
+   "gaps": [
+    "its rules for working there",
+    "a market of its own"
+   ]
+  },
+  {
+   "id": "kr",
+   "iso2": "KR",
+   "name": "South Korea",
+   "kind": "country",
+   "continent": "Asia",
+   "currency": "KRW",
+   "regions": 17,
+   "places": 306,
+   "work": "unsupported",
+   "routes": [],
+   "markets": [],
+   "unions": [],
+   "festivals": [
+    "Busan International Film Festival"
+   ],
+   "nearest": {
+    "market": "sydney",
+    "places": 246
+   },
+   "km": {
+    "min": 7895,
+    "median": 8136,
+    "max": 8421
+   },
+   "trips": 306,
+   "coverage": "partly researched",
+   "gaps": [
+    "its rules for working there",
+    "a market of its own"
+   ]
+  },
+  {
+   "id": "ss",
+   "iso2": "SS",
+   "name": "South Sudan",
+   "kind": "country",
+   "continent": "Africa",
+   "currency": "SSP",
+   "regions": 10,
+   "places": 23,
+   "work": "unsupported",
+   "routes": [],
+   "markets": [],
+   "unions": [],
+   "festivals": [],
+   "nearest": {
+    "market": "london",
+    "places": 23
+   },
+   "km": {
+    "min": 5201,
+    "median": 5582,
+    "max": 6098
+   },
+   "trips": 23,
+   "coverage": "simulated",
+   "gaps": [
+    "its rules for working there",
+    "a market of its own"
+   ]
+  },
+  {
+   "id": "es",
+   "iso2": "ES",
+   "name": "Spain",
+   "kind": "country",
+   "continent": "Europe",
+   "currency": "EUR",
+   "regions": 19,
+   "places": 7158,
+   "work": "unsupported",
+   "routes": [],
+   "markets": [],
+   "unions": [
+    "CONARTE – Confederación de Artistas – Trabajadores del Espectáculo",
+    "FSC-CC.OO. – Comisiones Obreras – Comunicación, Artes, Cultura y Deporte",
+    "UAA – Unión de Actores y Actrices"
+   ],
+   "festivals": [
+    "Cinema Jove",
+    "Gijon International Film Festival",
+    "Malaga Film Festival",
+    "Mostra de Valencia – Cinema del Mediterrani",
+    "Punto de Vista International Documentary Film Festival",
+    "San Sebastian International Film Festival",
+    "Sitges International Fantastic Film Festival of Catalunya",
+    "Zinebi – International Festival of Documentary and Short Film of Bilbao"
+   ],
+   "nearest": {
+    "market": "london",
+    "places": 7158
+   },
+   "km": {
+    "min": 914,
+    "median": 1202,
+    "max": 3035
+   },
+   "trips": 7158,
+   "coverage": "partly researched",
+   "gaps": [
+    "its rules for working there",
+    "a market of its own"
+   ]
+  },
+  {
+   "id": "lk",
+   "iso2": "LK",
+   "name": "Sri Lanka",
+   "kind": "country",
+   "continent": "Asia",
+   "currency": "LKR",
+   "regions": 9,
+   "places": 89,
+   "work": "unsupported",
+   "routes": [],
+   "markets": [],
+   "unions": [],
+   "festivals": [],
+   "nearest": {
+    "market": "sydney",
+    "places": 47
+   },
+   "km": {
+    "min": 8484,
+    "median": 8678,
+    "max": 8730
+   },
+   "trips": 89,
+   "coverage": "simulated",
+   "gaps": [
+    "its rules for working there",
+    "a market of its own"
+   ]
+  },
+  {
+   "id": "sd",
+   "iso2": "SD",
+   "name": "Sudan",
+   "kind": "country",
+   "continent": "Africa",
+   "currency": "SDG",
+   "regions": 18,
+   "places": 112,
+   "work": "unsupported",
+   "routes": [],
+   "markets": [],
+   "unions": [],
+   "festivals": [],
+   "nearest": {
+    "market": "london",
+    "places": 112
+   },
+   "km": {
+    "min": 4273,
+    "median": 5035,
+    "max": 5515
+   },
+   "trips": 112,
+   "coverage": "simulated",
+   "gaps": [
+    "its rules for working there",
+    "a market of its own"
+   ]
+  },
+  {
+   "id": "sr",
+   "iso2": "SR",
+   "name": "Suriname",
+   "kind": "country",
+   "continent": "South America",
+   "currency": "SRD",
+   "regions": 10,
+   "places": 31,
+   "work": "unsupported",
+   "routes": [],
+   "markets": [],
+   "unions": [],
+   "festivals": [],
+   "nearest": {
+    "market": "washington",
+    "places": 31
+   },
+   "km": {
+    "min": 4184,
+    "median": 4285,
+    "max": 4375
+   },
+   "trips": 31,
+   "coverage": "simulated",
+   "gaps": [
+    "its rules for working there",
+    "a market of its own"
+   ]
+  },
+  {
+   "id": "sj",
+   "iso2": "SJ",
+   "name": "Svalbard and Jan Mayen",
+   "kind": "territory of Norway",
+   "continent": "Europe",
+   "currency": "NOK",
+   "regions": 2,
+   "places": 2,
+   "work": "unsupported",
+   "routes": [],
+   "markets": [],
+   "unions": [],
+   "festivals": [],
+   "nearest": {
+    "market": "london",
+    "places": 2
+   },
+   "km": {
+    "min": 2202,
+    "median": 2202,
+    "max": 3038
+   },
+   "trips": 2,
+   "coverage": "simulated",
+   "gaps": [
+    "its rules for working there",
+    "a market of its own"
+   ]
+  },
+  {
+   "id": "se",
+   "iso2": "SE",
+   "name": "Sweden",
+   "kind": "country",
+   "continent": "Europe",
+   "currency": "SEK",
+   "regions": 21,
+   "places": 832,
+   "work": "unsupported",
+   "routes": [],
+   "markets": [],
+   "unions": [
+    "Scen & Film"
+   ],
+   "festivals": [],
+   "nearest": {
+    "market": "london",
+    "places": 832
+   },
+   "km": {
+    "min": 960,
+    "median": 1237,
+    "max": 2167
+   },
+   "trips": 832,
+   "coverage": "partly researched",
+   "gaps": [
+    "its rules for working there",
+    "a market of its own"
+   ]
+  },
+  {
+   "id": "ch",
+   "iso2": "CH",
+   "name": "Switzerland",
+   "kind": "country",
+   "continent": "Europe",
+   "currency": "CHF",
+   "regions": 26,
+   "places": 1425,
+   "work": "unsupported",
+   "routes": [],
+   "markets": [],
+   "unions": [
+    "SSRS – Syndicat Suisse Romand du Spectacle",
+    "SzeneSchweiz"
+   ],
+   "festivals": [
+    "Locarno Film Festival"
+   ],
+   "nearest": {
+    "market": "london",
+    "places": 1425
+   },
+   "km": {
+    "min": 682,
+    "median": 774,
+    "max": 949
+   },
+   "trips": 1425,
+   "coverage": "partly researched",
+   "gaps": [
+    "its rules for working there",
+    "a market of its own"
+   ]
+  },
+  {
+   "id": "sy",
+   "iso2": "SY",
+   "name": "Syria",
+   "kind": "country",
+   "continent": "Asia",
+   "currency": "SYP",
+   "regions": 14,
+   "places": 309,
+   "work": "unsupported",
+   "routes": [],
+   "markets": [],
+   "unions": [],
+   "festivals": [],
+   "nearest": {
+    "market": "london",
+    "places": 309
+   },
+   "km": {
+    "min": 3320,
+    "median": 3457,
+    "max": 3771
+   },
+   "trips": 309,
+   "coverage": "simulated",
+   "gaps": [
+    "its rules for working there",
+    "a market of its own"
+   ]
+  },
+  {
+   "id": "tw",
+   "iso2": "TW",
+   "name": "Taiwan",
+   "kind": "country",
+   "continent": "Asia",
+   "currency": "TWD",
+   "regions": 4,
+   "places": 89,
+   "work": "unsupported",
+   "routes": [],
+   "markets": [],
+   "unions": [],
+   "festivals": [],
+   "nearest": {
+    "market": "sydney",
+    "places": 89
+   },
+   "km": {
+    "min": 7000,
+    "median": 7209,
+    "max": 7446
+   },
+   "trips": 89,
+   "coverage": "simulated",
+   "gaps": [
+    "its rules for working there",
+    "a market of its own"
+   ]
+  },
+  {
+   "id": "tj",
+   "iso2": "TJ",
+   "name": "Tajikistan",
+   "kind": "country",
+   "continent": "Asia",
+   "currency": "TJS",
+   "regions": 5,
+   "places": 102,
+   "work": "unsupported",
+   "routes": [],
+   "markets": [],
+   "unions": [
+    "CMSTWU – Culture, Media, Sports and Tourism Workers’ Union of Tajikistan"
+   ],
+   "festivals": [],
+   "nearest": {
+    "market": "london",
+    "places": 102
+   },
+   "km": {
+    "min": 5246,
+    "median": 5426,
+    "max": 5765
+   },
+   "trips": 102,
+   "coverage": "partly researched",
+   "gaps": [
+    "its rules for working there",
+    "a market of its own"
+   ]
+  },
+  {
+   "id": "tz",
+   "iso2": "TZ",
+   "name": "Tanzania",
+   "kind": "country",
+   "continent": "Africa",
+   "currency": "TZS",
+   "regions": 31,
+   "places": 324,
+   "work": "unsupported",
+   "routes": [],
+   "markets": [],
+   "unions": [],
+   "festivals": [],
+   "nearest": {
+    "market": "london",
+    "places": 324
+   },
+   "km": {
+    "min": 6529,
+    "median": 7239,
+    "max": 7912
+   },
+   "trips": 324,
+   "coverage": "simulated",
+   "gaps": [
+    "its rules for working there",
+    "a market of its own"
+   ]
+  },
+  {
+   "id": "th",
+   "iso2": "TH",
+   "name": "Thailand",
+   "kind": "country",
+   "continent": "Asia",
+   "currency": "THB",
+   "regions": 77,
+   "places": 1069,
+   "work": "unsupported",
+   "routes": [],
+   "markets": [],
+   "unions": [],
+   "festivals": [],
+   "nearest": {
+    "market": "sydney",
+    "places": 1069
+   },
+   "km": {
+    "min": 6813,
+    "median": 7536,
+    "max": 8168
+   },
+   "trips": 1069,
+   "coverage": "simulated",
+   "gaps": [
+    "its rules for working there",
+    "a market of its own"
+   ]
+  },
+  {
+   "id": "nl",
+   "iso2": "NL",
+   "name": "The Netherlands",
+   "kind": "country",
+   "continent": "Europe",
+   "currency": "EUR",
+   "regions": 12,
+   "places": 1567,
+   "work": "unsupported",
+   "routes": [],
+   "markets": [],
+   "unions": [
+    "Kunstenbond"
+   ],
+   "festivals": [],
+   "nearest": {
+    "market": "london",
+    "places": 1567
+   },
+   "km": {
+    "min": 245,
+    "median": 396,
+    "max": 527
+   },
+   "trips": 58,
+   "coverage": "partly researched",
+   "gaps": [
+    "its rules for working there",
+    "a market of its own"
+   ]
+  },
+  {
+   "id": "tl",
+   "iso2": "TL",
+   "name": "Timor Leste",
+   "kind": "country",
+   "continent": "Oceania",
+   "currency": "USD",
+   "regions": 13,
+   "places": 32,
+   "work": "unsupported",
+   "routes": [],
+   "markets": [],
+   "unions": [],
+   "festivals": [],
+   "nearest": {
+    "market": "sydney",
+    "places": 32
+   },
+   "km": {
+    "min": 3747,
+    "median": 3819,
+    "max": 3882
+   },
+   "trips": 32,
+   "coverage": "simulated",
+   "gaps": [
+    "its rules for working there",
+    "a market of its own"
+   ]
+  },
+  {
+   "id": "tg",
+   "iso2": "TG",
+   "name": "Togo",
+   "kind": "country",
+   "continent": "Africa",
+   "currency": "XOF",
+   "regions": 5,
+   "places": 35,
+   "work": "unsupported",
+   "routes": [],
+   "markets": [],
+   "unions": [],
+   "festivals": [],
+   "nearest": {
+    "market": "london",
+    "places": 35
+   },
+   "km": {
+    "min": 4493,
+    "median": 4876,
+    "max": 5048
+   },
+   "trips": 35,
+   "coverage": "simulated",
+   "gaps": [
+    "its rules for working there",
+    "a market of its own"
+   ]
+  },
+  {
+   "id": "tk",
+   "iso2": "TK",
+   "name": "Tokelau",
+   "kind": "territory of New Zealand",
+   "continent": "Oceania",
+   "currency": "NZD",
+   "regions": 3,
+   "places": 3,
+   "work": "unsupported",
+   "routes": [],
+   "markets": [],
+   "unions": [],
+   "festivals": [],
+   "nearest": {
+    "market": "sydney",
+    "places": 3
+   },
+   "km": {
+    "min": 4655,
+    "median": 4660,
+    "max": 4696
+   },
+   "trips": 3,
+   "coverage": "simulated",
+   "gaps": [
+    "its rules for working there",
+    "a market of its own"
+   ]
+  },
+  {
+   "id": "to",
+   "iso2": "TO",
+   "name": "Tonga",
+   "kind": "country",
+   "continent": "Oceania",
+   "currency": "TOP",
+   "regions": 5,
+   "places": 24,
+   "work": "unsupported",
+   "routes": [],
+   "markets": [],
+   "unions": [],
+   "festivals": [],
+   "nearest": {
+    "market": "sydney",
+    "places": 24
+   },
+   "km": {
+    "min": 3571,
+    "median": 3582,
+    "max": 4023
+   },
+   "trips": 24,
+   "coverage": "simulated",
+   "gaps": [
+    "its rules for working there",
+    "a market of its own"
+   ]
+  },
+  {
+   "id": "tt",
+   "iso2": "TT",
+   "name": "Trinidad and Tobago",
+   "kind": "country",
+   "continent": "North America",
+   "currency": "TTD",
+   "regions": 15,
+   "places": 27,
+   "work": "unsupported",
+   "routes": [],
+   "markets": [],
+   "unions": [],
+   "festivals": [],
+   "nearest": {
+    "market": "atlanta",
+    "places": 27
+   },
+   "km": {
+    "min": 3457,
+    "median": 3495,
+    "max": 3520
+   },
+   "trips": 27,
+   "coverage": "simulated",
+   "gaps": [
+    "its rules for working there",
+    "a market of its own"
+   ]
+  },
+  {
+   "id": "tn",
+   "iso2": "TN",
+   "name": "Tunisia",
+   "kind": "country",
+   "continent": "Africa",
+   "currency": "TND",
+   "regions": 24,
+   "places": 285,
+   "work": "unsupported",
+   "routes": [],
+   "markets": [],
+   "unions": [],
+   "festivals": [],
+   "nearest": {
+    "market": "london",
+    "places": 285
+   },
+   "km": {
+    "min": 1764,
+    "median": 1940,
+    "max": 2341
+   },
+   "trips": 285,
+   "coverage": "simulated",
+   "gaps": [
+    "its rules for working there",
+    "a market of its own"
+   ]
+  },
+  {
+   "id": "tr",
+   "iso2": "TR",
+   "name": "Turkey",
+   "kind": "country",
+   "continent": "Asia",
+   "currency": "TRY",
+   "regions": 81,
+   "places": 2684,
+   "work": "unsupported",
+   "routes": [],
+   "markets": [],
+   "unions": [
+    "AUT – Oyuncular Sendikası",
+    "ÇASOD – Çağdaş Sinema Oyuncuları Derneği"
+   ],
+   "festivals": [
+    "Antalya Golden Orange Film Festival"
+   ],
+   "nearest": {
+    "market": "london",
+    "places": 2684
+   },
+   "km": {
+    "min": 2283,
+    "median": 3004,
+    "max": 3815
+   },
+   "trips": 2684,
+   "coverage": "partly researched",
+   "gaps": [
+    "its rules for working there",
+    "a market of its own"
+   ]
+  },
+  {
+   "id": "tm",
+   "iso2": "TM",
+   "name": "Turkmenistan",
+   "kind": "country",
+   "continent": "Asia",
+   "currency": "TMT",
+   "regions": 6,
+   "places": 111,
+   "work": "unsupported",
+   "routes": [],
+   "markets": [],
+   "unions": [],
+   "festivals": [],
+   "nearest": {
+    "market": "london",
+    "places": 111
+   },
+   "km": {
+    "min": 4086,
+    "median": 4769,
+    "max": 5275
+   },
+   "trips": 111,
+   "coverage": "simulated",
+   "gaps": [
+    "its rules for working there",
+    "a market of its own"
+   ]
+  },
+  {
+   "id": "tc",
+   "iso2": "TC",
+   "name": "Turks and Caicos Islands",
+   "kind": "territory of United Kingdom",
+   "continent": "North America",
+   "currency": "USD",
+   "regions": 0,
+   "places": 7,
+   "work": "unsupported",
+   "routes": [],
+   "markets": [],
+   "unions": [],
+   "festivals": [],
+   "nearest": {
+    "market": "atlanta",
+    "places": 7
+   },
+   "km": {
+    "min": 1780,
+    "median": 1786,
+    "max": 1886
+   },
+   "trips": 7,
+   "coverage": "simulated",
+   "gaps": [
+    "its rules for working there",
+    "a market of its own"
+   ]
+  },
+  {
+   "id": "tv",
+   "iso2": "TV",
+   "name": "Tuvalu",
+   "kind": "country",
+   "continent": "Oceania",
+   "currency": "AUD",
+   "regions": 8,
+   "places": 9,
+   "work": "unsupported",
+   "routes": [],
+   "markets": [],
+   "unions": [],
+   "festivals": [],
+   "nearest": {
+    "market": "sydney",
+    "places": 9
+   },
+   "km": {
+    "min": 3981,
+    "median": 4017,
+    "max": 4094
+   },
+   "trips": 9,
+   "coverage": "simulated",
+   "gaps": [
+    "its rules for working there",
+    "a market of its own"
+   ]
+  },
+  {
+   "id": "vi",
+   "iso2": "VI",
+   "name": "U.S. Virgin Islands",
+   "kind": "territory of United States",
+   "continent": "North America",
+   "currency": "USD",
+   "regions": 3,
+   "places": 6,
+   "work": "unsupported",
+   "routes": [],
+   "markets": [],
+   "unions": [],
+   "festivals": [],
+   "nearest": {
+    "market": "washington",
+    "places": 6
+   },
+   "km": {
+    "min": 2567,
+    "median": 2569,
+    "max": 2637
+   },
+   "trips": 6,
+   "coverage": "simulated",
+   "gaps": [
+    "its rules for working there",
+    "a market of its own"
+   ]
+  },
+  {
+   "id": "ug",
+   "iso2": "UG",
+   "name": "Uganda",
+   "kind": "country",
+   "continent": "Africa",
+   "currency": "UGX",
+   "regions": 4,
+   "places": 208,
+   "work": "unsupported",
+   "routes": [],
+   "markets": [],
+   "unions": [],
+   "festivals": [],
+   "nearest": {
+    "market": "london",
+    "places": 208
+   },
+   "km": {
+    "min": 6076,
+    "median": 6428,
+    "max": 6530
+   },
+   "trips": 208,
+   "coverage": "simulated",
+   "gaps": [
+    "its rules for working there",
+    "a market of its own"
+   ]
+  },
+  {
+   "id": "ua",
+   "iso2": "UA",
+   "name": "Ukraine",
+   "kind": "country",
+   "continent": "Europe",
+   "currency": "UAH",
+   "regions": 27,
+   "places": 3873,
+   "work": "unsupported",
+   "routes": [],
+   "markets": [],
+   "unions": [
+    "CWU – Cultural Workers’ Union of the Ukraine"
+   ],
+   "festivals": [
+    "Molodist – Kyiv International Film Festival"
+   ],
+   "nearest": {
+    "market": "london",
+    "places": 3873
+   },
+   "km": {
+    "min": 1622,
+    "median": 2267,
+    "max": 2856
+   },
+   "trips": 3873,
+   "coverage": "partly researched",
+   "gaps": [
+    "its rules for working there",
+    "a market of its own"
+   ]
+  },
+  {
+   "id": "ae",
+   "iso2": "AE",
+   "name": "United Arab Emirates",
+   "kind": "country",
+   "continent": "Asia",
+   "currency": "AED",
+   "regions": 7,
+   "places": 105,
+   "work": "unsupported",
+   "routes": [],
+   "markets": [],
+   "unions": [],
+   "festivals": [],
+   "nearest": {
+    "market": "london",
+    "places": 105
+   },
+   "km": {
+    "min": 5392,
+    "median": 5476,
+    "max": 5597
+   },
+   "trips": 105,
+   "coverage": "simulated",
+   "gaps": [
+    "its rules for working there",
+    "a market of its own"
+   ]
+  },
+  {
+   "id": "uk",
+   "iso2": "GB",
+   "name": "United Kingdom",
+   "kind": "country",
+   "continent": "Europe",
+   "currency": "GBP",
+   "regions": 4,
+   "places": 4643,
+   "work": "verified",
+   "routes": [
+    "Common Travel Area",
+    "Creative Worker visa concession",
+    "Temporary Work – Creative Worker visa"
+   ],
+   "markets": [
+    "London"
+   ],
+   "unions": [
+    "Equity"
+   ],
+   "festivals": [],
+   "nearest": {
+    "market": "london",
+    "places": 4643
+   },
+   "km": {
+    "min": 0,
+    "median": 202,
+    "max": 3256
+   },
+   "trips": 579,
+   "coverage": "researched",
+   "gaps": [
+    "the agreements of Pact and Equity that a British production would use, since the game’s work in London is an American production’s",
+    "the UK’s tax on a visiting performer’s pay, which the game doesn’t withhold",
+    "the other visas that let you work in the UK"
+   ]
+  },
+  {
+   "id": "us",
+   "iso2": "US",
+   "name": "United States",
+   "kind": "country",
+   "continent": "North America",
+   "currency": "USD",
+   "regions": 51,
+   "places": 17342,
+   "work": "us-package",
+   "routes": [],
+   "markets": [
+    "New York",
+    "Los Angeles",
+    "Atlanta",
+    "Chicago",
+    "Boston",
+    "Washington",
+    "Philadelphia",
+    "Seattle",
+    "San Diego",
+    "New Haven"
+   ],
+   "unions": [
+    "AEA – Actors’ Equity Association",
+    "AGMA – American Guild of Musical Artists",
+    "SAG-AFTRA – Screen Actors’ Guild – American Federation of Television and Radio Artists"
+   ],
+   "festivals": [
+    "Fantastic Fest"
+   ],
+   "nearest": {
+    "market": "chicago",
+    "places": 4449
+   },
+   "km": {
+    "min": 0,
+    "median": 353,
+    "max": 4254
+   },
+   "trips": 5767,
+   "coverage": "researched",
+   "gaps": []
+  },
+  {
+   "id": "um",
+   "iso2": "UM",
+   "name": "United States Minor Outlying Islands",
+   "kind": "territory of United States",
+   "continent": "Oceania",
+   "currency": "USD",
+   "regions": 9,
+   "places": 0,
+   "work": "unsupported",
+   "routes": [],
+   "markets": [],
+   "unions": [],
+   "festivals": [],
+   "nearest": null,
+   "km": null,
+   "trips": 0,
+   "coverage": "simulated",
+   "gaps": [
+    "its rules for working there",
+    "a market of its own"
+   ]
+  },
+  {
+   "id": "uy",
+   "iso2": "UY",
+   "name": "Uruguay",
+   "kind": "country",
+   "continent": "South America",
+   "currency": "UYU",
+   "regions": 19,
+   "places": 135,
+   "work": "unsupported",
+   "routes": [],
+   "markets": [],
+   "unions": [
+    "SUA – Sociedad Uruguaya de Actores"
+   ],
+   "festivals": [],
+   "nearest": {
+    "market": "atlanta",
+    "places": 135
+   },
+   "km": {
+    "min": 7651,
+    "median": 8083,
+    "max": 8233
+   },
+   "trips": 135,
+   "coverage": "partly researched",
+   "gaps": [
+    "its rules for working there",
+    "a market of its own"
+   ]
+  },
+  {
+   "id": "uz",
+   "iso2": "UZ",
+   "name": "Uzbekistan",
+   "kind": "country",
+   "continent": "Asia",
+   "currency": "UZS",
+   "regions": 14,
+   "places": 219,
+   "work": "unsupported",
+   "routes": [],
+   "markets": [],
+   "unions": [],
+   "festivals": [],
+   "nearest": {
+    "market": "london",
+    "places": 219
+   },
+   "km": {
+    "min": 4133,
+    "median": 5219,
+    "max": 5516
+   },
+   "trips": 219,
+   "coverage": "simulated",
+   "gaps": [
+    "its rules for working there",
+    "a market of its own"
+   ]
+  },
+  {
+   "id": "vu",
+   "iso2": "VU",
+   "name": "Vanuatu",
+   "kind": "country",
+   "continent": "Oceania",
+   "currency": "VUV",
+   "regions": 6,
+   "places": 9,
+   "work": "unsupported",
+   "routes": [],
+   "markets": [],
+   "unions": [],
+   "festivals": [],
+   "nearest": {
+    "market": "sydney",
+    "places": 9
+   },
+   "km": {
+    "min": 2393,
+    "median": 2558,
+    "max": 2767
+   },
+   "trips": 9,
+   "coverage": "simulated",
+   "gaps": [
+    "its rules for working there",
+    "a market of its own"
+   ]
+  },
+  {
+   "id": "va",
+   "iso2": "VA",
+   "name": "Vatican",
+   "kind": "country",
+   "continent": "Europe",
+   "currency": "EUR",
+   "regions": 0,
+   "places": 1,
+   "work": "unsupported",
+   "routes": [],
+   "markets": [],
+   "unions": [],
+   "festivals": [],
+   "nearest": {
+    "market": "london",
+    "places": 1
+   },
+   "km": {
+    "min": 1432,
+    "median": 1432,
+    "max": 1432
+   },
+   "trips": 1,
+   "coverage": "simulated",
+   "gaps": [
+    "its rules for working there",
+    "a market of its own"
+   ]
+  },
+  {
+   "id": "ve",
+   "iso2": "VE",
+   "name": "Venezuela",
+   "kind": "country",
+   "continent": "South America",
+   "currency": "VES",
+   "regions": 25,
+   "places": 414,
+   "work": "unsupported",
+   "routes": [],
+   "markets": [],
+   "unions": [],
+   "festivals": [],
+   "nearest": {
+    "market": "atlanta",
+    "places": 414
+   },
+   "km": {
+    "min": 2824,
+    "median": 3142,
+    "max": 4037
+   },
+   "trips": 414,
+   "coverage": "simulated",
+   "gaps": [
+    "its rules for working there",
+    "a market of its own"
+   ]
+  },
+  {
+   "id": "vn",
+   "iso2": "VN",
+   "name": "Vietnam",
+   "kind": "country",
+   "continent": "Asia",
+   "currency": "VND",
+   "regions": 34,
+   "places": 904,
+   "work": "unsupported",
+   "routes": [],
+   "markets": [],
+   "unions": [],
+   "festivals": [],
+   "nearest": {
+    "market": "sydney",
+    "places": 904
+   },
+   "km": {
+    "min": 6655,
+    "median": 7523,
+    "max": 8091
+   },
+   "trips": 904,
+   "coverage": "simulated",
+   "gaps": [
+    "its rules for working there",
+    "a market of its own"
+   ]
+  },
+  {
+   "id": "wf",
+   "iso2": "WF",
+   "name": "Wallis and Futuna",
+   "kind": "territory of France",
+   "continent": "Oceania",
+   "currency": "XPF",
+   "regions": 3,
+   "places": 3,
+   "work": "unsupported",
+   "routes": [],
+   "markets": [],
+   "unions": [],
+   "festivals": [],
+   "nearest": {
+    "market": "sydney",
+    "places": 3
+   },
+   "km": {
+    "min": 3771,
+    "median": 3773,
+    "max": 4006
+   },
+   "trips": 3,
+   "coverage": "simulated",
+   "gaps": [
+    "its rules for working there",
+    "a market of its own"
+   ]
+  },
+  {
+   "id": "eh",
+   "iso2": "EH",
+   "name": "Western Sahara",
+   "kind": "country",
+   "continent": "Africa",
+   "currency": "MAD",
+   "regions": 0,
+   "places": 22,
+   "work": "unsupported",
+   "routes": [],
+   "markets": [],
+   "unions": [],
+   "festivals": [],
+   "nearest": {
+    "market": "london",
+    "places": 22
+   },
+   "km": {
+    "min": 2864,
+    "median": 2994,
+    "max": 3715
+   },
+   "trips": 22,
+   "coverage": "simulated",
+   "gaps": [
+    "its rules for working there",
+    "a market of its own"
+   ]
+  },
+  {
+   "id": "ye",
+   "iso2": "YE",
+   "name": "Yemen",
+   "kind": "country",
+   "continent": "Asia",
+   "currency": "YER",
+   "regions": 22,
+   "places": 309,
+   "work": "unsupported",
+   "routes": [],
+   "markets": [],
+   "unions": [],
+   "festivals": [],
+   "nearest": {
+    "market": "london",
+    "places": 309
+   },
+   "km": {
+    "min": 5381,
+    "median": 5730,
+    "max": 6471
+   },
+   "trips": 309,
+   "coverage": "simulated",
+   "gaps": [
+    "its rules for working there",
+    "a market of its own"
+   ]
+  },
+  {
+   "id": "zm",
+   "iso2": "ZM",
+   "name": "Zambia",
+   "kind": "country",
+   "continent": "Africa",
+   "currency": "ZMW",
+   "regions": 10,
+   "places": 98,
+   "work": "unsupported",
+   "routes": [],
+   "markets": [],
+   "unions": [],
+   "festivals": [],
+   "nearest": {
+    "market": "london",
+    "places": 98
+   },
+   "km": {
+    "min": 7253,
+    "median": 7729,
+    "max": 8115
+   },
+   "trips": 98,
+   "coverage": "simulated",
+   "gaps": [
+    "its rules for working there",
+    "a market of its own"
+   ]
+  },
+  {
+   "id": "zw",
+   "iso2": "ZW",
+   "name": "Zimbabwe",
+   "kind": "country",
+   "continent": "Africa",
+   "currency": "ZWG",
+   "regions": 10,
+   "places": 68,
+   "work": "unsupported",
+   "routes": [],
+   "markets": [],
+   "unions": [],
+   "festivals": [],
+   "nearest": {
+    "market": "london",
+    "places": 68
+   },
+   "km": {
+    "min": 8019,
+    "median": 8297,
+    "max": 8709
+   },
+   "trips": 68,
+   "coverage": "simulated",
+   "gaps": [
+    "its rules for working there",
+    "a market of its own"
+   ]
+  }
+ ]
+}

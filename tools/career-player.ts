@@ -38,6 +38,7 @@ import { checkRefusal, offeredAgreement, relationOf, sendRefusal, supplyRefusal 
 import { currentOf, headshotRefusal, materialsCheck, reelRefusal, reelSources, resumeRefusal, type PartPrep } from '../src/engine/systems/pro';
 import { AUDITION_KIND, WORK, acceptRefusal, clashesAt, moveRefusal as moveRoundRefusal, prepareRefusal, projectOf, roundToCome, submitRefusal, tapeRefusal, tripMinutes } from '../src/engine/systems/projobs';
 import { joinSagRefusal } from '../src/engine/systems/propay';
+import { projectById, type ProjectTemplate } from '../src/engine/content/careerwork';
 import { evening, freeHour, keepCovered, lookAfter, practiceHour } from './policy';
 
 /** What the player met, in order: each notice as it came, each question raised, each stop and each step they took. */
@@ -160,6 +161,11 @@ export interface Ways {
   tape?: boolean;
   /** The résumé brought up to date whenever What's Missing says it's behind, or only when it's asked for. */
   resume?: 'when-behind' | 'when-asked';
+  /**
+   * The parts the player pursues: a player chooses which roles to go for (from 2026-10-24, brief 27). Others are left: no
+   * submission, no sides, no tape, an offer declined. Absent, every part.
+   */
+  only?: (t: ProjectTemplate) => boolean;
 }
 
 /** The work every actor does on their own: the sides, the tapes, the offers, the part, the résumé. True when it took time. */
@@ -167,9 +173,10 @@ function ownWork(sim: Simulation, t: Transcript | undefined, ways: Ways): boolea
   const person = sim.player;
   const pro = person.pro!;
   const before = sim.now;
+  const wanted = (projectId: string) => !ways.only || ways.only(projectById(projectId)!);
   for (const o of pro.opportunities) {
     const r = roundToCome(o);
-    if (!r || (o.status !== 'audition' && o.status !== 'callback')) continue;
+    if (!r || (o.status !== 'audition' && o.status !== 'callback') || !wanted(o.projectId)) continue;
     // An audition in person said to clash with the calendar is moved, as its notice says, where casting can move it.
     if (r.form === 'in-person' && !moveRoundRefusal(sim, person, o)) {
       const trip = tripMinutes(person.currentLocationId, projectOf(o).place.cityId);
@@ -190,11 +197,11 @@ function ownWork(sim: Simulation, t: Transcript | undefined, ways: Ways): boolea
     if (d.resolvedAt !== undefined || d.refType !== 'pro.offer') continue;
     const o = pro.opportunities.find((x) => x.id === d.refId);
     if (!o || o.status !== 'offered') continue;
-    const no = acceptRefusal(sim, person, o);
+    const no = acceptRefusal(sim, person, o) ?? (wanted(o.projectId) ? undefined : 'not a part this player goes for');
     press(sim, t, `${no ? 'Decline' : 'Accept'} The Offer for ${o.projectId}${no ? ` (${no})` : ''}`, 'world.take_decision_action', { decisionId: d.id, actionIndex: no ? 1 : 0 });
   }
   for (const e of ways.part === false ? [] : pro.engagements) {
-    if (e.status !== 'booked' && e.status !== 'working') continue;
+    if ((e.status !== 'booked' && e.status !== 'working') || !wanted(e.projectId)) continue;
     for (const [step, part] of STEPS) {
       if (short(e.prep, part) && !prepareRefusal(sim, person, { engagement: e }, step)) {
         press(sim, t, `Prepare the part (${step}) for ${e.projectId}`, 'pro.prepare', { engagementId: e.id, step });
@@ -275,7 +282,7 @@ export function unsignedActor(ways: Ways = {}): CareerStep {
     const before = sim.now;
     if (!currentOf(pro, 'headshot')) { if (!headshotRefusal(sim, person)) press(sim, t, 'Book A Headshot Session', 'pro.headshots'); return sim.now > before; }
     if (!currentOf(pro, 'resume')) { if (!resumeRefusal(sim, person)) press(sim, t, 'Make Your Résumé', 'pro.update_resume'); return sim.now > before; }
-    for (const o of pro.opportunities) if (o.status === 'open' && !submitRefusal(sim, person, o)) press(sim, t, `Submit Yourself for ${o.projectId}`, 'pro.submit', { opportunityId: o.id });
+    for (const o of pro.opportunities) if (o.status === 'open' && (!ways.only || ways.only(projectById(o.projectId)!)) && !submitRefusal(sim, person, o)) press(sim, t, `Submit Yourself for ${o.projectId}`, 'pro.submit', { opportunityId: o.id });
     return ownWork(sim, t, ways) || sim.now > before;
   };
 }

@@ -45,6 +45,14 @@ const REAL_NAMES_AS_WRITTEN = new Set([
   'Arion banki',        // Icelandic bank; banki is lowercase in its own name and signage.
   // Australia's Department of Home Affairs writes its visas this way (from 2026-10-23, brief 25: content/jurisdictions.ts).
   'Special Category visa (subclass 444)',
+  // And the UK's Home Office its own (from 2026-10-24, brief 27), as GOV.UK names them.
+  'Creative Worker visa concession', 'Temporary Work – Creative Worker visa',
+  // Performers' unions as FIA's member list names them, in their own languages (from 2026-10-24, brief 27:
+  // content/industry.ts): the joining words of German, Romanian, French, Slovene and Spanish.
+  'VdO – Vereinigung deutscher Opern- und Tanzensembles', 'FSLC – Federaƫia Sindicatelor Lucrătorilor din Cultură',
+  'SMPAD – Syndicat Marocain des Professionnels des Arts Dramatiques', 'FAIR-MEDIASIND – Federația Cultură și Mass-Media',
+  'GLOSA – Sindikat kulture in narave Slovenije', 'UAA – Unión de Actores y Actrices', 'UDA – Union des Artistes',
+  'UNEAC – Unión de Escritores y Artistas de Cuba', 'STST – Suomen tanssi-ja sirkustaiteilijat', 'SFA – Syndicat Français des Artistes-Interprètes',
   // parkrun writes its own name lowercase, and each event as '<Place> parkrun' (`content/clubs.ts`).
   // hi sonrisa, the Mexico City dental clinic, writes its name in lower case (from 2026-10-03).
   'hi sonrisa',

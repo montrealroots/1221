@@ -649,6 +649,14 @@ export interface ProRecord {
    * D4, `systems/projobs.ts`): eleven parts at most.
    */
   lastPosted?: Record<string, { id: ProId; postedAt: Instant; status: OpportunityStatus; outcome?: string }>;
+  /**
+   * The slate's parts the actor has been shown, by id, as they were shown (from 2026-10-24, the owner's brief 27, Area B;
+   * `systems/slate.ts`): kept while a posting, an engagement or a residual names one, so a later build never reads a part
+   * the actor met differently. A part never shown isn't kept: the slate makes it again the same way from the seed.
+   */
+  projects?: Record<string, import('../content/careerwork').ProjectTemplate>;
+  /** The slate's series the actor has met, by id, as they were (brief 27): what a season's decisions read for them. */
+  series?: Record<string, import('../content/series').SeriesTemplate>;
 }
 
 // ---------------------------------------------------------------------------------------------------------------------
@@ -769,6 +777,16 @@ export function keepBounded(pro: ProRecord): void {
     if (all.length <= MATERIALS_KEPT) continue;
     const drop = new Set(all.slice(0, all.length - MATERIALS_KEPT));
     pro.materials = pro.materials.filter((m) => !drop.has(m));
+  }
+  // The slate's parts kept while a posting, an engagement or a residual names one, and their series with them (from
+  // 2026-10-24, brief 27): a part nothing names is the slate's to make again from the seed, the same way.
+  if (pro.projects) {
+    const named = new Set<string>([...pro.opportunities.map((o) => o.projectId), ...pro.engagements.map((e) => e.projectId), ...(pro.residuals ?? []).map((r) => r.projectId)]);
+    for (const id of Object.keys(pro.projects)) if (!named.has(id)) delete pro.projects[id];
+    if (pro.series) {
+      const live = new Set(Object.values(pro.projects).map((t) => t.series).filter((x): x is string => x !== undefined));
+      for (const id of Object.keys(pro.series)) if (!live.has(id)) delete pro.series[id];
+    }
   }
 }
 

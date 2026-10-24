@@ -138,6 +138,9 @@ function proseSpans(line, tsx) {
     const inner = m[0].slice(1, -1);
     if (/^[a-z0-9_./@:-]+$/.test(inner)) continue;
     if (/\bfrom\s*$/.test(head.slice(0, m.index))) continue;
+    // A source's own words, quoted as it wrote them (`quote:` in content/jurisdictions.ts, from 2026-10-24, brief 27): a
+    // government page's "You do not need to pay" is evidence, and contracting it would misquote it.
+    if (/\bquote:\s*$/.test(head.slice(0, m.index))) continue;
     const start = m.index + 1;
     const end = m.index + m[0].length - 1;
     if (m[0][0] === '`') spans.push(...outsideInterpolations(head, start, end));

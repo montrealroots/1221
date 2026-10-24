@@ -3,6 +3,20 @@
 **This section is the current status, and where a new session starts.** (Written at the reconciliation; brought up to
 date at each milestone.)
 
+- **Branch:** `claude/career-universe`, from `main` at `d6eba5d5`, pushed, never force-pushed, not merged to `main` and
+  not deployed (the owner's word on both). One agent, no subagents, as the owner asked.
+- **The checkpoint is `docs/verification/career-universe-2026-10-24/CHECKPOINT.md`** (milestones, the four decisions for
+  the owner, the exact next step); `README.md` beside it is the receipt.
+- **Done:** R (brief 25 merged, `23ac6c66`), A (citizenship asked apart from the birthplace), D (the rotate gate gone, the
+  save's server path proven on a fake platform, emulation said as such), C classified (114 rows by what each lacks), K1
+  (the geographic coverage matrix of 252 countries and territories and 170,911 places, and the research register, brief
+  25's unread sources asked for again with the network full) and K2 (the slate: the work the world keeps making, its
+  London work under the UK's rules, read from GOV.UK).
+- **Next:** K3, representation depth and versioned materials; then K4 to K8 and F (the final runs, the measured rows
+  measured again, the gate in a clean clone).
+- **Blocked, and said so:** SAG-AFTRA's pages, USCIS, the Academy, BAFTA, France-Visas, Japan's foreign ministry and the
+  ATO refuse this environment (HTTP 403); none is worked around, and the game names each as unread where it uses it.
+
 **Completion, by the matrix:** 549 of 663 rows in scope Implemented And Verified (82.8%); 110 Implemented, Verification Incomplete, 0 Partially Implemented, 0 Not Implemented, 0 Blocked Externally, 4 Decision Required, 41 Explicitly Deferred.
 
 # Brief 26, The Complete Game Connectivity, Logic And Functionality Sweep, Complete And Merged (#64), 2026-10-24

@@ -298,7 +298,7 @@
    "kind": "command",
    "source": "audit",
    "goal": "Put your own plans on the calendar, call them off or skip them, and set how fast the clock runs | TimeControls' Play and Pause (run('world.set_preferences', { timeSpeed }) at :62) set the speed. It refuses any key but timeSpeed ('x isn’t a preference.') and any speed but paused or live ('The clock runs paused or live.'). The guide holds 'live' until The Clock is read, never 'paused'. A save's fast or faster opens as live. Downstream: the page's live clock, game-context.tsx SPEED_MULTIPLIER (paused 0 returns without ticking; live 1), stepped by core/realclock.",
-   "entry": "TimeControls.tsx:62 (setSpeed’s run('world.set_preferences'), sent by the Play/Pause button at :76). Until 2026-10-13 this said :55. | guide: The Clock | TimeControls.tsx game-context.tsx turn.tsx",
+   "entry": "TimeControls.tsx:62 (setSpeed’s run('world.set_preferences'), sent by the Play/Pause button at :76). Until 2026-10-13 this said :55. | guide: The Clock | TimeControls.tsx game-context.tsx",
    "preconditions": "A plan passes checkPlan (a title, a start, a length from half an hour to all day, in the town you’re in); calling off only before it starts, skipping only once it’s due | refused where: That isn’t a setting the game has.; The clock can only be set to Play or Pause.",
    "reads": "timeSpeed",
    "decisions": "issued with no choice beyond the control",
@@ -8016,7 +8016,7 @@
    "saveLoad": "(none) | Person.pro.trips (legs and their statuses, the stay, the history), the engagement's tripId, the permit in Person.documents with its bookingId, and the year's foreign income",
    "failure": "refusals said in the player's words: — (also visaRefusal) | Built on 2026-10-23 for brief 25's first module. pro.apply_work_visa is played through its command and the clock (tests/career-world-sydney.test.ts): the visa applied for from the engagement, refused a second time, granted ten days on, the trip flown, the work done in Sydney and paid, the trip home, each stage saved and loaded; and without it, the release at the flight. It isn’t called Verified because tools/capabilities.mjs and tools/coverage.mjs count a command’s row as read only by the review of 2026-10-13. Flight delays, missed connections, a stay extended, weather on the day, Australian tax and jet lag aren’t in the game. Allowances weren’t either until 2026-10-24, when brief 25's Module 4 brought a SAG-AFTRA trip's per diem (the career-contracts row)",
    "implementation": "`systems/worktrip.ts` | WorkPane.tsx",
-   "evidence": "`pro.apply_work_visa`: `tests/career-world-sydney.test.ts` | 1 test files",
+   "evidence": "`pro.apply_work_visa`: `tests/career-world-sydney.test.ts` | 2 test files",
    "sourceStatus": "capability Implemented",
    "status": "Implemented, Verification Incomplete",
    "missing": "No audit row has read it against the standard on docs/GAMEPLAY-COVERAGE.md; its capability’s limits say what no test checks"

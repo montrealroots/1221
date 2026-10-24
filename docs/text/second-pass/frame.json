@@ -2092,6 +2092,20 @@
   "reason": "Developer notes on each random draw, read only by tests/deciders.test.ts and tools/deciders.mjs; nothing the game ships imports decided.ts.",
   "first": "Pending"
  },
+ "src/engine/decided.ts#top [pro.slate_reach]": {
+  "status": "Retained",
+  "hash": "a002fb28a1e8",
+  "on": "2026-10-24",
+  "reason": "A decider's description and its sweep's placeholder credit (A Part), read by tests/deciders.test.ts and tools/deciders.mjs and never shown to a player: it says which of the slate's parts reach the actor and each thing that moves that.",
+  "first": "Pending"
+ },
+ "src/engine/decided.ts#top [pro.slate]": {
+  "status": "Retained",
+  "hash": "dd2f862e71f2",
+  "on": "2026-10-24",
+  "reason": "A decider's description, read by tests/deciders.test.ts and tools/deciders.mjs and never shown to a player: it says what the slate's draw decides (each market's productions of each kind in a week, each one's parts and fate, and each year's series) and what moves it.",
+  "first": "Pending"
+ },
  "src/engine/decided.ts#top [pro.stress]": {
   "status": "Rewritten",
   "hash": "663dc483d812",

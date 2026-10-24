@@ -101,6 +101,7 @@ import { STEP_LABEL, STEP_WORDS, afterWrap, dubDaysOf, cutInEdit, formatOf, kept
 import { RELEASED } from '../content/workflows';
 import { registerAwards, visibilityOf } from './awards';
 import { simulateRun } from './charts';
+import { keepProject, pushedPart, restoreSlate, slatePartsAt } from './slate';
 
 // ---------------------------------------------------------------------------------------------------------------------
 // The rules: each a published one with its source, or the game's ASSUMPTION
@@ -575,7 +576,8 @@ export function postingsAt(sim: Simulation, person: Person, at: Instant): { proj
   const agreement = activeAgreement(person, at);
   const week = dateKey(at, NY);
   const out: { project: ProjectTemplate; via: 'agent' | 'open' }[] = [];
-  for (const t of PROJECTS) {
+  // The fixed parts, then (from 2026-10-24, brief 27, Area B) the slate's: the work the world made for this week.
+  for (const t of [...PROJECTS, ...slatePartsAt(sim, at)]) {
     if (!writtenFor(t, person)) continue;
     const via = reachOf(t, agreement);
     if (!via) continue;
@@ -592,10 +594,50 @@ export function postingsAt(sim: Simulation, person: Person, at: Instant): { proj
       const season = seriesSeasonOf(t, days[0]!.from);
       if (person.pro?.engagements.some((e) => e.projectId === t.id && e.status !== 'canceled' && (!finished(e) || seriesSeasonOf(t, e.days[0]?.from ?? 0) === season))) continue;
     } else if (person.pro?.engagements.some((e) => e.projectId === t.id && e.status !== 'canceled') || person.pro?.credits.some((c) => c.project === t.project && c.role === t.role.part)) continue;
+    if (t.slate) {
+      // A slate part reaches the actor by the slate's own reach (`slateReach`), drawn on its own stream.
+      if (sim.rng('pro.slate_reach', week, t.id, via).next() < slateReach(sim, person, t, via, at)) out.push({ project: t, via });
+      continue;
+    }
     const chance = via === 'agent' ? POSTING.agentKind[t.kind] ?? POSTING.agent : POSTING.open[t.kind] ?? 0;
     if (sim.rng('pro.posting', week, t.id, via).next() < chance) out.push({ project: t, via });
   }
   return out;
+}
+
+/**
+ * How likely a slate part is to reach the actor in its week (from 2026-10-24, brief 27, Area B: "Make opportunity supply
+ * responsive to market, location, eligibility, representation access, availability, experience, skills, genres,
+ * relationships, and established production circumstances"). Every figure an ASSUMPTION, each factor said where it's set:
+ * - **who brings it**: an agent's breakdown reaches a client more often than an open posting reaches anyone (`SLATE_REACH`);
+ * - **the playing age**: a part outside the actor's age by more than `CASTING.playingSpread` years reaches nobody's agent and
+ *   no open call they'd answer;
+ * - **fit**: an agent puts up a client the part suits, so the agent's chance rises with the part's fit (`fitOf`: its genres'
+ *   knowledge and the techniques it asks), from a third at no fit;
+ * - **experience**: a lead in professional screen work comes to an actor with three professional credits or more, and to
+ *   anyone else a fifth as often; a supporting part through an agent to one with a credit, and half as often without;
+ * - **relationships**: a company or casting office the actor has worked for comes back to them a half again as often;
+ * - **where they live**: an open in-person audition farther than a day's trip reaches nobody there, and an agent's half as
+ *   often; a self-tape reaches anyone;
+ * - **availability**: an agent doesn't put up a client booked on the part's days.
+ * The market, the season and the production's own circumstances are the slate's (`systems/slate.ts`): what's made where,
+ * when, and whether a series is being made at all.
+ */
+export const SLATE_REACH = { agent: 0.45, open: 0.3, noFit: 0.35, leadCredits: 3, leadWithout: 0.2, supportingWithout: 0.5, worked: 1.5, farAgent: 0.5 } as const;
+const PRO_SCREEN: ReadonlySet<ProjectKind> = new Set(['network-drama', 'network-comedy', 'multicam-comedy', 'serialized-drama', 'serialized-comedy', 'limited-series', 'tv-movie', 'anthology', 'low-budget', 'action-feature', 'capture-feature', 'overseas-feature', 'animated-feature']);
+export function slateReach(sim: Simulation, person: Person, t: ProjectTemplate, via: 'agent' | 'open', at: Instant): number {
+  const age = ageOn(person.birthInstant, at, sim.homeZone);
+  if (age < t.requirements.ages[0] - CASTING.playingSpread || age > t.requirements.ages[1] + CASTING.playingSpread) return 0;
+  let chance = via === 'agent' ? SLATE_REACH.agent : SLATE_REACH.open;
+  if (via === 'agent') chance *= SLATE_REACH.noFit + (1 - SLATE_REACH.noFit) * fitOf(person, t).fit;
+  const credits = (person.pro?.credits ?? []).filter((c) => c.kind !== 'student-film').length;
+  if (t.role.size === 'lead' && PRO_SCREEN.has(t.kind) && credits < SLATE_REACH.leadCredits) chance *= SLATE_REACH.leadWithout;
+  if (via === 'agent' && t.role.size === 'supporting' && credits < 1) chance *= SLATE_REACH.supportingWithout;
+  const worked = (person.pro?.credits ?? []).some((c) => c.company === t.company) || (person.pro?.engagements ?? []).some((e) => { const x = projectById(e.projectId); return x !== undefined && (x.company === t.company || x.casting === t.casting); });
+  if (worked) chance *= SLATE_REACH.worked;
+  if (t.stages.audition === 'in-person' && needsTrip(person.currentLocationId, t.place.cityId)) chance *= via === 'agent' ? SLATE_REACH.farAgent : 0;
+  if (via === 'agent' && bookedClash(person, datesOf({ projectId: t.id, postedAt: at }))) return 0;
+  return Math.min(0.95, chance);
 }
 
 /** The season a day of a series part falls in, by the year it began. */
@@ -1220,7 +1262,10 @@ function post(sim: Simulation, person: Person, t: ProjectTemplate, at: Instant, 
     ...(last ? { again: { postedAt: last.postedAt, status: last.status, ...(last.outcome ? { outcome: last.outcome } : {}) } } : {}),
   };
   pro.opportunities.push(o);
-  (pro.lastPosted ??= {})[t.id] = { id: o.id, postedAt: at, status: 'open' };
+  // A slate part is kept in the save as it was posted (from 2026-10-24, brief 27), and never posted again as new, so it
+  // needs no last-posted record; a fixed part keeps one, as it comes round.
+  if (t.slate) keepProject(person, t, t.series ? seriesById(t.series) : undefined);
+  else (pro.lastPosted ??= {})[t.id] = { id: o.id, postedAt: at, status: 'open' };
   const agent = agentFor(o);
   const again = o.again ? ` again, a new casting of the part. ${lastTimeWords(o.again)}` : '.';
   // A casting office named by its role ("the production’s casting office", a part drawn from a real production) takes no
@@ -1856,6 +1901,47 @@ const WORKFLOW_HOOKS = {
   },
 };
 
+/**
+ * A slate production's fate, applied to work booked in it once the fate is known (from 2026-10-24, the owner's brief 27,
+ * Area B: "Delays ... Recasting where justified ... Projects that never proceed"). Only work not yet begun: a production
+ * that has started isn't pushed or dropped by the slate.
+ * - **Never made:** the work is called off, nothing owed for days never worked (`callOff`), as any work called off is: the
+ *   agreement's own terms for a production abandoned weren't read, so the game owes nothing more and says so.
+ * - **Pushed back:** the booking for the old dates is released, and the production offers the part again for the new ones,
+ *   at the same terms, through the same agent, as a fresh offer the actor can take or leave; left, the part is recast.
+ */
+function applyFates(sim: Simulation, person: Person): void {
+  const pro = person.pro;
+  if (!pro) return;
+  for (const e of [...pro.engagements]) {
+    const t = projectById(e.projectId);
+    const fate = t?.slate?.fate;
+    if (!t || !fate || fate.kind === 'made' || fate.at > sim.now) continue;
+    if (e.status === 'finished' || e.status === 'canceled' || (e.log ?? []).length > 0 || e.history.some((h) => h.key === 'slate-fate')) continue;
+    const first = e.days[0]?.from ?? sim.now;
+    if (fate.kind === 'dropped') {
+      callOff(sim, e, t);
+      noteEvent(sim, e, { kind: 'problem', key: 'slate-fate', words: `${t.company} called off ${t.project} on ${formatDate(sim.now, NY)}, before its first day: it won’t be made.` });
+      keepBounded(pro);
+      tell(sim, person, `${t.project} Won’t Be Made`, `${t.company} called off ${t.project} before its first day, so your work in it as ${t.role.part} is off your calendar. You hadn’t worked a day of it, so nothing is owed: the agreement’s terms for a production abandoned before it starts weren’t read, so the game pays nothing more.`, 85);
+      continue;
+    }
+    const next = pushedPart(t, fate.weeks);
+    callOff(sim, e, t);
+    noteEvent(sim, e, { kind: 'problem', key: 'slate-fate', words: `${t.company} pushed ${t.project} back ${counted(fate.weeks, 'week')} on ${formatDate(sim.now, NY)}, and released you from its old dates.` });
+    const old = opportunityOf(person, e.opportunityId);
+    keepProject(person, next, next.series ? seriesById(next.series) : undefined);
+    const o: Opportunity = {
+      id: sim.nextId('pro'), projectId: next.id, via: old?.via ?? 'open', status: 'callback', postedAt: old?.postedAt ?? sim.now, submitBy: sim.now, history: [], counts: {},
+      ...(old?.agentId ? { agentId: old.agentId } : {}), ...(old?.agreementId ? { agreementId: old.agreementId } : {}),
+    };
+    pro.opportunities.push(o);
+    keepBounded(pro);
+    tell(sim, person, `${t.project} Is Pushed Back`, `${t.company} pushed ${t.project} back ${counted(fate.weeks, 'week')}, from ${formatDate(first, NY)}, and released you from the old dates, so they’re off your calendar. It offers you ${t.role.part} again for the new dates.`, 80);
+    makeOffer(sim, person, o);
+  }
+}
+
 export function registerProJobs(sim: Simulation): void {
   // The workflows' revised pages, looping sessions, invitations and choices (from 2026-10-24, brief 25's Module 5).
   registerWorkflows(sim, WORKFLOW_HOOKS);
@@ -1869,12 +1955,16 @@ export function registerProJobs(sim: Simulation): void {
   // A series' seasons (from 2026-10-24, brief 25's Module 4): the network's word each May, a recurring part's further
   // episodes and its option, each through the loop's own steps.
   registerSeries(sim, SEASON_HOOKS);
+  // The slate's parts and series the save keeps, back in the session before anything reads them (from 2026-10-24, brief 27).
+  restoreSlate(sim.universe);
   // The week's postings, at each Monday the clock passes; a window passed closes; and the agent tries a submission his
   // breakdown brought, as soon as the role suits and the materials pass.
   sim.onPassage('pro.postings', (s, from) => {
     const person = s.universe.people[s.universe.playerId];
     if (!person) return;
     for (const at of postingTimes(from, s.now)) for (const { project, via } of postingsAt(s, person, at)) post(s, person, project, at, via);
+    // What became of the slate's productions the actor is booked in, once it's known (from 2026-10-24, brief 27).
+    applyFates(s, person);
     for (const o of person.pro?.opportunities ?? []) {
       if (o.status !== 'open') continue;
       if (s.now >= o.submitBy) {
