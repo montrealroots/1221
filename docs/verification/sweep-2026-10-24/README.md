@@ -358,6 +358,49 @@ and "Locked" until "The Clock"); the check was corrected before the run kept. No
 inspection and the tests alone (chapters 6 to 20, Show The Reasons, the start entries' promises). Running total: 1107
 Verified, 6 Fixed And Verified, 1 Blocked, 20 Deferred, 12 Not Tested (persistence's 12).
 
+### M11: Persistence, Save Compatibility And The Longer Playthroughs
+
+**Read on `3e359d4b`.** `createSave` and `loadSave` (`src/engine/index.ts`: a new life is made under every
+once-on-opening rule, so its `opened` list is full; an opened save runs each once-on-opening step once and the rest
+change nothing on a save they've visited), `migrate` (on every open, by the save's shape and not its number, which has
+read 94 since `ff837dfa` on 2026-10-10: every collection created where absent, the fields nothing reads dropped,
+records re-stamped, questions dated, the title, the personality and the citizenship put right, a newer save a
+problem), `openSlot` (an empty slot or no backup refused in words; a newer save refused with nothing changed; a save a
+step changed written back once after a backup, and not when opened out of the backup), `validateUniverse` and
+`loadPlacesFor`, the adapter (`serialise`, `deserialise`, the player's words for a damaged file), the local store
+(gzip with its marker, an older plain save still read, IndexedDB with a save still in local storage moved across once,
+a backup before every write and the slot's key written last and whole, a delete that keeps a readable save and never
+writes a damaged one over a readable backup, restore as a swap), the Base44 adapter and its three functions (the
+idempotency key from the save, the moment, the playtime and the schema; the local mirror on every write; the server's
+receipt replayed, forward progress required, the previous payload kept as the backup; a slot cleared and released),
+the guard (`inspectPayload`, `requireForwardProgress`), the schema pin in its two places, Your Saves, the start's four
+stages, Save & Exit's re-read of the slots and the provider's autosave (every 45 seconds when something changed, and on
+leaving); ran the area's 19 test files (172 tests, green), which open the seven fixtures under `tests/fixtures` (brief
+20's and the acceptance pass's played lives, all at 94) at their moment and play each on a day.
+
+**Probed** (`tests/b26-persistence-repeats.test.ts`, 6 tests): a save carrying a field 2026-10-02 dropped, opened
+twice, is written back once after a backup of what was stored, and the second open is current and writes nothing; a
+save from a newer build is refused twice in the same words with its bytes unmoved; a write that fails on the slot's own
+key leaves the slot readable and as it was, says so in the player's words, and the next write goes through; a slot
+deleted twice is empty once with its backup kept, restored it holds the life, restored again it holds the same life;
+thirty days reopened through the slot every five, with Save & Exit's own write before each, are the same to the byte as
+the life played straight, and `openSlot` never writes a current save back; `loadSave` on the same bytes twice, on a new
+life and on one played a fortnight, gives the same bytes. Three mutations each caught: `openSlot` writing back every
+open (two tests fail), a delete keeping no backup (one), the slot written before its backup (two).
+
+**Found and fixed:** the guard measured its 24 MiB limit in UTF-8 bytes (since 2026-10-12) and reported the save's size
+in the string's length, so the row's `payload_bytes` and the slot card's size on Base44 were a byte short for every
+accented character in a save. `inspectPayload` returns the count it measured (`base44/shared/guard.js`);
+`tests/server-guards.test.ts`, which asserted the string's length and so agreed with the under-count, asserts the UTF-8
+count, with a case of accented names that fails on the old guard (2 of 24). It takes effect on the functions' next
+deployment, which waits on the owner and the gate (rule 14). Noted and not changed: on Base44, `openSlot`'s explicit
+backup before writing back a save brought forward goes through the entity, where the function's own write keeps the
+previous payload as the backup anyway; the two agree, so the step is spent twice and loses nothing.
+
+**Register:** 12 more rows, 11 Verified and 1 Fixed And Verified (`persist.guard`); 9 of them by M10's walks as well,
+which made a life, saved and left it and opened it again through its slot. Running total: 1118 Verified, 7 Fixed And
+Verified, 1 Blocked, 20 Deferred, 0 Not Tested. Every feature the register lists has a status read from the code.
+
 ## Final Runs, Gate And Report (M12)
 
 (Written at the close.)

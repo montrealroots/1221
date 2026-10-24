@@ -87,6 +87,18 @@ nothing here builds on it.
     eleven screens, nothing broken. No defect found; corrected `tools/cohesion-walk.mjs`, which hadn't run since
     2026-09-24 and predated brief 20's birthplace picker and the guide's locks. 1107 Verified, 6 Fixed And Verified,
     20 Deferred in all, 12 Not Tested (persistence's).
+  - **M11, persistence, save compatibility and the longer playthroughs (read on `3e359d4b`):** 12 rows verified by
+    reading `createSave`, `loadSave` and its once-on-opening list, `migrate` (by the save's shape; the number 94 since
+    2026-10-10), `openSlot`, `validateUniverse`, the adapter, the local store (gzip, IndexedDB, the move from local
+    storage, a backup before every write), the Base44 adapter and its three functions, the guard, the schema pin in its
+    two places, Your Saves, the start's stages and the autosave; by the area's 19 test files (172 tests, green), which
+    open the seven fixtures and play each on a day; and by a probe (`tests/b26-persistence-repeats.test.ts`: a save
+    needing a step opened twice and written once, a newer save refused twice, a failed write leaving the slot as it
+    was, a delete and a restore twice, thirty days reopened through the slot every five the same to the byte as the
+    life played straight; three mutations caught). Found and fixed: the guard reported a save's size in the string's
+    length where it measured its limit in UTF-8 bytes, a byte short per accented character on the row and the slot
+    card (`base44/shared/guard.js`; `tests/server-guards.test.ts`); it takes effect on the functions' next deployment.
+    1118 Verified, 7 Fixed And Verified, 20 Deferred, 1 Blocked in all; nothing Not Tested.
 - **M12, at the close:** brief 22's final runs again on the finished commit (back to 634), the gate in a clean clone of
   it, the receipt with everything brief 26's §13 asks.
 - **Not merged, not deployed.** The schema stays 94.

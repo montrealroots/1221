@@ -88,7 +88,15 @@ each milestone's end, with the branch, the commit, what's covered, what remains 
   problem; the cohesion walk's eleven screens, nothing broken. Found no defect in the game; corrected
   `tools/cohesion-walk.mjs`, stale since 2026-09-24 against the birthplace picker and the guide's locks. 49 rows
   Verified, 25 by the walks as well. 1107 Verified in all; 12 Not Tested remain, persistence's.
-- **M11:** persistence and the longer playthroughs (the handoff's top section lists it with what it found).
+- **M11, 2026-10-24: persistence, save compatibility and the longer playthroughs.** Read `createSave`, `loadSave` and
+  its once-on-opening list, `migrate`, `openSlot`, `validateUniverse`, the adapter, the local and Base44 stores and the
+  three server functions, the guard, the schema pin in its two places, Your Saves, the start and the autosave; ran the
+  area's 19 test files (172 tests, green on `3e359d4b`), which open the seven fixtures and play each on a day; probed
+  the repeats (`tests/b26-persistence-repeats.test.ts`: a step once, a refusal twice, a failed write, a delete and a
+  restore twice, thirty days reopened every five the same to the byte; three mutations caught). Found and fixed: the
+  guard reported a save's size in the string's length where it measured the limit in UTF-8 bytes
+  (`base44/shared/guard.js`; `tests/server-guards.test.ts` fails on the old code). 12 rows: 11 Verified, 1 Fixed And
+  Verified. 1118 Verified, 7 Fixed And Verified in all; nothing Not Tested.
 - **M12:** brief 22's final runs again on the finished commit, the gate, the receipt.
 
 ## The Completion Matrix While The Sweep Runs
@@ -99,9 +107,9 @@ source change until the runs are played again on the finished commit (M12). That
 
 ## Next Step
 
-Begin M11, persistence: the 12 rows left (`node tools/sweep.mjs --todo persistence`: create, load, migrate, validate,
-open-slot, serialise, the local store, Base44, the guard, the schema, the slots and startup), reading each at its code
-and its tests; the fixtures under `tests/fixtures` (the `old-*` saves) loaded and migrated on the current schema, 94 in
-`model.ts` and in `guard.js` both; then the longer playthroughs on a played career, reloaded at intervals, each number
-read before and after, and the brief's repeated loads and saves (a slot opened twice, a save written twice) traced for
-anything made twice.
+Begin M12: brief 22's final runs again on the finished commit (prefix `f26`, the scripts under
+`../career-genre-2026-10-22/final-runs/runs/`), so the completion matrix's 46 rows measured on the whole source are
+measured on it; then `npm run gate` in a clean clone of that commit, its exit read from a file; then the receipt with
+everything brief 26's §13 asks (the SHAs, the totals, the defects, the chains, the decorative features left, the test
+commands and results, the playthroughs, save compatibility, the UI evidence, the blockers, the handoff), the handoff
+brought up to it, and the push. Nothing merges to `main` and nothing deploys without the owner.

@@ -124,7 +124,10 @@ export function inspectPayload(payload, expectedSlot) {
     saveId: meta.id,
     worldNow: universe.now,
     playtimeSeconds: Number(meta.playtimeSeconds) || 0,
-    bytes: payload.length,
+    // The same UTF-8 count the limit above was measured in (from 2026-10-24, brief 26): until then this stayed at the
+    // string's length after 2026-10-12 moved the limit, so the row's payload_bytes and the slot's size under-measured a
+    // save of accented names, by a byte a character.
+    bytes,
   };
 }
 

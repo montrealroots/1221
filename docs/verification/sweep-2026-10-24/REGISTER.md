@@ -7,7 +7,7 @@ persistence and world mechanics that matrix has no row for. Each carries the swe
 code, by a test the gate runs, by playing the built app), the commit, the evidence and what was found. Only Verified and Fixed And
 Verified count as done, out of every row not Deferred. Not Tested is the honest default: nothing is counted done for having a row.
 
-**Coverage:** 1113 of 1126 in scope Verified or Fixed And Verified (98.8%); 1107 Verified, 6 Fixed And Verified, 0 Failed, 1 Blocked, 20 Deferred, 12 Not Tested. By inspection 1134, automated 1133, interactive 25.
+**Coverage:** 1125 of 1126 in scope Verified or Fixed And Verified (99.9%); 1118 Verified, 7 Fixed And Verified, 0 Failed, 1 Blocked, 20 Deferred, 0 Not Tested. By inspection 1146, automated 1145, interactive 34.
 
 ## Totals
 
@@ -22,8 +22,8 @@ Verified count as done, out of every row not Deferred. Not Tested is the honest 
 | life | 84 | 84 |  |  |  |  |  | 84 | 84 |  |
 | career | 89 | 89 |  |  |  |  |  | 89 | 89 |  |
 | guide | 63 | 63 |  |  |  |  |  | 63 | 63 | 25 |
-| persistence | 12 |  |  |  |  |  | 12 |  |  |  |
-| **All** | **1146** | **1107** | **6** | **0** | **1** | **20** | **12** | **1134** | **1133** | **25** |
+| persistence | 12 | 11 | 1 |  |  |  |  | 12 | 12 | 9 |
+| **All** | **1146** | **1118** | **7** | **0** | **1** | **20** | **0** | **1146** | **1145** | **34** |
 
 ## Creation
 
@@ -1208,15 +1208,15 @@ Verified count as done, out of every row not Deferred. Not Tested is the honest 
 
 | Feature | Kind | Where | Effects matrix | Sweep | By | On | Evidence | Found |
 |---|---|---|---|---|---|---|---|---|
-| `persist.create` | persistence | src/engine/index.ts, createSave | — | Not Tested |  |  |  |  |
-| `persist.load` | persistence | src/engine/index.ts, loadSave | — | Not Tested |  |  |  |  |
-| `persist.migrate` | persistence | src/engine/index.ts, migrate | — | Not Tested |  |  |  |  |
-| `persist.validate` | persistence | src/engine/index.ts, validateUniverse | — | Not Tested |  |  |  |  |
-| `persist.open-slot` | persistence | src/engine/index.ts, openSlot | — | Not Tested |  |  |  |  |
-| `persist.serialise` | persistence | src/engine/persistence/adapter.ts, serialise | — | Not Tested |  |  |  |  |
-| `persist.local-store` | persistence | src/engine/persistence/local.ts, movingStore | — | Not Tested |  |  |  |  |
-| `persist.base44` | persistence | src/engine/persistence/base44.ts, resolveAdapter | — | Not Tested |  |  |  |  |
-| `persist.guard` | persistence | base44/shared/guard.js, inspectPayload | — | Not Tested |  |  |  |  |
-| `persist.schema` | persistence | src/engine/domain/model.ts, SAVE_SCHEMA_VERSION | — | Not Tested |  |  |  |  |
-| `persist.slots` | persistence | src/ui/saves/SaveSlots.tsx, SaveSlots | — | Not Tested |  |  |  |  |
-| `persist.startup` | persistence | src/ui/startup/StartupSequence.tsx, StartupSequence | — | Not Tested |  |  |  |  |
+| `persist.create` | persistence | src/engine/index.ts, createSave | — | Verified | inspection, automated, interactive | 3e359d4b | src/engine/index.ts:376-401 createSave: the universe from creation’s choices, the once-on-opening list full, every system registered, the world populated, the attributes drawn, the three craft records, the starting pape… |  |
+| `persist.load` | persistence | src/engine/index.ts, loadSave | — | Verified | inspection, automated, interactive | 3e359d4b | src/engine/index.ts:403-615 loadSave: every system registered, each once-on-opening step marked in opened and never run twice, the rest changing nothing on a save they’ve visited; src/app/SlateApp.tsx:78-90 resume: the … |  |
+| `persist.migrate` | persistence | src/engine/index.ts, migrate | — | Verified | inspection, automated, interactive | 3e359d4b | src/engine/index.ts:686-1283 migrate: on every open, by the shape not the number (the labels alone by it, under 11); every collection created where absent, the fields nothing reads dropped, records re-stamped, questions… |  |
+| `persist.validate` | persistence | src/engine/index.ts, validateUniverse | — | Verified | inspection, automated, interactive | 3e359d4b | src/engine/index.ts:1379-1444 validateUniverse: the ledger’s audit, the player and where they stand, the primary account, save isolation, the sorted timeline, the wellbeing bounds; src/ui/saves/SaveSlots.tsx:49-58 run a… |  |
+| `persist.open-slot` | persistence | src/engine/index.ts, openSlot | — | Verified | inspection, automated, interactive | 3e359d4b | src/engine/index.ts:1304-1331 openSlot: an empty slot or no backup refused in words, a newer save refused with nothing changed, migrate on every open, a problem refused, a save a step changed written back once after a b… |  |
+| `persist.serialise` | persistence | src/engine/persistence/adapter.ts, serialise | — | Verified | inspection, automated, interactive | 3e359d4b | src/engine/persistence/adapter.ts:49-68 serialise and deserialise: a damaged file and a file that isn’t a save said in the player’s words; src/engine/persistence/local.ts:23-62 a save packed with its marker, an older pl… |  |
+| `persist.local-store` | persistence | src/engine/persistence/local.ts, movingStore | — | Verified | inspection, automated, interactive | 3e359d4b | src/engine/persistence/local.ts:117-139 movingStore: a save still in local storage moved to IndexedDB once on its first read and the old key removed; src/engine/persistence/local.ts:141-252 LocalSaveAdapter: a backup of… |  |
+| `persist.base44` | persistence | src/engine/persistence/base44.ts, resolveAdapter | — | Verified | inspection, automated | 3e359d4b | src/engine/persistence/base44.ts:88-335 Base44SaveAdapter: the server’s functions preferred, an idempotency key from the save, the moment, the playtime and the schema so a retry writes once and a save brought forward st… |  |
+| `persist.guard` | persistence | base44/shared/guard.js, inspectPayload | — | Fixed And Verified | inspection, automated | 3e359d4b | base44/shared/guard.js:48-133 inspectPayload: a payload present, under 24 MiB in UTF-8, parsed, with a meta.id, a format, a slot that matches, a clock, every transaction balanced in whole cents, the ledger at zero and n… | inspectPayload reported a save’s size in the string’s length where it measured the 24 MiB limit in UTF-8 bytes (since 2026-10-12), so the row’s payload_bytes and the slot card’s size on Base44 were a byte short for every accented character; it returns the cou… |
+| `persist.schema` | persistence | src/engine/domain/model.ts, SAVE_SCHEMA_VERSION | — | Verified | inspection, automated | 3e359d4b | src/engine/domain/model.ts:494 SAVE_SCHEMA_VERSION 94 and base44/shared/guard.js:25 SUPPORTED_SCHEMA_VERSION 94, moved by hand together (CLAUDE.md’s rule 14); pinned at 94 since ff837dfa (2026-10-10), every change since… |  |
+| `persist.slots` | persistence | src/ui/saves/SaveSlots.tsx, SaveSlots | — | Verified | inspection, automated, interactive | 3e359d4b | src/ui/saves/SaveSlots.tsx:12-265 Your Saves: three slots, Continue or See How It Ended, New Save, Restore Backup with the backup’s date, Delete behind a confirm naming the life and whether it can come back, an unreadab… |  |
+| `persist.startup` | persistence | src/ui/startup/StartupSequence.tsx, StartupSequence | — | Verified | inspection, automated, interactive | 3e359d4b | src/ui/startup/StartupSequence.tsx:48-93 the four stages, each doing work: the store found, the slots read, a slot that won’t read said with its way on, a save from another version said before it’s opened; src/ui/startu… |  |
