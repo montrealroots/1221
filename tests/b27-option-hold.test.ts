@@ -103,7 +103,7 @@ describe('an option’s hold on the actor’s dates', () => {
     expect(notices(released).some((n) => n.startsWith('Released From The Option On Assistant DA Whitlock | Bright Harbor Television released you from its option'))).toBe(true);
     expect(acceptWarning(released, released.player, o1) ?? '').not.toContain('holds an option on you');
     released.must({ kind: 'pro.accept_offer', payload: { opportunityId: o1.id } });
-    expect(r1.givenUpFor).toBeUndefined();
+    expect(r1.settled!.why).toBe('Bright Harbor Television released you from its option as Assistant DA Whitlock, at your asking.');
     expect(gaveUpWith(released.player, WHITLOCK.casting)).toBe(false);
 
     // Asked and refused: the option stands, the warning says so; accepted anyway, it's given up.
@@ -118,9 +118,10 @@ describe('an option’s hold on the actor’s dates', () => {
     expect(optionReleaseRefusal(refused, refused.player, o2)).toMatch(/^Bright Harbor Television refused on .*: the option stands\. Decline the offer, or accept it and give the option up\.$/);
 
     // Accepted without a release (the refused fork goes on, and the falsifiability twin of the released one): given up.
-    const taken = refused.must<{ engagementId: string }>({ kind: 'pro.accept_offer', payload: { opportunityId: o2.id } }).engagementId;
+    refused.must({ kind: 'pro.accept_offer', payload: { opportunityId: o2.id } });
     const gone = clauseOf(ef.contract, 'option')!;
-    expect(gone).toMatchObject({ status: 'expired', givenUpFor: taken });
+    expect(gone.status).toBe('expired');
+    expect(refused.player.pro!.optionsGivenUp).toEqual([expect.objectContaining({ casting: WHITLOCK.casting, seriesId: CALLOWAY.id, part: WHITLOCK.role.part, year: 2027 })]);
     expect(gone.settled!.why).toBe(`You took ${projectById(o2.projectId)!.role.part} in ${projectById(o2.projectId)!.project} on days the option held, so you gave it up.`);
     expect(notices(refused).some((n) => n.startsWith('You Gave Up The Option On Assistant DA Whitlock | '))).toBe(true);
     expect(gaveUpWith(refused.player, WHITLOCK.casting)).toBe(true);
@@ -147,7 +148,8 @@ describe('an option’s hold on the actor’s dates', () => {
     expect(clauseOf(ed.contract, 'option')!.status).toBe('open');
     declined.advanceTo(option.by + MS_HOUR);
     expect(clauseOf(ed.contract, 'option')!.status).not.toBe('open');
-    expect(clauseOf(ed.contract, 'option')!.givenUpFor).toBeUndefined();
+    expect(clauseOf(ed.contract, 'option')!.settled!.why).not.toContain('you gave it up');
+    expect(declined.player.pro!.optionsGivenUp ?? []).toEqual([]);
   }, 900_000);
 
   it('refuses an ask the production couldn’t answer before the offer lapses', () => {
