@@ -473,7 +473,35 @@ looping session, double-booked until now; it's posted the first Monday whose day
 
 **Not built, said so:** a wardrobe fitting. At today's SAG-AFTRA day rate, $1,283, a fitting before the work pays nothing
 (Schedule A §16.A(2): none over $1,200 a day), and a fitting on a work day is that day's work time, so a fitting call would
-cost time and change nothing the game reads.
+cost time and change nothing the game reads. A call sheet as a document of its own: its contents, each day's call, place
+and scenes in their order, are the Work tab's Next Call, the calendar and How The Work Is Done, and revised pages and a
+weather day each say when they change. A flight delayed: the trip lands a day ahead of the first call, so a delay would
+change nothing short of a day's. Fares to work near home and expense claims: getting to a local job costs nothing in the
+game, and nothing a player pays is a production's to reimburse, so a claim would have nothing to read; the per diem away
+is paid once home, as an allowance and never as wages.
+
+## K6: Release, The Charts And A Series' Seasons
+
+Parts 12 and 13 and the supplement's loops 33 to 41, read against what brief 25 built. **Already in the game, and kept:**
+a release by the kind's months after the wrap, and the edit's cut; the reference charts as dated imports, Box Office Mojo's
+dollars, Netflix's views and Nielsen's minutes, each in its own unit and week and never added together; the game's own
+weekly chart for the player's films, simulated and said so, a strong performance never guaranteeing a hit; a series'
+seasons, the network's word each May, a recurring part's further episodes and its option taken up or let go, renewing the
+show apart from renewing the player; cancellation, settling what was earned; an anthology's invitation into its next
+story; and the slate's productions dropped or pushed before they shoot (K2).
+
+**Built, a finished production's way out** (loop 33: "Do not force every completed project to succeed or release
+immediately"). Every finished screen project was released on time. A slate production's distributor now chooses at the
+wrap (`RELEASE_FATE`, `releaseFate`, decider `pro.release`, on the production's own stream): a film for cinemas may be held
+back two to eight months, sent to streaming instead of cinemas, or shelved; a series or a broadcast may be held back or
+shelved. It's said when the release comes due. Held back, the release moves and the Emmy year with it, read from the start
+(`premiereOf`); sent to streaming, it's out with no weekly chart of its own in cinemas; shelved, it's never out, so the part
+stays on the credits as shot, its footage can't go on a reel, and it has no premiere to enter. The fixed parts briefs 19 to
+25 wrote keep their releases as written. Held by `tests/b27-release.test.ts`: the fixed parts on time and the slate's fates
+at about their chances over five years of productions; a film shelved, one held back, one streamed, each played to its
+release; and the falsifiability twin, out on time in cinemas and charted. Releasing a shelved film, never holding one back,
+charting a streamed one, and reading the premiere without the hold-back each failed a test.
+
 
 ## Defects Found And Fixed
 

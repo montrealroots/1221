@@ -569,7 +569,7 @@
    "kind": "pro.award_enter",
    "payload": "{ creditId: c.id }",
    "verdict": "Right",
-   "handler": "src/engine/systems/awards.ts:608",
+   "handler": "src/engine/systems/awards.ts:612",
    "note": "Enter Yourself under an eligible television part enters that credit for its Emmy year and pays the fee, by the credit's id; its refusal (entryRefusal) is its title and grays it, and the part then says where its entry stands. Read on 2026-10-24 by its builder (brief 25's Module 6), pressed through the command in tests/career-awards-screen.test.ts."
   },
   {
@@ -580,7 +580,7 @@
    "kind": "pro.watch_ceremony",
    "payload": "{ entryId: a.id }",
    "verdict": "Right",
-   "handler": "src/engine/systems/awards.ts:613",
+   "handler": "src/engine/systems/awards.ts:617",
    "note": "Watch The Ceremony under a nomination shows its ceremony from the result settled at the final round, by the entry's id; its refusal (watchRefusal) is its title and grays it until the award is presented, and the lines stay once watched. Read on 2026-10-24 by its builder (brief 25's Module 6), pressed through the command in tests/career-awards-screen.test.ts."
   },
   {
@@ -591,7 +591,7 @@
    "kind": "pro.ask_more",
    "payload": "{ opportunityId: o.id }",
    "verdict": "Right",
-   "handler": "src/engine/systems/projobs.ts:2742",
+   "handler": "src/engine/systems/projobs.ts:2793",
    "note": "Ask For More (its label the figure asked: a fifth over the offer, a day or a week) has the agent ask once on a standing offer; its refusal (askMoreRefusal) is its title: no agent, no figure, or asked already. Read on 2026-10-24 by its builder (brief 27, K4), pressed through the command in tests/b27-offers.test.ts."
   },
   {
@@ -602,7 +602,7 @@
    "kind": "pro.prepare",
    "payload": "{ ...target, step: 'special' }",
    "verdict": "Right",
-   "handler": "src/engine/systems/projobs.ts:2699",
+   "handler": "src/engine/systems/projobs.ts:2750",
    "note": "The work's own preparation (Find The Voice, Watch The Original, Work On The Movement and the rest) prepares that step on the booked work; its refusal (prepareRefusal, 'special') is the button's title, and Fight Rehearsal is refused here, done only on the work's rehearsal days with the coordinator. Read on 2026-10-24 by its builder (brief 25's Module 5), pressed through the command in tests/career-workflows-screen.test.ts."
   },
   {
@@ -613,7 +613,7 @@
    "kind": "pro.prepare",
    "payload": "{ ...target, step }",
    "verdict": "Right",
-   "handler": "src/engine/systems/projobs.ts:2699"
+   "handler": "src/engine/systems/projobs.ts:2750"
   },
   {
    "file": "src/ui/career/OpportunitiesPane.tsx",
@@ -623,7 +623,7 @@
    "kind": "pro.accept_offer",
    "payload": "{ opportunityId: o.id }",
    "verdict": "Right",
-   "handler": "src/engine/systems/projobs.ts:2782"
+   "handler": "src/engine/systems/projobs.ts:2833"
   },
   {
    "file": "src/ui/career/OpportunitiesPane.tsx",
@@ -633,7 +633,7 @@
    "kind": "pro.move_audition",
    "payload": "{ opportunityId: o.id }",
    "verdict": "Right",
-   "handler": "src/engine/systems/projobs.ts:2724"
+   "handler": "src/engine/systems/projobs.ts:2775"
   },
   {
    "file": "src/ui/career/OpportunitiesPane.tsx",
@@ -643,7 +643,7 @@
    "kind": "pro.request_outside_work",
    "payload": "{ opportunityId: o.id }",
    "verdict": "Right",
-   "handler": "src/engine/systems/projobs.ts:2845"
+   "handler": "src/engine/systems/projobs.ts:2896"
   },
   {
    "file": "src/ui/career/OpportunitiesPane.tsx",
@@ -653,7 +653,7 @@
    "kind": "pro.ask_hold",
    "payload": "{ opportunityId: o.id }",
    "verdict": "Right",
-   "handler": "src/engine/systems/projobs.ts:2766",
+   "handler": "src/engine/systems/projobs.ts:2817",
    "note": "Ask Them To Decide, on a part whose production holds the actor's dates, asks it to book them or let the hold go before another offer on the same days lapses; its refusal (holdAskRefusal) is its title: no hold, already offered, asked already, no other offer, or one lapsing before the answer. Read on 2026-10-25 by its builder (brief 27, K4), pressed through the command in tests/b27-holds.test.ts."
   },
   {
@@ -664,7 +664,7 @@
    "kind": "pro.decline_offer",
    "payload": "{ opportunityId: o.id }",
    "verdict": "Right",
-   "handler": "src/engine/systems/projobs.ts:2833"
+   "handler": "src/engine/systems/projobs.ts:2884"
   },
   {
    "file": "src/ui/career/OpportunitiesPane.tsx",
@@ -674,7 +674,7 @@
    "kind": "pro.submit",
    "payload": "{ opportunityId: o.id }",
    "verdict": "Right",
-   "handler": "src/engine/systems/projobs.ts:2690"
+   "handler": "src/engine/systems/projobs.ts:2741"
   },
   {
    "file": "src/ui/career/OpportunitiesPane.tsx",
@@ -684,7 +684,7 @@
    "kind": "pro.tape_audition",
    "payload": "{ opportunityId: o.id }",
    "verdict": "Right",
-   "handler": "src/engine/systems/projobs.ts:2709"
+   "handler": "src/engine/systems/projobs.ts:2760"
   },
   {
    "file": "src/ui/career/RepresentationPane.tsx",
@@ -1583,7 +1583,7 @@
    "kind": "pro.update_resume",
    "payload": "",
    "verdict": "Right",
-   "handler": "src/engine/systems/pro.ts:1363"
+   "handler": "src/engine/systems/pro.ts:1369"
   },
   {
    "file": "src/ui/workspaces/CareerWorkspace.tsx",
@@ -1593,7 +1593,7 @@
    "kind": "pro.headshots",
    "payload": "",
    "verdict": "Right",
-   "handler": "src/engine/systems/pro.ts:1346"
+   "handler": "src/engine/systems/pro.ts:1352"
   },
   {
    "file": "src/ui/workspaces/CareerWorkspace.tsx",
@@ -1603,7 +1603,7 @@
    "kind": "pro.cut_reel",
    "payload": "{ pieces: chosen }",
    "verdict": "Right",
-   "handler": "src/engine/systems/pro.ts:1375"
+   "handler": "src/engine/systems/pro.ts:1381"
   },
   {
    "file": "src/ui/workspaces/CareerWorkspace.tsx",
@@ -1613,7 +1613,7 @@
    "kind": "pro.mix_demo",
    "payload": "{ pieces: chosen }",
    "verdict": "Right",
-   "handler": "src/engine/systems/pro.ts:1396",
+   "handler": "src/engine/systems/pro.ts:1402",
    "note": "Mix A Voice Demo mixes the ticked voice recordings into a new version of the demo, its cost from the bank and two hours on the clock; its refusal (demoRefusal) is its title. Read on 2026-10-24 by its builder (brief 27, K3), pressed through the Portfolio tab in tests/b27-voice-demo.test.ts."
   },
   {
@@ -1624,7 +1624,7 @@
    "kind": "pro.set_name",
    "payload": "{ name }",
    "verdict": "Right",
-   "handler": "src/engine/systems/pro.ts:1334"
+   "handler": "src/engine/systems/pro.ts:1340"
   },
   {
    "file": "src/ui/workspaces/PapersWorkspace.tsx",
@@ -2112,7 +2112,7 @@
    "kind": "pro.accept_offer",
    "payload": "{ opportunityId: o.id }",
    "verdict": "Right",
-   "handler": "src/engine/systems/projobs.ts:2782"
+   "handler": "src/engine/systems/projobs.ts:2833"
   },
   {
    "file": "src/engine/systems/projobs.ts",
@@ -2120,7 +2120,7 @@
    "kind": "pro.decline_offer",
    "payload": "{ opportunityId: o.id }",
    "verdict": "Right",
-   "handler": "src/engine/systems/projobs.ts:2833"
+   "handler": "src/engine/systems/projobs.ts:2884"
   },
   {
    "file": "src/engine/systems/taxreturn.ts",

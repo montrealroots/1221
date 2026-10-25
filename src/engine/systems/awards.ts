@@ -25,7 +25,7 @@ import { CommandError } from '../core/simulation';
 import type { Person } from '../domain/model';
 import type { Money } from '../core/money';
 import { formatMoney } from '../core/money';
-import { MS_DAY, formatDate, instantFromZoned, zonedParts, type Instant } from '../core/time';
+import { MS_DAY, addDays, formatDate, instantFromZoned, zonedParts, type Instant } from '../core/time';
 import { projectById, type ProjectTemplate } from '../content/careerwork';
 import {
   EMMY_CATEGORIES, EMMY_RULES, LIMITED_EPISODES, SCENES_PER_EPISODE, SEASON_EPISODES, SHORT_UNDER_MINUTES, SUNDANCE_CATEGORY_NAME, emmyEdition, emmyYearOf,
@@ -102,7 +102,11 @@ const isoOf = (at: Instant): string => { const p = zonedParts(at, NY); return `$
 /** A credit's premiere: when it was released, or when its release is on the clock; nothing where neither. */
 export function premiereOf(sim: Simulation, person: Person, c: ProCredit): Instant | undefined {
   if (c.releasedAt !== undefined) return c.releasedAt;
-  return sim.universe.scheduled.find((i) => i.status === 'pending' && i.kind === 'pro.release' && i.refId === c.id && i.payload.personId === person.id)?.at;
+  // Its distributor's way out (from 2026-10-25, brief 27's `RELEASE_FATE`): shelved, none; held back and not yet said, the
+  // day it will come, so an Emmy year read before the hold-back is said is the one the release falls in.
+  if (c.release?.kind === 'shelved') return undefined;
+  const at = sim.universe.scheduled.find((i) => i.status === 'pending' && i.kind === 'pro.release' && i.refId === c.id && i.payload.personId === person.id)?.at;
+  return at !== undefined && c.release?.kind === 'late' && !c.release.told ? addDays(at, c.release.days ?? 0, NY) : at;
 }
 
 const engagementOf = (person: Person, c: ProCredit): Engagement | undefined => (c.engagementId ? person.pro?.engagements.find((e) => e.id === c.engagementId) : undefined);

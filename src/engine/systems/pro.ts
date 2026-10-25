@@ -146,6 +146,12 @@ export interface ProCredit {
   cut?: number;
   /** A film's run in the game's own weekly chart, from its release (from 2026-10-24, Module 6, X5): the game's simulation. */
   run?: SimRun;
+  /**
+   * The way out its distributor chose (from 2026-10-25, the owner's brief 27, loop 33; `systems/projobs.ts`'s
+   * `RELEASE_FATE`): on time, held back so many days, sent to streaming instead of cinemas, or shelved. Drawn at the wrap
+   * for a slate production, said when its release comes due; `told` once the hold-back has been said.
+   */
+  release?: { kind: 'on-time' | 'late' | 'streaming' | 'shelved'; days?: number; told?: true };
 }
 
 /** From 2026-10-24 (brief 27, Part 7) a voice demo too: recordings of the voice alone, for voice casting, which a reel can't hold. */

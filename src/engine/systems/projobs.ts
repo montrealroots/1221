@@ -72,7 +72,7 @@ import { IN_TOWN_MINUTES } from '../world/calendar';
 import {
   activeAgreement, addCredit, currentOf, demoSources, eligibilityOf, ensurePro, finished, keepBounded, materialsCheck, noteEvent, reelSources, releaseScreenCredit, resolved,
   type Agreement, type AuditionRound, type Engagement, type MaterialKind, type MaterialProblem, type Opportunity, type OutsideWorkRequest, type PartPrep,
-  type ProEventKind, type ProId, type ProPayment,
+  type ProCredit, type ProEventKind, type ProId, type ProPayment,
 } from './pro';
 import { BAND_LABEL, prepLean, type Band } from './coursework';
 import { bandOfQuality, chiefLimit, evaluate, recordWork, type EvalContext, type Evaluation } from './evaluation';
@@ -99,7 +99,7 @@ import { episodeDays, episodesFrom, seasonYearAt, seriesById } from '../content/
 import { clauseOf, contractFor, entitle, overtimeOf, paysOvertime, OPTION_RAISE } from './contracts';
 import { inProduction, registerSeries, scheduleSeason, seasonOf } from './series';
 import { STEP_LABEL, STEP_WORDS, afterWrap, dubDaysOf, cutInEdit, formatOf, furtherHours, keptBand, payUnitsOf, planWork, registerWorkflows, sessionDays, stepOf, voiceOnly, workHoursOf, workTheDay, workflowOf } from './workflow';
-import { AFTER_WRAP, RELEASED } from '../content/workflows';
+import { AFTER_WRAP, RELEASED, type After } from '../content/workflows';
 import { registerAwards, visibilityOf } from './awards';
 import { simulateRun } from './charts';
 import { keepProject, pushedPart, restoreSlate, slatePartsAt } from './slate';
@@ -275,6 +275,34 @@ export const FIELD_WORDS: Readonly<Record<ProjectKind, string>> = {
 
 /** Missed work days a project allows before replacing the actor: the stage's understudy covers one, a shoot can't wait. ASSUMPTION. */
 export const MISSES = { stage: 1, screen: 0 } as const;
+
+/**
+ * A slate production's way out after the wrap (from 2026-10-25, the owner's brief 27, loop 33: "Possible alternatives:
+ * Delayed release. Different distributor. Limited release. Direct-to-streaming release. Shelving. No public release. Do
+ * not force every completed project to succeed or release immediately"). Drawn at the wrap on the production's own stream
+ * (decider `pro.release`), by the way its format comes out: a film for cinemas may be held back, sent to streaming instead,
+ * or shelved; a series or a broadcast may be held back or shelved. The fixed parts briefs 19 to 25 wrote keep their
+ * releases as written. ASSUMPTION every chance and the hold-back's months: nobody publishes how often a finished film or
+ * series is held back or shelved.
+ */
+export const RELEASE_FATE: Readonly<Partial<Record<After, { late: number; streaming?: number; shelved: number }>>> = {
+  theatrical: { late: 0.12, streaming: 0.12, shelved: 0.04 },
+  streaming: { late: 0.08, shelved: 0.02 },
+  broadcast: { late: 0.06, shelved: 0.02 },
+};
+export const RELEASE_LATE = { least: 60, most: 240 } as const;
+
+/** A slate production's way out, by its own stream: on time unless its format's chances say otherwise. */
+export function releaseFate(sim: Simulation, t: ProjectTemplate): NonNullable<ProCredit['release']> {
+  const odds = t.slate ? RELEASE_FATE[formatOf(t).after] : undefined;
+  if (!odds) return { kind: 'on-time' };
+  const r = sim.rng('pro.release', t.slate!.production);
+  const u = r.next();
+  if (u < odds.shelved) return { kind: 'shelved' };
+  if (u < odds.shelved + (odds.streaming ?? 0)) return { kind: 'streaming' };
+  if (u < odds.shelved + (odds.streaming ?? 0) + odds.late) return { kind: 'late', days: RELEASE_LATE.least + Math.floor(r.next() * (RELEASE_LATE.most - RELEASE_LATE.least)) };
+  return { kind: 'on-time' };
+}
 
 /** How long after it's shot a screen project comes out, so its footage can go on a reel. ASSUMPTION, by kind. */
 export const RELEASE_DAYS: Readonly<Partial<Record<ProjectKind, number>>> = {
@@ -1884,6 +1912,8 @@ function finish(sim: Simulation, person: Person, e: Engagement, t: ProjectTempla
       ...(voiceOnly(t) ? { voice: true as const } : {}),
     });
     e.creditId = c.id;
+    // Its way out, drawn now and said when its release comes due (`RELEASE_FATE`, from 2026-10-25, brief 27).
+    c.release = releaseFate(sim, t);
     const days = RELEASE_DAYS[t.kind];
     if (days) sim.schedule({ at: dayAt(addDays(sim.now, days, NY), 12), kind: RELEASE_KIND, label: `${t.project} Is Released`, category: 'career', priority: 60, refType: 'pro.credit', refId: c.id, payload: { personId: person.id, creditId: c.id } });
   } else if (e.creditId && best) {
@@ -2650,6 +2680,25 @@ export function registerProJobs(sim: Simulation): void {
     // credit's band is the best of the days on the scenes kept, which a reel cut from it shows.
     const pre = person?.pro?.credits.find((x) => x.id === String(item.payload.creditId));
     const e = pre?.engagementId ? engagementOf(person!, pre.engagementId) : undefined;
+    // Its way out (`RELEASE_FATE`, from 2026-10-25, brief 27): held back, said and put on the clock again; shelved, said, and
+    // never out, so its footage never goes on a reel and it never has a premiere.
+    const fate = pre?.release;
+    const held = pre && e && projectById(e.projectId);
+    if (person && pre && held && fate?.kind === 'late' && !fate.told) {
+      fate.told = true;
+      const at = addDays(s.now, fate.days!, NY);
+      s.schedule({ at, kind: RELEASE_KIND, label: `${pre.project} Is Released`, category: 'career', priority: 60, refType: 'pro.credit', refId: pre.id, payload: { personId: person.id, creditId: pre.id } });
+      const words = `${pre.project}’s distributor held back its release to ${formatDate(at, NY)}. ${pre.role} stays on your credits as shot until then, and its footage can go on a reel once it’s out.`;
+      noteEvent(s, e, { kind: 'problem', key: 'release:late', words });
+      tell(s, person, `${pre.project}’s Release Is Held Back`, words, 60);
+      return;
+    }
+    if (person && pre && held && fate?.kind === 'shelved') {
+      const words = `${pre.project}’s distributor shelved it: it won’t be released. ${pre.role} stays on your credits as shot, and the pay was yours; with no release, its footage can’t go on a reel, and it has no premiere to enter for an award.`;
+      noteEvent(s, e, { kind: 'problem', key: 'release:shelved', words });
+      tell(s, person, `${pre.project} Is Shelved`, words, 65);
+      return;
+    }
     const cut = e ? cutInEdit(s, e) : undefined;
     const c = person && releaseScreenCredit(s, person, String(item.payload.creditId));
     if (!person || !c) return;
@@ -2662,8 +2711,10 @@ export function registerProJobs(sim: Simulation): void {
     }
     // A film in cinemas enters the game's own weekly chart (from 2026-10-24, brief 25's Module 6, X5), its run drawn now
     // and read by the clock: the game's simulation, never a published figure, and never pay.
-    if (t && formatOf(t).after === 'theatrical') c.run ??= simulateRun(s, t.id, t.kind, c.releasedAt ?? s.now);
-    const out = t ? RELEASED[formatOf(t).after] : 'is out';
+    // Sent to streaming instead of cinemas (`RELEASE_FATE`): no weekly chart of its own in cinemas.
+    const streamed = c.release?.kind === 'streaming';
+    if (t && formatOf(t).after === 'theatrical' && !streamed) c.run ??= simulateRun(s, t.id, t.kind, c.releasedAt ?? s.now);
+    const out = t ? (streamed ? `${RELEASED.streaming}, its distributor having sent it to streaming instead of cinemas` : RELEASED[formatOf(t).after]) : 'is out';
     const words = c.voice ? `${c.project} ${out}, so ${c.role} shows as released on your credits. It’s your voice with no picture of you, so it goes on a voice demo, not a reel: Mix A Voice Demo on the Portfolio tab lists it.` : `${c.project} ${out}, so ${c.role} shows as released on your credits, and its footage can go on your reel. Cut A Reel on the Portfolio tab lists it.`;
     tell(s, person, `${c.project} Is Released`, cut && t ? `${words} The edit cut one of your scenes, ${unitWord(t, cut)}: the part stays on your credits with the pay, and the reel can use only the scenes kept.` : words, 60);
   });

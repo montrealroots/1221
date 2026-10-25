@@ -2092,6 +2092,13 @@
   "reason": "A decider's description, read by tests/deciders.test.ts and tools/deciders.mjs and never shown to a player: it says what the draw decides and what moves it, from 2026-10-21 who the part is written for among them.",
   "first": "Reviewed And Retained"
  },
+ "src/engine/decided.ts#top [pro.release]": {
+  "status": "Retained",
+  "hash": "d0d419e931d8",
+  "on": "2026-10-25",
+  "reason": "A decider's description, read by tests/deciders.test.ts and tools/deciders.mjs and never shown to a player: it says what decides a slate production's way out after the wrap.",
+  "first": "Pending"
+ },
  "src/engine/decided.ts#top [pro.rerun]": {
   "status": "Retained",
   "hash": "64fe3d227edf",

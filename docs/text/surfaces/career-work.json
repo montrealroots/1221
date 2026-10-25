@@ -196,7 +196,7 @@
   ],
   "outcome": "Revised",
   "why": "New with brief 19: an offer’s terms and how long it stands, a refusal at acceptance for permission to work said in the papers’ words, and casting’s decision explained part by part without inventing its reasons.",
-  "changes": "Written new: the offer (“The film’s director offers you Theo in Paper Moons, a fictional student film. The pay is deferred…”), Accept The Offer and Decline The Offer, the F-1 refusal (“Your F-1 lets you work only on campus while you’re a student… That rules out work on October 19, 2026.”), a pass that says casting gives no reasons and where to see what went in, and Why It Went This Way: the band, the fit, the field and the chance, estimated. From 2026-10-21 (brief 19's app walk): the offer's history line says casting offered, and that the offer stood until its day; Settled says a booking once, where it had put the role and project before an outcome that named them again, with two colons.",
+  "changes": "Written new: the offer (“The film’s director offers you Theo in Paper Moons, a fictional student film. The pay is deferred…”), Accept The Offer and Decline The Offer, the F-1 refusal (“Your F-1 lets you work only on campus while you’re a student… That rules out work on October 19, 2026.”), a pass that says casting gives no reasons and where to see what went in, and Why It Went This Way: the band, the fit, the field and the chance, estimated. From 2026-10-21 (brief 19's app walk): the offer's history line says casting offered, and that the offer stood until its day; Settled says a booking once, where it had put the role and project before an outcome that named them again, with two colons. From 2026-10-25 (brief 27, K6) the release's notices say a slate production's way out: held back to a later date, sent to streaming instead of cinemas, or shelved.",
   "evidence": [
    {
     "kind": "test",
@@ -213,6 +213,18 @@
    {
     "kind": "test",
     "ref": "tests/pro-opportunities-screen.test.ts: 'PLAYER JOURNEY: accepted, the work shows under Booked Work with its days, the part’s preparation and the pay promised, not yet paid'"
+   },
+   {
+    "kind": "test",
+    "ref": "tests/b27-release.test.ts: 'PLAYER JOURNEY: a film shelved is said at its release date and never out: shot on the credits, off the reel, no premiere, no chart'"
+   },
+   {
+    "kind": "test",
+    "ref": "tests/b27-release.test.ts: 'PLAYER JOURNEY: a film held back is said at its date and out at the later one, the premiere the later day from the start'"
+   },
+   {
+    "kind": "test",
+    "ref": "tests/b27-release.test.ts: 'PLAYER JOURNEY: a film sent to streaming instead of cinemas is out on time, said so, with no weekly chart; the falsifiability twin out in cinemas is charted'"
    }
   ]
  },

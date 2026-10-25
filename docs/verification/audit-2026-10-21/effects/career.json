@@ -1608,6 +1608,18 @@
     {
      "what": "a released credit's footage is recorded work for a reel",
      "at": "src/engine/systems/pro.ts:847"
+    },
+    {
+     "what": "a slate production held back: said, and its release put on the clock again (`RELEASE_FATE`, from 2026-10-25, brief 27's K6)",
+     "at": "src/engine/systems/projobs.ts:2687"
+    },
+    {
+     "what": "shelved: said, and never out, off the reel, with no premiere",
+     "at": "src/engine/systems/projobs.ts:2696"
+    },
+    {
+     "what": "sent to streaming instead of cinemas: out, with no weekly chart of its own",
+     "at": "src/engine/systems/projobs.ts:2715"
     }
    ],
    "experienced": "A notice that the project is out; Cut A Reel lists its footage, and the reel's band reaches his office.",
@@ -1615,7 +1627,8 @@
    "evidence": {
     "tests": [
      "tests/b20-career-effects.test.ts",
-     "tests/pro-core.test.ts"
+     "tests/pro-core.test.ts",
+     "tests/b27-release.test.ts"
     ],
     "comparisons": [
      "b20-career-effects 8: the footage refused before the release day and cut into a reel after it, through the clock"

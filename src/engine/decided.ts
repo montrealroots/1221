@@ -45,7 +45,7 @@ import { therapyLifts } from './systems/therapy';
 import { priorityOf } from './systems/classmates';
 import { AGENTS } from './content/agents';
 import { GATE, LEVELS, chancesFor, drawOf, offerOutcome, replyOutcome, rosterFor } from './systems/proagent';
-import { DIRECT, HOLD, NEGOTIATE, castingDraw, postingsAt, slateReach } from './systems/projobs';
+import { DIRECT, HOLD, NEGOTIATE, castingDraw, postingsAt, releaseFate, slateReach } from './systems/projobs';
 import { productionsOf, seriesOfYear, slatePartsAt } from './systems/slate';
 import { PROJECTS } from './content/careerwork';
 import { SERIES } from './content/series';
@@ -872,6 +872,24 @@ defineDecider<{ sim: Simulation; first: number }, string>({
   },
   sample: (seed) => ({ sim: atYale(seed), first: seed * 7 }),
   decide: ({ sim, first }) => Array.from({ length: 40 }, (_, n) => loopDrawn(sim, `w${first + n}`) ?? '-').join(','),
+});
+
+defineDecider<{ sim: Simulation; first: number; after: number }, string>({
+  id: 'pro.release',
+  decides: 'A slate production’s way out after the wrap (RELEASE_FATE): on time, held back months, sent to streaming instead of cinemas, or shelved, by the way its format comes out.',
+  drawnIn: 'src/engine/systems/projobs.ts',
+  reads: {
+    first: (o, t) => ({ ...o, first: Math.round(t * 100) }),
+    // The way its format comes out: a film for cinemas, a streamed series, a broadcast.
+    after: (o, t) => ({ ...o, after: Math.round(t * 2) }),
+    world: (o, t) => ({ ...o, sim: atYale(Math.round(t * 20)) }),
+  },
+  sample: (seed) => ({ sim: atYale(seed), first: seed * 7, after: seed % 3 }),
+  decide: ({ sim, first, after }) => {
+    const format = (['independent-feature', 'serialized-drama', 'procedural'] as const)[after]!;
+    const base = PROJECTS.find((p) => p.format === format)!;
+    return Array.from({ length: 40 }, (_, n) => { const f = releaseFate(sim, { ...base, slate: { ...(base.slate ?? {}), production: `p${first + n}` } } as never); return f.kind === 'late' ? `late${f.days}` : f.kind; }).join(',');
+  },
 });
 
 defineDecider<{ sim: Simulation; first: number }, string>({
