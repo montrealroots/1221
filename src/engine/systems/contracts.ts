@@ -63,6 +63,7 @@ import { agencyOf, agentById } from '../content/agents';
 import { seasonNumber } from './series';
 import { KIND_WORDS, counted, overtimeHours } from './projobs';
 import { dubDaysOf, formatOf, promoFor, promoTerm } from './workflow';
+import { bargainedPromoWords } from './offers';
 
 const NY = 'America/New_York';
 const MIN = 60_000;
@@ -200,9 +201,11 @@ export function contractFor(sim: Simulation, e: Engagement, offer: NonNullable<i
   }
   const s = t.series ? seriesById(t.series) : undefined;
   if (s && extra.season && t.schedule.kind === 'episodes') {
-    clauses.push({ kind: 'episodes', ordered: s.episodes, guaranteed: t.schedule.guaranteed, expected: t.schedule.expected, daysEach: s.daysEach, numbers: extra.season.guaranteed, further: extra.season.further.map((n) => ({ n, status: 'pending' as const })) });
+    // The guaranteed episodes as the offer was negotiated, where it was (from 2026-10-25, `systems/offers.ts`).
+    clauses.push({ kind: 'episodes', ordered: s.episodes, guaranteed: offer.episodes ?? t.schedule.guaranteed, expected: t.schedule.expected, daysEach: s.daysEach, numbers: extra.season.guaranteed, further: extra.season.further.map((n) => ({ n, status: 'pending' as const })) });
   }
-  if (s && extra.option) clauses.push({ kind: 'option', season: seasonNumber(sim, s, extra.option.year), year: extra.option.year, by: extra.option.by, raise: OPTION_RAISE, status: 'open' });
+  // The option's raise as negotiated, where a trade-off took it away (from 2026-10-25, `systems/offers.ts`), `OPTION_RAISE` otherwise.
+  if (s && extra.option) clauses.push({ kind: 'option', season: seasonNumber(sim, s, extra.option.year), year: extra.option.year, by: extra.option.by, raise: offer.optionRaise ?? OPTION_RAISE, status: 'open' });
   // The workflow's rules last (from 2026-10-24, brief 25's Module 5, `workflowRules`), and voice-over's commission by the
   // agreement it's made under (from 2026-10-25, brief 27, `voiceCommission`).
   clauses.push(...workflowRules(t));
@@ -210,7 +213,8 @@ export function contractFor(sim: Simulation, e: Engagement, offer: NonNullable<i
   if (voiceRule) clauses.push(voiceRule);
   // A promotional film for the release, and what it pays (from 2026-10-25, brief 27's loop 34, `promoTerm`).
   const estimate = e.pay.reduce((n, p) => n + (p.deferred ? 0 : p.promised), 0);
-  if (promoFor(t)) clauses.push({ kind: 'rule', id: 'promo', words: promoTerm(t, estimate) });
+  // Its pay as the agent bargained it, where it was (from 2026-10-25, the offer's `promo`): the agreement's rule otherwise.
+  if (promoFor(t)) clauses.push({ kind: 'rule', id: 'promo', words: offer.promo !== undefined ? bargainedPromoWords(offer.promo, estimate) : promoTerm(t, estimate) });
   const first = e.days[0];
   const last = e.days[e.days.length - 1];
   const basis: Contract['basis'] = deferred ? 'deferred' : t.schedule.kind === 'episodes' ? 'episode' : offer.per;
@@ -224,6 +228,7 @@ export function contractFor(sim: Simulation, e: Engagement, offer: NonNullable<i
     ...(s && extra.season ? { series: { id: s.id, year: extra.season.year, season: seasonNumber(sim, s, extra.season.year) } } : {}),
     ...(extra.renews ? { renews: extra.renews } : {}),
     clauses,
+    ...(offer.promo !== undefined && promoFor(t) ? { promo: offer.promo } : {}),
   };
 }
 

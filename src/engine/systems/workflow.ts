@@ -752,13 +752,14 @@ export function promoSession(sim: Simulation, person: Person, e: Engagement, t: 
   }
   p.status = 'done';
   const forWork = e.contract?.estimate ?? e.pay.reduce((n, x) => n + (x.deferred ? 0 : x.promised), 0);
-  const amount = promoPay(t, forWork, at);
+  // What the agent bargained for it, where it was (from 2026-10-25, the contract's `promo`): the agreement's rule otherwise.
+  const amount = e.contract?.promo ?? promoPay(t, forWork, at);
   if (amount !== undefined) {
     const pay: ProPayment = { id: sim.nextId('pro'), key: `${e.id}:promo`, promised: amount, currency: 'USD', promisedAt: sim.now, due: thursdayAfter(at), week: { from: at, to: day.to } };
     if (!e.pay.some((x) => x.key === pay.key)) e.pay.push(pay);
     schedulePay(sim, person, e);
   }
-  noteEvent(sim, e, { kind: 'worked', key: 'promo:done', words: `You appeared in the promotional film for ${t.project} on ${formatDate(at, NY)}, ${amount !== undefined ? 'paid a day performer’s minimum' : 'unpaid, as your contract has it'}. It makes you a little more visible to casting for a while.` });
+  noteEvent(sim, e, { kind: 'worked', key: 'promo:done', words: `You appeared in the promotional film for ${t.project} on ${formatDate(at, NY)}, ${e.contract?.promo !== undefined ? 'paid as your agent bargained' : amount !== undefined ? 'paid a day performer’s minimum' : 'unpaid, as your contract has it'}. It makes you a little more visible to casting for a while.` });
 }
 
 const thursdayAfter = (at: Instant): Instant => {

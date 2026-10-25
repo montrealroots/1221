@@ -63,7 +63,6 @@ import { plural, spokenList } from '../core/text';
 import { CITIES } from '../content/geography';
 import { MASTERED, TECHNIQUE_LABEL } from '../content/abilities';
 import { TASK_PROFILES } from '../content/tasks';
-import { ENGAGEMENT } from '../content/engagement';
 import { WORK_RULES } from '../content/workrules';
 import type { Skill } from '../content/school';
 import { PROJECTS, RATES, minimumOn, projectById, type ProjectKind, type ProjectTemplate, type Rate } from '../content/careerwork';
@@ -109,6 +108,12 @@ import { actorAwardsPassage, registerActorAwards } from './actorawards';
 import { registerCeremonies } from './ceremony';
 import { simulateRun } from './charts';
 import { keepProject, pushedPart, restoreSlate, slatePartsAt } from './slate';
+// Offers and auditions, the actor's side of them (from 2026-10-25, brief 27's cluster of that name): `systems/offers.ts`.
+import {
+  acceptOnCondition, answerAsk, approachRead, approachToRehearse, askTerms, castingLift, conditionWords, decideCondition, giveNote, guaranteedOf, offerOnCondition, recastKey,
+  recordRefusal, recordTake, registerOffers, rehearseApproach, rememberMiss, remembers, requirementsOf, reviseDecision, rewriteAt, sendTake, termItem, termsAskRefusal,
+  type OfferHooks, type TermItem,
+} from './offers';
 
 // ---------------------------------------------------------------------------------------------------------------------
 // The rules: each a published one with its source, or the game's ASSUMPTION
@@ -217,7 +222,10 @@ export const DIRECT = { chance: 0.5, bands: ['strong', 'exceptional'] as readonl
  * standing a day past the answer. Its chance by the last round's band, and a little more where the casting office cast
  * the actor before; and, from 2026-10-25 (brief 27's K7, loop 47: "relevant opportunities or negotiation circumstances may
  * change"), more by half the actor's visibility, which awards, festivals, a hit and publicity lend and which fades
- * (`visibilityOf`, at most 15 points). ASSUMPTION each figure; drawn on its own stream (decider `pro.negotiate`).
+ * (`visibilityOf`, at most 15 points). ASSUMPTION each figure; drawn on its own stream (decider `pro.negotiate`). Until
+ * 2026-10-25 the pay was all the agent asked about and a raise or none all the answer could be: from then the actor chooses
+ * the term (the pay, a recurring part's guaranteed episodes, a promotional film's pay), and the answer can also be a
+ * trade-off or the offer withdrawn (`systems/offers.ts`'s `TERMS`, `answerAsk`). The pay's raise and refusal are still these.
  */
 export const NEGOTIATE = { ask: 0.2, yes: { unready: 0, working: 0.15, strong: 0.35, exceptional: 0.55 } as Readonly<Record<Band, number>>, worked: 0.15, visibility: 0.5, answerHour: 15 } as const;
 
@@ -447,13 +455,14 @@ export interface WorkDay { from: Instant; to: Instant; label: string; kind: 'reh
  * first Tuesday then, and its performances Tuesday to Sunday after. ASSUMPTION, each length the project's and each
  * shape the game's.
  */
-export function datesOf(o: Pick<Opportunity, 'projectId' | 'postedAt'>): WorkDay[] {
+export function datesOf(o: Pick<Opportunity, 'projectId' | 'postedAt'> & { offer?: Pick<NonNullable<Opportunity['offer']>, 'episodes'> }): WorkDay[] {
   const t = projectOf(o);
   const zone = zoneOf(t.place.cityId);
   const start = addDays(dayAt(o.postedAt, 12, zone), t.leadDays ?? WORK.leadDays, zone);
   const at = (d: Instant, s: { hour: number; minutes: number }) => { const from = dayAt(d, s.hour, zone); return { from, to: from + s.minutes * MIN }; };
   const out: WorkDay[] = [];
-  if (t.schedule.kind === 'episodes') return episodeWorkDays(t, start, t.schedule.guaranteed);
+  // An offer's guaranteed episodes as negotiated where they were (from 2026-10-25, `systems/offers.ts`): the part's own until then.
+  if (t.schedule.kind === 'episodes') return episodeWorkDays(t, start, guaranteedOf(o, t));
   if (t.schedule.kind === 'shoot') {
     // An action shoot's fight rehearsal days first (from 2026-10-24, brief 25's Module 5), with the stunt coordinator.
     const before = t.schedule.rehearsalDays ?? 0;
@@ -544,7 +553,7 @@ export interface PayTerms { rate: Rate; per: 'day' | 'week'; units: number; each
  * at scale plus ten itself (`AGREEMENT_TERMS`' Scale Plus Ten, representation.md S3); the pay's `negotiatedAmount` prices
  * it now, at the offer (`makeOffer`), so the terms here are the rate's scale.
  */
-export function payTermsOf(o: Pick<Opportunity, 'projectId' | 'postedAt'>): PayTerms {
+export function payTermsOf(o: Pick<Opportunity, 'projectId' | 'postedAt'> & { offer?: Pick<NonNullable<Opportunity['offer']>, 'episodes'> }): PayTerms {
   const t = projectOf(o);
   const days = datesOf(o);
   const rate = RATES[t.pay];
@@ -824,11 +833,12 @@ export function seriesPosts(sim: Simulation, t: ProjectTemplate, days: readonly 
  * save's numbering, so a project added to the game took an id ahead of later postings and changed their casting: brief
  * 25's eighth project moved a played life's (tests/journey-career.test.ts) first booking from December to June.
  */
-export function castingDraw(sim: Simulation, o: Pick<Opportunity, 'projectId' | 'postedAt'>, round: Exclude<Round, 'audition'> | 'final', band: Band, fit: number, lift = 0): { chance: number; yes: boolean } {
+export function castingDraw(sim: Simulation, o: Pick<Opportunity, 'projectId' | 'postedAt'> & Partial<Pick<Opportunity, 'recast'>>, round: Exclude<Round, 'audition'> | 'final', band: Band, fit: number, lift = 0): { chance: number; yes: boolean } {
   // The player's visibility lifts the chance (from 2026-10-24, brief 25's Module 6, X13: `visibilityOf`), within casting's
   // own ceiling, and never past it.
   const chance = r3(Math.min(CASTING.most, chanceOf(band, fit, projectOf(o).kind, round) * (1 + lift)));
-  return { chance, yes: sim.rng('pro.casting', o.projectId, o.postedAt, round).next() < chance };
+  // A part recast is decided afresh (from 2026-10-25, `recastKey`): its posting's draw would decide it as the first casting did.
+  return { chance, yes: sim.rng('pro.casting', o.projectId, o.postedAt, round, ...recastKey(o)).next() < chance };
 }
 
 // ---------------------------------------------------------------------------------------------------------------------
@@ -1114,10 +1124,12 @@ export function eligibilityProblems(person: Person, o: Opportunity, at: Instant)
   const out: string[] = [];
   if (o.via === 'open' && t.access.open === 'equity-members' && !person.pro?.equity) out.push('It’s an open call for Equity members, and you aren’t one yet. The degree makes you a member, and so does a contract with an Equity company.');
   const age = ageOn(person.birthInstant, at, NY);
-  const [lo, hi] = t.requirements.ages;
+  // The requirement as casting changed it, where it did (from 2026-10-25, `requirementsOf`, `REWRITE`): the part's own until then.
+  const required = requirementsOf(o, t);
+  const [lo, hi] = required.ages;
   // A character brought back by a revival (from 2026-10-25, brief 27's loop 41) is the actor's own, at whatever age.
   if (!o.direct?.returning && (age + CASTING.playingSpread < lo || age - CASTING.playingSpread > hi)) out.push(`Casting wants actors who play ${lo} to ${hi}, and at ${age} you’re outside that.`);
-  for (const [s, level] of Object.entries(t.requirements.skills ?? {}) as [Skill, number][]) {
+  for (const [s, level] of Object.entries(required.skills) as [Skill, number][]) {
     if ((person.craft?.[s] ?? 0) < level) out.push(`The part needs ${TECHNIQUE_LABEL[s].toLowerCase()} at ${level}, and yours is at ${Math.round(person.craft?.[s] ?? 0)}.`);
   }
   const clash = bookedClash(person, spansOf(person, t, datesOf(o)), o.id);
@@ -1198,7 +1210,8 @@ export function prepareRefusal(sim: Simulation, person: Person, x: PrepTarget | 
   const s = BRIEF.steps[step as BriefStep];
   if (!s) return 'That isn’t a step of preparation.';
   const prep = prepOfTarget(x);
-  if (prep[s.part] >= 0.97) return 'You’ve done all this step can do.';
+  // Rehearsal complete still rehearses a way of playing the sides chosen after it (from 2026-10-25, `approachToRehearse`).
+  if (prep[s.part] >= 0.97 && !(step === 'rehearse' && 'opportunity' in x && approachToRehearse(x.opportunity))) return 'You’ve done all this step can do.';
   if (step === 'rehearse' && prep.memorization < BRIEF.rehearseNeeds) return 'Learn some of the lines first: there’s nothing to rehearse without them.';
   if (person.awakeSince !== undefined && person.awakeSince > sim.now) return 'You’re asleep.';
   if (s.feet) {
@@ -1258,6 +1271,9 @@ export function clashesAt(sim: Simulation, person: Person, from: Instant, minute
 export function moveRefusal(sim: Simulation, person: Person, o: Opportunity | undefined): string | undefined {
   const r = o && roundToCome(o);
   if (!o || !r || r.form !== 'in-person') return 'There’s no audition in person to move.';
+  // Set around other people's days, a chemistry read or a screen test moves only if the production agrees (from 2026-10-25,
+  // `RESCHEDULE`, `systems/offers.ts`): until then Ask For Another Time moved either at once, as casting's own times move.
+  if (r.round === 'chemistry' || r.round === 'test') return `A ${ROUND_WORDS[r.round].noun} is set around other people’s days: Ask To Reschedule asks the production, which may say no.`;
   if ((r.moved ?? 0) >= WORK.movesAllowed) return 'You’ve already asked once, and casting is keeping the time it gave.';
   if (r.at - sim.now < WORK.moveAheadHours * MS_HOUR) return 'It’s less than a day away, and casting needs a day’s notice to move it.';
   if (!otherTime(sim, person, o, r)) return 'Casting has no other time clear of your calendar in the days it’s seeing actors.';
@@ -1668,12 +1684,13 @@ export function auditionContext(sim: Simulation, person: Person, o: Opportunity,
   // read none of it, `TASK_PROFILES.audition`).
   prep.genre = fitOf(person, t).genre * BRIEF.complete.genre;
   required.genre = BRIEF.complete.genre;
-  return {
+  // How the sides are played and casting's direction, where either is (from 2026-10-25, `approachRead`): as it was otherwise.
+  return approachRead(o, r, {
     task: r.round === 'chemistry' ? TASK_PROFILES.chemistry! : r.round === 'test' ? TASK_PROFILES.screenTest! : r.form === 'self-tape' ? TASK_PROFILES.tape! : TASK_PROFILES.audition!,
     techniques: t.role.techniques, prep, required,
     difficulty: WORK.difficulty[r.round] + (t.role.stakes - 1) * BRIEF.stakes,
     condition: conditionAt(sim, person, sim.now), families: t.role.families, key: `pro:${person.id}:${o.id}:${idx}`,
-  };
+  });
 }
 
 /** A round judged: kept on the work record, the round's band and what held it back, and casting's next step on the clock. */
@@ -1702,6 +1719,8 @@ const there = (person: Person, at: Instant): boolean => !(person.awakeSince !== 
 function missRound(sim: Simulation, person: Person, o: Opportunity, r: AuditionRound, elsewhere?: string): void {
   const t = projectOf(o);
   r.status = 'missed';
+  // A round in person not turned up to is remembered by its office; a self-tape's takes never sent are said (from 2026-10-25).
+  rememberMiss(sim, person, o, r, OFFER_HOOKS);
   const words = r.form === 'self-tape'
     ? `Your self-tape for ${t.role.part} wasn’t in by ${formatDate(r.at, NY)} at ${formatTime(r.at, NY)}, so ${t.casting} moved on without it.`
     : elsewhere
@@ -1736,7 +1755,8 @@ export function directOfferFor(sim: Simulation, person: Person, t: ProjectTempla
     .map((e) => ({ e, band: pro.credits.find((c) => c.engagementId === e.id)?.band }))
     .filter((x): x is { e: Engagement; band: Band } => x.band !== undefined && DIRECT.bands.includes(x.band))
     .sort((a, b) => (b.e.finishedAt ?? 0) - (a.e.finishedAt ?? 0))[0];
-  if (!before || sim.rng('pro.direct', dateKey(at, NY), t.id).next() >= DIRECT.chance) return undefined;
+  // An office that remembers a no-show of the actor's offers nothing without an audition (from 2026-10-25, `remembers`).
+  if (!before || remembers(person, t.casting, at) || sim.rng('pro.direct', dateKey(at, NY), t.id).next() >= DIRECT.chance) return undefined;
   const was = projectById(before.e.projectId)!;
   return { engagementId: before.e.id, words: `${castingAs(t)} cast you as ${was.role.part} in ${was.project}, where your work was ${BAND_LABEL[before.band]}.` };
 }
@@ -1745,7 +1765,7 @@ export function directOfferFor(sim: Simulation, person: Person, t: ProjectTempla
 export const askedAmount = (amount: Money): Money => Math.round((amount * (1 + NEGOTIATE.ask)) / 100) * 100;
 
 /** Why the agent can't ask for more on an offer now, or nothing (`NEGOTIATE`). */
-export function askMoreRefusal(sim: Simulation, person: Person, o: Opportunity | undefined): string | undefined {
+export function askMoreRefusal(sim: Simulation, person: Person, o: Opportunity | undefined, item: TermItem = 'pay'): string | undefined {
   if (!o || o.status !== 'offered' || !o.offer) return 'There’s no offer standing.';
   if (o.offer.asked) return o.offer.asked.answer ? `${agentFor(o)?.name ?? 'Your agent'} asked once already, on ${formatDate(o.offer.asked.at, NY)}.` : `${agentFor(o)?.name ?? 'Your agent'} has asked; the answer comes on ${formatWeekdayDate(o.offer.asked.answerAt, NY)} at ${formatTime(o.offer.asked.answerAt, NY)}.`;
   const agreement = activeAgreement(person, sim.now);
@@ -1755,6 +1775,8 @@ export function askMoreRefusal(sim: Simulation, person: Person, o: Opportunity |
     const agent = agentById(agreement.agentId);
     return `${agent?.name ?? 'Your agent'} doesn’t negotiate this one: ${outsideWords(agreement, projectOf(o), agent ? agencyOf(agent).name : 'your agency')}, so the offer is as it stands.`;
   }
+  // A term other than the pay (from 2026-10-25, `systems/offers.ts`): a recurring part's episodes, a promotional film's pay.
+  if (item !== 'pay') return termsAskRefusal(o, item);
   if (o.offer.amount === undefined) return 'The pay is deferred, so there’s no figure to ask more of.';
   return undefined;
 }
@@ -1781,7 +1803,8 @@ function makeOffer(sim: Simulation, person: Person, o: Opportunity): void {
   // What the contract adds to the pay, said with it (from 2026-10-24, brief 25's Module 4): a day's overtime, and a
   // recurring part's episodes and option.
   const more = termsWords(t, o.offer.amount, days);
-  const why = o.direct ? ` ${o.direct.words}` : '';
+  // And a conditional offer's condition (from 2026-10-25, `conditionWords`).
+  const why = `${o.direct ? ` ${o.direct.words}` : ''}${conditionWords(o)}`;
   const words = `${castingAs(t)} ${agrees(t, 'offers', 'offer')} you ${roleWords(t)}${o.direct ? ' without an audition' : ''}.${why} ${payWords(terms, o.offer.amount)}${more} The work is ${span}. The offer stands until ${formatDate(until, NY)} at ${formatTime(until, NY)}.${drawn ? ` ${drawn}` : ''}`;
   // In the history, past (from 2026-10-21, as the rounds' lines): the offer stood until its day, whatever came of it.
   note(sim, person, o, { kind: 'offer', key: 'offer', words: `${castingAs(t)} offered you ${roleWords(t)}${o.direct ? ' without an audition' : ''}.${why} ${payWords(terms, o.offer.amount)}${more} The work was ${span}, and the offer stood until ${formatDate(until, NY)} at ${formatTime(until, NY)}.` });
@@ -1987,8 +2010,9 @@ export function callPromo(sim: Simulation, person: Person, e: Engagement, t: Pro
     e.promo = { at, status: 'set' };
     sim.schedule({ at, kind: PROMO_KIND, label: `${t.project}: Promotional Film`, category: 'career', priority: 38, requiresPlayer: true, durationMinutes: PROMO.hours * 60, travelMinutes: 30, locationId: person.currentLocationId, refType: 'pro.engagement', refId: e.id, payload: { personId: person.id, engagementId: e.id } });
     const forWork = e.contract?.estimate ?? e.pay.reduce((n, x) => n + (x.deferred ? 0 : x.promised), 0);
-    const paid = promoPay(t, forWork, at);
-    const words = `${t.company} called you to appear in a promotional film for ${t.project}’s release: ${countWords(PROMO.hours)} hours at a studio near you on ${formatWeekdayDate(at, NY)} at 10:00 AM, talking about the work and ${t.role.part}. ${paid !== undefined ? `It pays a day performer’s minimum, ${formatMoney(paid, 'USD')}.` : 'Your contract has it unpaid.'} Being there makes you a little more visible to casting for a while. If you miss it, ${t.company} will remember.`;
+    // What the agent bargained for it, where it was (from 2026-10-25, the contract's `promo`), the agreement's rule otherwise.
+    const paid = e.contract?.promo ?? promoPay(t, forWork, at);
+    const words = `${t.company} called you to appear in a promotional film for ${t.project}’s release: ${countWords(PROMO.hours)} hours at a studio near you on ${formatWeekdayDate(at, NY)} at 10:00 AM, talking about the work and ${t.role.part}. ${e.contract?.promo !== undefined ? `It pays ${formatMoney(e.contract.promo, 'USD')}, as your agent bargained.` : paid !== undefined ? `It pays a day performer’s minimum, ${formatMoney(paid, 'USD')}.` : 'Your contract has it unpaid.'} Being there makes you a little more visible to casting for a while. If you miss it, ${t.company} will remember.`;
     noteEvent(sim, e, { kind: 'booked', key: 'promo', words });
     tell(sim, person, `${t.project} Calls You For A Promotional Film`, words, 70);
     return;
@@ -2149,6 +2173,8 @@ export function prepareOn(sim: Simulation, person: Person, x: PrepTarget, step: 
   const gain = s.gain * clamp(focus, 0.5, 1.1) * 0.5 ** n;
   const able = s.trains ? stepSpeed(sim, person, s.trains) : 1;
   prep[s.part] = r3(clamp(before + gain * prepLean(person, s.part) * able * (1 - before), 0, 1));
+  // And the way the sides are played, where one's chosen (from 2026-10-25, `rehearseApproach`), as a brief's rehearsal does.
+  if (step === 'rehearse' && 'opportunity' in x) rehearseApproach(x.opportunity, gain * able);
   if (s.trains && prep[s.part] > before) ordinary(sim, person, s.trains, focus, BRIEF.trainingWeight, `pro:${s.part}`);
   return { moved: r3(prep[s.part] - before), part: s.part, minutes };
 }
@@ -2186,7 +2212,8 @@ function renewFromOption(sim: Simulation, person: Person, e: Engagement, t: Proj
   const pro = ensurePro(sim, person);
   const old = opportunityOf(person, e.opportunityId);
   const scale = rateOn(RATES[t.pay], days[0]!.from) ?? 0;
-  const amount = Math.max(Math.round((old?.offer?.amount ?? scale) * (1 + OPTION_RAISE)), negotiatedAmount(scale, t.union, e.agreementId !== undefined));
+  // The raise the option's clause names (from 2026-10-25: a negotiation may have traded it away), `OPTION_RAISE` until then.
+  const amount = Math.max(Math.round((old?.offer?.amount ?? scale) * (1 + (clauseOf(e.contract, 'option')?.raise ?? OPTION_RAISE))), negotiatedAmount(scale, t.union, e.agreementId !== undefined));
   const words = `${t.company} took up its option on you as ${t.role.part}: ${counted(days.length, 'shoot day')} from ${formatDate(days[0]!.from, NY)}, at ${formatMoney(amount, 'USD')} a day.`;
   const o: Opportunity = {
     id: sim.nextId('pro'), projectId: t.id, via: old?.via ?? 'agent', status: 'booked', postedAt: sim.now, submitBy: sim.now, history: [], counts: {},
@@ -2442,6 +2469,12 @@ const WORKFLOW_HOOKS = {
   },
 };
 
+/** What the offers and auditions borrow from here (`registerOffers`, `systems/offers.ts`, from 2026-10-25): the loop's own steps. */
+const OFFER_HOOKS: OfferHooks = {
+  tell, note, settle, finishRound, makeOffer, holdGone,
+  setRound: (sim: Simulation, person: Person, o: Opportunity, which: Round) => setRound(sim, person, o, which),
+};
+
 /**
  * A slate production's fate, applied to work booked in it once the fate is known (from 2026-10-24, the owner's brief 27,
  * Area B: "Delays ... Recasting where justified ... Projects that never proceed"). Only work not yet begun: a production
@@ -2516,6 +2549,8 @@ export function registerProJobs(sim: Simulation): void {
       // Offered without an audition where the casting office cast the actor before (from 2026-10-24, brief 27, loop 16).
       const direct = o ? directOfferFor(s, person, project, at) : undefined;
       if (o && direct) { o.direct = direct; makeOffer(s, person, o); }
+      // A lead on one condition, the round still to come, from an office that cast the actor before (from 2026-10-25, `CONDITIONAL`).
+      else if (o) offerOnCondition(s, person, project, o, at, OFFER_HOOKS);
     }
     // What became of the slate's productions the actor is booked in, once it's known (from 2026-10-24, brief 27).
     applyFates(s, person);
@@ -2550,6 +2585,8 @@ export function registerProJobs(sim: Simulation): void {
     const trip = (item.travelMinutes ?? 0) * MIN;
     const elsewhere = attendedAcross(at.person, item.at - trip, item.at + roundMinutes(r) * MIN + trip, at.o.id);
     if (elsewhere) { missRound(s, at.person, at.o, r, elsewhere); return; }
+    // Casting's direction in the room, where it has one (from 2026-10-25, `giveNote`): the round is judged at its stop.
+    if (giveNote(s, at.person, at.o, r, idx, OFFER_HOOKS)) return;
     finishRound(s, at.person, at.o, r, idx, evaluate(s, at.person, auditionContext(s, at.person, at.o, r, idx)));
   });
 
@@ -2565,6 +2602,8 @@ export function registerProJobs(sim: Simulation): void {
     if (!at || !r || r.status !== 'done' || r.casting || (at.o.status !== 'audition' && at.o.status !== 'callback')) return;
     const { person, o } = at;
     const t = projectOf(o);
+    // A part whose requirement changes at the cut, and a conditional offer's round decided (from 2026-10-25, `systems/offers.ts`).
+    if (rewriteAt(s, person, o, r, OFFER_HOOKS) || decideCondition(s, person, o, r, OFFER_HOOKS)) return;
     const f = fitOf(person, t);
     // The next round where the part has one (from 2026-10-24, brief 27: a chemistry read or a screen test after the callback).
     const next = nextRound(t, r.round);
@@ -2576,7 +2615,8 @@ export function registerProJobs(sim: Simulation): void {
       pass(s, person, o, `You’re booked for ${clash.label} on ${formatDate(clash.from, NY)}, so ${t.casting} cast another actor as ${t.role.part}.`);
       return;
     }
-    const d = castingDraw(s, o, next && next !== 'audition' ? next : 'final', r.band!, f.fit, visibilityOf(person, s.now));
+    // Halved by an office that remembers a no-show of the actor's (from 2026-10-25, `castingLift`).
+    const d = castingDraw(s, o, next && next !== 'audition' ? next : 'final', r.band!, f.fit, castingLift(person, t, s.now, visibilityOf(person, s.now)));
     r.casting = { at: s.now, chance: d.chance, fit: f.fit, yes: d.yes };
     if (!d.yes) { pass(s, person, o, next === 'callback' ? `${castingAs(t)} didn’t call you back for ${t.role.part}.` : next ? `${castingAs(t)} didn’t ask you to the ${ROUND_WORDS[next].noun} for ${t.role.part}.` : `${castingAs(t)} cast another actor as ${t.role.part}.`); return; }
     if (next) { setRound(s, person, o, next); return; }
@@ -2588,6 +2628,8 @@ export function registerProJobs(sim: Simulation): void {
     const offer = at?.o.offer;
     if (!at || at.o.status !== 'offered' || !offer?.asked || offer.asked.answer) return;
     const { person, o } = at;
+    // The offer withdrawn, a trade-off, or another term's answer (from 2026-10-25, `answerAsk`): the pay raised or kept below.
+    if (answerAsk(s, person, o, OFFER_HOOKS)) return;
     const t = projectOf(o);
     const last = o.rounds?.filter((r) => r.band).at(-1)?.band;
     const worked = o.direct !== undefined || person.pro!.engagements.some((e) => finished(e) && projectById(e.projectId)?.casting === t.casting);
@@ -2604,6 +2646,8 @@ export function registerProJobs(sim: Simulation): void {
       : `${castingAs(t)} kept its offer for ${t.role.part} at ${formatMoney(offer.amount!, 'USD')} a ${offer.per}, where ${agent} asked for ${formatMoney(offer.asked.amount, 'USD')}. It stands until ${formatDate(offer.until, NY)} at ${formatTime(offer.until, NY)}.`;
     note(s, person, o, { kind: 'offer', key: 'answered', words });
     tell(s, person, yes ? `The Offer For ${t.role.part} Is Raised` : `The Offer For ${t.role.part} Stands`, words, 70);
+    // The offer's decision brought up to this version (from 2026-10-25, `reviseDecision`): until then it said the first.
+    reviseDecision(s, o, words);
   });
 
   sim.onSchedule(HOLD_KIND, (item, s) => {
@@ -2840,16 +2884,12 @@ export function registerProJobs(sim: Simulation): void {
   sim.onCommand<{ opportunityId: string }, { band: Band; overall: number }>('pro.tape_audition', (p, { sim: s }) => {
     const person = s.player;
     const o = opportunityOf(person, p?.opportunityId);
-    const no = tapeRefusal(s, person, o);
+    // A take recorded and sent at once (from 2026-10-25, `recordTake`, `sendTake`): the day's takes and those kept count it.
+    // Until then it was judged and sent here, one take; judged as the brief's tape is, at the moment it starts, the hour after.
+    const no = recordRefusal(s, person, o);
     if (no) throw new CommandError(no);
-    const r = roundToCome(o!)!;
-    const idx = o!.rounds!.indexOf(r);
-    // Judged as the brief's tape is (`tapeBrief`): at the moment it starts, the hour on the clock after.
-    const e = evaluate(s, person, auditionContext(s, person, o!, r, idx));
-    s.advanceTo(s.now + SELF_TAPE.minutes * MIN);
-    person.wellbeing.energy = clamp(person.wellbeing.energy - ENGAGEMENT.energy.desk, 0, 100);
-    finishRound(s, person, o!, r, idx, e);
-    return { band: r.band!, overall: r.overall! };
+    const { take } = recordTake(s, person, o!);
+    return sendTake(s, person, o!, take, OFFER_HOOKS);
   });
 
   sim.onCommand<{ opportunityId: string }, { at: Instant }>('pro.move_audition', (p, { sim: s }) => {
@@ -2870,11 +2910,14 @@ export function registerProJobs(sim: Simulation): void {
     return { at: to };
   });
 
-  sim.onCommand<{ opportunityId: string }, { asked: Money; answerAt: Instant }>('pro.ask_more', (p, { sim: s }) => {
+  sim.onCommand<{ opportunityId: string; item?: string }, { asked: Money; answerAt: Instant }>('pro.ask_more', (p, { sim: s }) => {
     const person = s.player;
     const o = opportunityOf(person, p?.opportunityId);
-    const no = askMoreRefusal(s, person, o);
+    // The term the agent asks about (from 2026-10-25, `systems/offers.ts`): the pay, as it always was, unless another's named.
+    const item = termItem(p?.item);
+    const no = askMoreRefusal(s, person, o, item);
     if (no) throw new CommandError(no);
+    if (item !== 'pay') return askTerms(s, person, o!, item, OFFER_HOOKS);
     const t = projectOf(o!);
     const offer = o!.offer!;
     const amount = askedAmount(offer.amount!);
@@ -2910,11 +2953,14 @@ export function registerProJobs(sim: Simulation): void {
     return { answerAt, against: against.id };
   });
 
-  sim.onCommand<{ opportunityId: string }, { engagementId: string; days: number }>('pro.accept_offer', (p, { sim: s }) => {
+  sim.onCommand<{ opportunityId: string }, { engagementId: string; days: number } | { conditional: true; round: Round; at: Instant }>('pro.accept_offer', (p, { sim: s }) => {
     const person = s.player;
     const o = opportunityOf(person, p?.opportunityId);
     const no = acceptRefusal(s, person, o);
     if (no) throw new CommandError(no);
+    // A conditional offer accepted on its condition books nothing yet (from 2026-10-25, `acceptOnCondition`).
+    const conditional = acceptOnCondition(s, person, o!, OFFER_HOOKS);
+    if (conditional) return conditional;
     const pro = ensurePro(s, person);
     const t = projectOf(o!);
     const days = datesOf(o!);
@@ -2990,4 +3036,7 @@ export function registerProJobs(sim: Simulation): void {
     note(s, person, o!, { kind: 'requested', key: 'school:asked', words: `You asked the School to approve ${t.role.part} in ${t.project} in term: ${counted(days.length, 'working day')}, ${counted(req.classDays, 'class day')}.` });
     return { decides };
   });
+
+  // Offers and auditions, the actor's side (from 2026-10-25, `systems/offers.ts`): last, so the Mondays' recasts follow the postings.
+  registerOffers(sim, OFFER_HOOKS);
 }

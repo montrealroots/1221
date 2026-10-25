@@ -155,7 +155,13 @@ describe('B2: skill moves neither the roles posted nor his office’s reading of
     // Played, the fixed parts the same over the weeks both records hold (`heldByBoth`).
     const fixed = (k: string) => projectById(k.split('@')[0]!)?.slate === undefined;
     const [t5, b5] = heldByBoth(postedKeys(top).filter(fixed), postedKeys(bottom).filter(fixed));
-    expect(b5).toEqual(t5);
+    // From the week after the first both hold (from 2026-10-25): a part recast is posted again (`RECAST`), and the twins,
+    // auditioning at different levels, lose different slate parts and so hold different numbers of postings (two recasts
+    // and three measured here). The record is trimmed by when each posting settled, not by its week (`keepBounded`), so the
+    // first week either holds may be part-trimmed in one and whole in the other.
+    const week = (k: string) => Number(k.split('@')[1]!.split(':')[0]);
+    const first = Math.min(...[...t5, ...b5].map(week));
+    expect(b5.filter((k) => week(k) > first)).toEqual(t5.filter((k) => week(k) > first));
   });
 
   it('PLAYER JOURNEY: his office reads the twins’ records alike, the room on his list among them, and answers the same approach the same way', () => {
