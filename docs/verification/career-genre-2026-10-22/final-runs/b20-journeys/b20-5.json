@@ -14,35 +14,35 @@
    "part": 1,
    "from": "2026-08-24",
    "to": "2027-06-01",
-   "secs": 27,
+   "secs": 25,
    "reloads": 8
   },
   {
    "part": 2,
    "from": "2027-06-01",
    "to": "2028-06-01",
-   "secs": 77,
+   "secs": 83,
    "reloads": 12
   },
   {
    "part": 3,
    "from": "2028-06-01",
    "to": "2029-06-04",
-   "secs": 128,
+   "secs": 133,
    "reloads": 12
   },
   {
    "part": 4,
    "from": "2029-06-04",
    "to": "2029-11-01",
-   "secs": 110,
+   "secs": 103,
    "reloads": 5
   },
   {
    "part": 5,
    "from": "2029-11-01",
    "to": "2030-03-01",
-   "secs": 43,
+   "secs": 48,
    "reloads": 4,
    "done": true
   }
@@ -11592,7 +11592,7 @@
      ],
      "transactions": 50
     },
-    "secs": 3
+    "secs": 2
    },
    {
     "why": "a union bill due 2030-05-21T14:00: Initiation fee, part 2 of 3",
@@ -11718,7 +11718,7 @@
      ],
      "transactions": 1227
     },
-    "secs": 16
+    "secs": 19
    },
    {
     "why": "an offer standing: An Offer For An Oyster Tonger Of 1890",
@@ -11775,7 +11775,7 @@
      ],
      "transactions": 1329
     },
-    "secs": 13
+    "secs": 11
    }
   ],
   "workDays": [],

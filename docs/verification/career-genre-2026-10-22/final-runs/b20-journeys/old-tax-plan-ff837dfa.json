@@ -6,21 +6,21 @@
    "part": 1,
    "from": "2027-04-18",
    "to": "2028-02-16",
-   "secs": 56,
+   "secs": 52,
    "reloads": 10
   },
   {
    "part": 2,
    "from": "2028-02-16",
    "to": "2028-12-16",
-   "secs": 93,
+   "secs": 81,
    "reloads": 10
   },
   {
    "part": 3,
    "from": "2028-12-16",
    "to": "2029-09-01",
-   "secs": 183,
+   "secs": 159,
    "reloads": 8,
    "done": true
   }
@@ -6715,7 +6715,7 @@
      "work": [],
      "transactions": 726
     },
-    "secs": 25
+    "secs": 23
    }
   ],
   "workDays": [],

@@ -3,7 +3,7 @@
  "part": 5,
  "from": "2029-11-01",
  "to": "2030-03-01",
- "secs": 42,
+ "secs": 48,
  "reloads": 61,
  "done": true,
  "standing": "graduated",
@@ -33,8 +33,8 @@
   "2029-06-06T14:00 an audition (self-tape) set for 2029-06-10T22:00, Robin in Last Bus To Eastview: same",
   "2029-07-04T21:45 an offer standing: An Offer For An Oyster Tonger Of 1890: same"
  ],
- "workDays": 15,
+ "workDays": 14,
  "notices": 992,
- "bank": 81101.82,
+ "bank": 79812.27,
  "errors": []
 }

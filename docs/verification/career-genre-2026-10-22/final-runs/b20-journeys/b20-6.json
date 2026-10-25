@@ -14,35 +14,35 @@
    "part": 1,
    "from": "2026-08-24",
    "to": "2027-06-01",
-   "secs": 35,
+   "secs": 31,
    "reloads": 9
   },
   {
    "part": 2,
    "from": "2027-06-01",
    "to": "2028-06-01",
-   "secs": 82,
+   "secs": 79,
    "reloads": 12
   },
   {
    "part": 3,
    "from": "2028-06-01",
    "to": "2029-06-04",
-   "secs": 112,
+   "secs": 108,
    "reloads": 11
   },
   {
    "part": 4,
    "from": "2029-06-04",
    "to": "2029-11-01",
-   "secs": 82,
+   "secs": 78,
    "reloads": 5
   },
   {
    "part": 5,
    "from": "2029-11-01",
    "to": "2030-03-01",
-   "secs": 49,
+   "secs": 44,
    "reloads": 4,
    "done": true
   }
@@ -158,10 +158,10 @@
    "lead": 3
   },
   "abilities": {
-   "emotionalDepth": 85.5,
+   "emotionalDepth": 85.6,
    "presence": 67.5,
    "listening": 69.1,
-   "imagination": 90.2,
+   "imagination": 90.4,
    "focus": 58.4,
    "memory": 67.2,
    "adaptability": 59.6,
@@ -204,7 +204,7 @@
    },
    {
     "what": "Dana Kell, Harbor Line: Audition, Taped",
-    "own": 66.67,
+    "own": 66.69,
     "atStart": 53.52,
     "rose": [
      "emotionalDepth",
@@ -220,7 +220,7 @@
    },
    {
     "what": "Harbormaster Brandt, The Salt Road: Audition, Taped",
-    "own": 65.79,
+    "own": 65.82,
     "atStart": 53.01,
     "rose": [
      "emotionalDepth",
@@ -236,7 +236,7 @@
    },
    {
     "what": "The Apprentice Lamplighter, The Lamplighters: Audition",
-    "own": 65.34,
+    "own": 65.4,
     "atStart": 48.87,
     "rose": [
      "emotionalDepth",
@@ -250,7 +250,7 @@
    },
    {
     "what": "The Apprentice Lamplighter, The Lamplighters: Callback",
-    "own": 63.3,
+    "own": 63.35,
     "atStart": 46.05,
     "rose": [
      "emotionalDepth",
@@ -264,7 +264,7 @@
    },
    {
     "what": "Hester Vane, The Winter Ledger: Audition",
-    "own": 70.47,
+    "own": 70.52,
     "atStart": 53.05,
     "rose": [
      "emotionalDepth",
@@ -278,7 +278,7 @@
    },
    {
     "what": "Hester Vane, The Winter Ledger: Callback",
-    "own": 68.53,
+    "own": 68.55,
     "atStart": 49.91,
     "rose": [
      "emotionalDepth",
@@ -292,7 +292,7 @@
    },
    {
     "what": "Robin, Last Bus To Eastview: Audition, Taped",
-    "own": 66.94,
+    "own": 66.97,
     "atStart": 54.03,
     "rose": [
      "emotionalDepth",
@@ -308,7 +308,7 @@
    },
    {
     "what": "An Oyster Tonger Of 1890, Tidewater: The Last Oyster Towns: Audition, Taped",
-    "own": 68.83,
+    "own": 68.88,
     "atStart": 55.17,
     "rose": [
      "emotionalDepth",
@@ -324,7 +324,7 @@
    },
    {
     "what": "Ivy Thibodeaux, The Witness: Audition",
-    "own": 74.1,
+    "own": 74.14,
     "atStart": 54.53,
     "rose": [
      "emotionalDepth",
@@ -338,7 +338,7 @@
    },
    {
     "what": "Ivy Thibodeaux, The Witness: Callback",
-    "own": 72.33,
+    "own": 72.38,
     "atStart": 51.38,
     "rose": [
      "emotionalDepth",
@@ -352,7 +352,7 @@
    },
    {
     "what": "The Crow, The Kite And The Crow: Audition, Taped",
-    "own": 65.55,
+    "own": 65.6,
     "atStart": 51.26,
     "rose": [
      "emotionalDepth",
@@ -368,7 +368,7 @@
    }
   ],
   "keptReplayed": 160,
-  "keptMismatched": 3,
+  "keptMismatched": 0,
   "genres": [
    {
     "g": "satire",
@@ -460,8 +460,8 @@
   "3 development": {
    "pass": true,
    "evidence": [
-    "abilities emotionalDepth 48.6→85.5, presence 65.7→67.5, listening 53.3→69.1, imagination 48.9→90.2, focus 49.1→58.4, memory 54.6→67.2, adaptability 55.1→59.6, composure 44.3→66.3, vocal 54→68.5, physical 45.7→61.9, discipline 57.5→90.4, stamina 50→35",
-    "last pieces at their own levels, then with what rose put back: 64.81/51.94 66.67/53.52 65.79/53.01 65.34/48.87 63.3/46.05 70.47/53.05 68.53/49.91 66.94/54.03 68.83/55.17 74.1/54.53 72.33/51.38 65.55/51.26",
+    "abilities emotionalDepth 48.6→85.6, presence 65.7→67.5, listening 53.3→69.1, imagination 48.9→90.4, focus 49.1→58.4, memory 54.6→67.2, adaptability 55.1→59.6, composure 44.3→66.3, vocal 54→68.5, physical 45.7→61.9, discipline 57.5→90.4, stamina 50→35",
+    "last pieces at their own levels, then with what rose put back: 64.81/51.94 66.69/53.52 65.82/53.01 65.4/48.87 63.35/46.05 70.52/53.05 68.55/49.91 66.97/54.03 68.88/55.17 74.14/54.53 72.38/51.38 65.6/51.26",
     "with what fell put back up: nothing fell",
     "first limits short of mastery: {\"ability\":299,\"preparation\":70,\"technique\":8,\"condition\":13}",
     "genres known 7; satire speed 1.16, unmet absurdist 1",
@@ -526,14 +526,12 @@
    "fails": []
   },
   "10 save and reload": {
-   "pass": false,
+   "pass": true,
    "evidence": [
     "59 reloads (every thirty days and at each part), every one the same to the byte: true",
-    "160 kept results replayed from their inputs, 3 different"
+    "160 kept results replayed from their inputs, 0 different"
    ],
-   "fails": [
-    "3 kept results replay to another figure"
-   ]
+   "fails": []
   }
  },
  "continuity": {
@@ -581,8 +579,8 @@
     "vocal": 34,
     "composure": 52,
     "clown": 1,
-    "emotionalDepth": 10,
-    "screen": 9,
+    "emotionalDepth": 11,
+    "screen": 8,
     "voiceover": 2
    },
    "longRuns": [
@@ -659,7 +657,7 @@
      "stripped": 6
     }
    ],
-   "runs": 50,
+   "runs": 49,
    "staleRuns": 1,
    "wordsOnlyChanges": 39
   },
@@ -693,8 +691,8 @@
    "exercises": {
     "graded-exposure": 125,
     "sense-memory": 306,
-    "given-circumstances": 381,
-    "self-tape-practice": 171,
+    "given-circumstances": 385,
+    "self-tape-practice": 167,
     "copy-reading": 40
    },
    "longestSameExercise": 89
@@ -7790,7 +7788,7 @@
   "2029 spring song: 3 @ 69.2, 1 ill or hurt",
   "2029 spring scene: 6 @ 61.6, 4 ill or hurt",
   "2029 fall tape: 14 @ 61.9",
-  "2029 fall audition: 8 @ 67.2",
+  "2029 fall audition: 8 @ 67.3",
   "2029 fall camera: 3 @ 69.1",
   "2030 spring audition: 5 @ 69",
   "2030 spring tape: 3 @ 66.7"
@@ -9158,35 +9156,35 @@
   ],
   [
    "2029-12-02",
-   "screen",
-   63.76,
-   0.52,
+   "emotionalDepth",
+   74.71,
+   0.55,
    1,
-   "prep:genre prep:interpretation screen 0.52 emotionalDepth 0.52 imagination 0.38"
+   "prep:genre prep:interpretation emotionalDepth 0.55 screen 0.54 imagination 0.4"
   ],
   [
    "2029-12-09",
    "emotionalDepth",
-   75.65,
-   0.52,
+   76.29,
+   0.53,
    1,
-   "prep:genre prep:interpretation emotionalDepth 0.52 screen 0.51 imagination 0.38"
+   "prep:genre prep:interpretation emotionalDepth 0.53 screen 0.53 imagination 0.39"
   ],
   [
    "2029-12-16",
    "emotionalDepth",
-   77.28,
-   0.52,
+   77.9,
+   0.55,
    1,
-   "prep:genre prep:interpretation emotionalDepth 0.52 screen 0.51 imagination 0.38"
+   "prep:genre prep:interpretation emotionalDepth 0.55 screen 0.53 imagination 0.4"
   ],
   [
    "2029-12-23",
    "screen",
-   65.91,
-   0.5,
+   65.94,
+   0.49,
    1,
-   "prep:genre prep:interpretation screen 0.5 emotionalDepth 0.5 imagination 0.38"
+   "prep:genre prep:interpretation screen 0.49 emotionalDepth 0.48 imagination 0.38"
   ],
   [
    "2029-12-30",
@@ -9194,15 +9192,15 @@
    67.09,
    0.55,
    1,
-   "prep:genre prep:interpretation screen 0.55 emotionalDepth 0.45 imagination 0.41"
+   "prep:genre prep:interpretation screen 0.55 emotionalDepth 0.43 imagination 0.4"
   ],
   [
    "2030-01-06",
    "screen",
-   69.17,
-   0.46,
+   69.16,
+   0.47,
    1,
-   "prep:genre prep:interpretation screen 0.46 emotionalDepth 0.45 imagination 0.43"
+   "prep:genre prep:interpretation screen 0.47 emotionalDepth 0.44 imagination 0.44"
   ],
   [
    "2030-01-13",
@@ -9214,16 +9212,16 @@
   ],
   [
    "2030-01-20",
-   "emotionalDepth",
-   80.03,
+   "imagination",
+   86.88,
    0.4,
    1,
-   "prep:genre emotionalDepth 0.4 imagination 0.4 screen 0.33 composure 0.27"
+   "prep:genre imagination 0.4 emotionalDepth 0.4 screen 0.33 composure 0.27"
   ],
   [
    "2030-01-27",
    "emotionalDepth",
-   80.84,
+   80.95,
    0.37,
    1,
    "prep:genre emotionalDepth 0.37 imagination 0.37 comedy 0.32 composure 0.31"
@@ -9231,34 +9229,34 @@
   [
    "2030-02-03",
    "imagination",
-   88.43,
-   0.38,
+   88.67,
+   0.37,
    1,
-   "prep:genre imagination 0.38 emotionalDepth 0.36 composure 0.3 comedy 0.29"
+   "prep:genre imagination 0.37 emotionalDepth 0.35 composure 0.29 comedy 0.29"
   ],
   [
    "2030-02-10",
-   "imagination",
-   90.07,
-   0.36,
+   "emotionalDepth",
+   81.64,
+   0.35,
    1,
-   "prep:genre imagination 0.36 emotionalDepth 0.36 composure 0.3 comedy 0.29"
+   "prep:genre emotionalDepth 0.35 imagination 0.35 composure 0.29 comedy 0.29"
   ],
   [
    "2030-02-17",
    "emotionalDepth",
-   82.93,
-   0.36,
+   83.02,
+   0.35,
    1,
-   "prep:genre emotionalDepth 0.36 imagination 0.35 composure 0.3 comedy 0.29"
+   "prep:genre emotionalDepth 0.35 imagination 0.35 comedy 0.29 composure 0.29"
   ],
   [
    "2030-02-24",
    "emotionalDepth",
-   84.56,
+   84.66,
    0.36,
    1,
-   "prep:genre emotionalDepth 0.36 imagination 0.34 composure 0.34 comedy 0.26"
+   "prep:genre emotionalDepth 0.36 composure 0.34 imagination 0.33 comedy 0.26"
   ]
  ],
  "monthly": [
@@ -10707,7 +10705,7 @@
    "standing": "graduated",
    "termsBegun": 6,
    "abilities": {
-    "emotionalDepth": 74.3,
+    "emotionalDepth": 74.5,
     "presence": 67.5,
     "listening": 69.1,
     "imagination": 84.7,
@@ -10743,7 +10741,7 @@
    "standing": "graduated",
    "termsBegun": 6,
    "abilities": {
-    "emotionalDepth": 78.8,
+    "emotionalDepth": 79.1,
     "presence": 67.5,
     "listening": 69.1,
     "imagination": 84.7,
@@ -10779,10 +10777,10 @@
    "standing": "graduated",
    "termsBegun": 6,
    "abilities": {
-    "emotionalDepth": 81.5,
+    "emotionalDepth": 81.6,
     "presence": 67.5,
     "listening": 69.1,
-    "imagination": 88,
+    "imagination": 88.2,
     "focus": 58.4,
     "memory": 67.2,
     "adaptability": 59.6,
@@ -10840,18 +10838,18 @@
    "sense-memory": 18
   },
   "2029-11": {
-   "sense-memory": 27,
+   "sense-memory": 29,
    "given-circumstances": 64,
-   "self-tape-practice": 4
+   "self-tape-practice": 2
   },
   "2029-12": {
-   "self-tape-practice": 45,
-   "sense-memory": 67
+   "sense-memory": 69,
+   "self-tape-practice": 43
   },
   "2030-01": {
    "self-tape-practice": 27,
-   "given-circumstances": 46,
-   "sense-memory": 39
+   "given-circumstances": 50,
+   "sense-memory": 35
   },
   "2030-02": {
    "given-circumstances": 37,
@@ -11147,7 +11145,7 @@
     "at": "2029-11-26T23:00",
     "what": "the first work day",
     "same": true,
-    "bytes": 1844340,
+    "bytes": 1845241,
     "credit": {
      "at": "2029-11-26T23:00",
      "what": "the first work day",
@@ -11167,7 +11165,7 @@
     "at": "2030-01-01T12:30",
     "what": "the end of 2029",
     "same": true,
-    "bytes": 1827774,
+    "bytes": 1830558,
     "credit": {
      "at": "2030-01-01T12:30",
      "what": "the end of 2029",
@@ -11512,7 +11510,7 @@
      ],
      "transactions": 29
     },
-    "secs": 3
+    "secs": 2
    },
    {
     "why": "a union bill due 2030-05-21T14:00: Initiation fee, part 2 of 3",
@@ -11620,7 +11618,7 @@
      ],
      "transactions": 1265
     },
-    "secs": 16
+    "secs": 17
    },
    {
     "why": "an offer standing: An Offer For Ivy",
@@ -11687,7 +11685,7 @@
      ],
      "transactions": 1406
     },
-    "secs": 13
+    "secs": 10
    }
   ],
   "workDays": [

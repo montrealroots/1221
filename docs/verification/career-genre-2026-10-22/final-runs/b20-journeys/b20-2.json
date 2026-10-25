@@ -21,28 +21,28 @@
    "part": 2,
    "from": "2027-06-01",
    "to": "2028-06-01",
-   "secs": 77,
+   "secs": 80,
    "reloads": 12
   },
   {
    "part": 3,
    "from": "2028-06-01",
    "to": "2029-06-04",
-   "secs": 124,
+   "secs": 135,
    "reloads": 11
   },
   {
    "part": 4,
    "from": "2029-06-04",
    "to": "2029-11-01",
-   "secs": 90,
+   "secs": 91,
    "reloads": 5
   },
   {
    "part": 5,
    "from": "2029-11-01",
    "to": "2030-03-01",
-   "secs": 39,
+   "secs": 51,
    "reloads": 4,
    "done": true
   }
@@ -158,10 +158,10 @@
    "unsized": 1
   },
   "abilities": {
-   "emotionalDepth": 76.5,
+   "emotionalDepth": 75.8,
    "presence": 67.4,
    "listening": 67.8,
-   "imagination": 96.1,
+   "imagination": 97.3,
    "focus": 62,
    "memory": 61.8,
    "adaptability": 56.3,
@@ -202,7 +202,7 @@
    },
    {
     "what": "Jess, Static On Route 9: Audition, Taped",
-    "own": 63.45,
+    "own": 63.47,
     "atStart": 50.72,
     "rose": [
      "emotionalDepth",
@@ -218,8 +218,8 @@
    },
    {
     "what": "Pickett The Ferret, Lantern Row: Audition, Taped",
-    "own": 64.93,
-    "atStart": 53.34,
+    "own": 64.88,
+    "atStart": 53.28,
     "rose": [
      "emotionalDepth",
      "imagination",
@@ -234,8 +234,8 @@
    },
    {
     "what": "Pickett The Ferret, Lantern Row: Callback, Taped",
-    "own": 63.04,
-    "atStart": 50.64,
+    "own": 62.99,
+    "atStart": 50.57,
     "rose": [
      "emotionalDepth",
      "imagination",
@@ -250,7 +250,7 @@
    },
    {
     "what": "Robin, Last Bus To Eastview: Audition, Taped",
-    "own": 63.55,
+    "own": 63.57,
     "atStart": 50.78,
     "rose": [
      "emotionalDepth",
@@ -266,7 +266,7 @@
    },
    {
     "what": "The Narrator, Tidewater: The Last Oyster Towns: Audition, Taped",
-    "own": 67.12,
+    "own": 67.14,
     "atStart": 53.14,
     "rose": [
      "emotionalDepth",
@@ -296,7 +296,7 @@
    },
    {
     "what": "The Narrator, Tidewater: The Last Oyster Towns: The Last Oyster Towns: Narration Session 1",
-    "own": 63.68,
+    "own": 63.8,
     "atStart": 50.9,
     "rose": [
      "vocal",
@@ -308,12 +308,12 @@
     "fell": [
      "stamina"
     ],
-    "fallsUndone": 64.57
+    "fallsUndone": 64.7
    },
    {
     "what": "The Narrator, Tidewater: The Last Oyster Towns: The Last Oyster Towns: Narration Session 2",
-    "own": 64.49,
-    "atStart": 51.48,
+    "own": 64.6,
+    "atStart": 51.5,
     "rose": [
      "vocal",
      "focus",
@@ -324,12 +324,12 @@
     "fell": [
      "stamina"
     ],
-    "fallsUndone": 65.38
+    "fallsUndone": 65.5
    },
    {
     "what": "The Narrator, Tidewater: The Last Oyster Towns: The Last Oyster Towns: Narration Session 3",
-    "own": 65.14,
-    "atStart": 51.97,
+    "own": 65.3,
+    "atStart": 52,
     "rose": [
      "vocal",
      "focus",
@@ -340,12 +340,12 @@
     "fell": [
      "stamina"
     ],
-    "fallsUndone": 66.03
+    "fallsUndone": 66.2
    },
    {
     "what": "Ferris Oduya, Narrow Crossing: Audition",
-    "own": 69.44,
-    "atStart": 51.91,
+    "own": 69.45,
+    "atStart": 51.94,
     "rose": [
      "emotionalDepth",
      "imagination",
@@ -358,8 +358,8 @@
    },
    {
     "what": "Pickett The Ferret, Lantern Row: Audition, Taped",
-    "own": 67.79,
-    "atStart": 53.93,
+    "own": 67.94,
+    "atStart": 53.94,
     "rose": [
      "emotionalDepth",
      "imagination",
@@ -374,7 +374,7 @@
    }
   ],
   "keptReplayed": 160,
-  "keptMismatched": 5,
+  "keptMismatched": 0,
   "genres": [
    {
     "g": "political_drama",
@@ -471,9 +471,9 @@
   "3 development": {
    "pass": true,
    "evidence": [
-    "abilities emotionalDepth 46.7→76.5, presence 65.5→67.4, listening 51.7→67.8, imagination 51.4→96.1, focus 53→62, memory 48.3→61.8, adaptability 51.4→56.3, composure 44.3→65.4, vocal 52.8→67.5, physical 57.2→71.7, discipline 57.5→90.4, stamina 50→35",
-    "last pieces at their own levels, then with what rose put back: 68.38/52.87 63.45/50.72 64.93/53.34 63.04/50.64 63.55/50.78 67.12/53.14 69.85/52.87 63.68/50.9 64.49/51.48 65.14/51.97 69.44/51.91 67.79/53.93",
-    "with what fell put back up: 63.68→64.57 (stamina) 64.49→65.38 (stamina) 65.14→66.03 (stamina)",
+    "abilities emotionalDepth 46.7→75.8, presence 65.5→67.4, listening 51.7→67.8, imagination 51.4→97.3, focus 53→62, memory 48.3→61.8, adaptability 51.4→56.3, composure 44.3→65.4, vocal 52.8→67.5, physical 57.2→71.7, discipline 57.5→90.4, stamina 50→35",
+    "last pieces at their own levels, then with what rose put back: 68.38/52.87 63.47/50.72 64.88/53.28 62.99/50.57 63.57/50.78 67.14/53.14 69.85/52.87 63.8/50.9 64.6/51.5 65.3/52 69.45/51.94 67.94/53.94",
+    "with what fell put back up: 63.8→64.7 (stamina) 64.6→65.5 (stamina) 65.3→66.2 (stamina)",
     "first limits short of mastery: {\"ability\":312,\"preparation\":65,\"technique\":9,\"condition\":1}",
     "genres known 8; political_drama speed 1.15, unmet absurdist 1",
     "fell: stamina 50→35 (stamina falls unworked: `settleTheBody`)"
@@ -537,14 +537,12 @@
    "fails": []
   },
   "10 save and reload": {
-   "pass": false,
+   "pass": true,
    "evidence": [
     "60 reloads (every thirty days and at each part), every one the same to the byte: true",
-    "160 kept results replayed from their inputs, 5 different"
+    "160 kept results replayed from their inputs, 0 different"
    ],
-   "fails": [
-    "5 kept results replay to another figure"
-   ]
+   "fails": []
   }
  },
  "continuity": {
@@ -585,14 +583,14 @@
    "weeks": 183,
    "targets": {
     "none": 2,
-    "imagination": 42,
+    "imagination": 43,
     "vocal": 47,
     "focus": 29,
     "composure": 43,
     "physical": 1,
     "adaptability": 2,
     "voiceover": 4,
-    "emotionalDepth": 6,
+    "emotionalDepth": 5,
     "screen": 2,
     "comedy": 2,
     "character": 3
@@ -682,7 +680,7 @@
    ],
    "runs": 62,
    "staleRuns": 0,
-   "wordsOnlyChanges": 44
+   "wordsOnlyChanges": 45
   },
   "feedback": {
    "notes": 269,
@@ -713,14 +711,14 @@
    "scenesAgain": 11,
    "exercises": {
     "graded-exposure": 114,
-    "sense-memory": 167,
-    "given-circumstances": 481,
-    "copy-reading": 98,
+    "sense-memory": 149,
+    "given-circumstances": 495,
+    "copy-reading": 100,
     "self-tape-practice": 52,
-    "comic-timing": 43,
-    "character-work": 67
+    "comic-timing": 49,
+    "character-work": 63
    },
-   "longestSameExercise": 169
+   "longestSameExercise": 170
   },
   "interpretations": 50
  },
@@ -7749,9 +7747,9 @@
   "2029 fall tape: 9 @ 62.4",
   "2029 fall audition: 6 @ 65.5",
   "2029 fall reenactment: 2 @ 67.8",
-  "2030 spring tape: 3 @ 65.8",
-  "2030 spring audition: 2 @ 69.2",
-  "2030 spring narration: 3 @ 64.2"
+  "2030 spring tape: 3 @ 65.9",
+  "2030 spring audition: 2 @ 69.3",
+  "2030 spring narration: 3 @ 64.3"
  ],
  "advice": [
   [
@@ -9096,28 +9094,28 @@
    69.96,
    0.44,
    1,
-   "prep:genre character 0.44 imagination 0.35 emotionalDepth 0.34 comedy 0.3"
+   "prep:genre character 0.44 imagination 0.35 emotionalDepth 0.35 comedy 0.3"
   ],
   [
    "2029-11-18",
    "character",
    71.57,
-   0.4,
+   0.39,
    1,
-   "prep:genre character 0.4 emotionalDepth 0.34 imagination 0.34 comedy 0.3"
+   "prep:genre character 0.39 emotionalDepth 0.35 imagination 0.34 comedy 0.3"
   ],
   [
    "2029-11-25",
    "emotionalDepth",
    71.32,
-   0.34,
+   0.35,
    1,
-   "prep:genre emotionalDepth 0.34 character 0.34 composure 0.32 imagination 0.31"
+   "prep:genre emotionalDepth 0.35 character 0.34 composure 0.32 imagination 0.31"
   ],
   [
    "2029-12-02",
    "character",
-   73.45,
+   73.37,
    0.33,
    1,
    "prep:genre character 0.33 emotionalDepth 0.33 composure 0.32 imagination 0.31"
@@ -9128,7 +9126,7 @@
    86.28,
    0.35,
    1,
-   "prep:genre imagination 0.35 character 0.33 emotionalDepth 0.32 screen 0.31"
+   "prep:genre imagination 0.35 character 0.32 emotionalDepth 0.31 screen 0.31"
   ],
   [
    "2029-12-16",
@@ -9144,7 +9142,7 @@
    89.5,
    0.37,
    1,
-   "prep:genre imagination 0.37 character 0.35 emotionalDepth 0.31 screen 0.29"
+   "prep:genre imagination 0.37 character 0.36 emotionalDepth 0.31 screen 0.29"
   ],
   [
    "2029-12-30",
@@ -9152,7 +9150,7 @@
    91.12,
    0.35,
    1,
-   "prep:genre imagination 0.35 character 0.33 emotionalDepth 0.31 screen 0.29"
+   "prep:genre imagination 0.35 character 0.33 emotionalDepth 0.3 screen 0.29"
   ],
   [
    "2030-01-06",
@@ -9160,63 +9158,63 @@
    55.81,
    0.4,
    1,
-   "prep:genre comedy 0.4 imagination 0.37 screen 0.34 emotionalDepth 0.3"
+   "prep:genre comedy 0.4 imagination 0.37 screen 0.34 character 0.3"
   ],
   [
    "2030-01-13",
    "imagination",
    92.5,
-   0.35,
+   0.36,
    1,
-   "prep:genre imagination 0.35 comedy 0.35 screen 0.31 emotionalDepth 0.31"
+   "prep:genre imagination 0.36 comedy 0.35 screen 0.31 emotionalDepth 0.31"
   ],
   [
    "2030-01-20",
    "imagination",
-   94.12,
+   93.63,
    0.34,
    1,
-   "prep:genre imagination 0.34 comedy 0.34 screen 0.31 emotionalDepth 0.31"
+   "prep:genre imagination 0.34 comedy 0.33 screen 0.31 emotionalDepth 0.3"
   ],
   [
    "2030-01-27",
    "imagination",
-   95.48,
+   95.02,
    0.34,
    1,
-   "prep:genre imagination 0.34 comedy 0.33 screen 0.31 emotionalDepth 0.31"
+   "prep:genre imagination 0.34 comedy 0.33 emotionalDepth 0.31 screen 0.31"
   ],
   [
    "2030-02-03",
-   "emotionalDepth",
-   74.66,
+   "imagination",
+   96.26,
    0.32,
    1,
-   "prep:genre emotionalDepth 0.32 imagination 0.32 screen 0.31 composure 0.3"
+   "prep:genre imagination 0.32 emotionalDepth 0.31 screen 0.31 composure 0.3"
   ],
   [
    "2030-02-10",
    "emotionalDepth",
-   76.29,
-   0.32,
+   75.56,
+   0.31,
    1,
-   "prep:genre emotionalDepth 0.32 imagination 0.32 screen 0.31 composure 0.3"
+   "prep:genre emotionalDepth 0.31 imagination 0.31 screen 0.3 composure 0.3"
   ],
   [
    "2030-02-17",
    "voiceover",
-   57.31,
+   57.57,
    0.46,
    1,
-   "prep:genre voiceover 0.46 speech 0.35 imagination 0.35 focus 0.34"
+   "prep:genre voiceover 0.46 speech 0.37 imagination 0.36 focus 0.35"
   ],
   [
    "2030-02-24",
    "voiceover",
-   59.61,
-   0.42,
+   59.86,
+   0.4,
    1,
-   "prep:genre voiceover 0.42 imagination 0.32 emotionalDepth 0.31 composure 0.29"
+   "prep:genre voiceover 0.4 emotionalDepth 0.32 imagination 0.31 composure 0.29"
   ]
  ],
  "monthly": [
@@ -10701,7 +10699,7 @@
    "standing": "graduated",
    "termsBegun": 6,
    "abilities": {
-    "emotionalDepth": 73.2,
+    "emotionalDepth": 73.4,
     "presence": 67.4,
     "listening": 67.8,
     "imagination": 91.6,
@@ -10737,10 +10735,10 @@
    "standing": "graduated",
    "termsBegun": 6,
    "abilities": {
-    "emotionalDepth": 74.2,
+    "emotionalDepth": 74.1,
     "presence": 67.4,
     "listening": 67.8,
-    "imagination": 95.7,
+    "imagination": 95.8,
     "focus": 62,
     "memory": 61.7,
     "adaptability": 56.3,
@@ -10805,23 +10803,23 @@
   },
   "2029-11": {
    "given-circumstances": 18,
-   "character-work": 56,
-   "sense-memory": 36
+   "character-work": 57,
+   "sense-memory": 35
   },
   "2029-12": {
-   "character-work": 11,
-   "sense-memory": 5,
+   "character-work": 6,
+   "sense-memory": 10,
    "given-circumstances": 100
   },
   "2030-01": {
-   "given-circumstances": 69,
-   "comic-timing": 27,
-   "sense-memory": 16
+   "given-circumstances": 70,
+   "comic-timing": 33,
+   "sense-memory": 9
   },
   "2030-02": {
-   "sense-memory": 40,
-   "given-circumstances": 7,
-   "copy-reading": 53
+   "given-circumstances": 20,
+   "sense-memory": 25,
+   "copy-reading": 55
   }
  },
  "commands": {
@@ -11035,7 +11033,7 @@
     "at": "2029-11-05T23:00",
     "what": "the first work day",
     "same": true,
-    "bytes": 1780775,
+    "bytes": 1781685,
     "credit": {
      "at": "2029-11-05T23:00",
      "what": "the first work day",
@@ -11049,7 +11047,7 @@
     "at": "2029-11-25T17:30",
     "what": "the first pay",
     "same": true,
-    "bytes": 1770016,
+    "bytes": 1771894,
     "credit": {
      "at": "2029-11-25T17:30",
      "what": "the first pay",
@@ -11063,7 +11061,7 @@
     "at": "2030-01-01T12:00",
     "what": "the end of 2029",
     "same": true,
-    "bytes": 1751910,
+    "bytes": 1753768,
     "credit": {
      "at": "2030-01-01T12:00",
      "what": "the end of 2029",
@@ -11363,7 +11361,7 @@
      ],
      "transactions": 1127
     },
-    "secs": 21
+    "secs": 24
    },
    {
     "why": "an audition (self-tape) set for 2029-06-17T22:00, Robin in Last Bus To Eastview",
@@ -11424,7 +11422,7 @@
      ],
      "transactions": 1153
     },
-    "secs": 21
+    "secs": 20
    },
    {
     "why": "an offer standing: An Offer For An Oyster Tonger Of 1890",
@@ -11483,7 +11481,7 @@
      ],
      "transactions": 1279
     },
-    "secs": 9
+    "secs": 10
    }
   ],
   "workDays": [

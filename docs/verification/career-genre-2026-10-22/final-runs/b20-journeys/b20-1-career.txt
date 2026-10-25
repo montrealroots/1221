@@ -435,8 +435,8 @@ August 23, 2029 at 10:00 AM | PRESS | Tape It for eastview | done
 August 29, 2029 at 5:00 PM | NOTICE | Not Cast As Robin | The producers cast another actor as Robin. Casting doesn’t give its reasons. The Opportunities tab shows what went into it: your audition, the role’s fit and the field.
 September 1, 2029 at 12:00 AM | NOTICE | Unclaimed Money | $7,067.13 left unused in Chase Savings for three years went to the state’s unclaimed-property office. It can be claimed back from that office.
 September 16, 2029 at 11:59 PM | NOTICE | Connecticut DRS Assessed Your 2028 Return | You didn’t file, so Connecticut DRS assessed $811.05: the tax from what was reported, plus its late penalties and interest from the due date, and the penalty for a return DRS made, 10% or $50, whichever is greater. File your own return on Papers, under Tax Returns, to replace it.
-September 18, 2029 at 12:00 PM | PRESS | Update Your Résumé | done
 September 20, 2029 at 11:59 PM | NOTICE | A Reminder From The IRS | Notice CP501: you owe $2,623.50 on your 2027 return. It’s still unpaid, and interest and the late-payment penalty keep adding up. Pay it on Papers, under Tax Returns, or apply for a payment plan there.
+September 21, 2029 at 11:00 AM | PRESS | Update Your Résumé | done
 September 24, 2029 at 9:00 AM | NOTICE | A Doctor’s Appointment | A review of your high blood pressure: booked at Fair Haven Community Health Care for October 18, 2029, the usual wait where you live. Be there then, or press Call It Off on Papers, under Health Cover.
 September 24, 2029 at 9:00 AM | PRESS | Submit Yourself for salt-road | done
 September 24, 2029 at 9:00 AM | PRESS | Submit Yourself for lamplighters | done
@@ -889,30 +889,7 @@ January 31, 2030 at 9:15 AM | PRESS | Prepare the sides (rehearse) for tidewater
 January 31, 2030 at 10:00 AM | PRESS | Tape It for tidewater-narrator | done
 February 1, 2030 at 9:00 AM | WHAT NEEDS YOU | Your 2029 Tax Return | You owe $177.92, on $17,690.96 of income. File It pays it from your bank at once, and if your bank can’t cover it, you’re sent a bill instead. File it by April 15, 2030. | File It
 February 2, 2030 at 10:59 PM | NOTICE | The IRS Levied Your Accounts | The IRS took $2,726.63 from your bank accounts for your 2027 return. That pays it in full.
-February 3, 2030 at 5:00 PM | WHAT NEEDS YOU | An Offer For Pickett The Ferret | Hollis Reed Casting offers you Pickett The Ferret in Lantern Row, a fictional animated television series. It pays $1,402.00 a day for three days, an estimate. An animated series, an episode’s lines recorded in a session every other week. The work is from February 25, 2030 to March 25, 2030, in New York. The offer stands until February 6, 2030 at 5:00 PM. | Accept The Offer, Decline The Offer
-February 3, 2030 at 5:00 PM | PRESS | Accept The Offer for lantern-row | done
-February 3, 2030 at 5:00 PM | PRESS | Prepare the part (read) for lantern-row | done
-February 3, 2030 at 6:00 PM | PRESS | Prepare the part (read) for lantern-row | done
-February 3, 2030 at 7:00 PM | PRESS | Prepare the part (rehearse) for lantern-row | done
-February 3, 2030 at 8:30 PM | PRESS | Prepare the part (rehearse) for lantern-row | done
-February 4, 2030 at 9:00 AM | PRESS | Prepare the part (rehearse) for lantern-row | done
-February 4, 2030 at 10:30 AM | PRESS | Prepare the part (special) for lantern-row | done
-February 4, 2030 at 11:15 AM | PRESS | Prepare the part (special) for lantern-row | done
-February 4, 2030 at 12:00 PM | PRESS | Prepare the part (special) for lantern-row | done
-February 4, 2030 at 12:45 PM | PRESS | Prepare the part (special) for lantern-row | done
-February 4, 2030 at 1:30 PM | PRESS | Prepare the part (special) for lantern-row | done
-February 4, 2030 at 2:15 PM | PRESS | Prepare the part (special) for lantern-row | done
-February 4, 2030 at 3:00 PM | PRESS | Prepare the part (special) for lantern-row | done
-February 4, 2030 at 3:45 PM | PRESS | Prepare the part (special) for lantern-row | done
-February 4, 2030 at 4:30 PM | PRESS | Prepare the part (special) for lantern-row | done
-February 4, 2030 at 5:15 PM | PRESS | Prepare the part (special) for lantern-row | done
-February 4, 2030 at 6:00 PM | PRESS | Prepare the part (special) for lantern-row | done
-February 4, 2030 at 6:45 PM | PRESS | Prepare the part (special) for lantern-row | done
-February 4, 2030 at 7:30 PM | PRESS | Prepare the part (special) for lantern-row | done
-February 4, 2030 at 8:15 PM | PRESS | Prepare the part (special) for lantern-row | done
-February 4, 2030 at 9:00 PM | PRESS | Prepare the part (special) for lantern-row | done
-February 4, 2030 at 9:45 PM | PRESS | Prepare the part (special) for lantern-row | done
-February 5, 2030 at 9:30 AM | PRESS | Prepare the part (special) for lantern-row | done
+February 3, 2030 at 5:00 PM | NOTICE | Not Cast As Pickett The Ferret | Hollis Reed Casting cast another actor as Pickett The Ferret. Casting doesn’t give its reasons. The Opportunities tab shows what went into it: your audition, the role’s fit and the field.
 February 6, 2030 at 5:00 PM | NOTICE | Not Cast As The Narrator | The film’s producers cast another actor as The Narrator. Casting doesn’t give its reasons. The Opportunities tab shows what went into it: your audition, the role’s fit and the field.
 February 7, 2030 at 7:00 AM | STOP | Salt Witness: Shoot Day 1 | Go
 February 8, 2030 at 7:00 AM | STOP | Salt Witness: Shoot Day 2 | Go
@@ -970,7 +947,6 @@ February 22, 2030 at 9:30 PM | PRESS | Prepare the sides (rehearse) for s1.1itaf
 February 23, 2030 at 9:15 AM | PRESS | Prepare the sides (rehearse) for s1.1itaf.2030-02-18.new-york.ultra-low-budget.0.1 | done
 February 23, 2030 at 10:00 AM | PRESS | Tape It for s1.1itaf.2030-02-18.new-york.ultra-low-budget.0.1 | done
 February 23, 2030 at 11:00 AM | PRESS | Update Your Résumé | done
-February 25, 2030 at 10:00 AM | STOP | Lantern Row: Recording Session 1 | Go
 February 27, 2030 at 5:00 PM | WHAT NEEDS YOU | An Offer For Reese | Hargrove Casting offers you Reese in Brisco Quarry, a fictional ultra-low-budget feature film. It pays $280.00 a day for four days, the SAG-AFTRA Ultra Low Budget Day Performer minimum. A live-action feature on an independent budget: two takes a scene and time for only one more in a day, the scenes shot by location, and a release in cinemas a year on. The work is from April 1, 2030 to April 4, 2030, in New York. The offer stands until March 2, 2030 at 5:00 PM. | Accept The Offer, Decline The Offer
 February 27, 2030 at 5:00 PM | PRESS | Accept The Offer for s1.1itaf.2030-02-18.new-york.ultra-low-budget.0.1 | done
 February 27, 2030 at 5:00 PM | PRESS | Prepare the part (read) for s1.1itaf.2030-02-18.new-york.ultra-low-budget.0.1 | done
@@ -982,7 +958,6 @@ February 28, 2030 at 9:00 AM | PRESS | Prepare the part (lines) for s1.1itaf.203
 February 28, 2030 at 10:00 AM | PRESS | Prepare the part (rehearse) for s1.1itaf.2030-02-18.new-york.ultra-low-budget.0.1 | done
 February 28, 2030 at 11:30 AM | PRESS | Prepare the part (rehearse) for s1.1itaf.2030-02-18.new-york.ultra-low-budget.0.1 | done
 February 28, 2030 at 12:00 PM | NOTICE | Paid For Static On Route 9 | Dead Air Films paid $1,120.00 for the week of February 18, 2030, less $85.68 withheld for tax, so $1,034.32 went into your Chase Total Checking.
-February 28, 2030 at 12:00 PM | NOTICE | Paid For Lantern Row | Paper Lantern Animation paid $1,402.00 for the week of February 25, 2030, less $112.45 withheld for tax, so $1,289.55 went into your Chase Total Checking.
 February 28, 2030 at 1:00 PM | PRESS | Prepare the part (rehearse) for s1.1itaf.2030-02-18.new-york.ultra-low-budget.0.1 | done
 February 28, 2030 at 2:30 PM | PRESS | Prepare the part (rehearse) for s1.1itaf.2030-02-18.new-york.ultra-low-budget.0.1 | done
 February 28, 2030 at 4:00 PM | PRESS | Prepare the part (rehearse) for s1.1itaf.2030-02-18.new-york.ultra-low-budget.0.1 | done

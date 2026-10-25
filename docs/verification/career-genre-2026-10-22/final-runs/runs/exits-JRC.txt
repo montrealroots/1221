@@ -1,7 +1,7 @@
-at f32cf407, 0 tracked files uncommitted, 2026-10-25T13:10:49Z
-journeys-compare exit=0 secs=8 cmd: npx vite-node tools/journeys.ts -- --compare /tmp/claude-0/-home-user-1221/93119f3d-c8d9-5356-8130-0e0fe32e5c95/scratchpad/f27-jstate --out /tmp/claude-0/-home-user-1221/93119f3d-c8d9-5356-8130-0e0fe32e5c95/scratchpad/f27-journeys/compare.json
-journeys-summarize exit=0 secs=7 cmd: npx vite-node tools/journeys.ts -- --summarize /tmp/claude-0/-home-user-1221/93119f3d-c8d9-5356-8130-0e0fe32e5c95/scratchpad/f27-journeys
-b20-journeys-table exit=0 secs=7 cmd: npx vite-node tools/b20-journeys.ts -- --table /tmp/claude-0/-home-user-1221/93119f3d-c8d9-5356-8130-0e0fe32e5c95/scratchpad/f27-b20journeys
-b19-lives exit=0 secs=382 cmd: npx vite-node docs/verification/career-2026-10-20/playthroughs/play.ts -- lives /tmp/claude-0/-home-user-1221/93119f3d-c8d9-5356-8130-0e0fe32e5c95/scratchpad/f27-b20journeys/b19-lives
-b19-lives-diff exit=1 secs=0 cmd: diff -r docs/verification/career-2026-10-20/playthroughs/transcripts /tmp/claude-0/-home-user-1221/93119f3d-c8d9-5356-8130-0e0fe32e5c95/scratchpad/f27-b20journeys/b19-lives
-DONE 2026-10-25T13:17:33Z
+at 9f974984, 0 tracked files uncommitted, 2026-10-25T15:00:17Z
+journeys-compare exit=0 secs=7 cmd: npx vite-node tools/journeys.ts -- --compare /tmp/claude-0/-home-user-1221/93119f3d-c8d9-5356-8130-0e0fe32e5c95/scratchpad/f27b-jstate --out /tmp/claude-0/-home-user-1221/93119f3d-c8d9-5356-8130-0e0fe32e5c95/scratchpad/f27b-journeys/compare.json
+journeys-summarize exit=0 secs=7 cmd: npx vite-node tools/journeys.ts -- --summarize /tmp/claude-0/-home-user-1221/93119f3d-c8d9-5356-8130-0e0fe32e5c95/scratchpad/f27b-journeys
+b20-journeys-table exit=0 secs=6 cmd: npx vite-node tools/b20-journeys.ts -- --table /tmp/claude-0/-home-user-1221/93119f3d-c8d9-5356-8130-0e0fe32e5c95/scratchpad/f27b-b20journeys
+b19-lives exit=0 secs=345 cmd: npx vite-node docs/verification/career-2026-10-20/playthroughs/play.ts -- lives /tmp/claude-0/-home-user-1221/93119f3d-c8d9-5356-8130-0e0fe32e5c95/scratchpad/f27b-b20journeys/b19-lives
+b19-lives-diff exit=1 secs=0 cmd: diff -r docs/verification/career-2026-10-20/playthroughs/transcripts /tmp/claude-0/-home-user-1221/93119f3d-c8d9-5356-8130-0e0fe32e5c95/scratchpad/f27b-b20journeys/b19-lives
+DONE 2026-10-25T15:06:22Z

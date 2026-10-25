@@ -1,4 +1,4 @@
-at f32cf407, 2 files uncommitted
+at 9f974984, 2 files uncommitted
 stage exit=0 cmd: npx vite-node tools/interpretation.ts -- --fresh --stage --out <out>/stage.json --st3 <out>/st3.json --st6 <out>/st6.json
 indirect exit=0 cmd: npx vite-node tools/h4-indirect.ts -- --out <out>/h4-indirect.json
 signature exit=0 cmd: npx vite-node tools/genre-signature.ts -- --out <out>/signature.json

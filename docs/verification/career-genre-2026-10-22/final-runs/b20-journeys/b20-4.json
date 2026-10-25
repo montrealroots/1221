@@ -14,35 +14,35 @@
    "part": 1,
    "from": "2026-08-24",
    "to": "2027-06-01",
-   "secs": 34,
+   "secs": 33,
    "reloads": 9
   },
   {
    "part": 2,
    "from": "2027-06-01",
    "to": "2028-06-01",
-   "secs": 93,
+   "secs": 102,
    "reloads": 12
   },
   {
    "part": 3,
    "from": "2028-06-01",
    "to": "2029-06-04",
-   "secs": 140,
+   "secs": 129,
    "reloads": 11
   },
   {
    "part": 4,
    "from": "2029-06-04",
    "to": "2029-11-01",
-   "secs": 46,
+   "secs": 43,
    "reloads": 5
   },
   {
    "part": 5,
    "from": "2029-11-01",
    "to": "2030-03-01",
-   "secs": 26,
+   "secs": 25,
    "reloads": 4,
    "done": true
   }
@@ -371,7 +371,7 @@
    }
   ],
   "keptReplayed": 160,
-  "keptMismatched": 3,
+  "keptMismatched": 0,
   "genres": [
    {
     "g": "satire",
@@ -536,14 +536,12 @@
    "fails": []
   },
   "10 save and reload": {
-   "pass": false,
+   "pass": true,
    "evidence": [
     "60 reloads (every thirty days and at each part), every one the same to the byte: true",
-    "160 kept results replayed from their inputs, 3 different"
+    "160 kept results replayed from their inputs, 0 different"
    ],
-   "fails": [
-    "3 kept results replay to another figure"
-   ]
+   "fails": []
   }
  },
  "continuity": {
@@ -693,7 +691,7 @@
      "weeks": 7,
      "newWords": 6,
      "moved": 3,
-     "stripped": 4
+     "stripped": 2
     },
     {
      "from": "2029-12-30",
@@ -707,7 +705,7 @@
    ],
    "runs": 47,
    "staleRuns": 0,
-   "wordsOnlyChanges": 80
+   "wordsOnlyChanges": 78
   },
   "feedback": {
    "notes": 269,
@@ -9209,7 +9207,7 @@
    59.77,
    0.81,
    1,
-   "prep:genre screen 0.81 prep:interpretation imagination 0.53 composure 0.34"
+   "prep:genre screen 0.81 prep:interpretation imagination 0.53 composure 0.33"
   ],
   [
    "2029-08-12",
@@ -9217,7 +9215,7 @@
    59.77,
    0.55,
    1,
-   "prep:genre prep:interpretation screen 0.55 imagination 0.48 composure 0.46"
+   "prep:genre prep:interpretation screen 0.55 imagination 0.49 composure 0.46"
   ],
   [
    "2029-08-19",
@@ -9225,7 +9223,7 @@
    59.77,
    0.5,
    1,
-   "prep:genre screen 0.5 imagination 0.48 composure 0.43 comedy 0.25"
+   "prep:genre screen 0.5 imagination 0.48 composure 0.42 comedy 0.25"
   ],
   [
    "2029-08-26",
@@ -9233,7 +9231,7 @@
    59.77,
    0.5,
    1,
-   "prep:genre screen 0.5 imagination 0.48 composure 0.43 comedy 0.25"
+   "prep:genre screen 0.5 imagination 0.48 composure 0.42 comedy 0.25"
   ],
   [
    "2029-09-02",
@@ -9241,7 +9239,7 @@
    59.77,
    0.54,
    1,
-   "prep:genre screen 0.54 imagination 0.48 composure 0.4 comedy 0.23"
+   "prep:genre screen 0.54 imagination 0.48 composure 0.39 comedy 0.23"
   ],
   [
    "2029-09-09",
@@ -9249,7 +9247,7 @@
    59.77,
    0.54,
    1,
-   "prep:genre screen 0.54 imagination 0.48 composure 0.4 comedy 0.23"
+   "prep:genre screen 0.54 imagination 0.48 composure 0.39 comedy 0.23"
   ],
   [
    "2029-09-16",
@@ -11453,7 +11451,7 @@
     "at": "2029-07-17T22:00",
     "what": "the first work day",
     "same": true,
-    "bytes": 1843897,
+    "bytes": 1845147,
     "credit": {
      "at": "2029-07-17T22:00",
      "what": "the first work day",
@@ -11473,7 +11471,7 @@
     "at": "2029-07-26T16:00",
     "what": "the first pay",
     "same": true,
-    "bytes": 1851535,
+    "bytes": 1855246,
     "credit": {
      "at": "2029-07-26T16:00",
      "what": "the first pay",
@@ -11493,7 +11491,7 @@
     "at": "2030-01-01T12:30",
     "what": "the end of 2029",
     "same": true,
-    "bytes": 1860023,
+    "bytes": 1863733,
     "credit": {
      "at": "2030-01-01T12:30",
      "what": "the end of 2029",
@@ -11889,7 +11887,7 @@
      ],
      "transactions": 1164
     },
-    "secs": 7
+    "secs": 6
    },
    {
     "why": "an audition (self-tape) set for 2029-06-10T22:00, Robin in Last Bus To Eastview",
@@ -11956,7 +11954,7 @@
      ],
      "transactions": 1181
     },
-    "secs": 7
+    "secs": 8
    },
    {
     "why": "an offer standing: An Offer For Rosalind Nakashima",
@@ -12013,7 +12011,7 @@
      ],
      "transactions": 1204
     },
-    "secs": 9
+    "secs": 7
    }
   ],
   "workDays": [

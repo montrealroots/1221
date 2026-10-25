@@ -6,21 +6,21 @@
    "part": 1,
    "from": "2027-06-01",
    "to": "2028-03-31",
-   "secs": 70,
+   "secs": 63,
    "reloads": 9
   },
   {
    "part": 2,
    "from": "2028-03-31",
    "to": "2029-01-29",
-   "secs": 75,
+   "secs": 71,
    "reloads": 11
   },
   {
    "part": 3,
    "from": "2029-01-29",
    "to": "2029-09-01",
-   "secs": 139,
+   "secs": 132,
    "reloads": 6,
    "done": true
   }
@@ -4287,7 +4287,7 @@
      "work": [],
      "transactions": 1148
     },
-    "secs": 18
+    "secs": 19
    },
    {
     "why": "an audition (self-tape) set for 2029-06-10T22:00, The Narrator in Tidewater: The Last Oyster Towns",
@@ -4395,7 +4395,7 @@
      ],
      "transactions": 1188
     },
-    "secs": 19
+    "secs": 18
    }
   ],
   "workDays": [],
