@@ -625,7 +625,10 @@ describe('W12: the formats apart', () => {
     // no agent could.
     for (const id of ['lantern-row', 'kite-and-crow', 'salt-road', 'tidewater-narrator']) expect(projectById(id)!.access, id).toEqual({ agent: true, open: 'anyone' });
     const voice = accept(sim, offerFor(sim, 'salt-road', at(2027, 6, 7)));
-    expect(voice.contract!.clauses.some((x) => x.kind === 'rule' && x.id === 'voice-over')).toBe(true);
+    // Unrepresented, its contract says nothing of an agent's commission, as no other contract does. Until 2026-10-25 every
+    // voice contract said voice-over was outside an agent's agreement; from then it says what the agreement it's made under
+    // covers (tests/b27-representation.test.ts), and there's none here.
+    expect(voice.contract!.clauses.some((x) => x.kind === 'rule' && x.id === 'voice-over')).toBe(false);
     expect(decisionsFor(projectById('salt-road')!).map((d) => d.id)).toEqual(['sync', 'stressful']);
     // Represented, the agent's agreement still leaves voice-over out: no commission on a dub paid over scale, and the
     // agreement's on a feature paid the same (TEST SETUP: the agreement and both bookings written as the systems write them).

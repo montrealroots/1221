@@ -57,7 +57,9 @@ import { inSaveMoney } from './banking';
 import { payeeAccount } from './cash';
 import { recordWages } from './earnings';
 import { businessDaysOn } from './permission';
-import { PAY_KIND, projectOf, weekOf, withholdingOn } from './propay';
+import { PAY_KIND, owedAgreement, projectOf, weekOf, withholdingOn } from './propay';
+import { coveredUnder, outsideWords } from './representation';
+import { agencyOf, agentById } from '../content/agents';
 import { seasonNumber } from './series';
 import { KIND_WORDS, counted, overtimeHours } from './projobs';
 import { dubDaysOf, formatOf, promoFor, promoTerm } from './workflow';
@@ -201,8 +203,11 @@ export function contractFor(sim: Simulation, e: Engagement, offer: NonNullable<i
     clauses.push({ kind: 'episodes', ordered: s.episodes, guaranteed: t.schedule.guaranteed, expected: t.schedule.expected, daysEach: s.daysEach, numbers: extra.season.guaranteed, further: extra.season.further.map((n) => ({ n, status: 'pending' as const })) });
   }
   if (s && extra.option) clauses.push({ kind: 'option', season: seasonNumber(sim, s, extra.option.year), year: extra.option.year, by: extra.option.by, raise: OPTION_RAISE, status: 'open' });
-  // The workflow's rules last (from 2026-10-24, brief 25's Module 5, `workflowRules`).
+  // The workflow's rules last (from 2026-10-24, brief 25's Module 5, `workflowRules`), and voice-over's commission by the
+  // agreement it's made under (from 2026-10-25, brief 27, `voiceCommission`).
   clauses.push(...workflowRules(t));
+  const voiceRule = voiceCommission(sim, e, t);
+  if (voiceRule) clauses.push(voiceRule);
   // A promotional film for the release, and what it pays (from 2026-10-25, brief 27's loop 34, `promoTerm`).
   const estimate = e.pay.reduce((n, p) => n + (p.deferred ? 0 : p.promised), 0);
   if (promoFor(t)) clauses.push({ kind: 'rule', id: 'promo', words: promoTerm(t, estimate) });
@@ -236,8 +241,37 @@ function workflowRules(t: ProjectTemplate): ContractClause[] {
   if (t.schedule.kind === 'shoot' && t.schedule.stuntDays?.length) out.push({ kind: 'rule', id: 'stunts', words: 'A stunt is done by you only with your consent, given before it, and with a qualified stunt coordinator there and consulted, as the agreement sets. Without your consent the stunt double does it.' });
   if (t.intimacy) out.push({ kind: 'rule', id: 'intimacy', words: `The part has ${t.intimacy.words}. It’s shot on a closed set with an intimacy coordinator, only with your written consent describing it; you can withdraw consent until it’s shot, and a body double does it then, as the agreement allows. Declining it doesn’t cost you the part, the pay or the credit.` });
   if (fmt.looping) out.push({ kind: 'rule', id: 'looping', words: `The production can recall you within ${fmt.looping} months of the wrap to loop: a four-hour session paid half a day, as the agreement sets.` });
-  if (voiceOnlyFormat(fmt.workflow)) out.push({ kind: 'rule', id: 'voice-over', words: 'Voice-over work is outside an agent’s agreement, so no commission is owed on it.' });
   return out;
+}
+
+/** The person whose career holds an engagement: the player's, in play, and anyone's whose record has it. */
+const holderOf = (sim: Simulation, e: Engagement): Person | undefined =>
+  (sim.player.pro?.engagements.includes(e) ? sim.player : Object.values(sim.universe.people).find((p) => p.pro?.engagements.includes(e)));
+
+/**
+ * Whether commission is owed on voice-over work, said on its contract, by the agreement it's made under as the pay reads
+ * it (`owedAgreement`, then `coveredUnder`, the rule `commissionOn` applies): covered where the agreement's terms take in
+ * voice-over (a voice-over department's, or one an office agreed to add it to), and otherwise not, saying why. Made
+ * unrepresented, there's no agreement to speak of and no clause, as on any other work.
+ *
+ * From 2026-10-24 (brief 25's Module 5) to 2026-10-25 every voice contract said "Voice-over work is outside an agent’s
+ * agreement, so no commission is owed on it", one rule for every agreement. Brief 27 gave each agreement its own terms and
+ * left the sentence standing, so a voice part booked under an agreement that covers voice-over said no commission was
+ * owed while the pay took ten percent of it (found by the review of 2026-10-25).
+ */
+function voiceCommission(sim: Simulation, e: Engagement, t: ProjectTemplate): ContractClause | undefined {
+  if (!voiceOnlyFormat(formatOf(t).workflow)) return undefined;
+  const person = holderOf(sim, e);
+  const owed = person ? owedAgreement(person, e) : undefined;
+  if (!owed) return undefined;
+  const agent = agentById(owed.agreement.agentId);
+  const agency = agent ? agencyOf(agent).name : 'your agency';
+  return {
+    kind: 'rule', id: 'voice-over',
+    words: coveredUnder(owed.agreement, t)
+      ? `Your agreement with ${agency} covers voice-over work, so commission is owed on this work as on the rest it covers.`
+      : `No commission is owed on this work: ${outsideWords(owed.agreement, t, agency)}.`,
+  };
 }
 
 const voiceOnlyFormat = (w: string): boolean => w === 'voice' || w === 'dubbing' || w === 'narration';

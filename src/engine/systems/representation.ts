@@ -14,10 +14,10 @@
  * **Now each agreement keeps its terms as versions** (`AgreementDeal` on `Agreement.deal`): the first as offered, from the
  * agent's department (`firstDeal`), and a second where the office agrees to the actor's ask. Three things read the current
  * one (`dealOf`): when it ends (the accept's `endsAt`), the commission (`coveredUnder`, read by `commissionOn` in
- * `systems/propay.ts`) and the offers its agent handles (`makeOffer`, `systems/projobs.ts`), and which parts its agent
- * submits the actor for (`submitsFor`, read by `reachOf`). The words the player reads under The Agreement are built from it
- * (`termsFor`), so the term that says it and the rule that reads it can't part. The commission's cap stays as it is: no
- * ask can touch it.
+ * `systems/propay.ts`, and by the clause a voice part's contract carries on it, `contractFor` in `systems/contracts.ts`)
+ * and the offers its agent handles (`makeOffer`, `systems/projobs.ts`), and which parts its agent submits the actor for
+ * (`submitsFor`, read by `reachOf`). The words the player reads under The Agreement are built from it (`termsFor`), so the
+ * term that says it and the rule that reads it can't part. The commission's cap stays as it is: no ask can touch it.
  *
  * **The ask** (`pro.ask_terms`): once, while the agreement is offered, the actor asks for a shorter term, for voice-over to be
  * added (only where the agency has a voice department in the game), or for work abroad to be added (where the game has work
@@ -35,7 +35,9 @@
  * **The festival introduction** (`introduceAtFestival`): an agent whose routes include `festival` meets the actor at a
  * festival where their film was selected and screens, an introduction the approach reads as it reads the School's
  * follow-up or a referral (`AgentRelation.via`), with the film among the work the office has to go on. The festival's own
- * system calls it when the player attends the screening and does its press; this file builds what it leads to.
+ * system calls it when the player attends the screening and does its press; this file builds what it leads to. The
+ * festival is named from the entry's own institution (`institutionById`): until the review of 2026-10-25 a call that
+ * named none said Sundance, whatever festival the entry was for.
  *
  * Every figure here is the game's ASSUMPTION, said where it's defined and where a player reads it.
  */
@@ -46,6 +48,7 @@ import type { Person } from '../domain/model';
 import { formatDate, formatTime, formatWeekdayDate, type Instant } from '../core/time';
 import { countWords, spokenList } from '../core/text';
 import { CITIES } from '../content/geography';
+import { institutionById } from '../content/awards';
 import { AGENTS, agencyCovers, agencyOf, agentById, departmentOf, type Agent, type AgentId } from '../content/agents';
 import { AGREEMENT, AGREEMENT_TERMS, type AgreementTerm, type ProjectTemplate } from '../content/careerwork';
 import type { MaterialKind, MaterialPurpose, Agreement, ProId } from './pro';
@@ -66,16 +69,17 @@ export type DealScope = 'legit' | 'voice';
 /** What the actor can ask for: a shorter term, voice-over added, or work abroad added. */
 export type TermsAsk = 'shorter' | 'voice' | 'abroad';
 
-/** One version of an agreement's terms: what it covers, where (country ids), for how long, and how it came to be. */
+/**
+ * One version of an agreement's terms: what it covers, where (country ids), for how long, and from when. The first is the
+ * terms as offered, a later one an ask the office agreed to (`Agreement.ask` says which). Until the review of 2026-10-25 a
+ * version kept `how` and `ask` as well, which nothing read: the version's number and the agreement's ask said both.
+ */
 export interface DealVersion {
   version: number;
   at: Instant;
   scope: DealScope[];
   territory: string[];
   termDays: number;
-  how: 'offered' | 'agreed';
-  /** The ask it answered, where the office agreed to one. */
-  ask?: TermsAsk;
 }
 
 /** An agreement's terms, every version kept, the last the one in force. */
@@ -141,7 +145,7 @@ export const purposeOf = (agent: Agent): Extract<MaterialPurpose, 'representatio
 
 /** The terms an agent's office offers first: its department's work, in the US, for `AGREEMENT.termDays`. */
 export function firstDeal(agent: Agent, at: Instant): DealVersion {
-  return { version: 1, at, scope: [voiceDepartment(agent) ? 'voice' : 'legit'], territory: [...TERMS.home], termDays: AGREEMENT.termDays, how: 'offered' };
+  return { version: 1, at, scope: [voiceDepartment(agent) ? 'voice' : 'legit'], territory: [...TERMS.home], termDays: AGREEMENT.termDays };
 }
 
 /**
@@ -152,7 +156,7 @@ export function dealOf(a: Agreement): DealVersion {
   const kept = a.deal?.versions.at(-1);
   if (kept) return kept;
   const agent = agentById(a.agentId);
-  return agent ? firstDeal(agent, a.offeredAt) : { version: 1, at: a.offeredAt, scope: ['legit'], territory: [...TERMS.home], termDays: AGREEMENT.termDays, how: 'offered' };
+  return agent ? firstDeal(agent, a.offeredAt) : { version: 1, at: a.offeredAt, scope: ['legit'], territory: [...TERMS.home], termDays: AGREEMENT.termDays };
 }
 
 /** What a version covers, in words: "stage, film and television work", "voice-over work", or both. */
@@ -181,7 +185,10 @@ export function termsFor(d: DealVersion): AgreementTerm[] {
   const set = (id: AgreementTerm['id'], words: string) => { const t = terms.find((x) => x.id === id); if (t) t.words = words; };
   const legit = d.scope.includes('legit');
   if (d.scope.includes('voice')) {
-    set('scope', legit ? 'Stage, film and television work, and voice-over work: animation, dubbing and narration, which the agency’s voice-over department handles.' : 'Voice-over work: animation, dubbing and narration, the work the agent’s department covers.');
+    // Who handles the voice-over work added to a legit agreement: the agent, with the agency's voice-over department (from
+    // the review of 2026-10-25; until then the words said the department handled it, while the submissions it makes say
+    // the agent submitted you).
+    set('scope', legit ? 'Stage, film and television work, and voice-over work: animation, dubbing and narration, which your agent handles with the agency’s voice-over department.' : 'Voice-over work: animation, dubbing and narration, the work the agent’s department covers.');
     set('excluded', legit ? 'Commercials aren’t covered. An agency usually handles them in another department.' : 'Stage, film and television work on camera, and commercials, aren’t covered. The agency handles them in its other departments.');
   }
   if (d.territory.some((c) => !TERMS.home.includes(c))) set('territory', `Work anywhere in the United States, and in ${ABROAD_WORDS()}, where the game has work abroad.`);
@@ -264,6 +271,12 @@ export function termsDraw(sim: Simulation, personId: string, agentId: AgentId, a
 /** When the office answers an ask made now: two days on, at its usual hour on its own clock. */
 const answerTime = (sim: Simulation, agent: Agent): Instant => onDayAt(sim.now, TERMS.answerDays, AGENT_TIMES.answerHour, officeZone(agent));
 
+/**
+ * What the game says of a real agent's answer (from the review of 2026-10-25): the agency's pages say nothing of its terms,
+ * so whether the office agrees is the game's, as every chance an office takes you further is (`REAL_CHANCE_WORDS`).
+ */
+export const realTermsWords = (agent: Agent): string => `${agencyOf(agent).name}’s pages say nothing of the terms its agents agree to, so whether ${agent.words.office} agrees is the game’s invention, not a fact about ${agent.name}.`;
+
 /** How an ask came out, in a sentence's end. */
 const answerWords = (agent: Agent, answer: NonNullable<AgreementAsk['answer']>): string => (answer === 'agreed' ? `${agent.words.office} agreed` : `${agent.words.office} kept the terms as offered`);
 
@@ -300,7 +313,7 @@ export function askWaiting(sim: Simulation, person: Person, agent: Agent): strin
 /** The terms an agreed ask makes, from the version in force. */
 function agreedVersion(d: DealVersion, ask: TermsAsk, at: Instant): DealVersion {
   return {
-    version: d.version + 1, at, how: 'agreed', ask,
+    version: d.version + 1, at,
     scope: ask === 'voice' ? [...d.scope, 'voice'] : [...d.scope],
     territory: ask === 'abroad' ? [...d.territory, ...TERMS.abroad.filter((c) => !d.territory.includes(c))] : [...d.territory],
     termDays: ask === 'shorter' ? TERMS.shorterDays : d.termDays,
@@ -328,7 +341,7 @@ function answerAsk(sim: Simulation, person: Person, agent: Agent, a: Agreement):
   sim.notify({
     category: 'career', importance: 65, route: REPRESENTATION_ROUTE, refType: 'pro-agent', refId: agent.id,
     title: agreed ? `${agent.name}’s Office Agreed To Your Ask` : `${agent.name}’s Office Kept Its Terms`,
-    body: `${agreed ? `${capital(officeOf(agent))} agreed to ${askWords(ask.what, before)}, and The Agreement on the Representation tab now says so.` : `${capital(officeOf(agent))} kept the agreement’s terms as it offered them, without ${askWords(ask.what, before)}.`} The offer stands until ${formatDate(a.standsUntil, z)}: accept it or decline it there.`,
+    body: `${agreed ? `${capital(officeOf(agent))} agreed to ${askWords(ask.what, before)}, and The Agreement on the Representation tab now says so.` : `${capital(officeOf(agent))} kept the agreement’s terms as it offered them, without ${askWords(ask.what, before)}.`} The offer stands until ${formatDate(a.standsUntil, z)}: accept it or decline it there.${agent.real ? ` ${realTermsWords(agent)}` : ''}`,
   });
 }
 
@@ -342,7 +355,10 @@ function answerAsk(sim: Simulation, person: Person, agent: Agent, a: Agreement):
  * there, the film goes among the work the office has to go on (`AgentRelation.festivals`, read by `workSeen` and
  * `caseKeys`), and, where no approach is under way or held, the meeting is the introduction the approach needs
  * (`via`, read by `sendRefusal`), as the School's follow-up and a referral are. Once for each festival entry: a second
- * call for it, or one for an entry not selected, does nothing. Returns the agents it introduced.
+ * call for it, or one for an entry not selected, does nothing. Returns the agents it introduced. The festival is the
+ * entry's own (`institutionById`), named as `festival` says where the caller gives a name; and the film "screened" there
+ * once the entry says so, and was "in the official selection" before (until the review of 2026-10-25 an unnamed call said
+ * Sundance and every call said "screened").
  *
  * ASSUMPTION, the game's: that an agent's office meets the actors of films it sees at a festival. A festival publishes its
  * films and its screenings, not who comes, and the notice says the meeting is the game's.
@@ -352,7 +368,8 @@ export function introduceAtFestival(sim: Simulation, person: Person, entryId: Pr
   if (!entry || (entry.state !== 'selected' && entry.state !== 'screened')) return [];
   const film = person.pro?.credits.find((c) => c.id === entry.creditId);
   if (!film) return [];
-  const name = festival ?? `the ${entry.year} Sundance Film Festival`;
+  const name = festival ?? `the ${entry.year} ${institutionById(entry.institution).name}`;
+  const shown = entry.state === 'screened' ? 'screened' : 'was in the official selection';
   const z = sim.zone;
   const introduced: AgentId[] = [];
   for (const agent of AGENTS.filter((a) => a.routes.includes('festival'))) {
@@ -360,22 +377,22 @@ export function introduceAtFestival(sim: Simulation, person: Person, entryId: Pr
     if (rel.festivals?.some((f) => f.entryId === entry.id)) continue;
     const unread = rel.noticeShownAt === undefined;
     rel.noticeShownAt ??= sim.now;
-    note(sim, rel, 'discovered', 'discovered', `You first heard of ${agent.words.him} at ${name}, where ${film.project} screened.`);
-    (rel.festivals ??= []).push({ entryId: entry.id, creditId: film.id, festival: name, at: sim.now });
+    note(sim, rel, 'discovered', 'discovered', `You first heard of ${agent.words.him} at ${name}, where ${film.project} ${shown}.`);
+    (rel.festivals ??= []).push({ entryId: entry.id, creditId: film.id, festival: name });
     const held = underWay(sim, agent, rel) ?? tooSoon(sim, rel);
     const key = `festival:${entry.id}`;
     const intro = unread ? ` ${agent.notice}` : '';
     const how = `In the game an agent’s office meets the actors of the films it sees at a festival. The festival publishes its films and screenings, not who comes, so the meeting is the game’s.`;
     const title = `${agent.name}’s Office Met You At The Festival`;
     if (held) {
-      note(sim, rel, 'introduced', key, `You met ${agent.words.office} at ${name}, where ${film.project} screened. Where you stood with it didn’t change, and it has the film to go on.`);
-      if (person.id === sim.universe.playerId) sim.notify({ category: 'career', importance: 55, route: REPRESENTATION_ROUTE, refType: 'pro-agent', refId: agent.id, title, body: `You met ${officeOf(agent)} at ${name}, where ${film.project} screened. Where you stand with it doesn’t change: ${held} It has the film to go on now.${intro} ${how}` });
+      note(sim, rel, 'introduced', key, `You met ${agent.words.office} at ${name}, where ${film.project} ${shown}. Where you stood with it didn’t change, and it has the film to go on.`);
+      if (person.id === sim.universe.playerId) sim.notify({ category: 'career', importance: 55, route: REPRESENTATION_ROUTE, refType: 'pro-agent', refId: agent.id, title, body: `You met ${officeOf(agent)} at ${name}, where ${film.project} ${shown}. Where you stand with it doesn’t change: ${held} It has the film to go on now.${intro} ${how}` });
       continue;
     }
     rel.via = { route: 'festival', at: sim.now, by: name };
     setStage(sim, rel, 'introduced');
-    note(sim, rel, 'introduced', key, `${capital(agent.words.office)} met you at ${name}, where ${film.project} screened: an introduction, so you could send it your materials.`);
-    if (person.id === sim.universe.playerId) sim.notify({ category: 'career', importance: 60, route: REPRESENTATION_ROUTE, refType: 'pro-agent', refId: agent.id, title, body: `You met ${officeOf(agent)} at ${name}, on ${formatDate(sim.now, z)}, where ${film.project} screened. It’s an introduction: you can send it your materials from the Career screen’s Representation tab, and it has the film to go on.${intro} ${how}` });
+    note(sim, rel, 'introduced', key, `${capital(agent.words.office)} met you at ${name}, where ${film.project} ${shown}: an introduction, so you could send it your materials.`);
+    if (person.id === sim.universe.playerId) sim.notify({ category: 'career', importance: 60, route: REPRESENTATION_ROUTE, refType: 'pro-agent', refId: agent.id, title, body: `You met ${officeOf(agent)} at ${name}, on ${formatDate(sim.now, z)}, where ${film.project} ${shown}. It’s an introduction: you can send it your materials from the Career screen’s Representation tab, and it has the film to go on.${intro} ${how}` });
     introduced.push(agent.id);
   }
   return introduced;

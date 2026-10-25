@@ -32,7 +32,7 @@ import { formatMoney } from '../../core/money';
 import { countWords } from '../../core/text';
 import { DEMO, HEADSHOTS, NAME_MOST, REEL, RESUME, SESSION_HOURS, SKILL_LISTED_AT, SPECIAL_SKILLS, clockWords } from '../../systems/pro';
 import { AGENT_TIMES, COOLDOWN_WORDS, GATE, REFERRAL_BAND, TEN, TIME_WORDS, TRAVEL_MINUTES, routesWords, tripWords } from '../../systems/proagent';
-import { ASK_LABEL, TERMS, termWords, voiceDepartment } from '../../systems/representation';
+import { ASK_LABEL, TERMS, chanceTenths, termWords, termsChance, voiceDepartment } from '../../systems/representation';
 import { YALE_DRAMA } from '../school';
 import { AGENTS, agencyOf } from '../agents';
 import { AGREEMENT, AUDITION_TOWNS, UNIONS } from '../careerwork';
@@ -82,6 +82,8 @@ const AGENCY = agencyOf(AGENT);
 /** The real agents beside the game's own (from 2026-10-24, brief 25's Module 3), and their office. */
 const REAL = AGENTS.filter((a) => a.real);
 const REAL_OFFICE = agencyOf(REAL[0]!);
+/** The factors at the bar in Asking For Different Terms' example, which its chance is worked from. */
+const EXAMPLE_AT_BAR = 5;
 /** The voice-over agent (from 2026-10-25, brief 27): the game's own, in its agency's voice-over department. */
 const VOICE_AGENT = AGENTS.find((a) => voiceDepartment(a))!;
 const REP_CHAPTER = CHAPTER_FOR['pro.agent_notice']!.title;
@@ -513,7 +515,7 @@ export const CAREER_GUIDE: readonly GuideEntry[] = [
     questions: ['What does the agreement say?', 'How much commission does an agent take?', 'How do I end the agreement?', 'Can I have two agents?'],
     where: on('representation', 'Career, Representation, The Agreement'),
     available: `From the guide’s chapter “${REP_CHAPTER}”.`,
-    short: `When an agent offers to represent you, The Agreement shows every term before you answer, each marked A Published Rule or The Game’s Own Term. It runs a year from the day you sign it, or ${termWords(TERMS.shorterDays)} where you asked for a shorter term and the office agreed, and the offer stands ${word(AGREEMENT.offerStandsDays / 7)} weeks.\n\nSigning changes nothing at the School and gives no permission to work. It can end by agreement at any time, or under Equity’s or SAG-AFTRA’s rules, or when its year is up. You have one agent at a time: another agent’s agreement can’t start while one runs.`,
+    short: `When an agent offers to represent you, The Agreement shows every term before you answer, each marked A Published Rule or The Game’s Own Term. It runs a year from the day you sign it, or ${termWords(TERMS.shorterDays)} where you asked for a shorter term and the office agreed, and the offer stands ${word(AGREEMENT.offerStandsDays / 7)} weeks.\n\nSigning changes nothing at the School and gives no permission to work. It can end by agreement at any time, or under Equity’s or SAG-AFTRA’s rules, or when its term is up. You have one agent at a time: another agent’s agreement can’t start while one runs.`,
     steps: [
       'Read every term under The Agreement.',
       'Press Accept The Agreement, or Decline The Agreement.',
@@ -572,7 +574,7 @@ export const CAREER_GUIDE: readonly GuideEntry[] = [
     later: [
       'Agreed, The Agreement’s terms change, and Asking For Different Terms keeps the terms as first offered.',
       `A shorter term ends the agreement ${termWords(TERMS.shorterDays)} after you sign it.`,
-      'Voice-over added, the agency’s voice-over department submits you for voice parts, and the commission is taken on them.',
+      'Voice-over added, your agent submits you for voice parts with the agency’s voice-over department, and the commission is taken on them.',
       'Work abroad added, your agent submits you for work in the UK and Australia, and the commission is taken on it.',
     ],
     interpret: [
@@ -593,9 +595,10 @@ export const CAREER_GUIDE: readonly GuideEntry[] = [
       { to: 'career.commission', kind: 'evaluation', why: 'Commission is taken only on what the agreement covers, so voice-over or work abroad added carries it.' },
     ],
     example: {
-      setup: `${AGENT.name} has offered you an agreement, and five of the factors are at the bar.`,
+      setup: `${AGENT.name} has offered you an agreement, and ${word(EXAMPLE_AT_BAR)} of the factors are at the bar.`,
       steps: [`Press ${ASK_LABEL.voice}.`, `Move the clock on ${word(TERMS.answerDays)} days.`],
-      result: 'The office agrees, What It Covers adds voice-over work, and a voice part can now come to you through the agency.',
+      // A chance, said as one (from the review of 2026-10-25: until then the result read as certain, "The office agrees").
+      result: `The game puts the chance at ${chanceTenths(termsChance('voice', EXAMPLE_AT_BAR, GATE))}. If the office agrees, What It Covers adds voice-over work, and a voice part can come to you through your agent; if it doesn’t, the terms stay as offered.`,
     },
   },
   {

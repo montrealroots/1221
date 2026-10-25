@@ -481,7 +481,9 @@ function agencyPage(person: Person, id: string): RefPage | undefined {
   const name = a?.name ?? record!.name;
   const facts: RefFact[] = [];
   if (a) {
-    facts.push(fact('Office', a.office.city, a.real ? 'verified' : 'simulated'), fact('Department', `${a.department.called}, also called ${a.department.alsoCalled}`, a.real ? 'verified' : 'simulated'), fact('Submissions', a.policy.words, a.real ? 'verified' : 'simulated'));
+    // Its other departments too (from 2026-10-25, brief 27's review: until then the page gave only the legit department,
+    // and listed the voice-over agent under it).
+    facts.push(fact('Office', a.office.city, a.real ? 'verified' : 'simulated'), ...[a.department, ...(a.otherDepartments ?? [])].map((d) => fact('Department', `${d.called}, also called ${d.alsoCalled}`, a.real ? 'verified' : 'simulated')), fact('Submissions', a.policy.words, a.real ? 'verified' : 'simulated'));
   }
   if (record) {
     facts.push(fieldFact('About', record.about, (v) => v));
