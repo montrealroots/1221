@@ -30,6 +30,7 @@ import { healthOf } from './health';
 import { mayHurt } from './injury';
 import { workAuthorizedFor } from './permission';
 import { schedulePay } from './propay';
+import { withLanguage } from './speaking';
 
 const NY = 'America/New_York';
 const MIN = 60_000;
@@ -367,11 +368,12 @@ export function unitContext(sim: Simulation, person: Person, e: Engagement, t: P
   const voice = strainOf(person, sim.now);
   const pickup = extra.pickup ? { connection: 0.6 } : {};
   const choice = { ...lean, ...Object.fromEntries(Object.entries(pickup).map(([d, f]) => [d, f * (lean[d as Dimension] ?? 1)])) };
-  return {
+  // And the part's other language, where the actor has it to work on (from 2026-10-25, brief 27, `withLanguage`).
+  return withLanguage({
     task, techniques: t.role.techniques, difficulty: (t.role.stakes - 1) * BRIEF.stakes, condition: { ...cond, ...(voice > 0 ? { voice } : {}) },
     families: t.role.families, ...(Object.keys(choice).length ? { lean: leanWith(t.role.families, choice) } : {}),
     prep, required, key: `pro:${person.id}:${e.id}:${u.day}:${u.id}:${take}`,
-  };
+  }, person, t, e.prep);
 }
 
 /**

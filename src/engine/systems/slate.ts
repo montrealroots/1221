@@ -40,6 +40,7 @@ import {
   type KindProfile, type Market,
 } from '../content/slate';
 import { CITIES } from '../content/geography';
+import { partLanguage } from './speaking';
 
 const NY = 'America/New_York';
 
@@ -193,13 +194,18 @@ function makeProduction(sim: Simulation, tag: string, week: Instant, market: Mar
     const techniques: Partial<Record<Skill, number>> = { ...profile.techniques };
     for (const f of families) for (const [s, w] of Object.entries(FAMILY_SKILLS[f] ?? {}) as [Skill, number][]) techniques[s] = Math.max(techniques[s] ?? 0, w);
     const sched: ProjectTemplate['schedule'] = extra?.recurring ? { kind: 'episodes', guaranteed: 2, expected: pr.int(4, 6) } : schedule;
+    // A character who speaks another language as well as English (from 2026-10-25, brief 27), on its own stream keyed by
+    // the part (`partLanguage`), so no draw of the slate moves and every id, title and part is the one it was. The
+    // generator's version stays: a part a save was posted before then is kept in the save as it was, with no language
+    // (`keepProject`, `restoreSlate`), and only a part no save has seen yet can carry one.
+    const language = partLanguage(sim, kind, `${id}.${i}`);
     parts.push({
       id: `${id}.${i}`, kind, format: profile.format, fictional: true,
       project: title, company, casting, medium: profile.medium, genres,
       place,
       role: { part: name, size, for: forWhom, about, families: families.length ? families : ['drama'], techniques, stakes: profile.stakes },
       union: profile.union, contract: profile.contract,
-      requirements: { ages, sends: profile.sends, ...(profile.access.open === 'equity-members' ? { membersOnly: 'equity' as const } : {}) },
+      requirements: { ages, sends: profile.sends, ...(profile.access.open === 'equity-members' ? { membersOnly: 'equity' as const } : {}), ...(language ? { language } : {}) },
       stages: { audition: profile.audition, callback: pr.chance(profile.callback), ...laterRounds(kind, size, families) },
       schedule: sched,
       access: profile.access, pay: profile.pay,

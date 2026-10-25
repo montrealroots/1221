@@ -104,8 +104,14 @@ const a = (ability: AbilityId, weight: number): Input => ({ ability, weight });
 const tech = (weight: number): Input => ({ techniques: true, weight });
 const ALL: readonly ConditionKind[] = ['fatigue'];
 
-/** Coursework's parts, by their own words (`content/coursework.ts` `PrepDim`). */
-const COURSEWORK_PREP = { familiarity: 'Knowing the material', memorization: 'Learning the lines', interpretation: 'Making your choices', rehearsal: 'Rehearsal', partner: 'Work with your partner', revision: 'The revision' } as const;
+/**
+ * A professional part's other language, worked on by an actor who speaks it conversationally (from 2026-10-25, brief 27,
+ * `systems/speaking.ts`): given only where a part has one, so a piece of coursework never reads it.
+ */
+const LANGUAGE_PART = 'Working on the part’s language';
+
+/** Coursework's parts, by their own words (`content/coursework.ts` `PrepDim`), and a professional part's language. */
+const COURSEWORK_PREP = { familiarity: 'Knowing the material', memorization: 'Learning the lines', interpretation: 'Making your choices', rehearsal: 'Rehearsal', partner: 'Work with your partner', revision: 'The revision', language: LANGUAGE_PART } as const;
 
 /**
  * The abilities a scene, a taped brief and a night read of their own, before what the piece demands (from 2026-10-16,
@@ -393,7 +399,7 @@ export const TASK_PROFILES: Readonly<Record<string, TaskProfile>> = {
   },
   musicalNight: {
     id: 'musicalNight', label: 'A Night Of A Musical', what: 'A performance of a musical in front of an audience: the scenes, the songs and the numbers.',
-    prepLabel: { lines: 'Learning the lines and songs', blocking: 'The staging', notes: 'Taking the director’s notes', special: 'The choreography', genre: 'Knowing the genre' },
+    prepLabel: { lines: 'Learning the lines and songs', blocking: 'The staging', notes: 'Taking the director’s notes', special: 'The choreography', genre: 'Knowing the genre', language: LANGUAGE_PART },
     dims: {
       believability: { weight: 2, inputs: BASE_INPUTS.night.believability, prep: ['lines', 'notes'], conditions: ALL },
       interpretation: { weight: 1, inputs: BASE_INPUTS.night.interpretation, prep: ['notes', 'genre'] },
@@ -409,7 +415,7 @@ export const TASK_PROFILES: Readonly<Record<string, TaskProfile>> = {
     // are. Until then a night on stage read no genre: a play of a kind known was learned faster (`genreSpeed`), and once
     // its lines and blocking were complete, knowing its genre made no difference to the night.
     id: 'performance', label: 'A Night On Stage', what: 'A performance of a production in front of an audience.',
-    prepLabel: { lines: 'Learning the lines', blocking: 'The blocking', notes: 'Taking the director’s notes', genre: 'Knowing the genre' },
+    prepLabel: { lines: 'Learning the lines', blocking: 'The blocking', notes: 'Taking the director’s notes', genre: 'Knowing the genre', language: LANGUAGE_PART },
     dims: {
       believability: { weight: 3, inputs: BASE_INPUTS.night.believability, prep: ['lines', 'notes'], conditions: ALL },
       interpretation: { weight: 2, inputs: BASE_INPUTS.night.interpretation, prep: ['notes', 'genre'] },

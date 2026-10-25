@@ -35,6 +35,7 @@ import { IndustryPane } from '@/ui/career/IndustryPane';
 import { ReferencePane } from '@/ui/career/ReferencePane';
 import { recognitionOf } from '@/engine/systems/awards';
 import { TabBar } from '@/ui/components/TabBar';
+import { LEVEL_LABEL, languagesOf, spokenName } from '@/engine/content/languages';
 
 type CareerTab = 'overview' | 'portfolio' | 'representation' | 'opportunities' | 'work' | 'industry' | 'reference';
 
@@ -195,6 +196,11 @@ function ProfilePanel() {
             ? <ul className="small" style={{ margin: 0, paddingLeft: '1.1rem' }}>{p.skills.map((s) => <li key={s.skill}>{`${s.label}, ${s.level}${s.mastered ? ', mastered' : ''}`}</li>)}</ul>
             : <p className="small" style={{ margin: 0 }}>{`None yet. A technique such as stage combat, singing or accents goes on your résumé once it reaches ${SKILL_LISTED_AT}.`}</p>}
         </div>
+        {/* What they speak, as creation took it (from 2026-10-25, brief 27): a part written in one of them reads it. */}
+        <div className="col gap-2">
+          <h3 className="eyebrow" style={{ margin: 0 }}>Languages</h3>
+          <ul className="small" style={{ margin: 0, paddingLeft: '1.1rem' }}>{languagesOf(person).map((l) => <li key={l.id}>{`${spokenName(l.id) ?? l.id}, ${LEVEL_LABEL[l.level].toLowerCase()}`}</li>)}</ul>
+        </div>
       </div>
     </Panel>
   );
@@ -252,7 +258,7 @@ function ResumePanel() {
               <ul style={{ margin: 'var(--s2) 0 0', paddingLeft: '1.1rem' }}>{current.contains.map((line, i) => <li key={i}>{line}</li>)}</ul>
             </details>
           </>
-        ) : <p className="small" style={{ margin: 0 }}>You have no résumé yet. It’s made from your record: your name, training, credits and special skills.</p>}
+        ) : <p className="small" style={{ margin: 0 }}>You have no résumé yet. It’s made from your record: your name, training, credits, special skills and languages.</p>}
         <div className="row gap-2" style={{ flexWrap: 'wrap' }}>
           <Gated feature="pro.update_resume" className="btn btn-sm" disabled={!!no} title={no} onClick={() => { const r = run<{ version: number }>('pro.update_resume'); if (r.ok) toast(r.value!.version === 1 ? 'Your résumé is made.' : 'Your résumé is up to date.', 'positive'); }}>{label}</Gated>
         </div>

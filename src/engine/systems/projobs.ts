@@ -108,6 +108,7 @@ import { actorAwardsPassage, registerActorAwards } from './actorawards';
 import { registerCeremonies } from './ceremony';
 import { simulateRun } from './charts';
 import { keepProject, pushedPart, restoreSlate, slatePartsAt } from './slate';
+import { LANGUAGE_PREP, carriedLanguage, languageDemand, languageRefusal, languageStepRefusal, withLanguage, workOnLanguage } from './speaking';
 
 // ---------------------------------------------------------------------------------------------------------------------
 // The rules: each a published one with its source, or the game's ASSUMPTION
@@ -588,7 +589,10 @@ export function inScope(agentId: string, t: ProjectTemplate): boolean {
   return !!agent && agencyOf(agent).department.fields.includes(fieldOf(t));
 }
 
-/** The role's fit: how well you know its genre, and its techniques against yours, each 0 to 1, and the two together. */
+/**
+ * The role's fit: how well you know its genre, and its techniques against yours (and, from 2026-10-25, brief 27, how well
+ * you speak a language its character speaks besides English, `languageDemand`), each 0 to 1, and the two together.
+ */
 export interface Fit { genre: number; demands: number; fit: number }
 
 /**
@@ -617,7 +621,10 @@ export function fitOf(person: Person, t: ProjectTemplate): Fit {
   const genre = clamp(relevantGenre(person, projectGenresOf(t)).total / BRIEF.complete.genre, 0, 1);
   const asks = Object.entries(t.role.techniques) as [Skill, number][];
   const total = asks.reduce((a, [, w]) => a + w, 0);
-  const demands = total > 0 ? asks.reduce((a, [s, w]) => a + w * clamp((person.craft?.[s] ?? 0) / MASTERED, 0, 1), 0) / total : 1;
+  // A part written for a character who speaks another language as well as English (from 2026-10-25, brief 27,
+  // `languageDemand`): how well the actor speaks it, and their English, weighs beside the techniques.
+  const tongue = languageDemand(person, t);
+  const demands = total + tongue.weight > 0 ? (asks.reduce((a, [s, w]) => a + w * clamp((person.craft?.[s] ?? 0) / MASTERED, 0, 1), 0) + tongue.weight * tongue.f) / (total + tongue.weight) : 1;
   return { genre: r3(genre), demands: r3(demands), fit: r3((genre + demands) / 2) };
 }
 
@@ -774,7 +781,9 @@ export function postingsAt(sim: Simulation, person: Person, at: Instant): { proj
  * - **relationships**: a company or casting office the actor has worked for comes back to them a half again as often;
  * - **where they live**: an open in-person audition farther than a day's trip reaches nobody there, and an agent's half as
  *   often; a self-tape reaches anyone;
- * - **availability**: an agent doesn't put up a client booked on the part's days.
+ * - **availability**: an agent doesn't put up a client booked on the part's days;
+ * - **language** (from 2026-10-25, brief 27): nor one who doesn't speak a language the part's character speaks besides
+ *   English (`languageRefusal`), and the agent's chance reads how well they speak it through the fit.
  * The market, the season and the production's own circumstances are the slate's (`systems/slate.ts`): what's made where,
  * when, and whether a series is being made at all.
  */
@@ -792,6 +801,8 @@ export function slateReach(sim: Simulation, person: Person, t: ProjectTemplate, 
   if (worked) chance *= SLATE_REACH.worked;
   if (t.stages.audition === 'in-person' && needsTrip(person.currentLocationId, t.place.cityId)) chance *= via === 'agent' ? SLATE_REACH.farAgent : 0;
   if (via === 'agent' && bookedClash(person, datesOf({ projectId: t.id, postedAt: at }))) return 0;
+  // Nor a client who doesn't speak the part's other language (from 2026-10-25, brief 27, `languageRefusal`).
+  if (via === 'agent' && languageRefusal(person, t)) return 0;
   return Math.min(0.95, chance);
 }
 
@@ -1100,7 +1111,10 @@ export function bookedClash(person: Person, days: readonly { from: Instant; to: 
   return undefined;
 }
 
-/** What keeps the actor from the role, each in a sentence: the union an open call is for, the ages, a technique, another booking. */
+/**
+ * What keeps the actor from the role, each in a sentence: the union an open call is for, the ages, a technique, a language
+ * the character speaks that the actor doesn't (from 2026-10-25, brief 27), another booking.
+ */
 export function eligibilityProblems(person: Person, o: Opportunity, at: Instant): string[] {
   const t = projectOf(o);
   const out: string[] = [];
@@ -1112,6 +1126,9 @@ export function eligibilityProblems(person: Person, o: Opportunity, at: Instant)
   for (const [s, level] of Object.entries(t.requirements.skills ?? {}) as [Skill, number][]) {
     if ((person.craft?.[s] ?? 0) < level) out.push(`The part needs ${TECHNIQUE_LABEL[s].toLowerCase()} at ${level}, and yours is at ${Math.round(person.craft?.[s] ?? 0)}.`);
   }
+  // The character's other language, where the actor doesn't speak it (from 2026-10-25, brief 27).
+  const tongue = languageRefusal(person, t);
+  if (tongue) out.push(tongue);
   const clash = bookedClash(person, spansOf(person, t, datesOf(o)), o.id);
   if (clash) out.push(`You’re booked for ${clash.label} on ${formatDate(clash.from, NY)}, one of the same days.`);
   if (abroad(person, t)) {
@@ -1158,7 +1175,7 @@ const prepOfTarget = (x: PrepTarget): PartPrep => ('opportunity' in x ? x.opport
 const idOfTarget = (x: PrepTarget): string => ('opportunity' in x ? x.opportunity.id : x.engagement.id);
 
 /** A step's time on the sides or the part (`BRIEF.steps`), the part's twice the sides'. */
-export const prepMinutes = (x: PrepTarget, step: BriefStep): number => BRIEF.steps[step].minutes * ('engagement' in x ? WORK.partTimes : 1);
+export const prepMinutes = (x: PrepTarget, step: BriefStep | 'language'): number => (step === 'language' ? LANGUAGE_PREP.minutes : BRIEF.steps[step].minutes) * ('engagement' in x ? WORK.partTimes : 1);
 
 /** The round still to come, if any: the last one set. */
 export const roundToCome = (o: Opportunity): AuditionRound | undefined => [...(o.rounds ?? [])].reverse().find((r) => r.status === 'set');
@@ -1168,6 +1185,11 @@ export function prepareRefusal(sim: Simulation, person: Person, x: PrepTarget | 
   if (!x) return 'There’s nothing to prepare for that.';
   if ('opportunity' in x && (!roundToCome(x.opportunity) || (x.opportunity.status !== 'audition' && x.opportunity.status !== 'callback'))) return 'There are no sides yet: casting sends them with an audition.';
   if ('engagement' in x && !live(x.engagement)) return 'That work is over.';
+  // The part's other language, worked on by an actor who speaks it conversationally (from 2026-10-25, brief 27).
+  if (step === 'language') {
+    const held = 'opportunity' in x ? x.opportunity : x.engagement;
+    return languageStepRefusal(sim, person, projectById(held.projectId)!, held.prep, prepMinutes(x, 'language'));
+  }
   // A booked part prepares as its workflow does (from 2026-10-24, brief 25's Module 5): its own step, and only the
   // three it reads, so a voice part has no lines to learn by heart.
   if ('engagement' in x) {
@@ -1660,12 +1682,13 @@ export function auditionContext(sim: Simulation, person: Person, o: Opportunity,
   // read none of it, `TASK_PROFILES.audition`).
   prep.genre = fitOf(person, t).genre * BRIEF.complete.genre;
   required.genre = BRIEF.complete.genre;
-  return {
+  // And the part's other language, where the actor has it to work on (from 2026-10-25, brief 27, `withLanguage`).
+  return withLanguage({
     task: r.round === 'chemistry' ? TASK_PROFILES.chemistry! : r.round === 'test' ? TASK_PROFILES.screenTest! : r.form === 'self-tape' ? TASK_PROFILES.tape! : TASK_PROFILES.audition!,
     techniques: t.role.techniques, prep, required,
     difficulty: WORK.difficulty[r.round] + (t.role.stakes - 1) * BRIEF.stakes,
     condition: conditionAt(sim, person, sim.now), families: t.role.families, key: `pro:${person.id}:${o.id}:${idx}`,
-  };
+  }, person, t, o.prep);
 }
 
 /** A round judged: kept on the work record, the round's band and what held it back, and casting's next step on the clock. */
@@ -1722,6 +1745,8 @@ function pass(sim: Simulation, person: Person, o: Opportunity, why: string): voi
 export function directOfferFor(sim: Simulation, person: Person, t: ProjectTemplate, at: Instant): { engagementId: ProId; words: string } | undefined {
   const pro = person.pro;
   if (!pro || !t.slate || t.role.size === 'lead') return undefined;
+  // Never to an actor who doesn't speak the part's other language (from 2026-10-25, brief 27, `languageRefusal`).
+  if (languageRefusal(person, t)) return undefined;
   // A promotional film missed for that work (from 2026-10-25, brief 27's loop 34, `promoSession`) leaves it out.
   const before = pro.engagements
     .filter((e) => finished(e) && e.status !== 'canceled' && e.promo?.status !== 'missed' && projectById(e.projectId)?.casting === t.casting)
@@ -1891,8 +1916,9 @@ export function workContext(sim: Simulation, person: Person, e: Engagement, t: P
   // and the breakdown, against what completes each (`BRIEF.complete`).
   // And the play's genres known (from 2026-10-22, the owner's brief 21), as a shoot day reads them: until then a night
   // on stage read none (`TASK_PROFILES.performance`).
-  if (dayKindOf(t, i) === 'performance') return { ...base, task: TASK_PROFILES.performance!, prep: { lines: p.memorization, blocking: p.rehearsal, notes: p.interpretation, genre: fitOf(person, t).genre * BRIEF.complete.genre }, required: { lines: BRIEF.complete.memorization, blocking: BRIEF.complete.rehearsal, notes: BRIEF.complete.interpretation, genre: BRIEF.complete.genre } };
-  return { ...base, task: TASK_PROFILES.camera!, prep: { interpretation: p.interpretation, memorization: p.memorization, rehearsal: p.rehearsal, genre: fitOf(person, t).genre * BRIEF.complete.genre }, required: { interpretation: BRIEF.complete.interpretation, memorization: BRIEF.complete.memorization, rehearsal: BRIEF.complete.rehearsal, genre: BRIEF.complete.genre } };
+  // And the part's other language, where the actor has it to work on (from 2026-10-25, brief 27, `withLanguage`).
+  if (dayKindOf(t, i) === 'performance') return withLanguage({ ...base, task: TASK_PROFILES.performance!, prep: { lines: p.memorization, blocking: p.rehearsal, notes: p.interpretation, genre: fitOf(person, t).genre * BRIEF.complete.genre }, required: { lines: BRIEF.complete.memorization, blocking: BRIEF.complete.rehearsal, notes: BRIEF.complete.interpretation, genre: BRIEF.complete.genre } }, person, t, e.prep);
+  return withLanguage({ ...base, task: TASK_PROFILES.camera!, prep: { interpretation: p.interpretation, memorization: p.memorization, rehearsal: p.rehearsal, genre: fitOf(person, t).genre * BRIEF.complete.genre }, required: { interpretation: BRIEF.complete.interpretation, memorization: BRIEF.complete.memorization, rehearsal: BRIEF.complete.rehearsal, genre: BRIEF.complete.genre } }, person, t, e.prep);
 }
 
 /**
@@ -2120,8 +2146,10 @@ function unionsFrom(sim: Simulation, person: Person, t: ProjectTemplate, at: Ins
  * in `systems/briefs.ts`): its time on the clock, its part moved by its gain at the hour's focus, halved for each time
  * the same step was done today, by the ability it's practice in and the way you prepare, of what's left.
  */
-export function prepareOn(sim: Simulation, person: Person, x: PrepTarget, step: BriefStep | 'special'): { moved: number; part: keyof PartPrep; minutes: number } {
+export function prepareOn(sim: Simulation, person: Person, x: PrepTarget, step: BriefStep | 'special' | 'language'): { moved: number; part: keyof PartPrep; minutes: number } {
   if (step === 'special') return specialOn(sim, person, x as { engagement: Engagement });
+  // The part's other language (from 2026-10-25, brief 27, `workOnLanguage`).
+  if (step === 'language') return workOnLanguage(sim, person, 'opportunity' in x ? x.opportunity : x.engagement, idOfTarget(x), prepMinutes(x, 'language'));
   const s = BRIEF.steps[step];
   const minutes = prepMinutes(x, step);
   const prep: PartPrep = 'opportunity' in x ? (x.opportunity.prep ??= { ...ZERO }) : (x.engagement.prep ??= { ...ZERO });
@@ -2818,7 +2846,7 @@ export function registerProJobs(sim: Simulation): void {
     const x: PrepTarget | undefined = o ? { opportunity: o } : e ? { engagement: e } : undefined;
     const no = prepareRefusal(s, person, x, String(p?.step));
     if (no) throw new CommandError(no);
-    return prepareOn(s, person, x!, p.step as BriefStep | 'special');
+    return prepareOn(s, person, x!, p.step as BriefStep | 'special' | 'language');
   });
 
   sim.onCommand<{ opportunityId: string }, { band: Band; overall: number }>('pro.tape_audition', (p, { sim: s }) => {
@@ -2908,7 +2936,7 @@ export function registerProJobs(sim: Simulation): void {
       id: s.nextId('pro'), opportunityId: o!.id, projectId: t.id, role: t.role.part, status: 'booked', days: days.map(({ from, to, label }) => ({ from, to, label })),
       ...(agreement ? { agreementId: agreement.id, agentId: agreement.agentId } : {}), pay: [], history: [], counts: {},
       // The sides are part of the script: the part starts from half of what they had.
-      prep: { interpretation: r3((o!.prep?.interpretation ?? 0) * WORK.sidesKept), memorization: r3((o!.prep?.memorization ?? 0) * WORK.sidesKept), rehearsal: r3((o!.prep?.rehearsal ?? 0) * WORK.sidesKept) },
+      prep: { interpretation: r3((o!.prep?.interpretation ?? 0) * WORK.sidesKept), memorization: r3((o!.prep?.memorization ?? 0) * WORK.sidesKept), rehearsal: r3((o!.prep?.rehearsal ?? 0) * WORK.sidesKept), ...carriedLanguage(person, t, o!.prep, WORK.sidesKept) },
       ...(inSessionAny(person, spansOf(person, t, days)) ? { school: req?.status === 'approved' ? 'approved' as const : 'unapproved' as const } : {}),
     };
     pro.engagements.push(e);

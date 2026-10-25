@@ -151,6 +151,14 @@ export interface Person {
    */
   genres?: string[];
   /**
+   * The languages they speak and how well, as creation took them (from 2026-10-25, the owner's brief 27, Part 7):
+   * English always, at native or fluent, and up to five more. Read by a part written for a character who speaks one of
+   * them as well as English (`systems/speaking.ts`): whether they can be submitted, casting's fit, and the preparation
+   * the part asks; and listed on the résumé (`resumeNow`). Absent on every save made before that day, which reads as
+   * English, natively (`languagesOf`, `ENGLISH_ONLY`), and plays on as it did.
+   */
+  languages?: import('../content/languages').SpokenLanguage[];
+  /**
    * The life before this one, in the player's own words.
    *
    * Flavor, and deliberately kept as flavor: no attribute, no modifier and
