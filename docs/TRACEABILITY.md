@@ -153,7 +153,7 @@ SLATE has no tests of its screens, and nothing is deployed.
 | `pro.submit` | Implemented But Unverified | Finding Work | OpportunitiesPane.tsx | `systems/projobs.ts` | — (also submitRefusal) | — | — | — | 6 | — |
 | `pro.supply_material` | Verified (journey) | Representation | RepresentationPane.tsx | `systems/proagent.ts` | — (also supplyRefusal) | — | — | pro.reply | 2 | journey-agent.test.ts |
 | `pro.tape_audition` | Implemented But Unverified | Finding Work | OpportunitiesPane.tsx | `systems/projobs.ts` | — (also tapeRefusal) | — | — | — | 2 | — |
-| `pro.update_resume` | Verified (journey) | Your Career | CareerWorkspace.tsx | `systems/pro.ts` | — (also resumeRefusal) | — | — | resume | 16 | journey-agent.test.ts |
+| `pro.update_resume` | Verified (journey) | Your Career | CareerWorkspace.tsx | `systems/pro.ts` | — (also resumeRefusal) | — | — | resume | 17 | journey-agent.test.ts |
 | `pro.watch_ceremony` | Implemented But Unverified | Finding Work | IndustryPane.tsx | `systems/awards.ts` | — (also watchRefusal) | — | — | — | 2 | — |
 | `pro.work_choice` | Implemented But Unverified | Finding Work | WorkPane.tsx | `systems/workflow.ts` | — (also choiceRefusal) | — | — | — | 2 | — |
 | `school.answer_partner` | Verified (journey) | Drama School | CourseworkPane.tsx | `systems/coursework.ts` | — (also answerRefusal) | — | — | — | 8 | journey-school-year.test.ts; journey-three-students.test.ts |

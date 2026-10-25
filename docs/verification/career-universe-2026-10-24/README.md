@@ -336,9 +336,22 @@ since screen work still sends the reel.
 cost nothing, both untrue once the UK's routes were verified; it now gives the three UK routes with their fees and timings
 from the routes' own figures (`tools/trace.ts` showed it).
 
-**Not built, said so:** managers, lawyers and publicists aren't in the game, so nothing tells them apart from agents; the
-agreement's terms aren't negotiated, since they're the unions' regulations as read (a commission over ten percent is
-barred); and no agent in the game covers voice work, so an office never asks for a demo (`AgentMaterial`).
+**Then, closing K3, awards and festival history on the résumé** (Part 7). The record had Emmy entries and Sundance
+selections since brief 25, read by the Charts And Awards tab and by casting's lift for visibility, and the résumé listed
+none of them. It lists each once the world knows it (`honorsOf`, `systems/pro.ts`): a nomination from its announcement,
+a win from its ceremony, a selection from the festival's word, and never an entry, a submission or a lost nomination as
+more than it was. A résumé made before one is behind it, which What's Missing names and an agent's office can ask about.
+Held in `tests/career-awards.test.ts`'s own journeys, played by the clock: the résumé behind at the nominations and
+again at the win, the win replacing the nomination, a lost nomination staying one, a short's selection listed only once
+the festival answered. Breaking the win and listing a submission each failed a test. The guide's agent chapter now says
+what an agent does, and what managers, entertainment lawyers and publicists do instead, and that none of them is in the
+game; a casting director works for the production.
+
+**Not built, said so:** managers, lawyers and publicists aren't in the game; the guide says what each does and that it
+isn't. The agreement's terms aren't negotiated, since they're the unions' regulations as read (a commission over ten
+percent is barred). No agent in the game covers voice work, so an office never asks for a demo (`AgentMaterial`). The
+game records no languages: every market the slate makes work in works in English, so a language on the résumé would be a
+word nothing reads; accents are a technique already, listed as a special skill from its level.
 
 ## K4: Auditions, Offers And Agreements
 

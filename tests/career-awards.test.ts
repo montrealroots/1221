@@ -22,7 +22,7 @@ import {
   recapWords, recognitionOf, visibilityOf, watchRefusal,
 } from '@/engine/systems/awards';
 import { CASTING_KIND, castingDraw, payTermsOf } from '@/engine/systems/projobs';
-import { ensurePro, type Engagement, type Opportunity, type ProCredit } from '@/engine/systems/pro';
+import { ensurePro, resumeBehind, resumeNow, type Engagement, type Opportunity, type ProCredit } from '@/engine/systems/pro';
 import { at, graduate, notices, played, reload, skilled } from './fakes/career-world';
 
 /** TEST SETUP: an offer for a part, written as casting writes one, at the rate's scale. */
@@ -391,15 +391,24 @@ describe('X8 to X12: entry, the field, the nominations, the ceremony', () => {
     expect(lines.join(' ')).not.toContain(winner);
     expect([entryOf(sim).state, entryOf(skipped).state, entryOf(skipped).field!.winner]).toEqual(['lost', 'lost', winner]);
     expect(recapWords(sim.player, entryOf(sim))).toBe('Nominated for Outstanding Guest Actress In A Drama Series at the 79th Emmy Awards, for Desk Clerk in The Calloway Files. You didn’t win.');
+    // A résumé lists the nomination still, never more (from 2026-10-25, brief 27, Part 7).
+    expect(resumeNow(sim.player, sim.now).lines.filter((l) => l.startsWith('Emmy'))).toEqual(['Emmy nomination: Outstanding Guest Actress In A Drama Series, for Desk Clerk in The Calloway Files, 2027']);
     expect(recognitionOf(sim.player).map((r) => r.words)).toEqual([recapWords(sim.player, entryOf(sim))]);
   });
 
   it('ANON-06, ANON-07, ANON-08, ANON-09, ANON-10, T56, T57, T79, T80: a win settled at the final round, given at the ceremony, kept for good on the Portfolio, paying nothing; watched or skipped, and reloaded, it’s one award', () => {
     const { sim, c } = wrapped('awards-journey-0', 'calloway-files');
     sim.must({ kind: 'pro.award_enter', payload: { creditId: c.id } });
+    // A résumé made before the nominations (from 2026-10-25, brief 27, Part 7): an entry isn't on it.
+    sim.must({ kind: 'pro.update_resume', payload: {} });
+    expect(resumeBehind(sim.player, sim.now)).toEqual([]);
     sim.advanceTo(NOMINATIONS);
     expect(entryOf(sim).state).toBe('nominated');
     expect(notices(sim).some((n) => n.startsWith('You’re Nominated For An Emmy | You’re one of'))).toBe(true);
+    // Announced, the nomination is on the record and the résumé is behind it, until it's updated.
+    expect(resumeBehind(sim.player, sim.now)).toEqual(['your Emmy nomination for Desk Clerk']);
+    expect(resumeNow(sim.player, sim.now).lines).toContain('Emmy nomination: Outstanding Guest Actress In A Drama Series, for Desk Clerk in The Calloway Files, 2027');
+    sim.must({ kind: 'pro.update_resume', payload: {} });
     sim.advanceTo(FINAL_ENDS);
     expect(entryOf(sim).field!.winner).toBe('you');
     // Settled, and still the player's to learn: until the ceremony it reads as a nomination.
@@ -413,6 +422,9 @@ describe('X8 to X12: entry, the field, the nominations, the ceremony', () => {
     expect(lines).toEqual(ceremonyLines(sim.player, entryOf(sim)));
     expect(lines.at(-1)).toBe('It’s you: you won Outstanding Guest Actress In A Drama Series at the 79th Emmy Awards.');
     expect([entryOf(sim).state, entryOf(reloaded).state]).toEqual(['won', 'won']);
+    // Given, the win replaces the nomination on a résumé made now, and the one made at the nominations is behind it.
+    expect(resumeBehind(sim.player, sim.now)).toEqual(['your Emmy win for Desk Clerk']);
+    expect(resumeNow(sim.player, sim.now).lines.filter((l) => l.startsWith('Emmy'))).toEqual(['Emmy Award: Outstanding Guest Actress In A Drama Series, for Desk Clerk in The Calloway Files, 2027']);
     // The same result, a different attendance history: the twin that watched keeps when it did, the other nothing.
     expect([entryOf(sim).watchedAt, entryOf(reloaded).watchedAt]).toEqual([sim.now, undefined]);
     expect(sim.player.pro!.awards!.length).toBe(1);
@@ -489,9 +501,13 @@ describe('X14: Sundance, by its 2027 rules', () => {
     expect(sim.commandKinds().filter((k) => /festival|sundance|submit_film/.test(k))).toEqual([]);
     sim.advanceTo(at(2027, 9, 1, 12));
     expect(sim.player.pro!.festivals![0]).toMatchObject({ state: 'submitted', year: 2028, category: 'us-short' });
+    // Submitted isn't selected: a résumé lists the festival only once it has said so (from 2026-10-25, brief 27, Part 7).
+    const SELECTION = 'Sundance Film Festival, official selection: Last Bus To Eastview, U.S. Short Films, 2028';
+    expect(resumeNow(sim.player, sim.now).lines).not.toContain(SELECTION);
     const saved = reload(sim);
     sim.advanceTo(at(2027, 12, 2, 12));
     expect(sim.player.pro!.festivals![0]!.state).toBe('selected');
+    expect(resumeNow(sim.player, sim.now).lines).toContain(SELECTION);
     expect(recognitionOf(sim.player).map((r) => r.words)).toEqual(['Last Bus To Eastview is an official selection of the 2028 Sundance Film Festival, in U.S. Short Films. It screens in Boulder, Colorado, January 21 to 31, 2028.']);
     sim.advanceTo(at(2028, 1, 21, 12));
     expect(sim.player.pro!.festivals![0]!.state).toBe('selected');

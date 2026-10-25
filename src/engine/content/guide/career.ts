@@ -232,7 +232,7 @@ export const CAREER_GUIDE: readonly GuideEntry[] = [
     questions: ['How do I make a résumé?', 'Why is my résumé behind?', 'What goes on my résumé?'],
     where: on('portfolio', 'Career, Portfolio, Résumé'),
     available: `From the guide’s chapter “${CHAPTER}”.`,
-    short: `Your résumé is made from your record: your name, your unions, your training, your professional credits, your School credits and your special skills. Making it takes ${hours(RESUME.minutes)} at your own desk, estimated, and costs nothing.\n\nOnce something new is on your record, it reads as behind, and the panel names what it’s missing.`,
+    short: `Your résumé is made from your record: your name, your unions, your training, your professional credits, any Emmy nomination or win and Sundance selection, your School credits and your special skills. Making it takes ${hours(RESUME.minutes)} at your own desk, estimated, and costs nothing.\n\nOnce something new is on your record, it reads as behind, and the panel names what it’s missing.`,
     steps: [
       'Open Career, then the Portfolio tab.',
       'Under Résumé, press Make Your Résumé, or Update Your Résumé once you have one.',
@@ -246,7 +246,7 @@ export const CAREER_GUIDE: readonly GuideEntry[] = [
       { label: 'Unions', value: 'Equity from the degree, as the School’s Bulletin says, and SAG-AFTRA when your record has it' },
     ],
     now: ['The clock moves on an hour, and the new résumé is on the panel with what it says.'],
-    later: ['A part played, a skill grown, a new name, the degree or a union makes it behind, and What’s Missing names what’s new.'],
+    later: ['A part played, a skill grown, a new name, the degree, a union, an Emmy nomination once it’s announced, a win once it’s presented, or a Sundance selection once the festival says so makes it behind, and What’s Missing names what’s new.'],
     interpret: ['Up To Date means it has everything on your record. Behind names what it’s missing.'],
     unavailable: ['Your résumé already has everything on your record.', 'You’re busy then.'],
     mistakes: ['Updating it before a run has closed. A School part goes on it once the run’s last night is played.'],
@@ -395,6 +395,7 @@ export const CAREER_GUIDE: readonly GuideEntry[] = [
     interpret: [
       'Where You Stand names the step you’re at, and What’s Next says what to do about it.',
       'A referral comes from the casting office of a job you’ve finished, never from the agent, and no agent writes to you first.',
+      'An agent submits you for work and handles its offers, for a commission. Actors also work with managers, who advise on a career, entertainment lawyers, who read contracts, and publicists, who handle the press; none of them is in the game. A casting director works for the production, not for you.',
       `The Agencies panel says what each agency brief 25 names says of itself on its own pages: how an actor reaches it, the agents it names, and what the game does with it.`,
     ],
     unavailable: [

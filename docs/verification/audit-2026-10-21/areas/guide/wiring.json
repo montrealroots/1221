@@ -1583,7 +1583,7 @@
    "kind": "pro.update_resume",
    "payload": "",
    "verdict": "Right",
-   "handler": "src/engine/systems/pro.ts:1323"
+   "handler": "src/engine/systems/pro.ts:1350"
   },
   {
    "file": "src/ui/workspaces/CareerWorkspace.tsx",
@@ -1593,7 +1593,7 @@
    "kind": "pro.headshots",
    "payload": "",
    "verdict": "Right",
-   "handler": "src/engine/systems/pro.ts:1306"
+   "handler": "src/engine/systems/pro.ts:1333"
   },
   {
    "file": "src/ui/workspaces/CareerWorkspace.tsx",
@@ -1603,7 +1603,7 @@
    "kind": "pro.cut_reel",
    "payload": "{ pieces: chosen }",
    "verdict": "Right",
-   "handler": "src/engine/systems/pro.ts:1335"
+   "handler": "src/engine/systems/pro.ts:1362"
   },
   {
    "file": "src/ui/workspaces/CareerWorkspace.tsx",
@@ -1613,7 +1613,7 @@
    "kind": "pro.mix_demo",
    "payload": "{ pieces: chosen }",
    "verdict": "Right",
-   "handler": "src/engine/systems/pro.ts:1356",
+   "handler": "src/engine/systems/pro.ts:1383",
    "note": "Mix A Voice Demo mixes the ticked voice recordings into a new version of the demo, its cost from the bank and two hours on the clock; its refusal (demoRefusal) is its title. Read on 2026-10-24 by its builder (brief 27, K3), pressed through the Portfolio tab in tests/b27-voice-demo.test.ts."
   },
   {
@@ -1624,7 +1624,7 @@
    "kind": "pro.set_name",
    "payload": "{ name }",
    "verdict": "Right",
-   "handler": "src/engine/systems/pro.ts:1294"
+   "handler": "src/engine/systems/pro.ts:1321"
   },
   {
    "file": "src/ui/workspaces/PapersWorkspace.tsx",

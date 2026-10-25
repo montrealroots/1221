@@ -582,9 +582,9 @@
  },
  "src/engine/content/guide/career.ts#CAREER_GUIDE [career.agent]": {
   "status": "Rewritten",
-  "hash": "2d614c5625ad",
-  "on": "2026-10-24",
-  "evidence": "Written for brief 25's Module 3 (real agencies and agents) to docs/STYLE.md and docs/GLOSSARY.md, with no pronoun for a real agent and the game's own agent's words unchanged; read where the player meets it in tests/career-agents.test.ts (the Representation tab drawn with Dan Patack chosen, the notices and history of a played referral, meeting, offer and signing) and in tests/pro-representation-screen.test.ts, tests/journey-agent.test.ts and tests/pro-agent.test.ts for Thomas Ashgrove, with tools/voice-check.mjs, tools/tics.mjs, tools/title-case.mjs, tools/plural-check.mjs and tools/spelling.mjs passing",
+  "hash": "f17b56600adb",
+  "on": "2026-10-25",
+  "evidence": "Written for brief 27's K3 (Part 6: \"Differentiate agents, managers, lawyers, publicists, and casting professionals\") to docs/STYLE.md and docs/GLOSSARY.md: the agent chapter now says what an agent does in the game and what managers, entertainment lawyers and publicists do in the industry, that none of them is in the game, and that a casting director works for the production. The rest of the chapter's words are as they were, held by brief 19's and brief 20's tests. tools/voice-check.mjs, tools/tics.mjs, tools/title-case.mjs, tools/plural-check.mjs and tools/spelling.mjs pass",
   "first": "Pending"
  },
  "src/engine/content/guide/career.ts#CAREER_GUIDE [career.agreement]": {
@@ -694,9 +694,9 @@
  },
  "src/engine/content/guide/career.ts#CAREER_GUIDE [career.resume]": {
   "status": "Rewritten",
-  "hash": "f9b64d7d18c3",
-  "on": "2026-10-21",
-  "evidence": "Written for brief 19 to docs/STYLE.md and docs/GLOSSARY.md; read where the player meets it in tests/pro-screen.test.ts and tests/pro-core.test.ts, with tools/voice-check.mjs, tools/tics.mjs and tools/title-case.mjs passing",
+  "hash": "ca16b2ac53bd",
+  "on": "2026-10-25",
+  "evidence": "Written for brief 27's K3 (Part 7: awards and festival history on the résumé) to docs/STYLE.md and docs/GLOSSARY.md, and read where the player meets it: tests/career-awards.test.ts holds a résumé made before the Emmy nominations behind once the nomination is announced (your Emmy nomination for Desk Clerk), the line a résumé made then says (Emmy nomination: Outstanding Guest Actress In A Drama Series, for Desk Clerk in The Calloway Files, 2027), the win replacing it at the ceremony (Emmy Award: ...; your Emmy win for Desk Clerk), a nomination lost staying a nomination, and a Sundance selection listed once the festival says so and not while it's only submitted (Sundance Film Festival, official selection: Last Bus To Eastview, U.S. Short Films, 2028). The guide's résumé chapter names them. tools/voice-check.mjs, tools/tics.mjs, tools/title-case.mjs, tools/plural-check.mjs and tools/spelling.mjs pass",
   "first": "Pending"
  },
  "src/engine/content/guide/career.ts#CAREER_GUIDE [career.unions]": {
@@ -823,6 +823,13 @@
   "hash": "d990bccbedc6",
   "on": "2026-10-21",
   "evidence": "Written for brief 19 to docs/STYLE.md and docs/GLOSSARY.md; read where the player meets it in tests/pro-screen.test.ts and tests/pro-core.test.ts, with tools/voice-check.mjs, tools/tics.mjs and tools/title-case.mjs passing",
+  "first": "Pending"
+ },
+ "src/engine/systems/pro.ts#honorsOf": {
+  "status": "Rewritten",
+  "hash": "98d8b17d3ef3",
+  "on": "2026-10-25",
+  "evidence": "Written for brief 27's K3 (Part 7: awards and festival history on the résumé) to docs/STYLE.md and docs/GLOSSARY.md, and read where the player meets it: tests/career-awards.test.ts holds a résumé made before the Emmy nominations behind once the nomination is announced (your Emmy nomination for Desk Clerk), the line a résumé made then says (Emmy nomination: Outstanding Guest Actress In A Drama Series, for Desk Clerk in The Calloway Files, 2027), the win replacing it at the ceremony (Emmy Award: ...; your Emmy win for Desk Clerk), a nomination lost staying a nomination, and a Sundance selection listed once the festival says so and not while it's only submitted (Sundance Film Festival, official selection: Last Bus To Eastview, U.S. Short Films, 2028). The guide's résumé chapter names them. tools/voice-check.mjs, tools/tics.mjs, tools/title-case.mjs, tools/plural-check.mjs and tools/spelling.mjs pass",
   "first": "Pending"
  },
  "src/engine/systems/pro.ts#materialsCheck [demo]": {

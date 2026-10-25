@@ -139,6 +139,7 @@
    "src/ui/workspaces/CareerWorkspace.tsx#ResumePanel",
    "src/engine/systems/pro.ts#resumeRefusal",
    "src/engine/systems/pro.ts#resumeNow",
+   "src/engine/systems/pro.ts#honorsOf",
    "src/engine/systems/pro.ts#registerPro [resume]"
   ],
   "states": [
@@ -152,7 +153,7 @@
   ],
   "outcome": "Revised",
   "why": "New with brief 19: a résumé made from the record, which says when it’s behind.",
-  "changes": "Written new: its lines built from the record (name, unions, training, credits, special skills); its standing (“Up to date with your record.” or “Behind: it doesn’t have …”, the missing parts named); What It Says behind a disclosure; refused while up to date in its own words. From 2026-10-21 (brief 19's app walk): a résumé behind names a new special skill as one, where it named the skill bare among the parts it lacked.",
+  "changes": "Written new: its lines built from the record (name, unions, training, credits, special skills); its standing (“Up to date with your record.” or “Behind: it doesn’t have …”, the missing parts named); What It Says behind a disclosure; refused while up to date in its own words. From 2026-10-21 (brief 19's app walk): a résumé behind names a new special skill as one, where it named the skill bare among the parts it lacked. From 2026-10-25 (brief 27, K3) an Emmy nomination, a win and a Sundance selection are lines of their own once each is public, and a résumé made before one is behind it.",
   "evidence": [
    {
     "kind": "test",
@@ -165,6 +166,14 @@
    {
     "kind": "test",
     "ref": "tests/pro-app.test.ts: 'PLAYER JOURNEY: a résumé behind a special skill newly on the record names it as a special skill'"
+   },
+   {
+    "kind": "test",
+    "ref": "tests/career-awards.test.ts: 'ANON-06, ANON-07, ANON-08, ANON-09, ANON-10, T56, T57, T79, T80: a win settled at the final round, given at the ceremony, kept for good on the Portfolio, paying nothing; watched or skipped, and reloaded, it’s one award'"
+   },
+   {
+    "kind": "test",
+    "ref": "tests/career-awards.test.ts: 'AWD-01, AWD-07, AWD-09, T52, WF-19: a short is submitted by its production at the deadline, the festival answers, and selection and the screening are kept apart; the player has no command to submit it'"
    }
   ]
  },

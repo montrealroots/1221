@@ -1134,7 +1134,7 @@
    "readAt": "e0b60f74",
    "where": "Career, Portfolio: Make Your Résumé or Update Your Résumé, grayed with resumeRefusal's words.",
    "prerequisites": "No résumé, or one behind the record; an hour free (`resumeRefusal`).",
-   "reads": "The record as a résumé would say it (`resumeNow`): the name, the unions, the training, the credits, the special skills.",
+   "reads": "The record as a résumé would say it (`resumeNow`): the name, the unions, the training, the credits, the special skills; from 2026-10-25 (brief 27, K3) an Emmy nomination or win and a Sundance selection once each is public (`honorsOf`, held by tests/career-awards.test.ts).",
    "changes": "A résumé material with its lines and the record's keys, an hour on the clock.",
    "consumers": [
     {

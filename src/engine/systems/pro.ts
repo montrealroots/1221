@@ -57,6 +57,7 @@ import { BRIEF_BY_ID } from '../content/briefs';
 import type { AgentId, AgentRoute } from '../content/agents';
 import type { AgreementTerm, ProMedium, RateId } from '../content/careerwork';
 import { UNIONS } from '../content/careerwork';
+import { EMMY_CATEGORIES, SUNDANCE_CATEGORY_NAME } from '../content/awards';
 import type { Band } from './coursework';
 import { BAND_LABEL } from './coursework';
 import { bandOfQuality } from './evaluation';
@@ -1062,11 +1063,37 @@ export function resumeNow(person: Person, at: Instant): { name: string; lines: s
   else if (p.unions.sagEligible !== undefined) add('union:sag-eligible', 'SAG-AFTRA Eligible', 'your SAG-AFTRA eligibility');
   add(`training:${p.training.status}:${p.training.short}`, `Training: ${p.training.short}`, `your training as it stands now (${p.training.short})`);
   for (const c of p.proCredits) add(`pro:${c.id}`, proCreditWords(c), `${c.role} in ${c.project} (${c.year})`);
+  for (const h of honorsOf(person)) add(h.key, h.line, h.what);
   for (const c of p.schoolCredits) add(c.key, schoolCreditWords(c), `${c.role} in ${c.production} (${c.year})`);
   // What a résumé behind lacks names a skill as one (from 2026-10-21): "doesn’t have … and Singing" read as a thing it
   // was missing, not a special skill newly on the record (brief 19's app walk).
   for (const s of p.skills) add(`skill:${s.skill}${s.mastered ? ':mastered' : ''}`, `Special skill: ${s.label}${s.mastered ? ', mastered' : ''}`, `${s.label} as a ${s.mastered ? 'mastered ' : ''}special skill`);
   return { name: p.name, lines, keys, labels };
+}
+
+/**
+ * The awards and festivals a résumé lists (from 2026-10-25, the owner's brief 27, Part 7: "Awards and festival
+ * history"), each once the world knows it: an Emmy nomination from its announcement, a win from its ceremony, a Sundance
+ * selection from the festival's word, as the awards' clock sets each state (`systems/awards.ts`). An entry, a film
+ * submitted, or a nomination lost to another nominee's win stays a nomination, never more. Until then the résumé listed
+ * none of them, though the Charts And Awards tab and casting's reading of visibility did.
+ */
+export function honorsOf(person: Person): { key: string; line: string; what: string }[] {
+  const out: { key: string; line: string; what: string }[] = [];
+  const credit = (id: ProId) => person.pro?.credits.find((c) => c.id === id);
+  for (const a of person.pro?.awards ?? []) {
+    const c = credit(a.creditId);
+    if (!c || !['nominated', 'won', 'lost'].includes(a.state)) continue;
+    const name = person.performerTitle === 'actress' ? EMMY_CATEGORIES[a.category].actressName : EMMY_CATEGORIES[a.category].actorName;
+    const won = a.state === 'won';
+    out.push({ key: `award:${a.id}:${won ? 'won' : 'nominated'}`, line: `${won ? 'Emmy Award' : 'Emmy nomination'}: ${name}, for ${c.role} in ${c.project}, ${a.year}`, what: `your Emmy ${won ? 'win' : 'nomination'} for ${c.role}` });
+  }
+  for (const f of person.pro?.festivals ?? []) {
+    const c = credit(f.creditId);
+    if (!c || (f.state !== 'selected' && f.state !== 'screened')) continue;
+    out.push({ key: `festival:${f.id}`, line: `Sundance Film Festival, official selection: ${c.project}, ${SUNDANCE_CATEGORY_NAME[f.category]}, ${f.year}`, what: `${c.project}’s selection for Sundance` });
+  }
+  return out;
 }
 
 /** What the current résumé is missing against the record now, a phrase each; empty where it's up to date. */
