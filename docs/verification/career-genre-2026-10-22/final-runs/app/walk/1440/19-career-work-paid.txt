@@ -13,6 +13,8 @@ Portfolio
 Representation
 Opportunities
 Work
+Charts And Awards
+Productions And People
 Your Engagements
 How This Works
 
@@ -21,28 +23,35 @@ No work booked. Work you accept appears here with its dates, its calls, its pay 
 Sources And Estimates
 Finished Engagements
 How This Works
-Desk Clerk, The Calloway Files
+Celeste Escobar, The Station
 Finished
 DATES
-January 7, 2030 to January 8, 2030, two days of work.
+July 16, 2029 to July 16, 2029, one day of work.
 PAY
-$3,084.40 a week for one week, $3,084.40 in all, 1 of 1 paid
+$2,120.53 a week for one week, $2,120.53 in all
 NEXT CALL
 Its calls are over.
-The Agreement
+The Trip To Los Angeles
+The Contract
+How The Work Is Done
+Each Day’s Report (1)
 On Your Calendar
 Pay (1)
+Residuals
 Eligibility When Accepted
 What Happened
-Ivy, Paper Moons
+Sabine, The Crossing On Tamsin Street
 Finished
 DATES
-December 3, 2029 to December 5, 2029, three days of work.
+July 9, 2029 to July 11, 2029, three days of work.
 PAY
-Deferred pay
+$6,361.59 a week for one week, $6,361.59 in all, 1 of 1 paid
 NEXT CALL
 Its calls are over.
-The Agreement
+The Trip To Atlanta
+The Contract
+How The Work Is Done
+Each Day’s Report (3)
 On Your Calendar
 Pay (1)
 Eligibility When Accepted
@@ -54,16 +63,23 @@ ACTORS’ EQUITY
 You joined Actors’ Equity Association with the degree on May 21, 2029.
 
 Initiation fee, part 1 of 3, the down payment: $600.00, paid May 21, 2029.
-Basic dues, half a year: $88.00, paid November 1, 2029.
-Basic dues, half a year: $88.00, due May 1, 2030.
+Basic dues, half a year: $88.00, due November 1, 2029.
 Initiation fee, part 2 of 3: $600.00, due May 21, 2030.
 Initiation fee, part 3 of 3: $600.00, due May 21, 2031.
 SAG-AFTRA
 
-You’ve been able to join SAG-AFTRA since January 7, 2030. SAG-AFTRA work from February 6, 2030 needs you to be a member.
+You’ve been able to join SAG-AFTRA since July 16, 2029. SAG-AFTRA work from August 15, 2029 needs you to be a member.
 
 Join SAG-AFTRA ($3,244.07)
 Sources And Estimates
 
------ 39 controls; Tab reached 34 of the 34 it can; 0 grayed
-Nothing found.
+----- 57 controls; Tab reached 41 of the 50 it can; 0 grayed
+FOUND: Tab never reached "How This Works: Work Abroad"
+FOUND: Tab never reached "Sources And Estimates"
+FOUND: Tab never reached "How This Works: Contracts, Residuals And A Series’ Seasons"
+FOUND: Tab never reached "How This Works: How Each Kind Of Work Is Done"
+FOUND: Tab never reached "Sources And Estimates"
+FOUND: Tab never reached "How This Works: Work Abroad"
+FOUND: Tab never reached "Sources And Estimates"
+FOUND: Tab never reached "How This Works: Contracts, Residuals And A Series’ Seasons"
+FOUND: Tab never reached "How This Works: How Each Kind Of Work Is Done"

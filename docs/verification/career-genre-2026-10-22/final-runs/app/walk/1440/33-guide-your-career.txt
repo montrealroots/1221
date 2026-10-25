@@ -3,11 +3,11 @@ guide-your-career (last-term.json, 1440 wide)
 CHAPTER 13 OF 20
 Your Career
 
-Your professional profile, the headshots, résumé and reel a submission sends, and your work’s pay and unions.
+Your professional profile, the headshots, résumé, reel and voice demo a submission sends, and your work’s pay and unions.
 
 Career, in the menu under Your Work, shows where you stand as a professional actor. Its Overview says what training you have, when you’re free for work, whether you can work in the US, and what your portfolio is missing.
 
-The Portfolio tab holds what a submission sends: your profile, headshots, a résumé and a reel. Each says where it came from, when it was made and what’s in it. Each button says its time and cost before you press it.
+The Portfolio tab holds what a submission sends: your profile, headshots, a résumé, a reel and a voice demo. Each says where it came from, when it was made and what’s in it. Each button says its time and cost before you press it.
 
 Your Profile shows the name you work under. To change it, type a name under Professional Name and press Use This Name. Leave it blank and press it to go back to your own name. Your résumé uses the name you choose.
 
@@ -21,6 +21,8 @@ A reel is cut only from recorded work: self-tapes of practice briefs, the School
 
 A night on stage and a class piece aren’t recorded, so they can’t go on a reel. A voice brief is a sound recording, so it can’t either.
 
+A voice brief goes on a voice demo instead: voice casting, for animation, dubbing and narration, asks for one where screen casting asks for a reel. Choose up to four recordings under Voice Recordings To Mix From and press Mix A Voice Demo. It takes two hours and about $300.00, both estimated.
+
 The Work tab lists work you’ve booked: its dates, its calls on your calendar and its pay. Pay is promised when you accept the work, and paid the Thursday after each week of it with tax withheld. If you’re represented, it goes through your agency, which takes its commission and passes the rest on within three business days. Each payment says what was taken and what reached you, and Money shows it land.
 
 Your permission to work is read for each date of the work when you book it, and signing with an agency changes none of it. On an F-1 while you’re a student, outside acting work isn’t open to you. On OPT after your degree, every day from a job’s first day to its last counts as a day with work, and the days before a booked job begins count as days without work.
@@ -28,6 +30,8 @@ Your permission to work is read for each date of the work when you book it, and 
 Your degree makes you a member of Actors’ Equity, and $600.00 of its initiation fee is taken then. A SAG-AFTRA role on a TV show or a theatrical or Low Budget film lets you join SAG-AFTRA. From the 30th day after that work began, SAG-AFTRA work needs you to be a member: press Join SAG-AFTRA on the Work tab first.
 
 If a button is grayed out, the line under it says why: you’re busy then, your bank can’t cover it, or your résumé already has everything on your record.
+
+Productions And People, the last tab, looks up the productions, companies and people your career touches: real ones as their own pages had them when the game read them, the game’s own marked Simulated, and your part in each. A link opens the page it names, Back goes back, and a page’s buttons open the tab where you can act.
 
 Read “Representation” next. It opens the agent’s panel on the Career screen: how to reach him, and the agreement.
 
@@ -48,10 +52,12 @@ Career
 Overview
 Portfolio
 Work
+Productions And People
 Use This Name
 Book A Headshot Session
 Make Your Résumé and Update Your Résumé
 Cut A Reel
+Mix A Voice Demo
 Join SAG-AFTRA
 Close
 

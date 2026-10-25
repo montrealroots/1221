@@ -3,25 +3,25 @@ guide-representation (last-term.json, 390 wide)
 CHAPTER 14 OF 20
 Representation
 
-The agent, how to reach him, why his office decides as it does, and the agreement.
+The agents, how to reach one, why an office decides as it does, and the agreement.
 
-Career’s Representation tab holds the game’s one agent, Thomas Ashgrove, at Halberd Talent in New York. He and the agency are invented for the game. His panel opens with a notice that says so: read it, then press I’ve Read This. Read The Notice Again shows it whenever you want it.
+Career’s Representation tab lists the agents under Agents, and Show opens one. Thomas Ashgrove, at Halberd Talent in New York, is invented for the game, as his agency is. Dan Patack, Jay Schachter, Rachel Grandizio and Tim Marshall are real theatrical agents at Stewart Talent’s New York office, as its own page names them, and what happens between you and them is the game’s invention. Each agent’s panel opens with a notice that says which: read it, then press I’ve Read This. Read The Notice Again shows it whenever you want it.
 
-His office takes no submissions it hasn’t asked for. It takes your materials only through the School’s follow-up after the showcase, or a referral from someone you’ve worked with. He never gets in touch first.
+Thomas Ashgrove’s office takes no submissions it hasn’t asked for: it takes your materials only through the School’s follow-up after the showcase, or a referral from someone you’ve worked with. Stewart Talent’s office takes no unsolicited submissions, so a referral is the one way in there. No agent gets in touch first. Agencies, at the foot of the tab, says what the other agencies’ own pages say, and why no one there is in the game.
 
 Press Check Your Materials first. If your headshots or your résumé are missing, it says so and where to make them, and nothing can be sent until they exist.
 
-For a referral, press Ask For A Referral beside a finished job under How To Reach Him: its work has to be judged Strong or better. After the showcase, the School follows up on its own, and its notice says whether his office asked to meet you.
+For a referral, press Ask For A Referral beside a finished job under How To Reach: its work has to be judged Strong or better. After the showcase, the School follows up on its own, and its notice says whether Thomas Ashgrove’s office asked to meet you.
 
-Then press Send Your Materials. His office answers in about two weeks: it asks for more, asks to meet, passes, or doesn’t answer at all, which after six weeks counts as no. Each answer comes as a notice, and History With His Office keeps every step.
+Then press Send Your Materials. The office answers in about two weeks: it asks for more, asks to meet, passes, or doesn’t answer at all, which after six weeks counts as no. Each answer comes as a notice, and the agent’s History panel keeps every step.
 
-When it asks for more, make what it asked for on the Portfolio tab and press Send What His Office Asked For by its date. A meeting goes on your calendar, and the clock stops at it. If you can’t make it, Ask To Move moves it a week, once. A meeting missed closes the approach.
+When it asks for more, make what it asked for on the Portfolio tab and press Send What His Office Asked For, or Send What The Office Asked For for a real agent, by its date. A meeting goes on your calendar, and the clock stops at it. If you can’t make it, Ask To Move moves it a week, once. A meeting missed closes the approach.
 
-Why It Went This Way gives the game’s reasons for each decision, seven separate factors against a bar the game sets: your work, stage and screen, training, fit with his department, availability, room on his list and reliability. An approach needs four at the bar or beyond, then a chance against the year’s other actors. Better work raises it, and it’s never certain.
+Why It Went This Way gives the game’s reasons for each decision, factor by factor, each against a bar the game sets: your work, stage and screen, training, fit with the department, availability and reliability, and for Thomas Ashgrove the room on his list, which the game assumes. An approach needs four at the bar or beyond, then a chance against the year’s other actors. Better work raises it, and it’s never certain.
 
-After a pass, his office looks again only after a year, and after no answer or a declined offer six months, and then only at something new: a new credit, a better reel or a referral.
+After a pass, the office looks again only after a year, and after no answer or a declined offer six months, and then only at something new: a new credit, a better reel or a referral.
 
-If he offers to represent you, The Agreement shows every term first, each marked A Published Rule or The Game’s Own Term. Press Accept The Agreement or Decline The Agreement before the offer lapses. Signing doesn’t change your place at the School or your permission to work.
+If an agent offers to represent you, The Agreement shows every term first, each marked A Published Rule or The Game’s Own Term. Press Accept The Agreement or Decline The Agreement before the offer lapses. Signing doesn’t change your place at the School or your permission to work, and you have one agent at a time: another’s agreement can’t start while one runs.
 
 While it runs, End It By Agreement ends it at once. End It: No Offer In 90 Days and End It: Under Ten Days’ Work follow Equity’s and SAG-AFTRA’s rules, and each grayed button says when it can. When it ends, commission stays owed on contracts made while it ran.
 

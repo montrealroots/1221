@@ -13,6 +13,8 @@ Portfolio
 Representation
 Opportunities
 Work
+Charts And Awards
+Productions And People
 Your Engagements
 How This Works
 
@@ -35,5 +37,5 @@ Not now: You can join SAG-AFTRA once you’ve worked a SAG-AFTRA principal role:
 
 Sources And Estimates
 
------ 28 controls; Tab reached 22 of the 22 it can; 1 grayed
+----- 30 controls; Tab reached 22 of the 22 it can; 1 grayed
 Nothing found.

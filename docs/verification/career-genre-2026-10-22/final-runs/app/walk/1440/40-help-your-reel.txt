@@ -44,13 +44,14 @@ Taping A Brief: A self-tape of a practice brief is the first recorded work a ree
 CHANGES STRAIGHT AWAY
 The Career Screen: Once you have a reel, What’s Missing stops asking for one, and says when newer work came after it.
 WHAT LEADS HERE
+Your Voice Demo: The reel is the demo’s counterpart for work on camera.
 Why It Went This Way: Your reel’s best band is part of Your Work, and a reel is part of Stage And Screen.
 What To Do Next
 Check What’s Missing on the Overview.
 If You Can’t
 You have nothing recorded to cut a reel from.
 A reel holds four pieces at most.
-A voice brief is a sound recording with no picture, so it can’t go on a reel.
+A voice brief is a sound recording with no picture, so it can’t go on a reel. It can go on a voice demo.
 Your reel already holds exactly these pieces.
 MISTAKES, AND PUTTING THEM RIGHT
 Expecting a production’s nights on it. Only recorded work can be.
@@ -75,5 +76,5 @@ The clock waits while you read.
 Back
 Close
 
------ 21 controls; Tab reached 21 of the 21 it can; 0 grayed
+----- 22 controls; Tab reached 22 of the 22 it can; 0 grayed
 Nothing found.

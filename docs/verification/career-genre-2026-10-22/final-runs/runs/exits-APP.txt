@@ -1,15 +1,15 @@
-at 124bec77, 0 tracked files uncommitted, 2026-10-24T15:31:19Z
-app-build exit=0 secs=19 cmd: npm run build
-app-saves exit=0 secs=36 cmd: npx vite-node docs/verification/career-2026-10-20/app/make-saves.ts -- /tmp/claude-0/-home-user-1221/93119f3d-c8d9-5356-8130-0e0fe32e5c95/scratchpad/f26-APP-work/app-saves
+at 9f974984, 0 tracked files uncommitted, 2026-10-25T16:18:27Z
+app-build exit=0 secs=22 cmd: npm run build
+app-saves exit=0 secs=51 cmd: npx vite-node docs/verification/career-2026-10-20/app/make-saves.ts -- /tmp/claude-0/-home-user-1221/93119f3d-c8d9-5356-8130-0e0fe32e5c95/scratchpad/f27b-APP-work/app-saves
 preview-4221 exit=0 secs=6 cmd: this clone's dist/index.html served
-app-walk-1440 exit=0 secs=182 cmd: env SLATE_BASE=http://localhost:4221 node docs/verification/career-2026-10-20/app/app-walk.mjs docs/verification/career-genre-2026-10-22/final-runs/app/walk 1440 /tmp/claude-0/-home-user-1221/93119f3d-c8d9-5356-8130-0e0fe32e5c95/scratchpad/f26-APP-work/app-saves
-app-walk-390 exit=0 secs=189 cmd: env SLATE_BASE=http://localhost:4221 node docs/verification/career-2026-10-20/app/app-walk.mjs docs/verification/career-genre-2026-10-22/final-runs/app/walk 390 /tmp/claude-0/-home-user-1221/93119f3d-c8d9-5356-8130-0e0fe32e5c95/scratchpad/f26-APP-work/app-saves
+app-walk-1440 exit=0 secs=183 cmd: env SLATE_BASE=http://localhost:4221 node docs/verification/career-2026-10-20/app/app-walk.mjs docs/verification/career-genre-2026-10-22/final-runs/app/walk 1440 /tmp/claude-0/-home-user-1221/93119f3d-c8d9-5356-8130-0e0fe32e5c95/scratchpad/f27b-APP-work/app-saves
+app-walk-390 exit=0 secs=187 cmd: env SLATE_BASE=http://localhost:4221 node docs/verification/career-2026-10-20/app/app-walk.mjs docs/verification/career-genre-2026-10-22/final-runs/app/walk 390 /tmp/claude-0/-home-user-1221/93119f3d-c8d9-5356-8130-0e0fe32e5c95/scratchpad/f27b-APP-work/app-saves
 older-walk-1440 exit=0 secs=140 cmd: env SLATE_BASE=http://localhost:4221 node docs/verification/audit-2026-10-21/app/older-walk.mjs docs/verification/career-genre-2026-10-22/final-runs/app/older 1440
-older-walk-390 exit=0 secs=176 cmd: env SLATE_BASE=http://localhost:4221 node docs/verification/audit-2026-10-21/app/older-walk.mjs docs/verification/career-genre-2026-10-22/final-runs/app/older 390
-b21-saves exit=0 secs=6 cmd: npx vite-node docs/verification/genre-banking-2026-10-22/app/make-saves.ts
+older-walk-390 exit=0 secs=177 cmd: env SLATE_BASE=http://localhost:4221 node docs/verification/audit-2026-10-21/app/older-walk.mjs docs/verification/career-genre-2026-10-22/final-runs/app/older 390
+b21-saves exit=0 secs=8 cmd: npx vite-node docs/verification/genre-banking-2026-10-22/app/make-saves.ts
 b21-walk-1440 exit=0 secs=59 cmd: env SLATE_BASE=http://localhost:4221 node docs/verification/genre-banking-2026-10-22/app/walk.mjs docs/verification/career-genre-2026-10-22/final-runs/app/b21 1440
 b21-walk-390 exit=0 secs=63 cmd: env SLATE_BASE=http://localhost:4221 node docs/verification/genre-banking-2026-10-22/app/walk.mjs docs/verification/career-genre-2026-10-22/final-runs/app/b21 390
-b22-saves exit=0 secs=6 cmd: npx vite-node docs/verification/career-genre-2026-10-22/app/make-saves.ts
-b22-walk-1440 exit=0 secs=53 cmd: env SLATE_BASE=http://localhost:4221 node docs/verification/career-genre-2026-10-22/app/walk.mjs docs/verification/career-genre-2026-10-22/final-runs/app/b22 1440
-b22-walk-390 exit=0 secs=56 cmd: env SLATE_BASE=http://localhost:4221 node docs/verification/career-genre-2026-10-22/app/walk.mjs docs/verification/career-genre-2026-10-22/final-runs/app/b22 390
-DONE 2026-10-24T15:47:51Z
+b22-saves exit=0 secs=8 cmd: npx vite-node docs/verification/career-genre-2026-10-22/app/make-saves.ts
+b22-walk-1440 exit=1 secs=54 cmd: env SLATE_BASE=http://localhost:4221 node docs/verification/career-genre-2026-10-22/app/walk.mjs docs/verification/career-genre-2026-10-22/final-runs/app/b22 1440
+b22-walk-390 exit=1 secs=56 cmd: env SLATE_BASE=http://localhost:4221 node docs/verification/career-genre-2026-10-22/app/walk.mjs docs/verification/career-genre-2026-10-22/final-runs/app/b22 390
+DONE 2026-10-25T16:35:21Z

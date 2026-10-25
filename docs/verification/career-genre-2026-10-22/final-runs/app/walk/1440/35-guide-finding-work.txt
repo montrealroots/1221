@@ -5,13 +5,13 @@ Finding Work
 
 Roles to be seen for, submissions, auditions, offers and the work itself, with or without an agent.
 
-The Career screen’s Opportunities tab lists the roles you can be seen for. Every project, company and casting office on it is invented for the game. New roles go up each Monday morning, and each takes submissions for seven days.
+The Career screen’s Opportunities tab lists the roles you can be seen for. Their projects, companies and casting offices are invented for the game, except a few parts drawn from real productions, which say so. New roles go up each Monday morning, and each takes submissions for seven days.
 
 Each role says its project, the part, what it asks, its dates and place, the pay, and whether you can be seen for it. Some casting offices take actors only through an agent: those roles reach you only while an agent represents you, and the agent submits you for them.
 
 To put yourself up for an open role, press Submit Yourself. A submission sends your headshots and résumé, and a reel where casting asks for one. If something’s missing, the line under the button says what, and where to make it.
 
-Two days later the casting office answers with an audition: in person in New York or Hudson at a set time, with the trip there, or a self-tape due by an evening. An audition in person goes on your calendar.
+Two days later the casting office answers with an audition: in person in New York or Hudson or New Haven at a set time, with the trip there, or a self-tape due by an evening. An audition in person goes on your calendar.
 
 Before it, prepare the sides with Break It Down, Learn The Lines and Rehearse It On Your Feet, the way you prepare a practice brief. For a self-tape, press Tape It before it’s due. For an audition in person, press Go when the clock stops for it.
 
@@ -21,11 +21,23 @@ Casting decides from how your audition went, how well the role suits you and how
 
 An offer says the pay, the dates and how long it stands, three days. Press Accept The Offer or Decline The Offer, on the tab or under What Needs You on Home. Accepting books the work days on your calendar and promises the pay for each week of it, due the Thursday after.
 
-Prepare the part under Booked Work. Each work day stops the clock: press Go to be there. Each day is judged, and the part goes on your professional credits. Miss a shoot day, or a second day of a run, and the production replaces you.
+If an agent represents you, the offer card’s Ask For More has your agent ask once for a fifth more; the answer comes the next afternoon. A casting office that cast you before, where your work was Strong, may offer you a part without an audition, and says so. A chemistry read or a screen test holds the part’s dates until it’s cast: taking other work on them lets the hold go, and Ask Them To Decide asks that production to choose first.
+
+Prepare the part under Booked Work. Each work day stops the clock: press Go to be there. Each day is judged, and the part goes on your professional credits. Sleep through a shoot day, or miss a second day of a run, and the production replaces you; laid up or in hospital on a lead or a supporting part, the production shoots around you once.
 
 While you’re at the School, work in term needs its approval. Press Ask The School at least two weeks before the first day, and the dean decides a week later. Short, professional work that takes no School call and two class days at most is approved. Work taken in term without approval brings an academic warning, and a second time dismissal.
 
 On an F-1 you can’t accept work outside the School while you’re a student, and the School can’t authorize it. Summer and the winter break are yours, unless the School holds you for one of its calls.
+
+Some roles are abroad. Accepting one is the contract, not permission to work there: for work in Australia, press Apply For The Visa on the engagement under Work, and be awake for the car to the airport when the clock stops for it.
+
+Each engagement on the Work tab has its contract under The Contract: the part, the dates, the pay and only the terms that apply, such as overtime, residuals or an option. Its estimated pay isn’t money in your accounts. Each payment says where it stands, from Estimated to Settled. If one is overdue, press Ask About It.
+
+Each kind of work is done its own way, and How The Work Is Done on the engagement says how: its days, its preparation and the choices it asks of you, such as Ask For Another Take on a shoot day or Use The Double for a stunt. After each day it keeps that day’s report.
+
+Charts And Awards, on the Career screen, says what each part on television is eligible for at the Emmy Awards. Press Enter Yourself before the entry deadline to enter it, or the production may. A film goes to Sundance only if its production submits it. When an award you’re nominated for is presented, press Watch The Ceremony, or just read the result. The tab also shows your films’ weeks in cinemas and the weekly charts Box Office Mojo, Netflix and Nielsen publish.
+
+At the Actor Awards, press Submit Yourself under a part while submissions are open, or its production may submit it. Nominated for any award, say by a week before the show whether you’ll go: Go To The Ceremony books the trip, and Watch From Home doesn’t. Going, press Prepare Your Remarks, and if you win, press Go Up And Accept when the clock stops for it.
 
 Read “Cover, Benefits And Returns” next. It opens Papers: your health cover, benefits and tax returns.
 
@@ -44,7 +56,18 @@ Break It Down, Learn The Lines and Rehearse It On Your Feet
 Tape It
 Ask For Another Time
 Accept The Offer and Decline The Offer
+Ask For More
+Ask Them To Decide
 Ask The School
+Apply For The Visa
+Ask About It
+Ask For Another Take
+Use The Double
+Enter Yourself
+Go To The Ceremony and Watch From Home
+Prepare Your Remarks
+Go Up And Accept
+Watch The Ceremony
 Close
 
 ----- 23 controls; Tab reached 23 of the 23 it can; 0 grayed

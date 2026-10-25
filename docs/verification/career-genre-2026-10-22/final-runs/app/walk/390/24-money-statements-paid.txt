@@ -8,7 +8,7 @@ Money
 YOUR BANK
 Chase
 
-$76,090 held here, in one account. Worth $76,090.
+$495,440 held here, in 2 accounts. Worth $495,440.
 
 ‹
 Accounts
@@ -22,16 +22,10 @@ Every payment in and out of each account, with the balance after it.
 
 Account
 Chase Total Checking ···6387, Chase
+Chase Savings ···4672, Chase
 Chase Freedom Unlimited ···9931, Chase
-Chase Savings ···4672, Chase (Closed)
 Period
-January 2030, So Far
-December 2029
-November 2029
-October 2029
-September 2029
-August 2029
-July 2029
+July 2029, So Far
 June 2029
 May 2029
 April 2029
@@ -68,109 +62,124 @@ October 2026
 September 2026
 August 2026
 OPENING BALANCE
-$73,726.02
+$76,452.72
 MONEY IN
-$2,568.05
+$6,016.60
 MONEY OUT
-$203.70
+$190.00
 INTEREST, AFTER TAX
 $0.00
 FEES
 $0.00
 AVAILABLE NOW
-$76,090.37
+$82,279.32
 POSTED BALANCE
-$76,110.37
+$82,299.32
 Posted payments only: what’s pending hasn’t posted yet
 Date
 What
 In / Out
 Balance
-January 16, 2030
-Groceries · Pending, posts January 18, 2030
+July 18, 2029
+Groceries · Pending, posts July 20, 2029
 −$10.00
-$76,090.37
-January 15, 2030
-The Calloway Files, the week of January 7, 2030: paid on from Halberd Talent’s client trust account, less $280.40 commission
-+$2,568.05
-$76,100.37
-January 15, 2030
-Groceries · Pending, posts January 17, 2030
+$82,279.32
+July 17, 2029
+Per diem: Rook Bridge Entertainment, The Station, 5 days
++$300.00
+$82,289.32
+July 17, 2029
+The Crossing On Tamsin Street, the week of July 9, 2029: paid on from Halberd Talent’s client trust account, less $578.33 commission
++$5,296.60
+$81,989.32
+July 17, 2029
+Groceries · Pending, posts July 19, 2029
 −$10.00
-$73,532.32
-January 14, 2030
+$76,692.72
+July 16, 2029
 Groceries
 −$10.00
-$73,542.32
-January 13, 2030
+$76,702.72
+July 15, 2029
 Groceries
 −$10.00
-$73,552.32
-January 12, 2030
+$76,712.72
+July 14, 2029
 Groceries
 −$10.00
-$73,562.32
-January 11, 2030
+$76,722.72
+July 13, 2029
 Groceries
 −$10.00
-$73,572.32
-January 10, 2030
+$76,732.72
+July 12, 2029
+Per diem: Blue Kettle Gate Television, The Crossing On Tamsin Street, 7 days
++$420.00
+$76,742.72
+July 12, 2029
 Groceries
 −$10.00
-$73,582.32
-January 9, 2030
+$76,322.72
+July 11, 2029
 Groceries
 −$10.00
-$73,592.32
-January 8, 2030
+$76,332.72
+July 10, 2029
 Groceries
 −$10.00
-$73,602.32
-January 7, 2030
+$76,342.72
+July 9, 2029
 Medicine for high blood pressure
-−$43.70
-$73,612.32
-January 7, 2030
+−$10.00
+$76,352.72
+July 9, 2029
 Groceries
 −$10.00
-$73,656.02
-January 6, 2030
+$76,362.72
+July 8, 2029
 Groceries
 −$10.00
-$73,666.02
-January 5, 2030
+$76,372.72
+July 7, 2029
 Groceries
 −$10.00
-$73,676.02
-January 4, 2030
+$76,382.72
+July 6, 2029
 Groceries
 −$10.00
-$73,686.02
-January 3, 2030
+$76,392.72
+July 5, 2029
 Groceries
 −$10.00
-$73,696.02
-January 2, 2030
+$76,402.72
+July 4, 2029
 Groceries
 −$10.00
-$73,706.02
-January 1, 2030
+$76,412.72
+July 3, 2029
 Groceries
 −$10.00
-$73,716.02
+$76,422.72
+July 2, 2029
+Groceries
+−$10.00
+$76,432.72
+July 1, 2029
+Groceries
+−$10.00
+$76,442.72
 Sources And Estimates
 The Year
 
 Interest, the tax taken off it, and every fee, as the bank reports them for the year.
 
 Year
-2030, So Far
-2029
+2029, So Far
 2028
 2027
 2026
 INTEREST EARNED
-$0.00
+$20.49
 Before tax
 TAX TAKEN OFF IT
 $0.00
@@ -191,5 +200,5 @@ Save Alerts
 Statement Ready: Off
 Short For A Payment: On
 
------ 91 controls; Tab reached 85 of the 85 it can; 0 grayed
+----- 103 controls; Tab reached 97 of the 97 it can; 0 grayed
 Nothing found.

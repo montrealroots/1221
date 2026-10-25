@@ -13,6 +13,8 @@ Portfolio
 Representation
 Opportunities
 Work
+Charts And Awards
+Productions And People
 Where You Stand
 How This Works
 Training
@@ -43,5 +45,5 @@ Start with your headshots, on the Portfolio tab. Each button there says what it 
 
 Go To Portfolio
 
------ 25 controls; Tab reached 20 of the 20 it can; 0 grayed
+----- 27 controls; Tab reached 20 of the 20 it can; 0 grayed
 Nothing found.

@@ -13,6 +13,8 @@ Portfolio
 Representation
 Opportunities
 Work
+Charts And Awards
+Productions And People
 ›
 Where You Stand
 How This Works
@@ -43,5 +45,5 @@ Start with your résumé, on the Portfolio tab. Each button there says what it t
 
 Go To Portfolio
 
------ 17 controls; Tab reached 11 of the 11 it can; 0 grayed
+----- 19 controls; Tab reached 11 of the 11 it can; 0 grayed
 Nothing found.

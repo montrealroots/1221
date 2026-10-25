@@ -45,7 +45,7 @@ The Career Screen: Once you have headshots, What’s Missing stops asking for th
 Your Accounts: The session’s price comes out of your bank as a work cost.
 WHAT LEADS HERE
 The Career Screen: What’s Missing names headshots first when you have none, since every submission starts with one.
-The Agent And How To Reach Him: A check refuses an approach with no headshots, since every submission starts with one.
+Agents And How To Reach One: A check refuses an approach with no headshots, since every submission starts with one.
 Finding Work And Submitting: A submission starts with your headshots: without them it can’t be sent.
 What To Do Next
 Make your résumé: a submission sends both.

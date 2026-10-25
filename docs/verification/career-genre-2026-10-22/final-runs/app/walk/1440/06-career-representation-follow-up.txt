@@ -13,6 +13,26 @@ Portfolio
 Representation
 Opportunities
 Work
+Charts And Awards
+Productions And People
+Agents
+How This Works
+Thomas Ashgrove
+Agent, Legit Department, Halberd Talent, New York. Invented for the game. Introduced.
+Shown Below
+Dan Patack
+Theatrical Agent, Stewart Talent, New York. A real agent. Not In Touch.
+Show
+Jay Schachter
+Theatrical Agent, Stewart Talent, New York. A real agent. Not In Touch.
+Show
+Rachel Grandizio
+Theatrical Agent, Stewart Talent, New York. A real agent. Not In Touch.
+Show
+Tim Marshall
+Theatrical Agent, Stewart Talent, New York. A real agent. Not In Touch.
+Show
+Sources And Estimates
 Thomas Ashgrove
 
 Agent, Legit Department, Halberd Talent, New York
@@ -62,6 +82,16 @@ History With His Office
 How This Works
 May 11, 2029: The School passed on a request from his office to meet you, standing until June 10, 2029.
 May 11, 2029: You first heard of him through the School’s follow-up after the showcase.
+Agencies
+How This Works
+Stewart Talent
+United Agents
+WME
+CAA
+UTA
+Curtis Brown
+Sources And Estimates
 
------ 36 controls; Tab reached 30 of the 30 it can; 1 grayed
-Nothing found.
+----- 53 controls; Tab reached 44 of the 44 it can; 2 grayed
+FOUND: grayed "Shown Below" has no reason in its title
+FOUND: grayed "Shown Below" has no reason said in its panel

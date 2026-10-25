@@ -2,14 +2,14 @@
  "playthrough": "document",
  "width": 390,
  "base": "http://localhost:4217",
- "commit": "124bec77",
+ "commit": "9f974984",
  "uncommitted": 25,
- "startedAt": "2026-10-24T15:41:47.380Z",
+ "startedAt": "2026-10-25T16:21:18.496Z",
  "startingPoint": {
   "kind": "save",
   "file": "brief.json",
-  "bytes": 109633,
-  "sha256": "8141b7dc06fc3f1037aabbbc40413ee47434dc726862a0dfdaaa046112e6e2e7",
+  "bytes": 113448,
+  "sha256": "b16d35ec697ad5bba482ef83abf95076a4f09fb3567fa437f04a7effd2b881f9",
   "seed": "sc-0",
   "command": "npx vite-node tools/scenarios.ts -- --scenario brief --seed sc-0 --save SAVEDIR/brief.json"
  },
@@ -118,7 +118,7 @@
    ],
    "said": [
     "Confirm Deletion: Delete Slot 1? This deletes Ada Cole’s life from the slot, with everything that happened in it. SLATE keeps a backup, so if you change your mind, press Restore Backup on this slot to bring it back. Keep It Delete Slot 1",
-    "slot 1 kept: SLOT 1 Ada Cole Actor, Yale Drama Year 1 DATE September 12, 2026 LOCATION New Haven NET WORTH $503K PLAYED 16s Version 1.1.0 · Save Format 94 · 30 KB Backup from an unknown date Continue Restore Backu",
+    "slot 1 kept: SLOT 1 Ada Cole Actor, Yale Drama Year 1 DATE September 12, 2026 LOCATION New Haven NET WORTH $503K PLAYED 17s Version 1.1.0 · Save Format 94 · 31 KB Backup from an unknown date Continue Restore Backu",
     "look “Non-Driver Identification Card” (PROOF OF IDENTITY): You’ve applied and paid, and the card is on its way. It should arrive by October 9, 2026.",
     "September 12, 2026 4:05 PM; still On Its Way"
    ],
@@ -841,5 +841,5 @@
    }
   ]
  },
- "finishedAt": "2026-10-24T15:45:14.867Z"
+ "finishedAt": "2026-10-25T16:24:47.994Z"
 }

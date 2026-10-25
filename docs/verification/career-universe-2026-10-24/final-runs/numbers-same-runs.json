@@ -26,9 +26,9 @@
   "after": "docs/verification/career-genre-2026-10-22/final-runs/journeys-final",
   "held": false,
   "files": 102,
-  "same": 7,
+  "same": 3,
   "explained": {
-   "the run’s own record: its commit, whether its tree was clean, the files it read, its seconds": 183
+   "the run’s own record: its commit, whether its tree was clean, the files it read, its seconds": 192
   },
   "unexplained": {},
   "missing": []
@@ -58,11 +58,11 @@
   "after": "docs/verification/career-genre-2026-10-22/final-runs/b20-journeys",
   "held": false,
   "files": 74,
-  "same": 4,
+  "same": 2,
   "explained": {
    "the run’s own record: its commit, whether its tree was clean, the files it read, its seconds": 149,
    "a count of notices: a rewrite changes which merge; the events are compared apart": 456,
-   "a measure of words: the journeys’ continuity counts text": 53
+   "a measure of words: the journeys’ continuity counts text": 57
   },
   "unexplained": {
    "b20-1-p4.json": {
@@ -75,13 +75,13 @@
    "b20-1-p5.json": {
     "differences": 3,
     "first": [
-     ".bank: 73598.97 before, 81101.82 after",
+     ".bank: 73598.97 before, 79812.27 after",
      ".forks: 3 items before, 4 after",
-     ".workDays: 2 before, 15 after"
+     ".workDays: 2 before, 14 after"
     ]
    },
    "b20-1.json": {
-    "differences": 393,
+    "differences": 398,
     "first": [
      ".advice[143][2]: 55.69 before, 55.29 after",
      ".advice[143][3]: 1.01 before, 0.9 after",
@@ -110,7 +110,7 @@
     ]
    },
    "b20-2.json": {
-    "differences": 406,
+    "differences": 402,
     "first": [
      ".advice[144][2]: 57.89 before, 57.5 after",
      ".advice[144][3]: 0.86 before, 0.81 after",
@@ -164,7 +164,7 @@
     ]
    },
    "b20-4.json": {
-    "differences": 336,
+    "differences": 333,
     "first": [
      ".advice[143][3]: 0.41 before, 0.37 after",
      ".advice[144][3]: 0.4 before, 0.32 after",
@@ -216,7 +216,7 @@
     ]
    },
    "b20-6.json": {
-    "differences": 340,
+    "differences": 337,
     "first": [
      ".advice[149][2]: 64.04 before, 63.73 after",
      ".advice[149][3]: 0.39 before, 0.44 after",
@@ -291,7 +291,7 @@
     ]
    },
    "b20-8.json": {
-    "differences": 429,
+    "differences": 427,
     "first": [
      ".advice[143][2]: 56 before, 55.61 after",
      ".advice[143][3]: 1.12 before, 1.01 after",
@@ -415,14 +415,14 @@
     ]
    },
    "table.json": {
-    "differences": 63,
+    "differences": 57,
     "first": [
-     "[0].checks.10 save and reload: pass before, ['15 kept results replay to another figure'] after",
      "[0].forks: 3 items before, 4 after",
      "[0].routes.clash: 0 before, 3 after",
      "[0].routes.decline: 0 before, 1 after",
      "[0].routes.delay: 0 before, 4 after",
-     "[0].routes.failure: 10 before, 22 after"
+     "[0].routes.failure: 10 before, 23 after",
+     "[0].routes.success: 3 before, 16 after"
     ]
    }
   },
@@ -453,9 +453,34 @@
   "after": "docs/verification/career-genre-2026-10-22/final-runs/app/older",
   "held": false,
   "files": 2,
-  "same": 2,
-  "explained": {},
-  "unexplained": {},
+  "same": 0,
+  "explained": {
+   "the run’s own record: its commit, whether its tree was clean, the files it read, its seconds": 18
+  },
+  "unexplained": {
+   "older-1440.json": {
+    "differences": 7,
+    "first": [
+     ".saves[0].steps[0].ms: 4976 before, 4996 after",
+     ".saves[1].steps[0].ms: 5009 before, 4954 after",
+     ".saves[2].steps[0].ms: 4730 before, 4843 after",
+     ".saves[3].steps[0].ms: 4710 before, 4832 after",
+     ".saves[4].steps[0].ms: 4839 before, 4904 after",
+     ".saves[5].steps[0].ms: 4797 before, 4838 after"
+    ]
+   },
+   "older-390.json": {
+    "differences": 6,
+    "first": [
+     ".saves[0].steps[0].ms: 4894 before, 5061 after",
+     ".saves[1].steps[0].ms: 4852 before, 4903 after",
+     ".saves[2].steps[0].ms: 4835 before, 4817 after",
+     ".saves[3].steps[0].ms: 4797 before, 4871 after",
+     ".saves[4].steps[0].ms: 4846 before, 4825 after",
+     ".saves[5].steps[0].ms: 4834 before, 4928 after"
+    ]
+   }
+  },
   "missing": []
  },
  "app/b21": {
@@ -463,8 +488,10 @@
   "after": "docs/verification/career-genre-2026-10-22/final-runs/app/b21",
   "held": false,
   "files": 2,
-  "same": 2,
-  "explained": {},
+  "same": 0,
+  "explained": {
+   "the run’s own record: its commit, whether its tree was clean, the files it read, its seconds": 4
+  },
   "unexplained": {},
   "missing": []
  },
@@ -473,9 +500,26 @@
   "after": "docs/verification/career-genre-2026-10-22/final-runs/app/b22",
   "held": false,
   "files": 2,
-  "same": 2,
-  "explained": {},
-  "unexplained": {},
+  "same": 0,
+  "explained": {
+   "the run’s own record: its commit, whether its tree was clean, the files it read, its seconds": 4
+  },
+  "unexplained": {
+   "walk-1440.json": {
+    "differences": 2,
+    "first": [
+     ".saves[2].found: 0 items before, 1 after",
+     ".saves[2].steps[6].held: True before, False after"
+    ]
+   },
+   "walk-390.json": {
+    "differences": 2,
+    "first": [
+     ".saves[2].found: 0 items before, 1 after",
+     ".saves[2].steps[6].held: True before, False after"
+    ]
+   }
+  },
   "missing": []
  }
 }

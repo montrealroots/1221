@@ -13,13 +13,33 @@ Portfolio
 Representation
 Opportunities
 Work
+Charts And Awards
+Productions And People
+Agents
+How This Works
+Thomas Ashgrove
+Agent, Legit Department, Halberd Talent, New York. Invented for the game. Not In Touch.
+Shown Below
+Dan Patack
+Theatrical Agent, Stewart Talent, New York. A real agent. Not In Touch.
+Show
+Jay Schachter
+Theatrical Agent, Stewart Talent, New York. A real agent. Not In Touch.
+Show
+Rachel Grandizio
+Theatrical Agent, Stewart Talent, New York. A real agent. Not In Touch.
+Show
+Tim Marshall
+Theatrical Agent, Stewart Talent, New York. A real agent. Not In Touch.
+Show
+Sources And Estimates
 Thomas Ashgrove
 
 Agent, Legit Department, Halberd Talent, New York
 
 How This Works
 
-Thomas Ashgrove and Halberd Talent are invented for the game, as every agency, project and casting office in it is. His office takes no submissions it hasn’t asked for: it sees your materials through the School’s follow-up after the showcase, or a referral from someone you’ve worked with. He never gets in touch first.
+Thomas Ashgrove and Halberd Talent are invented for the game. His office takes no submissions it hasn’t asked for: it sees your materials through the School’s follow-up after the showcase, or a referral from someone you’ve worked with. He never gets in touch first.
 
 I’ve Read This
 Department
@@ -31,6 +51,16 @@ Not In Touch
 What’s Next
 Read the notice at the top of his panel, then press I’ve Read This.
 Sources And Estimates
+Agencies
+How This Works
+Stewart Talent
+United Agents
+WME
+CAA
+UTA
+Curtis Brown
+Sources And Estimates
 
------ 26 controls; Tab reached 21 of the 21 it can; 0 grayed
-Nothing found.
+----- 43 controls; Tab reached 35 of the 35 it can; 1 grayed
+FOUND: grayed "Shown Below" has no reason in its title
+FOUND: grayed "Shown Below" has no reason said in its panel

@@ -74,9 +74,10 @@ Passport And ID: On an F-1, Connecticut’s DMV asks for your Social Security nu
 Passport And ID: If you’re not a citizen, Connecticut’s DMV asks for your passport in force, or OPT’s card, before it issues an ID card.
 Residence Abroad: Residence abroad and permission to work in the US are separate: OPT is the US route for a student.
 The Career Screen: Permission To Work on the Overview is the same permission Papers shows under Permission To Work.
-The Agreement: Signing with him gives no permission to work: Papers, under Permission To Work, still says what you may do.
+The Agreement: Signing with an agent gives no permission to work: Papers, under Permission To Work, still says what you may do.
 Your Work And Its Pay: Each engagement’s dates are read against your permission to work when you book it.
 Offers And Booked Work: An offer can be accepted only where your permission to work covers every one of its days.
+Work Abroad: The visa is a permission to work in Papers, pending until the department decides.
 What To Do Next
 Once the card comes, a new bank can open an account for you online, and Connecticut’s DMV can issue you an ID card: see Passport And ID.
 Near your program’s end, apply for OPT inside its window if you want your status to last past the grace period.

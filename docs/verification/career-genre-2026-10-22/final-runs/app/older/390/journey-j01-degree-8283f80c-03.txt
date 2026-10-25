@@ -100,7 +100,7 @@ None yet
 Listening And Responsiveness 69.0 100.0 78.6 
 Not held back today
  
-Connection, Responsiveness
+Connection, Responsiveness, Execution
  
 +0.01, Class: On-Camera Acting Technique (DRAM 463a/b)
  The Repetition Exercise…
@@ -142,14 +142,14 @@ None yet
 Vocal Expression 73.8 100.0 86.1 
 Not held back today
  
-Execution, Consistency
+Execution, Consistency, Believability
  
 +0.03, Class: Voice III (DRAM 313a/b)
  Voice Work…
 Physical Expression 66.6 100.0 77.1 
 Not held back today
  
-Execution
+Execution, Believability
  
 +0.03, Class: Character Analysis And Movement (DRAM 273b)
  Movement Work…

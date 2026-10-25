@@ -13,8 +13,10 @@ Portfolio
 Representation
 Opportunities
 Work
+Charts And Awards
+Productions And People
 
-Every project, company and casting office here is invented for the game: no real production is casting. New roles go up each Monday morning.
+The projects, companies and casting offices here are invented for the game, except a few parts drawn from real productions, and those say so. No real production is casting. New roles go up each Monday morning.
 
 Open Calls
 How This Works
@@ -28,9 +30,13 @@ Thomas Ashgrove represents you, and submits you for the roles casting offices re
 
 In Progress
 How This Works
+Marisol, The Assembly On Mercer Street
 
-No role is in progress. A role you submit for moves here, with its audition once casting answers.
+Submitted. Abernathy Casting answers soon.
 
+Through Thomas Ashgrove.
+
+What Happened (4)
 Offers
 How This Works
 
@@ -38,11 +44,25 @@ No offer stands now.
 
 Booked Work
 How This Works
-Ivy, Paper Moons
+Sabine, The Crossing On Tamsin Street
 
-Three days to come, the next Monday, December 3, 2029 at 7:00 AM, in New York. Each stops the clock: press Go to be there.
+Three days to come, the next Monday, July 9, 2029 at 7:00 AM, in Atlanta. Each stops the clock: press Go to be there.
 
-Preparing the part: the breakdown 98%, the lines 99%, rehearsal on your feet 98%.
+Preparing the part: the breakdown 97%, the lines 85%, rehearsal on your feet 97%.
+
+Break It Down (60 Minutes)
+Learn The Lines (60 Minutes)
+Rehearse It On Your Feet (90 Minutes)
+Break It Down (60 Minutes): You’ve done all this step can do.
+Rehearse It On Your Feet (90 Minutes): You’ve done all this step can do.
+
+Promised: $6,361.59 for one week, due the Thursday after it. It’s promised, not yet paid.
+
+Celeste Escobar, The Station
+
+One day to come, the next Monday, July 16, 2029 at 10:00 AM, in Los Angeles. Each stops the clock: press Go to be there.
+
+Preparing the part: the breakdown 98%, the lines 97%, rehearsal on your feet 97%.
 
 Break It Down (60 Minutes)
 Learn The Lines (60 Minutes)
@@ -50,27 +70,26 @@ Rehearse It On Your Feet (90 Minutes)
 
 Not now: You’ve done all this step can do.
 
-The pay is deferred: a student film pays its actors only if it earns money later, and no film in the game does, so nothing is paid for it.
+Promised: $2,120.53 for one week, due the Thursday after it. It’s promised, not yet paid.
 
 Settled
 How This Works
-Nell, A House On Calder Street: Pennick Casting didn’t call you back for Nell.
+Hollis Nakashima, Salt Crossing: Quillon Casting cast another actor as Hollis Nakashima.
 Why It Went This Way
-You accepted Ivy in Paper Moons: three work days, from December 3, 2029.
+Tamsin Moorcroft, Late Weather: Kettering Casting didn’t call you back for Tamsin Moorcroft.
 Why It Went This Way
-Robin, Last Bus To Eastview: The producers cast another actor as Robin.
+Lane, The Station: Delacroix Casting cast another actor as Lane.
 Why It Went This Way
-Hester Vane, The Winter Ledger: Ostrander Vale Casting cast another actor as Hester Vane.
+Adaeze, The Witness Of Brisco: Sorensen Casting cast another actor as Adaeze.
 Why It Went This Way
-Desk Clerk, The Calloway Files: Kettering Casting cast another actor as Desk Clerk.
+Lane, The Carnival Of Fenwick Pass: Kettering Casting cast another actor as Lane.
 Why It Went This Way
-Ivy, Paper Moons: The film’s director cast another actor as Ivy.
+Arden Prendergast, The Witness On Mercer Street: Quillon Casting cast another actor as Arden Prendergast.
 Why It Went This Way
-Wren, Gull Season: Quillon Casting didn’t call you back for Wren.
-Why It Went This Way
-Jess, Static On Route 9: Brisbane Hall Casting cast another actor as Jess.
+Tamsin Prendergast, The Accounts: You were at the audition for Nell in New York, so you missed the audition for Tamsin Prendergast on June 18, 2029 at 11:00 AM, and Lindqvist Casting moved on without you.
+Hollis Prendergast, Small Ledger: Delacroix Casting cast another actor as Hollis Prendergast.
 Why It Went This Way
 Sources And Estimates
 
------ 41 controls; Tab reached 33 of the 33 it can; 3 grayed
+----- 46 controls; Tab reached 34 of the 34 it can; 5 grayed
 Nothing found.

@@ -1,5 +1,5 @@
 {
- "commit": "f32cf4078d2fef0001f0f2051f4e72b9d7ce61c0",
+ "commit": "9f974984df50b675bd4999c83b4d49734309a391",
  "clean": true,
  "command": "npx vite-node tools/advice.ts -- --cases adv-v-90..99 --fresh --out docs/verification/career-genre-2026-10-22/final-runs/advice/fresh-adv-v-90-99.json",
  "roles": {

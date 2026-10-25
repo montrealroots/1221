@@ -117,7 +117,7 @@ None yet
 Listening And Responsiveness 57.5 100.0 74.0 
 Not held back today
  
-Connection, Responsiveness
+Connection, Responsiveness, Execution
  
 +0.03, Class: Clown (DRAM 263a/b)
  The Repetition Exercise…
@@ -159,14 +159,14 @@ None yet
 Vocal Expression 65.9 100.0 80.8 
 Not held back today
  
-Execution, Consistency
+Execution, Consistency, Believability
  
 +0.04, Class: The Greeks (DRAM 293b)
  Voice Work…
 Physical Expression 59.9 100.0 73.1 
 Not held back today
  
-Execution
+Execution, Believability
  
 +0.04, Class: Alexander Technique II Tutorials (DRAM 243a/b)
  Movement Work…

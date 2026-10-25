@@ -5,7 +5,7 @@ Your Plans And Commitments
 
 Everything on your calendar, and the public holidays where you are. When two things you need to be at overlap, they’re marked Clash.
 
-December 2029
+July 2029
 ‹
 Today
 ›
@@ -16,88 +16,141 @@ WED
 THU
 FRI
 SAT
-25
-26
-Audition: Nell, A House On Calder Street
-27
-Casting Decides: Nell
-28
-Bill Due: The Dentist, A Cleaning
-29
-30
 1
+Self-Tape Due: Lane, The Station
+Self-Tape Due: Tamsin Moorcroft, Late Weather
+Self-Tape Due: Hollis Nakashima, Salt Crossing
 2
+Casting Decides: Tamsin Moorcroft
 3
-Paper Moons: Shoot Day 1
 4
-Paper Moons: Shoot Day 2
+Independence Day
+Casting Answers: Marisol
+Casting Decides: Hollis Nakashima
 5
-Paper Moons: Shoot Day 3
 6
+Car To JFK In New York
+Car To JFK In New York: Arrives
+Flight To Atlanta
 7
 8
+Self-Tape Due: Marisol, The Assembly On Mercer Street
 9
+The Crossing On Tamsin Street: Shoot Day 1
 10
+The Crossing On Tamsin Street: Shoot Day 2
 11
+The Crossing On Tamsin Street: Shoot Day 3
+Casting Decides: Marisol
 12
+Car To The Airport
+Car To The Airport: Arrives
+Flight To New York
 13
+Car To JFK In New York
+Car To JFK In New York: Arrives
+Flight To Los Angeles
 14
+Car To The Hotel: Arrives
 15
 16
+The Station: Shoot Day 1
 17
+Car To The Airport
+Car To The Airport: Arrives
+Flight To New York
 18
 19
+Payday: The Station
 20
 Card Statement
 21
 22
 23
 24
-Christmas Eve
 25
-Christmas Day
 26
 27
 28
 29
 30
 31
-New Year's Eve
 1
-New Year's Day
 2
 3
 4
-5
 Personal
 School
 Career
 Money
 Holiday
-Today, December 3, 2029
+Today, July 9, 2029
 
-Winter
+Summer
 
 Put Something On It
 How This Works
-Paper Moons: Shoot Day 1
-7:00 AM · 11 hours · New York
+The Crossing On Tamsin Street: Shoot Day 1
+7:00 AM · 11 hours · Atlanta
 Next Thirty Days
 
 Everything in the next thirty days, a run of the same call on one line.
 
-Paper Moons: Shoot Day 1
-December 3, 2029 · 7:00 AM
+The Crossing On Tamsin Street: Shoot Day 1
+July 9, 2029 · 7:00 AM
 You
-Paper Moons: Shoot Day 2
-December 4, 2029 · 7:00 AM
+The Crossing On Tamsin Street: Shoot Day 2
+July 10, 2029 · 7:00 AM
 You
-Paper Moons: Shoot Day 3
-December 5, 2029 · 7:00 AM
+The Crossing On Tamsin Street: Shoot Day 3
+July 11, 2029 · 7:00 AM
 You
+Casting Decides: Marisol
+July 11, 2029 · 5:00 PM
+Car To The Airport (2)
+July 12, 2029 to July 17, 2029, the next at 8:20 AM
+You
+Show Each
+Car To The Airport: Arrives (2)
+July 12, 2029 to July 17, 2029, the next at 9:00 AM
+Show Each
+Flight To New York (2)
+July 12, 2029 to July 17, 2029, the next at 11:00 AM
+Show Each
+Payday: The Crossing On Tamsin Street
+July 12, 2029 · 12:00 PM
+Money
+Flight To New York: Arrives (2)
+July 12, 2029 to July 17, 2029, the next at 12:55 PM
+Show Each
+Car Home (2)
+July 12, 2029 to July 17, 2029, the next at 1:55 PM
+Show Each
+Car Home: Arrives (2)
+July 12, 2029 to July 17, 2029, the next at 3:55 PM
+Show Each
+Car To JFK In New York
+July 13, 2029 · 1:30 PM
+You
+Car To JFK In New York: Arrives
+July 13, 2029 · 3:30 PM
+Flight To Los Angeles
+July 13, 2029 · 5:30 PM
+Flight To Los Angeles: Arrives
+July 13, 2029 · 10:40 PM
+Car To The Hotel
+July 13, 2029 · 11:40 PM
+Car To The Hotel: Arrives
+July 14, 2029 · 12:20 AM
+The Station: Shoot Day 1
+July 16, 2029 · 10:00 AM
+You
+Payday: The Station
+July 19, 2029 · 12:00 PM
+Money
 Card Statement
-December 20, 2029 · 9:00 AM
+July 20, 2029 · 9:00 AM
 Money
 
------ 60 controls; Tab reached 59 of the 59 it can; 0 grayed
+----- 69 controls; Tab reached 68 of the 68 it can; 0 grayed
 Nothing found.

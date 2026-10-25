@@ -16,7 +16,7 @@ Meeting At Halberd Talent
 
 It’s 11:00 AM on May 25, 2029, and this needs you now. Going takes 1 hour, and the clock moves on to May 25, 2029 at 6:00 PM. Getting there and back, about 2 hours each way, doesn’t move the clock.
 
-Ask To Move asks his office to move the meeting a week on, which it does once, and the clock carries on to May 25, 2029 at 6:00 PM, stopping at the next commitment on the way. Stand Here keeps the clock paused here, and Meeting At Halberd Talent starts the next time it moves.
+Ask To Move asks the agent’s office to move the meeting a week on, which it does once, and the clock carries on to May 25, 2029 at 6:00 PM, stopping at the next commitment on the way. Stand Here keeps the clock paused here, and Meeting At Halberd Talent starts the next time it moves.
 
 How This Works
 Stand Here

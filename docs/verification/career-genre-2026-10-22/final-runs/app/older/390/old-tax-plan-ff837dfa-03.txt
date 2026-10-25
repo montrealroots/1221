@@ -96,7 +96,7 @@ Connection
 Listening And Responsiveness 58.3 100.0 79.8 
 Not held back today
  
-Connection, Responsiveness
+Connection, Responsiveness, Execution
  
 +0.04, Class: Acting I (DRAM 103a/b)
  The Repetition Exercise…
@@ -138,14 +138,14 @@ Consistency
 Vocal Expression 57.7 100.0 79.0 
 Not held back today
  
-Execution, Consistency
+Execution, Consistency, Believability
  
 +0.07, Class: Voice I (DRAM 113a/b)
  Voice Work…
 Physical Expression 65.8 100.0 84.3 
 Not held back today
  
-Execution
+Execution, Believability
  
 +0.05, Class: Alexander Technique I (DRAM 143a/b)
  Movement Work…
