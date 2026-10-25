@@ -16,7 +16,7 @@ import type { Simulation } from '@/engine/core/simulation';
 import { MS_DAY, MS_HOUR } from '@/engine/core/time';
 import { rngFor } from '@/engine/core/rng';
 import { agentById } from '@/engine/content/agents';
-import { TERMS, askChance, chanceTenths } from '@/engine/systems/representation';
+import { TERMS, askChance, chanceTenths, realTermsWords } from '@/engine/systems/representation';
 import { relationOf, signRefusal } from '@/engine/systems/proagent';
 import { GUIDE_BY_ID } from '@/engine/content/guide';
 import { AGENT, SURE, finishedJob, graduate, played, portfolio, reel, twin } from './fakes/b20-career';
@@ -34,6 +34,7 @@ vi.mock('@/app/game-context', () => {
 const { WorkspaceRouter } = await import('@/ui/workspaces/WorkspaceRouter');
 
 const CELIA = agentById('celia-brannock')!;
+const PATACK = agentById('dan-patack')!;
 const promise = (entry: string, to: string) => GUIDE_BY_ID[entry]!.connections.find((c) => c.to === to)!.why;
 const PERSON = 'person_000001';
 
@@ -46,24 +47,27 @@ function drawn(sim: Simulation, agent = AGENT.id): { html: string; shown: string
 }
 const button = (html: string, label: string) => [...html.matchAll(/<button([^>]*)>([^<]*)(?:<span class="lock-word">Locked<\/span>)?<\/button>/g)].filter((m) => m[2] === label).map((m) => ({ disabled: m[1]!.includes('disabled=""'), title: /title="([^"]*)"/.exec(m[1]!)?.[1]?.replace(/&quot;/g, '"') }));
 
-/** TEST SETUP: the first life of a prefix whose office offers an agreement and agrees to any ask, read from the game's draws. */
-function offeredAgreeing(prefix: string): Simulation {
+/**
+ * TEST SETUP: the first life of a prefix whose office offers an agreement and agrees to any ask, read from the game's draws
+ * (for another agent, any offer, whatever its answer would be).
+ */
+function offeredAgreeing(prefix: string, agentId: string = AGENT.id): Simulation {
   for (let i = 0; i < 20_000; i += 1) {
     const seed = `${prefix}-${i}`;
-    const d = (step: 'interest' | 'offer') => rngFor(seed, 'pro.agent', PERSON, AGENT.id, 'approach-1', step).next();
+    const d = (step: 'interest' | 'offer') => rngFor(seed, 'pro.agent', PERSON, agentId, 'approach-1', step).next();
     if (!(d('interest') < SURE.meet && d('offer') < SURE.offer)) continue;
     const sim = graduate(seed);
-    sim.must({ kind: 'pro.agent_notice', payload: {} });
+    sim.must({ kind: 'pro.agent_notice', payload: { agentId } });
     portfolio(sim);
     const job = finishedJob(sim, 'strong');
     sim.must({ kind: 'pro.update_resume', payload: {} });
-    sim.must({ kind: 'pro.agent_check', payload: {} });
-    sim.must({ kind: 'pro.ask_referral', payload: { engagementId: job.id } });
+    sim.must({ kind: 'pro.agent_check', payload: { agentId } });
+    sim.must({ kind: 'pro.ask_referral', payload: { agentId, engagementId: job.id } });
     reel(sim);
-    sim.must({ kind: 'pro.send_materials', payload: {} });
-    for (let k = 0; k < 60 && relationOf(sim.player, AGENT.id)!.stage !== 'offered'; k += 1) played(sim, sim.now + MS_DAY);
+    sim.must({ kind: 'pro.send_materials', payload: { agentId } });
+    for (let k = 0; k < 60 && relationOf(sim.player, agentId)!.stage !== 'offered'; k += 1) played(sim, sim.now + MS_DAY);
     const a = sim.player.pro!.agreements.find((x) => x.status === 'offered')!;
-    if (rngFor(seed, 'pro.agent_terms', PERSON, AGENT.id, a.id).next() < TERMS.least) return sim;
+    if (agentId !== AGENT.id || rngFor(seed, 'pro.agent_terms', PERSON, AGENT.id, a.id).next() < TERMS.least) return sim;
   }
   throw new Error('no life');
 }
@@ -99,6 +103,14 @@ describe('Asking For Different Terms, on the Representation tab', () => {
     expect(drawn(sim).shown).toContain('Where (The Game’s Own Term) Work anywhere in the United States.');
     played(sim, r.answerAt + MS_HOUR);
     expect(drawn(sim).shown).toContain('Where (The Game’s Own Term) Work anywhere in the United States, and in the UK and Australia, where the game has work abroad.');
+  }, 300_000);
+
+  it('PLAYER JOURNEY: a real agent’s offer: the panel says the game invents whether the office agrees, since the agency’s pages give no terms; the game’s own agent’s says nothing of it', () => {
+    const sim = offeredAgreeing('rep-screen-real', PATACK.id);
+    const shown = drawn(sim, PATACK.id).shown;
+    expect(shown).toContain(`Ask To Add Work Abroad: work in the UK and Australia to be covered too. The game puts the chance the office agrees at ${chanceTenths(askChance(sim, sim.player, PATACK, 'abroad'))}.`);
+    expect(shown).toContain(`The commission is the unions’ and New York’s rule, and no ask changes it. ${realTermsWords(PATACK)}`);
+    expect(drawn(offeredAgreeing('rep-screen-own')).shown).not.toContain('pages say nothing of the terms');
   }, 300_000);
 
   it('PLAYER JOURNEY: Celia Brannock’s panel gives her voice-over department, her office’s own rule, its one way in, and the voice demo her approach sends', () => {

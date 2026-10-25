@@ -305,8 +305,10 @@ describe('what the terms cover, read by the commission and the agent’s submiss
 
 describe('the offers an agent handles, by what the agreement covers', () => {
   it('PLAYER JOURNEY: a voice part offered without an audition while the agreement leaves voice-over out: the actor’s own, at scale, with no ask for more, and its contract says no commission is owed, as the pay takes none; with voice-over covered, a voice part from the same office comes through the agent at scale plus ten, and its contract says commission is owed, as the pay takes it', () => {
-    // TEST SETUP: represented by Thomas Ashgrove under an agreement as the agent's builder writes one: his first terms.
+    // TEST SETUP: represented by Thomas Ashgrove under an agreement as the agent's builder writes one: his first terms; and
+    // an earlier agreement with him that ended a month ago, which the contracts below don't read.
     const legit = graduate('rep-offers');
+    endedBefore(legit);
     represent(legit);
     const own = directVoiceOffer(legit, 'open');
     const scale = payTermsOf(own).each!;
@@ -318,13 +320,14 @@ describe('the offers an agent handles, by what the agreement covers', () => {
     expect(commissionOn(legit, legit.player, ownWork, ownWork.pay[0]!, ownWork.pay[0]!.promised)).toMatchObject({ how: 'uncovered', amount: 0, words: 'No commission: your agreement with Halberd Talent leaves out voice-over work, and this is that.' });
     // THE TWIN: the same life with voice-over covered (TEST SETUP: the agreement's terms as the office's agreement to the ask leaves them).
     const voiced = graduate('rep-offers');
+    endedBefore(voiced);
     const a = represent(voiced);
     a.deal = { versions: [{ version: 1, at: a.offeredAt, scope: ['legit'], territory: ['us'], termDays: 365 }, { version: 2, at: a.offeredAt, scope: ['legit', 'voice'], territory: ['us'], termDays: 365 }] };
     const through = directVoiceOffer(voiced, 'agent');
     expect([through.via, through.agreementId]).toEqual(['agent', a.id]);
     expect(through.offer!.amount).toBe(Math.round(payTermsOf(through).each! * 1.1));
     expect(askMoreRefusal(voiced, voiced.player, through)).toBeUndefined();
-    // Accepted, its contract says commission is owed, and the pay takes it.
+    // Accepted, its contract says commission is owed, and the pay takes it: the agreement it's made under, not the earlier one.
     const throughWork = acceptedWork(voiced, through.id);
     expect(voiceClause(throughWork)).toBe('Your agreement with Halberd Talent covers voice-over work, so commission is owed on this work as on the rest it covers.');
     const owed = commissionOn(voiced, voiced.player, throughWork, throughWork.pay[0]!, throughWork.pay[0]!.promised);
@@ -490,12 +493,22 @@ describe('one agent at a time, whatever each covers', () => {
   });
 });
 
+describe('the guide on the terms', () => {
+  it('states the ask’s result as a chance, worked from the game’s own figures, and the agreement’s end by its term, whatever its length', () => {
+    const example = GUIDE_BY_ID['career.agreement-terms']!.example!;
+    expect(example.setup).toBe('Thomas Ashgrove has offered you an agreement, and five of the factors are at the bar.');
+    expect(example.result).toBe(`The game puts the chance at ${chanceTenths(termsChance('voice', 5, GATE))}. If the office agrees, What It Covers adds voice-over work, and a voice part can come to you through your agent; if it doesn’t, the terms stay as offered.`);
+    expect(GUIDE_BY_ID['career.agreement']!.short).toContain('or when its term is up.');
+    expect(GUIDE_BY_ID['career.agreement']!.short).not.toContain('its year is up');
+  });
+});
+
 describe('the slate’s reach, as its decider samples it', () => {
   it('samples a represented life’s voice parts as the game reaches them under a legit agreement: openly, not through the agent', () => {
-    const d = deciders().find((x) => x.id === 'pro.slate_reach')!;
-    const input = (d.sample as (seed: number) => { sim: Simulation; represented: number })(1);
+    const d = deciders().find((x) => x.id === 'pro.slate_reach')! as unknown as { sample: (seed: number) => { sim: Simulation; represented: number }; decide: (input: unknown) => string };
+    const input = d.sample(1);
     expect(input.represented).toBe(1);
-    const weeks = String((d.decide as (i: unknown) => string)(input)).split(' ');
+    const weeks = d.decide(input).split(' ');
     const sim = input.sim;
     let voiced = 0;
     weeks.forEach((week, n) => {
@@ -554,6 +567,11 @@ describe('an older save’s agreement', () => {
 function acceptedWork(sim: Simulation, opportunityId: string): Engagement {
   const r = sim.must<{ engagementId: string }>({ kind: 'pro.accept_offer', payload: { opportunityId } });
   return sim.player.pro!.engagements.find((e) => e.id === r.engagementId)!;
+}
+
+/** TEST SETUP: an agreement with Thomas Ashgrove, on his first terms, that ended by agreement a month ago, as the builder leaves one. */
+function endedBefore(sim: Simulation): void {
+  sim.player.pro!.agreements.push({ id: 'ended-before', agentId: AGENT.id, offeredAt: sim.now - 70 * MS_DAY, standsUntil: sim.now - 56 * MS_DAY, status: 'ended', terms: termsFor(dealOf({ agentId: AGENT.id, offeredAt: sim.now - 70 * MS_DAY } as Agreement)), signedAt: sim.now - 60 * MS_DAY, endsAt: sim.now + 305 * MS_DAY, endedAt: sim.now - 30 * MS_DAY, endedHow: 'agreement' });
 }
 
 /** What a voice part's contract says of commission, as the Work tab shows its clauses. */
