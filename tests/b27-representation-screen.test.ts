@@ -110,7 +110,7 @@ describe('Asking For Different Terms, on the Representation tab', () => {
     const shown = drawn(sim, PATACK.id).shown;
     expect(shown).toContain(`Ask To Add Work Abroad: work in the UK and Australia to be covered too. The game puts the chance the office agrees at ${chanceTenths(askChance(sim, sim.player, PATACK, 'abroad'))}.`);
     expect(shown).toContain(`The commission is the unions’ and New York’s rule, and no ask changes it. ${realTermsWords(PATACK)}`);
-    expect(drawn(offeredAgreeing('rep-screen-own')).shown).not.toContain('pages say nothing of the terms');
+    expect(drawn(offeredAgreeing('rep-screen-own')).shown).not.toContain('say nothing of the terms its agents agree to');
   }, 300_000);
 
   it('PLAYER JOURNEY: Celia Brannock’s panel gives her voice-over department, her office’s own rule, its one way in, and the voice demo her approach sends', () => {
