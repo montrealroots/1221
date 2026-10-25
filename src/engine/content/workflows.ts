@@ -357,6 +357,12 @@ export interface FormatSpec {
   daysOnly?: true;
   /** A recall to loop after the wrap, within so many months (N13 Schedule A §28.A): four, six for features and long-form television. */
   looping?: number;
+  /**
+   * A further day after the wrap (from 2026-10-25, the owner's brief 27, loop 29: "ADR, pickups, or reshoots: request
+   * arrives → check contract and availability → schedule and complete the work → update compensation"): a feature's
+   * reshoot day on its own set, or a voice part's pickup session in a booth (`AFTER_WRAP.further`).
+   */
+  further?: 'reshoot' | 'pickup';
   /** Decisions of its own, beside its workflow's. */
   decisions?: readonly Decision[];
 }
@@ -367,12 +373,12 @@ export const FORMATS: Readonly<Record<FormatId, FormatSpec>> = {
   'independent-feature': {
     id: 'independent-feature', workflow: 'single-camera', label: 'An Independent Feature',
     words: 'A live-action feature on an independent budget: two takes a scene and time for only one more in a day, the scenes shot by location, and a release in cinemas a year on.',
-    takes: { base: 2, extra: 1 }, revisions: 0.1, board: 'location', after: 'theatrical', looping: 6,
+    takes: { base: 2, extra: 1 }, revisions: 0.1, board: 'location', after: 'theatrical', further: 'reshoot', looping: 6,
   },
   'studio-feature': {
     id: 'studio-feature', workflow: 'single-camera', label: 'A Studio Feature',
     words: 'A live-action feature on a studio’s budget: three takes a scene, three more in a day for the asking, fewer scenes a day, and a release in cinemas a year on.',
-    takes: { base: 3, extra: 3 }, revisions: 0.15, board: 'location', scenesPerDay: 2, after: 'theatrical', looping: 6,
+    takes: { base: 3, extra: 3 }, revisions: 0.15, board: 'location', scenesPerDay: 2, after: 'theatrical', further: 'reshoot', looping: 6,
   },
   procedural: {
     id: 'procedural', workflow: 'single-camera', label: 'A Procedural',
@@ -404,7 +410,7 @@ export const FORMATS: Readonly<Record<FormatId, FormatSpec>> = {
   'tv-movie': {
     id: 'tv-movie', workflow: 'single-camera', label: 'A Television Movie',
     words: 'A feature made for one network night: shot fast, two takes a scene, and broadcast once it’s cut.',
-    takes: { base: 2, extra: 2 }, revisions: 0.15, board: 'location', scenesPerDay: 4, after: 'broadcast', looping: 6,
+    takes: { base: 2, extra: 2 }, revisions: 0.15, board: 'location', scenesPerDay: 4, after: 'broadcast', further: 'reshoot', looping: 6,
   },
   'single-camera-comedy': {
     id: 'single-camera-comedy', workflow: 'single-camera', label: 'A Single-Camera Comedy',
@@ -419,12 +425,12 @@ export const FORMATS: Readonly<Record<FormatId, FormatSpec>> = {
   'animated-feature': {
     id: 'animated-feature', workflow: 'voice', label: 'An Animated Feature',
     words: 'An animated film, its lines recorded before it’s drawn, in sessions months apart, each paid as a day, the days between unpaid.',
-    revisions: 0.3, board: 'location', after: 'theatrical', daysOnly: true,
+    revisions: 0.3, board: 'location', after: 'theatrical', further: 'pickup', daysOnly: true,
   },
   'animated-series': {
     id: 'animated-series', workflow: 'voice', label: 'An Animated Series',
     words: 'An animated series, an episode’s lines recorded in a session every other week.',
-    revisions: 0.2, board: 'story', after: 'broadcast',
+    revisions: 0.2, board: 'story', after: 'broadcast', further: 'pickup',
   },
   dub: {
     id: 'dub', workflow: 'dubbing', label: 'An English Dub',
@@ -449,7 +455,7 @@ export const FORMATS: Readonly<Record<FormatId, FormatSpec>> = {
   'action-feature': {
     id: 'action-feature', workflow: 'action', label: 'An Action Feature',
     words: 'A studio feature built on its fights and stunts: rehearsal with the stunt coordinator first, and a release in cinemas a year on.',
-    takes: { base: 3, extra: 3 }, revisions: 0.15, board: 'location', after: 'theatrical', looping: 6,
+    takes: { base: 3, extra: 3 }, revisions: 0.15, board: 'location', after: 'theatrical', further: 'reshoot', looping: 6,
   },
   short: {
     id: 'short', workflow: 'single-camera', label: 'A Short Film',
@@ -488,7 +494,7 @@ export const STUNT = { rehearsed: 0.03, cold: 0.15, physicalShare: 0.4, insert: 
 export const PAGES = { least: 0.1, most: 0.35, eveningHour: 18 } as const;
 
 /** After a screen wrap, the chance the producer recalls you to loop, and the chance the edit cuts one of your scenes (the game's). */
-export const AFTER_WRAP = { loop: 0.35, cut: 0.2, loopHours: 4, loopHour: 10 } as const;
+export const AFTER_WRAP = { loop: 0.35, cut: 0.2, loopHours: 4, loopHour: 10, further: 0.2, furtherFrom: 45, furtherWithin: 45, reshootHour: 7, reshootHours: 9 } as const;
 
 /** Each scene of the part and how far into the story it falls, made at acceptance (`systems/workflow.ts`). */
 export const SCRIPT = { scenesPerEpisode: 6, minimumScene: 3, spread: 40 } as const;

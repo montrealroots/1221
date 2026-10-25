@@ -81,7 +81,7 @@ import { PROCESS } from './production';
 import { nerves, repeatsToday, stepSpeed } from './attributes';
 import { enjoyWork } from './enjoyment';
 import { exerts } from './body';
-import { trainingRefusal } from './injury';
+import { laidUp, trainingRefusal } from './injury';
 import { SPENT, startRefusal } from './life';
 import { SELF_TAPE, genreSpeed, practiceGenres, relevantGenre, requirementOfRole } from './engagement';
 import {
@@ -98,8 +98,8 @@ import { companiesAs, productionById } from '../content/catalog';
 import { episodeDays, episodesFrom, seasonYearAt, seriesById } from '../content/series';
 import { clauseOf, contractFor, entitle, overtimeOf, paysOvertime, OPTION_RAISE } from './contracts';
 import { inProduction, registerSeries, scheduleSeason, seasonOf } from './series';
-import { STEP_LABEL, STEP_WORDS, afterWrap, dubDaysOf, cutInEdit, formatOf, keptBand, payUnitsOf, planWork, registerWorkflows, sessionDays, stepOf, voiceOnly, workHoursOf, workTheDay, workflowOf } from './workflow';
-import { RELEASED } from '../content/workflows';
+import { STEP_LABEL, STEP_WORDS, afterWrap, dubDaysOf, cutInEdit, formatOf, furtherHours, keptBand, payUnitsOf, planWork, registerWorkflows, sessionDays, stepOf, voiceOnly, workHoursOf, workTheDay, workflowOf } from './workflow';
+import { AFTER_WRAP, RELEASED } from '../content/workflows';
 import { registerAwards, visibilityOf } from './awards';
 import { simulateRun } from './charts';
 import { keepProject, pushedPart, restoreSlate, slatePartsAt } from './slate';
@@ -323,6 +323,19 @@ export const HOLD_KIND = 'pro.hold_answer';
  * `most` such days on one part the production shoots the rest under cover (ASSUMPTION).
  */
 export const WEATHER_DAY = { skies: ['Thunderstorm', 'Fog'] as readonly string[], windKph: 40, eveningHour: 18, most: 2, steps: ['shoot', 'stunt-day', 'reenactment'] as readonly string[] } as const;
+
+/**
+ * An ill day shot around (from 2026-10-25, the owner's brief 27, loop 28: "A schedule change, illness, conflict, absence
+ * ... → determine its cause and relevant contractual rules ... → reschedule, excuse, warn, replace ... Do not impose
+ * replacement automatically after one universal number of mistakes unless a specific established game arrangement
+ * supports it"). Until then a shoot replaced the actor for any day missed, asleep or ill. Now a lead's or a supporting
+ * part's production shoots around one day the actor is too ill to work, slipping the rest a working day each as a weather
+ * day does, where nothing stands in the way; the day isn't paid, a performer's own illness being the agreement's exception
+ * to paying a day engaged and not used (N13 Schedule A §4.E). A smaller part is recast, as a second ill day is, and a day
+ * slept through is the actor's default, replaced as before. ASSUMPTION each line of it: the agreement says what's paid, not
+ * when a production waits.
+ */
+export const ILL_DAY = { most: 1, sizes: ['lead', 'supporting'] as readonly string[] } as const;
 
 /** How much of a screen venue's work is out on location, by its words: all of it, half where a stage or a set goes with locations, none in a studio, on a stage or in a room (the game's reading). */
 export const locationShare = (venue: string): number => (/^locations\b/i.test(venue) ? 1 : /\blocations\b|wharves/i.test(venue) ? 0.5 : 0);
@@ -1029,6 +1042,17 @@ export function bookedClash(person: Person, days: readonly { from: Instant; to: 
   for (const e of person.pro?.engagements ?? []) {
     if (!live(e) || e.opportunityId === except) continue;
     for (const [i, x] of e.days.entries()) if (!lostDay(e, i) && days.some((d) => x.from < d.to && x.to > d.from)) return { label: x.label, from: x.from };
+  }
+  // A recall after the wrap holds its hours too (from 2026-10-25, brief 27's K5): a looping session, a reshoot day or a
+  // pickup session set and not yet gone to. Until then an offer on the same day was taken without a word.
+  for (const e of person.pro?.engagements ?? []) {
+    if (e.opportunityId === except || e.status === 'canceled') continue;
+    const t = projectById(e.projectId);
+    const recalls = [
+      ...(e.loop?.status === 'set' ? [{ from: e.loop.at, to: e.loop.at + AFTER_WRAP.loopHours * MS_HOUR, label: `${t?.project ?? 'Your Work'}: Looping Session` }] : []),
+      ...(e.further?.status === 'set' ? [{ from: e.further.at, to: e.further.at + furtherHours(e.further.kind) * MS_HOUR, label: `${t?.project ?? 'Your Work'}: ${e.further.kind === 'reshoot' ? 'Reshoot Day' : 'Pickup Session'}` }] : []),
+    ];
+    for (const x of recalls) if (days.some((d) => x.from < d.to && x.to > d.from)) return { label: x.label, from: x.from };
   }
   // A trip abroad holds every day from its first leg to its last (from 2026-10-23, the owner's brief 25, W8).
   const exceptEngagement = person.pro?.engagements.find((e) => e.opportunityId === except)?.id;
@@ -1772,7 +1796,7 @@ export function promisedPay(sim: Simulation, e: Engagement, o: Opportunity, from
     // A weather day (from 2026-10-25, brief 27, `WEATHER_DAY`): a day lost isn't worked; a day off is paid as a day on
     // SAG-AFTRA's day rate (N13 Schedule A §4.E), with the day it was; a week only the slip made pays a fifth a day.
     const held = paysOvertime(offer.rate) ? (e.weather ?? []).filter((w) => g.includes(w.day)).length : 0;
-    const added = offer.per === 'week' && e.weather?.some((w) => w.slipped) && g.every((i) => e.days[i]!.from > endOf(e));
+    const added = offer.per === 'week' && (e.weather?.some((w) => w.slipped) || (e.ill?.length ?? 0) > 0) && g.every((i) => e.days[i]!.from > endOf(e));
     const units = g.reduce((n, i) => n + (lostDay(e, i) ? 0 : payUnitsOf(t, i)), 0) + held;
     const promised = (offer.amount === undefined ? 0 : offer.per === 'week' ? (added ? Math.round((offer.amount * g.length) / 5) : offer.amount) : offer.amount * units) + overtime;
     // The days it pays for go on it, so the pay reads this week, not the calendar week before its payday (from 2026-10-21).
@@ -1782,8 +1806,8 @@ export function promisedPay(sim: Simulation, e: Engagement, o: Opportunity, from
 }
 
 /** The end of the calendar week the work's last day fell in before any weather slipped it: the weeks after it are the slip's. */
-const endOf = (e: Pick<Engagement, 'days' | 'weather'>): Instant => {
-  const slips = (e.weather ?? []).filter((w) => w.slipped).length;
+const endOf = (e: Pick<Engagement, 'days' | 'weather' | 'ill'>): Instant => {
+  const slips = (e.weather ?? []).filter((w) => w.slipped).length + (e.ill?.length ?? 0);
   let last = e.days[e.days.length - 1]?.from ?? 0;
   // Each slip moved the last day a working day on: back that many to where it was.
   for (let k = 0; k < slips; k += 1) { last = addDays(last, -1, NY); while ([0, 6].includes(weekdayOf(last))) last = addDays(last, -1, NY); }
@@ -1805,11 +1829,11 @@ export function payGroups(e: Pick<Engagement, 'days'>, t: ProjectTemplate): numb
 }
 
 /** The work days booked on the calendar, each wanting the player, with its trip: from a day on, for an episode called for later. */
-function bookDays(sim: Simulation, person: Person, e: Engagement, t: ProjectTemplate, from = 0): void {
+function bookDays(sim: Simulation, person: Person, e: Engagement, t: ProjectTemplate, from = 0, to?: number): void {
   // Abroad, the day starts at the hotel (from 2026-10-23, the owner's brief 25, W10): the set is a short drive.
   const trip = travels(person, t) ? TRIP.hotelMinutes : tripMinutes(person.currentLocationId, t.place.cityId);
   e.days.forEach((d, i) => {
-    if (i < from || d.from <= sim.now) return;
+    if (i < from || (to !== undefined && i > to) || d.from <= sim.now) return;
     sim.schedule({
       at: d.from, kind: WORK_DAY_KIND, label: d.label, category: 'career', priority: 38, requiresPlayer: true, durationMinutes: (d.to - d.from) / MIN,
       travelMinutes: trip, locationId: t.place.cityId, refType: 'pro.engagement', refId: e.id, payload: { personId: person.id, engagementId: e.id, day: i, kind: dayKindOf(t, i) },
@@ -1871,7 +1895,8 @@ function finish(sim: Simulation, person: Person, e: Engagement, t: ProjectTempla
   // 2026-10-24, brief 25's Module 4, D5).
   entitle(sim, person, e, t);
   // A recall to loop, and an anthology's invitation for strong work (from 2026-10-24, brief 25's Module 5, `afterWrap`).
-  if (t.medium !== 'stage') afterWrap(sim, person, e, t, best, (title, body) => tell(sim, person, title, body, 70));
+  // A reshoot needs the actor on the set: within a day's reach of home, where the work had no trip (from 2026-10-25, brief 27's K5).
+  if (t.medium !== 'stage') afterWrap(sim, person, e, t, best, (title, body) => tell(sim, person, title, body, 70), travels(person, t) ? undefined : { minutes: tripMinutes(person.currentLocationId, t.place.cityId) });
   const rel = e.agentId ? person.pro?.relations[e.agentId] : undefined;
   if (rel) noteEvent(sim, rel, { kind: 'success', key: `eng:${e.id}:finished`, words: `You finished ${t.role.part} in ${t.project}.`, ref: e.id });
   keepBounded(ensurePro(sim, person));
@@ -1919,7 +1944,11 @@ function callOff(sim: Simulation, e: Engagement, t: ProjectTemplate): Set<number
     if (!done) return false;
     // A recurring part's episodes are paid by the day as a shoot is (from 2026-10-24), and the overtime goes with its days.
     if (t.schedule.kind !== 'run' && days.length) {
-      p.promised = Math.round((p.promised / days.length) * done);
+      // A weather day's held pay on SAG-AFTRA's day rate stays whole: earned when the day was called off (from
+      // 2026-10-25, brief 27, `WEATHER_DAY`; loop 32: earned pay isn't deleted when the work to come is called off).
+      const rate = e.contract?.per === 'day' && paysOvertime(t.pay) ? e.contract.rate ?? 0 : 0;
+      const held = rate ? (e.weather ?? []).filter((w) => days.includes(w.day)).length * rate : 0;
+      p.promised = Math.round(((p.promised - held) / days.length) * done) + held;
       if (p.overtime) p.overtime = Math.round((p.overtime / days.length) * done);
     }
     return true;
@@ -2186,6 +2215,30 @@ function weatherPayWords(o: Opportunity, slipped: boolean): string {
 }
 
 /**
+ * The days from one on slipped a working day each, where nothing stands in the way: their calendar items moved, or booked
+ * again where the day's own item is the one the clock is at; the flight home booked again from the new last day and the
+ * per diem's days with it. Or what stands in the way, in words, and nothing moved.
+ */
+function slipDays(sim: Simulation, person: Person, e: Engagement, t: ProjectTemplate, i: number): { home?: Instant; blocked?: undefined } | { blocked: string } {
+  const zone = zoneOf(t.place.cityId);
+  const moved = e.days.map((d, k) => (k < i ? d : { ...d, from: nextWorkday(d.from, zone), to: nextWorkday(d.from, zone) + (d.to - d.from) }));
+  const later = moved.slice(i);
+  const blocked = later.find((d) => !workAuthorizedFor(person, d)) ? 'your permission to work doesn’t reach the days it would need' : bookedClash(person, later, e.opportunityId) ? `you’re booked on a day it would need` : undefined;
+  if (blocked) return { blocked };
+  e.days = moved;
+  const pending = (j: number) => sim.universe.scheduled.find((item) => item.status === 'pending' && item.kind === WORK_DAY_KIND && item.payload.engagementId === e.id && Number(item.payload.day) === j);
+  for (let j = i; j < e.days.length; j += 1) {
+    const item = pending(j);
+    if (item) sim.timeline.reschedule(item.id, e.days[j]!.from);
+    else bookDays(sim, person, e, t, j, j);
+  }
+  const trip = tripOf(person, e);
+  const home = trip ? extendTrip(sim, person, trip, e.days) : undefined;
+  if (trip && home && e.contract) { const perDiem = clauseOf(e.contract, 'per-diem'); if (perDiem) perDiem.days = daysAwayOf(trip); }
+  return { home };
+}
+
+/**
  * A day on location called off for the weather, the evening before: the rest of the days slipped a working day each
  * where nothing stands in the way, the calendar, the flight home and the pay with them; where something does, the day
  * shot without the actor and its scenes cut from the part. Said in a notice and kept on the engagement.
@@ -2193,21 +2246,12 @@ function weatherPayWords(o: Opportunity, slipped: boolean): string {
 function weatherDay(sim: Simulation, person: Person, e: Engagement, t: ProjectTemplate, i: number, sky: string): void {
   const zone = zoneOf(t.place.cityId);
   const was = e.days[i]!.from;
-  const moved = e.days.map((d, k) => (k < i ? d : { ...d, from: nextWorkday(d.from, zone), to: nextWorkday(d.from, zone) + (d.to - d.from) }));
-  const later = moved.slice(i);
-  const blocked = later.find((d) => !workAuthorizedFor(person, d)) ? 'your permission to work doesn’t reach the days it would need' : bookedClash(person, later, e.opportunityId) ? `you’re booked on a day it would need` : undefined;
+  const r = slipDays(sim, person, e, t, i);
+  const blocked = r.blocked;
   const slipped = !blocked;
-  if (slipped) {
-    e.days = moved;
-    for (const item of sim.universe.scheduled) {
-      if (item.status !== 'pending' || item.kind !== WORK_DAY_KIND || item.payload.engagementId !== e.id || Number(item.payload.day) < i) continue;
-      sim.timeline.reschedule(item.id, e.days[Number(item.payload.day)]!.from);
-    }
-  } else for (const u of e.units ?? []) if (u.day === i) u.cut = true;
+  if (!slipped) for (const u of e.units ?? []) if (u.day === i) u.cut = true;
   (e.weather ??= []).push({ day: i, at: sim.now, was, sky, slipped });
-  const trip = slipped ? tripOf(person, e) : undefined;
-  const home = trip ? extendTrip(sim, person, trip, e.days) : undefined;
-  if (trip && home && e.contract) { const perDiem = clauseOf(e.contract, 'per-diem'); if (perDiem) perDiem.days = daysAwayOf(trip); }
+  const home = 'home' in r ? r.home : undefined;
   const o = opportunityOf(person, e.opportunityId);
   if (o?.offer) repay(sim, person, e, o);
   const city = t.place.city;
@@ -2219,6 +2263,27 @@ function weatherDay(sim: Simulation, person: Person, e: Engagement, t: ProjectTe
   const pay = o?.offer ? ` ${weatherPayWords(o, slipped)}` : '';
   noteEvent(sim, e, { kind: 'problem', key: `weather:${i}:${was}`, words: `${what}${flight}${pay}` });
   tell(sim, person, `A Weather Day On ${t.project}`, `${what}${flight}${pay} The Work tab has the days as they stand.`, 80);
+}
+
+/**
+ * A day the actor is too ill to work, shot around (`ILL_DAY`): the rest slipped as a weather day's are, the day unpaid, said.
+ * Returns whether it was; where it can't be, the day is missed as before.
+ */
+function illDay(sim: Simulation, person: Person, e: Engagement, t: ProjectTemplate, i: number, at: Instant): boolean {
+  if (t.medium === 'stage' || !ILL_DAY.sizes.includes(t.role.size) || (e.ill?.length ?? 0) >= ILL_DAY.most) return false;
+  const r = slipDays(sim, person, e, t, i);
+  if (r.blocked) return false;
+  (e.ill ??= []).push({ day: i, at: sim.now, was: at });
+  const o = opportunityOf(person, e.opportunityId);
+  if (o?.offer) repay(sim, person, e, o);
+  const zone = zoneOf(t.place.cityId);
+  const what = `You were ${laidUp(person, at) ? 'laid up' : 'in hospital'} on ${formatWeekdayDate(at, zone)}, so ${t.company} kept the shoot going around you and slipped the rest of your days a working day each: that day’s work is now on ${formatWeekdayDate(e.days[i]!.from, zone)}, and your last day ${formatWeekdayDate(e.days[e.days.length - 1]!.from, zone)}.`;
+  const home = 'home' in r ? r.home : undefined;
+  const flight = home ? ` Your flight home moves with them, leaving ${formatWeekdayDate(home, zone)}.` : '';
+  const pay = o?.offer?.amount === undefined ? '' : o.offer.per === 'week' ? ' You’re paid by the week, so the day changes nothing; a day the slip carries into a week of its own pays a fifth of your weekly rate.' : ` A day lost to your own illness or injury isn’t paid${paysOvertime(o.offer.rate) ? ', SAG-AFTRA’s agreement’s exception to paying a day engaged and not used' : ''}; every day you work still is.`;
+  noteEvent(sim, e, { kind: 'problem', key: `ill:${i}:${at}`, words: `${what}${flight}${pay}` });
+  tell(sim, person, `${t.project} Shoots Around You`, `${what}${flight}${pay} Another day lost the same way and the production recasts the part.`, 85);
+  return true;
 }
 
 /** The days a trip keeps the actor away, as the contract's per diem counts them. */
@@ -2501,6 +2566,8 @@ export function registerProJobs(sim: Simulation): void {
       return;
     }
     if (!there(person, item.at)) {
+      // Too ill to work, on a lead's or a supporting part's day: shot around once, where it can be (`ILL_DAY`).
+      if (offSick(person, item.at) && illDay(s, person, e, t, i, item.at)) return;
       missDay(s, person, e, t, i, item.at);
       // The last day missed, with the work still on: it ends there.
       if (i === e.days.length - 1 && live(e) && !episodesPending(e)) finish(s, person, e, t);

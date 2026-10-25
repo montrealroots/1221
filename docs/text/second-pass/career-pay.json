@@ -428,9 +428,9 @@
  },
  "src/ui/career/WorkPane.tsx#WorkflowView": {
   "status": "Rewritten",
-  "hash": "aad45b21b67e",
-  "on": "2026-10-24",
-  "evidence": "Written for brief 25's Module 5 (the ways of working: the booth, the dub, narration, multicamera, performance capture, reenactment, the musical and action; a shoot's order and takes, revised pages, a recall to loop and a scene cut) to docs/STYLE.md and docs/GLOSSARY.md, every rule the agreements' own and every invention said as the game's; read where the player meets it in tests/career-workflows-screen.test.ts (the Work and Opportunities tabs drawn for a voice session, a multicamera week and an action shoot, through the clock and a reload at each stage) and tests/career-workflows.test.ts (each workflow's days, choices, reports and notices), with tools/voice-check.mjs, tools/tics.mjs and tools/title-case.mjs clean.",
+  "hash": "fc9190a9a705",
+  "on": "2026-10-25",
+  "evidence": "Written for brief 27's K5 (Part 10 and loop 29: pickups and reshoots after the wrap) to docs/STYLE.md and docs/GLOSSARY.md, and read where the player meets it: tests/b27-reshoot.test.ts holds the call back (Calls You Back To Reshoot, It pays a day; Calls You Back For Pickups), the day as another offer meets it (... Reshoot Day), the history's line in the past (You reshot ... the better take of each kept, paid a day), a missed one (You Missed The Reshoot, ... cut from the part. It isn't paid.), the Work tab's line and the guide's How Each Kind Of Work Is Done. The rest of these sources' words are as they were, held by brief 25's tests. tools/voice-check.mjs, tools/tics.mjs, tools/title-case.mjs, tools/plural-check.mjs and tools/spelling.mjs pass",
   "first": "Pending"
  },
  "src/ui/career/WorkPane.tsx#WorkPane": {

@@ -762,6 +762,13 @@
   "evidence": "Written for brief 27's K4 (Part 9: chemistry reads and screen tests) to docs/STYLE.md and docs/GLOSSARY.md, and read where the player meets it: tests/b27-rounds.test.ts plays a feature's lead through the callback, the chemistry read and the screen test by the clock, holding each notice (A Chemistry Read For, A Screen Test For), each history line in the past (asked you to read with the actors already cast, Your chemistry read for ... was), the work record's task, the offer at the end, and a chemistry read slept through (You missed the chemistry read for, You Missed The Chemistry Read For). The audition's and the callback's words are as they were, held by brief 19's tests. tools/voice-check.mjs, tools/tics.mjs, tools/title-case.mjs, tools/plural-check.mjs and tools/spelling.mjs pass",
   "first": "Pending"
  },
+ "src/engine/systems/projobs.ts#bookedClash": {
+  "status": "Rewritten",
+  "hash": "f506d35876ba",
+  "on": "2026-10-25",
+  "evidence": "Written for brief 27's K5 (Part 10 and loop 29: pickups and reshoots after the wrap) to docs/STYLE.md and docs/GLOSSARY.md, and read where the player meets it: tests/b27-reshoot.test.ts holds the call back (Calls You Back To Reshoot, It pays a day; Calls You Back For Pickups), the day as another offer meets it (... Reshoot Day), the history's line in the past (You reshot ... the better take of each kept, paid a day), a missed one (You Missed The Reshoot, ... cut from the part. It isn't paid.), the Work tab's line and the guide's How Each Kind Of Work Is Done. The rest of these sources' words are as they were, held by brief 25's tests. tools/voice-check.mjs, tools/tics.mjs, tools/title-case.mjs, tools/plural-check.mjs and tools/spelling.mjs pass",
+  "first": "Pending"
+ },
  "src/engine/systems/projobs.ts#callOff": {
   "status": "Rewritten",
   "hash": "ace5c87e13e4",
@@ -942,6 +949,13 @@
   "hash": "ea4c56b4be1b",
   "on": "2026-10-25",
   "evidence": "Written for brief 27's K4 (loop 20: holds, options and conflicts) to docs/STYLE.md and docs/GLOSSARY.md, and read where the player meets it: tests/b27-holds.test.ts holds the chemistry read's notice saying a hold is on the player's dates and that it isn't a booking and pays nothing, the history's line in the past (put a hold on your dates for ..., until the part was cast), the warning on another offer on the same days (Accepting this lets that hold go and withdraws you from the part), the withdrawal it brings (You took ... on some of the same days, so you withdrew from ... and its hold was let go; You Withdrew From ...), the refusals of Ask Them To Decide (no other offer, asked already, an offer lapsing before the answer), and the answer's words (Asked to decide, ... chose you for ...; The Hold On ... Is Let Go, You're free to take ...); the hold's end in the history (The hold on your dates became the booking). The rest of these sources' words are as they were, held by brief 19's, brief 25's and brief 27's tests. tools/voice-check.mjs, tools/tics.mjs, tools/title-case.mjs, tools/plural-check.mjs and tools/spelling.mjs pass",
+  "first": "Pending"
+ },
+ "src/engine/systems/projobs.ts#illDay": {
+  "status": "Rewritten",
+  "hash": "98bc942edb7a",
+  "on": "2026-10-25",
+  "evidence": "Written for brief 27's K5 (loop 28: illness and absence by their contractual rule, not one universal number) to docs/STYLE.md and docs/GLOSSARY.md, and read where the player meets it: tests/b27-ill.test.ts holds the notice ... Shoots Around You (You were laid up on ..., so ... kept the shoot going around you and slipped the rest of your days a working day each; A day lost to your own illness or injury isn't paid, SAG-AFTRA's agreement's exception ...; Another day lost the same way and the production recasts the part), a smaller part recast as before and a second day recast; the offer card, the Day look's cost of a missed call, the guide's Offers And Booked Work and Your Day, and the tutorial's Finding Work now say the same, where each had said a shoot replaces you for any day missed. The weather day's slip, shared with it, says what tests/b27-weather.test.ts holds. tools/voice-check.mjs, tools/tics.mjs, tools/title-case.mjs, tools/plural-check.mjs and tools/spelling.mjs pass",
   "first": "Pending"
  },
  "src/engine/systems/projobs.ts#intimacyWords": {
@@ -1301,6 +1315,13 @@
   "evidence": "Written for brief 27's K4 (loop 20: holds, options and conflicts) to docs/STYLE.md and docs/GLOSSARY.md, and read where the player meets it: tests/b27-holds.test.ts holds the chemistry read's notice saying a hold is on the player's dates and that it isn't a booking and pays nothing, the history's line in the past (put a hold on your dates for ..., until the part was cast), the warning on another offer on the same days (Accepting this lets that hold go and withdraws you from the part), the withdrawal it brings (You took ... on some of the same days, so you withdrew from ... and its hold was let go; You Withdrew From ...), the refusals of Ask Them To Decide (no other offer, asked already, an offer lapsing before the answer), and the answer's words (Asked to decide, ... chose you for ...; The Hold On ... Is Let Go, You're free to take ...); the hold's end in the history (The hold on your dates became the booking). The rest of these sources' words are as they were, held by brief 19's, brief 25's and brief 27's tests. tools/voice-check.mjs, tools/tics.mjs, tools/title-case.mjs, tools/plural-check.mjs and tools/spelling.mjs pass",
   "first": "Pending"
  },
+ "src/engine/systems/projobs.ts#slipDays": {
+  "status": "Rewritten",
+  "hash": "4742cbdde9eb",
+  "on": "2026-10-25",
+  "evidence": "Written for brief 27's K5 (loop 28: illness and absence by their contractual rule, not one universal number) to docs/STYLE.md and docs/GLOSSARY.md, and read where the player meets it: tests/b27-ill.test.ts holds the notice ... Shoots Around You (You were laid up on ..., so ... shot around you and slipped the rest of your days a working day each; A day lost to your own illness or injury isn't paid, SAG-AFTRA's agreement's exception ...; Another day lost the same way and the production recasts the part), a smaller part recast as before and a second day recast; the offer card, the Day look's cost of a missed call, the guide's Offers And Booked Work and Your Day, and the tutorial's Finding Work now say the same, where each had said a shoot replaces you for any day missed. The weather day's slip, shared with it, says what tests/b27-weather.test.ts holds. tools/voice-check.mjs, tools/tics.mjs, tools/title-case.mjs, tools/plural-check.mjs and tools/spelling.mjs pass",
+  "first": "Pending"
+ },
  "src/engine/systems/projobs.ts#spansOf": {
   "status": "Rewritten",
   "hash": "705aae9d0951",
@@ -1359,9 +1380,9 @@
  },
  "src/engine/systems/projobs.ts#weatherDay": {
   "status": "Rewritten",
-  "hash": "58d2d90559d9",
+  "hash": "cf617d83b00a",
   "on": "2026-10-25",
-  "evidence": "Written for brief 27's K5 (Part 11: weather affecting production; loop 28: a schedule change communicated with its contractual rule) to docs/STYLE.md and docs/GLOSSARY.md, and read where the player meets it: tests/b27-weather.test.ts holds the notice A Weather Day On ... with its sky (thunderstorms, thick fog, high winds), the days as they stand (called off your day on location and slipped the rest of your days a working day each), the flight home (Your flight home moves with them), each pay sentence by how the work is paid (the SAG-AFTRA day performer's day off paid; This work pays the days you work, so the day off isn't paid; every day you work still is), and a day that can't slip (It couldn't slip your days, since you're booked on a day it would need); the Work tab's Weather Day line and the guide's How Each Kind Of Work Is Done say the same. tools/voice-check.mjs, tools/tics.mjs, tools/title-case.mjs, tools/plural-check.mjs and tools/spelling.mjs pass",
+  "evidence": "Written for brief 27's K5 (loop 28: illness and absence by their contractual rule, not one universal number) to docs/STYLE.md and docs/GLOSSARY.md, and read where the player meets it: tests/b27-ill.test.ts holds the notice ... Shoots Around You (You were laid up on ..., so ... shot around you and slipped the rest of your days a working day each; A day lost to your own illness or injury isn't paid, SAG-AFTRA's agreement's exception ...; Another day lost the same way and the production recasts the part), a smaller part recast as before and a second day recast; the offer card, the Day look's cost of a missed call, the guide's Offers And Booked Work and Your Day, and the tutorial's Finding Work now say the same, where each had said a shoot replaces you for any day missed. The weather day's slip, shared with it, says what tests/b27-weather.test.ts holds. tools/voice-check.mjs, tools/tics.mjs, tools/title-case.mjs, tools/plural-check.mjs and tools/spelling.mjs pass",
   "first": "Pending"
  },
  "src/engine/systems/projobs.ts#weatherPayWords": {
@@ -1415,9 +1436,9 @@
  },
  "src/engine/systems/workflow.ts#afterWrap": {
   "status": "Rewritten",
-  "hash": "ae84c8f9003a",
-  "on": "2026-10-24",
-  "evidence": "Written for brief 25's Module 5 (the ways of working: the booth, the dub, narration, multicamera, performance capture, reenactment, the musical and action; a shoot's order and takes, revised pages, a recall to loop and a scene cut) to docs/STYLE.md and docs/GLOSSARY.md, every rule the agreements' own and every invention said as the game's; read where the player meets it in tests/career-workflows-screen.test.ts (the Work and Opportunities tabs drawn for a voice session, a multicamera week and an action shoot, through the clock and a reload at each stage) and tests/career-workflows.test.ts (each workflow's days, choices, reports and notices), with tools/voice-check.mjs, tools/tics.mjs and tools/title-case.mjs clean.",
+  "hash": "06474cbcf80e",
+  "on": "2026-10-25",
+  "evidence": "Written for brief 27's K5 (Part 10 and loop 29: pickups and reshoots after the wrap) to docs/STYLE.md and docs/GLOSSARY.md, and read where the player meets it: tests/b27-reshoot.test.ts holds the call back (Calls You Back To Reshoot, It pays a day; Calls You Back For Pickups), the day as another offer meets it (... Reshoot Day), the history's line in the past (You reshot ... the better take of each kept, paid a day), a missed one (You Missed The Reshoot, ... cut from the part. It isn't paid.), the Work tab's line and the guide's How Each Kind Of Work Is Done. The rest of these sources' words are as they were, held by brief 25's tests. tools/voice-check.mjs, tools/tics.mjs, tools/title-case.mjs, tools/plural-check.mjs and tools/spelling.mjs pass",
   "first": "Pending"
  },
  "src/engine/systems/workflow.ts#afterWrap [success]": {
@@ -1439,6 +1460,20 @@
   "hash": "c82b0322aafc",
   "on": "2026-10-24",
   "evidence": "Written for brief 25's Module 5 (the ways of working: the booth, the dub, narration, multicamera, performance capture, reenactment, the musical and action; a shoot's order and takes, revised pages, a recall to loop and a scene cut) to docs/STYLE.md and docs/GLOSSARY.md, every rule the agreements' own and every invention said as the game's; read where the player meets it in tests/career-workflows-screen.test.ts (the Work and Opportunities tabs drawn for a voice session, a multicamera week and an action shoot, through the clock and a reload at each stage) and tests/career-workflows.test.ts (each workflow's days, choices, reports and notices), with tools/voice-check.mjs, tools/tics.mjs and tools/title-case.mjs clean.",
+  "first": "Pending"
+ },
+ "src/engine/systems/workflow.ts#furtherSession": {
+  "status": "Rewritten",
+  "hash": "4df4e4fcde1d",
+  "on": "2026-10-25",
+  "evidence": "Written for brief 27's K5 (Part 10 and loop 29: pickups and reshoots after the wrap) to docs/STYLE.md and docs/GLOSSARY.md, and read where the player meets it: tests/b27-reshoot.test.ts holds the call back (Calls You Back To Reshoot, It pays a day; Calls You Back For Pickups), the day as another offer meets it (... Reshoot Day), the history's line in the past (You reshot ... the better take of each kept, paid a day), a missed one (You Missed The Reshoot, ... cut from the part. It isn't paid.), the Work tab's line and the guide's How Each Kind Of Work Is Done. The rest of these sources' words are as they were, held by brief 25's tests. tools/voice-check.mjs, tools/tics.mjs, tools/title-case.mjs, tools/plural-check.mjs and tools/spelling.mjs pass",
+  "first": "Pending"
+ },
+ "src/engine/systems/workflow.ts#furtherSession [worked]": {
+  "status": "Rewritten",
+  "hash": "2d88bebc618c",
+  "on": "2026-10-25",
+  "evidence": "Written for brief 27's K5 (Part 10 and loop 29: pickups and reshoots after the wrap) to docs/STYLE.md and docs/GLOSSARY.md, and read where the player meets it: tests/b27-reshoot.test.ts holds the call back (Calls You Back To Reshoot, It pays a day; Calls You Back For Pickups), the day as another offer meets it (... Reshoot Day), the history's line in the past (You reshot ... the better take of each kept, paid a day), a missed one (You Missed The Reshoot, ... cut from the part. It isn't paid.), the Work tab's line and the guide's How Each Kind Of Work Is Done. The rest of these sources' words are as they were, held by brief 25's tests. tools/voice-check.mjs, tools/tics.mjs, tools/title-case.mjs, tools/plural-check.mjs and tools/spelling.mjs pass",
   "first": "Pending"
  },
  "src/engine/systems/workflow.ts#loopSession": {
@@ -1555,9 +1590,9 @@
  },
  "src/ui/career/OpportunitiesPane.tsx#OfferCard": {
   "status": "Rewritten",
-  "hash": "13cfb27c57ef",
+  "hash": "57b15c803faa",
   "on": "2026-10-25",
-  "evidence": "Written for brief 27's K4 (loops 16 and 18: a direct offer and asking for more through the agent) to docs/STYLE.md and docs/GLOSSARY.md, and read where the player meets it: tests/b27-offers.test.ts holds the direct offer's reason in the offer's decision and history (offered you ... without an audition, cast you as ... where your work was Strong), the ask's history line, its refusals (no agent, asked once already, the answer to come), and the answer's notices (The Offer For ... Is Raised, The Offer For ... Stands) with their words; the release notice of a voice credit now names the voice demo, which brief 27's K3 made. The rest of these sources' words are as they were, held by brief 19's and brief 25's tests. tools/voice-check.mjs, tools/tics.mjs, tools/title-case.mjs, tools/plural-check.mjs and tools/spelling.mjs pass",
+  "evidence": "Written for brief 27's K5 (loop 28: illness and absence by their contractual rule, not one universal number) to docs/STYLE.md and docs/GLOSSARY.md, and read where the player meets it: tests/b27-ill.test.ts holds the notice ... Shoots Around You (You were laid up on ..., so ... shot around you and slipped the rest of your days a working day each; A day lost to your own illness or injury isn't paid, SAG-AFTRA's agreement's exception ...; Another day lost the same way and the production recasts the part), a smaller part recast as before and a second day recast; the offer card, the Day look's cost of a missed call, the guide's Offers And Booked Work and Your Day, and the tutorial's Finding Work now say the same, where each had said a shoot replaces you for any day missed. The weather day's slip, shared with it, says what tests/b27-weather.test.ts holds. tools/voice-check.mjs, tools/tics.mjs, tools/title-case.mjs, tools/plural-check.mjs and tools/spelling.mjs pass",
   "first": "Pending"
  },
  "src/ui/career/OpportunitiesPane.tsx#OpenRole": {

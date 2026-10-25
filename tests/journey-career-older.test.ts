@@ -288,7 +288,7 @@ describe('J6, the calendar: what the career puts on it, drawn and opened (the gr
     // A shoot day in New York, opened from the calendar: the trip is part of it, and missing it costs the part.
     const day = career.find((e) => sim.timeline.get(e.id)?.kind === WORK_DAY_KIND && sim.timeline.get(e.id)?.payload.kind === 'shoot')!;
     const words = entryWords(sim, day.id);
-    expect(words).toContain('You need to be there, awake, when the clock reaches it. If you aren’t, it’s missed: the production replaces you, and the days you don’t work aren’t paid.');
+    expect(words).toContain('You need to be there, awake, when the clock reaches it. If you aren’t, it’s missed: the production replaces you, and the days you don’t work aren’t paid, unless you’re laid up or in hospital on a lead or a supporting part, when it shoots around you once.');
     expect(words).toContain('It’s in New York, two hours each way from New Haven, and the trip is part of it.');
     expect(words).not.toContain('nothing takes you there');
   }, 300_000);

@@ -23,7 +23,7 @@ import { FORMATS } from '@/engine/content/workflows';
 import { STEP_WORDS, stepOf, workflowOf } from '@/engine/systems/workflow';
 import { activeAgreement, type Engagement, type Opportunity } from '@/engine/systems/pro';
 import {
-  DEFERRED_WHY, FIELD_WORDS, MISSES, OUTSIDE_WORK, ROUND_WORDS, acceptRefusal, holdAskRefusal, holding, askMoreRefusal, askedAmount, acceptWarning, againWords, agrees, castingAs, chanceWords, conditionsFor, counted, datesOf, decidesAt, drawnWords, kindPhrase, reachWords,
+  DEFERRED_WHY, FIELD_WORDS, ILL_DAY, MISSES, OUTSIDE_WORK, ROUND_WORDS, acceptRefusal, holdAskRefusal, holding, askMoreRefusal, askedAmount, acceptWarning, againWords, agrees, castingAs, chanceWords, conditionsFor, counted, datesOf, decidesAt, drawnWords, kindPhrase, reachWords,
   demandsWords, eligibilityProblems, fitOf, fitWords, inSessionAny, materialProblems, moveRefusal, payTermsOf, payWords, prepMinutes,
   prepareRefusal, projectGenresOf, projectOf, requestFor, requestRefusal, roundToCome, submitRefusal, tapeRefusal, writtenFor, writtenForWords, intimacyWords,
 } from '@/engine/systems/projobs';
@@ -276,7 +276,7 @@ function OfferCard({ o }: { o: Opportunity }) {
       {asked && <p className="small" style={{ margin: 0 }}>{asked.answer === 'raised' ? `Raised to ${formatMoney(asked.amount, 'USD')} a ${o.offer!.per}, as your agent asked.` : asked.answer === 'kept' ? `Kept at its offer, where your agent asked for ${formatMoney(asked.amount, 'USD')} a ${o.offer!.per}.` : `Your agent asked for ${formatMoney(asked.amount, 'USD')} a ${o.offer!.per}. The answer comes on ${formatWeekdayDate(asked.answerAt, NY)} at ${formatTime(asked.answerAt, NY)}.`}</p>}
       <Hold o={o} />
       {warning && <p className="callout callout-warning small" style={{ margin: 0 }}>{warning}</p>}
-      <p className="xs dim" style={{ margin: 0 }}>{t.medium === 'stage' ? `Missing a day: the company’s understudy covers ${counted(MISSES.stage, 'performance')}, with a written warning; another and the company replaces you.` : 'Missing a day: a shoot can’t wait, so the production replaces you.'}</p>
+      <p className="xs dim" style={{ margin: 0 }}>{t.medium === 'stage' ? `Missing a day: the company’s understudy covers ${counted(MISSES.stage, 'performance')}, with a written warning; another and the company replaces you.` : ILL_DAY.sizes.includes(t.role.size) ? 'Missing a day: a shoot can’t wait, so sleeping through one costs you the part; laid up or in hospital, the production shoots around you once, and the day isn’t paid.' : 'Missing a day: a shoot can’t wait, so the production replaces you.'}</p>
       <div className="row gap-2" style={{ flexWrap: 'wrap' }}>
         <Gated feature="pro.accept_offer" className="btn btn-sm btn-primary" disabled={!!no} title={no} onClick={() => { const r = run('pro.accept_offer', { opportunityId: o.id }); if (r.ok) toast(`Booked: ${t.role.part}.`, 'positive'); }}>Accept The Offer</Gated>
         <Gated feature="pro.decline_offer" className="btn btn-sm" onClick={() => { const r = run('pro.decline_offer', { opportunityId: o.id }); if (r.ok) toast(`Declined: ${t.role.part}.`, 'neutral'); }}>Decline The Offer</Gated>

@@ -10,7 +10,7 @@ import { MS_DAY, MS_HOUR, zonedParts } from '@/engine/core/time';
 import { PROJECTS, projectById } from '@/engine/content/careerwork';
 import { FORMATS, STUNT, VOICE, WORKFLOWS, type FormatId, type WorkflowId } from '@/engine/content/workflows';
 import { demoSources, ensurePro, reelSources, type Engagement, type Opportunity } from '@/engine/systems/pro';
-import { datesOf, payTermsOf, castingDraw, termsWords } from '@/engine/systems/projobs';
+import { bookedClash, datesOf, payTermsOf, castingDraw, termsWords } from '@/engine/systems/projobs';
 import { clauseOf, overtimeOf } from '@/engine/systems/contracts';
 import {
   AHEAD, INVITE_KIND, LOOP_KIND, choiceRefusal, decisionsFor, dubDaysOf, formatOf, keptBand, loopPay, reportWords, shotAhead, stepOf, strainOf,
@@ -218,7 +218,11 @@ describe('W2: the screen formats, each shot its own way', () => {
     const movie = worked(sim, accept(sim, offerFor(sim, 'pell-street', at(2027, 1, 4))));
     for (const i of movie.days.keys()) expect(movie.units!.filter((u) => u.day === i).map((u) => u.takes!.length)).toEqual([2, 2, 2, 2]);
     // A student film: more takes than any paid set spares, and its pay deferred, said in the contract.
-    const student = worked(sim, accept(sim, offerFor(sim, 'paper-moons', at(2027, 3, 1))));
+    // Posted the first Monday from March whose days are clear of the work booked already: from 2026-10-25 (brief 27's K5)
+    // the television movie's recall to loop holds its day, and the student film posted on March 1 fell on it.
+    let posted = at(2027, 3, 1);
+    while (bookedClash(sim.player, datesOf({ projectId: 'paper-moons', postedAt: posted }))) posted += 7 * MS_DAY;
+    const student = worked(sim, accept(sim, offerFor(sim, 'paper-moons', posted)));
     expect(new Set(student.units!.map((u) => u.takes!.length))).toEqual(new Set([FORMATS['student-film'].takes!.base]));
     expect(FORMATS['student-film'].takes!.base).toBeGreaterThan(Math.max(...Object.values(FORMATS).filter((f) => f.id !== 'student-film').map((f) => f.takes?.base ?? 0)));
     expect(student.contract!.clauses.map((c) => c.kind)).toContain('deferred');

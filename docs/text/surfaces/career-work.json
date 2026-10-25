@@ -654,7 +654,8 @@
    "src/engine/systems/projobs.ts#WEATHER_DAY",
    "src/engine/systems/projobs.ts#stoppingSky",
    "src/engine/systems/projobs.ts#weatherPayWords",
-   "src/engine/systems/projobs.ts#weatherDay"
+   "src/engine/systems/projobs.ts#weatherDay",
+   "src/engine/systems/projobs.ts#slipDays"
   ],
   "states": [
    "notification",
@@ -681,6 +682,69 @@
    {
     "kind": "test",
     "ref": "tests/b27-weather.test.ts: 'PLAYER JOURNEY: away from home, the flight home moves with the slipped days'"
+   }
+  ]
+ },
+ {
+  "surface": "A day laid up or in hospital on a lead's or a supporting part's shoot, shot around: the notice, the days and pay as they stand, and what each screen says a missed day costs",
+  "where": "The notice (the project) Shoots Around You; Career, Work, the engagement's days, calendar and pay; Career, Opportunities, the offer card's Missing a day line; the Day look's cost of a missed call; the guide and the tutorial",
+  "sources": [
+   "src/engine/systems/projobs.ts#illDay"
+  ],
+  "states": [
+   "notification",
+   "setback",
+   "history",
+   "explanation"
+  ],
+  "outcome": "Revised",
+  "why": "New with brief 27's K5: an ill day says what the production did, what it does to the days and the flight home, why the day isn't paid, and what a second one would bring.",
+  "changes": "Written new: the notice and history line. Where the offer card, the Day look, the guide and the tutorial said a shoot replaces you for any day missed, each now names the exception.",
+  "evidence": [
+   {
+    "kind": "test",
+    "ref": "tests/b27-ill.test.ts: 'PLAYER JOURNEY: a lead’s or a supporting part’s production shoots around a day laid up, the rest slipped and worked by the clock, the day unpaid'"
+   },
+   {
+    "kind": "test",
+    "ref": "tests/b27-ill.test.ts: 'PLAYER JOURNEY: the falsifiability test: a smaller part laid up the same way is recast, as it was'"
+   },
+   {
+    "kind": "test",
+    "ref": "tests/b27-ill.test.ts: 'PLAYER JOURNEY: a second day lost the same way is recast: the production waits once'"
+   }
+  ]
+ },
+ {
+  "surface": "A reshoot day or a pickup session after the wrap: the call back, the day as another offer meets it, the session's line, a missed one's notice",
+  "where": "The notices (Calls You Back To Reshoot, Calls You Back For Pickups, You Missed The Reshoot); an offer's refusal on the same day; Career, Work, How The Work Is Done; the engagement's What Happened",
+  "sources": [
+   "src/engine/systems/projobs.ts#bookedClash",
+   "src/engine/systems/workflow.ts#furtherSession",
+   "src/engine/systems/workflow.ts#furtherSession [worked]"
+  ],
+  "states": [
+   "notification",
+   "success",
+   "setback",
+   "unavailable",
+   "history"
+  ],
+  "outcome": "Revised",
+  "why": "New with brief 27's K5: a call back says the day, where, the hours and the pay; another offer on the day says it's held; the session's line says what was taken again and kept; a missed one says what it cost.",
+  "changes": "Written new: the session's history lines and missed notice, and the recall's label where another booking meets it.",
+  "evidence": [
+   {
+    "kind": "test",
+    "ref": "tests/b27-reshoot.test.ts: 'PLAYER JOURNEY: a feature’s reshoot is called, set clear of other work, played by the clock, its weakest scenes taken again and the better take kept, and paid a day; it holds the date against another offer'"
+   },
+   {
+    "kind": "test",
+    "ref": "tests/b27-reshoot.test.ts: 'PLAYER JOURNEY: a reshoot slept through is done without the actor: its scenes cut from the part, the credit’s band read again, and nothing paid'"
+   },
+   {
+    "kind": "test",
+    "ref": "tests/b27-reshoot.test.ts: 'PLAYER JOURNEY: a voice part’s pickup session, four hours in a booth near home, recorded and paid a session'"
    }
   ]
  }

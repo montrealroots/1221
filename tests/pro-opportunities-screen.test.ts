@@ -21,7 +21,7 @@ import { projectById, PROJECTS } from '@/engine/content/careerwork';
 import { TECHNIQUE_LABEL } from '@/engine/content/abilities';
 import type { Skill } from '@/engine/content/school';
 import type { Opportunity } from '@/engine/systems/pro';
-import { DEFERRED_WHY, payTermsOf, projectGenresOf, writtenForWords } from '@/engine/systems/projobs';
+import { DEFERRED_WHY, ILL_DAY, payTermsOf, projectGenresOf, writtenForWords } from '@/engine/systems/projobs';
 import { requirementWords } from '@/engine/systems/engagement';
 import { GENRE_BY_ID } from '@/engine/content/film-genres';
 import { PROJECT_GENRES } from '@/engine/content/genre-weights';
@@ -182,7 +182,9 @@ describe('the Opportunities tab', () => {
     const open = drawn(us);
     expect(button(open.html, 'Accept The Offer')[0]!.disabled).toBe(false);
     expect(open.shown).toMatch(/This work falls in term, and the School hasn’t approved it\. You’d miss (one class day|two class days)\. Working in term without approval brings an academic warning the first time and dismissal the second/);
-    expect(open.shown).toContain('Missing a day: a shoot can’t wait, so the production replaces you.');
+    // A lead's or a supporting part's production shoots around a day laid up (from 2026-10-25, brief 27's K5, `ILL_DAY`):
+    // until then the card said any day missed cost the part.
+    expect(open.shown).toContain(ILL_DAY.sizes.includes(projectById(film.id)!.role.size) ? 'Missing a day: a shoot can’t wait, so sleeping through one costs you the part; laid up or in hospital, the production shoots around you once, and the day isn’t paid.' : 'Missing a day: a shoot can’t wait, so the production replaces you.');
     // An offer priced above the scale, as the pay's negotiatedAmount prices a represented actor's SAG-AFTRA offer (TEST
     // SETUP: the amount raised by its ten percent): the card says the offer's amount and the minimum it's above.
     const rep = student('opps-negotiated');

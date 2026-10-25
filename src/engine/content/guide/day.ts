@@ -127,7 +127,7 @@ export const DAY: readonly GuideEntry[] = [
     later: [
       'A commitment missed costs what its own kind costs: classes an unexcused absence, a rehearsal call one counted against you, a performance a grave breach, a work-study shift its pay. An entry, opened, says which. The faculty weigh attendance at the end of each term’s classes.',
       'A plan of your own you walked away from costs nothing beyond the plan.',
-      'A meeting with an agent’s office missed closes the approach, an audition missed loses the role, and a day of booked work missed brings the company’s written warning, or on a shoot, the production replaces you.',
+      'A meeting with an agent’s office missed closes the approach, an audition missed loses the role, and a day of booked work missed brings the company’s written warning, or on a shoot, the production replaces you, unless you’re laid up or in hospital on a lead or a supporting part, when it shoots around you once.',
     ],
     interpret: [
       'The time above the next commitment’s name counts down from now: “in 2h 30m” is two and a half hours away.',

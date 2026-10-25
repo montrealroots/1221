@@ -47,6 +47,8 @@ export const voiceOnly = (t: Pick<ProjectTemplate, 'format'>): boolean => ['voic
 export const LOOP_KIND = 'pro.loop';
 /** An anthology's invitation into its next story (`afterWrap`). */
 export const INVITE_KIND = 'pro.invite';
+/** A reshoot day or a voice pickup session after the wrap (`afterWrap`, from 2026-10-25, brief 27's K5). */
+export const FURTHER_KIND = 'pro.reshoot';
 
 // ---------------------------------------------------------------------------------------------------------------------
 // The days
@@ -213,6 +215,15 @@ export function pagesDrawn(sim: Simulation, key: string, day: number, chance: nu
 export function loopDrawn(sim: Simulation, key: string): number | undefined {
   if (sim.rng('pro.loop', key).next() >= AFTER_WRAP.loop) return undefined;
   return 14 + Math.floor(sim.rng('pro.loop', key, 'when').next() * 46);
+}
+
+/**
+ * A reshoot day or a pickup session after the wrap (decider `pro.reshoot`): at `AFTER_WRAP.further`, by the work, and the
+ * days on it's asked for, a month and a half to three months on.
+ */
+export function furtherDrawn(sim: Simulation, key: string): number | undefined {
+  if (sim.rng('pro.reshoot', key).next() >= AFTER_WRAP.further) return undefined;
+  return AFTER_WRAP.furtherFrom + Math.floor(sim.rng('pro.reshoot', key, 'when').next() * AFTER_WRAP.furtherWithin);
 }
 
 /** A scene cut in the edit (decider `pro.cut`): at `AFTER_WRAP.cut`, by the work. */
@@ -509,25 +520,49 @@ const bandWords = (q: number): string => `${BAND_WORDS[bandOfQuality(q)]}`;
 // ---------------------------------------------------------------------------------------------------------------------
 
 /** The weekday at ten on or after a day, clear of the person's booked work. */
-function clearWeekday(person: Person, from: Instant, until: Instant, except: string): Instant | undefined {
+function clearWeekday(person: Person, from: Instant, until: Instant, except: string, hour: number = AFTER_WRAP.loopHour, hours: number = AFTER_WRAP.loopHours): Instant | undefined {
   for (let d = from; d <= until; d = addDays(d, 1, NY)) {
     const p = zonedParts(d, NY);
     if (p.weekday === 0 || p.weekday === 6) continue;
-    const start = instantFromZoned({ year: p.year, month: p.month, day: p.day, hour: AFTER_WRAP.loopHour, minute: 0 }, NY);
-    const end = start + AFTER_WRAP.loopHours * MS_HOUR;
+    const start = instantFromZoned({ year: p.year, month: p.month, day: p.day, hour, minute: 0 }, NY);
+    const end = start + hours * MS_HOUR;
     const clash = (person.pro?.engagements ?? []).some((x) => x.id !== except && x.status !== 'finished' && x.status !== 'canceled' && x.days.some((w) => w.from < end && w.to > start));
-    if (!clash) return start;
+    // Nor the part's own recall to loop (from 2026-10-25, brief 27's K5): a reshoot isn't set on the loop's day.
+    const loop = (person.pro?.engagements ?? []).some((x) => x.loop?.status === 'set' && x.loop.at < end && x.loop.at + AFTER_WRAP.loopHours * MS_HOUR > start);
+    if (!clash && !loop) return start;
   }
   return undefined;
 }
 
+/** A further day's hours: a reshoot's call to wrap, nine with lunch, eight of them work; a pickup session's four. */
+export const furtherHours = (kind: 'reshoot' | 'pickup'): number => (kind === 'reshoot' ? AFTER_WRAP.reshootHours : AFTER_WRAP.loopHours);
+
 /**
  * After a screen wrap (N13 Schedule A §28.A): a recall to loop, drawn by the engagement, within the format's months, on a
- * weekday clear of the actor's other booked work; and an anthology's invitation into its next story for strong work. A
- * stage run and voice work have neither.
+ * weekday clear of the actor's other booked work; a feature's reshoot day or a voice part's pickup session (`further`,
+ * from 2026-10-25, brief 27's K5); and an anthology's invitation into its next story for strong work. A stage run has
+ * none of them; voice work had none until 2026-10-25.
  */
-export function afterWrap(sim: Simulation, person: Person, e: Engagement, t: ProjectTemplate, best: Band | undefined, tell: (title: string, body: string) => void): void {
+export function afterWrap(sim: Simulation, person: Person, e: Engagement, t: ProjectTemplate, best: Band | undefined, tell: (title: string, body: string) => void, near?: { minutes: number }): void {
   const fmt = formatOf(t);
+  // A reshoot on the production's own set, for a part within a day's reach of home, or a voice part's pickup session at a
+  // studio near you (from 2026-10-25, brief 27's K5): drawn by the work, on a weekday clear of other work and the loop.
+  const kind = fmt.further === 'pickup' || (fmt.further === 'reshoot' && near) ? fmt.further : undefined;
+  const further = kind ? furtherDrawn(sim, workKey(e)) : undefined;
+  if (kind && further !== undefined && !e.further) {
+    const first = addDays(sim.now, further, NY);
+    const at = clearWeekday(person, first, addDays(first, 30, NY), e.id, kind === 'reshoot' ? AFTER_WRAP.reshootHour : AFTER_WRAP.loopHour, furtherHours(kind));
+    if (at) {
+      e.further = { kind, at, status: 'set' };
+      const label = kind === 'reshoot' ? `${t.project}: Reshoot Day` : `${t.project}: Pickup Session`;
+      sim.schedule({ at, kind: FURTHER_KIND, label, category: 'career', priority: 38, requiresPlayer: true, durationMinutes: furtherHours(kind) * 60, travelMinutes: kind === 'reshoot' ? near!.minutes : 30, locationId: kind === 'reshoot' ? t.place.cityId : person.currentLocationId, refType: 'pro.engagement', refId: e.id, payload: { personId: person.id, engagementId: e.id } });
+      const words = kind === 'reshoot'
+        ? `${t.company} called you back for a reshoot as ${t.role.part}: ${t.place.venue} in ${t.place.city} on ${formatWeekdayDate(at, NY)}, from 7:00 AM to 4:00 PM, to shoot some of your scenes again. It pays a day.`
+        : `${t.company} called you back for a pickup session as ${t.role.part}: four hours in a booth at a studio near you on ${formatWeekdayDate(at, NY)} at 10:00 AM, to record some of your lines again. It pays a session, as your other sessions did.`;
+      noteEvent(sim, e, { kind: 'booked', key: 'further', words });
+      tell(kind === 'reshoot' ? `${t.project} Calls You Back To Reshoot` : `${t.project} Calls You Back For Pickups`, words);
+    }
+  }
   const after = fmt.looping ? loopDrawn(sim, workKey(e)) : undefined;
   if (fmt.looping && after !== undefined) {
     const first = addDays(sim.now, after, NY);
@@ -599,6 +634,59 @@ export function loopSession(sim: Simulation, person: Person, e: Engagement, t: P
   if (!e.pay.some((x) => x.key === p.key)) e.pay.push(p);
   schedulePay(sim, person, e);
   noteEvent(sim, e, { kind: 'worked', key: 'loop:done', words: `You looped ${t.role.part} on ${formatDate(at, NY)}: ${plural(units.length, 'line')} re-recorded${overall !== undefined ? `, ${BAND_WORDS[bandOfQuality(overall)]}` : ''}, paid half a day.` });
+}
+
+/**
+ * A reshoot day or a pickup session (`FURTHER_KIND`, from 2026-10-25, brief 27's K5): read for permission to work and the
+ * actor there; the part's weakest kept scenes or lines taken again, each judged as its day judged it, and the better take
+ * kept; the credit's band read again from what's kept; paid a day, or a weekly part's fifth of a week (N13 Schedule B
+ * §12), through the pay the work's other days came by. Missed, the production does them again without the actor, and
+ * they're cut from the part and unpaid.
+ */
+export function furtherSession(sim: Simulation, person: Person, e: Engagement, t: ProjectTemplate, at: Instant, there: boolean, genre: number, tell: (title: string, body: string) => void): void {
+  const f = e.further;
+  if (!f || f.status !== 'set') return;
+  const flow = workflowOf(t);
+  const day = { from: at, to: at + furtherHours(f.kind) * MS_HOUR, label: f.kind === 'reshoot' ? `${t.project}: Reshoot Day` : `${t.project}: Pickup Session` };
+  const what = f.kind === 'reshoot' ? 'reshoot' : 'pickup session';
+  const again = (e.units ?? []).filter((u) => u.takes?.length && !u.cut && u.by !== 'double' && u.day >= 0).sort((a, b) => (a.best ?? 0) - (b.best ?? 0)).slice(0, f.kind === 'reshoot' ? 2 : 3);
+  const credit = person.pro?.credits.find((c) => c.engagementId === e.id);
+  if (!workAuthorizedFor(person, day) || !there) {
+    f.status = 'missed';
+    for (const u of again) u.cut = true;
+    const band = keptBand(e);
+    if (credit && band) credit.band = band;
+    const why = !there ? `You missed the ${what} for ${t.role.part} on ${formatDate(at, NY)}` : `You had no permission to work on ${formatDate(at, NY)} for the ${what}`;
+    const words = `${why}, so the production did ${f.kind === 'reshoot' ? 'those scenes' : 'those lines'} again with another actor, and ${plural(again.length, f.kind === 'reshoot' ? 'scene' : 'line')} of yours ${again.length === 1 ? 'is' : 'are'} cut from the part. It isn’t paid.`;
+    noteEvent(sim, e, { kind: 'problem', key: 'further:missed', words });
+    tell(`You Missed The ${f.kind === 'reshoot' ? 'Reshoot' : 'Pickup Session'}`, words);
+    return;
+  }
+  let total = 0;
+  const units: WorkUnit[] = [];
+  for (const u of again) {
+    const js = flow.judged[stepOf(t, u.day)];
+    const task = TASK_PROFILES[js?.task ?? 'scene'] ?? TASK_PROFILES.scene!;
+    const takes: number[] = [];
+    for (let k = 1; k <= 2; k += 1) takes.push(r1(evaluate(sim, person, { ...unitContext(sim, person, e, t, u, k, task, {}, genre), key: `pro:${person.id}:${e.id}:further:${u.id}:${k}` }).overall));
+    const best = Math.max(...takes);
+    units.push({ id: `further-${u.id}`, day: -2, scene: u.scene, order: units.length + 1, ...(u.episode !== undefined ? { episode: u.episode } : {}), version: u.version ?? 1, takes, best });
+    // The better of the two is what the film keeps.
+    if (best > (u.best ?? 0)) u.best = best;
+    total += best;
+  }
+  if (f.kind === 'pickup') strain(person, at, 3 * AFTER_WRAP.loopHours);
+  const overall = units.length ? r1(total / units.length) : undefined;
+  f.status = 'done';
+  if (overall !== undefined) f.overall = overall;
+  f.units = units;
+  const band = keptBand(e);
+  if (credit && band) credit.band = band;
+  const rate = e.contract?.rate ?? 0;
+  const p: ProPayment = { id: sim.nextId('pro'), key: `${e.id}:further`, promised: e.contract?.per === 'week' ? Math.round(rate / 5) : rate, currency: 'USD', promisedAt: sim.now, due: thursdayAfter(at), week: { from: at, to: day.to } };
+  if (!e.pay.some((x) => x.key === p.key)) e.pay.push(p);
+  schedulePay(sim, person, e);
+  noteEvent(sim, e, { kind: 'worked', key: 'further:done', words: `You ${f.kind === 'reshoot' ? 'reshot' : 'recorded again'} ${plural(units.length, f.kind === 'reshoot' ? 'scene' : 'line')} of ${t.role.part} on ${formatDate(at, NY)}${overall !== undefined ? `, ${BAND_WORDS[bandOfQuality(overall)]}` : ''}, the better take of each kept, paid ${e.contract?.per === 'week' ? 'a fifth of a week' : 'a day'}.` });
 }
 
 const thursdayAfter = (at: Instant): Instant => {
@@ -688,6 +776,13 @@ export function registerWorkflows(sim: Simulation, hooks: WorkflowHooks): void {
     const t = e && projectById(e.projectId);
     if (!person || !e || !t) return;
     loopSession(s, person, e, t, item.at, hooks.there(person, item.at), hooks.genre(person, t), (title, body) => hooks.tell(s, person, title, body));
+  });
+  sim.onSchedule(FURTHER_KIND, (item, s) => {
+    const person = s.universe.people[String(item.payload.personId)];
+    const e = person?.pro?.engagements.find((x) => x.id === item.payload.engagementId);
+    const t = e && projectById(e.projectId);
+    if (!person || !e || !t) return;
+    furtherSession(s, person, e, t, item.at, hooks.there(person, item.at), hooks.genre(person, t), (title, body) => hooks.tell(s, person, title, body));
   });
   sim.onSchedule(INVITE_KIND, (item, s) => {
     const person = s.universe.people[String(item.payload.personId)];

@@ -1778,6 +1778,10 @@
     {
      "what": "composure grown by facing a house, read by the next night's nerves",
      "at": "src/engine/systems/attributes.ts:351"
+    },
+    {
+     "what": "laid up or in hospital on a lead's or a supporting part's day, shot around once, the rest slipped (`illDay`, from 2026-10-25, brief 27's K5)",
+     "at": "src/engine/systems/projobs.ts:2570"
     }
    ],
    "experienced": "Each day's band on Booked Work; the credit on the profile; the wrap's notice; a later referral, résumé and reel read them; the mood and the stress the day leaves.",
@@ -1789,7 +1793,8 @@
      "tests/b20-career-saveload.test.ts",
      "tests/b20-career-skill.test.ts",
      "tests/b22-authorization.test.ts",
-     "tests/pro-work.test.ts"
+     "tests/pro-work.test.ts",
+     "tests/b27-ill.test.ts"
     ],
     "comparisons": [
      "b20-career-skill: the same booked days, the part prepared alike: the top Strong or better every day, the bottom Unready",
@@ -2689,6 +2694,61 @@
     ]
    },
    "missing": "A recall abroad, and looping over more than one session, aren't modeled.",
+   "status": "Implemented And Verified",
+   "why": "",
+   "prior": null
+  },
+  {
+   "id": "pro.reshoot",
+   "kind": "scheduled",
+   "area": "career",
+   "mechanic": true,
+   "seeded": false,
+   "readBy": "career",
+   "readAt": "830677a2",
+   "where": "A feature's reshoot day on its set, 7:00 AM to 4:00 PM, or a voice part's pickup session, four hours in a booth near home, a month and a half to three months after the wrap (`afterWrap`).",
+   "prerequisites": "A format with one (`FormatSpec.further`); for a reshoot, the work shot within a day's reach of home; the draw (decider `pro.reshoot`, by the work); a weekday clear of other booked work and the part's loop.",
+   "reads": "Permission to work and the actor there at the call; the part's kept scenes or lines and their printed takes; the preparation, the genre, the day's condition, as each day's work reads them; the contract's rate.",
+   "changes": "Done: the weakest kept scenes or lines taken again, the better take kept, the credit's band read again, a day's pay (a fifth of a week for a weekly part) promised by its own key. Missed: those scenes or lines cut from the part, the band read again, nothing paid. A line in the history and a notice either way.",
+   "consumers": [
+    {
+     "what": "the better take kept",
+     "at": "src/engine/systems/workflow.ts:675"
+    },
+    {
+     "what": "missed, the scenes cut",
+     "at": "src/engine/systems/workflow.ts:656"
+    },
+    {
+     "what": "the credit's band read again from what's kept",
+     "at": "src/engine/systems/workflow.ts:684"
+    },
+    {
+     "what": "a day's pay promised and paid",
+     "at": "src/engine/systems/workflow.ts:686"
+    },
+    {
+     "what": "the day held against another offer",
+     "at": "src/engine/systems/projobs.ts:1042"
+    }
+   ],
+   "experienced": "Calls You Back To Reshoot (or For Pickups) at the wrap, the day on the calendar, the Work tab's line, the pay; a missed one's notice.",
+   "saveLoad": "The professional record (`person.pro`: each engagement's `further`, `units`, `pay`) and the calendar's pending `pro.*` items are in the save; the session reads the record's own status before acting, and the draw is keyed by the work, never by an id, so a reload decides it the same.",
+   "evidence": {
+    "tests": [
+     "tests/b27-reshoot.test.ts"
+    ],
+    "comparisons": [
+     "b27-reshoot: a feature shot near home called back and one shot away, its draw the same kind, not; a reshoot done and one slept through"
+    ],
+    "mutations": [
+     "b27-reshoot: the better take not kept, a missed reshoot not cutting, reshoots for work away, and the day not held each failed a test"
+    ],
+    "journeys": [
+     "b27-reshoot: a feature to its reshoot and pay by the clock; a voice part's pickup session"
+    ]
+   },
+   "missing": "No played life of the long runs reaches one yet: they're replayed in brief 27's F.",
    "status": "Implemented And Verified",
    "why": "",
    "prior": null

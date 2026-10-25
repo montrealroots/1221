@@ -638,9 +638,9 @@
  },
  "src/engine/content/guide/career.ts#CAREER_GUIDE [career.offers]": {
   "status": "Rewritten",
-  "hash": "dd20378a3954",
+  "hash": "22d9b50d35a9",
   "on": "2026-10-25",
-  "evidence": "Written for brief 27's K4 (loop 20: holds, options and conflicts) to docs/STYLE.md and docs/GLOSSARY.md, and read where the player meets it: tests/b27-holds.test.ts holds the chemistry read's notice saying a hold is on the player's dates and that it isn't a booking and pays nothing, the history's line in the past (put a hold on your dates for ..., until the part was cast), the warning on another offer on the same days (Accepting this lets that hold go and withdraws you from the part), the withdrawal it brings (You took ... on some of the same days, so you withdrew from ... and its hold was let go; You Withdrew From ...), the refusals of Ask Them To Decide (no other offer, asked already, an offer lapsing before the answer), and the answer's words (Asked to decide, ... chose you for ...; The Hold On ... Is Let Go, You're free to take ...); the hold's end in the history (The hold on your dates became the booking). The rest of these sources' words are as they were, held by brief 19's, brief 25's and brief 27's tests. tools/voice-check.mjs, tools/tics.mjs, tools/title-case.mjs, tools/plural-check.mjs and tools/spelling.mjs pass",
+  "evidence": "Written for brief 27's K5 (loop 28: illness and absence by their contractual rule, not one universal number) to docs/STYLE.md and docs/GLOSSARY.md, and read where the player meets it: tests/b27-ill.test.ts holds the notice ... Shoots Around You (You were laid up on ..., so ... shot around you and slipped the rest of your days a working day each; A day lost to your own illness or injury isn't paid, SAG-AFTRA's agreement's exception ...; Another day lost the same way and the production recasts the part), a smaller part recast as before and a second day recast; the offer card, the Day look's cost of a missed call, the guide's Offers And Booked Work and Your Day, and the tutorial's Finding Work now say the same, where each had said a shoot replaces you for any day missed. The weather day's slip, shared with it, says what tests/b27-weather.test.ts holds. tools/voice-check.mjs, tools/tics.mjs, tools/title-case.mjs, tools/plural-check.mjs and tools/spelling.mjs pass",
   "first": "Pending"
  },
  "src/engine/content/guide/career.ts#CAREER_GUIDE [career.opportunities]": {
@@ -715,9 +715,9 @@
  },
  "src/engine/content/guide/career.ts#CAREER_GUIDE [career.workflows]": {
   "status": "Rewritten",
-  "hash": "6a46ce98d6d1",
+  "hash": "b774f8fbcf6b",
   "on": "2026-10-25",
-  "evidence": "Written for brief 27's K5 (Part 11: weather affecting production; loop 28: a schedule change communicated with its contractual rule) to docs/STYLE.md and docs/GLOSSARY.md, and read where the player meets it: tests/b27-weather.test.ts holds the notice A Weather Day On ... with its sky (thunderstorms, thick fog, high winds), the days as they stand (called off your day on location and slipped the rest of your days a working day each), the flight home (Your flight home moves with them), each pay sentence by how the work is paid (the SAG-AFTRA day performer's day off paid; This work pays the days you work, so the day off isn't paid; every day you work still is), and a day that can't slip (It couldn't slip your days, since you're booked on a day it would need); the Work tab's Weather Day line and the guide's How Each Kind Of Work Is Done say the same. tools/voice-check.mjs, tools/tics.mjs, tools/title-case.mjs, tools/plural-check.mjs and tools/spelling.mjs pass",
+  "evidence": "Written for brief 27's K5 (Part 10 and loop 29: pickups and reshoots after the wrap) to docs/STYLE.md and docs/GLOSSARY.md, and read where the player meets it: tests/b27-reshoot.test.ts holds the call back (Calls You Back To Reshoot, It pays a day; Calls You Back For Pickups), the day as another offer meets it (... Reshoot Day), the history's line in the past (You reshot ... the better take of each kept, paid a day), a missed one (You Missed The Reshoot, ... cut from the part. It isn't paid.), the Work tab's line and the guide's How Each Kind Of Work Is Done. The rest of these sources' words are as they were, held by brief 25's tests. tools/voice-check.mjs, tools/tics.mjs, tools/title-case.mjs, tools/plural-check.mjs and tools/spelling.mjs pass",
   "first": "Pending"
  },
  "src/engine/content/guide/career.ts#CAREER_GUIDE [evaluation]": {

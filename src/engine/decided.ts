@@ -51,7 +51,7 @@ import { PROJECTS } from './content/careerwork';
 import { SERIES } from './content/series';
 import { decisionsTo, episodeDrawn, optionDrawn } from './systems/series';
 import { lateDays, rerunDrawn } from './systems/contracts';
-import { cutDrawn, loopDrawn, pagesDrawn, planWork, stressDrawn } from './systems/workflow';
+import { cutDrawn, furtherDrawn, loopDrawn, pagesDrawn, planWork, stressDrawn } from './systems/workflow';
 import { simulateRun } from './systems/charts';
 import { fieldDrawn, finalDrawn, festivalSelects, festivalSubmits, nominationsFor, productionEnters } from './systems/awards';
 import type { Engagement } from './systems/pro';
@@ -872,6 +872,18 @@ defineDecider<{ sim: Simulation; first: number }, string>({
   },
   sample: (seed) => ({ sim: atYale(seed), first: seed * 7 }),
   decide: ({ sim, first }) => Array.from({ length: 40 }, (_, n) => loopDrawn(sim, `w${first + n}`) ?? '-').join(','),
+});
+
+defineDecider<{ sim: Simulation; first: number }, string>({
+  id: 'pro.reshoot',
+  decides: 'A feature’s reshoot day or a voice part’s pickup session after the wrap, two times in ten, and the days on it’s asked for.',
+  drawnIn: 'src/engine/systems/workflow.ts',
+  reads: {
+    first: (o, t) => ({ ...o, first: Math.round(t * 100) }),
+    world: (o, t) => ({ ...o, sim: atYale(Math.round(t * 20)) }),
+  },
+  sample: (seed) => ({ sim: atYale(seed), first: seed * 7 }),
+  decide: ({ sim, first }) => Array.from({ length: 40 }, (_, n) => furtherDrawn(sim, `w${first + n}`) ?? '-').join(','),
 });
 
 defineDecider<{ sim: Simulation; first: number }, string>({

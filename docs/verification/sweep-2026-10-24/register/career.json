@@ -721,6 +721,18 @@
    "tests/pro-core.test.ts the career’s 32 test files, 423 tests, run on this commit: all green"
   ]
  },
+ "pro.reshoot": {
+  "status": "Verified",
+  "by": [
+   "inspection",
+   "automated"
+  ],
+  "on": "830677a2",
+  "evidence": [
+   "tests/b27-reshoot.test.ts",
+   "src/engine/systems/workflow.ts:646 the session: taken again or missed, the band and the pay; src/engine/systems/workflow.ts:780 its handler"
+  ]
+ },
  "pro.school_answer": {
   "status": "Verified",
   "by": [

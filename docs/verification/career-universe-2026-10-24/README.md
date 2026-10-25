@@ -436,11 +436,40 @@ not moving the flight each failed a test. Calibrated first, on a year of one sav
 York's days in the game, and crews shoot through it, so a weather day is between one location day in twenty (Los Angeles)
 and one in nine (London), New York's about one in sixteen.
 
+**Then reshoots and pickups** (Part 10, Part 11, loop 29). After a wrap, the recall to loop was all a production asked
+for. Now, about two times in ten by the work's own draw (decider `pro.reshoot`), a feature shot within a day's reach of
+home calls the actor back to reshoot its weakest kept scenes, a day on its set paid a day (a weekly part a fifth of a
+week, Schedule B §12), and a voice part for a pickup session, four hours in a booth near home, paid a session (`afterWrap`,
+`furtherSession`, `systems/workflow.ts`). It's set a month and a half to three months on, on a weekday clear of other work
+and the loop, and it holds that day against another offer, as a looping session now does too (`bookedClash`). Each scene
+is taken twice, judged as its own day judged it, and the better take is kept; the credit's band is read again from what's
+kept. Missed, another actor does them, they're cut from the part, and nothing is paid. A feature shot away from home has
+none, since it would need the actor back on its set. Held by `tests/b27-reshoot.test.ts`: a reshoot and its pay by the
+clock, one slept through, a pickup session, and the falsifiability test, a feature away whose draw would give one getting
+none. Keeping the first take, not cutting a missed one's scenes, calling back work shot away and not holding the day each
+failed a test.
+
+**Then a day laid up, shot around** (loop 28: "Do not impose replacement automatically after one universal number of
+mistakes unless a specific established game arrangement supports it"). A shoot replaced the actor for any day missed,
+asleep or in hospital alike. Now a lead's or a supporting part's production shoots around one day the actor is laid up or
+in hospital, slipping the rest a working day each as a weather day does (`ILL_DAY`, `illDay`, the slip itself shared as
+`slipDays`); the day isn't paid, a performer's own illness or incapacity being the agreement's exception to paying a day
+engaged and not used (Schedule A §4.E). A smaller part is recast, a second such day is recast, and a day slept through is
+the actor's own default, replaced as before. Every place that told the player a shoot replaces you for any missed day,
+the offer card, the Day look, the guide's Offers And Booked Work and Your Day, and the tutorial, now names the exception.
+Held by `tests/b27-ill.test.ts`: shot around and every day worked by the clock; the falsifiability test, a smaller part
+laid up the same way recast; a second day recast. No shooting around, shooting around every size of part, and waiting
+twice each failed a test. And where work is called off after a weather day, a SAG-AFTRA day performer's held day stays
+owed whole (loop 32: earned pay isn't deleted when the work to come is called off; `callOff`), held by a test of its own in
+`tests/b27-weather.test.ts`; dropping it failed that test.
+
 **Found on the way, and fixed:** a way home booked again after a flight was missed or moved waited on the canceled leg
 before it in the list, canceled itself, and left the trip in the work's town (`priorOfWay`, `systems/worktrip.ts`; brief
 25's missed-flight-home path had it, untested). Two tests whose fixed weeks now meet a storm were changed: the fatigue
 measurement's shoot week (`tests/fakes/shoot-week.ts`) took a seed whose sky lets all six days go ahead, a premise its
-test now holds, and the award journeys' `wrapped` plays to the wrap wherever a weather day moved it.
+test now holds, and the award journeys' `wrapped` plays to the wrap wherever a weather day moved it. With a recall to loop holding its
+day, `tests/career-workflows.test.ts`'s student film, posted on March 1, 2027, fell on the television movie's April 5
+looping session, double-booked until now; it's posted the first Monday whose days are clear.
 
 **Not built, said so:** a wardrobe fitting. At today's SAG-AFTRA day rate, $1,283, a fitting before the work pays nothing
 (Schedule A §16.A(2): none over $1,200 a day), and a fitting on a work day is that day's work time, so a fitting call would

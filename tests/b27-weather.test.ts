@@ -214,6 +214,27 @@ describe('a weather day', () => {
   }, 240_000);
 });
 
+describe('a weather day’s pay, kept', () => {
+  it('PLAYER JOURNEY: a SAG-AFTRA day performer’s day off for the weather stays paid when the work is called off later: a day slept through, the part recast, and the day off still owed', () => {
+    const sim = graduate('b27-weather-kept');
+    const { t, week, day } = stormyPart(sim, (x) => near(x) && !travels(sim.player, x) && x.pay === 'sag-tv-day' && x.schedule.kind === 'shoot' && x.schedule.days >= 3);
+    const e = booked(sim, t, week);
+    const rate = e.contract!.rate!;
+    played(sim, e.days[day]!.from - MS_HOUR);
+    expect(e.weather?.[0]?.slipped).toBe(true);
+    // TEST SETUP: asleep through the slipped day's call, the actor's own default, so the production recasts the part.
+    const missed = e.days[day]!.from;
+    played(sim, missed - 2 * MS_HOUR);
+    sim.player.awakeSince = missed + 12 * MS_HOUR;
+    sim.advanceTo(missed + 2 * MS_HOUR);
+    expect(e.status).toBe('canceled');
+    // What's owed: each day worked, with its overtime, and the day off whole (N13 Schedule A §4.E; loop 32).
+    const worked = (e.log ?? []).filter((l) => l.status === 'worked').map((l) => l.day);
+    const each = (i: number) => rate + overtimeOf(rate, overtimeHours(e.days[i]!));
+    expect(promised(e)).toBe(worked.reduce((n, i) => n + each(i), 0) + rate);
+  }, 240_000);
+});
+
 describe('a flight home missed', () => {
   it('PLAYER JOURNEY: asleep for the car to the airport, the way home is booked again a day later, and flown: the trip ends at home', () => {
     const sim = graduate('b27-missed-home');

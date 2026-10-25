@@ -834,7 +834,7 @@ export const CAREER_GUIDE: readonly GuideEntry[] = [
       'A casting office that cast you before, where your work was Strong or better, may offer you a later part without an audition, never a lead. The offer says why.',
       'A production that asks you to a chemistry read or a screen test holds the part’s dates until it’s cast. A hold isn’t a booking and pays nothing; it asks you to keep those days free. Accepting other work on them lets the hold go and withdraws you from the part. Asked to decide first, the production answers the next afternoon: it offers you the part, likelier the better your last round went, or lets the hold go and casts someone else. Once the part is cast or let go, the hold ends.',
       'A stage part goes on your credits at its first night; a screen part when it’s shot, and as released once it comes out, when its footage can go on a reel.',
-      'Miss a shoot day, or a second day of a run, and the production replaces you.',
+      'Sleep through a shoot day, or miss a second day of a run, and the production replaces you. Laid up or in hospital on a lead or a supporting part, the production shoots around you once, slipping your days a working day each, and the day isn’t paid; a smaller part is recast.',
     ],
     interpret: ['Promised pay is what the contract owes you, not money you have yet. A student film’s pay is deferred: it’s paid only if the film earns money later, and no film in the game does, so nothing is paid.'],
     unavailable: [
@@ -973,7 +973,7 @@ export const CAREER_GUIDE: readonly GuideEntry[] = [
     title: 'How Each Kind Of Work Is Done',
     goal: 'career',
     covers: ['pro.work_choice'],
-    synonyms: ['takes', 'another take', 'voice session', 'booth', 'dubbing', 'loop', 'looping', 'motion capture', 'performance capture', 'narration', 'reenactment', 'multicam', 'studio audience', 'musical', 'mark it', 'stunt', 'stunt double', 'intimacy coordinator', 'consent', 'revised pages', 'scene cut', 'weather day', 'weather', 'rain', 'thunderstorm', 'on location'],
+    synonyms: ['takes', 'another take', 'voice session', 'booth', 'dubbing', 'loop', 'looping', 'motion capture', 'performance capture', 'narration', 'reenactment', 'multicam', 'studio audience', 'musical', 'mark it', 'stunt', 'stunt double', 'intimacy coordinator', 'consent', 'revised pages', 'scene cut', 'weather day', 'weather', 'rain', 'thunderstorm', 'on location', 'reshoot', 'pickups', 'pickup session'],
     questions: ['Why were my scenes shot out of order?', 'Should I ask for another take?', 'What is a tape night?', 'Why is my voice strained?', 'Do I have to do my own stunts?', 'Do I have to do the intimate scene?', 'Why was a scene of mine cut?', 'Why was I called back to loop?', 'What happens if the weather is bad on a shoot day?'],
     where: on('work', 'Career, Work, How The Work Is Done'),
     available: `From the guide’s chapter “${WORK_CHAPTER}”, once you’ve accepted work.`,
@@ -1001,6 +1001,7 @@ export const CAREER_GUIDE: readonly GuideEntry[] = [
       'Pages revised the night before change some of your lines, and Learn The Lines that evening puts them back.',
       `A day out on location is called off the evening before when the forecast where it shoots is thunderstorms, fog, or wind of ${WEATHER_DAY.windKph} km/h or more: your days from it slip a working day each, and your flight home with them. A shower is shot through. A SAG-AFTRA day performer is paid the day off; other work pays the days you work. If another booking is in the way, the production shoots that day’s scenes without you, and they’re cut from your part. A studio, a booth, a stage play and a capture stage never stop for the weather.`,
       `After a screen wrap, the production may recall you to loop: a four-hour session paid half a day. When the work comes out, the edit may cut one of your scenes, about ${Math.round(AFTER_WRAP.cut * 10)} times in ten; the part stays on your credits with its pay.`,
+      `About ${Math.round(AFTER_WRAP.further * 10)} times in ten, a feature calls you back to reshoot your weakest scenes, a day on its set paid a day, if it was shot within reach of home; a voice part calls you back for a pickup session, four hours in a booth near you. The better take of each is kept. Miss it, and another actor does them, and they’re cut from your part.`,
     ],
     interpret: [
       'A dub’s pay by its characters and lines, a recall to loop at half a day for four hours, a stunt only with your consent and a coordinator there, and an intimate scene only with your written consent are the SAG-AFTRA agreements’ rules. The takes, the strain, the stunt’s risk and how often pages change are the game’s.',
