@@ -103,7 +103,7 @@ import { homeOf, recordWages, stateOf, yearOf } from './earnings';
 import { nonresidentFor, connecticutTax } from './taxreturn';
 import { inTheBank, owe, payFromBank } from './spending';
 import { contributionOn, lateDays } from './contracts';
-import { voiceOnly } from './workflow';
+import { coveredUnder, uncoveredWords } from './representation';
 import { businessDaysOn, f1Of, usWorkAuthorized, weeklyHours } from './permission';
 import { WORK_RULES } from '../content/workrules';
 import { addYears, citizenOf, documentsOf } from './documents';
@@ -286,14 +286,11 @@ export function owedAgreement(person: Person, e: Engagement): { agreement: Agree
   return tail ? { agreement: tail, how: 'tail' } : undefined;
 }
 
-/**
- * Whether an agreement covers a project's work: stage, film and television, in the United States, and from 2026-10-24
- * (brief 25's Module 5) not voice-over, which the agreement's What It Leaves Out says an agency handles in another
- * department (`AGREEMENT_TERMS`): an animated part, a dub, a narration.
- */
-export const coveredWork = (project: Pick<ProjectTemplate, 'medium' | 'place'> & Partial<Pick<ProjectTemplate, 'format'>>): boolean =>
-  COVERED_MEDIA.includes(project.medium) && (CITIES.get(project.place.cityId)?.countryId ?? (project.place.cityId.startsWith('us-') ? 'us' : '')) === 'us'
-  && !(project.format && voiceOnly({ format: project.format }));
+// `coveredWork`, whether an agreement covered a project's work (stage, film and television in the United States, and from
+// 2026-10-24, brief 25's Module 5, not voice-over), went on 2026-10-25 (brief 27): it was one rule for every agreement,
+// and each agreement keeps its own terms from then, which the commission reads (`coveredUnder`, `systems/representation.ts`).
+// Those are its rule for a legit department's first terms; a voice-over department's, or voice-over or work abroad an
+// office agreed to add, cover more.
 
 export interface Commission {
   /** The agreement it's owed under, and the agency's name, where it's owed. */
@@ -356,7 +353,7 @@ export function commissionOn(sim: Simulation, person: Person, e: Engagement, p: 
   if (!owed || !project) return { how: 'unrepresented', rule: 'none', amount: 0, rate: 0, words: 'No commission: you weren’t represented when you made this contract.' };
   const agent = agentById(owed.agreement.agentId);
   const agency = agent ? agencyOf(agent).name : 'your agency';
-  if (!coveredWork(project)) return { agreement: owed.agreement, agency, how: 'uncovered', rule: 'none', amount: 0, rate: 0, words: voiceOnly(project) ? `No commission: your agreement with ${agency} leaves out voice-over work, and this is that.` : `No commission: your agreement with ${agency} covers stage, film and television work in the US, and this isn’t that.` };
+  if (!coveredUnder(owed.agreement, project)) return { agreement: owed.agreement, agency, how: 'uncovered', rule: 'none', amount: 0, rate: 0, words: uncoveredWords(owed.agreement, project, agency) };
   const how = owed.how === 'tail' ? 'tail' : termEnd(owed.agreement) <= at ? 'continuing' : 'term';
   const still = how === 'continuing' ? ` It’s still owed after your agreement with ${agency} ended, because you made the contract while it ran.` : how === 'tail' ? ` It’s owed after your agreement ended, because ${agency} passed on the offer while it ran and you accepted it within ${AGREEMENT.tailDays} days.` : '';
   const ten = AGREEMENT.commission;

@@ -620,8 +620,10 @@ describe('W12: the formats apart', () => {
     expect([o.status, o.rounds ?? []]).toEqual(['offered', []]);
     expect(o.history.some((h) => h.words === `Brass Key Pictures invited you back into Six Rooms’s next story for your work as The Night Auditor, without an audition.`)).toBe(true);
     expect(done.status).toBe('finished');
-    // Voice-over: open to the actor's own submission, outside an agent's agreement.
-    for (const id of ['lantern-row', 'kite-and-crow', 'salt-road', 'tidewater-narrator']) expect(projectById(id)!.access, id).toEqual({ agent: false, open: 'anyone' });
+    // Voice-over: open to the actor's own submission, and outside a legit agent's agreement. From 2026-10-25 (brief 27) an
+    // agent whose agreement covers voice-over can put the actor up for it too (tests/b27-representation.test.ts); until then
+    // no agent could.
+    for (const id of ['lantern-row', 'kite-and-crow', 'salt-road', 'tidewater-narrator']) expect(projectById(id)!.access, id).toEqual({ agent: true, open: 'anyone' });
     const voice = accept(sim, offerFor(sim, 'salt-road', at(2027, 6, 7)));
     expect(voice.contract!.clauses.some((x) => x.kind === 'rule' && x.id === 'voice-over')).toBe(true);
     expect(decisionsFor(projectById('salt-road')!).map((d) => d.id)).toEqual(['sync', 'stressful']);

@@ -132,8 +132,8 @@ describe('G1: the notice where he first appears', () => {
     expect(run(sim, 'pro.send_materials').error).toBe('Read the notice about Thomas Ashgrove first: it’s at the top of his panel.');
     // Until 2026-10-24 the notice said every project and casting office was invented too, untrue once parts were drawn
     // from real productions (brief 25's Module 2), and then every agency, untrue once Stewart Talent's New York office
-    // and its agents came in (Module 3).
-    expect(AGENT.notice).toBe('Thomas Ashgrove and Halberd Talent are invented for the game. His office takes no submissions it hasn’t asked for: it sees your materials through the School’s follow-up after the showcase, or a referral from someone you’ve worked with. He never gets in touch first.');
+    // and its agents came in (Module 3); and from 2026-10-25 (brief 27) it names the festival among the ways in.
+    expect(AGENT.notice).toBe('Thomas Ashgrove and Halberd Talent are invented for the game. His office takes no submissions it hasn’t asked for: it sees your materials through the School’s follow-up after the showcase, a referral from someone you’ve worked with or an introduction at a festival where your film screens. He never gets in touch first.');
     sim.must({ kind: 'pro.agent_notice', payload: {} });
     const r = rel(sim);
     expect(r.stage).toBe('discovered');

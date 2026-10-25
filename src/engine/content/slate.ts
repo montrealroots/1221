@@ -144,7 +144,11 @@ export interface KindProfile {
 
 const SCREEN_SENDS = ['headshot', 'resume', 'reel'] as const;
 const STAGE_SENDS = ['headshot', 'resume'] as const;
-/** Voice casting listens: a voice demo where screen casting asks for a reel (until 2026-10-24, brief 27, the screen's three). */
+/**
+ * Voice casting listens: a voice demo where screen casting asks for a reel (until 2026-10-24, brief 27, the screen's three).
+ * From 2026-10-25 it takes an agent's submission too, where the agent's agreement covers voice-over (`submitsFor`,
+ * `systems/representation.ts`), as well as the actor's own: until then its kinds took the actor's own only.
+ */
 const VOICE_SENDS = ['headshot', 'resume', 'demo'] as const;
 const FATE_FILM = { never: 0.08, pushed: 0.12, weeks: [3, 10] } as const;
 const FATE_TV = { never: 0.04, pushed: 0.1, weeks: [2, 6] } as const;
@@ -215,7 +219,7 @@ export const KIND_PROFILES: Readonly<Partial<Record<ProjectKind, KindProfile>>> 
   'animated-series': {
     format: 'animated-series', medium: 'television', union: 'sag-aftra', contract: 'SAG-AFTRA Television Animation', pay: 'animation-session',
     schedules: [{ kind: 'sessions', sessions: 3, everyDays: 14, minutes: 240, hour: 10 }, { kind: 'sessions', sessions: 2, everyDays: 21, minutes: 240, hour: 10 }],
-    audition: 'self-tape', callback: 0.5, access: { agent: false, open: 'anyone' }, sizes: { 'co-star': 2, supporting: 1 }, parts: [1, 2],
+    audition: 'self-tape', callback: 0.5, access: { agent: true, open: 'anyone' }, sizes: { 'co-star': 2, supporting: 1 }, parts: [1, 2],
     genreSets: [['animated', 'comedy'], ['animated', 'adventure'], ['animated', 'childrens']],
     sends: VOICE_SENDS, lead: [21, 42], fate: FATE_TV, techniques: { voice: 2, voiceover: 2 }, stakes: 1,
     series: { episodes: 13, everyDays: 14, daysEach: 1, program: 'half-hour', renew: 0.6, revive: 0.1 },
@@ -279,7 +283,7 @@ export const KIND_PROFILES: Readonly<Partial<Record<ProjectKind, KindProfile>>> 
   'animated-feature': {
     format: 'animated-feature', medium: 'film', union: 'sag-aftra', contract: 'SAG-AFTRA Basic Agreement', pay: 'sag-tv-day',
     schedules: [{ kind: 'sessions', sessions: 4, everyDays: 35, minutes: 240, hour: 10 }, { kind: 'sessions', sessions: 3, everyDays: 28, minutes: 240, hour: 10 }],
-    audition: 'self-tape', callback: 0.6, access: { agent: false, open: 'anyone' }, sizes: { supporting: 2, 'co-star': 2 }, parts: [1, 2],
+    audition: 'self-tape', callback: 0.6, access: { agent: true, open: 'anyone' }, sizes: { supporting: 2, 'co-star': 2 }, parts: [1, 2],
     genreSets: [['animated', 'adventure'], ['animated', 'fantasy'], ['animated', 'family']],
     sends: VOICE_SENDS, lead: [28, 56], fate: FATE_FILM, techniques: { voice: 2, voiceover: 2 }, stakes: 2,
   },
@@ -293,14 +297,14 @@ export const KIND_PROFILES: Readonly<Partial<Record<ProjectKind, KindProfile>>> 
   dub: {
     format: 'dub', medium: 'film', union: 'sag-aftra', contract: 'SAG-AFTRA Basic Agreement (Dialogue Replacement)', pay: 'sag-tv-day',
     schedules: [{ kind: 'sessions', sessions: 3, everyDays: 1, minutes: 480, hour: 9 }, { kind: 'sessions', sessions: 2, everyDays: 1, minutes: 480, hour: 9 }],
-    audition: 'self-tape', callback: 0, access: { agent: false, open: 'anyone' }, sizes: { supporting: 2, 'co-star': 1 }, parts: [1, 2],
+    audition: 'self-tape', callback: 0, access: { agent: true, open: 'anyone' }, sizes: { supporting: 2, 'co-star': 1 }, parts: [1, 2],
     genreSets: [['drama', 'thriller'], ['animated', 'adventure'], ['crime', 'drama']],
     sends: VOICE_SENDS, lead: [14, 35], fate: { never: 0.05, pushed: 0.08, weeks: [1, 4] }, techniques: { voice: 2, voiceover: 1 }, stakes: 1,
   },
   documentary: {
     format: 'narration', medium: 'film', union: 'sag-aftra', contract: 'SAG-AFTRA Basic Agreement', pay: 'sag-tv-day',
     schedules: [{ kind: 'sessions', sessions: 3, everyDays: 2, minutes: 240, hour: 10 }, { kind: 'sessions', sessions: 2, everyDays: 3, minutes: 240, hour: 10 }],
-    audition: 'self-tape', callback: 0, access: { agent: false, open: 'anyone' }, sizes: { lead: 1 }, parts: [1, 1],
+    audition: 'self-tape', callback: 0, access: { agent: true, open: 'anyone' }, sizes: { lead: 1 }, parts: [1, 1],
     genreSets: [['documentary', 'nature_documentary'], ['documentary', 'true_crime'], ['documentary', 'biographical']],
     sends: VOICE_SENDS, lead: [21, 42], fate: { never: 0.06, pushed: 0.1, weeks: [2, 6] }, techniques: { voiceover: 2, speech: 1 }, stakes: 1,
   },

@@ -446,16 +446,18 @@ describe('the history and the bounds', () => {
 describe('the agent and the work, as data', () => {
   it('holds the game’s own agent and agency, the game’s rule on submissions, the routes it allows and the notice that says they’re invented', () => {
     // Until 2026-10-21 the agent was a real person, held only as published and quoted; the owner chose a fictional one.
-    // Until 2026-10-24 he was the only agent; brief 25's Module 3 put the real ones beside him (tests/career-agents.test.ts).
-    expect(AGENTS.filter((a) => !a.real).map((a) => a.id)).toEqual(['thomas-ashgrove']);
+    // Until 2026-10-24 he was the only agent; brief 25's Module 3 put the real ones beside him (tests/career-agents.test.ts),
+    // and until 2026-10-25 the only invented one: brief 27 put Celia Brannock in his agency's voice-over department.
+    expect(AGENTS.filter((a) => !a.real).map((a) => a.id)).toEqual(['thomas-ashgrove', 'celia-brannock']);
     const agent = agentById('thomas-ashgrove')!;
     const agency = agencyOf(agent);
     expect([agent.name, agency.name, agency.office.city, agency.department.called]).toEqual(['Thomas Ashgrove', 'Halberd Talent', 'New York', 'Legit']);
     expect(agency.department.fields).toEqual(['television', 'film', 'broadway', 'off-broadway', 'national-tour', 'regional']);
     expect(agency.policy.words).toBe('His office takes no submissions it hasn’t asked for.');
     expect(agency.policy.unsolicited).toBe('refused');
-    expect(agent.routes).toEqual(['showcase', 'referral']);
-    expect(agent.notice).toBe('Thomas Ashgrove and Halberd Talent are invented for the game. His office takes no submissions it hasn’t asked for: it sees your materials through the School’s follow-up after the showcase, or a referral from someone you’ve worked with. He never gets in touch first.');
+    // An introduction at a festival too, from 2026-10-25 (brief 27).
+    expect(agent.routes).toEqual(['showcase', 'referral', 'festival']);
+    expect(agent.notice).toBe('Thomas Ashgrove and Halberd Talent are invented for the game. His office takes no submissions it hasn’t asked for: it sees your materials through the School’s follow-up after the showcase, a referral from someone you’ve worked with or an introduction at a festival where your film screens. He never gets in touch first.');
     expect(agent.roster!.basis).toBe('assumption');
     // Nothing private: no contact detail of any kind in the agent's or the agency's data.
     const text = JSON.stringify([AGENTS, AGENCIES]);

@@ -94,6 +94,7 @@ import { EQUITY_JOINED, PAY_KIND, SAG_QUALIFIES, dropPaydays, eligibilityRead, n
 import { TRIP, US_RULES, abroadRead, awayOn, bookTrip, extendTrip, needsTrip, planTrip, registerWorkTrips, tripOf, tripSpans, whereAt, whereWords, windowOf as tripWindow } from './worktrip';
 import { weatherOn, type DayWeather } from './weather';
 import { AGENT_TIMES, MEETING_KIND, TRAVEL_MINUTES } from './proagent';
+import { coveredUnder, outsideWords, submitsFor } from './representation';
 import { companiesAs, productionById } from '../content/catalog';
 import { episodeDays, episodesFrom, seasonYearAt, seriesById } from '../content/series';
 import { clauseOf, contractFor, entitle, overtimeOf, paysOvertime, OPTION_RAISE } from './contracts';
@@ -668,7 +669,9 @@ export function postingTimes(from: Instant, to: Instant): Instant[] {
  * its office casts through agents only and nobody represents them.
  */
 export function reachOf(t: ProjectTemplate, agreement: Agreement | undefined): 'agent' | 'open' | undefined {
-  if (agreement && t.access.agent && inScope(agreement.agentId, t)) return 'agent';
+  // What the agreement covers, by its own terms (from 2026-10-25, brief 27, `submitsFor`): until then the department's
+  // fields alone, so an agent put the actor up for work abroad its agreement left out.
+  if (agreement && t.access.agent && submitsFor(agreement, t)) return 'agent';
   return t.access.open ? 'open' : undefined;
 }
 
@@ -1740,7 +1743,13 @@ export const askedAmount = (amount: Money): Money => Math.round((amount * (1 + N
 export function askMoreRefusal(sim: Simulation, person: Person, o: Opportunity | undefined): string | undefined {
   if (!o || o.status !== 'offered' || !o.offer) return 'There’s no offer standing.';
   if (o.offer.asked) return o.offer.asked.answer ? `${agentFor(o)?.name ?? 'Your agent'} asked once already, on ${formatDate(o.offer.asked.at, NY)}.` : `${agentFor(o)?.name ?? 'Your agent'} has asked; the answer comes on ${formatWeekdayDate(o.offer.asked.answerAt, NY)} at ${formatTime(o.offer.asked.answerAt, NY)}.`;
-  if (!activeAgreement(person, sim.now)) return 'An agent asks for more on your behalf, and none represents you, so the offer is as it stands.';
+  const agreement = activeAgreement(person, sim.now);
+  if (!agreement) return 'An agent asks for more on your behalf, and none represents you, so the offer is as it stands.';
+  // Work the agreement doesn't cover is the actor's own (from 2026-10-25, brief 27, `coveredUnder`).
+  if (!o.agreementId && !coveredUnder(agreement, projectOf(o))) {
+    const agent = agentById(agreement.agentId);
+    return `${agent?.name ?? 'Your agent'} doesn’t negotiate this one: ${outsideWords(agreement, projectOf(o), agent ? agencyOf(agent).name : 'your agency')}, so the offer is as it stands.`;
+  }
   if (o.offer.amount === undefined) return 'The pay is deferred, so there’s no figure to ask more of.';
   return undefined;
 }
@@ -1755,7 +1764,9 @@ function makeOffer(sim: Simulation, person: Person, o: Opportunity): void {
   // He handles the offer where an agreement's in force, the actor's own submission too: covered work is his (the
   // agreement's Exclusive and What The Agent Does, `AGREEMENT_TERMS`).
   const agreement = activeAgreement(person, sim.now);
-  if (agreement && !o.agreementId) { o.agentId = agreement.agentId; o.agreementId = agreement.id; }
+  // Only work the agreement covers (from 2026-10-25, brief 27, `coveredUnder`): until then every offer while represented,
+  // so the agent negotiated scale plus ten on a dub its agreement left out and took no commission on it.
+  if (agreement && !o.agreementId && coveredUnder(agreement, t)) { o.agentId = agreement.agentId; o.agreementId = agreement.id; }
   // Represented, a SAG-AFTRA offer is scale plus 10%, so his commission comes out of the ten (`negotiatedAmount`,
   // `systems/propay.ts`; wired at the merge, 2026-10-21).
   if (o.offer.amount !== undefined) o.offer.amount = negotiatedAmount(o.offer.amount, t.union, o.agreementId !== undefined);

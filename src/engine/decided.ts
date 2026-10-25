@@ -45,6 +45,7 @@ import { therapyLifts } from './systems/therapy';
 import { priorityOf } from './systems/classmates';
 import { AGENTS } from './content/agents';
 import { GATE, LEVELS, chancesFor, drawOf, offerOutcome, replyOutcome, rosterFor } from './systems/proagent';
+import { ASKS, termsChance, termsDraw } from './systems/representation';
 import { DIRECT, HOLD, NEGOTIATE, castingDraw, postingsAt, releaseFate, slateReach } from './systems/projobs';
 import { productionsOf, seriesOfYear, slatePartsAt } from './systems/slate';
 import { PROJECTS } from './content/careerwork';
@@ -605,6 +606,26 @@ defineDecider<{ sim: Simulation; year: number }, string>({
   },
   sample: (seed) => ({ sim: atYale(seed), year: 2026 + (seed % 6) }),
   decide: ({ sim, year }) => JSON.stringify(rosterFor(sim, AGENTS[0]!, year)),
+});
+
+defineDecider<{ sim: Simulation; ask: number; atBar: number; agreement: number }, string>({
+  id: 'pro.agent_terms',
+  decides: 'An agent’s office’s answer when the actor asks once for different terms on the agreement it offered (TERMS): agreed or kept as offered, its chance by what was asked and by how many of the factors the office weighs are at the bar or beyond.',
+  drawnIn: 'src/engine/systems/representation.ts',
+  reads: {
+    // What was asked: a shorter term, voice-over added or work abroad added, each with its own chance.
+    ask: (o, t) => ({ ...o, ask: Math.round(t * 2) }),
+    // How many of the seven factors are at the bar or beyond: a keener office, a likelier yes.
+    atBar: (o, t) => ({ ...o, atBar: Math.round(t * 7) }),
+    // Which agreement: each draws its own.
+    agreement: (o, t) => ({ ...o, agreement: 1 + Math.round(t * 40) }),
+    world: (o, t) => ({ ...o, sim: atYale(Math.round(t * 20)) }),
+  },
+  sample: (seed) => ({ sim: atYale(seed), ask: seed % 3, atBar: 3 + (seed % 5), agreement: 1 + seed }),
+  decide: ({ sim, ask, atBar, agreement }) => {
+    const chance = termsChance(ASKS[ask]!, atBar, GATE);
+    return Array.from({ length: 30 }, (_, n) => (termsDraw(sim, sim.player.id, AGENTS[0]!.id, `agreement-${agreement + n}`) < chance ? '1' : '0')).join('');
+  },
 });
 
 // ---------------------------------------------------------------------------

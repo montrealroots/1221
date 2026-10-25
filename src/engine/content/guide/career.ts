@@ -20,6 +20,10 @@
  * and booked work, and work while at the School. Their figures are the work loop's own (`systems/projobs.ts`): a
  * posting's week, the trip and the times, the School's fourteen days, ten working days, two class days and the dean's
  * week, each the game's estimate, said so; the Bulletin's sentences are its own (yale.md §4, B27 p.148).
+ * From 2026-10-25 (the owner's brief 27, Part 6 and loop 8) one more, Asking For Different Terms
+ * (`systems/representation.ts`): the ask's labels, the shorter term, the answer's days and the abroad the game has are
+ * the module's own (`ASK_LABEL`, `TERMS`), each the game's, said so; and the agent's entry names the voice-over agent and
+ * the festival among the ways in, from `AGENTS` and the routes' own words (`routesWords`).
  */
 
 import { CHAPTER_FOR } from '../tutorial';
@@ -27,7 +31,8 @@ import { SKILL_WORDS } from '../school';
 import { formatMoney } from '../../core/money';
 import { countWords } from '../../core/text';
 import { DEMO, HEADSHOTS, NAME_MOST, REEL, RESUME, SESSION_HOURS, SKILL_LISTED_AT, SPECIAL_SKILLS, clockWords } from '../../systems/pro';
-import { AGENT_TIMES, COOLDOWN_WORDS, GATE, REFERRAL_BAND, TEN, TIME_WORDS, TRAVEL_MINUTES, tripWords } from '../../systems/proagent';
+import { AGENT_TIMES, COOLDOWN_WORDS, GATE, REFERRAL_BAND, TEN, TIME_WORDS, TRAVEL_MINUTES, routesWords, tripWords } from '../../systems/proagent';
+import { ASK_LABEL, TERMS, termWords, voiceDepartment } from '../../systems/representation';
 import { YALE_DRAMA } from '../school';
 import { AGENTS, agencyOf } from '../agents';
 import { AGREEMENT, AUDITION_TOWNS, UNIONS } from '../careerwork';
@@ -77,6 +82,8 @@ const AGENCY = agencyOf(AGENT);
 /** The real agents beside the game's own (from 2026-10-24, brief 25's Module 3), and their office. */
 const REAL = AGENTS.filter((a) => a.real);
 const REAL_OFFICE = agencyOf(REAL[0]!);
+/** The voice-over agent (from 2026-10-25, brief 27): the game's own, in its agency's voice-over department. */
+const VOICE_AGENT = AGENTS.find((a) => voiceDepartment(a))!;
 const REP_CHAPTER = CHAPTER_FOR['pro.agent_notice']!.title;
 const weeks = (days: number): string => `${word(days / 7)} ${days === 7 ? 'week' : 'weeks'}`;
 const BAR = BAND_LABEL[REFERRAL_BAND];
@@ -371,13 +378,13 @@ export const CAREER_GUIDE: readonly GuideEntry[] = [
     questions: ['How do I get an agent?', 'Why was my submission refused?', 'How do I get a referral?'],
     where: on('representation', 'Career, Representation'),
     available: `From the guide’s chapter “${REP_CHAPTER}”.`,
-    short: `The Representation tab holds the agents in the game. ${AGENT.name}, an agent in ${AGENCY.name}’s ${AGENCY.office.city} ${AGENCY.department.called.toLowerCase()} department, is invented for the game, as his agency is. ${andList(REAL.map((a) => a.name))} are real theatrical agents at ${REAL_OFFICE.name}’s ${REAL_OFFICE.office.city} office, as its own page names them, and whatever happens between you and them is the game’s invention. Each agent’s panel says which first, before anything else. Agents lists them all, and Show opens one.\n\n${AGENCY.policy.words} It takes your materials only through the School’s follow-up after the showcase, or a referral from someone you’ve worked with. ${REAL_OFFICE.name}’s office takes no unsolicited submissions, so there a referral is the one way in. No agent gets in touch first.`,
+    short: `The Representation tab holds the agents in the game. ${AGENT.name}, an agent in ${AGENCY.name}’s ${AGENCY.office.city} ${AGENCY.department.called.toLowerCase()} department, is invented for the game, as his agency is. ${VOICE_AGENT.name}, in its voice-over department, is invented too: for animation, dubbing and narration, her office hears your voice demo where his sees your reel. ${andList(REAL.map((a) => a.name))} are real theatrical agents at ${REAL_OFFICE.name}’s ${REAL_OFFICE.office.city} office, as its own page names them, and whatever happens between you and them is the game’s invention. Each agent’s panel says which first, before anything else. Agents lists them all, and Show opens one.\n\n${AGENCY.policy.words} It takes your materials only through ${routesWords(AGENT)}. ${REAL_OFFICE.name}’s office takes no unsolicited submissions, so there a referral is the one way in, as it is for ${VOICE_AGENT.name}. No agent gets in touch first.`,
     steps: [
       'Open Career, then the Representation tab.',
       'Under Agents, press Show beside the agent you want.',
       'Read the notice at the top of the agent’s panel, then press I’ve Read This.',
       'Press Check Your Materials. If something’s missing, the line under it says what, and where to make it.',
-      `Under How To Reach, press Ask For A Referral beside a finished job. For ${AGENT.name}, the School’s follow-up after the showcase is a way in too.`,
+      `Under How To Reach, press Ask For A Referral beside a finished job. For ${AGENT.name}, the School’s follow-up after the showcase and an introduction at a festival where your film screens are ways in too.`,
       'Press Send Your Materials.',
     ],
     needs: [
@@ -388,7 +395,7 @@ export const CAREER_GUIDE: readonly GuideEntry[] = [
     ],
     costs: [{ label: 'Time', value: 'None' }, { label: 'Money', value: 'None' }],
     reads: [
-      { label: 'Your Materials', value: 'Your headshots, résumé and reel, checked as a submission would be' },
+      { label: 'Your Materials', value: 'Your headshots, résumé and reel, or your voice demo for a voice-over department, checked as a submission would be' },
       { label: 'A Referral', value: `A finished job’s work, judged ${BAR} or better`, estimate: true },
       { label: 'An Answer', value: `Usually within ${TIME_WORDS.reply}; no answer in ${TIME_WORDS.silence} counts as no`, estimate: true },
     ],
@@ -404,7 +411,7 @@ export const CAREER_GUIDE: readonly GuideEntry[] = [
       `The Agencies panel says what each agency brief 25 names says of itself on its own pages: how an actor reaches it, the agents it names, and what the game does with it.`,
     ],
     unavailable: [
-      `${AGENCY.policy.words} It sees your materials only through the School’s follow-up after the showcase, or a referral from someone you’ve worked with.`,
+      `${AGENCY.policy.words} It sees your materials only through ${routesWords(AGENT)}.`,
       `${REAL_OFFICE.policy.words} It sees your materials only through a referral from someone you’ve worked with.`,
       'Check your materials first: a referral passes them on.',
       `A referral needs work judged ${BAR} or better in the game.`,
@@ -506,7 +513,7 @@ export const CAREER_GUIDE: readonly GuideEntry[] = [
     questions: ['What does the agreement say?', 'How much commission does an agent take?', 'How do I end the agreement?', 'Can I have two agents?'],
     where: on('representation', 'Career, Representation, The Agreement'),
     available: `From the guide’s chapter “${REP_CHAPTER}”.`,
-    short: `When an agent offers to represent you, The Agreement shows every term before you answer, each marked A Published Rule or The Game’s Own Term. It runs a year from the day you sign it, and the offer stands ${word(AGREEMENT.offerStandsDays / 7)} weeks.\n\nSigning changes nothing at the School and gives no permission to work. It can end by agreement at any time, or under Equity’s or SAG-AFTRA’s rules, or when its year is up. You have one agent at a time: another agent’s agreement can’t start while one runs.`,
+    short: `When an agent offers to represent you, The Agreement shows every term before you answer, each marked A Published Rule or The Game’s Own Term. It runs a year from the day you sign it, or ${termWords(TERMS.shorterDays)} where you asked for a shorter term and the office agreed, and the offer stands ${word(AGREEMENT.offerStandsDays / 7)} weeks.\n\nSigning changes nothing at the School and gives no permission to work. It can end by agreement at any time, or under Equity’s or SAG-AFTRA’s rules, or when its year is up. You have one agent at a time: another agent’s agreement can’t start while one runs.`,
     steps: [
       'Read every term under The Agreement.',
       'Press Accept The Agreement, or Decline The Agreement.',
@@ -519,7 +526,7 @@ export const CAREER_GUIDE: readonly GuideEntry[] = [
     ],
     costs: [{ label: 'Time', value: 'None' }, { label: 'Money', value: `Commission on covered work: ${Math.round(AGREEMENT.commission * 100)}% of gross pay, or ${Math.round(AGREEMENT.equityLowTier.rate * 100)}% on an Equity contract paying ${usd(AGREEMENT.equityLowTier.weeklyAtOrBelow)} a week or less` }],
     reads: [
-      { label: 'How Long', value: 'One year from signing', estimate: true },
+      { label: 'How Long', value: `One year from signing, or ${termWords(TERMS.shorterDays)} where the office agreed to a shorter term`, estimate: true },
       { label: 'Ending It', value: `Equity’s ${AGREEMENT.noOfferDays} days and SAG-AFTRA’s ${AGREEMENT.sag.waitDays} and ${AGREEMENT.sag.windowDays} days, from their published rules` },
     ],
     now: ['Accepting makes the agent yours from today. Declining closes the approach.'],
@@ -528,7 +535,7 @@ export const CAREER_GUIDE: readonly GuideEntry[] = [
     unavailable: ['He hasn’t offered you an agreement.', 'You’re not represented by him.', `Equity’s rule lets you end it once ${AGREEMENT.noOfferDays} days go by with no real offer of covered work through him.`, 'In the game you have one agent at a time, so this agreement can’t start while that one runs.'],
     mistakes: ['Ending it while a contract made in the term is still to be paid, and expecting no commission. It stays owed.'],
     next: ['Keep your availability and your materials current: covered work comes through the agent.'],
-    related: ['career.agent', 'career.reasons', 'documents.work'],
+    related: ['career.agent', 'career.reasons', 'career.agreement-terms', 'documents.work'],
     connections: [
       { to: 'documents.work', kind: 'optional', why: 'Signing with an agent gives no permission to work: Papers, under Permission To Work, still says what you may do.' },
       { to: 'career.agent', kind: 'history', why: 'Accepting, declining and the agreement’s end each go in the agent’s History panel.' },
@@ -537,6 +544,58 @@ export const CAREER_GUIDE: readonly GuideEntry[] = [
       setup: 'An offer standing, read in full.',
       steps: ['Press Accept The Agreement.'],
       result: 'Where You Stand reads Represented, and The Agreement gives the day it ends and the three ways to end it sooner.',
+    },
+  },
+  {
+    id: 'career.agreement-terms',
+    title: 'Asking For Different Terms',
+    goal: 'career',
+    covers: ['pro.ask_terms'],
+    synonyms: ['negotiate the agreement', 'shorter term', 'add voice-over', 'work abroad', 'agreement terms', 'scope and territory'],
+    questions: ['Can I negotiate my agency agreement?', 'Can my agent cover voice-over work?', 'Can I sign for less than a year?'],
+    where: on('representation', 'Career, Representation, Asking For Different Terms'),
+    available: `From the guide’s chapter “${REP_CHAPTER}”, while an agreement is offered.`,
+    short: `While an agent’s agreement is offered, you can ask the office once to change it: ${ASK_LABEL.shorter} asks for ${termWords(TERMS.shorterDays)} instead of a year, ${ASK_LABEL.voice} asks for voice-over work to be covered too, where the agency has a voice-over department, and ${ASK_LABEL.abroad} asks for work in the UK and Australia, where the game has work abroad.\n\nThe office answers ${word(TERMS.answerDays)} days later. It agrees or keeps the terms as offered, a chance the game gives before you ask, higher the more of the factors under Why It Went This Way are at the bar. The commission is the unions’ and New York’s rule, and no ask changes it.`,
+    steps: [
+      'Read every term under The Agreement.',
+      `Under Asking For Different Terms, read each ask and the chance the game gives it.`,
+      `Press ${ASK_LABEL.shorter}, ${ASK_LABEL.voice} or ${ASK_LABEL.abroad}.`,
+      'When the answer comes, read the terms again, then accept or decline the agreement.',
+    ],
+    needs: ['An agreement offered and not yet answered.', 'No ask made on it before.', `${word(TERMS.answerDays).charAt(0).toUpperCase()}${word(TERMS.answerDays).slice(1)} days left before the offer lapses, for the answer.`],
+    costs: [{ label: 'Time', value: 'None' }, { label: 'Money', value: 'None' }],
+    reads: [
+      { label: 'The Chance', value: 'How many of the factors the office weighs are at the bar or beyond', estimate: true },
+      { label: 'The Answer', value: `${word(TERMS.answerDays).charAt(0).toUpperCase()}${word(TERMS.answerDays).slice(1)} days on`, estimate: true },
+    ],
+    now: ['The ask goes to the office, and the agreement can’t be accepted until it answers.'],
+    later: [
+      'Agreed, The Agreement’s terms change, and Asking For Different Terms keeps the terms as first offered.',
+      `A shorter term ends the agreement ${termWords(TERMS.shorterDays)} after you sign it.`,
+      'Voice-over added, the agency’s voice-over department submits you for voice parts, and the commission is taken on them.',
+      'Work abroad added, your agent submits you for work in the UK and Australia, and the commission is taken on it.',
+    ],
+    interpret: [
+      'What the agreement covers decides which parts your agent puts you up for and which offers it handles, and which pay carries commission. Work it doesn’t cover is yours to submit for yourself, with no commission.',
+      'A shorter term lets you go sooner, and leaves you to approach an agent again sooner.',
+    ],
+    unavailable: [
+      'You asked once already. In the game you ask once.',
+      'The game knows of no voice-over department at Stewart Talent’s New York office.',
+      'The game has no voice work abroad.',
+      'There’s no time left to ask before the offer lapses.',
+    ],
+    mistakes: ['Asking and expecting to accept at once. The agreement can be accepted once the office has answered.'],
+    next: ['Accept the agreement or decline it before the offer lapses.'],
+    related: ['career.agreement', 'career.reasons', 'career.commission', 'career.opportunities'],
+    connections: [
+      { to: 'career.agreement', kind: 'scheduled', why: 'The office answers the ask two days on, and an agreed ask changes the terms The Agreement shows.' },
+      { to: 'career.commission', kind: 'evaluation', why: 'Commission is taken only on what the agreement covers, so voice-over or work abroad added carries it.' },
+    ],
+    example: {
+      setup: `${AGENT.name} has offered you an agreement, and five of the factors are at the bar.`,
+      steps: [`Press ${ASK_LABEL.voice}.`, `Move the clock on ${word(TERMS.answerDays)} days.`],
+      result: 'The office agrees, What It Covers adds voice-over work, and a voice part can now come to you through the agency.',
     },
   },
   {
@@ -605,7 +664,7 @@ export const CAREER_GUIDE: readonly GuideEntry[] = [
     questions: ['How much commission does my agency take?', 'Why was no commission taken?', 'Do I owe commission after my agreement ends?', 'What is scale plus ten?'],
     where: on('work', 'Career, Work, each payment’s Commission'),
     available: `From the guide’s chapter “${CHAPTER}”. Commission is owed only on work you contracted while represented.`,
-    short: `Your agency takes commission only on covered work, stage, film and television in the US, that you contracted while your agreement was in force. It’s taken when your pay passes through its client trust account, and shown on its own line on the Work tab and in the deposit’s line in Money.\n\nThe rate is the unions’ and the law’s: ${COMMISSION} at most, ${FIVE} on an Equity contract paying ${LOW} a week or less, and on SAG-AFTRA work only what you’re paid over scale.`,
+    short: `Your agency takes commission only on covered work, what your agreement says it covers, that you contracted while it was in force: as first offered, stage, film and television in the US, or voice-over for a voice-over department. It’s taken when your pay passes through its client trust account, and shown on its own line on the Work tab and in the deposit’s line in Money.\n\nThe rate is the unions’ and the law’s: ${COMMISSION} at most, ${FIVE} on an Equity contract paying ${LOW} a week or less, and on SAG-AFTRA work only what you’re paid over scale.`,
     steps: [
       'Open Career, then the Work tab.',
       'Under each payment, read Commission: for one to come, what’s expected and why; for one received, what was taken.',

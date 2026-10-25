@@ -762,7 +762,7 @@ describe('14. Representation', () => {
     const checked = sim.execute({ kind: 'pro.agent_check', payload: { agentId: agent } });
     expect(checked.ok).toBe(false);
     expect(checked.error).toMatch(/headshots|résumé/i);
-    expect(sim.execute({ kind: 'pro.send_materials', payload: { agentId: agent } }).error).toContain('It sees your materials only through the School’s follow-up after the showcase, or a referral from someone you’ve worked with.');
+    expect(sim.execute({ kind: 'pro.send_materials', payload: { agentId: agent } }).error).toContain('It sees your materials only through the School’s follow-up after the showcase, a referral from someone you’ve worked with or an introduction at a festival where your film screens.');
   });
 });
 

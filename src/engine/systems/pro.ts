@@ -45,6 +45,7 @@
 import type { SimRun } from './charts';
 import type { AwardEntry, FestivalEntry } from './awards';
 import type { GuildEntry } from './actorawards';
+import type { AgreementAsk, AgreementDeal } from './representation';
 import type { Simulation } from '../core/simulation';
 import { CommandError } from '../core/simulation';
 import type { Person } from '../domain/model';
@@ -95,7 +96,10 @@ export type ProEventKind =
   | 'ask-lapsed'
   // A trip for work abroad, step by step (from 2026-10-23, the owner's brief 25, `systems/worktrip.ts`), and its work
   // visa applied for and decided.
-  | 'departed' | 'arrived' | 'checked-in' | 'checked-out' | 'home' | 'missed-flight' | 'visa-applied' | 'visa-granted';
+  | 'departed' | 'arrived' | 'checked-in' | 'checked-out' | 'home' | 'missed-flight' | 'visa-applied' | 'visa-granted'
+  // The actor's ask for different terms on an offered agreement, and the office's answer (from 2026-10-25, the owner's
+  // brief 27, loop 8, `systems/representation.ts`).
+  | 'terms-asked' | 'terms-agreed' | 'terms-kept';
 
 /** One event in a history: a stable id, when, what, its words as the player reads them, and what it's about. */
 export interface ProEvent {
@@ -157,8 +161,11 @@ export interface ProCredit {
 
 /** From 2026-10-24 (brief 27, Part 7) a voice demo too: recordings of the voice alone, for voice casting, which a reel can't hold. */
 export type MaterialKind = 'headshot' | 'resume' | 'reel' | 'demo';
-/** What an agent's office can ask for: never a voice demo, since no agent's department in the game covers voice work. */
-export type AgentMaterial = Exclude<MaterialKind, 'demo'>;
+/**
+ * What an agent's office can ask for. Until 2026-10-25 never a voice demo, since no agent's department in the game covered
+ * voice work; from then a voice-over department's office asks for one (brief 27, `systems/proagent.ts`'s `requestable`).
+ */
+export type AgentMaterial = MaterialKind;
 
 /** One recorded piece on a reel, copied in when it's cut, so it reads the same after its source has gone from the record. */
 export interface MaterialPiece {
@@ -224,6 +231,11 @@ export interface AgentRelation extends HasHistory {
    */
   referrals?: { engagementId: ProId; by: string; job: string; at: Instant; band?: Band }[];
   /**
+   * The introductions at a festival where the actor's film screened (`introduceAtFestival`, `systems/representation.ts`,
+   * from 2026-10-25, brief 27), one for each festival entry: the film it showed is work the office has to go on.
+   */
+  festivals?: { entryId: ProId; creditId: ProId; festival: string; at: Instant }[];
+  /**
    * The reasons for the last decision, as Why It Went This Way shows them (`systems/proagent.ts`, from 2026-10-21): copied
    * in when it's made, so they read as they were after the record has moved on.
    */
@@ -246,6 +258,15 @@ export interface Agreement {
   endsAt?: Instant;
   endedAt?: Instant;
   endedHow?: EndedHow;
+  /**
+   * What it covers, where and for how long, each version kept, the first as offered and a second where the office agreed
+   * to the actor's ask (from 2026-10-25, the owner's brief 27, Part 6 and loop 8; `systems/representation.ts`). An older
+   * save's agreement has none and reads as the words it was offered with (`dealOf`): its department's work in the US for
+   * a year.
+   */
+  deal?: AgreementDeal;
+  /** The actor's one ask for different terms while it was offered, and the office's answer (from 2026-10-25). */
+  ask?: AgreementAsk;
 }
 
 export type OpportunityStatus =
