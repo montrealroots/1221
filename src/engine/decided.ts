@@ -941,7 +941,7 @@ defineDecider<{ sim: Simulation; first: number }, string>({
 
 defineDecider<{ sim: Simulation; first: number; after: number }, string>({
   id: 'pro.release',
-  decides: 'A slate production’s way out after the wrap (RELEASE_FATE): on time, held back months, sent to streaming instead of cinemas, or shelved, by the way its format comes out.',
+  decides: 'A slate production’s way out after the wrap (RELEASE_FATE): on time, held back months, sent to streaming instead of cinemas, or shelved, and from 2026-10-25 a limited release, another distributor’s later date or a film abroad first (routeOf), by the way its format comes out.',
   drawnIn: 'src/engine/systems/projobs.ts',
   reads: {
     first: (o, t) => ({ ...o, first: Math.round(t * 100) }),
