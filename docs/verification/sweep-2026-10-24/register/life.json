@@ -539,13 +539,40 @@
   ]
  },
  "notice.systems/contracts#air": {
-  "status": "Not Tested"
+  "status": "Verified",
+  "by": [
+   "inspection",
+   "automated"
+  ],
+  "on": "3a759d49",
+  "evidence": [
+   "tests/career-contracts.test.ts",
+   "src/engine/systems/contracts.ts:365 air: a rerun's notice and its residual promised; contracts.ts:461 on the clock"
+  ]
  },
  "notice.systems/contracts#payPerDiem": {
-  "status": "Not Tested"
+  "status": "Verified",
+  "by": [
+   "inspection",
+   "automated"
+  ],
+  "on": "3a759d49",
+  "evidence": [
+   "tests/career-contracts.test.ts",
+   "src/engine/systems/contracts.ts:429 payPerDiem: the per diem paid once home, said; called from worktrip.ts:693"
+  ]
  },
  "notice.systems/contracts#settleResidual": {
-  "status": "Not Tested"
+  "status": "Verified",
+  "by": [
+   "inspection",
+   "automated"
+  ],
+  "on": "3a759d49",
+  "evidence": [
+   "tests/career-contracts.test.ts",
+   "src/engine/systems/contracts.ts:396 settleResidual: the residual paid and said; contracts.ts:465 on the clock"
+  ]
  },
  "notice.systems/injury#mayHurt": {
   "status": "Verified",

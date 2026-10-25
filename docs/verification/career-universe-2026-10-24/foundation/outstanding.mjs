@@ -42,10 +42,12 @@ function classify(r) {
   if (m) return { class: 'Proof: a measurement behind the code', lacks: `Measured on ${m.commit} (${m.watch === 'judge' ? 'the judge\'s lanes' : m.watch === 'engine' ? 'brief 22\'s long runs, which read all of src/engine' : 'the built app and the gate'}); brief 25's merge and brief 27's work changed what it reads.`, action: 'Measured again on brief 27\'s finished commit (milestone F), with each figure beside the last; a figure that moves is read against its criterion before the row is called verified.' };
   if (TAX.has(r.id)) return { class: 'Proof in a played life, behind a product decision', lacks: 'Behavior exists and is tested on fixtures; no student\'s life reaches it under Connecticut\'s rules (the row\'s Open note).', action: 'Waits on coverage09.3-unresolved. Not deferred and not counted verified.' };
   if (r.source === 'audit' || r.source.includes('banking-checklist')) return { class: 'Proof in a played life, behind a product decision', lacks: 'Behavior exists and is tested on lives abroad (fixtures); every New Haven bank refuses it or has no such product.', action: 'Waits on KS-bank-rows-scope. Not deferred and not counted verified.' };
-  if (r.group === 'Commands Traced Outside The Audit') return { class: 'Proof: no audit reading yet', lacks: 'Brief 25\'s command, traced in connected-journey/TRACE.md and tested, but read by no audit row, so the matrix can\'t call it verified.', action: 'Read by an audit row once brief 27\'s career milestones (K2 to K7) settle the command, so the reading isn\'t made stale by them.' };
+  if (r.group === 'Commands Traced Outside The Audit') return { class: 'Proof: no audit reading yet', lacks: `${B25.has(r.id) ? 'Brief 25' : 'Brief 27'}'s command, traced in connected-journey/TRACE.md and tested, but read by no audit row, so the matrix can\'t call it verified.`, action: 'Waits on an audit reading by a reader who wrote neither the command nor its tests, as the audit\'s rows require (`independent`); one agent builds brief 27 at the owner\'s word, so its builder\'s own reading can\'t be that, and the row stays Implemented, Verification Incomplete until such a reader reads it.' };
   return { class: 'Unclassified', lacks: 'Read the row', action: 'Read the row' };
 }
 
+// Brief 25's commands an audit hasn't read; the rest in that class are brief 27's (K3's voice demo, K4's asks, K7's awards and ceremony).
+const B25 = new Set(['pro.apply_work_visa', 'pro.ask_pay', 'pro.award_enter', 'pro.watch_ceremony', 'pro.work_choice']);
 const rows = matrix.rows.filter((r) => r.status === IVI || r.status === DR).map((r) => ({
   id: r.id, group: r.group, status: r.status,
   // The goal in the house's spelling, as `tools/spelling.mjs` holds it: a British double l in a row's "canceled" goes.
@@ -53,6 +55,7 @@ const rows = matrix.rows.filter((r) => r.status === IVI || r.status === DR).map(
   implementation: String(r.implementation ?? 'Not recorded').replace(/\s+/g, ' ').slice(0, 160),
   ...classify(r),
 }));
+const B27 = rows.filter((r) => r.class === 'Proof: no audit reading yet' && !B25.has(r.id)).map((r) => r.id);
 const byClass = {};
 for (const r of rows) byClass[r.class] = (byClass[r.class] ?? 0) + 1;
 writeFileSync(join(HERE, 'outstanding.json'), JSON.stringify({ written: 'by outstanding.mjs, from completion-matrix.json and criteria.json', completion: matrix.completion, byClass, rows }, null, 1) + '\n');
@@ -67,7 +70,7 @@ const out = [
   '| Class | Rows |', '|---|---|',
   ...Object.entries(byClass).map(([k, v]) => `| ${k} | ${v} |`), '',
   'Before brief 25\'s merge the matrix had 24 such rows (634 of 658): the 20 rows reached only on fixtures and the 4',
-  `decisions. Brief 25 added 5 commands no audit has read and brief 27 ${['none', 'one', 'two', 'three'][(byClass['Proof: no audit reading yet'] ?? 0) - 5] ?? (byClass['Proof: no audit reading yet'] ?? 0) - 5} more (its voice demo, \`pro.mix_demo\`), and their changes`,
+  `decisions. Brief 25 added 5 commands no audit has read and brief 27 ${B27.length} more (${B27.map((id) => `\`${id}\``).join(', ')}), and their changes`,
   `to \`src/engine\` left ${byClass['Proof: a measurement behind the code'] ?? 0} measured criteria behind the code; none of those is a defect found, and each is measured or read`,
   'again before it is called verified.', '',
   '| Row | Group | Status | Class | Requirement (the row\'s goal) | Implementation | What it lacks | What happens |',

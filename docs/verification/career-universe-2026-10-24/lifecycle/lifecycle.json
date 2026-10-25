@@ -1,0 +1,1010 @@
+{
+ "note": "Brief 27, loop 55: one row a loop; lifecycle.mjs joins the rest from the effects matrix.",
+ "loops": [
+  {
+   "loop": 1,
+   "title": "Creation And Starting History",
+   "features": [
+    "create.citizenshipId",
+    "create.homeRegionId",
+    "create.priorResidence",
+    "create.birthYear",
+    "create.background",
+    "create.genres",
+    "create.school",
+    "create.wealth",
+    "create.bankId",
+    "create.homeBankId"
+   ],
+   "decisions": "Who the actor is: name, birth, a citizenship asked apart from the birthplace, a home region and a previous residence, background, genres, wealth and banks.",
+   "states": "A new save: the history set once at creation, then read by the systems it feeds.",
+   "timed": "None until the clock starts, paused.",
+   "exits": "Back between the steps; nothing is written until the life begins.",
+   "status": "Implemented And Verified",
+   "tests": [
+    "tests/b27-creation-origins.test.ts"
+   ],
+   "docs": []
+  },
+  {
+   "loop": 2,
+   "title": "Outstanding Foundation Requirements",
+   "features": [],
+   "decisions": "None of the player’s: the rows are proof, decisions and measurements.",
+   "states": "Each row classified by what it lacks (OUTSTANDING.md).",
+   "timed": "The final runs measure the 85 again on the finished commit.",
+   "exits": "A row behind a decision waits on the owner.",
+   "status": "Implemented, Verification Incomplete",
+   "tests": [],
+   "docs": [
+    "docs/verification/career-universe-2026-10-24/foundation/OUTSTANDING.md"
+   ],
+   "why": "Area C’s 121 rows: 85 measured again in F, 20 behind a product decision, 4 decisions for the owner, 12 commands no audit has read."
+  },
+  {
+   "loop": 3,
+   "title": "Mobile Orientation And Navigation",
+   "features": [],
+   "decisions": "Holding the phone either way; every screen usable upright and turned.",
+   "states": "No gate: the rotate overlay is gone, the layout the same interface in portrait.",
+   "timed": "None.",
+   "exits": "Turning back restores the scroll and focus.",
+   "status": "Implemented And Verified",
+   "tests": [
+    "tests/b23-turn.test.ts"
+   ],
+   "docs": [
+    "docs/verification/career-universe-2026-10-24/walk"
+   ],
+   "entry": "Every screen, upright and turned (emulation, not a physical phone)."
+  },
+  {
+   "loop": 4,
+   "title": "Save, Resume, And Recovery",
+   "features": [],
+   "decisions": "Save, load, restore a backup.",
+   "states": "A save at schema 94, migrated forward from older ones; a cleared slot’s backup listed.",
+   "timed": "The autosave and the clock’s pending items, kept in the save.",
+   "exits": "Restore Backup; an older save brought forward.",
+   "status": "Implemented And Verified",
+   "tests": [
+    "tests/b27-backend.test.ts",
+    "tests/persistence.test.ts",
+    "tests/save-migration.test.ts",
+    "tests/migration-94.test.ts",
+    "tests/b26-persistence-repeats.test.ts",
+    "tests/b20-career-saveload.test.ts"
+   ],
+   "docs": [],
+   "entry": "Save Selection; the save’s way to the server (a fake platform, said as such)."
+  },
+  {
+   "loop": 5,
+   "title": "Career Readiness While Enrolled",
+   "features": [
+    "pro.set_name",
+    "pro.headshots",
+    "pro.update_resume",
+    "pro.cut_reel",
+    "pro.request_outside_work",
+    "pro.school_answer",
+    "school.choose_showcase",
+    "school.showcase"
+   ],
+   "decisions": "What to make for a portfolio, whether to ask the School to work in term, which pieces for the showcase.",
+   "states": "Materials made and versioned; a request pending, approved or refused; the showcase chosen and played.",
+   "timed": "The dean’s answer a week on; the showcase’s night and its follow-up.",
+   "exits": "Work taken in term without approval brings an academic warning; a refused request leaves the part to decline.",
+   "status": "Implemented And Verified",
+   "tests": [
+    "tests/pro-showcase.test.ts",
+    "tests/pro-core.test.ts"
+   ],
+   "docs": []
+  },
+  {
+   "loop": 6,
+   "title": "Graduation And Career Transition",
+   "features": [
+    "school.evaluation",
+    "school.commencement",
+    "pro.equity_joined",
+    "pro.join_sag"
+   ],
+   "decisions": "Whether to join SAG-AFTRA once eligible.",
+   "states": "Graduated at Commencement; Equity by the degree; SAG-AFTRA eligible, then a member.",
+   "timed": "The last evaluation, Commencement, the union dues each May and November.",
+   "exits": "Leaving without the degree takes the other way; dues owed are kept as owed.",
+   "status": "Implemented And Verified",
+   "tests": [
+    "tests/pro-work.test.ts",
+    "tests/journey-career.test.ts"
+   ],
+   "docs": []
+  },
+  {
+   "loop": 7,
+   "title": "Professional Materials",
+   "features": [
+    "pro.headshots",
+    "pro.update_resume",
+    "pro.cut_reel",
+    "pro.mix_demo",
+    "pro.set_name"
+   ],
+   "decisions": "What to make, from which recordings, and when to bring the résumé up to date.",
+   "states": "Each material a numbered version with where it came from; a résumé behind the record says so.",
+   "timed": "A headshot session in daylight hours; none other.",
+   "exits": "An older version kept; a submission names the versions it sent.",
+   "status": "Implemented And Verified",
+   "tests": [
+    "tests/b27-voice-demo.test.ts",
+    "tests/pro-core.test.ts"
+   ],
+   "docs": []
+  },
+  {
+   "loop": 8,
+   "title": "Approaching An Individual Agent",
+   "features": [
+    "pro.agent_notice",
+    "pro.agent_check",
+    "pro.ask_referral",
+    "pro.send_materials",
+    "pro.supply_material",
+    "pro.ask_to_move",
+    "pro.agent_reply",
+    "pro.agent_request_due",
+    "pro.agent_meeting",
+    "pro.agent_silence",
+    "pro.agent_decision",
+    "pro.agent_follow_up"
+   ],
+   "decisions": "Which agent, by which way in, what to send, and when to move a meeting.",
+   "states": "From the notice read to materials sent, waiting, asked for more, a meeting, deciding, and an offer, a pass or no answer.",
+   "timed": "The office’s answer, a request’s due date, the meeting, the silence after six weeks, a cooldown.",
+   "exits": "After a pass or no answer, a cooldown and only something new reopens it.",
+   "status": "Implemented And Verified",
+   "tests": [
+    "tests/journey-agent.test.ts",
+    "tests/pro-agent.test.ts"
+   ],
+   "docs": []
+  },
+  {
+   "loop": 9,
+   "title": "Active Representation And Ending Representation",
+   "features": [
+    "pro.accept_agreement",
+    "pro.decline_agreement",
+    "pro.end_agreement",
+    "pro.agent_offer_lapse",
+    "pro.agent_term_end",
+    "pro.agent_ask_lapse"
+   ],
+   "decisions": "Accept or decline the agreement; end it by agreement or by its unions’ rules.",
+   "states": "Offered, accepted, declined, lapsed, ended by term, agreement, no offer or too little work.",
+   "timed": "The offer’s lapse; the term’s end; Equity’s ninety days, SAG-AFTRA’s 151 and 91.",
+   "exits": "Commission still owed on work contracted while represented; one agent at a time.",
+   "status": "Implemented And Verified",
+   "tests": [
+    "tests/career-agents.test.ts"
+   ],
+   "docs": []
+  },
+  {
+   "loop": 10,
+   "title": "Project Development And Opportunity Supply",
+   "features": [
+    "pro.postings",
+    "pro.series"
+   ],
+   "decisions": "None: the world makes the work.",
+   "states": "Each week’s slate by market and kind; a production made, pushed back or dropped; series seasons ordered or decided.",
+   "timed": "Monday’s postings; a production’s fate known weeks before its first day.",
+   "exits": "A pushed part posted again for its new dates.",
+   "status": "Implemented And Verified",
+   "tests": [
+    "tests/b27-slate.test.ts",
+    "tests/b27-slate-screens.test.ts"
+   ],
+   "docs": []
+  },
+  {
+   "loop": 11,
+   "title": "Discovering And Evaluating A Role",
+   "features": [
+    "pro.postings",
+    "ui.career-reference"
+   ],
+   "decisions": "Whether a role suits: its project, part, what it asks, dates, place and pay, and its page in Productions And People.",
+   "states": "Posted, open until its date.",
+   "timed": "The submission window’s close.",
+   "exits": "A role let go lapses unsaid.",
+   "status": "Implemented And Verified",
+   "tests": [
+    "tests/pro-opportunities-screen.test.ts",
+    "tests/b27-reference.test.ts"
+   ],
+   "docs": []
+  },
+  {
+   "loop": 12,
+   "title": "Submission",
+   "features": [
+    "pro.submit",
+    "pro.reply"
+   ],
+   "decisions": "Submit yourself, with what the casting asks for.",
+   "states": "Open, submitted, then an audition or a pass.",
+   "timed": "Casting’s answer some days on.",
+   "exits": "A submission refused names what’s missing and where to make it.",
+   "status": "Implemented And Verified",
+   "tests": [
+    "tests/journey-career.test.ts"
+   ],
+   "docs": []
+  },
+  {
+   "loop": 13,
+   "title": "Self-Tape",
+   "features": [
+    "pro.tape_audition",
+    "pro.tape_due",
+    "pro.prepare"
+   ],
+   "decisions": "Prepare the sides by the steps, and tape it before it’s due.",
+   "states": "An audition set, prepared, taped or missed.",
+   "timed": "The tape’s due evening.",
+   "exits": "A tape missed closes the round, said.",
+   "status": "Implemented And Verified",
+   "tests": [
+    "tests/journey-career.test.ts"
+   ],
+   "docs": []
+  },
+  {
+   "loop": 14,
+   "title": "In-Person Audition",
+   "features": [
+    "pro.audition",
+    "pro.move_audition"
+   ],
+   "decisions": "Go when the clock stops; ask once for another time a day ahead.",
+   "states": "Set, moved once, done or missed.",
+   "timed": "The audition’s hour, with the trip there.",
+   "exits": "A clash moved once to a clear time.",
+   "status": "Implemented And Verified",
+   "tests": [
+    "tests/journey-career.test.ts"
+   ],
+   "docs": []
+  },
+  {
+   "loop": 15,
+   "title": "Callback, Chemistry Read, Or Screen Test",
+   "features": [
+    "pro.audition",
+    "pro.casting_decision"
+   ],
+   "decisions": "Go to each round.",
+   "states": "Audition, callback, chemistry read and screen test, each judged; a hold on the dates from the cut.",
+   "timed": "Each round’s hour; casting’s decision after the last.",
+   "exits": "A round slept through ends it.",
+   "status": "Implemented And Verified",
+   "tests": [
+    "tests/b27-rounds.test.ts"
+   ],
+   "docs": []
+  },
+  {
+   "loop": 16,
+   "title": "Direct Offer",
+   "features": [
+    "pro.accept_offer",
+    "pro.decline_offer",
+    "pro.offer_lapse",
+    "pro.invite"
+   ],
+   "decisions": "Accept or decline an offer made without an audition.",
+   "states": "Offered, booked, declined or lapsed.",
+   "timed": "The offer’s lapse.",
+   "exits": "Declining closes it with no penalty beyond the part.",
+   "status": "Implemented And Verified",
+   "tests": [
+    "tests/b27-offers.test.ts"
+   ],
+   "docs": []
+  },
+  {
+   "loop": 17,
+   "title": "Rejection And Recovery",
+   "features": [
+    "pro.casting_decision",
+    "pro.offer_lapse"
+   ],
+   "decisions": "What to do next: other roles, better materials.",
+   "states": "Passed or lapsed, kept in the history with why.",
+   "timed": "None.",
+   "exits": "Why It Went This Way gives the round’s reasons; the next Monday posts again.",
+   "status": "Implemented And Verified",
+   "tests": [
+    "tests/journey-career.test.ts"
+   ],
+   "docs": []
+  },
+  {
+   "loop": 18,
+   "title": "Negotiation",
+   "features": [
+    "pro.ask_more",
+    "pro.negotiate_answer"
+   ],
+   "decisions": "Have the agent ask once for more.",
+   "states": "The offer versioned, raised or kept.",
+   "timed": "The answer the next afternoon; the lapse moved past it.",
+   "exits": "Without an agent nobody asks; a second ask refused.",
+   "status": "Implemented And Verified",
+   "tests": [
+    "tests/b27-offers.test.ts",
+    "tests/b27-award-effects.test.ts"
+   ],
+   "docs": []
+  },
+  {
+   "loop": 19,
+   "title": "Contract Signing And Booking",
+   "features": [
+    "pro.accept_offer"
+   ],
+   "decisions": "Accept the offer, reading what accepting brings first.",
+   "states": "Booked: a contract with only the clauses that apply, the work days on the calendar, the pay promised.",
+   "timed": "The work days; each payment’s due date.",
+   "exits": "Called off later, what was earned is kept.",
+   "status": "Implemented And Verified",
+   "tests": [
+    "tests/career-contracts.test.ts"
+   ],
+   "docs": []
+  },
+  {
+   "loop": 20,
+   "title": "Holds, Options, And Conflicts",
+   "features": [
+    "pro.ask_hold",
+    "pro.hold_answer"
+   ],
+   "decisions": "Ask the production to decide first, or let the hold go for other work.",
+   "states": "A hold from the cut, booked, let go or withdrawn; a series part’s option taken up or not.",
+   "timed": "The answer the next afternoon; the option’s last day.",
+   "exits": "Accepting other work lets the hold go, said before it’s pressed.",
+   "status": "Implemented And Verified",
+   "tests": [
+    "tests/b27-holds.test.ts",
+    "tests/career-contracts.test.ts"
+   ],
+   "docs": []
+  },
+  {
+   "loop": 21,
+   "title": "Role Preparation",
+   "features": [
+    "pro.prepare",
+    "pro.pages"
+   ],
+   "decisions": "Prepare by each format’s own steps.",
+   "states": "Preparation levels, revised pages the night before.",
+   "timed": "The revision the evening before a work day.",
+   "exits": "Unprepared work is judged lower, said.",
+   "status": "Implemented And Verified",
+   "tests": [
+    "tests/career-workflows.test.ts"
+   ],
+   "docs": []
+  },
+  {
+   "loop": 22,
+   "title": "Work Travel And Arrival",
+   "features": [
+    "pro.trip_depart",
+    "pro.trip_arrive",
+    "pro.apply_work_visa",
+    "pro.visa_decision"
+   ],
+   "decisions": "Apply for the visa; be awake for the car to the airport.",
+   "states": "A trip booked, departed, arrived, home; a visa pending, granted or refused; a flight missed.",
+   "timed": "Each leg; the visa’s decision.",
+   "exits": "A missed flight books the same flights a day later, or the work goes on without the actor.",
+   "status": "Implemented And Verified",
+   "tests": [
+    "tests/career-world-sydney.test.ts",
+    "tests/b27-ill.test.ts"
+   ],
+   "docs": [],
+   "notBuilt": "A delayed flight: the trip lands a day ahead of the first call, so a delay changes nothing short of a day’s (README, K5)."
+  },
+  {
+   "loop": 23,
+   "title": "Live-Action Production Day",
+   "features": [
+    "pro.work_day",
+    "pro.work_choice",
+    "pro.weather"
+   ],
+   "decisions": "Go to each day; ask for another take, use the double.",
+   "states": "Each day worked, judged and reported; a weather day slips the days.",
+   "timed": "Each call; the weather the evening before.",
+   "exits": "A day that can’t slip is shot without the actor.",
+   "status": "Implemented And Verified",
+   "tests": [
+    "tests/career-workflows.test.ts",
+    "tests/b27-weather.test.ts"
+   ],
+   "docs": []
+  },
+  {
+   "loop": 24,
+   "title": "Multi-Camera Or Audience-Based Production",
+   "features": [
+    "pro.work_day"
+   ],
+   "decisions": "Each day of the week to the tape night.",
+   "states": "Table read, rehearsal, blocking, tape night.",
+   "timed": "The week’s calls.",
+   "exits": "A missed day by the medium’s rule.",
+   "status": "Implemented And Verified",
+   "tests": [
+    "tests/career-workflows.test.ts"
+   ],
+   "docs": []
+  },
+  {
+   "loop": 25,
+   "title": "Animation And Voice Work",
+   "features": [
+    "pro.work_day",
+    "pro.mix_demo"
+   ],
+   "decisions": "Each booth session; a voice demo for voice casting.",
+   "states": "Sessions worked; voice credits that go on a demo, not a reel.",
+   "timed": "Each session.",
+   "exits": "A pickup session after the wrap.",
+   "status": "Implemented And Verified",
+   "tests": [
+    "tests/career-workflows.test.ts",
+    "tests/b27-voice-demo.test.ts"
+   ],
+   "docs": []
+  },
+  {
+   "loop": 26,
+   "title": "Performance Capture",
+   "features": [
+    "pro.work_day"
+   ],
+   "decisions": "Each capture day.",
+   "states": "Days worked, other characters at no more pay.",
+   "timed": "Each call.",
+   "exits": "A missed day by the medium’s rule.",
+   "status": "Implemented And Verified",
+   "tests": [
+    "tests/career-workflows.test.ts"
+   ],
+   "docs": []
+  },
+  {
+   "loop": 27,
+   "title": "Documentary-Related Performer Work",
+   "features": [
+    "pro.work_day"
+   ],
+   "decisions": "Narration or a reenactment.",
+   "states": "Sessions or days worked; a documentary performer ineligible for performer awards, said.",
+   "timed": "Each call.",
+   "exits": "A missed day by the medium’s rule.",
+   "status": "Implemented And Verified",
+   "tests": [
+    "tests/career-workflows.test.ts"
+   ],
+   "docs": []
+  },
+  {
+   "loop": 28,
+   "title": "Changes, Absence, And Replacement",
+   "features": [
+    "pro.work_day",
+    "pro.weather",
+    "pro.pages"
+   ],
+   "decisions": "Whether to go while unwell.",
+   "states": "A day missed, covered by an understudy, shot around once, or the actor replaced.",
+   "timed": "Each call; the weather day.",
+   "exits": "Replacement ends the engagement with the pay earned kept.",
+   "status": "Implemented And Verified",
+   "tests": [
+    "tests/b27-ill.test.ts",
+    "tests/b27-weather.test.ts"
+   ],
+   "docs": []
+  },
+  {
+   "loop": 29,
+   "title": "Wrap And Post-Production Obligations",
+   "features": [
+    "pro.loop",
+    "pro.reshoot",
+    "pro.promo"
+   ],
+   "decisions": "Go to the looping session, the reshoot or pickup, the promotional film.",
+   "states": "Recalled, held against other work, attended or missed.",
+   "timed": "Each recall a month and a half to three months on.",
+   "exits": "A missed recall said, its pay not earned.",
+   "status": "Implemented And Verified",
+   "tests": [
+    "tests/b27-reshoot.test.ts",
+    "tests/b27-promo.test.ts"
+   ],
+   "docs": []
+  },
+  {
+   "loop": 30,
+   "title": "Compensation",
+   "features": [
+    "pro.ask_pay"
+   ],
+   "decisions": "Ask about a late payment.",
+   "states": "Each payment from estimated to settled, through the agency’s trust account where represented.",
+   "timed": "The Thursday after each week; late pay’s answer.",
+   "exits": "A late payment asked about; withholding, dues and commission each shown.",
+   "status": "Implemented And Verified",
+   "tests": [
+    "tests/propay.test.ts",
+    "tests/career-contracts.test.ts"
+   ],
+   "docs": [],
+   "notBuilt": "Expense claims and fares to local work: nothing a player pays is a production’s to reimburse; the per diem away is paid once home (README, K5)."
+  },
+  {
+   "loop": 31,
+   "title": "Residuals Or Contingent Compensation",
+   "features": [],
+   "decisions": "None of the player’s.",
+   "states": "Television work under SAG-AFTRA carries residuals; a rerun pays again.",
+   "timed": "A rerun’s payment.",
+   "exits": "None.",
+   "status": "Implemented And Verified",
+   "tests": [
+    "tests/career-contracts.test.ts"
+   ],
+   "docs": []
+  },
+  {
+   "loop": 32,
+   "title": "Work Ending And Money Still Owed",
+   "features": [
+    "pro.ask_pay"
+   ],
+   "decisions": "Ask about what’s owed.",
+   "states": "Work finished or called off, the earned pay still paid, commission owed after an agreement ends.",
+   "timed": "The remaining payments’ dates.",
+   "exits": "A canceled engagement keeps what was earned.",
+   "status": "Implemented And Verified",
+   "tests": [
+    "tests/propay.test.ts",
+    "tests/journey-career-older.test.ts"
+   ],
+   "docs": []
+  },
+  {
+   "loop": 33,
+   "title": "Distribution And Release",
+   "features": [
+    "pro.release"
+   ],
+   "decisions": "None: the distributor decides.",
+   "states": "Released on time, held back, sent to streaming or shelved, told when due.",
+   "timed": "The release date; a held-back release put on the clock again.",
+   "exits": "A shelved credit stays shot, its footage never on a reel.",
+   "status": "Implemented And Verified",
+   "tests": [
+    "tests/b27-release.test.ts"
+   ],
+   "docs": []
+  },
+  {
+   "loop": 34,
+   "title": "Publicity",
+   "features": [
+    "pro.promo"
+   ],
+   "decisions": "Go to the promotional film.",
+   "states": "Called, attended or missed.",
+   "timed": "A weekday a fortnight before the release.",
+   "exits": "Missing it is said: the visibility it would lend isn’t gained, and its casting office won’t make a direct offer from that work.",
+   "status": "Implemented And Verified",
+   "tests": [
+    "tests/b27-promo.test.ts"
+   ],
+   "docs": []
+  },
+  {
+   "loop": 35,
+   "title": "Weekly Box Office",
+   "features": [
+    "pro.release"
+   ],
+   "decisions": "None.",
+   "states": "A film in cinemas has a run in the game’s own chart; published charts read as dated imports.",
+   "timed": "Each week as the clock reaches it.",
+   "exits": "None.",
+   "status": "Implemented And Verified",
+   "tests": [
+    "tests/career-awards.test.ts",
+    "tests/career-awards-screen.test.ts"
+   ],
+   "docs": []
+  },
+  {
+   "loop": 36,
+   "title": "Weekly Television And Streaming Performance",
+   "features": [
+    "pro.series"
+   ],
+   "decisions": "None.",
+   "states": "Each season’s audience in its own unit, the game’s estimate.",
+   "timed": "Measured when the season finishes.",
+   "exits": "None.",
+   "status": "Implemented And Verified",
+   "tests": [
+    "tests/b27-audience.test.ts"
+   ],
+   "docs": []
+  },
+  {
+   "loop": 37,
+   "title": "Long-Term Project History",
+   "features": [
+    "ui.career-reference"
+   ],
+   "decisions": "Look up any project the career touched.",
+   "states": "Each project’s history kept: the posting’s, the work’s, the credit’s, the awards’.",
+   "timed": "None.",
+   "exits": "A page no longer held says so.",
+   "status": "Implemented, Verification Incomplete",
+   "tests": [
+    "tests/b27-reference.test.ts",
+    "tests/pro-core.test.ts"
+   ],
+   "docs": [],
+   "why": "Not yet played in the built app or on a phone; brief 27’s F plays it."
+  },
+  {
+   "loop": 38,
+   "title": "Renewal Decision",
+   "features": [
+    "pro.series"
+   ],
+   "decisions": "None: the network decides.",
+   "states": "Renewed or canceled, reading the last season’s audience, reviews and age.",
+   "timed": "Each May’s word.",
+   "exits": "A canceled series may be revived.",
+   "status": "Implemented And Verified",
+   "tests": [
+    "tests/b27-audience.test.ts"
+   ],
+   "docs": []
+  },
+  {
+   "loop": 39,
+   "title": "Returning Player",
+   "features": [
+    "pro.invite",
+    "pro.series"
+   ],
+   "decisions": "Accept the invitation back.",
+   "states": "A recurring part optioned, invited, returning.",
+   "timed": "The option’s day; the next season’s casting.",
+   "exits": "Renewal never rebooks automatically.",
+   "status": "Implemented And Verified",
+   "tests": [
+    "tests/b27-revival.test.ts",
+    "tests/career-contracts.test.ts"
+   ],
+   "docs": []
+  },
+  {
+   "loop": 40,
+   "title": "New Character On An Existing Series",
+   "features": [
+    "pro.revival",
+    "pro.postings"
+   ],
+   "decisions": "Whether to go for a new part in a series already on.",
+   "states": "A revival’s character plans; a new part posted.",
+   "timed": "The revival’s casting week.",
+   "exits": "None.",
+   "status": "Implemented And Verified",
+   "tests": [
+    "tests/b27-revival.test.ts"
+   ],
+   "docs": []
+  },
+  {
+   "loop": 41,
+   "title": "Cancellation And Possible Revival",
+   "features": [
+    "pro.series",
+    "pro.revival"
+   ],
+   "decisions": "None.",
+   "states": "Canceled, future work called off with pay settled; revived years on.",
+   "timed": "Each May’s word.",
+   "exits": "A revival brings the character back by its draw.",
+   "status": "Implemented And Verified",
+   "tests": [
+    "tests/b27-revival.test.ts"
+   ],
+   "docs": []
+  },
+  {
+   "loop": 42,
+   "title": "Festival Submission And Selection",
+   "features": [
+    "pro.awards"
+   ],
+   "decisions": "None: the production submits.",
+   "states": "Not submitted, submitted, selected, not selected, screened.",
+   "timed": "The festival’s answer; the screening.",
+   "exits": "None.",
+   "status": "Implemented And Verified",
+   "tests": [
+    "tests/career-awards.test.ts"
+   ],
+   "docs": []
+  },
+  {
+   "loop": 43,
+   "title": "Festival Attendance",
+   "features": [],
+   "decisions": "None offered.",
+   "states": "A selected film screens whether or not the actor goes.",
+   "timed": "The screening.",
+   "exits": "None.",
+   "status": "Not Implemented",
+   "tests": [],
+   "docs": [
+    "docs/verification/career-universe-2026-10-24/README.md"
+   ],
+   "why": "Not built: going could change only the people met there, which the game keeps no record of beyond an agent’s meetings, and the loop forbids a boost merely for appearing; a choice nothing read would be a declared word (README, K7)."
+  },
+  {
+   "loop": 44,
+   "title": "Award Eligibility And Submission",
+   "features": [
+    "pro.award_enter",
+    "pro.actor_submit"
+   ],
+   "decisions": "Enter yourself for an Emmy; submit yourself for the Actor Awards.",
+   "states": "Eligible or refused with the rule’s words; entered or submitted, by you or the production.",
+   "timed": "The entry deadline; the submission window.",
+   "exits": "After the deadline nobody can enter.",
+   "status": "Implemented And Verified",
+   "tests": [
+    "tests/career-awards.test.ts",
+    "tests/b27-actor-awards.test.ts"
+   ],
+   "docs": []
+  },
+  {
+   "loop": 45,
+   "title": "Nomination And Voting",
+   "features": [
+    "pro.awards",
+    "pro.actor_awards"
+   ],
+   "decisions": "None: the voters decide.",
+   "states": "Nominated or not; won or lost at the final round, told at the ceremony.",
+   "timed": "The nominations; the final round.",
+   "exits": "None.",
+   "status": "Implemented And Verified",
+   "tests": [
+    "tests/b27-actor-awards.test.ts",
+    "tests/career-awards.test.ts"
+   ],
+   "docs": [],
+   "notBuilt": "The player’s own ballot as a member: one vote among the membership’s is a vote the simulated field can’t weigh (README, K7)."
+  },
+  {
+   "loop": 46,
+   "title": "Ceremony",
+   "features": [
+    "pro.ceremony_rsvp",
+    "pro.ceremony_prepare",
+    "pro.ceremony",
+    "pro.ceremony_speech",
+    "pro.ceremony_accept",
+    "pro.watch_ceremony"
+   ],
+   "decisions": "Go or watch from home; prepare remarks; go up to accept.",
+   "states": "Invited, going or watching; the show; a win accepted with a speech, unanswered, or without the actor.",
+   "timed": "The answer’s day, the trip, the show, the moment to go up.",
+   "exits": "A missed flight: the win accepted without them.",
+   "status": "Implemented, Verification Incomplete",
+   "tests": [
+    "tests/b27-ceremony.test.ts"
+   ],
+   "docs": [],
+   "why": "Not yet played in the built app or on a phone; brief 27’s F plays it."
+  },
+  {
+   "loop": 47,
+   "title": "Post-Award Career Effects",
+   "features": [
+    "pro.awards"
+   ],
+   "decisions": "None.",
+   "states": "Recognition fades over three years; an agent reads it once; an ask reads visibility.",
+   "timed": "The fade.",
+   "exits": "Nothing stacks for the same award.",
+   "status": "Implemented And Verified",
+   "tests": [
+    "tests/b27-award-effects.test.ts"
+   ],
+   "docs": []
+  },
+  {
+   "loop": 48,
+   "title": "Interactive Industry Reference",
+   "features": [
+    "ui.career-reference"
+   ],
+   "decisions": "Which page to open, and where to go to act.",
+   "states": "A page held or not for this player; the trail of pages followed.",
+   "timed": "None: pages read the clock.",
+   "exits": "Back and the trail; a page no longer held says so.",
+   "status": "Implemented, Verification Incomplete",
+   "tests": [
+    "tests/b27-reference.test.ts"
+   ],
+   "docs": [],
+   "why": "Not yet played in the built app or on a phone; brief 27’s F plays it."
+  },
+  {
+   "loop": 49,
+   "title": "Actionable Mail And Notices",
+   "features": [
+    "world.take_decision_action",
+    "world.dismiss_decision",
+    "world.mark_read"
+   ],
+   "decisions": "Answer a decision; read a notice.",
+   "states": "A decision open, answered, expired once; a notice read.",
+   "timed": "A decision’s due date.",
+   "exits": "Expiry closes it once; reading never accepts an offer.",
+   "status": "Implemented And Verified",
+   "tests": [
+    "tests/notices-rollback.test.ts"
+   ],
+   "docs": []
+  },
+  {
+   "loop": 50,
+   "title": "Ongoing Opportunity And Relationship Loop",
+   "features": [
+    "pro.postings",
+    "pro.agent_follow_up"
+   ],
+   "decisions": "Keep submitting; keep the agent relationship.",
+   "states": "Weekly postings; an agent’s follow-ups and referrals.",
+   "timed": "Mondays; the office’s follow-ups.",
+   "exits": "Cooldowns end with something new.",
+   "status": "Implemented And Verified",
+   "tests": [
+    "tests/b27-slate.test.ts",
+    "tests/journey-agent.test.ts"
+   ],
+   "docs": []
+  },
+  {
+   "loop": 51,
+   "title": "Persistent State And Event Order",
+   "features": [
+    "world.tick",
+    "calendar.schedule"
+   ],
+   "decisions": "None.",
+   "states": "Every pending item in the save; each step reads its record before acting.",
+   "timed": "The clock.",
+   "exits": "A reload decides the same.",
+   "status": "Implemented And Verified",
+   "tests": [
+    "tests/b26-persistence-repeats.test.ts",
+    "tests/persistence.test.ts"
+   ],
+   "docs": []
+  },
+  {
+   "loop": 52,
+   "title": "Meaningful Variation",
+   "features": [
+    "pro.postings"
+   ],
+   "decisions": "None.",
+   "states": "The slate’s work by market, kind and season, every draw keyed by what it decides.",
+   "timed": "Each week.",
+   "exits": "None.",
+   "status": "Implemented And Verified",
+   "tests": [
+    "tests/b27-slate.test.ts",
+    "tests/journey-three-students.test.ts"
+   ],
+   "docs": []
+  },
+  {
+   "loop": 53,
+   "title": "Transparency And Player Understanding",
+   "features": [
+    "ui.career-reasons",
+    "tutorial.read"
+   ],
+   "decisions": "Read why it went as it did; read the guide.",
+   "states": "Reasons kept per decision; chapters read.",
+   "timed": "None.",
+   "exits": "None.",
+   "status": "Implemented And Verified",
+   "tests": [
+    "tests/b20-guide-chapters.test.ts",
+    "tests/guide.test.ts"
+   ],
+   "docs": []
+  },
+  {
+   "loop": 54,
+   "title": "Research And Accuracy",
+   "features": [],
+   "decisions": "None.",
+   "states": "Every real fact sourced and dated in the register; what wasn’t read said unread.",
+   "timed": "None.",
+   "exits": "None.",
+   "status": "Implemented And Verified",
+   "tests": [
+    "tests/b27-research-register.test.ts",
+    "tests/career-catalog.test.ts"
+   ],
+   "docs": [
+    "docs/verification/career-universe-2026-10-24/research/REGISTER.md"
+   ]
+  },
+  {
+   "loop": 55,
+   "title": "Coverage And Verification",
+   "features": [],
+   "decisions": "None.",
+   "states": "This matrix, the effects matrix, the sweep’s register, the completion matrix.",
+   "timed": "None.",
+   "exits": "None.",
+   "status": "Implemented, Verification Incomplete",
+   "tests": [],
+   "docs": [
+    "docs/verification/audit-2026-10-21/EFFECTS.md",
+    "docs/verification/sweep-2026-10-24/REGISTER.md"
+   ],
+   "why": "The final runs and the long careers are played again in F."
+  },
+  {
+   "loop": 56,
+   "title": "Execution And Completion",
+   "features": [],
+   "decisions": "None.",
+   "states": "Milestones R to K8 built and pushed; F under way.",
+   "timed": "None.",
+   "exits": "None.",
+   "status": "Implemented, Verification Incomplete",
+   "tests": [],
+   "docs": [
+    "docs/verification/career-universe-2026-10-24/CHECKPOINT.md"
+   ],
+   "why": "F: the final runs, the gate on the finished commit, the receipt and the handoff."
+  }
+ ]
+}

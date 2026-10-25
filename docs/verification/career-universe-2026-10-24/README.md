@@ -729,7 +729,7 @@ All seventeen mutations failed a test:
 
 The canceled season survived until the network's word had a test: the Desk Clerk's series had no word yet.
 
-**Found on the way:** K7's four commands (`pro.actor_submit`, `pro.ceremony_rsvp`, `pro.ceremony_prepare`, `pro.ceremony_accept`) were in no chapter of the guide, so `tests/tutorial.test.ts` failed three cases on K7's commit. The Finding Work chapter opens them now, with a paragraph and their buttons' names (defect 12).
+**Found on the way:** K7's four commands (`pro.actor_submit`, `pro.ceremony_rsvp`, `pro.ceremony_prepare`, `pro.ceremony_accept`) were in no chapter of the guide. K7's clean-clone gate on `52d65a60` exited 1 in 3,096 seconds: 523 of 524 test files and 5,938 of 5,941 tests passed, and the three failures were all `tests/tutorial.test.ts`'s coverage matrix (`k7-gate/gate.txt`, `k7-gate/gate-exit.txt`). The Finding Work chapter opens the four now, with a paragraph and their buttons' names (defect 12).
 
 ## Defects Found And Fixed
 

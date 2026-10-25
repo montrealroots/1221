@@ -1898,7 +1898,7 @@
    "kind": "scheduled",
    "claim": "Each payment the contract promised is paid on its payday, and its state says where it stands.",
    "entryFile": "src/engine/content/guide/career.ts",
-   "holds": "Each promised payment is on the clock for its payday (`schedulePay`, src/engine/systems/propay.ts) and its state is read from the record and the clock (`payState`, src/engine/systems/contracts.ts:207).",
+   "holds": "Each promised payment is on the clock for its payday (`schedulePay`, src/engine/systems/propay.ts) and its state is read from the record and the clock (`payState`, src/engine/systems/contracts.ts:267).",
    "tests": [
     "tests/career-contracts.test.ts"
    ],
@@ -1943,7 +1943,7 @@
    "kind": "prerequisite",
    "claim": "The agreements’ rules for a dub, a stunt, an intimate scene and a recall to loop are in the contract.",
    "entryFile": "src/engine/content/guide/career.ts",
-   "holds": "The contract's clauses end on the workflow's rules (`workflowRules`, src/engine/systems/contracts.ts:226), read from the part's format, its dub, its stunts, its intimate scene and whether it can be recalled to loop.",
+   "holds": "The contract's clauses end on the workflow's rules (`workflowRules`, src/engine/systems/contracts.ts:229), read from the part's format, its dub, its stunts, its intimate scene and whether it can be recalled to loop.",
    "tests": [
     "tests/career-contracts.test.ts",
     "tests/career-workflows.test.ts"
@@ -1959,7 +1959,7 @@
    "kind": "scheduled",
    "claim": "A looping session is paid half a day, on the work’s pay.",
    "entryFile": "src/engine/content/guide/career.ts",
-   "holds": "The session worked puts half the contract's day rate (`loopPay`, src/engine/systems/workflow.ts:558) among the engagement's payments, due the Thursday after, and puts it on the clock (`schedulePay`, src/engine/systems/workflow.ts:600).",
+   "holds": "The session worked puts half the contract's day rate (`loopPay`, src/engine/systems/workflow.ts:631) among the engagement's payments, due the Thursday after, and puts it on the clock (`schedulePay`, src/engine/systems/workflow.ts:673).",
    "tests": [
     "tests/career-workflows.test.ts"
    ],
@@ -1989,7 +1989,7 @@
    "kind": "optional",
    "claim": "Recognition makes casting likelier to choose you for a while.",
    "entryFile": "src/engine/content/guide/career.ts",
-   "holds": "Casting's decision passes the player's visibility to its draw (src/engine/systems/projobs.ts:1933), which lifts the chance within casting's ceiling (`castingDraw`), fading over three years (`visibilityOf`).",
+   "holds": "Casting's decision passes the player's visibility to its draw (src/engine/systems/projobs.ts:2563), which lifts the chance within casting's ceiling (`castingDraw`), fading over three years (`visibilityOf`).",
    "tests": [
     "tests/career-awards.test.ts"
    ],

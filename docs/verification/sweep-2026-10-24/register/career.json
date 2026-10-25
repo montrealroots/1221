@@ -354,7 +354,16 @@
   ]
  },
  "pro.apply_work_visa": {
-  "status": "Not Tested"
+  "status": "Verified",
+  "by": [
+   "inspection",
+   "automated"
+  ],
+  "on": "3a759d49",
+  "evidence": [
+   "tests/career-world-sydney.test.ts",
+   "src/engine/systems/worktrip.ts:697 Apply For The Visa, refused in visaRefusal's words (worktrip.ts:326); worktrip.ts:359 applyVisa writes the pending permit"
+  ]
  },
  "pro.ask_hold": {
   "status": "Verified",
@@ -381,7 +390,16 @@
   ]
  },
  "pro.ask_pay": {
-  "status": "Not Tested"
+  "status": "Verified",
+  "by": [
+   "inspection",
+   "automated"
+  ],
+  "on": "3a759d49",
+  "evidence": [
+   "tests/career-contracts.test.ts",
+   "src/engine/systems/contracts.ts:470 Ask About It on a late payment; its answer on the clock"
+  ]
  },
  "pro.ask_referral": {
   "status": "Verified",
@@ -431,10 +449,30 @@
   ]
  },
  "pro.award_enter": {
-  "status": "Not Tested"
+  "status": "Verified",
+  "by": [
+   "inspection",
+   "automated"
+  ],
+  "on": "3a759d49",
+  "evidence": [
+   "tests/career-awards.test.ts",
+   "tests/career-awards-screen.test.ts",
+   "src/engine/systems/awards.ts:612 Enter Yourself, eligibility by emmyCheck (awards.ts:134), the fees taken once"
+  ]
  },
  "pro.awards": {
-  "status": "Not Tested"
+  "status": "Verified",
+  "by": [
+   "inspection",
+   "automated"
+  ],
+  "on": "3a759d49",
+  "evidence": [
+   "tests/career-awards.test.ts",
+   "tests/career-awards-screen.test.ts",
+   "src/engine/systems/awards.ts:611 the awards' passage: the deadline's production entries, the nominations, the final round and the ceremony's word; the field by fieldFor (awards.ts:324)"
+  ]
  },
  "pro.casting_decision": {
   "status": "Verified",
@@ -619,7 +657,17 @@
   ]
  },
  "pro.invite": {
-  "status": "Not Tested"
+  "status": "Verified",
+  "by": [
+   "inspection",
+   "automated"
+  ],
+  "on": "3a759d49",
+  "evidence": [
+   "tests/career-workflows.test.ts",
+   "tests/career-workflows-screen.test.ts",
+   "src/engine/systems/workflow.ts:862 an anthology's invitation to its next story, for strong work"
+  ]
  },
  "pro.join_sag": {
   "status": "Verified",
@@ -636,7 +684,17 @@
   ]
  },
  "pro.loop": {
-  "status": "Not Tested"
+  "status": "Verified",
+  "by": [
+   "inspection",
+   "automated"
+  ],
+  "on": "3a759d49",
+  "evidence": [
+   "tests/career-workflows.test.ts",
+   "tests/career-workflows-screen.test.ts",
+   "src/engine/systems/workflow.ts:841 the looping session after the wrap, paid half the day rate (loopPay, workflow.ts:631)"
+  ]
  },
  "pro.mix_demo": {
   "status": "Verified",
@@ -693,7 +751,17 @@
   ]
  },
  "pro.pages": {
-  "status": "Not Tested"
+  "status": "Verified",
+  "by": [
+   "inspection",
+   "automated"
+  ],
+  "on": "3a759d49",
+  "evidence": [
+   "tests/career-workflows.test.ts",
+   "tests/career-workflows-screen.test.ts",
+   "src/engine/systems/workflow.ts:834 revised pages the night before a work day, by the format's chance"
+  ]
  },
  "pro.postings": {
   "status": "Verified",
@@ -838,7 +906,16 @@
   ]
  },
  "pro.series": {
-  "status": "Not Tested"
+  "status": "Verified",
+  "by": [
+   "inspection",
+   "automated"
+  ],
+  "on": "3a759d49",
+  "evidence": [
+   "tests/career-contracts.test.ts",
+   "src/engine/systems/series.ts:323 the network's word each May, read from the last season's audience; series.ts:396 a further episode's call and series.ts:421 the option"
+  ]
  },
  "pro.set_name": {
   "status": "Verified",
@@ -915,10 +992,28 @@
   ]
  },
  "pro.trip_arrive": {
-  "status": "Not Tested"
+  "status": "Verified",
+  "by": [
+   "inspection",
+   "automated"
+  ],
+  "on": "3a759d49",
+  "evidence": [
+   "tests/career-world-sydney.test.ts",
+   "src/engine/systems/worktrip.ts:670 arrival, the hotel checked in to, and the per diem paid once home (worktrip.ts:693)"
+  ]
  },
  "pro.trip_depart": {
-  "status": "Not Tested"
+  "status": "Verified",
+  "by": [
+   "inspection",
+   "automated"
+  ],
+  "on": "3a759d49",
+  "evidence": [
+   "tests/career-world-sydney.test.ts",
+   "src/engine/systems/worktrip.ts:614 the leg out or home, missed where the actor is asleep or laid up"
+  ]
  },
  "pro.update_resume": {
   "status": "Verified",
@@ -937,10 +1032,30 @@
   ]
  },
  "pro.visa_decision": {
-  "status": "Not Tested"
+  "status": "Verified",
+  "by": [
+   "inspection",
+   "automated"
+  ],
+  "on": "3a759d49",
+  "evidence": [
+   "tests/career-world-sydney.test.ts",
+   "src/engine/systems/worktrip.ts:600 the department's decision, granting or refusing the permit by its date"
+  ]
  },
  "pro.watch_ceremony": {
-  "status": "Not Tested"
+  "status": "Verified",
+  "by": [
+   "inspection",
+   "automated"
+  ],
+  "on": "3a759d49",
+  "evidence": [
+   "tests/b27-ceremony.test.ts",
+   "tests/career-awards-screen.test.ts",
+   "tests/career-awards.test.ts",
+   "src/engine/systems/ceremony.ts:328 Watch The Ceremony, the settled result read and nothing changed"
+  ]
  },
  "pro.weather": {
   "status": "Verified",
@@ -955,7 +1070,17 @@
   ]
  },
  "pro.work_choice": {
-  "status": "Not Tested"
+  "status": "Verified",
+  "by": [
+   "inspection",
+   "automated"
+  ],
+  "on": "3a759d49",
+  "evidence": [
+   "tests/career-workflows.test.ts",
+   "tests/career-workflows-screen.test.ts",
+   "src/engine/systems/workflow.ts:867 a work day's choice (another take, the double), each read by the day's judgment"
+  ]
  },
  "pro.work_day": {
   "status": "Verified",
@@ -1515,10 +1640,28 @@
   ]
  },
  "promise.career.work-abroad>career.offers": {
-  "status": "Not Tested"
+  "status": "Verified",
+  "by": [
+   "inspection",
+   "automated"
+  ],
+  "on": "3a759d49",
+  "evidence": [
+   "tests/career-world-sydney.test.ts",
+   "src/engine/systems/worktrip.ts:326 visaRefusal refuses without an engagement abroad"
+  ]
  },
  "promise.career.work-abroad>documents.work": {
-  "status": "Not Tested"
+  "status": "Verified",
+  "by": [
+   "inspection",
+   "automated"
+  ],
+  "on": "3a759d49",
+  "evidence": [
+   "tests/career-world-sydney.test.ts",
+   "src/engine/systems/worktrip.ts:359 applyVisa writes the permit tied to the engagement; src/ui/papers/Documents.tsx:64 DocumentList shows it under Permission To Work"
+  ]
  },
  "promise.coursework.showcase>career.overview": {
   "status": "Verified",

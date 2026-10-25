@@ -2745,7 +2745,7 @@
     },
     {
      "what": "the payroll pays it on its Thursday",
-     "at": "src/engine/systems/workflow.ts:600"
+     "at": "src/engine/systems/workflow.ts:673"
     },
     {
      "what": "the loop's status read before acting, so it's worked once",
@@ -3052,7 +3052,7 @@
     },
     {
      "what": "casting reads the recognition it leaves",
-     "at": "src/engine/systems/projobs.ts:1933"
+     "at": "src/engine/systems/projobs.ts:2563"
     },
     {
      "what": "the Portfolio keeps what was recognized",
@@ -4243,7 +4243,7 @@
    "kind": "immediate",
    "claim": "The visa is a permission to work in Papers, pending until the department decides.",
    "entryFile": "src/engine/content/guide/career.ts",
-   "holds": "`applyVisa` writes a permit, pending and tied to the engagement (src/engine/systems/worktrip.ts:294), and Papers' Permission To Work lists permits (`DocumentList`, src/ui/papers/Documents.tsx:297); the journey draws it there after applying.",
+   "holds": "`applyVisa` writes a permit, pending and tied to the engagement (src/engine/systems/worktrip.ts:359), and Papers' Permission To Work lists permits (`DocumentList`, src/ui/papers/Documents.tsx:64); the journey draws it there after applying.",
    "tests": [
     "tests/career-world-sydney.test.ts"
    ],
@@ -4263,7 +4263,7 @@
    "kind": "prerequisite",
    "claim": "You apply for it once you’ve accepted the work abroad.",
    "entryFile": "src/engine/content/guide/career.ts",
-   "holds": "`visaRefusal` refuses without an engagement abroad (src/engine/systems/worktrip.ts:267); the journey's Apply For The Visa before Accept is refused in those words.",
+   "holds": "`visaRefusal` refuses without an engagement abroad (src/engine/systems/worktrip.ts:326); the journey's Apply For The Visa before Accept is refused in those words.",
    "tests": [
     "tests/career-world-sydney.test.ts"
    ],

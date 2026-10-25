@@ -366,19 +366,64 @@
   ]
  },
  "promise.career.awards>career.offers": {
-  "status": "Not Tested"
+  "status": "Verified",
+  "by": [
+   "inspection",
+   "automated"
+  ],
+  "on": "3a759d49",
+  "evidence": [
+   "tests/career-awards.test.ts",
+   "src/engine/systems/projobs.ts:2563 casting's decision passes the player's visibility to castingDraw"
+  ]
  },
  "promise.career.awards>career.workflows": {
-  "status": "Not Tested"
+  "status": "Verified",
+  "by": [
+   "inspection",
+   "automated"
+  ],
+  "on": "3a759d49",
+  "evidence": [
+   "tests/career-awards.test.ts",
+   "src/engine/systems/awards.ts:134 emmyCheck counts the scenes kept; awards.ts:324 fieldFor reads the credit's band"
+  ]
  },
  "promise.career.contracts>career.offers": {
-  "status": "Not Tested"
+  "status": "Verified",
+  "by": [
+   "inspection",
+   "automated"
+  ],
+  "on": "3a759d49",
+  "evidence": [
+   "tests/career-contracts.test.ts",
+   "src/engine/systems/contracts.ts:182 contractFor, made when the offer is accepted"
+  ]
  },
  "promise.career.contracts>career.pay": {
-  "status": "Not Tested"
+  "status": "Verified",
+  "by": [
+   "inspection",
+   "automated"
+  ],
+  "on": "3a759d49",
+  "evidence": [
+   "tests/career-contracts.test.ts",
+   "src/engine/systems/contracts.ts:267 payState reads each payment's state from the record and the clock"
+  ]
  },
  "promise.career.contracts>career.unions": {
-  "status": "Not Tested"
+  "status": "Verified",
+  "by": [
+   "inspection",
+   "automated"
+  ],
+  "on": "3a759d49",
+  "evidence": [
+   "tests/career-contracts.test.ts",
+   "src/engine/systems/projobs.ts:2202 SEASON_HOOKS, whose refusal reads sagWorkRefusal for a further episode's days and an option's"
+  ]
  },
  "promise.career.reference>career.awards": {
   "status": "Verified",
@@ -405,10 +450,29 @@
   ]
  },
  "promise.career.workflows>career.contracts": {
-  "status": "Not Tested"
+  "status": "Verified",
+  "by": [
+   "inspection",
+   "automated"
+  ],
+  "on": "3a759d49",
+  "evidence": [
+   "tests/career-contracts.test.ts",
+   "tests/career-workflows.test.ts",
+   "src/engine/systems/contracts.ts:229 workflowRules, the clauses read from the part's format"
+  ]
  },
  "promise.career.workflows>career.pay": {
-  "status": "Not Tested"
+  "status": "Verified",
+  "by": [
+   "inspection",
+   "automated"
+  ],
+  "on": "3a759d49",
+  "evidence": [
+   "tests/career-workflows.test.ts",
+   "src/engine/systems/workflow.ts:631 loopPay, half the contract's day rate among the engagement's payments"
+  ]
  },
  "promise.start.find>day.needs": {
   "status": "Verified",
