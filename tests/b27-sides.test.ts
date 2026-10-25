@@ -124,7 +124,9 @@ describe('a self-tape’s takes', () => {
     twin.must({ kind: 'pro.send_take', payload: { opportunityId: o.id, take: worst.take } });
     expect(opp(twin, o.id).rounds![0]!.overall).toBe(worst.overall);
     expect(worst.overall).toBeLessThan(best.overall);
-    // Saved with its takes, the same take sends the same figure.
+    // Saved with its takes, the same take sends the same figure, though the actor sending it is worn out by then: a take is
+    // judged as it was recorded, not again as they are now. TEST SETUP: exhausted, short of sleep, at the moment of sending.
+    Object.assign(again.player.wellbeing, { energy: 3, sleepDebt: 30, stress: 90 });
     again.must({ kind: 'pro.send_take', payload: { opportunityId: o.id, take: best.take } });
     expect(opp(again, o.id).rounds![0]!.overall).toBe(best.overall);
     // Casting reads the take sent: its chance from that band.
@@ -233,6 +235,13 @@ describe('casting’s direction in the room', () => {
         const rf = f.o.rounds![0]!;
         const rh = h.o.rounds![0]!;
         expect([rf.status, rh.status, rf.note!.answer, rh.note!.answer]).toEqual(['done', 'done', 'follow', 'hold']);
+        // Followed, the side asked for is how it's played from then, its rehearsal halved; kept, the read is held back where
+        // the side asked for leans (the round's judgment, as the work record keeps it).
+        expect([f.o.playing![lean.axis], f.o.playing!.prep, h.o.playing![lean.axis], h.o.playing!.prep]).toEqual([lean.side, 0.5, lean.other, 1]);
+        const judged = (x: { sim: Sim }) => (x.sim.player.work ?? []).find((w) => w.what === `${t.role.part}, ${t.project}: Audition`)!;
+        expect(Object.values(judged(h).inputs.fit ?? {}).some((x) => x.label.includes('casting asked for it'))).toBe(true);
+        expect(Object.values(judged(f).inputs.fit ?? {}).some((x) => x.label.includes('casting asked for it'))).toBe(false);
+        expect(judged(f).inputs.inputs?.responsiveness?.some((x) => x.ability === 'adaptability')).toBe(true);
         if (rf.band === rh.band) continue;
         const [win, lose] = rf.overall! > rh.overall! ? [f, h] : [h, f];
         if (!(u < chanceOf(win.o.rounds![0]!.band!, fit, t.kind, 'callback') && u >= chanceOf(lose.o.rounds![0]!.band!, fit, t.kind, 'callback'))) continue;
