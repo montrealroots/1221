@@ -340,7 +340,7 @@ function SeriesPanel() {
             </div>
           );
         }) : <p className="small" style={{ margin: 0 }}>You haven’t worked on a series yet. One you’ve worked on shows here, each season’s audience as it finishes.</p>}
-        <Fine>Each season’s audience and reviews are the game’s simulation, never a published figure, for series it invents and for a real series’ seasons after the one its pages had on the air: a broadcast series counted in viewers an episode, a streaming one in hours viewed a week, never the one as the other. Your part in a season moves them a little. The network reads them, with the series’ age, when it says whether there’s another season.</Fine>
+        <Fine>Each season’s audience and reviews are the game’s simulation for series it invents, never a published figure, and so are those of a real series’ seasons after the one its pages had on the air: a broadcast series counted in viewers an episode, a streaming one in hours viewed a week, never the one as the other. Your part in a season moves them a little. The network reads them, with the series’ age, when it says whether there’s another season.</Fine>
       </div>
     </Panel>
   );
