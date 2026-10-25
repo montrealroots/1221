@@ -19,9 +19,10 @@ import { loadSave } from '@/engine';
 import { breaches } from '@/engine/core/invariants';
 import { PROJECTS, RATES, UNIONS, projectById, type ProjectTemplate } from '@/engine/content/careerwork';
 import {
-  BILLS_KEPT, DUES_KIND, PAY_KIND, RELEASE_KIND, SAG_ELIGIBLE_KIND, commissionOn, coveredWork, eligibilityRead, joinSagRefusal, keepBills, negotiatedAmount, sagWorkRefusal, schedulePay,
+  BILLS_KEPT, DUES_KIND, PAY_KIND, RELEASE_KIND, SAG_ELIGIBLE_KIND, commissionOn, eligibilityRead, joinSagRefusal, keepBills, negotiatedAmount, sagWorkRefusal, schedulePay,
   workEligibilityRefusal, withholdingOn,
 } from '@/engine/systems/propay';
+import { coveredUnder } from '@/engine/systems/representation';
 import { yearOf } from '@/engine/systems/earnings';
 import { figuresFor } from '@/engine/systems/taxreturn';
 import { documentsOf } from '@/engine/systems/documents';
@@ -252,8 +253,10 @@ describe('commission, only when owed, checked to the cent against the postings',
     expect(commissionOn(sim, sim.player, within, within.pay[0]!, 1_051_00)).toMatchObject({ how: 'tail', amount: 105_10 });
     const late = booked(sim, { project: 'calder-street', days: runDays(at(2026, 9, 21), 1), amount: 1_051_00, per: 'week', via: 'agent', offerAt: at(2026, 7, 1) });
     expect(commissionOn(sim, sim.player, late, late.pay[0]!, 1_051_00)).toMatchObject({ how: 'unrepresented', amount: 0 });
-    expect(coveredWork({ medium: 'stage', place: { city: 'London', cityId: 'uk-eng-london', venue: 'a theater' } })).toBe(false);
-    expect(coveredWork(projectById('calder-street')!)).toBe(true);
+    // Until 2026-10-25 one rule for every agreement (`coveredWork`); from then each agreement's own terms, here a legit
+    // department's first ones (brief 27, `coveredUnder`, tests/b27-representation.test.ts).
+    expect(coveredUnder(a, { medium: 'stage', place: { city: 'London', cityId: 'uk-eng-london', venue: 'a theater' } })).toBe(false);
+    expect(coveredUnder(a, projectById('calder-street')!)).toBe(true);
     // TEST SETUP: a project in London, which no project in the game is, outside the agreement's United States.
     const abroad = { ...projectById('calder-street')!, id: 'test-abroad', place: { city: 'London', cityId: 'uk-eng-london', venue: 'a theater in the West End' } };
     (PROJECTS as ProjectTemplate[]).push(abroad);
