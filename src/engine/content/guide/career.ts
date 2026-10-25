@@ -897,7 +897,7 @@ export const CAREER_GUIDE: readonly GuideEntry[] = [
     ],
     reads: [
       { label: 'How You Play It', value: 'What counts most in the round shifts toward what each side is, it uses the abilities each side names, and it needs rehearsal before it pays off. A side that suits the part’s genre is easier to make work' },
-      { label: 'Casting’s Direction', value: 'Followed, the side casting asked for, unrehearsed, and how well you adapt on the spot; kept, your own choice, with what casting asked for held back' },
+      { label: 'Casting’s Direction', value: 'Followed, the side casting asked for, with as much of your rehearsal as you can adapt, and how well you take the note; kept, your own choice, with what casting asked for and how you answer a note held back' },
       { label: 'A Take', value: 'Each take is judged on its own, as the moment and your condition stand when you record it' },
     ],
     now: [
@@ -911,7 +911,7 @@ export const CAREER_GUIDE: readonly GuideEntry[] = [
     ],
     interpret: [
       'The table under How You’ll Play It shows what each side would come to fully prepared, and whether it suits the part, goes against it, or could go either way.',
-      'Following a direction asks you to adapt: an actor who adapts well loses little, and one who doesn’t may do better keeping their choice, though playing against what casting asked holds those qualities back.',
+      'Following a direction asks you to adapt: an actor who adapts well usually does better following it, and one who doesn’t may do better keeping their choice, though keeping it holds back how you answer a note and the qualities casting asked for.',
     ],
     unavailable: [
       'There are no sides yet: casting sends them with an audition.',
@@ -930,7 +930,7 @@ export const CAREER_GUIDE: readonly GuideEntry[] = [
     example: {
       setup: 'An audition in person for a part in a thriller, with the sides prepared and played restrained.',
       steps: ['Press Play It This Way with Restrained chosen, then Rehearse It On Your Feet.', 'When the clock stops for casting’s direction to play it driven, press Follow The Direction.'],
-      result: 'The rest of the audition is played driven, unrehearsed, and casting decides the next day from how it went.',
+      result: 'The rest of the audition is played driven, with as much of your rehearsal as you can adapt, and casting decides the next day from how it went.',
     },
   },
   {
@@ -1003,7 +1003,7 @@ export const CAREER_GUIDE: readonly GuideEntry[] = [
     ],
     now: ['Withdrawing takes the part’s rounds off your calendar and lets any hold on your dates go.'],
     later: [
-      `A casting office remembers a round in person you didn’t turn up to, unless you were ill or in hospital, and a withdrawal at less than a day’s notice, for ${word(Math.round(NOTICE.rememberDays / 365))} years: your chance at each of its decisions is ${Math.round(NOTICE.cut * 100)}% of what it would be, and it offers you nothing without an audition, estimated. A withdrawal with notice costs you nothing with it.`,
+      `A casting office remembers a round in person you didn’t turn up to, unless you were ill or in hospital, and a withdrawal at less than a day’s notice, for ${word(Math.round(NOTICE.rememberDays / 365))} years: your chance at each of its casting decisions after a round is ${Math.round(NOTICE.cut * 100)}% of what it would be, and it offers you nothing without an audition, estimated. A withdrawal with notice costs you nothing with it.`,
       `A part you lost or let go may be recast if the actor cast in it leaves, about ${Math.round(RECAST.chance * 100)} times in 100 with its first day ${word(RECAST.leadDays / 7)} weeks off or more, estimated. It’s posted again, and casting decides it afresh.`,
       `At a cut, a production now and then changes what a part asks, about one part in ${Math.round(1 / REWRITE.chance)}, estimated: its playing ages, or a technique it now needs at ${REWRITE.level}. If you no longer fit it, it releases you; if you still do, you go on.`,
     ],

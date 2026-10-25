@@ -282,7 +282,8 @@ export interface Opportunity extends HasHistory {
     /**
      * The terms an answer changed (from 2026-10-25, `systems/offers.ts`), each read by what books and pays the work: the
      * guaranteed episodes of a recurring part (`datesOf`, so the days booked and the weeks paid follow), the promotional
-     * film's pay bargained for work of $25,000 or more (the contract's `promo`, paid by `promoSession`), and the raise on
+     * film's pay the agent bargained for (the contract's `promo`, paid by `promoSession`): where the contract would leave
+     * it unpaid, on work of $25,000 or more, or above the day performer's minimum it pays below that; and the raise on
      * the production's option (the option clause's `raise`, which `renewFromOption` reads). Absent, the part's own: an
      * older save's offers have none of them.
      */
@@ -299,9 +300,10 @@ export interface Opportunity extends HasHistory {
   playing?: import('./material').Playing;
   /**
    * A conditional offer (from 2026-10-25, loop 10, `systems/offers.ts`'s `CONDITIONAL`): firm only once the round it names
-   * goes the actor's way. `accepted` is when the actor accepted it on that condition, and `outcome` what came of it.
+   * goes the actor's way. `accepted` is when the actor accepted it on that condition, and `outcome` what came of it;
+   * `engagementId` and `words` the work for the same casting office that brought it, and why, said with the condition.
    */
-  condition?: { round: 'chemistry' | 'test'; accepted?: Instant; outcome?: 'met' | 'failed' };
+  condition?: { round: 'chemistry' | 'test'; accepted?: Instant; outcome?: 'met' | 'failed'; engagementId?: ProId; words?: string };
   /**
    * The part's requirement changed during casting (from 2026-10-25, loop 10, `REWRITE`): the playing ages or a technique
    * it now needs, read by `eligibilityProblems` in place of the part's own, and said.
@@ -380,8 +382,9 @@ export interface AuditionRound {
   /**
    * A self-tape's takes (from 2026-10-25, brief 27's offers and auditions, loop 13: "records a take → reviews or retries
    * within available time and rules → selects and submits the take"; `systems/offers.ts`): each recorded, judged and kept,
-   * with what it was judged from (`kept`) until one is sent, so the one sent is judged as it was recorded. `sent` is the
-   * take sent, by its place. An older save's taped rounds have none: their one take was sent as it was taped.
+   * with what it was judged from (`kept`) until one is sent, so the one sent is judged as it was recorded, and how it was
+   * played (`sides`, which its line says). `sent` is the take sent, by its place, which Why It Went This Way says
+   * (`roundWords`). An older save's taped rounds have none: their one take was sent as it was taped.
    */
   takes?: { at: Instant; overall: number; band: Band; key: string; sides?: string[]; held?: string; kept?: { task: string; ruleset?: string; inputs: import('./evaluation').Evaluation['inputs'] } }[];
   sent?: number;
@@ -393,9 +396,9 @@ export interface AuditionRound {
   note?: { axis: 'pace' | 'scale' | 'structure'; side: string; at: Instant; answer?: 'follow' | 'hold' };
   /**
    * Asking the production to reschedule a chemistry read or a screen test (from 2026-10-25, loop 14, `RESCHEDULE`): when,
-   * when it answers, and the answer, with the new time where it was granted.
+   * when it answers, and the answer; the round's own `at` is the new time where it was granted.
    */
-  reschedule?: { at: Instant; answerAt: Instant; answer?: 'granted' | 'refused'; to?: Instant };
+  reschedule?: { at: Instant; answerAt: Instant; answer?: 'granted' | 'refused' };
 }
 
 /** A payment owed for work: promised when the contract's accepted, received only when it's posted. */
@@ -621,8 +624,9 @@ export interface Contract {
   renews?: ProId;
   clauses: ContractClause[];
   /**
-   * The promotional film's pay the agent bargained for work of $25,000 or more (from 2026-10-25, brief 27's offers and
-   * auditions, `systems/offers.ts`): what `promoSession` pays for it in place of the contract's own rule. Absent, the rule's.
+   * The promotional film's pay the agent bargained for (from 2026-10-25, brief 27's offers and auditions,
+   * `systems/offers.ts`), on work of $25,000 or more where the contract would leave it unpaid, or above the day performer's
+   * minimum it pays below that: what `promoSession` pays for it in place of the contract's own rule. Absent, the rule's.
    */
   promo?: Money;
 }

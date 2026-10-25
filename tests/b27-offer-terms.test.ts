@@ -10,22 +10,23 @@
  *
  * PLAYER JOURNEYS: a graduate played by the clock and the commands a player sends (tests/fakes/career-world.ts); TEST
  * SETUP, said where it's done: the agreement (`represent`), an offer put on the record as casting's draws would leave
- * one, and, for the option's renewal and the promotional film, their days brought to the clock. Each fixture's draw is
- * read as the game reads it, never forced. The twin is the same save, reloaded, that doesn't negotiate.
+ * one, the option's day brought to the clock, and the promotional film's release set so its call falls before the shoot.
+ * Each fixture's draw is read as the game reads it, never forced. The twin is the same save, reloaded, that doesn't
+ * negotiate.
  */
 import { describe, expect, it } from 'vitest';
-import { MS_DAY, MS_HOUR } from '@/engine/core/time';
+import { MS_DAY, MS_HOUR, addDays, formatDate } from '@/engine/core/time';
 import { formatMoney } from '@/engine/core/money';
 import type { ProjectTemplate } from '@/engine/content/careerwork';
 import { seriesById } from '@/engine/content/series';
 import { PROMO } from '@/engine/content/workflows';
 import { keepProject, slatePartsAt } from '@/engine/systems/slate';
 import type { Engagement, Opportunity } from '@/engine/systems/pro';
-import { NEGOTIATE, OFFER_KIND, askMoreRefusal, datesOf, payTermsOf, travels, writtenFor } from '@/engine/systems/projobs';
+import { NEGOTIATE, OFFER_KIND, askMoreRefusal, callPromo, datesOf, payTermsOf, travels, writtenFor } from '@/engine/systems/projobs';
 import { TERMS, askShare, offerEstimate, ownDay, promoMinimum, withdrawChance } from '@/engine/systems/offers';
 import { OPTION_RAISE, clauseOf } from '@/engine/systems/contracts';
 import { OPTION_KIND, seasonMade } from '@/engine/systems/series';
-import { PROMO_KIND, promoFor } from '@/engine/systems/workflow';
+import { promoDrawn, promoFor, workKey } from '@/engine/systems/workflow';
 import { negotiatedAmount } from '@/engine/systems/propay';
 import { graduate, notices, played, reload } from './fakes/career-world';
 import { represent } from './fakes/b20-career';
@@ -193,6 +194,8 @@ describe('negotiating a term through the agent', () => {
         if (datesOf({ projectId: t.id, postedAt: week }).length === 0) continue;
         const d = draws(base, t, week, 'promo');
         if (!d.yes || d.withdraw < TERMS.withdraw.most) continue;
+        // And whose production calls the actor to a promotional film by its own draw (`promoDrawn`, keyed by the work).
+        if (!promoDrawn(base, workKey({ projectId: t.id, days: datesOf({ projectId: t.id, postedAt: week }) }), t.role.size)) continue;
         const terms = payTermsOf({ projectId: t.id, postedAt: week });
         const probe = { id: 'probe', projectId: t.id, postedAt: week, offer: { amount: negotiatedAmount(terms.each ?? 0, t.union, true), per: terms.per, rate: t.pay } } as unknown as Opportunity;
         keepProject(base.player, t, t.series ? seriesById(t.series) : undefined);
@@ -210,14 +213,17 @@ describe('negotiating a term through the agent', () => {
         played(sim, ask(sim, o, 'promo').answerAt + MS_HOUR);
       }
       const e = accept(sim, o);
-      // TEST SETUP: the production's call to the promotional film, as `callPromo` sets one, brought to the clock tomorrow.
-      const at = sim.now + MS_DAY;
-      e.promo = { at, status: 'set' };
-      sim.schedule({ at, kind: PROMO_KIND, label: `${t.project}: Promotional Film`, category: 'career', priority: 38, requiresPlayer: true, durationMinutes: PROMO.hours * 60, travelMinutes: 30, locationId: sim.player.currentLocationId, refType: 'pro.engagement', refId: e.id, payload: { personId: sim.player.id, engagementId: e.id } });
-      played(sim, at + PROMO.hours * MS_HOUR + MS_HOUR);
-      return { o, e };
+      // The production's call to the promotional film, made by the function the wrap and a late release call (`callPromo`).
+      // TEST SETUP: its release a fortnight and a day off, so the call falls before the shoot, clear of the days booked.
+      const from = sim.universe.notifications.length;
+      callPromo(sim, sim.player, e, t, addDays(sim.now, PROMO.before + 1, 'America/New_York'));
+      const call = sim.universe.notifications.slice(from).find((n) => n.title === `${t.project} Calls You For A Promotional Film`)!.body;
+      played(sim, e.promo!.at + PROMO.hours * MS_HOUR + MS_HOUR);
+      return { o, e, call };
     };
     const asked = run(true);
+    // The call says what the agent bargained; the twin's says the agreement's minimum.
+    expect(asked.call).toContain(`It pays ${formatMoney(ownDay(asked.o), 'USD')}, as your agent bargained.`);
     expect([asked.o.offer!.asked!.answer, asked.o.offer!.promo]).toEqual(['raised', ownDay(asked.o)]);
     expect(asked.e.contract!.promo).toBe(ownDay(asked.o));
     expect(asked.e.contract!.clauses.find((c) => c.kind === 'rule' && c.id === 'promo')).toMatchObject({ words: expect.stringContaining('your agent bargained') });
@@ -228,6 +234,7 @@ describe('negotiating a term through the agent', () => {
     // The falsifiability twin: the agreement's minimum for it, less than the day bargained.
     expect(plain.e.contract!.promo).toBeUndefined();
     expect(plain.e.pay.find((p) => p.key === `${plain.e.id}:promo`)?.promised).toBe(promoMinimum(plain.o));
+    expect(plain.call).toContain(`It pays a day performer’s minimum, ${formatMoney(promoMinimum(plain.o), 'USD')}.`);
     expect(promoMinimum(plain.o)).toBeLessThan(ownDay(asked.o));
   }, 300_000);
 
@@ -287,6 +294,13 @@ describe('negotiating a term through the agent', () => {
     }
     const lo = offered(sim, low!.t, low!.week);
     expect(askMoreRefusal(sim, sim.player, lo, 'promo')).toBe(`The agreement already pays the promotional film a day performer’s minimum, ${formatMoney(promoMinimum(lo), 'USD')}, at least your own day.`);
+    // A further episode whose days would clash with work booked isn't asked for: a yes would leave an offer the clash made
+    // impossible to accept. TEST SETUP: a day of other work booked on the further episode's first day.
+    const own = datesOf(o).map((d) => d.from);
+    const extra = datesOf({ ...o, offer: { ...o.offer!, episodes: (o.offer!.episodes ?? (t.schedule.kind === 'episodes' ? t.schedule.guaranteed : 0)) + 1 } }).find((d) => !own.includes(d.from))!;
+    sim.player.pro!.engagements.push({ id: 'test-clash', opportunityId: 'test-clash-o', projectId: oneOff.id, role: oneOff.role.part, status: 'booked', days: [{ from: extra.from, to: extra.to, label: 'Another Job' }], pay: [], history: [], counts: {} });
+    expect(askMoreRefusal(sim, sim.player, o, 'episodes')).toBe(`A further episode’s days would clash with Another Job on ${formatDate(extra.from, 'America/New_York')}, so there’s no episode you could take on.`);
+    sim.player.pro!.engagements = sim.player.pro!.engagements.filter((e) => e.id !== 'test-clash');
     const r = ask(sim, o, 'episodes');
     const twin = reload(sim);
     expect(sim.execute({ kind: 'pro.ask_more', payload: { opportunityId: o.id, item: 'pay' } }).error).toMatch(/has asked; the answer comes on /);

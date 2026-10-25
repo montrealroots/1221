@@ -67,8 +67,10 @@ export function attributesMatrix(): string {
 
   out.push('', `## Task Profiles: ${Object.keys(TASK_PROFILES).length} of ${Object.keys(TASK_PROFILES).length}`, '', row(['Profile', 'Dimensions', 'Judged In', 'Consumer', 'Test Evidence']), '| --- | --- | --- | --- | --- |');
   for (const t of Object.values(TASK_PROFILES)) {
-    const where = t.id === 'performance' ? 'a night, a dress (`nightEvaluation`)' : t.id === 'camera' ? 'coursework self-tape' : t.id === 'tape' ? 'a practice brief, `practice.self_tape` (from 2026-10-12)' : t.id === 'tapeOnFeet' ? 'a practice brief built on physical work, `practice.self_tape`' : `coursework: ${Object.entries(TEMPLATE_TASK).filter(([, v]) => v === t.id).map(([k]) => k).join(', ')}`;
-    out.push(row([t.label, Object.keys(t.dims).map((d) => DIMENSION_LABEL[d as Dimension]).join(', '), where, t.id === 'performance' ? 'the night’s band: morale, presence, casting, the term’s evaluation' : 'the showing’s band: the meeting’s growth, a classmate’s word', '`tests/evaluation.test.ts` (the guarantee on every profile)']));
+    // An audition casting directed (from 2026-10-25, brief 27's offers and auditions): a professional round, read by casting's cut.
+    const directed = t.id === 'auditionDirected';
+    const where = directed ? 'an audition or a callback in person casting directed (`approachRead`, from 2026-10-25)' : t.id === 'performance' ? 'a night, a dress (`nightEvaluation`)' : t.id === 'camera' ? 'coursework self-tape' : t.id === 'tape' ? 'a practice brief, `practice.self_tape` (from 2026-10-12)' : t.id === 'tapeOnFeet' ? 'a practice brief built on physical work, `practice.self_tape`' : `coursework: ${Object.entries(TEMPLATE_TASK).filter(([, v]) => v === t.id).map(([k]) => k).join(', ')}`;
+    out.push(row([t.label, Object.keys(t.dims).map((d) => DIMENSION_LABEL[d as Dimension]).join(', '), where, directed ? 'the round’s band: casting’s cut (`castingDraw`)' : t.id === 'performance' ? 'the night’s band: morale, presence, casting, the term’s evaluation' : 'the showing’s band: the meeting’s growth, a classmate’s word', directed ? '`tests/b27-sides.test.ts`, `tests/evaluation.test.ts` (the guarantee on every profile)' : '`tests/evaluation.test.ts` (the guarantee on every profile)']));
   }
 
   out.push('', '## Exercises: ' + `${EXERCISES.length} of ${EXERCISES.length}`, '', row(['Exercise', 'Trains', 'Source']), '| --- | --- | --- |');

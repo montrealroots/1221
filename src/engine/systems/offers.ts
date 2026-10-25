@@ -9,8 +9,9 @@
  * the pay, and the answer was a raise or none. Now the actor chooses what the agent asks about, once an offer: the pay; on
  * a recurring part, one more guaranteed episode; and on SAG-AFTRA work, the promotional film paid at the actor's own day,
  * where the contract pays it less (`promoTerm`, `systems/workflow.ts`): unpaid on work of $25,000 or more, which the
- * agreement leaves to bargain (N13 §18.B(5)), and a day performer's minimum below it, which the agreement sets as the
- * least it pays (§18.B(3)), so more is the parties' to agree. No part the game offers today is paid $25,000 or more, so
+ * agreement leaves to bargain (N13 §18.B(3)), and a day performer's minimum below it, which the agreement sets as the
+ * least it pays (§18.B(5)), so more is the parties' to agree (the subsections stood the other way round here until later
+ * on 2026-10-25; brief 25's register has them as they are now). No part the game offers today is paid $25,000 or more, so
  * in play it's the second. The production answers the next afternoon as before, and
  * the answer is one the loop names: raised, kept, a trade-off (more pay for one guaranteed episode fewer; one more episode
  * for no raise on the option; the promotional film at the agreement's minimum rather than the actor's own day), or the
@@ -27,9 +28,10 @@
  * a brief has one (`Playing`, `content/approaches.ts`), rehearsed by Rehearse It On Your Feet; every round reads it,
  * against the part's own register (`sceneOfPart`). At an audition or a callback in person, played some way, casting
  * gives a direction where the part asks for another way on one aspect, from what the part asks, never drawn: the clock
- * stops ten minutes in, and the actor follows it, playing that side unrehearsed and reaching for adaptability, or keeps
- * their choice, playing against what casting asked. The rest of the read is judged with the answer, and casting's cut
- * reads that read.
+ * stops ten minutes in, and the actor follows it, playing that side with as much of the rehearsal as their adaptability
+ * carries over and reaching for adaptability to take the note, or keeps their choice, playing against what casting asked
+ * and not answering the note. The rest of the read is judged with the answer, as an audition with a direction
+ * (`TASK_PROFILES.auditionDirected`, which judges responsiveness as well), and casting's cut reads that read.
  *
  * **Conditional offers, changed requirements, recasting** (loop 10, Area B; `CONDITIONAL`, `REWRITE`, `RECAST`). A
  * casting office that cast the actor before, the work Strong, may offer them a lead on one condition, the screen test
@@ -54,7 +56,7 @@ import { MS_DAY, MS_HOUR, addDays, ageOn, dateKey, formatDate, formatTime, forma
 import { formatMoney, type Money } from '../core/money';
 import { spokenList } from '../core/text';
 import { RATES, minimumOn, projectById, type ProjectTemplate } from '../content/careerwork';
-import { AXES, APPROACH_EFFECT, MISFIT } from '../content/approaches';
+import { AXES, APPROACH_EFFECT, MISFIT, PLAYING } from '../content/approaches';
 import type { Axis, AxisValue } from '../content/material';
 import { GENRE_REGISTER } from '../content/genre-register';
 import { EVALUATION, TASK_PROFILES, type Dimension, type TaskProfile } from '../content/tasks';
@@ -72,12 +74,13 @@ import { axisSuitability, type Scene } from './interpretation';
 import { requirementOfRole, SELF_TAPE } from './engagement';
 import { ENGAGEMENT } from '../content/engagement';
 import { offSick } from './school';
+import { abilityOf } from './attributes';
 import { defineStop } from '../world/clock';
 import { promoFor } from './workflow';
 import { overtimeOf, paysOvertime } from './contracts';
 import {
-  AUDITION_KIND, CASTING, NEGOTIATE, NEGOTIATE_KIND, OFFER_KIND, ROUND_WORDS, WORK, acceptRefusal, agrees, askedAmount, auditionContext, castingAs, clashesAt, counted,
-  datesOf, fitOf, nextRound, overtimeHours, payTermsOf, postingTimes, projectOf, roundMinutes, roundToCome, tapeRefusal, tripMinutes,
+  AUDITION_KIND, CASTING, NEGOTIATE, NEGOTIATE_KIND, OFFER_KIND, ROUND_WORDS, WORK, acceptRefusal, agrees, askedAmount, auditionContext, bookedClash, castingAs, clashesAt, counted,
+  datesOf, fitOf, nextRound, overtimeHours, payTermsOf, postingTimes, projectOf, roundMinutes, roundToCome, spansOf, tapeRefusal, tripMinutes,
   type Round, type WorkDay,
 } from './projobs';
 import { visibilityOf } from './awards';
@@ -99,10 +102,18 @@ export const TAKES = { perDay: 3 } as const;
 /**
  * Casting's direction in the room: given ten minutes into an audition or a callback in person, on the aspect the part's
  * register leans on most (a suitability gap of a tenth or more) where the actor's choice plays the other way or none.
- * Followed, the read reaches for adaptability as well, half a weight on responsiveness: taking a direction on the spot.
+ * A round so directed is judged as `TASK_PROFILES.auditionDirected`, the audition's five dimensions and responsiveness,
+ * which is answering a note: listening, and half a weight of adaptability. Followed, the side asked for is played with as
+ * much of the choice's rehearsal as adaptability carries over (`followedPrep`), and the read reaches for adaptability a
+ * weight and a half more on responsiveness, taking the note on the spot; kept, responsiveness is held to `MISFIT` (the
+ * note not answered), and so is each dimension the side asked for leans on. Measured on six directed slate parts with
+ * every other level at 60, keeping came out ahead below an adaptability of about 40 and following above it, by up to
+ * seven points at 95. Until later on 2026-10-25 a directed round was judged as an audition, which has no
+ * responsiveness, so the half weight the follow added was read nowhere and keeping a choice against a direction to play it
+ * open cost nothing (brief 27's review, F1).
  */
 export const NOTE = { afterMinutes: 10, least: 0.1 } as const;
-const NOTE_INPUTS: Partial<Record<Dimension, readonly { ability: AbilityId; weight: number }[]>> = { responsiveness: [{ ability: 'adaptability', weight: 0.5 }] };
+const NOTE_INPUTS: Partial<Record<Dimension, readonly { ability: AbilityId; weight: number }[]>> = { responsiveness: [{ ability: 'adaptability', weight: 1.5 }] };
 
 /**
  * Negotiation's further answers: the offer withdrawn at a quarter of the ask's share of the offer's worth, at most one in
@@ -183,29 +194,33 @@ const mergeInputs = (a: Partial<Record<Dimension, readonly { ability: AbilityId;
 /**
  * A round's judgment with the way the sides are played (`auditionContext`'s last step): the choice's lean on the task,
  * the abilities each side draws on, its rehearsal against the part's own mark, and how well it suits the part's register;
- * casting's direction once answered, followed (its side played, reaching for adaptability) or kept against (the
- * dimensions the asked side leans on held to `MISFIT`). A round played with no choice and no direction is judged as it
- * always was, the context returned untouched.
+ * casting's direction once answered, the round judged as one directed (`TASK_PROFILES.auditionDirected`), followed (its
+ * side played, reaching for adaptability on responsiveness) or kept against (responsiveness and the dimensions the asked
+ * side leans on held to `MISFIT`). A round played with no choice and no direction is judged as it always was, the context
+ * returned untouched.
  */
 export function approachRead(o: Opportunity, r: AuditionRound, ctx: EvalContext): EvalContext {
   const playing = o.playing;
   const sides = sidesOf(playing);
   const note = r.note?.answer ? r.note : undefined;
   if (!sides.length && !note) return ctx;
-  const read = materialContext(ctx.task, undefined, playing, undefined, sceneOfPart(projectOf(o)));
-  const fam = familyFactors(ctx.task, ctx.families);
-  const lean = Object.fromEntries((Object.keys(ctx.task.dims) as Dimension[]).map((d) => [d, (fam[d] ?? 1) * (read.lean[d] ?? 1)])) as Partial<Record<Dimension, number>>;
+  // A round casting directed is judged on answering the note as well (`NOTE`): an audition's, as one with a direction.
+  const task = note && ctx.task.id === TASK_PROFILES.audition!.id ? TASK_PROFILES.auditionDirected! : ctx.task;
+  const read = materialContext(task, undefined, playing, undefined, sceneOfPart(projectOf(o)));
+  const fam = familyFactors(task, ctx.families);
+  const lean = Object.fromEntries((Object.keys(task.dims) as Dimension[]).map((d) => [d, (fam[d] ?? 1) * (read.lean[d] ?? 1)])) as Partial<Record<Dimension, number>>;
   const prep = { ...ctx.prep };
   const required = { ...ctx.required };
   if (sides.length) { prep.approach = playing!.prep; required.approach = read.required; }
   const fit = { ...read.fit };
   if (note?.answer === 'hold') {
     const asked = APPROACH_EFFECT[note.side as AxisValue];
+    if (task.dims.responsiveness) fit.responsiveness = { f: Math.min(fit.responsiveness?.f ?? 1, MISFIT), label: `Casting’s direction: asked to play it ${asked.label.toLowerCase()}, you kept your choice rather than take the note` };
     for (const [d, x] of Object.entries(asked.lean) as [Dimension, number][]) {
-      if (x >= 1.1 && ctx.task.dims[d]) fit[d] = { f: Math.min(fit[d]?.f ?? 1, MISFIT), label: `${asked.label}: casting asked for it ${asked.label.toLowerCase()}, and you kept your choice` };
+      if (x >= 1.1 && task.dims[d] && d !== 'responsiveness') fit[d] = { f: Math.min(fit[d]?.f ?? 1, MISFIT), label: `${asked.label}: casting asked for it ${asked.label.toLowerCase()}, and you kept your choice` };
     }
   }
-  return { ...ctx, prep, required, lean, inputs: mergeInputs(read.inputs, note?.answer === 'follow' ? NOTE_INPUTS : {}), extraPrep: read.prep, fit, grain: read.grain };
+  return { ...ctx, task, prep, required, lean, inputs: mergeInputs(read.inputs, note?.answer === 'follow' ? NOTE_INPUTS : {}), extraPrep: read.prep, fit, grain: read.grain };
 }
 
 /** What a round would come to played a way, fully prepared, on a sufficient day, with no draw: what How You'll Play It shows beside each side. */
@@ -287,7 +302,7 @@ export function giveNote(sim: Simulation, person: Person, o: Opportunity, r: Aud
   if (person.id === sim.universe.playerId) {
     sim.requireDecision({
       urgency: 85, category: 'career', title: `Casting’s Direction For ${t.role.part}`, dueAt: at, route: CAREER, refType: 'pro.note', refId: o.id,
-      detail: `${words} Follow The Direction plays the rest of it that way, unrehearsed, and asks you to adapt on the spot. Keep Your Choice plays it as you prepared it, against what casting asked. Go keeps your choice.`,
+      detail: `${words} Follow The Direction plays the rest of it that way: how much of your rehearsal carries over, and how well you take the note, are down to how well you adapt. Keep Your Choice plays it as you prepared it, against what casting asked, and casting sees you didn’t take the note. Go keeps your choice.`,
       actions: [
         { label: 'Follow The Direction', commandKind: 'pro.answer_note', payload: { opportunityId: o.id, follow: true } },
         { label: 'Keep Your Choice', commandKind: 'pro.answer_note', payload: { opportunityId: o.id, follow: false } },
@@ -308,12 +323,24 @@ export function noteRefusal(o: Opportunity | undefined): string | undefined {
   return undefined;
 }
 
-/** Casting's direction answered: followed, the side taken into the way you play it (its rehearsal halved, `choose`), or kept against. */
+/**
+ * The share of a way of playing's rehearsal carried into the side casting asked for, when it's followed: the half any
+ * change of mind keeps (`PLAYING.keptOnChange`, `choose`), and the rest by the actor's adaptability, all of it at 100.
+ * Until later on 2026-10-25 a direction followed kept the half whatever the actor was, so following cost a strong adapter
+ * what it cost a weak one and keeping the choice came out ahead at every level measured (brief 27's review, F1).
+ */
+export const followedPrep = (prep: number, adaptability: number): number => r3(prep * (PLAYING.keptOnChange + (1 - PLAYING.keptOnChange) * clamp(adaptability, 0, 100) / 100));
+
+/** Casting's direction answered: followed, the side taken into the way you play it (its rehearsal by `followedPrep`), or kept against. */
 export function answerNote(sim: Simulation, person: Person, o: Opportunity, follow: boolean, hooks: OfferHooks): { answer: 'follow' | 'hold' } {
   const r = noteWaiting(o)!;
   const note = r.note!;
   note.answer = follow ? 'follow' : 'hold';
-  if (follow) chooseApproach(sim, o, { ...(o.playing?.pace ? { pace: o.playing.pace } : {}), ...(o.playing?.scale ? { scale: o.playing.scale } : {}), ...(o.playing?.structure ? { structure: o.playing.structure } : {}), [note.axis]: note.side });
+  if (follow) {
+    const before = o.playing?.prep ?? 0;
+    chooseApproach(sim, o, { ...(o.playing?.pace ? { pace: o.playing.pace } : {}), ...(o.playing?.scale ? { scale: o.playing.scale } : {}), ...(o.playing?.structure ? { structure: o.playing.structure } : {}), [note.axis]: note.side });
+    o.playing!.prep = followedPrep(before, abilityOf(sim, person, 'adaptability'));
+  }
   sim.resolveDecision('pro.note', o.id, 'career');
   const t = projectOf(o);
   hooks.note(sim, person, o, { kind: r.round === 'audition' ? 'audition' : 'callback', key: `${r.round}:note-answered`, words: follow ? `You played the rest of it ${sideLabel(note.side)}, as ${t.casting} asked.` : `You kept to your choice, against what ${t.casting} asked.` });
@@ -387,8 +414,22 @@ export function sendTake(sim: Simulation, person: Person, o: Opportunity, take: 
   return { band: r.band!, overall: r.overall! };
 }
 
-/** A take in a line: "Take 2, Tuesday, March 3 at 2:00 PM: Strong, 71.4." */
-export const takeWords = (x: NonNullable<AuditionRound['takes']>[number], i: number): string => `Take ${i + 1}, ${formatWeekdayDate(x.at, NY)} at ${formatTime(x.at, NY)}: ${BAND_LABEL[x.band]}, ${x.overall.toFixed(1)}.${x.held ? ` ${x.held.charAt(0).toUpperCase()}${x.held.slice(1)}.` : ''}`;
+/**
+ * A take in a line, how it was played where it was some way: "Take 2, Tuesday, March 3 at 2:00 PM, played driven and
+ * open: Strong, 71.4." The way is the take's own (`sides`), so a take kept from before a change of mind says how it was.
+ */
+export const takeWords = (x: NonNullable<AuditionRound['takes']>[number], i: number): string => `Take ${i + 1}, ${formatWeekdayDate(x.at, NY)} at ${formatTime(x.at, NY)}${x.sides?.length ? `, played ${spokenList(x.sides.map(sideLabel))}` : ''}: ${BAND_LABEL[x.band]}, ${x.overall.toFixed(1)}.${x.held ? ` ${x.held.charAt(0).toUpperCase()}${x.held.slice(1)}.` : ''}`;
+
+/**
+ * What a decided round adds to Why It Went This Way, or nothing: the take sent of those recorded, and casting's direction
+ * and the answer to it, each of which the round's judgment read.
+ */
+export function roundWords(r: AuditionRound): string {
+  const out: string[] = [];
+  if (r.sent !== undefined && (r.takes?.length ?? 0) > 1) out.push(`You sent take ${r.sent + 1} of the ${counted(r.takes!.length, 'take')} you recorded.`);
+  if (r.note?.answer) out.push(`Casting asked for it ${sideLabel(r.note.side)}, and you ${r.note.answer === 'follow' ? 'followed the direction' : 'kept your choice'}.`);
+  return out.length ? ` ${out.join(' ')}` : '';
+}
 
 // ---------------------------------------------------------------------------------------------------------------------
 // Negotiation through representation (loop 18; Part 10)
@@ -426,7 +467,7 @@ const daysWith = (o: Opportunity, episodes: number): WorkDay[] => datesOf({ proj
  * Why the agent can't ask about a term other than the pay, or nothing (`askMoreRefusal` says the rest first: an offer
  * standing, asked once, an agent).
  */
-export function termsAskRefusal(o: Opportunity, item: TermItem): string | undefined {
+export function termsAskRefusal(person: Person, o: Opportunity, item: TermItem): string | undefined {
   const t = projectOf(o);
   if (item === 'episodes') {
     if (t.schedule.kind !== 'episodes') return 'Only a recurring part on a series has guaranteed episodes to ask about.';
@@ -434,7 +475,12 @@ export function termsAskRefusal(o: Opportunity, item: TermItem): string | undefi
     if (o.offer!.amount === undefined) return 'The pay is deferred, so there’s nothing to ask a further episode’s pay of.';
     if (g >= t.schedule.expected) return `The contract already guarantees every episode it expects you in, ${counted(g, 'episode')}.`;
     const s = t.series ? seriesById(t.series) : undefined;
-    if (!s || daysWith(o, g + 1).length < (g + 1) * s.daysEach) return 'The season has no episode left to guarantee you.';
+    const more = daysWith(o, g + 1);
+    if (!s || more.length < (g + 1) * s.daysEach) return 'The season has no episode left to guarantee you.';
+    // The further episode's days clear of booked work (from later on 2026-10-25): until then a yes could leave an offer a
+    // clash made impossible to accept, its first terms gone with it (brief 27's review, F12).
+    const clash = bookedClash(person, spansOf(person, t, more), o.id);
+    if (clash) return `A further episode’s days would clash with ${clash.label} on ${formatDate(clash.from, NY)}, so there’s no episode you could take on.`;
     return undefined;
   }
   if (item === 'promo') {
@@ -567,7 +613,7 @@ export function answerAsk(sim: Simulation, person: Person, o: Opportunity, hooks
     words = yes
       ? `${castingAs(t)} agreed to guarantee ${counted(g + 1, 'episode')} of the season, as ${agent} asked, each paid at ${formatMoney(offer.amount!, 'USD')} a day. ${until}`
       : traded
-        ? `${castingAs(t)} will guarantee ${counted(g + 1, 'episode')}, as ${agent} asked, if ${agrees(t, 'its', 'their')} option on you for next season carries no raise: the same day rate, not more. ${until}`
+        ? `${castingAs(t)} will guarantee ${counted(g + 1, 'episode')}, as ${agent} asked, if ${agrees(t, 'its', 'their')} option on you for next season carries no raise: the same day rate, unless next season’s rate for the part comes to more. ${until}`
         : `${castingAs(t)} kept ${agrees(t, 'its', 'their')} offer at ${counted(g, 'guaranteed episode')}, where ${agent} asked for ${counted(g + 1, 'episode')}. ${until}`;
   } else {
     const least = promoMinimum(o);
@@ -636,18 +682,19 @@ export function conditionalOfferFor(sim: Simulation, person: Person, t: ProjectT
 export function offerOnCondition(sim: Simulation, person: Person, t: ProjectTemplate, o: Opportunity, at: Instant, hooks: OfferHooks): boolean {
   const c = conditionalOfferFor(sim, person, t, at);
   if (!c) return false;
-  o.direct = { engagementId: c.engagementId, words: c.words };
-  o.condition = { round: c.round };
+  // Why it's offered is kept on the condition (from later on 2026-10-25): kept on `direct` until then, the offer said it came
+  // "without an audition" beside the round it named still to come (brief 27's review, F7).
+  o.condition = { round: c.round, engagementId: c.engagementId, words: c.words };
   hooks.makeOffer(sim, person, o);
   return true;
 }
 
-/** An offer's condition, in the sentences its notice and card say, or nothing. */
+/** An offer's condition, in the sentences its notice and card say, why it's offered first, or nothing. */
 export function conditionWords(o: Pick<Opportunity, 'condition' | 'projectId'>): string {
   if (!o.condition) return '';
   const t = projectOf(o);
   const noun = ROUND_WORDS[o.condition.round].noun;
-  return ` It’s offered on one condition: the ${noun} with ${t.casting} goes your way. Accepting it now holds your dates and sets the ${noun}; nothing is booked or paid until it goes your way, and the offer falls away if it doesn’t.`;
+  return `${o.condition.words ? ` ${o.condition.words}` : ''} It’s offered on one condition: the ${noun} with ${t.casting} goes your way. Accepting it now holds your dates and sets the ${noun}; nothing is booked or paid until it goes your way, and the offer falls away if it doesn’t.`;
 }
 
 /**
@@ -687,20 +734,43 @@ export function decideCondition(sim: Simulation, person: Person, o: Opportunity,
     hooks.tell(sim, person, `The Offer For ${t.role.part} Falls Away`, `${words}${gone}`, 75);
     return true;
   }
-  o.condition.outcome = 'met';
+  firm(sim, person, o, `Your ${noun} for ${t.role.part} went your way`, hooks);
+  return true;
+}
+
+/**
+ * A conditional offer made firm: the condition met, and the offer booked through the work loop's own acceptance on the
+ * terms accepted (the negotiated ones with them), or, where the booking is refused by then, fallen away, said.
+ */
+function firm(sim: Simulation, person: Person, o: Opportunity, why: string, hooks: OfferHooks): void {
+  const t = projectOf(o);
+  o.condition!.outcome = 'met';
   o.status = 'offered';
   o.offer!.until = Math.max(o.offer!.until, sim.now + MS_HOUR);
   const no = acceptRefusal(sim, person, o);
   if (no) {
-    const words = `Your ${noun} for ${t.role.part} went your way, but the booking couldn’t be made: ${lower(no)}`;
+    const words = `${why}, but the booking couldn’t be made: ${lower(no)}`;
     const gone = hooks.holdGone(o);
     hooks.note(sim, person, o, { kind: 'problem', key: 'condition:refused', words });
     hooks.settle(sim, person, o, 'lapsed', words);
     hooks.tell(sim, person, `The Offer For ${t.role.part} Falls Away`, `${words}${gone}`, 80);
-    return true;
+    return;
   }
   sim.execute({ kind: 'pro.accept_offer', payload: { opportunityId: o.id } });
-  hooks.tell(sim, person, `${t.role.part} Is Yours`, `Your ${noun} went your way, so the offer you accepted on that condition is firm: you’re booked as ${t.role.part} in ${t.project}. Booked Work has the days.`, 85);
+  hooks.tell(sim, person, `${t.role.part} Is Yours`, `${why}, so the offer you accepted on its condition is firm: you’re booked as ${t.role.part} in ${t.project}, on the terms you accepted. Booked Work has the days.`, 85);
+}
+
+/**
+ * A part accepted on its condition whose production, asked to decide against another offer on its days, chooses the actor
+ * (the work loop's hold answer, before its own `makeOffer`): the condition settled as met and the part booked on the
+ * terms accepted, as the round going their way would have. Until later on 2026-10-25 the answer made the offer afresh, which
+ * dropped the negotiated terms and said the condition again of an offer that, accepted, would book outright (brief 27's
+ * review, F3). Returns whether it did.
+ */
+export function firmOnHold(sim: Simulation, person: Person, o: Opportunity, other: string, hooks: OfferHooks): boolean {
+  if (!o.condition?.accepted || o.condition.outcome) return false;
+  const t = projectOf(o);
+  firm(sim, person, o, `Asked to decide, ${t.casting} chose you for ${t.role.part} rather than let you go to ${other}`, hooks);
   return true;
 }
 
@@ -933,6 +1003,9 @@ export function rescheduleWords(sim: Simulation, person: Person, o: Opportunity)
   return `The ${ROUND_WORDS[r.round].noun} is set around other people’s days, so the production decides whether to move it: about ${Math.round(rescheduleChance(r.round, clash) * 10)} in 10, estimated${clash ? ', more for the clash on your calendar' : ''}.`;
 }
 
+/** What a chemistry read's or a screen test's notice says of a clash: Ask To Reschedule, and the chance with the clash to give. */
+export const rescheduleAskWords = (round: 'chemistry' | 'test'): string => `To ask the production to move it, press Ask To Reschedule on the Opportunities tab, at least a day ahead. The production decides: about ${Math.round(rescheduleChance(round, true) * 10)} in 10 with the clash to give as the reason, estimated.`;
+
 /** An ask to reschedule made: kept on the round, its answer on the clock. */
 export function askReschedule(sim: Simulation, person: Person, o: Opportunity, hooks: OfferHooks): { answerAt: Instant } {
   const r = roundToCome(o)!;
@@ -957,7 +1030,6 @@ function answerReschedule(sim: Simulation, person: Person, o: Opportunity, r: Au
     const item = sim.universe.scheduled.find((i) => i.status === 'pending' && i.kind === AUDITION_KIND && i.payload.opportunityId === o.id && Number(i.payload.round) === idx);
     if (item) sim.timeline.reschedule(item.id, to!);
     r.at = to!;
-    r.reschedule.to = to;
     r.moved = (r.moved ?? 0) + 1;
   }
   const words = yes
@@ -1053,8 +1125,8 @@ export function registerOffers(sim: Simulation, hooks: OfferHooks): void {
   if (!stopDeclared) {
     stopDeclared = true;
     defineStop(NOTE_KIND, [
-      { label: 'Follow The Direction', command: 'pro.answer_note', payload: (item) => ({ opportunityId: item.payload.opportunityId, follow: true }), then: 'carry-on', does: 'plays the rest of the read the way casting asked, unrehearsed', ahead: 'follow casting’s direction at an audition' },
-      { label: 'Keep Your Choice', command: 'pro.answer_note', payload: (item) => ({ opportunityId: item.payload.opportunityId, follow: false }), then: 'carry-on', does: 'plays the rest of the read the way you prepared it', ahead: 'keep your own choice against casting’s direction' },
+      { label: 'Follow The Direction', command: 'pro.answer_note', payload: (item) => ({ opportunityId: item.payload.opportunityId, follow: true }), then: 'carry-on', does: 'plays the rest of the read the way casting asked, as well as you adapt', ahead: 'follow casting’s direction at an audition' },
+      { label: 'Keep Your Choice', command: 'pro.answer_note', payload: (item) => ({ opportunityId: item.payload.opportunityId, follow: false }), then: 'carry-on', does: 'plays the rest of the read the way you prepared it, without taking the note', ahead: 'keep your own choice against casting’s direction' },
     ]);
   }
 }
@@ -1076,7 +1148,7 @@ export function termsChangedWords(o: Opportunity): string | undefined {
   const t = projectOf(o);
   const out: string[] = [];
   if (offer.episodes !== undefined) out.push(`${counted(offer.episodes, 'guaranteed episode')}`);
-  if (offer.optionRaise === 0) out.push('the option on next season at the same day rate');
+  if (offer.optionRaise === 0) out.push('the option on next season at the same day rate, unless next season’s rate for the part comes to more');
   if (offer.promo !== undefined) out.push(`the promotional film paid ${formatMoney(offer.promo, 'USD')}`);
   if (!out.length) return undefined;
   return `As negotiated: ${spokenList(out)}${t.schedule.kind === 'episodes' && offer.episodes !== undefined ? `, ${counted(datesOf(o).length, 'shoot day')}` : ''}.`;
@@ -1089,8 +1161,12 @@ export function conditionStanding(o: Opportunity): string | undefined {
   return `You accepted it on its condition: the ${ROUND_WORDS[o.condition.round].noun}. If it goes your way you’re booked on the terms you accepted; if it doesn’t, the offer falls away. ${castingAs(t)} ${agrees(t, 'holds', 'hold')} your dates meanwhile.`;
 }
 
-/** What a remembered no-show costs with an office, for the card: said where it applies. */
+/** What a remembered no-show costs with an office, for the card: what it remembers, the latest, and what that costs, where it applies. */
 export function rememberedWords(person: Person, t: ProjectTemplate, at: Instant): string | undefined {
-  return remembers(person, t.casting, at) ? `${castingAs(t)} remembers a time you didn’t turn up or withdrew late: ${agrees(t, 'its', 'their')} cuts are half as likely to go your way, estimated.` : undefined;
+  if (!remembers(person, t.casting, at)) return undefined;
+  const x = (person.pro?.noShows ?? []).filter((y) => y.casting === t.casting && y.at <= at).at(-1)!;
+  const was = projectById(x.projectId);
+  const what = was ? `${x.how === 'late' ? 'withdrew from' : 'didn’t turn up for'} ${was.role.part} in ${was.project}` : x.how === 'late' ? 'withdrew late' : 'didn’t turn up';
+  return `${castingAs(t)} remembers that you ${what}${x.how === 'late' ? ' at less than a day’s notice' : ''}, on ${formatDate(x.at, NY)}: ${agrees(t, 'its', 'their')} cuts are half as likely to go your way, estimated.`;
 }
 

@@ -16,15 +16,15 @@
  * hospital. Every draw is read as the game reads it, never forced.
  */
 import { describe, expect, it } from 'vitest';
-import { MS_DAY, MS_HOUR, addDays, instantFromZoned, zonedParts } from '@/engine/core/time';
+import { MS_DAY, MS_HOUR, addDays, formatTime, instantFromZoned, zonedParts } from '@/engine/core/time';
 import type { ProjectTemplate } from '@/engine/content/careerwork';
 import { keepProject, productionsOf, slatePartsAt } from '@/engine/systems/slate';
 import type { AuditionRound, Opportunity } from '@/engine/systems/pro';
 import {
-  AUDITION_KIND, CASTING, CASTING_KIND, castingDraw, datesOf, directOfferFor, eligibilityProblems, moveRefusal, postingTimes, postingsAt, roundsOf, travels, tripMinutes, writtenFor,
+  AUDITION_KIND, CASTING, CASTING_KIND, HOLD, OFFER_KIND, WORK, askedAmount, castingDraw, chanceOf, fitOf, datesOf, directOfferFor, eligibilityProblems, moveRefusal, payTermsOf, postingTimes, postingsAt, roundsOf, spansOf, travels, tripMinutes, writtenFor,
 } from '@/engine/systems/projobs';
 import {
-  CONDITIONAL, NOTICE, RECAST, RESCHEDULE, castingLift, conditionalOfferFor, recastDrawn, remembers, rescheduleChance, rescheduleRefusal, rescheduleWords, rewriteDrawn, withdrawWarning,
+  CONDITIONAL, NOTICE, RECAST, RESCHEDULE, castingLift, conditionalOfferFor, recastDrawn, rememberedWords, remembers, rescheduleAskWords, rescheduleChance, rescheduleRefusal, rescheduleWords, rewriteDrawn, withdrawWarning,
 } from '@/engine/systems/offers';
 import { MS_DAY as DAY } from '@/engine/core/time';
 import { graduate, notices, played, portfolio, reload, tend } from './fakes/career-world';
@@ -109,13 +109,25 @@ describe('an offer on condition', () => {
     }
     expect(fixture).toBeDefined();
     const { base, t, at } = fixture!;
+    // The falsifiability twin for the office's memory: one whose no-show it remembers gets no offer on condition.
+    // TEST SETUP: the no-show on the record as `rememberMiss` leaves one, a week before.
+    const marked = reload(base);
+    marked.player.pro!.noShows = [{ casting: t.casting, projectId: t.id, at: marked.now - WEEK, how: 'no-show' }];
+    expect(conditionalOfferFor(marked, marked.player, t, at)).toBeUndefined();
+    played(marked, at + MS_HOUR);
+    expect(marked.player.pro!.opportunities.filter((x) => x.projectId === t.id && x.condition)).toEqual([]);
     played(base, at + MS_HOUR);
     const o = base.player.pro!.opportunities.find((x) => x.projectId === t.id)!;
     const round = t.stages.test ? 'test' : 'chemistry';
-    expect([o.status, o.condition, o.rounds ?? []]).toEqual(['offered', { round }, []]);
-    expect(o.history.find((h) => h.key === 'offer')!.words).toContain('It’s offered on one condition:');
+    expect([o.status, o.condition, o.rounds ?? [], o.direct]).toEqual(['offered', { round, engagementId: expect.any(String), words: expect.stringMatching(/cast you as .* where your work was (Strong|Exceptional)\.$/) }, [], undefined]);
+    // Its notice says why and on what condition, and nothing of an audition it hasn't had yet.
+    const words = o.history.find((h) => h.key === 'offer')!.words;
+    expect(words).toContain(`${o.condition!.words} It’s offered on one condition:`);
+    expect(words).not.toContain('without an audition');
     const q = Object.values(base.universe.decisions).find((d) => d.refId === o.id)!;
     expect(q.detail).toContain('nothing is booked or paid until it goes your way');
+    // Its decision's acceptance is named as the card names it.
+    expect(q.actions.map((x) => x.label)).toEqual(['Accept On Its Condition', 'Decline The Offer']);
     const r = base.must<{ conditional: true; round: string; at: number }>({ kind: 'pro.accept_offer', payload: { opportunityId: o.id } });
     expect([r.conditional, r.round, o.status, o.condition!.accepted, o.hold?.status]).toEqual([true, round, 'callback', base.now, 'held']);
     // Uncertain work isn't guaranteed income: nothing booked, nothing promised.
@@ -150,6 +162,64 @@ describe('an offer on condition', () => {
   }, 300_000);
 });
 
+describe('an offer on condition, asked to decide', () => {
+  it('PLAYER JOURNEY: accepted on its condition, another offer on the same days, and the production asked to decide: its yes books the part on the terms accepted, the negotiated pay with them, and says so rather than offering it afresh', () => {
+    const base = graduate('b27-conditional-hold');
+    // A part with a chemistry read whose production, asked to decide, books by its own draw (`HOLD.book`, the condition's
+    // round not yet judged), and another part on some of the same days: read from the draws, never forced.
+    const overlap = (a: readonly { from: number; to: number }[], b: readonly { from: number; to: number }[]) => a.some((x) => b.some((y) => x.from < y.to && x.to > y.from));
+    let found: { t: ProjectTemplate; week: number; other: ProjectTemplate } | undefined;
+    for (let w = 1; w < 400 && !found; w += 1) {
+      const week = base.now + w * WEEK;
+      for (const p of productionsOf(base, week)) for (const t of p.parts) {
+        if (found || !t.stages.chemistry || travels(base.player, t) || !writtenFor(t, base.player) || !plays(base, t, week)) continue;
+        if (base.rng('pro.hold', t.id, week).next() >= HOLD.book.working) continue;
+        keepProject(base.player, t);
+        if (payTermsOf({ projectId: t.id, postedAt: week }).each === undefined) continue;
+        const held = spansOf(base.player, t, datesOf({ projectId: t.id, postedAt: week }));
+        for (const u of p.parts) {
+          if (u.project === t.project || travels(base.player, u) || !writtenFor(u, base.player)) continue;
+          keepProject(base.player, u);
+          if (payTermsOf({ projectId: u.id, postedAt: week }).each === undefined) continue;
+          if (overlap(spansOf(base.player, u, datesOf({ projectId: u.id, postedAt: week })), held)) { found = { t, week, other: u }; break; }
+        }
+        if (!found) for (const q of productionsOf(base, week)) for (const u of q.parts) {
+          if (found || u.project === t.project || travels(base.player, u) || !writtenFor(u, base.player)) continue;
+          keepProject(base.player, u);
+          if (payTermsOf({ projectId: u.id, postedAt: week }).each === undefined) continue;
+          if (overlap(spansOf(base.player, u, datesOf({ projectId: u.id, postedAt: week })), held)) found = { t, week, other: u };
+        }
+      }
+    }
+    expect(found).toBeDefined();
+    const { t, week, other } = found!;
+    played(base, week);
+    // TEST SETUP: the conditional offer on the record as `offerOnCondition` leaves one, its pay raised as an agent's ask
+    // answered yes leaves it; and the other offer as casting's draws would leave one, standing three days.
+    const offerOf = (u: ProjectTemplate, raised: boolean) => {
+      const terms = payTermsOf({ projectId: u.id, postedAt: week });
+      return { at: base.now, until: base.now + 3 * MS_DAY, rate: u.pay, amount: raised ? askedAmount(terms.each!) : terms.each!, per: terms.per, units: terms.units, version: raised ? 2 : 1 };
+    };
+    const o: Opportunity = { id: `test-${t.id}`, projectId: t.id, via: 'open', status: 'offered', postedAt: week, submitBy: week + WEEK, history: [], counts: {}, condition: { round: 'chemistry', words: 'Cast before.' }, offer: offerOf(t, true) };
+    const x: Opportunity = { id: `test-${other.id}`, projectId: other.id, via: 'open', status: 'offered', postedAt: week, submitBy: week + WEEK, history: [], counts: {}, offer: offerOf(other, false) };
+    base.player.pro!.opportunities.push(o);
+    const raised = o.offer!.amount!;
+    expect(base.must<{ conditional: true }>({ kind: 'pro.accept_offer', payload: { opportunityId: o.id } }).conditional).toBe(true);
+    expect([o.status, o.hold?.status, base.player.pro!.engagements.filter((e) => e.projectId === t.id)]).toEqual(['callback', 'held', []]);
+    base.player.pro!.opportunities.push(x);
+    base.schedule({ at: x.offer!.until, kind: OFFER_KIND, label: `The Offer For ${other.role.part} Lapses`, category: 'career', priority: 40, refType: 'pro.offer', refId: x.id, payload: { personId: base.player.id, opportunityId: x.id } });
+    const asked = base.must<{ answerAt: number }>({ kind: 'pro.ask_hold', payload: { opportunityId: o.id } });
+    played(base, asked.answerAt + MS_HOUR);
+    // Booked on the terms accepted, the condition settled as met: not offered afresh at the first pay.
+    expect([o.hold!.asked!.answer, o.condition!.outcome, o.status]).toEqual(['booked', 'met', 'booked']);
+    const e = base.player.pro!.engagements.find((y) => y.opportunityId === o.id)!;
+    expect(e.contract!.rate).toBe(raised);
+    expect(raised).toBeGreaterThan(payTermsOf({ projectId: t.id, postedAt: week }).each!);
+    expect(notices(base).some((n) => n.startsWith(`${t.role.part} Is Yours | Asked to decide, ${t.casting} chose you for ${t.role.part} rather than let you go to ${other.role.part}, so the offer you accepted on its condition is firm`))).toBe(true);
+    expect(o.history.filter((h) => h.key === 'offer')).toEqual([]);
+  }, 300_000);
+});
+
 describe('a requirement changed during casting', () => {
   it('PLAYER JOURNEY: the part now needs a technique at a level, said at the cut; the actor below it is released, the twin above it goes on, and the change is what the part asks from then', () => {
     const base = graduate('b27-rewrite');
@@ -176,6 +246,40 @@ describe('a requirement changed during casting', () => {
     above.player.craft![change.skill] = change.level - 1;
     expect(eligibilityProblems(above.player, oa, above.now).some((p) => p.includes(` at ${change.level}, and yours is at ${change.level - 1}.`))).toBe(true);
     expect(opp(reload(above), oa.id).rewrite).toMatchObject({ skill: change });
+  }, 240_000);
+});
+
+describe('a requirement changed during casting: the playing ages', () => {
+  it('PLAYER JOURNEY: the part rewritten for other ages, said at the cut; the actor outside them is released, the twin inside them goes on, and the new ages are what casting reads from then', () => {
+    const base = graduate('b27-rewrite-ages');
+    const { t, week } = first(base, (x, wk) => !!x.stages.callback && rewriteDrawn(base, x, wk)?.ages !== undefined);
+    const ages = rewriteDrawn(base, t, week)!.ages!;
+    played(base, week);
+    // TEST SETUP: the actor's age, the input the twins differ by: in the middle of the new ages for one, and just past
+    // them, on the side the part moved from, for the other.
+    const born = (sim: Sim, age: number) => { const p = zonedParts(sim.now, NY); sim.player.birthInstant = instantFromZoned({ year: p.year - age, month: p.month, day: 1, hour: 12, minute: 0 }, NY); };
+    const inside = Math.round((ages[0] + ages[1]) / 2);
+    const outside = ages[0] > t.requirements.ages[0] ? ages[0] - CASTING.playingSpread - 1 : ages[1] + CASTING.playingSpread + 1;
+    const out = reload(base);
+    const kept = reload(base);
+    born(out, outside);
+    born(kept, inside);
+    const oo = atTheCut(out, t, week);
+    const ok = atTheCut(kept, t, week);
+    played(out, out.now + 2 * MS_HOUR);
+    played(kept, kept.now + 2 * MS_HOUR);
+    expect(oo.rewrite).toMatchObject({ ages });
+    expect(oo.status).toBe('withdrawn');
+    expect(oo.outcome).toMatch(new RegExp(`for actors who play ${ages[0]} to ${ages[1]}, where it had asked for ${t.requirements.ages[0]} to ${t.requirements.ages[1]}, and you no longer fit it, so (it|they) released you from .*: at ${outside} you’re outside that\\.$`));
+    expect(ok.rewrite).toMatchObject({ ages });
+    expect(ok.history.find((h) => h.key === 'rewrite')!.words).toMatch(/You still fit it, so you’re still in the running\.$/);
+    // What casting reads from then is the new range: the twin at the released actor's age is a problem eligibility names
+    // in the new ages, and at the middle of them none. TEST SETUP: the twin's age moved.
+    born(kept, outside);
+    expect(eligibilityProblems(kept.player, ok, kept.now)).toContain(`Casting wants actors who play ${ages[0]} to ${ages[1]}, and at ${outside} you’re outside that.`);
+    born(kept, inside);
+    expect(eligibilityProblems(kept.player, ok, kept.now).some((p) => p.startsWith('Casting wants actors who play'))).toBe(false);
+    expect(opp(reload(kept), ok.id).rewrite).toMatchObject({ ages });
   }, 240_000);
 });
 
@@ -266,6 +370,10 @@ describe('withdrawing, and not turning up', () => {
     expect(withdrawWarning(late, os[3]!)).toMatch(/less than a day away, so withdrawing now is late notice/);
     expect(late.must<{ notice: boolean }>({ kind: 'pro.withdraw', payload: { opportunityId: os[3]!.id } }).notice).toBe(false);
     expect(late.player.pro!.noShows!.map((x) => x.how)).toEqual(['late']);
+    // What the office remembers, said on the card: the part, and how.
+    expect(rememberedWords(asleep.player, t, asleep.now)).toMatch(new RegExp(`remembers that you didn’t turn up for ${t.role.part} in ${t.project}, on .*: (its|their) cuts are half as likely to go your way, estimated\\.$`));
+    expect(rememberedWords(late.player, t, late.now)).toMatch(new RegExp(`remembers that you withdrew from ${t.role.part} in ${t.project} at less than a day’s notice, on `));
+    expect(rememberedWords(notice.player, t, notice.now)).toBeUndefined();
     // What the office's memory does: halves its cuts, read at the cut itself (a later part of its own at casting's word, the
     // same for both twins but the memory), and stops its direct offers, for the no-show and not the twin with notice.
     const { t: later, week: lw } = first(base, (x, wk) => x.casting === t.casting && x.id !== t.id && !!x.stages.callback && wk > week + 2 * WEEK && !rewriteDrawn(base, x, wk));
@@ -285,6 +393,37 @@ describe('withdrawing, and not turning up', () => {
 });
 
 describe('asking to reschedule a chemistry read', () => {
+  it('PLAYER JOURNEY: a chemistry read set on a day that clashes with the calendar says so, and points at Ask To Reschedule and its chance, not at Ask For Another Time, which refuses it', () => {
+    const base = graduate('b27-reschedule-clash-notice');
+    // A part whose cut into its chemistry read the game's own draw passes for a Strong callback, its requirement unchanged.
+    const { t, week } = first(base, (x, wk) => !!x.stages.callback && !!x.stages.chemistry && !rewriteDrawn(base, x, wk)
+      && base.rng('pro.casting', x.id, wk, 'chemistry').next() < chanceOf('strong', fitOf(base.player, x).fit, x.kind, 'chemistry'));
+    played(base, week);
+    // TEST SETUP: the audition and the callback on the record as done and judged Strong, and casting's word on the callback
+    // on the clock an hour on.
+    const o: Opportunity = { id: `test-${t.id}`, projectId: t.id, via: 'open', status: 'callback', postedAt: week, submitBy: week + WEEK, history: [], counts: {}, rounds: [
+      { round: 'audition', form: t.stages.audition, at: base.now - 2 * MS_DAY, status: 'done', band: 'strong', overall: 70, casting: { at: base.now - MS_DAY, chance: 0.7, fit: 0.5, yes: true } },
+      { round: 'callback', form: 'in-person', at: base.now - MS_DAY, status: 'done', band: 'strong', overall: 70 },
+    ] };
+    base.player.pro!.opportunities.push(o);
+    const cut = base.now + MS_HOUR;
+    base.schedule({ at: cut, kind: CASTING_KIND, label: `Casting Decides: ${t.role.part}`, category: 'career', priority: 40, refType: 'pro.opportunity', refId: o.id, payload: { personId: base.player.id, opportunityId: o.id, round: 1 } });
+    // The chemistry read's time as casting sets it (`WORK`), and a plan of the actor's own across it.
+    let day = addDays(cut, WORK.chemistryLeadDays, NY);
+    while ([0, 6].includes(zonedParts(day, NY).weekday)) day = addDays(day, 1, NY);
+    const p = zonedParts(day, NY);
+    const at = instantFromZoned({ year: p.year, month: p.month, day: p.day, hour: WORK.chemistryHour, minute: 0 }, NY);
+    base.must({ kind: 'calendar.schedule', payload: { title: 'Tutoring At The Library', at: at - MS_HOUR, durationMinutes: 180 } });
+    played(base, cut + MS_HOUR);
+    expect([o.rounds!.length, o.rounds![2]!.round, o.rounds![2]!.at]).toEqual([3, 'chemistry', at]);
+    const said = notices(base).find((n) => n.startsWith(`A Chemistry Read For ${t.role.part} | `))!;
+    expect(said).toContain(`It clashes with Tutoring At The Library at ${formatTime(at - MS_HOUR, NY)}. ${rescheduleAskWords('chemistry')}`);
+    expect(said).not.toContain('Ask For Another Time');
+    expect(rescheduleAskWords('chemistry')).toBe(`To ask the production to move it, press Ask To Reschedule on the Opportunities tab, at least a day ahead. The production decides: about ${Math.round(rescheduleChance('chemistry', true) * 10)} in 10 with the clash to give as the reason, estimated.`);
+    // And the button it names takes the ask.
+    expect(rescheduleRefusal(base, base.player, o)).toBeUndefined();
+  }, 240_000);
+
   it('PLAYER JOURNEY: asked, the production answers the next afternoon by its draw: moved for the actor with a clash to give as the reason, kept for the twin without one', () => {
     const base = graduate('b27-reschedule');
     // A chemistry read whose draw falls between the chance without a clash and the chance with one.

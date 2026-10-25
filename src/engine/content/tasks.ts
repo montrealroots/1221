@@ -290,6 +290,24 @@ export const TASK_PROFILES: Readonly<Record<string, TaskProfile>> = {
       consistency: { weight: 1, inputs: [a('composure', 2)], conditions: ALL },
     },
   },
+  // An audition or a callback in person where casting gave a direction partway through (from 2026-10-25, the owner's brief
+  // 27, Part 9's "Responding to direction"; `NOTE`, `systems/offers.ts`): the audition's five dimensions as they stand
+  // above, and responsiveness, which is answering a note (`DIMENSION_MEANS`): listening to what's given, and a little
+  // adaptability, before following the note reaches for more of it (`approachRead`). Until then a directed round was judged
+  // as an audition, which has no responsiveness, so following a direction read nothing of how the actor adapts, and keeping
+  // a choice against a direction to play it open cost nothing. Only a round casting directed is judged so: one without a
+  // direction keeps the audition's profile, so no result kept, or to come without one, moves.
+  auditionDirected: {
+    id: 'auditionDirected', label: 'An Audition With A Direction', what: 'The sides played for casting in the room, and casting’s direction taken partway through.', prepLabel: { ...COURSEWORK_PREP, genre: 'Knowing the genre' },
+    dims: {
+      believability: { weight: 3, inputs: [a('emotionalDepth', 2), tech(1)], prep: ['interpretation', 'memorization'], conditions: ALL },
+      interpretation: { weight: 2, inputs: [a('imagination', 2), tech(1)], prep: ['interpretation', 'genre'] },
+      execution: { weight: 2, inputs: [a('memory', 1), a('vocal', 1), a('physical', 1), tech(2)], prep: ['memorization', 'rehearsal'], conditions: ['fatigue', 'illness'] },
+      connection: { weight: 1, inputs: [a('presence', 2)], prep: ['rehearsal'], conditions: ALL },
+      consistency: { weight: 1, inputs: [a('composure', 2)], conditions: ALL },
+      responsiveness: { weight: 2, inputs: [a('listening', 1), a('adaptability', 0.5)], conditions: ALL },
+    },
+  },
   // A chemistry read and a screen test (from 2026-10-24, the owner's brief 27, Part 9), the rounds a lead's casting adds after
   // a callback. SLATE's reading of each: a chemistry read is the sides played with an actor already cast, so listening
   // and adapting to them carry it beside the believability an audition asks; a screen test is the part filmed on set in

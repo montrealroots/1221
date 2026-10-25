@@ -498,7 +498,18 @@ function roundPiece(round: 'chemistry' | 'test', projectId: string): Judged {
   const ctx = { ...auditionContext(sim, sim.player, o, r, 0), condition: { readiness: 100 }, key: `p2b:round:${round}`, expected: true };
   return (p) => judge('p2b', p, ctx);
 }
-/** Every piece of each kind of work, by the task it's judged as: every template, every brief at its first reading, every class scene, every night, and a professional unit of each kind the workflows judge, and from 2026-10-24 a chemistry read's and a screen test's round. */
+/**
+ * An audition in person casting directed partway through, followed or kept against, judged as the game judges one
+ * (`auditionContext`, `approachRead`, from 2026-10-25, brief 27's offers and auditions): an audition with a direction.
+ */
+function directedPiece(answer: 'follow' | 'hold', projectId: string): Judged {
+  const sim = life(`p2b-directed-${answer}`);
+  const o = { id: 'o1', projectId, via: 'open', status: 'audition', postedAt: sim.now, submitBy: sim.now, history: [], counts: {}, prep: { interpretation: 1, memorization: 1, rehearsal: 1 }, playing: { structure: answer === 'follow' ? 'open' : 'set', chosenAt: 0, prep: 1 } } as unknown as Opportunity;
+  const r: AuditionRound = { round: 'audition', form: 'in-person', at: sim.now, status: 'set', note: { axis: 'structure', side: 'open', at: sim.now, answer } };
+  const ctx = { ...auditionContext(sim, sim.player, o, r, 0), condition: { readiness: 100 }, key: `p2b:directed:${answer}`, expected: true };
+  return (p) => judge('p2b', p, ctx);
+}
+/** Every piece of each kind of work, by the task it's judged as: every template, every brief at its first reading, every class scene, every night, and a professional unit of each kind the workflows judge, and from 2026-10-24 a chemistry read's and a screen test's round, and from 2026-10-25 an audition casting directed. */
 const PIECES_BY_TASK: Readonly<Record<string, readonly Judged[]>> = (() => {
   const out: Record<string, Judged[]> = {};
   const add = (j: Judged) => { (out[j(EVEN).task] ??= []).push(j); };
@@ -508,6 +519,7 @@ const PIECES_BY_TASK: Readonly<Record<string, readonly Judged[]>> = (() => {
   for (const m of PLAY_MATERIAL) { const pc = gamePiece(m, 'night'); add((p) => pc.judge(p)); }
   for (const [task, projectId] of PRO_PIECES) add(proUnit(task, projectId));
   for (const round of ['chemistry', 'test'] as const) add(roundPiece(round, 'route-nine'));
+  for (const answer of ['follow', 'hold'] as const) add(directedPiece(answer, 'route-nine'));
   return out;
 })();
 const dimsOf = (e: Evaluation): Partial<Record<Dimension, number>> => Object.fromEntries(e.dimensions.map((d) => [d.dimension, d.exact ?? d.quality]));
@@ -769,7 +781,7 @@ does.discipline = [
     expect(lift((sim) => { const r = sim.execute<{ gained: number }>({ kind: 'practice.exercise', payload: { exercise: 'concentration' } }); expect(r.ok, r.error).toBe(true); return r.value!.gained; })).toBeCloseTo(1.1 / 0.9, 9);
   } },
   { says: '(but not the fitness a workout builds)', holds: () => { const at = (d: number) => { const sim = life('p2b-a4-workout'); freeAndRested(sim); setAbility(sim, 'discipline', d); const f = sim.player.wellbeing.fitness; expect(sim.execute({ kind: 'life.look_after', payload: { action: 'exercise' } }).ok).toBe(true); return sim.player.wellbeing.fitness - f; }; expect(at(100)).toBe(at(0)); } },
-  { says: 'It keeps your work consistent wherever consistency is judged', holds: () => { for (const t of Object.values(TASK_PROFILES).filter((x) => x.dims.consistency && x.id !== 'audition')) readsIn('discipline', t.id, ['consistency']); } },
+  { says: 'It keeps your work consistent wherever consistency is judged', holds: () => { for (const t of Object.values(TASK_PROFILES).filter((x) => x.dims.consistency && x.id !== 'audition' && x.id !== 'auditionDirected')) readsIn('discipline', t.id, ['consistency']); } },
   { says: 'In an audition it counts only when the scene has many beats, since there your nerves are what’s tested', holds: () => {
     // An audition shown on a scene of three units (A Doll's House, its third act) reads none; on six (The Seagull, its fourth), three beats past three.
     expect(movedBy(auditionOn('dollhouse-3'), 'discipline')).not.toContain('consistency');

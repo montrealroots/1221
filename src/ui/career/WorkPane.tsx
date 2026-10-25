@@ -329,8 +329,9 @@ function clauseWords(x: ContractClause, zone: string): string {
       return `Episodes: guaranteed ${counted(x.numbers.length, 'episode')} of the season’s ${counted(x.ordered, 'episode')} (${x.numbers.map((n) => `episode ${n}`).join(' and ')}), ${counted(x.daysEach, 'shoot day')} each, and expected in up to ${counted(x.expected, 'episode')}. A further episode is paid only if the production calls you for it: ${said.join(', ')}.`;
     }
     case 'option': {
-      // At the same day rate where a negotiation traded the raise away (from 2026-10-25, `systems/offers.ts`).
-      const head = `Option: the production can take you up for the series’ ${ordinal(x.season)} season at ${x.raise ? `${Math.round(x.raise * 100)}% more a day` : 'the same day rate'}, by ${formatDate(x.by, zone)}.`;
+      // At the same day rate where a negotiation traded the raise away (from 2026-10-25, `systems/offers.ts`), or next
+      // season's rate for the part where that's more, as `renewFromOption` pays it.
+      const head = `Option: the production can take you up for the series’ ${ordinal(x.season)} season at ${x.raise ? `${Math.round(x.raise * 100)}% more a day` : 'the same day rate, unless next season’s rate for the part comes to more'}, by ${formatDate(x.by, zone)}.`;
       if (x.status === 'open') return `${head} Not yet decided.`;
       return `${head} ${x.settled?.why ?? (x.status === 'exercised' ? 'Taken up.' : 'Lapsed.')}`;
     }
