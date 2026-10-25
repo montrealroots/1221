@@ -47,7 +47,7 @@ import { CEREMONY } from '../../systems/ceremony';
 import { VISIBILITY, ordinal } from '../../systems/awards';
 import { READ_ON } from '../catalog';
 import { formatDateKey } from '../../core/time';
-import { LANGUAGE_FIT, LANGUAGE_PREP, PART_LANGUAGE } from '../../systems/speaking';
+import { LANGUAGE_FIT, LANGUAGE_PREP, PART_LANGUAGE, suitsWords } from '../../systems/speaking';
 import type { GuideEntry } from './types';
 
 const CAREER = '/workspace/career';
@@ -717,11 +717,12 @@ export const CAREER_GUIDE: readonly GuideEntry[] = [
       'Headshots and a résumé, made on the Portfolio tab, and a reel where the casting office asks for one.',
       'A role that takes your own submission, before its window closes.',
       'The role’s playing ages, and Equity membership for an Equity open call.',
+      'Where the role’s character speaks another language as well as English, that language. Languages says how well you need it.',
     ],
     costs: [{ label: 'Time', value: 'None: a submission is sent at once' }, { label: 'Money', value: 'None' }],
     reads: [
       { label: 'Materials', value: 'Your current headshots, résumé and reel, as What’s Missing reads them' },
-      { label: 'Eligibility', value: 'The role’s playing ages, an open call’s union, and the days you’re already booked' },
+      { label: 'Eligibility', value: 'The role’s playing ages, an open call’s union, a language its character speaks besides English, and the days you’re already booked' },
     ],
     now: ['The role moves to In Progress, with what you sent and when each was made.'],
     later: [`${word(WORK.replyDays).charAt(0).toUpperCase()}${word(WORK.replyDays).slice(1)} days on, the casting office answers with an audition in person or a self-tape, and a notice says when and where.`],
@@ -734,6 +735,7 @@ export const CAREER_GUIDE: readonly GuideEntry[] = [
       'You have no headshots, and every submission starts with one.',
       'The casting office takes submissions only from agents.',
       'It’s an open call for Equity members, and you aren’t one yet.',
+      'The character speaks another language as well as English, and you don’t speak it.',
       'Submissions closed.',
     ],
     mistakes: ['Waiting to make headshots until a role you want is posted. A role’s window is a week; make them first.'],
@@ -775,8 +777,8 @@ export const CAREER_GUIDE: readonly GuideEntry[] = [
       { label: 'Money', value: 'None' },
     ],
     reads: [
-      { label: 'Your Audition', value: 'Your abilities and techniques, the sides’ preparation, how well you know the project’s genres and the day’s condition, judged as every piece of work is' },
-      { label: 'The Role’s Fit', value: 'How well you know its genres, each by its share as Genres explains, and its techniques against yours' },
+      { label: 'Your Audition', value: 'Your abilities and techniques, the sides’ preparation, how well you know the project’s genres and the day’s condition, judged as every piece of work is. If you speak the part’s other language conversationally, its preparation counts too' },
+      { label: 'The Role’s Fit', value: 'How well you know its genres, each by its share as Genres explains, its techniques against yours, and, where its character speaks another language as well as English, how well you speak that and English, as Languages explains' },
       { label: 'The Field', value: 'How many other actors that kind of work draws, estimated' },
     ],
     now: ['A step moves its part of the preparation on and the clock with it. A self-tape is judged at once and kept on your work record.'],
@@ -834,7 +836,9 @@ export const CAREER_GUIDE: readonly GuideEntry[] = [
       { label: 'Money', value: 'None' },
     ],
     reads: [
-      { label: 'Casting’s Fit', value: `How well you speak the part’s language and English, the weaker of the two counting: a native speaker of both suits it best, a fluent one ${Math.round(LANGUAGE_FIT.fluent * 100)}% as well and a conversational one ${Math.round(LANGUAGE_FIT.conversational * 100)}%`, estimate: true },
+      // In words, not the figures (from 2026-10-25's review, docs/STYLE.md "No internal concepts"): until then "a fluent one
+      // 80% as well and a conversational one 50%".
+      { label: 'Casting’s Fit', value: `How well you speak the part’s language and English, the weaker of the two counting. A native speaker of both suits it best, a fluent one ${suitsWords(LANGUAGE_FIT.fluent)} and a conversational one ${suitsWords(LANGUAGE_FIT.conversational)}`, estimate: true },
       { label: 'Your Audition And Your Work', value: 'For a conversational speaker, how far the language has been prepared, beside the rest of the preparation, read on how believable you seem and how cleanly you deliver the lines' },
       { label: 'Your Résumé', value: 'Every language you speak and how well, except native English' },
     ],
@@ -843,6 +847,7 @@ export const CAREER_GUIDE: readonly GuideEntry[] = [
     interpret: [
       'Native is a language you grew up speaking, fluent one you’re at ease in, and conversational one you can hold a conversation in.',
       'Until a conversational speaker’s language is prepared, Why It Went This Way can say that working on the part’s language held the audition back.',
+      'Why It Went This Way, under a settled role, names the part’s language and the weaker of your two languages, the one casting’s fit counts.',
     ],
     unavailable: [
       'The character speaks a language you don’t speak.',

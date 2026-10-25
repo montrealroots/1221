@@ -19,7 +19,7 @@ import type { Simulation } from '@/engine/core/simulation';
 import { MS_DAY, MS_HOUR, ageOn, dateKey } from '@/engine/core/time';
 import { deserialise, serialise } from '@/engine/persistence/adapter';
 import { newLifeConfig, type NewSaveConfig } from '@/engine/world/bootstrap';
-import type { ProjectTemplate } from '@/engine/content/careerwork';
+import { PROJECTS, type ProjectTemplate } from '@/engine/content/careerwork';
 import { ENGLISH_ONLY, languagesOf, spokenName, type SpokenLanguage } from '@/engine/content/languages';
 import { genreState } from '@/engine/systems/engagement';
 import { currentOf, resumeNow, type Engagement, type Opportunity, type WorkUnit } from '@/engine/systems/pro';
@@ -32,6 +32,8 @@ import {
 } from '@/engine/systems/projobs';
 import { LANGUAGE_PREP, PART_LANGUAGE, languageRefusal, languageWords } from '@/engine/systems/speaking';
 import { evaluate } from '@/engine/systems/evaluation';
+import { GUIDE_BY_ID } from '@/engine/content/guide';
+import { CHAPTERS } from '@/engine/content/tutorial';
 import { graduate, played, playRound, portfolio, prepareAll, reload, skilled } from './fakes/career-world';
 
 // The Career screen drawn over the save, as tests/b27-voice-demo.test.ts draws it.
@@ -261,6 +263,30 @@ describe('a part in another language, played', () => {
     expect(e.prep!.language).toBeCloseTo(LANGUAGE_PREP.start + (o.prep!.language! - LANGUAGE_PREP.start) / 2, 2);
     expect(coldE.prep!.language).toBe(LANGUAGE_PREP.start);
     expect(shown(talk, 'opportunities')).toContain(`Work On Your ${name} (120 Minutes)`);
+
+    // Why It Went This Way, under the settled role, gives the techniques alone and says the language apart, naming the
+    // weaker of the actor's two. The falsifiability test: only the levels change, and only the language's sentence moves.
+    // Until the review of 2026-10-25's first cut the techniques' figure had the language folded in: 93% for a fluent
+    // speaker whose techniques were all mastered, and less for a conversational one.
+    const twin = (languages: SpokenLanguage[]) => { const s = reload(talk); s.player.languages = languages; return shown(s, 'opportunities'); };
+    const lang = t.requirements.language!;
+    const techniques = 'your techniques are 100% of the way to what the part asks at mastery.';
+    const head = `${techniques} Its character speaks ${name} as well as English`;
+    expect(shown(talk, 'opportunities')).toContain(`${head}. Your ${name} is conversational, which suits it about half as well as a native speaker of both would.`);
+    expect(twin([{ id: 'en', level: 'native' }, { id: lang, level: 'fluent' }])).toContain(`${head}. Your ${name} is fluent, which suits it nearly as well as a native speaker of both would.`);
+    expect(twin([{ id: 'en', level: 'fluent' }, { id: lang, level: 'native' }])).toContain(`${head}. Your English is fluent, which suits it nearly as well as a native speaker of both would.`);
+    expect(twin([{ id: 'en', level: 'fluent' }, { id: lang, level: 'fluent' }])).toContain(`${head}. Your ${name} and your English are both fluent, which suits it nearly as well as a native speaker of both would.`);
+    expect(twin([{ id: 'en', level: 'native' }, { id: lang, level: 'native' }])).toContain(`${head}, and you speak both natively, which suits it best.`);
+    expect(twin([{ id: 'en', level: 'native' }])).toContain(`${head}, and you don’t speak ${name}, which lowers your fit.`);
+    // A role settled for a part in English alone (TEST SETUP: the settled role pointed at one of the fixed parts, which
+    // carry no language): the line ends with the techniques.
+    const plain = reload(talk);
+    plain.player.pro!.opportunities.find((x) => x.id === o.id)!.projectId = PROJECTS.find((x) => !x.requirements.language)!.id;
+    const alone = shown(plain, 'opportunities');
+    expect(alone).toContain(techniques);
+    expect(alone).not.toContain('Its character speaks');
+    expect(alone).not.toContain('undefined');
+
     const before = e.prep!.language!;
     const worked = talk.execute({ kind: 'pro.prepare', payload: { engagementId: e.id, step: 'language' } });
     expect(worked.error).toBeUndefined();
@@ -338,7 +364,7 @@ describe('the work reads the language', () => {
     const shot = (e: Engagement) => evaluate(sim, sim.player, { ...workContext(sim, sim.player, e, screen, 0), expected: true }).overall;
     expect(shot(booked())).toBeLessThan(shot(booked(LANGUAGE_PREP.complete)));
     // The words on the card name the language and the actor's level.
-    expect(languageWords(sim.player, stage)).toBe('The character speaks Spanish as well as English. Your Spanish is conversational, so the part takes more preparation: press Work On Your Spanish with the sides, and again with the part if you’re cast. Casting reads an actor native in both languages as a closer fit.');
+    expect(languageWords(sim.player, stage)).toBe('The character speaks Spanish as well as English. Your Spanish is conversational, so the part takes more preparation: press Work On Your Spanish with the sides, and again with the part if you’re cast. A native speaker of both would be a closer fit.');
   });
 
   it('the résumé lists every language but native English, and a life with none on record lists none', () => {
@@ -349,6 +375,23 @@ describe('the work reads the language', () => {
     expect(resumeNow(second.player, second.now).lines.filter((l) => l.startsWith('Language:'))).toEqual(['Language: English, fluent', 'Language: Japanese, native']);
     delete (sim.player as { languages?: unknown }).languages;
     expect(resumeNow(sim.player, sim.now).lines.some((l) => l.startsWith('Language:'))).toBe(false);
+  });
+});
+
+describe('the guide, where it explains fit and eligibility', () => {
+  it('names the character’s other language beside the genres, the techniques, the ages and the union, and says the fit in words, not figures', () => {
+    // Until the review of 2026-10-25's first cut, Auditions gave the fit as genres and techniques alone, Finding Work's
+    // eligibility and refusals left the language out, the tutorial's résumé had no languages, and Languages showed the
+    // fit's figures ("a fluent one 80% as well").
+    const languages = GUIDE_BY_ID['career.languages']!;
+    const fit = languages.reads.find((r) => r.label === 'Casting’s Fit')!.value;
+    expect(fit).toContain('A native speaker of both suits it best, a fluent one nearly as well and a conversational one about half as well');
+    expect(fit).not.toMatch(/\d/);
+    expect(GUIDE_BY_ID['career.auditions']!.reads.find((r) => r.label === 'The Role’s Fit')!.value).toContain('how well you speak that and English');
+    const finding = GUIDE_BY_ID['career.opportunities']!;
+    expect(finding.reads.find((r) => r.label === 'Eligibility')!.value).toContain('a language its character speaks besides English');
+    expect(finding.unavailable).toContain('The character speaks another language as well as English, and you don’t speak it.');
+    expect(CHAPTERS.find((c) => c.id === 'career')!.body.join(' ')).toContain('special skills and the languages you speak besides native English');
   });
 });
 

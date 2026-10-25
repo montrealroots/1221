@@ -99,6 +99,9 @@ export function languageRefusal(person: Person, t: Pick<ProjectTemplate, 'requir
  */
 export const LANGUAGE_FIT = { weight: 2, native: 1, fluent: 0.8, conversational: 0.5 } as const;
 
+/** How well a level suits a part, 0 to 1 (`LANGUAGE_FIT`); a language not spoken, not at all. */
+const suits = (level: LanguageLevel | undefined): number => (level ? LANGUAGE_FIT[level] : 0);
+
 /**
  * The language's share of a part's demands, for `fitOf`: its weight, and how well the actor suits it, 0 to 1, the weaker
  * of the part's language and their English, since the character speaks both. Nothing for a part in English alone.
@@ -106,8 +109,33 @@ export const LANGUAGE_FIT = { weight: 2, native: 1, fluent: 0.8, conversational:
 export function languageDemand(person: Person, t: Pick<ProjectTemplate, 'requirements'>): { weight: number; f: number } {
   const id = t.requirements.language;
   if (!id) return { weight: 0, f: 0 };
-  const suits = (level: LanguageLevel | undefined): number => (level ? LANGUAGE_FIT[level] : 0);
   return { weight: LANGUAGE_FIT.weight, f: Math.min(suits(levelIn(person, id)), suits(levelIn(person, ENGLISH))) };
+}
+
+/**
+ * How well a level suits a part beside a native speaker, in words, from its share of a native speaker's fit
+ * (`LANGUAGE_FIT`): what the guide and Why It Went This Way say in place of the figure (docs/STYLE.md, "No internal
+ * concepts"), so a figure changed changes the words with it.
+ */
+export const suitsWords = (f: number): string => (f >= LANGUAGE_FIT.native ? 'as well' : f >= 0.7 ? 'nearly as well' : f >= 0.4 ? 'about half as well' : 'far less well');
+
+/**
+ * The language's part of the fit, for Why It Went This Way under a settled role, beside the genre and the techniques
+ * (`fitOf`'s `techniques`): which language the character speaks, and the weaker of the actor's two, which is the one
+ * casting's fit counts (`languageDemand`). Nothing for a part in English alone. Until the review of 2026-10-25's first
+ * cut, the line gave the techniques with the language folded in, and never named the language.
+ */
+export function languageFitWords(person: Person, t: Pick<ProjectTemplate, 'requirements'>): string | undefined {
+  const name = partLanguageName(t);
+  if (!name) return undefined;
+  const head = `Its character speaks ${name} as well as English`;
+  const part = levelIn(person, t.requirements.language!);
+  const english = levelIn(person, ENGLISH);
+  if (!part) return `${head}, and you don’t speak ${name}, which lowers your fit.`;
+  if (!english) return `${head}, and you don’t speak English, which lowers your fit.`;
+  if (part === 'native' && english === 'native') return `${head}, and you speak both natively, which suits it best.`;
+  const weaker = part === english ? `Your ${name} and your English are both ${part}` : suits(part) < suits(english) ? `Your ${name} is ${part}` : `Your English is ${english}`;
+  return `${head}. ${weaker}, which suits it ${suitsWords(languageDemand(person, t).f)} as a native speaker of both would.`;
 }
 
 // ---------------------------------------------------------------------------------------------------------------------
@@ -201,7 +229,9 @@ export function languageWords(person: Person, t: Pick<ProjectTemplate, 'requirem
   const head = `The character speaks ${name} as well as English.`;
   if (!level) return `${head} You don’t speak ${name}, so you can’t be put up for it.`;
   // Casting reads the weaker of the two languages (`languageDemand`): said where it's short of a native speaker's.
-  const closer = languageDemand(person, t).f < LANGUAGE_FIT.native ? ' Casting reads an actor native in both languages as a closer fit.' : '';
+  // From 2026-10-25's review it says so without "reads", the engine's word (docs/STYLE.md): until then "Casting reads an
+  // actor native in both languages as a closer fit."
+  const closer = languageDemand(person, t).f < LANGUAGE_FIT.native ? ' A native speaker of both would be a closer fit.' : '';
   if (level === 'conversational') return `${head} Your ${name} is conversational, so the part takes more preparation: press ${languageStepLabel(name)} with the sides, and again with the part if you’re cast.${closer}`;
   return `${head} Your ${name} is ${level}, so it needs no preparation of its own.${closer}`;
 }
