@@ -285,7 +285,8 @@
    "src/engine/systems/series.ts#registerSeries [booked]",
    "src/engine/systems/projobs.ts#renewFromOption",
    "src/engine/systems/projobs.ts#SEASON_HOOKS",
-   "src/engine/systems/projobs.ts#callOff"
+   "src/engine/systems/projobs.ts#callOff",
+   "src/engine/systems/series.ts#registerSeries [success]"
   ],
   "states": [
    "notification",
@@ -297,7 +298,7 @@
   ],
   "outcome": "Revised",
   "why": "New with brief 25's Module 4: each turn of a season said when it comes, and why where the work doesn't come.",
-  "changes": "Written new: Called For Episode and Not In Episode (“An episode you aren’t called for isn’t paid: your contract guarantees only the episodes it names.”), the option taken up into the next version of the contract or let go, and the network's word: renewed (“That doesn’t bring you back by itself”), canceled with the casting closed and the work called off, and back.",
+  "changes": "Written new: Called For Episode and Not In Episode (“An episode you aren’t called for isn’t paid: your contract guarantees only the episodes it names.”), the option taken up into the next version of the contract or let go, and the network's word: renewed (“That doesn’t bring you back by itself”), canceled with the casting closed and the work called off, and back. From 2026-10-25 (brief 27's loop 41), a revival's character plans: the network's word bringing it back says when its producers will say whether a part the player played comes back; wanted back, the offer says why (“… its producers want Desk Clerk back, with a new contract for its new season”); not, “… Comes Back Without …”, and the history says which.",
   "evidence": [
    {
     "kind": "test",
@@ -310,6 +311,14 @@
    {
     "kind": "test",
     "ref": "tests/career-contracts.test.ts: 'T62 and T85: a renewal brings no engagement by itself'"
+   },
+   {
+    "kind": "test",
+    "ref": "tests/b27-revival.test.ts: 'PLAYER JOURNEY: a character wanted back is offered the part without an audition for the new season, and accepted into a new engagement, the old one as it was'"
+   },
+   {
+    "kind": "test",
+    "ref": "tests/b27-revival.test.ts: 'PLAYER JOURNEY: the falsifiability twin, the same part in a save whose draw says no: said, and never posted to the actor in that season'"
    }
   ]
  },

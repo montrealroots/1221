@@ -759,5 +759,39 @@
     "ref": "tests/b27-reshoot.test.ts: 'PLAYER JOURNEY: a voice part’s pickup session, four hours in a booth near home, recorded and paid a session'"
    }
   ]
+ },
+ {
+  "surface": "A promotional film for a release: the call, the contract's term, the day as another offer meets it, the film's line, a missed one's notice",
+  "where": "The notices (Calls You For A Promotional Film, You Missed The Promotional Film); the contract on Career, Work; an offer's refusal on the same day; Career, Work, How The Work Is Done; the engagement's What Happened",
+  "sources": [
+   "src/engine/systems/projobs.ts#callPromo",
+   "src/engine/systems/workflow.ts#promoTerm",
+   "src/engine/systems/workflow.ts#promoSession",
+   "src/engine/systems/workflow.ts#promoSession [worked]"
+  ],
+  "states": [
+   "notification",
+   "success",
+   "setback",
+   "unavailable",
+   "history"
+  ],
+  "outcome": "Revised",
+  "why": "New with brief 27's K6 (loop 34): a call says the day, where, the hours, what it pays and what missing it costs; the contract says when it may come and what it pays, the agreement's rule or the game's term, said which; another offer on the day says it's held; the film's line says it was made and what it does; a missed one says what it cost.",
+  "changes": "Written new: the call, the contract's term, the film's history lines and the missed notice, and the film's label where another booking meets it.",
+  "evidence": [
+   {
+    "kind": "test",
+    "ref": "tests/b27-promo.test.ts: 'is for a lead or a supporting part seen on screen in work released, and the contract says what it pays'"
+   },
+   {
+    "kind": "test",
+    "ref": "tests/b27-promo.test.ts: 'PLAYER JOURNEY: called at the wrap, set before the release on a clear weekday, made by the clock, paid, and the actor a little more visible, the work judged as it was'"
+   },
+   {
+    "kind": "test",
+    "ref": "tests/b27-promo.test.ts: 'PLAYER JOURNEY: missed, unpaid, and the casting office’s direct offer on its strength gone; the falsifiability twin made, the offer stands'"
+   }
+  ]
  }
 ]

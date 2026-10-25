@@ -578,12 +578,18 @@ export function recognitionOf(person: Person): { id: string; words: string }[] {
 // Visibility
 // ---------------------------------------------------------------------------------------------------------------------
 
-/** What each recognition lends casting's eye, and over how long it fades to nothing (ASSUMPTION, the game's). */
-export const VISIBILITY = { selected: 0.05, nominated: 0.08, won: 0.15, topThree: 0.04, fadeDays: 3 * 365, most: 0.3 } as const;
+/**
+ * What each recognition lends casting's eye, and over how long it fades to nothing (ASSUMPTION, the game's); and, from
+ * 2026-10-25 (brief 27's loop 34: "Publicity should influence exposure where appropriate, not directly manufacture
+ * artistic merit or guarantee awards"), a promotional film the actor appeared in, the least of them.
+ */
+export const VISIBILITY = { selected: 0.05, nominated: 0.08, won: 0.15, topThree: 0.04, promo: 0.03, fadeDays: 3 * 365, most: 0.3 } as const;
 
 /**
- * How visible the player's work has made them at a moment: each festival selection, nomination, win and film in the top
- * three of the game's own chart, each fading to nothing over three years from when it came. Casting reads it; nothing pays it.
+ * How visible the player's work has made them at a moment: each festival selection, nomination, win, film in the top
+ * three of the game's own chart and, from 2026-10-25, promotional film appeared in, each fading to nothing over three
+ * years from when it came. Casting reads it, and so does an Emmy field's standing (`fieldFor`), at its weight; nothing
+ * pays it, and it never touches the work's judged quality.
  */
 export function visibilityOf(person: Person, at: Instant): number {
   const pro = person.pro;
@@ -600,6 +606,7 @@ export function visibilityOf(person: Person, at: Instant): number {
     const peak = peakOf(c.run, at);
     if (peak !== undefined && peak <= 3) v += fade(c.run!.opening, VISIBILITY.topThree);
   }
+  for (const e of pro.engagements) if (e.promo?.status === 'done') v += fade(e.promo.at, VISIBILITY.promo);
   return Math.min(VISIBILITY.most, Math.round(v * 1000) / 1000);
 }
 

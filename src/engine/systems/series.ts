@@ -12,18 +12,20 @@
  * canceled, the season's production stops that day, so a part not yet cast in it closes, and work booked in it for days
  * not yet done is called off and owed nothing, while the pay for days worked and every record stay; the option on a part
  * for the next season lapses with it. Renewed, nothing is booked by itself: a part comes back only through its option or
- * a new casting. Revived, its parts are cast again, its old seasons and the work done in them as they were.
+ * a new casting. Revived, its parts are cast again, its old seasons and the work done in them as they were; and, from
+ * 2026-10-25 (brief 27, loop 41), each character the player played in it is brought back by a new offer, or not, by its
+ * producers' plans (`REVIVAL`), never by restoring the old engagement.
  */
 
 import type { Simulation } from '../core/simulation';
 import type { Person } from '../domain/model';
-import { addDays, formatDate, formatWeekdayDate, instantFromZoned, zonedParts, type Instant } from '../core/time';
+import { MS_DAY, addDays, formatDate, formatWeekdayDate, instantFromZoned, zonedParts, type Instant } from '../core/time';
 import { PROJECTS, projectById, type ProjectTemplate } from '../content/careerwork';
 import { decisionAt, episodeDays, seasonWindow, seasonYearAt, seriesById, SERIES, type SeriesTemplate } from '../content/series';
-import { noteEvent, type Engagement, type Opportunity } from './pro';
+import { finished, noteEvent, type Engagement, type Opportunity } from './pro';
 import type { Band } from './coursework';
 import { clauseOf, type ContractExtra } from './contracts';
-import { episodeOfDay, episodeOn, episodeWorkDays, type WorkDay } from './projobs';
+import { WORK, counted, episodeOfDay, episodeOn, episodeWorkDays, type WorkDay } from './projobs';
 
 /** The network's word on one season: another, no more, or back after time off. */
 export interface SeasonDecision { year: number; at: Instant; what: 'renewed' | 'canceled' | 'revived' }
@@ -277,9 +279,44 @@ export interface SeriesHooks {
   renew: (sim: Simulation, person: Person, e: Engagement, t: ProjectTemplate, days: readonly WorkDay[]) => Engagement;
   /** Why work on these days can't be taken, or nothing: permission, SAG-AFTRA's thirty days, a clash. */
   refusal: (person: Person, days: readonly WorkDay[], except: string) => string | undefined;
+  /** A revival's offer for a character the actor played, without an audition (`REVIVAL`): whether one could be made. */
+  bringBack: (sim: Simulation, person: Person, t: ProjectTemplate, from: Engagement, words: string) => boolean;
 }
 
 const UNRESOLVED: readonly Opportunity['status'][] = ['open', 'submitted', 'audition', 'callback', 'offered'];
+
+/**
+ * A revival's character plans (from 2026-10-25, the owner's brief 27, loop 41: "A later revival: requires a plausible new
+ * project event → checks elapsed time, agreements, availability, and character plans → creates a new engagement rather
+ * than silently restoring the old one"). The chance its producers want back a character the player played to its end: a
+ * recurring part's more than a single episode's, less each year the series was off past the two a revival needs, never
+ * under `least`. Wanted, the character comes back by a new offer without an audition, its days in the new season's first
+ * weeks, cast `castWeeks` into it; the old contract's option lapsed with the cancellation, so nothing carries over but the
+ * character. ASSUMPTION each figure, the game's; drawn by the series, the season and the part (decider `pro.revival`).
+ */
+export const REVIVAL = { recurring: 0.6, guest: 0.25, perYear: 0.1, least: 0.05, castWeeks: 1 } as const;
+export const REVIVAL_KIND = 'pro.revival';
+
+/** How many years a revived series was off: from the network's word canceling it to the word bringing it back. */
+export function yearsOff(sim: Simulation, s: SeriesTemplate, year: number): number {
+  const ended = decisionsTo(sim, s, year).filter((d) => d.year < year && d.what === 'canceled').pop();
+  return ended ? year - ended.year : 0;
+}
+
+/** The chance a revival's producers bring back a character the player played (`REVIVAL`). */
+export function revivalChance(sim: Simulation, s: SeriesTemplate, year: number, t: ProjectTemplate): number {
+  const base = t.schedule.kind === 'episodes' ? REVIVAL.recurring : REVIVAL.guest;
+  return Math.max(REVIVAL.least, base - REVIVAL.perYear * Math.max(0, yearsOff(sim, s, year) - s.chance.reviveAfter));
+}
+
+/** Whether they do, by its draw. */
+export const revivalReturns = (sim: Simulation, s: SeriesTemplate, year: number, t: ProjectTemplate): boolean => sim.rng('pro.revival', s.id, year, t.id).next() < revivalChance(sim, s, year, t);
+
+/** When a revived season's returning characters are cast: so their work falls in its first weeks, and after the word. */
+export function revivalCastAt(s: SeriesTemplate, year: number): Instant {
+  const at = addDays(seasonWindow(s, year).from, REVIVAL.castWeeks * 7 - WORK.leadDays, NY);
+  return Math.max(at, decisionAt(s, year) + MS_DAY);
+}
 
 export function registerSeries(sim: Simulation, hooks: SeriesHooks): void {
   // The network's word, at the first stop of the clock after it, before anything due there.
@@ -315,8 +352,44 @@ export function registerSeries(sim: Simulation, hooks: SeriesHooks): void {
       if (!touched.length) continue;
       const held = touched.find((e) => { const o = clauseOf(e.contract, 'option'); return o?.status === 'open' && o.year === d.year; });
       if (held) noteEvent(s, held, { kind: 'success', key: `series:${d.year}`, words });
-      const next = held ? ` The production has until ${formatDate(clauseOf(held.contract, 'option')!.by, NY)} to take up its option on you as ${held.role}.` : d.what === 'revived' ? ' Its parts will be cast again.' : ' That doesn’t bring you back by itself: a part in it comes only through an option or a new casting.';
+      // Revived, its producers say before the new season whether the characters the player played come back (from
+      // 2026-10-25, brief 27's loop 41, `REVIVAL`): until then "Its parts will be cast again", and nothing more came of it.
+      const roles = [...new Set(touched.filter((e) => finished(e) && e.status !== 'canceled').map((e) => e.role))];
+      if (d.what === 'revived' && roles.length) s.schedule({ at: revivalCastAt(series, d.year), kind: REVIVAL_KIND, label: `${series.title}: Its Returning Characters`, category: 'career', priority: 40, refType: 'pro.series', refId: series.id, payload: { personId: person.id, seriesId: series.id, year: d.year } });
+      const back = roles.length === 1 ? `whether ${roles[0]} comes back` : `whether the parts you played come back`;
+      const next = held ? ` The production has until ${formatDate(clauseOf(held.contract, 'option')!.by, NY)} to take up its option on you as ${held.role}.` : d.what === 'revived' ? (roles.length ? ` Its producers will say by ${formatDate(revivalCastAt(series, d.year), NY)}, ${back}, and its other parts will be cast again.` : ' Its parts will be cast again.') : ' That doesn’t bring you back by itself: a part in it comes only through an option or a new casting.';
       hooks.tell(s, person, d.what === 'renewed' ? `${series.title} Is Renewed` : `${series.title} Is Back`, `${words}${next}`, 55);
+    }
+  });
+
+  // A revival's character plans (`REVIVAL`): each character the player played to its end, the latest work as each, brought
+  // back by a new offer or said not to be. Read from the engagements the record keeps (`ENGAGEMENTS_KEPT`, the latest twenty).
+  sim.onSchedule(REVIVAL_KIND, (item, s) => {
+    const person = s.universe.people[String(item.payload.personId)];
+    const series = seriesById(String(item.payload.seriesId));
+    const year = Number(item.payload.year);
+    if (!person?.pro || !series || !seasonMade(s, series, year)) return;
+    const ids = partsOf(s, series.id);
+    const played = new Map<string, Engagement>();
+    for (const e of person.pro.engagements.filter((x) => ids.has(x.projectId) && finished(x) && x.status !== 'canceled').sort((a, b) => (b.finishedAt ?? 0) - (a.finishedAt ?? 0))) {
+      if (!played.has(e.projectId)) played.set(e.projectId, e);
+    }
+    const off = yearsOff(s, series, year);
+    for (const e of played.values()) {
+      const t = projectById(e.projectId);
+      if (!t || e.revival?.year === year) continue;
+      const returns = revivalReturns(s, series, year, t);
+      e.revival = { year, returns };
+      const words = `${series.title} is back after ${counted(off, 'year')} off, and its producers want ${t.role.part} back, with a new contract for its new season.`;
+      if (returns && hooks.bringBack(s, person, t, e, words)) {
+        noteEvent(s, e, { kind: 'success', key: `revival:${year}`, words: `The producers of ${series.title} brought ${t.role.part} back for its new season, with an offer.` });
+        continue;
+      }
+      const why = returns
+        ? `${series.title} is back, and its producers wanted ${t.role.part} back, but its new season had no work for the part to offer you.`
+        : `${series.title} is back after ${counted(off, 'year')} off without ${t.role.part}: its producers’ plans for the new season don’t bring the character back.`;
+      noteEvent(s, e, { kind: 'problem', key: `revival:${year}`, words: why });
+      hooks.tell(s, person, `${series.title} Comes Back Without ${t.role.part}`, `${why} Your work in its earlier seasons stays on your credits, and a part in it can still come through a new casting.`, 60);
     }
   });
 

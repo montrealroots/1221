@@ -43,7 +43,7 @@ import { LEGEND_BY_CATEGORY, entriesBetween, keptCalendars, upcoming, type Calen
 import { PLAN_KIND } from '@/engine/world/plans';
 import { MEETING_KIND, tripWords } from '@/engine/systems/proagent';
 import { AUDITION_KIND, MISSES, WORK_DAY_KIND } from '@/engine/systems/projobs';
-import { FURTHER_KIND, LOOP_KIND } from '@/engine/systems/workflow';
+import { FURTHER_KIND, LOOP_KIND, PROMO_KIND } from '@/engine/systems/workflow';
 import { SHOWCASE_KIND } from '@/engine/systems/proshowcase';
 import type { Simulation } from '@/engine';
 import { Stat } from '@/ui/components/primitives';
@@ -207,6 +207,8 @@ function missCost(sim: Simulation, id: string): string {
     case LOOP_KIND: return ': the production has another actor loop the lines, and the session isn’t paid';
     // A reshoot or a pickup session (from 2026-10-25, brief 27's K5).
     case FURTHER_KIND: return ': another actor does those scenes, they’re cut from your part, and it isn’t paid';
+    // A promotional film for a release (from 2026-10-25, brief 27's loop 34).
+    case PROMO_KIND: return ': it’s made without you, unpaid, and the production’s casting office won’t come straight to you with a part on the strength of this one';
     case WORK_DAY_KIND: return item?.payload.kind === 'shoot' || item?.payload.kind === 'session'
       ? ': the production replaces you, and the days you don’t work aren’t paid, unless you’re laid up or in hospital on a lead or a supporting part, when it shoots around you once'
       : `: the company manager’s written warning${item?.payload.kind === 'performance' ? ', and your understudy goes on' : ''}; miss ${MISSES.stage === 1 ? 'a second day' : 'more days'} and the company replaces you`;

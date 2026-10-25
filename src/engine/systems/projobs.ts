@@ -98,8 +98,11 @@ import { companiesAs, productionById } from '../content/catalog';
 import { episodeDays, episodesFrom, seasonYearAt, seriesById } from '../content/series';
 import { clauseOf, contractFor, entitle, overtimeOf, paysOvertime, OPTION_RAISE } from './contracts';
 import { inProduction, registerSeries, scheduleSeason, seasonOf } from './series';
-import { STEP_LABEL, STEP_WORDS, afterWrap, dubDaysOf, cutInEdit, formatOf, furtherHours, keptBand, payUnitsOf, planWork, registerWorkflows, sessionDays, stepOf, voiceOnly, workHoursOf, workTheDay, workflowOf } from './workflow';
-import { AFTER_WRAP, RELEASED, type After } from '../content/workflows';
+import {
+  PROMO_KIND, STEP_LABEL, STEP_WORDS, afterWrap, dubDaysOf, cutInEdit, formatOf, furtherHours, keptBand, payUnitsOf, planWork, promoDrawn, promoFor, promoPay, registerWorkflows,
+  sessionDays, stepOf, voiceOnly, workHoursOf, workKey, workTheDay, workflowOf,
+} from './workflow';
+import { AFTER_WRAP, PROMO, RELEASED, type After } from '../content/workflows';
 import { registerAwards, visibilityOf } from './awards';
 import { simulateRun } from './charts';
 import { keepProject, pushedPart, restoreSlate, slatePartsAt } from './slate';
@@ -738,6 +741,9 @@ export function postingsAt(sim: Simulation, person: Person, at: Instant): { proj
       if (!seriesPosts(sim, t, days, at)) continue;
       const season = seriesSeasonOf(t, days[0]!.from);
       if (person.pro?.engagements.some((e) => e.projectId === t.id && e.status !== 'canceled' && (!finished(e) || seriesSeasonOf(t, e.days[0]?.from ?? 0) === season))) continue;
+      // A revival's season, where its producers said whether the actor's character comes back (from 2026-10-25, brief 27's
+      // loop 41, `REVIVAL`): their word stands for it, an offer or none, so the part isn't posted to the actor again in it.
+      if (person.pro?.engagements.some((e) => e.projectId === t.id && e.revival?.year === season)) continue;
     } else if (person.pro?.engagements.some((e) => e.projectId === t.id && e.status !== 'canceled') || person.pro?.credits.some((c) => c.project === t.project && c.role === t.role.part)) continue;
     if (t.slate) {
       // A slate part reaches the actor by the slate's own reach (`slateReach`), drawn on its own stream.
@@ -1079,6 +1085,8 @@ export function bookedClash(person: Person, days: readonly { from: Instant; to: 
     const recalls = [
       ...(e.loop?.status === 'set' ? [{ from: e.loop.at, to: e.loop.at + AFTER_WRAP.loopHours * MS_HOUR, label: `${t?.project ?? 'Your Work'}: Looping Session` }] : []),
       ...(e.further?.status === 'set' ? [{ from: e.further.at, to: e.further.at + furtherHours(e.further.kind) * MS_HOUR, label: `${t?.project ?? 'Your Work'}: ${e.further.kind === 'reshoot' ? 'Reshoot Day' : 'Pickup Session'}` }] : []),
+      // And a promotional film (from 2026-10-25, brief 27's loop 34).
+      ...(e.promo?.status === 'set' ? [{ from: e.promo.at, to: e.promo.at + PROMO.hours * MS_HOUR, label: `${t?.project ?? 'Your Work'}: Promotional Film` }] : []),
     ];
     for (const x of recalls) if (days.some((d) => x.from < d.to && x.to > d.from)) return { label: x.label, from: x.from };
   }
@@ -1095,7 +1103,8 @@ export function eligibilityProblems(person: Person, o: Opportunity, at: Instant)
   if (o.via === 'open' && t.access.open === 'equity-members' && !person.pro?.equity) out.push('It’s an open call for Equity members, and you aren’t one yet. The degree makes you a member, and so does a contract with an Equity company.');
   const age = ageOn(person.birthInstant, at, NY);
   const [lo, hi] = t.requirements.ages;
-  if (age + CASTING.playingSpread < lo || age - CASTING.playingSpread > hi) out.push(`Casting wants actors who play ${lo} to ${hi}, and at ${age} you’re outside that.`);
+  // A character brought back by a revival (from 2026-10-25, brief 27's loop 41) is the actor's own, at whatever age.
+  if (!o.direct?.returning && (age + CASTING.playingSpread < lo || age - CASTING.playingSpread > hi)) out.push(`Casting wants actors who play ${lo} to ${hi}, and at ${age} you’re outside that.`);
   for (const [s, level] of Object.entries(t.requirements.skills ?? {}) as [Skill, number][]) {
     if ((person.craft?.[s] ?? 0) < level) out.push(`The part needs ${TECHNIQUE_LABEL[s].toLowerCase()} at ${level}, and yours is at ${Math.round(person.craft?.[s] ?? 0)}.`);
   }
@@ -1709,8 +1718,9 @@ function pass(sim: Simulation, person: Person, o: Opportunity, why: string): voi
 export function directOfferFor(sim: Simulation, person: Person, t: ProjectTemplate, at: Instant): { engagementId: ProId; words: string } | undefined {
   const pro = person.pro;
   if (!pro || !t.slate || t.role.size === 'lead') return undefined;
+  // A promotional film missed for that work (from 2026-10-25, brief 27's loop 34, `promoSession`) leaves it out.
   const before = pro.engagements
-    .filter((e) => finished(e) && e.status !== 'canceled' && projectById(e.projectId)?.casting === t.casting)
+    .filter((e) => finished(e) && e.status !== 'canceled' && e.promo?.status !== 'missed' && projectById(e.projectId)?.casting === t.casting)
     .map((e) => ({ e, band: pro.credits.find((c) => c.engagementId === e.id)?.band }))
     .filter((x): x is { e: Engagement; band: Band } => x.band !== undefined && DIRECT.bands.includes(x.band))
     .sort((a, b) => (b.e.finishedAt ?? 0) - (a.e.finishedAt ?? 0))[0];
@@ -1903,6 +1913,7 @@ function finish(sim: Simulation, person: Person, e: Engagement, t: ProjectTempla
   e.status = 'finished';
   e.finishedAt = sim.now;
   const best = bestBand(e);
+  let releaseAt: Instant | undefined;
   if (t.medium !== 'stage' && !e.creditId) {
     const worked = e.log!.find((l) => l.status === 'worked')!;
     const c = addCredit(sim, person, {
@@ -1915,7 +1926,12 @@ function finish(sim: Simulation, person: Person, e: Engagement, t: ProjectTempla
     // Its way out, drawn now and said when its release comes due (`RELEASE_FATE`, from 2026-10-25, brief 27).
     c.release = releaseFate(sim, t);
     const days = RELEASE_DAYS[t.kind];
-    if (days) sim.schedule({ at: dayAt(addDays(sim.now, days, NY), 12), kind: RELEASE_KIND, label: `${t.project} Is Released`, category: 'career', priority: 60, refType: 'pro.credit', refId: c.id, payload: { personId: person.id, creditId: c.id } });
+    if (days) {
+      releaseAt = dayAt(addDays(sim.now, days, NY), 12);
+      sim.schedule({ at: releaseAt, kind: RELEASE_KIND, label: `${t.project} Is Released`, category: 'career', priority: 60, refType: 'pro.credit', refId: c.id, payload: { personId: person.id, creditId: c.id } });
+      // A release held back or shelved has no promotional film set for its first date: the later one's is set when it's said.
+      if (c.release.kind === 'late' || c.release.kind === 'shelved') releaseAt = undefined;
+    }
   } else if (e.creditId && best) {
     const c = person.pro?.credits.find((x) => x.id === e.creditId);
     if (c) c.band = best;
@@ -1927,10 +1943,36 @@ function finish(sim: Simulation, person: Person, e: Engagement, t: ProjectTempla
   // A recall to loop, and an anthology's invitation for strong work (from 2026-10-24, brief 25's Module 5, `afterWrap`).
   // A reshoot needs the actor on the set: within a day's reach of home, where the work had no trip (from 2026-10-25, brief 27's K5).
   if (t.medium !== 'stage') afterWrap(sim, person, e, t, best, (title, body) => tell(sim, person, title, body, 70), travels(person, t) ? undefined : { minutes: tripMinutes(person.currentLocationId, t.place.cityId) });
+  // A promotional film for the release, set after the recalls so it keeps clear of them (from 2026-10-25, brief 27's loop 34).
+  if (releaseAt !== undefined) callPromo(sim, person, e, t, releaseAt);
   const rel = e.agentId ? person.pro?.relations[e.agentId] : undefined;
   if (rel) noteEvent(sim, rel, { kind: 'success', key: `eng:${e.id}:finished`, words: `You finished ${t.role.part} in ${t.project}.`, ref: e.id });
   keepBounded(ensurePro(sim, person));
   tell(sim, person, t.medium === 'stage' ? `${t.project} Closed` : `You Wrapped ${t.project}`, `${t.medium === 'stage' ? `The run of ${t.project} is over` : `${t.project} wrapped`}, and ${t.role.part} is on your professional credits${t.medium === 'stage' ? '' : voiceOnly(t) ? `, not yet released. It’s your voice with no picture of you, so it can go on a voice demo and not a reel${RELEASE_DAYS[t.kind] ? `; it comes out about ${counted(Math.round(RELEASE_DAYS[t.kind]! / 30), 'month')} on, estimated` : ''}` : `, not yet released. Its footage can go on a reel once it comes out${RELEASE_DAYS[t.kind] ? `, about ${counted(Math.round(RELEASE_DAYS[t.kind]! / 30), 'month')} on, estimated` : ''}`}. Update your résumé on the Portfolio tab to add it.`, 70);
+}
+
+/**
+ * A promotional film for a release (`PROMO`, from 2026-10-25, the owner's brief 27, loop 34): for a part `promoFor`
+ * allows, drawn by the work (`promoDrawn`), set on the first weekday from a fortnight before the release, up to three days
+ * before it, clear of the actor's booked work, recalls and trips (`bookedClash`), at a studio near the actor; said, with
+ * what the contract pays for it. None where no such day is clear.
+ */
+export function callPromo(sim: Simulation, person: Person, e: Engagement, t: ProjectTemplate, release: Instant): void {
+  if (e.promo || !promoFor(t) || !promoDrawn(sim, workKey(e), t.role.size)) return;
+  for (let d = addDays(release, -PROMO.before, NY); d <= addDays(release, -PROMO.latest, NY); d = addDays(d, 1, NY)) {
+    const p = zonedParts(d, NY);
+    if (p.weekday === 0 || p.weekday === 6) continue;
+    const at = instantFromZoned({ year: p.year, month: p.month, day: p.day, hour: PROMO.hour, minute: 0 }, NY);
+    if (at <= sim.now || bookedClash(person, [{ from: at, to: at + PROMO.hours * MS_HOUR }])) continue;
+    e.promo = { at, status: 'set' };
+    sim.schedule({ at, kind: PROMO_KIND, label: `${t.project}: Promotional Film`, category: 'career', priority: 38, requiresPlayer: true, durationMinutes: PROMO.hours * 60, travelMinutes: 30, locationId: person.currentLocationId, refType: 'pro.engagement', refId: e.id, payload: { personId: person.id, engagementId: e.id } });
+    const forWork = e.contract?.estimate ?? e.pay.reduce((n, x) => n + (x.deferred ? 0 : x.promised), 0);
+    const paid = promoPay(t, forWork, at);
+    const words = `${t.company} called you to appear in a promotional film for ${t.project}’s release: ${countWords(PROMO.hours)} hours at a studio near you on ${formatWeekdayDate(at, NY)} at 10:00 AM, talking about the work and ${t.role.part}. ${paid !== undefined ? `It pays a day performer’s minimum, ${formatMoney(paid, 'USD')}.` : 'Your contract has it unpaid.'} Being there makes you a little more visible to casting for a while. If you miss it, ${t.company} will remember.`;
+    noteEvent(sim, e, { kind: 'booked', key: 'promo', words });
+    tell(sim, person, `${t.project} Calls You For A Promotional Film`, words, 70);
+    return;
+  }
 }
 
 /** A unit as a sentence names it: "scene 14". */
@@ -2185,6 +2227,16 @@ const SEASON_HOOKS = {
   },
   finish: (sim: Simulation, person: Person, e: Engagement, t: ProjectTemplate) => finish(sim, person, e, t),
   renew: renewFromOption,
+  // A revival's character brought back (from 2026-10-25, brief 27's loop 41): posted and offered without an audition, for
+  // days in the new season, a new opportunity and, accepted, a new engagement.
+  bringBack: (sim: Simulation, person: Person, t: ProjectTemplate, from: Engagement, words: string): boolean => {
+    if (!seriesPosts(sim, t, datesOf({ projectId: t.id, postedAt: sim.now }), sim.now)) return false;
+    const o = post(sim, person, t, sim.now, 'open');
+    if (!o) return false;
+    o.direct = { engagementId: from.id, words, returning: true };
+    makeOffer(sim, person, o);
+    return true;
+  },
   refusal: (person: Person, days: readonly WorkDay[], except: string): string | undefined => {
     const bad = days.find((d) => !workAuthorizedFor(person, d));
     if (bad) return `${eligibilityOf(person, bad.from).words} That rules out work on ${formatDate(bad.from, NY)}.`;
@@ -2691,6 +2743,8 @@ export function registerProJobs(sim: Simulation): void {
       const words = `${pre.project}’s distributor held back its release to ${formatDate(at, NY)}. ${pre.role} stays on your credits as shot until then, and its footage can go on a reel once it’s out.`;
       noteEvent(s, e, { kind: 'problem', key: 'release:late', words });
       tell(s, person, `${pre.project}’s Release Is Held Back`, words, 60);
+      // Its promotional film, for the later date (from 2026-10-25, brief 27's loop 34).
+      callPromo(s, person, e, held, at);
       return;
     }
     if (person && pre && held && fate?.kind === 'shelved') {

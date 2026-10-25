@@ -764,9 +764,9 @@
  },
  "src/engine/systems/projobs.ts#bookedClash": {
   "status": "Rewritten",
-  "hash": "f506d35876ba",
+  "hash": "ed0e20d94bde",
   "on": "2026-10-25",
-  "evidence": "Written for brief 27's K5 (Part 10 and loop 29: pickups and reshoots after the wrap) to docs/STYLE.md and docs/GLOSSARY.md, and read where the player meets it: tests/b27-reshoot.test.ts holds the call back (Calls You Back To Reshoot, It pays a day; Calls You Back For Pickups), the day as another offer meets it (... Reshoot Day), the history's line in the past (You reshot ... the better take of each kept, paid a day), a missed one (You Missed The Reshoot, ... cut from the part. It isn't paid.), the Work tab's line and the guide's How Each Kind Of Work Is Done. The rest of these sources' words are as they were, held by brief 25's tests. tools/voice-check.mjs, tools/tics.mjs, tools/title-case.mjs, tools/plural-check.mjs and tools/spelling.mjs pass",
+  "evidence": "Written for brief 27's K6 (loop 34: publicity) to docs/STYLE.md and docs/GLOSSARY.md, and read where the player meets it: tests/b27-promo.test.ts holds the call (Calls You For A Promotional Film, It pays a day performer’s minimum), the contract's term (Paid less than $25,000 for the work, you’re paid at least a day performer’s minimum for it, as the agreement sets; Paid $25,000 or more ... this contract has it unpaid; SAG-AFTRA’s Basic Agreement’s rule, which the game applies to this agreement too, its assumption; It’s part of the job, unpaid), the hours held against another booking (... Promotional Film), and the missed film (You Missed The Promotional Film, won’t come straight to you with a part on the strength of ...). Numbers under ten in words; the pay a day performer's minimum, N13 §18.B(5), named as the agreement names it; no engine words.",
   "first": "Pending"
  },
  "src/engine/systems/projobs.ts#callOff": {
@@ -774,6 +774,13 @@
   "hash": "ace5c87e13e4",
   "on": "2026-10-24",
   "evidence": "Written for brief 25's Module 4 (contracts, pay states, overtime, the producer's contribution, residuals, the per diem, a recurring part's season and a series' seasons) to docs/STYLE.md and docs/GLOSSARY.md, every rule's figure the agreements' own and every invention said as the game's; read where the player meets it in tests/career-contracts.test.ts (the offer, the contract, each payment's state, the notices of each episode, option, decision, telecast, rerun, residual and per diem, through a played recurring part), with tools/voice-check.mjs, tools/tics.mjs and tools/title-case.mjs clean.",
+  "first": "Pending"
+ },
+ "src/engine/systems/projobs.ts#callPromo": {
+  "status": "Rewritten",
+  "hash": "5adafffa47a4",
+  "on": "2026-10-25",
+  "evidence": "Written for brief 27's K6 (loop 34: publicity) to docs/STYLE.md and docs/GLOSSARY.md, and read where the player meets it: tests/b27-promo.test.ts holds the call (Calls You For A Promotional Film, It pays a day performer’s minimum), the contract's term (Paid less than $25,000 for the work, you’re paid at least a day performer’s minimum for it, as the agreement sets; Paid $25,000 or more ... this contract has it unpaid; SAG-AFTRA’s Basic Agreement’s rule, which the game applies to this agreement too, its assumption; It’s part of the job, unpaid), the hours held against another booking (... Promotional Film), and the missed film (You Missed The Promotional Film, won’t come straight to you with a part on the strength of ...). Numbers under ten in words; the pay a day performer's minimum, N13 §18.B(5), named as the agreement names it; no engine words.",
   "first": "Pending"
  },
  "src/engine/systems/projobs.ts#chanceWords": {
@@ -1502,6 +1509,27 @@
   "hash": "91a5e4a639ea",
   "on": "2026-10-24",
   "evidence": "Written for brief 25's Module 5 (the ways of working: the booth, the dub, narration, multicamera, performance capture, reenactment, the musical and action; a shoot's order and takes, revised pages, a recall to loop and a scene cut) to docs/STYLE.md and docs/GLOSSARY.md, every rule the agreements' own and every invention said as the game's; read where the player meets it in tests/career-workflows-screen.test.ts (the Work and Opportunities tabs drawn for a voice session, a multicamera week and an action shoot, through the clock and a reload at each stage) and tests/career-workflows.test.ts (each workflow's days, choices, reports and notices), with tools/voice-check.mjs, tools/tics.mjs and tools/title-case.mjs clean.",
+  "first": "Pending"
+ },
+ "src/engine/systems/workflow.ts#promoSession": {
+  "status": "Rewritten",
+  "hash": "78b0c55d30db",
+  "on": "2026-10-25",
+  "evidence": "Written for brief 27's K6 (loop 34: publicity) to docs/STYLE.md and docs/GLOSSARY.md, and read where the player meets it: tests/b27-promo.test.ts holds the call (Calls You For A Promotional Film, It pays a day performer’s minimum), the contract's term (Paid less than $25,000 for the work, you’re paid at least a day performer’s minimum for it, as the agreement sets; Paid $25,000 or more ... this contract has it unpaid; SAG-AFTRA’s Basic Agreement’s rule, which the game applies to this agreement too, its assumption; It’s part of the job, unpaid), the hours held against another booking (... Promotional Film), and the missed film (You Missed The Promotional Film, won’t come straight to you with a part on the strength of ...). Numbers under ten in words; the pay a day performer's minimum, N13 §18.B(5), named as the agreement names it; no engine words.",
+  "first": "Pending"
+ },
+ "src/engine/systems/workflow.ts#promoSession [worked]": {
+  "status": "Rewritten",
+  "hash": "ed4eb86e4fea",
+  "on": "2026-10-25",
+  "evidence": "Written for brief 27's K6 (loop 34: publicity) to docs/STYLE.md and docs/GLOSSARY.md, and read where the player meets it: tests/b27-promo.test.ts holds the call (Calls You For A Promotional Film, It pays a day performer’s minimum), the contract's term (Paid less than $25,000 for the work, you’re paid at least a day performer’s minimum for it, as the agreement sets; Paid $25,000 or more ... this contract has it unpaid; SAG-AFTRA’s Basic Agreement’s rule, which the game applies to this agreement too, its assumption; It’s part of the job, unpaid), the hours held against another booking (... Promotional Film), and the missed film (You Missed The Promotional Film, won’t come straight to you with a part on the strength of ...). Numbers under ten in words; the pay a day performer's minimum, N13 §18.B(5), named as the agreement names it; no engine words.",
+  "first": "Pending"
+ },
+ "src/engine/systems/workflow.ts#promoTerm": {
+  "status": "Rewritten",
+  "hash": "5d7d256076cb",
+  "on": "2026-10-25",
+  "evidence": "Written for brief 27's K6 (loop 34: publicity) to docs/STYLE.md and docs/GLOSSARY.md, and read where the player meets it: tests/b27-promo.test.ts holds the call (Calls You For A Promotional Film, It pays a day performer’s minimum), the contract's term (Paid less than $25,000 for the work, you’re paid at least a day performer’s minimum for it, as the agreement sets; Paid $25,000 or more ... this contract has it unpaid; SAG-AFTRA’s Basic Agreement’s rule, which the game applies to this agreement too, its assumption; It’s part of the job, unpaid), the hours held against another booking (... Promotional Film), and the missed film (You Missed The Promotional Film, won’t come straight to you with a part on the strength of ...). Numbers under ten in words; the pay a day performer's minimum, N13 §18.B(5), named as the agreement names it; no engine words.",
   "first": "Pending"
  },
  "src/engine/systems/workflow.ts#reportWords": {

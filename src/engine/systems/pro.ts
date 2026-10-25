@@ -274,7 +274,11 @@ export interface Opportunity extends HasHistory {
     asked?: { at: Instant; amount: Money; answerAt: Instant; answer?: 'raised' | 'kept' };
   };
   /** Offered without an audition (from 2026-10-24, brief 27, loop 16): the work for the same casting office that's why, said. */
-  direct?: { engagementId: ProId; words: string };
+  /**
+   * Offered without an audition: the work before that brought it, and why. `returning` (from 2026-10-25, brief 27's loop
+   * 41) marks a revival bringing back a character the actor played, whose playing ages casting doesn't read again.
+   */
+  direct?: { engagementId: ProId; words: string; returning?: true };
   /**
    * A hold on the actor's dates (from 2026-10-25, the owner's brief 27, loop 20): put on the part's work days when casting
    * asks for a chemistry read or a screen test, from the first day's start to the last's end, and kept until the part is
@@ -448,6 +452,8 @@ export interface Engagement extends HasHistory {
   loop?: { at: Instant; status: 'set' | 'done' | 'missed'; overall?: number; units?: WorkUnit[] };
   /** A reshoot day or a voice pickup session after the wrap (from 2026-10-25, brief 27's K5; `systems/workflow.ts`'s `afterWrap`): when, and how it went. */
   further?: { kind: 'reshoot' | 'pickup'; at: Instant; status: 'set' | 'done' | 'missed'; overall?: number; units?: WorkUnit[] };
+  /** A promotional film for the release (from 2026-10-25, brief 27's loop 34; `systems/workflow.ts`'s `promoSession`): when, and whether it was made with the actor. */
+  promo?: { at: Instant; status: 'set' | 'done' | 'missed' };
   /**
    * Each day on location called off for the weather (from 2026-10-25, the owner's brief 27, Part 11; `systems/projobs.ts`'s
    * `WEATHER_DAY`): the day by its index, when it was called off and the day it had been, the sky that stopped it, and
@@ -459,6 +465,11 @@ export interface Engagement extends HasHistory {
    * `systems/projobs.ts`'s `ILL_DAY`): the day by its index, when, and the day it had been. The rest slipped as a weather day's do.
    */
   ill?: { day: number; at: Instant; was: Instant }[];
+  /**
+   * A revival's word on the character played here (from 2026-10-25, the owner's brief 27, loop 41; `systems/series.ts`'s
+   * `REVIVAL`): the season it's back for, and whether its producers bring the character back, by a new offer.
+   */
+  revival?: { year: number; returns: boolean };
 }
 
 /** One unit of a part's work (`systems/workflow.ts`): a scene, a loop, a chapter or a sequence. */
@@ -526,7 +537,7 @@ export type ContractClause =
   | { kind: 'episodes'; ordered: number; guaranteed: number; expected: number; daysEach: number; numbers: number[]; further: { n: number; status: 'pending' | 'called' | 'not-called' | 'off'; at?: Instant }[] }
   | { kind: 'option'; season: number; year: number; by: Instant; raise: number; status: 'open' | 'exercised' | 'expired'; settled?: { at: Instant; why: string; engagementId?: ProId } }
   // A workflow's rule (from 2026-10-24, brief 25's Module 5, `workflowRules`, `systems/contracts.ts`): its words.
-  | { kind: 'rule'; id: 'rehearsal-paid' | 'dubbing' | 'stressful' | 'days-only' | 'stunts' | 'intimacy' | 'looping' | 'voice-over' | 'residuals-unread'; words: string };
+  | { kind: 'rule'; id: 'rehearsal-paid' | 'dubbing' | 'stressful' | 'days-only' | 'stunts' | 'intimacy' | 'looping' | 'voice-over' | 'residuals-unread' | 'promo'; words: string };
 
 /** An engagement's contract (D1), its money in US cents as the offer's: a gross estimate, never cash. */
 export interface Contract {

@@ -675,6 +675,18 @@
    "tests/pro-core.test.ts the career’s 32 test files, 423 tests, run on this commit: all green"
   ]
  },
+ "pro.promo": {
+  "status": "Verified",
+  "by": [
+   "inspection",
+   "automated"
+  ],
+  "on": "0bab5068",
+  "evidence": [
+   "tests/b27-promo.test.ts",
+   "src/engine/systems/workflow.ts:737 the film: made or missed, the pay; src/engine/systems/workflow.ts:855 its handler; src/engine/systems/projobs.ts:1956 the call"
+  ]
+ },
  "pro.release": {
   "status": "Verified",
   "by": [
@@ -731,6 +743,18 @@
   "evidence": [
    "tests/b27-reshoot.test.ts",
    "src/engine/systems/workflow.ts:646 the session: taken again or missed, the band and the pay; src/engine/systems/workflow.ts:780 its handler"
+  ]
+ },
+ "pro.revival": {
+  "status": "Verified",
+  "by": [
+   "inspection",
+   "automated"
+  ],
+  "on": "0bab5068",
+  "evidence": [
+   "tests/b27-revival.test.ts",
+   "src/engine/systems/series.ts:367 the producers' word: back by an offer or not; src/engine/systems/projobs.ts:2232 the offer without an audition; src/engine/systems/projobs.ts:746 the part not posted again"
   ]
  },
  "pro.school_answer": {

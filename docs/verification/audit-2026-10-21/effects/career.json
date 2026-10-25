@@ -2472,7 +2472,7 @@
    "where": "The clock, at the first stop after each May 15 from 2030 (`onPassage`): the network's word on The Calloway Files, as a notice and on the Work tab.",
    "prerequisites": "The player's life; a decision moment passed since the last stop; the series' order run out (seasons through the one beginning in 2029 are ordered).",
    "reads": "The series' decisions worked out from the seed (`decisionsTo`, decider `pro.series`), the player's castings, bookings and options in it.",
-   "changes": "Canceled: castings in it closed as withdrawn, work booked for days not yet done called off with nothing owed, an option on its next season lapsed once; renewed or revived: nothing booked, the player told where they've worked in it, an open option's contract noting it.",
+   "changes": "Canceled: castings in it closed as withdrawn, work booked for days not yet done called off with nothing owed, an option on its next season lapsed once; renewed or revived: nothing booked, the player told where they've worked in it, an open option's contract noting it; revived, from 2026-10-25 (brief 27's loop 41), its producers' word on each character the player played set for before the new season (`pro.revival`).",
    "consumers": [
     {
      "what": "the week's postings cast a series part only while a season is made",
@@ -2493,6 +2493,10 @@
     {
      "what": "the contract's fold says the series' word so far",
      "at": "src/ui/career/WorkPane.tsx:280"
+    },
+    {
+     "what": "revived, the producers' word on the player's characters set",
+     "at": "src/engine/systems/series.ts:358"
     }
    ],
    "experienced": "A notice the day the network speaks (“The Calloway Files Is Canceled”, “Is Renewed”, “Is Back”); a casting closed and booked work called off with the reason; the series' seasons under The Contract.",
@@ -2508,6 +2512,61 @@
     ]
    },
    "missing": "A real series' renewals aren't simulated: 9-1-1's and Abbott Elementary's parts are guest parts in seasons the game imagines.",
+   "status": "Implemented And Verified",
+   "why": "",
+   "prior": null
+  },
+  {
+   "id": "pro.revival",
+   "kind": "scheduled",
+   "area": "career",
+   "mechanic": true,
+   "seeded": false,
+   "readBy": "career",
+   "readAt": "0bab5068",
+   "where": "A revived series' producers' word on each character the player played in it, set by the network's word bringing it back, for a week into the new season less a posting's lead (`revivalCastAt`), never before the word.",
+   "prerequisites": "A series the player has worked in, canceled and then revived by the network's word; a character played to its end in it, the latest work as each, among the engagements the record keeps.",
+   "reads": "The years the series was off (`yearsOff`), whether the part was recurring, and the draw (decider `pro.revival`, by the series, the season and the part); the new season's days for the part (`seriesPosts`).",
+   "changes": "Wanted back: the part posted and offered without an audition, its days in the new season, the playing ages not read again; accepted, a new engagement under a new contract, the old one as it was. Not wanted: said, and the part not posted to the actor in that season. The engagement keeps the word (`revival`); a line in its history and a notice either way.",
+   "consumers": [
+    {
+     "what": "the network's word schedules it and says when it comes",
+     "at": "src/engine/systems/series.ts:358"
+    },
+    {
+     "what": "the word kept on the old engagement",
+     "at": "src/engine/systems/series.ts:382"
+    },
+    {
+     "what": "wanted back, offered without an audition",
+     "at": "src/engine/systems/projobs.ts:2232"
+    },
+    {
+     "what": "a returning character's playing ages not read",
+     "at": "src/engine/systems/projobs.ts:1107"
+    },
+    {
+     "what": "the part not posted again in that season",
+     "at": "src/engine/systems/projobs.ts:746"
+    }
+   ],
+   "experienced": "Is Back says when its producers will say; then an offer without an audition, its reason on the card, or Comes Back Without; accepted, the new work on the calendar and the Work tab.",
+   "saveLoad": "The professional record (`person.pro`: each engagement's `revival`, the opportunity's `direct`) and the calendar's pending `pro.*` items are in the save; the word reads the engagement's own `revival` before acting, and the draw is keyed by the series, the season and the part, never by an id, so a reload decides it the same.",
+   "evidence": {
+    "tests": [
+     "tests/b27-revival.test.ts"
+    ],
+    "comparisons": [
+     "b27-revival: the Desk Clerk wanted back in one save and not in another, The Calloway Files canceled in 2030 and back in 2032 in both; the same record with and without the producers' word, the part posted and not"
+    ],
+    "mutations": [
+     "b27-revival: never back, always back, the offer not marked returning, a returning character's ages read, the part posted again in the season, the years off not read, the word never scheduled, cast before the network's word, a recurring part's chance a guest's, and the word against unsaid each failed a test"
+    ],
+    "journeys": [
+     "b27-revival: a Desk Clerk played in 2026 to the 2032 revival's offer and its acceptance; the twin to its word against"
+    ]
+   },
+   "missing": "No played life of the long runs reaches one yet: they're replayed in brief 27's F.",
    "status": "Implemented And Verified",
    "why": "",
    "prior": null
@@ -2759,6 +2818,65 @@
     ],
     "journeys": [
      "b27-reshoot: a feature to its reshoot and pay by the clock; a voice part's pickup session"
+    ]
+   },
+   "missing": "No played life of the long runs reaches one yet: they're replayed in brief 27's F.",
+   "status": "Implemented And Verified",
+   "why": "",
+   "prior": null
+  },
+  {
+   "id": "pro.promo",
+   "kind": "scheduled",
+   "area": "career",
+   "mechanic": true,
+   "seeded": false,
+   "readBy": "career",
+   "readAt": "0bab5068",
+   "where": "A promotional film for a lead's or a supporting part's release, three hours at a studio near home at 10:00 AM on the first weekday from a fortnight before the release, up to three days before it, clear of other booked work, recalls and trips (`callPromo`); for a release held back, before the later date, set when the hold-back is said.",
+   "prerequisites": "A part `promoFor` allows: lead or supporting, seen on screen, in work released to cinemas, streaming or broadcast; the draw (decider `pro.promo`, by the work); a release on time or sent to streaming, or held back and said; such a weekday clear.",
+   "reads": "Permission to work and the actor there at the call; the contract's estimate for the work and the union, for the pay (N13 §18.B(3), (5)); the day performer's minimum on the day.",
+   "changes": "Made: a day performer's minimum promised by its own key where the contract pays it, and the actor's visibility to casting up `VISIBILITY.promo`, fading over three years, never the credit's band. Missed: nothing paid, and that work no longer brings its casting office's direct offer. A line in the history and a notice either way; the contract's term at acceptance; its hours held against another offer.",
+   "consumers": [
+    {
+     "what": "a day performer's minimum promised and paid",
+     "at": "src/engine/systems/workflow.ts:754"
+    },
+    {
+     "what": "the actor more visible to casting",
+     "at": "src/engine/systems/awards.ts:609"
+    },
+    {
+     "what": "missed, the direct offer on its strength gone",
+     "at": "src/engine/systems/projobs.ts:1719"
+    },
+    {
+     "what": "the day held against another offer",
+     "at": "src/engine/systems/projobs.ts:1086"
+    },
+    {
+     "what": "a loop or a reshoot kept off its hours",
+     "at": "src/engine/systems/workflow.ts:569"
+    },
+    {
+     "what": "the contract's term",
+     "at": "src/engine/systems/contracts.ts:208"
+    }
+   ],
+   "experienced": "Calls You For A Promotional Film at the wrap or the hold-back, the day on the calendar, the contract's term, the Work tab's line, the pay; a missed one's notice and the day look's cost before it's passed.",
+   "saveLoad": "The professional record (`person.pro`: each engagement's `promo`, `pay`, `contract`) and the calendar's pending `pro.*` items are in the save; the film reads the record's own status before acting, and the draw is keyed by the work, never by an id, so a reload decides it the same.",
+   "evidence": {
+    "tests": [
+     "tests/b27-promo.test.ts"
+    ],
+    "comparisons": [
+     "b27-promo: a film missed and its twin made, the same record: the direct offer gone and standing; work paid under $25,000 under SAG-AFTRA paid, at $25,000 or more and other work unpaid; a release held back called for its later date and none for its first"
+    ],
+    "mutations": [
+     "b27-promo: a missed film not read by the direct offer, visibility not read, the film never paid, the bargained threshold ignored, no call for the later date, a held-back film called for its first date, its hours not held, a loop let onto a reshoot's or a film's hours, absence not read, and the contract silent each failed a test"
+    ],
+    "journeys": [
+     "b27-promo: a part to its promotional film and pay by the clock; one missed; a film held back to its later call"
     ]
    },
    "missing": "No played life of the long runs reaches one yet: they're replayed in brief 27's F.",

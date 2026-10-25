@@ -25,6 +25,7 @@
 import { CHAPTER_FOR } from '../tutorial';
 import { SKILL_WORDS } from '../school';
 import { formatMoney } from '../../core/money';
+import { countWords } from '../../core/text';
 import { DEMO, HEADSHOTS, NAME_MOST, REEL, RESUME, SESSION_HOURS, SKILL_LISTED_AT, SPECIAL_SKILLS, clockWords } from '../../systems/pro';
 import { AGENT_TIMES, COOLDOWN_WORDS, GATE, REFERRAL_BAND, TEN, TIME_WORDS, TRAVEL_MINUTES, tripWords } from '../../systems/proagent';
 import { YALE_DRAMA } from '../school';
@@ -37,7 +38,8 @@ import { OUTSIDE_WORK, WEATHER_DAY, WORK } from '../../systems/projobs';
 import { TRIP, routeSourceWords } from '../../systems/worktrip';
 import { CONTRIBUTION, LATE, OPTION_RAISE, PER_DIEM, RERUN_CEILING, RESIDUALS, contributionRate, overtimeOf } from '../../systems/contracts';
 import { SERIES } from '../series';
-import { AFTER_WRAP, STUNT, VOICE, WORKFLOWS } from '../workflows';
+import { REVIVAL } from '../../systems/series';
+import { AFTER_WRAP, PROMO, STUNT, VOICE, WORKFLOWS } from '../workflows';
 import { JURISDICTIONS } from '../jurisdictions';
 import { BRIEF } from '../../systems/briefs';
 import { EMMY_RULES, SUNDANCE_2027 } from '../awards';
@@ -941,7 +943,7 @@ export const CAREER_GUIDE: readonly GuideEntry[] = [
     later: [
       'Each payment moves to Earned, Due and Settled as its days and its payday come.',
       `Television work under SAG-AFTRA carries residuals: its first telecast is paid for by your pay, and a network rerun in prime time pays again, within ${RESIDUALS.payWithinDays} days of it.`,
-      `${SERIES[0]!.title} shoots each season from mid-July to May. From May 2030 the network says each May whether there’s another season. A canceled series stops that day: casting for it closes, and work not yet done is called off with nothing owed. It can come back years later.`,
+      `${SERIES[0]!.title} shoots each season from mid-July to May. From May 2030 the network says each May whether there’s another season. A canceled series stops that day: casting for it closes, and work not yet done is called off with nothing owed. It can come back years later. When it does, its producers say before the new season whether a part you played comes back: a recurring part about ${countWords(Math.round(REVIVAL.recurring * 10))} times in ten and a single episode’s about one in four, less the longer it was off. Wanted back, you’re offered the part without an audition, a new contract for the new season; not wanted, the part isn’t offered to you in it.`,
       `A recurring part guarantees some episodes and is expected in more: a further episode is paid only if the production calls you for it. The option on the next season, at ${Math.round(OPTION_RAISE * 100)}% more a day, is taken up or let go by June 30, once.`,
     ],
     interpret: [
@@ -974,8 +976,8 @@ export const CAREER_GUIDE: readonly GuideEntry[] = [
     title: 'How Each Kind Of Work Is Done',
     goal: 'career',
     covers: ['pro.work_choice'],
-    synonyms: ['takes', 'another take', 'voice session', 'booth', 'dubbing', 'loop', 'looping', 'motion capture', 'performance capture', 'narration', 'reenactment', 'multicam', 'studio audience', 'musical', 'mark it', 'stunt', 'stunt double', 'intimacy coordinator', 'consent', 'revised pages', 'scene cut', 'weather day', 'weather', 'rain', 'thunderstorm', 'on location', 'reshoot', 'pickups', 'pickup session'],
-    questions: ['Why were my scenes shot out of order?', 'Should I ask for another take?', 'What is a tape night?', 'Why is my voice strained?', 'Do I have to do my own stunts?', 'Do I have to do the intimate scene?', 'Why was a scene of mine cut?', 'Why was I called back to loop?', 'What happens if the weather is bad on a shoot day?'],
+    synonyms: ['takes', 'another take', 'voice session', 'booth', 'dubbing', 'loop', 'looping', 'motion capture', 'performance capture', 'narration', 'reenactment', 'multicam', 'studio audience', 'musical', 'mark it', 'stunt', 'stunt double', 'intimacy coordinator', 'consent', 'revised pages', 'scene cut', 'weather day', 'weather', 'rain', 'thunderstorm', 'on location', 'reshoot', 'pickups', 'pickup session', 'promotional film', 'publicity', 'press'],
+    questions: ['Why were my scenes shot out of order?', 'Should I ask for another take?', 'What is a tape night?', 'Why is my voice strained?', 'Do I have to do my own stunts?', 'Do I have to do the intimate scene?', 'Why was a scene of mine cut?', 'Why was I called back to loop?', 'What happens if the weather is bad on a shoot day?', 'Do I have to do publicity for a release?'],
     where: on('work', 'Career, Work, How The Work Is Done'),
     available: `From the guide’s chapter “${WORK_CHAPTER}”, once you’ve accepted work.`,
     short: `Each kind of work is done its own way. A film or a single-camera series shoots your scenes out of the script’s order, each in takes, and prints the best. A multicamera comedy rehearses for a week and tapes before a studio audience. Voice work, a dub and a narration are sessions in a booth, and they strain the voice. Performance capture is a suit and markers and no set. A musical has its music rehearsals and choreography. An action film rehearses its fights with the stunt coordinator before the stunts.\n\nEach engagement says how its work is done, the choices it asks of you, and each day’s report once it’s worked.`,
@@ -1003,9 +1005,10 @@ export const CAREER_GUIDE: readonly GuideEntry[] = [
       `A day out on location is called off the evening before when the forecast where it shoots is thunderstorms, fog, or wind of ${WEATHER_DAY.windKph} km/h or more: your days from it slip a working day each, and your flight home with them. A shower is shot through. A SAG-AFTRA day performer is paid the day off; other work pays the days you work. If another booking is in the way, the production shoots that day’s scenes without you, and they’re cut from your part. A studio, a booth, a stage play and a capture stage never stop for the weather.`,
       `After a screen wrap, the production may recall you to loop: a four-hour session paid half a day. When the work comes out, the edit may cut one of your scenes, about ${Math.round(AFTER_WRAP.cut * 10)} times in ten; the part stays on your credits with its pay.`,
       `About ${Math.round(AFTER_WRAP.further * 10)} times in ten, a feature calls you back to reshoot your weakest scenes, a day on its set paid a day, if it was shot within reach of home; a voice part calls you back for a pickup session, four hours in a booth near you. The better take of each is kept. Miss it, and another actor does them, and they’re cut from your part.`,
+      `Around the release, a lead’s production calls you to a promotional film about it about ${countWords(Math.round(PROMO.chance.lead * 4))} times in four, and a supporting part’s about one time in three: ${countWords(PROMO.hours)} hours at a studio near you, on a weekday clear of your other work. Under SAG-AFTRA, work paid less than $25,000 pays a day performer’s minimum for it; otherwise it’s unpaid. Being there makes casting a little likelier to choose you for a while. Miss it, and it’s made without you, and that production’s casting office won’t come straight to you with a part on the strength of that one.`,
     ],
     interpret: [
-      'A dub’s pay by its characters and lines, a recall to loop at half a day for four hours, a stunt only with your consent and a coordinator there, and an intimate scene only with your written consent are the SAG-AFTRA agreements’ rules. The takes, the strain, the stunt’s risk and how often pages change are the game’s.',
+      'A dub’s pay by its characters and lines, a recall to loop at half a day for four hours, a stunt only with your consent and a coordinator there, an intimate scene only with your written consent, and a promotional film’s day performer’s minimum for work paid less than $25,000 are the SAG-AFTRA agreements’ rules. The takes, the strain, the stunt’s risk and how often pages change are the game’s.',
       `There are ${Object.keys(WORKFLOWS).length} ways of working in the game: a stage play, single camera, multicamera, the booth, dubbing, performance capture, narration, reenactment, a musical and action.`,
       'Declining an intimate scene costs you nothing: a body double does it, and the part, the pay and the casting are as they were.',
     ],
@@ -1066,7 +1069,7 @@ The tab also shows the game’s own box office for your films, each season’s a
       'How many enter a category, how the votes go, whether a production enters you or submits its film, and whether the festival selects it are the game’s, and no other nominee is ever named.',
       'A film’s box office is the production’s, not your pay, and how well your part went doesn’t move it. The published charts are the providers’ own figures, each in its own unit and week.',
       'A series’ season audience is the game’s estimate, in viewers an episode for a broadcast series and hours viewed a week for a streaming one, never one as the other. The network reads it, with the season’s reviews and how long the series has run, when it says whether there’s another season: a big audience makes another likelier, never certain.',
-      `Recognition makes casting a little likelier to choose you, fading over three years, and at most ${Math.round(VISIBILITY.most * 100)}% better. It never changes a contract.`,
+      `Recognition makes casting a little likelier to choose you, fading over three years, and at most ${Math.round(VISIBILITY.most * 100)}% better; so, a little, does a promotional film you appeared in for a release. Neither changes a contract or how your work is judged.`,
     ],
     unavailable: ['“Performers in documentary and nonfiction programs aren’t eligible in any performer category.”', '“You weren’t nominated, so there’s no ceremony of yours to watch.”'],
     mistakes: [

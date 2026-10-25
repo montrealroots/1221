@@ -519,6 +519,51 @@ chances; the word following that chance where the fixed chance would have said o
 every series in viewers and a word silent on what it read each failed a test. The contract tests' premise for The Calloway
 Files, canceled in May 2030 and back in 2032, holds under the new chance.
 
+**Then publicity** (loop 34: "Applicable invitation or obligation → check agreement and availability → prepare → attend or
+respond → complete the activity → apply justified visibility, relationship, or contractual consequences → record the
+event"; "Publicity should influence exposure where appropriate, not directly manufacture artistic merit or guarantee
+awards"). Nothing in the game promoted a release. A lead's or a supporting part's production may now call the actor to a
+promotional film for it (`PROMO`, `callPromo`, `promoSession`, decider `pro.promo`): three hours at a studio near home, on
+the first weekday from a fortnight before the release, up to three days before it, clear of other booked work, recalls and
+trips; for a release held back, before the later date, set when the hold-back is said; none for a shelved film. The
+contract says it at acceptance, with its pay: under SAG-AFTRA, work paid less than $25,000 is paid at least a day
+performer's minimum for it, and more is bargained, which the game's contract leaves unpaid (N13 §18.B(3) and (5), read
+into the register's `b25-N13` today); SAG-AFTRA's other screen agreements are given the Basic Agreement's rule, the game's
+assumption and said so, their terms for it unread; other work's is unpaid, the game's term. Made, it's paid through the
+work's pay and makes the actor a little more visible to casting for a while (`VISIBILITY.promo`, the least weight
+visibility has, which an Emmy field's standing reads at its weight too); never the work's judged quality. Missed, it's
+unpaid, and that work no longer brings its casting office's direct offer (`directOfferFor`). Its hours are held against
+another offer, and the day look says what missing it costs. Held by `tests/b27-promo.test.ts`: which parts are called and
+what the contract says it pays; a film made by the clock, paid and the actor more visible, the band as it was; one missed,
+and the falsifiability twin, the same record made, the direct offer standing; and a film held back, called for its later
+date. All eleven mutations failed a test: a missed film not read by the direct offer, visibility not read, the film never
+paid, the bargained threshold ignored, no call for the later date, a held-back film called for its first, its hours not
+held, a loop let onto a reshoot's or a film's hours, absence not read, and the contract silent.
+
+**Then a revival's character plans** (loop 41: "A later revival: requires a plausible new project event → checks elapsed
+time, agreements, availability, and character plans → creates a new engagement rather than silently restoring the old
+one"). A series brought back after cancellation said "Its parts will be cast again", and nothing more came of the parts
+the player had played. Its producers now say, a week into the new season less a posting's lead and never before the
+network's word, whether each character the player played to its end comes back (`REVIVAL`, `revivalChance`,
+`revivalReturns`, decider `pro.revival`, `systems/series.ts`): a recurring part six times in ten, a single episode's a
+quarter, less a tenth for each year off past the two a revival needs. Wanted back, the part is posted and offered without
+an audition, its days in the new season, the playing ages not read again, since the character is the actor's own;
+accepted, it's a new engagement under a new contract for the new season, and the old engagement is as it was; the old
+contract's option had lapsed with the cancellation, so nothing but the character carries over. Not wanted, it's said, and
+the part isn't posted to the actor in that season. The rest of loop 41, cancellation closing future work, settling pay,
+lapsing the option and keeping the credits, was brief 25's, and loops 39 and 40 were already in the game: a recurring
+part's option taken up or let go, a renewal bringing no part by itself, and a slate series casting new characters each
+season (K2). Held by `tests/b27-revival.test.ts`: the chance and the draw it's read by; a Desk Clerk played in 2026,
+wanted back in the 2032 revival in one save, its offer accepted into a new engagement; the falsifiability twin, the same
+part in a save whose draw says no, said so and never posted that season, though the same record without the producers'
+word is; and the ages unread for a returning character. All ten mutations failed a test.
+
+With that, **K6 is closed**: Parts 12 and 13 and loops 33 to 41 read against the game, and what was missing built: a
+finished production's way out, a season's audience read by renewal, publicity, and a revival's character plans.
+
+**The clean-clone gates since K3:** `2afeda79` exit 0, 514 test files and 5,863 tests; `830677a2` exit 0, 515 and 5,871;
+`5b1ff6ac` (K5's reshoots and the day laid up) exit 0, 517 and 5,883 (`k5-gate/gate.txt`, `k5-gate/gate-exit.txt`).
+
 ## Defects Found And Fixed
 
 | # | Where | What stood | What stands | Held by |
@@ -533,4 +578,5 @@ Files, canceled in May 2030 and back in 2032, holds under the new chance.
 | 8 | The slate's voice work, and a voice part's submission | asked for a reel, which no voice recording can go on, and refused a submission without one; a voice part's submission sent the reel | voice casting asks for a voice demo, mixed from the voice alone, and a voice part's submission sends it | `tests/b27-voice-demo.test.ts` |
 | 9 | The guide's Work Abroad chapter | "so far, Australia", and a visa that cost nothing, after the UK's routes were verified | the UK's three routes, fees and timings, read from the routes | `tests/b20-guide-chapters.test.ts`, `docs/verification/connected-journey/TRACE.md` |
 | 10 | `worktrip.ts`, a way home booked again | waited on the canceled leg before it, canceled itself, and left the trip in the work's town | the leg before it that still counts is read, so a way booked again starts afresh | `tests/b27-weather.test.ts` |
+| 11 | `workflow.ts`'s `clearWeekday`, a recall to loop set after a reshoot | kept off other loops alone, so a loop drawn after a reshoot could land on its day, the two set for the same hours | kept off any recall set: a loop, a reshoot or pickup session, a promotional film | `tests/b27-promo.test.ts` |
 

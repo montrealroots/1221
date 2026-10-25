@@ -48,10 +48,10 @@ import { GATE, LEVELS, chancesFor, drawOf, offerOutcome, replyOutcome, rosterFor
 import { DIRECT, HOLD, NEGOTIATE, castingDraw, postingsAt, releaseFate, slateReach } from './systems/projobs';
 import { productionsOf, seriesOfYear, slatePartsAt } from './systems/slate';
 import { PROJECTS } from './content/careerwork';
-import { SERIES } from './content/series';
-import { decisionsTo, episodeDrawn, optionDrawn, seasonAudience } from './systems/series';
+import { SERIES, seriesById } from './content/series';
+import { decisionsTo, episodeDrawn, optionDrawn, revivalReturns, seasonAudience } from './systems/series';
 import { lateDays, rerunDrawn } from './systems/contracts';
-import { cutDrawn, furtherDrawn, loopDrawn, pagesDrawn, planWork, stressDrawn } from './systems/workflow';
+import { cutDrawn, furtherDrawn, loopDrawn, pagesDrawn, planWork, promoDrawn, stressDrawn } from './systems/workflow';
 import { simulateRun } from './systems/charts';
 import { fieldDrawn, finalDrawn, festivalSelects, festivalSubmits, nominationsFor, productionEnters } from './systems/awards';
 import type { Engagement } from './systems/pro';
@@ -917,6 +917,36 @@ defineDecider<{ sim: Simulation; first: number }, string>({
   },
   sample: (seed) => ({ sim: atYale(seed), first: seed * 7 }),
   decide: ({ sim, first }) => Array.from({ length: 40 }, (_, n) => furtherDrawn(sim, `w${first + n}`) ?? '-').join(','),
+});
+
+defineDecider<{ sim: Simulation; first: number; size: 'lead' | 'supporting' }, string>({
+  id: 'pro.promo',
+  decides: 'A promotional film for a lead’s or a supporting part’s release, three times in four for a lead and about one in three for a supporting part, by the work.',
+  drawnIn: 'src/engine/systems/workflow.ts',
+  reads: {
+    first: (o, t) => ({ ...o, first: Math.round(t * 100) }),
+    size: (o, t) => ({ ...o, size: t < 0.5 ? 'lead' : 'supporting' }),
+    world: (o, t) => ({ ...o, sim: atYale(Math.round(t * 20)) }),
+  },
+  sample: (seed) => ({ sim: atYale(seed), first: seed * 7, size: seed % 2 ? 'lead' : 'supporting' }),
+  decide: ({ sim, first, size }) => Array.from({ length: 40 }, (_, n) => (promoDrawn(sim, `w${first + n}`, size) ? '1' : '0')).join(''),
+});
+
+defineDecider<{ sim: Simulation; year: number; recurring: boolean }, string>({
+  id: 'pro.revival',
+  decides: 'Whether a revived series’ producers bring back a character the player played: six times in ten for a recurring part and a quarter for one episode’s, less each year it was off past two.',
+  drawnIn: 'src/engine/systems/series.ts',
+  reads: {
+    year: (o, t) => ({ ...o, year: 2030 + Math.round(t * 10) }),
+    recurring: (o, t) => ({ ...o, recurring: t < 0.5 }),
+    world: (o, t) => ({ ...o, sim: atYale(Math.round(t * 20)) }),
+  },
+  sample: (seed) => ({ sim: atYale(seed), year: 2030 + (seed % 10), recurring: seed % 2 === 0 }),
+  decide: ({ sim, year, recurring }) => {
+    const base = PROJECTS.find((p) => p.series && (p.schedule.kind === 'episodes') === recurring)!;
+    const s = seriesById(base.series!)!;
+    return Array.from({ length: 40 }, (_, n) => (revivalReturns(sim, { ...s, id: `${s.id}-${n}` }, year, base) ? '1' : '0')).join('');
+  },
 });
 
 defineDecider<{ sim: Simulation; first: number }, string>({

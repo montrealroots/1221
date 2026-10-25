@@ -268,7 +268,7 @@ function ContractFacts({ c, zone }: { c: Contract; zone: string }) {
 
 /**
  * How the work is done (from 2026-10-24, brief 25's Module 5): its workflow and format in words, its own preparation and
- * how far it stands, the voice where the work reads it, a recall to loop, a reshoot or a pickup session, and each choice the work asks with its
+ * how far it stands, the voice where the work reads it, a recall to loop, a reshoot or a pickup session, a promotional film, and each choice the work asks with its
  * options, the one in force said and the others a button each.
  */
 function WorkflowView({ person, e }: { person: Person; e: Engagement }) {
@@ -288,6 +288,8 @@ function WorkflowView({ person, e }: { person: Person; e: Engagement }) {
       {e.loop && <p style={{ margin: 0 }}>{e.loop.status === 'set' ? `Recalled to loop on ${formatDateTime(e.loop.at, sim.zone)}: four hours at a studio near you, paid half a day.` : e.loop.status === 'done' ? `Looped on ${formatDate(e.loop.at, sim.zone)}, paid half a day.` : `The looping session on ${formatDate(e.loop.at, sim.zone)} was missed, and another actor did it.`}</p>}
       {/* A reshoot day or a pickup session after the wrap (from 2026-10-25, brief 27's K5, `furtherSession`). */}
       {e.further && <p style={{ margin: 0 }}>{e.further.status === 'set' ? (e.further.kind === 'reshoot' ? `Called back to reshoot on ${formatDateTime(e.further.at, sim.zone)}, on the production’s set until 4:00 PM, paid a day.` : `Called back for a pickup session on ${formatDateTime(e.further.at, sim.zone)}: four hours in a booth near you, paid a session.`) : e.further.status === 'done' ? `${e.further.kind === 'reshoot' ? 'Reshot' : 'Recorded again'} on ${formatDate(e.further.at, sim.zone)}, the better take of each kept.` : `The ${e.further.kind === 'reshoot' ? 'reshoot' : 'pickup session'} on ${formatDate(e.further.at, sim.zone)} was missed: another actor did it, and those ${e.further.kind === 'reshoot' ? 'scenes' : 'lines'} are cut from your part.`}</p>}
+      {/* A promotional film for the release (from 2026-10-25, brief 27's loop 34, `promoSession`). */}
+      {e.promo && <p style={{ margin: 0 }}>{e.promo.status === 'set' ? `Called for a promotional film on ${formatDateTime(e.promo.at, sim.zone)}: three hours at a studio near you, for the release.` : e.promo.status === 'done' ? `Appeared in the promotional film on ${formatDate(e.promo.at, sim.zone)}, which makes you a little more visible to casting for a while.` : `The promotional film on ${formatDate(e.promo.at, sim.zone)} was missed: it was made without you, unpaid, and ${t.company}’s casting office won’t come straight to you with a part on the strength of this one.`}</p>}
       {live && choicesOf(e, t).map(({ decision: d, chosen }) => {
         const now = d.options.find((o) => o.id === chosen)!;
         const others = d.options.filter((o) => o.id !== chosen);

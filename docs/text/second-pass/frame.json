@@ -2099,6 +2099,13 @@
   "reason": "A decider's description, read by tests/deciders.test.ts and tools/deciders.mjs and never shown to a player: it says what the draw decides and what moves it, from 2026-10-21 who the part is written for among them.",
   "first": "Reviewed And Retained"
  },
+ "src/engine/decided.ts#top [pro.promo]": {
+  "status": "Retained",
+  "hash": "a06d7681084b",
+  "on": "2026-10-25",
+  "reason": "A decider's description, read by tests/deciders.test.ts and tools/deciders.mjs and never shown to a player: it says what decides a promotional film for a lead's or a supporting part's release, and how often.",
+  "first": "Pending"
+ },
  "src/engine/decided.ts#top [pro.release]": {
   "status": "Retained",
   "hash": "d0d419e931d8",
@@ -2118,6 +2125,13 @@
   "hash": "9b9a65b56e8b",
   "on": "2026-10-25",
   "reason": "A decider's description, read by tests/deciders.test.ts and tools/deciders.mjs and never shown to a player: it says what decides a reshoot day or a pickup session after the wrap, how often, and when.",
+  "first": "Pending"
+ },
+ "src/engine/decided.ts#top [pro.revival]": {
+  "status": "Retained",
+  "hash": "3621d16ca284",
+  "on": "2026-10-25",
+  "reason": "A decider's description, read by tests/deciders.test.ts and tools/deciders.mjs and never shown to a player: it says what decides whether a revived series' producers bring back a character the player played, and how often.",
   "first": "Pending"
  },
  "src/engine/decided.ts#top [pro.roster]": {
@@ -3152,9 +3166,9 @@
  },
  "src/ui/looks/day.tsx#missCost": {
   "status": "Rewritten",
-  "hash": "287fb07bf719",
+  "hash": "5187e440e827",
   "on": "2026-10-25",
-  "evidence": "Written for brief 27's K5 (loop 28: illness and absence by their contractual rule, not one universal number) to docs/STYLE.md and docs/GLOSSARY.md, and read where the player meets it: tests/b27-ill.test.ts holds the notice ... Shoots Around You (You were laid up on ..., so ... shot around you and slipped the rest of your days a working day each; A day lost to your own illness or injury isn't paid, SAG-AFTRA's agreement's exception ...; Another day lost the same way and the production recasts the part), a smaller part recast as before and a second day recast; the offer card, the Day look's cost of a missed call, the guide's Offers And Booked Work and Your Day, and the tutorial's Finding Work now say the same, where each had said a shoot replaces you for any day missed. The weather day's slip, shared with it, says what tests/b27-weather.test.ts holds. tools/voice-check.mjs, tools/tics.mjs, tools/title-case.mjs, tools/plural-check.mjs and tools/spelling.mjs pass",
+  "evidence": "Written for brief 27's K6 (loop 34: publicity) to docs/STYLE.md: a missed promotional film's cost, said before the player passes on it (it's made without you, unpaid, and the production's casting office won't come straight to you with a part on the strength of this one), the consequence tests/b27-promo.test.ts holds by the clock.",
   "first": "Pending"
  },
  "src/ui/looks/day.tsx#quarterSentence": {

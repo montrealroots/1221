@@ -7,7 +7,7 @@ persistence and world mechanics that matrix has no row for. Each carries the swe
 code, by a test the gate runs, by playing the built app), the commit, the evidence and what was found. Only Verified and Fixed And
 Verified count as done, out of every row not Deferred. Not Tested is the honest default: nothing is counted done for having a row.
 
-**Coverage:** 1135 of 1160 in scope Verified or Fixed And Verified (97.8%); 1128 Verified, 7 Fixed And Verified, 0 Failed, 0 Blocked, 20 Deferred, 25 Not Tested. By inspection 1155, automated 1155, interactive 34.
+**Coverage:** 1137 of 1162 in scope Verified or Fixed And Verified (97.8%); 1130 Verified, 7 Fixed And Verified, 0 Failed, 0 Blocked, 20 Deferred, 25 Not Tested. By inspection 1157, automated 1157, interactive 34.
 
 ## Totals
 
@@ -20,10 +20,10 @@ Verified count as done, out of every row not Deferred. Not Tested is the honest 
 | benefits | 77 | 63 |  |  |  | 14 |  | 77 | 77 |  |
 | papers | 103 | 97 |  |  |  | 6 |  | 103 | 103 |  |
 | life | 87 | 84 |  |  |  |  | 3 | 84 | 84 |  |
-| career | 113 | 98 |  |  |  |  | 15 | 98 | 98 |  |
+| career | 115 | 100 |  |  |  |  | 15 | 100 | 100 |  |
 | guide | 70 | 63 |  |  |  |  | 7 | 63 | 63 | 25 |
 | persistence | 12 | 11 | 1 |  |  |  |  | 12 | 12 | 9 |
-| **All** | **1180** | **1128** | **7** | **0** | **0** | **20** | **25** | **1155** | **1155** | **34** |
+| **All** | **1182** | **1130** | **7** | **0** | **0** | **20** | **25** | **1157** | **1157** | **34** |
 
 ## Creation
 
@@ -1109,11 +1109,13 @@ Verified count as done, out of every row not Deferred. Not Tested is the honest 
 | `pro.trip_arrive` | scheduled | The clock, at each leg's arrival (`ARRIVE_KIND`). | Implemented And Verified | Not Tested |  |  |  |  |
 | `pro.ask_pay` | command | Career, Work: Ask About It under a payment that's Overdue, grayed with askRefusal's words. | Implemented And Verified | Not Tested |  |  |  |  |
 | `pro.series` | reactor | The clock, at the first stop after each May 15 from 2030 (`onPassage`): the network's word on The Calloway Files, as a … | Implemented And Verified | Not Tested |  |  |  |  |
+| `pro.revival` | scheduled | A revived series' producers' word on each character the player played in it, set by the network's word bringing it back… | Implemented And Verified | Verified | inspection, automated | 0bab5068 | tests/b27-revival.test.ts; src/engine/systems/series.ts:367 the producers' word: back by an offer or not; src/engine/systems/projobs.ts:2232 the offer without an audition; src/engine/systems/projobs.ts:746 the part not … |  |
 | `pro.work_choice` | command | Career, Work: How The Work Is Done, a button for each option of each choice the work asks, grayed with choiceRefusal's … | Implemented And Verified | Not Tested |  |  |  |  |
 | `pro.pages` | reactor | The clock, at the first stop after 6:00 PM the evening before each work day of a format that revises its pages (`onPass… | Implemented And Verified | Not Tested |  |  |  |  |
 | `pro.weather` | reactor | The clock, at the first stop after 6:00 PM, in the shoot's own town, the evening before each day out on location (`onPa… | Implemented And Verified | Verified | inspection, automated | a5b0bd05 | tests/b27-weather.test.ts; src/engine/systems/projobs.ts:2232 the passage: each day on location read the evening before; src/engine/systems/projobs.ts:2193 the weather day: slipped or lost, the calendar, the flight home… |  |
 | `pro.loop` | scheduled | The clock, at a looping session the production recalled the player to after a screen wrap (`LOOP_KIND`). | Implemented And Verified | Not Tested |  |  |  |  |
 | `pro.reshoot` | scheduled | A feature's reshoot day on its set, 7:00 AM to 4:00 PM, or a voice part's pickup session, four hours in a booth near ho… | Implemented And Verified | Verified | inspection, automated | 830677a2 | tests/b27-reshoot.test.ts; src/engine/systems/workflow.ts:646 the session: taken again or missed, the band and the pay; src/engine/systems/workflow.ts:780 its handler |  |
+| `pro.promo` | scheduled | A promotional film for a lead's or a supporting part's release, three hours at a studio near home at 10:00 AM on the fi… | Implemented And Verified | Verified | inspection, automated | 0bab5068 | tests/b27-promo.test.ts; src/engine/systems/workflow.ts:737 the film: made or missed, the pay; src/engine/systems/workflow.ts:855 its handler; src/engine/systems/projobs.ts:1956 the call |  |
 | `pro.invite` | scheduled | The clock, 240 days after an anthology's wrap whose work was judged Strong or better (`INVITE_KIND`). | Implemented And Verified | Not Tested |  |  |  |  |
 | `pro.award_enter` | command | Career, Charts And Awards: Your Recognition, Enter Yourself under each television part eligible and not entered, grayed… | Implemented And Verified | Not Tested |  |  |  |  |
 | `pro.watch_ceremony` | command | Career, Charts And Awards: Your Recognition, Watch The Ceremony under a nominated entry, grayed with watchRefusal's wor… | Implemented And Verified | Not Tested |  |  |  |  |

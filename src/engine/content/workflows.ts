@@ -496,5 +496,16 @@ export const PAGES = { least: 0.1, most: 0.35, eveningHour: 18 } as const;
 /** After a screen wrap, the chance the producer recalls you to loop, and the chance the edit cuts one of your scenes (the game's). */
 export const AFTER_WRAP = { loop: 0.35, cut: 0.2, loopHours: 4, loopHour: 10, further: 0.2, furtherFrom: 45, furtherWithin: 45, reshootHour: 7, reshootHours: 9 } as const;
 
+/**
+ * A promotional film for a release (from 2026-10-25, the owner's brief 27, loop 34: "Applicable invitation or obligation
+ * → check agreement and availability → prepare → attend or respond → complete the activity → apply justified visibility,
+ * relationship, or contractual consequences → record the event"): the chance a lead's or a supporting part's production
+ * calls the actor to one; the days before the release it's set, the first weekday clear of other work from `before` days
+ * ahead to `latest`; its hour and hours; and the pay for the work from which SAG-AFTRA's Basic Agreement leaves a
+ * promotional film's pay to bargaining, under which it pays at least a day performer's minimum (N13 §18.B(3), (5)).
+ * ASSUMPTION the chances, the days and the hours, the game's.
+ */
+export const PROMO = { chance: { lead: 0.75, supporting: 0.35 }, before: 14, latest: 3, hour: 10, hours: 3, bargained: 25_000_00 } as const;
+
 /** Each scene of the part and how far into the story it falls, made at acceptance (`systems/workflow.ts`). */
 export const SCRIPT = { scenesPerEpisode: 6, minimumScene: 3, spread: 40 } as const;

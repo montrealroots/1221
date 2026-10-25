@@ -12,12 +12,12 @@
 import type { Simulation } from '../core/simulation';
 import { CommandError } from '../core/simulation';
 import type { Person } from '../domain/model';
-import { MS_HOUR, addDays, formatDate, formatWeekdayDate, instantFromZoned, zonedParts, type Instant } from '../core/time';
-import { plural, spokenList } from '../core/text';
+import { MS_HOUR, addDays, dateKey, formatDate, formatWeekdayDate, instantFromZoned, zonedParts, type Instant } from '../core/time';
+import { countWords, plural, spokenList } from '../core/text';
 import { TASK_PROFILES, EVALUATION, type Dimension, type TaskProfile } from '../content/tasks';
-import { PROJECTS, projectById, type ProjectTemplate } from '../content/careerwork';
+import { PROJECTS, RATES, minimumOn, projectById, type ProjectTemplate } from '../content/careerwork';
 import {
-  AFTER_WRAP, CONSENT, FORMATS, PAGES, SCRIPT, STUNT, VOICE, WORKFLOWS, decisionsOf, type ChoiceEffect, type Decision, type DecisionId,
+  AFTER_WRAP, CONSENT, FORMATS, PAGES, PROMO, SCRIPT, STUNT, VOICE, WORKFLOWS, decisionsOf, type ChoiceEffect, type Decision, type DecisionId,
   type FormatSpec, type JudgedStep, type StepId, type WorkflowSpec,
 } from '../content/workflows';
 import { ensurePro, noteEvent, type Engagement, type PartPrep, type ProPayment, type WorkReport, type WorkUnit } from './pro';
@@ -49,6 +49,8 @@ export const LOOP_KIND = 'pro.loop';
 export const INVITE_KIND = 'pro.invite';
 /** A reshoot day or a voice pickup session after the wrap (`afterWrap`, from 2026-10-25, brief 27's K5). */
 export const FURTHER_KIND = 'pro.reshoot';
+/** A promotional film for a release (`PROMO`, from 2026-10-25, brief 27's loop 34). */
+export const PROMO_KIND = 'pro.promo';
 
 // ---------------------------------------------------------------------------------------------------------------------
 // The days
@@ -224,6 +226,37 @@ export function loopDrawn(sim: Simulation, key: string): number | undefined {
 export function furtherDrawn(sim: Simulation, key: string): number | undefined {
   if (sim.rng('pro.reshoot', key).next() >= AFTER_WRAP.further) return undefined;
   return AFTER_WRAP.furtherFrom + Math.floor(sim.rng('pro.reshoot', key, 'when').next() * AFTER_WRAP.furtherWithin);
+}
+
+/** A promotional film for the release (decider `pro.promo`): at `PROMO.chance` for the part's size, by the work. */
+export const promoDrawn = (sim: Simulation, key: string, size: 'lead' | 'supporting'): boolean => sim.rng('pro.promo', key).next() < PROMO.chance[size];
+
+/**
+ * Whether a part's production may call it to a promotional film (`PROMO`): a lead or a supporting part seen on screen in
+ * work released to cinemas, streaming or broadcast. A voice, a student film, a short for festivals and a stage run have none.
+ */
+export const promoFor = (t: ProjectTemplate): t is ProjectTemplate & { role: { size: 'lead' | 'supporting' } } =>
+  t.medium !== 'stage' && !voiceOnly(t) && (t.role.size === 'lead' || t.role.size === 'supporting') && ['theatrical', 'streaming', 'broadcast'].includes(formatOf(t).after);
+
+/**
+ * A promotional film's pay (N13 §18.B(3), (5)): under SAG-AFTRA, a part paid less than $25,000 for the work is paid at
+ * least a day performer's minimum on the day, the Basic Agreement's rule, which the game reads into SAG-AFTRA's other
+ * screen agreements too (ASSUMPTION, their terms for it unread); a part paid more bargains for it, and the game's contract
+ * has it unpaid, as other work's. Undefined is unpaid. `forWork` is the contract's estimate, so the term it said holds.
+ */
+export function promoPay(t: ProjectTemplate, forWork: number, at: Instant): number | undefined {
+  if (t.union !== 'sag-aftra' || forWork >= PROMO.bargained) return undefined;
+  return minimumOn(RATES['sag-tv-day'], dateKey(at, NY));
+}
+
+/** A promotional film's term in the contract (`PROMO`, `promoPay`): when it may come, and what it pays and why. */
+export function promoTerm(t: ProjectTemplate, forWork: number): string {
+  const call = `Around its release, the production may call you for ${countWords(PROMO.hours)} hours to appear in a promotional film about it, on a weekday clear of your other work.`;
+  if (t.union !== 'sag-aftra') return `${call} It’s part of the job, unpaid.`;
+  const rule = t.pay === 'sag-tv-day' || t.pay === 'sag-tv-week' ? 'as the agreement sets' : 'SAG-AFTRA’s Basic Agreement’s rule, which the game applies to this agreement too, its assumption';
+  return forWork < PROMO.bargained
+    ? `${call} Paid less than $25,000 for the work, you’re paid at least a day performer’s minimum for it, ${rule}.`
+    : `${call} Paid $25,000 or more for the work, its pay is yours to bargain, ${rule}, and this contract has it unpaid.`;
 }
 
 /** A scene cut in the edit (decider `pro.cut`): at `AFTER_WRAP.cut`, by the work. */
@@ -527,9 +560,14 @@ function clearWeekday(person: Person, from: Instant, until: Instant, except: str
     const start = instantFromZoned({ year: p.year, month: p.month, day: p.day, hour, minute: 0 }, NY);
     const end = start + hours * MS_HOUR;
     const clash = (person.pro?.engagements ?? []).some((x) => x.id !== except && x.status !== 'finished' && x.status !== 'canceled' && x.days.some((w) => w.from < end && w.to > start));
-    // Nor the part's own recall to loop (from 2026-10-25, brief 27's K5): a reshoot isn't set on the loop's day.
-    const loop = (person.pro?.engagements ?? []).some((x) => x.loop?.status === 'set' && x.loop.at < end && x.loop.at + AFTER_WRAP.loopHours * MS_HOUR > start);
-    if (!clash && !loop) return start;
+    // Nor another recall already set (from 2026-10-25, brief 27's K5): a reshoot isn't set on a loop's day; nor, from later
+    // that day, a loop on a reshoot's or a pickup's, nor either on a promotional film's. Until then a loop drawn after a
+    // reshoot could land on its day, the two set for the same hours.
+    const recalled = (person.pro?.engagements ?? []).some((x) =>
+      (x.loop?.status === 'set' && x.loop.at < end && x.loop.at + AFTER_WRAP.loopHours * MS_HOUR > start)
+      || (x.further?.status === 'set' && x.further.at < end && x.further.at + furtherHours(x.further.kind) * MS_HOUR > start)
+      || (x.promo?.status === 'set' && x.promo.at < end && x.promo.at + PROMO.hours * MS_HOUR > start));
+    if (!clash && !recalled) return start;
   }
   return undefined;
 }
@@ -689,6 +727,36 @@ export function furtherSession(sim: Simulation, person: Person, e: Engagement, t
   noteEvent(sim, e, { kind: 'worked', key: 'further:done', words: `You ${f.kind === 'reshoot' ? 'reshot' : 'recorded again'} ${plural(units.length, f.kind === 'reshoot' ? 'scene' : 'line')} of ${t.role.part} on ${formatDate(at, NY)}${overall !== undefined ? `, ${BAND_WORDS[bandOfQuality(overall)]}` : ''}, the better take of each kept, paid ${e.contract?.per === 'week' ? 'a fifth of a week' : 'a day'}.` });
 }
 
+/**
+ * A promotional film (`PROMO_KIND`, from 2026-10-25, brief 27's loop 34): read for permission to work and the actor there.
+ * Made with the actor, it's paid where the contract pays it (`promoPay`), through the pay the work's other days came by,
+ * and it makes the actor a little more visible to casting for a while (`VISIBILITY.promo`, `systems/awards.ts`), never
+ * the work's judged quality nor an award's. Missed, the production makes it without the actor, unpaid, and its casting
+ * office won't come straight to the actor with a part on the strength of this one (`directOfferFor`, `systems/projobs.ts`).
+ */
+export function promoSession(sim: Simulation, person: Person, e: Engagement, t: ProjectTemplate, at: Instant, there: boolean, tell: (title: string, body: string) => void): void {
+  const p = e.promo;
+  if (!p || p.status !== 'set') return;
+  const day = { from: at, to: at + PROMO.hours * MS_HOUR, label: `${t.project}: Promotional Film` };
+  if (!workAuthorizedFor(person, day) || !there) {
+    p.status = 'missed';
+    const why = !there ? `You missed the promotional film for ${t.project} on ${formatDate(at, NY)}` : `You had no permission to work on ${formatDate(at, NY)}, the day of the promotional film for ${t.project}`;
+    const words = `${why}, so the production made it without you, and it isn’t paid. ${t.company} will remember it: its casting office won’t come straight to you with a part on the strength of ${t.role.part}.`;
+    noteEvent(sim, e, { kind: 'problem', key: 'promo:missed', words });
+    tell('You Missed The Promotional Film', words);
+    return;
+  }
+  p.status = 'done';
+  const forWork = e.contract?.estimate ?? e.pay.reduce((n, x) => n + (x.deferred ? 0 : x.promised), 0);
+  const amount = promoPay(t, forWork, at);
+  if (amount !== undefined) {
+    const pay: ProPayment = { id: sim.nextId('pro'), key: `${e.id}:promo`, promised: amount, currency: 'USD', promisedAt: sim.now, due: thursdayAfter(at), week: { from: at, to: day.to } };
+    if (!e.pay.some((x) => x.key === pay.key)) e.pay.push(pay);
+    schedulePay(sim, person, e);
+  }
+  noteEvent(sim, e, { kind: 'worked', key: 'promo:done', words: `You appeared in the promotional film for ${t.project} on ${formatDate(at, NY)}, ${amount !== undefined ? 'paid a day performer’s minimum' : 'unpaid, as your contract has it'}. It makes you a little more visible to casting for a while.` });
+}
+
 const thursdayAfter = (at: Instant): Instant => {
   let d = addDays(at, 1, NY);
   while (zonedParts(d, NY).weekday !== 4) d = addDays(d, 1, NY);
@@ -783,6 +851,13 @@ export function registerWorkflows(sim: Simulation, hooks: WorkflowHooks): void {
     const t = e && projectById(e.projectId);
     if (!person || !e || !t) return;
     furtherSession(s, person, e, t, item.at, hooks.there(person, item.at), hooks.genre(person, t), (title, body) => hooks.tell(s, person, title, body));
+  });
+  sim.onSchedule(PROMO_KIND, (item, s) => {
+    const person = s.universe.people[String(item.payload.personId)];
+    const e = person?.pro?.engagements.find((x) => x.id === item.payload.engagementId);
+    const t = e && projectById(e.projectId);
+    if (!person || !e || !t) return;
+    promoSession(s, person, e, t, item.at, hooks.there(person, item.at), (title, body) => hooks.tell(s, person, title, body));
   });
   sim.onSchedule(INVITE_KIND, (item, s) => {
     const person = s.universe.people[String(item.payload.personId)];

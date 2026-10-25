@@ -60,7 +60,7 @@ import { businessDaysOn } from './permission';
 import { PAY_KIND, projectOf, weekOf, withholdingOn } from './propay';
 import { seasonNumber } from './series';
 import { KIND_WORDS, counted, overtimeHours } from './projobs';
-import { dubDaysOf, formatOf } from './workflow';
+import { dubDaysOf, formatOf, promoFor, promoTerm } from './workflow';
 
 const NY = 'America/New_York';
 const MIN = 60_000;
@@ -203,6 +203,9 @@ export function contractFor(sim: Simulation, e: Engagement, offer: NonNullable<i
   if (s && extra.option) clauses.push({ kind: 'option', season: seasonNumber(sim, s, extra.option.year), year: extra.option.year, by: extra.option.by, raise: OPTION_RAISE, status: 'open' });
   // The workflow's rules last (from 2026-10-24, brief 25's Module 5, `workflowRules`).
   clauses.push(...workflowRules(t));
+  // A promotional film for the release, and what it pays (from 2026-10-25, brief 27's loop 34, `promoTerm`).
+  const estimate = e.pay.reduce((n, p) => n + (p.deferred ? 0 : p.promised), 0);
+  if (promoFor(t)) clauses.push({ kind: 'rule', id: 'promo', words: promoTerm(t, estimate) });
   const first = e.days[0];
   const last = e.days[e.days.length - 1];
   const basis: Contract['basis'] = deferred ? 'deferred' : t.schedule.kind === 'episodes' ? 'episode' : offer.per;
@@ -211,7 +214,7 @@ export function contractFor(sim: Simulation, e: Engagement, offer: NonNullable<i
     format: KIND_WORDS[t.kind], agreement: t.contract,
     service: { from: first?.from ?? made, to: last?.to ?? made }, place: `${t.place.venue}, ${t.place.city}`,
     basis, ...(offer.amount !== undefined ? { rate: offer.amount } : {}), per: offer.per, units: offer.units,
-    estimate: e.pay.reduce((n, p) => n + (p.deferred ? 0 : p.promised), 0),
+    estimate,
     payKeys: e.pay.map((p) => p.key),
     ...(s && extra.season ? { series: { id: s.id, year: extra.season.year, season: seasonNumber(sim, s, extra.season.year) } } : {}),
     ...(extra.renews ? { renews: extra.renews } : {}),

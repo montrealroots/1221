@@ -302,9 +302,9 @@
  },
  "src/engine/systems/series.ts#registerSeries": {
   "status": "Rewritten",
-  "hash": "9422592c43b6",
-  "on": "2026-10-24",
-  "evidence": "Written for brief 25's Module 4 (contracts, pay states, overtime, the producer's contribution, residuals, the per diem, a recurring part's season and a series' seasons) to docs/STYLE.md and docs/GLOSSARY.md, every rule's figure the agreements' own and every invention said as the game's; read where the player meets it in tests/career-contracts.test.ts (the offer, the contract, each payment's state, the notices of each episode, option, decision, telecast, rerun, residual and per diem, through a played recurring part), with tools/voice-check.mjs, tools/tics.mjs and tools/title-case.mjs clean.",
+  "hash": "a19cf18d967f",
+  "on": "2026-10-25",
+  "evidence": "Written for brief 27's K6 (loop 41: cancellation and possible revival) to docs/STYLE.md and docs/GLOSSARY.md, and read where the player meets it: tests/b27-revival.test.ts holds the network's word bringing a series back (Its producers will say by June 17, 2032, whether Desk Clerk comes back, and its other parts will be cast again), the offer's reason (The Calloway Files is back after two years off, and its producers want Desk Clerk back, with a new contract for its new season), and the word against (The Calloway Files Comes Back Without Desk Clerk | ... is back after two years off without Desk Clerk). Numbers under ten in words; no engine words.",
   "first": "Pending"
  },
  "src/engine/systems/series.ts#registerSeries [booked]": {
@@ -321,11 +321,18 @@
   "evidence": "Written for brief 25's Module 4 (contracts, pay states, overtime, the producer's contribution, residuals, the per diem, a recurring part's season and a series' seasons) to docs/STYLE.md and docs/GLOSSARY.md, every rule's figure the agreements' own and every invention said as the game's; read where the player meets it in tests/career-contracts.test.ts (the offer, the contract, each payment's state, the notices of each episode, option, decision, telecast, rerun, residual and per diem, through a played recurring part), with tools/voice-check.mjs, tools/tics.mjs and tools/title-case.mjs clean.",
   "first": "Pending"
  },
+ "src/engine/systems/series.ts#registerSeries [success]": {
+  "status": "Rewritten",
+  "hash": "8cf29d26ae37",
+  "on": "2026-10-25",
+  "evidence": "Written for brief 27's K6 (loop 41: cancellation and possible revival) to docs/STYLE.md and docs/GLOSSARY.md, and read where the player meets it: tests/b27-revival.test.ts holds the network's word bringing a series back (Its producers will say by June 17, 2032, whether Desk Clerk comes back, and its other parts will be cast again), the offer's reason (The Calloway Files is back after two years off, and its producers want Desk Clerk back, with a new contract for its new season), and the word against (The Calloway Files Comes Back Without Desk Clerk | ... is back after two years off without Desk Clerk). Numbers under ten in words; no engine words.",
+  "first": "Pending"
+ },
  "src/engine/systems/series.ts#registerSeries <pro.series>": {
   "status": "Rewritten",
-  "hash": "6d887bc1d2d0",
-  "on": "2026-10-24",
-  "evidence": "Written for brief 25's Module 4 (contracts, pay states, overtime, the producer's contribution, residuals, the per diem, a recurring part's season and a series' seasons) to docs/STYLE.md and docs/GLOSSARY.md, every rule's figure the agreements' own and every invention said as the game's; read where the player meets it in tests/career-contracts.test.ts (the offer, the contract, each payment's state, the notices of each episode, option, decision, telecast, rerun, residual and per diem, through a played recurring part), with tools/voice-check.mjs, tools/tics.mjs and tools/title-case.mjs clean.",
+  "hash": "c3065e0a6fda",
+  "on": "2026-10-25",
+  "evidence": "Written for brief 27's K6 (loop 41: cancellation and possible revival) to docs/STYLE.md and docs/GLOSSARY.md, and read where the player meets it: tests/b27-revival.test.ts holds the network's word bringing a series back (Its producers will say by June 17, 2032, whether Desk Clerk comes back, and its other parts will be cast again), the offer's reason (The Calloway Files is back after two years off, and its producers want Desk Clerk back, with a new contract for its new season), and the word against (The Calloway Files Comes Back Without Desk Clerk | ... is back after two years off without Desk Clerk). Numbers under ten in words; no engine words.",
   "first": "Pending"
  },
  "src/engine/systems/series.ts#scheduleSeason": {
@@ -435,9 +442,9 @@
  },
  "src/ui/career/WorkPane.tsx#WorkflowView": {
   "status": "Rewritten",
-  "hash": "fc9190a9a705",
+  "hash": "12f5094d1c32",
   "on": "2026-10-25",
-  "evidence": "Written for brief 27's K5 (Part 10 and loop 29: pickups and reshoots after the wrap) to docs/STYLE.md and docs/GLOSSARY.md, and read where the player meets it: tests/b27-reshoot.test.ts holds the call back (Calls You Back To Reshoot, It pays a day; Calls You Back For Pickups), the day as another offer meets it (... Reshoot Day), the history's line in the past (You reshot ... the better take of each kept, paid a day), a missed one (You Missed The Reshoot, ... cut from the part. It isn't paid.), the Work tab's line and the guide's How Each Kind Of Work Is Done. The rest of these sources' words are as they were, held by brief 25's tests. tools/voice-check.mjs, tools/tics.mjs, tools/title-case.mjs, tools/plural-check.mjs and tools/spelling.mjs pass",
+  "evidence": "Written for brief 27's K6 (loop 34: publicity) to docs/STYLE.md and docs/GLOSSARY.md, and read where the player meets it: tests/b27-promo.test.ts holds the call (Calls You For A Promotional Film, It pays a day performer’s minimum), the contract's term (Paid less than $25,000 for the work, you’re paid at least a day performer’s minimum for it, as the agreement sets; Paid $25,000 or more ... this contract has it unpaid; SAG-AFTRA’s Basic Agreement’s rule, which the game applies to this agreement too, its assumption; It’s part of the job, unpaid), the hours held against another booking (... Promotional Film), and the missed film (You Missed The Promotional Film, won’t come straight to you with a part on the strength of ...). Numbers under ten in words; the pay a day performer's minimum, N13 §18.B(5), named as the agreement names it; no engine words.",
   "first": "Pending"
  },
  "src/ui/career/WorkPane.tsx#WorkPane": {

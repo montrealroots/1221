@@ -1907,7 +1907,84 @@
    "organization": null,
    "territory": null,
    "updated": null,
-   "establishes": [],
+   "establishes": [
+    {
+     "fact": "The 33rd Actor Awards ceremony is scheduled for Sunday, February 28, 2027",
+     "quote": "The 33rd Annual Actor Awards Presented by SAG-AFTRA ceremony (“Awards Show”) is scheduled for Sunday, February 28, 2027."
+    },
+    {
+     "fact": "Work first exhibited or broadcast in calendar 2026 is eligible for the 33rd",
+     "quote": "Motion pictures and television programs first exhibited or broadcast during the 2026 calendar year (Jan. 1, 2026 - Dec. 31, 2026) shall be eligible for nomination."
+    },
+    {
+     "fact": "Productions in SAG-AFTRA's jurisdiction must be signatory to its agreements",
+     "quote": "Motion picture and television productions made within SAG-AFTRA’s jurisdiction must be signatory to a Screen Actors Guild (“SAG”), American Federation of Television and Radio Artists (“AFTRA”), or a SAG-AFTRA collective bargaining agreement."
+    },
+    {
+     "fact": "A motion picture is scripted and over 60 minutes; documentaries aren't eligible in motion picture categories",
+     "quote": "Motion pictures must be scripted, feature-length films (over 60 minutes in running time)."
+    },
+    {
+     "fact": "A motion picture qualifies with a seven-day consecutive paid run beginning in 2026 in one of six major markets, Los Angeles County first",
+     "quote": "before a paying audience in a commercial motion picture house for at least a seven (7) day consecutive run commencing in calendar year 2026 in at least one of the major markets as outlined below:"
+    },
+    {
+     "fact": "A day-and-date theatrical and streaming release is a motion picture and is submitted only as one",
+     "quote": "Any eligible motion picture with a day and date release in theaters and on video on demand (“VOD”),or other streaming platform is eligible as a Motion Picture and may only be submitted as a Motion Picture."
+    },
+    {
+     "fact": "A comedy or drama series has at least six episodes, each at least 20 minutes",
+     "quote": "All series episodes must have a minimum running time of 20 minutes."
+    },
+    {
+     "fact": "A television performer qualifies by appearing in at least one episode of a series in 2026, with no minimum screen time",
+     "quote": "minimum of one (1) episode of a television series during the calendar year 2026."
+    },
+    {
+     "fact": "Submissions run August 24 to November 2, 2026, 5 p.m. PT",
+     "quote": "Submissions open Monday, August 24, 2026 and close Monday, November 2, 2026 at 5 p.m. PT."
+    },
+    {
+     "fact": "The actor or their representative, producer, distributor or network may submit, with the actor's permission",
+     "quote": "Submissions will be accepted online only and may be completed by the actor, actor’s publicist, agent, manager, representative, a film’s producer or distributor or a production company, network or studio executive, provided that permission has been given by the actor"
+    },
+    {
+     "fact": "An individual performance's submission fee is $200",
+     "quote": "Individual Performances $200 per entry"
+    },
+    {
+     "fact": "One performance, one category; a second submission for the same performance is returned",
+     "quote": "Submissions will not be accepted for the same performance in more than one category."
+    },
+    {
+     "fact": "Randomly drawn member nominating committees nominate five in each category, more on a tie",
+     "quote": "The five (5) performances receiving the highest number of votes in each category on the nominations ballots will become the five (5) nominees for that category and placed on the final ballot."
+    },
+    {
+     "fact": "Two performances by one actor in one category: only the higher is nominated",
+     "quote": "In the event that different performances by the same actor receive sufficient votes to be nominated in the same category, only the performance receiving the highest number of votes shall be a nominee for an award."
+    },
+    {
+     "fact": "Final voting is by active paid-up members residing in the US and Canada",
+     "quote": "Final voting for awards shall be restricted to active members in good standing of SAG- AFTRA who reside in the U.S. and Canada and have paid their dues in full by December 10, 2026."
+    },
+    {
+     "fact": "The highest final vote wins; a tie gives the award to all tied",
+     "quote": "The performance receiving the highest number of votes on the final ballots will become the recipient of the award in that category."
+    },
+    {
+     "fact": "Nominations are announced January 6, 2027",
+     "quote": "Wednesday, January 6, 2027      Nominations Announced"
+    },
+    {
+     "fact": "Final voting opens January 13 and closes February 26, 2027 at noon PT",
+     "quote": "Friday, February 26, 2027    Final Voting closes at 12 Noon PT"
+    },
+    {
+     "fact": "Attendance at the show is by invitation only",
+     "quote": "Attendance at the Actor Awards Presented by SAG-AFTRA and related events is by invitation only."
+    }
+   ],
    "confidence": null,
    "usedBy": []
   },
@@ -4102,6 +4179,14 @@
     {
      "fact": "A weekly performer's additional day is prorated at one-fifth of the weekly base rate (Schedule B §12)",
      "quote": "such prorating shall be on the basis of one-fifth (1/5) of the performer's weekly base rate"
+    },
+    {
+     "fact": "A performer paid under $25,000 for the motion picture who appears in a promotional film of thirty minutes or less is paid at least day performer minimum scale (§18.B(5))",
+     "quote": "All other performers appearing in such promotional films: At the time of employment, Producer may bargain with performer to appear in such promotional films, but the minimum compensation payable shall be day performer minimum scale."
+    },
+    {
+     "fact": "A performer paid $25,000 or more for the motion picture bargains individually for appearing in its promotional films, and may agree to appear without pay (§18.B(3))",
+     "quote": "Performers receiving $25,000 or more for the motion picture: Compensation to such performers for appearing in such promotional films shall be a matter of individual bargaining. The performer may agree to make such promotional films without compensation."
     }
    ],
    "confidence": "high",
@@ -4118,6 +4203,105 @@
      "at": "2026-10-25T01:46Z",
      "http": "200",
      "bytes": 5542552,
+     "error": ""
+    }
+   ]
+  },
+  {
+   "id": "b27-AA-home",
+   "register": "b27",
+   "was": null,
+   "previously": null,
+   "title": "The Actor Awards: home page",
+   "organization": "SAG-AFTRA",
+   "territory": "US",
+   "updated": null,
+   "establishes": [
+    {
+     "fact": "The 33rd Actor Awards are live on Netflix, Sunday, February 28, 2027, at 5 PM PT",
+     "quote": "Sunday, February 28, 2027"
+    }
+   ],
+   "confidence": null,
+   "usedBy": [],
+   "url": "https://www.actorawards.org/",
+   "final": "https://www.actorawards.org/",
+   "status": "read",
+   "http": "200",
+   "bytes": 87049,
+   "sha256": "3eafe54ec89c1083e5f930b10ac89239774ef79bee45fb03175e69005c9a3691",
+   "retrieved": "2026-10-25T04:57Z",
+   "attempts": [
+    {
+     "at": "2026-10-25T04:57Z",
+     "http": "200",
+     "bytes": 87049,
+     "error": ""
+    }
+   ]
+  },
+  {
+   "id": "b27-AA-32nd",
+   "register": "b27",
+   "was": null,
+   "previously": null,
+   "title": "The Actor Awards: the 32nd Annual Actor Awards honored",
+   "organization": "SAG-AFTRA",
+   "territory": "US",
+   "updated": null,
+   "establishes": [
+    {
+     "fact": "The 32nd Actor Awards were presented on March 1, 2026, from Los Angeles, streamed live on Netflix",
+     "quote": "LOS ANGELES (March 1, 2026)"
+    }
+   ],
+   "confidence": null,
+   "usedBy": [],
+   "url": "https://www.actorawards.org/media/news/releases/outstanding-film-and-television-performances-honored-32nd-annual-actor-awards",
+   "final": "https://www.actorawards.org/media/news/releases/outstanding-film-and-television-performances-honored-32nd-annual-actor-awards",
+   "status": "read",
+   "http": "200",
+   "bytes": 52631,
+   "sha256": "1160b7bed9bc503afade04edf509fb7078616e2505fe0c526660a44b49b5a540",
+   "retrieved": "2026-10-25T04:57Z",
+   "attempts": [
+    {
+     "at": "2026-10-25T04:57Z",
+     "http": "200",
+     "bytes": 52631,
+     "error": ""
+    }
+   ]
+  },
+  {
+   "id": "b27-AA-faq",
+   "register": "b27",
+   "was": null,
+   "previously": null,
+   "title": "The Actor Awards: FAQ",
+   "organization": "SAG-AFTRA",
+   "territory": "US",
+   "updated": null,
+   "establishes": [
+    {
+     "fact": "No member ticket lottery for the show, for limited seating",
+     "quote": "Unfortunately, we will not be able to hold a ticket lottery for members this year due to limited seating capacity."
+    }
+   ],
+   "confidence": null,
+   "usedBy": [],
+   "url": "https://www.actorawards.org/faq",
+   "final": "https://www.actorawards.org/faq",
+   "status": "read",
+   "http": "200",
+   "bytes": 54076,
+   "sha256": "cff7d1e98fa7c582a57240655dbcacd1ab9557825faaedf95c0bdfb0696c3f94",
+   "retrieved": "2026-10-25T04:57Z",
+   "attempts": [
+    {
+     "at": "2026-10-25T04:57Z",
+     "http": "200",
+     "bytes": 54076,
      "error": ""
     }
    ]
