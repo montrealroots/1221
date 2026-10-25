@@ -23,7 +23,7 @@ import { FORMATS } from '@/engine/content/workflows';
 import { STEP_WORDS, stepOf, workflowOf } from '@/engine/systems/workflow';
 import { activeAgreement, type Engagement, type Opportunity } from '@/engine/systems/pro';
 import {
-  DEFERRED_WHY, FIELD_WORDS, ILL_DAY, MISSES, OUTSIDE_WORK, ROUND_WORDS, acceptRefusal, holdAskRefusal, holding, askMoreRefusal, askedAmount, acceptWarning, againWords, agrees, castingAs, chanceWords, conditionsFor, counted, datesOf, decidesAt, drawnWords, kindPhrase, reachWords,
+  DEFERRED_WHY, FIELD_WORDS, ILL_DAY, MISSES, OUTSIDE_WORK, ROUND_WORDS, acceptRefusal, holdAskRefusal, holding, askMoreRefusal, acceptWarning, againWords, agrees, castingAs, chanceWords, conditionsFor, counted, datesOf, decidesAt, drawnWords, kindPhrase, reachWords,
   demandsWords, eligibilityProblems, fitOf, fitWords, inSessionAny, materialProblems, moveRefusal, payTermsOf, payWords, prepMinutes,
   prepareRefusal, projectGenresOf, projectOf, requestFor, requestRefusal, roundToCome, submitRefusal, tapeRefusal, writtenFor, writtenForWords, intimacyWords,
 } from '@/engine/systems/projobs';
@@ -31,6 +31,13 @@ import { requirementWords } from '@/engine/systems/engagement';
 import { productionById, productionWords } from '@/engine/content/catalog';
 import { projectKey } from '@/engine/systems/reference';
 import { openReference } from '@/ui/career/ReferencePane';
+import { PlayingChooser } from '@/ui/components/PlayingChooser';
+import { promoFor } from '@/engine/systems/workflow';
+// Offers and auditions, the actor's side (from 2026-10-25, brief 27's cluster of that name): `systems/offers.ts`.
+import {
+  TERM_ITEMS, approachPreview, askAnswerWords, askLabel, chooseRefusal, conditionStanding, conditionWords, noteRefusal, noteWaiting, recastWords, recordRefusal, rememberedWords,
+  rescheduleRefusal, rescheduleWords, sceneOfPart, sendRefusal, takeWords, termsChangedWords, withdrawRefusal, withdrawWarning, type TermItem,
+} from '@/engine/systems/offers';
 
 const NY = 'America/New_York';
 const STEPS: readonly BriefStep[] = ['read', 'lines', 'rehearse'];
@@ -99,6 +106,8 @@ function OpenRole({ o }: { o: Opportunity }) {
       <h3 style={{ margin: 0 }}>{`${t.role.part}, ${t.project}`}</h3>
       {/* A part posted before says so, with what came of it the last time (from 2026-10-21, brief 20's D4). */}
       {o.again && <p className="small" style={{ margin: 0 }}>{againWords(o)}</p>}
+      {/* A part recast says so (from 2026-10-25, `RECAST`). */}
+      {o.recast && <p className="small" style={{ margin: 0 }}>{recastWords(o)}</p>}
       <RoleFacts t={t} o={o} />
       <p className="small" style={{ margin: 0 }}>{`Submissions close ${formatWeekdayDate(o.submitBy, NY)} at ${formatTime(o.submitBy, NY)}.`}</p>
       {problems.length > 0 && <ul className="small" style={{ margin: 0, paddingLeft: '1.1rem' }}>{problems.map((p) => <li key={p}>{p}</li>)}</ul>}
@@ -148,6 +157,9 @@ function InProgress({ o }: { o: Opportunity }) {
   const agent = o.agentId ? agentById(o.agentId) : undefined;
   const tapeNo = tapeRefusal(sim, person, o);
   const moveNo = moveRefusal(sim, person, o);
+  // A chemistry read or a screen test asks the production to move it (from 2026-10-25, `RESCHEDULE`): Ask To Reschedule.
+  const later = r?.form === 'in-person' && (r.round === 'chemistry' || r.round === 'test');
+  const rescheduleNo = rescheduleRefusal(sim, person, o);
   // Its verb agrees with who answers (`agrees`): until 2026-10-22 it read "The producers answers soon." of a self-tape the
   // producers asked for, which the submission's own notice had already said right.
   const next = !r ? `Submitted. ${castingAs(t)} ${agrees(t, 'answers', 'answer')} soon.`
@@ -158,15 +170,25 @@ function InProgress({ o }: { o: Opportunity }) {
       <h3 style={{ margin: 0 }}>{`${t.role.part}, ${t.project}`}</h3>
       <p className="small" style={{ margin: 0 }}>{next}</p>
       {agent && <p className="xs dim" style={{ margin: 0 }}>{`Through ${agent.name}.`}</p>}
+      {/* A conditional offer accepted, its round still to come (from 2026-10-25, `CONDITIONAL`). */}
+      {conditionStanding(o) && <p className="small" style={{ margin: 0 }}>{conditionStanding(o)}</p>}
+      {rememberedWords(person, t, sim.now) && <p className="xs dim" style={{ margin: 0 }}>{rememberedWords(person, t, sim.now)}</p>}
       {r && <Prepare target={{ opportunityId: o.id }} prep={o.prep} what="the sides" />}
+      {r && <HowToPlay o={o} />}
+      <Direction o={o} />
+      {r?.form === 'self-tape' && <Takes o={o} />}
       {r && (
         <div className="row gap-2" style={{ flexWrap: 'wrap' }}>
           {r.form === 'self-tape'
             ? <Gated feature="pro.tape_audition" className="btn btn-sm" disabled={!!tapeNo} title={tapeNo} onClick={() => { const x = run<{ band: keyof typeof BAND_LABEL }>('pro.tape_audition', { opportunityId: o.id }); if (x.ok) toast(`Taped: ${BAND_LABEL[x.value!.band]}.`, 'positive'); }}>Tape It</Gated>
-            : <Gated feature="pro.move_audition" className="btn btn-sm" disabled={!!moveNo} title={moveNo} onClick={() => { const x = run<{ at: number }>('pro.move_audition', { opportunityId: o.id }); if (x.ok) toast(`Moved to ${formatWeekdayDate(x.value!.at, NY)} at ${formatTime(x.value!.at, NY)}.`, 'positive'); }}>Ask For Another Time</Gated>}
+            : later
+              ? <Gated feature="pro.ask_reschedule" className="btn btn-sm" disabled={!!rescheduleNo} title={rescheduleNo} onClick={() => { const x = run<{ answerAt: number }>('pro.ask_reschedule', { opportunityId: o.id }); if (x.ok) toast(`Asked. The production answers on ${formatWeekdayDate(x.value!.answerAt, NY)}.`, 'positive'); }}>Ask To Reschedule</Gated>
+              : <Gated feature="pro.move_audition" className="btn btn-sm" disabled={!!moveNo} title={moveNo} onClick={() => { const x = run<{ at: number }>('pro.move_audition', { opportunityId: o.id }); if (x.ok) toast(`Moved to ${formatWeekdayDate(x.value!.at, NY)} at ${formatTime(x.value!.at, NY)}.`, 'positive'); }}>Ask For Another Time</Gated>}
         </div>
       )}
-      {r && <WhyNot reasons={[[r.form === 'self-tape' ? 'Tape It' : 'Ask For Another Time', r.form === 'self-tape' ? tapeNo : moveNo]]} />}
+      {r && later && rescheduleWords(sim, person, o) && <p className="xs dim" style={{ margin: 0 }}>{rescheduleWords(sim, person, o)}</p>}
+      {r && <WhyNot reasons={[[r.form === 'self-tape' ? 'Tape It' : later ? 'Ask To Reschedule' : 'Ask For Another Time', r.form === 'self-tape' ? tapeNo : later ? rescheduleNo : moveNo]]} />}
+      <Withdraw o={o} />
       <Hold o={o} />
       <SchoolRule o={o} />
       <History o={o} />
@@ -198,6 +220,90 @@ function Hold({ o }: { o: Opportunity }) {
           <WhyNot reasons={[['Ask Them To Decide', no]]} />
         </>
       )}
+    </div>
+  );
+}
+
+/**
+ * How the sides are played (from 2026-10-25, the owner's brief 27, Part 9's "Selecting an approach"; `systems/offers.ts`):
+ * the School's chooser, read against the part's own register, each side's result shown fully prepared.
+ */
+function HowToPlay({ o }: { o: Opportunity }) {
+  const { sim, run, toast } = useGame();
+  const person = useWorld((s) => s.player);
+  const no = chooseRefusal(o);
+  if (no) return <WhyNot reasons={[['Play It This Way', no]]} />;
+  return (
+    <PlayingChooser scene={sceneOfPart(projectOf(o))} current={o.playing} feature="pro.choose_approach" help="career.sides"
+      preview={(c) => approachPreview(sim, person, o, c)}
+      onChoose={(c) => { const r = run<{ prep: number }>('pro.choose_approach', { opportunityId: o.id, ...c }); if (r.ok) toast(`Chosen. You’ve rehearsed this way of playing it to ${pct(r.value!.prep)} so far.`, 'positive'); }} />
+  );
+}
+
+/** Casting's direction in the room, waiting on the answer (from 2026-10-25, Part 9's "Responding to direction"). */
+function Direction({ o }: { o: Opportunity }) {
+  const { run, toast } = useGame();
+  const r = noteWaiting(o);
+  if (!r) return null;
+  const no = noteRefusal(o);
+  const words = o.history.filter((h) => h.key === `${r.round}:note`).at(-1)?.words;
+  return (
+    <div className="col gap-2">
+      <SectionHead title="Casting’s Direction" help="career.sides" heading />
+      {words && <p className="small" style={{ margin: 0 }}>{words}</p>}
+      <div className="row gap-2" style={{ flexWrap: 'wrap' }}>
+        <Gated feature="pro.answer_note" className="btn btn-sm btn-primary" disabled={!!no} title={no} onClick={() => { const x = run('pro.answer_note', { opportunityId: o.id, follow: true }); if (x.ok) toast('You’ll play the rest of it the way casting asked.', 'positive'); }}>Follow The Direction</Gated>
+        <Gated feature="pro.answer_note" className="btn btn-sm" disabled={!!no} title={no} onClick={() => { const x = run('pro.answer_note', { opportunityId: o.id, follow: false }); if (x.ok) toast('You’ll keep your choice.', 'neutral'); }}>Keep Your Choice</Gated>
+      </div>
+      <WhyNot reasons={[['Follow The Direction', no]]} />
+    </div>
+  );
+}
+
+/** A self-tape's takes (from 2026-10-25, loop 13): each recorded and shown, and the one picked sent. */
+function Takes({ o }: { o: Opportunity }) {
+  const { sim, run, toast } = useGame();
+  const person = useWorld((s) => s.player);
+  const r = roundToCome(o);
+  const recordNo = recordRefusal(sim, person, o);
+  const takes = r?.takes ?? [];
+  return (
+    <div className="col gap-2">
+      <SectionHead title="Your Takes" help="career.sides" heading />
+      {takes.length ? (
+        <ul className="small col gap-1" style={{ margin: 0, paddingLeft: '1.1rem' }}>
+          {takes.map((x, i) => {
+            const no = sendRefusal(sim, o, i);
+            return (
+              <li key={x.key} className="row gap-2" style={{ flexWrap: 'wrap', alignItems: 'center' }}>
+                <span>{takeWords(x, i)}</span>
+                <Gated feature="pro.send_take" className="btn btn-sm" disabled={!!no} title={no} onClick={() => { const y = run<{ band: keyof typeof BAND_LABEL }>('pro.send_take', { opportunityId: o.id, take: i }); if (y.ok) toast(`Sent take ${i + 1}: ${BAND_LABEL[y.value!.band]}.`, 'positive'); }}>Send This Take</Gated>
+              </li>
+            );
+          })}
+        </ul>
+      ) : <p className="small" style={{ margin: 0 }}>No takes yet. Record A Take keeps each one to choose from; Tape It records one and sends it straight away.</p>}
+      <div className="row gap-2" style={{ flexWrap: 'wrap' }}>
+        <Gated feature="pro.record_take" className="btn btn-sm" disabled={!!recordNo} title={recordNo} onClick={() => { const y = run<{ take: number; band: keyof typeof BAND_LABEL }>('pro.record_take', { opportunityId: o.id }); if (y.ok) toast(`Take ${y.value!.take + 1}: ${BAND_LABEL[y.value!.band]}.`, 'positive'); }}>Record A Take</Gated>
+      </div>
+      <WhyNot reasons={[['Record A Take', recordNo]]} />
+    </div>
+  );
+}
+
+/** Withdrawing from a part in progress, what it does said before it's pressed (from 2026-10-25, loop 14). */
+function Withdraw({ o }: { o: Opportunity }) {
+  const { sim, run, toast } = useGame();
+  const no = withdrawRefusal(o);
+  if (no && !noteWaiting(o)) return null;
+  return (
+    <div className="col gap-2">
+      <SectionHead title="Withdrawing" help="career.withdrawing" heading />
+      {!no && <p className="xs dim" style={{ margin: 0 }}>{withdrawWarning(sim, o)}</p>}
+      <div className="row gap-2" style={{ flexWrap: 'wrap' }}>
+        <Gated feature="pro.withdraw" className="btn btn-sm btn-ghost" disabled={!!no} title={no} onClick={() => { const x = run<{ notice: boolean }>('pro.withdraw', { opportunityId: o.id }); if (x.ok) toast(x.value!.notice ? 'Withdrawn, with notice.' : 'Withdrawn, at short notice.', 'neutral'); }}>Withdraw From The Part</Gated>
+      </div>
+      <WhyNot reasons={[['Withdraw From The Part', no]]} />
     </div>
   );
 }
@@ -259,10 +365,16 @@ function OfferCard({ o }: { o: Opportunity }) {
   const warning = acceptWarning(sim, person, o);
   const agent = o.agentId ? agentById(o.agentId) : undefined;
   const days = datesOf(o);
-  // Asking for more through the agent (from 2026-10-24, brief 27, loop 18): once, a fifth over the offer.
-  const askNo = askMoreRefusal(sim, person, o);
+  // Asking through the agent (from 2026-10-24, brief 27, loop 18): once, a fifth over the offer. From 2026-10-25 the term
+  // asked about is the player's: the pay, a recurring part's guaranteed episodes, or a promotional film's pay where its
+  // contract leaves it to bargain (`systems/offers.ts`). Each shown only where the work has it.
+  const items = TERM_ITEMS.filter((item) => item === 'pay' || (item === 'episodes' ? t.schedule.kind === 'episodes' : promoFor(t) && t.union === 'sag-aftra'));
+  const asks = items.map((item) => [item, askLabel(o, item), askMoreRefusal(sim, person, o, item)] as const);
   const asked = o.offer?.asked;
-  const askLabel = o.offer?.amount !== undefined ? `Ask For ${formatMoney(askedAmount(o.offer.amount), 'USD')} A ${o.offer.per === 'week' ? 'Week' : 'Day'}` : 'Ask For More';
+  const answered = askAnswerWords(o);
+  const changed = termsChangedWords(o);
+  const pendingWords = (item: TermItem) => (item === 'pay' ? `Your agent asked for ${formatMoney(asked!.amount, 'USD')} a ${o.offer!.per}.` : item === 'episodes' ? `Your agent asked for ${counted(asked!.amount, 'guaranteed episode')}.` : `Your agent asked for the promotional film paid ${formatMoney(asked!.amount, 'USD')}.`);
+  const acceptLabel = o.condition && !o.condition.accepted ? 'Accept On Its Condition' : 'Accept The Offer';
   return (
     <article className="engagement" aria-label={`${t.role.part}, ${t.project}`}>
       <div className="engagement-head">
@@ -276,16 +388,23 @@ function OfferCard({ o }: { o: Opportunity }) {
       </dl>
       {agent && <p className="xs dim" style={{ margin: 0 }}>{`${agent.name} passed it on.`}</p>}
       {o.direct && <p className="small" style={{ margin: 0 }}>{`Offered without an audition. ${o.direct.words}`}</p>}
-      {asked && <p className="small" style={{ margin: 0 }}>{asked.answer === 'raised' ? `Raised to ${formatMoney(asked.amount, 'USD')} a ${o.offer!.per}, as your agent asked.` : asked.answer === 'kept' ? `Kept at its offer, where your agent asked for ${formatMoney(asked.amount, 'USD')} a ${o.offer!.per}.` : `Your agent asked for ${formatMoney(asked.amount, 'USD')} a ${o.offer!.per}. The answer comes on ${formatWeekdayDate(asked.answerAt, NY)} at ${formatTime(asked.answerAt, NY)}.`}</p>}
+      {o.condition && <p className="small" style={{ margin: 0 }}>{conditionWords(o).trim()}</p>}
+      {/* The latest version of the offer, what the answer was, in its own words (from 2026-10-25): until then a raise or a
+          refusal of the pay was all it could say. */}
+      {asked && <p className="small" style={{ margin: 0 }}>{answered ?? `${pendingWords(asked.item ?? 'pay')} The answer comes on ${formatWeekdayDate(asked.answerAt, NY)} at ${formatTime(asked.answerAt, NY)}.`}</p>}
+      {changed && <p className="small" style={{ margin: 0 }}>{changed}</p>}
+      {asks.length > 0 && !asked && <SectionHead title="Negotiating" help="career.negotiation" heading />}
       <Hold o={o} />
       {warning && <p className="callout callout-warning small" style={{ margin: 0 }}>{warning}</p>}
       <p className="xs dim" style={{ margin: 0 }}>{t.medium === 'stage' ? `Missing a day: the company’s understudy covers ${counted(MISSES.stage, 'performance')}, with a written warning; another and the company replaces you.` : ILL_DAY.sizes.includes(t.role.size) ? 'Missing a day: a shoot can’t wait, so sleeping through one costs you the part; laid up or in hospital, the production shoots around you once, and the day isn’t paid.' : 'Missing a day: a shoot can’t wait, so the production replaces you.'}</p>
       <div className="row gap-2" style={{ flexWrap: 'wrap' }}>
-        <Gated feature="pro.accept_offer" className="btn btn-sm btn-primary" disabled={!!no} title={no} onClick={() => { const r = run('pro.accept_offer', { opportunityId: o.id }); if (r.ok) toast(`Booked: ${t.role.part}.`, 'positive'); }}>Accept The Offer</Gated>
+        <Gated feature="pro.accept_offer" className="btn btn-sm btn-primary" disabled={!!no} title={no} onClick={() => { const r = run<{ conditional?: true }>('pro.accept_offer', { opportunityId: o.id }); if (r.ok) toast(r.value?.conditional ? `Accepted on its condition: ${t.role.part}.` : `Booked: ${t.role.part}.`, 'positive'); }}>{acceptLabel}</Gated>
         <Gated feature="pro.decline_offer" className="btn btn-sm" onClick={() => { const r = run('pro.decline_offer', { opportunityId: o.id }); if (r.ok) toast(`Declined: ${t.role.part}.`, 'neutral'); }}>Decline The Offer</Gated>
-        <Gated feature="pro.ask_more" className="btn btn-sm" disabled={!!askNo} title={askNo} onClick={() => { const r = run<{ answerAt: number }>('pro.ask_more', { opportunityId: o.id }); if (r.ok) toast(`Asked. The answer comes on ${formatWeekdayDate(r.value!.answerAt, NY)}.`, 'positive'); }}>{askLabel}</Gated>
+        {asks.map(([item, label, askNo]) => (
+          <Gated key={item} feature="pro.ask_more" className="btn btn-sm" disabled={!!askNo} title={askNo} onClick={() => { const r = run<{ answerAt: number }>('pro.ask_more', { opportunityId: o.id, item }); if (r.ok) toast(`Asked. The answer comes on ${formatWeekdayDate(r.value!.answerAt, NY)}.`, 'positive'); }}>{label}</Gated>
+        ))}
       </div>
-      <WhyNot reasons={[['Accept The Offer', no], [askLabel, askNo]]} />
+      <WhyNot reasons={[[acceptLabel, no], ...asks.map(([, label, askNo]) => [label, askNo] as const)]} />
       <details className="section-fold">
         <summary>The Role In Full</summary>
         <RoleFacts t={t} o={o} />
@@ -381,6 +500,7 @@ export function OpportunitiesPane() {
               <article key={o.id} className="card card-tight col gap-2">
                 <h3 style={{ margin: 0 }}>{`${t.role.part}, ${t.project}`}</h3>
                 {o.again && <p className="small" style={{ margin: 0 }}>{againWords(o)}</p>}
+                {o.recast && <p className="small" style={{ margin: 0 }}>{recastWords(o)}</p>}
                 <RoleFacts t={t} o={o} />
                 <History o={o} />
               </article>

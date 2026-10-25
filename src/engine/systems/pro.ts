@@ -272,8 +272,46 @@ export interface Opportunity extends HasHistory {
      * the engine pays is `amount`, the one the screens show.
      */
     version?: number;
-    asked?: { at: Instant; amount: Money; answerAt: Instant; answer?: 'raised' | 'kept' };
+    /**
+     * From 2026-10-25 (brief 27's offers and auditions, loop 18, `systems/offers.ts`): the term the agent asked about
+     * (`item`, the pay where a save has none), and the answers the loop names beside a raise and a refusal, a trade-off
+     * (`traded`) and the offer withdrawn. `amount` is the figure asked: the pay asked for, the guaranteed episodes asked
+     * for, or the promotional film's pay asked for. An older save's asks were all of the pay, raised or kept.
+     */
+    asked?: { at: Instant; amount: Money; answerAt: Instant; answer?: 'raised' | 'kept' | 'traded' | 'withdrawn'; item?: 'pay' | 'episodes' | 'promo' };
+    /**
+     * The terms an answer changed (from 2026-10-25, `systems/offers.ts`), each read by what books and pays the work: the
+     * guaranteed episodes of a recurring part (`datesOf`, so the days booked and the weeks paid follow), the promotional
+     * film's pay bargained for work of $25,000 or more (the contract's `promo`, paid by `promoSession`), and the raise on
+     * the production's option (the option clause's `raise`, which `renewFromOption` reads). Absent, the part's own: an
+     * older save's offers have none of them.
+     */
+    episodes?: number;
+    promo?: Money;
+    optionRaise?: number;
   };
+  /**
+   * How the actor has chosen to play the sides (from 2026-10-25, brief 27's offers and auditions, Part 9: "Selecting an
+   * approach"; `systems/offers.ts`): a way of playing them, as the School's briefs have one (`Playing`,
+   * `systems/material.ts`), and how far it's rehearsed. Read by every round's judgment (`auditionContext`). Absent, the
+   * sides are played as they come, as every round was before.
+   */
+  playing?: import('./material').Playing;
+  /**
+   * A conditional offer (from 2026-10-25, loop 10, `systems/offers.ts`'s `CONDITIONAL`): firm only once the round it names
+   * goes the actor's way. `accepted` is when the actor accepted it on that condition, and `outcome` what came of it.
+   */
+  condition?: { round: 'chemistry' | 'test'; accepted?: Instant; outcome?: 'met' | 'failed' };
+  /**
+   * The part's requirement changed during casting (from 2026-10-25, loop 10, `REWRITE`): the playing ages or a technique
+   * it now needs, read by `eligibilityProblems` in place of the part's own, and said.
+   */
+  rewrite?: { at: Instant; ages?: readonly [number, number]; skill?: { skill: Skill; level: number }; words: string };
+  /**
+   * A part posted again because the production recast it (from 2026-10-25, Area B's "Recasting where justified",
+   * `RECAST`): the opportunity it came after, and when. Casting decides it afresh (`castingDraw`'s key).
+   */
+  recast?: { from: ProId; at: Instant };
   /** Offered without an audition (from 2026-10-24, brief 27, loop 16): the work for the same casting office that's why, said. */
   /**
    * Offered without an audition: the work before that brought it, and why. `returning` (from 2026-10-25, brief 27's loop
@@ -339,6 +377,25 @@ export interface AuditionRound {
   held?: string;
   /** What casting decided from it: the chance it gave, the role's fit, and whether it went on. */
   casting?: { at: Instant; chance: number; fit: number; yes: boolean };
+  /**
+   * A self-tape's takes (from 2026-10-25, brief 27's offers and auditions, loop 13: "records a take → reviews or retries
+   * within available time and rules → selects and submits the take"; `systems/offers.ts`): each recorded, judged and kept,
+   * with what it was judged from (`kept`) until one is sent, so the one sent is judged as it was recorded. `sent` is the
+   * take sent, by its place. An older save's taped rounds have none: their one take was sent as it was taped.
+   */
+  takes?: { at: Instant; overall: number; band: Band; key: string; sides?: string[]; held?: string; kept?: { task: string; ruleset?: string; inputs: import('./evaluation').Evaluation['inputs'] } }[];
+  sent?: number;
+  /**
+   * Casting's direction in the room (from 2026-10-25, Part 9's "Responding to direction", loop 14): the way it asked for the
+   * part to be played, on one aspect, and whether the actor followed it or kept their own choice. The round is judged with
+   * the answer (`auditionContext`). An older save's rounds have none.
+   */
+  note?: { axis: 'pace' | 'scale' | 'structure'; side: string; at: Instant; answer?: 'follow' | 'hold' };
+  /**
+   * Asking the production to reschedule a chemistry read or a screen test (from 2026-10-25, loop 14, `RESCHEDULE`): when,
+   * when it answers, and the answer, with the new time where it was granted.
+   */
+  reschedule?: { at: Instant; answerAt: Instant; answer?: 'granted' | 'refused'; to?: Instant };
 }
 
 /** A payment owed for work: promised when the contract's accepted, received only when it's posted. */
@@ -563,6 +620,11 @@ export interface Contract {
   /** The engagement whose option made it. */
   renews?: ProId;
   clauses: ContractClause[];
+  /**
+   * The promotional film's pay the agent bargained for work of $25,000 or more (from 2026-10-25, brief 27's offers and
+   * auditions, `systems/offers.ts`): what `promoSession` pays for it in place of the contract's own rule. Absent, the rule's.
+   */
+  promo?: Money;
 }
 
 /** A per diem, paid once (D6): for how many days, at what a day, how much, when, and its transaction. */
@@ -726,6 +788,12 @@ export interface ProRecord {
   projects?: Record<string, import('../content/careerwork').ProjectTemplate>;
   /** The slate's series the actor has met, by id, as they were (brief 27): what a season's decisions read for them. */
   series?: Record<string, import('../content/series').SeriesTemplate>;
+  /**
+   * What casting offices remember (from 2026-10-25, brief 27's offers and auditions, loop 14, `systems/offers.ts`'s
+   * `NOTICE`): a round in person missed without notice, or a part left with less than a day's, by the office. Read by its
+   * later cuts and its direct offers. A withdrawal with notice leaves nothing here. An older save remembers nothing.
+   */
+  noShows?: { casting: string; projectId: string; at: Instant; how: 'no-show' | 'late' }[];
 }
 
 // ---------------------------------------------------------------------------------------------------------------------

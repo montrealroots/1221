@@ -35,6 +35,7 @@ import { BAND_LABEL } from '../../systems/coursework';
 import { ESTIMATE } from '../../systems/school';
 import { PAY, sagJoinUsd } from '../../systems/propay';
 import { OUTSIDE_WORK, WEATHER_DAY, WORK } from '../../systems/projobs';
+import { CONDITIONAL, NOTE, NOTICE, RECAST, RESCHEDULE, REWRITE, TAKES, TERMS } from '../../systems/offers';
 import { TRIP, routeSourceWords } from '../../systems/worktrip';
 import { CONTRIBUTION, LATE, OPTION_RAISE, PER_DIEM, RERUN_CEILING, RESIDUALS, contributionRate, overtimeOf } from '../../systems/contracts';
 import { SERIES } from '../series';
@@ -762,7 +763,7 @@ export const CAREER_GUIDE: readonly GuideEntry[] = [
       'Open Career, then Opportunities, and find the role under In Progress.',
       `Press ${STEPS}, each as many times as it helps. Each says its time.`,
       'For a self-tape, press Tape It before it’s due. For an audition in person, press Go when the clock stops for it.',
-      'If it clashes with something, press Ask For Another Time at least a day ahead.',
+      'If it clashes with something, press Ask For Another Time at least a day ahead. A chemistry read or a screen test asks the production instead: press Ask To Reschedule.',
     ],
     needs: [
       'Free for each step’s time, and awake. Rehearsing on your feet needs some of the lines learned and the energy for it.',
@@ -794,9 +795,9 @@ export const CAREER_GUIDE: readonly GuideEntry[] = [
       'You’ve already asked once, and casting is keeping the time it gave.',
       'Casting has no other time clear of your calendar in the days it’s seeing actors.',
     ],
-    mistakes: ['Missing an audition. Casting moves on without you, and the role lapses.'],
+    mistakes: ['Missing an audition. Casting moves on without you, and the role lapses. Not turning up, unless you were ill, its casting office remembers: Withdrawing And Rescheduling says what that costs.'],
     next: ['Wait for casting’s word, then answer an offer under Offers.'],
-    related: ['career.opportunities', 'career.offers', 'craft.brief-tape'],
+    related: ['career.opportunities', 'career.offers', 'craft.brief-tape', 'career.sides', 'career.withdrawing'],
     connections: [
       { to: 'career.offers', kind: 'evaluation', why: 'Casting reads your audition’s band, with the role’s fit and the field, when it decides whether to offer you the role.' },
       { to: 'day.calendar', kind: 'scheduled', why: 'An audition in person goes on your calendar with its trip, and stops the clock when it comes.' },
@@ -819,7 +820,7 @@ export const CAREER_GUIDE: readonly GuideEntry[] = [
     short: `An offer says the role, the pay, the dates and how long it stands, ${word(WORK.offerDays)} days. Press Accept The Offer to book it, or Decline The Offer. Accepting puts each work day on your calendar and promises the pay for each week of it.\n\nEach work day stops the clock: press Go to be there. Each is judged, and the part goes on your professional credits.`,
     steps: [
       'Open Career, then Opportunities, and read the offer under Offers, or under What Needs You on Home.',
-      'Press Accept The Offer or Decline The Offer before it lapses. Represented, you can first have your agent ask once for a fifth more.',
+      'Press Accept The Offer or Decline The Offer before it lapses. Represented, you can first have your agent ask once about one term: the pay, a recurring part’s guaranteed episodes, or a promotional film’s pay.',
       'If another part holds some of the same days, its card under In Progress says so: press Ask Them To Decide there to have that production book you or let you go before you answer.',
       'Under Booked Work, prepare the part with the same three steps as the sides.',
       'On each work day, press Go when the clock stops for it.',
@@ -835,8 +836,8 @@ export const CAREER_GUIDE: readonly GuideEntry[] = [
     ],
     now: ['The work days go on your calendar, and the pay for each week is promised, due the Thursday after it. It isn’t paid yet.'],
     later: [
-      'Asked for more, the production answers the next afternoon: it raises the offer to what your agent asked, or keeps its offer, and the offer then stands a day past the answer. How your last round went makes a raise likelier, and so does having worked for its casting office.',
-      'A casting office that cast you before, where your work was Strong or better, may offer you a later part without an audition, never a lead. The offer says why.',
+      'Asked, the production answers the next afternoon: it gives what your agent asked, keeps its offer, offers a trade-off, or now and then withdraws the offer, and the offer then stands a day past the answer. How your last round went makes a yes likelier, and so does having worked for its casting office. Negotiating Through Your Agent says each answer.',
+      'A casting office that cast you before, where your work was Strong or better, may offer you a later part without an audition, and a lead on one condition, the chemistry read or screen test still to come. The offer says why.',
       'A production that asks you to a chemistry read or a screen test holds the part’s dates until it’s cast. A hold isn’t a booking and pays nothing; it asks you to keep those days free. Accepting other work on them lets the hold go and withdraws you from the part. Asked to decide first, the production answers the next afternoon: it offers you the part, likelier the better your last round went, or lets the hold go and casts someone else. Once the part is cast or let go, the hold ends.',
       'A stage part goes on your credits at its first night; a screen part when it’s shot, and as released once it comes out, when its footage can go on a reel.',
       'A finished production isn’t always out on time. Its distributor may hold the release back months, send a film to streaming instead of cinemas, where it has no weekly chart, or shelve it, so it’s never out: the part stays on your credits as shot, its footage can’t go on a reel, and it has no premiere to enter for an award. The notice says which when the release comes due.',
@@ -854,7 +855,7 @@ export const CAREER_GUIDE: readonly GuideEntry[] = [
     ],
     mistakes: ['Sleeping through a work day. A missed day of a shoot ends the job.'],
     next: ['Update your résumé once the part is on your credits.'],
-    related: ['career.auditions', 'career.outside-work', 'documents.work', 'career.resume'],
+    related: ['career.auditions', 'career.outside-work', 'documents.work', 'career.resume', 'career.negotiation'],
     connections: [
       { to: 'documents.work', kind: 'prerequisite', why: 'An offer can be accepted only where your permission to work covers every one of its days.' },
       { to: 'career.resume', kind: 'history', why: 'The part goes on your professional credits, and your résumé reads as behind until it has it.' },
@@ -864,6 +865,165 @@ export const CAREER_GUIDE: readonly GuideEntry[] = [
       setup: 'An offer of a two-day shoot at $125.00 a day, estimated, standing three days.',
       steps: ['Press Accept The Offer.', 'Prepare the part, then press Go on each shoot day.'],
       result: 'Two shoot days go on your calendar and $250.00 is promised for that week. After the second day the part is on your credits as not yet released.',
+    },
+  },
+  // From 2026-10-25 (the owner's brief 27, its offers and auditions cluster; `systems/offers.ts`): three entries for what
+  // that work added, the way the sides are played and the takes, negotiating through the agent, and withdrawing.
+  {
+    id: 'career.sides',
+    title: 'How You Play The Sides And Your Takes',
+    goal: 'career',
+    covers: ['pro.choose_approach', 'pro.answer_note', 'pro.record_take', 'pro.send_take'],
+    synonyms: ['play it this way', 'casting’s direction', 'follow the direction', 'keep your choice', 'record a take', 'send this take', 'takes'],
+    questions: ['How do I choose how to play an audition?', 'What happens when casting gives me a direction?', 'Can I record more than one take of a self-tape?'],
+    where: on('opportunities', 'Career, Opportunities, In Progress'),
+    available: `From the guide’s chapter “${WORK_CHAPTER}”, once casting has sent the sides with an audition.`,
+    short: `Choose how to play the sides as you would a brief: measured or driven, restrained or expansive, set or open. Rehearse It On Your Feet rehearses the choice, and every round is judged with it, against what the part’s genre favors.\n\nPlayed some way at an audition or a callback in person, casting may ask for it another way partway through. Follow The Direction plays the rest that way; Keep Your Choice plays it as you prepared it. For a self-tape, Record A Take keeps each take to choose from, and Send This Take sends the one you pick.`,
+    steps: [
+      'Open Career, then Opportunities, and find the role under In Progress.',
+      'Under How You’ll Play It, choose a side of each aspect you want, or leave one open, and press Play It This Way.',
+      'Press Rehearse It On Your Feet until the choice is rehearsed. Work on your feet rehearses it, as it does a brief’s.',
+      'In person: when the clock stops for casting’s direction, press Follow The Direction or Keep Your Choice. Go keeps your choice.',
+      `On tape: press Record A Take, up to ${countWords(TAKES.perDay)} a day before it’s due, then Send This Take beside the one you want casting to see. Tape It records one and sends it at once.`,
+    ],
+    needs: [
+      'Sides to play: casting sends them with an audition.',
+      `For a take, the hour a self-tape takes before it’s due, awake, and fewer than ${countWords(TAKES.perDay)} takes today and ${word(BRIEF.takesKept)} in all.`,
+    ],
+    costs: [
+      { label: 'Time', value: 'None to choose; an hour for each take', estimate: true },
+      { label: 'Energy', value: 'A take takes what an hour at a desk does' },
+      { label: 'Money', value: 'None' },
+    ],
+    reads: [
+      { label: 'How You Play It', value: 'What counts most in the round shifts toward what each side is, it uses the abilities each side names, and it needs rehearsal before it pays off. A side that suits the part’s genre is easier to make work' },
+      { label: 'Casting’s Direction', value: 'Followed, the side casting asked for, unrehearsed, and how well you adapt on the spot; kept, your own choice, with what casting asked for held back' },
+      { label: 'A Take', value: 'Each take is judged on its own, as the moment and your condition stand when you record it' },
+    ],
+    now: [
+      'Choosing a way to play it rehearses nothing yet: once you choose, work on your feet rehearses it. A different choice keeps half of the rehearsal.',
+      'A take is shown with its result once it’s recorded. Nothing goes to casting until you press Send This Take.',
+    ],
+    later: [
+      `Casting gives a direction only where you’ve chosen a way to play it and the part’s genre leans another way on some aspect: the clock stops ${countWords(NOTE.afterMinutes)} minutes in for your answer, and the rest of the round is judged with it. Casting’s decision reads that round, so the answer can win or lose the part.`,
+      'The take you send is the one casting judges. Only it goes on your work record, so recording more doesn’t train you, and each costs its hour.',
+      'If the self-tape is due and you’ve sent nothing, casting moves on without it, takes recorded or not.',
+    ],
+    interpret: [
+      'The table under How You’ll Play It shows what each side would come to fully prepared, and whether it suits the part, goes against it, or could go either way.',
+      'Following a direction asks you to adapt: an actor who adapts well loses little, and one who doesn’t may do better keeping their choice, though playing against what casting asked holds those qualities back.',
+    ],
+    unavailable: [
+      'There are no sides yet: casting sends them with an audition.',
+      'You’re in the room: answer casting’s direction first.',
+      'Casting has no direction waiting for you.',
+      `You’ve recorded ${countWords(TAKES.perDay)} takes today, as many as a day allows. Record more tomorrow, or send one.`,
+      'You haven’t recorded a take yet: press Record A Take first.',
+    ],
+    mistakes: ['Recording takes and sending none. Casting moves on without the tape when it’s due.'],
+    next: ['Wait for casting’s word, then answer an offer under Offers.'],
+    related: ['career.auditions', 'craft.brief-tape', 'career.offers'],
+    connections: [
+      { to: 'career.auditions', kind: 'evaluation', why: 'Casting’s decision reads the round as it was played and directed, and the take you sent.' },
+      { to: 'craft.brief-tape', kind: 'optional', why: 'The ways of playing are the same as a practice brief’s, and so is how they’re rehearsed.' },
+    ],
+    example: {
+      setup: 'An audition in person for a part in a thriller, with the sides prepared and played restrained.',
+      steps: ['Press Play It This Way with Restrained chosen, then Rehearse It On Your Feet.', 'When the clock stops for casting’s direction to play it driven, press Follow The Direction.'],
+      result: 'The rest of the audition is played driven, unrehearsed, and casting decides the next day from how it went.',
+    },
+  },
+  {
+    id: 'career.negotiation',
+    title: 'Negotiating Through Your Agent',
+    goal: 'career',
+    covers: [],
+    synonyms: ['negotiate', 'trade-off', 'guaranteed episodes', 'promotional film pay', 'offer withdrawn', 'conditional offer', 'accept on its condition'],
+    questions: ['What can my agent ask for?', 'Can an offer be withdrawn if I ask for more?', 'What is a conditional offer?'],
+    where: on('opportunities', 'Career, Opportunities, Offers'),
+    available: `From the guide’s chapter “${WORK_CHAPTER}”, with an agent representing you and an offer standing.`,
+    short: `Represented, you can have your agent ask once about one term of an offer: the pay, a fifth more; on a recurring part, one more guaranteed episode; or, on SAG-AFTRA work with a promotional film, that film paid at your own day where the contract pays it less. Without an agent nobody negotiates for you, and the offer is as it stands.\n\nThe production answers the next afternoon. It may give what was asked, keep its offer, offer a trade-off, or withdraw the offer.`,
+    steps: [
+      'Open Career, then Opportunities, and read the offer under Offers.',
+      'Press the ask you want: Ask For a figure a day, Ask For Another Guaranteed Episode, or Ask For The Promotional Film Paid. Each says why it can’t be asked where it can’t.',
+      'Wait for the answer the next afternoon, then accept or decline the offer as it stands.',
+    ],
+    needs: ['An agent representing you.', 'An offer standing that hasn’t been asked about.'],
+    costs: [{ label: 'Time', value: 'None; the answer comes the next afternoon' }, { label: 'Money', value: 'None' }],
+    reads: [
+      { label: 'The Answer', value: 'How your last round went, whether you’ve worked for its casting office, and how visible you are; a bigger ask risks the offer more' },
+    ],
+    now: ['The offer stands a day past the answer, so there’s time to take what comes.'],
+    later: [
+      'A yes changes the offer: the pay raised, another episode guaranteed and booked, or the promotional film paid at your own day. The contract, the days booked and the pay promised follow it.',
+      `A trade-off gives something for something: on a recurring part, more pay for one guaranteed episode fewer; another episode, if the option on next season carries no raise; or, on work paid $25,000 or more, where the contract leaves the promotional film unpaid, a day performer’s minimum for it rather than your own day. Offered about ${Math.round(TERMS.trade * 10)} times in 10 where the production won’t give what was asked and there’s something to trade, estimated.`,
+      `Now and then the production withdraws the offer rather than negotiate: at most ${Math.round(TERMS.withdraw.most * 100)}% of the time, more for a bigger ask, estimated. The part goes to another actor.`,
+      `A casting office that cast you before, where your work was Strong, may offer you a lead on one condition: the screen test or chemistry read still to come, about ${Math.round(CONDITIONAL.chance * 10)} times in 10 that such a lead reaches you, estimated. Accept On Its Condition holds your dates and sets that round; nothing is booked or paid until it goes your way, and the offer falls away if it doesn’t.`,
+    ],
+    interpret: ['The offer’s card says the answer in the production’s words, and the terms as negotiated. What Needs You says the latest version too.'],
+    unavailable: [
+      'An agent asks for more on your behalf, and none represents you, so the offer is as it stands.',
+      'Only a recurring part on a series has guaranteed episodes to ask about.',
+      'The agreement already pays the promotional film a day performer’s minimum, at least your own day.',
+    ],
+    mistakes: ['Asking for the biggest thing on an offer you can’t afford to lose. A bigger ask is likelier to see the offer withdrawn.'],
+    next: ['Accept or decline the offer before it lapses.'],
+    related: ['career.offers', 'career.agreement', 'career.contracts'],
+    connections: [
+      { to: 'career.offers', kind: 'immediate', why: 'The answer changes the offer you then accept or decline.' },
+      { to: 'career.contracts', kind: 'history', why: 'The contract made when you accept carries the terms as negotiated.' },
+      { to: 'career.agreement', kind: 'prerequisite', why: 'Only an agent under an agreement in force negotiates for you.' },
+    ],
+    example: {
+      setup: 'An offer of a recurring part guaranteeing two episodes, with your agent representing you.',
+      steps: ['Press Ask For Another Guaranteed Episode.', 'Read the answer the next afternoon.'],
+      result: 'The production guarantees three episodes, so a third episode’s shoot days are booked and paid when you accept, or it keeps two, or offers three for no raise on its option.',
+    },
+  },
+  {
+    id: 'career.withdrawing',
+    title: 'Withdrawing And Rescheduling',
+    goal: 'career',
+    covers: ['pro.withdraw', 'pro.ask_reschedule'],
+    synonyms: ['withdraw from the part', 'ask to reschedule', 'no-show', 'recast', 'part recast', 'changed requirements'],
+    questions: ['Can I pull out of an audition?', 'What happens if I don’t turn up to an audition?', 'Can I move a screen test?', 'Why was a part posted again?'],
+    where: on('opportunities', 'Career, Opportunities, In Progress'),
+    available: `From the guide’s chapter “${WORK_CHAPTER}”, once you’re in the running for a part.`,
+    short: `Withdraw From The Part leaves a part you’re in the running for. With a day’s notice or more before a round in person, casting won’t hold it against you. With less, or by not turning up at all, its casting office remembers.\n\nA chemistry read or a screen test is set around other people’s days, so Ask To Reschedule asks the production, which may say no.`,
+    steps: [
+      'Open Career, then Opportunities, and find the role under In Progress.',
+      'Read what withdrawing would do under Withdrawing, then press Withdraw From The Part.',
+      'For a chemistry read or a screen test, press Ask To Reschedule at least a day ahead, and read the answer the next afternoon.',
+    ],
+    needs: ['A part you’re in the running for.', 'To reschedule, a day’s notice and another day the production could see you.'],
+    costs: [{ label: 'Time', value: 'None' }, { label: 'Money', value: 'None' }],
+    reads: [
+      { label: 'Notice', value: `Whether a round in person is a day or more away (${NOTICE.hours} hours)` },
+      { label: 'The Production’s Answer', value: `About ${Math.round(RESCHEDULE.chance.chemistry * 10)} in 10 for a chemistry read, ${Math.round(RESCHEDULE.chance.test * 10)} for a screen test, and ${Math.round(RESCHEDULE.clash * 10)} more with a clash on your calendar to give as the reason`, estimate: true },
+    ],
+    now: ['Withdrawing takes the part’s rounds off your calendar and lets any hold on your dates go.'],
+    later: [
+      `A casting office remembers a round in person you didn’t turn up to, unless you were ill or in hospital, and a withdrawal at less than a day’s notice, for ${word(Math.round(NOTICE.rememberDays / 365))} years: your chance at each of its decisions is ${Math.round(NOTICE.cut * 100)}% of what it would be, and it offers you nothing without an audition, estimated. A withdrawal with notice costs you nothing with it.`,
+      `A part you lost or let go may be recast if the actor cast in it leaves, about ${Math.round(RECAST.chance * 100)} times in 100 with its first day ${word(RECAST.leadDays / 7)} weeks off or more, estimated. It’s posted again, and casting decides it afresh.`,
+      `At a cut, a production now and then changes what a part asks, about one part in ${Math.round(1 / REWRITE.chance)}, estimated: its playing ages, or a technique it now needs at ${REWRITE.level}. If you no longer fit it, it releases you; if you still do, you go on.`,
+    ],
+    interpret: ['What withdrawing would do is said above the button before you press it.'],
+    unavailable: [
+      'Decline the offer instead: you haven’t accepted it, so there’s nothing to withdraw from.',
+      'It’s less than a day away, and the production needs a day’s notice to reschedule.',
+      'The production has no other day clear of your calendar in the days it’s seeing actors.',
+    ],
+    mistakes: [`Sleeping through an audition instead of withdrawing. Its casting office remembers it for ${word(Math.round(NOTICE.rememberDays / 365))} years.`],
+    next: ['Look for the next role under Open Calls.'],
+    related: ['career.auditions', 'career.offers', 'career.opportunities'],
+    connections: [
+      { to: 'career.auditions', kind: 'evaluation', why: 'A remembered no-show halves that office’s decisions on your later auditions.' },
+      { to: 'career.offers', kind: 'immediate', why: 'An office that remembers a no-show offers you nothing without an audition.' },
+    ],
+    example: {
+      setup: 'A screen test on Thursday that clashes with a booked shoot day.',
+      steps: ['On Monday, press Ask To Reschedule.', 'Read the production’s answer on Tuesday afternoon.'],
+      result: 'The production moves the screen test to another weekday clear of your calendar, or keeps its time, and you can still withdraw with notice before Wednesday.',
     },
   },
   {

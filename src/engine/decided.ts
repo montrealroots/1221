@@ -57,6 +57,7 @@ import { cutDrawn, furtherDrawn, loopDrawn, pagesDrawn, planWork, promoDrawn, st
 import { simulateRun } from './systems/charts';
 import { fieldDrawn, finalDrawn, festivalSelects, festivalSubmits, nominationsFor, productionEnters } from './systems/awards';
 import type { Engagement } from './systems/pro';
+import { conditionMetDrawn, conditionalDrawn, recastDrawn, rescheduleDrawn, rewriteDrawn, tradeDrawn, withdrawChance, withdrawDrawn } from './systems/offers';
 
 // ---------------------------------------------------------------------------
 // The sky
@@ -1084,4 +1085,94 @@ defineDecider<{ sim: Simulation; first: number }, string>({
   },
   sample: (seed) => ({ sim: atYale(seed), first: seed * 7 }),
   decide: ({ sim, first }) => Array.from({ length: 60 }, (_, n) => (festivalSelects(sim, 2027, 'us-short', `p${first + n}`, 'exceptional') ? '1' : '0')).join(''),
+});
+
+// ---------------------------------------------------------------------------------------------------------------------
+// Offers and auditions, the actor's side (from 2026-10-25, brief 27's cluster of that name, `systems/offers.ts`)
+// ---------------------------------------------------------------------------------------------------------------------
+
+defineDecider<{ sim: Simulation; share: number }, string>({
+  id: 'pro.withdraw',
+  decides: 'Whether a production withdraws its offer rather than answer an agent’s ask (TERMS.withdraw): a quarter of the ask’s share of the offer, at most one in ten, by its own draw.',
+  drawnIn: 'src/engine/systems/offers.ts',
+  reads: {
+    // The ask's share of the offer: a bigger ask, a likelier withdrawal.
+    share: (o, t) => ({ ...o, share: t }),
+    world: (o, t) => ({ ...o, sim: atYale(Math.round(t * 20)) }),
+  },
+  sample: (seed) => ({ sim: atYale(seed), share: (seed % 5) / 4 }),
+  decide: ({ sim, share }) => Array.from({ length: 80 }, (_, n) => (withdrawDrawn(sim, PROJECTS[n % PROJECTS.length]!.id, sim.now + n * 86_400_000, 'pay', withdrawChance(share)) ? '1' : '0')).join(''),
+});
+
+defineDecider<{ sim: Simulation; possible: number }, string>({
+  id: 'pro.trade',
+  decides: 'Whether a production that won’t give what an agent asked offers a trade-off instead (TERMS.trade), only where the ask has one to offer, by its own draw.',
+  drawnIn: 'src/engine/systems/offers.ts',
+  reads: {
+    // Whether there's a trade to offer: none, and none is offered.
+    possible: (o, t) => ({ ...o, possible: Math.round(t) }),
+    world: (o, t) => ({ ...o, sim: atYale(Math.round(t * 20)) }),
+  },
+  sample: (seed) => ({ sim: atYale(seed), possible: seed % 2 }),
+  decide: ({ sim, possible }) => Array.from({ length: 40 }, (_, n) => (tradeDrawn(sim, PROJECTS[n % PROJECTS.length]!.id, sim.now + n * 86_400_000, 'episodes', possible === 1) ? '1' : '0')).join(''),
+});
+
+defineDecider<{ sim: Simulation; band: number }, string>({
+  id: 'pro.conditional',
+  decides: 'Whether a lead from a casting office that cast the actor before comes as an offer on condition of its last round (CONDITIONAL.chance), and whether that round goes their way, at its band’s chance (CONDITIONAL.met).',
+  drawnIn: 'src/engine/systems/offers.ts',
+  reads: {
+    // The round's band: a stronger one, a likelier condition met.
+    band: (o, t) => ({ ...o, band: Math.round(t * 3) }),
+    world: (o, t) => ({ ...o, sim: atYale(Math.round(t * 20)) }),
+  },
+  sample: (seed) => ({ sim: atYale(seed), band: seed % 4 }),
+  decide: ({ sim, band }) => {
+    const b = (['unready', 'working', 'strong', 'exceptional'] as const)[band]!;
+    const offered = Array.from({ length: 24 }, (_, n) => (conditionalDrawn(sim, sim.now + n * 7 * 86_400_000, PROJECTS[n % PROJECTS.length]!.id) ? '1' : '0')).join('');
+    const met = Array.from({ length: 40 }, (_, n) => (conditionMetDrawn(sim, PROJECTS[n % PROJECTS.length]!.id, sim.now + n * 86_400_000, b) ? '1' : '0')).join('');
+    return `${offered} ${met}`;
+  },
+});
+
+defineDecider<{ sim: Simulation; kind: number }, string>({
+  id: 'pro.rewrite',
+  decides: 'Whether a part’s requirement changes at casting’s cut (REWRITE), and how: its playing ages moved from its own, or the technique it asks most now needed at a level.',
+  drawnIn: 'src/engine/systems/offers.ts',
+  reads: {
+    // Which part: its ages and its techniques are what a change moves from.
+    kind: (o, t) => ({ ...o, kind: Math.round(t * (PROJECTS.length - 1)) }),
+    world: (o, t) => ({ ...o, sim: atYale(Math.round(t * 20)) }),
+  },
+  sample: (seed) => ({ sim: atYale(seed), kind: seed % PROJECTS.length }),
+  decide: ({ sim, kind }) => Array.from({ length: 80 }, (_, n) => {
+    const c = rewriteDrawn(sim, PROJECTS[kind]!, sim.now + n * 7 * 86_400_000);
+    return c ? (c.ages ? c.ages.join('-') : `${c.skill!.skill}@${c.skill!.level}`) : '.';
+  }).join(','),
+});
+
+defineDecider<{ sim: Simulation; lead: number }, string>({
+  id: 'pro.recast',
+  decides: 'Whether a part the actor lost or let go is recast and posted again (RECAST), only with its first day three weeks off or more, by its posting’s own draw.',
+  drawnIn: 'src/engine/systems/offers.ts',
+  reads: {
+    // The days to its first day: too close, and there's no recasting it.
+    lead: (o, t) => ({ ...o, lead: Math.round(t * 42) }),
+    world: (o, t) => ({ ...o, sim: atYale(Math.round(t * 20)) }),
+  },
+  sample: (seed) => ({ sim: atYale(seed), lead: 14 + (seed % 3) * 7 }),
+  decide: ({ sim, lead }) => Array.from({ length: 60 }, (_, n) => (recastDrawn(sim, PROJECTS[n % PROJECTS.length]!.id, sim.now + n * 86_400_000, lead) ? '1' : '0')).join(''),
+});
+
+defineDecider<{ sim: Simulation; round: number; clash: number }, string>({
+  id: 'pro.reschedule',
+  decides: 'Whether a production moves a chemistry read or a screen test when the actor asks (RESCHEDULE): a test less often than a read, more with a clash on the actor’s calendar to give as the reason.',
+  drawnIn: 'src/engine/systems/offers.ts',
+  reads: {
+    round: (o, t) => ({ ...o, round: Math.round(t) }),
+    clash: (o, t) => ({ ...o, clash: Math.round(t) }),
+    world: (o, t) => ({ ...o, sim: atYale(Math.round(t * 20)) }),
+  },
+  sample: (seed) => ({ sim: atYale(seed), round: seed % 2, clash: (seed >> 1) % 2 }),
+  decide: ({ sim, round, clash }) => Array.from({ length: 40 }, (_, n) => (rescheduleDrawn(sim, PROJECTS[n % PROJECTS.length]!.id, sim.now + n * 86_400_000, round ? 'test' : 'chemistry', clash === 1) ? '1' : '0')).join(''),
 });
