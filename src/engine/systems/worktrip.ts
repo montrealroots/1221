@@ -420,14 +420,51 @@ export function bookTrip(sim: Simulation, person: Person, e: Engagement, t: Proj
   return trip;
 }
 
+/**
+ * The leg before this one on its way that still counts, booked, on its way or done: a leg canceled or missed is passed
+ * over, so a way booked again starts afresh. Until 2026-10-25 (brief 27's weather day) the leg before in the list was read,
+ * and a way home booked again after a missed or moved flight waited on the canceled leg before it and canceled itself.
+ */
+function priorOfWay(trip: WorkTrip, i: number): TripLeg | undefined {
+  for (let k = i - 1; k >= 0; k -= 1) {
+    const l = trip.legs[k]!;
+    if (l.way !== trip.legs[i]!.way) return undefined;
+    if (l.status !== 'canceled' && l.status !== 'missed') return l;
+  }
+  return undefined;
+}
+
 /** Each leg's departure and arrival on the clock: the first leg of each way wants the player, the rest follow on. */
 function scheduleLegs(sim: Simulation, person: Person, trip: WorkTrip, from = 0): void {
   trip.legs.forEach((leg, i) => {
     if (i < from || leg.status !== 'booked') return;
-    const first = i === 0 || trip.legs[i - 1]!.way !== leg.way;
+    const first = !priorOfWay(trip, i);
     sim.schedule({ at: leg.departs, kind: DEPART_KIND, label: leg.label, category: 'career', priority: 37, requiresPlayer: first, ...(first ? { durationMinutes: Math.round((leg.arrives - leg.departs) / MIN) } : {}), locationId: leg.from, refType: 'pro.trip', refId: trip.id, payload: { personId: person.id, tripId: trip.id, leg: i } });
     sim.schedule({ at: leg.arrives, kind: ARRIVE_KIND, label: `${leg.label}: Arrives`, category: 'career', priority: 36, requiresPlayer: false, locationId: leg.to, refType: 'pro.trip', refId: trip.id, payload: { personId: person.id, tripId: trip.id, leg: i } });
   });
+}
+
+/**
+ * A trip's way home moved when its work's days slip (from 2026-10-25, the owner's brief 27, loop 22: "Returning home:
+ * occurs only after the relevant work or travel arrangement → respects travel time → updates future availability"): the
+ * legs home not yet gone are canceled, their times off the clock, and booked again from the new last day as `planTrip`
+ * books them; the stay runs to the new first leg home. Returns that leg's departure, or nothing where nothing moved.
+ */
+export function extendTrip(sim: Simulation, person: Person, trip: WorkTrip, days: readonly { from: Instant; to: Instant }[]): Instant | undefined {
+  const home = trip.legs[0]?.from;
+  if (!home || trip.status === 'canceled') return undefined;
+  const back = planTrip(home, trip.cityId, days)?.legs.filter((l) => l.way === 'back') ?? [];
+  const old = trip.legs.map((l, i) => ({ l, i })).filter(({ l }) => l.way === 'back' && l.status === 'booked');
+  if (!back.length || !old.length || back[0]!.departs === old[0]!.l.departs) return undefined;
+  for (const { l, i } of old) {
+    l.status = 'canceled';
+    for (const item of sim.universe.scheduled) if (item.status === 'pending' && item.refType === 'pro.trip' && item.refId === trip.id && item.payload.leg === i) sim.timeline.cancel(item.id, sim.now);
+  }
+  const from = trip.legs.length;
+  trip.legs.push(...back.map((l) => ({ ...l, id: sim.nextId('pro'), status: 'booked' as const })));
+  trip.stay.to = back[0]!.departs;
+  scheduleLegs(sim, person, trip, from);
+  return back[0]!.departs;
 }
 
 /** Calls a trip off: the legs not yet gone and the stay canceled, their times off the clock. */
@@ -505,9 +542,8 @@ export function registerWorkTrips(sim: Simulation, hooks: TripHooks): void {
     const e = hooks.engagementOf(person, trip.engagementId);
     const t = e ? hooks.projectOf(e) : undefined;
     if (!leg || leg.status !== 'booked' || !e || !t) return;
-    const first = i === 0 || trip.legs[i - 1]!.way !== leg.way;
-    if (!first) {
-      const before = trip.legs[i - 1]!;
+    const before = priorOfWay(trip, i);
+    if (before) {
       if (before.status !== 'done') { leg.status = 'canceled'; return; }
       leg.status = 'en-route';
       return;

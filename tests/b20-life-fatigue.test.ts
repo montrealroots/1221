@@ -57,6 +57,8 @@ describe('D3: five shoot days in a row, a 7 AM call two hours away', () => {
     expect(fullNightWords(s, night)).toBe('A full night before it, with an hour to get up and two hours to get there, means being asleep by 8:00 PM.');
     const days = play(s, END, advised);
     expect(days.map((d) => d.label)).toEqual([1, 2, 3, 4, 5].map((n) => `Gull Season: Shoot Day ${n}`));
+    // The fixture's premise (`shootWeek`'s seed): a week whose sky lets every day on location go ahead.
+    expect(s.player.pro!.engagements[0]!.weather).toBeUndefined();
     for (const d of days) {
       expect(d.energy).toBeGreaterThan(85);
       expect(d.debt).toBeLessThan(2);

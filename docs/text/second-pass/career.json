@@ -715,9 +715,9 @@
  },
  "src/engine/content/guide/career.ts#CAREER_GUIDE [career.workflows]": {
   "status": "Rewritten",
-  "hash": "3235da1a8dc8",
-  "on": "2026-10-24",
-  "evidence": "Written for brief 25's Module 5 to docs/STYLE.md and docs/GLOSSARY.md: the guide's chapter on how each kind of work is done and its links to Contracts and Pay, each link's promise read against the code by tools/effects.mjs and each quote by tools/guide-quotes.mjs, the chapter's command opened by tests/career-workflows-screen.test.ts, with tools/voice-check.mjs and tools/tics.mjs clean.",
+  "hash": "6a46ce98d6d1",
+  "on": "2026-10-25",
+  "evidence": "Written for brief 27's K5 (Part 11: weather affecting production; loop 28: a schedule change communicated with its contractual rule) to docs/STYLE.md and docs/GLOSSARY.md, and read where the player meets it: tests/b27-weather.test.ts holds the notice A Weather Day On ... with its sky (thunderstorms, thick fog, high winds), the days as they stand (called off your day on location and slipped the rest of your days a working day each), the flight home (Your flight home moves with them), each pay sentence by how the work is paid (the SAG-AFTRA day performer's day off paid; This work pays the days you work, so the day off isn't paid; every day you work still is), and a day that can't slip (It couldn't slip your days, since you're booked on a day it would need); the Work tab's Weather Day line and the guide's How Each Kind Of Work Is Done say the same. tools/voice-check.mjs, tools/tics.mjs, tools/title-case.mjs, tools/plural-check.mjs and tools/spelling.mjs pass",
   "first": "Pending"
  },
  "src/engine/content/guide/career.ts#CAREER_GUIDE [evaluation]": {

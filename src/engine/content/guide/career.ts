@@ -33,7 +33,7 @@ import { AGREEMENT, AUDITION_TOWNS, UNIONS } from '../careerwork';
 import { BAND_LABEL } from '../../systems/coursework';
 import { ESTIMATE } from '../../systems/school';
 import { PAY, sagJoinUsd } from '../../systems/propay';
-import { OUTSIDE_WORK, WORK } from '../../systems/projobs';
+import { OUTSIDE_WORK, WEATHER_DAY, WORK } from '../../systems/projobs';
 import { TRIP, routeSourceWords } from '../../systems/worktrip';
 import { CONTRIBUTION, LATE, OPTION_RAISE, PER_DIEM, RERUN_CEILING, RESIDUALS, contributionRate, overtimeOf } from '../../systems/contracts';
 import { SERIES } from '../series';
@@ -973,8 +973,8 @@ export const CAREER_GUIDE: readonly GuideEntry[] = [
     title: 'How Each Kind Of Work Is Done',
     goal: 'career',
     covers: ['pro.work_choice'],
-    synonyms: ['takes', 'another take', 'voice session', 'booth', 'dubbing', 'loop', 'looping', 'motion capture', 'performance capture', 'narration', 'reenactment', 'multicam', 'studio audience', 'musical', 'mark it', 'stunt', 'stunt double', 'intimacy coordinator', 'consent', 'revised pages', 'scene cut'],
-    questions: ['Why were my scenes shot out of order?', 'Should I ask for another take?', 'What is a tape night?', 'Why is my voice strained?', 'Do I have to do my own stunts?', 'Do I have to do the intimate scene?', 'Why was a scene of mine cut?', 'Why was I called back to loop?'],
+    synonyms: ['takes', 'another take', 'voice session', 'booth', 'dubbing', 'loop', 'looping', 'motion capture', 'performance capture', 'narration', 'reenactment', 'multicam', 'studio audience', 'musical', 'mark it', 'stunt', 'stunt double', 'intimacy coordinator', 'consent', 'revised pages', 'scene cut', 'weather day', 'weather', 'rain', 'thunderstorm', 'on location'],
+    questions: ['Why were my scenes shot out of order?', 'Should I ask for another take?', 'What is a tape night?', 'Why is my voice strained?', 'Do I have to do my own stunts?', 'Do I have to do the intimate scene?', 'Why was a scene of mine cut?', 'Why was I called back to loop?', 'What happens if the weather is bad on a shoot day?'],
     where: on('work', 'Career, Work, How The Work Is Done'),
     available: `From the guide’s chapter “${WORK_CHAPTER}”, once you’ve accepted work.`,
     short: `Each kind of work is done its own way. A film or a single-camera series shoots your scenes out of the script’s order, each in takes, and prints the best. A multicamera comedy rehearses for a week and tapes before a studio audience. Voice work, a dub and a narration are sessions in a booth, and they strain the voice. Performance capture is a suit and markers and no set. A musical has its music rehearsals and choreography. An action film rehearses its fights with the stunt coordinator before the stunts.\n\nEach engagement says how its work is done, the choices it asks of you, and each day’s report once it’s worked.`,
@@ -999,6 +999,7 @@ export const CAREER_GUIDE: readonly GuideEntry[] = [
     later: [
       'Each judged day plays its scenes, loops, chapters or sequences in takes, the best printed, and leaves a report.',
       'Pages revised the night before change some of your lines, and Learn The Lines that evening puts them back.',
+      `A day out on location is called off the evening before when the forecast where it shoots is thunderstorms, fog, or wind of ${WEATHER_DAY.windKph} km/h or more: your days from it slip a working day each, and your flight home with them. A shower is shot through. A SAG-AFTRA day performer is paid the day off; other work pays the days you work. If another booking is in the way, the production shoots that day’s scenes without you, and they’re cut from your part. A studio, a booth, a stage play and a capture stage never stop for the weather.`,
       `After a screen wrap, the production may recall you to loop: a four-hour session paid half a day. When the work comes out, the edit may cut one of your scenes, about ${Math.round(AFTER_WRAP.cut * 10)} times in ten; the part stays on your credits with its pay.`,
     ],
     interpret: [

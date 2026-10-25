@@ -66,7 +66,9 @@ function wrapped(seed: string, projectId: string, opts: { skilled?: boolean; ste
   sim.must({ kind: 'pro.accept_offer', payload: { opportunityId: o.id } });
   const e = sim.player.pro!.engagements.find((x) => x.opportunityId === o.id)!;
   prepared(sim, e, opts.steps ?? ['read', 'lines', 'rehearse']);
-  played(sim, e.days.at(-1)!.to + MS_HOUR);
+  // To its wrap, wherever a weather day has moved its last day to (from 2026-10-25, brief 27's `WEATHER_DAY`): until then
+  // the last day as booked was the last.
+  for (let n = 0; n < 4 && e.status !== 'finished' && e.status !== 'canceled'; n += 1) played(sim, e.days.at(-1)!.to + MS_HOUR);
   return { sim, c: sim.player.pro!.credits.find((x) => x.engagementId === e.id)!, e: sim.player.pro!.engagements.find((x) => x.id === e.id)! };
 }
 

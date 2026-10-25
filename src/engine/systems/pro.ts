@@ -440,6 +440,12 @@ export interface Engagement extends HasHistory {
   script?: { version: number; drawn: number[]; revised: { day: number; share: number; at: Instant }[] };
   /** A recall to loop after the wrap (N13 Schedule A §28.A): when, and how it went. */
   loop?: { at: Instant; status: 'set' | 'done' | 'missed'; overall?: number; units?: WorkUnit[] };
+  /**
+   * Each day on location called off for the weather (from 2026-10-25, the owner's brief 27, Part 11; `systems/projobs.ts`'s
+   * `WEATHER_DAY`): the day by its index, when it was called off and the day it had been, the sky that stopped it, and
+   * whether the rest of the days slipped a working day for it or the day was shot without the actor.
+   */
+  weather?: { day: number; at: Instant; was: Instant; sky: string; slipped: boolean }[];
 }
 
 /** One unit of a part's work (`systems/workflow.ts`): a scene, a loop, a chapter or a sequence. */

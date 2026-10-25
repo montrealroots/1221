@@ -646,5 +646,42 @@
     "ref": "tests/b27-holds.test.ts: 'PLAYER JOURNEY: asked to decide first, the production lets the hold go by its draw, said, and the other offer is free to take; asked too late, refused'"
    }
   ]
+ },
+ {
+  "surface": "A weather day on location: the notice the evening before, the Work tab's Weather Day line and the days, calendar and pay as they stand",
+  "where": "The notice A Weather Day On (the project); Career, Work, the engagement's Weather Day line, On Your Calendar and Pay; the engagement's What Happened",
+  "sources": [
+   "src/engine/systems/projobs.ts#WEATHER_DAY",
+   "src/engine/systems/projobs.ts#stoppingSky",
+   "src/engine/systems/projobs.ts#weatherPayWords",
+   "src/engine/systems/projobs.ts#weatherDay"
+  ],
+  "states": [
+   "notification",
+   "setback",
+   "history",
+   "explanation"
+  ],
+  "outcome": "Revised",
+  "why": "New with brief 27's K5: the production's call on the weather says the sky, what it did to the days and the flight home, and what it does to the pay by how the work is paid.",
+  "changes": "Written new: the notice and history line, the sky's words, each pay sentence, and the Work tab's Weather Day line.",
+  "evidence": [
+   {
+    "kind": "test",
+    "ref": "tests/b27-weather.test.ts: 'PLAYER JOURNEY: a SAG-AFTRA day performer’s day on location is called off the evening before, the rest slip a working day each and are worked, and the day off is paid'"
+   },
+   {
+    "kind": "test",
+    "ref": "tests/b27-weather.test.ts: 'PLAYER JOURNEY: a non-union part’s day off isn’t paid: every day worked, and the pay what was promised'"
+   },
+   {
+    "kind": "test",
+    "ref": "tests/b27-weather.test.ts: 'PLAYER JOURNEY: a day that can’t slip, another booking on the day it would need, is shot without the actor: its scenes cut, the day paid on SAG-AFTRA’s day rate without overtime, and the work finished on time'"
+   },
+   {
+    "kind": "test",
+    "ref": "tests/b27-weather.test.ts: 'PLAYER JOURNEY: away from home, the flight home moves with the slipped days'"
+   }
+  ]
  }
 ]

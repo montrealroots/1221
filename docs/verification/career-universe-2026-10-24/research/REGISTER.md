@@ -2,9 +2,9 @@
 
 Written by `register.mjs` from `register.json`; `tests/b27-research-register.test.ts` fails when this page is behind it.
 
-**124 pages asked for:** 82 read, 25 blocked, 10 unreadable, 7 unreached. **Facts established:** 67, each with the page's own words, from 25 pages read.
+**125 pages asked for:** 83 read, 25 blocked, 10 unreadable, 7 unreached. **Facts established:** 71, each with the page's own words, from 26 pages read.
 
-**Brief 25's unread sources, asked for again:** 99 (its dossier located them, or its build couldn't read them). 60 came back whole, and each claim the game makes from one was checked against it: the facts below, from 11 of them. The rest the game cites only as what isn't in it yet (a country's gaps, an award whose rules weren't read), so nothing in them was taken as a rule. 39 didn't come back, and their claims stay unconfirmed: the game says so where it names them ("refused", "loads only in a browser", "located and not read"). Network access was full on 2026-10-24, and each was asked for again that evening; none that refused was worked around.
+**Brief 25's unread sources, asked for again:** 100 (its dossier located them, or its build couldn't read them). 61 came back whole, and each claim the game makes from one was checked against it: the facts below, from 12 of them. The rest the game cites only as what isn't in it yet (a country's gaps, an award whose rules weren't read), so nothing in them was taken as a rule. 39 didn't come back, and their claims stay unconfirmed: the game says so where it names them ("refused", "loads only in a browser", "located and not read"). Network access was full on 2026-10-24, and each was asked for again that evening; none that refused was worked around.
 
 - Read: the page came back whole and its text was kept; the facts below are what was read from it.
 - Blocked: the site refused this build (HTTP 403 or 429). Not worked around.
@@ -82,6 +82,10 @@ Written by `register.mjs` from `register.json`; `tests/b27-research-register.tes
 | `b27-JP-entertainer` | Actors are among those the Entertainer status is for. | “該当例としては、俳優、歌手、ダンサー、プロスポーツ選手等。” |
 | `b27-JP-entertainer` | Its periods of stay: 3 years, 1 year, 6 months, 3 months or 30 days. | “３年、１年、６月、３月又は３０日” |
 | `b27-JP-entertainer` | It covers work in the production of broadcast programs or films. | “(2)放送番組（有線放送番組を含む。）又は映画の製作に係る活動” |
+| `b25-N13` | A day performer engaged and not used for any reason but their own default, illness or incapacity is paid a day of salary or their guarantee, whichever is greater (Schedule A §4.E) | “When a performer is engaged and not used for any reason other than his default, illness, or other incapacity, he shall be entitled to one (1) day of salary or his guarantee, whichever is greater.” |
+| `b25-N13` | A day performer's employment runs for consecutive days from the beginning of the engagement (Schedule A §6.A) | “Employment of the day performer shall be for consecutive days from the beginning of the engagement” |
+| `b25-N13` | The weather that makes usable sound or photography impossible outdoors is rain, wind or hail, and fog, wind, rain or hail (Schedule A §25.A) | “where the making of usable sound track is rendered impossible because of rain, wind or hail, or where usable photography on an uncovered structure is rendered impossible by fog, wind, rain or hail.” |
+| `b25-N13` | A weekly performer's additional day is prorated at one-fifth of the weekly base rate (Schedule B §12) | “such prorating shall be on the basis of one-fifth (1/5) of the performer's weekly base rate” |
 
 ## Every Page
 
@@ -211,3 +215,4 @@ Written by `register.mjs` from `register.json`; `tests/b27-research-register.tes
 | `b27-NZ-WS3` | New Zealand: Operational Manual, WS3, Performing Artists, Entertainers and Entertainment Industry workers (its contents only) | Immigration New Zealand | NZ | read (HTTP 200) | 2026-10-24T20:50Z | 2017-05-08 | medium | 1 | `9d4370c971e5` | https://www.immigration.govt.nz/opsmanual/46206.htm |
 | `b27-JP-entertainer` | Japan: the status of residence Entertainer (興行) | Immigration Services Agency of Japan | JP | read (HTTP 200) | 2026-10-24T20:51Z | — | high | 1 | `057f0d82e96f` | https://www.moj.go.jp/isa/applications/status/entertainer.html |
 | `b27-JP-status` | Japan: the statuses of residence, index | Immigration Services Agency of Japan | JP | read (HTTP 200) | 2026-10-24T20:50Z | — | high | 1 | `b6c5e26de6b1` | https://www.moj.go.jp/isa/applications/status/index.html |
+| `b25-N13` | AMPTP: 2014 SAG-AFTRA Codified Basic Agreement | AMPTP | US | read (HTTP 200) | 2026-10-25T01:46Z | — | high | 1 | `f5ebacb3821f` | https://amptp.org/wp-content/themes/amptp/assets/pdf/SAG-AFTRA/2014%20Codified%20Basic%20Agreement%20(%E2%80%9CCBA%E2%80%9D).pdf |

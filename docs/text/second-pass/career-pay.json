@@ -372,9 +372,9 @@
  },
  "src/ui/career/WorkPane.tsx#EngagementView": {
   "status": "Rewritten",
-  "hash": "338152f5654f",
-  "on": "2026-10-24",
-  "evidence": "Written for brief 25's Module 5 (the ways of working: the booth, the dub, narration, multicamera, performance capture, reenactment, the musical and action; a shoot's order and takes, revised pages, a recall to loop and a scene cut) to docs/STYLE.md and docs/GLOSSARY.md, every rule the agreements' own and every invention said as the game's; read where the player meets it in tests/career-workflows-screen.test.ts (the Work and Opportunities tabs drawn for a voice session, a multicamera week and an action shoot, through the clock and a reload at each stage) and tests/career-workflows.test.ts (each workflow's days, choices, reports and notices), with tools/voice-check.mjs, tools/tics.mjs and tools/title-case.mjs clean.",
+  "hash": "007f5218fa29",
+  "on": "2026-10-25",
+  "evidence": "Written for brief 27's K5 (Part 11: weather affecting production) to docs/STYLE.md and docs/GLOSSARY.md: the Work tab's Weather Day line says the day called off, its sky, and whether the days from it slipped a working day each or the day was shot without the player, its scenes cut, as the notice held by tests/b27-weather.test.ts says it. The rest of the panel's words are as they were, held by brief 19's and brief 25's tests. tools/voice-check.mjs, tools/tics.mjs, tools/title-case.mjs, tools/plural-check.mjs and tools/spelling.mjs pass",
   "first": "Pending"
  },
  "src/ui/career/WorkPane.tsx#payLine": {

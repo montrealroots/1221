@@ -7,7 +7,7 @@ persistence and world mechanics that matrix has no row for. Each carries the swe
 code, by a test the gate runs, by playing the built app), the commit, the evidence and what was found. Only Verified and Fixed And
 Verified count as done, out of every row not Deferred. Not Tested is the honest default: nothing is counted done for having a row.
 
-**Coverage:** 1133 of 1158 in scope Verified or Fixed And Verified (97.8%); 1126 Verified, 7 Fixed And Verified, 0 Failed, 0 Blocked, 20 Deferred, 25 Not Tested. By inspection 1153, automated 1153, interactive 34.
+**Coverage:** 1134 of 1159 in scope Verified or Fixed And Verified (97.8%); 1127 Verified, 7 Fixed And Verified, 0 Failed, 0 Blocked, 20 Deferred, 25 Not Tested. By inspection 1154, automated 1154, interactive 34.
 
 ## Totals
 
@@ -20,10 +20,10 @@ Verified count as done, out of every row not Deferred. Not Tested is the honest 
 | benefits | 77 | 63 |  |  |  | 14 |  | 77 | 77 |  |
 | papers | 103 | 97 |  |  |  | 6 |  | 103 | 103 |  |
 | life | 87 | 84 |  |  |  |  | 3 | 84 | 84 |  |
-| career | 111 | 96 |  |  |  |  | 15 | 96 | 96 |  |
+| career | 112 | 97 |  |  |  |  | 15 | 97 | 97 |  |
 | guide | 70 | 63 |  |  |  |  | 7 | 63 | 63 | 25 |
 | persistence | 12 | 11 | 1 |  |  |  |  | 12 | 12 | 9 |
-| **All** | **1178** | **1126** | **7** | **0** | **0** | **20** | **25** | **1153** | **1153** | **34** |
+| **All** | **1179** | **1127** | **7** | **0** | **0** | **20** | **25** | **1154** | **1154** | **34** |
 
 ## Creation
 
@@ -1111,6 +1111,7 @@ Verified count as done, out of every row not Deferred. Not Tested is the honest 
 | `pro.series` | reactor | The clock, at the first stop after each May 15 from 2030 (`onPassage`): the network's word on The Calloway Files, as a … | Implemented And Verified | Not Tested |  |  |  |  |
 | `pro.work_choice` | command | Career, Work: How The Work Is Done, a button for each option of each choice the work asks, grayed with choiceRefusal's … | Implemented And Verified | Not Tested |  |  |  |  |
 | `pro.pages` | reactor | The clock, at the first stop after 6:00 PM the evening before each work day of a format that revises its pages (`onPass… | Implemented And Verified | Not Tested |  |  |  |  |
+| `pro.weather` | reactor | The clock, at the first stop after 6:00 PM, in the shoot's own town, the evening before each day out on location (`onPa… | Implemented And Verified | Verified | inspection, automated | a5b0bd05 | tests/b27-weather.test.ts; src/engine/systems/projobs.ts:2232 the passage: each day on location read the evening before; src/engine/systems/projobs.ts:2193 the weather day: slipped or lost, the calendar, the flight home… |  |
 | `pro.loop` | scheduled | The clock, at a looping session the production recalled the player to after a screen wrap (`LOOP_KIND`). | Implemented And Verified | Not Tested |  |  |  |  |
 | `pro.invite` | scheduled | The clock, 240 days after an anthology's wrap whose work was judged Strong or better (`INVITE_KIND`). | Implemented And Verified | Not Tested |  |  |  |  |
 | `pro.award_enter` | command | Career, Charts And Awards: Your Recognition, Enter Yourself under each television part eligible and not entered, grayed… | Implemented And Verified | Not Tested |  |  |  |  |

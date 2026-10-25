@@ -27,8 +27,13 @@ import { EVALUATION } from '@/engine/content/tasks';
 export { at };
 export const FIRST_CALL = at(2026, 9, 14, 7);
 
-/** A booked week: the save at Sunday 13 September, 6 PM, with six shoot days ahead from Monday at seven. */
-export function shootWeek(seed = 'b20-d3'): Simulation {
+/**
+ * A booked week: the save at Sunday 13 September, 6 PM, with six shoot days ahead from Monday at seven. Gull Season shoots
+ * on location, so from 2026-10-25 (brief 27's weather day, `WEATHER_DAY`) a thunderstorm in its week slips a day and the
+ * week isn't six in a row: the seed is one whose sky lets every day go ahead, held by tests/b20-life-fatigue.test.ts.
+ * Until then it was `b20-d3`, whose Thursday storms.
+ */
+export function shootWeek(seed = 'b20-d3-d'): Simulation {
   const sim = graduate(seed);
   sim.player.craft = evenCraft(92);
   const attrs = attributesOf(sim, sim.player) as unknown as Record<string, number>;

@@ -4076,6 +4076,51 @@
      "error": ""
     }
    ]
+  },
+  {
+   "id": "b25-N13",
+   "register": "b25",
+   "was": "N13",
+   "previously": "read",
+   "title": "AMPTP: 2014 SAG-AFTRA Codified Basic Agreement",
+   "organization": "AMPTP",
+   "territory": "US",
+   "updated": null,
+   "establishes": [
+    {
+     "fact": "A day performer engaged and not used for any reason but their own default, illness or incapacity is paid a day of salary or their guarantee, whichever is greater (Schedule A §4.E)",
+     "quote": "When a performer is engaged and not used for any reason other than his default, illness, or other incapacity, he shall be entitled to one (1) day of salary or his guarantee, whichever is greater."
+    },
+    {
+     "fact": "A day performer's employment runs for consecutive days from the beginning of the engagement (Schedule A §6.A)",
+     "quote": "Employment of the day performer shall be for consecutive days from the beginning of the engagement"
+    },
+    {
+     "fact": "The weather that makes usable sound or photography impossible outdoors is rain, wind or hail, and fog, wind, rain or hail (Schedule A §25.A)",
+     "quote": "where the making of usable sound track is rendered impossible because of rain, wind or hail, or where usable photography on an uncovered structure is rendered impossible by fog, wind, rain or hail."
+    },
+    {
+     "fact": "A weekly performer's additional day is prorated at one-fifth of the weekly base rate (Schedule B §12)",
+     "quote": "such prorating shall be on the basis of one-fifth (1/5) of the performer's weekly base rate"
+    }
+   ],
+   "confidence": "high",
+   "usedBy": [],
+   "url": "https://amptp.org/wp-content/themes/amptp/assets/pdf/SAG-AFTRA/2014%20Codified%20Basic%20Agreement%20(%E2%80%9CCBA%E2%80%9D).pdf",
+   "final": "https://amptp.org/wp-content/themes/amptp/assets/pdf/SAG-AFTRA/2014%20Codified%20Basic%20Agreement%20(%E2%80%9CCBA%E2%80%9D).pdf",
+   "status": "read",
+   "http": "200",
+   "bytes": 5542552,
+   "sha256": "f5ebacb3821fea36c4469b665d12692a0f0949e03e54d5e8486061728218ed3e",
+   "retrieved": "2026-10-25T01:46Z",
+   "attempts": [
+    {
+     "at": "2026-10-25T01:46Z",
+     "http": "200",
+     "bytes": 5542552,
+     "error": ""
+    }
+   ]
   }
  ]
 }

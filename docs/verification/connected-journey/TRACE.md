@@ -1074,8 +1074,8 @@ The Career screen, your professional profile and name, headshots, your résumé 
 - **History (kept in the record):**
   - The Nights: A School production’s part goes on your résumé once its run has closed.
 - **Later consequence:**
-  - A part played, a skill grown, a new name, the degree or a union makes it behind, and What’s Missing names what’s new.
-- **Tested by:** `pro.update_resume`: `tests/b20-agent-ask-lapse.test.ts`, `tests/b20-career-effects.test.ts`, `tests/b20-career-history.test.ts`, `tests/b20-career-skill.test.ts`, `tests/b20-guide-chapters.test.ts`, `tests/b27-voice-demo.test.ts`, `tests/career-agents.test.ts`, `tests/journey-agent.test.ts`, `tests/journey-career.test.ts`, `tests/pro-agent.test.ts`, `tests/pro-app.test.ts`, `tests/pro-core.test.ts`, `tests/pro-opportunities-screen.test.ts`, `tests/pro-representation-screen.test.ts`, `tests/pro-screen.test.ts`, `tests/pro-work.test.ts`
+  - A part played, a skill grown, a new name, the degree, a union, an Emmy nomination once it’s announced, a win once it’s presented, or a Sundance selection once the festival says so makes it behind, and What’s Missing names what’s new.
+- **Tested by:** `pro.update_resume`: `tests/b20-agent-ask-lapse.test.ts`, `tests/b20-career-effects.test.ts`, `tests/b20-career-history.test.ts`, `tests/b20-career-skill.test.ts`, `tests/b20-guide-chapters.test.ts`, `tests/b27-voice-demo.test.ts`, `tests/career-agents.test.ts`, `tests/career-awards.test.ts`, `tests/journey-agent.test.ts`, `tests/journey-career.test.ts`, `tests/pro-agent.test.ts`, `tests/pro-app.test.ts`, `tests/pro-core.test.ts`, `tests/pro-opportunities-screen.test.ts`, `tests/pro-representation-screen.test.ts`, `tests/pro-screen.test.ts`, `tests/pro-work.test.ts`
 
 ### Your Reel (`career.reel`)
 
@@ -1149,6 +1149,7 @@ The Career screen, your professional profile and name, headshots, your résumé 
 - **Feedback (how to read what comes back):**
   - Where You Stand names the step you’re at, and What’s Next says what to do about it.
   - A referral comes from the casting office of a job you’ve finished, never from the agent, and no agent writes to you first.
+  - An agent submits you for work and handles its offers, for a commission. Actors also work with managers, who advise on a career, entertainment lawyers, who read contracts, and publicists, who handle the press; none of them is in the game. A casting director works for the production, not for you.
   - The Agencies panel says what each agency brief 25 names says of itself on its own pages: how an actor reaches it, the agents it names, and what the game does with it.
 - **History (kept in the record):**
   - (none)
@@ -1382,7 +1383,7 @@ The Career screen, your professional profile and name, headshots, your résumé 
   - A production that asks you to a chemistry read or a screen test holds the part’s dates until it’s cast. A hold isn’t a booking and pays nothing; it asks you to keep those days free. Accepting other work on them lets the hold go and withdraws you from the part. Asked to decide first, the production answers the next afternoon: it offers you the part, likelier the better your last round went, or lets the hold go and casts someone else. Once the part is cast or let go, the hold ends.
   - A stage part goes on your credits at its first night; a screen part when it’s shot, and as released once it comes out, when its footage can go on a reel.
   - Miss a shoot day, or a second day of a run, and the production replaces you.
-- **Tested by:** `pro.accept_offer`: `tests/b20-benefits-safetynet.test.ts`, `tests/b20-benefits-tax.test.ts`, `tests/b20-benefits-unemployment.test.ts`, `tests/b20-career-defects.test.ts`, `tests/b20-career-effects.test.ts`, `tests/b20-career-history.test.ts`, `tests/b20-career-skill.test.ts`, `tests/b20-guide-screens.test.ts`, `tests/b20-life-fatigue.test.ts`, `tests/b20-papers-work.test.ts`, `tests/b21-genre-proof.test.ts`, `tests/b22-authorization.test.ts`, `tests/b27-holds.test.ts`, `tests/b27-offers.test.ts`, `tests/b27-slate-screens.test.ts`, `tests/b27-slate.test.ts`, `tests/career-awards-screen.test.ts`, `tests/career-awards.test.ts`, `tests/career-contracts.test.ts`, `tests/career-drawn.test.ts`, `tests/career-workflows-screen.test.ts`, `tests/career-workflows.test.ts`, `tests/career-world-sydney.test.ts`, `tests/pro-opportunities-screen.test.ts`, `tests/pro-work.test.ts`; `pro.decline_offer`: `tests/b20-career-effects.test.ts`, `tests/b20-career-history.test.ts`, `tests/b20-guide-screens.test.ts`, `tests/pro-work.test.ts`; `pro.ask_more`: `tests/b27-offers.test.ts`; `pro.ask_hold`: `tests/b27-holds.test.ts`
+- **Tested by:** `pro.accept_offer`: `tests/b20-benefits-safetynet.test.ts`, `tests/b20-benefits-tax.test.ts`, `tests/b20-benefits-unemployment.test.ts`, `tests/b20-career-defects.test.ts`, `tests/b20-career-effects.test.ts`, `tests/b20-career-history.test.ts`, `tests/b20-career-skill.test.ts`, `tests/b20-guide-screens.test.ts`, `tests/b20-life-fatigue.test.ts`, `tests/b20-papers-work.test.ts`, `tests/b21-genre-proof.test.ts`, `tests/b22-authorization.test.ts`, `tests/b27-holds.test.ts`, `tests/b27-offers.test.ts`, `tests/b27-slate-screens.test.ts`, `tests/b27-slate.test.ts`, `tests/b27-weather.test.ts`, `tests/career-awards-screen.test.ts`, `tests/career-awards.test.ts`, `tests/career-contracts.test.ts`, `tests/career-drawn.test.ts`, `tests/career-workflows-screen.test.ts`, `tests/career-workflows.test.ts`, `tests/career-world-sydney.test.ts`, `tests/pro-opportunities-screen.test.ts`, `tests/pro-work.test.ts`; `pro.decline_offer`: `tests/b20-career-effects.test.ts`, `tests/b20-career-history.test.ts`, `tests/b20-guide-screens.test.ts`, `tests/pro-work.test.ts`; `pro.ask_more`: `tests/b27-offers.test.ts`; `pro.ask_hold`: `tests/b27-holds.test.ts`
 
 ### Work While You’re At The School (`career.outside-work`)
 
@@ -1460,6 +1461,7 @@ The Career screen, your professional profile and name, headshots, your résumé 
 - **Later consequence:**
   - Each judged day plays its scenes, loops, chapters or sequences in takes, the best printed, and leaves a report.
   - Pages revised the night before change some of your lines, and Learn The Lines that evening puts them back.
+  - A day out on location is called off the evening before when the forecast where it shoots is thunderstorms, fog, or wind of 40 km/h or more: your days from it slip a working day each, and your flight home with them. A shower is shot through. A SAG-AFTRA day performer is paid the day off; other work pays the days you work. If another booking is in the way, the production shoots that day’s scenes without you, and they’re cut from your part. A studio, a booth, a stage play and a capture stage never stop for the weather.
   - After a screen wrap, the production may recall you to loop: a four-hour session paid half a day. When the work comes out, the edit may cut one of your scenes, about 2 times in ten; the part stays on your credits with its pay.
 - **Tested by:** `pro.work_choice`: `tests/career-workflows-screen.test.ts`, `tests/career-workflows.test.ts`
 

@@ -2595,6 +2595,61 @@
    "prior": null
   },
   {
+   "id": "pro.weather",
+   "kind": "reactor",
+   "area": "career",
+   "mechanic": true,
+   "seeded": false,
+   "readBy": "career",
+   "readAt": "a5b0bd05",
+   "where": "The clock, at the first stop after 6:00 PM, in the shoot's own town, the evening before each day out on location (`onPassage`), or at the day's own call where no stop came between.",
+   "prerequisites": "Work booked and not finished; the day out on location by its venue and step (`onLocation`); not worked or lost already; fewer than WEATHER_DAY.most weather days on the part.",
+   "reads": "The day's weather in the shoot's town (`weatherOn`, the save's own, never drawn here), the actor's other bookings and permission for the days a slip would need, the trip, the offer's rate.",
+   "changes": "Slipped: the day and every day after it a working day later, their calendar items moved, the flight home booked again from the new last day and the stay with it, the per diem's days, the pay promised again by key. Lost: the day's scenes cut from the part, its overtime off the pay. Either way the weather day kept on the engagement, a line in its history and a notice.",
+   "consumers": [
+    {
+     "what": "the days slip, and their calendar items with them",
+     "at": "src/engine/systems/projobs.ts:2204"
+    },
+    {
+     "what": "a day that can't slip has its scenes cut",
+     "at": "src/engine/systems/projobs.ts:2206"
+    },
+    {
+     "what": "the flight home moves",
+     "at": "src/engine/systems/projobs.ts:2209"
+    },
+    {
+     "what": "the pay is promised again: the day off paid on SAG-AFTRA's day rate, a lost day's overtime gone",
+     "at": "src/engine/systems/projobs.ts:1774"
+    },
+    {
+     "what": "a lost day is never worked, and the last one still ends the work",
+     "at": "src/engine/systems/projobs.ts:2478"
+    }
+   ],
+   "experienced": "A Weather Day On (the project), the evening before, with the sky, the days as they stand, the flight home and the pay; the Work tab's Weather Day line, its calendar and pay.",
+   "saveLoad": "The professional record (`person.pro`: each engagement's `weather`, `days`, `units`, `pay` and its trip's legs) and the calendar's pending `pro.*` items are in the save; the passage reads the engagement's own record (a day logged, a weather day kept) before acting, and the weather is a function of the save's seed, so a load decides it the same: held by tests/b27-weather.test.ts, a twin saved and opened two days before meeting the same sky, slipping the same days and promising the same pay.",
+   "evidence": {
+    "tests": [
+     "tests/b27-weather.test.ts"
+    ],
+    "comparisons": [
+     "b27-weather: a part whose days the sky allows has no weather day and its pay as promised; one whose sky stops a day slips and pays a day more on SAG-AFTRA's day rate; a non-union part pays the same"
+    ],
+    "mutations": [
+     "b27-weather: the day off unpaid, never slipping, no forecast read, and the flight home not moved each failed a test"
+    ],
+    "journeys": [
+     "b27-weather: a SAG-AFTRA day performer's part played by the clock through a weather day to its pay; a part away from home to the flight home"
+    ]
+   },
+   "missing": "No played life of the long runs reaches a weather day yet: they're replayed in brief 27's F.",
+   "status": "Implemented And Verified",
+   "why": "",
+   "prior": null
+  },
+  {
    "id": "pro.loop",
    "kind": "scheduled",
    "area": "career",

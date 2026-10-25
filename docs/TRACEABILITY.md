@@ -128,7 +128,7 @@ SLATE has no tests of its screens, and nothing is deployed.
 | `practice.exercise` | Implemented But Unverified | You As An Actor | ProfileWorkspace.tsx | `systems/practice.ts` | There’s no such tier. (also practiceRefusal, focusRefusal) | — | — | — | 32 | — |
 | `practice.self_tape` | Verified (journey) | You As An Actor | BriefPane.tsx | `systems/briefs.ts` | — (also tapeRefusal) | — | — | — | 46 | journey-agent.test.ts |
 | `pro.accept_agreement` | Verified (journey) | Representation | RepresentationPane.tsx | `systems/proagent.ts` | — (also signRefusal) | — | — | pro.agent_term_end | 6 | journey-agent.test.ts |
-| `pro.accept_offer` | Implemented But Unverified | Finding Work | OpportunitiesPane.tsx | `systems/projobs.ts` | — (also acceptRefusal) | engagements (added to) | — | booked | 23 | — |
+| `pro.accept_offer` | Implemented But Unverified | Finding Work | OpportunitiesPane.tsx | `systems/projobs.ts` | — (also acceptRefusal) | engagements (added to) | — | booked | 24 | — |
 | `pro.agent_check` | Verified (journey) | Representation | RepresentationPane.tsx | `systems/proagent.ts` | — (also checkRefusal) | — | — | — | 10 | journey-agent.test.ts |
 | `pro.agent_notice` | Verified (journey) | Representation | RepresentationPane.tsx | `systems/proagent.ts` | — (also noticeRefusal) | — | — | — | 8 | journey-agent.test.ts |
 | `pro.apply_work_visa` | Implemented But Unverified | Finding Work | WorkPane.tsx | `systems/worktrip.ts` | — (also visaRefusal) | — | — | — | 2 | — |
@@ -281,7 +281,7 @@ money, what it sets going next, and how many test files name it or its constant.
 | `pro.invite` | `systems/workflow.ts` | systems/workflow.ts | — | — | — | 2 |
 | `pro.loop` | `systems/workflow.ts` | systems/workflow.ts | — | — | — | 2 |
 | `pro.negotiate_answer` | `systems/projobs.ts` | systems/projobs.ts | — | — | offer | 0 |
-| `pro.offer_lapse` | `systems/projobs.ts` | systems/projobs.ts | — | — | lapsed | 4 |
+| `pro.offer_lapse` | `systems/projobs.ts` | systems/projobs.ts | — | — | lapsed | 6 |
 | `pro.pay.dues` | `systems/propay.ts` | systems/propay.ts | — | — | — | 4 |
 | `pro.pay.payday` | `systems/propay.ts` | systems/contracts.ts; systems/propay.ts | — | — | — | 8 |
 | `pro.pay.release` | `systems/propay.ts` | systems/projobs.ts; systems/propay.ts | — | — | — | 4 |
@@ -296,7 +296,7 @@ money, what it sets going next, and how many test files name it or its constant.
 | `pro.trip_arrive` | `systems/worktrip.ts` | systems/worktrip.ts | — | — | arrived; home | 0 |
 | `pro.trip_depart` | `systems/worktrip.ts` | systems/worktrip.ts | — | — | departed | 0 |
 | `pro.visa_decision` | `systems/worktrip.ts` | systems/worktrip.ts | — | — | — | 0 |
-| `pro.work_day` | `systems/projobs.ts` | systems/projobs.ts | — | — | stage; worked | 10 |
+| `pro.work_day` | `systems/projobs.ts` | systems/projobs.ts | — | — | stage; worked | 12 |
 | `school.account_due` | `systems/leave.ts` | systems/leave.ts | — | — | — | 14 |
 | `school.aid_decide` | `systems/leave.ts` | systems/leave.ts | — | — | — | 0 |
 | `school.cabaret` | `systems/school.ts` | systems/school.ts | status | — | cabaret; school.summer; school.stipend | 30 |

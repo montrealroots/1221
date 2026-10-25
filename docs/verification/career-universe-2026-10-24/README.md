@@ -404,6 +404,48 @@ chemistry read's connection reads Emotional Depth and lists fatigue, as an impro
 connection too, and is right to. The two tests now hold that; the comment in `ProfileWorkspace.tsx` that said "only
 partnered work reads it" was corrected in the same commit.
 
+## K5: Production, Travel And Pay
+
+Parts 10 and 11 and the supplement's loops 21 to 32, read against what briefs 19 to 25 built. **Already in the game, and
+kept:** preparation by each format's own steps, read by the day's judgment (`pro.prepare`, the workflows' special steps);
+the trip a production books, flights, cars, the hotel, a visa where the country needs one, a missed flight, and the per
+diem paid once home; each format's day, single camera out of the script's order in takes, multicamera's week to a tape
+night, the booth, the dub, capture, narration, reenactment, the musical and action; revised pages the night before; a
+recall to loop after the wrap and a scene cut in the edit; the contract with its clauses, overtime, the producer's
+contribution, residuals on a rerun, late pay asked about; the pay by the week, withholding, dues, commission and the
+agency's trust account; a missed day by the medium's own rule, the stage's understudy and a shoot's replacement; and work
+called off with what was earned kept.
+
+**Built, the weather day** (Part 11, "Weather should affect production when circumstances justify it"; loop 28). The
+weather was the save's own already and decided nothing since 2026-09-26, when the day job it served went. A day out on
+location, by its venue (a venue all on location sends every shoot day out, a stage with locations every other, a studio,
+a booth or a stage play none), whose forecast where it shoots is a thunderstorm, fog, or wind of 40 km/h or more is called
+off the evening before (`WEATHER_DAY`, `systems/projobs.ts`). That is the agreement's own list of what makes sound or
+photography outdoors impossible (N13 Schedule A §25.A, fetched again and read this time), less the shower crews shoot
+through. The days from it slip a working day each, their calendar items with them, and the flight home is booked again
+from the new last day (`extendTrip`, `systems/worktrip.ts`). The pay follows the agreement: a SAG-AFTRA day performer
+engaged and not used through no fault of their own is paid the day (Schedule A §4.E), so the day off is paid; a weekly
+performer's added week pays a fifth a day (Schedule B §12); work whose terms weren't read pays the days worked. A day that
+can't slip, with another booking or the end of permission in the way, is shot without the actor, its scenes cut and its
+overtime gone. Unpaid payments are promised again by key, so nothing pays twice. The notice, the Work tab's Weather Day
+line and the guide's How Each Kind Of Work Is Done say each. Held by `tests/b27-weather.test.ts`, played by the clock: a
+SAG-AFTRA part through a weather day to its pay, a day more; the falsifiability test, a part whose sky allows it keeping
+its days and pay; a non-union part paying the same; a day that can't slip, lost; a part away whose flight home moved,
+twice. A twin saved two days before meets the same sky. Never paying the day off, never slipping, reading no forecast and
+not moving the flight each failed a test. Calibrated first, on a year of one save's weather: steady rain is about a quarter of New
+York's days in the game, and crews shoot through it, so a weather day is between one location day in twenty (Los Angeles)
+and one in nine (London), New York's about one in sixteen.
+
+**Found on the way, and fixed:** a way home booked again after a flight was missed or moved waited on the canceled leg
+before it in the list, canceled itself, and left the trip in the work's town (`priorOfWay`, `systems/worktrip.ts`; brief
+25's missed-flight-home path had it, untested). Two tests whose fixed weeks now meet a storm were changed: the fatigue
+measurement's shoot week (`tests/fakes/shoot-week.ts`) took a seed whose sky lets all six days go ahead, a premise its
+test now holds, and the award journeys' `wrapped` plays to the wrap wherever a weather day moved it.
+
+**Not built, said so:** a wardrobe fitting. At today's SAG-AFTRA day rate, $1,283, a fitting before the work pays nothing
+(Schedule A §16.A(2): none over $1,200 a day), and a fitting on a work day is that day's work time, so a fitting call would
+cost time and change nothing the game reads.
+
 ## Defects Found And Fixed
 
 | # | Where | What stood | What stands | Held by |
@@ -417,4 +459,5 @@ partnered work reads it" was corrected in the same commit.
 | 7 | `wiring.json`, the guide's wiring list | 17 handlers named lines their commands had moved from, as the slate and the UK's routes grew five files | each at the line its command is registered on | `tests/b20-guide-wiring.test.ts` |
 | 8 | The slate's voice work, and a voice part's submission | asked for a reel, which no voice recording can go on, and refused a submission without one; a voice part's submission sent the reel | voice casting asks for a voice demo, mixed from the voice alone, and a voice part's submission sends it | `tests/b27-voice-demo.test.ts` |
 | 9 | The guide's Work Abroad chapter | "so far, Australia", and a visa that cost nothing, after the UK's routes were verified | the UK's three routes, fees and timings, read from the routes | `tests/b20-guide-chapters.test.ts`, `docs/verification/connected-journey/TRACE.md` |
+| 10 | `worktrip.ts`, a way home booked again | waited on the canceled leg before it, canceled itself, and left the trip in the work's town | the leg before it that still counts is read, so a way booked again starts afresh | `tests/b27-weather.test.ts` |
 

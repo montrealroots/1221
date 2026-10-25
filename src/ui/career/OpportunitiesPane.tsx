@@ -295,7 +295,8 @@ function OfferCard({ o }: { o: Opportunity }) {
 function BookedCard({ e }: { e: Engagement }) {
   const { sim } = useGame();
   const t = projectById(e.projectId)!;
-  const ahead = e.days.filter((d) => d.to > sim.now);
+  // A day shot without you for the weather isn't one to come (from 2026-10-25, brief 27's K5).
+  const ahead = e.days.filter((d, i) => d.to > sim.now && !e.weather?.some((w) => w.day === i && !w.slipped));
   const worked = (e.log ?? []).filter((l) => l.status === 'worked');
   const missed = (e.log ?? []).filter((l) => l.status === 'missed');
   const promised = e.pay.reduce((n, p) => n + p.promised, 0);

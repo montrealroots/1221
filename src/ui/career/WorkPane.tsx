@@ -374,7 +374,8 @@ function EngagementView({ person, e }: { person: Person; e: Engagement }) {
   const zone = sim.zone;
   const project = projectOf(e);
   const calls = callsOf(sim, e);
-  const ahead = e.days.filter((d) => d.to > sim.now);
+  // A day shot without you for the weather isn't one to come (from 2026-10-25, brief 27's K5).
+  const ahead = e.days.filter((d, i) => d.to > sim.now && !e.weather?.some((w) => w.day === i && !w.slipped));
   // Work abroad reads the country's permission (from 2026-10-23, the owner's brief 25), shown with its trip below.
   const now = !finished(e) && ahead.length && !e.tripId ? eligibilityRead(person, ahead, sim.now) : undefined;
   const ended = e.status === 'canceled' ? [...e.history].reverse()[0] : undefined;
@@ -402,6 +403,8 @@ function EngagementView({ person, e }: { person: Person; e: Engagement }) {
           <strong>Permission To Work Now. </strong>{now.words}
         </p>
       )}
+      {/* A day on location called off for the weather (from 2026-10-25, brief 27's K5, `WEATHER_DAY`): what it did to the days and the pay. */}
+      {(e.weather ?? []).map((w) => <p key={`${w.day}:${w.was}`} className="callout small" style={{ margin: 0 }}><strong>Weather Day. </strong>{`${formatDate(w.was, zone)}, ${w.sky}: ${w.slipped ? `called off, and the days from it slipped a working day each.` : `called off, and shot without you, its scenes cut from your part.`}`}</p>)}
       {e.tripId && <TripView person={person} e={e} />}
       <details className="section-fold">
         <summary>The Contract</summary>

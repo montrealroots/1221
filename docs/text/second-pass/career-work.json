@@ -1315,6 +1315,13 @@
   "evidence": "Written for brief 25's Module 5 (the ways of working: the booth, the dub, narration, multicamera, performance capture, reenactment, the musical and action; a shoot's order and takes, revised pages, a recall to loop and a scene cut) to docs/STYLE.md and docs/GLOSSARY.md, every rule the agreements' own and every invention said as the game's; read where the player meets it in tests/career-workflows-screen.test.ts (the Work and Opportunities tabs drawn for a voice session, a multicamera week and an action shoot, through the clock and a reload at each stage) and tests/career-workflows.test.ts (each workflow's days, choices, reports and notices), with tools/voice-check.mjs, tools/tics.mjs and tools/title-case.mjs clean.",
   "first": "Pending"
  },
+ "src/engine/systems/projobs.ts#stoppingSky": {
+  "status": "Rewritten",
+  "hash": "1dbcf9d6ee72",
+  "on": "2026-10-25",
+  "evidence": "Written for brief 27's K5 (Part 11: weather affecting production; loop 28: a schedule change communicated with its contractual rule) to docs/STYLE.md and docs/GLOSSARY.md, and read where the player meets it: tests/b27-weather.test.ts holds the notice A Weather Day On ... with its sky (thunderstorms, thick fog, high winds), the days as they stand (called off your day on location and slipped the rest of your days a working day each), the flight home (Your flight home moves with them), each pay sentence by how the work is paid (the SAG-AFTRA day performer's day off paid; This work pays the days you work, so the day off isn't paid; every day you work still is), and a day that can't slip (It couldn't slip your days, since you're booked on a day it would need); the Work tab's Weather Day line and the guide's How Each Kind Of Work Is Done say the same. tools/voice-check.mjs, tools/tics.mjs, tools/title-case.mjs, tools/plural-check.mjs and tools/spelling.mjs pass",
+  "first": "Pending"
+ },
  "src/engine/systems/projobs.ts#submit": {
   "status": "Rewritten",
   "hash": "054ec5e48572",
@@ -1341,6 +1348,27 @@
   "hash": "0e4e192a3591",
   "on": "2026-10-24",
   "evidence": "Written for brief 25's Module 5 (the ways of working: the booth, the dub, narration, multicamera, performance capture, reenactment, the musical and action; a shoot's order and takes, revised pages, a recall to loop and a scene cut) to docs/STYLE.md and docs/GLOSSARY.md, every rule the agreements' own and every invention said as the game's; read where the player meets it in tests/career-workflows-screen.test.ts (the Work and Opportunities tabs drawn for a voice session, a multicamera week and an action shoot, through the clock and a reload at each stage) and tests/career-workflows.test.ts (each workflow's days, choices, reports and notices), with tools/voice-check.mjs, tools/tics.mjs and tools/title-case.mjs clean.",
+  "first": "Pending"
+ },
+ "src/engine/systems/projobs.ts#WEATHER_DAY": {
+  "status": "Retained",
+  "hash": "e08648313763",
+  "on": "2026-10-25",
+  "reason": "The weather day's rule as the engine compares it: the weather model's own condition names and the workflows' step ids, never shown to a player; what the player reads of it is stoppingSky's and weatherDay's words.",
+  "first": "Pending"
+ },
+ "src/engine/systems/projobs.ts#weatherDay": {
+  "status": "Rewritten",
+  "hash": "58d2d90559d9",
+  "on": "2026-10-25",
+  "evidence": "Written for brief 27's K5 (Part 11: weather affecting production; loop 28: a schedule change communicated with its contractual rule) to docs/STYLE.md and docs/GLOSSARY.md, and read where the player meets it: tests/b27-weather.test.ts holds the notice A Weather Day On ... with its sky (thunderstorms, thick fog, high winds), the days as they stand (called off your day on location and slipped the rest of your days a working day each), the flight home (Your flight home moves with them), each pay sentence by how the work is paid (the SAG-AFTRA day performer's day off paid; This work pays the days you work, so the day off isn't paid; every day you work still is), and a day that can't slip (It couldn't slip your days, since you're booked on a day it would need); the Work tab's Weather Day line and the guide's How Each Kind Of Work Is Done say the same. tools/voice-check.mjs, tools/tics.mjs, tools/title-case.mjs, tools/plural-check.mjs and tools/spelling.mjs pass",
+  "first": "Pending"
+ },
+ "src/engine/systems/projobs.ts#weatherPayWords": {
+  "status": "Rewritten",
+  "hash": "2004173918ff",
+  "on": "2026-10-25",
+  "evidence": "Written for brief 27's K5 (Part 11: weather affecting production; loop 28: a schedule change communicated with its contractual rule) to docs/STYLE.md and docs/GLOSSARY.md, and read where the player meets it: tests/b27-weather.test.ts holds the notice A Weather Day On ... with its sky (thunderstorms, thick fog, high winds), the days as they stand (called off your day on location and slipped the rest of your days a working day each), the flight home (Your flight home moves with them), each pay sentence by how the work is paid (the SAG-AFTRA day performer's day off paid; This work pays the days you work, so the day off isn't paid; every day you work still is), and a day that can't slip (It couldn't slip your days, since you're booked on a day it would need); the Work tab's Weather Day line and the guide's How Each Kind Of Work Is Done say the same. tools/voice-check.mjs, tools/tics.mjs, tools/title-case.mjs, tools/plural-check.mjs and tools/spelling.mjs pass",
   "first": "Pending"
  },
  "src/engine/systems/projobs.ts#WORKFLOW_HOOKS [opportunity]": {

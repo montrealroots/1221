@@ -45,7 +45,7 @@ commit, what's done, what remains and the exact next step. `README.md` is the re
 | K2 | The ongoing project and opportunity lifecycle (Area B) | Done (this commit): the slate, with the UK's rules verified for its London work |
 | K3 | Representation depth and versioned materials | Built: what briefs 19 to 25 built read against Parts 6 and 7; the voice demo (`60a43de2`); awards and festivals on the résumé; managers, lawyers and publicists not in the game, the guide saying what each does; no languages, every market working in English |
 | K4 | Discovery, submission, auditions, direct offers, negotiation, holds and options | Built: the chemistry read, the screen test, direct offers, asking for more through the agent, and holds; options were brief 25's (a series part's) |
-| K5 | Preparation, production, travel, changes, wrap, compensation, expenses, residuals | Waiting |
+| K5 | Preparation, production, travel, changes, wrap, compensation, expenses, residuals | In progress: what briefs 19 to 25 built read against Parts 10 and 11; the weather day built; fittings not built, said so |
 | K6 | Release, publicity, weekly charts, renewal and returning work | Waiting |
 | K7 | Festivals, awards, the ceremony | Waiting |
 | K8 | The industry reference | Waiting |

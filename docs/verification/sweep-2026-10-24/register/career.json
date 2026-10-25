@@ -863,6 +863,18 @@
  "pro.watch_ceremony": {
   "status": "Not Tested"
  },
+ "pro.weather": {
+  "status": "Verified",
+  "by": [
+   "inspection",
+   "automated"
+  ],
+  "on": "a5b0bd05",
+  "evidence": [
+   "tests/b27-weather.test.ts",
+   "src/engine/systems/projobs.ts:2232 the passage: each day on location read the evening before; src/engine/systems/projobs.ts:2193 the weather day: slipped or lost, the calendar, the flight home and the pay"
+  ]
+ },
  "pro.work_choice": {
   "status": "Not Tested"
  },
