@@ -26,6 +26,8 @@ import { COMMENCEMENT_KIND, EVALUATION_KIND, evenCraft } from '@/engine/systems/
 import { attributesOf } from '@/engine/systems/attributes';
 import { genreState } from '@/engine/systems/engagement';
 import { PROJECTS, RATES, projectById } from '@/engine/content/careerwork';
+import { seriesById } from '@/engine/content/series';
+import { seasonMade } from '@/engine/systems/series';
 import { AGENTS } from '@/engine/content/agents';
 import { MEETING_KIND } from '@/engine/systems/proagent';
 import { submitsFor } from '@/engine/systems/representation';
@@ -196,14 +198,18 @@ describe('J1: fictional roles, posted on a schedule', () => {
       for (const p of [...open, ...through]) expect(p.project.role.for === 'either' || p.project.role.for === sim.player.performerTitle).toBe(true);
       // And every part that is the player's comes round, each way it can reach them.
       // The fixed parts, each way they can reach; the slate's parts (from 2026-10-24, brief 27) are held to the same rule above.
-      const ids = (list: typeof open, via: 'open' | 'agent') => [...new Set(list.filter((p) => p.via === via && !p.project.slate).map((p) => p.project.id))].sort();
-      expect(ids(open, 'open')).toEqual(PROJECTS.filter((t) => writtenFor(t, sim.player) && reachOf(t, undefined) === 'open').map((t) => t.id).sort());
-      expect(ids(through, 'agent')).toEqual(PROJECTS.filter((t) => writtenFor(t, sim.player) && reachOf(t, agreement) === 'agent').map((t) => t.id).sort());
+      // A part drawn from a real series is cast only in a season of it the game simulates and the network made (from
+      // 2026-10-25, brief 27, `REAL_SERIES`): held by tests/b27-real-series.test.ts, and here only to post in one.
+      const real = (t: { series?: string }) => !!(t.series && seriesById(t.series)?.real);
+      for (const p of [...open, ...through].filter((x) => real(x.project))) expect(seasonMade(sim, seriesById(p.project.series!)!, 2027) || seasonMade(sim, seriesById(p.project.series!)!, 2028)).toBe(true);
+      const ids = (list: typeof open, via: 'open' | 'agent') => [...new Set(list.filter((p) => p.via === via && !p.project.slate && !real(p.project)).map((p) => p.project.id))].sort();
+      expect(ids(open, 'open')).toEqual(PROJECTS.filter((t) => writtenFor(t, sim.player) && reachOf(t, undefined) === 'open' && !real(t)).map((t) => t.id).sort());
+      expect(ids(through, 'agent')).toEqual(PROJECTS.filter((t) => writtenFor(t, sim.player) && reachOf(t, agreement) === 'agent' && !real(t)).map((t) => t.id).sort());
     }
     // The same projects reach each, the parts in them their own.
     // The fixed parts' projects: the slate's productions (from 2026-10-24, brief 27) are each its own, its parts written as
     // it draws them, so an actor and an actress meet different ones.
-    const projects = (x: typeof actor, via: 'open' | 'agent') => [...new Set([...x.open, ...x.through].filter((p) => p.via === via && !p.project.slate).map((p) => p.project.project))].sort();
+    const projects = (x: typeof actor, via: 'open' | 'agent') => [...new Set([...x.open, ...x.through].filter((p) => p.via === via && !p.project.slate && !(p.project.series && seriesById(p.project.series)?.real)).map((p) => p.project.project))].sort();
     for (const via of ['open', 'agent'] as const) expect(projects(actor, via)).toEqual(projects(actress, via));
     expect(actor.open.map((p) => p.project.role.part)).toContain('Felix');
     expect(actress.open.map((p) => p.project.role.part)).toContain('Ivy');

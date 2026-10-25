@@ -39,6 +39,7 @@ import {
   requirementsOf, rescheduleRefusal, rescheduleWords, roundWords, sceneOfPart, sendRefusal, takeWords, termsChangedWords, withdrawRefusal, withdrawWarning, type TermItem,
 } from '@/engine/systems/offers';
 import { LANGUAGE_PREP, languageFitWords, languageStepLabel, languageToWork, languageWords } from '@/engine/systems/speaking';
+import { OptionRelease } from '@/ui/career/OptionRelease';
 
 const NY = 'America/New_York';
 const STEPS: readonly BriefStep[] = ['read', 'lines', 'rehearse'];
@@ -410,6 +411,8 @@ function OfferCard({ o }: { o: Opportunity }) {
       {asks.length > 0 && !asked && <SectionHead title="Negotiating" help="career.negotiation" heading />}
       <Hold o={o} />
       {warning && <p className="callout callout-warning small" style={{ margin: 0 }}>{warning}</p>}
+      {/* An option holding some of its days (from 2026-10-25, brief 27's loop 20): Ask To Be Released. */}
+      <OptionRelease o={o} />
       <p className="xs dim" style={{ margin: 0 }}>{t.medium === 'stage' ? `Missing a day: the company’s understudy covers ${counted(MISSES.stage, 'performance')}, with a written warning; another and the company replaces you.` : ILL_DAY.sizes.includes(t.role.size) ? 'Missing a day: a shoot can’t wait, so sleeping through one costs you the part; laid up or in hospital, the production shoots around you once, and the day isn’t paid.' : 'Missing a day: a shoot can’t wait, so the production replaces you.'}</p>
       <div className="row gap-2" style={{ flexWrap: 'wrap' }}>
         <Gated feature="pro.accept_offer" className="btn btn-sm btn-primary" disabled={!!no} title={no} onClick={() => { const r = run<{ conditional?: true }>('pro.accept_offer', { opportunityId: o.id }); if (r.ok) toast(r.value?.conditional ? `Accepted on its condition: ${t.role.part}.` : `Booked: ${t.role.part}.`, 'positive'); }}>{acceptLabel}</Gated>

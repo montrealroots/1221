@@ -31,7 +31,8 @@ import type { Person } from '@/engine/domain/model';
 import { UNIONS } from '@/engine/content/careerwork';
 import { finished, type Contract, type ContractClause, type Engagement, type ProPayment, type Residual, type UnionBill } from '@/engine/systems/pro';
 import { askRefusal, notOwed, payState, calculationWords } from '@/engine/systems/contracts';
-import { EPISODE_CALL_KIND, OPTION_KIND, decisionsTo, decisionWords, ordinal } from '@/engine/systems/series';
+import { EPISODE_CALL_KIND, OPTION_KIND, decisionsTo, decisionWords, numbered, ordinal } from '@/engine/systems/series';
+import { optionDays } from '@/engine/systems/continuity';
 import { seriesById } from '@/engine/content/series';
 import { FORMATS } from '@/engine/content/workflows';
 import { choiceRefusal, choicesOf, formatOf, reportWords, strainOf, workflowOf } from '@/engine/systems/workflow';
@@ -256,9 +257,9 @@ function ContractFacts({ c, zone }: { c: Contract; zone: string }) {
   const series = c.series ? seriesById(c.series.id) : undefined;
   return (
     <>
-      <div><dt>Made</dt><dd>{`${formatDate(c.madeAt, zone)}${c.version > 1 ? `, its version ${c.version}: an option on the last season’s contract, taken up` : ''}.`}</dd></div>
+      <div><dt>Made</dt><dd>{`${formatDate(c.madeAt, zone)}${c.version > 1 ? `, its version ${c.version}: an option on the last season’s contract, taken up` : ''}${c.grew ? `, the part grown by ${counted(c.grew.episodes, 'episode')} and ${Math.round(c.grew.raise * 100)}% more a day` : ''}.`}</dd></div>
       <div><dt>Part</dt><dd>{`${c.billing[0]!.toUpperCase()}${c.billing.slice(1)}, under the ${c.classification} terms.`}</dd></div>
-      <div><dt>Format</dt><dd>{`${c.format[0]!.toUpperCase()}${c.format.slice(1)}${series && c.series ? `, its ${ordinal(c.series.season)} season` : ''}.`}</dd></div>
+      <div><dt>Format</dt><dd>{`${c.format[0]!.toUpperCase()}${c.format.slice(1)}${series && c.series ? (numbered(series) ? `, its ${ordinal(c.series.season)} season` : `, its season beginning in ${c.series.year}`) : ''}.`}</dd></div>
       <div><dt>Service</dt><dd>{`${formatDate(c.service.from, zone)} to ${formatDate(c.service.to, zone)}.`}</dd></div>
       <div><dt>Pay</dt><dd>{c.rate !== undefined ? `${usd(c.rate)} a ${c.per}, ${BASIS[c.basis]}.` : 'Deferred.'}</dd></div>
       {c.basis !== 'deferred' && <div><dt>Estimated Gross</dt><dd>{`${usd(c.estimate)}, before withholding, commission and dues: an estimate of what you’ll earn, not money in your accounts.`}</dd></div>}
@@ -313,7 +314,7 @@ function WorkflowView({ person, e }: { person: Person; e: Engagement }) {
 }
 
 /** A clause in a sentence (D1 to D8): what it gives, and where it stands. */
-function clauseWords(x: ContractClause, zone: string): string {
+function clauseWords(x: ContractClause, zone: string, e?: Engagement): string {
   switch (x.kind) {
     case 'deferred': return `Deferred pay: ${DEFERRED_WHY}.`;
     // A day of one hour's overtime, a capture day's, from 2026-10-24 (brief 25's Module 5).
@@ -330,9 +331,17 @@ function clauseWords(x: ContractClause, zone: string): string {
     }
     case 'option': {
       // At the same day rate where a negotiation traded the raise away (from 2026-10-25, `systems/offers.ts`), or next
-      // season's rate for the part where that's more, as `renewFromOption` pays it.
-      const head = `Option: the production can take you up for the series’ ${ordinal(x.season)} season at ${x.raise ? `${Math.round(x.raise * 100)}% more a day` : 'the same day rate, unless next season’s rate for the part comes to more'}, by ${formatDate(x.by, zone)}.`;
-      if (x.status === 'open') return `${head} Not yet decided.`;
+      // season's rate for the part where that's more, as `renewFromOption` pays it. A real series whose pages give no
+      // number names the season by its year, and an open option says the days it holds (from 2026-10-25, the owner's
+      // brief 27, loop 20: "show how it affects availability"; `optionDays`).
+      const t = e ? projectById(e.projectId) : undefined;
+      const s = t?.series ? seriesById(t.series) : undefined;
+      const which = s && !numbered(s) ? `season beginning in ${x.year}` : `${ordinal(x.season)} season`;
+      const head = `Option: the production can take you up for the series’ ${which} at ${x.raise ? `${Math.round(x.raise * 100)}% more a day` : 'the same day rate, unless next season’s rate for the part comes to more'}, by ${formatDate(x.by, zone)}.`;
+      if (x.status === 'open') {
+        const days = t ? optionDays(t, x) : [];
+        return `${head} Not yet decided.${days.length ? ` Until then it holds you for that season’s guaranteed episodes, from ${formatDate(days[0]!.from, zone)} to ${formatDate(days[days.length - 1]!.from, zone)}: an offer on any of those days asks you to choose between them.` : ''}`;
+      }
       return `${head} ${x.settled?.why ?? (x.status === 'exercised' ? 'Taken up.' : 'Lapsed.')}`;
     }
     // A workflow's rule (from 2026-10-24, brief 25's Module 5): its own words.
@@ -421,7 +430,7 @@ function EngagementView({ person, e }: { person: Person; e: Engagement }) {
         </dl>
         {e.contract && <SectionHead title="Its Terms" help="career.contracts" />}
         {e.contract
-          ? <ul className="small col gap-2" style={{ margin: 'var(--s2) 0 0', paddingLeft: '1.1rem' }}>{e.contract.clauses.map((x) => <li key={x.kind === 'rule' ? `rule:${x.id}` : x.kind}>{clauseWords(x, zone)}</li>)}</ul>
+          ? <ul className="small col gap-2" style={{ margin: 'var(--s2) 0 0', paddingLeft: '1.1rem' }}>{e.contract.clauses.map((x) => <li key={x.kind === 'rule' ? `rule:${x.id}` : x.kind}>{clauseWords(x, zone, e)}</li>)}</ul>
           : <p className="xs dim" style={{ margin: 'var(--s2) 0 0' }}>This work was booked before the game kept contracts, so its terms are its pay below.</p>}
         {e.contract?.series && <p className="xs dim" style={{ margin: 'var(--s2) 0 0' }}>{[seriesById(e.contract.series.id)?.words ?? '', ...seasonsWords(sim, e.contract)].join(' ')}</p>}
         {!placeKnown(e) && project && <p className="xs dim" style={{ margin: 'var(--s2) 0 0' }}>{`${project.place.city} isn’t among the game’s towns, so its pay counts on your tax return as earned where you live, and the tax where the work is done isn’t worked out.`}</p>}

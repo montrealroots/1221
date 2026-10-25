@@ -38,8 +38,10 @@ import { AGENCIES, AGENTS, agencyById, agentById, type Agency, type Agent } from
 import { projectById, type ProjectTemplate } from '../content/careerwork';
 import { FORMATS } from '../content/workflows';
 import { CHARTS } from '../content/charts';
-import { episodeDays, seasonWindow, seriesById, type SeriesTemplate } from '../content/series';
-import { REFERENCE, figureWords, peakOf, titleAcross, weekEnd, weekWords, weeksSoFar } from './charts';
+import { REAL_SERIES, episodeDays, seasonWindow, seriesById, type SeriesTemplate } from '../content/series';
+import { REFERENCE, figureWords, peakOf, titleAcross, totalsOf, weekEnd, weekWords, weeksSoFar } from './charts';
+import { routeWords } from './market';
+import { pilotSeries } from './continuity';
 import { kindPhrase, projectGenresOf } from './projobs';
 import { requirementWords } from './engagement';
 import { activeAgreement, honorsOf, type Engagement, type Opportunity, type ProCredit, type ProEvent } from './pro';
@@ -47,7 +49,7 @@ import { STAGE_LABEL } from './proagent';
 import { recapWords, festivalWords } from './awards';
 import { actorRecapWords } from './actorawards';
 import { clauseOf } from './contracts';
-import { audienceWords, decisionWords, decisionsTo, ordinal, productionEnds, seasonAudience, seasonMade, seasonNumber, seriesInPlay } from './series';
+import { audienceWords, decisionWords, decisionsTo, networkOf, ordinal, productionEnds, seasonAudience, seasonMade, seasonName, seriesInPlay, simulatedSeason } from './series';
 
 // ---------------------------------------------------------------------------------------------------------------------
 // The shapes a page is drawn from
@@ -89,6 +91,8 @@ const ACTION: Readonly<Record<CareerTab, string>> = {
 const act = (tab: CareerTab, words: string): RefAction => ({ label: ACTION[tab], tab, words });
 const fact = (label: string, words: string, known: Known, to?: RefKey): RefFact => ({ label, words, known, ...(to ? { to } : {}) });
 const cap = (x: string): string => `${x.charAt(0).toUpperCase()}${x.slice(1)}`;
+/** A phrase as a title: every word capitalised ("The Season Beginning In 2027"). */
+const titleWords = (x: string): string => x.split(' ').map(cap).join(' ');
 const readOn = (): string => { const [y, m, d] = READ_ON.split('-').map(Number); return formatDate(Date.UTC(y!, m! - 1, d!, 12), 'UTC'); };
 const dated = (sim: Simulation, at: Instant): string => formatDate(at, sim.zone);
 
@@ -142,10 +146,16 @@ const toldOf = (e: Engagement, key: 'release:late' | 'release:shelved'): ProEven
 /** Where a credit stands, as far as the player has been told. */
 export function creditWords(sim: Simulation, person: Person, c: ProCredit): string {
   if (c.status === 'performed') return `Performed, ${c.year}`;
-  if (c.status === 'released' && c.releasedAt !== undefined) return `Released on ${dated(sim, c.releasedAt)}`;
+  // Its way out, where it had another (from 2026-10-25, brief 27, `routeWords`), and the network that picked its series up.
+  const route = c.release?.kind === 'limited' || c.release?.kind === 'territory' || (c.release?.kind === 'distributor' && c.release.told) ? ` ${routeWords(c)}` : '';
+  const network = c.network ? ` Seen on ${c.network}, which picked the series up.` : '';
+  if (c.status === 'released' && c.releasedAt !== undefined) return route || network ? `Released on ${dated(sim, c.releasedAt)}.${route}${network}` : `Released on ${dated(sim, c.releasedAt)}`;
   const e = c.engagementId ? person.pro?.engagements.find((x) => x.id === c.engagementId) : undefined;
+  // A pilot its network passed on (from 2026-10-25, brief 27, Part 8): never aired.
+  if (e?.pilot && !e.pilot.picked) return 'Shot, and its network passed on the pilot: it won’t air';
   if (e && toldOf(e, 'release:shelved')) return 'Shot, and shelved by its distributor: it won’t be released';
   if (e && toldOf(e, 'release:late')) return 'Shot, and held back by its distributor';
+  if (e && e.history.some((x) => x.key === 'release:distributor')) return `Shot, and taken over by ${c.release?.distributor ?? 'another distributor'}, which moved its release`;
   if (c.status === 'unreleased') return 'Never released';
   return 'Shot, not yet released';
 }
@@ -184,6 +194,34 @@ function runFacts(sim: Simulation, person: Person, parts: readonly ProjectTempla
     const peak = peakOf(c.run, sim.now);
     const gross = weeks.reduce((s, w) => s + w.gross, 0);
     out.push(fact('In Cinemas', `Opened ${dated(sim, c.run.opening)}. ${weeks.length === 1 ? 'One week' : `${weeks.length} weeks`} so far, about $${Math.round(gross).toLocaleString('en-US')} in all; ${peak !== undefined ? `its best week No. ${peak} in the game’s own chart` : 'never in the game’s own Top 10'}.`, 'simulated'));
+    // Its totals, each in the run's currency, and its reception (from 2026-10-25, brief 27, Part 12), each the game's.
+    const totals = totalsOf(c.run, sim.now);
+    const usd = (n: number) => `$${Math.round(n).toLocaleString('en-US')}`;
+    if (totals.worldwide !== undefined) out.push(fact('Box Office', `${usd(totals.domestic)} in the US, ${usd(totals.international!)} abroad, ${usd(totals.worldwide)} worldwide, all in US dollars, the game’s estimates.`, 'simulated'));
+    if (c.run.response) out.push(fact('Reception', `Critics ${c.run.response.critics} of 100, audiences ${c.run.response.audience} of 100, the game’s estimates.`, 'simulated'));
+  }
+  return out;
+}
+
+/**
+ * A project's release, where it went another way than on time (from 2026-10-25, brief 27; `routeWords`), and a pilot's word
+ * once the clock has reached it, picked up with its series' page or passed on (Part 8): each the game's.
+ */
+function releaseFacts(sim: Simulation, person: Person, parts: readonly ProjectTemplate[]): RefFact[] {
+  const out: RefFact[] = [];
+  const pilot = parts.find((t) => t.pilot);
+  if (pilot && pilot.pilot) {
+    const e = engsOf(person, pilot).find((x) => x.pilot);
+    const s = pilotSeries(pilot);
+    const held = seriesHeld(sim).some((x) => x.id === s.id);
+    out.push(e?.pilot
+      ? fact('The Pilot', e.pilot.picked ? `${pilot.pilot.network} picked it up to series on ${dated(sim, e.pilot.at)}.` : `${pilot.pilot.network} passed on it on ${dated(sim, e.pilot.at)}, so it won’t air.`, 'simulated', e.pilot.picked && held ? { kind: 'series', id: s.id } : undefined)
+      : fact('The Pilot', `A pilot for ${pilot.pilot.network}, a network invented for the game, which picks it up to series or passes on it on ${dated(sim, pilot.pilot.decideAt)}.`, 'simulated'));
+  }
+  for (const t of parts) for (const e of engsOf(person, t)) {
+    const c = creditOf(person, e);
+    const words = c && (c.release?.kind !== 'distributor' || c.release.told) ? routeWords(c) : undefined;
+    if (words) out.push(fact('Release', words, 'simulated'));
   }
   return out;
 }
@@ -262,6 +300,10 @@ function productionPage(sim: Simulation, person: Person, p: Production): RefPage
   const charts = charted ? titleAcross(REFERENCE, charted).filter((x) => weekEnd(x.to) <= sim.now).map((x) => fact(`${CHARTS[x.chart].name}, ${weekWords(x)}`, `No. ${x.entry.rank} in ${CHARTS[x.chart].territory}: ${figureWords(x.chart, x.entry.value)}, as ${CHARTS[x.chart].provider} published it`, 'verified')) : [];
   const parts = partsOn(person, key);
   const game = parts.map((t) => fact(t.role.part, `The game’s own character, in ${t.drawn!.season}. It isn’t a real casting notice, and no one at the real production is casting it.`, 'simulated'));
+  // The simulation's seasons after its baseline (from 2026-10-25, brief 27, Part 13, `REAL_SERIES`), each said as the game's.
+  const continued = REAL_SERIES.find((x) => x.real?.production === p.id);
+  const said = continued ? saidBy(sim, continued) : [];
+  const continuation = continued ? [fact('Its Seasons In The Game', `${said.length ? decisionWords(sim, continued, said[said.length - 1]!) : `Every season after the one its pages had on the air is the game’s own continuation, and the first word on one comes on ${dated(sim, decisionsTo(sim, continued, continued.orderedThrough + 1)[0]?.at ?? sim.now)}.`} Open it for each season the game has simulated.`, 'simulated', { kind: 'series', id: continued.id })] : [];
   return {
     key, title: p.title, known: 'verified',
     what: `A real ${p.format}, as its official pages had it when the game read them on ${readOn()}. The game holds only what those pages say, and says where they don’t.`,
@@ -271,6 +313,7 @@ function productionPage(sim: Simulation, person: Person, p: Production): RefPage
       ...(made.length ? [{ title: 'Made By', facts: made }] : []),
       { title: 'Cast', facts: cast.length ? cast : [fact('None Named', 'The pages the game read name none of its cast.', 'not-given')] },
       ...(charted ? [{ title: 'Published Charts', facts: charts.length ? charts : [fact('Not Yet', 'No week of a published chart the game holds has ended with it in yet.', 'verified')] }] : []),
+      ...(continuation.length ? [{ title: 'The Game’s Continuation', facts: continuation }] : []),
       ...(game.length ? [{ title: 'In The Game', facts: game }] : []),
       ...(parts.length ? [{ title: 'Your Part', facts: parts.flatMap((t) => yourPart(sim, person, t)) }, { title: 'What Happened', facts: historyOf(sim, person, parts) }] : []),
       ...(honorFacts(person, parts).length ? [{ title: 'Awards And Festivals', facts: honorFacts(person, parts) }] : []),
@@ -308,7 +351,7 @@ function projectPage(sim: Simulation, person: Person, key: RefKey, parts: Projec
     fact('Agreement', t.contract, 'simulated'),
     ...(t.series && seriesById(t.series) ? [fact('Series', seriesById(t.series)!.title, 'simulated', { kind: 'series', id: t.series })] : []),
   ];
-  const run = runFacts(sim, person, parts);
+  const run = [...releaseFacts(sim, person, parts), ...runFacts(sim, person, parts)];
   const honors = honorFacts(person, parts);
   return {
     key, title: t.project, known: 'simulated',
@@ -355,16 +398,22 @@ const seriesEngagements = (person: Person, s: SeriesTemplate, year?: number): En
 
 function seriesPage(sim: Simulation, person: Person, s: SeriesTemplate): RefPage {
   const key: RefKey = { kind: 'series', id: s.id };
+  // A real series' baseline season is its pages', the seasons after it the simulation's (from 2026-10-25, brief 27).
   const seasons = seasonsKnown(sim, s).map((y) => {
-    return fact(`The ${cap(ordinal(seasonNumber(sim, s, y)))} Season`, `${y <= s.orderedThrough ? 'Ordered' : 'Renewed'}; ${shootWords(sim, s, y)}, ${s.episodes} episodes`, 'simulated', { kind: 'season', id: s.id, season: y });
+    if (!simulatedSeason(s, y)) return fact(titleWords(seasonName(sim, s, y)), `On the air when the game read its pages on ${readOn()}. The game simulates only the seasons after it.`, 'verified', s.real ? { kind: 'production', id: s.real.production } : undefined);
+    return fact(`${titleWords(seasonName(sim, s, y))}${s.real ? ' (Simulated)' : ''}`, `${y <= s.orderedThrough ? 'Ordered' : 'Renewed'}; ${shootWords(sim, s, y)}, ${s.episodes} episodes${s.real ? ', the game’s own count' : ''}`, 'simulated', { kind: 'season', id: s.id, season: y });
   });
   const word = saidBy(sim, s).map((d) => fact(dated(sim, d.at), decisionWords(sim, s, d), 'simulated'));
-  const yours = seriesEngagements(person, s).map((e) => { const t = projectById(e.projectId)!; return fact(t.role.part, `${ENGAGEMENT_WORDS[e.status]}${e.contract?.series ? `, in its ${ordinal(e.contract.series.season)} season` : ''}`, 'yours', projectKey(t)); });
+  const yours = seriesEngagements(person, s).map((e) => { const t = projectById(e.projectId)!; return fact(t.role.part, `${ENGAGEMENT_WORDS[e.status]}${e.contract?.series ? `, in ${seasonName(sim, s, e.contract.series.year).replace(/^the /, 'its ')}` : ''}`, 'yours', projectKey(t)); });
+  // The network it's seen on now, where another picked it up after its cancellation (from 2026-10-25, `PICKUP`).
+  const net = networkOf(sim, s, new Date(sim.now).getUTCFullYear());
+  const picked = net.since !== undefined && decisionsTo(sim, s, net.since).some((d) => d.year === net.since && d.at <= sim.now) ? [fact('Seen On', `${net.name}, invented for the game, which picked it up for the season beginning in ${net.since}`, 'simulated')] : [];
+  const company = s.real ? fact('Company', s.company, 'verified', companyKey(s.company)) : fact('Company', s.company, 'simulated', companyKey(s.company));
   return {
     key, title: s.title, known: 'simulated',
-    what: `A fictional ${s.program === 'hour' ? 'hour-long' : 'half-hour'} series by ${s.company}, invented for the game, with every season and audience the game’s. ${s.words}`,
+    what: s.real ? `A real series, as its official pages had it on ${readOn()}: the season on the air then is the pages’, and every season after it is the game’s simulation, never an announcement. ${s.words}` : `A fictional ${s.program === 'hour' ? 'hour-long' : 'half-hour'} series by ${s.company}, invented for the game, with every season and audience the game’s. ${s.words}`,
     sections: [
-      { title: 'The Series', facts: [fact('Company', s.company, 'simulated', companyKey(s.company)), fact('First Season', String(s.firstSeason), 'simulated'), fact('Ordered Through', `The season beginning in ${s.orderedThrough}`, 'simulated')] },
+      { title: 'The Series', facts: s.real ? [company, fact('Its Official Pages', `Productions The Game Read has ${s.title} as its pages had it.`, 'verified', { kind: 'production', id: s.real.production }), ...picked] : [company, fact('First Season', String(s.firstSeason), 'simulated'), fact('Ordered Through', `The season beginning in ${s.orderedThrough}`, 'simulated'), ...picked] },
       { title: 'Seasons', facts: seasons },
       ...(word.length ? [{ title: 'The Network’s Word', facts: word }] : []),
       ...(yours.length ? [{ title: 'Your Work In It', facts: yours }] : []),
@@ -376,7 +425,6 @@ function seriesPage(sim: Simulation, person: Person, s: SeriesTemplate): RefPage
 function seasonPage(sim: Simulation, person: Person, s: SeriesTemplate, year: number): RefPage {
   const key: RefKey = { kind: 'season', id: s.id, season: year };
   const w = seasonWindow(s, year);
-  const n = seasonNumber(sim, s, year);
   const after = saidBy(sim, s).find((d) => d.year === year + 1);
   const finished = w.to <= sim.now;
   const audience = finished ? seasonAudience(sim, s, year) : undefined;
@@ -389,9 +437,12 @@ function seasonPage(sim: Simulation, person: Person, s: SeriesTemplate, year: nu
   ];
   const episodes = Array.from({ length: s.episodes }, (_, k) => k + 1).map((e) => fact(`Episode ${e}`, `First shot on ${dated(sim, episodeDays(s, year, e)[0]!)}`, 'simulated', { kind: 'episode', id: s.id, season: year, episode: e }));
   const yours = seriesEngagements(person, s, year).map((e) => fact(projectById(e.projectId)!.role.part, episodesWords(e, s, year), 'yours', projectKey(projectById(e.projectId)!)));
+  // Its network, where another picked the series up (from 2026-10-25, `PICKUP`).
+  const net = networkOf(sim, s, year);
+  if (net.since !== undefined) facts.splice(1, 0, fact('Seen On', `${net.name}, invented for the game`, 'simulated'));
   return {
-    key, title: `${s.title}: The ${cap(ordinal(n))} Season`, known: 'simulated',
-    what: `The season beginning in ${year}, on the game’s schedule. Its audience and reviews are the game’s simulation, never a published figure.`,
+    key, title: `${s.title}: ${titleWords(seasonName(sim, s, year))}`, known: 'simulated',
+    what: `The season beginning in ${year}, on the game’s schedule. Its audience and reviews are the game’s simulation, never a published figure.${s.real ? ` ${s.title} is a real series, and this season is the game’s own continuation of it, not an announcement.` : ''}`,
     sections: [{ title: 'The Season', facts }, { title: 'Episodes', facts: episodes }, ...(yours.length ? [{ title: 'Your Episodes', facts: yours }] : [])],
     actions: [],
   };
@@ -434,7 +485,7 @@ function episodePage(sim: Simulation, person: Person, s: SeriesTemplate, year: n
     key, title: `${s.title}: Episode ${n}`, known: 'simulated',
     what: `Episode ${n} of the season beginning in ${year}, on the game’s schedule.`,
     sections: [
-      { title: 'The Episode', facts: [fact('Season', `The ${ordinal(seasonNumber(sim, s, year))} season`, 'simulated', { kind: 'season', id: s.id, season: year }), fact('Shoot', state, 'simulated')] },
+      { title: 'The Episode', facts: [fact('Season', cap(seasonName(sim, s, year)), 'simulated', { kind: 'season', id: s.id, season: year }), fact('Shoot', state, 'simulated')] },
       ...(yours.length ? [{ title: 'You In It', facts: yours }] : []),
     ],
     actions: [],
@@ -573,8 +624,9 @@ export function pageOf(sim: Simulation, person: Person, key: RefKey): RefPage | 
   if (key.kind === 'project') { const parts = partsOn(person, key); return parts.length ? projectPage(sim, person, key, parts) : undefined; }
   const s = key.kind === 'series' || key.kind === 'season' || key.kind === 'episode' ? seriesHeld(sim).find((x) => x.id === key.id) : undefined;
   if (key.kind === 'series') return s ? seriesPage(sim, person, s) : undefined;
-  if (key.kind === 'season') return s && key.season !== undefined && seasonsKnown(sim, s).includes(key.season) ? seasonPage(sim, person, s, key.season) : undefined;
-  if (key.kind === 'episode') return s && key.season !== undefined && key.episode !== undefined && key.episode >= 1 && key.episode <= s.episodes && seasonsKnown(sim, s).includes(key.season) ? episodePage(sim, person, s, key.season, key.episode) : undefined;
+  // A real series' baseline season has no page of the game's: its pages are the catalog's (from 2026-10-25).
+  if (key.kind === 'season') return s && key.season !== undefined && seasonsKnown(sim, s).includes(key.season) && simulatedSeason(s, key.season) ? seasonPage(sim, person, s, key.season) : undefined;
+  if (key.kind === 'episode') return s && key.season !== undefined && key.episode !== undefined && key.episode >= 1 && key.episode <= s.episodes && seasonsKnown(sim, s).includes(key.season) && simulatedSeason(s, key.season) ? episodePage(sim, person, s, key.season, key.episode) : undefined;
   if (key.kind === 'company') {
     const [space, ...rest] = key.id.split(':');
     const id = rest.join(':');
@@ -593,7 +645,8 @@ export function pageOf(sim: Simulation, person: Person, key: RefKey): RefPage | 
 /** The front page: the player's own work first, then the series, the productions the game read, companies and people. */
 export function refIndex(sim: Simulation, person: Person): { title: string; entries: RefEntry[] }[] {
   const yours = [...new Map(metParts(person).map((t) => [refId(projectKey(t)), t])).values()].map((t): RefEntry => ({ key: projectKey(t), words: t.project, known: t.drawn ? 'verified' : 'simulated', note: `${t.role.part}: ${OPPORTUNITY_WORDS[oppsOf(person, t).at(-1)?.status ?? 'booked'].toLowerCase()}` }));
-  const series = seriesHeld(sim).map((s): RefEntry => ({ key: { kind: 'series', id: s.id }, words: s.title, known: 'simulated', note: `A fictional series by ${s.company}` }));
+  // A real series continued by the simulation is listed with the productions the game read, its page linked from there.
+  const series = seriesHeld(sim).filter((s) => !s.real).map((s): RefEntry => ({ key: { kind: 'series', id: s.id }, words: s.title, known: 'simulated', note: `A fictional series by ${s.company}` }));
   const productions = CATALOG.map((p): RefEntry => ({ key: { kind: 'production', id: p.id }, words: p.title, known: 'verified', note: `A real ${p.format}` }));
   const companies: RefEntry[] = [
     ...COMPANIES.map((c): RefEntry => ({ key: { kind: 'company', id: `catalog:${c.id}` }, words: c.name, known: 'verified', note: 'A real company' })),

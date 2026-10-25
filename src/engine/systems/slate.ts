@@ -8,7 +8,9 @@
  * the time of year: a play, a film, a television movie, a limited series, a dub, each with one to three parts, cast once,
  * its first day some weeks on. Each year, new television series in the markets that make them, each a series as brief 25's
  * Calloway Files is (`content/series.ts`): one season ordered, then renewed, canceled and revived by the network's word each
- * May (`systems/series.ts`), new characters cast in each season it makes, a recurring part carried on by its option.
+ * May (`systems/series.ts`), new characters cast in each season it makes, a recurring part carried on by its option. From
+ * 2026-10-25, each winter, pilots too (`PILOTS`), each for a network the game invents, which picks it up or passes in May
+ * (`systems/continuity.ts`).
  * Everything is drawn from the save's seed and the week, so the same save makes the same world on every reload, and a
  * different save another; nothing the slate makes is stored until it reaches the actor.
  *
@@ -152,10 +154,12 @@ function laterRounds(kind: ProjectKind, size: RoleSize, families: readonly Famil
  * place, each part's size, who it's written for, its name and its breakdown, the playing ages, the days to its first day
  * from the posting, and its fate.
  */
-function makeProduction(sim: Simulation, tag: string, week: Instant, market: Market, kind: ProjectKind, n: number, profile: KindProfile, extra?: { series: SeriesTemplate; season: number; recurring: boolean }): Production {
+function makeProduction(sim: Simulation, tag: string, week: Instant, market: Market, kind: ProjectKind, n: number, profile: KindProfile, extra?: { series: SeriesTemplate; season: number; recurring: boolean }, pilot?: true): Production {
   const key = dateKey(week, NY);
-  const r = sim.rng('pro.slate', key, market.id, kind, n, extra ? `s${extra.season}` : '');
-  const id = extra ? `${extra.series.id}.s${extra.season}` : `s${SLATE_VERSION}.${tag}.${key}.${market.id}.${kind}.${n}`;
+  // A pilot (from 2026-10-25, `PILOTS`) on its own key and id, so no other production's draws move for it.
+  const own = extra ? `s${extra.season}` : pilot ? 'pilot' : '';
+  const r = sim.rng('pro.slate', key, market.id, kind, n, own);
+  const id = extra ? `${extra.series.id}.s${extra.season}` : pilot ? `pl${SLATE_VERSION}.${tag}.${key}.${market.id}.${kind}.${n}` : `s${SLATE_VERSION}.${tag}.${key}.${market.id}.${kind}.${n}`;
   const title = extra ? extra.series.title : titleOf(r);
   const company = extra ? extra.series.company : companyOf(r, profile.medium);
   const casting = extra ? `${CASTING_NAMES[(hash32(extra.series.id) >>> 0) % CASTING_NAMES.length]} Casting` : `${r.pick(CASTING_NAMES)} Casting`;
@@ -173,19 +177,20 @@ function makeProduction(sim: Simulation, tag: string, week: Instant, market: Mar
     if (u < profile.fate.never + profile.fate.pushed) return { kind: 'pushed', at, weeks: r.int(profile.fate.weeks[0], profile.fate.weeks[1]) };
     return { kind: 'made' };
   })();
-  const count = extra ? (extra.recurring ? 1 : r.int(1, 2)) : r.int(profile.parts[0], profile.parts[1]);
+  const count = extra ? (extra.recurring ? 1 : r.int(1, 2)) : pilot ? r.int(PILOTS.parts[0], PILOTS.parts[1]) : r.int(profile.parts[0], profile.parts[1]);
+  const pilotTerms = pilot ? { network: company, decideAt: instantFromZoned({ year: zonedParts(week, NY).year, month: PILOTS.word.month, day: PILOTS.word.day, hour: PILOTS.word.hour, minute: 0 }, NY) } : undefined;
   const place = { city: market.city, cityId: market.cityId, venue };
   const abroad = CITIES.get(market.cityId)?.countryId !== 'us';
   const used = new Set<string>();
   const parts: ProjectTemplate[] = [];
   for (let i = 0; i < count; i += 1) {
-    const pr = sim.rng('pro.slate', key, market.id, kind, n, extra ? `s${extra.season}` : '', i);
+    const pr = sim.rng('pro.slate', key, market.id, kind, n, own, i);
     const forWhom: PartFor = pr.weighted(['actor', 'actress', 'either'] as const, (x) => (x === 'either' ? 1 : 2));
     let given = pr.pick(GIVEN[forWhom]);
     for (let k = 0; used.has(given) && k < 8; k += 1) given = pr.pick(GIVEN[forWhom]);
     used.add(given);
     const name = pr.chance(0.5) ? `${given} ${pr.pick(SURNAMES)}` : given;
-    const sizes = Object.entries(profile.sizes) as [RoleSize, number][];
+    const sizes = Object.entries(pilot ? PILOTS.sizes : profile.sizes) as [RoleSize, number][];
     const size = extra?.recurring ? 'co-star' : pr.weighted(sizes, ([, w]) => w)[0];
     const words = BREAKDOWN[breakdownFamily(kind, families)];
     const about = `${pr.pick(words.who)} ${pr.pick(words.what)}.`;
@@ -193,7 +198,7 @@ function makeProduction(sim: Simulation, tag: string, week: Instant, market: Mar
     const ages: readonly [number, number] = [lo, lo + pr.int(8, 14)];
     const techniques: Partial<Record<Skill, number>> = { ...profile.techniques };
     for (const f of families) for (const [s, w] of Object.entries(FAMILY_SKILLS[f] ?? {}) as [Skill, number][]) techniques[s] = Math.max(techniques[s] ?? 0, w);
-    const sched: ProjectTemplate['schedule'] = extra?.recurring ? { kind: 'episodes', guaranteed: 2, expected: pr.int(4, 6) } : schedule;
+    const sched: ProjectTemplate['schedule'] = extra?.recurring ? { kind: 'episodes', guaranteed: 2, expected: pr.int(4, 6) } : pilot ? PILOTS.schedules[kind] ?? schedule : schedule;
     // A character who speaks another language as well as English (from 2026-10-25, brief 27), on its own stream keyed by
     // the part (`partLanguage`), so no draw of the slate moves and every id, title and part is the one it was. The
     // generator's version stays: a part a save was posted before then is kept in the save as it was, with no language
@@ -212,7 +217,8 @@ function makeProduction(sim: Simulation, tag: string, week: Instant, market: Mar
       leadDays: lead,
       trip: { ...(abroad ? { supporter: `${title} Productions ${CITIES.get(market.cityId)?.countryId === 'au' ? 'Pty Ltd' : 'Ltd'}` } : {}), hotel: AWAY_TRIP.hotel, pays: 'production' as const, words: AWAY_TRIP.words },
       ...(extra ? { series: extra.series.id } : {}),
-      slate: { version: SLATE_VERSION, production: id, week: key, market: market.id, fate: extra ? { kind: 'made' } : fate },
+      ...(pilotTerms ? { pilot: pilotTerms } : {}),
+      slate: { version: SLATE_VERSION, production: id, week: key, market: market.id, fate: extra || pilot ? { kind: 'made' } : fate },
     });
   }
   return { id, market, kind, title, company, casting, parts };
@@ -237,6 +243,51 @@ export function productionsOf(sim: Simulation, week: Instant): Production[] {
       const draw = sim.rng('pro.slate', key, market.id, kind, 'count');
       const count = countOf(() => draw.next(), rate * SEASON[profile.medium][month]!);
       for (let n = 0; n < count; n += 1) out.push(makeProduction(sim, tag, monday, market, kind, n, profile));
+    }
+  }
+  cache.set(key, out);
+  return out;
+}
+
+/**
+ * Pilots (from 2026-10-25, the owner's brief 27, Part 8: "Pilots"; `systems/continuity.ts`): each winter's pilot season,
+ * the markets that make network television making pilots of its kinds, each a production of the game's for a network it
+ * invents, shot as an episode of its kind is (`schedules`), with one to three parts, leads among them, and in May the
+ * network's word on a series. ASSUMPTION every figure: postings from January to March, a market's pilots of a kind a week
+ * at `rate` of its weekly rate for that kind, the parts' sizes, the shoot's days, and the word on May 15 at noon, when the
+ * game's networks decide on their series. Until then the slate made no pilots, and no series began from one.
+ */
+export const PILOTS = {
+  months: [1, 2, 3] as readonly number[],
+  rate: 0.6,
+  kinds: ['network-drama', 'network-comedy', 'multicam-comedy'] as readonly ProjectKind[],
+  parts: [1, 3] as readonly [number, number],
+  sizes: { lead: 2, supporting: 3, 'co-star': 2 } as Readonly<Partial<Record<RoleSize, number>>>,
+  schedules: { 'network-drama': { kind: 'shoot', days: 7 }, 'network-comedy': { kind: 'shoot', days: 5 }, 'multicam-comedy': { kind: 'week', weeks: 1 } } as Readonly<Partial<Record<ProjectKind, ProjectTemplate['schedule']>>>,
+  word: { month: 5, day: 15, hour: 12 },
+} as const;
+
+/** The pilots the slate made for a week: none outside the pilot season. */
+const pilotCache = new WeakMap<SaveUniverse, Map<string, Production[]>>();
+export function pilotsOf(sim: Simulation, week: Instant): Production[] {
+  const monday = weekOf(week);
+  const key = dateKey(monday, NY);
+  let cache = pilotCache.get(sim.universe);
+  if (!cache) { cache = new Map(); pilotCache.set(sim.universe, cache); }
+  const hit = cache.get(key);
+  if (hit) return hit;
+  const out: Production[] = [];
+  if (PILOTS.months.includes(zonedParts(monday, NY).month)) {
+    const tag = slateTag(sim);
+    for (const market of MARKETS) {
+      for (const kind of PILOTS.kinds) {
+        const rate = market.kinds[kind];
+        const profile = KIND_PROFILES[kind];
+        if (!rate || !profile) continue;
+        const draw = sim.rng('pro.slate', key, market.id, kind, 'pilot-count');
+        const count = countOf(() => draw.next(), rate * PILOTS.rate);
+        for (let n = 0; n < count; n += 1) out.push(makeProduction(sim, tag, monday, market, kind, n, profile, undefined, true));
+      }
     }
   }
   cache.set(key, out);
@@ -313,7 +364,8 @@ export function seriesParts(sim: Simulation, s: SeriesTemplate, seasonYear: numb
  * in the work loop).
  */
 export function slatePartsAt(sim: Simulation, at: Instant): ProjectTemplate[] {
-  const parts = productionsOf(sim, at).flatMap((p) => p.parts);
+  // And the week's pilots (from 2026-10-25, `PILOTS`).
+  const parts = [...productionsOf(sim, at), ...pilotsOf(sim, at)].flatMap((p) => p.parts);
   const year = zonedParts(at, NY).year;
   // A series' part is cast for the season its days fall in: the days come about five weeks after the posting.
   const workAt = at + 35 * MS_DAY;

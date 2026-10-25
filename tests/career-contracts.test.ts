@@ -18,7 +18,7 @@ import {
   CONTRIBUTION, OVERTIME, PER_DIEM, RERUN_CEILING, RESIDUALS, RESIDUAL_PAY_KIND, askRefusal, clauseOf, contributionRate, daysAway, lateDays, notOwed, overtimeOf,
   payPerDiem, payState, rerunAmount, rerunDrawn, totalActualCompensation,
 } from '@/engine/systems/contracts';
-import { decisionsTo, inProduction, seasonMade, seasonNumber, EPISODE_CALL_KIND, OPTION_KIND } from '@/engine/systems/series';
+import { decisionsTo, inProduction, pickupOf, seasonMade, seasonNumber, EPISODE_CALL_KIND, OPTION_KIND } from '@/engine/systems/series';
 import { tripOf } from '@/engine/systems/worktrip';
 import { yearOf } from '@/engine/systems/earnings';
 import { at, graduate, notices, played, playRound, portfolio, prepareAll, reload, skilled, tend, tended, zone } from './fakes/career-world';
@@ -445,7 +445,11 @@ describe('D8: a series’ seasons, decided by the world', () => {
     const t = projectById('calloway-files')!;
     expect(seriesPosts(sim, t, datesOf({ projectId: t.id, postedAt: at(2031, 9, 1) }), at(2031, 9, 1))).toBe(false);
     tended(sim, at(2032, 5, 16));
-    expect(notices(sim).some((n) => n.startsWith('The Calloway Files Is Back | On May 15, 2032, the network brought The Calloway Files back for a season beginning in July, its twelfth.'))).toBe(true);
+    // Back on its own network, or, from 2026-10-25 (brief 27, `PICKUP`), on another where the series' own draw says so.
+    const network = pickupOf(sim, CALLOWAY, 2032);
+    expect(notices(sim).some((n) => n.startsWith(network
+      ? `The Calloway Files Is Back | On May 15, 2032, ${network}, a network invented for the game, picked up The Calloway Files after its cancellation, for a season beginning in July, its twelfth.`
+      : 'The Calloway Files Is Back | On May 15, 2032, the network brought The Calloway Files back for a season beginning in July, its twelfth.'))).toBe(true);
     expect(seriesPosts(sim, t, datesOf({ projectId: t.id, postedAt: at(2032, 9, 6) }), at(2032, 9, 6))).toBe(true);
     expect(JSON.stringify(sim.player.pro!.engagements.filter((x) => x.projectId.startsWith('calloway')))).toBe(old);
     // Cast again through an agent's breakdowns: a Desk Clerk in the revived season, a new engagement beside the old.

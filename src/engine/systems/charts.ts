@@ -10,8 +10,16 @@
  * didn't have is new to the game's record of that chart, which isn't a new release, or back where an older week had it.
  *
  * The game's own chart: a film's gross is drawn by the film (decider `charts.gross`), from its budget's range, falling week
- * by week, and ranked among a field of the game's own unnamed releases. It isn't the actor's pay, a week of it isn't a
- * payday, and how well the player's part was judged doesn't move it: a film's fortunes are the production's.
+ * by week, and ranked among a field of the game's own unnamed releases. It isn't the actor's pay, and a week of it isn't a
+ * payday. Until 2026-10-25 how well the player's part was judged didn't move it ("a film's fortunes are the production's",
+ * this header said). From then (the owner's brief 27, Part 12: "A strong player performance must matter without
+ * guaranteeing a hit"; loop 35: "Project success depends on multiple project-level factors, including but not limited to
+ * the player's performance") the opening is moved by the production's own quality and the player's part, weighted by its
+ * size, and each week's hold by the audience's response (`systems/market.ts`, `FORTUNE`), all inside the drawn range's
+ * spread, so the draw still decides most of it. Each run keeps its domestic weeks, the ones the chart ranks, and the
+ * international gross beside them, both in US dollars, so their worldwide sum adds one currency to itself; and a limited
+ * release's weeks in a few cinemas, or a release abroad before its domestic one, as its distributor chose (`RELEASE_FATE`).
+ * A run made before keeps its domestic weeks alone.
  */
 
 import type { Simulation } from '../core/simulation';
@@ -189,11 +197,53 @@ export const OPENING: Readonly<Partial<Record<ProjectKind, readonly [number, num
 /** How a run falls (ASSUMPTION): each week keeps a share of the last, drawn between these; the run ends under 1% of its opening, or after twelve weeks. */
 export const RUN = { keepLeast: 0.4, keepMost: 0.7, endBelow: 0.01, weeksMost: 12, fieldSize: 10 } as const;
 
-/** One week of a film in the game's own chart. */
-export interface SimWeek { from: Instant; to: Instant; gross: number; rank: number | 'outside' }
+/**
+ * One week of a film in the game's own chart: its domestic gross, which the chart ranks, and from 2026-10-25 its
+ * international gross that week, in the same currency.
+ */
+export interface SimWeek { from: Instant; to: Instant; gross: number; rank: number | 'outside'; international?: number }
 
-/** A released film's run in the game's own chart: the game's simulation, never a published figure. */
-export interface SimRun { simulated: true; opening: Instant; weeks: SimWeek[] }
+/**
+ * A released film's run in the game's own chart: the game's simulation, never a published figure. From 2026-10-25 (brief
+ * 27, Part 12), each optional so a run kept from before reads as it was: its currency; the weeks abroad before a domestic
+ * opening where its distributor released it in some territories first; the critics' and the audience's response, the
+ * game's simulation; and a limited release's weeks in a few cinemas and whether it widened after them.
+ */
+export interface SimRun {
+  simulated: true; opening: Instant; weeks: SimWeek[];
+  currency?: 'USD';
+  before?: { from: Instant; to: Instant; international: number }[];
+  response?: { critics: number; audience: number };
+  limited?: { weeks: number; widened: boolean };
+}
+
+/**
+ * What a run is made with besides its draw (from 2026-10-25, brief 27; `systems/market.ts`'s `runOf`): how far the
+ * production's quality and the player's part move its opening (a natural log, bounded there), how far the audience's
+ * response moves each week's hold, the response itself, a limited release's weeks and whether it widens, and the days a
+ * release in some territories first waits for its domestic opening.
+ */
+export interface RunTerms {
+  lift?: number;
+  hold?: number;
+  response?: { critics: number; audience: number };
+  limited?: { weeks: number; widens: boolean };
+  domesticAfter?: number;
+}
+
+/**
+ * A film's international gross as a share of its domestic, by kind, the low and high of a range drawn by the film (on its
+ * own key of `charts.gross`, so the domestic draws come as they did). ASSUMPTION, the game's: no studio's split was read.
+ */
+export const INTERNATIONAL: Readonly<Partial<Record<ProjectKind, readonly [number, number]>>> = {
+  'ultra-low-budget': [0.05, 0.4], 'low-budget': [0.2, 0.8], 'overseas-feature': [1, 2.5], 'action-feature': [0.8, 2], 'capture-feature': [0.8, 2], 'animated-feature': [0.7, 1.8],
+};
+
+/**
+ * A limited release (ASSUMPTION, the game's): each week in a few cinemas makes `share` of what a wide opening would, a
+ * quarter more each week as cinemas are added; widened, the wide opening follows it.
+ */
+export const LIMITED = { share: 0.06, growth: 0.25 } as const;
 
 /** The Friday a run opens: the release day, or the Friday after it. */
 function fridayFrom(at: Instant): Instant {
@@ -205,24 +255,61 @@ function fridayFrom(at: Instant): Instant {
 
 /**
  * A film's run, drawn by the film (decider `charts.gross`, keyed by its project and its release): its opening from its
- * kind's range, each week a share of the last, and its rank each week among the game's own field of unnamed releases,
- * drawn for that week. Undefined for work not released in cinemas.
+ * kind's range, moved by `terms.lift`, each week a share of the last, moved by `terms.hold`, and its rank each week among
+ * the game's own field of unnamed releases, drawn for that week. A limited release's first weeks are a small share of the
+ * opening, the wide opening after them only if it widens; a release in some territories first opens abroad and comes home
+ * `domesticAfter` days on. Undefined for work not released in cinemas. With no terms, the run is the one it was before
+ * 2026-10-25, but for its international gross, drawn on its own key.
  */
-export function simulateRun(sim: Simulation, projectId: string, kind: ProjectKind, releasedAt: Instant): SimRun | undefined {
+export function simulateRun(sim: Simulation, projectId: string, kind: ProjectKind, releasedAt: Instant, terms: RunTerms = {}): SimRun | undefined {
   const range = OPENING[kind];
   if (!range) return undefined;
   const rng = sim.rng('charts.gross', projectId, releasedAt);
-  const opening = fridayFrom(releasedAt);
+  const abroad = sim.rng('charts.gross', projectId, releasedAt, 'international');
+  const [ilo, ihi] = INTERNATIONAL[kind] ?? [0.5, 1];
+  const share = ilo + (ihi - ilo) * abroad.next();
+  const first0 = fridayFrom(releasedAt);
+  const lead = terms.domesticAfter ? Math.max(1, Math.round(terms.domesticAfter / 7)) : 0;
+  const opening = lead ? addDays(first0, 7 * lead, NY) : first0;
   const [lo, hi] = range;
-  let gross = Math.round(lo * Math.exp(Math.log(hi / lo) * rng.next()));
-  const first = gross;
-  const weeks: SimWeek[] = [];
-  for (let k = 0; k < RUN.weeksMost && gross >= first * RUN.endBelow; k += 1) {
+  // The draw first, as it came before; then the lift, inside the range's spread.
+  const first = Math.round(lo * Math.exp(Math.log(hi / lo) * rng.next()) * Math.exp(terms.lift ?? 0));
+  // The wide run's weeks, each a share of the last, the audience's response moving the share within the run's bounds.
+  const keep = (u: number) => Math.min(0.95, Math.max(0.2, RUN.keepLeast + (RUN.keepMost - RUN.keepLeast) * u + (terms.hold ?? 0)));
+  const curve: number[] = [];
+  for (let g = first; curve.length < RUN.weeksMost + lead && g >= first * RUN.endBelow; g = Math.round(g * keep(rng.next()))) curve.push(g);
+  const limited = terms.limited;
+  const domestic: number[] = [];
+  if (limited) {
+    for (let k = 0; k < limited.weeks; k += 1) domestic.push(Math.round(first * LIMITED.share * (1 + LIMITED.growth * k)));
+    if (limited.widens) domestic.push(...curve.slice(0, RUN.weeksMost - limited.weeks));
+    else { let g = domestic[domestic.length - 1]!; while (domestic.length < RUN.weeksMost && (g = Math.round(g * keep(0.5))) >= first * RUN.endBelow) domestic.push(g); }
+  } else domestic.push(...curve.slice(0, RUN.weeksMost));
+  const weeks: SimWeek[] = domestic.map((gross, k) => {
     const from = addDays(opening, 7 * k, NY);
-    weeks.push({ from, to: addDays(from, 7, NY) - 60_000, gross, rank: rankAmong(sim, from, gross) });
-    gross = Math.round(gross * (RUN.keepLeast + (RUN.keepMost - RUN.keepLeast) * rng.next()));
-  }
-  return { simulated: true, opening, weeks };
+    const abroadWeek = curve[k + lead];
+    return { from, to: addDays(from, 7, NY) - 60_000, gross, rank: rankAmong(sim, from, gross), ...(abroadWeek !== undefined ? { international: Math.round(abroadWeek * share) } : {}) };
+  });
+  const before = Array.from({ length: lead }, (_, j) => { const from = addDays(first0, 7 * j, NY); return { from, to: addDays(from, 7, NY) - 60_000, international: Math.round((curve[j] ?? 0) * share) }; });
+  return {
+    simulated: true, opening, weeks, currency: 'USD',
+    ...(before.length ? { before } : {}),
+    ...(terms.response ? { response: terms.response } : {}),
+    ...(limited ? { limited: { weeks: limited.weeks, widened: limited.widens } } : {}),
+  };
+}
+
+/**
+ * A run's totals by a moment, each in the run's own currency: the domestic weeks the chart ranks, and from 2026-10-25 the
+ * international weeks beside and before them, and their worldwide sum. A run kept from before has no international
+ * figure, and so no worldwide one.
+ */
+export function totalsOf(run: SimRun, at: Instant): { domestic: number; international?: number; worldwide?: number; currency: 'USD' } {
+  const weeks = weeksSoFar(run, at);
+  const domestic = weeks.reduce((n, w) => n + w.gross, 0);
+  if (!run.currency) return { domestic, currency: 'USD' };
+  const international = weeks.reduce((n, w) => n + (w.international ?? 0), 0) + (run.before ?? []).filter((w) => w.to <= at).reduce((n, w) => n + w.international, 0);
+  return { domestic, international, worldwide: domestic + international, currency: run.currency };
 }
 
 /**

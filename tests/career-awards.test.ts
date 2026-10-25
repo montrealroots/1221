@@ -17,6 +17,7 @@ import {
   OPENING, REFERENCE, RUN, currentOf, emptyStore, figureWords, importSnapshot, latestOf, movementOf, movementWords, placeIn, rankAmong,
   simulateRun, titleAcross, weeksBy, weeksOf, weeksSoFar,
 } from '@/engine/systems/charts';
+import { FORTUNE } from '@/engine/systems/market';
 import {
   FIELD, VISIBILITY, ceremonyLines, deadlineOf, emmyCheck, entryFee, entryRefusal, festivalCheck, festivalCheckWords, fieldDrawn, nominate, nominationsFor, productionEnters,
   recapWords, recognitionOf, visibilityOf, watchRefusal,
@@ -194,7 +195,7 @@ describe('X1 to X4: the reference charts, dated imports', () => {
 // ---------------------------------------------------------------------------------------------------------------------
 
 describe('X5: the game’s own chart for the player’s films', () => {
-  it('CHART-06, CHART-11, T73, T74, T84, CON-10, T98: a released film enters a simulated weekly chart apart from the reference charts, ranked among unnamed releases with no outside career behind them; unreleased it isn’t charted; a gross is never pay; how the part went doesn’t move it', () => {
+  it('CHART-06, CHART-11, T73, T74, T84, CON-10, T98: a released film enters a simulated weekly chart apart from the reference charts, ranked among unnamed releases with no outside career behind them; unreleased it isn’t charted; a gross is never pay; how the part went moves it, within the draw’s spread', () => {
     const { sim, c } = wrapped('awards-boxoffice', 'gull-season', { steps: ['read', 'lines', 'rehearse', 'special'] });
     expect(c.run).toBeUndefined();
     const release = sim.universe.scheduled.find((i) => i.kind === 'pro.release' && i.refId === c.id && i.status === 'pending')!.at;
@@ -207,16 +208,19 @@ describe('X5: the game’s own chart for the player’s films', () => {
     twin.advanceTo(release + 13 * 7 * MS_DAY);
     const run = creditIn(sim, c.id).run!;
     expect(run.simulated).toBe(true);
-    expect(run).toEqual(creditIn(twin, c.id).run);
+    // From 2026-10-25 (brief 27, Part 12, `FORTUNE`) the part moves the run: until then the twin's run was the same.
+    expect(run.weeks[0]!.gross).toBeGreaterThan(creditIn(twin, c.id).run!.weeks[0]!.gross);
     expect([creditIn(sim, c.id).band, creditIn(twin, c.id).band]).toEqual(['exceptional', 'unready']);
-    // Its opening within its kind's range, each week a share of the last between the run's bounds, at most twelve weeks.
+    // Its opening within its kind's range, moved at most by the part and the production's quality, each week a share of the
+    // last between the run's bounds, moved at most by the audience's response, at most twelve weeks.
     const [lo, hi] = OPENING['low-budget']!;
-    expect(run.weeks[0]!.gross).toBeGreaterThanOrEqual(lo);
-    expect(run.weeks[0]!.gross).toBeLessThanOrEqual(hi);
+    const most = Math.exp(FORTUNE.gross + FORTUNE.quality);
+    expect(run.weeks[0]!.gross).toBeGreaterThanOrEqual(lo / most);
+    expect(run.weeks[0]!.gross).toBeLessThanOrEqual(hi * most);
     for (let k = 1; k < run.weeks.length; k += 1) {
       const share = run.weeks[k]!.gross / run.weeks[k - 1]!.gross;
-      expect(share).toBeGreaterThanOrEqual(RUN.keepLeast - 0.001);
-      expect(share).toBeLessThanOrEqual(RUN.keepMost + 0.001);
+      expect(share).toBeGreaterThanOrEqual(RUN.keepLeast - FORTUNE.hold - 0.001);
+      expect(share).toBeLessThanOrEqual(RUN.keepMost + FORTUNE.hold + 0.001);
     }
     expect(run.weeks.length).toBeLessThanOrEqual(RUN.weeksMost);
     // Ranked among the game's own unnamed releases: a place or outside, never a name.
