@@ -515,8 +515,12 @@ export const PROJECTS: readonly ProjectTemplate[] = [
   // and the hotel. ASSUMPTIONS: a US studio's feature engages an American actor it casts from the US under the SAG-AFTRA
   // Basic Agreement, its weekly performer's minimum, though the game hasn't read the agreement's terms for work abroad;
   // its casting office takes self-tapes for the part from anyone in the US; the shoot is eight weekdays, eight weeks after
-  // the posting, so a visa can be decided before the flight. An agent's agreement covers work in the United States
-  // (`AGREEMENT_TERMS`' territory), so this is outside it: no agent puts the actor up for it, and none is owed commission.
+  // the posting, so a visa can be decided before the flight. Until 2026-10-25 every agent's agreement covered work in the
+  // United States only (`AGREEMENT_TERMS`' territory), so this was outside all of them: no agent put the actor up for it,
+  // and none was owed commission. From then an office can agree to add work abroad (brief 27, `coveredUnder`,
+  // `systems/representation.ts`), and under that agreement it's covered work and owes commission, as the agreement's
+  // Exclusive has it; its casting office still takes self-tapes from anyone in the US and no agent's submission
+  // (`access.agent` false), so the actor still submits for it themselves.
   {
     id: 'harbor-line', kind: 'overseas-feature', format: 'studio-feature', fictional: true,
     project: 'Harbor Line', company: 'Larkspur Pictures', casting: 'Brandt Casting',
@@ -547,8 +551,11 @@ export const PROJECTS: readonly ProjectTemplate[] = [
   },
   // Module 5's productions (from 2026-10-24, the owner's brief 25, Part 8): one or more for each way of working the
   // game didn't have (`content/workflows.ts`), every name, company and casting office invented, every part written for
-  // either. Their schedules' lengths are assumed. Voice-over work (the animated parts, the dub, the narration) is outside
-  // an agent's agreement (`AGREEMENT_TERMS`' What It Leaves Out), so it's posted for the actor's own submission.
+  // either. Their schedules' lengths are assumed. Voice-over work (the animated parts, the dub, the narration) was outside
+  // every agent's agreement until 2026-10-25 (`AGREEMENT_TERMS`' What It Leaves Out), so it was posted for the actor's
+  // own submission only. From then it's covered where an agreement's terms take it in, a voice-over department's or one an
+  // office agreed to add it to (brief 27, `coveredUnder`), and that agreement's agent puts the actor up for it too
+  // (`access.agent`, read through `submitsFor`); a legit agreement as first offered still leaves it out.
   {
     id: 'half-past-normal', kind: 'multicam-comedy', format: 'multicam-comedy', fictional: true,
     project: 'Half Past Normal', company: 'Corner Booth Productions', casting: 'Wexley Casting',

@@ -19,8 +19,11 @@
  * its postings, in the save's currency (`inSaveMoney`).
  *
  * **Commission, only when owed** (`commissionOn`), each rule from `representation.md`:
- * - **None unrepresented**, and none on work the agreement doesn't cover: its scope is stage, film and television in the
- *   United States (`AGREEMENT_TERMS`, a simulation term; commercials and voice-over sit elsewhere).
+ * - **None unrepresented**, and none on work the agreement doesn't cover. Until 2026-10-25 that was one scope for every
+ *   agreement, stage, film and television in the United States (`AGREEMENT_TERMS`, a simulation term; commercials and
+ *   voice-over sat elsewhere). From then it's each agreement's own terms (`coveredUnder`, `systems/representation.ts`,
+ *   brief 27): that scope as a legit department first offers it, voice-over as a voice-over department does, and
+ *   voice-over or the UK and Australia where an office agreed to add them.
  * - **Equity:** 5% on a weekly salary of $525 or less, 10% above (S28). Its rehearsal period at minimum salary,
  *   commissionable at 5% under Tier II (S28), isn't told apart: the game's pay doesn't split rehearsal weeks from
  *   performance weeks. None on the Equity-minimum part of per diem (S28): no engagement pays per diem.
@@ -152,7 +155,11 @@ export const BILLS_KEPT = 12;
  */
 export const SAG_QUALIFIES: readonly ProjectKind[] = ['network-drama', 'network-comedy', 'low-budget', 'overseas-feature'];
 
-/** What an agreement's scope covers: stage, film and television (`AGREEMENT_TERMS`, a simulation term), in the US. */
+/**
+ * The media a legit scope covers: stage, film and television (`AGREEMENT_TERMS`, a simulation term). Until 2026-10-25
+ * every agreement's, in the US; from then each agreement's territory is its own, and voice-over a scope of its own
+ * (`coveredUnder`, `systems/representation.ts`).
+ */
 export const COVERED_MEDIA: readonly ProMedium[] = ['stage', 'film', 'television'];
 
 /** SAG-AFTRA's joining: the initiation fee and half a year's base dues (S20, a search engine's copy). */
