@@ -272,10 +272,11 @@ export function termsDraw(sim: Simulation, personId: string, agentId: AgentId, a
 const answerTime = (sim: Simulation, agent: Agent): Instant => onDayAt(sim.now, TERMS.answerDays, AGENT_TIMES.answerHour, officeZone(agent));
 
 /**
- * What the game says of a real agent's answer (from the review of 2026-10-25): the agency's pages say nothing of its terms,
- * so whether the office agrees is the game's, as every chance an office takes you further is (`REAL_CHANCE_WORDS`).
+ * What the game says of a real agent's answer (from the review of 2026-10-25): the agency's pages the game read (its
+ * sources, N05, N09, N11 and S101) say nothing of its terms, so whether the office agrees is the game's, as every chance
+ * an office takes you further is (`REAL_CHANCE_WORDS`).
  */
-export const realTermsWords = (agent: Agent): string => `${agencyOf(agent).name}’s pages say nothing of the terms its agents agree to, so whether ${agent.words.office} agrees is the game’s invention, not a fact about ${agent.name}.`;
+export const realTermsWords = (agent: Agent): string => `The pages the game read from ${agencyOf(agent).name} say nothing of the terms its agents agree to, so whether ${agent.words.office} agrees is the game’s invention, not a fact about ${agent.name}.`;
 
 /** How an ask came out, in a sentence's end. */
 const answerWords = (agent: Agent, answer: NonNullable<AgreementAsk['answer']>): string => (answer === 'agreed' ? `${agent.words.office} agreed` : `${agent.words.office} kept the terms as offered`);
