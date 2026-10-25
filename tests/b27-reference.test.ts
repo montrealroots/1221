@@ -152,6 +152,19 @@ describe('the game’s own projects', () => {
     expect(pageOf(sim, sim.player, { kind: 'company', id: `casting:${never.casting}` })).toBeUndefined();
   }, 300_000);
 
+  it('links a company or casting office the game names, never one it only describes, such as a student film’s', () => {
+    const sim = graduate('b27-reference-named');
+    const t = projectById('paper-moons')!;
+    // TEST SETUP: the student film posted to the player, as its call is posted.
+    sim.player.pro!.opportunities.push({ id: sim.nextId('pro'), projectId: t.id, via: 'open', status: 'open', postedAt: sim.now, submitBy: sim.now + 7 * MS_DAY, history: [], counts: {} });
+    const page = pageOf(sim, sim.player, { kind: 'project', id: t.project })!;
+    expect(factOf(page, 'The Project', 'Company')).toEqual({ label: 'Company', words: t.company, known: 'simulated' });
+    expect(factOf(page, 'The Project', 'Casting')).toEqual({ label: 'Casting', words: t.casting, known: 'simulated' });
+    expect(pageOf(sim, sim.player, { kind: 'company', id: `company:${t.company}` })).toBeUndefined();
+    expect(pageOf(sim, sim.player, { kind: 'company', id: `casting:${t.casting}` })).toBeUndefined();
+    expect(refIndex(sim, sim.player).flatMap((g) => g.entries).some((e) => e.words === t.company || e.words === t.casting)).toBe(false);
+  });
+
   it('PLAYER JOURNEY: the Desk Clerk’s project shows the part, the work, the credit and what happened, and links to its company, its casting office, its series, the season and the episode its shoot fell on', () => {
     const { sim } = clerk('b27-reference-clerk');
     const e = sim.player.pro!.engagements[0]!;

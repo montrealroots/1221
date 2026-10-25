@@ -6,6 +6,9 @@
  * brief 19, so the save is brought forward as any older save is) and plays it on by `tools/career-player.ts`: the attentive
  * player's hours, every commitment stopped at and answered with Go, and the career's business through public commands
  * only. To what the player tool's actors do, this adds what an actor does with the rest of the career brief 27 built:
+ * - a reel cut from released screen work, cut again when the record moves past it, and a voice demo mixed;
+ * - after the degree, an agent at Stewart Talent approached by a referral from a finished job, what the office asks for
+ *   sent, and an agreement offered accepted;
  * - SAG-AFTRA joined once a first principal job makes it possible;
  * - the agent asked for more on an offer, once, where an agent represents the actor;
  * - an Emmy entry and an Actor Awards submission for each eligible credit while it's open and the bank can pay;
@@ -29,7 +32,9 @@ import { formatMoney, saveCurrency } from '../src/engine/core/money';
 import { netWorth } from '../src/engine/systems/finance';
 import { stopChoices } from '../src/engine/world/clock';
 import { projectById } from '../src/engine/content/careerwork';
-import { activeAgreement } from '../src/engine/systems/pro';
+import { DEMO, REEL, activeAgreement, currentOf, demoRefusal, demoSources, materialsCheck, reelRefusal, reelSources } from '../src/engine/systems/pro';
+import { AGENTS } from '../src/engine/content/agents';
+import { checkRefusal, offeredAgreement, referralRefusal, referrersOf, relationOf, sendRefusal, supplyRefusal } from '../src/engine/systems/proagent';
 import { askMoreRefusal } from '../src/engine/systems/projobs';
 import { joinSagRefusal } from '../src/engine/systems/propay';
 import { entryRefusal } from '../src/engine/systems/awards';
@@ -48,6 +53,50 @@ const keepOut = arg('keep', '');
 const raw = gunzipSync(readFileSync(`tests/fixtures/journey-j01-${which}-8283f80c.json.gz`)).toString('utf8');
 const sim: Simulation = loadSave(deserialise(raw) as never);
 const startedAt = sim.now;
+
+/**
+ * The portfolio kept up as a working actor keeps it (the player tool's unsigned actor makes headshots and a résumé and
+ * no more): a reel cut from released screen work once there's any, cut again when the record has moved past it, and a
+ * voice demo mixed from voice recordings, so screen and voice casting take a submission. True when it took time.
+ */
+const portfolio: CareerStep = (s, player) => {
+  const t = player.transcript;
+  const person = s.player;
+  const pro = person.pro!;
+  const before = s.now;
+  const reel = reelSources(person, s.now).filter((x) => x.usable).slice(0, REEL.most).map((x) => x.ref);
+  const reelBehind = materialsCheck(person, 'screen', s.now).some((x) => x.kind === 'reel');
+  if (reel.length && (!currentOf(pro, 'reel') || reelBehind) && !reelRefusal(s, person, reel)) press(s, t, `Cut A Reel (${reel.length})`, 'pro.cut_reel', { pieces: reel });
+  const demo = demoSources(person, s.now).filter((x) => x.usable).slice(0, DEMO.most).map((x) => x.ref);
+  if (s.now === before && demo.length && !currentOf(pro, 'demo') && !demoRefusal(s, person, demo)) press(s, t, `Mix A Voice Demo (${demo.length})`, 'pro.mix_demo', { pieces: demo });
+  return s.now > before;
+};
+
+/**
+ * An agent approached the way an unsigned actor can after the School (the referral route the real agents at Stewart Talent
+ * take, `content/agents.ts`): the notice read, the materials checked, a referral asked for from a finished job judged well
+ * enough, the materials sent; what the office asks for made and sent; an agreement offered, accepted. One agent at a
+ * time, and none while one represents the actor. True when it took time.
+ */
+const agents: CareerStep = (s, player) => {
+  const t = player.transcript;
+  const person = s.player;
+  const before = s.now;
+  if (activeAgreement(person, s.now)) return false;
+  for (const agent of AGENTS.filter((a) => a.routes.includes('referral'))) {
+    const rel = relationOf(person, agent.id);
+    if (rel && ['sent', 'waiting', 'meeting', 'deciding'].includes(rel.stage)) return false;
+    if (offeredAgreement(person, agent)) { press(s, t, `Accept The Agreement (${agent.name})`, 'pro.accept_agreement', { agentId: agent.id }); return s.now > before; }
+    if (rel?.stage === 'requested' && !supplyRefusal(s, person, agent)) { press(s, t, `Send What The Office Asked For (${agent.name})`, 'pro.supply_material', { agentId: agent.id }); return s.now > before; }
+    const job = referrersOf(s, person, agent).find((r) => !r.why);
+    if (!job) continue;
+    if (rel?.noticeShownAt === undefined) press(s, t, `I've Read This (${agent.name})`, 'pro.agent_notice', { agentId: agent.id });
+    if (!checkRefusal(s, person, agent)) press(s, t, `Check Your Materials (${agent.name})`, 'pro.agent_check', { agentId: agent.id });
+    if (!referralRefusal(s, person, agent, job.engagementId)) press(s, t, `Ask For A Referral (${agent.name}, ${job.job})`, 'pro.ask_referral', { agentId: agent.id, engagementId: job.engagementId });
+    if (!sendRefusal(s, person, agent)) { press(s, t, `Send Your Materials (${agent.name})`, 'pro.send_materials', { agentId: agent.id }); return s.now > before; }
+  }
+  return s.now > before;
+};
 
 /** What an actor does with the rest of the career, before the player tool's own business. True when it took time. */
 const recognition: CareerStep = (s, player) => {
@@ -73,7 +122,7 @@ const recognition: CareerStep = (s, player) => {
 };
 const own: CareerStep = which === 'last-term' ? graduatingActor({ joinSag: true, agreement: 'accept' }) : unsignedActor();
 const player: Player = {
-  career: (s, p) => recognition(s, p) || own(s, p),
+  career: (s, p) => recognition(s, p) || portfolio(s, p) || (which === 'degree' && agents(s, p)) || own(s, p),
   // The moment to go up: its own choice, Go Up And Accept; every other stop answered with Go.
   stop: (_s, item) => (item.kind === SPEECH_KIND ? stopChoices(SPEECH_KIND)[0]! : 'go'),
   transcript: transcriptFrom(sim),

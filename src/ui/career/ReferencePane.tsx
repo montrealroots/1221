@@ -84,7 +84,7 @@ function Entries({ id, entries, open, empty }: { id: string; entries: readonly R
         {shown.map((e) => (
           <li key={refId(e.key)}>
             <button type="button" className="link" onClick={() => open(e.key)}>{e.words}</button>
-            {` ${e.note}. `}<Tag known={e.known} />
+            {`, ${e.note}. `}<Tag known={e.known} />
           </li>
         ))}
       </ul>

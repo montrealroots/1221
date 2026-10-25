@@ -708,7 +708,7 @@ Held by `tests/b27-reference.test.ts`:
 - Find;
 - the Career screen drawn over the real kept store, with a role's project opened, followed, left for Charts And Awards and found again.
 
-All seventeen mutations failed a test:
+All eighteen mutations failed a test:
 - a drawn part met unposted;
 - a page for a project nobody posted;
 - a chart week before it ends;
@@ -725,7 +725,8 @@ All seventeen mutations failed a test:
 - the tab not turned;
 - the trail not kept;
 - the network's word before it's said;
-- an award entry left off.
+- an award entry left off;
+- a description linked as a company (from F's walk, defect 13).
 
 The canceled season survived until the network's word had a test: the Desk Clerk's series had no word yet.
 
@@ -747,4 +748,5 @@ The canceled season survived until the network's word had a test: the Desk Clerk
 | 10 | `worktrip.ts`, a way home booked again | waited on the canceled leg before it, canceled itself, and left the trip in the work's town | the leg before it that still counts is read, so a way booked again starts afresh | `tests/b27-weather.test.ts` |
 | 11 | `workflow.ts`'s `clearWeekday`, a recall to loop set after a reshoot | kept off other loops alone, so a loop drawn after a reshoot could land on its day, the two set for the same hours | kept off any recall set: a loop, a reshoot or pickup session, a promotional film | `tests/b27-promo.test.ts` |
 | 12 | `tutorial.ts`, the guide's Finding Work chapter (K7's commit) | K7's four commands in no chapter, so the coverage matrix's three cases failed in `tests/tutorial.test.ts` | Finding Work opens them, with a paragraph and their buttons' names, and the coverage matrix's row says so | `tests/tutorial.test.ts`, `tests/help-mechanics.test.ts` |
+| 13 | `reference.ts`, a game project's Company and Casting | a student film's company and casting office, which the game only describes ("a graduate film program's thesis production", "the film's director"), linked to pages titled with the description, and listed among the companies; found by F's walk of the built app | only a name the game gives links or is listed; a description stays words | `tests/b27-reference.test.ts`, mutation R18 |
 

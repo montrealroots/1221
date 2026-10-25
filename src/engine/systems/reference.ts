@@ -279,12 +279,18 @@ function productionPage(sim: Simulation, person: Person, p: Production): RefPage
 // One of the game's projects
 // ---------------------------------------------------------------------------------------------------------------------
 
-const companyKey = (name: string): RefKey => {
+/**
+ * A company or casting office the game names, as against one it describes: a student film's "a graduate film program's
+ * thesis production", cast by "the film's director", is no company of its own, so it has no page. Found by brief 27's F walk,
+ * which opened such a page titled with the description.
+ */
+const named = (s: string): boolean => /^[A-Z0-9]/.test(s);
+const companyKey = (name: string): RefKey | undefined => {
   const real = COMPANIES.find((c) => c.name === name);
-  return { kind: 'company', id: real ? `catalog:${real.id}` : `company:${name}` };
+  return real ? { kind: 'company', id: `catalog:${real.id}` } : named(name) ? { kind: 'company', id: `company:${name}` } : undefined;
 };
 /** A casting office the game names, with a page; the production's own, unnamed, has none. */
-const castingKey = (t: ProjectTemplate): RefKey | undefined => (t.fictional ? { kind: 'company', id: `casting:${t.casting}` } : undefined);
+const castingKey = (t: ProjectTemplate): RefKey | undefined => (t.fictional && named(t.casting) ? { kind: 'company', id: `casting:${t.casting}` } : undefined);
 
 function projectPage(sim: Simulation, person: Person, key: RefKey, parts: ProjectTemplate[]): RefPage {
   const t = parts[0]!;
@@ -561,8 +567,8 @@ export function pageOf(sim: Simulation, person: Person, key: RefKey): RefPage | 
     const [space, ...rest] = key.id.split(':');
     const id = rest.join(':');
     if (space === 'catalog') return COMPANIES.some((c) => c.id === id) ? catalogCompanyPage(id) : undefined;
-    if (space === 'company') return metParts(person).some((t) => t.company === id && !t.drawn) || seriesHeld(sim).some((x) => x.company === id) ? gameCompanyPage(sim, person, id) : undefined;
-    if (space === 'casting') return metParts(person).some((t) => t.fictional && t.casting === id) ? castingPage(sim, person, id) : undefined;
+    if (space === 'company') return named(id) && (metParts(person).some((t) => t.company === id && !t.drawn) || seriesHeld(sim).some((x) => x.company === id)) ? gameCompanyPage(sim, person, id) : undefined;
+    if (space === 'casting') return named(id) && metParts(person).some((t) => t.fictional && t.casting === id) ? castingPage(sim, person, id) : undefined;
     if (space === 'agency') return agencyPage(person, id);
     return undefined;
   }
@@ -579,8 +585,8 @@ export function refIndex(sim: Simulation, person: Person): { title: string; entr
   const productions = CATALOG.map((p): RefEntry => ({ key: { kind: 'production', id: p.id }, words: p.title, known: 'verified', note: `A real ${p.format}` }));
   const companies: RefEntry[] = [
     ...COMPANIES.map((c): RefEntry => ({ key: { kind: 'company', id: `catalog:${c.id}` }, words: c.name, known: 'verified', note: 'A real company' })),
-    ...[...new Set([...metParts(person).filter((t) => !t.drawn).map((t) => t.company), ...seriesHeld(sim).map((s) => s.company)])].filter((n) => !COMPANIES.some((c) => c.name === n)).map((n): RefEntry => ({ key: { kind: 'company', id: `company:${n}` }, words: n, known: 'simulated', note: 'A company invented for the game' })),
-    ...[...new Set(metParts(person).filter((t) => t.fictional).map((t) => t.casting))].map((n): RefEntry => ({ key: { kind: 'company', id: `casting:${n}` }, words: n, known: 'simulated', note: 'A casting office invented for the game' })),
+    ...[...new Set([...metParts(person).filter((t) => !t.drawn).map((t) => t.company), ...seriesHeld(sim).map((s) => s.company)])].filter((n) => named(n) && !COMPANIES.some((c) => c.name === n)).map((n): RefEntry => ({ key: { kind: 'company', id: `company:${n}` }, words: n, known: 'simulated', note: 'A company invented for the game' })),
+    ...[...new Set(metParts(person).filter((t) => t.fictional && named(t.casting)).map((t) => t.casting))].map((n): RefEntry => ({ key: { kind: 'company', id: `casting:${n}` }, words: n, known: 'simulated', note: 'A casting office invented for the game' })),
     ...AGENCIES.map((a): RefEntry => ({ key: { kind: 'company', id: `agency:${a.id}` }, words: a.name, known: a.real ? 'verified' : 'simulated', note: a.real ? 'A real talent agency' : 'A talent agency invented for the game' })),
     ...AGENCY_RECORDS.filter((r) => !AGENCIES.some((a) => a.name === r.name)).map((r): RefEntry => ({ key: { kind: 'company', id: `agency:${r.id}` }, words: r.name, known: 'verified', note: 'A real talent agency' })),
   ];

@@ -2,11 +2,11 @@
 // app, at a desk (1440 x 900), on a phone on its side (844 x 390) and upright (390 x 844), each from a long career's save
 // (`tools/long-career.ts --keep`). At each size, pressed as a player presses it:
 //   1. Career, then Productions And People: the front page, its lists and Find;
-//   2. the first project under Your Work, then its series, a season and an episode, each a link on the page before;
-//   3. Back to the project, by Back three times: the same page as left;
-//   4. an action on the project's page, to the tab it names, then Productions And People again: the same page, the
-//      same trail;
-//   5. the trail's first crumb to the front page, Find a real person's name, and that person's page;
+//   2. a project under Your Work, the first whose page offers an action, and its company and Back to it;
+//   3. that action, to the tab it names, then Productions And People again: the same page, the same trail;
+//   4. the trail's first crumb to the front page, a series, its season under way and an episode, each a link on the
+//      page before, and Back twice to the series;
+//   5. Find a real person's name, and that person's page;
 //   6. Charts And Awards, Your Recognition: the Actor Awards and, for a nomination, the ceremony's controls.
 // At each step: no page error, nothing wider than the window, every control on screen or in a box that scrolls.
 //
@@ -91,39 +91,28 @@ for (const size of SIZES) {
     });
     let project = null;
     await step('project', async () => {
-      const first = page.locator('#main section, #main .card').filter({ has: page.getByRole('heading', { name: /^Your Work$/ }) }).first().locator('button.link').first();
-      project = (await first.textContent())?.trim();
-      await press(first);
-      return { project };
-    });
-    await step('series-or-company', async () => {
-      const series = link(/^The Calloway Files$/);
-      const target = (await series.count()) ? series : page.locator('#main dd button.link').first();
-      const name = (await target.textContent())?.trim();
-      await press(target);
-      return { opened: name };
-    });
-    await step('season', async () => {
-      const s = link(/shot from|shooting from|to shoot from/);
-      if (!(await s.count())) return { skipped: 'no season on this page' };
-      await press(s);
-      return { opened: true };
-    });
-    await step('episode', async () => {
-      const e = link(/^First shot on/);
-      if (!(await e.count())) return { skipped: 'no episode on this page' };
-      await press(e);
-      return { opened: true };
-    });
-    await step('back-to-project', async () => {
-      for (let i = 0; i < 3; i += 1) {
-        const h = (await page.locator('#main h2').first().textContent())?.trim() ?? '';
-        if (project && h.startsWith(project)) break;
-        await press(page.getByRole('button', { name: /^Back$/ }).first());
+      // The first project under Your Work whose page offers an action, else the first: each opened, and Back if it has none.
+      const entries = () => page.locator('#main section, #main .card').filter({ has: page.getByRole('heading', { name: /^Your Work$/ }) }).first().locator('button.link');
+      const count = Math.min(8, await entries().count());
+      for (let i = 0; i < count; i += 1) {
+        const e = entries().nth(i);
+        project = (await e.textContent())?.trim();
+        await press(e);
+        if (await page.getByRole('heading', { name: /^What You Can Do$/ }).count()) return { project, withAction: true, tried: i + 1 };
+        if (i < count - 1) await press(page.getByRole('button', { name: /^Back$/ }).first());
       }
+      return { project, withAction: false };
+    });
+    await step('company-and-back', async () => {
+      const c = page.locator('#main dd button.link').first();
+      if (!(await c.count())) return { skipped: 'no linked company on this page' };
+      const name = (await c.textContent())?.trim();
+      await press(c);
+      const opened = (await page.locator('#main h2').first().textContent())?.trim();
+      await press(page.getByRole('button', { name: /^Back$/ }).first());
       const h = (await page.locator('#main h2').first().textContent())?.trim() ?? '';
       if (project && !h.startsWith(project)) throw new Error(`Back reached “${h}”, not “${project}”`);
-      return { heading: h };
+      return { opened: name, heading: opened, backTo: h };
     });
     await step('action-and-return', async () => {
       const action = page.locator('#main button').filter({ hasText: /^Open (Opportunities|Work|Charts And Awards|Representation|Portfolio)$/ }).first();
@@ -135,6 +124,28 @@ for (const size of SIZES) {
       const h = (await page.locator('#main h2').first().textContent())?.trim() ?? '';
       if (project && !h.startsWith(project)) throw new Error(`came back to “${h}”, not “${project}”`);
       return { pressed: label, opened, cameBackTo: h };
+    });
+    await step('series', async () => {
+      await press(page.locator('nav[aria-label="Pages followed"] button.link').filter({ hasText: /^Productions And People$/ }).first());
+      await press(page.locator('#main section, #main .card').filter({ has: page.getByRole('heading', { name: /^Series$/ }) }).first().locator('button.link').filter({ hasText: /^The Calloway Files$/ }).first());
+      return { heading: (await page.locator('#main h2').first().textContent())?.trim() };
+    });
+    await step('season', async () => {
+      const seasons = page.locator('#main button.link').filter({ hasText: /shot from|shooting from|to shoot from/ });
+      const s = (await page.locator('#main button.link').filter({ hasText: /shooting from/ }).count()) ? page.locator('#main button.link').filter({ hasText: /shooting from/ }).first() : seasons.last();
+      await press(s);
+      return { heading: (await page.locator('#main h2').first().textContent())?.trim() };
+    });
+    await step('episode', async () => {
+      await press(link(/^First shot on/));
+      return { heading: (await page.locator('#main h2').first().textContent())?.trim() };
+    });
+    await step('back-to-series', async () => {
+      await press(page.getByRole('button', { name: /^Back$/ }).first());
+      await press(page.getByRole('button', { name: /^Back$/ }).first());
+      const h = (await page.locator('#main h2').first().textContent())?.trim() ?? '';
+      if (!h.startsWith('The Calloway Files')) throw new Error(`Back reached “${h}”`);
+      return { heading: h };
     });
     await step('find-a-person', async () => {
       await press(page.locator('nav[aria-label="Pages followed"] button.link').filter({ hasText: /^Productions And People$/ }).first());
