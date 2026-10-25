@@ -86,7 +86,8 @@ import { AXES } from '@/engine/content/approaches';
 import { genreState } from '@/engine/systems/engagement';
 import { projectById } from '@/engine/content/careerwork';
 import { unitContext } from '@/engine/systems/workflow';
-import type { Engagement, WorkUnit } from '@/engine/systems/pro';
+import type { AuditionRound, Engagement, Opportunity, WorkUnit } from '@/engine/systems/pro';
+import { auditionContext } from '@/engine/systems/projobs';
 
 const h = vi.hoisted(() => ({
   sim: undefined as unknown as import('@/engine/core/simulation').Simulation,
@@ -486,7 +487,18 @@ function proUnit(task: string, projectId: string): Judged {
   const ctx = { ...unitContext(sim, sim.player, e, projectById(projectId)!, u, 1, TASK_PROFILES[task]!, {}, 1), condition: { readiness: 100 }, key: `p2b:pro:${task}`, expected: true };
   return (p) => judge('p2b', p, ctx);
 }
-/** Every piece of each kind of work, by the task it's judged as: every template, every brief at its first reading, every class scene, every night, and a professional unit of each kind the workflows judge. */
+/**
+ * A chemistry read's or a screen test's round on a screen part, judged as the game judges one (`auditionContext`, from
+ * 2026-10-24, the owner's brief 27, Part 9): the rounds after a callback, each its own task.
+ */
+function roundPiece(round: 'chemistry' | 'test', projectId: string): Judged {
+  const sim = life(`p2b-round-${round}`);
+  const o = { id: 'o1', projectId, via: 'open', status: 'callback', postedAt: sim.now, submitBy: sim.now, history: [], counts: {}, prep: { interpretation: 1, memorization: 1, rehearsal: 1 } } as unknown as Opportunity;
+  const r: AuditionRound = { round, form: 'in-person', at: sim.now, status: 'set' };
+  const ctx = { ...auditionContext(sim, sim.player, o, r, 0), condition: { readiness: 100 }, key: `p2b:round:${round}`, expected: true };
+  return (p) => judge('p2b', p, ctx);
+}
+/** Every piece of each kind of work, by the task it's judged as: every template, every brief at its first reading, every class scene, every night, and a professional unit of each kind the workflows judge, and from 2026-10-24 a chemistry read's and a screen test's round. */
 const PIECES_BY_TASK: Readonly<Record<string, readonly Judged[]>> = (() => {
   const out: Record<string, Judged[]> = {};
   const add = (j: Judged) => { (out[j(EVEN).task] ??= []).push(j); };
@@ -495,6 +507,7 @@ const PIECES_BY_TASK: Readonly<Record<string, readonly Judged[]>> = (() => {
   for (const m of SCENE_MATERIAL) { const pc = gamePiece(m, 'scene'); add((p) => pc.judge(p)); }
   for (const m of PLAY_MATERIAL) { const pc = gamePiece(m, 'night'); add((p) => pc.judge(p)); }
   for (const [task, projectId] of PRO_PIECES) add(proUnit(task, projectId));
+  for (const round of ['chemistry', 'test'] as const) add(roundPiece(round, 'route-nine'));
   return out;
 })();
 const dimsOf = (e: Evaluation): Partial<Record<Dimension, number>> => Object.fromEntries(e.dimensions.map((d) => [d.dimension, d.exact ?? d.quality]));

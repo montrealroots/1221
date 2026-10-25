@@ -290,6 +290,30 @@ export const TASK_PROFILES: Readonly<Record<string, TaskProfile>> = {
       consistency: { weight: 1, inputs: [a('composure', 2)], conditions: ALL },
     },
   },
+  // A chemistry read and a screen test (from 2026-10-24, the owner's brief 27, Part 9), the rounds a lead's casting adds after
+  // a callback. SLATE's reading of each: a chemistry read is the sides played with an actor already cast, so listening
+  // and adapting to them carry it beside the believability an audition asks; a screen test is the part filmed on set in
+  // costume, take after take, so the camera's believability, presence to the lens and the composure and discipline to hold
+  // it do: discipline as consistency reads it wherever it's judged, as Discipline's sentence says.
+  chemistry: {
+    id: 'chemistry', label: 'A Chemistry Read', what: 'The sides played with an actor already cast, for the casting office and the director.', prepLabel: { ...COURSEWORK_PREP, genre: 'Knowing the genre' },
+    dims: {
+      responsiveness: { weight: 3, inputs: [a('listening', 3), a('adaptability', 2), tech(1)], prep: ['rehearsal'], conditions: ALL },
+      connection: { weight: 3, inputs: [a('listening', 1), a('emotionalDepth', 1), a('presence', 1)], prep: ['rehearsal'], conditions: ALL },
+      believability: { weight: 2, inputs: [a('emotionalDepth', 2), tech(1)], prep: ['interpretation', 'memorization'], conditions: ALL },
+      interpretation: { weight: 1, inputs: [a('imagination', 2), tech(1)], prep: ['interpretation', 'genre'] },
+    },
+  },
+  screenTest: {
+    id: 'screenTest', label: 'A Screen Test', what: 'The part filmed on set in costume and makeup, take after take, for the producers.', prepLabel: { ...COURSEWORK_PREP, genre: 'Knowing the genre' },
+    dims: {
+      believability: { weight: 3, inputs: [a('emotionalDepth', 3), tech(1)], prep: ['interpretation', 'memorization'], conditions: ALL },
+      execution: { weight: 2, inputs: [a('memory', 2), a('focus', 1), tech(2)], prep: ['memorization', 'rehearsal'], conditions: ALL },
+      connection: { weight: 2, inputs: [a('presence', 2)], prep: ['rehearsal'], conditions: ALL },
+      consistency: { weight: 2, inputs: [a('composure', 2), a('discipline', 1), a('stamina', 1)], prep: ['rehearsal'], conditions: ALL },
+      interpretation: { weight: 1, inputs: [a('imagination', 2), tech(1)], prep: ['interpretation', 'genre'] },
+    },
+  },
   // The professional workflows' own (from 2026-10-24, the owner's brief 25, Part 8; `content/workflows.ts`). Until then a
   // professional day was a night on stage or a shoot day judged as a self-tape, whatever the work: a session in a booth,
   // a dub, a capture stage, a narration, a tape night before a studio audience, a musical's night and a stunt had no

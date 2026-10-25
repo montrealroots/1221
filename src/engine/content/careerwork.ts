@@ -269,8 +269,11 @@ export interface ProjectTemplate {
      */
     sends: readonly ('headshot' | 'resume' | 'reel' | 'demo')[];
   };
-  /** The stages it uses: how it's auditioned, and whether there's a callback. */
-  stages: { audition: 'self-tape' | 'in-person'; callback: boolean };
+  /**
+   * The stages it uses: how it's auditioned, and whether there's a callback; from 2026-10-24 (brief 27, Part 9) a chemistry
+   * read with the actors already cast, and a screen test on film, each in person after the callback, where a part has them.
+   */
+  stages: { audition: 'self-tape' | 'in-person'; callback: boolean; chemistry?: true; test?: true };
   /**
    * A run's rehearsal and performance weeks, a shoot's days, or a recurring part's episodes in a season of its series
    * (`content/series.ts`, from 2026-10-24, brief 25's Module 4, D7): the episodes its contract guarantees, the next ones

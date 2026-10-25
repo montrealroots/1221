@@ -591,7 +591,7 @@
    "kind": "pro.prepare",
    "payload": "{ ...target, step: 'special' }",
    "verdict": "Right",
-   "handler": "src/engine/systems/projobs.ts:2209",
+   "handler": "src/engine/systems/projobs.ts:2256",
    "note": "The work's own preparation (Find The Voice, Watch The Original, Work On The Movement and the rest) prepares that step on the booked work; its refusal (prepareRefusal, 'special') is the button's title, and Fight Rehearsal is refused here, done only on the work's rehearsal days with the coordinator. Read on 2026-10-24 by its builder (brief 25's Module 5), pressed through the command in tests/career-workflows-screen.test.ts."
   },
   {
@@ -602,7 +602,7 @@
    "kind": "pro.prepare",
    "payload": "{ ...target, step }",
    "verdict": "Right",
-   "handler": "src/engine/systems/projobs.ts:2209"
+   "handler": "src/engine/systems/projobs.ts:2256"
   },
   {
    "file": "src/ui/career/OpportunitiesPane.tsx",
@@ -612,7 +612,7 @@
    "kind": "pro.accept_offer",
    "payload": "{ opportunityId: o.id }",
    "verdict": "Right",
-   "handler": "src/engine/systems/projobs.ts:2252"
+   "handler": "src/engine/systems/projobs.ts:2299"
   },
   {
    "file": "src/ui/career/OpportunitiesPane.tsx",
@@ -622,7 +622,7 @@
    "kind": "pro.move_audition",
    "payload": "{ opportunityId: o.id }",
    "verdict": "Right",
-   "handler": "src/engine/systems/projobs.ts:2234"
+   "handler": "src/engine/systems/projobs.ts:2281"
   },
   {
    "file": "src/ui/career/OpportunitiesPane.tsx",
@@ -632,7 +632,7 @@
    "kind": "pro.request_outside_work",
    "payload": "{ opportunityId: o.id }",
    "verdict": "Right",
-   "handler": "src/engine/systems/projobs.ts:2307"
+   "handler": "src/engine/systems/projobs.ts:2354"
   },
   {
    "file": "src/ui/career/OpportunitiesPane.tsx",
@@ -642,7 +642,7 @@
    "kind": "pro.decline_offer",
    "payload": "{ opportunityId: o.id }",
    "verdict": "Right",
-   "handler": "src/engine/systems/projobs.ts:2295"
+   "handler": "src/engine/systems/projobs.ts:2342"
   },
   {
    "file": "src/ui/career/OpportunitiesPane.tsx",
@@ -652,7 +652,7 @@
    "kind": "pro.submit",
    "payload": "{ opportunityId: o.id }",
    "verdict": "Right",
-   "handler": "src/engine/systems/projobs.ts:2200"
+   "handler": "src/engine/systems/projobs.ts:2247"
   },
   {
    "file": "src/ui/career/OpportunitiesPane.tsx",
@@ -662,7 +662,7 @@
    "kind": "pro.tape_audition",
    "payload": "{ opportunityId: o.id }",
    "verdict": "Right",
-   "handler": "src/engine/systems/projobs.ts:2219"
+   "handler": "src/engine/systems/projobs.ts:2266"
   },
   {
    "file": "src/ui/career/RepresentationPane.tsx",
@@ -1561,7 +1561,7 @@
    "kind": "pro.update_resume",
    "payload": "",
    "verdict": "Right",
-   "handler": "src/engine/systems/pro.ts:1299"
+   "handler": "src/engine/systems/pro.ts:1300"
   },
   {
    "file": "src/ui/workspaces/CareerWorkspace.tsx",
@@ -1571,7 +1571,7 @@
    "kind": "pro.headshots",
    "payload": "",
    "verdict": "Right",
-   "handler": "src/engine/systems/pro.ts:1282"
+   "handler": "src/engine/systems/pro.ts:1283"
   },
   {
    "file": "src/ui/workspaces/CareerWorkspace.tsx",
@@ -1581,7 +1581,7 @@
    "kind": "pro.cut_reel",
    "payload": "{ pieces: chosen }",
    "verdict": "Right",
-   "handler": "src/engine/systems/pro.ts:1311"
+   "handler": "src/engine/systems/pro.ts:1312"
   },
   {
    "file": "src/ui/workspaces/CareerWorkspace.tsx",
@@ -1591,7 +1591,7 @@
    "kind": "pro.mix_demo",
    "payload": "{ pieces: chosen }",
    "verdict": "Right",
-   "handler": "src/engine/systems/pro.ts:1332",
+   "handler": "src/engine/systems/pro.ts:1333",
    "note": "Mix A Voice Demo mixes the ticked voice recordings into a new version of the demo, its cost from the bank and two hours on the clock; its refusal (demoRefusal) is its title. Read on 2026-10-24 by its builder (brief 27, K3), pressed through the Portfolio tab in tests/b27-voice-demo.test.ts."
   },
   {
@@ -1602,7 +1602,7 @@
    "kind": "pro.set_name",
    "payload": "{ name }",
    "verdict": "Right",
-   "handler": "src/engine/systems/pro.ts:1270"
+   "handler": "src/engine/systems/pro.ts:1271"
   },
   {
    "file": "src/ui/workspaces/PapersWorkspace.tsx",
@@ -2090,7 +2090,7 @@
    "kind": "pro.accept_offer",
    "payload": "{ opportunityId: o.id }",
    "verdict": "Right",
-   "handler": "src/engine/systems/projobs.ts:2252"
+   "handler": "src/engine/systems/projobs.ts:2299"
   },
   {
    "file": "src/engine/systems/projobs.ts",
@@ -2098,7 +2098,7 @@
    "kind": "pro.decline_offer",
    "payload": "{ opportunityId: o.id }",
    "verdict": "Right",
-   "handler": "src/engine/systems/projobs.ts:2295"
+   "handler": "src/engine/systems/projobs.ts:2342"
   },
   {
    "file": "src/engine/systems/taxreturn.ts",

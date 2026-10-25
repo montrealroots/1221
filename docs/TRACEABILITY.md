@@ -282,7 +282,7 @@ money, what it sets going next, and how many test files name it or its constant.
 | `pro.pay.payday` | `systems/propay.ts` | systems/contracts.ts; systems/propay.ts | — | — | — | 8 |
 | `pro.pay.release` | `systems/propay.ts` | systems/projobs.ts; systems/propay.ts | — | — | — | 4 |
 | `pro.pay.sag_eligible` | `systems/propay.ts` | systems/propay.ts | — | Yes | pro.pay.sag_eligible; success | 4 |
-| `pro.reply` | `systems/projobs.ts` | systems/proagent.ts; systems/projobs.ts | — | — | — | 4 |
+| `pro.reply` | `systems/projobs.ts` | systems/proagent.ts; systems/projobs.ts | — | — | — | 6 |
 | `pro.residual.air` | `systems/contracts.ts` | systems/contracts.ts | — | — | — | 0 |
 | `pro.residual.pay` | `systems/contracts.ts` | systems/contracts.ts | — | — | pro.pay.payday; problem | 2 |
 | `pro.school_answer` | `systems/projobs.ts` | systems/projobs.ts | engagements (added to) | — | booked; declined; pro.school_answer; and 1 more | 0 |

@@ -23,7 +23,7 @@ import { FORMATS } from '@/engine/content/workflows';
 import { STEP_WORDS, stepOf, workflowOf } from '@/engine/systems/workflow';
 import { activeAgreement, type Engagement, type Opportunity } from '@/engine/systems/pro';
 import {
-  DEFERRED_WHY, FIELD_WORDS, MISSES, OUTSIDE_WORK, acceptRefusal, acceptWarning, againWords, agrees, castingAs, chanceWords, conditionsFor, counted, datesOf, decidesAt, drawnWords, kindPhrase, reachWords,
+  DEFERRED_WHY, FIELD_WORDS, MISSES, OUTSIDE_WORK, ROUND_WORDS, acceptRefusal, acceptWarning, againWords, agrees, castingAs, chanceWords, conditionsFor, counted, datesOf, decidesAt, drawnWords, kindPhrase, reachWords,
   demandsWords, eligibilityProblems, fitOf, fitWords, inSessionAny, materialProblems, moveRefusal, payTermsOf, payWords, prepMinutes,
   prepareRefusal, projectGenresOf, projectOf, requestFor, requestRefusal, roundToCome, submitRefusal, tapeRefusal, writtenFor, writtenForWords, intimacyWords,
 } from '@/engine/systems/projobs';
@@ -149,7 +149,7 @@ function InProgress({ o }: { o: Opportunity }) {
   // producers asked for, which the submission's own notice had already said right.
   const next = !r ? `Submitted. ${castingAs(t)} ${agrees(t, 'answers', 'answer')} soon.`
     : r.form === 'self-tape' ? `${r.round === 'callback' ? 'A callback self-tape' : 'A self-tape'}, due ${formatWeekdayDate(r.at, NY)} at ${formatTime(r.at, NY)}.`
-      : `${r.round === 'callback' ? 'A callback' : 'An audition'} in person at ${t.place.venue} in ${t.place.city}, ${formatWeekdayDate(r.at, NY)} at ${formatTime(r.at, NY)}.`;
+      : `${r.round === 'callback' ? 'A callback' : r.round === 'audition' ? 'An audition' : `A ${ROUND_WORDS[r.round].noun}`} in person at ${t.place.venue} in ${t.place.city}, ${formatWeekdayDate(r.at, NY)} at ${formatTime(r.at, NY)}.`;
   return (
     <article className="card card-tight col gap-3">
       <h3 style={{ margin: 0 }}>{`${t.role.part}, ${t.project}`}</h3>
@@ -289,7 +289,7 @@ function Settled({ o }: { o: Opportunity }) {
           <summary>Why It Went This Way</summary>
           <ul style={{ margin: 'var(--s2) 0 0', paddingLeft: '1.1rem' }}>
             {decided.map((r) => (
-              <li key={r.round}>{`${r.round === 'callback' ? 'The callback' : 'The audition'}: ${r.band ? BAND_LABEL[r.band] : 'not judged'}${r.held ? `. ${r.held.charAt(0).toUpperCase()}${r.held.slice(1)}` : ''}. The role’s fit: ${fitWords(r.casting!.fit)}. The field: ${FIELD_WORDS[t.kind]}. Casting’s chance from those, estimated: ${chanceWords(r.casting!.chance)}. ${r.casting!.yes ? 'It went your way.' : 'It went to another actor.'}`}</li>
+              <li key={r.round}>{`The ${ROUND_WORDS[r.round].noun}: ${r.band ? BAND_LABEL[r.band] : 'not judged'}${r.held ? `. ${r.held.charAt(0).toUpperCase()}${r.held.slice(1)}` : ''}. The role’s fit: ${fitWords(r.casting!.fit)}. The field: ${FIELD_WORDS[t.kind]}. Casting’s chance from those, estimated: ${chanceWords(r.casting!.chance)}. ${r.casting!.yes ? 'It went your way.' : 'It went to another actor.'}`}</li>
             ))}
             <li>{`Your fit for it now: you know its genre ${pct(fit.genre)} of the way, and your techniques are ${pct(fit.demands)} of the way to what the part asks at mastery.`}</li>
           </ul>

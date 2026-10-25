@@ -290,7 +290,8 @@ export interface PartPrep { interpretation: number; memorization: number; rehear
 
 /** One audition round (`systems/projobs.ts`): in person at a time, or a self-tape due by one. */
 export interface AuditionRound {
-  round: 'audition' | 'callback';
+  /** From 2026-10-24 (brief 27, Part 9) a chemistry read or a screen test too, each a round after the callback. */
+  round: 'audition' | 'callback' | 'chemistry' | 'test';
   form: 'in-person' | 'self-tape';
   /** In person, when it is; on tape, when it's due. */
   at: Instant;

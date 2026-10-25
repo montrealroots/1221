@@ -1973,6 +1973,13 @@
   "evidence": "Written for brief 25's Module 5 (the ways of working: the booth, the dub, narration, multicamera, performance capture, reenactment, the musical and action; a shoot's order and takes, revised pages, a recall to loop and a scene cut) to docs/STYLE.md and docs/GLOSSARY.md, every rule the agreements' own and every invention said as the game's; read where the player meets it in tests/career-workflows-screen.test.ts (the Work and Opportunities tabs drawn for a voice session, a multicamera week and an action shoot, through the clock and a reload at each stage) and tests/career-workflows.test.ts (each workflow's days, choices, reports and notices), with tools/voice-check.mjs, tools/tics.mjs and tools/title-case.mjs clean.",
   "first": "Pending"
  },
+ "src/engine/content/tasks.ts#TASK_PROFILES [chemistry]": {
+  "status": "Rewritten",
+  "hash": "5dda1f6e6bc3",
+  "on": "2026-10-24",
+  "evidence": "Written for brief 27's K4 (Part 9: chemistry reads and screen tests) to docs/STYLE.md and docs/GLOSSARY.md, and read where the player meets it: tests/b27-rounds.test.ts plays a feature's lead through the callback, the chemistry read and the screen test by the clock, holding each notice (A Chemistry Read For, A Screen Test For), each history line in the past (asked you to read with the actors already cast, Your chemistry read for ... was), the work record's task, the offer at the end, and a chemistry read slept through (You missed the chemistry read for, You Missed The Chemistry Read For). The audition's and the callback's words are as they were, held by brief 19's tests. tools/voice-check.mjs, tools/tics.mjs, tools/title-case.mjs, tools/plural-check.mjs and tools/spelling.mjs pass",
+  "first": "Pending"
+ },
  "src/engine/content/tasks.ts#TASK_PROFILES [clown]": {
   "status": "Retained",
   "hash": "6e3dc4aaa90c",
@@ -2049,6 +2056,13 @@
   "on": "2026-10-19",
   "reason": "What each kind of work is and the parts of preparing it, named in a teacher's words, the same names the card, the profile and the guide use.",
   "first": "Reviewed And Retained"
+ },
+ "src/engine/content/tasks.ts#TASK_PROFILES [screenTest]": {
+  "status": "Rewritten",
+  "hash": "99cd25a59cac",
+  "on": "2026-10-24",
+  "evidence": "Written for brief 27's K4 (Part 9: chemistry reads and screen tests) to docs/STYLE.md and docs/GLOSSARY.md, and read where the player meets it: tests/b27-rounds.test.ts plays a feature's lead through the callback, the chemistry read and the screen test by the clock, holding each notice (A Chemistry Read For, A Screen Test For), each history line in the past (asked you to read with the actors already cast, Your chemistry read for ... was), the work record's task, the offer at the end, and a chemistry read slept through (You missed the chemistry read for, You Missed The Chemistry Read For). The audition's and the callback's words are as they were, held by brief 19's tests. tools/voice-check.mjs, tools/tics.mjs, tools/title-case.mjs, tools/plural-check.mjs and tools/spelling.mjs pass",
+  "first": "Pending"
  },
  "src/engine/content/tasks.ts#TASK_PROFILES [song]": {
   "status": "Retained",

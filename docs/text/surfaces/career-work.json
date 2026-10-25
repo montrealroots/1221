@@ -536,5 +536,35 @@
     "ref": "tests/b27-slate.test.ts: 'PLAYER JOURNEY: pushed back: released from the old dates, and offered the part again for dates the weeks later'"
    }
   ]
+ },
+ {
+  "surface": "A chemistry read and a screen test: their notices, the In Progress card, Why It Went This Way and the work record",
+  "where": "The notices; Career, Opportunities, In Progress and a settled role's Why It Went This Way; the Player Profile's work record, each round's task",
+  "sources": [
+   "src/engine/systems/projobs.ts#ROUND_WORDS",
+   "src/engine/content/tasks.ts#TASK_PROFILES [chemistry]",
+   "src/engine/content/tasks.ts#TASK_PROFILES [screenTest]"
+  ],
+  "states": [
+   "first use",
+   "notification",
+   "details",
+   "history",
+   "setback",
+   "explanation"
+  ],
+  "outcome": "Revised",
+  "why": "New with brief 27's K4: each later round says what it is (read with the actors already cast; filmed in costume and makeup), how long it takes and where, is judged as its own task, and is named in the history and in why it went as it did.",
+  "changes": "Written new: the two rounds' names, notices, history lines and missed lines, and their two task profiles' labels; the audition's and the callback's words kept as they were.",
+  "evidence": [
+   {
+    "kind": "test",
+    "ref": "tests/b27-rounds.test.ts: 'PLAYER JOURNEY: a feature’s lead taken through every round to an offer, each judged as its own task, said and kept; weaker listening reads the chemistry read lower'"
+   },
+   {
+    "kind": "test",
+    "ref": "tests/b27-rounds.test.ts: 'PLAYER JOURNEY: a chemistry read slept through lapses the part, and says so'"
+   }
+  ]
  }
 ]

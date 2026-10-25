@@ -596,9 +596,9 @@
  },
  "src/engine/content/guide/career.ts#CAREER_GUIDE [career.auditions]": {
   "status": "Rewritten",
-  "hash": "63163488adca",
-  "on": "2026-10-22",
-  "evidence": "Said again for brief 21 (2026-10-22) to docs/STYLE.md and docs/GLOSSARY.md: a work's several genres, each by its share, and where knowing them counts; the mechanics it names played in tests/b20-career-effects.test.ts, tests/evidence-g20-school.test.ts, tests/evidence-g23-school.test.ts and tests/guide-examples-*.test.ts, with tools/voice-check.mjs, tools/tics.mjs, tools/title-case.mjs, tools/spelling.mjs and tools/plural-check.mjs passing",
+  "hash": "91542531b4f4",
+  "on": "2026-10-24",
+  "evidence": "Written for brief 27's K4 (Part 9: chemistry reads and screen tests) to docs/STYLE.md and docs/GLOSSARY.md, and read where the player meets it: tests/b27-rounds.test.ts plays a feature's lead through the callback, the chemistry read and the screen test by the clock, holding each notice (A Chemistry Read For, A Screen Test For), each history line in the past (asked you to read with the actors already cast, Your chemistry read for ... was), the work record's task, the offer at the end, and a chemistry read slept through (You missed the chemistry read for, You Missed The Chemistry Read For). The audition's and the callback's words are as they were, held by brief 19's tests. tools/voice-check.mjs, tools/tics.mjs, tools/title-case.mjs, tools/plural-check.mjs and tools/spelling.mjs pass",
   "first": "Pending"
  },
  "src/engine/content/guide/career.ts#CAREER_GUIDE [career.awards]": {

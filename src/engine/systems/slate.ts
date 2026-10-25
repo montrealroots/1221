@@ -128,6 +128,24 @@ export function weekOf(at: Instant): Instant {
 
 interface Production { id: string; market: Market; kind: ProjectKind; title: string; company: string; casting: string; parts: ProjectTemplate[] }
 
+/** The kinds made at a professional's rates on screen, where a lead's casting reads with the cast and tests on film. */
+const PRO_SCREEN_KINDS: ReadonlySet<ProjectKind> = new Set(['network-drama', 'network-comedy', 'multicam-comedy', 'serialized-drama', 'serialized-comedy', 'limited-series', 'tv-movie', 'anthology', 'low-budget', 'action-feature', 'capture-feature', 'overseas-feature']);
+const FEATURE_KINDS: ReadonlySet<ProjectKind> = new Set(['low-budget', 'action-feature', 'capture-feature', 'overseas-feature']);
+
+/**
+ * The rounds a part's casting adds after the callback (from 2026-10-24, the owner's brief 27, Part 9), by the part's size,
+ * its kind and its genres, never drawn, so no other draw of the slate moves: a chemistry read for a lead in professional
+ * screen work and for a supporting part in a romance, played opposite a lead already cast; and a screen test for a
+ * feature's lead. ASSUMPTION each: the game's reading of when a production adds them. Voice work, in none of these kinds,
+ * has neither.
+ */
+function laterRounds(kind: ProjectKind, size: RoleSize, families: readonly Family[]): { chemistry?: true; test?: true } {
+  if (!PRO_SCREEN_KINDS.has(kind)) return {};
+  const chemistry = size === 'lead' || (size === 'supporting' && families.includes('romance'));
+  const test = size === 'lead' && FEATURE_KINDS.has(kind);
+  return { ...(chemistry ? { chemistry: true as const } : {}), ...(test ? { test: true as const } : {}) };
+}
+
 /**
  * The parts of one production, made from its own draw: its title, company and casting office, its genres, schedule and
  * place, each part's size, who it's written for, its name and its breakdown, the playing ages, the days to its first day
@@ -182,7 +200,7 @@ function makeProduction(sim: Simulation, tag: string, week: Instant, market: Mar
       role: { part: name, size, for: forWhom, about, families: families.length ? families : ['drama'], techniques, stakes: profile.stakes },
       union: profile.union, contract: profile.contract,
       requirements: { ages, sends: profile.sends, ...(profile.access.open === 'equity-members' ? { membersOnly: 'equity' as const } : {}) },
-      stages: { audition: profile.audition, callback: pr.chance(profile.callback) },
+      stages: { audition: profile.audition, callback: pr.chance(profile.callback), ...laterRounds(kind, size, families) },
       schedule: sched,
       access: profile.access, pay: profile.pay,
       leadDays: lead,

@@ -340,6 +340,24 @@ from the routes' own figures (`tools/trace.ts` showed it).
 agreement's terms aren't negotiated, since they're the unions' regulations as read (a commission over ten percent is
 barred); and no agent in the game covers voice work, so an office never asks for a demo (`AgentMaterial`).
 
+## K4: Auditions, Offers And Agreements
+
+Part 9 and the supplement's loops 11 to 20, read against what briefs 19 to 25 built: open calls and agent-only parts,
+self-tapes and auditions in person, callbacks, a series' invitation back without an audition, casting's chance by the
+band, the fit and the field, a represented SAG-AFTRA offer at scale plus ten, and a series part's option. **Missing:**
+chemistry reads, screen tests, a direct offer outside a returning series, the player's own negotiation, and holds.
+
+**Built first, the chemistry read and the screen test** (Part 9; loop 15): rounds after the callback, each in person and
+each judged as its own task (`TASK_PROFILES.chemistry`, listening and adapting to the actors already cast above all;
+`TASK_PROFILES.screenTest`, the camera's believability, presence and the composure and discipline to hold it take after
+take). The slate adds a chemistry read to a lead in professional screen work and to a supporting part in a romance, and
+a screen test to a feature's lead, by rule (`laterRounds`, `systems/slate.ts`), so no draw of the slate moves; each cut
+is its own draw (`CASTING.chemistry`, `CASTING.test`), the fixed parts' rounds and draws as they were. Each round has its
+notice, its history line in the past, its place on the work record, its line in Why It Went This Way, and its words when
+it's missed; the guide's Auditions And Callbacks says what each is. Held by `tests/b27-rounds.test.ts`: a feature's lead
+played by the clock through every round to an offer; the falsifiability test, a twin whose listening and adaptability
+are weak reading the chemistry read lower and nothing else set between them; and a chemistry read slept through.
+
 ## Defects Found And Fixed
 
 | # | Where | What stood | What stands | Held by |

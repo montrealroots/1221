@@ -125,6 +125,12 @@ export const WORK = {
   auditionLeadDays: 4, auditionHour: 11, auditionMinutes: 30,
   tapeDays: 4, tapeHour: 18,
   callbackLeadDays: 4, callbackHour: 14, callbackTapeDays: 3,
+  /**
+   * A chemistry read and a screen test (from 2026-10-24, brief 27, Part 9), ASSUMPTION each: a chemistry read five days on at
+   * one, for an hour with the actors already cast; a screen test a week on from nine, five hours in hair, makeup, costume
+   * and the takes. Each in person.
+   */
+  chemistryLeadDays: 5, chemistryHour: 13, chemistryMinutes: 60, testLeadDays: 7, testHour: 9, testMinutes: 300,
   cutDays: 1, decisionDays: 3, decisionHour: 17,
   offerDays: 3, offerHour: 17,
   leadDays: 35,
@@ -140,7 +146,7 @@ export const WORK = {
   /** A step on the whole part takes twice its time on the sides; the part starts from half the sides' preparation. */
   partTimes: 2, sidesKept: 0.5,
   /** A professional audition's difficulty: a professional's (0), a callback a little more; each step of stakes as a brief's. */
-  difficulty: { audition: 0, callback: 0.1 },
+  difficulty: { audition: 0, callback: 0.1, chemistry: 0.15, test: 0.2 },
   /** A work day on your feet, as a brief's rehearsal: 2.5 METs. */
   met: 2.5,
 } as const;
@@ -166,6 +172,29 @@ export const POSTING = {
   againDays: 70,
 } as const;
 
+/** A round of casting: the audition, the callback, and from 2026-10-24 (brief 27, Part 9) a chemistry read and a screen test. */
+export type Round = AuditionRound['round'];
+
+/** A part's rounds in order: the audition, then, where it has them, the callback, the chemistry read and the screen test. */
+export function roundsOf(t: Pick<ProjectTemplate, 'stages'>): Round[] {
+  return ['audition', ...(t.stages.callback ? ['callback' as const] : []), ...(t.stages.chemistry ? ['chemistry' as const] : []), ...(t.stages.test ? ['test' as const] : [])];
+}
+
+/** The round after one, if the part has another. */
+export function nextRound(t: Pick<ProjectTemplate, 'stages'>, r: Round): Round | undefined {
+  const all = roundsOf(t);
+  return all[all.indexOf(r) + 1];
+}
+
+/** Each round as a sentence says it. */
+export const ROUND_WORDS: Readonly<Record<Round, { name: string; noun: string }>> = {
+  audition: { name: 'Audition', noun: 'audition' }, callback: { name: 'Callback', noun: 'callback' },
+  chemistry: { name: 'Chemistry Read', noun: 'chemistry read' }, test: { name: 'Screen Test', noun: 'screen test' },
+};
+
+/** How long a round takes in person: an audition's or a callback's half hour, a chemistry read's hour, a screen test's five. */
+export const roundMinutes = (r: Pick<AuditionRound, 'round'>): number => (r.round === 'chemistry' ? WORK.chemistryMinutes : r.round === 'test' ? WORK.testMinutes : WORK.auditionMinutes);
+
 /**
  * Casting's chance, ASSUMPTION every figure: by the band of the round it reads (a callback's cut from the first
  * audition, the final from the last), the fit (the chance at no fit is `fitFloor` of it), and the field each kind of
@@ -175,6 +204,9 @@ export const POSTING = {
 export const CASTING = {
   final: { unready: 0.04, working: 0.18, strong: 0.38, exceptional: 0.58 } as Readonly<Record<Band, number>>,
   callback: { unready: 0.1, working: 0.45, strong: 0.78, exceptional: 0.9 } as Readonly<Record<Band, number>>,
+  /** The cut into a chemistry read and into a screen test (from 2026-10-24, brief 27), each from the round before it. */
+  chemistry: { unready: 0.08, working: 0.4, strong: 0.7, exceptional: 0.85 } as Readonly<Record<Band, number>>,
+  test: { unready: 0.06, working: 0.35, strong: 0.65, exceptional: 0.8 } as Readonly<Record<Band, number>>,
   fitFloor: 0.4,
   field: {
     'off-broadway': 0.8, lort: 0.85, 'network-drama': 0.75, 'low-budget': 0.85, 'ultra-low-budget': 1, 'student-film': 1.25, 'non-union-short': 1.2, 'overseas-feature': 0.8, 'network-comedy': 0.75,
@@ -484,8 +516,8 @@ export function demandsWords(person: Person, t: ProjectTemplate): string {
 }
 
 /** Casting's chance for a band and a fit in a kind of work, for a callback's cut or the final decision (`CASTING`). */
-export function chanceOf(band: Band, fit: number, kind: ProjectKind, round: 'callback' | 'final'): number {
-  const base = (round === 'callback' ? CASTING.callback : CASTING.final)[band];
+export function chanceOf(band: Band, fit: number, kind: ProjectKind, round: Exclude<Round, 'audition'> | 'final'): number {
+  const base = CASTING[round][band];
   return r3(clamp(base * (CASTING.fitFloor + (1 - CASTING.fitFloor) * clamp(fit, 0, 1)) * CASTING.field[kind], CASTING.least, CASTING.most));
 }
 
@@ -661,7 +693,7 @@ export function seriesPosts(sim: Simulation, t: ProjectTemplate, days: readonly 
  * save's numbering, so a project added to the game took an id ahead of later postings and changed their casting: brief
  * 25's eighth project moved a played life's (tests/journey-career.test.ts) first booking from December to June.
  */
-export function castingDraw(sim: Simulation, o: Pick<Opportunity, 'projectId' | 'postedAt'>, round: 'callback' | 'final', band: Band, fit: number, lift = 0): { chance: number; yes: boolean } {
+export function castingDraw(sim: Simulation, o: Pick<Opportunity, 'projectId' | 'postedAt'>, round: Exclude<Round, 'audition'> | 'final', band: Band, fit: number, lift = 0): { chance: number; yes: boolean } {
   // The player's visibility lifts the chance (from 2026-10-24, brief 25's Module 6, X13: `visibilityOf`), within casting's
   // own ceiling, and never past it.
   const chance = r3(Math.min(CASTING.most, chanceOf(band, fit, projectOf(o).kind, round) * (1 + lift)));
@@ -773,7 +805,7 @@ export function awayAt(person: Person, when: Instant): { label: string; approved
     for (const r of o.rounds ?? []) {
       if (r.form !== 'in-person' || r.status === 'missed' || (r.status === 'set' && o.status !== 'audition' && o.status !== 'callback')) continue;
       const away = tripMinutes(person.currentLocationId, t.place.cityId) * MIN;
-      if (when >= r.at - away && when <= r.at + (WORK.auditionMinutes * MIN) + away) return { label: `${r.round === 'callback' ? 'Callback' : 'Audition'}: ${t.role.part}`, approved: false };
+      if (when >= r.at - away && when <= r.at + (roundMinutes(r) * MIN) + away) return { label: `${ROUND_WORDS[r.round].name}: ${t.role.part}`, approved: false };
     }
   }
   // A meeting with an agent's office, its hour and the trip each way as `scheduleMeeting` puts them on the calendar; by
@@ -808,7 +840,7 @@ export function attendedAcross(person: Person, from: Instant, to: Instant, excep
     if (!t || o.id === except) continue;
     const away = tripMinutes(person.currentLocationId, t.place.cityId) * MIN;
     for (const r of o.rounds ?? []) {
-      if (r.form === 'in-person' && r.status === 'done' && r.at - away < to && r.at + WORK.auditionMinutes * MIN + away > from) return `the ${r.round} for ${t.role.part} in ${t.place.city}`;
+      if (r.form === 'in-person' && r.status === 'done' && r.at - away < to && r.at + roundMinutes(r) * MIN + away > from) return `the ${ROUND_WORDS[r.round].noun} for ${t.role.part} in ${t.place.city}`;
     }
   }
   for (const [agentId, rel] of Object.entries(pro.relations)) {
@@ -859,8 +891,8 @@ export function careerClashes(sim: Simulation, item: ScheduledItem, among?: read
  * where the actor is, as `awayAt` reads it for the School: a stage actor who slept through a rehearsal's start can go
  * to an audition in its hours (a screen day missed replaces the actor, and the engagement's days go with it).
  */
-export function workDayAt(person: Person, at: Instant): { label: string; from: Instant } | undefined {
-  const end = at + WORK.auditionMinutes * MIN;
+export function workDayAt(person: Person, at: Instant, minutes: number = WORK.auditionMinutes): { label: string; from: Instant } | undefined {
+  const end = at + minutes * MIN;
   for (const e of person.pro?.engagements ?? []) {
     if (!live(e)) continue;
     for (let i = 0; i < e.days.length; i += 1) {
@@ -1056,7 +1088,7 @@ export function otherTime(sim: Simulation, person: Person, o: Opportunity, r: Au
     for (const hour of WORK.moveSlots) {
       const at = dayAt(day, hour);
       if (at - sim.now < WORK.moveAheadHours * MS_HOUR) continue;
-      if (!clashesAt(sim, person, at - away * MIN, WORK.auditionMinutes + 2 * away, ownItem?.id).length) return at;
+      if (!clashesAt(sim, person, at - away * MIN, roundMinutes(r) + 2 * away, ownItem?.id).length) return at;
     }
   }
   return undefined;
@@ -1335,44 +1367,57 @@ function settle(sim: Simulation, person: Person, o: Opportunity, status: Opportu
  * A round set: an audition in person on the calendar, the first weekday from four days on at eleven (a callback at
  * two), with the trip; or a self-tape due by an evening. A clash with the calendar is said with the way to move it.
  */
-function setRound(sim: Simulation, person: Person, o: Opportunity, which: 'audition' | 'callback'): AuditionRound {
+function setRound(sim: Simulation, person: Person, o: Opportunity, which: Round): AuditionRound {
   const t = projectOf(o);
-  const form = t.stages.audition;
-  const at = form === 'in-person'
-    ? weekdayFrom(addDays(sim.now, which === 'audition' ? WORK.auditionLeadDays : WORK.callbackLeadDays, NY), which === 'audition' ? WORK.auditionHour : WORK.callbackHour)
-    : dayAt(addDays(sim.now, which === 'audition' ? WORK.tapeDays : WORK.callbackTapeDays, NY), WORK.tapeHour);
+  // A chemistry read and a screen test are always in person (from 2026-10-24, brief 27): the actors already cast, the set.
+  const later = which === 'chemistry' || which === 'test';
+  const form = later ? 'in-person' : t.stages.audition;
+  const at = later
+    ? weekdayFrom(addDays(sim.now, which === 'chemistry' ? WORK.chemistryLeadDays : WORK.testLeadDays, NY), which === 'chemistry' ? WORK.chemistryHour : WORK.testHour)
+    : form === 'in-person'
+      ? weekdayFrom(addDays(sim.now, which === 'audition' ? WORK.auditionLeadDays : WORK.callbackLeadDays, NY), which === 'audition' ? WORK.auditionHour : WORK.callbackHour)
+      : dayAt(addDays(sim.now, which === 'audition' ? WORK.tapeDays : WORK.callbackTapeDays, NY), WORK.tapeHour);
   const r: AuditionRound = { round: which, form, at, status: 'set' };
   const rounds = (o.rounds ??= []);
   rounds.push(r);
   const idx = rounds.length - 1;
-  o.status = which;
+  // Every round after the first is under way as a callback is: the opportunity's status says how far it's come, the round which.
+  o.status = which === 'audition' ? 'audition' : 'callback';
   const trip = tripMinutes(person.currentLocationId, t.place.cityId);
-  const name = which === 'callback' ? 'Callback' : 'Audition';
+  const name = ROUND_WORDS[which].name;
   let itemId: string | undefined;
   if (form === 'in-person') {
     itemId = sim.schedule({
       at, kind: AUDITION_KIND, label: `${name}: ${t.role.part}, ${t.project}`, category: 'career', priority: 40, requiresPlayer: true,
-      durationMinutes: WORK.auditionMinutes, travelMinutes: trip, locationId: t.place.cityId, refType: 'pro.opportunity', refId: o.id,
+      durationMinutes: roundMinutes(r), travelMinutes: trip, locationId: t.place.cityId, refType: 'pro.opportunity', refId: o.id,
       payload: { personId: person.id, opportunityId: o.id, round: idx },
     }).id;
   } else {
     sim.schedule({ at, kind: TAPE_DUE_KIND, label: `Self-Tape Due: ${t.role.part}, ${t.project}`, category: 'career', priority: 40, refType: 'pro.opportunity', refId: o.id, payload: { personId: person.id, opportunityId: o.id, round: idx } });
   }
   const when = `${formatWeekdayDate(at, NY)} at ${formatTime(at, NY)}`;
-  const clash = form === 'in-person' ? clashesAt(sim, person, at - trip * MIN, WORK.auditionMinutes + 2 * trip, itemId) : [];
-  const words = form === 'in-person'
+  const clash = form === 'in-person' ? clashesAt(sim, person, at - trip * MIN, roundMinutes(r) + 2 * trip, itemId) : [];
+  const words = which === 'chemistry'
+    ? `${castingAs(t)} ${agrees(t, 'wants', 'want')} you to read with the actors already cast in ${t.project}, a chemistry read for ${t.role.part}: ${t.place.venue} in ${t.place.city}, ${when}, for an hour. Getting there takes about ${hoursWords(trip)} each way.`
+    : which === 'test'
+      ? `${castingAs(t)} ${agrees(t, 'wants', 'want')} to screen-test you for ${t.role.part} in ${t.project}, filmed in costume and makeup: ${t.place.venue} in ${t.place.city}, ${when}, for five hours. Getting there takes about ${hoursWords(trip)} each way.`
+      : form === 'in-person'
     ? `${castingAs(t)} ${agrees(t, 'wants', 'want')} to see you${which === 'callback' ? ' again' : ''} for ${t.role.part} in ${t.project}: ${t.place.venue} in ${t.place.city}, ${when}. Getting there takes about ${hoursWords(trip)} each way.`
     : `${castingAs(t)} ${agrees(t, 'asks', 'ask')} for a self-tape${which === 'callback' ? ' for the callback' : ''} for ${t.role.part} in ${t.project}, due ${when}.`;
   // The history keeps it in the past, as the rest of a history is: until 2026-10-21 it kept the notice's present tense
   // ("asks for a self-tape"), among lines that said "submitted" and "was Working" (brief 19's app walk).
-  const noted = form === 'in-person'
+  const noted = which === 'chemistry'
+    ? `${castingAs(t)} asked you to read with the actors already cast in ${t.project}, a chemistry read for ${t.role.part}: ${t.place.venue} in ${t.place.city}, ${when}.`
+    : which === 'test'
+      ? `${castingAs(t)} asked to screen-test you for ${t.role.part} in ${t.project}: ${t.place.venue} in ${t.place.city}, ${when}.`
+      : form === 'in-person'
     ? `${castingAs(t)} asked to see you${which === 'callback' ? ' again' : ''} for ${t.role.part} in ${t.project}: ${t.place.venue} in ${t.place.city}, ${when}.`
     : `${castingAs(t)} asked for a self-tape${which === 'callback' ? ' for the callback' : ''} for ${t.role.part} in ${t.project}, due ${when}.`;
-  note(sim, person, o, { kind: which, key: `${which}:set`, words: noted });
+  note(sim, person, o, { kind: which === 'audition' ? 'audition' : 'callback', key: `${which}:set`, words: noted });
   const next = form === 'in-person' ? 'Prepare the sides on the Career screen’s Opportunities tab before you go.' : 'Prepare the sides, then press Tape It on the Career screen’s Opportunities tab.';
   const clashWords = clash.length ? ` It clashes with ${spokenList(clash)}. To ask for another time, press Ask For Another Time on the Opportunities tab, at least a day ahead. Casting moves it once.` : '';
   const agent = agentFor(o);
-  tell(sim, person, which === 'callback' ? `A Callback For ${t.role.part}` : form === 'in-person' ? `An Audition For ${t.role.part}` : `A Self-Tape For ${t.role.part}`, `${agent ? `${agent.name} passed this on: ` : ''}${words}${clashWords} ${next}`, 80);
+  tell(sim, person, later ? `A ${ROUND_WORDS[which].name} For ${t.role.part}` : which === 'callback' ? `A Callback For ${t.role.part}` : form === 'in-person' ? `An Audition For ${t.role.part}` : `A Self-Tape For ${t.role.part}`, `${agent ? `${agent.name} passed this on: ` : ''}${words}${clashWords} ${next}`, 80);
   return r;
 }
 
@@ -1390,7 +1435,7 @@ export function auditionContext(sim: Simulation, person: Person, o: Opportunity,
   prep.genre = fitOf(person, t).genre * BRIEF.complete.genre;
   required.genre = BRIEF.complete.genre;
   return {
-    task: r.form === 'self-tape' ? TASK_PROFILES.tape! : TASK_PROFILES.audition!,
+    task: r.round === 'chemistry' ? TASK_PROFILES.chemistry! : r.round === 'test' ? TASK_PROFILES.screenTest! : r.form === 'self-tape' ? TASK_PROFILES.tape! : TASK_PROFILES.audition!,
     techniques: t.role.techniques, prep, required,
     difficulty: WORK.difficulty[r.round] + (t.role.stakes - 1) * BRIEF.stakes,
     condition: conditionAt(sim, person, sim.now), families: t.role.families, key: `pro:${person.id}:${o.id}:${idx}`,
@@ -1405,10 +1450,10 @@ function finishRound(sim: Simulation, person: Person, o: Opportunity, r: Auditio
   r.band = bandOfQuality(e.overall);
   const held = chiefLimit(e);
   if (held) r.held = held;
-  const name = r.round === 'callback' ? 'Callback' : 'Audition';
+  const name = ROUND_WORDS[r.round].name;
   recordWork(sim, person, e, { at: sim.now, what: `${t.role.part}, ${t.project}: ${name}${r.form === 'self-tape' ? ', Taped' : ''}`, band: r.band });
-  note(sim, person, o, { kind: r.round, key: `${r.round}:done`, words: `Your ${r.form === 'self-tape' ? 'self-tape' : r.round} for ${t.role.part} was ${BAND_LABEL[r.band]}.` });
-  const cut = r.round === 'audition' && t.stages.callback;
+  note(sim, person, o, { kind: r.round === 'audition' ? 'audition' : 'callback', key: `${r.round}:done`, words: `Your ${r.form === 'self-tape' ? 'self-tape' : ROUND_WORDS[r.round].noun} for ${t.role.part} was ${BAND_LABEL[r.band]}.` });
+  const cut = nextRound(t, r.round) !== undefined;
   const base = Math.max(sim.now, r.at);
   sim.schedule({
     at: dayAt(addDays(base, cut ? WORK.cutDays : WORK.decisionDays, NY), WORK.decisionHour), kind: CASTING_KIND, label: `Casting Decides: ${t.role.part}`, category: 'career', priority: 40,
@@ -1426,11 +1471,11 @@ function missRound(sim: Simulation, person: Person, o: Opportunity, r: AuditionR
   const words = r.form === 'self-tape'
     ? `Your self-tape for ${t.role.part} wasn’t in by ${formatDate(r.at, NY)} at ${formatTime(r.at, NY)}, so ${t.casting} moved on without it.`
     : elsewhere
-      ? `You were ${/^(in|on) /.test(elsewhere) ? '' : 'at '}${elsewhere}, so you missed the ${r.round} for ${t.role.part} on ${formatDate(r.at, NY)} at ${formatTime(r.at, NY)}, and ${t.casting} moved on without you.`
-      : `You missed the ${r.round} for ${t.role.part} on ${formatDate(r.at, NY)} at ${formatTime(r.at, NY)}, so ${t.casting} moved on without you.`;
+      ? `You were ${/^(in|on) /.test(elsewhere) ? '' : 'at '}${elsewhere}, so you missed the ${ROUND_WORDS[r.round].noun} for ${t.role.part} on ${formatDate(r.at, NY)} at ${formatTime(r.at, NY)}, and ${t.casting} moved on without you.`
+      : `You missed the ${ROUND_WORDS[r.round].noun} for ${t.role.part} on ${formatDate(r.at, NY)} at ${formatTime(r.at, NY)}, so ${t.casting} moved on without you.`;
   note(sim, person, o, { kind: 'problem', key: `${r.round}:missed`, words });
   settle(sim, person, o, 'lapsed', words);
-  tell(sim, person, r.form === 'self-tape' ? `Your Self-Tape For ${t.role.part} Wasn’t In` : `You Missed The ${r.round === 'callback' ? 'Callback' : 'Audition'} For ${t.role.part}`, words, 75);
+  tell(sim, person, r.form === 'self-tape' ? `Your Self-Tape For ${t.role.part} Wasn’t In` : `You Missed The ${ROUND_WORDS[r.round].name} For ${t.role.part}`, words, 75);
 }
 
 /** Casting passed: said, with where to see what went into it. */
@@ -1999,12 +2044,12 @@ export function registerProJobs(sim: Simulation): void {
     if (!at || !r || r.status !== 'set' || r.form !== 'in-person' || r.at !== item.at) return;
     // Asleep, ill or at a booked day's work (`workDayAt`), the round is missed; and at another audition or a meeting
     // whose trip meets this one's (`attendedAcross`), missed with where they were.
-    if (!there(at.person, item.at) || workDayAt(at.person, item.at)) { missRound(s, at.person, at.o, r); return; }
+    if (!there(at.person, item.at) || workDayAt(at.person, item.at, roundMinutes(r))) { missRound(s, at.person, at.o, r); return; }
     // Away on a trip for work abroad (from 2026-10-23, the owner's brief 25, W8): an audition in person at home can't be gone to.
     const w = awayOn(at.person, item.at);
     if (w) { missRound(s, at.person, at.o, r, whereWords(w)); return; }
     const trip = (item.travelMinutes ?? 0) * MIN;
-    const elsewhere = attendedAcross(at.person, item.at - trip, item.at + WORK.auditionMinutes * MIN + trip, at.o.id);
+    const elsewhere = attendedAcross(at.person, item.at - trip, item.at + roundMinutes(r) * MIN + trip, at.o.id);
     if (elsewhere) { missRound(s, at.person, at.o, r, elsewhere); return; }
     finishRound(s, at.person, at.o, r, idx, evaluate(s, at.person, auditionContext(s, at.person, at.o, r, idx)));
   });
@@ -2022,7 +2067,9 @@ export function registerProJobs(sim: Simulation): void {
     const { person, o } = at;
     const t = projectOf(o);
     const f = fitOf(person, t);
-    const cut = r.round === 'audition' && t.stages.callback;
+    // The next round where the part has one (from 2026-10-24, brief 27: a chemistry read or a screen test after the callback).
+    const next = nextRound(t, r.round);
+    const cut = next !== undefined;
     // Availability and eligibility are checked, never drawn: booked on its days since, and casting goes elsewhere.
     const clash = cut ? undefined : bookedClash(person, datesOf(o), o.id);
     if (clash) {
@@ -2030,10 +2077,10 @@ export function registerProJobs(sim: Simulation): void {
       pass(s, person, o, `You’re booked for ${clash.label} on ${formatDate(clash.from, NY)}, so ${t.casting} cast another actor as ${t.role.part}.`);
       return;
     }
-    const d = castingDraw(s, o, cut ? 'callback' : 'final', r.band!, f.fit, visibilityOf(person, s.now));
+    const d = castingDraw(s, o, next && next !== 'audition' ? next : 'final', r.band!, f.fit, visibilityOf(person, s.now));
     r.casting = { at: s.now, chance: d.chance, fit: f.fit, yes: d.yes };
-    if (!d.yes) { pass(s, person, o, cut ? `${castingAs(t)} didn’t call you back for ${t.role.part}.` : `${castingAs(t)} cast another actor as ${t.role.part}.`); return; }
-    if (cut) { setRound(s, person, o, 'callback'); return; }
+    if (!d.yes) { pass(s, person, o, next === 'callback' ? `${castingAs(t)} didn’t call you back for ${t.role.part}.` : next ? `${castingAs(t)} didn’t ask you to the ${ROUND_WORDS[next].noun} for ${t.role.part}.` : `${castingAs(t)} cast another actor as ${t.role.part}.`); return; }
+    if (next) { setRound(s, person, o, next); return; }
     makeOffer(s, person, o);
   });
 
@@ -2245,7 +2292,7 @@ export function registerProJobs(sim: Simulation): void {
     r.at = to;
     r.moved = (r.moved ?? 0) + 1;
     const t = projectOf(o!);
-    note(s, person, o!, { kind: r.round, key: `${r.round}:moved`, words: `At your asking, ${t.casting} moved your ${r.round} for ${t.role.part} from ${formatDate(was, NY)} at ${formatTime(was, NY)} to ${formatWeekdayDate(to, NY)} at ${formatTime(to, NY)}.` });
+    note(s, person, o!, { kind: r.round === 'audition' ? 'audition' : 'callback', key: `${r.round}:moved`, words: `At your asking, ${t.casting} moved your ${ROUND_WORDS[r.round].noun} for ${t.role.part} from ${formatDate(was, NY)} at ${formatTime(was, NY)} to ${formatWeekdayDate(to, NY)} at ${formatTime(to, NY)}.` });
     return { at: to };
   });
 

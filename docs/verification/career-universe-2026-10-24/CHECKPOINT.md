@@ -44,7 +44,7 @@ commit, what's done, what remains and the exact next step. `README.md` is the re
 | K1 | The geographic coverage matrix and the research register | Done (this commit): 252 countries and territories, 170,911 places; 124 pages in the register, brief 25's unread sources asked for again |
 | K2 | The ongoing project and opportunity lifecycle (Area B) | Done (this commit): the slate, with the UK's rules verified for its London work |
 | K3 | Representation depth and versioned materials | In progress: what briefs 19 to 25 built read against Parts 6 and 7; the voice demo built (this commit); managers, lawyers and publicists not in the game, said so |
-| K4 | Discovery, submission, auditions, direct offers, negotiation, holds and options | Waiting |
+| K4 | Discovery, submission, auditions, direct offers, negotiation, holds and options | In progress: the chemistry read and the screen test built; direct offers, the player's negotiation and holds next |
 | K5 | Preparation, production, travel, changes, wrap, compensation, expenses, residuals | Waiting |
 | K6 | Release, publicity, weekly charts, renewal and returning work | Waiting |
 | K7 | Festivals, awards, the ceremony | Waiting |

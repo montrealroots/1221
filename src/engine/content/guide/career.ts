@@ -747,8 +747,8 @@ export const CAREER_GUIDE: readonly GuideEntry[] = [
     title: 'Auditions And Callbacks',
     goal: 'career',
     covers: ['pro.prepare', 'pro.tape_audition', 'pro.move_audition'],
-    synonyms: ['audition', 'self-tape audition', 'callback', 'sides', 'another time', 'casting decision'],
-    questions: ['How do I prepare for an audition?', 'Can I move my audition?', 'How does casting decide?'],
+    synonyms: ['audition', 'self-tape audition', 'callback', 'sides', 'another time', 'casting decision', 'chemistry read', 'screen test'],
+    questions: ['How do I prepare for an audition?', 'Can I move my audition?', 'How does casting decide?', 'What is a chemistry read?'],
     where: on('opportunities', 'Career, Opportunities, In Progress'),
     available: `From the guide’s chapter “${WORK_CHAPTER}”, once a casting office has answered a submission.`,
     short: `An audition is in person, in ${AUDITION_TOWNS} at a set time, or a self-tape due by an evening. Prepare the sides first with ${STEPS}, the way you prepare a practice brief. Then press Tape It, or be there when the clock stops for the audition and press Go.\n\nCasting decides from how the audition went, how well the role suits you and how many other actors it saw. Some roles call you back for a second audition first.`,
@@ -764,7 +764,7 @@ export const CAREER_GUIDE: readonly GuideEntry[] = [
       `For a new time, a day’s notice, asked once.`,
     ],
     costs: [
-      { label: 'Time', value: `${BRIEF.steps.read.minutes} minutes to ${BRIEF.steps.rehearse.minutes} minutes a step; an hour for a self-tape; an audition in person ${WORK.auditionMinutes} minutes, with the trip each way`, estimate: true },
+      { label: 'Time', value: `${BRIEF.steps.read.minutes} minutes to ${BRIEF.steps.rehearse.minutes} minutes a step; an hour for a self-tape; an audition in person ${WORK.auditionMinutes} minutes, a chemistry read an hour and a screen test ${word(WORK.testMinutes / 60)} hours, with the trip each way`, estimate: true },
       { label: 'Money', value: 'None' },
     ],
     reads: [
@@ -773,7 +773,10 @@ export const CAREER_GUIDE: readonly GuideEntry[] = [
       { label: 'The Field', value: 'How many other actors that kind of work draws, estimated' },
     ],
     now: ['A step moves its part of the preparation on and the clock with it. A self-tape is judged at once and kept on your work record.'],
-    later: ['A day after a first audition casting decides whether to call you back, and three days after the last whether to offer you the role. A notice says which.'],
+    later: [
+      'A day after a first audition casting decides whether to call you back, and three days after the last whether to offer you the role. A notice says which.',
+      'A lead in screen work, and a supporting part in a romance, has a chemistry read after the callback: the sides played in person with the actors already cast, judged above all on how you listen and answer them. A feature’s lead has a screen test after that: the part filmed on set in costume and makeup, take after take. Casting decides after each whether you go on.',
+    ],
     interpret: [
       'The band says how good the audition was. Casting’s chance reads the band, the fit and the field together, and even the best audition doesn’t make it certain.',
       'Why It Went This Way, under a settled role, shows each part of it.',
