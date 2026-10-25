@@ -351,6 +351,10 @@ for (const size of WIDTHS.filter((w) => ONLY.length === 0 || ONLY.includes(w.nam
     await page.waitForTimeout(200);
   }
   await check('02-identity');
+  // A citizenship, asked from brief 27 (2026-10-24, c5db2be2): until brief 27's final runs this walk never chose one
+  // and stopped at Identity. Same As Your Place Of Birth, as a player most often answers.
+  await page.getByRole('button', { name: /^Same As Your Place Of Birth: / }).first().click({ timeout: 3000 }).catch(() => {});
+  await page.waitForTimeout(300);
 
   for (const [step, screen] of [
     ['dispositions and traits', '03-dispositions-and-traits'],

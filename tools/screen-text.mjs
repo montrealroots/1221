@@ -65,6 +65,8 @@ const click = async (page, re) => {
   if (await race.count()) { await race.getByRole('button').first().click().catch(() => {}); await page.waitForTimeout(300); }
   await page.locator('#born-search').fill('New York').catch(() => {}); await page.waitForTimeout(800);
   await page.getByRole('listbox', { name: 'Matching Places' }).getByRole('option').first().click().catch(() => problems.push('no town chosen')); await page.waitForTimeout(600);
+  // A citizenship, asked from brief 27 (2026-10-24); until brief 27's final runs this read stopped at step 1 for want of one.
+  await page.getByRole('button', { name: /^Same As Your Place Of Birth: / }).first().click().catch(() => problems.push('no citizenship chosen')); await page.waitForTimeout(400);
   await read(page, 'Creation, Step 1');
   for (let s = 2; s <= 5; s++) {
     if (!(await click(page, /^Continue$/))) break;

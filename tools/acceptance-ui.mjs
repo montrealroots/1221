@@ -171,6 +171,14 @@ await step('creation: five steps, Continue held until each validates, Begin', as
     await page.locator('#born-search').fill('New York'); await wait(700);
     await page.getByRole('listbox', { name: 'Matching Places' }).getByRole('option').first().click(); await wait(500);
   }
+  // From brief 27 (2026-10-24, c5db2be2) Identity asks for a citizenship and the birthplace no longer settles it. Until
+  // brief 27's final runs this step never chose one, so Continue stayed held on step 1 and every fresh-play step after it
+  // failed (lane A on 9f974984, 2026-10-25). It's chosen as a player most often does, from Same As Your Place Of Birth.
+  if (asks.some((t) => /citizenship/.test(t))) {
+    const same = page.getByRole('button', { name: /^Same As Your Place Of Birth: / });
+    must(await same.count(), 'no Same As Your Place Of Birth once a birthplace was chosen');
+    await same.click(); await wait(400);
+  }
   for (let i = 0; i < 4; i += 1) { must(!(await cont.isDisabled()), `Continue disabled on step ${i + 1}`); await cont.click(); await wait(900); }
   await page.getByRole('button', { name: /^Begin$/ }).click();
   // The game's own top bar: on a phone the rail is in its drawer.
@@ -1708,6 +1716,10 @@ await step('home account: a London-raised F-1 keeps HSBC UK through Before Yale,
   const london = page.getByRole('listbox', { name: 'Matching Places' }).getByRole('option', { name: /^London/ }).first();
   must(await london.count(), 'no London, England among the places');
   await london.click(); await wait(500);
+  // A British citizen, from Same As Your Place Of Birth (asked from brief 27; see creation's step above).
+  const british = page.getByRole('button', { name: /^Same As Your Place Of Birth: United Kingdom/ });
+  if (await british.count()) { await british.click(); await wait(400); }
+  must(/United Kingdom/.test(await page.locator('#citizenship option:checked').innerText()), 'the citizenship isn’t the United Kingdom');
   const cont = page.getByRole('button', { name: /^Continue$/ });
   for (let i = 0; i < 3 && !(await page.locator('#lived-born').count()); i += 1) { await cont.click(); await wait(900); }
   must(await page.locator('#lived-born').count(), 'no Before Yale on Starting Point');

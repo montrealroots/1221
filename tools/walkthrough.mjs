@@ -170,7 +170,13 @@ if (await race.count()) {
   await page.waitForTimeout(300);
 }
 
-await sections('creation-1-identity', 'step 1 of 5: name, portrait, how you are billed, where you are from and the citizenship it gives');
+// A citizenship, asked from brief 27 (2026-10-24, c5db2be2): until brief 27's final runs this walk never chose one
+// and stopped at Identity. Same As Your Place Of Birth, as a player most often answers. The section's words said "where
+// you are from and the citizenship it gives" until then.
+await page.getByRole('button', { name: /^Same As Your Place Of Birth: / }).first().click({ timeout: 3000 }).catch(() => {});
+await page.waitForTimeout(300);
+
+await sections('creation-1-identity', 'step 1 of 5: name, portrait, how you are billed, where you are from and your citizenship');
 
 const dataUrl = await page.evaluate(() => {
   const canvas = document.createElement('canvas');

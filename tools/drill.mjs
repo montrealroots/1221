@@ -94,6 +94,10 @@ if (await town.count()) {
   await match.click({ timeout: 3000 }).catch(() => {});
   await page.waitForTimeout(400);
 }
+// A citizenship, asked from brief 27 (2026-10-24, c5db2be2): until brief 27's final runs this walk never chose one
+// and stopped at Identity. Same As Your Place Of Birth, as a player most often answers.
+await page.getByRole('button', { name: /^Same As Your Place Of Birth: / }).first().click({ timeout: 3000 }).catch(() => {});
+await page.waitForTimeout(300);
 
 for (let i = 0; i < 6; i++) {
   if (!(await click(/^Continue$/))) break;

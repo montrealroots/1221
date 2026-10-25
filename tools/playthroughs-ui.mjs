@@ -443,6 +443,13 @@ async function normal() {
       await page.locator('#born-search').fill('New York'); cur.pressed.push('Born In: New York'); await wait(800);
       await press(page.getByRole('listbox', { name: 'Matching Places' }).getByRole('option').first()); await wait(500);
     }
+    // Identity asks for a citizenship from brief 27 (2026-10-24, c5db2be2); until brief 27's final runs this never chose
+    // one and Continue stayed grayed on step 1 (lane UI on 9f974984, 2026-10-25). Chosen as a player most often does.
+    if ((await asks()).some((t) => /citizenship/.test(t))) {
+      const same = page.getByRole('button', { name: /^Same As Your Place Of Birth: / });
+      must(await same.count(), 'no Same As Your Place Of Birth once a birthplace was chosen');
+      await press(same); await wait(400);
+    }
     for (let i = 0; i < 4; i += 1) { must(!(await cont.isDisabled()), `Continue grayed on step ${i + 1}: ${(await asks()).join(' ')}`); await press(cont, 'Continue'); await wait(900); }
     const review = clean(await page.locator('main, body').first().innerText());
     must(review.includes(name) && /New York/.test(review), `Review doesn’t name ${name} or New York: ${review.slice(0, 200)}`);
