@@ -170,7 +170,7 @@
   "on": "7e12b026",
   "evidence": [
    "tests/b27-actor-awards.test.ts",
-   "src/engine/systems/actorawards.ts:248 the production's submission, the nominations, the final round and the show; src/engine/systems/actorawards.ts:334 its passage"
+   "src/engine/systems/actorawards.ts:267 the production's submission, the nominations, the final round and the show; src/engine/systems/actorawards.ts:353 its passage"
   ]
  },
  "pro.actor_submit": {
@@ -182,7 +182,7 @@
   "on": "7e12b026",
   "evidence": [
    "tests/b27-actor-awards.test.ts",
-   "src/engine/systems/actorawards.ts:175 the submission and its fee; src/engine/systems/actorawards.ts:335 its handler"
+   "src/engine/systems/actorawards.ts:194 the submission and its fee; src/engine/systems/actorawards.ts:354 its handler"
   ]
  },
  "pro.agent_ask_lapse": {
@@ -458,7 +458,7 @@
   "evidence": [
    "tests/career-awards.test.ts",
    "tests/career-awards-screen.test.ts",
-   "src/engine/systems/awards.ts:653 Enter Yourself, eligibility by emmyCheck (awards.ts:138), the fees taken once"
+   "src/engine/systems/awards.ts:667 Enter Yourself, eligibility by emmyCheck (awards.ts:138), the fees taken once"
   ]
  },
  "pro.awards": {
@@ -471,7 +471,7 @@
   "evidence": [
    "tests/career-awards.test.ts",
    "tests/career-awards-screen.test.ts",
-   "src/engine/systems/awards.ts:652 the awards' passage: the deadline's production entries, the nominations, the final round and the ceremony's word; the field by fieldFor (awards.ts:337)"
+   "src/engine/systems/awards.ts:666 the awards' passage: the deadline's production entries, the nominations, the final round and the ceremony's word; the field by fieldFor (awards.ts:337)"
   ]
  },
  "pro.casting_decision": {
@@ -497,7 +497,7 @@
   "on": "7e12b026",
   "evidence": [
    "tests/b27-ceremony.test.ts",
-   "src/engine/systems/ceremony.ts:314 the show's hour: in the room or not, the moment to go up set"
+   "src/engine/systems/ceremony.ts:316 the show's hour: in the room or not, the moment to go up set"
   ]
  },
  "pro.ceremony_accept": {
@@ -509,7 +509,7 @@
   "on": "7e12b026",
   "evidence": [
    "tests/b27-ceremony.test.ts",
-   "src/engine/systems/ceremony.ts:268 the speech given and judged; src/engine/systems/ceremony.ts:353 its handler"
+   "src/engine/systems/ceremony.ts:268 the speech given and judged; src/engine/systems/ceremony.ts:355 its handler"
   ]
  },
  "pro.ceremony_prepare": {
@@ -521,7 +521,7 @@
   "on": "7e12b026",
   "evidence": [
    "tests/b27-ceremony.test.ts",
-   "src/engine/systems/ceremony.ts:218 an hour on the remarks; src/engine/systems/ceremony.ts:352 its handler"
+   "src/engine/systems/ceremony.ts:218 an hour on the remarks; src/engine/systems/ceremony.ts:354 its handler"
   ]
  },
  "pro.ceremony_rsvp": {
@@ -533,7 +533,7 @@
   "on": "7e12b026",
   "evidence": [
    "tests/b27-ceremony.test.ts",
-   "src/engine/systems/ceremony.ts:180 the answer, the trip and the show's call; src/engine/systems/ceremony.ts:351 its handler"
+   "src/engine/systems/ceremony.ts:180 the answer, the trip and the show's call; src/engine/systems/ceremony.ts:353 its handler"
   ]
  },
  "pro.ceremony_speech": {
@@ -545,7 +545,7 @@
   "on": "7e12b026",
   "evidence": [
    "tests/b27-ceremony.test.ts",
-   "src/engine/systems/ceremony.ts:345 the moment let pass"
+   "src/engine/systems/ceremony.ts:347 the moment let pass"
   ]
  },
  "pro.cut_reel": {
@@ -1054,7 +1054,7 @@
    "tests/b27-ceremony.test.ts",
    "tests/career-awards-screen.test.ts",
    "tests/career-awards.test.ts",
-   "src/engine/systems/ceremony.ts:365 Watch The Ceremony, the settled result read and nothing changed"
+   "src/engine/systems/ceremony.ts:367 Watch The Ceremony, the settled result read and nothing changed"
   ]
  },
  "pro.weather": {

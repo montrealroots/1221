@@ -569,7 +569,7 @@
    "kind": "pro.award_enter",
    "payload": "{ creditId: c.id }",
    "verdict": "Right",
-   "handler": "src/engine/systems/awards.ts:653",
+   "handler": "src/engine/systems/awards.ts:667",
    "note": "Enter Yourself under an eligible television part enters that credit for its Emmy year and pays the fee, by the credit's id; its refusal (entryRefusal) is its title and grays it, and the part then says where its entry stands. Read on 2026-10-24 by its builder (brief 25's Module 6), pressed through the command in tests/career-awards-screen.test.ts."
   },
   {
@@ -580,7 +580,7 @@
    "kind": "pro.ceremony_rsvp",
    "payload": "{ entryId: n.id, attend: true }",
    "verdict": "Right",
-   "handler": "src/engine/systems/ceremony.ts:351",
+   "handler": "src/engine/systems/ceremony.ts:353",
    "note": "Go To The Ceremony on a nomination answers the invitation, by the entry's id: going books the trip and the show's call; its refusal (rsvpRefusal, a clash or the day passed) is its title and grays it. Read on 2026-10-25 by its builder (brief 27's K7), pressed through the command in tests/b27-ceremony.test.ts."
   },
   {
@@ -591,7 +591,7 @@
    "kind": "pro.ceremony_accept",
    "payload": "{ entryId: n.id }",
    "verdict": "Right",
-   "handler": "src/engine/systems/ceremony.ts:353",
+   "handler": "src/engine/systems/ceremony.ts:355",
    "note": "Go Up And Accept, shown only to a winner in the room within half an hour of the show's start, gives the speech, by the entry's id. Read on 2026-10-25 by its builder (brief 27's K7); the stop's own choice is the way the clock offers it (tests/b27-ceremony.test.ts)."
   },
   {
@@ -602,7 +602,7 @@
    "kind": "pro.ceremony_prepare",
    "payload": "{ entryId: n.id }",
    "verdict": "Right",
-   "handler": "src/engine/systems/ceremony.ts:352",
+   "handler": "src/engine/systems/ceremony.ts:354",
    "note": "Prepare Your Remarks on a show the player is going to spends the hour on the remarks, by the entry's id; its refusal (prepareRemarksRefusal) is its title. Read on 2026-10-25 by its builder (brief 27's K7), pressed through the command in tests/b27-ceremony.test.ts."
   },
   {
@@ -613,7 +613,7 @@
    "kind": "pro.actor_submit",
    "payload": "{ creditId: c.id }",
    "verdict": "Right",
-   "handler": "src/engine/systems/actorawards.ts:335",
+   "handler": "src/engine/systems/actorawards.ts:354",
    "note": "Submit Yourself under an eligible credit submits that performance for its Actor Awards year and pays the $200, by the credit's id; its refusal (actorSubmitRefusal) is its title and grays it. Read on 2026-10-25 by its builder (brief 27's K7), pressed through the command in tests/b27-actor-awards.test.ts."
   },
   {
@@ -624,7 +624,7 @@
    "kind": "pro.ceremony_rsvp",
    "payload": "{ entryId: n.id, attend: false }",
    "verdict": "Right",
-   "handler": "src/engine/systems/ceremony.ts:351",
+   "handler": "src/engine/systems/ceremony.ts:353",
    "note": "Watch From Home answers the invitation the other way, by the entry's id, calling off a trip going had booked. Read on 2026-10-25 by its builder (brief 27's K7), pressed through the command in tests/b27-ceremony.test.ts."
   },
   {
@@ -635,7 +635,7 @@
    "kind": "pro.watch_ceremony",
    "payload": "{ entryId: a.id }",
    "verdict": "Right",
-   "handler": "src/engine/systems/ceremony.ts:365",
+   "handler": "src/engine/systems/ceremony.ts:367",
    "note": "Watch The Ceremony under a nomination shows its ceremony from the result settled at the final round, by the entry's id; its refusal (watchRefusal) is its title and grays it until the award is presented, and the lines stay once watched. Read on 2026-10-24 by its builder (brief 25's Module 6), pressed through the command in tests/career-awards-screen.test.ts."
   },
   {
@@ -646,7 +646,7 @@
    "kind": "pro.watch_ceremony",
    "payload": "{ entryId: g.id }",
    "verdict": "Right",
-   "handler": "src/engine/systems/ceremony.ts:365",
+   "handler": "src/engine/systems/ceremony.ts:367",
    "note": "Watch The Show under an Actor Awards nomination shows the settled result once the show is given, by the entry's id; its refusal (watchRefusal) is its title. Read on 2026-10-25 by its builder (brief 27's K7), pressed through the command in tests/b27-ceremony.test.ts."
   },
   {
@@ -2162,7 +2162,7 @@
    "kind": "pro.ceremony_rsvp",
    "payload": "{ entryId: n.id, attend: true }",
    "verdict": "Right",
-   "handler": "src/engine/systems/ceremony.ts:351"
+   "handler": "src/engine/systems/ceremony.ts:353"
   },
   {
    "file": "src/engine/systems/ceremony.ts",
@@ -2170,7 +2170,7 @@
    "kind": "pro.ceremony_rsvp",
    "payload": "{ entryId: n.id, attend: false }",
    "verdict": "Right",
-   "handler": "src/engine/systems/ceremony.ts:351"
+   "handler": "src/engine/systems/ceremony.ts:353"
   },
   {
    "file": "src/engine/systems/permission.ts",
@@ -2221,7 +2221,7 @@
    "kind": "pro.ceremony_accept",
    "payload": "(item) => ({ entryId: item.payload.entryId })",
    "verdict": "Right",
-   "handler": "src/engine/systems/ceremony.ts:353"
+   "handler": "src/engine/systems/ceremony.ts:355"
   },
   {
    "file": "src/engine/systems/proagent.ts",

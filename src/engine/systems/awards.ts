@@ -131,6 +131,20 @@ export type EmmyCheck =
   | { eligible: false; why: string; year?: number };
 
 /**
+ * Why a credit whose part the record no longer holds can't be entered, read from the credit itself (from 2026-10-25, brief
+ * 27's F). A finished engagement goes only once nothing to come reads it (`keepBounded`, `stillRead`), so by then its Emmy
+ * year has passed. Until then this said "This work's scenes are no longer in the game, so it can't say", which a long
+ * career's older credits showed on Charts And Awards (the built app's ceremony walk).
+ */
+function pastWhy(sim: Simulation, c: ProCredit): string {
+  if (c.medium !== 'television') return `The Emmy Awards are for programs first presented on television, and this is a ${c.medium === 'stage' ? 'play' : 'film'}.`;
+  if (c.releasedAt === undefined) return c.release?.kind === 'shelved' ? 'It was shelved and never shown, so it never had an Emmy year.' : 'Its part is no longer on your record, so it can’t be entered.';
+  const ed = emmyEdition(emmyYearOf(isoOf(c.releasedAt)));
+  if (sim.now <= deadlineOf(ed)) return 'Its part is no longer on your record, so it can’t be entered.';
+  return `Its premiere fell in the ${ordinal(ed.number)} Emmy Awards’ year, whose entries closed on ${longDay(ed.entryDeadline)}${ed.projected ? ', as the game projects it' : ''}.`;
+}
+
+/**
  * Whether a credit's performance can be entered for an Emmy, and in what: the program's kind and placement, the part's
  * episodes against the season's and its share of the episode's running time (the game counts scenes), and the year its
  * premiere falls in. Every refusal is a rule of the 78th's, said.
@@ -138,7 +152,7 @@ export type EmmyCheck =
 export function emmyCheck(sim: Simulation, person: Person, c: ProCredit): EmmyCheck {
   const e = engagementOf(person, c);
   const t = e ? projectById(e.projectId) : undefined;
-  if (!t || !e) return { eligible: false, why: 'This work’s scenes are no longer in the game, so it can’t say.' };
+  if (!t || !e) return { eligible: false, why: pastWhy(sim, c) };
   const premiere = premiereOf(sim, person, c);
   const year = premiere !== undefined ? emmyYearOf(isoOf(premiere)) : undefined;
   if (t.medium !== 'television') return { eligible: false, why: 'The Emmy Awards are for programs first presented on television, and this is a film.', ...(year ? { year } : {}) };

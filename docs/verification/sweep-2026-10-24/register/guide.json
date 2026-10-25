@@ -386,7 +386,7 @@
   "on": "3a759d49",
   "evidence": [
    "tests/career-awards.test.ts",
-   "src/engine/systems/awards.ts:138 emmyCheck counts the scenes kept; awards.ts:343 fieldFor reads the credit's band"
+   "src/engine/systems/awards.ts:152 emmyCheck counts the scenes kept; awards.ts:343 fieldFor reads the credit's band"
   ]
  },
  "promise.career.contracts>career.offers": {

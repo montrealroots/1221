@@ -302,7 +302,9 @@ export function ceremonyLines(person: Person, n: Nomination): string[] {
       : mine ? `It’s you, for ${mine.role} in ${mine.project}: you won ${name} at ${awardTitle(n)} for that part, and this nomination stands.`
         : 'It goes to another nominee. You didn’t win, and your nomination stands.',
   ];
-  if (n.attend?.outcome === 'there' && won) lines.push(n.attend.speech ? SPEECH_WORDS[n.attend.speech.band] : 'You went up, said thank you, and sat down.');
+  // Only once it's happened (from 2026-10-25, brief 27's F): until then a win in the room whose moment was still open read
+  // "You went up, said thank you, and sat down" beside the Go Up And Accept still to press (the built app's ceremony walk).
+  if (n.attend?.outcome === 'there' && won && (n.attend.speech || n.attend.accepted === 'unanswered')) lines.push(n.attend.speech ? SPEECH_WORDS[n.attend.speech.band] : 'You went up, said thank you, and sat down.');
   return lines;
 }
 

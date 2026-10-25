@@ -163,7 +163,7 @@ function ActorCredit({ sim, person, c }: { sim: Simulation; person: Person; c: P
   return (
     <div className="col gap-2">
       <p className="small strong" style={{ margin: 0 }}>{`${c.role}, ${c.project}`}</p>
-      <p className="small" style={{ margin: 0 }}>{check.eligible ? actorEligibleWords(person, check) : check.why}</p>
+      <p className="small" style={{ margin: 0 }}>{check.eligible ? actorEligibleWords(person, check, sim.now) : check.why}</p>
       {entries.map((g) => {
         const watchNo = ['nominated', 'won', 'lost'].includes(g.state) ? watchRefusal(sim, person, g.id) : 'not nominated';
         return (

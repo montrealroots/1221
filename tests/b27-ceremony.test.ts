@@ -135,6 +135,17 @@ describe('the ceremony', () => {
     const { sim, g } = nominated('b27-aa-3');
     going(sim, g);
     prepared(sim, g, 3);
+    // Won and in the room, the moment to go up still to come: nothing says it's happened (brief 27's F: until then the lines
+    // said "You went up" beside the Go Up And Accept still to press, seen on the built app).
+    // Played as the top bar plays it, every stop gone to, to the win's own stop, left standing.
+    const wanted = SHOW + MS_HOUR;
+    let r = sim.advanceTo(wanted, { stopOnPlayerRequired: true });
+    for (let n = 0; r.interruptedBy && r.interruptedBy.kind !== SPEECH_KIND && n < 50; n += 1) { tend(sim); r = answerStop(sim, { item: r.interruptedBy, wanted, sentFrom: r.sentFrom }, 'go').result!; }
+    expect(r.interruptedBy?.kind).toBe(SPEECH_KIND);
+    expect([g.state, g.attend!.outcome, g.attend!.accepted]).toEqual(['won', 'there', undefined]);
+    expect(ceremonyLines(sim.player, g).join(' ')).not.toContain('You went up');
+    // Go, not Go Up And Accept: the moment passes.
+    answerStop(sim, { item: r.interruptedBy!, wanted, sentFrom: r.sentFrom }, 'go');
     played(sim, SHOW + MS_HOUR);
     expect([g.attend!.outcome, g.attend!.accepted, g.attend!.speech]).toEqual(['there', 'unanswered', undefined]);
     expect(ceremonyLines(sim.player, g).at(-1)).toBe('You went up, said thank you, and sat down.');

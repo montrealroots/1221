@@ -771,16 +771,16 @@
  },
  "src/engine/systems/actorawards.ts#actorCheck": {
   "status": "Rewritten",
-  "hash": "ab024b9148c6",
+  "hash": "8142e0582e31",
   "on": "2026-10-25",
-  "evidence": "Written for brief 27's K7 (Parts 11, 14 and 15; loops 44 to 47: the Actor Awards by its 33rd Rules & Regulations, the ceremony for every nomination, and what an award does after it) to docs/STYLE.md and docs/GLOSSARY.md, every rule the 33rd's own and every invention said as the game's: read where the player meets it in tests/b27-actor-awards.test.ts (eligibility and each refusal, Submit Yourself and its refusals, the production's submission, the nomination and the show's notices, the résumé's line), tests/b27-ceremony.test.ts (the invitation's question and notice, Go To The Ceremony and Watch From Home, a clash's refusal, Prepare Your Remarks, the trip's notices there and home, a missed flight, the room's loss, You Won At, the speech's words, the moment let pass, You Weren't At) and tests/b27-award-effects.test.ts (the agent's office seeing the recognition). Numbers under ten in words; dates with their comma; no engine words.",
+  "evidence": "Brief 27, F (2026-10-25): a credit whose part the record no longer holds says when its award year was and when entries closed, read from the credit's release; a shelved one that it was never shown; an open year, or anything else, that its part is no longer on your record. Until then: This work's scenes are no longer in the game, so it can't say, seen on the built app beside a long career's older credits (walk/ceremony); tests/b27-actor-awards.test.ts 'places a performance by the rules'.",
   "first": "Pending"
  },
  "src/engine/systems/actorawards.ts#actorEligibleWords": {
   "status": "Rewritten",
-  "hash": "32e74f4e862b",
+  "hash": "c411656d1106",
   "on": "2026-10-25",
-  "evidence": "Written for brief 27's K7 (Parts 11, 14 and 15; loops 44 to 47: the Actor Awards by its 33rd Rules & Regulations, the ceremony for every nomination, and what an award does after it) to docs/STYLE.md and docs/GLOSSARY.md, every rule the 33rd's own and every invention said as the game's: read where the player meets it in tests/b27-actor-awards.test.ts (eligibility and each refusal, Submit Yourself and its refusals, the production's submission, the nomination and the show's notices, the résumé's line), tests/b27-ceremony.test.ts (the invitation's question and notice, Go To The Ceremony and Watch From Home, a clash's refusal, Prepare Your Remarks, the trip's notices there and home, a missed flight, the room's loss, You Won At, the speech's words, the moment let pass, You Weren't At) and tests/b27-award-effects.test.ts (the agent's office seeing the recognition). Numbers under ten in words; dates with their comma; no engine words.",
+  "evidence": "Brief 27, F (2026-10-25): the submissions' window said in the clock's tense, open ahead of it, are open in it, were open after it; seen on the built app reading are open two years after (walk/ceremony); tests/b27-actor-awards.test.ts holds the three.",
   "first": "Pending"
  },
  "src/engine/systems/actorawards.ts#actorRecapWords": {
@@ -811,6 +811,13 @@
   "reason": "A time zone's id from the IANA database, which the clock reads to place a day on a city's calendar and never shows a player: America/New_York, America/Los_Angeles.",
   "first": "Pending"
  },
+ "src/engine/systems/actorawards.ts#pastWhy": {
+  "status": "Rewritten",
+  "hash": "c7c3e43b5590",
+  "on": "2026-10-25",
+  "evidence": "Brief 27, F (2026-10-25): a credit whose part the record no longer holds says when its award year was and when entries closed, read from the credit's release; a shelved one that it was never shown; an open year, or anything else, that its part is no longer on your record. Until then: This work's scenes are no longer in the game, so it can't say, seen on the built app beside a long career's older credits (walk/ceremony); tests/b27-actor-awards.test.ts 'places a performance by the rules'.",
+  "first": "Pending"
+ },
  "src/engine/systems/actorawards.ts#submitActor": {
   "status": "Rewritten",
   "hash": "badbada9d0e7",
@@ -834,9 +841,9 @@
  },
  "src/engine/systems/awards.ts#emmyCheck": {
   "status": "Rewritten",
-  "hash": "fbe51ffa306d",
-  "on": "2026-10-24",
-  "evidence": "Written for brief 25's Module 6 (the published charts as dated imports, the game's own box office, the awards and festivals inventory, the Emmy Awards by the 78th's rules and Sundance by its 2027 festival's) to docs/STYLE.md and docs/GLOSSARY.md, every rule the read sources' own and every invention said as the game's; read where the player meets it in tests/career-awards-screen.test.ts (the Charts And Awards tab and the Portfolio drawn before the work, after the wrap, after the entry, at the nominations and after the ceremony, through the clock and a reload at each stage) and tests/career-awards.test.ts (each refusal, notice, recap and festival word), with tools/voice-check.mjs, tools/tics.mjs and tools/title-case.mjs clean.",
+  "hash": "3f647827f538",
+  "on": "2026-10-25",
+  "evidence": "Brief 27, F (2026-10-25): a credit whose part the record no longer holds says when its award year was and when entries closed, read from the credit's release; a shelved one that it was never shown; an open year, or anything else, that its part is no longer on your record. Until then: This work's scenes are no longer in the game, so it can't say, seen on the built app beside a long career's older credits (walk/ceremony); tests/career-awards.test.ts 'no longer holds'.",
   "first": "Pending"
  },
  "src/engine/systems/awards.ts#emmyStep": {
@@ -900,6 +907,13 @@
   "hash": "91a5e4a639ea",
   "on": "2026-10-24",
   "evidence": "Written for brief 25's Module 6 (the published charts as dated imports, the game's own box office, the awards and festivals inventory, the Emmy Awards by the 78th's rules and Sundance by its 2027 festival's) to docs/STYLE.md and docs/GLOSSARY.md, every rule the read sources' own and every invention said as the game's; read where the player meets it in tests/career-awards-screen.test.ts (the Charts And Awards tab and the Portfolio drawn before the work, after the wrap, after the entry, at the nominations and after the ceremony, through the clock and a reload at each stage) and tests/career-awards.test.ts (each refusal, notice, recap and festival word), with tools/voice-check.mjs, tools/tics.mjs and tools/title-case.mjs clean.",
+  "first": "Pending"
+ },
+ "src/engine/systems/awards.ts#pastWhy": {
+  "status": "Rewritten",
+  "hash": "7ef081572f2d",
+  "on": "2026-10-25",
+  "evidence": "Brief 27, F (2026-10-25): a credit whose part the record no longer holds says when its award year was and when entries closed, read from the credit's release; a shelved one that it was never shown; an open year, or anything else, that its part is no longer on your record. Until then: This work's scenes are no longer in the game, so it can't say, seen on the built app beside a long career's older credits (walk/ceremony); tests/career-awards.test.ts 'no longer holds'.",
   "first": "Pending"
  },
  "src/engine/systems/awards.ts#recapWords": {

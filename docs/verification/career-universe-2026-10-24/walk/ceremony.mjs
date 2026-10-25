@@ -4,7 +4,7 @@
 //   2. every nomination at the show reads going, with no second question;
 //   3. Prepare Your Remarks pressed once: every nomination reads the same preparation (or, ready, why it can't be);
 //   4. the clock moved on with the Advance menu's Next Event, Go pressed at each stop, until the show's own stop, Go;
-//   5. a win's stop, if one comes: Go Up And Accept pressed, and the speech said;
+//   5. each win's stop, if any comes, a minute apart: Go Up And Accept pressed, and the speech said;
 //   6. Charts And Awards after the show: what each nomination says now.
 // At each step: no page error, nothing wider than the window, every control on screen or in a box that scrolls.
 //
@@ -120,11 +120,11 @@ for (const size of SIZES) {
       return { toast: said.at(-1) ?? null, prepared: ready[0], nominations: ready.length };
     });
     const passed = [];
-    let speech = null;
+    const speeches = [];
     let atShow = false;
     await step('to-the-show', async () => {
       // Next Event, again and again; at each stop, Go (and at a win's stop, Go Up And Accept). Ends a stop after the show.
-      for (let i = 0; i < 160 && !speech; i += 1) {
+      for (let i = 0; i < 200; i += 1) {
         if (await page.getByRole('dialog').count()) {
           const d = dialog();
           const title = (await d.getAttribute('aria-label')) ?? '';
@@ -132,8 +132,8 @@ for (const size of SIZES) {
           if (await accept.count()) {
             await shot('speech-stop');
             await press(accept.first());
-            speech = { stop: title, toast: (await toasts()).at(-1) ?? null };
-            break;
+            speeches.push({ stop: title, toast: (await toasts()).at(-1) ?? null });
+            continue;
           }
           if (title === 'On The Way') { await press(d.locator('.btn-primary').first()); continue; }
           const go = d.getByRole('button', { name: /^Go$/ });
@@ -148,15 +148,16 @@ for (const size of SIZES) {
           await page.keyboard.press('Escape'); await wait(400);
           continue;
         }
-        // After the show's Go, the clock ran the evening: a win's stop, a minute on, halted it; with none, the evening is over.
+        // After the show's Go, the clock ran the evening: each win's stop, a minute apart, halted it; with none left, the
+        // evening is over.
         if (atShow) break;
         await press(time.getByRole('button', { name: /^Advance/ }).first());
         await press(page.getByRole('menuitem', { name: /^Next Event/ }).first());
         await wait(500);
       }
-      return { stops: passed.length, atShow, show, last: passed.slice(-4) };
+      return { stops: passed.length, atShow, show, last: passed.slice(-4), speeches: speeches.length };
     });
-    if (speech) await step('speech', async () => speech);
+    if (speeches.length) await step('speech', async () => ({ speeches }));
     await step('after', async () => {
       for (let i = 0; i < 4; i += 1) { if (!(await page.getByRole('dialog').count())) break; await page.keyboard.press('Escape'); await wait(400); }
       await awards();

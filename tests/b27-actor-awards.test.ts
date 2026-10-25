@@ -55,6 +55,9 @@ describe('the Actor Awards', () => {
         seen.add(check.category);
         if (t.medium === 'film') expect(check.category).toBe(t.role.size === 'lead' ? 'film-lead' : 'film-supporting');
         expect(actorEligibleWords(sim.player, check)).toContain('at the 33rd Actor Awards. Submissions are open from August 24, 2026 to November 2, 2026, at 5 PM Pacific.');
+        // The window in the clock's tense (brief 27's F): ahead, open, and gone.
+        const ed = actorEdition(2026);
+        expect([submissionsOpen(ed) - 1, submissionsOpen(ed), submissionsClose(ed) + 1].map((at) => actorEligibleWords(sim.player, check, at).match(/Submissions (\w+ ?\w*) from/)![1])).toEqual(['open', 'are open', 'were open']);
       } else expect(check.why.length).toBeGreaterThan(20);
     }
     expect(seen.has('tv-drama')).toBe(true);
@@ -78,6 +81,13 @@ describe('the Actor Awards', () => {
       Object.assign(xc, { engagementId: x.id, releasedAt: instantFromZoned({ year: 2026, month: 6, day: 1, hour: 12, minute: 0 }, 'America/New_York') });
       expect(actorCheck(sim, sim.player, xc)).toEqual({ eligible: false, why, year: 2026 });
     }
+    // A credit whose part the record no longer holds says when its year was (brief 27's F), read from the credit: TEST
+    // SETUP, its engagement gone, as the record's bound lets one go. Before the 33rd's window closes, and after.
+    const was = sim.player.pro!.credits.find((x) => actorCheck(sim, sim.player, x).eligible)!;
+    sim.player.pro!.engagements = sim.player.pro!.engagements.filter((x) => x.id !== was.engagementId);
+    expect(actorCheck(sim, sim.player, was)).toEqual({ eligible: false, why: 'Its part is no longer on your record, so it can’t be submitted.' });
+    sim.advanceTo(submissionsClose(ACTOR_AWARDS_33) + MS_HOUR);
+    expect(actorCheck(sim, sim.player, was)).toEqual({ eligible: false, why: 'It was first shown in 2026, for the 33rd Actor Awards, whose submissions closed on November 2, 2026.' });
   });
 
   it('nominates the five with the most votes, every tie at the line too, and of one actor’s performances in a category only the one with more', () => {

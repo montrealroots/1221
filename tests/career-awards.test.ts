@@ -479,6 +479,23 @@ describe('X8 to X12: entry, the field, the nominations, the ceremony', () => {
     expect(recognitionOf(sim.player).filter((r) => r.words.startsWith('You won')).length).toBe(1);
   });
 
+  it('a credit whose part the record no longer holds says when its Emmy year was, not that its scenes are gone', () => {
+    const { sim, c } = wrapped('awards-journey-0', 'calloway-files');
+    sim.must({ kind: 'pro.award_enter', payload: { creditId: c.id } });
+    // TEST SETUP: the engagement gone, as the record's bound lets a finished one go once nothing to come reads it.
+    const gone = (s: Simulation) => { s.player.pro!.engagements = s.player.pro!.engagements.filter((e) => e.id !== c.engagementId); return s; };
+    const early = gone(reload(sim));
+    expect(emmyCheck(early, early.player, creditIn(early, c.id))).toEqual({ eligible: false, why: 'Its part is no longer on your record, so it can’t be entered.' });
+    // Released, its year's entries still open (only a save from before the record's bound read what's to come, defect 15).
+    sim.advanceTo(at(2027, 5, 1));
+    const mid = gone(reload(sim));
+    expect(creditIn(mid, c.id).releasedAt).toBeLessThan(mid.now);
+    expect(emmyCheck(mid, mid.player, creditIn(mid, c.id))).toEqual({ eligible: false, why: 'Its part is no longer on your record, so it can’t be entered.' });
+    sim.advanceTo(CREATIVE_ARTS);
+    const late = gone(reload(sim));
+    expect(emmyCheck(late, late.player, creditIn(late, c.id))).toEqual({ eligible: false, why: 'Its premiere fell in the 79th Emmy Awards’ year, whose entries closed on May 7, 2027, as the game projects it.' });
+  });
+
   it('a field drawn before brief 27’s F, the player in it as `you`, is still read as the player’s: won at the ceremony, its lines unchanged', () => {
     const { sim, c } = wrapped('awards-journey-0', 'calloway-files');
     sim.must({ kind: 'pro.award_enter', payload: { creditId: c.id } });

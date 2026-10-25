@@ -162,7 +162,7 @@
      "b27-offers: asked, answered, accepted at the raised figure"
     ]
    },
-   "missing": "Until then no played life of the long runs reached one. brief 27’s F played two long careers from the journey saves (docs/verification/career-universe-2026-10-24/long, degree four years and last term four and a half, by tools/long-career.ts on 1ad8f7af): the player asks on every offer the game doesn’t refuse, 86 asks in the degree career and 11 in the last term’s, each answered.",
+   "missing": "Until then no played life of the long runs reached one. Brief 27’s F played two long careers from the journey saves (docs/verification/career-universe-2026-10-24/long, degree four years and last term four and a half, by tools/long-career.ts on 1ad8f7af): the player asks on every offer the game doesn’t refuse, 86 asks in the degree career and 11 in the last term’s, each answered.",
    "status": "Implemented And Verified",
    "why": "",
    "prior": null
@@ -250,7 +250,7 @@
      "b27-holds: held at the cut, asked, booked and accepted; held, asked and let go, the other offer accepted"
     ]
    },
-   "missing": "Not yet reached in a played life. brief 27’s F played two long careers from the journey saves (docs/verification/career-universe-2026-10-24/long, degree four years and last term four and a half, by tools/long-career.ts on 1ad8f7af): holds were put on at four cuts into a chemistry read or a screen test, and one let go when the actor was booked elsewhere, but the long-career player never asks a production to decide, and no second offer stood on held days.",
+   "missing": "Not yet reached in a played life. Brief 27’s F played two long careers from the journey saves (docs/verification/career-universe-2026-10-24/long, degree four years and last term four and a half, by tools/long-career.ts on 1ad8f7af): holds were put on at four cuts into a chemistry read or a screen test, and one let go when the actor was booked elsewhere, but the long-career player never asks a production to decide, and no second offer stood on held days.",
    "status": "Implemented And Verified",
    "why": "",
    "prior": null
@@ -569,7 +569,7 @@
      "b27-voice-demo: a slate voice part, the demo mixed, the submission, a second demo"
     ]
    },
-   "missing": "Until then no played life of the long runs reached one. brief 27’s F played two long careers from the journey saves (docs/verification/career-universe-2026-10-24/long, degree four years and last term four and a half, by tools/long-career.ts on 1ad8f7af): each mixed a voice demo once its first voice credit was released (March 10, 2032 and April 2, 2031).",
+   "missing": "Until then no played life of the long runs reached one. Brief 27’s F played two long careers from the journey saves (docs/verification/career-universe-2026-10-24/long, degree four years and last term four and a half, by tools/long-career.ts on 1ad8f7af): each mixed a voice demo once its first voice credit was released (March 10, 2032 and April 2, 2031).",
    "status": "Implemented And Verified",
    "why": "",
    "prior": null
@@ -2566,7 +2566,7 @@
      "b27-revival: a Desk Clerk played in 2026 to the 2032 revival's offer and its acceptance; the twin to its word against"
     ]
    },
-   "missing": "Not yet reached in a played life. brief 27’s F played two long careers from the journey saves (docs/verification/career-universe-2026-10-24/long, degree four years and last term four and a half, by tools/long-career.ts on 1ad8f7af): neither career reached a revival, which comes years after a cancellation.",
+   "missing": "Not yet reached in a played life. Brief 27’s F played two long careers from the journey saves (docs/verification/career-universe-2026-10-24/long, degree four years and last term four and a half, by tools/long-career.ts on 1ad8f7af): neither career reached a revival, which comes years after a cancellation.",
    "status": "Implemented And Verified",
    "why": "",
    "prior": null
@@ -2721,7 +2721,7 @@
      "b27-weather: a SAG-AFTRA day performer's part played by the clock through a weather day to its pay; a part away from home to the flight home"
     ]
    },
-   "missing": "Until then no played life of the long runs reached one. brief 27’s F played two long careers from the journey saves (docs/verification/career-universe-2026-10-24/long, degree four years and last term four and a half, by tools/long-career.ts on 1ad8f7af): four weather days in the degree career (the first, thunderstorms over a day on location on July 21, 2031), none in the last term’s.",
+   "missing": "Until then no played life of the long runs reached one. Brief 27’s F played two long careers from the journey saves (docs/verification/career-universe-2026-10-24/long, degree four years and last term four and a half, by tools/long-career.ts on 1ad8f7af): four weather days in the degree career (the first, thunderstorms over a day on location on July 21, 2031), none in the last term’s.",
    "status": "Implemented And Verified",
    "why": "",
    "prior": null
@@ -2820,7 +2820,7 @@
      "b27-reshoot: a feature to its reshoot and pay by the clock; a voice part's pickup session"
     ]
    },
-   "missing": "Until then no played life of the long runs reached one. brief 27’s F played two long careers from the journey saves (docs/verification/career-universe-2026-10-24/long, degree four years and last term four and a half, by tools/long-career.ts on 1ad8f7af): one reshoot recall in each, each gone to.",
+   "missing": "Until then no played life of the long runs reached one. Brief 27’s F played two long careers from the journey saves (docs/verification/career-universe-2026-10-24/long, degree four years and last term four and a half, by tools/long-career.ts on 1ad8f7af): one reshoot recall in each, each gone to.",
    "status": "Implemented And Verified",
    "why": "",
    "prior": null
@@ -2844,7 +2844,7 @@
     },
     {
      "what": "the actor more visible to casting",
-     "at": "src/engine/systems/awards.ts:637"
+     "at": "src/engine/systems/awards.ts:651"
     },
     {
      "what": "missed, the direct offer on its strength gone",
@@ -2879,7 +2879,7 @@
      "b27-promo: a part to its promotional film and pay by the clock; one missed; a film held back to its later call"
     ]
    },
-   "missing": "Until then no played life of the long runs reached one. brief 27’s F played two long careers from the journey saves (docs/verification/career-universe-2026-10-24/long, degree four years and last term four and a half, by tools/long-career.ts on 1ad8f7af): eight promotional films called in the degree career and four in the last term’s, by the engagements’ history.",
+   "missing": "Until then no played life of the long runs reached one. Brief 27’s F played two long careers from the journey saves (docs/verification/career-universe-2026-10-24/long, degree four years and last term four and a half, by tools/long-career.ts on 1ad8f7af): eight promotional films called in the degree career and four in the last term’s, by the engagements’ history.",
    "status": "Implemented And Verified",
    "why": "",
    "prior": null
@@ -2939,15 +2939,15 @@
    "consumers": [
     {
      "what": "the fee paid from the bank",
-     "at": "src/engine/systems/awards.ts:246"
+     "at": "src/engine/systems/awards.ts:260"
     },
     {
      "what": "the nominations read only an entered performance",
-     "at": "src/engine/systems/awards.ts:493"
+     "at": "src/engine/systems/awards.ts:507"
     },
     {
      "what": "the field is drawn and the nominations made for it",
-     "at": "src/engine/systems/awards.ts:503"
+     "at": "src/engine/systems/awards.ts:517"
     },
     {
      "what": "Your Recognition says where it stands",
@@ -2987,11 +2987,11 @@
    "consumers": [
     {
      "what": "the ceremony's lines, read from the settled result",
-     "at": "src/engine/systems/ceremony.ts:373"
+     "at": "src/engine/systems/ceremony.ts:375"
     },
     {
      "what": "the entry keeps the day it was watched",
-     "at": "src/engine/systems/ceremony.ts:372"
+     "at": "src/engine/systems/ceremony.ts:374"
     },
     {
      "what": "Your Recognition shows the lines once watched",
@@ -3032,23 +3032,23 @@
    "consumers": [
     {
      "what": "an entry whose work no longer meets the rules is disqualified",
-     "at": "src/engine/systems/awards.ts:477"
+     "at": "src/engine/systems/awards.ts:491"
     },
     {
      "what": "the winner settled at the final round's end",
-     "at": "src/engine/systems/awards.ts:527"
+     "at": "src/engine/systems/awards.ts:541"
     },
     {
      "what": "the result given at the ceremony",
-     "at": "src/engine/systems/awards.ts:529"
-    },
-    {
-     "what": "the production submits its film",
      "at": "src/engine/systems/awards.ts:543"
     },
     {
+     "what": "the production submits its film",
+     "at": "src/engine/systems/awards.ts:557"
+    },
+    {
      "what": "the festival selects it or doesn't",
-     "at": "src/engine/systems/awards.ts:550"
+     "at": "src/engine/systems/awards.ts:564"
     },
     {
      "what": "casting reads the recognition it leaves",
@@ -3070,7 +3070,8 @@
      "career-awards 'two guest parts': two parts of the player's in one category, both nominated, one award given, the other part's recap naming the part that won"
     ],
     "mutations": [
-     "career-awards (brief 27's F, F7 to F13): each entry its own field, the count not one more, the note to the player, the recap's part, the lines' other part, a loss to your own part said as to another, and an old field's `you` not read, each failed a test"
+     "career-awards (brief 27's F, F7 to F13): each entry its own field, the count not one more, the note to the player, the recap's part, the lines' other part, a loss to your own part said as to another, and an old field's `you` not read, each failed a test",
+     "career-awards (brief 27's F, F15, F18, F19): the reason for a credit whose part the record no longer holds put back as \"its scenes are no longer in the game\", every unreleased credit called shelved, and an open year said closed, each failed a test"
     ],
     "journeys": [
      "tests/career-awards-screen.test.ts",
@@ -3097,11 +3098,11 @@
    "consumers": [
     {
      "what": "the nominations read the submission",
-     "at": "src/engine/systems/actorawards.ts:266"
+     "at": "src/engine/systems/actorawards.ts:285"
     },
     {
      "what": "the fee paid",
-     "at": "src/engine/systems/actorawards.ts:181"
+     "at": "src/engine/systems/actorawards.ts:200"
     }
    ],
    "experienced": "Submit Yourself and its toast; the entry's line under the credit; the ledger's charge.",
@@ -3114,13 +3115,14 @@
      "b27-actor-awards: the same performance submitted and not, its production not submitting: nominated and never in the field"
     ],
     "mutations": [
-     "b27-actor-awards: a second submission taken and submissions before the window each failed a test"
+     "b27-actor-awards: a second submission taken and submissions before the window each failed a test",
+     "b27-actor-awards (brief 27's F, F14, F16): the window always \"are open\", and the reason for a credit whose part is gone put back, each failed a test"
     ],
     "journeys": [
      "b27-actor-awards: a Desk Clerk submitted through the command to its nomination and the show"
     ]
    },
-   "missing": "Until then no played life of the long runs reached one. brief 27’s F played two long careers from the journey saves (docs/verification/career-universe-2026-10-24/long, degree four years and last term four and a half, by tools/long-career.ts on 1ad8f7af): the player submits itself whenever the window is open, 102 submissions in the degree career and 12 in the last term’s.",
+   "missing": "Until then no played life of the long runs reached one. Brief 27’s F played two long careers from the journey saves (docs/verification/career-universe-2026-10-24/long, degree four years and last term four and a half, by tools/long-career.ts on 1ad8f7af): the player submits itself whenever the window is open, 102 submissions in the degree career and 12 in the last term’s.",
    "status": "Implemented And Verified",
    "why": "",
    "prior": null
@@ -3140,7 +3142,7 @@
    "consumers": [
     {
      "what": "a nomination counts toward visibility",
-     "at": "src/engine/systems/awards.ts:640"
+     "at": "src/engine/systems/awards.ts:654"
     },
     {
      "what": "on the résumé's lines",
@@ -3148,7 +3150,7 @@
     },
     {
      "what": "the nominee invited to the show",
-     "at": "src/engine/systems/actorawards.ts:292"
+     "at": "src/engine/systems/actorawards.ts:311"
     }
    ],
    "experienced": "Submitted You For The Actor Awards; You're Nominated For An Actor Award or The Actor Awards Nominations Are Out; The Actor Awards Tonight; the entry's line.",
@@ -3167,7 +3169,7 @@
      "b27-actor-awards: a Desk Clerk to its nomination and the show"
     ]
    },
-   "missing": "Until then no played life of the long runs reached one. brief 27’s F played two long careers from the journey saves (docs/verification/career-universe-2026-10-24/long, degree four years and last term four and a half, by tools/long-career.ts on 1ad8f7af): the degree career won 5 Actor Awards and lost 3; the last term’s won 1 and lost 2.",
+   "missing": "Until then no played life of the long runs reached one. Brief 27’s F played two long careers from the journey saves (docs/verification/career-universe-2026-10-24/long, degree four years and last term four and a half, by tools/long-career.ts on 1ad8f7af): the degree career won 5 Actor Awards and lost 3; the last term’s won 1 and lost 2.",
    "status": "Implemented And Verified",
    "why": "",
    "prior": null
@@ -3215,7 +3217,7 @@
      "b27-ceremony: a nominee to the show by the clock, and one watching from home"
     ]
    },
-   "missing": "Until then no played life of the long runs reached one. brief 27’s F played two long careers from the journey saves (docs/verification/career-universe-2026-10-24/long, degree four years and last term four and a half, by tools/long-career.ts on 1ad8f7af): six answers in the degree career and five in the last term’s, one of the degree’s and two of the last term’s refused for a booked clash and watched from home.",
+   "missing": "Until then no played life of the long runs reached one. Brief 27’s F played two long careers from the journey saves (docs/verification/career-universe-2026-10-24/long, degree four years and last term four and a half, by tools/long-career.ts on 1ad8f7af): six answers in the degree career and five in the last term’s, one of the degree’s and two of the last term’s refused for a booked clash and watched from home.",
    "status": "Implemented And Verified",
    "why": "",
    "prior": null
@@ -3254,7 +3256,7 @@
      "b27-ceremony: remarks prepared three times, then the show"
     ]
    },
-   "missing": "Until then no played life of the long runs reached one. brief 27’s F played two long careers from the journey saves (docs/verification/career-universe-2026-10-24/long, degree four years and last term four and a half, by tools/long-career.ts on 1ad8f7af): remarks prepared before each show the player went to.",
+   "missing": "Until then no played life of the long runs reached one. Brief 27’s F played two long careers from the journey saves (docs/verification/career-universe-2026-10-24/long, degree four years and last term four and a half, by tools/long-career.ts on 1ad8f7af): remarks prepared before each show the player went to.",
    "status": "Implemented And Verified",
    "why": "",
    "prior": null
@@ -3274,11 +3276,11 @@
    "consumers": [
     {
      "what": "a strong speech counts toward visibility",
-     "at": "src/engine/systems/awards.ts:643"
+     "at": "src/engine/systems/awards.ts:657"
     },
     {
      "what": "the ceremony's lines say it",
-     "at": "src/engine/systems/ceremony.ts:305"
+     "at": "src/engine/systems/ceremony.ts:307"
     }
    ],
    "experienced": "The stop's choice, Your Speech's notice, the speech's line under the nomination.",
@@ -3297,7 +3299,7 @@
      "b27-ceremony: a win in the room, gone up to accept by the stop's choice"
     ]
    },
-   "missing": "Until then no played life of the long runs reached one. brief 27’s F played two long careers from the journey saves (docs/verification/career-universe-2026-10-24/long, degree four years and last term four and a half, by tools/long-career.ts on 1ad8f7af): seven speeches given in the degree career and one in the last term’s, each from the win’s own stop.",
+   "missing": "Until then no played life of the long runs reached one. Brief 27’s F played two long careers from the journey saves (docs/verification/career-universe-2026-10-24/long, degree four years and last term four and a half, by tools/long-career.ts on 1ad8f7af): seven speeches given in the degree career and one in the last term’s, each from the win’s own stop.",
    "status": "Implemented And Verified",
    "why": "",
    "prior": null
@@ -3317,11 +3319,11 @@
    "consumers": [
     {
      "what": "the moment to go up set",
-     "at": "src/engine/systems/ceremony.ts:340"
+     "at": "src/engine/systems/ceremony.ts:342"
     },
     {
      "what": "absent, said",
-     "at": "src/engine/systems/ceremony.ts:329"
+     "at": "src/engine/systems/ceremony.ts:331"
     }
    ],
    "experienced": "The show's stop; You Won At …, the room's loss, or You Weren't At ….",
@@ -3341,7 +3343,7 @@
      "b27-ceremony: the night played by the clock, the trip there and home"
     ]
    },
-   "missing": "Until then no played life of the long runs reached one. brief 27’s F played two long careers from the journey saves (docs/verification/career-universe-2026-10-24/long, degree four years and last term four and a half, by tools/long-career.ts on 1ad8f7af): four shows gone to in the degree career and three in the last term’s.",
+   "missing": "Until then no played life of the long runs reached one. Brief 27’s F played two long careers from the journey saves (docs/verification/career-universe-2026-10-24/long, degree four years and last term four and a half, by tools/long-career.ts on 1ad8f7af): four shows gone to in the degree career and three in the last term’s.",
    "status": "Implemented And Verified",
    "why": "",
    "prior": null
@@ -3361,7 +3363,7 @@
    "consumers": [
     {
      "what": "the moment let pass",
-     "at": "src/engine/systems/ceremony.ts:349"
+     "at": "src/engine/systems/ceremony.ts:351"
     }
    ],
    "experienced": "The stop and its choice; the line You went up, said thank you, and sat down.",
@@ -3374,13 +3376,14 @@
      "b27-ceremony: the moment taken and let pass"
     ],
     "mutations": [
-     "b27-ceremony: the moment no stop and the moment let pass still speaking each failed a test"
+     "b27-ceremony: the moment no stop and the moment let pass still speaking each failed a test",
+     "b27-ceremony (brief 27's F, F17): \"You went up\" said while the moment to go up was still to come failed a test"
     ],
     "journeys": [
      "b27-ceremony: a win, the moment let pass"
     ]
    },
-   "missing": "Until then no played life of the long runs reached one. brief 27’s F played two long careers from the journey saves (docs/verification/career-universe-2026-10-24/long, degree four years and last term four and a half, by tools/long-career.ts on 1ad8f7af): seven stops in the degree career and one in the last term’s, each answered Go Up And Accept.",
+   "missing": "Until then no played life of the long runs reached one. Brief 27’s F played two long careers from the journey saves (docs/verification/career-universe-2026-10-24/long, degree four years and last term four and a half, by tools/long-career.ts on 1ad8f7af): seven stops in the degree career and one in the last term’s, each answered Go Up And Accept.",
    "status": "Implemented And Verified",
    "why": "",
    "prior": null

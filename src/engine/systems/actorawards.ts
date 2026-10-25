@@ -108,11 +108,25 @@ const LIMITED: readonly FormatId[] = ['limited-series', 'anthology', 'tv-movie']
 
 export type ActorCheck = { eligible: true; year: number; category: ActorCategory } | { eligible: false; why: string; year?: number };
 
+/**
+ * Why a credit whose part the record no longer holds can't be submitted, read from the credit itself (from 2026-10-25,
+ * brief 27's F, as `pastWhy` in `systems/awards.ts`): by then its year's submissions have closed. Until then this said
+ * "This work's scenes are no longer in the game, so it can't say".
+ */
+function pastWhy(sim: Simulation, c: ProCredit): string {
+  if (c.medium === 'stage') return 'The Actor Awards are for motion pictures and television programs.';
+  if (c.releasedAt === undefined) return c.release?.kind === 'shelved' ? 'It was shelved and never shown, so it never had a year at the Actor Awards.' : 'Its part is no longer on your record, so it can’t be submitted.';
+  const year = zonedParts(c.releasedAt, NY).year;
+  const ed = actorEdition(year);
+  if (sim.now <= submissionsClose(ed)) return 'Its part is no longer on your record, so it can’t be submitted.';
+  return `It was first shown in ${year}, for ${actorAwardsName(ed)}, whose submissions closed on ${longDay(ed.submissions.closes)}.`;
+}
+
 /** Whether a credit's performance can be submitted for the Actor Awards, in which year and category; each refusal a rule's, said. */
 export function actorCheck(sim: Simulation, person: Person, c: ProCredit): ActorCheck {
   const e = c.engagementId ? person.pro?.engagements.find((x) => x.id === c.engagementId) : undefined;
   const t = e ? projectById(e.projectId) : undefined;
-  if (!t || !e) return { eligible: false, why: 'This work’s scenes are no longer in the game, so it can’t say.' };
+  if (!t || !e) return { eligible: false, why: pastWhy(sim, c) };
   const premiere = premiereOf(sim, person, c);
   const year = premiere !== undefined ? zonedParts(premiere, NY).year : undefined;
   const y = year !== undefined ? { year } : {};
@@ -143,10 +157,15 @@ export function actorCheck(sim: Simulation, person: Person, c: ProCredit): Actor
   return { eligible: true, year, category: DRAMA.includes(t.format) ? 'tv-drama' : 'tv-comedy' };
 }
 
-/** An eligible check in words: the category and the edition. */
-export function actorEligibleWords(person: Person, check: Extract<ActorCheck, { eligible: true }>): string {
+/**
+ * An eligible check in words: the category and the edition, and the submissions' window in the tense the clock reads it
+ * (from 2026-10-25, brief 27's F: until then a window two years gone read "Submissions are open from August 24, 2032",
+ * seen on the built app in January 2034).
+ */
+export function actorEligibleWords(person: Person, check: Extract<ActorCheck, { eligible: true }>, now?: Instant): string {
   const ed = actorEdition(check.year);
-  return `Eligible for ${actorCategoryName(person, check.category)} at ${actorAwardsName(ed)}. Submissions are open from ${longDay(ed.submissions.opens)} to ${longDay(ed.submissions.closes)}, at 5 PM Pacific.`;
+  const are = now === undefined ? 'are open' : now > submissionsClose(ed) ? 'were open' : now < submissionsOpen(ed) ? 'open' : 'are open';
+  return `Eligible for ${actorCategoryName(person, check.category)} at ${actorAwardsName(ed)}. Submissions ${are} from ${longDay(ed.submissions.opens)} to ${longDay(ed.submissions.closes)}, at 5 PM Pacific.`;
 }
 
 // ---------------------------------------------------------------------------------------------------------------------
