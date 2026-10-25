@@ -84,7 +84,7 @@ import type { Simulation } from '../core/simulation';
 import type { Person } from '../domain/model';
 import { abilityFull, abilityOf, abilityDef, type AbilityId } from './attributes';
 import { MASTERED, TECHNIQUES, TECHNIQUE_LABEL } from '../content/abilities';
-import { type Dimension, type DimensionSpec, type TaskProfile, DIMENSION_LABEL, EVALUATION, RULESET } from '../content/tasks';
+import { type Dimension, type DimensionSpec, type TaskProfile, DIMENSION_LABEL, EVALUATION, RULESET, TASK_PROFILES } from '../content/tasks';
 import { SKILL_WORDS, type Skill } from '../content/school';
 import { plural } from '../core/text';
 import { judgePiece, type PieceResult, type PieceSpec } from './piece';
@@ -248,6 +248,14 @@ export interface Evaluation {
     grain?: Partial<Record<Dimension, { d: number; label: string }>>;
     /** A piece judged in segments (from 2026-10-12, `systems/piece.ts`): the segments, their work, the part and the load. */
     piece?: PieceSpec;
+    /**
+     * A day of units kept as one piece of work (from 2026-10-25, brief 27's F, `systems/workflow.ts`): each unit's best take,
+     * as far as it differs from the day's own inputs, and the factor its figure was printed at (a stunt double's insert).
+     * The day's figure is their mean, and it replays the same way (`partsJudged`). Until then a day kept one unit's inputs
+     * beside the units' mean, so it didn't replay from them: brief 20's journeys found 3 to 15 such days in six of eight
+     * lives (their check 10), and a day's page said it came to another figure judged again.
+     */
+    parts?: readonly WorkPart[];
   };
   /** The segments' own results and the continuity read from them, for a piece judged in segments. */
   piece?: PieceResult;
@@ -342,10 +350,35 @@ export function evaluate(sim: Simulation, person: Person, ctx: EvalContext): Eva
  * kept under other rules (`ruleset`, from 2026-10-12) isn't: today's judge would give another number and call it the
  * same work, so there's nothing to show but what it was.
  */
+/** One unit of a day kept as one piece (`Evaluation['inputs']['parts']`): what its best take read that the day's inputs don't. */
+export interface WorkPart {
+  task: string;
+  key: string;
+  prep: Record<string, number>;
+  required: Record<string, number>;
+  condition: Condition;
+  lean?: Partial<Record<Dimension, number>>;
+  /** The factor its figure was printed at, where it wasn't 1. */
+  f?: number;
+}
+
+/**
+ * A day's parts judged again by a performer, each from the day's inputs with its own on top, and their mean, as the day
+ * was worked out (`systems/workflow.ts`): the part nearest it, its figure the mean.
+ */
+function partsJudged(i: Evaluation['inputs'], profile: TaskProfile, performer: Performer, expected: boolean): Evaluation {
+  const evs = i.parts!.map((p) => ({ p, ev: judge(i.seed!, performer, { task: TASK_PROFILES[p.task] ?? profile, techniques: i.techniques, prep: p.prep, required: p.required, difficulty: i.difficulty, condition: p.condition, families: i.families, key: p.key, ...(expected ? { expected: true } : {}), ...(p.lean ? { lean: p.lean } : {}) }) }));
+  const printed = evs.map(({ p, ev }) => (p.f === undefined ? ev.overall : ev.overall * p.f));
+  const mean = printed.reduce((s, x) => s + x, 0) / printed.length;
+  const near = evs[printed.reduce((b, x, k) => (Math.abs(x - mean) < Math.abs(printed[b]! - mean) ? k : b), 0)]!.ev;
+  return { ...near, overall: r1(mean), exact: mean };
+}
+
 export function replay(record: { inputs: Evaluation['inputs']; task: string; ruleset?: string }, profile: TaskProfile): Evaluation | undefined {
   const i = record.inputs;
   if (!i.levels || !i.fulls || i.seed === undefined) return undefined;
   if (record.ruleset !== undefined && record.ruleset !== RULESET) return undefined;
+  if (i.parts?.length) return partsJudged(i, profile, frozenPerformer(i), false);
   const ctx: EvalContext = { task: profile, techniques: i.techniques, prep: i.prep, required: i.required, difficulty: i.difficulty, condition: i.condition, families: i.families, key: i.key, ...(i.lean ? { lean: i.lean } : {}), ...(i.inputs ? { inputs: i.inputs } : {}), ...(i.extraPrep ? { extraPrep: i.extraPrep } : {}), ...(i.fit ? { fit: i.fit } : {}), ...(i.grain ? { grain: i.grain } : {}) };
   return i.piece ? judgePiece(i.seed, frozenPerformer(i), ctx, i.piece) : judge(i.seed, frozenPerformer(i), ctx);
 }
@@ -360,6 +393,7 @@ export function replayAs(record: { inputs: Evaluation['inputs']; task: string; r
   const i = record.inputs;
   if (i.seed === undefined) return undefined;
   if (record.ruleset !== undefined && record.ruleset !== RULESET) return undefined;
+  if (i.parts?.length) return partsJudged(i, profile, performer, true);
   const ctx: EvalContext = { task: profile, techniques: i.techniques, prep: i.prep, required: i.required, difficulty: i.difficulty, condition: i.condition, families: i.families, key: i.key, expected: true, ...(i.lean ? { lean: i.lean } : {}), ...(i.inputs ? { inputs: i.inputs } : {}), ...(i.extraPrep ? { extraPrep: i.extraPrep } : {}), ...(i.fit ? { fit: i.fit } : {}), ...(i.grain ? { grain: i.grain } : {}) };
   return i.piece ? judgePiece(i.seed, performer, ctx, i.piece) : judge(i.seed, performer, ctx);
 }

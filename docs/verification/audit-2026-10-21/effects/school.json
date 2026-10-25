@@ -256,7 +256,7 @@
    "consumers": [
     {
      "what": "Every evaluation reads the abilities and techniques",
-     "at": "src/engine/systems/evaluation.ts:333"
+     "at": "src/engine/systems/evaluation.ts:341"
     },
     {
      "what": "A step’s speed reads the ability it trains",

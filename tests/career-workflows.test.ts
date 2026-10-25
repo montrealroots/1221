@@ -17,6 +17,7 @@ import {
   stuntChance, unitContext, workKey, loopDrawn, cutDrawn,
 } from '@/engine/systems/workflow';
 import { TASK_PROFILES } from '@/engine/content/tasks';
+import { replay } from '@/engine/systems/evaluation';
 import { at, graduate, notices, played, reload, skilled, tended, zone } from './fakes/career-world';
 import { booked, signed } from './fakes/career-work';
 import { commissionOn } from '@/engine/systems/propay';
@@ -131,6 +132,14 @@ describe('W2: single camera, its scenes out of order, in takes, with revised pag
     const done = worked(sim, e);
     expect(done.status).toBe('finished');
     expect(done.reports!.map((r) => r.day)).toEqual(done.days.map((_, i) => i));
+    // Each day kept as one piece of work replays from what it keeps, its three scenes' best takes and their mean, and so
+    // after a save and a load (brief 27's F: until then a day kept one scene's inputs beside the mean, and didn't).
+    const days = (s: Simulation) => s.player.work!.filter((w) => w.inputs.key.startsWith(`pro:${s.player.id}:${e.id}:`));
+    expect(days(sim)).toHaveLength(done.days.length);
+    for (const w of [...days(sim), ...days(reload(sim))]) {
+      expect(w.inputs.parts).toHaveLength(3);
+      expect(replay(w, TASK_PROFILES[w.task]!)!.overall).toBe(w.overall);
+    }
     for (const r of done.reports!) {
       expect(r.units).toHaveLength(3);
       expect(r.band).toBeDefined();
@@ -471,6 +480,10 @@ describe('W9: action, with the stunt coordinator', () => {
     expect(doubled.takes).toEqual(own.takes);
     expect([doubled.by, own.by]).toEqual(['double', 'you']);
     expect(doubled.best!).toBeCloseTo(Math.round(Math.max(...own.takes!) * STUNT.insert * 10) / 10, 1);
+    // The doubled day replays from what it keeps, the double's part at the insert's share (brief 27's F).
+    const day3 = sim.player.work!.find((w) => w.inputs.key === `pro:${sim.player.id}:${e.id}:3`)!;
+    expect(day3.inputs.parts!.some((p) => p.f === STUNT.insert)).toBe(true);
+    expect(replay(day3, TASK_PROFILES[day3.task]!)!.overall).toBe(day3.overall);
     // The risk: less with the fight rehearsed and a strong body (the game's figures).
     expect(stuntChance(0, 0)).toBeCloseTo(STUNT.cold, 5);
     expect(stuntChance(1, 0)).toBeCloseTo(STUNT.rehearsed, 5);

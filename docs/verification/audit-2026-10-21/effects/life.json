@@ -1754,7 +1754,7 @@
    "kind": "evaluation",
    "claim": "A night on stage is judged with your readiness at curtain time: under ${EVALUATION.sufficientReadiness}, coming in tired costs you.",
    "entryFile": "src/engine/content/guide/body.ts",
-   "holds": "A night is judged with conditionAt’s readiness at the call (src/engine/systems/school.ts:967); under EVALUATION.sufficientReadiness the judgment names fatigue and takes it off (src/engine/systems/evaluation.ts:427).",
+   "holds": "A night is judged with conditionAt’s readiness at the call (src/engine/systems/school.ts:967); under EVALUATION.sufficientReadiness the judgment names fatigue and takes it off (src/engine/systems/evaluation.ts:461).",
    "tests": [
     "tests/integration-mastery.test.ts",
     "tests/b20-life-fatigue.test.ts"

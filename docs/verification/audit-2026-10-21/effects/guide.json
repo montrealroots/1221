@@ -1959,7 +1959,7 @@
    "kind": "scheduled",
    "claim": "A looping session is paid half a day, on the work’s pay.",
    "entryFile": "src/engine/content/guide/career.ts",
-   "holds": "The session worked puts half the contract's day rate (`loopPay`, src/engine/systems/workflow.ts:631) among the engagement's payments, due the Thursday after, and puts it on the clock (`schedulePay`, src/engine/systems/workflow.ts:673).",
+   "holds": "The session worked puts half the contract's day rate (`loopPay`, src/engine/systems/workflow.ts:635) among the engagement's payments, due the Thursday after, and puts it on the clock (`schedulePay`, src/engine/systems/workflow.ts:677).",
    "tests": [
     "tests/career-workflows.test.ts"
    ],

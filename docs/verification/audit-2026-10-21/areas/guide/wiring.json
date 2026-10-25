@@ -873,7 +873,7 @@
    "kind": "pro.work_choice",
    "payload": "{ engagementId: e.id, decision: d.id, option: o.id }",
    "verdict": "Right",
-   "handler": "src/engine/systems/workflow.ts:867",
+   "handler": "src/engine/systems/workflow.ts:871",
    "note": "Each option's button under How The Work Is Done sets that choice on that engagement, by its decision and option ids; its refusal (choiceRefusal) is the button's title and grays it, and the option in force says now beside it. Read on 2026-10-24 by its builder (brief 25's Module 5), pressed through the command in tests/career-workflows-screen.test.ts."
   },
   {

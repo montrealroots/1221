@@ -113,7 +113,7 @@
    "kind": "history",
    "claim": "Each showing is kept on your record, where Your Work So Far reads your strengths and what keeps holding you back.",
    "entryFile": "src/engine/content/guide/coursework.ts",
-   "holds": "`show` keeps the judged piece (`recordWork`, src/engine/systems/coursework.ts:1134; src/engine/systems/evaluation.ts:629), which counts it for life with its limits (`countWork`, src/engine/systems/evaluation.ts:580); Your Work So Far reads the record's strengths and the limits kept for life (src/engine/systems/artistry.ts:92-127).",
+   "holds": "`show` keeps the judged piece (`recordWork`, src/engine/systems/coursework.ts:1134; src/engine/systems/evaluation.ts:663), which counts it for life with its limits (`countWork`, src/engine/systems/evaluation.ts:614); Your Work So Far reads the record's strengths and the limits kept for life (src/engine/systems/artistry.ts:92-127).",
    "tests": [
     "tests/b20-craft-promises.test.ts",
     "tests/evidence-g23-school.test.ts",
@@ -543,7 +543,7 @@
    "kind": "history",
    "claim": "Each scene played together is counted, and Your Work So Far gives how they came out on average from the third on.",
    "entryFile": "src/engine/content/guide/coursework.ts",
-   "holds": "Each scene together is counted (`countTogether`, src/engine/systems/coursework.ts:1144; src/engine/systems/evaluation.ts:607); Playing With Others is named from the third (src/engine/systems/artistry.ts:213).",
+   "holds": "Each scene together is counted (`countTogether`, src/engine/systems/coursework.ts:1144; src/engine/systems/evaluation.ts:641); Playing With Others is named from the third (src/engine/systems/artistry.ts:213).",
    "tests": [
     "tests/evidence-g23-school.test.ts",
     "tests/b20-craft-promises.test.ts"
@@ -1314,7 +1314,7 @@
    "kind": "history",
    "claim": "Every take with a reader counts toward Playing With Others, with the slips and those you covered.",
    "entryFile": "src/engine/content/guide/craft.ts",
-   "holds": "Each take with a reader is counted together (src/engine/systems/briefs.ts:663; src/engine/systems/evaluation.ts:607), named Playing With Others from the third (src/engine/systems/artistry.ts:209-213).",
+   "holds": "Each take with a reader is counted together (src/engine/systems/briefs.ts:663; src/engine/systems/evaluation.ts:641), named Playing With Others from the third (src/engine/systems/artistry.ts:209-213).",
    "tests": [
     "tests/b20-craft-promises.test.ts"
    ],
@@ -1396,7 +1396,7 @@
    "kind": "history",
    "claim": "Takes and their readings are read for habits, and a callback answered counts toward Taking Direction.",
    "entryFile": "src/engine/content/guide/craft.ts",
-   "holds": "Takes' readings are read for habits (src/engine/systems/artistry.ts:161-170); a callback answered counts toward Taking Direction (src/engine/systems/briefs.ts:682; src/engine/systems/evaluation.ts:615; src/engine/systems/artistry.ts:184-193).",
+   "holds": "Takes' readings are read for habits (src/engine/systems/artistry.ts:161-170); a callback answered counts toward Taking Direction (src/engine/systems/briefs.ts:682; src/engine/systems/evaluation.ts:649; src/engine/systems/artistry.ts:184-193).",
    "tests": [
     "tests/b20-craft-promises.test.ts"
    ],
@@ -1445,7 +1445,7 @@
    "kind": "history",
    "claim": "Each piece judged is kept in School Journey, the latest ${WORK_KEPT} in full and every one counted.",
    "entryFile": "src/engine/content/guide/craft.ts",
-   "holds": "`recordWork` keeps the latest `WORK_KEPT` (src/engine/systems/evaluation.ts:517, src/engine/systems/evaluation.ts:629-643) and counts every one for life (`countWork`, src/engine/systems/evaluation.ts:580); School Journey draws both (src/ui/workspaces/ProfileWorkspace.tsx:478).",
+   "holds": "`recordWork` keeps the latest `WORK_KEPT` (src/engine/systems/evaluation.ts:551, src/engine/systems/evaluation.ts:663-643) and counts every one for life (`countWork`, src/engine/systems/evaluation.ts:614); School Journey draws both (src/ui/workspaces/ProfileWorkspace.tsx:478).",
    "tests": [
     "tests/b20-craft-promises.test.ts",
     "tests/evidence-g32-ui.test.ts",
@@ -1462,7 +1462,7 @@
    "kind": "history",
    "claim": "Your Work So Far reads the record for strengths, and what held each piece back, kept for life, for what keeps coming back.",
    "entryFile": "src/engine/content/guide/craft.ts",
-   "holds": "Strengths from the record (src/engine/systems/artistry.ts:92-107), what held pieces back kept for life (src/engine/systems/evaluation.ts:580; src/engine/systems/artistry.ts:113-119).",
+   "holds": "Strengths from the record (src/engine/systems/artistry.ts:92-107), what held pieces back kept for life (src/engine/systems/evaluation.ts:614; src/engine/systems/artistry.ts:113-119).",
    "tests": [
     "tests/evidence-g23-school.test.ts",
     "tests/evidence2-b11.test.ts",
@@ -2118,7 +2118,7 @@
    "kind": "history",
    "claim": "The nights with a company count toward Playing With Others in Your Work So Far.",
    "entryFile": "src/engine/content/guide/productions.ts",
-   "holds": "A night with a company is counted together (src/engine/systems/school.ts:3697; src/engine/systems/evaluation.ts:607), read by Playing With Others (src/engine/systems/artistry.ts:213).",
+   "holds": "A night with a company is counted together (src/engine/systems/school.ts:3697; src/engine/systems/evaluation.ts:641), read by Playing With Others (src/engine/systems/artistry.ts:213).",
    "tests": [
     "tests/b20-craft-promises.test.ts"
    ],

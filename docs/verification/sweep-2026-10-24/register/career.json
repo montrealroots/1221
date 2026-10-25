@@ -666,7 +666,7 @@
   "evidence": [
    "tests/career-workflows.test.ts",
    "tests/career-workflows-screen.test.ts",
-   "src/engine/systems/workflow.ts:862 an anthology's invitation to its next story, for strong work"
+   "src/engine/systems/workflow.ts:866 an anthology's invitation to its next story, for strong work"
   ]
  },
  "pro.join_sag": {
@@ -693,7 +693,7 @@
   "evidence": [
    "tests/career-workflows.test.ts",
    "tests/career-workflows-screen.test.ts",
-   "src/engine/systems/workflow.ts:841 the looping session after the wrap, paid half the day rate (loopPay, workflow.ts:631)"
+   "src/engine/systems/workflow.ts:845 the looping session after the wrap, paid half the day rate (loopPay, workflow.ts:631)"
   ]
  },
  "pro.mix_demo": {
@@ -760,7 +760,7 @@
   "evidence": [
    "tests/career-workflows.test.ts",
    "tests/career-workflows-screen.test.ts",
-   "src/engine/systems/workflow.ts:834 revised pages the night before a work day, by the format's chance"
+   "src/engine/systems/workflow.ts:838 revised pages the night before a work day, by the format's chance"
   ]
  },
  "pro.postings": {
@@ -804,7 +804,7 @@
   "on": "0bab5068",
   "evidence": [
    "tests/b27-promo.test.ts",
-   "src/engine/systems/workflow.ts:737 the film: made or missed, the pay; src/engine/systems/workflow.ts:855 its handler; src/engine/systems/projobs.ts:1956 the call"
+   "src/engine/systems/workflow.ts:741 the film: made or missed, the pay; src/engine/systems/workflow.ts:859 its handler; src/engine/systems/projobs.ts:1956 the call"
   ]
  },
  "pro.release": {
@@ -860,7 +860,7 @@
   "on": "830677a2",
   "evidence": [
    "tests/b27-reshoot.test.ts",
-   "src/engine/systems/workflow.ts:646 the session: taken again or missed, the band and the pay; src/engine/systems/workflow.ts:780 its handler"
+   "src/engine/systems/workflow.ts:650 the session: taken again or missed, the band and the pay; src/engine/systems/workflow.ts:784 its handler"
   ]
  },
  "pro.revival": {
@@ -1079,7 +1079,7 @@
   "evidence": [
    "tests/career-workflows.test.ts",
    "tests/career-workflows-screen.test.ts",
-   "src/engine/systems/workflow.ts:867 a work day's choice (another take, the double), each read by the day's judgment"
+   "src/engine/systems/workflow.ts:871 a work day's choice (another take, the double), each read by the day's judgment"
   ]
  },
  "pro.work_day": {

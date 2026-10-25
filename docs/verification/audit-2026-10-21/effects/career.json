@@ -1819,10 +1819,12 @@
      "B20-CAREER-8",
      "B20-CAREER-3",
      "B20-CAREER-18",
-     "B20-CAREER-19"
+     "B20-CAREER-19",
+     "career-workflows (brief 27's F, F23 to F25): a day kept without its parts, its parts not replayed, and a stunt double's insert not kept, each failed a test"
     ],
     "journeys": [
-     "life A (v1-21)"
+     "life A (v1-21)",
+     "career-workflows WF-01 and WF-18: every day of a feature's three scenes, and a day with the double's stunt, replays from what it keeps to its own figure, after a save and a load too"
     ]
    },
    "missing": "Found and repaired in brief 20: a professional day read neither nerves nor enjoyment, where a School night and rehearsal read both (found by the creation area). A shoot day takes no nerves: a crew, not a house, as a School tape takes none.",
@@ -2598,7 +2600,7 @@
     },
     {
      "what": "the looping session's sync choice",
-     "at": "src/engine/systems/workflow.ts:585"
+     "at": "src/engine/systems/workflow.ts:589"
     },
     {
      "what": "the Work tab shows the option in force",
@@ -2638,11 +2640,11 @@
    "consumers": [
     {
      "what": "the units shot that day carry the new version",
-     "at": "src/engine/systems/workflow.ts:655"
+     "at": "src/engine/systems/workflow.ts:659"
     },
     {
      "what": "what was learned falls by the share",
-     "at": "src/engine/systems/workflow.ts:658"
+     "at": "src/engine/systems/workflow.ts:662"
     },
     {
      "what": "the day's report says the pages were revised",
@@ -2741,15 +2743,15 @@
    "consumers": [
     {
      "what": "the half day's pay",
-     "at": "src/engine/systems/workflow.ts:598"
+     "at": "src/engine/systems/workflow.ts:602"
     },
     {
      "what": "the payroll pays it on its Thursday",
-     "at": "src/engine/systems/workflow.ts:673"
+     "at": "src/engine/systems/workflow.ts:677"
     },
     {
      "what": "the loop's status read before acting, so it's worked once",
-     "at": "src/engine/systems/workflow.ts:570"
+     "at": "src/engine/systems/workflow.ts:574"
     }
    ],
    "experienced": "A looping session on the calendar and a line in the history: You looped your part, its lines re-recorded, paid half a day.",
@@ -2785,19 +2787,19 @@
    "consumers": [
     {
      "what": "the better take kept",
-     "at": "src/engine/systems/workflow.ts:675"
+     "at": "src/engine/systems/workflow.ts:679"
     },
     {
      "what": "missed, the scenes cut",
-     "at": "src/engine/systems/workflow.ts:656"
+     "at": "src/engine/systems/workflow.ts:660"
     },
     {
      "what": "the credit's band read again from what's kept",
-     "at": "src/engine/systems/workflow.ts:684"
+     "at": "src/engine/systems/workflow.ts:688"
     },
     {
      "what": "a day's pay promised and paid",
-     "at": "src/engine/systems/workflow.ts:686"
+     "at": "src/engine/systems/workflow.ts:690"
     },
     {
      "what": "the day held against another offer",
@@ -2840,7 +2842,7 @@
    "consumers": [
     {
      "what": "a day performer's minimum promised and paid",
-     "at": "src/engine/systems/workflow.ts:754"
+     "at": "src/engine/systems/workflow.ts:758"
     },
     {
      "what": "the actor more visible to casting",
@@ -2856,7 +2858,7 @@
     },
     {
      "what": "a loop or a reshoot kept off its hours",
-     "at": "src/engine/systems/workflow.ts:569"
+     "at": "src/engine/systems/workflow.ts:573"
     },
     {
      "what": "the contract's term",

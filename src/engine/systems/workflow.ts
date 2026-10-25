@@ -432,7 +432,7 @@ export function workTheDay(sim: Simulation, person: Person, e: Engagement, t: Pr
   const fmt = formatOf(t);
   let extras = effects.takes?.extraTakes ? fmt.takes?.extra ?? 0 : 0;
   const units = (e.units ?? []).filter((u) => u.day === i).sort((a, b) => a.order - b.order);
-  const kept: { u: WorkUnit; ev: Evaluation; best: number }[] = [];
+  const kept: { u: WorkUnit; ev: Evaluation; best: number; f?: number }[] = [];
   let stressful = 0;
   for (const u of units) {
     report.units.push(u.id);
@@ -471,7 +471,7 @@ export function workTheDay(sim: Simulation, person: Person, e: Engagement, t: Pr
     }
     if (u.stressful) stressful += 1;
     u.best = r1(printed);
-    kept.push({ u, ev: best!, best: printed });
+    kept.push({ u, ev: best!, best: printed, ...(printed !== best!.overall ? { f: STUNT.insert } : {}) });
   }
   if (!kept.length) { (e.reports ??= []).push(report); return { report }; }
   const overall = r1(kept.reduce((s, k) => s + k.best, 0) / kept.length);
@@ -485,7 +485,11 @@ export function workTheDay(sim: Simulation, person: Person, e: Engagement, t: Pr
   if (energy) person.wellbeing.energy = clamp(person.wellbeing.energy - energy * kept.length, 0, 100);
   // The day on the record as one piece of work: the printed takes' mean, with what held back the unit nearest it.
   const near = kept.reduce((a, b) => (Math.abs(b.best - overall) < Math.abs(a.best - overall) ? b : a)).ev;
-  const ev: Evaluation = { ...near, overall, inputs: { ...near.inputs, key: `pro:${person.id}:${e.id}:${i}` } };
+  // And every unit's best take, where the day isn't one take as judged, so the day replays from what it keeps
+  // (`Evaluation['inputs']['parts']`).
+  const whole = kept.length > 1 || kept[0]!.f !== undefined;
+  const parts = whole ? kept.map(({ ev: x, f }) => ({ task: x.task, key: x.inputs.key, prep: x.inputs.prep, required: x.inputs.required, condition: x.inputs.condition, ...(x.inputs.lean ? { lean: x.inputs.lean } : {}), ...(f !== undefined ? { f } : {}) })) : undefined;
+  const ev: Evaluation = { ...near, overall, inputs: { ...near.inputs, key: `pro:${person.id}:${e.id}:${i}`, ...(parts ? { parts } : {}) } };
   recordWork(sim, person, ev, { at, what: `${t.role.part}, ${t.project}: ${e.days[i]!.label.replace(/^[^:]*: /, '')}`, band });
   report.overall = overall;
   report.band = band;
