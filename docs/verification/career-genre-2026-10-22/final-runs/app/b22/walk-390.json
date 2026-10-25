@@ -1,8 +1,8 @@
 {
  "width": 390,
  "base": "http://localhost:4221",
- "commit": "9f974984",
- "at": "2026-10-25T16:34:25.939Z",
+ "commit": "4cba6159",
+ "at": "2026-10-25T17:01:26.070Z",
  "saves": [
   {
    "save": "before",
@@ -125,9 +125,9 @@
      "picture": "roles-06"
     },
     {
-     "step": "reads /What It Asks\\s*(Psychological Horror|Coming Of Age|Farce|Domestic Drama|Police Procedural|Psychological Thriller|Romantic Comedy)\\. /",
+     "step": "reads /What It Asks\\s*([A-Z][A-Za-z’\\-]*(?: [A-Z][A-Za-z’\\-]*)*|[A-Z][A-Za-z’\\-]*(?: [A-Z][A-Za-z’\\-]*)*(, [A-Z][A-Za-z’\\-]*(?: [A-Z][A-Za-z’\\-]*)*)* and [A-Z][A-Za-z’\\-]*(?: [A-Z][A-Za-z’\\-]*)*, about evenly|Mostly [A-Z][A-Za-z’\\-]*(?: [A-Z][A-Za-z’\\-]*)*, with some [A-Z][A-Za-z’\\-]*(?: [A-Z][A-Za-z’\\-]*)*((, [A-Z][A-Za-z’\\-]*(?: [A-Z][A-Za-z’\\-]*)*)* and [A-Z][A-Za-z’\\-]*(?: [A-Z][A-Za-z’\\-]*)*)?)\\. Written for/",
      "on": "Career, Opportunities",
-     "held": false
+     "held": true
     },
     {
      "step": "doesn’t read /What It Asks\\s*[^.]*, (Horror|Drama|Comedy|Crime|Thriller)\\./",
@@ -155,9 +155,7 @@
      "held": true
     }
    ],
-   "found": [
-    "Career, Opportunities: doesn’t say /What It Asks\\s*(Psychological Horror|Coming Of Age|Farce|Domestic Drama|Police Procedural|Psychological Thriller|Romantic Comedy)\\. /"
-   ]
+   "found": []
   }
  ]
 }

@@ -2,9 +2,9 @@
  "playthrough": "specialist",
  "width": 1440,
  "base": "http://localhost:4217",
- "commit": "9f974984",
- "uncommitted": 9,
- "startedAt": "2026-10-25T16:12:57.104Z",
+ "commit": "4cba6159",
+ "uncommitted": 16,
+ "startedAt": "2026-10-25T16:57:42.681Z",
  "startingPoint": {
   "kind": "save",
   "file": "specialist.json",
@@ -313,5 +313,5 @@
   "errors": 0,
   "overflows": 0
  },
- "finishedAt": "2026-10-25T16:14:03.636Z"
+ "finishedAt": "2026-10-25T16:58:47.342Z"
 }

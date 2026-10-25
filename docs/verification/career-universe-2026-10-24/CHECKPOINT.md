@@ -11,7 +11,11 @@ commit, what's done, what remains and the exact next step. `README.md` is the re
   production without my explicit instruction.").
 - **Brief:** `../briefs-2026-10-16/27-foundation-limits-and-connected-professional-career-universe.txt`, kept as sent
   (the geographic preamble, the command's Parts 1 to 20, the lifecycle supplement's loops 1 to 56).
-- **One agent, no subagents,** as the brief asks.
+- **One agent, no subagents,** as the brief asked, until 2026-10-25, when the owner withdrew it: "I explicitly withdraw
+  my previous ONE-agent restriction. You may use subagents, parallel work, and independent review when they meaningfully
+  improve implementation quality, coverage, or efficiency." One primary agent keeps the architecture, the requirements,
+  the integration and the final verification; subagents build bounded clusters in clones of their own, each reviewed by
+  another agent, and nothing they claim is taken without the primary agent's own check.
 - **Brief 25's work** (`claude/peaceful-hamilton-59zdbb`, the other account's, Modules 0 to 6, from `b46ee301`) is
   merged into this branch by a merge commit (`23ac6c66`); its own branch is untouched.
 
@@ -49,7 +53,8 @@ commit, what's done, what remains and the exact next step. `README.md` is the re
 | K6 | Release, publicity, weekly charts, renewal and returning work | Built: what brief 25 built read against Parts 12 and 13; a finished production's way out, a season's audience read by renewal, a promotional film for a release, and a revival's character plans |
 | K7 | Festivals, awards, the ceremony | Built: the Actor Awards by its 33rd rules, the ceremony for every nomination (invitation, trip, remarks, the moment to go up and the speech), an agent's and a negotiation's read of recognition; a festival's attendance and other institutions not built, each said why |
 | K8 | The industry reference | Built: Productions And People, a seventh Career tab over the records the career already reads: real productions, companies, agencies and people as their pages had them, the game's projects, series, seasons and episodes to the clock, the player's part and history, each fact tagged, links, actions to the tab that acts and the trail kept; the retired database not restored. K7's four commands opened by Finding Work (defect 12) |
-| F | The lifecycle and career matrices, long careers, final runs, the gate, the receipt | Under way: the lifecycle matrix (56 loops) and the career feature matrix (81 features); two long careers played (`long/`) and walked on the built app at three sizes (`walk/k8`); six defects found by them and fixed (13 to 18, README), the last the Emmy field (`1ad8f7af`); the long careers played again on it; the ceremony's built-app walk, the final runs, the gate and the receipt to come |
+| F | The lifecycle and career matrices, long careers, final runs, the gate, the receipt | Under way: the matrices, two long careers and their walks, defects 13 to 23 fixed (README); brief 22's final runs on `9f974984` gathered (`bd60125b`, `2129ee8c`), three browser lanes failing on stale walks (creation's citizenship, a seed's genre list), the walks corrected (`6d970ab6`, `4cba6159`) and those lanes played again clean on `4cba6159` (its src `9f974984`'s); then the owner's audit of what the career build left out (below, G) |
+| G | The omitted career connections, built (the owner's instruction of 2026-10-25) | Under way: research of the unread award, festival and union sources (G1); wave 1's four clusters (offers and auditions, series and releases, languages, representation) built, reviewed and fixed in clones (G2); then wave 2 (awards and festivals, travel and money, the production day), integration (G3), an independent review (G4) and the full validation (G5) |
 
 ## Outstanding Decisions (For The Owner)
 
@@ -67,12 +72,24 @@ commit, what's done, what remains and the exact next step. `README.md` is the re
 
 ## Next Step
 
-F, after `1ad8f7af`. Done: the lifecycle matrix (`lifecycle/`), the career feature matrix (`career-matrix/`), two long careers
-and their built-app walk, and defects 13 to 18. Next, in order:
-1. the long careers' replay on `1ad8f7af` copied into `long/` (the first pair ran on `7545e2d7`, before the Emmy field);
-2. the ceremony walked on the built app (`walk/ceremony.mjs`), from a save stopped at an open invitation
-   (`tools/long-career.ts --from long/degree-save.json.gz --until-invited`), and lifecycle loop 46 read again;
-3. the final runs on the final source commit (`S=… P=f27 bash docs/verification/career-genre-2026-10-22/final-runs/runs/queue22.sh
-   <commit>`, every lane, the judge's included), gathered, folded and the 85 criteria measured again;
-4. the gate in a clean clone of the final commit, then the receipt (Part 20's list) and the handoff.
-The four decisions above stay with the owner.
+G, after `4cba6159` (brief 22's final runs gathered there; nothing of G merged yet). Running at this checkpoint, each in
+the session's scratchpad (`S=/tmp/claude-0/-home-user-1221/93119f3d-c8d9-5356-8130-0e0fe32e5c95/scratchpad`):
+- G1, one research agent: `$S/b27/research-brief.md` → `$S/b27/research-g1/facts.json` and `README.md`, every quote to be
+  checked against its download in `research-g1/dl/` before use.
+- G2, wave 1, two workflows of two clusters each (implement, review, fix): clones `$S/g-offers`, `$S/g-series`,
+  `$S/g-lang`, `$S/g-rep`, branches `g27-<name>` from `4cba6159`, patches in `$S/b27/patches/<name>/`; the briefs are
+  `$S/b27/implementer-common.md` and `$S/b27/cluster-<name>.md`.
+
+Then, in order:
+1. each cluster's patch read line by line and its report's claims checked, then applied here in turn (`git am -3`),
+   typecheck, lint and the touched tests after each;
+2. wave 2's briefs from G1's facts (awards and festivals: attendance through rep's festival introduction, the Golden
+   Globes and AACTA where their rules were read, the other festivals, juries and prizes, festival to release, the Emmy
+   category choice and voice-over; travel and money: delays and travel rest, fares, expenses and claims, reshoots away,
+   Equity per diem; the production day: fittings, waiting and revised calls), built the same way, then applied;
+3. the records regenerated (text inventory marks, surfaces, effects, sweep, wiring, citations, capabilities, guide
+   coverage), the stale weather record (E2) and the Globes/AACTA words fixed;
+4. an independent review of the integrated diff against the owner's seven criteria, its confirmed defects fixed;
+5. the full validation: the suite and the 24 checks, the long careers and walks again, brief 22's final runs in two
+   batches, the fold, the gate in a clean clone, then the receipt, this checkpoint and the handoff.
+The four decisions above stay with the owner. No merge to `main` and no deployment without the owner's word.

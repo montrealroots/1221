@@ -461,23 +461,23 @@
    "older-1440.json": {
     "differences": 7,
     "first": [
-     ".saves[0].steps[0].ms: 4976 before, 4996 after",
-     ".saves[1].steps[0].ms: 5009 before, 4954 after",
-     ".saves[2].steps[0].ms: 4730 before, 4843 after",
-     ".saves[3].steps[0].ms: 4710 before, 4832 after",
-     ".saves[4].steps[0].ms: 4839 before, 4904 after",
-     ".saves[5].steps[0].ms: 4797 before, 4838 after"
+     ".saves[0].steps[0].ms: 4976 before, 4932 after",
+     ".saves[1].steps[0].ms: 5009 before, 4886 after",
+     ".saves[2].steps[0].ms: 4730 before, 4795 after",
+     ".saves[3].steps[0].ms: 4710 before, 4841 after",
+     ".saves[4].steps[0].ms: 4839 before, 4929 after",
+     ".saves[5].steps[0].ms: 4797 before, 4915 after"
     ]
    },
    "older-390.json": {
-    "differences": 6,
+    "differences": 7,
     "first": [
-     ".saves[0].steps[0].ms: 4894 before, 5061 after",
-     ".saves[1].steps[0].ms: 4852 before, 4903 after",
-     ".saves[2].steps[0].ms: 4835 before, 4817 after",
-     ".saves[3].steps[0].ms: 4797 before, 4871 after",
-     ".saves[4].steps[0].ms: 4846 before, 4825 after",
-     ".saves[5].steps[0].ms: 4834 before, 4928 after"
+     ".saves[0].steps[0].ms: 4894 before, 4989 after",
+     ".saves[1].steps[0].ms: 4852 before, 4952 after",
+     ".saves[2].steps[0].ms: 4835 before, 4798 after",
+     ".saves[3].steps[0].ms: 4797 before, 4780 after",
+     ".saves[4].steps[0].ms: 4846 before, 4860 after",
+     ".saves[5].steps[0].ms: 4834 before, 4876 after"
     ]
    }
   },
@@ -504,22 +504,7 @@
   "explained": {
    "the run’s own record: its commit, whether its tree was clean, the files it read, its seconds": 4
   },
-  "unexplained": {
-   "walk-1440.json": {
-    "differences": 2,
-    "first": [
-     ".saves[2].found: 0 items before, 1 after",
-     ".saves[2].steps[6].held: True before, False after"
-    ]
-   },
-   "walk-390.json": {
-    "differences": 2,
-    "first": [
-     ".saves[2].found: 0 items before, 1 after",
-     ".saves[2].steps[6].held: True before, False after"
-    ]
-   }
-  },
+  "unexplained": {},
   "missing": []
  }
 }

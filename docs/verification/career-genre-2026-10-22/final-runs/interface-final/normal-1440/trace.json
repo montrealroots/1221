@@ -2,13 +2,13 @@
  "playthrough": "normal",
  "width": 1440,
  "base": "http://localhost:4217",
- "commit": "9f974984",
+ "commit": "4cba6159",
  "uncommitted": 3,
- "startedAt": "2026-10-25T16:04:21.873Z",
+ "startedAt": "2026-10-25T16:46:30.364Z",
  "startingPoint": {
   "kind": "new life",
   "how": "creation in a browser with no saves: billed as Actress, the first name as offered, born in New York, the rest as offered",
-  "seed": ""
+  "seed": "1-AlexRivera-mvo28qpg"
  },
  "steps": [
   {
@@ -36,29 +36,35 @@
     "Continue (grayed, forced)",
     "First Name: Alex",
     "Born In: New York",
-    "New York New York · 8,300,000 people"
+    "New York New York · 8,300,000 people",
+    "Same As Your Place Of Birth: United States",
+    "Continue",
+    "Continue",
+    "Continue",
+    "Continue",
+    "Begin"
    ],
    "said": [
-    "grayed, the step says: Choose the town or city you were born in. Choose your citizenship."
+    "grayed, the step says: Choose the town or city you were born in. Choose your citizenship.",
+    "began as Alex"
    ],
-   "ok": false,
-   "why": "Continue grayed on step 1: Choose your citizenship.",
-   "date": "",
-   "clock": ""
+   "ok": true,
+   "date": "August 24, 2026",
+   "clock": "7:30 AM"
   },
   {
    "n": 3,
    "name": "the guide: controls locked until its chapters are read; read, none locked",
    "exercises": [],
    "pressed": [
-    "I’ve Read It ×0"
+    "I’ve Read It ×20"
    ],
    "said": [
-    "0 locked at the start; 0 chapters read; none locked now"
+    "9 locked at the start; 20 chapters read; none locked now"
    ],
    "ok": true,
-   "date": "",
-   "clock": ""
+   "date": "August 24, 2026",
+   "clock": "7:30 AM"
   },
   {
    "n": 4,
@@ -67,12 +73,18 @@
     "notification",
     "drill-down"
    ],
-   "pressed": [],
-   "said": [],
-   "ok": false,
-   "why": "no rail entry Home",
-   "date": "",
-   "clock": ""
+   "pressed": [
+    "Home",
+    "Welcome To The Class Of 2029",
+    "Close Welcome To The Class Of 2029"
+   ],
+   "said": [
+    "notice “Welcome To The Class Of 2029”: You’re one of 16 actors starting the MFA in Acting at the David Geffen School of Drama at Yale University, chosen at this year’s auditions. You’ll be cast beside and against the other 15. Tuition is covered, as it is for every student. The fall term begins with registration and orientation, which runs until August 29, 2026, and classes start on August 31, 2026, at 9 a.m. Orientation’s five sessions, from August 24, 2026, are on your calendar. If you miss one, press Catch Up beside it under Orientation, on the School’s Coursework tab.",
+    "look “Welcome To The Class Of 2029” (NOTICE): It came in just now, and it’s your only unread notice."
+   ],
+   "ok": true,
+   "date": "August 24, 2026",
+   "clock": "7:30 AM"
   },
   {
    "n": 5,
@@ -80,12 +92,18 @@
    "exercises": [
     "drill-down"
    ],
-   "pressed": [],
-   "said": [],
-   "ok": false,
-   "why": "locator.innerText: Timeout 8000ms exceeded.",
-   "date": "",
-   "clock": ""
+   "pressed": [
+    "Rested, steady and ready for a real day.",
+    "Readiness",
+    "Close Alex Rivera"
+   ],
+   "said": [
+    "look “Alex Rivera” (YOURSELF): Rested, steady and ready for a real day.",
+    "Readiness, inside “Alex Rivera”: 79. Energy, morale and stress are holding you back most.; trail “Alex Rivera”"
+   ],
+   "ok": true,
+   "date": "August 24, 2026",
+   "clock": "7:30 AM"
   },
   {
    "n": 6,
@@ -94,13 +112,16 @@
     "confirmation"
    ],
    "pressed": [
-    "Advance"
+    "Advance",
+    "Tomorrow Morning",
+    "Cancel"
    ],
-   "said": [],
-   "ok": false,
-   "why": "locator.click: Timeout 8000ms exceeded.",
-   "date": "",
-   "clock": ""
+   "said": [
+    "On The Way: ✕ Moving the clock to Tomorrow Morning (August 25, 2026 at 7:00 AM) passes one commitment. The clock stops at it so you can choose: press Go to be there and carry on, or Stand Here to stop the clock there. Registration And Your Account — August 24, 2026 at 10:00 AM Cancel Advance"
+   ],
+   "ok": true,
+   "date": "August 24, 2026",
+   "clock": "7:30 AM"
   },
   {
    "n": 7,
@@ -110,26 +131,48 @@
     "notification"
    ],
    "pressed": [
-    "Advance"
+    "Advance",
+    "Tomorrow Morning",
+    "Advance",
+    "Go",
+    "Home"
    ],
-   "said": [],
-   "ok": false,
-   "why": "locator.click: Timeout 8000ms exceeded.",
-   "date": "",
-   "clock": ""
+   "said": [
+    "stopped: Registration And Your Account ✕ It’s 10:00 AM on August 24, 2026, and this needs you now. Going takes 2 hours, and the clock moves on to August 25, 2026 at 7:00 AM. Press Go, or Stand Here to wait with the clock paused. Registration And Your Account starts the next time the clock moves, and you’re t",
+    "notice “Registration And Your Account”: Your tuition, $20,375.00 a term, is covered by the tuition scholarship. The aid office found no financial need, so you pay the Yale Health plan, $1,882.00 a term, yourself. Work-study is 150 assigned hours a year at $23.00 an hour: a shift each Saturday while classes run."
+   ],
+   "ok": true,
+   "date": "August 25, 2026",
+   "clock": "7:00 AM"
   },
   {
    "n": 8,
    "name": "the orientation week: each morning to the weekend, each stop gone to",
    "exercises": [],
    "pressed": [
-    "Advance"
+    "Advance",
+    "Tomorrow Morning",
+    "On The Way: Advance",
+    "Meeting Your Class: Go",
+    "Advance",
+    "Tomorrow Morning",
+    "On The Way: Advance",
+    "Meeting The Acting Faculty: Go",
+    "Advance",
+    "Tomorrow Morning",
+    "On The Way: Advance",
+    "The Building, The Studios And The Library: Go",
+    "Advance",
+    "Tomorrow Morning",
+    "On The Way: Advance",
+    "The Courses And What They Ask: Go"
    ],
-   "said": [],
-   "ok": false,
-   "why": "locator.click: Timeout 8000ms exceeded.",
-   "date": "",
-   "clock": ""
+   "said": [
+    "August 26, 2026 7:00 AM → August 27, 2026 7:00 AM → August 28, 2026 7:00 AM → August 29, 2026 7:00 AM"
+   ],
+   "ok": true,
+   "date": "August 29, 2026",
+   "clock": "7:00 AM"
   },
   {
    "n": 9,
@@ -138,12 +181,20 @@
     "notification",
     "navigation"
    ],
-   "pressed": [],
-   "said": [],
-   "ok": false,
-   "why": "no rail entry Home",
-   "date": "",
-   "clock": ""
+   "pressed": [
+    "Home",
+    "View All Updates",
+    "Go There",
+    "Coursework (tab)"
+   ],
+   "said": [
+    "11 more unread. View All Updates",
+    "notice “The Courses And What They Ask”: Each course set out what it asks. Eight courses gave you their first piece now, so you can start before classes.",
+    "8 pieces: Acting I: Scene Study (Due September 8, 2026); Text And Context Across The Repertory: A Play In Its Context (Due September 8, 2026); The Body As Source I: A Movement Score (Due September 10, 2026); Voice I: A Voice Sequence (Due September 11, 2026); Speech And Accents I: Sound Changes And A Text (Due September 14, 2026); Alexander Technique I: Directions In Daily Life (Due September 14, 2026); Play: A Game Played Through (Due September 17, 2026); Acting Intimacy And Combat For The Stage: Consent And Intimacy Practice (Due September 25, 2026)"
+   ],
+   "ok": true,
+   "date": "August 29, 2026",
+   "clock": "7:00 AM"
   },
   {
    "n": 10,
@@ -151,23 +202,139 @@
    "exercises": [
     "unavailable"
    ],
-   "pressed": [],
-   "said": [],
-   "ok": false,
-   "why": "no scene was found in the step before",
-   "date": "",
-   "clock": ""
+   "pressed": [
+    "School",
+    "Coursework (tab)",
+    "Read The Scene",
+    "Rehearse Alone (grayed, forced)"
+   ],
+   "said": [
+    "Read The Scene: 7:00 AM → 7:40 AM; Knows The Scene 0% → 56%",
+    "refused: Rehearse Alone: Learn some of the lines first."
+   ],
+   "ok": true,
+   "date": "August 29, 2026",
+   "clock": "7:40 AM"
   },
   {
    "n": 11,
    "name": "to the first showing: each day every step the scene allows, a partner answered, each stop gone to; Shown Today rises on each day of work",
    "exercises": [],
-   "pressed": [],
-   "said": [],
-   "ok": false,
-   "why": "no scene was found in the step before",
-   "date": "",
-   "clock": ""
+   "pressed": [
+    "School",
+    "Coursework (tab)",
+    "Table Work: An October morning, the house emptied and the carriages wait",
+    "Table Work: Two people everyone expects to marry, who have never said a ",
+    "Table Work: Hear him ask, without asking him to",
+    "Table Work: Neither of them can say it, and there’s no time left",
+    "Table Work: Look for something in the luggage, to have something to do",
+    "Read The Scene",
+    "Read The Scene",
+    "Read The Scene",
+    "Read The Scene",
+    "Learn Lines",
+    "Advance",
+    "Tomorrow Morning",
+    "School",
+    "Coursework (tab)",
+    "Learn Lines",
+    "Learn Lines",
+    "Learn Lines",
+    "Learn Lines",
+    "Learn Lines",
+    "Learn Lines",
+    "Learn Lines",
+    "Learn Lines",
+    "Learn Lines",
+    "Rehearse Alone",
+    "Advance",
+    "Tomorrow Morning",
+    "School",
+    "Coursework (tab)",
+    "Rehearse Alone",
+    "Advance",
+    "Tomorrow Morning",
+    "On The Way: Advance",
+    "Classes: Go",
+    "School",
+    "Coursework (tab)",
+    "Rehearse Alone",
+    "Advance",
+    "Tomorrow Morning",
+    "On The Way: Advance",
+    "Classes: Go",
+    "School",
+    "Coursework (tab)",
+    "Rehearse Alone",
+    "Advance",
+    "Tomorrow Morning",
+    "On The Way: Advance",
+    "Classes: Go",
+    "School",
+    "Coursework (tab)",
+    "Say Yes",
+    "Rehearse Alone",
+    "Advance",
+    "Tomorrow Morning",
+    "On The Way: Advance",
+    "Classes: Go",
+    "Rehearsal With Caleb: Go",
+    "School",
+    "Coursework (tab)",
+    "Rehearse Alone",
+    "Advance",
+    "Tomorrow Morning",
+    "On The Way: Advance",
+    "Classes: Go",
+    "School",
+    "Coursework (tab)",
+    "Rehearse Alone",
+    "Rehearse Alone",
+    "Advance",
+    "Tomorrow Morning",
+    "On The Way: Advance",
+    "Work-Study Shift: Go",
+    "School",
+    "Coursework (tab)",
+    "Rehearse Alone",
+    "Rehearse Alone",
+    "Rehearse Alone",
+    "Run It With A Reader",
+    "Advance",
+    "Tomorrow Morning",
+    "School",
+    "Coursework (tab)",
+    "Run It With A Reader",
+    "Advance",
+    "Tomorrow Morning",
+    "School",
+    "Coursework (tab)",
+    "Run It With A Reader",
+    "Advance",
+    "Tomorrow Morning",
+    "On The Way: Advance",
+    "Classes: Go",
+    "Drama 50: The Theatrical Event: Go",
+    "School",
+    "Coursework (tab)"
+   ],
+   "said": [
+    "August 29, 2026 11:55 AM: 21.3 → 28.6 (10 steps: Table Work, Table Work, Table Work, Table Work, Table Work, Read The Scene, Read The Scene, Read The Scene, Read The Scene, Learn Lines)",
+    "August 30, 2026 2:45 PM: 28.6 → 35.8 (10 steps: Learn Lines, Learn Lines, Learn Lines, Learn Lines, Learn Lines, Learn Lines, Learn Lines, Learn Lines, Learn Lines, Rehearse Alone)",
+    "August 31, 2026 8:00 AM: 35.8 → 38.3 (1 steps: Rehearse Alone)",
+    "September 1, 2026 8:00 AM: 38.3 → 40.2 (1 steps: Rehearse Alone)",
+    "September 2, 2026 8:00 AM: 40.2 → 41.5 (1 steps: Rehearse Alone)",
+    "September 3, 2026 8:00 AM: 41.5 → 42.4 (2 steps: answered yes, Rehearse Alone)",
+    "September 4, 2026 8:00 AM: 47.5 → 48.2 (1 steps: Rehearse Alone)",
+    "September 5, 2026 9:00 AM: 48.1 → 48.8 (2 steps: Rehearse Alone, Rehearse Alone)",
+    "September 6, 2026 11:00 AM: 48.8 → 53.1 (4 steps: Rehearse Alone, Rehearse Alone, Rehearse Alone, Run It With A Reader)",
+    "September 7, 2026 8:00 AM: 53.1 → 56.4 (1 steps: Run It With A Reader)",
+    "September 8, 2026 8:00 AM: 56.4 → 58.7 (1 steps: Run It With A Reader)",
+    "11 days; Shown Today 21.3 → 58.7"
+   ],
+   "ok": true,
+   "date": "September 9, 2026",
+   "clock": "7:00 AM"
   },
   {
    "n": 12,
@@ -177,12 +344,23 @@
     "navigation",
     "unavailable"
    ],
-   "pressed": [],
-   "said": [],
-   "ok": false,
-   "why": "no scene was found before",
-   "date": "",
-   "clock": ""
+   "pressed": [
+    "Home",
+    "Go There",
+    "Coursework (tab)",
+    "Read The Scene (grayed, forced)",
+    "Mark As Read",
+    "Work On The Note"
+   ],
+   "said": [
+    "notice “Shown: Scene Study, Working”: Simulated note from Acting I: Most of all, the two of you weren’t playing the same scene yet: it needed time together. You and Caleb had rehearsed together once. You ran it with a reader 3 times. (With Your Partner: 75% prepared.) You played Varya in The Cherry Orchard.",
+    "To Show Again: refused “Not now: There’s new feedback on this piece. Read it, then press Mark As Read.”, then Mark As Read, and Work On The Note: Work On The Note: 60 minutes, 49% further on the note.",
+    "feedback: FEEDBACK: WORKING, 58 OF 100 · A NEW NOTE",
+    "Shown: Scene Study, Working"
+   ],
+   "ok": true,
+   "date": "September 9, 2026",
+   "clock": "8:00 AM"
   },
   {
    "n": 13,
@@ -190,12 +368,19 @@
    "exercises": [
     "navigation"
    ],
-   "pressed": [],
-   "said": [],
-   "ok": false,
-   "why": "no rail entry School",
-   "date": "",
-   "clock": ""
+   "pressed": [
+    "School",
+    "Casting (tab)",
+    "Papers",
+    "Money",
+    "School"
+   ],
+   "said": [
+    "School at Casting, kept across Papers and Money"
+   ],
+   "ok": true,
+   "date": "September 9, 2026",
+   "clock": "8:00 AM"
   },
   {
    "n": 14,
@@ -204,40 +389,238 @@
     "confirmation",
     "save-continue"
    ],
-   "pressed": [],
-   "said": [],
-   "ok": false,
-   "why": "no rail entry Home",
-   "date": "",
-   "clock": ""
+   "pressed": [
+    "Home",
+    "Home",
+    "Save & Exit",
+    "Delete",
+    "Keep It",
+    "Continue",
+    "Home",
+    "Home"
+   ],
+   "said": [
+    "Confirm Deletion: Delete Slot 1? This deletes Alex Rivera’s life from the slot, with everything that happened in it. SLATE keeps a backup, so if you change your mind, press Restore Backup on this slot to bring it back. Keep It Delete Slot 1",
+    "slot 1 kept: SLOT 1 Alex Rivera Actress, Yale Drama Year 1 DATE September 9, 2026 LOCATION New Haven NET WORTH $503K PLAYED 0s Version 1.1.0 · Save Format 94 · 27 KB Backup from September 5, 2026 Continue Restore",
+    "September 9, 2026 8:00 AM; 4 notices as they were"
+   ],
+   "ok": true,
+   "date": "September 9, 2026",
+   "clock": "8:00 AM"
   }
  ],
- "milestones": [],
- "dialogs": [],
+ "milestones": [
+  {
+   "file": "01-creation-review.jpg",
+   "step": 2,
+   "at": ""
+  },
+  {
+   "file": "02-home-notice-look.jpg",
+   "step": 4,
+   "at": "August 24, 2026 7:30 AM"
+  },
+  {
+   "file": "03-first-preparation.jpg",
+   "step": 10,
+   "at": "August 29, 2026 7:40 AM"
+  },
+  {
+   "file": "04-showing-notice.jpg",
+   "step": 12,
+   "at": "September 9, 2026 7:00 AM"
+  },
+  {
+   "file": "05-confirm-deletion.jpg",
+   "step": 14,
+   "at": ""
+  }
+ ],
+ "dialogs": [
+  {
+   "step": 8,
+   "title": "On The Way",
+   "pressed": "Advance",
+   "after": "August 25, 2026 10:00 AM"
+  },
+  {
+   "step": 8,
+   "title": "Meeting Your Class",
+   "pressed": "Go",
+   "after": "August 26, 2026 7:00 AM"
+  },
+  {
+   "step": 8,
+   "title": "On The Way",
+   "pressed": "Advance",
+   "after": "August 26, 2026 10:00 AM"
+  },
+  {
+   "step": 8,
+   "title": "Meeting The Acting Faculty",
+   "pressed": "Go",
+   "after": "August 27, 2026 7:00 AM"
+  },
+  {
+   "step": 8,
+   "title": "On The Way",
+   "pressed": "Advance",
+   "after": "August 27, 2026 10:00 AM"
+  },
+  {
+   "step": 8,
+   "title": "The Building, The Studios And The Library",
+   "pressed": "Go",
+   "after": "August 28, 2026 7:00 AM"
+  },
+  {
+   "step": 8,
+   "title": "On The Way",
+   "pressed": "Advance",
+   "after": "August 28, 2026 10:00 AM"
+  },
+  {
+   "step": 8,
+   "title": "The Courses And What They Ask",
+   "pressed": "Go",
+   "after": "August 29, 2026 7:00 AM"
+  },
+  {
+   "step": 11,
+   "title": "On The Way",
+   "pressed": "Advance",
+   "after": "August 31, 2026 9:00 AM"
+  },
+  {
+   "step": 11,
+   "title": "Classes",
+   "pressed": "Go",
+   "after": "September 1, 2026 7:00 AM"
+  },
+  {
+   "step": 11,
+   "title": "On The Way",
+   "pressed": "Advance",
+   "after": "September 1, 2026 9:00 AM"
+  },
+  {
+   "step": 11,
+   "title": "Classes",
+   "pressed": "Go",
+   "after": "September 2, 2026 7:00 AM"
+  },
+  {
+   "step": 11,
+   "title": "On The Way",
+   "pressed": "Advance",
+   "after": "September 2, 2026 9:00 AM"
+  },
+  {
+   "step": 11,
+   "title": "Classes",
+   "pressed": "Go",
+   "after": "September 3, 2026 7:00 AM"
+  },
+  {
+   "step": 11,
+   "title": "On The Way",
+   "pressed": "Advance",
+   "after": "September 3, 2026 9:00 AM"
+  },
+  {
+   "step": 11,
+   "title": "Classes",
+   "pressed": "Go",
+   "after": "September 3, 2026 7:00 PM"
+  },
+  {
+   "step": 11,
+   "title": "Rehearsal With Caleb",
+   "pressed": "Go",
+   "after": "September 4, 2026 7:00 AM"
+  },
+  {
+   "step": 11,
+   "title": "On The Way",
+   "pressed": "Advance",
+   "after": "September 4, 2026 9:00 AM"
+  },
+  {
+   "step": 11,
+   "title": "Classes",
+   "pressed": "Go",
+   "after": "September 5, 2026 7:00 AM"
+  },
+  {
+   "step": 11,
+   "title": "On The Way",
+   "pressed": "Advance",
+   "after": "September 5, 2026 10:00 AM"
+  },
+  {
+   "step": 11,
+   "title": "Work-Study Shift",
+   "pressed": "Go",
+   "after": "September 6, 2026 7:00 AM"
+  },
+  {
+   "step": 11,
+   "title": "On The Way",
+   "pressed": "Advance",
+   "after": "September 8, 2026 9:00 AM"
+  },
+  {
+   "step": 11,
+   "title": "Classes",
+   "pressed": "Go",
+   "after": "September 8, 2026 3:00 PM"
+  },
+  {
+   "step": 11,
+   "title": "Drama 50: The Theatrical Event",
+   "pressed": "Go",
+   "after": "September 9, 2026 7:00 AM"
+  }
+ ],
  "errors": [],
  "overflows": [],
  "exercised": {
-  "navigation": [],
-  "drill-down": [],
-  "unavailable": [],
-  "confirmation": [],
-  "notification": [],
-  "save-continue": []
+  "navigation": [
+   9,
+   12,
+   13
+  ],
+  "drill-down": [
+   4,
+   5
+  ],
+  "unavailable": [
+   2,
+   10,
+   12
+  ],
+  "confirmation": [
+   6,
+   7,
+   14
+  ],
+  "notification": [
+   4,
+   7,
+   9,
+   12
+  ],
+  "save-continue": [
+   14
+  ]
  },
  "summary": {
   "steps": 14,
-  "passed": 2,
-  "failed": 12,
-  "sixMissing": [
-   "navigation",
-   "drill-down",
-   "unavailable",
-   "confirmation",
-   "notification",
-   "save-continue"
-  ],
+  "passed": 14,
+  "failed": 0,
+  "sixMissing": [],
   "errors": 0,
   "overflows": 0
  },
- "finishedAt": "2026-10-25T16:06:15.354Z"
+ "finishedAt": "2026-10-25T16:50:00.618Z"
 }

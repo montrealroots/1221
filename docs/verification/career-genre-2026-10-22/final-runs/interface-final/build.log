@@ -15,4 +15,4 @@ dist/assets/index-tCPNpBpp.js   6,529.24 kB │ gzip: 1,997.10 kB
 - Using dynamic import() to code-split the application
 - Use build.rollupOptions.output.manualChunks to improve chunking: https://rollupjs.org/configuration-options/#output-manualchunks
 - Adjust chunk size limit for this warning via build.chunkSizeWarningLimit.
-✓ built in 11.77s
+✓ built in 13.82s
