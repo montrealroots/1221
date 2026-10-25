@@ -220,10 +220,10 @@ describe('asking for different terms (Part 6, loop 8)', () => {
     const patack = offeredBy(seedFor('rep-patack', (s) => offers(s, PATACK)), PATACK);
     expect(askRefusal(patack, patack.player, PATACK, 'voice')).toBe('The game knows of no voice-over department at Stewart Talent’s New York office, since the pages it read name none, so voice-over can’t be added to this agreement.');
     expect(askRefusal(patack, patack.player, PATACK, 'abroad')).toBeUndefined();
-    // A real agent's answer, whichever it is, says it's the game's: the agency's pages give no terms.
+    // A real agent's answer, whichever it is, says it's the game's: the agency's pages the game read give no terms.
     asked(patack, 'abroad', PATACK);
     expect(notices(patack).at(-1)).toMatch(new RegExp(`^Dan Patack’s Office (Agreed To Your Ask|Kept Its Terms): .+ ${realTermsWords(PATACK)}$`));
-    expect(realTermsWords(PATACK)).toBe('Stewart Talent’s pages say nothing of the terms its agents agree to, so whether the office agrees is the game’s invention, not a fact about Dan Patack.');
+    expect(realTermsWords(PATACK)).toBe('The pages the game read from Stewart Talent say nothing of the terms its agents agree to, so whether the office agrees is the game’s invention, not a fact about Dan Patack.');
   }, 300_000);
 });
 
