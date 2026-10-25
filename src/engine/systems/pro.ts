@@ -378,16 +378,14 @@ export interface Opportunity extends HasHistory {
   rounds?: AuditionRound[];
 }
 
-/** How far the sides or the part stand, in a practice brief's three parts (`systems/briefs.ts`), each 0 to 1. */
 /**
- * A part's preparation: the breakdown, the lines and rehearsal, and from 2026-10-24 (brief 25's Module 5) the workflow's
- * own where it has one (`SpecialStep`, `content/workflows.ts`): finding the voice, watching the original, the movement,
- * the pronunciations, the period's movement, the choreography, the fight rehearsal.
- */
-/**
- * How far each part of the preparation stands, 0 to 1. `language` from 2026-10-25 (brief 27): the part's other language
- * worked on by an actor who speaks it conversationally (`systems/speaking.ts`); absent, it stands where their level
- * starts it (`LANGUAGE_PREP.start`), on every part prepared before that day too.
+ * How far the sides or the part stand, each part 0 to 1: a practice brief's three (`systems/briefs.ts`), the breakdown,
+ * the lines and rehearsal; from 2026-10-24 (brief 25's Module 5) the workflow's own where it has one (`SpecialStep`,
+ * `content/workflows.ts`): finding the voice, watching the original, the movement, the pronunciations, the period's
+ * movement, the choreography, the fight rehearsal; and from 2026-10-25 (brief 27) `language`, the part's other language
+ * worked on by an actor who speaks it conversationally (`systems/speaking.ts`). Absent, the language stands where their
+ * level starts it (`LANGUAGE_PREP.start`), on every part prepared before that day too. Until 2026-10-25's review the
+ * three sentences were three doc comments stacked above this one interface.
  */
 export interface PartPrep { interpretation: number; memorization: number; rehearsal: number; special?: number; language?: number }
 

@@ -23,7 +23,8 @@
  * an open call themselves.
  *
  * **Casting is decided apart from quality (J5).** What casting reads, in order: the audition's band (how good it was),
- * the role's fit (genre knowledge, and the role's techniques against the actor's), availability and eligibility, which
+ * the role's fit (genre knowledge, and the role's techniques against the actor's, and from 2026-10-25 a language its
+ * character speaks besides English, `systems/speaking.ts`), availability and eligibility, which
  * are checked and never drawn, and then the field of other actors, a draw by the decider `pro.casting` at a chance the
  * band, the fit and the kind of work give (`CASTING`). The chance never reaches certainty, so a strong actor can lose a
  * role, and a developing actor whose band and fit suit a smaller project can book it.
@@ -607,8 +608,11 @@ export function inScope(agentId: string, t: ProjectTemplate): boolean {
 /**
  * The role's fit: how well you know its genre, and its techniques against yours (and, from 2026-10-25, brief 27, how well
  * you speak a language its character speaks besides English, `languageDemand`), each 0 to 1, and the two together.
+ * `techniques` is the techniques alone, which Why It Went This Way shows apart from the language (from 2026-10-25: that
+ * day's first cut showed `demands`, the language folded in, as the techniques, and a part asking Spanish of a fluent
+ * speaker whose techniques were all mastered said they were 93% of the way).
  */
-export interface Fit { genre: number; demands: number; fit: number }
+export interface Fit { genre: number; demands: number; fit: number; techniques: number }
 
 /**
  * What a role asks of the genres: its own requirement, or its project's, as the material states it (`requirementOfRole`,
@@ -621,7 +625,9 @@ export const projectGenresOf = (t: ProjectTemplate) => requirementOfRole(t);
 /**
  * How well the role suits the actor, from the record: the project's genres known, weighed (`relevantGenre`), against
  * what a brief counts complete (`BRIEF.complete.genre`); and the role's techniques against the actor's, each at most
- * mastered (`MASTERED`), by the role's weights. The two count alike. ASSUMPTION: the game's reading of "fit".
+ * mastered (`MASTERED`), by the role's weights, with, from 2026-10-25 (brief 27), a language the character speaks besides
+ * English weighed beside them (`languageDemand`, `systems/speaking.ts`). The two count alike. ASSUMPTION: the game's
+ * reading of "fit".
  *
  * Two things read the genre part, and they're different contributions (from 2026-10-22, the owner's brief 21): casting's
  * reading of the actor for the part (here, half the fit, which sets casting's chance with the round's band,
@@ -639,8 +645,9 @@ export function fitOf(person: Person, t: ProjectTemplate): Fit {
   // A part written for a character who speaks another language as well as English (from 2026-10-25, brief 27,
   // `languageDemand`): how well the actor speaks it, and their English, weighs beside the techniques.
   const tongue = languageDemand(person, t);
-  const demands = total + tongue.weight > 0 ? (asks.reduce((a, [s, w]) => a + w * clamp((person.craft?.[s] ?? 0) / MASTERED, 0, 1), 0) + tongue.weight * tongue.f) / (total + tongue.weight) : 1;
-  return { genre: r3(genre), demands: r3(demands), fit: r3((genre + demands) / 2) };
+  const known = asks.reduce((a, [s, w]) => a + w * clamp((person.craft?.[s] ?? 0) / MASTERED, 0, 1), 0);
+  const demands = total + tongue.weight > 0 ? (known + tongue.weight * tongue.f) / (total + tongue.weight) : 1;
+  return { genre: r3(genre), demands: r3(demands), fit: r3((genre + demands) / 2), techniques: r3(total > 0 ? known / total : 1) };
 }
 
 /** A fit as a phrase. */
@@ -792,7 +799,7 @@ export function postingsAt(sim: Simulation, person: Person, at: Instant): { proj
  * - **the playing age**: a part outside the actor's age by more than `CASTING.playingSpread` years reaches nobody's agent and
  *   no open call they'd answer;
  * - **fit**: an agent puts up a client the part suits, so the agent's chance rises with the part's fit (`fitOf`: its genres'
- *   knowledge and the techniques it asks), from a third at no fit;
+ *   knowledge and the techniques it asks, and from 2026-10-25 its character's other language), from a third at no fit;
  * - **experience**: a lead in professional screen work comes to an actor with three professional credits or more, and to
  *   anyone else a fifth as often; a supporting part through an agent to one with a credit, and half as often without;
  * - **relationships**: a company or casting office the actor has worked for comes back to them a half again as often;

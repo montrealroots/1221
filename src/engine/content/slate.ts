@@ -31,6 +31,12 @@ import type { Skill } from './school';
  * The generator's version, in every id it makes. A change to what it makes from the same draws (a word list, a rate, a
  * profile) is a new version, so a later build never makes a different production under an id a save already holds; what a
  * save was shown is kept in the save itself (`systems/slate.ts`, `keepProject`).
+ *
+ * One change went in under version 1 by that second rule (2026-10-25, the owner's brief 27): a part's other language
+ * (`partLanguage`, `systems/speaking.ts`), drawn on a stream of its own so no other draw moved and every id, title and
+ * part stayed the one it was. A part a save was posted before that day is the save's own copy, with no language, and
+ * the save's copy is the one the session keeps (`restoreSlate` puts it back first and `addProjects` keeps the first copy
+ * of an id it's given), so only a part no save had seen could come with one.
  */
 export const SLATE_VERSION = 1;
 

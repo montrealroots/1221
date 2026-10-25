@@ -38,7 +38,7 @@ import {
   TERM_ITEMS, approachPreview, askAnswerWords, askLabel, chooseRefusal, conditionStanding, conditionWords, noteRefusal, noteWaiting, recastWords, recordRefusal, rememberedWords,
   requirementsOf, rescheduleRefusal, rescheduleWords, roundWords, sceneOfPart, sendRefusal, takeWords, termsChangedWords, withdrawRefusal, withdrawWarning, type TermItem,
 } from '@/engine/systems/offers';
-import { LANGUAGE_PREP, languageStepLabel, languageToWork, languageWords } from '@/engine/systems/speaking';
+import { LANGUAGE_PREP, languageFitWords, languageStepLabel, languageToWork, languageWords } from '@/engine/systems/speaking';
 
 const NY = 'America/New_York';
 const STEPS: readonly BriefStep[] = ['read', 'lines', 'rehearse'];
@@ -453,6 +453,7 @@ function Settled({ o }: { o: Opportunity }) {
   const t = projectOf(o);
   const decided = (o.rounds ?? []).filter((r) => r.casting);
   const fit = fitOf(person, t);
+  const tongue = languageFitWords(person, t);
   return (
     <li className="col gap-1">
       {/* The outcome alone where it names the project already: until 2026-10-21 "Jess, Static On Route 9: You accepted
@@ -465,7 +466,9 @@ function Settled({ o }: { o: Opportunity }) {
             {decided.map((r) => (
               <li key={r.round}>{`The ${ROUND_WORDS[r.round].noun}: ${r.band ? BAND_LABEL[r.band] : 'not judged'}${r.held ? `. ${r.held.charAt(0).toUpperCase()}${r.held.slice(1)}` : ''}. The role’s fit: ${fitWords(r.casting!.fit)}. The field: ${FIELD_WORDS[t.kind]}. Casting’s chance from those, estimated: ${chanceWords(r.casting!.chance)}. ${r.casting!.yes ? 'It went your way.' : 'It went to another actor.'}${roundWords(r)}`}</li>
             ))}
-            <li>{`Your fit for it now: you know its genre ${pct(fit.genre)} of the way, and your techniques are ${pct(fit.demands)} of the way to what the part asks at mastery.`}</li>
+            {/* The techniques alone, and the character's other language said apart (from 2026-10-25, brief 27): until the
+                review of that day's first cut the techniques' figure had the language folded in. */}
+            <li>{`Your fit for it now: you know its genre ${pct(fit.genre)} of the way, and your techniques are ${pct(fit.techniques)} of the way to what the part asks at mastery.${tongue ? ` ${tongue}` : ''}`}</li>
           </ul>
         </details>
       )}
