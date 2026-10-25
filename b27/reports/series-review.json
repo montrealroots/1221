@@ -1,0 +1,166 @@
+{
+ "verdict": "The cluster is built largely as its brief asks, and it is connected. I traced every new piece of state to a reader. seasonMarks is read by seasonTerm, which feeds seasonAudience and renewChance. optionsGivenUp is read by optionGivenUp (postingsAt) and gaveUpWith (directOfferFor). option.release is read by optionWarning, optionReleaseRefusal and the answer handler. Engagement.invite is read by inviteStands. Engagement.pilot is read by creditWords and releaseFacts. ProCredit.release.weeks/days/first/distributor are read by runOf, homeOpening, premiereOf and routeWords. ProCredit.network is read by creditWords. SimRun's currency, before, response and limited fields are read by totalsOf, reference.ts and IndustryPane. SeasonDecision.network is read by networkOf and decisionWords.\n\nPer item:\n- Item 1 is built: the film's run and the season's audience read size × band, it is bounded, and the charts header is in the past tense.\n- Item 2 is built. The limited release changes the chart and the credit but not awards eligibility. The deviation is reasoned and reported: a Los Angeles/New York run qualifies under b25-S48, and visibility still reads the run's peak.\n- Item 3 is built, but it has a real contradiction for pilots whose shoot spans the May 15 word.\n- Item 4 is built.\n- Item 5 is built, but the pickup's new renewal chance rewrites decisions already given in older saves.\n- Item 6 is built: the baseline is verified, later seasons are tagged Simulated, and drawn parts are gated to simulated seasons.\n\nReal-world facts S80, S81, S109 and b25-S48 check out against the registers, and every invented network and distributor is labeled. The schema stays 94 in both pins. tsc on the app config (src+tests) and eslint are clean.\n\nThe 22 new tests pass. Three of my six mutations survived: limited-release widening, the invite's season-renewal guard, and growth's clash guard. A fourth (Actor Awards year by home opening) is near-equivalent. tests/journey-career.test.ts passes at BASE but fails on the branch. tests/b20-guide-wiring.test.ts fails pending the primary agent's wiring.json regeneration.",
+ "tests_run": "All commands were run in CLONE with nice -n 19, one file at a time.\n\nNew tests:\n- tests/b27-fortunes.test.ts: 5/5 pass.\n- tests/b27-release-routes.test.ts: 5/5 pass.\n- tests/b27-pilots.test.ts: 2/2 pass.\n- tests/b27-option-hold.test.ts: 2/2 pass.\n- tests/b27-returning.test.ts: 3/3 pass.\n- tests/b27-real-series.test.ts: 5/5 pass.\n\nExisting tests that import changed modules:\n- b27-release 4/4, b27-audience 4/4, b27-revival 4/4, b27-promo 5/5, b27-reference 13/13.\n- b27-slate 11/11, b27-slate-screens 4/4, b27-actor-awards 6/6, b27-holds 3/3.\n- tutorial 18/18, deciders 216/216, b20-guide-promises 8/8.\n- career-awards 25/25, career-contracts 15/15, career-drawn 6/6, pro-work 36/36.\n- b20-guide-wiring FAIL, 2 failed and 5 passed. The failures are 'controls: expected Array(212) to deeply equal Array(213)' and the handler lines moved (e.g. pro.award_enter at awards.ts:683). The record needs regenerating, as reported.\n- journey-career FAIL in beforeAll: 'booked by September 30, 2029: expected false to be true'. On a git-archive export of 4cba6159 (scratch, since deleted) the same file passed 13/13, so this is a regression from this change.\n\nTypecheck and lint:\n- `npx tsc --noEmit -p .` exits 0 but checks nothing (files: []).\n- `npx tsc --noEmit -p tsconfig.app.json` (src+tests) exits 0.\n- `npx eslint --max-warnings=0` on all changed .ts/.tsx exits 0.\n\nProbes (scratch vitest config outside the clone, no source changed):\n- Pilot spanning the word: 7 of 156 pilots in ten winters of seed rv-pilot-span. One played through and passed on mid-shoot still aired.\n- Pickup flips: in 300 seeds, 202 had Calloway revived on another network and 22 had the next word flip from renewed to canceled.\n- A limited release that never widened has the same takings abroad as a wide release.\n- A second revival by the series' own network keeps the pickup network.\n\nMutations: 6 run, each restored with git checkout. `git status --short` is empty at the end.",
+ "mutations": [
+  {
+   "claim": "A film's run reads the player's judged band (Part 12)",
+   "mutation": "market.ts runOf: termOf(t.role.size, c.band) -> termOf(t.role.size, undefined)",
+   "killed": true
+  },
+  {
+   "claim": "A limited release widens only if the audience takes to it (market.ts header, ROUTES/FORTUNE.widen)",
+   "mutation": "market.ts:106 widens: response.audience >= FORTUNE.widen -> widens: true; ran tests/b27-release-routes.test.ts",
+   "killed": false
+  },
+  {
+   "claim": "A guest part is brought back only in a season ordered or renewed, never on a cancellation (continuity.ts header, brief item 5 'reading the band and the season's renewal')",
+   "mutation": "continuity.ts:423 dropped '|| !seasonMade(s, series, year)' from the RECUR_KIND guard; ran tests/b27-returning.test.ts",
+   "killed": false
+  },
+  {
+   "claim": "A film released abroad first is placed in its Actor Awards year by its run at home (actorawards.ts:131-134)",
+   "mutation": "actorawards.ts: const premiere = homeOpening(first, c) -> const premiere = first; ran tests/b27-release-routes.test.ts (near-equivalent: splitYearsWhy already rejects any year difference)",
+   "killed": false
+  },
+  {
+   "claim": "A pilot's network word reads the pilot's own quality (Part 8 brief: 'a labeled draw that reads the pilot's own quality')",
+   "mutation": "continuity.ts pilotPicked: pilotChance(qualityOf(sim, t), term) -> pilotChance(0, term); ran tests/b27-pilots.test.ts",
+   "killed": true
+  },
+  {
+   "claim": "A part grows at its option only where every further day is clear (continuity.ts:273-279)",
+   "mutation": "continuity.ts:279 dropped '|| refusal(person, more, e.id)'; ran tests/b27-returning.test.ts",
+   "killed": false
+  }
+ ],
+ "findings": [
+  {
+   "id": "S1",
+   "severity": "blocking",
+   "criterion": "contradiction",
+   "claim": "A pilot whose shoot runs past May 15 is passed on before it wraps and then airs anyway. The game tells the player 'the pilot won't air' and 'its footage can't go on a reel', then releases it, puts it on the air and offers its footage for a reel. The network's word also reads a partly judged part, and 'stays on your credits as shot' is said before the shoot is over.",
+   "evidence": "Probe on seed rv-pilot-0, pilot pl1.10hr3.2028-03-27.new-york.network-drama.0.0, shoot days 2028-05-09..05-17, word 2028-05-15 16:00Z. Sequence of events: 'Isn't Picked Up | Corbin Hollow Television passed on The Errand Of Fenwick Pass: it won't go to series, and the pilot won't air... With no airing, its footage can't go on a reel.' Then the wrap, with credit release {kind:'on-time'}, due 2028-09-14. creditWords read 'Shot, and its network passed on the pilot: it won't air' while premiereOf returned 2028-09-14. Then 'Is On Tonight | Your episode... is on tonight' and 'Is Released | ... is on the air ... footage can go on your reel', and creditWords became 'Released on September 14, 2028'. Rate: 7 of 156 pilots over ten winters span the word (posting late March plus PILOTS lead days of up to 42, datesOf projobs.ts:456). Cause: the passed-on path cancels the release only if a credit already exists (continuity.ts:452-457). The credit is made later in finish() (projobs.ts:1935-1955), whose releaseFate is on-time for pilots, and atWrap (continuity.ts:359-366) only moves the release past the word and never checks e.pilot.picked === false. tests/b27-pilots.test.ts picks only pilots that wrap before the word.",
+   "file": "src/engine/systems/continuity.ts",
+   "line": 452,
+   "suggested_fix": "In atWrap (or finish), when e.pilot?.picked === false, set c.release = {kind:'shelved', told:true} and schedule no release or promo. Or keep pilot shoots before the word: clamp PILOTS postings or lead days so the last day falls before decideAt, or move the word after the wrap. Add a journey test for a pilot whose shoot spans the word."
+  },
+  {
+   "id": "S2",
+   "severity": "blocking",
+   "criterion": "save-compat",
+   "claim": "The pickup draw re-decides past revivals, and switches later renewals to PICKUP.renew. Seasons an older save was already told were renewed, and may have worked in, now read as canceled. That contradicts series.ts's own claim that 'a save opened years on reads the same seasons' and the commit's claim that 'an older save reads as it did'.",
+   "evidence": "series.ts:170-173: `const network = pickupOf(sim, s, y); if (network) base = PICKUP.renew;` sits inside decisionsTo, which is recomputed from the seed on every asking. Probe over 300 student saves with Calloway Files (renew .65, revive .25): 202 have a revival on another network by 2045. In 22 of them the next season's word flips against the BASE formula. Examples: rv-pick-24 was revived 2033 on Blue Kettle Lane Network, and 2034 was 'renewed' under the BASE formula but is 'canceled' now. rv-pick-84 was revived 2032 and its 2033 word flips the same way. For an older save past such a word, seasonMade(year) changes. Readers include the option handler, which lapses with 'has no next season' (series.ts:531), postings, and the Productions And People and Charts season lists. The reference's decisionWords would also name a pickup network for a revival the player was told was 'the network'.",
+   "file": "src/engine/systems/series.ts",
+   "line": 172,
+   "suggested_fix": "Keep renewals after a pickup at the series' own chance and make the pickup network a label only, which the brief's 'company changing in the record and in Productions And People' still satisfies. Or record the pickup on the player's record when it's said, and read PICKUP.renew only from such recorded pickups."
+  },
+  {
+   "id": "S3",
+   "severity": "should-fix",
+   "criterion": "contradiction",
+   "claim": "A limited release's takings abroad are drawn from the full wide-release curve, not from its domestic run. A limited release that never widened takes as much abroad as a wide one and several times its own US gross. That falsifies INTERNATIONAL's 'international gross as a share of its domestic' (an ultra-low-budget film's share is 0.05 to 0.4).",
+   "evidence": "charts.ts:290: `const abroadWeek = curve[k + lead]` uses the wide curve whatever the limited weeks. Probe on seed rv-limited, an ultra-low-budget film with widened:false: limited US 20,122 against abroad 41,212. The same film released wide takes US 136,138 and abroad 41,894. Its first week is 3,807 US against 19,527 abroad.",
+   "file": "src/engine/systems/charts.ts",
+   "line": 290,
+   "suggested_fix": "Scale the international weeks by the domestic run actually made, e.g. `share * domestic[k]`, or by the limited share during limited weeks. Add an assertion that international/domestic stays within INTERNATIONAL[kind]."
+  },
+  {
+   "id": "S4",
+   "severity": "should-fix",
+   "criterion": "weak-test",
+   "claim": "Three claims the code makes are protected by no test: a limited release widens only if audiences take to it; a guest part is invited back only into a season that is made (never on a cancellation); a part grows only where its further days are clear (without that guard, a grown part could be booked over other work).",
+   "evidence": "Each surviving mutation was run on its file and restored:\n- market.ts:106 `widens: true`: b27-release-routes 5/5 pass.\n- continuity.ts:423 with `!seasonMade(...)` dropped: b27-returning 3/3 pass. Calloway's 2027 season is already ordered in the test, so the guard is never exercised.\n- continuity.ts:279 with `refusal(person, more, e.id)` dropped: b27-returning 3/3 pass.\nThe grep for 'widen' in tests finds only engine-properties and decisions-judge, which are unrelated.",
+   "file": "tests/b27-release-routes.test.ts",
+   "suggested_fix": "Add a limited-release journey (or run assertions) where response.audience is below 70 and the run never reaches the wide opening, and a twin at 70 or more that does. Add an invite case for a season the network cancels (no offer, nothing posted). Add a growth case where the further episodes clash with booked work and the part carries on at its old size."
+  },
+  {
+   "id": "S5",
+   "severity": "should-fix",
+   "criterion": "downstream",
+   "claim": "tests/journey-career.test.ts passes at BASE and fails on this branch. Gating the 9-1-1 guest part to simulated seasons removes a posting, which shifts the audition judge's opportunity-id keys, and the seeded career's August 2029 booking no longer happens. The gate will fail until it is re-seeded or the judge is keyed by posting.",
+   "evidence": "Branch: `journey-career exit=1 Tests 13 skipped`, 'AssertionError: booked by September 30, 2029: expected false to be true'. A git-archive export of 4cba6159 with linked node_modules (scratch, since deleted) gave 'Tests 13 passed (13)'. The implementer's cause, the judge keyed by o.id at projobs.ts:1677 and seed v1-21 canceling 9-1-1 in May 2029, is consistent with this.",
+   "file": "tests/journey-career.test.ts",
+   "suggested_fix": "After integration, re-find the seed once, or key the audition judge by the posting as castingDraw is, so the clusters' extra postings stop moving it."
+  },
+  {
+   "id": "S6",
+   "severity": "should-fix",
+   "criterion": "house-standard",
+   "claim": "Some notices about a real series' simulated future aren't labeled as the simulation's (Part 13: 'Generated future offers, characters, renewals, and cancellations must belong explicitly to the simulation'). A 9-1-1 revival's 'Comes Back Without' notice and a 9-1-1 invite's 'Can't Bring Back' notice attribute plans to 'its producers' with no 'in the game's simulation'. Real series reach this code only from this change, since REAL_SERIES now feed seriesInPlay and parts carry series:'real-nine-one-one'.",
+   "evidence": "series.ts:485-488: `${series.title} is back after N years off without ${part}: its producers' plans for the new season don't bring the character back.` continuity.ts:435-437: `${series.title}'s producers wanted ${part} back as a recurring character, but its new season had no work...`. Neither checks s.real. decisionWords does add the label (series.ts:271-273), and offers carry drawnWords, but these two notices don't.",
+   "file": "src/engine/systems/continuity.ts",
+   "line": 435,
+   "suggested_fix": "For s.real, add the same clause decisionWords uses ('in the game's simulation', 'the game's own continuation... not an announcement') to the revival and invite notices and the option-lapse line."
+  },
+  {
+   "id": "S7",
+   "severity": "note",
+   "criterion": "weak-test",
+   "claim": "Placing a film released abroad first by its home run is near-redundant in actorCheck: splitYearsWhy already rejects any year difference, so the year from homeOpening equals the premiere's year whenever the film is eligible. The test's `run.opening === homeOpening(releasedAt, c)` is tautological, because homeOpening returns c.run.opening whenever run.before exists.",
+   "evidence": "The mutation actorawards.ts `const premiere = homeOpening(first, c)` -> `first` survived (b27-release-routes 5/5). The tautology is at tests/b27-release-routes.test.ts:110 against market.ts:207.",
+   "file": "src/engine/systems/actorawards.ts",
+   "line": 134,
+   "suggested_fix": "Either drop the homeOpening line and say in its place that splitYearsWhy decides it, or assert the year on the ineligible split verdict."
+  },
+  {
+   "id": "S8",
+   "severity": "note",
+   "criterion": "missing-requirement",
+   "claim": "Item 2 is partly built for the limited release. It changes the chart and the credit but not awards eligibility, which the brief asked for each route. The implementer reported and reasoned this: a limited LA/NY run qualifies under b25-S48, and Emmys don't take films. It still moves awards indirectly through visibilityOf, which reads the run's peak (awards.ts:665).",
+   "evidence": "actorawards.ts has no limited branch. visibilityOf at awards.ts:665-666 reads peakOf(c.run) and adds topThree only for a peak of 3 or better.",
+   "file": "src/engine/systems/market.ts",
+   "line": 182,
+   "suggested_fix": "Accept as reasoned, or say in the guide's career.series line that a limited release still qualifies for the Actor Awards and why."
+  },
+  {
+   "id": "S9",
+   "severity": "note",
+   "criterion": "contradiction",
+   "claim": "After a series is picked up by another network and later brought back with no pickup draw ('its own network', per pickupOf's comment), networkOf still names the pickup network. Credits and the season page then say 'Seen On <pickup network>' while the word says 'the network brought it back'. PICKUP.renew also stays as the base.",
+   "evidence": "Probe: rv-net-3 was picked up 2035 by Tern Works Network and brought back 2040 with the words 'On May 15, 2040, the network brought The Calloway Files back...', while networkOf(2040) = {name:'Tern Works Network', since:2035}. series.ts:143 only replaces the network on revivals that have one.",
+   "file": "src/engine/systems/series.ts",
+   "line": 143,
+   "suggested_fix": "Reset net to {name: s.company} on a revival without a network, or record that the revival was by the current network and say so."
+  },
+  {
+   "id": "S10",
+   "severity": "note",
+   "criterion": "house-standard",
+   "claim": "Comments the change falsified were left in the present tense. SeriesTemplate.firstSeason says 'The year its first season began', but REAL_SERIES set it to 2026, their baseline: 9-1-1 began in 2018 and Abbott Elementary in 2021. ProCredit.release's doc still lists only on time, held back, streaming or shelved, and says `told` is set 'once the hold-back has been said', though the distributor change sets it too.",
+   "evidence": "src/engine/content/series.ts:37 `/** The year its first season began. */` with REAL_SERIES firstSeason: 2026. src/engine/systems/pro.ts:150-153.",
+   "file": "src/engine/content/series.ts",
+   "line": 37,
+   "suggested_fix": "Say that for a real series firstSeason is the baseline season the game read, and widen the release doc to the seven kinds and both uses of told."
+  },
+  {
+   "id": "S11",
+   "severity": "note",
+   "criterion": "house-standard",
+   "claim": "Player text shows the engine's weights and misstates when a guest part is weighed. The guide's 'Your Part In A Film' read lists FORTUNE's size weights ('a lead counts in full, a supporting part six tenths, a co-star a quarter'), which docs/STYLE.md's 'No internal concepts... weights' rule keeps out of the player's sight. Its INVITE line says 'When the network renews the series, its producers weigh it', but a season already ordered is weighed too (inviteAt, continuity.ts:228-231).",
+   "evidence": "src/engine/content/guide/career.ts:1138 and :1143. docs/STYLE.md:81-82.",
+   "file": "src/engine/content/guide/career.ts",
+   "line": 1138,
+   "suggested_fix": "Say it plainly, e.g. 'a bigger part counts for more', and 'before each new season the series makes, its producers weigh it'."
+  },
+  {
+   "id": "S12",
+   "severity": "note",
+   "criterion": "other",
+   "claim": "Smaller wording mismatches in the option ask, and abroad-first weeks that are invisible:\n- When an ask is pending against one offer, the warning on a second offer on the same days still says 'Ask To Be Released, on this offer, asks...' while the command refuses with 'You've asked; ...'.\n- A release granted after the offer lapsed or was declined still says 'You can accept the offer for X'.\n- A film released abroad first shows nothing on Charts And Awards or in Productions And People's In Cinemas or Box Office until its first US week, though its weeks abroad have passed.",
+   "evidence": "continuity.ts:140-142 vs :193. continuity.ts:401-407 (offer looked up whatever its status). IndustryPane.tsx:268 and reference.ts:192 filter on weeksSoFar(run).length.",
+   "file": "src/engine/systems/continuity.ts",
+   "line": 140,
+   "suggested_fix": "Match the warning to the refusal when any ask on that option is pending. Word the granted notice by the offer's status. Show a film whose run.before weeks have passed."
+  },
+  {
+   "id": "S13",
+   "severity": "note",
+   "criterion": "other",
+   "claim": "Records left for the primary agent, as reported: docs/verification/audit-2026-10-21/areas/guide/wiring.json (b20-guide-wiring fails), text-inventory, surfaces, effects, capabilities, traceability, DEVMAP, and connected-journey/TRACE.md. Also the build account docs/verification/career-universe-2026-10-24/README.md K6 still says a film for cinemas 'may be held back..., sent to streaming instead of cinemas, or shelved'. The commit trailers say 'Claude Opus 5.5' where implementer-common.md asks for 'Claude Fable 5.1'.",
+   "evidence": "b20-guide-wiring: 'controls: expected [ Array(212) ] to deeply equal [ Array(213) ]'. README.md K6 lines 493-497. `git log 4cba6159..g27-series` trailers.",
+   "file": "docs/verification/career-universe-2026-10-24/README.md",
+   "line": 493,
+   "suggested_fix": "Regenerate after integration, and decide which trailer the owner wants."
+  }
+ ]
+}

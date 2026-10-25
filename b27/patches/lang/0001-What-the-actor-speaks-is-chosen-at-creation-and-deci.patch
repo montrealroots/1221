@@ -1,0 +1,1534 @@
+From a64e48ad2258f0b8fe9c8c674d3b42170476724f Mon Sep 17 00:00:00 2001
+From: Claude <noreply@anthropic.com>
+Date: Sun, 25 Oct 2026 18:04:25 +0000
+Subject: [PATCH 1/3] What the actor speaks is chosen at creation and decides a
+ bilingual part
+MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
+
+The career universe's K3 left languages out because nothing would read one: every
+market the slate makes work in works in English. The owner ruled that no reader is a
+reason to build the reader, so the readers came first. A share of the slate's parts
+(about one in eight, the game's ASSUMPTION) are written for a character who speaks a
+named language as well as English, Spanish most often by the game's reckoning. Each is
+decided on its own stream keyed by the part's id (the pro.language decider), so no draw
+of the slate moves, every id and production stays the one it was, and the generator's
+version stays: a part a save was posted before today is kept as posted, with no language.
+
+What the actor speaks is asked on Genres & Background: English always, at native or
+fluent (the School and every part are in English), up to six languages, one of them
+native, each from the real names the map already used. It is an optional field on the
+person; an older save has none and reads as English, natively, so it loads and plays on
+as it did. The save schema stays 94.
+
+Each step such a part takes reads it, decided rather than displayed:
+- a non-speaker is refused at Submit Yourself in words, an agent doesn't put them up
+  (slateReach), and a casting office that cast them before doesn't offer it without an
+  audition (directOfferFor);
+- casting's fit weighs the weaker of the part's language and the actor's English beside
+  the techniques, native above fluent above conversational, so the casting chance and an
+  agent's reach move with it;
+- a conversational speaker comes to a language part of the preparation short of complete,
+  read on believability and execution by the tape, the room, the night and the day's take
+  (withLanguage in auditionContext, workContext and unitContext). Work On Your Spanish,
+  a new step of pro.prepare, brings it on (an hour on the sides, two on the part, faster
+  with Accents And Dialects, which it grows a little), and a booking keeps half of what
+  was done on the sides, as the other parts do. Native and fluent speakers prepare none.
+
+Measured on a played career (tests/b27-languages.test.ts): the same seed's fluent
+speaker was posted a Mandarin short, taped Exceptional at 95.9 and was booked, while the
+English-only twin was posted it and refused with the reason; the conversational twin who
+didn't work on the language taped 77.2, held back 31 points on believability by the
+language, against 95.9 once it was worked on, and casting's chance fell from 0.644 to
+0.422. All 31 mutations of the claims were killed.
+
+The résumé lists every language but native English, the Portfolio tab's profile shows
+them, the Opportunities tab's card says what the part asks under The Language, and the
+guide's new Languages entry says what languages do. The Résumé and Profile entries, and
+the docs of fitOf, eligibilityProblems and slateReach, said less than is now true and
+were brought up to it.
+
+Co-Authored-By: Claude Opus 5.5 <noreply@anthropic.com>
+Claude-Session: https://claude.ai/code/session_01HBdcuKzBBMbipfFQSByALG
+---
+ src/engine/content/careerwork.ts      |   6 +
+ src/engine/content/guide/career.ts    |  60 +++-
+ src/engine/content/languages.ts       |  92 ++++++
+ src/engine/content/tasks.ts           |  14 +-
+ src/engine/decided.ts                 |  19 ++
+ src/engine/domain/model.ts            |   8 +
+ src/engine/systems/pro.ts             |  15 +-
+ src/engine/systems/projobs.ts         |  52 +++-
+ src/engine/systems/slate.ts           |   8 +-
+ src/engine/systems/speaking.ts        | 207 +++++++++++++
+ src/engine/systems/workflow.ts        |   6 +-
+ src/engine/world/bootstrap.ts         |  12 +-
+ src/ui/career/OpportunitiesPane.tsx   |  12 +-
+ src/ui/creation/CharacterCreation.tsx |  72 +++++
+ src/ui/workspaces/CareerWorkspace.tsx |   8 +-
+ tests/b27-creation-origins.test.ts    |  29 ++
+ tests/b27-languages.test.ts           | 400 ++++++++++++++++++++++++++
+ 17 files changed, 994 insertions(+), 26 deletions(-)
+ create mode 100644 src/engine/systems/speaking.ts
+ create mode 100644 tests/b27-languages.test.ts
+
+diff --git a/src/engine/content/careerwork.ts b/src/engine/content/careerwork.ts
+index 71642f97..0d3940e1 100644
+--- a/src/engine/content/careerwork.ts
++++ b/src/engine/content/careerwork.ts
+@@ -263,6 +263,12 @@ export interface ProjectTemplate {
+     membersOnly?: 'equity';
+     /** Techniques the part needs at a level, where it needs any. */
+     skills?: Partial<Record<Skill, number>>;
++    /**
++     * A language the character speaks as well as English, by its code (`content/languages.ts`), on a share of the slate's
++     * parts from 2026-10-25 (brief 27; `partLanguage`, `systems/speaking.ts`). Read by eligibility, casting's fit and the
++     * preparation. A part kept in a save from before has none, and is in English alone, as it was posted.
++     */
++    language?: string;
+     /**
+      * What a submission sends: a headshot and a résumé always, a reel where screen casting asks for one, and, from
+      * 2026-10-24 (brief 27), a voice demo where voice casting does.
+diff --git a/src/engine/content/guide/career.ts b/src/engine/content/guide/career.ts
+index d08e4b72..9913677e 100644
+--- a/src/engine/content/guide/career.ts
++++ b/src/engine/content/guide/career.ts
+@@ -47,6 +47,7 @@ import { CEREMONY } from '../../systems/ceremony';
+ import { VISIBILITY, ordinal } from '../../systems/awards';
+ import { READ_ON } from '../catalog';
+ import { formatDateKey } from '../../core/time';
++import { LANGUAGE_FIT, LANGUAGE_PREP, PART_LANGUAGE } from '../../systems/speaking';
+ import type { GuideEntry } from './types';
+ 
+ const CAREER = '/workspace/career';
+@@ -148,7 +149,7 @@ export const CAREER_GUIDE: readonly GuideEntry[] = [
+     questions: ['Can I work under another name?', 'Why isn’t my self-tape a credit?', 'Which skills go on my résumé?'],
+     where: on('portfolio', 'Career, Portfolio, Your Profile'),
+     available: `From the guide’s chapter “${CHAPTER}”.`,
+-    short: 'Your Profile is what a submission says about you: the name you work under, your training, your School credits and professional credits kept apart, your special skills, when you’re free, where you’re based and whether you can work in the US.\n\nYou set one thing here: your professional name. Everything else is read from your record.',
++    short: 'Your Profile is what a submission says about you: the name you work under, your training, your School credits and professional credits kept apart, your special skills, the languages you speak, when you’re free, where you’re based and whether you can work in the US.\n\nYou set one thing here: your professional name. Everything else is read from your record.',
+     steps: [
+       'Open Career, then the Portfolio tab.',
+       'Under Professional Name, type the name you want to work under.',
+@@ -237,7 +238,7 @@ export const CAREER_GUIDE: readonly GuideEntry[] = [
+     questions: ['How do I make a résumé?', 'Why is my résumé behind?', 'What goes on my résumé?'],
+     where: on('portfolio', 'Career, Portfolio, Résumé'),
+     available: `From the guide’s chapter “${CHAPTER}”.`,
+-    short: `Your résumé is made from your record: your name, your unions, your training, your professional credits, any Emmy nomination or win and Sundance selection, your School credits and your special skills. Making it takes ${hours(RESUME.minutes)} at your own desk, estimated, and costs nothing.\n\nOnce something new is on your record, it reads as behind, and the panel names what it’s missing.`,
++    short: `Your résumé is made from your record: your name, your unions, your training, your professional credits, any Emmy nomination or win and Sundance selection, your School credits, your special skills and the languages you speak besides native English. Making it takes ${hours(RESUME.minutes)} at your own desk, estimated, and costs nothing.\n\nOnce something new is on your record, it reads as behind, and the panel names what it’s missing.`,
+     steps: [
+       'Open Career, then the Portfolio tab.',
+       'Under Résumé, press Make Your Résumé, or Update Your Résumé once you have one.',
+@@ -807,6 +808,61 @@ export const CAREER_GUIDE: readonly GuideEntry[] = [
+       result: 'An hour on, the tape is judged and shown with its band, and the casting office decides on the Friday after it’s due.',
+     },
+   },
++  // From 2026-10-25 (the owner's brief 27, Part 7, "Languages and accents"; Part 9's language preparation): what the
++  // languages chosen at creation do, from `systems/speaking.ts`, its figures the rules' own.
++  {
++    id: 'career.languages',
++    title: 'Languages',
++    goal: 'career',
++    covers: [],
++    synonyms: ['language', 'languages', 'bilingual', 'second language', 'native speaker', 'fluent', 'conversational'],
++    questions: ['What do my languages do?', 'Why can’t I submit for a part in another language?', 'How do I prepare a part in a language I only speak a little?'],
++    where: on('opportunities', 'Career, Opportunities, The Language'),
++    available: `From the guide’s chapter “${WORK_CHAPTER}”. You choose your languages when you create your character, on Genres & Background, and they stay as you chose them.`,
++    short: `Some parts are written for a character who speaks another language as well as English: about one in ${Math.round(1 / PART_LANGUAGE.share)} of the parts the game invents, estimated. The Language, on the part’s card, says which language and where you stand.\n\nIf you speak it fluently or natively, you’re ready for it. If you speak it conversationally, you can be submitted, but the part takes more preparation. If you don’t speak it, you can’t submit yourself, and an agent won’t put you up for it.`,
++    steps: [
++      'Open Career, then the Opportunities tab.',
++      'Read The Language on a role’s card: the character’s other language, and how well you speak it.',
++      'If you speak it conversationally, press Work On Your Spanish (or the part’s language) beside the other steps when you prepare the sides, and again on the part once you’re booked.',
++    ],
++    needs: [
++      'The language, chosen when you created your character.',
++      `Free for ${hours(LANGUAGE_PREP.minutes)} on the sides, or ${hours(LANGUAGE_PREP.minutes * WORK.partTimes)} on the part, and awake.`,
++    ],
++    costs: [
++      { label: 'Time', value: `${hours(LANGUAGE_PREP.minutes)} a session on the sides, ${hours(LANGUAGE_PREP.minutes * WORK.partTimes)} on the part`, estimate: true },
++      { label: 'Money', value: 'None' },
++    ],
++    reads: [
++      { label: 'Casting’s Fit', value: `How well you speak the part’s language and English, the weaker of the two counting: a native speaker of both suits it best, a fluent one ${Math.round(LANGUAGE_FIT.fluent * 100)}% as well and a conversational one ${Math.round(LANGUAGE_FIT.conversational * 100)}%`, estimate: true },
++      { label: 'Your Audition And Your Work', value: 'For a conversational speaker, how far the language has been prepared, beside the rest of the preparation, read on how believable you seem and how cleanly you deliver the lines' },
++      { label: 'Your Résumé', value: 'Every language you speak and how well, except native English' },
++    ],
++    now: ['A session moves your preparation of the language on, and the clock with it. It grows your Accents And Dialects a little, and that technique makes each session go further.'],
++    later: ['Once you’re booked, the part starts from half of what you did on the sides, as the rest of its preparation does.'],
++    interpret: [
++      'Native is a language you grew up speaking, fluent one you’re at ease in, and conversational one you can hold a conversation in.',
++      'Until a conversational speaker’s language is prepared, Why It Went This Way can say that working on the part’s language held the audition back.',
++    ],
++    unavailable: [
++      'The character speaks a language you don’t speak.',
++      'You speak the part’s language fluently or natively, so it needs no work of its own.',
++      'You’ve done all this step can do.',
++    ],
++    mistakes: ['Taping a self-tape before the language is prepared. A conversational speaker’s tape is held back until it is.'],
++    next: ['Prepare the rest of the sides, then tape it or go to the audition.'],
++    related: ['career.auditions', 'career.opportunities', 'career.resume'],
++    connections: [
++      { to: 'career.auditions', kind: 'evaluation', why: 'For a conversational speaker, the language’s preparation is read when an audition is judged, beside the rest of the sides.' },
++      { to: 'career.opportunities', kind: 'prerequisite', why: 'A part written in a language you don’t speak can’t be submitted for.' },
++      { to: 'career.resume', kind: 'history', why: 'Your résumé lists the languages you speak and how well.' },
++    ],
++    example: {
++      setup: 'A graduate who speaks Spanish conversationally, asked for a self-tape for a part whose character speaks Spanish as well as English.',
++      steps: ['Press Break It Down, Learn The Lines and Rehearse It On Your Feet.', 'Press Work On Your Spanish once a day for four days.', 'Press Tape It.'],
++      result: `Each session takes ${hours(LANGUAGE_PREP.minutes)} and moves your Spanish on, less each time as it nears complete. Taped once it’s complete, the language holds the tape back no more than a fluent speaker’s would.`,
++    },
++  },
+   {
+     id: 'career.offers',
+     title: 'Offers And Booked Work',
+diff --git a/src/engine/content/languages.ts b/src/engine/content/languages.ts
+index d5dd71f6..18345766 100644
+--- a/src/engine/content/languages.ts
++++ b/src/engine/content/languages.ts
+@@ -7,6 +7,8 @@
+  * A code not listed here is shown as itself rather than guessed at.
+  */
+ 
++import { countWords } from '../core/text';
++
+ const NAMES: Record<string, string> = {
+   aa: 'Afar', ab: 'Abkhaz', af: 'Afrikaans', ak: 'Akan', am: 'Amharic', ar: 'Arabic', as: 'Assamese',
+   ay: 'Aymara', az: 'Azerbaijani', ba: 'Bashkir', be: 'Belarusian', bg: 'Bulgarian', bi: 'Bislama',
+@@ -49,3 +51,93 @@ export function languageNames(codes: string, limit = 4): string[] {
+   }
+   return out;
+ }
++
++// ---------------------------------------------------------------------------------------------------------------------
++// What a life speaks (from 2026-10-25, the owner's brief 27, Part 7: "Languages and accents"; Part 9: "Accent, language,
++// movement, and vocal preparation"). Until then the game recorded no languages: every market the slate made work in
++// worked in English, and the README of the career universe (K3) left a language on the résumé out as a word nothing
++// would read. The owner ruled that no reader was a reason to build one: a part of the slate can be written for a
++// character who speaks a named language as well as English, and eligibility, casting's fit and the preparation read
++// what the actor speaks (`systems/speaking.ts`). The names are the ones above, real languages each.
++// ---------------------------------------------------------------------------------------------------------------------
++
++/** How well a language is spoken: grown up speaking it, at ease in it, or able to hold a conversation in it. */
++export type LanguageLevel = 'native' | 'fluent' | 'conversational';
++export const LANGUAGE_LEVELS: readonly LanguageLevel[] = ['native', 'fluent', 'conversational'];
++export const LEVEL_LABEL: Readonly<Record<LanguageLevel, string>> = { native: 'Native', fluent: 'Fluent', conversational: 'Conversational' };
++
++/** A language a person speaks, by its code, and how well. */
++export interface SpokenLanguage { id: string; level: LanguageLevel }
++
++export const ENGLISH = 'en';
++
++/**
++ * What a person with no languages on record speaks: English, natively. Every save made before 2026-10-25 has none
++ * (`Person.languages` is optional), and reads as this, so an older life loads and plays on as it did: every part it was
++ * offered was in English, and every part written in English alone still is.
++ */
++export const ENGLISH_ONLY: readonly SpokenLanguage[] = [{ id: ENGLISH, level: 'native' }];
++
++/** The most languages creation takes. ASSUMPTION: the game's limit, for a list a résumé can carry. */
++export const LANGUAGES_MOST = 6;
++
++/**
++ * The languages a life can speak, by name: every one above but four. Chinese is offered as the two spoken languages its
++ * code covers, Mandarin and Cantonese, since a part names the one its character speaks; Norwegian once, not again as its
++ * two written standards; and Latin, which nobody speaks today, not at all.
++ */
++const SPOKEN_NAMES: Readonly<Record<string, string>> = (() => {
++  const out: Record<string, string> = { ...NAMES, cmn: 'Mandarin' };
++  for (const gone of ['zh', 'nb', 'nn', 'la']) delete out[gone];
++  return out;
++})();
++
++/** Each language a life can speak, A to Z by name. */
++export const SPOKEN: readonly { id: string; name: string }[] = Object.entries(SPOKEN_NAMES)
++  .map(([id, name]) => ({ id, name }))
++  .sort((a, b) => a.name.localeCompare(b.name, 'en'));
++
++/** A spoken language's name, or undefined for a code the list doesn't hold. */
++export const spokenName = (id: string): string | undefined => SPOKEN_NAMES[id];
++
++/** What a person speaks: what they said at creation, or, with nothing on record, English natively (`ENGLISH_ONLY`). */
++export const languagesOf = (person: { languages?: readonly SpokenLanguage[] }): readonly SpokenLanguage[] => person.languages ?? ENGLISH_ONLY;
++
++/** How well a person speaks a language, or undefined where they don't. */
++export const levelIn = (person: { languages?: readonly SpokenLanguage[] }, id: string): LanguageLevel | undefined => languagesOf(person).find((l) => l.id === id)?.level;
++
++/**
++ * What's wrong with a list of languages, each in a sentence creation shows: a language not on the list, one listed twice,
++ * English missing or under fluent (the School teaches in English, and every part the game offers is in English), no
++ * language marked native, or more than `LANGUAGES_MOST`.
++ */
++export function languagesProblems(list: readonly SpokenLanguage[]): string[] {
++  const out: string[] = [];
++  if (list.some((l) => !spokenName(l.id) || !LANGUAGE_LEVELS.includes(l.level))) out.push('Choose each language and how well you speak it from the lists.');
++  const seen = new Set<string>();
++  for (const l of list) {
++    if (seen.has(l.id) && spokenName(l.id)) out.push(`You’ve listed ${spokenName(l.id)} twice.`);
++    seen.add(l.id);
++  }
++  const english = list.find((l) => l.id === ENGLISH);
++  if (!english || english.level === 'conversational') out.push('Your training and every part in the game are in English, so list English as native or fluent.');
++  if (!list.some((l) => l.level === 'native')) out.push('Mark the language you grew up speaking as native.');
++  if (list.length > LANGUAGES_MOST) out.push(`List ${countWords(LANGUAGES_MOST)} languages at most.`);
++  return [...new Set(out)];
++}
++
++/**
++ * A list made into one creation would take, for a save made straight from the engine (as `cleanPersonality` does for the
++ * dispositions): the languages on the list, each once, at a level it has; English among them at fluent where another is
++ * native and at native where none is; and no more than `LANGUAGES_MOST`.
++ */
++export function cleanLanguages(list: readonly SpokenLanguage[]): SpokenLanguage[] {
++  const out: SpokenLanguage[] = [];
++  for (const l of list) if (spokenName(l.id) && LANGUAGE_LEVELS.includes(l.level) && !out.some((x) => x.id === l.id)) out.push({ id: l.id, level: l.level });
++  const others = out.filter((l) => l.id !== ENGLISH);
++  const english = out.find((l) => l.id === ENGLISH);
++  const englishLevel: LanguageLevel = english && english.level !== 'conversational' ? english.level : others.some((l) => l.level === 'native') ? 'fluent' : 'native';
++  const kept: SpokenLanguage[] = [{ id: ENGLISH, level: englishLevel }, ...others].slice(0, LANGUAGES_MOST);
++  if (!kept.some((l) => l.level === 'native')) kept[0] = { id: ENGLISH, level: 'native' };
++  return kept;
++}
+diff --git a/src/engine/content/tasks.ts b/src/engine/content/tasks.ts
+index 09337f40..123222db 100644
+--- a/src/engine/content/tasks.ts
++++ b/src/engine/content/tasks.ts
+@@ -104,8 +104,14 @@ const a = (ability: AbilityId, weight: number): Input => ({ ability, weight });
+ const tech = (weight: number): Input => ({ techniques: true, weight });
+ const ALL: readonly ConditionKind[] = ['fatigue'];
+ 
+-/** Coursework's parts, by their own words (`content/coursework.ts` `PrepDim`). */
+-const COURSEWORK_PREP = { familiarity: 'Knowing the material', memorization: 'Learning the lines', interpretation: 'Making your choices', rehearsal: 'Rehearsal', partner: 'Work with your partner', revision: 'The revision' } as const;
++/**
++ * A professional part's other language, worked on by an actor who speaks it conversationally (from 2026-10-25, brief 27,
++ * `systems/speaking.ts`): given only where a part has one, so a piece of coursework never reads it.
++ */
++const LANGUAGE_PART = 'Working on the part’s language';
++
++/** Coursework's parts, by their own words (`content/coursework.ts` `PrepDim`), and a professional part's language. */
++const COURSEWORK_PREP = { familiarity: 'Knowing the material', memorization: 'Learning the lines', interpretation: 'Making your choices', rehearsal: 'Rehearsal', partner: 'Work with your partner', revision: 'The revision', language: LANGUAGE_PART } as const;
+ 
+ /**
+  * The abilities a scene, a taped brief and a night read of their own, before what the piece demands (from 2026-10-16,
+@@ -393,7 +399,7 @@ export const TASK_PROFILES: Readonly<Record<string, TaskProfile>> = {
+   },
+   musicalNight: {
+     id: 'musicalNight', label: 'A Night Of A Musical', what: 'A performance of a musical in front of an audience: the scenes, the songs and the numbers.',
+-    prepLabel: { lines: 'Learning the lines and songs', blocking: 'The staging', notes: 'Taking the director’s notes', special: 'The choreography', genre: 'Knowing the genre' },
++    prepLabel: { lines: 'Learning the lines and songs', blocking: 'The staging', notes: 'Taking the director’s notes', special: 'The choreography', genre: 'Knowing the genre', language: LANGUAGE_PART },
+     dims: {
+       believability: { weight: 2, inputs: BASE_INPUTS.night.believability, prep: ['lines', 'notes'], conditions: ALL },
+       interpretation: { weight: 1, inputs: BASE_INPUTS.night.interpretation, prep: ['notes', 'genre'] },
+@@ -409,7 +415,7 @@ export const TASK_PROFILES: Readonly<Record<string, TaskProfile>> = {
+     // are. Until then a night on stage read no genre: a play of a kind known was learned faster (`genreSpeed`), and once
+     // its lines and blocking were complete, knowing its genre made no difference to the night.
+     id: 'performance', label: 'A Night On Stage', what: 'A performance of a production in front of an audience.',
+-    prepLabel: { lines: 'Learning the lines', blocking: 'The blocking', notes: 'Taking the director’s notes', genre: 'Knowing the genre' },
++    prepLabel: { lines: 'Learning the lines', blocking: 'The blocking', notes: 'Taking the director’s notes', genre: 'Knowing the genre', language: LANGUAGE_PART },
+     dims: {
+       believability: { weight: 3, inputs: BASE_INPUTS.night.believability, prep: ['lines', 'notes'], conditions: ALL },
+       interpretation: { weight: 2, inputs: BASE_INPUTS.night.interpretation, prep: ['notes', 'genre'] },
+diff --git a/src/engine/decided.ts b/src/engine/decided.ts
+index 3ddcb0f3..325dd4eb 100644
+--- a/src/engine/decided.ts
++++ b/src/engine/decided.ts
+@@ -660,6 +660,25 @@ defineDecider<{ sim: Simulation; week: number }, string>({
+   },
+ });
+ 
++// From 2026-10-25 (brief 27, Part 7): a slate part's other language, its own stream keyed by the part.
++defineDecider<{ sim: Simulation; week: number }, string>({
++  id: 'pro.language',
++  decides: 'Which of the slate\u2019s parts are written for a character who speaks another language as well as English, and which language (PART_LANGUAGE, PART_LANGUAGES), each by the part\u2019s own id.',
++  drawnIn: 'src/engine/systems/speaking.ts',
++  reads: {
++    // Which week: each Monday makes its own parts, each with its own draw.
++    week: (o, t) => ({ ...o, week: Math.round(t * 50) }),
++    // Which world: the save's seed makes its own slate and its own draws.
++    world: (o, t) => ({ ...o, sim: atYale(Math.round(t * 20)) }),
++  },
++  sample: (seed) => ({ sim: atYale(seed), week: seed * 3 }),
++  decide: ({ sim, week }) => {
++    const out: string[] = [];
++    for (let n = 0; n < 4; n += 1) out.push(productionsOf(sim, sim.now + (week + n) * 7 * MS_DAY).flatMap((p) => p.parts).map((t) => t.requirements.language ?? '-').join(','));
++    return out.join(' ');
++  },
++});
++
+ defineDecider<{ sim: Simulation; represented: number; credits: number; skill: number }, string>({
+   id: 'pro.slate_reach',
+   decides: 'Which of the slate\u2019s parts reach the actor in a week (SLATE_REACH): an agent\u2019s breakdown or an open posting, the part\u2019s fit, the playing age, the actor\u2019s credits, the companies they\u2019ve worked for, where they live and when they\u2019re booked.',
+diff --git a/src/engine/domain/model.ts b/src/engine/domain/model.ts
+index e1241bc0..f14009fa 100644
+--- a/src/engine/domain/model.ts
++++ b/src/engine/domain/model.ts
+@@ -150,6 +150,14 @@ export interface Person {
+    * migration 94 dropped them from every save.
+    */
+   genres?: string[];
++  /**
++   * The languages they speak and how well, as creation took them (from 2026-10-25, the owner's brief 27, Part 7):
++   * English always, at native or fluent, and up to five more. Read by a part written for a character who speaks one of
++   * them as well as English (`systems/speaking.ts`): whether they can be submitted, casting's fit, and the preparation
++   * the part asks; and listed on the résumé (`resumeNow`). Absent on every save made before that day, which reads as
++   * English, natively (`languagesOf`, `ENGLISH_ONLY`), and plays on as it did.
++   */
++  languages?: import('../content/languages').SpokenLanguage[];
+   /**
+    * The life before this one, in the player's own words.
+    *
+diff --git a/src/engine/systems/pro.ts b/src/engine/systems/pro.ts
+index a6ac2c78..9b93c1a3 100644
+--- a/src/engine/systems/pro.ts
++++ b/src/engine/systems/pro.ts
+@@ -54,6 +54,7 @@ import { plural, spokenList } from '../core/text';
+ import { CITIES } from '../content/geography';
+ import { YALE_DRAMA, type Skill } from '../content/school';
+ import { MASTERED, TECHNIQUE_LABEL } from '../content/abilities';
++import { ENGLISH, languagesOf, spokenName } from '../content/languages';
+ import { BRIEF_BY_ID } from '../content/briefs';
+ import type { AgentId, AgentRoute } from '../content/agents';
+ import type { AgreementTerm, ProMedium, RateId } from '../content/careerwork';
+@@ -321,7 +322,12 @@ export interface Opportunity extends HasHistory {
+  * own where it has one (`SpecialStep`, `content/workflows.ts`): finding the voice, watching the original, the movement,
+  * the pronunciations, the period's movement, the choreography, the fight rehearsal.
+  */
+-export interface PartPrep { interpretation: number; memorization: number; rehearsal: number; special?: number }
++/**
++ * How far each part of the preparation stands, 0 to 1. `language` from 2026-10-25 (brief 27): the part's other language
++ * worked on by an actor who speaks it conversationally (`systems/speaking.ts`); absent, it stands where their level
++ * starts it (`LANGUAGE_PREP.start`), on every part prepared before that day too.
++ */
++export interface PartPrep { interpretation: number; memorization: number; rehearsal: number; special?: number; language?: number }
+ 
+ /** One audition round (`systems/projobs.ts`): in person at a time, or a self-tape due by one. */
+ export interface AuditionRound {
+@@ -1127,6 +1133,13 @@ export function resumeNow(person: Person, at: Instant): { name: string; lines: s
+   // What a résumé behind lacks names a skill as one (from 2026-10-21): "doesn’t have … and Singing" read as a thing it
+   // was missing, not a special skill newly on the record (brief 19's app walk).
+   for (const s of p.skills) add(`skill:${s.skill}${s.mastered ? ':mastered' : ''}`, `Special skill: ${s.label}${s.mastered ? ', mastered' : ''}`, `${s.label} as a ${s.mastered ? 'mastered ' : ''}special skill`);
++  // The languages they speak, each with how well (from 2026-10-25, the owner's brief 27, Part 7), but native English, which
++  // every part the game offers takes for granted. A save from before has none on record, so its résumé lists none.
++  for (const l of languagesOf(person)) {
++    if (l.id === ENGLISH && l.level === 'native') continue;
++    const name = spokenName(l.id) ?? l.id;
++    add(`language:${l.id}:${l.level}`, `Language: ${name}, ${l.level}`, `${name} (${l.level}) among your languages`);
++  }
+   return { name: p.name, lines, keys, labels };
+ }
+ 
+diff --git a/src/engine/systems/projobs.ts b/src/engine/systems/projobs.ts
+index 2f29b17f..fb6cb830 100644
+--- a/src/engine/systems/projobs.ts
++++ b/src/engine/systems/projobs.ts
+@@ -108,6 +108,7 @@ import { actorAwardsPassage, registerActorAwards } from './actorawards';
+ import { registerCeremonies } from './ceremony';
+ import { simulateRun } from './charts';
+ import { keepProject, pushedPart, restoreSlate, slatePartsAt } from './slate';
++import { LANGUAGE_PREP, carriedLanguage, languageDemand, languageRefusal, languageStepRefusal, withLanguage, workOnLanguage } from './speaking';
+ 
+ // ---------------------------------------------------------------------------------------------------------------------
+ // The rules: each a published one with its source, or the game's ASSUMPTION
+@@ -588,7 +589,10 @@ export function inScope(agentId: string, t: ProjectTemplate): boolean {
+   return !!agent && agencyOf(agent).department.fields.includes(fieldOf(t));
+ }
+ 
+-/** The role's fit: how well you know its genre, and its techniques against yours, each 0 to 1, and the two together. */
++/**
++ * The role's fit: how well you know its genre, and its techniques against yours (and, from 2026-10-25, brief 27, how well
++ * you speak a language its character speaks besides English, `languageDemand`), each 0 to 1, and the two together.
++ */
+ export interface Fit { genre: number; demands: number; fit: number }
+ 
+ /**
+@@ -617,7 +621,10 @@ export function fitOf(person: Person, t: ProjectTemplate): Fit {
+   const genre = clamp(relevantGenre(person, projectGenresOf(t)).total / BRIEF.complete.genre, 0, 1);
+   const asks = Object.entries(t.role.techniques) as [Skill, number][];
+   const total = asks.reduce((a, [, w]) => a + w, 0);
+-  const demands = total > 0 ? asks.reduce((a, [s, w]) => a + w * clamp((person.craft?.[s] ?? 0) / MASTERED, 0, 1), 0) / total : 1;
++  // A part written for a character who speaks another language as well as English (from 2026-10-25, brief 27,
++  // `languageDemand`): how well the actor speaks it, and their English, weighs beside the techniques.
++  const tongue = languageDemand(person, t);
++  const demands = total + tongue.weight > 0 ? (asks.reduce((a, [s, w]) => a + w * clamp((person.craft?.[s] ?? 0) / MASTERED, 0, 1), 0) + tongue.weight * tongue.f) / (total + tongue.weight) : 1;
+   return { genre: r3(genre), demands: r3(demands), fit: r3((genre + demands) / 2) };
+ }
+ 
+@@ -774,7 +781,9 @@ export function postingsAt(sim: Simulation, person: Person, at: Instant): { proj
+  * - **relationships**: a company or casting office the actor has worked for comes back to them a half again as often;
+  * - **where they live**: an open in-person audition farther than a day's trip reaches nobody there, and an agent's half as
+  *   often; a self-tape reaches anyone;
+- * - **availability**: an agent doesn't put up a client booked on the part's days.
++ * - **availability**: an agent doesn't put up a client booked on the part's days;
++ * - **language** (from 2026-10-25, brief 27): nor one who doesn't speak a language the part's character speaks besides
++ *   English (`languageRefusal`), and the agent's chance reads how well they speak it through the fit.
+  * The market, the season and the production's own circumstances are the slate's (`systems/slate.ts`): what's made where,
+  * when, and whether a series is being made at all.
+  */
+@@ -792,6 +801,8 @@ export function slateReach(sim: Simulation, person: Person, t: ProjectTemplate,
+   if (worked) chance *= SLATE_REACH.worked;
+   if (t.stages.audition === 'in-person' && needsTrip(person.currentLocationId, t.place.cityId)) chance *= via === 'agent' ? SLATE_REACH.farAgent : 0;
+   if (via === 'agent' && bookedClash(person, datesOf({ projectId: t.id, postedAt: at }))) return 0;
++  // Nor a client who doesn't speak the part's other language (from 2026-10-25, brief 27, `languageRefusal`).
++  if (via === 'agent' && languageRefusal(person, t)) return 0;
+   return Math.min(0.95, chance);
+ }
+ 
+@@ -1100,7 +1111,10 @@ export function bookedClash(person: Person, days: readonly { from: Instant; to:
+   return undefined;
+ }
+ 
+-/** What keeps the actor from the role, each in a sentence: the union an open call is for, the ages, a technique, another booking. */
++/**
++ * What keeps the actor from the role, each in a sentence: the union an open call is for, the ages, a technique, a language
++ * the character speaks that the actor doesn't (from 2026-10-25, brief 27), another booking.
++ */
+ export function eligibilityProblems(person: Person, o: Opportunity, at: Instant): string[] {
+   const t = projectOf(o);
+   const out: string[] = [];
+@@ -1112,6 +1126,9 @@ export function eligibilityProblems(person: Person, o: Opportunity, at: Instant)
+   for (const [s, level] of Object.entries(t.requirements.skills ?? {}) as [Skill, number][]) {
+     if ((person.craft?.[s] ?? 0) < level) out.push(`The part needs ${TECHNIQUE_LABEL[s].toLowerCase()} at ${level}, and yours is at ${Math.round(person.craft?.[s] ?? 0)}.`);
+   }
++  // The character's other language, where the actor doesn't speak it (from 2026-10-25, brief 27).
++  const tongue = languageRefusal(person, t);
++  if (tongue) out.push(tongue);
+   const clash = bookedClash(person, spansOf(person, t, datesOf(o)), o.id);
+   if (clash) out.push(`You’re booked for ${clash.label} on ${formatDate(clash.from, NY)}, one of the same days.`);
+   if (abroad(person, t)) {
+@@ -1158,7 +1175,7 @@ const prepOfTarget = (x: PrepTarget): PartPrep => ('opportunity' in x ? x.opport
+ const idOfTarget = (x: PrepTarget): string => ('opportunity' in x ? x.opportunity.id : x.engagement.id);
+ 
+ /** A step's time on the sides or the part (`BRIEF.steps`), the part's twice the sides'. */
+-export const prepMinutes = (x: PrepTarget, step: BriefStep): number => BRIEF.steps[step].minutes * ('engagement' in x ? WORK.partTimes : 1);
++export const prepMinutes = (x: PrepTarget, step: BriefStep | 'language'): number => (step === 'language' ? LANGUAGE_PREP.minutes : BRIEF.steps[step].minutes) * ('engagement' in x ? WORK.partTimes : 1);
+ 
+ /** The round still to come, if any: the last one set. */
+ export const roundToCome = (o: Opportunity): AuditionRound | undefined => [...(o.rounds ?? [])].reverse().find((r) => r.status === 'set');
+@@ -1168,6 +1185,11 @@ export function prepareRefusal(sim: Simulation, person: Person, x: PrepTarget |
+   if (!x) return 'There’s nothing to prepare for that.';
+   if ('opportunity' in x && (!roundToCome(x.opportunity) || (x.opportunity.status !== 'audition' && x.opportunity.status !== 'callback'))) return 'There are no sides yet: casting sends them with an audition.';
+   if ('engagement' in x && !live(x.engagement)) return 'That work is over.';
++  // The part's other language, worked on by an actor who speaks it conversationally (from 2026-10-25, brief 27).
++  if (step === 'language') {
++    const held = 'opportunity' in x ? x.opportunity : x.engagement;
++    return languageStepRefusal(sim, person, projectById(held.projectId)!, held.prep, prepMinutes(x, 'language'));
++  }
+   // A booked part prepares as its workflow does (from 2026-10-24, brief 25's Module 5): its own step, and only the
+   // three it reads, so a voice part has no lines to learn by heart.
+   if ('engagement' in x) {
+@@ -1660,12 +1682,13 @@ export function auditionContext(sim: Simulation, person: Person, o: Opportunity,
+   // read none of it, `TASK_PROFILES.audition`).
+   prep.genre = fitOf(person, t).genre * BRIEF.complete.genre;
+   required.genre = BRIEF.complete.genre;
+-  return {
++  // And the part's other language, where the actor has it to work on (from 2026-10-25, brief 27, `withLanguage`).
++  return withLanguage({
+     task: r.round === 'chemistry' ? TASK_PROFILES.chemistry! : r.round === 'test' ? TASK_PROFILES.screenTest! : r.form === 'self-tape' ? TASK_PROFILES.tape! : TASK_PROFILES.audition!,
+     techniques: t.role.techniques, prep, required,
+     difficulty: WORK.difficulty[r.round] + (t.role.stakes - 1) * BRIEF.stakes,
+     condition: conditionAt(sim, person, sim.now), families: t.role.families, key: `pro:${person.id}:${o.id}:${idx}`,
+-  };
++  }, person, t, o.prep);
+ }
+ 
+ /** A round judged: kept on the work record, the round's band and what held it back, and casting's next step on the clock. */
+@@ -1722,6 +1745,8 @@ function pass(sim: Simulation, person: Person, o: Opportunity, why: string): voi
+ export function directOfferFor(sim: Simulation, person: Person, t: ProjectTemplate, at: Instant): { engagementId: ProId; words: string } | undefined {
+   const pro = person.pro;
+   if (!pro || !t.slate || t.role.size === 'lead') return undefined;
++  // Never to an actor who doesn't speak the part's other language (from 2026-10-25, brief 27, `languageRefusal`).
++  if (languageRefusal(person, t)) return undefined;
+   // A promotional film missed for that work (from 2026-10-25, brief 27's loop 34, `promoSession`) leaves it out.
+   const before = pro.engagements
+     .filter((e) => finished(e) && e.status !== 'canceled' && e.promo?.status !== 'missed' && projectById(e.projectId)?.casting === t.casting)
+@@ -1891,8 +1916,9 @@ export function workContext(sim: Simulation, person: Person, e: Engagement, t: P
+   // and the breakdown, against what completes each (`BRIEF.complete`).
+   // And the play's genres known (from 2026-10-22, the owner's brief 21), as a shoot day reads them: until then a night
+   // on stage read none (`TASK_PROFILES.performance`).
+-  if (dayKindOf(t, i) === 'performance') return { ...base, task: TASK_PROFILES.performance!, prep: { lines: p.memorization, blocking: p.rehearsal, notes: p.interpretation, genre: fitOf(person, t).genre * BRIEF.complete.genre }, required: { lines: BRIEF.complete.memorization, blocking: BRIEF.complete.rehearsal, notes: BRIEF.complete.interpretation, genre: BRIEF.complete.genre } };
+-  return { ...base, task: TASK_PROFILES.camera!, prep: { interpretation: p.interpretation, memorization: p.memorization, rehearsal: p.rehearsal, genre: fitOf(person, t).genre * BRIEF.complete.genre }, required: { interpretation: BRIEF.complete.interpretation, memorization: BRIEF.complete.memorization, rehearsal: BRIEF.complete.rehearsal, genre: BRIEF.complete.genre } };
++  // And the part's other language, where the actor has it to work on (from 2026-10-25, brief 27, `withLanguage`).
++  if (dayKindOf(t, i) === 'performance') return withLanguage({ ...base, task: TASK_PROFILES.performance!, prep: { lines: p.memorization, blocking: p.rehearsal, notes: p.interpretation, genre: fitOf(person, t).genre * BRIEF.complete.genre }, required: { lines: BRIEF.complete.memorization, blocking: BRIEF.complete.rehearsal, notes: BRIEF.complete.interpretation, genre: BRIEF.complete.genre } }, person, t, e.prep);
++  return withLanguage({ ...base, task: TASK_PROFILES.camera!, prep: { interpretation: p.interpretation, memorization: p.memorization, rehearsal: p.rehearsal, genre: fitOf(person, t).genre * BRIEF.complete.genre }, required: { interpretation: BRIEF.complete.interpretation, memorization: BRIEF.complete.memorization, rehearsal: BRIEF.complete.rehearsal, genre: BRIEF.complete.genre } }, person, t, e.prep);
+ }
+ 
+ /**
+@@ -2120,8 +2146,10 @@ function unionsFrom(sim: Simulation, person: Person, t: ProjectTemplate, at: Ins
+  * in `systems/briefs.ts`): its time on the clock, its part moved by its gain at the hour's focus, halved for each time
+  * the same step was done today, by the ability it's practice in and the way you prepare, of what's left.
+  */
+-export function prepareOn(sim: Simulation, person: Person, x: PrepTarget, step: BriefStep | 'special'): { moved: number; part: keyof PartPrep; minutes: number } {
++export function prepareOn(sim: Simulation, person: Person, x: PrepTarget, step: BriefStep | 'special' | 'language'): { moved: number; part: keyof PartPrep; minutes: number } {
+   if (step === 'special') return specialOn(sim, person, x as { engagement: Engagement });
++  // The part's other language (from 2026-10-25, brief 27, `workOnLanguage`).
++  if (step === 'language') return workOnLanguage(sim, person, 'opportunity' in x ? x.opportunity : x.engagement, idOfTarget(x), prepMinutes(x, 'language'));
+   const s = BRIEF.steps[step];
+   const minutes = prepMinutes(x, step);
+   const prep: PartPrep = 'opportunity' in x ? (x.opportunity.prep ??= { ...ZERO }) : (x.engagement.prep ??= { ...ZERO });
+@@ -2818,7 +2846,7 @@ export function registerProJobs(sim: Simulation): void {
+     const x: PrepTarget | undefined = o ? { opportunity: o } : e ? { engagement: e } : undefined;
+     const no = prepareRefusal(s, person, x, String(p?.step));
+     if (no) throw new CommandError(no);
+-    return prepareOn(s, person, x!, p.step as BriefStep | 'special');
++    return prepareOn(s, person, x!, p.step as BriefStep | 'special' | 'language');
+   });
+ 
+   sim.onCommand<{ opportunityId: string }, { band: Band; overall: number }>('pro.tape_audition', (p, { sim: s }) => {
+@@ -2908,7 +2936,7 @@ export function registerProJobs(sim: Simulation): void {
+       id: s.nextId('pro'), opportunityId: o!.id, projectId: t.id, role: t.role.part, status: 'booked', days: days.map(({ from, to, label }) => ({ from, to, label })),
+       ...(agreement ? { agreementId: agreement.id, agentId: agreement.agentId } : {}), pay: [], history: [], counts: {},
+       // The sides are part of the script: the part starts from half of what they had.
+-      prep: { interpretation: r3((o!.prep?.interpretation ?? 0) * WORK.sidesKept), memorization: r3((o!.prep?.memorization ?? 0) * WORK.sidesKept), rehearsal: r3((o!.prep?.rehearsal ?? 0) * WORK.sidesKept) },
++      prep: { interpretation: r3((o!.prep?.interpretation ?? 0) * WORK.sidesKept), memorization: r3((o!.prep?.memorization ?? 0) * WORK.sidesKept), rehearsal: r3((o!.prep?.rehearsal ?? 0) * WORK.sidesKept), ...carriedLanguage(person, t, o!.prep, WORK.sidesKept) },
+       ...(inSessionAny(person, spansOf(person, t, days)) ? { school: req?.status === 'approved' ? 'approved' as const : 'unapproved' as const } : {}),
+     };
+     pro.engagements.push(e);
+diff --git a/src/engine/systems/slate.ts b/src/engine/systems/slate.ts
+index c75ba06f..375434b4 100644
+--- a/src/engine/systems/slate.ts
++++ b/src/engine/systems/slate.ts
+@@ -40,6 +40,7 @@ import {
+   type KindProfile, type Market,
+ } from '../content/slate';
+ import { CITIES } from '../content/geography';
++import { partLanguage } from './speaking';
+ 
+ const NY = 'America/New_York';
+ 
+@@ -193,13 +194,18 @@ function makeProduction(sim: Simulation, tag: string, week: Instant, market: Mar
+     const techniques: Partial<Record<Skill, number>> = { ...profile.techniques };
+     for (const f of families) for (const [s, w] of Object.entries(FAMILY_SKILLS[f] ?? {}) as [Skill, number][]) techniques[s] = Math.max(techniques[s] ?? 0, w);
+     const sched: ProjectTemplate['schedule'] = extra?.recurring ? { kind: 'episodes', guaranteed: 2, expected: pr.int(4, 6) } : schedule;
++    // A character who speaks another language as well as English (from 2026-10-25, brief 27), on its own stream keyed by
++    // the part (`partLanguage`), so no draw of the slate moves and every id, title and part is the one it was. The
++    // generator's version stays: a part a save was posted before then is kept in the save as it was, with no language
++    // (`keepProject`, `restoreSlate`), and only a part no save has seen yet can carry one.
++    const language = partLanguage(sim, kind, `${id}.${i}`);
+     parts.push({
+       id: `${id}.${i}`, kind, format: profile.format, fictional: true,
+       project: title, company, casting, medium: profile.medium, genres,
+       place,
+       role: { part: name, size, for: forWhom, about, families: families.length ? families : ['drama'], techniques, stakes: profile.stakes },
+       union: profile.union, contract: profile.contract,
+-      requirements: { ages, sends: profile.sends, ...(profile.access.open === 'equity-members' ? { membersOnly: 'equity' as const } : {}) },
++      requirements: { ages, sends: profile.sends, ...(profile.access.open === 'equity-members' ? { membersOnly: 'equity' as const } : {}), ...(language ? { language } : {}) },
+       stages: { audition: profile.audition, callback: pr.chance(profile.callback), ...laterRounds(kind, size, families) },
+       schedule: sched,
+       access: profile.access, pay: profile.pay,
+diff --git a/src/engine/systems/speaking.ts b/src/engine/systems/speaking.ts
+new file mode 100644
+index 00000000..2a77e5d1
+--- /dev/null
++++ b/src/engine/systems/speaking.ts
+@@ -0,0 +1,207 @@
++/**
++ * SLATE — a part's other language (from 2026-10-25, the owner's brief 27, Part 7: "Languages and accents"; Part 9:
++ * "Accent, language, movement, and vocal preparation"; the supplement's loops 13 and 21, a self-tape's and a booked
++ * part's preparation of "accent, movement, or other relevant requirements").
++ *
++ * Until this module the game recorded no languages, and the career universe's README (K3) left a language on the résumé
++ * out as a word nothing would read, since every market the slate made work in worked in English. The owner ruled that no
++ * reader wasn't a reason to leave an authorized feature out. So a share of the slate's parts are written for a character
++ * who speaks a named language as well as English, as American work casts a bilingual character, and what the actor
++ * speaks (`Person.languages`, chosen at creation, `content/languages.ts`) is read at each step that part takes:
++ * - **who can be put up for it** (`languageRefusal`): an actor who doesn't speak the language can't be submitted, their
++ *   agent doesn't put them up for it (`slateReach`), and a casting office that cast them before doesn't offer it to them
++ *   without an audition (`directOfferFor`);
++ * - **casting's fit** (`languageDemand`, read by `fitOf`): a native speaker suits it best, a fluent one well and a
++ *   conversational one less, the weaker of the part's language and the actor's English counting, since the character
++ *   speaks both. The fit sets casting's chance with the band (`chanceOf`) and an agent's reach (`slateReach`);
++ * - **the preparation** (`withLanguage`, read by `auditionContext`, `workContext` and `unitContext`): a conversational
++ *   speaker comes to the language part of the preparation short of complete, and Work On Your Spanish (or whichever it
++ *   is) brings it on, as the other steps do theirs (`workOnLanguage`). Until it's complete it holds back the
++ *   believability and the execution of an audition, a night or a day's take. A native or fluent speaker has nothing to
++ *   prepare there.
++ * The résumé lists every language but native English (`resumeNow`, `systems/pro.ts`).
++ *
++ * Every figure here is an ASSUMPTION, the game's own, said where it's set: no source the game uses counts how often an
++ * American production writes a bilingual part, which languages, or how long an actor takes to bring a conversational
++ * language to a part. Nothing here is said to the player as a fact about the world.
++ */
++
++import type { Simulation } from '../core/simulation';
++import type { Person } from '../domain/model';
++import type { ProjectKind, ProjectTemplate } from '../content/careerwork';
++import type { Dimension } from '../content/tasks';
++import { ENGLISH, levelIn, spokenName, type LanguageLevel } from '../content/languages';
++import { MASTERED, STEP_SPEED } from '../content/abilities';
++import type { EvalContext } from './evaluation';
++import type { PartPrep } from './pro';
++import { BRIEF } from './briefs';
++import { repeatsToday } from './attributes';
++import { exerts } from './body';
++import { focusAt, ordinary } from './school';
++import { startRefusal } from './life';
++
++const clamp = (x: number, lo: number, hi: number) => Math.max(lo, Math.min(hi, x));
++const r3 = (x: number) => Math.round(x * 1000) / 1000;
++
++// ---------------------------------------------------------------------------------------------------------------------
++// The slate's parts
++// ---------------------------------------------------------------------------------------------------------------------
++
++/**
++ * How often the slate writes a part for a character who speaks another language as well as English, and the kinds that
++ * never do. ASSUMPTION, both: about one part in eight, and never a dub (the actor replaces another's lines in English) or
++ * a documentary's narration (in English).
++ */
++export const PART_LANGUAGE = { share: 0.12, without: ['dub', 'documentary'] as readonly ProjectKind[] } as const;
++
++/**
++ * The languages such a part's character speaks, by weight. ASSUMPTION: the game's choice of second languages an
++ * American production's bilingual character might plausibly speak, Spanish most often by the game's reckoning, the rest
++ * alike. No source here counts them, and the game never says one does.
++ */
++export const PART_LANGUAGES: readonly (readonly [string, number])[] = [
++  ['es', 6], ['cmn', 1], ['fr', 1], ['ko', 1], ['tl', 1], ['vi', 1], ['ar', 1], ['ru', 1], ['pt', 1], ['ja', 1], ['it', 1], ['hi', 1],
++];
++
++/**
++ * The language a slate part's character speaks besides English, or none (the decider `pro.language`): drawn on its own
++ * stream, keyed by the part's id, so the same save gives the same part the same language on every reload and in every
++ * build that makes the part, and no other draw of the slate moves.
++ */
++export function partLanguage(sim: Pick<Simulation, 'rng'>, kind: ProjectKind, partId: string): string | undefined {
++  if (PART_LANGUAGE.without.includes(kind)) return undefined;
++  const r = sim.rng('pro.language', partId);
++  if (r.next() >= PART_LANGUAGE.share) return undefined;
++  return r.weighted(PART_LANGUAGES, ([, w]) => w)[0];
++}
++
++/** A part's other language by name, where it has one. */
++export const partLanguageName = (t: Pick<ProjectTemplate, 'requirements'>): string | undefined => (t.requirements.language ? spokenName(t.requirements.language) ?? t.requirements.language : undefined);
++
++// ---------------------------------------------------------------------------------------------------------------------
++// Who can be put up for it, and casting's fit
++// ---------------------------------------------------------------------------------------------------------------------
++
++/**
++ * Why the actor can't be put up for a part, by its language, or nothing: a part whose character speaks a language they
++ * don't. Read by `eligibilityProblems` (Submit Yourself, and an agent's submission), `slateReach` and `directOfferFor`.
++ */
++export function languageRefusal(person: Person, t: Pick<ProjectTemplate, 'requirements'>): string | undefined {
++  const name = partLanguageName(t);
++  if (!name || levelIn(person, t.requirements.language!)) return undefined;
++  return `The character speaks ${name} as well as English, and you don’t speak ${name}.`;
++}
++
++/**
++ * How well each level suits a part written in a language, for casting's fit (`fitOf`), and how much the language weighs
++ * beside the part's techniques. ASSUMPTION, each: a native speaker is what the part is written for, a fluent one comes
++ * close, a conversational one is half the way; and the language counts as much as a technique the part leans on twice.
++ */
++export const LANGUAGE_FIT = { weight: 2, native: 1, fluent: 0.8, conversational: 0.5 } as const;
++
++/**
++ * The language's share of a part's demands, for `fitOf`: its weight, and how well the actor suits it, 0 to 1, the weaker
++ * of the part's language and their English, since the character speaks both. Nothing for a part in English alone.
++ */
++export function languageDemand(person: Person, t: Pick<ProjectTemplate, 'requirements'>): { weight: number; f: number } {
++  const id = t.requirements.language;
++  if (!id) return { weight: 0, f: 0 };
++  const suits = (level: LanguageLevel | undefined): number => (level ? LANGUAGE_FIT[level] : 0);
++  return { weight: LANGUAGE_FIT.weight, f: Math.min(suits(levelIn(person, id)), suits(levelIn(person, ENGLISH))) };
++}
++
++// ---------------------------------------------------------------------------------------------------------------------
++// The preparation
++// ---------------------------------------------------------------------------------------------------------------------
++
++/**
++ * The language part of the preparation, for an actor who speaks the part's language conversationally. ASSUMPTION, every
++ * figure: they come to it at `start`, short of `complete` (where a fluent speaker stands); an hour on the sides, two on
++ * the part as every step takes (`WORK.partTimes`), moves it `gain` of the way that's left at a good hour's focus, halved
++ * for each time it's done again that day, faster with the Accents And Dialects technique (as `STEP_SPEED` reads an
++ * ability), so three or four sessions bring a part's language to complete. Until then it reads on the believability and
++ * the execution of the work (`dims`).
++ */
++export const LANGUAGE_PREP = { start: 0.45, complete: 0.9, gain: 0.4, minutes: 60, dims: ['believability', 'execution'] as readonly Dimension[] } as const;
++
++/** The part's other language by name, where the actor speaks it conversationally and so has it to work on. */
++export function languageToWork(person: Person, t: Pick<ProjectTemplate, 'requirements'>): string | undefined {
++  const id = t.requirements.language;
++  return id && levelIn(person, id) === 'conversational' ? partLanguageName(t) : undefined;
++}
++
++/** Where the language part of the preparation stands for this actor and part, or nothing where there's none to prepare. */
++export function languagePrepOf(person: Person, t: Pick<ProjectTemplate, 'requirements'>, prep: Pick<PartPrep, 'language'> | undefined): number | undefined {
++  return languageToWork(person, t) ? prep?.language ?? LANGUAGE_PREP.start : undefined;
++}
++
++/**
++ * A piece of work's context with the language part of the preparation in it, where the actor has the part's language to
++ * work on: read beside the rest of the preparation on believability and execution, complete at `LANGUAGE_PREP.complete`.
++ * Unchanged for a part in English alone, and for a native or fluent speaker.
++ */
++export function withLanguage<C extends EvalContext>(ctx: C, person: Person, t: Pick<ProjectTemplate, 'requirements'>, prep: Pick<PartPrep, 'language'> | undefined): C {
++  const now = languagePrepOf(person, t, prep);
++  if (now === undefined) return ctx;
++  const extraPrep: Partial<Record<Dimension, readonly string[]>> = { ...(ctx.extraPrep ?? {}) };
++  for (const d of LANGUAGE_PREP.dims) extraPrep[d] = [...(extraPrep[d] ?? []), 'language'];
++  return { ...ctx, prep: { ...ctx.prep, language: now }, required: { ...ctx.required, language: LANGUAGE_PREP.complete }, extraPrep } as C;
++}
++
++/**
++ * The language part a booked part starts from: what was done on the sides beyond where the actor started, kept as the
++ * other parts are (`WORK.sidesKept`). Nothing where there's no language to prepare.
++ */
++export function carriedLanguage(person: Person, t: Pick<ProjectTemplate, 'requirements'>, sides: Pick<PartPrep, 'language'> | undefined, kept: number): Pick<PartPrep, 'language'> {
++  const was = languagePrepOf(person, t, sides);
++  return was === undefined ? {} : { language: r3(LANGUAGE_PREP.start + (was - LANGUAGE_PREP.start) * kept) };
++}
++
++/** The step's label, as its button says it: "Work On Your Spanish". */
++export const languageStepLabel = (name: string): string => `Work On Your ${name}`;
++
++/** Why the language step can't be done now on these sides or this part, or nothing. */
++export function languageStepRefusal(sim: Simulation, person: Person, t: Pick<ProjectTemplate, 'requirements'>, prep: Pick<PartPrep, 'language'> | undefined, minutes: number): string | undefined {
++  const name = partLanguageName(t);
++  if (!name) return 'The part is in English alone, so there’s no other language to work on.';
++  const level = levelIn(person, t.requirements.language!);
++  if (!level) return `You don’t speak ${name}, so there’s nothing here you can work on.`;
++  if (level !== 'conversational') return `Your ${name} is ${level}, so the part’s ${name} needs no work of its own.`;
++  if ((prep?.language ?? LANGUAGE_PREP.start) >= 0.97) return 'You’ve done all this step can do.';
++  if (person.awakeSince !== undefined && person.awakeSince > sim.now) return 'You’re asleep.';
++  return startRefusal(sim, person, minutes, true);
++}
++
++/**
++ * The language step done: its time on the clock and at the desk, the language part moved by its gain at the hour's focus,
++ * halved for each time it was done today, by the actor's Accents And Dialects, of what's left; and the technique grown a
++ * little by the work, as a brief's step grows the ability it's practice in (`BRIEF.trainingWeight`).
++ */
++export function workOnLanguage(sim: Simulation, person: Person, holder: { prep?: PartPrep }, key: string, minutes: number): { moved: number; part: 'language'; minutes: number } {
++  const prep = (holder.prep ??= { interpretation: 0, memorization: 0, rehearsal: 0 });
++  const focus = focusAt(sim, person, sim.now);
++  const n = repeatsToday(sim, person, `pro:${key}<language`);
++  sim.advanceTo(sim.now + minutes * 60_000);
++  exerts(person, BRIEF.met.desk, minutes / 60);
++  const before = prep.language ?? LANGUAGE_PREP.start;
++  const able = STEP_SPEED.least + (STEP_SPEED.most - STEP_SPEED.least) * clamp((person.craft?.accents ?? 0) / MASTERED, 0, 1);
++  prep.language = r3(clamp(before + LANGUAGE_PREP.gain * clamp(focus, 0.5, 1.1) * 0.5 ** n * able * (1 - before), 0, 1));
++  if (prep.language > before) ordinary(sim, person, 'accents', focus, BRIEF.trainingWeight, 'pro:language');
++  return { moved: r3(prep.language - before), part: 'language', minutes };
++}
++
++/**
++ * What a part's language asks of the actor, as its card says it under The Language: the character's languages, then
++ * where the actor stands. Nothing for a part in English alone.
++ */
++export function languageWords(person: Person, t: Pick<ProjectTemplate, 'requirements'>): string | undefined {
++  const name = partLanguageName(t);
++  if (!name) return undefined;
++  const level = levelIn(person, t.requirements.language!);
++  const head = `The character speaks ${name} as well as English.`;
++  if (!level) return `${head} You don’t speak ${name}, so you can’t be put up for it.`;
++  // Casting reads the weaker of the two languages (`languageDemand`): said where it's short of a native speaker's.
++  const closer = languageDemand(person, t).f < LANGUAGE_FIT.native ? ' Casting reads an actor native in both languages as a closer fit.' : '';
++  if (level === 'conversational') return `${head} Your ${name} is conversational, so the part takes more preparation: press ${languageStepLabel(name)} with the sides, and again with the part if you’re cast.${closer}`;
++  return `${head} Your ${name} is ${level}, so it needs no preparation of its own.${closer}`;
++}
+diff --git a/src/engine/systems/workflow.ts b/src/engine/systems/workflow.ts
+index 42367f6c..e53e9d6e 100644
+--- a/src/engine/systems/workflow.ts
++++ b/src/engine/systems/workflow.ts
+@@ -30,6 +30,7 @@ import { healthOf } from './health';
+ import { mayHurt } from './injury';
+ import { workAuthorizedFor } from './permission';
+ import { schedulePay } from './propay';
++import { withLanguage } from './speaking';
+ 
+ const NY = 'America/New_York';
+ const MIN = 60_000;
+@@ -367,11 +368,12 @@ export function unitContext(sim: Simulation, person: Person, e: Engagement, t: P
+   const voice = strainOf(person, sim.now);
+   const pickup = extra.pickup ? { connection: 0.6 } : {};
+   const choice = { ...lean, ...Object.fromEntries(Object.entries(pickup).map(([d, f]) => [d, f * (lean[d as Dimension] ?? 1)])) };
+-  return {
++  // And the part's other language, where the actor has it to work on (from 2026-10-25, brief 27, `withLanguage`).
++  return withLanguage({
+     task, techniques: t.role.techniques, difficulty: (t.role.stakes - 1) * BRIEF.stakes, condition: { ...cond, ...(voice > 0 ? { voice } : {}) },
+     families: t.role.families, ...(Object.keys(choice).length ? { lean: leanWith(t.role.families, choice) } : {}),
+     prep, required, key: `pro:${person.id}:${e.id}:${u.day}:${u.id}:${take}`,
+-  };
++  }, person, t, e.prep);
+ }
+ 
+ /**
+diff --git a/src/engine/world/bootstrap.ts b/src/engine/world/bootstrap.ts
+index 6feeba62..230f7061 100644
+--- a/src/engine/world/bootstrap.ts
++++ b/src/engine/world/bootstrap.ts
+@@ -18,6 +18,7 @@ import { idAlreadyIssued } from '../core/ids';
+ import { ETHNICITY_BY_ID } from '../content/ethnicity';
+ import { GENRE_BY_ID } from '../content/film-genres';
+ import { ceilingAt } from '../content/lifespan';
++import { ENGLISH_ONLY, cleanLanguages, type SpokenLanguage } from '../content/languages';
+ 
+ /** The ids on a list this build recognises, deduplicated, in the order given. */
+ function known(ids: readonly string[] | undefined, table: Readonly<Record<string, unknown>>): string[] {
+@@ -87,6 +88,11 @@ export interface NewSaveConfig {
+   /** Genres & Background. The interests were asked here too until 2026-10-10. */
+   /** Genres they love: a rehearsal or a night of a play of the kind is a better day (`systems/enjoyment.ts`). */
+   genres: string[];
++  /**
++   * The languages they speak, each with how well (from 2026-10-25, brief 27), asked with the genres and the background.
++   * Absent on a life a test or a tool makes, which speaks English natively (`languagesOf`).
++   */
++  languages?: SpokenLanguage[];
+   /** The life before this one, in their own words. Flavor, and said back to them. */
+   background: string;
+   // `beforeActing` (the body they started with, and the day job it led to)
+@@ -217,7 +223,8 @@ export const withFamily = (config: NewSaveConfig, wealth: StartingWealth): NewSa
+  * choose their own town and day.
+  */
+ export function newLifeConfig(): NewSaveConfig {
+-  return atSchool(withFamily({ ...defaultConfig(), homeRegionId: '', birthYear: 2002 }, 'wealthy'));
++  // English, natively, until the player says otherwise on Genres & Background (from 2026-10-25, brief 27).
++  return atSchool(withFamily({ ...defaultConfig(), homeRegionId: '', birthYear: 2002, languages: ENGLISH_ONLY.map((l) => ({ ...l })) }, 'wealthy'));
+ }
+ 
+ /**
+@@ -404,6 +411,9 @@ export function createUniverse(slot: 1 | 2 | 3, seed: string, config: NewSaveCon
+     // Cleaned by the same rule the engine reads them by, so what is written
+     // and what is read can never drift apart.
+     genres: known(config.genres, GENRE_BY_ID),
++    // What they speak, cleaned by the rule creation holds the list to (`cleanLanguages`, from 2026-10-25), and absent
++    // where nothing was said, which reads as English, natively.
++    ...(config.languages ? { languages: cleanLanguages(config.languages) } : {}),
+     // Kept as the player wrote it, and printed back on their own page. It
+     // decides nothing, and the step says so; what they did before, beside it,
+     // is the part that does.
+diff --git a/src/ui/career/OpportunitiesPane.tsx b/src/ui/career/OpportunitiesPane.tsx
+index 421bb687..b95e15eb 100644
+--- a/src/ui/career/OpportunitiesPane.tsx
++++ b/src/ui/career/OpportunitiesPane.tsx
+@@ -31,6 +31,7 @@ import { requirementWords } from '@/engine/systems/engagement';
+ import { productionById, productionWords } from '@/engine/content/catalog';
+ import { projectKey } from '@/engine/systems/reference';
+ import { openReference } from '@/ui/career/ReferencePane';
++import { LANGUAGE_PREP, languageStepLabel, languageToWork, languageWords } from '@/engine/systems/speaking';
+ 
+ const NY = 'America/New_York';
+ const STEPS: readonly BriefStep[] = ['read', 'lines', 'rehearse'];
+@@ -79,6 +80,8 @@ function RoleFacts({ t, o }: { t: ProjectTemplate; o: Pick<Opportunity, 'project
+       {/* What the part asks of the genres, in words (`requirementWords`, from 2026-10-22, the owner's brief 22): until then
+           its project's tags, a broad genre beside its own kind ("Domestic Drama, Drama"), the order deciding nothing said. */}
+       <div><dt className="strong">What It Asks</dt><dd style={{ margin: 0 }}>{`${requirementWords(projectGenresOf(t)) ?? 'No genre the game names'}. ${writtenForWords(t)} Playing ages ${t.requirements.ages[0]} to ${t.requirements.ages[1]}. ${demandsWords(person, t)}`}</dd></div>
++      {/* A character who speaks another language as well as English, and where the actor stands (from 2026-10-25, brief 27). */}
++      {t.requirements.language && <div><dt className="strong">The Language</dt><dd style={{ margin: 0 }}>{languageWords(person, t)}</dd></div>}
+       <div><dt className="strong">When And Where</dt><dd style={{ margin: 0 }}>{`${cap(daysWords(t, days.length))} ${spanWords(days)}, at ${t.place.venue} in ${t.place.city}. ${reachWords(person, t, days)}`}</dd></div>
+       <div><dt className="strong">Pay</dt><dd style={{ margin: 0 }}>{payWords(payTermsOf(o), o.offer?.amount)}</dd></div>
+       <div><dt className="strong">The Audition</dt><dd style={{ margin: 0 }}>{`${t.stages.audition === 'in-person' ? 'In person' : 'A self-tape'}${t.stages.callback ? ', then a callback for those casting wants to see again' : ''}.`}</dd></div>
+@@ -219,7 +222,11 @@ function Prepare({ target, prep, what }: { target: { opportunityId: string } | {
+     return [`${s.label} (${counted(x ? prepMinutes(x, step) : s.minutes, 'Minute')})`, prepareRefusal(sim, person, x, step)] as const;
+   });
+   const own = special ? [`${special.label}${special.minutes ? ` (${counted(special.minutes, 'Minute')})` : ''}`, prepareRefusal(sim, person, x, 'special')] as const : undefined;
+-  const parts = [...(steps.includes('read') ? [`the breakdown ${pct(p.interpretation)}`] : []), ...(steps.includes('lines') ? [`the lines ${pct(p.memorization)}`] : []), ...(steps.includes('rehearse') ? [`rehearsal on your feet ${pct(p.rehearsal)}`] : []), ...(special ? [`${special.label.toLowerCase()} ${pct(eng?.prep?.special ?? 0)}`] : [])];
++  // The part's other language, for an actor who speaks it conversationally (from 2026-10-25, brief 27, `languageToWork`).
++  const held = opp ? projectOf(opp) : eng ? projectById(eng.projectId) : undefined;
++  const tongue = held && x ? languageToWork(person, held) : undefined;
++  const speak = tongue && x ? [`${languageStepLabel(tongue)} (${counted(prepMinutes(x, 'language'), 'Minute')})`, prepareRefusal(sim, person, x, 'language')] as const : undefined;
++  const parts = [...(steps.includes('read') ? [`the breakdown ${pct(p.interpretation)}`] : []), ...(steps.includes('lines') ? [`the lines ${pct(p.memorization)}`] : []), ...(steps.includes('rehearse') ? [`rehearsal on your feet ${pct(p.rehearsal)}`] : []), ...(special ? [`${special.label.toLowerCase()} ${pct(eng?.prep?.special ?? 0)}`] : []), ...(tongue ? [`your ${tongue} ${pct((opp ?? eng)?.prep?.language ?? LANGUAGE_PREP.start)}`] : [])];
+   return (
+     <div className="col gap-2">
+       <p className="small" style={{ margin: 0 }}>{`Preparing ${what}: ${parts.join(', ')}.`}</p>
+@@ -228,8 +235,9 @@ function Prepare({ target, prep, what }: { target: { opportunityId: string } | {
+           <Gated key={step} feature="pro.prepare" className="btn btn-sm" disabled={!!reasons[i]![1]} title={reasons[i]![1]} onClick={() => { const r = run<{ minutes: number }>('pro.prepare', { ...target, step }); if (r.ok) toast(`${BRIEF.steps[step].label}: done.`, 'positive'); }}>{reasons[i]![0]}</Gated>
+         ))}
+         {own && special && <Gated feature="pro.prepare" className="btn btn-sm" disabled={!!own[1]} title={own[1]} onClick={() => { const r = run<{ minutes: number }>('pro.prepare', { ...target, step: 'special' }); if (r.ok) toast(`${special.label}: done.`, 'positive'); }}>{own[0]}</Gated>}
++        {speak && tongue && <Gated feature="pro.prepare" className="btn btn-sm" disabled={!!speak[1]} title={speak[1]} onClick={() => { const r = run<{ minutes: number }>('pro.prepare', { ...target, step: 'language' }); if (r.ok) toast(`${languageStepLabel(tongue)}: done.`, 'positive'); }}>{speak[0]}</Gated>}
+       </div>
+-      <WhyNot reasons={own ? [...reasons, own] : reasons} />
++      <WhyNot reasons={[...reasons, ...(own ? [own] : []), ...(speak ? [speak] : [])]} />
+     </div>
+   );
+ }
+diff --git a/src/ui/creation/CharacterCreation.tsx b/src/ui/creation/CharacterCreation.tsx
+index 52245d5d..b905b781 100644
+--- a/src/ui/creation/CharacterCreation.tsx
++++ b/src/ui/creation/CharacterCreation.tsx
+@@ -49,6 +49,10 @@ import { termAccount } from '@/engine/systems/school';
+ import { bodyUnits } from '@/engine/systems/body';
+ import { outOf, said } from '@/ui/looks/words';
+ import { spokenList } from '@/engine/core/text';
++import {
++  ENGLISH, ENGLISH_ONLY, LANGUAGES_MOST, LANGUAGE_LEVELS, LEVEL_LABEL, SPOKEN, languagesProblems, spokenName,
++  type LanguageLevel, type SpokenLanguage,
++} from '@/engine/content/languages';
+ 
+ /**
+  * How far back the last year a character can be born in sits from the year
+@@ -891,11 +895,76 @@ function PersonalStep({
+         </div>
+       </div>
+ 
++      <LanguagesCard config={config} setConfig={setConfig} />
++
+       {config.school && <FamilyChoice config={config} setConfig={setConfig} />}
+     </div>
+   );
+ }
+ 
++/**
++ * The languages they speak, each with how well (from 2026-10-25, the owner's brief 27, Part 7: "Languages and accents").
++ * English always, at native or fluent, and up to five more, each from the game's list of real languages (`SPOKEN`). A part
++ * written for a character who speaks one of them as well as English reads it (`systems/speaking.ts`), and the résumé lists
++ * them. Until then creation asked nothing of it, and every life spoke English alone.
++ */
++export function LanguagesCard({ config, setConfig }: { config: NewSaveConfig; setConfig: React.Dispatch<React.SetStateAction<NewSaveConfig>> }) {
++  const list: readonly SpokenLanguage[] = config.languages ?? ENGLISH_ONLY;
++  const setList = (next: SpokenLanguage[]) => setConfig((c) => ({ ...c, languages: next }));
++  const unused = SPOKEN.filter((x) => !list.some((l) => l.id === x.id));
++  return (
++    <div className="card">
++      <div className="panel-head">
++        <div>
++          <h2>Languages</h2>
++          <p className="muted small">
++            The languages you speak, and how well. Your training and every part in the game are in English. Some parts
++            are written for a character who speaks another language too. If you speak it fluently or natively, you’re
++            ready for it. If you speak it conversationally, the part takes more preparation. If you don’t speak it, you
++            can’t be put up for it. Your résumé lists your languages.
++          </p>
++        </div>
++        <span className="chip chip-accent">{`${list.length} Listed`}</span>
++      </div>
++      <div className="col gap-3">
++        {list.map((l, i) => {
++          const name = spokenName(l.id) ?? l.id;
++          return (
++            <div key={l.id} className="row gap-2" style={{ alignItems: 'flex-end', flexWrap: 'wrap' }}>
++              <div className="field" style={{ margin: 0 }}>
++                <label htmlFor={`language-${i}`}>{name}</label>
++                <select
++                  id={`language-${i}`}
++                  value={l.level}
++                  onChange={(e) => setList(list.map((x) => (x.id === l.id ? { ...x, level: e.target.value as LanguageLevel } : x)))}
++                >
++                  {LANGUAGE_LEVELS.filter((level) => l.id !== ENGLISH || level !== 'conversational').map((level) => <option key={level} value={level}>{LEVEL_LABEL[level]}</option>)}
++                </select>
++              </div>
++              {l.id !== ENGLISH && (
++                <button type="button" className="btn btn-ghost btn-sm" onClick={() => setList(list.filter((x) => x.id !== l.id))}>{`Remove ${name}`}</button>
++              )}
++            </div>
++          );
++        })}
++        {list.length < LANGUAGES_MOST && (
++          <div className="field" style={{ margin: 0 }}>
++            <label htmlFor="language-add">Add A Language</label>
++            <select id="language-add" value="" onChange={(e) => { if (e.target.value) setList([...list, { id: e.target.value, level: 'fluent' }]); }}>
++              <option value="">Choose A Language</option>
++              {unused.map((x) => <option key={x.id} value={x.id}>{x.name}</option>)}
++            </select>
++          </div>
++        )}
++        <p className="xs dim" style={{ margin: 0 }}>
++          Native is a language you grew up speaking. Fluent is one you’re at ease in. Conversational is one you can hold a
++          conversation in. Mark at least one as native.
++        </p>
++      </div>
++    </div>
++  );
++}
++
+ /**
+  * The family they come from, beside the background (from 2026-10-14): the six starting-wealth levels (`FAMILIES`), each
+  * the money in their name on the first morning (`wealthIn`) and the means Yale's need assessment reads (`withFamily`,
+@@ -1385,6 +1454,7 @@ export function ReviewStep({ config, setConfig }: { config: NewSaveConfig; setCo
+       <div className="card">
+         <div className="eyebrow" style={{ marginBottom: 'var(--s3)' }}>Genres &amp; Background</div>
+         <Line label="Genres" value={namesOf(FILM_GENRES, config.genres)} />
++        <Line label="Languages" value={(config.languages ?? ENGLISH_ONLY).map((l) => `${spokenName(l.id) ?? l.id} (${LEVEL_LABEL[l.level]})`).join(', ')} />
+         {config.school && <Line label="Family" value={`${wealthLabel(config.wealth)}, ${findsNeed(config) ? 'Need Found' : 'No Need Found'}`} />}
+         {/* A sentence of the player's own, so it is set as one, not squeezed
+             into the right-hand column a line gives a value. */}
+@@ -1484,6 +1554,8 @@ export function validate(config: NewSaveConfig, step: StepIndex): string[] {
+     if (!CITIES.get(config.homeRegionId)) issues.push('Choose the town or city you were born in.');
+     if (!isCitizenship(config.citizenshipId)) issues.push('Choose your citizenship.');
+   }
++  // What they speak (from 2026-10-25, brief 27): English at native or fluent, each language once, one of them native.
++  if (step === STEP['Genres & Background']) issues.push(...languagesProblems(config.languages ?? ENGLISH_ONLY));
+   if (step === STEP['Starting Point']) {
+     if (!CITIES.get(config.startLocationId)) issues.push('Choose the town or city you live in.');
+     // Nothing on the page sets the start date; this guards a draft that came in wrong.
+diff --git a/src/ui/workspaces/CareerWorkspace.tsx b/src/ui/workspaces/CareerWorkspace.tsx
+index 656c3523..e932bdd8 100644
+--- a/src/ui/workspaces/CareerWorkspace.tsx
++++ b/src/ui/workspaces/CareerWorkspace.tsx
+@@ -35,6 +35,7 @@ import { IndustryPane } from '@/ui/career/IndustryPane';
+ import { ReferencePane } from '@/ui/career/ReferencePane';
+ import { recognitionOf } from '@/engine/systems/awards';
+ import { TabBar } from '@/ui/components/TabBar';
++import { LEVEL_LABEL, languagesOf, spokenName } from '@/engine/content/languages';
+ 
+ type CareerTab = 'overview' | 'portfolio' | 'representation' | 'opportunities' | 'work' | 'industry' | 'reference';
+ 
+@@ -195,6 +196,11 @@ function ProfilePanel() {
+             ? <ul className="small" style={{ margin: 0, paddingLeft: '1.1rem' }}>{p.skills.map((s) => <li key={s.skill}>{`${s.label}, ${s.level}${s.mastered ? ', mastered' : ''}`}</li>)}</ul>
+             : <p className="small" style={{ margin: 0 }}>{`None yet. A technique such as stage combat, singing or accents goes on your résumé once it reaches ${SKILL_LISTED_AT}.`}</p>}
+         </div>
++        {/* What they speak, as creation took it (from 2026-10-25, brief 27): a part written in one of them reads it. */}
++        <div className="col gap-2">
++          <h3 className="eyebrow" style={{ margin: 0 }}>Languages</h3>
++          <ul className="small" style={{ margin: 0, paddingLeft: '1.1rem' }}>{languagesOf(person).map((l) => <li key={l.id}>{`${spokenName(l.id) ?? l.id}, ${LEVEL_LABEL[l.level].toLowerCase()}`}</li>)}</ul>
++        </div>
+       </div>
+     </Panel>
+   );
+@@ -252,7 +258,7 @@ function ResumePanel() {
+               <ul style={{ margin: 'var(--s2) 0 0', paddingLeft: '1.1rem' }}>{current.contains.map((line, i) => <li key={i}>{line}</li>)}</ul>
+             </details>
+           </>
+-        ) : <p className="small" style={{ margin: 0 }}>You have no résumé yet. It’s made from your record: your name, training, credits and special skills.</p>}
++        ) : <p className="small" style={{ margin: 0 }}>You have no résumé yet. It’s made from your record: your name, training, credits, special skills and languages.</p>}
+         <div className="row gap-2" style={{ flexWrap: 'wrap' }}>
+           <Gated feature="pro.update_resume" className="btn btn-sm" disabled={!!no} title={no} onClick={() => { const r = run<{ version: number }>('pro.update_resume'); if (r.ok) toast(r.value!.version === 1 ? 'Your résumé is made.' : 'Your résumé is up to date.', 'positive'); }}>{label}</Gated>
+         </div>
+diff --git a/tests/b27-creation-origins.test.ts b/tests/b27-creation-origins.test.ts
+index 5b9f965b..a4652d22 100644
+--- a/tests/b27-creation-origins.test.ts
++++ b/tests/b27-creation-origins.test.ts
+@@ -103,3 +103,32 @@ describe('a bank account kept abroad comes from where they lived and banked, nev
+     expect(anyRefusesBirth).toBe(false);
+   });
+ });
++
++// From 2026-10-25 (brief 27, Part 7): what they speak, asked on Genres & Background beside the genres and the background.
++describe('creation asks what they speak, and the life speaks it', () => {
++  const genres = 2 as never;
++  it('starts with English, natively, and won’t leave Genres & Background with English under fluent, a language twice, none native, or more than six', () => {
++    const base = config({ homeRegionId: 'us-ny-newyork', citizenshipId: 'us' });
++    expect(base.languages).toEqual([{ id: 'en', level: 'native' }]);
++    expect(validate(base, genres)).toEqual([]);
++    expect(validate({ ...base, languages: [{ id: 'en', level: 'fluent' }, { id: 'ko', level: 'native' }] }, genres)).toEqual([]);
++    expect(validate({ ...base, languages: [{ id: 'en', level: 'conversational' }, { id: 'ko', level: 'native' }] }, genres)).toEqual(['Your training and every part in the game are in English, so list English as native or fluent.']);
++    expect(validate({ ...base, languages: [{ id: 'ko', level: 'native' }] }, genres)).toEqual(['Your training and every part in the game are in English, so list English as native or fluent.']);
++    expect(validate({ ...base, languages: [{ id: 'en', level: 'native' }, { id: 'ko', level: 'fluent' }, { id: 'ko', level: 'conversational' }] }, genres)).toEqual(['You’ve listed Korean twice.']);
++    expect(validate({ ...base, languages: [{ id: 'en', level: 'fluent' }, { id: 'ko', level: 'fluent' }] }, genres)).toEqual(['Mark the language you grew up speaking as native.']);
++    expect(validate({ ...base, languages: [{ id: 'en', level: 'native' }, { id: 'xx', level: 'fluent' }] }, genres)).toEqual(['Choose each language and how well you speak it from the lists.']);
++    const seven = ['es', 'fr', 'de', 'it', 'pt', 'ja'].map((id) => ({ id, level: 'conversational' as const }));
++    expect(validate({ ...base, languages: [{ id: 'en', level: 'native' }, ...seven] }, genres)).toEqual(['List six languages at most.']);
++    // The other steps don't ask it.
++    expect(validate({ ...base, languages: [{ id: 'ko', level: 'native' }] }, identity)).not.toContain('Your training and every part in the game are in English, so list English as native or fluent.');
++  });
++
++  it('PLAYER JOURNEY: born in Seoul, Korean natively and English fluently: the life keeps both through a save and a load', () => {
++    const sim = life('b27-seoul-ko', { homeRegionId: 'kr-11-seoul', citizenshipId: 'kr', languages: [{ id: 'en', level: 'fluent' }, { id: 'ko', level: 'native' }] });
++    expect(sim.player.languages).toEqual([{ id: 'en', level: 'fluent' }, { id: 'ko', level: 'native' }]);
++    const back = loadSave(deserialise(serialise(sim.universe)) as never);
++    expect(back.player.languages).toEqual([{ id: 'en', level: 'fluent' }, { id: 'ko', level: 'native' }]);
++    // The falsifiability test: the same creation saying English alone gives a life that speaks English alone.
++    expect(life('b27-seoul-en', { homeRegionId: 'kr-11-seoul', citizenshipId: 'kr' }).player.languages).toEqual([{ id: 'en', level: 'native' }]);
++  });
++});
+diff --git a/tests/b27-languages.test.ts b/tests/b27-languages.test.ts
+new file mode 100644
+index 00000000..1240c1b5
+--- /dev/null
++++ b/tests/b27-languages.test.ts
+@@ -0,0 +1,400 @@
++/**
++ * Brief 27 (2026-10-25), the languages: Part 7's "Languages and accents", Part 9's "Accent, language, movement, and vocal
++ * preparation", and the supplement's loop 1 (creation's choices read by the systems after it). Held here: a part of the
++ * slate written for a character who speaks a named language as well as English, decided on its own stream by the part's
++ * id; what the actor speaks, chosen at creation, read by eligibility (Submit Yourself, an agent's reach, a direct offer),
++ * by casting's fit, and by the preparation of the sides and the part; the résumé listing it; and the Opportunities tab
++ * saying what the part asks.
++ *
++ * PLAYER JOURNEYS: graduates' lives from creation's config (`newLifeConfig`, the languages as Genres & Background sends
++ * them), played by the clock and the commands a player sends (tests/fakes/career-world.ts). TEST SETUP, said where it's
++ * done: a skilled actor's levels, the part's genres known, a conversational twin forked from the fluent life at the
++ * posting with only the level changed, and a casting office's finished work put on the record for a direct offer.
++ */
++import { describe, expect, it, vi } from 'vitest';
++import { createElement } from 'react';
++import { renderToStaticMarkup } from 'react-dom/server';
++import { createSave, loadSave } from '@/engine';
++import type { Simulation } from '@/engine/core/simulation';
++import { MS_DAY, MS_HOUR, ageOn, dateKey } from '@/engine/core/time';
++import { deserialise, serialise } from '@/engine/persistence/adapter';
++import { newLifeConfig, type NewSaveConfig } from '@/engine/world/bootstrap';
++import type { ProjectTemplate } from '@/engine/content/careerwork';
++import { ENGLISH_ONLY, languagesOf, spokenName, type SpokenLanguage } from '@/engine/content/languages';
++import { genreState } from '@/engine/systems/engagement';
++import { currentOf, resumeNow, type Engagement, type Opportunity, type WorkUnit } from '@/engine/systems/pro';
++import { unitContext } from '@/engine/systems/workflow';
++import { TASK_PROFILES } from '@/engine/content/tasks';
++import { BRIEF } from '@/engine/systems/briefs';
++import { productionsOf, slatePartsAt } from '@/engine/systems/slate';
++import {
++  CASTING, auditionContext, chanceOf, directOfferFor, eligibilityProblems, fitOf, postingTimes, roundToCome, roundsOf, slateReach, travels, workContext, writtenFor,
++} from '@/engine/systems/projobs';
++import { LANGUAGE_PREP, PART_LANGUAGE, languageRefusal, languageWords } from '@/engine/systems/speaking';
++import { evaluate } from '@/engine/systems/evaluation';
++import { graduate, played, playRound, portfolio, prepareAll, reload, skilled } from './fakes/career-world';
++
++// The Career screen drawn over the save, as tests/b27-voice-demo.test.ts draws it.
++const h = vi.hoisted(() => ({ sim: undefined as unknown as import('@/engine/core/simulation').Simulation, tab: 'opportunities' }));
++vi.mock('@/ui/kept', async (orig) => {
++  const real = await orig<typeof import('@/ui/kept')>();
++  return { ...real, useKept: <T,>(key: string, initial: T) => [(key === 'tab:/workspace/career' ? h.tab : initial) as T, () => undefined] as const };
++});
++vi.mock('@/app/game-context', () => {
++  const noop = () => undefined;
++  const game = () => new Proxy({ get sim() { return h.sim; }, version: 0, run: (kind: string, payload: Record<string, unknown> = {}) => h.sim.execute({ kind, payload }), toast: noop } as Record<string, unknown>, { get: (t, k) => (k in t ? t[k as string] : noop) });
++  return { useGame: () => game(), useWorld: <T,>(read: (s: Simulation) => T) => read(h.sim) };
++});
++const { WorkspaceRouter } = await import('@/ui/workspaces/WorkspaceRouter');
++const { LanguagesCard, ReviewStep, validate } = await import('@/ui/creation/CharacterCreation');
++function shown(sim: Simulation, tab: string): string {
++  h.sim = sim; h.tab = tab;
++  return renderToStaticMarkup(createElement(WorkspaceRouter, { route: '/workspace/career' })).replace(/<!-- -->/g, '').replace(/\stitle="[^"]*"/g, '').replace(/<[^>]+>/g, ' ')
++    .replace(/&#x27;/g, '\'').replace(/&amp;/g, '&').replace(/\s+/g, ' ');
++}
++
++const NY = 'America/New_York';
++const WEEK = 7 * MS_DAY;
++/** The seed whose slate has a part in another language near New Haven within twenty weeks of graduating. */
++const SEED = 'b27-lang-64';
++
++/** TEST SETUP: the part's own genres known, as `skilled` knows the fixed parts'. */
++function knows(sim: Simulation, t: ProjectTemplate): void {
++  for (const g of t.genres) genreState(sim.player, g).familiarity = 95;
++}
++
++/**
++ * The first slate part in another language this life is posted openly within twenty weeks, near enough to work daily,
++ * written for them, in their playing ages, whose casting draws pass for a Strong round at the fit given: each read from the
++ * game's own draws as the posting and casting read them, never forced.
++ */
++function languagePart(sim: Simulation, fit: (t: ProjectTemplate) => number): { t: ProjectTemplate; at: number } {
++  const p = sim.player;
++  for (const at of postingTimes(sim.now, sim.now + 20 * WEEK)) {
++    for (const t of slatePartsAt(sim, at)) {
++      if (!t.requirements.language || t.series || t.kind.startsWith('animated') || t.access.open !== 'anyone' || travels(p, t) || !writtenFor(t, p)) continue;
++      const age = ageOn(p.birthInstant, at, NY);
++      if (age + CASTING.playingSpread < t.requirements.ages[0] || age - CASTING.playingSpread > t.requirements.ages[1]) continue;
++      if (!(sim.rng('pro.slate_reach', dateKey(at, NY), t.id, 'open').next() < slateReach(sim, p, t, 'open', at))) continue;
++      const cuts = [...roundsOf(t).slice(1), 'final'] as const;
++      if (cuts.every((c) => sim.rng('pro.casting', t.id, at, c).next() < chanceOf('strong', fit(t), t.kind, c as never))) return { t, at };
++    }
++  }
++  throw new Error('no part in another language');
++}
++
++/** A graduate at work: skilled, with headshots, a résumé and a reel, speaking what creation was told. */
++function actor(languages: SpokenLanguage[]): Simulation {
++  const sim = graduate(SEED, { languages });
++  skilled(sim);
++  portfolio(sim);
++  return sim;
++}
++
++const posting = (sim: Simulation, t: ProjectTemplate): Opportunity | undefined => sim.player.pro!.opportunities.find((o) => o.projectId === t.id);
++
++describe('what the actor speaks, from creation', () => {
++  it('keeps the languages creation took, through a save and a load, and reads a life with none as English, natively', () => {
++    const sim = createSave(1, 'b27-lang-keep', { ...newLifeConfig(), homeRegionId: 'us-ny-newyork', citizenshipId: 'us', firstName: 'Ada', lastName: 'Cole', pronouns: 'she/her', languages: [{ id: 'en', level: 'fluent' }, { id: 'es', level: 'native' }, { id: 'ko', level: 'conversational' }] });
++    expect(sim.player.languages).toEqual([{ id: 'en', level: 'fluent' }, { id: 'es', level: 'native' }, { id: 'ko', level: 'conversational' }]);
++    const back = loadSave(deserialise(serialise(sim.universe)) as never);
++    expect(back.player.languages).toEqual(sim.player.languages);
++    // A save made before languages were recorded: no field, read as English, natively.
++    delete (back.player as { languages?: unknown }).languages;
++    const older = loadSave(deserialise(serialise(back.universe)) as never);
++    expect(older.player.languages).toBeUndefined();
++    expect(languagesOf(older.player)).toEqual(ENGLISH_ONLY);
++  });
++
++  it('cleans a list made straight from the engine to one creation would take', () => {
++    const sim = createSave(1, 'b27-lang-clean', { ...newLifeConfig(), homeRegionId: 'us-ny-newyork', citizenshipId: 'us', firstName: 'Ada', lastName: 'Cole', pronouns: 'she/her', languages: [{ id: 'es', level: 'native' }, { id: 'xx', level: 'fluent' }, { id: 'es', level: 'conversational' }, { id: 'en', level: 'conversational' }] });
++    expect(sim.player.languages).toEqual([{ id: 'en', level: 'fluent' }, { id: 'es', level: 'native' }]);
++  });
++});
++
++describe('the slate’s parts in another language', () => {
++  it('are decided by the part’s own draw: the same for the same seed, different for another, never a dub or a narration', () => {
++    const make = (seed: string) => createSave(1, seed, { ...newLifeConfig(), homeRegionId: 'us-ny-newyork', firstName: 'Ada', lastName: 'Cole', pronouns: 'she/her' });
++    const a = make('b27-lang-same');
++    const b = make('b27-lang-same');
++    const c = make('b27-lang-other');
++    const languages = (sim: Simulation) => Array.from({ length: 26 }, (_, w) => productionsOf(sim, sim.now + w * WEEK).flatMap((p) => p.parts).map((t) => `${t.id.split('.').slice(2).join('.')}:${t.requirements.language ?? '-'}`)).flat();
++    const all = languages(a);
++    expect(languages(b)).toEqual(all);
++    expect(languages(c)).not.toEqual(all);
++    const parts = Array.from({ length: 26 }, (_, w) => productionsOf(a, a.now + w * WEEK).flatMap((p) => p.parts)).flat();
++    const written = parts.filter((t) => t.requirements.language);
++    // About the share the game sets, over half a year's parts; never a dub or a documentary's narration.
++    expect(written.length / parts.length).toBeGreaterThan(PART_LANGUAGE.share / 2);
++    expect(written.length / parts.length).toBeLessThan(PART_LANGUAGE.share * 2);
++    expect(written.filter((t) => PART_LANGUAGE.without.includes(t.kind))).toEqual([]);
++    expect(written.every((t) => spokenName(t.requirements.language!) !== undefined)).toBe(true);
++  });
++});
++
++describe('a part in another language, played', () => {
++  it('PLAYER JOURNEY: a fluent speaker is posted the part, auditions and is booked; a twin who speaks English alone is posted it and refused, with the reason; both kept through a load', () => {
++    // Which part: found on the monolingual life, whose slate is the bilingual one's, the seed being the same.
++    const mono = actor([{ id: 'en', level: 'native' }]);
++    const found = languagePart(mono, (t) => { knows(mono, t); return fitOf({ ...mono.player, languages: [{ id: 'en', level: 'native' }, { id: t.requirements.language!, level: 'fluent' }] }, t).fit; });
++    const { t, at } = found;
++    const name = spokenName(t.requirements.language!)!;
++    const fluent = actor([{ id: 'en', level: 'native' }, { id: t.requirements.language!, level: 'fluent' }]);
++    knows(fluent, t);
++    // The résumé lists the language, and the monolingual one's lists none; the Portfolio tab's profile says each.
++    expect(currentOf(fluent.player.pro, 'resume')!.contains).toContain(`Language: ${name}, fluent`);
++    expect(currentOf(mono.player.pro, 'resume')!.contains.some((l) => l.startsWith('Language:'))).toBe(false);
++    expect(shown(fluent, 'portfolio')).toContain(`Languages English, native ${name}, fluent`);
++    expect(shown(mono, 'portfolio')).toContain('Languages English, native Headshots');
++
++    played(fluent, at + MS_HOUR);
++    played(mono, at + MS_HOUR);
++    const o = posting(fluent, t)!;
++    const theirs = posting(mono, t)!;
++    // Both posted it, openly, the same Monday.
++    expect([o.via, o.postedAt, theirs.via, theirs.postedAt]).toEqual(['open', at, 'open', at]);
++    // The monolingual twin is refused, and the card says why.
++    const refusal = `The character speaks ${name} as well as English, and you don’t speak ${name}.`;
++    expect(mono.execute({ kind: 'pro.submit', payload: { opportunityId: theirs.id } }).error).toBe(refusal);
++    expect(eligibilityProblems(mono.player, theirs, mono.now)).toContain(refusal);
++    expect(shown(mono, 'opportunities')).toContain(`The Language The character speaks ${name} as well as English. You don’t speak ${name}, so you can’t be put up for it.`);
++    expect(theirs.status).toBe('open');
++
++    // The fluent speaker submits, auditions and is offered the part, then accepts it.
++    expect(shown(fluent, 'opportunities')).toContain(`The character speaks ${name} as well as English. Your ${name} is fluent, so it needs no preparation of its own.`);
++    fluent.must({ kind: 'pro.submit', payload: { opportunityId: o.id } });
++    played(fluent, fluent.now + 3 * MS_DAY);
++    for (let n = 0; n < roundsOf(t).length && roundToCome(o); n += 1) {
++      if (roundToCome(o)!.form === 'self-tape') playRound(fluent, o);
++      else { prepareAll(fluent, { opportunityId: o.id }); played(fluent, roundToCome(o)!.at + 2 * MS_HOUR); }
++    }
++    for (let k = 0; k < 10 && o.status !== 'offered'; k += 1) played(fluent, fluent.now + MS_DAY);
++    expect(o.rounds!.every((r) => r.band === 'strong' || r.band === 'exceptional')).toBe(true);
++    expect(o.status).toBe('offered');
++    fluent.must({ kind: 'pro.accept_offer', payload: { opportunityId: o.id } });
++    const e = fluent.player.pro!.engagements.find((x) => x.projectId === t.id)!;
++    expect(e.status).toBe('booked');
++    // A fluent speaker's part has no language part to prepare.
++    expect(e.prep!.language).toBeUndefined();
++
++    // Kept through a save and a load: the languages, and the part's language as it was posted.
++    const back = reload(fluent);
++    expect(back.player.languages).toEqual(fluent.player.languages);
++    expect(back.player.pro!.projects![t.id]!.requirements.language).toBe(t.requirements.language);
++    expect(back.player.pro!.engagements.find((x) => x.projectId === t.id)!.status).toBe('booked');
++  }, 600_000);
++
++  it('PLAYER JOURNEY: a conversational speaker can be submitted, but the part takes more preparation: Work On Your … is read by the tape, and casting reads the fit lower', () => {
++    const fluent = actor([{ id: 'en', level: 'native' }, { id: 'cmn', level: 'fluent' }]);
++    const { t, at } = languagePart(fluent, (x) => { knows(fluent, x); return fitOf({ ...fluent.player, languages: [{ id: 'en', level: 'native' }, { id: x.requirements.language!, level: 'fluent' }] }, x).fit; });
++    const name = spokenName(t.requirements.language!)!;
++    knows(fluent, t);
++    played(fluent, at + MS_HOUR);
++    // TEST SETUP: the twin, the same life at the posting with only the part's language spoken conversationally.
++    const talk = reload(fluent);
++    talk.player.languages = [{ id: 'en', level: 'native' }, { id: t.requirements.language!, level: 'conversational' }];
++    const native = reload(fluent);
++    native.player.languages = [{ id: 'en', level: 'native' }, { id: t.requirements.language!, level: 'native' }];
++    fluent.player.languages = [{ id: 'en', level: 'native' }, { id: t.requirements.language!, level: 'fluent' }];
++    // Casting's fit: native, then fluent, then conversational. The falsifiability test: only the level moves it.
++    const fits = [native, fluent, talk].map((s) => fitOf(s.player, t).fit);
++    expect(fits[0]!).toBeGreaterThan(fits[1]!);
++    expect(fits[1]!).toBeGreaterThan(fits[2]!);
++    // The character speaks both, so the weaker counts: native in the part's language and fluent in English reads as fluent.
++    const englishFluent = reload(fluent);
++    englishFluent.player.languages = [{ id: 'en', level: 'fluent' }, { id: t.requirements.language!, level: 'native' }];
++    expect(fitOf(englishFluent.player, t).fit).toBe(fits[1]);
++    // A part in English alone reads none of it.
++    const english = productionsOf(fluent, at).flatMap((p) => p.parts).find((x) => !x.requirements.language)!;
++    expect(new Set([native, fluent, talk].map((s) => fitOf(s.player, english).fit)).size).toBe(1);
++
++    const o = posting(talk, t)!;
++    expect(shown(talk, 'opportunities')).toContain(`Your ${name} is conversational, so the part takes more preparation: press Work On Your ${name} with the sides, and again with the part if you’re cast.`);
++    expect(talk.execute({ kind: 'pro.submit', payload: { opportunityId: o.id } }).error).toBeUndefined();
++    for (let k = 0; k < 20 && !roundToCome(o); k += 1) played(talk, talk.now + 6 * MS_HOUR);
++    const r = roundToCome(o)!;
++    expect(r.form).toBe('self-tape');
++    prepareAll(talk, { opportunityId: o.id });
++    // The step, on the tab beside the others, where it stands, and refused to a fluent speaker with the reason.
++    expect(shown(talk, 'opportunities')).toContain(`Work On Your ${name} (60 Minutes)`);
++    expect(shown(talk, 'opportunities')).toContain(`your ${name} 45%`);
++    const fl = reload(talk);
++    fl.player.languages = [{ id: 'en', level: 'native' }, { id: t.requirements.language!, level: 'fluent' }];
++    expect(fl.execute({ kind: 'pro.prepare', payload: { opportunityId: o.id, step: 'language' } }).error).toBe(`Your ${name} is fluent, so the part’s ${name} needs no work of its own.`);
++    expect(shown(fl, 'opportunities')).not.toContain(`Work On Your ${name}`);
++
++    // The falsifiability test: a twin who tapes without working on the language, and one who works on it until complete.
++    const cold = reload(talk);
++    for (let n = 0; n < 8 && (o.prep?.language ?? LANGUAGE_PREP.start) < LANGUAGE_PREP.complete; n += 1) {
++      talk.must({ kind: 'pro.prepare', payload: { opportunityId: o.id, step: 'language' } });
++      played(talk, talk.now + 12 * MS_HOUR);
++    }
++    expect(o.prep!.language!).toBeGreaterThanOrEqual(LANGUAGE_PREP.complete);
++    expect(talk.now).toBeLessThan(r.at - 3 * MS_HOUR);
++    const coldO = posting(cold, t)!;
++    expect(coldO.prep?.language).toBeUndefined();
++    // Both taped as the evening it's due comes round, so the day's condition is alike.
++    const due = r.at - 3 * MS_HOUR;
++    played(talk, due);
++    played(cold, due);
++    talk.must({ kind: 'pro.tape_audition', payload: { opportunityId: o.id } });
++    cold.must({ kind: 'pro.tape_audition', payload: { opportunityId: coldO.id } });
++    const warm = o.rounds!.find((x) => x.round === 'audition')!;
++    const unworked = coldO.rounds!.find((x) => x.round === 'audition')!;
++    expect(warm.overall!).toBeGreaterThan(unworked.overall!);
++    expect(unworked.held).toMatch(/^Working on the part’s language wasn’t complete/);
++    // The language's preparation is read by the tape and nothing else set between the two.
++    expect(auditionContext(cold, cold.player, coldO, unworked, 0).prep.language).toBe(LANGUAGE_PREP.start);
++    expect(auditionContext(talk, talk.player, o, warm, 0).prep.language).toBe(o.prep!.language);
++    // Casting reads the tape's band, so the unworked language cost the twin some of its chance.
++    for (let k = 0; k < 10 && o.status === 'audition'; k += 1) played(talk, talk.now + MS_DAY);
++    for (let k = 0; k < 10 && coldO.status === 'audition'; k += 1) played(cold, cold.now + MS_DAY);
++    expect(warm.casting!.chance).toBeGreaterThan(unworked.casting!.chance);
++
++    // Booked, the part starts from half the language work done on the sides, as the rest of its preparation does, and
++    // Work On Your … goes on with the part, two hours a session.
++    expect([o.status, coldO.status]).toEqual(['offered', 'offered']);
++    talk.must({ kind: 'pro.accept_offer', payload: { opportunityId: o.id } });
++    cold.must({ kind: 'pro.accept_offer', payload: { opportunityId: coldO.id } });
++    const e = talk.player.pro!.engagements.find((x) => x.projectId === t.id)!;
++    const coldE = cold.player.pro!.engagements.find((x) => x.projectId === t.id)!;
++    expect(e.prep!.language).toBeCloseTo(LANGUAGE_PREP.start + (o.prep!.language! - LANGUAGE_PREP.start) / 2, 2);
++    expect(coldE.prep!.language).toBe(LANGUAGE_PREP.start);
++    expect(shown(talk, 'opportunities')).toContain(`Work On Your ${name} (120 Minutes)`);
++    const before = e.prep!.language!;
++    const worked = talk.execute({ kind: 'pro.prepare', payload: { engagementId: e.id, step: 'language' } });
++    expect(worked.error).toBeUndefined();
++    expect((worked.value as { minutes: number }).minutes).toBe(LANGUAGE_PREP.minutes * 2);
++    expect(e.prep!.language!).toBeGreaterThan(before);
++    // It goes so far and no further, as every step does: a session a day until it's done all it can.
++    let last: string | undefined;
++    for (let n = 0; n < 14 && !last; n += 1) {
++      played(talk, talk.now + 22 * MS_HOUR);
++      last = talk.execute({ kind: 'pro.prepare', payload: { engagementId: e.id, step: 'language' } }).error;
++    }
++    expect(last).toBe('You’ve done all this step can do.');
++    expect(e.prep!.language!).toBeGreaterThanOrEqual(0.97);
++  }, 600_000);
++});
++
++describe('who can be put up for it', () => {
++  it('an agent doesn’t put up a client who doesn’t speak the language, and a casting office doesn’t offer it to them without an audition', () => {
++    const sim = graduate('b27-lang-agent', { languages: [{ id: 'en', level: 'native' }] });
++    // A part in another language near New Haven for an actress, open to agents.
++    let found: { t: ProjectTemplate; at: number } | undefined;
++    for (const at of postingTimes(sim.now, sim.now + 40 * WEEK)) {
++      const t = slatePartsAt(sim, at).find((x) => x.requirements.language && x.access.agent && !x.series && writtenFor(x, sim.player) && x.role.size !== 'lead' && ageOn(sim.player.birthInstant, at, NY) + CASTING.playingSpread >= x.requirements.ages[0] && ageOn(sim.player.birthInstant, at, NY) - CASTING.playingSpread <= x.requirements.ages[1]);
++      if (t) { found = { t, at }; break; }
++    }
++    const { t, at } = found!;
++    const speaks = reload(sim);
++    speaks.player.languages = [{ id: 'en', level: 'native' }, { id: t.requirements.language!, level: 'conversational' }];
++    expect(slateReach(sim, sim.player, t, 'agent', at)).toBe(0);
++    expect(slateReach(speaks, speaks.player, t, 'agent', at)).toBeGreaterThan(0);
++    expect(languageRefusal(sim.player, t)).toBeDefined();
++    expect(languageRefusal(speaks.player, t)).toBeUndefined();
++
++    // TEST SETUP: the same casting office's finished work on the record, judged Strong, on a day its draw offers directly.
++    for (const s of [sim, speaks]) {
++      const e = { id: 'pro_test_done', projectId: t.id, opportunityId: 'x', role: 'A Part', status: 'finished', finishedAt: at - 30 * MS_DAY, days: [], pay: [], history: [], counts: {} } as unknown as Engagement;
++      s.player.pro!.engagements.push(e);
++      s.player.pro!.credits.push({ id: 'credit_test', kind: 'screen', project: t.project, role: 'A Part', company: t.company, year: 2026, medium: 'film', status: 'released', at: at - 30 * MS_DAY, engagementId: e.id, band: 'strong' } as never);
++    }
++    const other = { ...t, id: `${t.id}.other`, role: { ...t.role, size: 'supporting' as const } };
++    const day = Array.from({ length: 60 }, (_, i) => at + i * WEEK).find((d) => speaks.rng('pro.direct', dateKey(d, NY), other.id).next() < 0.5)!;
++    expect(directOfferFor(speaks, speaks.player, other, day)).toBeDefined();
++    expect(directOfferFor(sim, sim.player, other, day)).toBeUndefined();
++  }, 300_000);
++});
++
++describe('the work reads the language', () => {
++  it('a booked part’s night on stage and a day’s take read a conversational speaker’s language preparation, and nobody else’s', () => {
++    const sim = graduate('b27-lang-work', { languages: [{ id: 'en', level: 'native' }, { id: 'es', level: 'conversational' }] });
++    skilled(sim);
++    // A stage part and a screen part in Spanish, as the slate makes them.
++    const parts = Array.from({ length: 200 }, (_, w) => productionsOf(sim, sim.now + w * WEEK).flatMap((p) => p.parts)).flat().filter((x) => x.requirements.language === 'es');
++    const stage = parts.find((x) => x.medium === 'stage' && x.schedule.kind === 'run')!;
++    expect(stage).toBeDefined();
++    const night = stage.schedule.kind === 'run' ? stage.schedule.rehearsalWeeks * 5 : 0;
++    const booked = (language?: number) => ({ id: 'pro_test', prep: { interpretation: 0.9, memorization: 0.9, rehearsal: 0.9, ...(language !== undefined ? { language } : {}) } }) as unknown as Engagement;
++    const judged = (e: Engagement) => evaluate(sim, sim.player, { ...workContext(sim, sim.player, e, stage, night), expected: true }).overall;
++    // Short of complete it holds the night back; complete, it doesn't.
++    expect(judged(booked())).toBeLessThan(judged(booked(LANGUAGE_PREP.complete)));
++    expect(workContext(sim, sim.player, booked(), stage, night).prep.language).toBe(LANGUAGE_PREP.start);
++    // A fluent speaker, and a part in English alone, read none of it.
++    const fluent = reload(sim);
++    fluent.player.languages = [{ id: 'en', level: 'native' }, { id: 'es', level: 'fluent' }];
++    expect(workContext(fluent, fluent.player, booked(), stage, night).prep.language).toBeUndefined();
++    const english = { ...stage, requirements: { ...stage.requirements, language: undefined } };
++    expect(workContext(sim, sim.player, booked(), english, night).prep.language).toBeUndefined();
++    // A screen part's take on a shoot day, the way its workflow judges it (`unitContext`), reads it the same way.
++    const screen = parts.find((x) => x.medium !== 'stage' && x.schedule.kind === 'shoot')!;
++    const unit = { id: 'u1', day: 0, scene: 1, order: 0 } as WorkUnit;
++    const take = (s: Simulation, e: Engagement) => unitContext(s, s.player, e, screen, unit, 1, TASK_PROFILES.camera!, {}, BRIEF.complete.genre);
++    const takeWhole = (e: Engagement) => evaluate(sim, sim.player, { ...take(sim, e), expected: true }).overall;
++    expect(takeWhole(booked())).toBeLessThan(takeWhole(booked(LANGUAGE_PREP.complete)));
++    expect(take(fluent, booked()).prep.language).toBeUndefined();
++    // And `workContext`'s own day on camera, for a part whose day isn't a night (a shoot day asked of it directly).
++    const shot = (e: Engagement) => evaluate(sim, sim.player, { ...workContext(sim, sim.player, e, screen, 0), expected: true }).overall;
++    expect(shot(booked())).toBeLessThan(shot(booked(LANGUAGE_PREP.complete)));
++    // The words on the card name the language and the actor's level.
++    expect(languageWords(sim.player, stage)).toBe('The character speaks Spanish as well as English. Your Spanish is conversational, so the part takes more preparation: press Work On Your Spanish with the sides, and again with the part if you’re cast. Casting reads an actor native in both languages as a closer fit.');
++  });
++
++  it('the résumé lists every language but native English, and a life with none on record lists none', () => {
++    const sim = createSave(1, 'b27-lang-resume', { ...newLifeConfig(), homeRegionId: 'us-ny-newyork', citizenshipId: 'us', firstName: 'Ada', lastName: 'Cole', pronouns: 'she/her', languages: [{ id: 'en', level: 'native' }, { id: 'fr', level: 'conversational' }, { id: 'ar', level: 'native' }] });
++    const lines = resumeNow(sim.player, sim.now).lines.filter((l) => l.startsWith('Language:'));
++    expect(lines).toEqual(['Language: French, conversational', 'Language: Arabic, native']);
++    const second = createSave(1, 'b27-lang-resume-2', { ...newLifeConfig(), homeRegionId: 'us-ny-newyork', citizenshipId: 'us', firstName: 'Ada', lastName: 'Cole', pronouns: 'she/her', languages: [{ id: 'en', level: 'fluent' }, { id: 'ja', level: 'native' }] });
++    expect(resumeNow(second.player, second.now).lines.filter((l) => l.startsWith('Language:'))).toEqual(['Language: English, fluent', 'Language: Japanese, native']);
++    delete (sim.player as { languages?: unknown }).languages;
++    expect(resumeNow(sim.player, sim.now).lines.some((l) => l.startsWith('Language:'))).toBe(false);
++  });
++});
++
++describe('creation’s Languages, as the player has it', () => {
++  type El = { type: unknown; props: Record<string, unknown> };
++  /** Every element a component's tree holds, its own children walked. */
++  const walk = (node: unknown, out: El[] = []): El[] => {
++    if (Array.isArray(node)) { for (const n of node) walk(n, out); return out; }
++    if (node && typeof node === 'object' && 'props' in node) { out.push(node as El); walk((node as El).props.children, out); }
++    return out;
++  };
++  /** The card drawn over a config, its controls pressed through their own handlers, and the config each press leaves. */
++  const card = (config: NewSaveConfig) => {
++    let next = config;
++    const setConfig = (u: unknown) => { next = typeof u === 'function' ? (u as (c: NewSaveConfig) => NewSaveConfig)(next) : u as NewSaveConfig; };
++    const els = walk(LanguagesCard({ config, setConfig: setConfig as never }));
++    const text = renderToStaticMarkup(createElement(LanguagesCard, { config, setConfig: setConfig as never })).replace(/<!-- -->/g, '').replace(/<[^>]+>/g, ' ').replace(/&#x27;/g, '\'').replace(/\s+/g, ' ');
++    const pick = (id: string, value: string) => { (els.find((e) => e.type === 'select' && e.props.id === id)!.props.onChange as (e: unknown) => void)({ target: { value } }); return next; };
++    const press = (label: string) => { (els.find((e) => e.type === 'button' && e.props.children === label)!.props.onClick as () => void)(); return next; };
++    return { text, pick, press };
++  };
++  const start: NewSaveConfig = { ...newLifeConfig(), homeRegionId: 'us-ny-newyork', citizenshipId: 'us', firstName: 'Ada', lastName: 'Cole', pronouns: 'she/her' };
++
++  it('lists English to begin with, adds a language from the list at fluent, sets its level, and removes it; English can’t go under fluent or be removed', () => {
++    const first = card(start);
++    expect(first.text).toContain('Languages');
++    expect(first.text).toContain('If you speak it conversationally, the part takes more preparation.');
++    expect(first.text).toContain('English Native Fluent Add A Language Choose A Language');
++    expect(first.text).not.toContain('Remove English');
++    const added = first.pick('language-add', 'ko');
++    expect(added.languages).toEqual([{ id: 'en', level: 'native' }, { id: 'ko', level: 'fluent' }]);
++    const second = card(added);
++    expect(second.text).toContain('Korean Native Fluent Conversational Remove Korean');
++    const levelled = second.pick('language-1', 'conversational');
++    expect(levelled.languages).toEqual([{ id: 'en', level: 'native' }, { id: 'ko', level: 'conversational' }]);
++    expect(card(levelled).press('Remove Korean').languages).toEqual([{ id: 'en', level: 'native' }]);
++    // Each choice reaches the life it begins.
++    const sim = createSave(1, 'b27-lang-card', levelled);
++    expect(sim.player.languages).toEqual([{ id: 'en', level: 'native' }, { id: 'ko', level: 'conversational' }]);
++    expect(validate(levelled, 2)).toEqual([]);
++  });
++
++  it('stops offering Add A Language at six, and Review says each with how well', () => {
++    const six: NewSaveConfig = { ...start, languages: [{ id: 'en', level: 'native' }, ...['es', 'fr', 'de', 'it', 'pt'].map((id) => ({ id, level: 'fluent' as const }))] };
++    expect(card(six).text).not.toContain('Add A Language');
++    const review = renderToStaticMarkup(createElement(ReviewStep, { config: { ...start, languages: [{ id: 'en', level: 'fluent' }, { id: 'ko', level: 'native' }] }, setConfig: () => undefined })).replace(/<!-- -->/g, '').replace(/<[^>]+>/g, ' ').replace(/\s+/g, ' ');
++    expect(review).toContain('Languages English (Fluent), Korean (Native)');
++  });
++});
+-- 
+2.43.0
+

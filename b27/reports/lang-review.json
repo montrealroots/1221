@@ -1,0 +1,158 @@
+{
+ "verdict": "The languages cluster (a64e48ad, 47c5e480 on g27-lang, base 4cba6159) builds everything the brief lists, and each piece is connected to something that reads it. Item 1 is built: Person.languages is optional, an older save reads as English native (ENGLISH_ONLY, with a comment saying so), it is set on Genres & Background, checked by validate and cleanLanguages, uses real ISO names, and creation's walk tests were extended. Item 2 is built: a 12% ASSUMPTION share comes from its own decider stream (pro.language, keyed by part id). The new state is read by eligibilityProblems, slateReach, directOfferFor, fitOf (and so casting's chance), and by auditionContext, workContext and unitContext through withLanguage, plus a new gated 'language' step of pro.prepare. The Opportunities card has a The Language row. Item 3 (resumeNow) and item 4 (guide entry career.languages) are built. I confirmed each reader at its file and line. The falsifiability twin, save/load and same-seed stability are all tested. All 15 of my mutations were killed. The schema stays 94 in both pins, nothing on the backend lists the person's fields, posted slate parts are kept in the save and win over regenerated ones (addProjects keeps the first copy it sees), and older-save, migration and career-journey tests pass. Defects remain. The change falsified a player-facing explanation: 'Why It Went This Way' says 'your techniques are N% of the way' but now prints a number that includes the language, so mastered techniques show as 93%. An existing test (b20-guide-wiring) now fails because a record went stale, and the report claims all existing tests pass without mentioning it. Several guide, tutorial and comment passages still describe fit and eligibility without the language.",
+ "tests_run": "All in CLONE, one file at a time, at nice 19:\n- tests/b27-languages.test.ts: 10/10 pass.\n- npx tsc --noEmit -p . exit 0. tsconfig.json has files [] and only references, so this checks nothing.\n- npx tsc --noEmit -p tsconfig.app.json exit 0 (it includes src and tests).\n- npx eslint on all 18 changed files: exit 0.\n- Existing files that pass: b27-creation-origins 9/9, evidence-g34-ui 15/15, tutorial 18/18, journey-career-older 8/8, save-migration 4/4, b27-slate 11/11, b27-offers 4/4, b27-rounds 3/3, b27-holds 3/3, b27-revival 4/4, b27-voice-demo 4/4, career-workflows 20/20, deciders 196/196, guide 14/14, b20-guide-promises 8/8, guide-chapter-facts 13/13, b27-slate-screens 4/4, b27-reference 13/13, career-agents 11/11, journey-career 13/13, career-contracts 15/15, b27-reshoot 5/5, b27-promo 5/5, audit-pipeline 4/4, b20-creation-copy 1/1, b20-creation-twins 15/15, creation 25/25, b20-guide-startup 14/14, b20-guide-firsts 3/3, b20-guide-screens 15/15, b20-guide-chapters 37/37, cards 17/17, cohesion 19/19, evidence3-person 19/19, b23-pages 7/7, language-dynamic 35/35.\n- FAILS: tests/b20-guide-wiring.test.ts, 2 failed and 5 passed. 'controls: expected [Array(212)] to deeply equal [Array(213)]' and 'pro.ask_more at src/engine/systems/projobs.ts:2857 ... expected false to be true'.\n- A scratch probe of fitOf, run through a scratch vitest config (no clone file changed): with every technique mastered and the part's language at fluent, demands is 0.933; for a non-speaker it is 0.667.\n- After every mutation I restored the file, and git status --short is empty.",
+ "mutations": [
+  {
+   "claim": "A non-speaker is refused at Submit Yourself with words that say why",
+   "mutation": "projobs.ts eligibilityProblems: 'if (tongue) out.push(tongue);' -> 'void tongue;'",
+   "killed": true
+  },
+  {
+   "claim": "Fit takes the weaker of the part's language and the actor's English",
+   "mutation": "speaking.ts languageDemand: Math.min(part, English) -> part level only",
+   "killed": true
+  },
+  {
+   "claim": "The language counts in casting's fit",
+   "mutation": "projobs.ts fitOf: tongue = { weight: 0, f: 0 }",
+   "killed": true
+  },
+  {
+   "claim": "A conversational speaker's language preparation is read by the audition (auditionContext)",
+   "mutation": "auditionContext: withLanguage(..., person, t, o.prep) -> passes a template with no language",
+   "killed": true
+  },
+  {
+   "claim": "A part's language is stable for the same seed (decider-keyed)",
+   "mutation": "speaking.ts partLanguage: sim.rng('pro.language', partId, String(Math.random()))",
+   "killed": true
+  },
+  {
+   "claim": "An agent doesn't put up a non-speaker",
+   "mutation": "projobs.ts slateReach: removed the agent-route language refusal",
+   "killed": true
+  },
+  {
+   "claim": "A casting office makes no direct offer to a non-speaker",
+   "mutation": "projobs.ts directOfferFor: removed the languageRefusal line",
+   "killed": true
+  },
+  {
+   "claim": "Booking carries half the language work done on the sides",
+   "mutation": "accept_offer: carriedLanguage(person, t, undefined, ...)",
+   "killed": true
+  },
+  {
+   "claim": "The résumé lists every language but native English",
+   "mutation": "pro.ts resumeNow: always continue (lists no language)",
+   "killed": true
+  },
+  {
+   "claim": "Creation's languages are stored on the life",
+   "mutation": "bootstrap.ts createUniverse: dropped the languages spread",
+   "killed": true
+  },
+  {
+   "claim": "A booked screen part's take reads the language preparation (unitContext)",
+   "mutation": "workflow.ts unitContext: withLanguage gets a template with no language",
+   "killed": true
+  },
+  {
+   "claim": "An older save with no field reads as English, native",
+   "mutation": "languages.ts languagesOf: person.languages ?? [] instead of ENGLISH_ONLY",
+   "killed": true
+  },
+  {
+   "claim": "The Opportunities card says what the part asks under The Language",
+   "mutation": "OpportunitiesPane.tsx RoleFacts: {false && <div>The Language...}",
+   "killed": true
+  },
+  {
+   "claim": "No dub or documentary carries a language",
+   "mutation": "speaking.ts partLanguage: removed the PART_LANGUAGE.without guard",
+   "killed": true
+  },
+  {
+   "claim": "A night on stage reads the language preparation (workContext's performance branch)",
+   "mutation": "projobs.ts workContext performance branch: withLanguage gets a template with no language",
+   "killed": true
+  }
+ ],
+ "findings": [
+  {
+   "id": "lang-1",
+   "severity": "blocking",
+   "criterion": "contradiction",
+   "claim": "'Why It Went This Way' under a settled role tells the player 'your techniques are N% of the way to what the part asks at mastery', but N is fit.demands, which now includes the language term. On a language part the line misstates the techniques and never names the language the engine weighed. Part 9 asks for outcomes explained 'using factors the engine actually evaluated'.",
+   "evidence": "src/ui/career/OpportunitiesPane.tsx:343: `Your fit for it now: you know its genre ${pct(fit.genre)} of the way, and your techniques are ${pct(fit.demands)} of the way to what the part asks at mastery.` fitOf (projobs.ts:624-627) now folds `tongue.weight * tongue.f` into demands. Scratch probe on a Spanish part with techniques {screen:2, scene:1, comedy:1}, all at MASTERED, actor fluent: demands = 0.933, so the line says 'your techniques are 93%' when they are 100%. Same part, non-speaker: 0.667.",
+   "file": "src/ui/career/OpportunitiesPane.tsx",
+   "line": 343,
+   "suggested_fix": "Show the techniques' share apart from the language, or say both: for example 'your techniques are X% … and your Spanish counts as Y% of a native speaker's', using languageDemand. Add a test that draws a settled language part."
+  },
+  {
+   "id": "lang-2",
+   "severity": "should-fix",
+   "criterion": "downstream",
+   "claim": "An existing test that passed at BASE now fails on the branch, and the report doesn't mention it (it claims every existing test that imports a changed module passes). The guide wiring record no longer matches the code: there is one more pro.prepare control (Work On Your …), and every handler line below the hunks in projobs.ts has moved.",
+   "evidence": "tests/b20-guide-wiring.test.ts: 2 failed, 5 passed. 'controls: expected [Array(212)] to deeply equal [Array(213)]' and 'pro.ask_more at src/engine/systems/projobs.ts:2857 …: expected false to be true'. `git show 4cba6159:src/engine/systems/projobs.ts | grep -n \"'pro.ask_more'\"` gives 2857, which matches docs/verification/audit-2026-10-21/areas/guide/wiring.json. On the branch it is 2885.",
+   "file": "docs/verification/audit-2026-10-21/areas/guide/wiring.json",
+   "suggested_fix": "At integration (the record is the primary's): run `node tools/wiring.mjs --write`, fill in the reading for the new pro.prepare {step:'language'} control, and re-run b20-guide-wiring."
+  },
+  {
+   "id": "lang-3",
+   "severity": "should-fix",
+   "criterion": "house-standard",
+   "claim": "Text and comments the change made untrue or incomplete were left as they were. The guide's Auditions entry describes the role's fit as genres and techniques only. The Finding Work entry's Eligibility read and its refusal list (it answers 'Why can't I submit for this role?') leave out the new language refusal. The tutorial's Career chapter lists what the résumé holds without languages. In code, the projobs.ts module header and slateReach's fit bullet still define fit as genre plus techniques. content/slate.ts states that any change to what the generator makes is a new SLATE_VERSION, which this change deliberately didn't follow.",
+   "evidence": "guide/career.ts:779 `{ label: 'The Role’s Fit', value: 'How well you know its genres, … and its techniques against yours' }`; guide/career.ts:724 `Eligibility: 'The role’s playing ages, an open call’s union, and the days you’re already booked'`, with the unavailable list at 733-738 lacking the language refusal; tutorial.ts:459 'It lists your name, training, unions, credits and special skills from your record'; projobs.ts:26 'the role's fit (genre knowledge, and the role's techniques against the actor's)'; projobs.ts:778 '(`fitOf`: its genres' knowledge and the techniques it asks)'; content/slate.ts:30-34 'A change to what it makes from the same draws … is a new version, so a later build never makes a different production under an id a save already holds'. The implementer named only the tutorial line and career.opportunities as left alone.",
+   "file": "src/engine/content/guide/career.ts",
+   "line": 779,
+   "suggested_fix": "Add the language to the Auditions fit read and to the Finding Work eligibility read and refusals, and add languages to the tutorial résumé line. Amend the two projobs comments. In content/slate.ts, say (past tense, dated) that the 2026-10-25 language draw was added under version 1 because posted parts are kept in the save and a save's own copy wins in addProjects."
+  },
+  {
+   "id": "lang-4",
+   "severity": "note",
+   "criterion": "other",
+   "claim": "Records outside the cluster's write scope now say the opposite of the code, as the implementer reported.",
+   "evidence": "docs/verification/career-universe-2026-10-24/README.md:353 'The game records no languages: every market … works in English'; docs/verification/career-universe-2026-10-24/CHECKPOINT.md:46 '… no languages, every market working in English'.",
+   "file": "docs/verification/career-universe-2026-10-24/README.md",
+   "line": 353,
+   "suggested_fix": "Primary agent: record K3's languages as built (2026-10-25) when the records are regenerated."
+  },
+  {
+   "id": "lang-5",
+   "severity": "note",
+   "criterion": "real-world",
+   "claim": "Languages are fixed for life. An older save is read as English native, as the brief asked, and the player is never told, though that life is now refused about one in eight new slate parts with no way to change it. A new life also defaults to English native whatever its birthplace (for example Seoul with Korean citizenship).",
+   "evidence": "languages.ts languagesOf `person.languages ?? ENGLISH_ONLY`; nothing in the change writes Person.languages after createUniverse (bootstrap.ts:416); slateReach agent route returns 0 and eligibilityProblems refuses for ENGLISH_ONLY on a language part. b27-creation-origins 'b27-seoul-en' confirms the English-only default for a Seoul life.",
+   "file": "src/engine/content/languages.ts",
+   "suggested_fix": "Nothing required by the cluster brief. If the owner wants supplement loop 1's 'explain material changes', a one-time notice to an older life, or a way to record languages later, would close it."
+  },
+  {
+   "id": "lang-6",
+   "severity": "note",
+   "criterion": "house-standard",
+   "claim": "The Languages guide entry shows the fit weights to the player as percentages, which sits close to STYLE.md's 'No internal concepts … weights'.",
+   "evidence": "guide/career.ts career.languages reads: `a fluent one ${Math.round(LANGUAGE_FIT.fluent * 100)}% as well and a conversational one ${Math.round(LANGUAGE_FIT.conversational * 100)}%` (estimate: true); docs/STYLE.md:81-82.",
+   "file": "src/engine/content/guide/career.ts",
+   "suggested_fix": "Consider plain words ('a fluent speaker comes close, a conversational one about half as close') when the text inventory reads this source."
+  },
+  {
+   "id": "lang-7",
+   "severity": "note",
+   "criterion": "other",
+   "claim": "PartPrep now has three doc comments stacked above it. The new one was added instead of amending the old ones, which leaves the first two orphaned.",
+   "evidence": "src/engine/systems/pro.ts:319-330: '/** How far the sides or the part stand …*/', then '/** A part's preparation: …*/', then '/** How far each part of the preparation stands … `language` from 2026-10-25 … */', then the interface.",
+   "file": "src/engine/systems/pro.ts",
+   "line": 325,
+   "suggested_fix": "Merge them into one doc comment."
+  },
+  {
+   "id": "lang-8",
+   "severity": "note",
+   "criterion": "other",
+   "claim": "The commit trailers say 'Co-Authored-By: Claude Opus 5.5', where implementer-common.md asks for 'Claude Fable 5.1'. The implementer disclosed this.",
+   "evidence": "git log 4cba6159..g27-lang: both commits end 'Co-Authored-By: Claude Opus 5.5 <noreply@anthropic.com>'; implementer-common.md specifies 'Claude Fable 5.1'.",
+   "suggested_fix": "Primary agent decides at integration."
+  }
+ ]
+}

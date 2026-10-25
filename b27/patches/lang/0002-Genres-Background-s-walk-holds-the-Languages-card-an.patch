@@ -1,0 +1,45 @@
+From 47c5e480c74cd9b5cef57085ff515d80ff3339bd Mon Sep 17 00:00:00 2001
+From: Claude <noreply@anthropic.com>
+Date: Sun, 25 Oct 2026 21:02:34 +0000
+Subject: [PATCH 2/3] Genres & Background's walk holds the Languages card and
+ Review's Languages line
+
+tests/evidence-g34-ui.test.ts walks creation's five steps and held Genres & Background to
+three headings and Review's Genres & Background card to the genres, the family and the
+background. The languages commit put a Languages card between the background and the
+family and a Languages line after the genres on Review, so the walk failed on exactly
+those two things and nothing else. It now holds both, so the interest check it exists for
+still reads every control and the new card's are among them.
+
+Co-Authored-By: Claude Opus 5.5 <noreply@anthropic.com>
+Claude-Session: https://claude.ai/code/session_01HBdcuKzBBMbipfFQSByALG
+---
+ tests/evidence-g34-ui.test.ts | 9 +++++----
+ 1 file changed, 5 insertions(+), 4 deletions(-)
+
+diff --git a/tests/evidence-g34-ui.test.ts b/tests/evidence-g34-ui.test.ts
+index 2e79576b..e2355774 100644
+--- a/tests/evidence-g34-ui.test.ts
++++ b/tests/evidence-g34-ui.test.ts
+@@ -347,13 +347,14 @@ describe('i-ui-text', () => {
+       }
+     }
+     const personal = steps[2]!;
+-    // Your Family beside the background, from 2026-10-14 (the family a life comes from, `FamilyChoice`).
+-    expect(headings(personal.html).filter((t) => !t.startsWith('Who Are You'))).toEqual(['Genres', 'Background', 'Your Family']);
++    // Your Family beside the background, from 2026-10-14 (the family a life comes from, `FamilyChoice`); Languages between
++    // them from 2026-10-25 (brief 27, `LanguagesCard`).
++    expect(headings(personal.html).filter((t) => !t.startsWith('Who Are You'))).toEqual(['Genres', 'Background', 'Languages', 'Your Family']);
+     expect(personal.controls.filter((c) => c.type === 'button' && c.props.className === 'chip')).toHaveLength(149);
+     expect(personal.controls.find((c) => c.type === 'label' && c.props.htmlFor === 'background')?.text).toBe('In Your Own Words');
+     // Review says back the genres and the background, under that one heading.
+-    // The family between them from 2026-10-14, as Review names it.
+-    expect(steps[4]!.text).toContain('Genres & Background Genres Comedy Family Wealthy, No Need Found In Your Own Words —');
++    // The family between them from 2026-10-14, as Review names it, and the languages after the genres from 2026-10-25.
++    expect(steps[4]!.text).toContain('Genres & Background Genres Comedy Languages English (Native) Family Wealthy, No Need Found In Your Own Words —');
+   });
+ 
+   it('PLAYER JOURNEY: the Profile, on the first morning and after a week lived, has no Interests section and no interest in its words or its controls; it says the genres back', () => {
+-- 
+2.43.0
+

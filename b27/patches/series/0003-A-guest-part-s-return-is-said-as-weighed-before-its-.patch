@@ -1,0 +1,80 @@
+From c44383d282e306f631ccaa7eb31ab76413c8a3c3 Mon Sep 17 00:00:00 2001
+From: Claude <noreply@anthropic.com>
+Date: Sun, 25 Oct 2026 19:52:45 +0000
+Subject: [PATCH 3/6] A guest part's return is said as weighed before its
+ season, not at the renewal
+
+The producers weigh a guest part six weeks before a season ordered or renewed, since the invitation moved from the
+network's word to the wrap; the record's, the decider's and INVITE's comments still said "at the network's renewal". And
+the guide's own line that a renewed series' part "comes only through its option or a new casting" stopped being true
+the day a guest part could be asked back, so it says the third way now.
+
+Co-Authored-By: Claude Opus 5.5 <noreply@anthropic.com>
+Claude-Session: https://claude.ai/code/session_01HBdcuKzBBMbipfFQSByALG
+---
+ src/engine/content/guide/career.ts | 3 ++-
+ src/engine/decided.ts              | 2 +-
+ src/engine/systems/continuity.ts   | 2 +-
+ src/engine/systems/pro.ts          | 6 +++---
+ 4 files changed, 7 insertions(+), 6 deletions(-)
+
+diff --git a/src/engine/content/guide/career.ts b/src/engine/content/guide/career.ts
+index 0b9a3ed9..da6b6e8f 100644
+--- a/src/engine/content/guide/career.ts
++++ b/src/engine/content/guide/career.ts
+@@ -955,7 +955,8 @@ export const CAREER_GUIDE: readonly GuideEntry[] = [
+     interpret: [
+       'The overtime, the contribution’s rates, the per diem and the rerun’s share and ceiling are SAG-AFTRA’s agreements’ own, as AMPTP publishes them. The eleven-hour shoot day’s hour for lunch is estimated.',
+       `When an episode is on the air, whether it’s rerun, the series’ seasons and how late a non-union producer pays, ${Math.round(LATE.chance * 10)} times in ten, by one to four weeks, are the game’s own.`,
+-      'A renewal brings no contract by itself: a part in a renewed series comes only through its option or a new casting.',
++      // Until 2026-10-25 (brief 27, `INVITE`) a part came back only through its option or a new casting.
++      'A renewal brings no contract by itself: a part in a renewed series comes only through its option, a new casting, or its producers asking a guest part back.',
+     ],
+     unavailable: ['“You can ask about a payment once it’s past its payday and unpaid.”'],
+     mistakes: [
+diff --git a/src/engine/decided.ts b/src/engine/decided.ts
+index 5783a24b..e4b02570 100644
+--- a/src/engine/decided.ts
++++ b/src/engine/decided.ts
+@@ -1063,7 +1063,7 @@ defineDecider<{ sim: Simulation; first: number; performance: number }, string>({
+ 
+ defineDecider<{ sim: Simulation; band: number }, string>({
+   id: 'pro.recurring',
+-  decides: 'A guest part brought back as a recurring character at the network’s renewal: its chance by the best the work was judged at, none for working work (INVITE).',
++  decides: 'A guest part brought back as a recurring character, six weeks before a season ordered or renewed: its chance by the best the work was judged at, none for working work (INVITE).',
+   drawnIn: 'src/engine/systems/continuity.ts',
+   reads: {
+     band: (o, t) => ({ ...o, band: Math.round(t * 4) - 1 }),
+diff --git a/src/engine/systems/continuity.ts b/src/engine/systems/continuity.ts
+index 1af107c3..71679336 100644
+--- a/src/engine/systems/continuity.ts
++++ b/src/engine/systems/continuity.ts
+@@ -203,7 +203,7 @@ export function optionReleaseRefusal(sim: Simulation, person: Person, o: Opportu
+ // ---------------------------------------------------------------------------------------------------------------------
+ 
+ /**
+- * The producers' chance of bringing a guest part back as a recurring character in the season the network renewed, by the
++ * The producers' chance of bringing a guest part back as a recurring character in a season ordered or renewed, by the
+  * best its work was judged: none for working or unready work. The part they offer guarantees two episodes and expects
+  * five. ASSUMPTION each, the game's; drawn by the engagement and the season (decider `pro.recurring`).
+  */
+diff --git a/src/engine/systems/pro.ts b/src/engine/systems/pro.ts
+index 48702315..064a3c8a 100644
+--- a/src/engine/systems/pro.ts
++++ b/src/engine/systems/pro.ts
+@@ -485,9 +485,9 @@ export interface Engagement extends HasHistory {
+    */
+   revival?: { year: number; returns: boolean };
+   /**
+-   * The producers' word on bringing a guest part back as a recurring character, at the network's renewal (from 2026-10-25,
+-   * the owner's brief 27, Part 13: "Guest work leading to a recurring engagement"; `systems/continuity.ts`'s `INVITE`): the
+-   * season it's for, and whether they do. Given once; an engagement from before has none and is never asked.
++   * The producers' word on bringing a guest part back as a recurring character, six weeks before a season ordered or renewed
++   * (from 2026-10-25, the owner's brief 27, Part 13: "Guest work leading to a recurring engagement"; `systems/continuity.ts`'s
++   * `INVITE`): the season it's for, and whether they do. Given once; an engagement from before has none and is never asked.
+    */
+   invite?: { year: number; invited: boolean };
+   /** A pilot's word from its network (brief 27, Part 8; `systems/continuity.ts`'s `PILOT`): when, picked up or not, and the series it became. */
+-- 
+2.43.0
+

@@ -1,0 +1,3836 @@
+{
+ "written": "by the brief 27 research agent (G1), 2026-10-25; each quote is from the file under dl/ named by \"download\"",
+ "sources": [
+  {
+   "id": "b25-S49",
+   "title": "Golden Globes, LLC: 84th Annual Golden Globes Eligibility and Consideration Rules (last updated July 30, 2026)",
+   "url": "https://goldenglobes.com/wp-content/uploads/2026/08/FINAL_84th-ANNUAL-GOLDEN-GLOBES-ELIGIBILITY-AND-CONSIDERATION-RULES_8_3_2026.pdf",
+   "retrieved": "2026-10-25T16:49:31Z",
+   "http": "200",
+   "bytes": 1226410,
+   "download": "dl/gg84-rules-pdf/document.pdf",
+   "text": "dl/gg84-rules-pdf/document.txt",
+   "facts": [
+    {
+     "field": "updated",
+     "value": "The rules were last updated July 30, 2026.",
+     "quote": "Last Updated: July 30, 2026",
+     "where": "p.1"
+    },
+    {
+     "field": "film-qualifying-year",
+     "value": "Film qualifying year for the 84th: January 1 to December 31, 2026.",
+     "quote": "For the 84th Annual Golden Globes, the qualifying year shall be January 1 through December 31, 2026.",
+     "where": "A.1.a"
+    },
+    {
+     "field": "film-eligible",
+     "value": "Eligible films: scripted features of 70 minutes or longer, released and made available to all voters in the qualifying year.",
+     "quote": "Feature-length, scripted motion pictures (70 minutes or longer) that have been both released and made available for viewing to all Golden Globes voters pursuant to these rules during the qualifying year (January 1 through December 31).",
+     "where": "A.1.a"
+    },
+    {
+     "field": "film-released",
+     "value": "Released means a seven-day consecutive commercial run (theatrical or pay-per-view, not subscription) in one of seven US metro areas, starting before 11:59 p.m. on December 31.",
+     "quote": "made available for public exhibition in commercial motion picture theaters or on a recognized platform pay-per-view cable channel or pay-per-view digital delivery service (not subscription cable or digital delivery) in any of the greater Atlanta, Chicago, Dallas, Los Angeles, Miami, New York City or San Francisco metropolitan areas for a minimum seven-day consecutive period beginning prior to 11:59 p.m. local time on December 31 of the qualifying year.",
+     "where": "A.1.b"
+    },
+    {
+     "field": "film-festival-not-release",
+     "value": "A festival screening is not a release unless it meets the run criteria.",
+     "quote": "A motion picture exhibited at a film festival would not qualify as “released” unless it meets the criteria set forth above.",
+     "where": "A.1.b"
+    },
+    {
+     "field": "film-best-picture-prerequisite",
+     "value": "A film must be entered for Best Motion Picture for its individuals (including performers) to be eligible.",
+     "quote": "A motion picture must be eligible and submitted for consideration in the Best Motion Picture category in order to be eligible for consideration in any of the individual award categories set forth below",
+     "where": "A.1.c"
+    },
+    {
+     "field": "film-performance-exception",
+     "value": "Non-English-language and low-budget independent films may enter performers without entering Best Motion Picture.",
+     "quote": "However, Non-English Language and low-budget independent motion pictures may be submitted for individual Best Performance categories without being submitted in the Best Motion Picture category, provided they meet all other eligibility requirements.",
+     "where": "A.1.c"
+    },
+    {
+     "field": "low-budget-definition",
+     "value": "Low-budget independent means fully independently financed and a gross production budget under $10 million USD.",
+     "quote": "(a) is fully financed by independent producers, private investors, or small production companies, and (b) has a gross production budget of less than $10 million USD.",
+     "where": "A.1.c"
+    },
+    {
+     "field": "film-category-1",
+     "value": "Film performer category.",
+     "quote": "Best Performance by a Female Actor in a Motion Picture – Drama",
+     "where": "A.2"
+    },
+    {
+     "field": "film-category-2",
+     "value": "Film performer category.",
+     "quote": "Best Performance by a Male Actor in a Motion Picture – Drama",
+     "where": "A.2"
+    },
+    {
+     "field": "film-category-3",
+     "value": "Film performer category.",
+     "quote": "Best Performance by a Female Actor in a Motion Picture – Musical or Comedy",
+     "where": "A.2"
+    },
+    {
+     "field": "film-category-4",
+     "value": "Film performer category.",
+     "quote": "Best Performance by a Male Actor in a Motion Picture – Musical or Comedy",
+     "where": "A.2"
+    },
+    {
+     "field": "film-category-5",
+     "value": "Film performer category.",
+     "quote": "Best Performance by a Female Actor in a Supporting Role in any Motion Picture",
+     "where": "A.2"
+    },
+    {
+     "field": "film-category-6",
+     "value": "Film performer category.",
+     "quote": "Best Performance by a Male Actor in a Supporting Role in any Motion Picture",
+     "where": "A.2"
+    },
+    {
+     "field": "film-voice-only",
+     "value": "Voice-only performances are not eligible in any film performance category.",
+     "quote": "Voice-only performances and other roles in which the actor’s face is not visible are not eligible in any performance category.",
+     "where": "A.3.d.i"
+    },
+    {
+     "field": "film-lead-definition",
+     "value": "Lead: central characters in a substantial portion who drive the narrative.",
+     "quote": "Lead cast members in a motion picture must be the central characters who appear in a substantial portion of the motion picture and who drive the narrative of the motion picture.",
+     "where": "A.3.d.iii"
+    },
+    {
+     "field": "film-supporting-definition",
+     "value": "Supporting: non-central characters who support the leads or narrative.",
+     "quote": "Supporting cast members in a motion picture are the non-central characters who support the lead characters and/or the narrative of the motion picture.",
+     "where": "A.3.d.iv"
+    },
+    {
+     "field": "film-any-language",
+     "value": "Performers in English or non-English films may qualify.",
+     "quote": "Performers appearing in either English language or non-English language motion pictures may qualify for performance awards.",
+     "where": "A.3.d.v"
+    },
+    {
+     "field": "non-english-performer-classification",
+     "value": "A non-English film must be classified Drama or Musical/Comedy for its performers to be eligible.",
+     "quote": "In order for individual performers from a non-English language motion picture to be eligible for Best Performance categories, the applicable non-English language motion picture must be classified as either a Drama or Musical/Comedy.",
+     "where": "A.3.c.v"
+    },
+    {
+     "field": "non-english-no-us-release",
+     "value": "Non-English films from outside the US need no US release for the Non-English Language award.",
+     "quote": "Non-English-language motion pictures that originate outside the United States do not need to be released in the United States to qualify for the Best Motion Picture – Non-English Language award.",
+     "where": "A.3.c.viii"
+    },
+    {
+     "field": "non-english-country-release",
+     "value": "For the Non-English Language award, a first release in the country of origin for at least seven consecutive days in the qualifying year.",
+     "quote": "a motion picture must be first released in its country of origin during the qualifying calendar year for a minimum seven-day consecutive period.",
+     "where": "A.3.c.vi"
+    },
+    {
+     "field": "tv-eligible-us-prime-time",
+     "value": "TV: first aired or made available in the US in the qualifying year in prime time.",
+     "quote": "Only programs first aired (or made available for viewing on demand) in the United States during the qualifying year (January 1 through December 31) in prime time (8:00 p.m. – 11:00 p.m. Monday through Saturday; 7:00 p.m. – 11:00 p.m. Sunday) are eligible for television awards.",
+     "where": "C.1.b"
+    },
+    {
+     "field": "tv-cable-streaming-exempt",
+     "value": "Cable and subscription platforms are exempt from the prime-time rule.",
+     "quote": "Programs released on cable or subscription-based platforms are exempt from the prime time requirement, provided they are first made available in the United States during the qualifying year.",
+     "where": "C.1.b"
+    },
+    {
+     "field": "tv-foreign",
+     "value": "Foreign TV programs are ineligible unless a US-foreign co-production (financial and creative) that precedes completion.",
+     "quote": "Foreign programs (programs produced principally outside the United States) are not eligible for television awards unless they are the result of a co-production (both financially and creatively) between a United States partner and a foreign partner, which precedes the completion of production of the program.",
+     "where": "C.1.d"
+    },
+    {
+     "field": "tv-language",
+     "value": "TV eligibility does not depend on language.",
+     "quote": "The eligibility of television programs does not depend on the language(s) used in the program.",
+     "where": "C.1.e"
+    },
+    {
+     "field": "tv-animated",
+     "value": "Animated TV programs may enter the series categories.",
+     "quote": "Animated television programs may be entered in the appropriate category (Best Series – Drama, Best Series – Musical or Comedy, etc.) if they meet the other qualifying criteria for that category.",
+     "where": "C.1.f"
+    },
+    {
+     "field": "tv-festival",
+     "value": "A TV program first shown at a festival is not disqualified.",
+     "quote": "A television program first exhibited at a festival would not be disqualified for television awards if it otherwise meets the television eligibility criteria set forth herein.",
+     "where": "C.1.c"
+    },
+    {
+     "field": "film-or-tv-not-both",
+     "value": "A motion picture enters film or TV categories, not both, by original release format.",
+     "quote": "Motion pictures should be entered in either the motion picture or the television award categories (but not both) based on their original release format.",
+     "where": "C.1.c"
+    },
+    {
+     "field": "tv-best-program-prerequisite",
+     "value": "A TV program must be entered in a Best Television category for its performers to be eligible (except stand-up).",
+     "quote": "a television program must be eligible and submitted for consideration in one of the Best Television award categories to be eligible for consideration in any of the individual Best Performance categories set forth below.",
+     "where": "C.1.j"
+    },
+    {
+     "field": "tv-category-1",
+     "value": "TV performer category.",
+     "quote": "Best Performance by a Female Actor in a Television Series – Drama",
+     "where": "C.2"
+    },
+    {
+     "field": "tv-category-2",
+     "value": "TV performer category.",
+     "quote": "Best Performance by a Male Actor in a Television Series – Drama",
+     "where": "C.2"
+    },
+    {
+     "field": "tv-category-3",
+     "value": "TV performer category (name breaks across a line in the PDF).",
+     "quote": "Best Performance by a Female Actor in a Television Series – Musical or Comedy",
+     "where": "C.2"
+    },
+    {
+     "field": "tv-category-4",
+     "value": "TV performer category.",
+     "quote": "Best Performance by a Male Actor in a Television Series – Musical or Comedy",
+     "where": "C.2"
+    },
+    {
+     "field": "tv-category-5",
+     "value": "TV performer category.",
+     "quote": "Best Performance by a Female Actor in a Limited Series, Anthology Series, or a Motion Picture Made for Television",
+     "where": "C.2"
+    },
+    {
+     "field": "tv-category-6",
+     "value": "TV performer category.",
+     "quote": "Best Performance by a Male Actor in a Limited Series, Anthology Series, or a Motion Picture Made for Television",
+     "where": "C.2"
+    },
+    {
+     "field": "tv-category-7",
+     "value": "TV performer category.",
+     "quote": "Best Performance by a Female Actor in a Supporting Role on Television",
+     "where": "C.2"
+    },
+    {
+     "field": "tv-category-8",
+     "value": "TV performer category.",
+     "quote": "Best Performance by a Male Actor in a Supporting Role on Television",
+     "where": "C.2"
+    },
+    {
+     "field": "tv-category-9",
+     "value": "TV performer category.",
+     "quote": "Best Performance in Stand-Up Comedy on Television",
+     "where": "C.2"
+    },
+    {
+     "field": "tv-voice-only",
+     "value": "Voice-only TV performances are not eligible.",
+     "quote": "Voice only performances and other roles in which the actor’s face is not visible are not eligible in any acting category.",
+     "where": "C.3.e.iii"
+    },
+    {
+     "field": "tv-ensemble",
+     "value": "Comparable ensemble roles in a series should be all lead or all supporting.",
+     "quote": "Actors in ensemble casts with comparable roles in a television series should be classified as either all lead or all supporting actors.",
+     "where": "C.3.e.v"
+    },
+    {
+     "field": "tv-anthology-lead",
+     "value": "Anthology leads must be in segments of at least 50% of running time; others may go supporting.",
+     "quote": "contributed to segments that comprise at least 50% of the running time in the anthology series. All other actors are eligible for the Best Performance in a Supporting Role awards if they meet the other requirements of these rules.",
+     "where": "C.3.c.iv"
+    },
+    {
+     "field": "who-chooses-category",
+     "value": "The submitting studio or publicist initially selects the categories, including lead vs supporting.",
+     "quote": "The studio or publicist submitting a motion picture or television program initially selects the award categories for which it is entered (e.g., male actor vs. female actor, drama vs. musical/comedy or lead vs. supporting).",
+     "where": "F.1.k"
+    },
+    {
+     "field": "committee-may-change",
+     "value": "The Eligibility and review committees may change an entry by a two-thirds vote.",
+     "quote": "These committees, voting by written ballot, may change any award entry by a vote of two-thirds or more of the committees’ members voting.",
+     "where": "F.1.l"
+    },
+    {
+     "field": "misclassification-letter",
+     "value": "Suspected misclassification: director/showrunner asked for a justification letter.",
+     "quote": "the Eligibility Committee will ask the director(s)/showrunner(s) of the motion picture or television program to submit a letter justifying the initial classification for review.",
+     "where": "F.1.l"
+    },
+    {
+     "field": "submission-portal",
+     "value": "All programming is submitted through Yangaroo and uploaded to the Indee platform.",
+     "quote": "all programming must be submitted through the Yangaroo submissions portal and uploaded to the Golden Globes Indee Viewing Platform.",
+     "where": "F.1.a"
+    },
+    {
+     "field": "individual-entry-photo",
+     "value": "Individual performance entries need high-resolution photographs owned or controlled by the submitting party.",
+     "quote": "Entries for individual performance awards must be accompanied by submission of high-resolution photographs (e.g., head shot or key artwork) owned and/or controlled by the party submitting such individual.",
+     "where": "F.1.c"
+    },
+    {
+     "field": "fees",
+     "value": "$250 per individual entry; $500 per film, TV program and other title entries.",
+     "quote": "Yangaroo submission fees for Golden Globes consideration are $250 for each individual entry submitted and $500 for each motion picture, television program, Stand-Up Comedy on Television, Cinematic and Box Office Achievement production, and Best Podcast submitted.",
+     "where": "F.1.f"
+    },
+    {
+     "field": "fee-per-production",
+     "value": "An individual entered for several productions pays a fee for each entry.",
+     "quote": "Entries for individuals submitted for consideration for their work on multiple productions will be charged a fee for each entry.",
+     "where": "F.1.f"
+    },
+    {
+     "field": "indee-fee",
+     "value": "Indee upload administration fee: $5,000 per title.",
+     "quote": "Uploads to the Golden Globes Indee Viewing Platform are subject to an administration fee of $5,000 per title.",
+     "where": "F.1.g"
+    },
+    {
+     "field": "fee-alternatives",
+     "value": "Productions under $2 million may ask about fee alternatives.",
+     "quote": "Motion pictures, television programs, and Cinematic and Box Office Achievement films with production budgets of less than $2 million USD may contact AwardsOffice@GoldenGlobes.com to inquire about fee alternatives.",
+     "where": "F.1.i"
+    },
+    {
+     "field": "voters",
+     "value": "Only individuals designated by Golden Globes, LLC vote.",
+     "quote": "Only individuals officially designated by the Company as Golden Globes voters (“Golden Globes voters”) vote for the Golden Globes.",
+     "where": "G.1.a"
+    },
+    {
+     "field": "two-phases",
+     "value": "Voting in two phases, monitored by an accounting firm: nominations and final vote.",
+     "quote": "The voting is monitored by an accounting firm and is conducted in two phases – Nominations and Final Vote.",
+     "where": "G.1.a"
+    },
+    {
+     "field": "nomination-ballot",
+     "value": "Each voter votes for up to six nominees per film/TV category, in order of preference.",
+     "quote": "requesting that each of them vote for up to (i) six nominees for motion picture and television programs and Best Podcast entries and (ii) eight nominees for Best Cinematic and Box Office Achievement productions, in order of preference in each award category",
+     "where": "G.2.a"
+    },
+    {
+     "field": "nominees-count",
+     "value": "Nominees are the six selections with most votes.",
+     "quote": "The nominees in each category will be the six (or eight) selections in each category that receive the greatest number of votes on the nomination ballots.",
+     "where": "G.2.c"
+    },
+    {
+     "field": "rank-points-ties-only",
+     "value": "Rank points are used only to break ties.",
+     "quote": "The accounting firm will use the points assigned in the nomination rankings only in the event of ties.",
+     "where": "G.2.c"
+    },
+    {
+     "field": "final-ballot",
+     "value": "Final ballot: one vote per category.",
+     "quote": "requesting that each of them votes for one nominee in each category and return the completed ballot directly to the accounting firm.",
+     "where": "G.3.a"
+    },
+    {
+     "field": "final-tie",
+     "value": "A final tie goes to the tied nominee with more nomination-ballot votes.",
+     "quote": "In the case of a tie in any category, the winner will be the one of the tied nominees on the final ballot that had the most votes on the",
+     "where": "G.3.a (sentence continues on p.28: \"nomination ballot.\")"
+    },
+    {
+     "field": "final-tie-two-winners",
+     "value": "If still tied, two winners.",
+     "quote": "there is still a tie in any category, two winners will be announced for that category.",
+     "where": "G.3.a"
+    },
+    {
+     "field": "ai-performance",
+     "value": "Performances substantially generated by AI are not eligible.",
+     "quote": "Submissions in which a performance is substantially generated or created by artificial intelligence are not eligible.",
+     "where": "E, Performance (Acting) Awards"
+    },
+    {
+     "field": "nomination-certificate",
+     "value": "Each individual nominee may buy one nomination certificate for $1,500.",
+     "quote": "Every individual nominee and co-nominee named for an award is eligible to purchase one nomination certificate for a fee of $1,500.",
+     "where": "I.1.a"
+    }
+   ],
+   "notes": "Not stated anywhere in the rules: any rule on one performer holding several nominations in the same category (searched for \"multiple\", \"more than one\", \"same category\"); no country rule for performers beyond the TV foreign-program co-production rule and the non-English film rules quoted. The rules refer to \"Golden Globes Campaign Guidelines below\" (F.1.c) but the PDF contains no campaign guidelines section. Who submits: \"The studio or publicist\" (F.1.k); a performer submitting themselves is not stated.",
+   "sha256": "a423ab148294044f427dc43397c54047fd4253fef8e5668302b3473d98628af4"
+  },
+  {
+   "id": "b25-S50",
+   "title": "Golden Globes: The 84th Annual Golden Globes Timetable, Eligibility Rules and Campaign Guidelines Announced (May 7, 2026)",
+   "url": "https://goldenglobes.com/articles/the-84th-annual-golden-globes-timetable-eligibility-rules-and-campaign-guidelines-announced/",
+   "retrieved": "2026-10-25T16:49:32Z",
+   "http": "200",
+   "bytes": 77746,
+   "download": "dl/gg84-calendar-page/page.html",
+   "text": "dl/gg84-calendar-page/page.txt",
+   "facts": [
+    {
+     "field": "announced",
+     "value": "Published May 7, 2026.",
+     "quote": "LOS ANGELES, CA – May 7, 2026 – Today, the Golden Globes® released its awards timetable, eligibility rules and campaign guidelines for the 84th Annual Golden Globes®",
+     "where": "opening paragraph"
+    },
+    {
+     "field": "ceremony",
+     "value": "Ceremony Sunday January 10, 2027, Beverly Hilton, CBS and Paramount+.",
+     "quote": "the ceremony will broadcast live from the Beverly Hilton on Sunday, January 10, 2027 on the CBS Television Network, and streaming on Paramount+ in the U.S.",
+     "where": "opening paragraph"
+    },
+    {
+     "field": "submissions-open",
+     "value": "Submission website opens June 1, 2026.",
+     "quote": "Monday, June 1, 2026 Submission website opens for 84th Annual Golden Globes Motion Picture, Television and Podcast",
+     "where": "timetable"
+    },
+    {
+     "field": "submission-deadline",
+     "value": "Deadline for all submissions October 30, 2026.",
+     "quote": "Friday, October 30, 2026 Deadline for Motion Picture, Television, and Podcast submissions",
+     "where": "timetable"
+    },
+    {
+     "field": "tv-nomination-ballots-out",
+     "value": "TV nomination ballots sent November 16, 2026.",
+     "quote": "Monday, November 16, 2026 Television and Podcast nomination ballots to be sent to all voters",
+     "where": "timetable"
+    },
+    {
+     "field": "tv-uploads-last",
+     "value": "Last day for TV press conferences, November 22, 2026 (the next line on the page gives the same date as the last day for TV uploads to the Indee platform).",
+     "quote": "Sunday, November 22, 2026 Final date for Television and Podcast press conferences",
+     "where": "timetable"
+    },
+    {
+     "field": "tv-nomination-ballots-due",
+     "value": "TV nomination ballots due November 23, 2026, 5 p.m. PST (the page spells the firm \"KMPG\" here).",
+     "quote": "Monday, November 23, 2026 by 5:00 p.m. PST Deadline for receipt of Television and Podcast nomination ballots to KMPG",
+     "where": "timetable"
+    },
+    {
+     "field": "film-nomination-ballots-out",
+     "value": "Film nomination ballots sent November 24, 2026.",
+     "quote": "Tuesday, November 24, 2026 Motion Picture and Cinematic and Box Office Achievement nomination ballots to be sent to all voters",
+     "where": "timetable"
+    },
+    {
+     "field": "film-uploads-last",
+     "value": "Last day for film press conferences, December 2, 2026 (the next line gives the same date for film uploads).",
+     "quote": "Wednesday, December 2, 2026 Final date for Motion Picture and Cinematic and Box Office Achievement press conferences",
+     "where": "timetable"
+    },
+    {
+     "field": "film-nomination-ballots-due",
+     "value": "Film nomination ballots due December 4, 2026, 5 p.m. PST.",
+     "quote": "Friday, December 4, 2026 by 5:00 p.m. PST Deadline for receipt of Motion Picture and Cinematic and Box Office Achievement nomination ballots to KPMG",
+     "where": "timetable"
+    },
+    {
+     "field": "nominations",
+     "value": "Nominations announced December 7, 2026, 5 a.m. PST.",
+     "quote": "Monday, December 7, 2026 at 5:00 a.m. PST Announcement of nominations for the 84th Annual Golden Globes",
+     "where": "timetable"
+    },
+    {
+     "field": "final-ballots-out",
+     "value": "Final ballots sent December 18, 2026.",
+     "quote": "Friday, December 18, 2026 Final ballots sent to all voters by KPMG",
+     "where": "timetable"
+    },
+    {
+     "field": "final-ballots-due",
+     "value": "Final ballots due January 2, 2027, 5 p.m. PST.",
+     "quote": "Saturday, January 2, 2027 by 5:00 p.m. PST Deadline for receipt of final ballots to KPMG",
+     "where": "timetable"
+    },
+    {
+     "field": "presentation",
+     "value": "Presentation January 10, 2027, 5 p.m. PST.",
+     "quote": "Sunday, January 10, 2027 at 5:00 p.m. PST Presentation of the 84th Annual Golden Globes",
+     "where": "timetable"
+    }
+   ],
+   "notes": "The page links the rules (\"HERE\"); the campaign guidelines named in its title are not in the page text. No fee or eligibility figures on this page.",
+   "sha256": "4511cc7916504ddaa8eec2beee954404173fc3197bdc389af0a5830e8f655e28"
+  },
+  {
+   "id": "b25-S56",
+   "title": "AACTA: 2027 AACTA Awards Rule Book",
+   "url": "https://s3-ap-southeast-2.amazonaws.com/aacta-org-assets/Uploads/2027-AACTA-Awards-Rule-Book.pdf",
+   "retrieved": "2026-10-25T16:50:20Z",
+   "http": "200",
+   "bytes": 664776,
+   "download": "dl/aacta-2027-rulebook-pdf/document.pdf",
+   "text": "dl/aacta-2027-rulebook-pdf/document.txt",
+   "facts": [
+    {
+     "field": "australian-person",
+     "value": "An Australian individual: born in Australia, a passport holder/citizen, or a permanent resident of 5+ years.",
+     "quote": "Australian – when used to describe an individual, an individual who was born in Australia, or is a current passport holder/citizen, or has been a permanent resident for at least 5 years.",
+     "where": "2(f) Glossary"
+    },
+    {
+     "field": "eligibility-sac",
+     "value": "Eligibility route (i): significant Australian content under the Income Tax Assessment Act 1997.",
+     "quote": "contain “significant Australian content” for the purposes of section 376-65(2)(a)(i) of the Income Tax Assessment Act 1997",
+     "where": "3.2(a)(i)"
+    },
+    {
+     "field": "eligibility-finance",
+     "value": "Route (ii): at least 51% Australian financing.",
+     "quote": "have at least 51% financing from Australian investors",
+     "where": "3.2(a)(ii)"
+    },
+    {
+     "field": "eligibility-coproduction",
+     "value": "Route (iii): official co-production or Australian creative control.",
+     "quote": "be an official co-production (as per a formal agreement with Australia and an international territory) or produced under the creative control of Australians if an international collaboration has occurred outside of a formal treaty",
+     "where": "3.2(a)(iii)"
+    },
+    {
+     "field": "eligibility-discretion",
+     "value": "Route (iv): otherwise satisfy AFI/AACTA at their discretion (the rule goes on to list factors such as setting, story, key creatives, shooting and financing).",
+     "quote": "otherwise satisfy the AFI and AACTA, in their sole and absolute discretion, that the Production is an eligible Production",
+     "where": "3.2(a)(iv)"
+    },
+    {
+     "field": "previously-entered",
+     "value": "A production entered before is ineligible again.",
+     "quote": "A Television Program or Film, (or an episode or season of a Television Program) which has been previously entered into the Awards is ineligible for entry into the current or any future Awards.",
+     "where": "3.2(b)"
+    },
+    {
+     "field": "who-enters",
+     "value": "Entry by the Producer or a representative of the production company or distributor/broadcaster.",
+     "quote": "Your entry should be completed by the Producer or a representative of the Production Company or Distributor/Broadcaster.",
+     "where": "3.1(b)"
+    },
+    {
+     "field": "all-producers-agree",
+     "value": "Every producer must agree to the entry.",
+     "quote": "AACTA will only consider an Entry Form as valid if the submission of it has been agreed to by all of the Producers of a Production.",
+     "where": "3.7(d)"
+    },
+    {
+     "field": "dates-on-website",
+     "value": "Dates are on the AACTA website, not in the rule book.",
+     "quote": "Please refer to the AACTA website for current dates as they relate to eligibility periods and voting periods.",
+     "where": "3.1(c)"
+    },
+    {
+     "field": "fees-on-website",
+     "value": "Fees are on the website and entry form.",
+     "quote": "The fees payable in relation to each Award Category will be stated on the AACTA Website and the Entry Form relevant to the Award Category and may change from year to year.",
+     "where": "2(o)"
+    },
+    {
+     "field": "one-category",
+     "value": "A production may enter one award category.",
+     "quote": "Productions may only be entered into one Award Category",
+     "where": "3.3(a)(iv)"
+    },
+    {
+     "field": "tv-categorisation",
+     "value": "TV entries need both the broadcaster executive and the senior production executive to confirm the category.",
+     "quote": "All TV category entrants will require confirmation of their entered categorisation from both; a senior executive at their associated broadcaster; and the most senior production executive listed on the entry.",
+     "where": "3.3(a)(v)"
+    },
+    {
+     "field": "afi-may-override",
+     "value": "AFI may override the entrant's category.",
+     "quote": "to determine the appropriate Award Category for any Production and override the selection of the Award Category made by the Entrant;",
+     "where": "3.7(a)(vi)"
+    },
+    {
+     "field": "minimum-entries",
+     "value": "At least 8 entries for a full field of nominations.",
+     "quote": "In order for a production category to proceed with the standard number of nominations, at least 8 entries must be received.",
+     "where": "3.7(a)(i)"
+    },
+    {
+     "field": "minimum-entries-under-8",
+     "value": "Fewer than 8 entries: nominations may be cut to 4.",
+     "quote": "If less than 8 entries are received, the final number of nominated productions may be reduced to 4.",
+     "where": "3.7(a)(i)"
+    },
+    {
+     "field": "minimum-entries-4",
+     "value": "4 or fewer entries: no award.",
+     "quote": "If 4 or less entries are received, the category will not be undertaken.",
+     "where": "3.7(a)(i)"
+    },
+    {
+     "field": "television-program",
+     "value": "Television Program: broadcast in Australia on FTA, subscription, VOD or SVOD, not community TV.",
+     "quote": "a Production broadcast in Australia produced specifically for television broadcast on free to air or subscription television, or available on VOD or SVOD platforms, but excluding broadcasts made on community television networks.",
+     "where": "2(y)"
+    },
+    {
+     "field": "tv-eligibility",
+     "value": "TV: first episode broadcast in Australia for the first time within the TV eligibility period.",
+     "quote": "All television programs submitted to the AACTA Awards must have had their first episode broadcast in Australia for the first time within the Television eligibility period specified on the AACTA website.",
+     "where": "6.3(b)"
+    },
+    {
+     "field": "tv-category-lead-actor",
+     "value": "TV performer award.",
+     "quote": "AACTA Award for Best Lead Actor in a Drama",
+     "where": "6.1(j)"
+    },
+    {
+     "field": "tv-category-lead-actress",
+     "value": "TV performer award.",
+     "quote": "AACTA Award for Best Lead Actress in a Drama",
+     "where": "6.1(k)"
+    },
+    {
+     "field": "tv-category-comedy-lead",
+     "value": "TV performer award.",
+     "quote": "AACTA Award for Best Acting in Comedy in a Lead Role",
+     "where": "6.1(l)"
+    },
+    {
+     "field": "tv-category-comedy-supporting",
+     "value": "TV performer award.",
+     "quote": "AACTA Award for Best Acting in Comedy in a Supporting Role",
+     "where": "6.1(m)"
+    },
+    {
+     "field": "tv-category-supporting-actor",
+     "value": "TV performer award.",
+     "quote": "AACTA Award for Best Supporting Actor in a Drama",
+     "where": "6.1(n)"
+    },
+    {
+     "field": "tv-category-supporting-actress",
+     "value": "TV performer award.",
+     "quote": "AACTA Award for Best Supporting Actress in a Drama",
+     "where": "6.1(o)"
+    },
+    {
+     "field": "tv-acting-names-in-6.3",
+     "value": "Rule 6.3(c) names the drama awards differently, as Guest or Supporting, and limits them to a drama series, miniseries or children's series.",
+     "quote": "Best Guest or Supporting Actor in a Television Drama; and",
+     "where": "6.3(c)"
+    },
+    {
+     "field": "tv-acting-entrant-chooses",
+     "value": "The entrant selects lead or supporting for a candidate.",
+     "quote": "The Entrant must select the most appropriate Award Category for a particular Candidate (e.g. Lead or Supporting Actor).",
+     "where": "6.3(c)(i) and 7.3(d)(i)"
+    },
+    {
+     "field": "tv-lead-not-supporting",
+     "value": "A TV drama candidate cannot be lead and supporting in the same year for the same production.",
+     "quote": "Candidates for the Lead Actor and Lead Actress in a Drama Awards cannot simultaneously be Candidates for the Supporting Actor or Supporting Actress in a Drama Awards in the same year for the same Production.",
+     "where": "6.3(c)(ii)"
+    },
+    {
+     "field": "tv-voice-over",
+     "value": "Voice-over actors in animated programs are not eligible for the TV acting awards.",
+     "quote": "Voice-over actors in animated programs are not eligible for these awards.",
+     "where": "6.3(c)(vii)"
+    },
+    {
+     "field": "childrens-program",
+     "value": "Children's Program: made predominantly for children, animated or live action.",
+     "quote": "A television program that is made predominantly for viewing by children, either created using animation or recorded in live action.",
+     "where": "6.2(a)(i)"
+    },
+    {
+     "field": "tv-voting",
+     "value": "TV nominees and winners (excluding craft) decided by Professional members.",
+     "quote": "Nominees and winners in the Television Award categories, excluding technical craft, are decided upon by Professional AACTA members.",
+     "where": "6.8(s)"
+    },
+    {
+     "field": "film-voting",
+     "value": "Film nominees and winners decided by Professional members (the same sentence also appears for documentaries at 5.8(b)).",
+     "quote": "Nominees and winners are decided by Professional AACTA Members.",
+     "where": "7.8(b)"
+    },
+    {
+     "field": "tv-membership",
+     "value": "At least five TV candidates must be current Professional members.",
+     "quote": "A minimum of five Candidates on the Entry Form must be current AACTA Professional members.",
+     "where": "6.4(d)"
+    },
+    {
+     "field": "candidates-per-category",
+     "value": "At most four people per category; each must have worked on a submitted episode.",
+     "quote": "You may submit a maximum of four people per category. Each candidate must have worked on one or both of the episodes submitted.",
+     "where": "6.5(g)"
+    },
+    {
+     "field": "feature-film",
+     "value": "Feature Film: self-contained dramatized story of at least 60 minutes.",
+     "quote": "Feature Film – A dramatized story that is self-contained and of at least 60 minutes continuous duration.",
+     "where": "7.2(a)"
+    },
+    {
+     "field": "indie-film",
+     "value": "Indie Film: budget below AUD 2 million.",
+     "quote": "Indie Film – A Feature Film with overall budget that is below 2 million AUD",
+     "where": "7.2(b)"
+    },
+    {
+     "field": "film-release-cinema",
+     "value": "Film release route (i): commercial cinema in two capital cities including Sydney or Melbourne, 7+ consecutive days.",
+     "quote": "A commercial cinema, in a minimum of two Australian capital cities including Sydney or Melbourne, for a run of at least seven consecutive days; or",
+     "where": "7.3(a)(i)"
+    },
+    {
+     "field": "film-release-festival",
+     "value": "Route (ii): a qualifying Australian festival plus 4 paid commercial screenings in two capitals.",
+     "quote": "An approved Qualifying Australian Film Festival along with a minimum of four separate screenings (paid admission) at a commercial cinema across a minimum of two Australian Capital cities with one city being Melbourne or Sydney; or",
+     "where": "7.3(a)(ii)"
+    },
+    {
+     "field": "film-release-svod",
+     "value": "Route (iii): a qualifying VOD/SVOD platform or free-to-air broadcast.",
+     "quote": "An approved Qualifying VOD/SVOD platform or broadcast on Free to Air; or",
+     "where": "7.3(a)(iii)"
+    },
+    {
+     "field": "film-category-lead-actor",
+     "value": "Film performer award.",
+     "quote": "AACTA Award for Best Lead Actor in Film",
+     "where": "7.1(d)"
+    },
+    {
+     "field": "film-category-lead-actress",
+     "value": "Film performer award.",
+     "quote": "AACTA Award for Best Lead Actress in Film",
+     "where": "7.1(e)"
+    },
+    {
+     "field": "film-category-supporting-actor",
+     "value": "Film performer award.",
+     "quote": "AACTA Award for Best Supporting Actor in Film",
+     "where": "7.1(f)"
+    },
+    {
+     "field": "film-category-supporting-actress",
+     "value": "Film performer award.",
+     "quote": "AACTA Award for Best Supporting Actress in Film",
+     "where": "7.1(g)"
+    },
+    {
+     "field": "film-lead-not-supporting",
+     "value": "A film candidate cannot be both lead and supporting for the same production.",
+     "quote": "Candidates for the Lead Actor and Lead Actress Awards cannot also be Candidates for the Supporting Actor or Supporting Actress Awards for the same Production.",
+     "where": "7.3(d)(ii)"
+    },
+    {
+     "field": "film-voice-over",
+     "value": "Voice-over actors in animated films are not eligible.",
+     "quote": "Voice-over actors in animated films are not eligible for these awards.",
+     "where": "7.3(d)(vi)"
+    },
+    {
+     "field": "film-motion-capture",
+     "value": "Motion-capture performances considered at AFI/AACTA discretion.",
+     "quote": "Performances utilising motion capture that render the human in another form can be considered at the discretion of AFI/AACTA.",
+     "where": "7.3(d)(vii)"
+    },
+    {
+     "field": "film-membership",
+     "value": "At least five film candidates must be Professional members.",
+     "quote": "A minimum of five Candidates on the Entry Form must be AACTA Professional members.",
+     "where": "7.4(a)"
+    },
+    {
+     "field": "agent-email",
+     "value": "An agent's email may be given for acting candidates.",
+     "quote": "You can provide an agent’s email address for acting candidates.",
+     "where": "13.f FAQ"
+    },
+    {
+     "field": "short-film",
+     "value": "Short Film: under 40 minutes.",
+     "quote": "It must be less than 40 minutes in duration.",
+     "where": "4.2(a)"
+    },
+    {
+     "field": "short-film-students",
+     "value": "Student work is eligible.",
+     "quote": "Student work is eligible for entry.",
+     "where": "4.3(b)"
+    },
+    {
+     "field": "short-film-nominations",
+     "value": "Short film nominations by all voting members.",
+     "quote": "Nominations are decided by all AACTA voting members.",
+     "where": "4.8(c)"
+    },
+    {
+     "field": "short-film-voting",
+     "value": "Short films: an independent pre-selection jury shortlists at most 30.",
+     "quote": "The number of shortlisted productions will be determined by the pre-selection panel, and not exceed 30.",
+     "where": "4.8(a)"
+    },
+    {
+     "field": "withdrawal-refund-late",
+     "value": "Withdrawal between close and nominations: up to half refunded, at discretion.",
+     "quote": "at any time between the Closing Date for Entry and the Awards Nominations Announcement, AACTA may at its discretion refund up to one half of the Fee.",
+     "where": "3.5(b)(ii)"
+    },
+    {
+     "field": "withdrawal-refund",
+     "value": "Withdrawal before entries close: full refund.",
+     "quote": "at any time prior to the Closing Date for Entry for the particular Award Category, AACTA will refund the full amount of the Fee; or",
+     "where": "3.5(b)(i)"
+    },
+    {
+     "field": "statuette",
+     "value": "One statuette per award.",
+     "quote": "AACTA will present one statuette to the winner of each Award within each Award Category.",
+     "where": "3.9(a)"
+    }
+   ],
+   "notes": "Not stated in the rule book: any dates (deferred to the website, see b27-G1-03 and b27-G1-04) and any fee amounts (deferred to the website). The FAQ section (13.d, 13.e) still refers to the \"2026 AACTA Awards Rule Book\". Rule 6.1 names the TV drama awards \"Best Supporting Actor/Actress in a Drama\" while 6.3(c) names \"Best Guest or Supporting Actor/Actress in a Television Drama\". No rule on one performer entering several productions in the same category is stated beyond the lead/supporting exclusivity for the same production.",
+   "sha256": "5372e94ddfbf1e06af2192087697db7d127b5c4c3f2924c6208619a6c763ca89"
+  },
+  {
+   "id": "b25-S55",
+   "title": "AACTA: 2027 AACTA Awards Voting",
+   "url": "https://www.aacta.org/aacta-awards/voting-2027/",
+   "retrieved": "2026-10-25T16:50:22Z",
+   "http": "200",
+   "bytes": 49619,
+   "download": "dl/aacta-2027-voting-page/page.html",
+   "text": "dl/aacta-2027-voting-page/page.txt",
+   "facts": [
+    {
+     "field": "reached",
+     "value": "This build reached the page (the register recorded two connection resets on 2026-10-24).",
+     "quote": "Voting in the AACTA Awards determines which productions, performers and practitioners will be honoured with Australia's highest screen accolade - an AACTA Award.",
+     "where": "body"
+    },
+    {
+     "field": "members-only",
+     "value": "Voting is for AACTA members only.",
+     "quote": "Voting is exclusive to AACTA members, drawn from every sector of the screen industry: Free-to-Air Television, Streaming/SVOD/Subscription Television, Online, Film and Documentary.",
+     "where": "body"
+    },
+    {
+     "field": "professional-only",
+     "value": "Major categories now decided by accredited professional members only.",
+     "quote": "Our major award categories will now be determined by accredited professional members only, strengthening the experience, expertise and integrity behind every result.",
+     "where": "body"
+    },
+    {
+     "field": "crafts",
+     "value": "Craft awards decided by Chapters.",
+     "quote": "Craft Awards in Film, Television and Documentary will be determined by respective Chapters with accreditation aligning each member to the crafts they're qualified to judge.",
+     "where": "body"
+    }
+   ],
+   "notes": "Retried once as the brief asked: HTTP 200, 49,619 bytes. It links the \"Voting Governance Summary\", read as b27-G1-01.",
+   "sha256": "003b24919794feab64cb9258bceb55f8388cda9588ea4351537c0529d03d2e16"
+  },
+  {
+   "id": "b27-G1-01",
+   "title": "AACTA: 2027 AACTA Awards Voting and Assessment Governance Framework",
+   "url": "https://s3-ap-southeast-2.amazonaws.com/aacta-org-assets/Uploads/Voting-and-Assessment-Governance-Framework-1.pdf",
+   "retrieved": "2026-10-25T16:50:43Z",
+   "http": "200",
+   "bytes": 201146,
+   "download": "dl/aacta-voting-governance-framework-pdf/document.pdf",
+   "text": "dl/aacta-voting-governance-framework-pdf/document.txt",
+   "facts": [
+    {
+     "field": "professional-only",
+     "value": "All categories except Short Film are decided by accredited Professional members.",
+     "quote": "All award categories, with the exception of Short Film, are determined by accredited Professional members only, strengthening the experience and expertise behind every result.",
+     "where": "How each category is judged"
+    },
+    {
+     "field": "acting-two-rounds",
+     "value": "Film and TV production and acting: all Professional members, two rounds.",
+     "quote": "Film and Television (Production and Acting) - nominees and winners determined by all Professional members across two rounds.",
+     "where": "How each category is judged"
+    },
+    {
+     "field": "short-film-weighting",
+     "value": "Short Film votes weighted: Professional 100%, General 50%, Youth 25%.",
+     "quote": "A Professional member's vote carries full weight (100%); a General member's vote is weighted at 50%; and a Youth member's vote at 25%.",
+     "where": "How each category is judged"
+    },
+    {
+     "field": "secret-ballot",
+     "value": "Secret ballot.",
+     "quote": "Voting is conducted by secret ballot, and panel and jury deliberations are confidential.",
+     "where": "Independence, confidentiality and scrutiny"
+    },
+    {
+     "field": "invigilator",
+     "value": "Results verified by PKF.",
+     "quote": "results are verified before release by AACTA’s independent invigilator, PKF.",
+     "where": "Independence, confidentiality and scrutiny"
+    },
+    {
+     "field": "merit",
+     "value": "Judged on merit without regard to budget, scale, platform or commercial performance.",
+     "quote": "Work is judged on merit alone, without regard to budget, production scale, distribution platform or commercial performance.",
+     "where": "Assessment panels and juries"
+    }
+   ],
+   "notes": "Linked from b25-S55 (\"Voting Governance Summary\"). Not stated: dates.",
+   "sha256": "bfa755582bba0847a4bd63f522bab5cd9339e39782762d300f8b2065d0b5fb99"
+  },
+  {
+   "id": "b27-G1-02",
+   "title": "AACTA: Entries 2027 (index page)",
+   "url": "https://www.aacta.org/aacta-awards/entries-2027/",
+   "retrieved": "2026-10-25T16:51:33Z",
+   "http": "200",
+   "bytes": 53430,
+   "download": "dl/aacta-2027-entries-page/page.html",
+   "text": "dl/aacta-2027-entries-page/page.txt",
+   "facts": [
+    {
+     "field": "open",
+     "value": "The index page says entries are open (its Television sub-page says TV entries are closed).",
+     "quote": "Entries are now open for the 2027 AACTA Awards presented by BINGE.",
+     "where": "body"
+    }
+   ],
+   "notes": "An index of six sub-pages; dates and fees are on the sub-pages (b27-G1-03 film, b27-G1-04 television).",
+   "sha256": "d645663da7d6a6545f53740425aa3905a37e805aed61349d2fb8bbc87efb65f1"
+  },
+  {
+   "id": "b27-G1-03",
+   "title": "AACTA: Entries 2027, Film",
+   "url": "https://www.aacta.org/aacta-awards/entries-2027/film/",
+   "retrieved": "2026-10-25T16:52:12Z",
+   "http": "200",
+   "bytes": 49166,
+   "download": "dl/aacta-2027-entries-film-page-retry/page.html",
+   "text": "dl/aacta-2027-entries-film-page-retry/page.txt",
+   "facts": [
+    {
+     "field": "status",
+     "value": "The page says film entries are open, though its close date has passed.",
+     "quote": "Film entries for the 2027 AACTA Awards are open.",
+     "where": "body"
+    },
+    {
+     "field": "entries-open",
+     "value": "Entries opened July 6, 2026.",
+     "quote": "Entries Open: Monday 6th July, 2026",
+     "where": "body"
+    },
+    {
+     "field": "entries-close",
+     "value": "Entries closed September 28, 2026.",
+     "quote": "Entries Close: Monday 28th September 2026, 11:59pm AEST",
+     "where": "body"
+    },
+    {
+     "field": "round-1",
+     "value": "Round 1 viewing and voting October 2 to November 9, 2026.",
+     "quote": "Round 1 Viewing and Voting Period: 2nd October 2026 - 9th November 2026",
+     "where": "body"
+    },
+    {
+     "field": "nominations",
+     "value": "Nominations date not yet set.",
+     "quote": "Nominations Announcement: TBC",
+     "where": "body"
+    },
+    {
+     "field": "round-2",
+     "value": "Round 2 not yet set.",
+     "quote": "Round 2 Viewing and Voting Period: TBC",
+     "where": "body"
+    },
+    {
+     "field": "fee-under-500k",
+     "value": "Fee $600 for budgets under $500k (currency not on the page; see notes).",
+     "quote": "Budget under $500k: $600",
+     "where": "body"
+    },
+    {
+     "field": "fee-500k-2m",
+     "value": "Fee 1,150.",
+     "quote": "Budget $500k to $2M: $1,150",
+     "where": "body"
+    },
+    {
+     "field": "fee-2m-4m",
+     "value": "Fee 1,980.",
+     "quote": "Budget $2M to $4M: $1,980",
+     "where": "body"
+    },
+    {
+     "field": "fee-over-4m",
+     "value": "Fee 2,200.",
+     "quote": "Budget over $4m: $2,200",
+     "where": "body"
+    },
+    {
+     "field": "window",
+     "value": "Released publicly January 1 to December 31, 2026.",
+     "quote": "released publicly between January 1st 2026 and December 31st 2026 to be eligible in this category.",
+     "where": "body"
+    }
+   ],
+   "notes": "First attempt reset (000); one retry succeeded. The fee currency is not written on the page; the rule book says entry fees are \"in Australian dollars inclusive of Goods and Services Tax\" (b25-S56, 2(o)). No per-performer fee is listed.",
+   "sha256": "cf97d2a0375e450047e5c8653d83ce58c79c1715b226ee693e53550b735939d8",
+   "attempts": [
+    {
+     "at": "2026-10-25T16:51:52Z",
+     "http": "000",
+     "bytes": 0,
+     "error": "curl: (35) Recv failure: Connection reset by peer",
+     "folder": "dl/aacta-2027-entries-film-page"
+    },
+    {
+     "at": "2026-10-25T16:52:12Z",
+     "http": "200",
+     "bytes": 49166,
+     "error": "",
+     "folder": "dl/aacta-2027-entries-film-page-retry"
+    }
+   ]
+  },
+  {
+   "id": "b27-G1-04",
+   "title": "AACTA: Entries 2027, Television",
+   "url": "https://www.aacta.org/aacta-awards/entries-2027/television/",
+   "retrieved": "2026-10-25T16:52:01Z",
+   "http": "200",
+   "bytes": 51230,
+   "download": "dl/aacta-2027-entries-television-page/page.html",
+   "text": "dl/aacta-2027-entries-television-page/page.txt",
+   "facts": [
+    {
+     "field": "status",
+     "value": "TV entries closed.",
+     "quote": "Television entries for the 2027 AACTA Awards are closed.",
+     "where": "body"
+    },
+    {
+     "field": "entries-close",
+     "value": "Closed September 28, 2026.",
+     "quote": "Entries Close: Monday 28th September 2026, 11:59pm AEDT",
+     "where": "body"
+    },
+    {
+     "field": "round-1",
+     "value": "Round 1 from October 16, 2026, end TBC.",
+     "quote": "Round 1 Viewing and Voting Period: 16th October 2026 - TBC",
+     "where": "body"
+    },
+    {
+     "field": "fee-drama",
+     "value": "Drama Series fee 1,480.",
+     "quote": "Drama Series: $1,480",
+     "where": "body"
+    },
+    {
+     "field": "fee-comedy",
+     "value": "Narrative Comedy Series fee 1,480.",
+     "quote": "Narrative Comedy Series: $1,480",
+     "where": "body"
+    },
+    {
+     "field": "fee-miniseries",
+     "value": "Miniseries fee 1,480.",
+     "quote": "Miniseries: $1,480",
+     "where": "body"
+    },
+    {
+     "field": "fee-childrens",
+     "value": "Children's Program fee 1,480.",
+     "quote": "Children’s Program: $1,480",
+     "where": "body"
+    },
+    {
+     "field": "window",
+     "value": "First episode broadcast in Australia January 1 to December 31, 2026.",
+     "quote": "broadcast in Australia on a FTA Network or VOD/SVOD platform for the first time between January 1st 2026 and December 31st 2026.",
+     "where": "body"
+    }
+   ],
+   "notes": "Fees are per program category; no performer fee is listed (performers are candidates on the program entry). The page also lists a \"Lifestyle Program: $1,480\" fee for a category the rule book does not have.",
+   "sha256": "5111e3153819be6e9bfa724b3cd72d35eb4341fc380cb62645189da15a383e54"
+  },
+  {
+   "id": "b25-S65",
+   "title": "Festival de Cannes: Submit a film",
+   "url": "https://www.festival-cannes.com/en/take-part/submit-a-film/",
+   "retrieved": "2026-10-25T16:52:22Z",
+   "http": "200",
+   "bytes": 146653,
+   "download": "dl/cannes-submit-a-film-page/page.html",
+   "text": "dl/cannes-submit-a-film-page/page.txt",
+   "facts": [
+    {
+     "field": "sections",
+     "value": "Official Selection: Competition, Out of Competition or Un Certain Regard; the committee decides which.",
+     "quote": "Films may be accepted in the Official Selection for Competition, Out of Competition or Un Certain Regard. The selection committee is the sole decision-maker of the category in which a selected film is screened.",
+     "where": "top"
+    },
+    {
+     "field": "2026-closed",
+     "value": "Official Selection and La Cinef registration for 2026 are closed.",
+     "quote": "Registration is now closed for films for the Official Selection (feature films and short films) and the La Cinef selection of student films at the 2026 Festival de Cannes!",
+     "where": "2026 Submission"
+    },
+    {
+     "field": "feature-produced",
+     "value": "Features produced in the 12 months before the festival.",
+     "quote": "Films that have been produced during the twelve months preceding the Festival",
+     "where": "Feature films, Conditions"
+    },
+    {
+     "field": "feature-home-only",
+     "value": "Distribution limited to the country of origin.",
+     "quote": "Films whose distribution is limited to their country of origin",
+     "where": "Feature films, Conditions"
+    },
+    {
+     "field": "international-section-bars",
+     "value": "Selection in another festival's international section makes a film ineligible.",
+     "quote": "If the film has been selected for an international section (competitive or not) of a festival, it becomes ineligible for the Festival de Cannes. A selection is international if it presents films from different countries.",
+     "where": "Feature films, Conditions"
+    },
+    {
+     "field": "feature-no-internet",
+     "value": "Not shown on the internet or released on DVD.",
+     "quote": "Films that have not been shown on the Internet or released on DVD",
+     "where": "Feature films, Conditions"
+    },
+    {
+     "field": "french-release",
+     "value": "Competition features must be released theatrically in France.",
+     "quote": "Every feature film invited to be in competition must be released theatrically in France in accordance with French legislation pertaining to media chronology rules.",
+     "where": "Feature films, Conditions"
+    },
+    {
+     "field": "feature-length",
+     "value": "Features over 60 minutes.",
+     "quote": "In order to be selected as a feature film, your film must be more than 60 minutes long.",
+     "where": "Film duration"
+    },
+    {
+     "field": "no-medium-length",
+     "value": "No films of 15 to 60 minutes.",
+     "quote": "The Festival de Cannes does not accept films with a duration of between 15 and 60 minutes.",
+     "where": "Film duration"
+    },
+    {
+     "field": "feature-deadline",
+     "value": "Feature registration deadline March 13, 2026.",
+     "quote": "The registration deadline is March 13th, 2026 at midnight French time",
+     "where": "Deadline for registration"
+    },
+    {
+     "field": "fee-dcp",
+     "value": "Feature fee: DCP sent, EUR 300 excl. VAT.",
+     "quote": "DCP (Digital Cinema Package) to be sent: €300 excl. VAT, €360 incl. VAT.",
+     "where": "Application and screening fee"
+    },
+    {
+     "field": "fee-uploaded-dcp",
+     "value": "Uploaded DCP EUR 350 excl. VAT.",
+     "quote": "Uploaded DCPs: €350 excl. VAT, €420 incl. VAT.",
+     "where": "Application and screening fee"
+    },
+    {
+     "field": "fee-video",
+     "value": "Video file upload EUR 75 excl. VAT.",
+     "quote": "Video file upload: €75 excl. VAT, €90 incl. VAT.",
+     "where": "Application and screening fee"
+    },
+    {
+     "field": "who-pays",
+     "value": "Fees borne by the producer or sender, non-refundable.",
+     "quote": "Application and screening costs are borne by the producer or the sender, and are non-refundable.",
+     "where": "Application and screening fee"
+    },
+    {
+     "field": "short-length",
+     "value": "Shorts under 15 minutes including credits.",
+     "quote": "In order to be selected in the Short Films competition, your film must be under 15 minutes long (including credits).",
+     "where": "Short films"
+    },
+    {
+     "field": "short-deadline",
+     "value": "Short deadline March 2, 2026.",
+     "quote": "The deadline to submit short films is 2nd March 2026",
+     "where": "Short films"
+    },
+    {
+     "field": "short-fee",
+     "value": "Short fee EUR 25 excl. VAT.",
+     "quote": "Online upload: €25 excl. VAT, €30 incl. VAT for screening fees.",
+     "where": "Short films"
+    },
+    {
+     "field": "camera-dor",
+     "value": "First features in the Official Selection, Directors' Fortnight or Critics' Week compete for the Caméra d'or.",
+     "quote": "all selected first feature films compete for the Caméra d’or, awarded to the best first film presented in the Official Selection (Competition, Out of Competition, Un Certain Regard), in the Director’s Fortnight or in the Semaine de la Critique",
+     "where": "Info"
+    },
+    {
+     "field": "parallel-sections",
+     "value": "Directors' Fortnight and Critics' Week are independent of the festival.",
+     "quote": "The non-official sections Director’s Fortnight and La Semaine de la Critique are independent of the Festival de Cannes.",
+     "where": "Feature films, Important"
+    },
+    {
+     "field": "la-cinef",
+     "value": "La Cinef: student films within a film-school curriculum.",
+     "quote": "have been directed by a student within his/her film school curriculum;",
+     "where": "La Cinef, Eligibility"
+    },
+    {
+     "field": "la-cinef-fee",
+     "value": "No fee for La Cinef.",
+     "quote": "No registration fee is required to submit a short film to LA CINEF.",
+     "where": "La Cinef, Registration fee"
+    }
+   ],
+   "notes": "Juries are not described on this page; prizes are in the regulations (b27-G1-05, b27-G1-06).",
+   "sha256": "43d3381d768c95b58151fe852dd6fbde681aca27357603ee9bb23084e61dfbcb"
+  },
+  {
+   "id": "b27-G1-05",
+   "title": "Festival de Cannes: Feature Films in Official Selection – Regulations 2026",
+   "url": "https://www.festival-cannes.com/en/take-part/submit-a-film/feature-films-in-official-selection/",
+   "retrieved": "2026-10-25T16:52:49Z",
+   "http": "200",
+   "bytes": 84494,
+   "download": "dl/cannes-regulations-feature-films-page/page.html",
+   "text": "dl/cannes-regulations-feature-films-page/page.txt",
+   "facts": [
+    {
+     "field": "sections-competition",
+     "value": "Official Selection: In Competition.",
+     "quote": "In Competition films",
+     "where": "Article 3"
+    },
+    {
+     "field": "sections-ucr",
+     "value": "Official Selection: Un Certain Regard.",
+     "quote": "Un Certain Regard films",
+     "where": "Article 3"
+    },
+    {
+     "field": "sections-premiere",
+     "value": "Official Selection: Cannes Première (also an opening film, a closing film and special screenings).",
+     "quote": "Cannes Première films",
+     "where": "Article 3"
+    },
+    {
+     "field": "home-only",
+     "value": "Not screened outside the home country.",
+     "quote": "not have been screened elsewhere than their home country;",
+     "where": "Article 4"
+    },
+    {
+     "field": "no-other-international",
+     "value": "Not in another international festival selection.",
+     "quote": "not have been presented in another international film festival (if the film was screened in an international selection, competitive or otherwise, of a festival, it is not eligible for the Festival de Cannes – a selection is international once it screens films from different countries);",
+     "where": "Article 4"
+    },
+    {
+     "field": "no-withdrawal",
+     "value": "Once selected, a film cannot be withdrawn except by French court decision.",
+     "quote": "Once selected, a film cannot be withdrawn from the program by the rights-holder other than from a decision by the French courts.",
+     "where": "Article 5.1"
+    },
+    {
+     "field": "jury-awards",
+     "value": "The Competition jury must hand out seven awards.",
+     "quote": "The Jury must hand out the following awards:",
+     "where": "Article 8"
+    },
+    {
+     "field": "award-actress",
+     "value": "Acting award.",
+     "quote": "the Award for Best Actress;",
+     "where": "Article 8"
+    },
+    {
+     "field": "award-actor",
+     "value": "Acting award.",
+     "quote": "the Award for Best Actor.",
+     "where": "Article 8"
+    },
+    {
+     "field": "one-award-per-film",
+     "value": "One award per film; Screenplay or Jury Prize may be paired with an acting award by dispensation.",
+     "quote": "A single film can only receive one of the awards. However, the Award for Best Screenplay and the Jury Prize may be, upon dispensation of the Festival, associated with an acting award.",
+     "where": "Article 8"
+    },
+    {
+     "field": "ties",
+     "value": "Awards can have only one tie, never the Palme d'or.",
+     "quote": "The awards can only have one tie and this provision does not apply to the Palme d’or.",
+     "where": "Article 8"
+    },
+    {
+     "field": "palme-bars-other-competition",
+     "value": "A Palme d'or or Grand Prix winner may not compete at another international festival.",
+     "quote": "Any producer of a feature film invited into Competition commits, should the film win the Palme d’or or the Grand Prix, to not presenting this film in competition at any other international festival.",
+     "where": "Article 9"
+    },
+    {
+     "field": "next-edition",
+     "value": "The next (80th) edition: May 11-22, 2027.",
+     "quote": "May 11-22, 2027",
+     "where": "page footer"
+    }
+   ],
+   "notes": "Jury composition (size, who sits) is not stated. Article 10's dates render as \"13 th March 2026\" and \"23 rd March 2026\" in the page text (superscripts).",
+   "sha256": "f6335b5df4225e0581f7d8e0df2e0d57580b26f06b97e473997d1325de28bbbb"
+  },
+  {
+   "id": "b27-G1-06",
+   "title": "Festival de Cannes: Short films In Competition – Regulations 2026",
+   "url": "https://www.festival-cannes.com/en/take-part/submit-a-film/regulations-for-short-films-in-competition/",
+   "retrieved": "2026-10-25T16:52:53Z",
+   "http": "200",
+   "bytes": 80973,
+   "download": "dl/cannes-regulations-short-films-page/page.html",
+   "text": "dl/cannes-regulations-short-films-page/page.txt",
+   "facts": [
+    {
+     "field": "palme",
+     "value": "The short competition awards a Palme d'or.",
+     "quote": "Every year, the Association Française du Festival International du Film has a short film competition in order to award a Palme d’or.",
+     "where": "Article 2"
+    },
+    {
+     "field": "length",
+     "value": "At most 15 minutes including credits.",
+     "quote": "the duration of films must not exceed 15 minutes, including credits.",
+     "where": "Article 3"
+    },
+    {
+     "field": "notified",
+     "value": "Selected shorts are told before the press conference, around mid-April.",
+     "quote": "In the event that your short film is selected, you will be notified before the official press conference, which takes place each year around the middle of April.",
+     "where": "Article 4"
+    }
+   ],
+   "notes": "No acting prize for shorts is stated.",
+   "sha256": "7b012e383d073cd38cd2c6ea55f01136fb8f7a8d377bd7abfddd5c8c7097ec6d"
+  },
+  {
+   "id": "b25-S66",
+   "title": "La Biennale di Venezia: 83rd Venice International Film Festival, Regulations",
+   "url": "https://www.labiennale.org/en/cinema/2026/regulations",
+   "retrieved": "2026-10-25T16:52:25Z",
+   "http": "200",
+   "bytes": 85637,
+   "download": "dl/venice-2026-regulations-page/page.html",
+   "text": "dl/venice-2026-regulations-page/page.txt",
+   "facts": [
+    {
+     "field": "dates",
+     "value": "Lido, September 2 to 12, 2026.",
+     "quote": "Venice International Film Festival is organised by La Biennale di Venezia and will be held on the Lido di Venezia from 2 to 12 September 2026.",
+     "where": "1"
+    },
+    {
+     "field": "world-premieres",
+     "value": "Official Selection: world premieres only.",
+     "quote": "Only films presented as world premieres that meet the following criteria are eligible for selection:",
+     "where": "3"
+    },
+    {
+     "field": "completed-after",
+     "value": "Completed after September 6, 2025.",
+     "quote": "Films that were completed after 6 September 2025;",
+     "where": "3"
+    },
+    {
+     "field": "no-distribution",
+     "value": "No commercial distribution or internet exhibition.",
+     "quote": "Films that have not had any form of commercial distribution or exhibition on the Internet;",
+     "where": "3"
+    },
+    {
+     "field": "no-prior-screening",
+     "value": "Not screened to public or press, nor at any international festival, even at home.",
+     "quote": "Films that neither have been previously screened to the public and/or the press, nor have been presented at any other International film festival or cinematographic event, including those in the country of origin.",
+     "where": "3"
+    },
+    {
+     "field": "competition",
+     "value": "Venezia 83: at most 21 features.",
+     "quote": "An International competition comprising a maximum of 21 feature-length films presented as world premieres.",
+     "where": "3.1"
+    },
+    {
+     "field": "orizzonti",
+     "value": "Orizzonti: at most 19 films.",
+     "quote": "An international competition reserved for a maximum of 19 films",
+     "where": "3.3"
+    },
+    {
+     "field": "orizzonti-shorts",
+     "value": "Orizzonti Corti: competing shorts of at most 20 minutes.",
+     "quote": "The Orizzonti section features a selection of competing short films lasting a maximum of 20 minutes",
+     "where": "3.3"
+    },
+    {
+     "field": "jury",
+     "value": "Venezia jury: at most 7 people from various countries.",
+     "quote": "An International Jury composed of no more than 7 personalities from the world of cinema and culture from various countries",
+     "where": "6.1"
+    },
+    {
+     "field": "prize-actress",
+     "value": "Acting prize.",
+     "quote": "Coppa Volpi for Best Actress",
+     "where": "6.1"
+    },
+    {
+     "field": "prize-actor",
+     "value": "Acting prize.",
+     "quote": "Coppa Volpi for Best Actor",
+     "where": "6.1"
+    },
+    {
+     "field": "prize-young",
+     "value": "Young performer prize.",
+     "quote": "Marcello Mastroianni Award for Best New Young Actor or Actress",
+     "where": "6.1"
+    },
+    {
+     "field": "no-joint",
+     "value": "No joint winners.",
+     "quote": "There will be no joint winners.",
+     "where": "6.1"
+    },
+    {
+     "field": "acting-pairing",
+     "value": "Once only, an acting prize may go to a film that won another prize.",
+     "quote": "Exceptionally and just in one case, after consultation with the Festival Director, the Jury may confer the Coppa Volpi or the Marcello Mastroianni award to an actor or an actress featured in a film which has won one of the other awards listed in the Regulations.",
+     "where": "6.1"
+    },
+    {
+     "field": "orizzonti-jury",
+     "value": "Orizzonti jury: at most 5.",
+     "quote": "An International Jury, composed of no more than 5 personalities from the world of cinema and culture from various countries",
+     "where": "6.2"
+    },
+    {
+     "field": "orizzonti-actress",
+     "value": "Orizzonti acting prize.",
+     "quote": "Orizzonti Award for Best Actress",
+     "where": "6.2"
+    },
+    {
+     "field": "orizzonti-actor",
+     "value": "Orizzonti acting prize.",
+     "quote": "Orizzonti Award for Best Actor",
+     "where": "6.2"
+    },
+    {
+     "field": "orizzonti-short",
+     "value": "Orizzonti short prize.",
+     "quote": "Orizzonti Award for Best Short Film",
+     "where": "6.2"
+    },
+    {
+     "field": "submissions-open",
+     "value": "Submissions opened February 9.",
+     "quote": "Submissions to the 83rd Venice International Film Festival open on 9 February and close as follows:",
+     "where": "7.1"
+    },
+    {
+     "field": "feature-deadline",
+     "value": "Features close June 4.",
+     "quote": "for feature length films, series and miniseries on 4 June;",
+     "where": "7.1"
+    },
+    {
+     "field": "short-deadline",
+     "value": "Shorts close May 28.",
+     "quote": "for short films on 28 May;",
+     "where": "7.1"
+    },
+    {
+     "field": "no-public-screening",
+     "value": "No public screening anywhere, even at home.",
+     "quote": "Under no circumstances may films to be presented at the Venice International Film Festival have been screened publicly, not even in their country of origin.",
+     "where": "7.2"
+    },
+    {
+     "field": "other-festivals-excluded",
+     "value": "Works shown at other international festivals or on the web are excluded.",
+     "quote": "Works previously presented in competing or non-competing sections at other international festivals are also excluded, as are those already available on the web.",
+     "where": "7.2"
+    },
+    {
+     "field": "fees",
+     "value": "Fees: EUR 200 features, 80 shorts; 250 for features from May 15, 2026; 100 for shorts from April 30.",
+     "quote": "The fee is 200 Euros for feature length films and immersive projects, 80 Euros for short films. For feature length films submitted from 15 May 2026 the fee will be 250 Euros. From 30 April the fee will be 100 Euros for short films and 250 Euros for immersive projects.",
+     "where": "7.5"
+    },
+    {
+     "field": "who-submits",
+     "value": "Producers, distributors or other authorised parties submit.",
+     "quote": "Producers, distributors or other parties who submit works to the Festival must guarantee they are legally authorised to do so.",
+     "where": "11"
+    }
+   ],
+   "notes": "The page says this is the 83rd (2026) edition; the 2027 regulations were not found.",
+   "sha256": "86b291737b449b01d98cff4c5d89994de2638bec5b5e72de4f16c43563b2550f"
+  },
+  {
+   "id": "b25-S67",
+   "title": "Berlinale: General Guidelines for Submission and Participation",
+   "url": "https://www.berlinale.de/en/film-entry/guidelines/general-guidelines.html",
+   "retrieved": "2026-10-25T16:52:28Z",
+   "http": "200",
+   "bytes": 230341,
+   "download": "dl/berlinale-general-guidelines-page/page.html",
+   "text": "dl/berlinale-general-guidelines-page/page.txt",
+   "facts": [
+    {
+     "field": "feature-deadline",
+     "value": "Features: form and screener by October 21, 2026.",
+     "quote": "Feature-length films: receipt of submission form and selection screener by October 21, 2026",
+     "where": "2.1"
+    },
+    {
+     "field": "short-deadline",
+     "value": "Shorts: by November 4, 2026.",
+     "quote": "Short films: receipt of submission form and selection screener by November 04, 2026",
+     "where": "2.1"
+    },
+    {
+     "field": "completed",
+     "value": "Completed within 12 months before the festival.",
+     "quote": "Only films completed within the 12 months prior to the start of the festival may be submitted.",
+     "where": "2.1"
+    },
+    {
+     "field": "premieres",
+     "value": "World premieres preferred; a home-country release or festival accepted, except German films.",
+     "quote": "World premieres are preferred in all sections. However, except for German films, a theatrical release as well as a festival participation in the main country of origin will be accepted.",
+     "where": "2.1"
+    },
+    {
+     "field": "no-german-premieres",
+     "value": "German premieres not eligible.",
+     "quote": "German premieres are not eligible for any section accepting film submissions.",
+     "where": "2.1"
+    },
+    {
+     "field": "no-tv-vod",
+     "value": "No TV, internet or VOD showings.",
+     "quote": "Films that have been broadcasted on television or presented on the internet/on VOD are not eligible.",
+     "where": "2.1"
+    },
+    {
+     "field": "no-resubmission",
+     "value": "No resubmission.",
+     "quote": "Films which have been submitted and viewed for previous editions of the Berlinale may not be registered again.",
+     "where": "2.1"
+    },
+    {
+     "field": "fees",
+     "value": "Fee EUR 175 per feature regardless of sections; EUR 75 per short.",
+     "quote": "The fee for submitting a feature-length film is 175 euros (7 % VAT included) regardless of the number of sections for which the film is entered. The fee for short films is 75 euros (7 % VAT included).",
+     "where": "2.2"
+    },
+    {
+     "field": "no-withdrawal",
+     "value": "No withdrawal after announcement.",
+     "quote": "No film may be withdrawn from the festival programme after its participation has been publicly announced.",
+     "where": "3.2"
+    },
+    {
+     "field": "who-submits",
+     "value": "Producers, distributors and others submit.",
+     "quote": "Producers, distributors and other people or organisations submitting a film must ensure that any third parties connected to the production agree to its participation in the festival.",
+     "where": "3.2"
+    },
+    {
+     "field": "cast-presence",
+     "value": "Directors and main cast expected; no travel paid; some hotel rooms.",
+     "quote": "The Berlinale expects the invited films’ directors and main cast to attend the presentation of their films in Berlin, if possible. The festival is not in the position to cover travel expenses, although a certain number of hotel rooms are made available.",
+     "where": "3.3"
+    }
+   ],
+   "notes": "The 2027 festival dates are not stated on this page. Juries and prizes are described elsewhere (b27-G1-10, b25-S68).",
+   "sha256": "3b3bf488ac88b69b58e2a99b69eb3a2519ccbe13fb5135e61258a613810bfe00"
+  },
+  {
+   "id": "b25-S68",
+   "title": "Berlinale: Welcome to the Film Entry",
+   "url": "https://www.berlinale.de/en/film-entry/submission/start.html",
+   "retrieved": "2026-10-25T16:53:48Z",
+   "http": "200",
+   "bytes": 201997,
+   "download": "dl/berlinale-film-entry-start-page/page.html",
+   "text": "dl/berlinale-film-entry-start-page/page.txt",
+   "facts": [
+    {
+     "field": "feature-deadline-passed",
+     "value": "Feature deadline passed October 21.",
+     "quote": "The submission deadline for feature films has passed on October 21.",
+     "where": "top"
+    },
+    {
+     "field": "shorts-open",
+     "value": "Shorts until November 4.",
+     "quote": "Short films can still be submitted until November 4.",
+     "where": "top"
+    },
+    {
+     "field": "european-premieres",
+     "value": "Only Perspectives, Panorama, Generation and Forum accept European premieres.",
+     "quote": "Only the Perspectives, Panorama, Generation and Forum sections accept European premieres.",
+     "where": "Premiere Status"
+    },
+    {
+     "field": "awards-as-of",
+     "value": "Awards listed as of September 2026, subject to change.",
+     "quote": "(as of September 2026 – subject to change)",
+     "where": "Sections at a Glance"
+    },
+    {
+     "field": "competition-awards",
+     "value": "Competition awards include the Golden Bear and Silver Bears.",
+     "quote": "Golden Bear, Silver Bears, Berlinale Documentary Award, Teddy Awards, Heiner Carow Prize",
+     "where": "Sections at a Glance, Competition"
+    },
+    {
+     "field": "shorts-awards",
+     "value": "Berlinale Shorts awards.",
+     "quote": "Golden Bear for Best Short Film, Silver Bear Jury Prize, Berlinale Shorts CUPRA Filmmaker Award, Berlin Short Film Candidate for the European Film Awards, Teddy Award",
+     "where": "Sections at a Glance, Berlinale Shorts"
+    },
+    {
+     "field": "multiple-sections",
+     "value": "One application for several sections.",
+     "quote": "You may submit to multiple sections with only one application.",
+     "where": "Further Information"
+    },
+    {
+     "field": "results-by",
+     "value": "Results at latest by early 2027.",
+     "quote": "Notification of the results of the selection process will take place as soon as possible, at the latest by the beginning of 2027.",
+     "where": "body"
+    }
+   ],
+   "notes": "The section table gives Competition \"min. 60'\" with \"International premiere (German productions have to be world premieres)\", and Berlinale Shorts \"max. 30'\".",
+   "sha256": "3ccbae0984c637a88c032251687e1853f67f3bd988c592fd07bcbb778589b5ef"
+  },
+  {
+   "id": "b27-G1-07",
+   "title": "Berlinale: Competition Regulations",
+   "url": "https://www.berlinale.de/en/film-entry/guidelines/competition.html",
+   "retrieved": "2026-10-25T16:53:52Z",
+   "http": "200",
+   "bytes": 186982,
+   "download": "dl/berlinale-competition-regulations-page/page.html",
+   "text": "dl/berlinale-competition-regulations-page/page.txt",
+   "facts": [
+    {
+     "field": "eligible-kinds",
+     "value": "Fiction features, documentaries, animation and experimental films.",
+     "quote": "Eligible for Competition are fiction feature films, documentaries, animation and experimental films, which",
+     "where": "1"
+    },
+    {
+     "field": "length",
+     "value": "At least 60 minutes.",
+     "quote": "are of at least 60 minutes running time.",
+     "where": "1"
+    },
+    {
+     "field": "premiere",
+     "value": "World or international premieres; not shown publicly, at an international festival or in release outside the country of origin.",
+     "quote": "are available as world or international premieres. Submitted films must not have been presented publicly outside their country of origin, participated in any international film festival outside of their country of origin, or have been theatrically released outside of their country of origin.",
+     "where": "1"
+    },
+    {
+     "field": "country-of-origin",
+     "value": "Country of origin = production company headquarters.",
+     "quote": "A film’s country of origin is determined by the location of the production company’s headquarters.",
+     "where": "1"
+    },
+    {
+     "field": "germany",
+     "value": "German films must be world premieres.",
+     "quote": "have not been presented publicly in Germany. Accordingly, German films must be world premieres.",
+     "where": "1"
+    },
+    {
+     "field": "theatrical",
+     "value": "Intended for theatrical release.",
+     "quote": "are intended for theatrical release.",
+     "where": "1"
+    },
+    {
+     "field": "prizes",
+     "value": "Compete for Golden Bear and Silver Bears.",
+     "quote": "The selected films compete for the Golden Bear as well as the Silver Bears.",
+     "where": "2"
+    }
+   ],
+   "notes": "",
+   "sha256": "dd688242e10cbca687efbdddd79cb18a0c8b037ffa3439d1396c7bab7b956556"
+  },
+  {
+   "id": "b27-G1-08",
+   "title": "Berlinale: Berlinale Shorts Regulations",
+   "url": "https://www.berlinale.de/en/film-entry/guidelines/berlinale-shorts.html",
+   "retrieved": "2026-10-25T16:53:55Z",
+   "http": "200",
+   "bytes": 187065,
+   "download": "dl/berlinale-shorts-regulations-page/page.html",
+   "text": "dl/berlinale-shorts-regulations-page/page.txt",
+   "facts": [
+    {
+     "field": "length",
+     "value": "At most 30 minutes.",
+     "quote": "do not exceed the maximum running time of 30 minutes.",
+     "where": "1"
+    },
+    {
+     "field": "prizes",
+     "value": "Golden Bear for Best Short Film, Silver Bear Jury Prize (Short Film), CUPRA Filmmaker Award of EUR 20,000.",
+     "quote": "The selected films compete for the Golden Bear for Best Short Film and the Silver Bear Jury Prize (Short Film) as well as the Berlinale Shorts CUPRA Filmmaker Award endowed with 20,000 euros.",
+     "where": "2"
+    }
+   ],
+   "notes": "No acting prize for shorts is stated.",
+   "sha256": "0b3c4c8fa77ff66581737181f2651fa15144a10f79cbbbecdf66068072211068"
+  },
+  {
+   "id": "b27-G1-09",
+   "title": "Berlinale: All prizes and juries (index page)",
+   "url": "https://www.berlinale.de/en/festival/awards-and-juries/all-prizes-and-juries.html",
+   "retrieved": "2026-10-25T16:54:22Z",
+   "http": "200",
+   "bytes": 203235,
+   "download": "dl/berlinale-all-prizes-and-juries-page/page.html",
+   "text": "dl/berlinale-all-prizes-and-juries-page/page.txt",
+   "facts": [],
+   "notes": "An index of links only; no rules text. Its \"International Jury\" link was read as b27-G1-10.",
+   "sha256": "db52d65f1bf3c203b3867dad153b45ed217dcbee4bfb6ecf879bc1663077bc94"
+  },
+  {
+   "id": "b27-G1-10",
+   "title": "Berlinale: Prizes of the International Jury",
+   "url": "https://www.berlinale.de/en/festival/awards-and-juries/international-jury.html",
+   "retrieved": "2026-10-25T16:54:42Z",
+   "http": "200",
+   "bytes": 230942,
+   "download": "dl/berlinale-international-jury-page/page.html",
+   "text": "dl/berlinale-international-jury-page/page.txt",
+   "facts": [
+    {
+     "field": "selected-by",
+     "value": "The jury is selected yearly by the Festival Director.",
+     "quote": "The International Jury is selected every year by the Festival Director and presents the following awards:",
+     "where": "body"
+    },
+    {
+     "field": "leading",
+     "value": "Acting prize (gender-neutral).",
+     "quote": "Silver Bear for Best Leading Performance",
+     "where": "body"
+    },
+    {
+     "field": "supporting",
+     "value": "Acting prize (gender-neutral).",
+     "quote": "Silver Bear for Best Supporting Performance",
+     "where": "body"
+    },
+    {
+     "field": "one-prize-rule",
+     "value": "No ex aequo; one prize per film except acting awards may be added.",
+     "quote": "None of the Bears may be awarded ex aequo. The Jury may not award more than one prize to the same film, except in the case of the acting awards, which may be awarded in addition to any other prize (Golden Bear, Silver Bear Grand Jury Prize etc.).",
+     "where": "body"
+    },
+    {
+     "field": "jury-members",
+     "value": "Jury includes directors, actors, producers, writers, artists.",
+     "quote": "Jury members include directors, actresses and actors as well as producers, but also writers and artists.",
+     "where": "body"
+    }
+   ],
+   "notes": "Jury size is not stated.",
+   "sha256": "f8d19e92a329fccc5eec9255baa0687b6fd941dbd476fdca5703f2365a180387"
+  },
+  {
+   "id": "b25-S75",
+   "title": "IDFA: Festival entry regulations 2026",
+   "url": "https://professionals.idfa.nl/program/festival-entries/festival-entry-regulations/",
+   "retrieved": "2026-10-25T16:55:11Z",
+   "http": "200",
+   "bytes": 253102,
+   "download": "dl/idfa-2026-entry-regulations-page/page.html",
+   "text": "dl/idfa-2026-entry-regulations-page/page.txt",
+   "facts": [
+    {
+     "field": "dates",
+     "value": "The 39th IDFA: November 12 to 22, 2026.",
+     "quote": "The 39th International Documentary Film Festival Amsterdam, including its New Media program IDFA DocLab, takes place November 12 to 22, 2026.",
+     "where": "intro"
+    },
+    {
+     "field": "documentary-only",
+     "value": "IDFA considers documentary films (broadly, including hybrids) and new media.",
+     "quote": "IDFA considers documentary films, performances and new media projects in any format and of any duration. IDFA understands documentary film in a broad sense, as a film that deals with reality, including hybrid films and films that rely on real elements as a core component.",
+     "where": "1.2"
+    },
+    {
+     "field": "completed-after",
+     "value": "Completed after July 10, 2025.",
+     "quote": "All Films completed after July 10, 2025 are eligible for IDFA 2026.",
+     "where": "1.2"
+    },
+    {
+     "field": "netherlands-bar",
+     "value": "Films already shown, broadcast or online in the Netherlands are ineligible.",
+     "quote": "Films that have already been screened in the Netherlands, been broadcast on Dutch television or are available via VOD, SVOD or any online platform in the Netherlands are not eligible for the Festival.",
+     "where": "1.2"
+    },
+    {
+     "field": "premiere-definitions",
+     "value": "World, international and European premiere defined.",
+     "quote": "A world premiere would mean that a screening at IDFA is the first screening ever, on any media, and anywhere. The international premiere is the first screening outside the country of production, a European premiere is the first screening in Europe",
+     "where": "1.3"
+    },
+    {
+     "field": "competition-premiere",
+     "value": "Competitions need world, international or European premiere.",
+     "quote": "The latter is a requirement for films entered into one of IDFA’s competitions, Luminous or Frontlight sections.",
+     "where": "1.3"
+    },
+    {
+     "field": "private-screening",
+     "value": "A private screening under 50 people does not change premiere status.",
+     "quote": "A private screening prior to IDFA is allowed and will not change a film's premiere status, provided this screening is not publicized, by invitation, without ticket sales, and for fewer than 50 people.",
+     "where": "1.3"
+    },
+    {
+     "field": "early-deadline",
+     "value": "Early deadline April 23, 2026; fees EUR 25 to 45.",
+     "quote": "Early entry deadline April 23, 2026 (entry fee for student films €25, films shorter than 40 minutes €25, films 40 minutes or longer €45)",
+     "where": "1.1"
+    },
+    {
+     "field": "second-deadline",
+     "value": "Second deadline May 28, 2026; fees EUR 25 to 65.",
+     "quote": "Second entry deadline May 28, 2026 (entry fee for student films €25, films shorter than 40 minutes €40, films 40 minutes or longer €65)",
+     "where": "1.1"
+    },
+    {
+     "field": "final-deadline",
+     "value": "Final deadline July 9, 2026; fees EUR 25 to 85.",
+     "quote": "Final entry deadline July 9, 2026 (entry fee for student films €25, films shorter than 40 minutes €50, films 40 minutes or longer €85).",
+     "where": "1.1"
+    },
+    {
+     "field": "entry",
+     "value": "Entry needs the form, an English-subtitled screener and the fee.",
+     "quote": "To consider your entry for the festival, IDFA must receive a completed Entry Form, a screener that is subtitled in English (unless the Film’s spoken language is English), and payment of the entry fee.",
+     "where": "1.5"
+    },
+    {
+     "field": "international-competition",
+     "value": "About 15 films over 60 minutes.",
+     "quote": "The International Competition presents about 15 films, over 60 minutes in duration each, in world, international or European premiere.",
+     "where": "2.4.1"
+    },
+    {
+     "field": "short-competition",
+     "value": "Short documentary competition up to 40 minutes.",
+     "quote": "The IDFA Competition for Short Documentary is a competitive section for films up to 40 minutes, in world, international, or European premiere. For Dutch productions, only world premieres can be accepted.",
+     "where": "2.4.4"
+    },
+    {
+     "field": "prizes",
+     "value": "International Competition jury of five: best film, directing, editing, cinematography.",
+     "quote": "an international jury consisting of five jurors will award a best film award (to be shared equally between director(s) and main producer(s)), IDFA Award for Best Directing (awarded to the director(s)), the IDFA Award for Best Editing (awarded to the editor(s)), and the IDFA Award for Best Cinematography (awarded to the cinematographer(s)).",
+     "where": "3"
+    },
+    {
+     "field": "envision-jury",
+     "value": "Envision Competition jury of five.",
+     "quote": "an international jury consisting of five jurors will award a best film award (to the director(s) and main producer(s)), IDFA Award for Best Directing (awarded to the director(s)), IDFA Award for Outstanding Artistic Contribution.",
+     "where": "3"
+    },
+    {
+     "field": "short-jury",
+     "value": "Short documentary jury of three.",
+     "quote": "an international jury consisting of three jurors will choose the winner of the IDFA Award for Best Short Documentary (awarded to the director).",
+     "where": "3"
+    },
+    {
+     "field": "premiere-kept",
+     "value": "Breaking the agreed premiere status may cost the invitation.",
+     "quote": "Failing to keep the premiere status as agreed on between both Parties will result in IDFA reconsidering selection and placement of the Film",
+     "where": "4.1"
+    }
+   ],
+   "notes": "A documentary festival: a fiction feature or short is not eligible as such (only \"hybrid films and films that rely on real elements\"). No performance prize is stated.",
+   "sha256": "cb1946f7bfe8f6d658975e14d0fac40d088dcf377ba1ec7304c701b26eb498ee"
+  },
+  {
+   "id": "b25-S76",
+   "title": "IDFA: Festival entries",
+   "url": "https://professionals.idfa.nl/program/festival-entries/",
+   "retrieved": "2026-10-25T16:55:14Z",
+   "http": "200",
+   "bytes": 171791,
+   "download": "dl/idfa-festival-entries-page/page.html",
+   "text": "dl/idfa-festival-entries-page/page.txt",
+   "facts": [
+    {
+     "field": "closed",
+     "value": "Entries for 2026 closed.",
+     "quote": "Entries for IDFA 2026 are now closed.",
+     "where": "top"
+    }
+   ],
+   "notes": "An overview of S75; nothing beyond it was used.",
+   "sha256": "8bf43c6843fb956b9c17a933d45ce5c66b3b6a74e23216ee37b7b0622fbfbc20"
+  },
+  {
+   "id": "b25-S70",
+   "title": "Sundance Institute: Submitting Your Project to the 2027 Sundance Film Festival (FAQ PDF)",
+   "url": "https://www.sundance.org/wp-content/uploads/2026/06/2027_Submissions_FAQ.pdf",
+   "retrieved": "2026-10-25T16:55:49Z",
+   "http": "200",
+   "bytes": 177048,
+   "download": "dl/sundance-2027-submissions-faq-pdf/document.pdf",
+   "text": "dl/sundance-2027-submissions-faq-pdf/document.txt",
+   "facts": [
+    {
+     "field": "feature-early",
+     "value": "Features early deadline July 27, 2026, $80.",
+     "quote": "U.S. & International Feature Films: Monday, July 27, 2026 - $80 entry fee",
+     "where": "Q1"
+    },
+    {
+     "field": "feature-official",
+     "value": "Official deadline August 28, 2026, $100.",
+     "quote": "U.S. & International Feature Films: Friday, August 28, 2026 - $100 entry fee",
+     "where": "Q1"
+    },
+    {
+     "field": "feature-late",
+     "value": "Late deadline September 21, 2026, $125.",
+     "quote": "U.S. & International Feature Films: Monday, September 21, 2026 - $125 entry fee",
+     "where": "Q1"
+    },
+    {
+     "field": "short-early",
+     "value": "Shorts early July 13, 2026, $55.",
+     "quote": "U.S. & International Short Films: Monday, July 13, 2026 - $55 entry fee",
+     "where": "Q1"
+    },
+    {
+     "field": "short-late",
+     "value": "Shorts late August 31, 2026, $95.",
+     "quote": "U.S. & International Short Films: Monday, August 31, 2026 - $95 entry fee",
+     "where": "Q1"
+    },
+    {
+     "field": "us-narrative-premiere",
+     "value": "US narrative features: world premiere status only.",
+     "quote": "Only projects retaining world premiere status are eligible for open submission to this category.",
+     "where": "Q2, U.S. Narrative Feature Films"
+    },
+    {
+     "field": "us-financing",
+     "value": "US category: at least half US financing.",
+     "quote": "at least half of the project's financing must originate from within the United States.",
+     "where": "Q2"
+    },
+    {
+     "field": "intl-narrative-premiere",
+     "value": "International narrative features: international premiere status.",
+     "quote": "Only projects retaining international premiere status are eligible for open submission to this category.",
+     "where": "Q2, International Narrative Feature Films"
+    },
+    {
+     "field": "shorts-premiere",
+     "value": "Shorts completed after December 31, 2025 eligible regardless of premiere status.",
+     "quote": "Projects completed after December 31, 2025 are still eligible to submit to the Festival, regardless of premiere status.",
+     "where": "Q2, Short Films"
+    },
+    {
+     "field": "completion",
+     "value": "Completed before January 1, 2026: ineligible.",
+     "quote": "If your project was completed prior to January 1, 2026, it is no longer eligible for consideration.",
+     "where": "Q9"
+    },
+    {
+     "field": "short-vs-feature",
+     "value": "Under 50 minutes = short; 50+ = feature.",
+     "quote": "Films with a total running time of less than 50 minutes (including credits) are classified as shorts. Films with a total running time of 50 minutes or longer are classified as features.",
+     "where": "Q6"
+    },
+    {
+     "field": "no-program-choice",
+     "value": "Submitters cannot choose a program.",
+     "quote": "You may not submit your project directly to any specific Festival program.",
+     "where": "Q3"
+    },
+    {
+     "field": "competition-prizes",
+     "value": "Competition films compete for jury prizes and an audience award.",
+     "quote": "will compete against one another for jury prizes and an audience award.",
+     "where": "Q3, U.S. Dramatic Competition"
+    },
+    {
+     "field": "short-prizes",
+     "value": "Shorts compete for jury prizes by category.",
+     "quote": "will compete against one another for jury prizes within their respective categories and genres (U.S. Fiction, International Fiction, Nonfiction, and Animation).",
+     "where": "Q3, Short Film Competition"
+    },
+    {
+     "field": "festival-favorite",
+     "value": "All accepted features eligible for the audience-balloted Festival Favorite Award.",
+     "quote": "All feature-length films accepted into any of these programs are eligible to compete for the Festival Favorite Award, determined by audience balloting at screenings throughout the Festival.",
+     "where": "Q3"
+    }
+   ],
+   "notes": "No performance prize is named in the FAQ; jury composition not stated. The FAQ says it \"is superseded by our Festival Rules & Regulations\", which were not fetched.",
+   "sha256": "b27bf428148123f06a9e68080ab8eb96fdcf2be1fdb3309bb01b7c668392d7cf"
+  },
+  {
+   "id": "b25-S69",
+   "title": "Sundance Institute: Submit to the 2027 Sundance Film Festival",
+   "url": "https://www.sundance.org/festivals/sundance-film-festival/submit/",
+   "retrieved": "2026-10-25T16:55:45Z",
+   "http": "200",
+   "bytes": 350608,
+   "download": "dl/sundance-submit-page/page.html",
+   "text": "dl/sundance-submit-page/page.txt",
+   "facts": [
+    {
+     "field": "open",
+     "value": "The page still says 2027 submissions are open.",
+     "quote": "Submissions to the 2027 Sundance Film Festival are now open.",
+     "where": "body"
+    }
+   ],
+   "notes": "Category texts repeat the FAQ (b25-S70).",
+   "sha256": "225382c0ad30c6024978202f234258689e229f65a7dd58e3ef56965712ad9591"
+  },
+  {
+   "id": "b25-S53",
+   "title": "Film Independent: Spirit Awards FAQ",
+   "url": "https://www.filmindependent.org/spirit-awards/faq/",
+   "retrieved": "2026-10-25T16:56:38Z",
+   "http": "200",
+   "bytes": 118135,
+   "download": "dl/spirit-awards-faq-page/page.html",
+   "text": "dl/spirit-awards-faq-page/page.txt",
+   "facts": [
+    {
+     "field": "submission-window",
+     "value": "Submissions August 18 to September 29, 2026.",
+     "quote": "We will accept submissions for the 2027 Spirit Awards from August 18 through September 29, 2026.",
+     "where": "FAQ"
+    },
+    {
+     "field": "nominations",
+     "value": "Nominations December 2, 2026.",
+     "quote": "The 2027 Spirit Awards nominations announcement will take place on Wednesday, December 2, 2026.",
+     "where": "FAQ"
+    },
+    {
+     "field": "nominating-committees",
+     "value": "Film Independent assembles nominating committees.",
+     "quote": "Film Independent assembles nominating committees comprised of passionate, working members of the film community.",
+     "where": "FAQ"
+    },
+    {
+     "field": "budget-cap",
+     "value": "Budget ceiling $30 million after tax incentives; Cassavetes $1 million.",
+     "quote": "The budget ceiling for all feature films, after tax incentives, is $30 million. The budget ceiling for John Cassavetes Award qualification is $1 million.",
+     "where": "FAQ"
+    },
+    {
+     "field": "no-shorts",
+     "value": "No short films; at least 70 minutes.",
+     "quote": "All submitted films must be at least 70 minutes long.",
+     "where": "FAQ"
+    },
+    {
+     "field": "animation",
+     "value": "Animated films accepted.",
+     "quote": "Yes, as long as they meet all other eligibility requirements.",
+     "where": "FAQ: Are animated films accepted?"
+    },
+    {
+     "field": "tv-first-season",
+     "value": "TV categories for new series with one season aired.",
+     "quote": "The Spirit Awards television categories are for new series that have aired only one season.",
+     "where": "FAQ"
+    },
+    {
+     "field": "film-performance-categories",
+     "value": "Feature performer categories.",
+     "quote": "Best Lead Performance",
+     "where": "FAQ: categories"
+    },
+    {
+     "field": "film-supporting",
+     "value": "Feature performer category.",
+     "quote": "Best Supporting Performance",
+     "where": "FAQ: categories"
+    },
+    {
+     "field": "film-breakthrough",
+     "value": "Feature performer category.",
+     "quote": "Best Breakthrough Performance",
+     "where": "FAQ: categories"
+    },
+    {
+     "field": "tv-lead",
+     "value": "TV performer category (FAQ wording).",
+     "quote": "Best Lead Performance in a Scripted Series",
+     "where": "FAQ: categories"
+    },
+    {
+     "field": "performance-submission-combos",
+     "value": "Performers may submit Lead + Breakthrough, Supporting + Breakthrough, or Breakthrough only.",
+     "quote": "Performers may submit for Lead + Breakthrough consideration, Supporting + Breakthrough consideration, or just Breakthrough consideration.",
+     "where": "FAQ: categories"
+    },
+    {
+     "field": "one-performance-category",
+     "value": "Nominated in only one of Lead, Supporting or Breakthrough; the committee decides.",
+     "quote": "Ultimately, actors can only be nominated in either Lead, Supporting OR Breakthrough. Final determination on category will be at the discretion of the Nominating Committee.",
+     "where": "FAQ: categories"
+    },
+    {
+     "field": "qualifying-festivals",
+     "value": "Qualifying festivals, with the Berlinale new for 2027.",
+     "quote": "Hot Docs Film Festival, Sundance Film Festival, SXSW Film Festival, New Directors/New Films, Tribeca Film Festival, Telluride Film Festival, Toronto International Film Festival, New York Film Festival and, new for 2027, the Berlin International Film Festival (Berlinale).",
+     "where": "FAQ"
+    },
+    {
+     "field": "winners-voted-by-members",
+     "value": "Film Independent Members vote the winners.",
+     "quote": "Only Film Independent Members vote on the Spirit Awards nominees to determine winners*.",
+     "where": "FAQ"
+    },
+    {
+     "field": "member-deadline",
+     "value": "Voters must be members by December 17, 2026.",
+     "quote": "You must be a current Film Independent Member by December 17, 2026 to be eligible for voting benefits.",
+     "where": "FAQ"
+    },
+    {
+     "field": "nominee-screening-fee",
+     "value": "Nominee Screening Room $4,200 per title.",
+     "quote": "The cost to participate is $4,200 per title.",
+     "where": "FAQ"
+    },
+    {
+     "field": "must-see-all",
+     "value": "Members vote only in categories where they have seen all nominees.",
+     "quote": "You may only vote in categories in which you have seen all of the nominated films.",
+     "where": "FAQ"
+    }
+   ],
+   "notes": "The FAQ links the official rules PDFs (read as b27-G1-11 film, b27-G1-12 TV).",
+   "sha256": "cd60c050033f5177c19d3d60ec521552e4921c675d62af933099959e62d9831a"
+  },
+  {
+   "id": "b25-S54",
+   "title": "Film Independent: Spirit Awards Submissions",
+   "url": "https://www.filmindependent.org/spirit-awards/submissions/",
+   "retrieved": "2026-10-25T16:56:40Z",
+   "http": "200",
+   "bytes": 101660,
+   "download": "dl/spirit-awards-submissions-page/page.html",
+   "text": "dl/spirit-awards-submissions-page/page.txt",
+   "facts": [
+    {
+     "field": "ceremony",
+     "value": "The 42nd Spirit Awards: March 6, 2027.",
+     "quote": "The 42nd Film Independent Spirit Awards will take place on Saturday, March 6, 2027.",
+     "where": "body"
+    },
+    {
+     "field": "nominations",
+     "value": "Nominees announced December 2, 2026.",
+     "quote": "Nominees will be announced December 2, 2026.",
+     "where": "body"
+    },
+    {
+     "field": "closed",
+     "value": "Submissions closed.",
+     "quote": "2027 Spirit Awards submissions are closed.",
+     "where": "body"
+    }
+   ],
+   "notes": "",
+   "sha256": "9b8712ec566612a7415be06a9f307fcf67e79b67466b006fe3e3875723eedf1c"
+  },
+  {
+   "id": "b27-G1-11",
+   "title": "Film Independent: 2027 Spirit Awards Rules & Regulations, Film Submissions (PDF)",
+   "url": "https://s3.us-east-1.amazonaws.com/SA_SubForm_etc/2027_SAsubmissions_RulesRegs_Film_082426.pdf",
+   "retrieved": "2026-10-25T16:57:09Z",
+   "http": "200",
+   "bytes": 196933,
+   "download": "dl/spirit-awards-2027-film-rules-pdf/document.pdf",
+   "text": "dl/spirit-awards-2027-film-rules-pdf/document.txt",
+   "facts": [
+    {
+     "field": "committees",
+     "value": "Three nominating committees: American Narrative, Documentary, International.",
+     "quote": "The Spirit Awards nominations are determined by three (3) committees: American Narrative, Documentary and International.",
+     "where": "Nominating Guidelines"
+    },
+    {
+     "field": "length",
+     "value": "At least 70 minutes.",
+     "quote": "All submitted films must be at least 70 minutes long.",
+     "where": "Rules for Eligibility 1"
+    },
+    {
+     "field": "budget",
+     "value": "Cost after incentives, including post, under $30 million.",
+     "quote": "Cost of completed film after tax incentives, and including post production expenses, should be less than $30 million.",
+     "where": "Rules for Eligibility 2"
+    },
+    {
+     "field": "festival-route",
+     "value": "Eligible via 2026 programming at one of nine festivals.",
+     "quote": "Been programmed in 2026 at one of the following nine film festivals: Hot Docs, New Directors/New Films, New York Film Festival, Sundance Film Festival, SXSW Film Festival, Telluride Film Festival, Toronto International Film Festival, Tribeca Film Festival, Berlin International Film Festival OR",
+     "where": "Rules for Eligibility 3.a"
+    },
+    {
+     "field": "theatrical-route",
+     "value": "Or one week in a US commercial theater in 2026.",
+     "quote": "Been shown in a commercial theater in the United States for at least one week (seven consecutive days) between January 1, 2026 – December 31, 2026 OR",
+     "where": "Rules for Eligibility 3.b"
+    },
+    {
+     "field": "nominated-once",
+     "value": "Once nominated, not eligible again.",
+     "quote": "once a film is nominated (in any category minus the Emerging Filmmaker Award categories: Someone to Watch, Producers Award, Truer Than Fiction), it is no longer eligible for submission in subsequent years.",
+     "where": "Rules for Eligibility 4"
+    },
+    {
+     "field": "american-production",
+     "value": "American production: US citizens/residents in two of director, writer, producer.",
+     "quote": "A film in which U.S. citizens or permanent residents are credited in at least two of the following categories of responsibilities: director, writer or producer.",
+     "where": "Rules for Eligibility 5.a"
+    },
+    {
+     "field": "american-setting",
+     "value": "Or the film is set in significant part in the US or has significant American content.",
+     "quote": "The film is set in significant part in the United States and/or has significant American content.",
+     "where": "Rules for Eligibility 5.b"
+    },
+    {
+     "field": "submitter",
+     "value": "The submitter is the filmmaker or distributor.",
+     "quote": "the submitter (filmmaker or distributor) must supply proof of citizenship or permanent residence of filmmaker(s).",
+     "where": "Rules for Eligibility 5"
+    },
+    {
+     "field": "international-only-intl",
+     "value": "International narratives only eligible for Best International Film.",
+     "quote": "Documentary films are only eligible for Best Documentary; international narrative films are only eligible for Best International Film.",
+     "where": "Rules for Eligibility 6"
+    },
+    {
+     "field": "acting-categories",
+     "value": "Acting categories open to all American narrative features.",
+     "quote": "Best Lead/Supporting/Breakthrough Performance: All American narrative features are eligible in these categories.",
+     "where": "Category Information"
+    },
+    {
+     "field": "acting-american-only",
+     "value": "Only actors in American narrative films are eligible.",
+     "quote": "Only actors in \"American Narrative\" films are eligible in acting categories.",
+     "where": "Category Information"
+    },
+    {
+     "field": "fees-members",
+     "value": "Member fees $400/$500/$600 by deadline.",
+     "quote": "Film Early Deadline $400 Sept 1 / Film Regular Deadline $500 Sept 15 / Film Final Deadline $600 Sept 29",
+     "where": "Submission Payment"
+    },
+    {
+     "field": "fees-non-members",
+     "value": "Non-member fees $450/$550/$650.",
+     "quote": "Film Early Deadline $450 Sept 1 / Film Regular Deadline $550 Sept 15 / Film Final Deadline $650 Sept 29",
+     "where": "Submission Payment"
+    },
+    {
+     "field": "voters",
+     "value": "Film Independent Members are the voting body.",
+     "quote": "Film Independent Members are the official voting body that determines the winners for the Spirit Awards.",
+     "where": "Voting and Consideration"
+    },
+    {
+     "field": "nominee-fee",
+     "value": "Nominee screener program $4,200.",
+     "quote": "Spirit Award-nominated titles will be required to participate in the Nominee Screener program for a $4,200 fee",
+     "where": "Nominee Screening Program"
+    }
+   ],
+   "notes": "The PDF prints a shared login for the screener upload site; it is not reproduced here. The PDF names the international award \"Best International Film\" in rules 5-6 and \"Best International Feature\" in the category list.",
+   "sha256": "aff69855a3c5c79a359b8f79f011f34876ecb88e1664d906e4420f58390b5b91"
+  },
+  {
+   "id": "b27-G1-12",
+   "title": "Film Independent: 2027 Spirit Awards Rules & Regulations, Television Submissions (PDF)",
+   "url": "https://s3.us-east-1.amazonaws.com/SA_SubForm_etc/2027_SAsubmissions_RulesRegs_TV_090126.pdf",
+   "retrieved": "2026-10-25T16:57:12Z",
+   "http": "200",
+   "bytes": 198771,
+   "download": "dl/spirit-awards-2027-tv-rules-pdf/document.pdf",
+   "text": "dl/spirit-awards-2027-tv-rules-pdf/document.txt",
+   "facts": [
+    {
+     "field": "window",
+     "value": "New series airing October 1, 2025 to September 30, 2026.",
+     "quote": "The 2027 Film Independent Spirit Awards will recognize new series airing during the eligibility period of October 1, 2025 - September 30, 2026.",
+     "where": "Rules for Eligibility 1"
+    },
+    {
+     "field": "episodes",
+     "value": "Episodes 18+ minutes; at least two in the window.",
+     "quote": "Episodes must be at least 18 minutes in length and a minimum of two (2) episodes must have been broadcast, transmitted or available via a commercial streaming platform within the eligibility window.",
+     "where": "Rules for Eligibility 3"
+    },
+    {
+     "field": "performers-from-scripted",
+     "value": "Performer entries only from series entered as Best New Scripted Series.",
+     "quote": "Only series eligible to submit in the category of Best New Scripted Series are eligible to submit for Best Lead Performance, Best Supporting Performance, and/or Best Breakthrough Performance.",
+     "where": "Rules for Eligibility 4"
+    },
+    {
+     "field": "international-platform",
+     "value": "International series must air on a US platform for US audiences in the window.",
+     "quote": "The series airs on a U.S. platform with the purpose to be shown to U.S. audiences within the eligibility window, AND",
+     "where": "Rules for Eligibility 5.a"
+    },
+    {
+     "field": "international",
+     "value": "And be a creative and financial US co-production preceding production.",
+     "quote": "The series is a co-production between U.S. and International partners, creatively and financially, preceding the start of production.",
+     "where": "Rules for Eligibility 5.b"
+    },
+    {
+     "field": "ensemble-excludes-individual",
+     "value": "An ensemble winner's performers cannot be nominated individually.",
+     "quote": "Any performer recognized as part of the awarded Best Ensemble Cast will no longer be eligible to be nominated in the individual performance categories.",
+     "where": "Rules for Eligibility"
+    },
+    {
+     "field": "tv-lead",
+     "value": "TV performer category (PDF wording).",
+     "quote": "BEST LEAD PERFORMANCE IN A NEW SCRIPTED SERIES",
+     "where": "Category Information"
+    },
+    {
+     "field": "tv-supporting",
+     "value": "TV performer category.",
+     "quote": "BEST SUPPORTING PERFORMANCE IN A NEW SCRIPTED SERIES",
+     "where": "Category Information"
+    },
+    {
+     "field": "tv-breakthrough",
+     "value": "TV performer category.",
+     "quote": "BEST BREAKTHROUGH PERFORMANCE IN A NEW SCRIPTED SERIES",
+     "where": "Category Information"
+    },
+    {
+     "field": "fees-members",
+     "value": "Series fee (members) $525 / $625.",
+     "quote": "Member fees: (TV Regular Deadline: $525 by Sept 1/TV Final Deadline: $625 by Sept 15)",
+     "where": "Payment"
+    },
+    {
+     "field": "performer-fee",
+     "value": "$100 per performer per category.",
+     "quote": "+ $100 for each performer in a performance category",
+     "where": "Payment"
+    },
+    {
+     "field": "same-performer-multiple",
+     "value": "The same performer in several categories pays $100 per category.",
+     "quote": "if submitting same performer in multiple categories, fee is $100 per category",
+     "where": "Payment"
+    }
+   ],
+   "notes": "The FAQ (b25-S53) names the TV acting categories \"in a Scripted Series\"; this PDF names them \"in a New Scripted Series\".",
+   "sha256": "dee146b8fcd93800250de468da83cd59cdf435a8bcbcb4ede04f88c1c53ce905"
+  },
+  {
+   "id": "b25-S57",
+   "title": "Critics Choice Association: Critics Choice Awards Submissions and Categories",
+   "url": "https://www.criticschoice.com/critics-choice-awards-submissions-and-categories/",
+   "retrieved": "2026-10-25T16:57:40Z",
+   "http": "200",
+   "bytes": 197949,
+   "download": "dl/critics-choice-submissions-and-categories-page/page.html",
+   "text": "dl/critics-choice-submissions-and-categories-page/page.txt",
+   "facts": [
+    {
+     "field": "ceremony",
+     "value": "Ceremony live Sunday January 3, 2027.",
+     "quote": "LIVE SUNDAY JANUARY 3, 2027",
+     "where": "top"
+    },
+    {
+     "field": "film-actor",
+     "value": "Film performer category.",
+     "quote": "Best Actor",
+     "where": "film categories"
+    },
+    {
+     "field": "young",
+     "value": "Film young performer category, 18 and under at filming.",
+     "quote": "(18 and under at the time of filming)",
+     "where": "film categories"
+    },
+    {
+     "field": "film-actress",
+     "value": "Film performer category.",
+     "quote": "Best Actress",
+     "where": "film categories"
+    },
+    {
+     "field": "film-supporting-actor",
+     "value": "Film performer category.",
+     "quote": "Best Supporting Actor",
+     "where": "film categories"
+    },
+    {
+     "field": "film-supporting-actress",
+     "value": "Film performer category.",
+     "quote": "Best Supporting Actress",
+     "where": "film categories"
+    },
+    {
+     "field": "film-young",
+     "value": "Film performer category.",
+     "quote": "Best Young Actor / Actress",
+     "where": "film categories"
+    },
+    {
+     "field": "tv-drama-actor",
+     "value": "TV performer category.",
+     "quote": "Best Actor in a Drama Series",
+     "where": "television categories"
+    },
+    {
+     "field": "tv-drama-actress",
+     "value": "TV performer category.",
+     "quote": "Best Actress in a Drama Series",
+     "where": "television categories"
+    },
+    {
+     "field": "tv-drama-supporting-actor",
+     "value": "TV performer category.",
+     "quote": "Best Supporting Actor in a Drama Series",
+     "where": "television categories"
+    },
+    {
+     "field": "tv-drama-supporting-actress",
+     "value": "TV performer category.",
+     "quote": "Best Supporting Actress in a Drama Series",
+     "where": "television categories"
+    },
+    {
+     "field": "tv-comedy-actor",
+     "value": "TV performer category.",
+     "quote": "Best Actor in a Comedy Series",
+     "where": "television categories"
+    },
+    {
+     "field": "tv-comedy-actress",
+     "value": "TV performer category.",
+     "quote": "Best Actress in a Comedy Series",
+     "where": "television categories"
+    },
+    {
+     "field": "tv-comedy-supporting-actor",
+     "value": "TV performer category.",
+     "quote": "Best Supporting Actor in a Comedy Series",
+     "where": "television categories"
+    },
+    {
+     "field": "tv-comedy-supporting-actress",
+     "value": "TV performer category.",
+     "quote": "Best Supporting Actress in a Comedy Series",
+     "where": "television categories"
+    },
+    {
+     "field": "tv-limited-actor",
+     "value": "TV performer category.",
+     "quote": "Best Actor in a Limited Series or a Movie Made for Television",
+     "where": "television categories"
+    },
+    {
+     "field": "tv-limited-actress",
+     "value": "TV performer category.",
+     "quote": "Best Actress in a Limited Series or a Movie Made for Television",
+     "where": "television categories"
+    },
+    {
+     "field": "tv-limited-supporting-actor",
+     "value": "TV performer category.",
+     "quote": "Best Supporting Actor in a Limited Series or a Movie Made for Television",
+     "where": "television categories"
+    },
+    {
+     "field": "tv-limited-supporting-actress",
+     "value": "TV performer category.",
+     "quote": "Best Supporting Actress in a Limited Series or a Movie Made for Television",
+     "where": "television categories"
+    }
+   ],
+   "notes": "The page lists categories and dates but no eligibility rules. Its \"Submission guidelines\" links (b27-G1-13, b27-G1-14) are script-rendered pages with no text. Eligibility windows are in the timelines (b27-G1-21, b27-G1-22). Who votes is not stated beyond the timelines' ballot steps.",
+   "sha256": "b1c696bac49610260c1c2cc3d493f406b8933d90a50088da4612171637fecea1"
+  },
+  {
+   "id": "b27-G1-13",
+   "title": "Critics Choice: Film Submissions guidelines (filmsubmissions.criticschoice.com/page/guidelines)",
+   "url": "https://filmsubmissions.criticschoice.com/page/guidelines",
+   "retrieved": "2026-10-25T16:58:01Z",
+   "http": "200",
+   "bytes": 5542,
+   "download": "dl/critics-choice-film-guidelines-page/page.html",
+   "text": "dl/critics-choice-film-guidelines-page/page.txt",
+   "facts": [],
+   "notes": "HTTP 200 but unreadable: a 5,542-byte script shell (a JavaScript single-page app) with no guidelines text. Not pursued further (no browser).",
+   "sha256": "671fcae14aafa654c128566307626a6dc5d83c2015ec65a882b9f68b7e2b225c"
+  },
+  {
+   "id": "b27-G1-14",
+   "title": "Critics Choice: TV Submissions guidelines (tvsubmissions.criticschoice.com/page/guidelines)",
+   "url": "https://tvsubmissions.criticschoice.com/page/guidelines",
+   "retrieved": "2026-10-25T16:58:04Z",
+   "http": "200",
+   "bytes": 5535,
+   "download": "dl/critics-choice-tv-guidelines-page/page.html",
+   "text": "dl/critics-choice-tv-guidelines-page/page.txt",
+   "facts": [],
+   "notes": "HTTP 200 but unreadable: a 5,535-byte script shell with no guidelines text.",
+   "sha256": "f3440cdf06fa07d71c69b9e9ace00c585e02a5b8a295b920b6898da05d47a726"
+  },
+  {
+   "id": "b27-G1-21",
+   "title": "Critics Choice: 2026 Film Awards Timeline (updated October 16, 2026)",
+   "url": "https://www.criticschoice.com/wp-content/uploads/2026/10/CCA-Film-Awards-Timeline-updated-2026.pdf",
+   "retrieved": "2026-10-25T17:08:05Z",
+   "http": "200",
+   "bytes": 762459,
+   "download": "dl/critics-choice-film-timeline-pdf/document.pdf",
+   "text": "dl/critics-choice-film-timeline-pdf/document.txt",
+   "facts": [
+    {
+     "field": "window",
+     "value": "Film eligibility January 1 to December 31, 2026.",
+     "quote": "JANUARY 1, 2026 - DECEMBER 31, 2026",
+     "where": "Eligibility window"
+    },
+    {
+     "field": "submissions",
+     "value": "Film submissions open October 21.",
+     "quote": "WEDNESDAY, OCTOBER 21 SUBMISSIONS OPEN FOR ALL FILM CATEGORIES",
+     "where": "timeline"
+    },
+    {
+     "field": "submissions-close",
+     "value": "Film submissions close November 9.",
+     "quote": "MONDAY, NOVEMBER 9 SUBMISSIONS CLOSE FOR ALL FILM CATEGORIES",
+     "where": "timeline"
+    },
+    {
+     "field": "nominating-ballots",
+     "value": "Nominating ballots go to Film Branch members.",
+     "quote": "TUESDAY, NOVEMBER 24 FILM NOMINATING BALLOTS SENT TO FILM BRANCH MEMBERS",
+     "where": "timeline"
+    },
+    {
+     "field": "nominations",
+     "value": "Film nominations December 4.",
+     "quote": "FRIDAY, DECEMBER 4 FILM NOMINATIONS ANNOUNCED LIVE ON E! AND USA NETWORK",
+     "where": "timeline"
+    },
+    {
+     "field": "final-ballots",
+     "value": "Final ballots to all voting members December 21.",
+     "quote": "MONDAY, DECEMBER 21 FINAL BALLOTS SENT TO ALL VOTING MEMBERS",
+     "where": "timeline"
+    },
+    {
+     "field": "final-ballots-due",
+     "value": "Final ballots due December 31.",
+     "quote": "THURSDAY, DECEMBER 31 DEADLINE FOR RETURNING FINAL BALLOTS",
+     "where": "timeline"
+    }
+   ],
+   "notes": "",
+   "sha256": "fd0e5dd574cda31d1ec68a77b951d6b518a3cbee4f110f9d25b3df0df0387fba"
+  },
+  {
+   "id": "b27-G1-22",
+   "title": "Critics Choice: 2026 Television Awards Timeline (updated April 9, 2026)",
+   "url": "https://www.criticschoice.com/wp-content/uploads/2026/08/CCA-TV-Awards-Timeline-2026.pdf",
+   "retrieved": "2026-10-25T17:08:08Z",
+   "http": "200",
+   "bytes": 337833,
+   "download": "dl/critics-choice-tv-timeline-pdf/document.pdf",
+   "text": "dl/critics-choice-tv-timeline-pdf/document.txt",
+   "facts": [
+    {
+     "field": "window",
+     "value": "TV eligibility January 1 to December 31, 2026.",
+     "quote": "JANUARY 1, 2026 - DECEMBER 31, 2026",
+     "where": "Eligibility window"
+    },
+    {
+     "field": "nomcoms",
+     "value": "TV nominating committees begin November 9.",
+     "quote": "MONDAY, NOVEMBER 9 TV NOMCOMS BEGIN DELIBERATIONS",
+     "where": "timeline"
+    },
+    {
+     "field": "nomcoms-end",
+     "value": "TV nominating committees end December 1.",
+     "quote": "TUESDAY, DECEMBER 1 TV NOMCOMS END DELIBERATIONS",
+     "where": "timeline"
+    },
+    {
+     "field": "tv-nominations",
+     "value": "TV nominations December 4.",
+     "quote": "FRIDAY, DECEMBER 4 TV NOMINATIONS ANNOUNCED LIVE ON E! AND USA NETWORK",
+     "where": "timeline"
+    },
+    {
+     "field": "open",
+     "value": "TV submissions open September 21.",
+     "quote": "MONDAY, SEPTEMBER 21 SUBMISSIONS OPEN",
+     "where": "timeline"
+    },
+    {
+     "field": "close",
+     "value": "TV submissions close November 16.",
+     "quote": "MONDAY, NOVEMBER 16 SUBMISSIONS CLOSE",
+     "where": "timeline"
+    }
+   ],
+   "notes": "",
+   "sha256": "d858fb5b07aa3b3bc6508362d9bb31091690ea86643c7da047b252419a59f4c5"
+  },
+  {
+   "id": "b25-S60",
+   "title": "NATAS: Rules & Procedures (theemmys.tv/rules)",
+   "url": "https://theemmys.tv/rules/",
+   "retrieved": "2026-10-25T16:58:21Z",
+   "http": "200",
+   "bytes": 130978,
+   "download": "dl/natas-rules-page/page.html",
+   "text": "dl/natas-rules-page/page.txt",
+   "facts": [
+    {
+     "field": "current-call",
+     "value": "The current national call listed is the 4th Children's & Family.",
+     "quote": "4th Annual Children’s & Family",
+     "where": "National Competition Call for Entries"
+    },
+    {
+     "field": "general-rules-year",
+     "value": "General rules shown are for 2025.",
+     "quote": "GENERAL RULES FOR 2025",
+     "where": "body"
+    }
+   ],
+   "notes": "Read for links; the 4th Children's & Family call for entries was read as b27-G1-15.",
+   "sha256": "a44d5928e68cb0725f082159c4b56ce4952a59e86677c823b39070fe5cad93af"
+  },
+  {
+   "id": "b27-G1-16",
+   "title": "NATAS: Children's & Family Emmy Awards page",
+   "url": "https://theemmys.tv/childrens/",
+   "retrieved": "2026-10-25T16:59:42Z",
+   "http": "200",
+   "bytes": 281210,
+   "download": "dl/natas-childrens-page/page.html",
+   "text": "dl/natas-childrens-page/page.txt",
+   "facts": [
+    {
+     "field": "fifth",
+     "value": "A 5th annual contest is named, linking to the entry portal.",
+     "quote": "5th Annual Children’s & Family Emmy® Awards",
+     "where": "body"
+    }
+   ],
+   "notes": "The 5th's rules were not found as a published PDF; its button links to enter.theemmys.tv (an entry portal), not followed.",
+   "sha256": "473040a446262004858f04ffd60cdb1cb5d77a034646d4471224a14f764c6419"
+  },
+  {
+   "id": "b27-G1-15",
+   "title": "NATAS: Call for Entries, 4th Annual Children's & Family Emmy Awards (v2025.0.1)",
+   "url": "https://theemmys.tv/wp-content/uploads/2025/08/4th-CAFE-Call-for-Entries_with-boilerplate-1.pdf",
+   "retrieved": "2026-10-25T16:58:31Z",
+   "http": "200",
+   "bytes": 2899737,
+   "download": "dl/natas-4th-childrens-family-call-for-entries-pdf/document.pdf",
+   "text": "dl/natas-4th-childrens-family-call-for-entries-pdf/document.txt",
+   "facts": [
+    {
+     "field": "version",
+     "value": "Version 2025.0.1.",
+     "quote": "v2025.0.1",
+     "where": "every page"
+    },
+    {
+     "field": "window",
+     "value": "Eligibility June 1, 2024 to May 31, 2025.",
+     "quote": "originally aired or made available for viewing in the United States for the first time between the dates of June 1, 2024 to May 31, 2025.",
+     "where": "Entering the Children's & Family Emmys"
+    },
+    {
+     "field": "deadlines",
+     "value": "Entry Aug 14, late Aug 26, payment Sep 15 (2025).",
+     "quote": "DEADLINES: Entry - August 14 | Late Entry - August 26 | Payment - September 15",
+     "where": "every page footer"
+    },
+    {
+     "field": "nominations",
+     "value": "Nominations week of December 1, 2025.",
+     "quote": "Week of December 1, 2025 - CAFE nominations announced",
+     "where": "Key dates"
+    },
+    {
+     "field": "ceremonies",
+     "value": "Ceremonies Q1 2026.",
+     "quote": "Q1 2026 - CAFE ceremonies",
+     "where": "Key dates"
+    },
+    {
+     "field": "performer-fee",
+     "value": "Performer, host and craft entries (categories 10-53): the next two lines give the fees.",
+     "quote": "PERFORMER, HOST AND CRAFT CATEGORIES (CATEGORIES 10-53):",
+     "where": "Fees"
+    },
+    {
+     "field": "performer-fee-deadline",
+     "value": "Deadline fee $350.",
+     "quote": "DEADLINE: $350",
+     "where": "Fees"
+    },
+    {
+     "field": "performer-fee-late",
+     "value": "Late fee $400.",
+     "quote": "LATE DEADLINE: $400",
+     "where": "Fees"
+    },
+    {
+     "field": "no-discounts",
+     "value": "No member or bulk discounts.",
+     "quote": "NATAS competitions do not offer discounts based on membership status or bulk submissions.",
+     "where": "Fees"
+    },
+    {
+     "field": "two-academies",
+     "value": "Television Academy runs the Primetime Emmys; NATAS runs Daytime, Sports, News & Documentary, Tech and Children's & Family.",
+     "quote": "The LA-based Television Academy administers the Primetime Emmys. The NY-based National Academy of Television Arts and Sciences (NATAS) administers the Daytime Emmys, the Sports Emmys, the News & Documentary Emmys, the Technology & Engineering Emmys, and now the Children’s & Family Emmys.",
+     "where": "Basic Information"
+    },
+    {
+     "field": "audience",
+     "value": "CAFE honours programming for ages infancy to 15.",
+     "quote": "CAFE content specifically honors programming for audiences ages infancy through 15 years of age",
+     "where": "Basic Information"
+    },
+    {
+     "field": "older-to-primetime",
+     "value": "Content for over-15s, animation included, may go to the Primetime Emmys.",
+     "quote": "Content for viewers older than the age of 15, including animation, may be eligible for the Primetime Emmy Awards.",
+     "where": "Basic Information"
+    },
+    {
+     "field": "adult-animation",
+     "value": "Animation for 16+ belongs to the Primetime Emmys.",
+     "quote": "Animation designed for adult and teen audiences age 16 and older is eligible within the Primetime Emmys.",
+     "where": "Basic Information"
+    },
+    {
+     "field": "eligibility-panel",
+     "value": "Contest eligibility decided by administration and the Eligibility Panel, not the entrant.",
+     "quote": "Eligibility is determined by administration and the Eligibility Panel, NOT the entrant.",
+     "where": "Eligibility Panel"
+    },
+    {
+     "field": "preschool",
+     "value": "Preschool: animated and live action, ages 0 to 5.",
+     "quote": "Preschool content, both animated and live-action, is content specifically designed for viewers from infancy to five years of age.",
+     "where": "Preschool Content"
+    },
+    {
+     "field": "childrens",
+     "value": "Children's and family: animated and live action, ages 6 to 11.",
+     "quote": "Children’s and family content, both animated and live action, is content specifically designed for viewers ages six to 11 years of age",
+     "where": "Children's & Family Viewing Content"
+    },
+    {
+     "field": "animated-definition",
+     "value": "An animated program is two-thirds animated content.",
+     "quote": "Animated Programs contain a predominance of animated content - clarified as ⅔ animated content.",
+     "where": "Individual Eligibility Exceptions"
+    },
+    {
+     "field": "acting-categories",
+     "value": "Non-gendered acting and voice categories; show and performer must agree on placement.",
+     "quote": "The Children’s & Family Emmys features a full slate of non-gendered acting and voice performance categories. Eligibility is determined by number of roles performed, screen time, and age. The show and the performer must be in agreement as to where the performance is being entered.",
+     "where": "Acting Categories"
+    },
+    {
+     "field": "younger",
+     "value": "Performers 18 or under: Younger OR Lead/Supporting, not both.",
+     "quote": "Younger performers, defined as performers who are ages 18 or under at any point within the current eligibility window, may enter the Younger Performer category OR a Lead or Supporting category but not both.",
+     "where": "Acting Categories"
+    },
+    {
+     "field": "primetime-shows-excluded",
+     "value": "Younger performers on a Primetime-eligible show cannot enter CAFE.",
+     "quote": "younger performers on “Abbott Elementary” are not eligible in CAFE because “Abbott Elementary” itself is eligible in Primetime.",
+     "where": "Younger Performer Eligibility"
+    },
+    {
+     "field": "same-role-once",
+     "value": "Same role on several shows: one entry.",
+     "quote": "Performers who play or voice the same role on multiple shows can only enter once for the same role",
+     "where": "Younger Performer Eligibility / Camera Style"
+    },
+    {
+     "field": "live-and-voice-two-entries",
+     "value": "Playing a role live and voicing it in animation are two crafts, two entries.",
+     "quote": "if a performer plays the character on a live action show and then voices the same character on an animated version, this is considered two different crafts and therefore the performer is eligible for two different entries",
+     "where": "Younger Performer Eligibility / Camera Style"
+    },
+    {
+     "field": "cat-lead",
+     "value": "Performer category 10.",
+     "quote": "Outstanding Lead Performer in a Preschool, Children’s or Young Teen Program",
+     "where": "Index of categories"
+    },
+    {
+     "field": "cat-supporting",
+     "value": "Performer category 11.",
+     "quote": "Outstanding Supporting Performer in a Preschool, Children’s or Young Teen Program",
+     "where": "Index of categories"
+    },
+    {
+     "field": "cat-younger",
+     "value": "Performer category 12.",
+     "quote": "Outstanding Younger Performer in a Preschool, Children’s or Young Teen Program",
+     "where": "Index of categories"
+    },
+    {
+     "field": "cat-puppetry",
+     "value": "Performer category 13.",
+     "quote": "Outstanding Puppetry Performer",
+     "where": "Index of categories"
+    },
+    {
+     "field": "cat-voice-1",
+     "value": "Voice category 14.",
+     "quote": "Outstanding Single Role Voice Performer in a Preschool Program",
+     "where": "Index of categories"
+    },
+    {
+     "field": "cat-voice-2",
+     "value": "Voice category 15.",
+     "quote": "Outstanding Multiple Role Voice Performer in a Preschool Program",
+     "where": "Index of categories"
+    },
+    {
+     "field": "cat-voice-3",
+     "value": "Voice category 16.",
+     "quote": "Outstanding Single Role Voice Performer in a Children’s or Young Teen Program",
+     "where": "Index of categories"
+    },
+    {
+     "field": "cat-voice-4",
+     "value": "Voice category 17.",
+     "quote": "Outstanding Multiple Role Voice Performer in a Children’s or Young Teen Program",
+     "where": "Index of categories"
+    },
+    {
+     "field": "cat-voice-younger",
+     "value": "Voice category 18.",
+     "quote": "Outstanding Younger Voice Performer in a Preschool, Children’s or Young Teen Program",
+     "where": "Index of categories"
+    },
+    {
+     "field": "one-category-per-program",
+     "value": "One performance category per program; show and talent agree.",
+     "quote": "A performer may only enter a single performance category (Lead, Supporting or Younger) for a single Program, and the show and the talent must be in agreement.",
+     "where": "Category 10"
+    },
+    {
+     "field": "guest",
+     "value": "Guests may enter Supporting.",
+     "quote": "Guest Performers are welcome to enter this category.",
+     "where": "Category 11"
+    },
+    {
+     "field": "voice-live-action",
+     "value": "Fully voiceover live-action performances eligible in voice categories.",
+     "quote": "While the emphasis is for animated voice performances, fully voiceover performances in Live Action programming are also eligible.",
+     "where": "Categories 14-17"
+    },
+    {
+     "field": "single-vs-multiple",
+     "value": "More than one role in a program: Multiple.",
+     "quote": "If an individual voices more than one role in the same program, they must instead enter Multiple Voice Performance.",
+     "where": "Categories 14, 16"
+    },
+    {
+     "field": "narrators",
+     "value": "Narrators only in Children's Personality.",
+     "quote": "Narrators (including Voiceover) and Storytellers count as Performers but are only eligible within the Children’s Personality category.",
+     "where": "Performer categories checklist"
+    },
+    {
+     "field": "reel",
+     "value": "Performer reel: up to 15 minutes, up to 5 scenes.",
+     "quote": "A reel of up to 15 minutes containing up to 5 scenes from any episodes originally aired in the eligibility window.",
+     "where": "Performer categories checklist"
+    },
+    {
+     "field": "self-submission",
+     "value": "Self or agent submissions allowed with rights-holder permission.",
+     "quote": "CAFE allows self-submissions (or agent/rep submissions) but self-submitters must still attain permission from the rights-holder",
+     "where": "What's New"
+    },
+    {
+     "field": "peer-judging",
+     "value": "Peer judging: vetted judges watch everything in their categories.",
+     "quote": "As a NATAS Emmys contest, CAFE is subject to the peer judging system by which judges are vetted, assigned and must watch all their material in their given categories.",
+     "where": "Judging System"
+    },
+    {
+     "field": "blue-ribbon",
+     "value": "Blue Ribbon judging decides nominees and winners in one round.",
+     "quote": "Then Blue Ribbon Judging will determine nominees and winners within the same round of judging.",
+     "where": "Judging System"
+    },
+    {
+     "field": "highest-average",
+     "value": "Highest average wins.",
+     "quote": "The highest average determines the winners.",
+     "where": "Judging System"
+    }
+   ],
+   "notes": "This is the 4th (2025) contest, the latest call for entries published as a PDF. Fee amounts are on separate lines: \"DEADLINE: $350\" and \"LATE DEADLINE: $400\" follow the quoted performer heading. The Primetime age line differs between the academies: NATAS says infancy to 15 (16+ animation to Primetime); the Television Academy says children's animation under 13 goes to CAFE (b25-N23).",
+   "sha256": "84359e5a87e537a461f3366bbf0b4884d56876c042f228aca58ea05c7c28710b"
+  },
+  {
+   "id": "b25-N13",
+   "title": "AMPTP: 2014 SAG-AFTRA Codified Basic Agreement",
+   "url": "https://amptp.org/wp-content/themes/amptp/assets/pdf/SAG-AFTRA/2014%20Codified%20Basic%20Agreement%20(%E2%80%9CCBA%E2%80%9D).pdf",
+   "retrieved": "2026-10-25T17:00:01Z",
+   "http": "200",
+   "bytes": 5542552,
+   "download": "dl/sag-aftra-2014-codified-basic-agreement-pdf/document.pdf",
+   "text": "dl/sag-aftra-2014-codified-basic-agreement-pdf/document.txt",
+   "facts": [
+    {
+     "field": "fitting-heading",
+     "value": "Schedule A §16.A governs a day performer's fittings.",
+     "quote": "Time spent by a day performer in fitting shall be paid for as follows:",
+     "where": "Schedule A §16.A, p.254"
+    },
+    {
+     "field": "fitting-same-day",
+     "value": "Same-day fittings are work time.",
+     "quote": "Time spent in such fittings shall be work time and part of the performer's continuous day.",
+     "where": "Schedule A §16.A(1)(a)"
+    },
+    {
+     "field": "fitting-voucher",
+     "value": "A signed voucher at every fitting.",
+     "quote": "There shall be a voucher provided at all wardrobe fittings to be signed by the performer indicating time in and time out.",
+     "where": "Schedule A §16.A(1)(b)"
+    },
+    {
+     "field": "fitting-prior-day",
+     "value": "Prior-day fitting: one hour minimum per call, then 15-minute units.",
+     "quote": "When a day performer is fitted on a day prior to the day on which he works, he shall be entitled to one (1) hour minimum pay for each call. Additional time shall be paid for in fifteen (15) minute units.",
+     "where": "Schedule A §16.A(2), p.255"
+    },
+    {
+     "field": "fitting-threshold-2014",
+     "value": "In the 2014 text: no prior-day fitting pay over $1,000 a day, over $1,200 for contracts from July 1, 2015. Later agreements changed this (b25-N16, b25-N17, b25-N12).",
+     "quote": "Day performers receiving over $1,000 per day (over $1,200 per day with respect to contracts entered into on or after July 1, 2015) shall not be entitled to any compensation for such fittings.",
+     "where": "Schedule A §16.A(2)"
+    },
+    {
+     "field": "fitted-not-used",
+     "value": "Fitted and not used: one day's pay.",
+     "quote": "If the day performer is fitted and not used in the picture for which he was fitted, he shall be entitled to one (1) day's pay; such performer shall not be entitled to any further compensation.",
+     "where": "Schedule A §16.A(3)"
+    },
+    {
+     "field": "weekly-free-fitting",
+     "value": "Weekly (Schedule B): four free fitting hours on two days per week worked; excess at contract rate.",
+     "quote": "The Producer shall be entitled to not more than four (4) hours free fitting time on two (2) days for each week worked in the picture.",
+     "where": "Schedule B §20.A(2), p.317"
+    },
+    {
+     "field": "weekly-excess",
+     "value": "Excess at contract salary rate, one-hour minimum call, 15-minute units.",
+     "quote": "Excess time shall be paid for at the salary rate specified in the performer's contract and shall be computed as follows: Initial call shall be for a minimum of one (1) hour; time over one (1) hour on such call shall be computed in fifteen minute (15) units.",
+     "where": "Schedule B §20.A(2)"
+    },
+    {
+     "field": "weekly-fitting-not-consecutive",
+     "value": "Pre-start fittings do not start consecutive employment.",
+     "quote": "Fittings, after employment but before the starting date of such employment, shall not start the consecutive days of employment of a freelance performer.",
+     "where": "Schedule B §20.B"
+    },
+    {
+     "field": "per-diem",
+     "value": "Overnight-location meal per diem (2014): $12 / $18 / $30 = $60.",
+     "quote": "All performers shall be entitled to a basic per diem allowance for meals on overnight locations, which shall be as follows:",
+     "where": "General Provisions §35.B(2), p.105"
+    },
+    {
+     "field": "per-diem-amounts",
+     "value": "2014 amounts.",
+     "quote": "Breakfast $12.00 Lunch 18.00 Dinner 30.00 TOTAL: $60.00",
+     "where": "General Provisions §35.B(2)"
+    },
+    {
+     "field": "per-diem-minimums",
+     "value": "Per diems are minimums, individually bargainable.",
+     "quote": "The foregoing per diems are minimums only and are subject to individual bargaining at not less than the indicated per diem rate.",
+     "where": "General Provisions §35.B(2)"
+    },
+    {
+     "field": "per-diem-deduct",
+     "value": "Furnished meals may be deducted.",
+     "quote": "The Producer shall have the right to deduct from the per diem the appropriate amount for each such meal furnished.",
+     "where": "General Provisions §35.B(2), p.106"
+    },
+    {
+     "field": "per-diem-timing",
+     "value": "Per diem checks before each workday (day) or workweek (weekly).",
+     "quote": "The Producer shall issue per diem checks to day performers before the start of each workday and to weekly performers before the start of each workweek.",
+     "where": "General Provisions §35.B(2)"
+    },
+    {
+     "field": "la-zone",
+     "value": "LA studio zone: 30-mile radius from Beverly and La Cienega.",
+     "quote": "the “studio zone” shall include all territory within the radius of thirty (30) miles from the intersection of Beverly Boulevard and La Cienega Boulevard, Los Angeles, California",
+     "where": "Schedule A §32.F(1), p.270"
+    },
+    {
+     "field": "ny-zone",
+     "value": "NY studio zone: 30 miles from Columbus Circle.",
+     "quote": "The New York \"studio zone\" shall encompass any location within a thirty (30) mile radius of Columbus Circle other than Sandy Hook, New Jersey.",
+     "where": "Schedule A §32.F(2)"
+    },
+    {
+     "field": "mileage",
+     "value": "Reporting in the LA zone away from the studio: $.30 per mile, studio to reporting place and back, none within 10 miles of a designated point.",
+     "quote": "Performers shall be paid $.30 per mile mileage allowance figured from the studio to the place of reporting and back, except that no mileage allowance is required if the performer is required to report for work at a site within a ten (10) mile radius of a point designated by the Producer.",
+     "where": "Schedule A §32.F(3)(a), p.271"
+    },
+    {
+     "field": "mileage-iatse",
+     "value": "The rate follows any better IATSE mileage rate.",
+     "quote": "negotiates with Producer a more favorable mileage allowance than the foregoing thirty cents ($.30) per mile allowance, then, in such event, from such date forward, the Union will be entitled to the benefit of such increase.",
+     "where": "Schedule A §32.F(3)(c)"
+    },
+    {
+     "field": "parking",
+     "value": "Parking paid when reporting in the zone away from a studio.",
+     "quote": "When a performer is required to report for work in the studio zone other than at a studio, Producer shall pay for parking in a supervised public parking lot.",
+     "where": "Schedule A §32.F(4)"
+    },
+    {
+     "field": "location",
+     "value": "Location: outside the studio zone.",
+     "quote": "Location shall mean any place of work not at the Producer's studio which is outside the studio zone.",
+     "where": "Schedule A §32.G, p.272"
+    },
+    {
+     "field": "overnight-location",
+     "value": "Overnight location: lodged or offered lodging, or takes overnight to reach.",
+     "quote": "Overnight location shall be any location where the performer is lodged or offered lodging by the Producer at or near the location for one (1) or more nights, or any location which takes overnight to reach by ordinary means of transportation.",
+     "where": "Schedule A §32.G"
+    },
+    {
+     "field": "reporting",
+     "value": "Report only at studio or within the zone.",
+     "quote": "Except when already at an overnight location, performers shall be required to report only at the Producer's studio or within the studio zone",
+     "where": "Schedule A §32.J"
+    },
+    {
+     "field": "travel-is-work",
+     "value": "Travel at the producer's request between reporting place and location is travel time and work time.",
+     "quote": "all time spent by any performer in traveling at the request of the Producer between any place at which he is required to and does report and any location, both to and from, shall be travel time and, as such, shall be",
+     "where": "Schedule A §32.K (continues on p.273: \"work time, subject to all deductions, limitations and exceptions\")"
+    },
+    {
+     "field": "travel-day-no-work",
+     "value": "Travel on a day without work pays a day.",
+     "quote": "If a day performer is transported to location and such traveling is commenced on any day on which he does not render services, he shall be compensated at a day's pay.",
+     "where": "Schedule A §32.A"
+    }
+   ],
+   "notes": "This is the codified 2014 text; it is amended by the 2017, 2020, 2023 and 2026 memoranda (read below). The hourly rate behind \"one (1) hour minimum pay\" is not defined in §16.A(2) itself.",
+   "sha256": "f5ebacb3821fea36c4469b665d12692a0f0949e03e54d5e8486061728218ed3e"
+  },
+  {
+   "id": "b25-N15",
+   "title": "AMPTP: 2017 SAG-AFTRA CBA and TVA Memorandum of Agreement",
+   "url": "https://amptp.org/wp-content/themes/amptp/assets/pdf/SAG-AFTRA/2017%20CBA%20and%20TVA%20Memorandum%20of%20Agreement%20(%E2%80%9CMOA%E2%80%9D).pdf",
+   "retrieved": "2026-10-25T17:03:26Z",
+   "http": "200",
+   "bytes": 1129725,
+   "download": "dl/sag-aftra-2017-cba-tva-moa-pdf/document.pdf",
+   "text": "dl/sag-aftra-2017-cba-tva-moa-pdf/document.txt",
+   "facts": [
+    {
+     "field": "tva-56-replaced",
+     "value": "The 2017 MOA replaced Television Agreement §56 (travel) with new text.",
+     "quote": "Replace Section 56 (“Air Transportation and Mileage Allowance”) in the 2014 Television Agreement with the following new Section 56",
+     "where": "Item 7, p.10"
+    },
+    {
+     "field": "tva-mileage",
+     "value": "TV Agreement LA zone mileage stays $.30 per mile.",
+     "quote": "Performers shall be paid $.30 per mile mileage allowance figured from the studio to the place of reporting and back",
+     "where": "new TVA §56(b)(1)a), p.11"
+    },
+    {
+     "field": "secondary-zone",
+     "value": "LA secondary studio zone: mileage plus $4.50 a day.",
+     "quote": "In addition, the Producer shall pay a $4.50 per day allowance (no fringe) to each performer asked to report within the Los Angeles secondary studio zone.",
+     "where": "new TVA §56(b)(2)b), p.12"
+    }
+   ],
+   "notes": "Read for mileage only.",
+   "sha256": "df36337551de8ec2609d2ee74c4f6a9f709dd7a6881ce27fe8fedf516fd3b217"
+  },
+  {
+   "id": "b25-N16",
+   "title": "AMPTP: 2020 SAG-AFTRA CBA and TVA Memorandum of Agreement",
+   "url": "https://amptp.org/wp-content/themes/amptp/assets/pdf/SAG-AFTRA/2020%20CBA%20and%20TVA%20MOA.pdf",
+   "retrieved": "2026-10-25T17:03:08Z",
+   "http": "200",
+   "bytes": 2960309,
+   "download": "dl/sag-aftra-2020-cba-tva-moa-pdf/document.pdf",
+   "text": "dl/sag-aftra-2020-cba-tva-moa-pdf/document.txt",
+   "facts": [
+    {
+     "field": "fitting-threshold-2020",
+     "value": "Fitting money break raised: $1,200, or $1,400 for contracts from July 1, 2020.",
+     "quote": "Day performers receiving over $1,200 per day (over $1,400 per day with respect to contracts entered into on or after July 1, 2020) shall not be entitled to any compensation for such fittings.",
+     "where": "Item 4, Money Break for Fittings"
+    },
+    {
+     "field": "allowances-frozen",
+     "value": "Allowances frozen.",
+     "quote": "Freeze all allowances and adjustments in the SAG-AFTRA Codified Basic",
+     "where": "Item 2.c"
+    }
+   ],
+   "notes": "",
+   "sha256": "763b294ff0ea46b6abaec2661b9ecbd84c94d54a785168439dff5818b00b0719"
+  },
+  {
+   "id": "b25-N17",
+   "title": "AMPTP: 2023 SAG-AFTRA CBA and TVA Memorandum of Agreement (the 2023 TV/Theatrical agreement)",
+   "url": "https://amptp.org/wp-content/themes/amptp/assets/pdf/SAG-AFTRA/2023%20CBA%20and%20TVA%20MOA.pdf",
+   "retrieved": "2026-10-25T17:01:14Z",
+   "http": "200",
+   "bytes": 12782172,
+   "download": "dl/sag-aftra-2023-cba-tva-moa-pdf/document.pdf",
+   "text": "dl/sag-aftra-2023-cba-tva-moa-pdf/document.txt",
+   "facts": [
+    {
+     "field": "allowances-frozen",
+     "value": "Allowances frozen except relocation (Item 7) and wardrobe (Item 22).",
+     "quote": "Freeze all allowances and adjustments in the SAG-AFTRA Codified Basic Agreement and Television Agreement (except as provided in Item 7 regarding the relocation allowance and Item 22 regarding the wardrobe allowance).",
+     "where": "Item 2.e, p.3"
+    },
+    {
+     "field": "fitting-item",
+     "value": "Item 20.b amends Schedule A §16.A(2).",
+     "quote": "Fittings (Union Proposal No. 19.B.)",
+     "where": "Item 20.b, p.51 (PDF page 52)"
+    },
+    {
+     "field": "fitting-threshold-2023",
+     "value": "The redline (struck text merges into the extracted text). The page image shows $1,200, $1,400 and \"July 1, 2020\" struck and $1,400, $1,500 and \"[the first Sunday after the AMPTP's receipt of notice of ratification]\" inserted: no prior-day fitting pay over $1,400 a day, or over $1,500 for contracts from that Sunday.",
+     "quote": "receiving over $1,200 $ 1 .400 per day (over $1,400 $1,500 per day with respect to",
+     "where": "Item 20.b, p.51 (PDF page 52); see render/moa2023-p52-052.png"
+    },
+    {
+     "field": "per-diem-item",
+     "value": "Per diem raised in CBA §35.B(2) and TVA §65(b).",
+     "quote": "Increase the per diem amounts in Section 35.B.(2) of the General Provision of the Codified Basic Agreement and Section 65(b) of the Television Agreement to the following amounts:",
+     "where": "Item 21, p.52"
+    },
+    {
+     "field": "per-diem-breakfast",
+     "value": "Breakfast: $12 current, $14 from the first Sunday after ratification notice, $16 from the first Sunday two years after (column headers read from the page image).",
+     "quote": "Breakfast $12.00 $14.00 $16.00",
+     "where": "Item 21 table"
+    },
+    {
+     "field": "per-diem-lunch",
+     "value": "Lunch: $18, $21, $22.",
+     "quote": "Lunch $18.00 $21.00 $22.00",
+     "where": "Item 21 table"
+    },
+    {
+     "field": "per-diem-dinner",
+     "value": "Dinner: $30, $35, $37 (totals $60, $70, $75).",
+     "quote": "Dinner $30.00 $35.00 $37.00",
+     "where": "Item 21 table"
+    },
+    {
+     "field": "wardrobe-cleaning",
+     "value": "Principal formal-wear cleaning allowance $27.",
+     "quote": "Increase the wardrobe cleaning allowance for principal performers to $27.00 for formal wear.",
+     "where": "Item 22.a"
+    }
+   ],
+   "notes": "The ratification Sunday is not stated in this MOA; the 2026 MOA's struck text reads \"December 10, 2023\" in that place (b25-N12). Travel time and mileage are not changed by this MOA (allowances frozen).",
+   "sha256": "3c755c871dc8c2f66ba05d11466292d6875ece687a9b128d379c5b870bdd546b"
+  },
+  {
+   "id": "b25-N12",
+   "title": "AMPTP: 2026 SAG-AFTRA Memorandum of Agreement (fully executed May 27, 2026)",
+   "url": "https://amptp.org/wp-content/themes/amptp/assets/pdf/SAG-AFTRA/2026%20SAG-AFTRA%20Memorandum%20of%20Agreement%20FULLY%20EXECUTED%202026-05-27.pdf",
+   "retrieved": "2026-10-25T17:02:08Z",
+   "http": "200",
+   "bytes": 2166670,
+   "download": "dl/sag-aftra-2026-moa-pdf/document.pdf",
+   "text": "dl/sag-aftra-2026-moa-pdf/document.txt",
+   "facts": [
+    {
+     "field": "allowances-stet",
+     "value": "Allowances kept unless the MOA says otherwise.",
+     "quote": "Stet all allowances and adjustments in the SAG-AFTRA Codified Basic Agreement and Television Agreement (except as otherwise provided in this Memorandum of Agreement).",
+     "where": "Item 2.c"
+    },
+    {
+     "field": "fitting-threshold-2026",
+     "value": "Redline (page image shows \"over $1,400\", \"over $1,500.00\" and \"December 10, 2023\" struck; \"$1,500.00 or more\", \"$1,700.00 or more\" and the bracketed date inserted): no prior-day fitting pay at $1,500 or more a day, or $1,700 or more for contracts from July 1, 2026 or the first Sunday after ratification notice, whichever is later.",
+     "quote": "Day performers receiving over $1,400$1,500.00 or more per day (over $1,500.00$1,700.00 or more per day with respect to contracts entered into on or after December 10, 2023 [insert date that is July 1, 2026 or the first Sunday after",
+     "where": "Item 16.a, p.20; see render/moa2026-020.png"
+    },
+    {
+     "field": "fitting-threshold-2026-end",
+     "value": "The sentence ends on p.21.",
+     "quote": "the business day on which the AMPTP receives notice of ratification, whichever is later]) shall not be entitled to any compensation for such fittings.\"",
+     "where": "Item 16.a, p.21; see render/moa2026-021.png"
+    },
+    {
+     "field": "fitting-one-hour",
+     "value": "Prior-day fitting still one hour minimum per call.",
+     "quote": "the day performer shall be entitled to one (1) hour minimum pay for each call. Additional time shall be paid for in fifteen (15) minute units.",
+     "where": "Item 16.a, p.20"
+    },
+    {
+     "field": "per-diem-2028",
+     "value": "Principal per diem up $5 from July 1, 2028 ($1/$2/$2).",
+     "quote": "by $5.00 effective July 1, 2028 (which shall consist of an additional $1.00 for breakfast, $2.00 for lunch and $2.00 for dinner).",
+     "where": "Item 29.a, p.35"
+    },
+    {
+     "field": "contact-lens",
+     "value": "Lens measurement time is treated like wardrobe fitting time.",
+     "quote": "Time spent obtaining the lens measurements shall be treated in the same manner as time spent in a wardrobe fitting.",
+     "where": "Item 17.a"
+    }
+   ],
+   "notes": "The principal per diem amount in force before July 1, 2028 is not restated in this MOA; by the 2023 MOA it is $75 ($16/$22/$37) after its second step, and this MOA adds $5 from July 1, 2028 (that sum is arithmetic, not a quoted figure). The background per diem table in Item 29.b gives $16/$22/$37 = $75, then $17/$24/$39 = $80 from July 1, 2028.",
+   "sha256": "ddd692cd9d75bb568120c244e2b34cd885e2eb934f2a1e3064858e220d8c2716"
+  },
+  {
+   "id": "b25-N01",
+   "title": "AMPTP: 2026-30 SAG-AFTRA Agreement Wage Tables (v.4, May 27, 2026)",
+   "url": "https://amptp.org/wp-content/themes/amptp/assets/pdf/SAG-AFTRA/2026-30%20SAG-AFTRA%20Rates_2026-05-27%204931-9242-3576%20v.4.pdf",
+   "retrieved": "2026-10-25T17:01:19Z",
+   "http": "200",
+   "bytes": 606770,
+   "download": "dl/sag-aftra-2026-30-rates-pdf/document.pdf",
+   "text": "dl/sag-aftra-2026-30-rates-pdf/document.txt",
+   "facts": [
+    {
+     "field": "day-performer",
+     "value": "Theatrical day performer minimum: $1,246 (7/1/25-6/30/26), $1,283 (from 7/1/26), $1,321, $1,361, $1,402.",
+     "quote": "A 299 Performer $1,246 $1,283 $1,321 $1,361 $1,402",
+     "where": "CBA minimums, Day Performers"
+    }
+   ],
+   "notes": "Read only for the day rate, to compare with the fitting thresholds. No per diem, mileage or fitting figures in this document.",
+   "sha256": "074728db9a057eac275b9c577990e7d3d777bdecb55c063bdea7e4da8b3c5d30"
+  },
+  {
+   "id": "b27-G1-18",
+   "title": "AMPTP: Contracts page",
+   "url": "https://amptp.org/contracts/",
+   "retrieved": "2026-10-25T17:03:53Z",
+   "http": "200",
+   "bytes": 73989,
+   "download": "dl/amptp-contracts-page/page.html",
+   "text": "dl/amptp-contracts-page/page.txt",
+   "facts": [
+    {
+     "field": "tv-animation-wages",
+     "value": "The page lists the 2023-26 TV and BC Animation wage scales.",
+     "quote": "Wage Scales – 2023-26 TV and BC Animation Agreements",
+     "where": "SAG-AFTRA list"
+    },
+    {
+     "field": "tv-animation-latest-moa",
+     "value": "Latest TV Animation document listed: the 2023 MOA (no 2026 TV Animation MOA listed).",
+     "quote": "2023 TV Animation Agreement MOA",
+     "where": "SAG-AFTRA list"
+    }
+   ],
+   "notes": "Reached via the AMPTP home page (b27-G1-17, read for its link only).",
+   "sha256": "7e529ddb0ed163c02d2e35dbdbfd9628a46b3e978a61708e10461df13093e12f"
+  },
+  {
+   "id": "b27-G1-17",
+   "title": "AMPTP: home page",
+   "url": "https://amptp.org/",
+   "retrieved": "2026-10-25T17:03:44Z",
+   "http": "200",
+   "bytes": 59515,
+   "download": "dl/amptp-home-page/page.html",
+   "text": "dl/amptp-home-page/page.txt",
+   "facts": [],
+   "notes": "Read only for the link to the contracts page.",
+   "sha256": "d1874174dbbb22cb321ddc9d93c6f05316ca443f4ec4eef00d3e8693244e07d8"
+  },
+  {
+   "id": "b27-G1-19",
+   "title": "AMPTP: 2023-26 Producer-SAG-AFTRA TV Animation Agreement Wage Rates (printed 2/20/2024)",
+   "url": "https://amptp.org/wp-content/themes/amptp/assets/pdf/SAG-AFTRA/Wage%20Scales%20%E2%80%93%202023-26%20TV%20and%20BC%20Animation%20Agreements.pdf",
+   "retrieved": "2026-10-25T17:04:02Z",
+   "http": "200",
+   "bytes": 117672,
+   "download": "dl/sag-aftra-2023-26-tv-bc-animation-wage-scales-pdf/document.pdf",
+   "text": "dl/sag-aftra-2023-26-tv-bc-animation-wage-scales-pdf/document.txt",
+   "facts": [
+    {
+     "field": "over-10-min",
+     "value": "TV animation minimum per film or segment over 10 minutes: $1,082 / $1,158 / $1,204 / $1,246 for the years from 7/1/22, 7/1/23, 7/1/24, 7/1/25 (to 6/30/26).",
+     "quote": "I.A.1. Minimum Compensation per film or segment of film more than 10 minutes in length $1,082 $1,158 $1,204 $1,246",
+     "where": "p.1, SAG-AFTRA Television Animation Series"
+    },
+    {
+     "field": "10-min-or-less",
+     "value": "Per film or segment of 10 minutes or less: $981 / $1,050 / $1,092 / $1,130.",
+     "quote": "I.B.1. Minimum Compensation per film or segment of film 10 minutes or less in length $981 $1,050 $1,092 $1,130",
+     "where": "p.1"
+    },
+    {
+     "field": "fourth-voice",
+     "value": "Each voice after the third (10 minutes or less): $317 / $339 / $353 / $365.",
+     "quote": "II.A.1. For each voice after the third for performers employed on films or segments of films 10 minutes or less in length $317 $339 $353 $365",
+     "where": "p.1"
+    },
+    {
+     "field": "legacy-aftra",
+     "value": "Legacy AFTRA series over 10 minutes: $1,120 / $1,198 / $1,246 / $1,290.",
+     "quote": "I.A.2. Minimum Compensation per film or segment of film more than 10 minutes in length $1,120 $1,198 $1,246 $1,290",
+     "where": "p.1, Legacy AFTRA Television Animation Series"
+    }
+   ],
+   "notes": "The rates run to 6/30/26; no 2026-onward TV Animation rates were found on the AMPTP page. What the minimum covers (session length, voices per session for films over 10 minutes) is not stated in this wage sheet; it is in the 2014 TV Animation Agreement, not fetched.",
+   "sha256": "02025db364d09798dd9067bdded679bbfea27ae7f5d2310efceab9aa60f613f6"
+  },
+  {
+   "id": "work-S36",
+   "title": "Actors' Equity: LORT Negotiations 2023, Summary of Changes (docs/research/career-2026-10-20/work.md S36)",
+   "url": "https://cdn.actorsequity.org/pages/lort-documents/LORTRatification.pdf",
+   "retrieved": "2026-10-25T17:04:20Z",
+   "http": "200",
+   "bytes": 500490,
+   "download": "dl/aea-lort-2023-summary-of-changes-pdf/document.pdf",
+   "text": "dl/aea-lort-2023-summary-of-changes-pdf/document.txt",
+   "facts": [
+    {
+     "field": "term",
+     "value": "Agreement February 13, 2023 to June 27, 2027.",
+     "quote": "Agree to 4.5-year agreement, from February 13, 2023 – June 27, 2027.",
+     "where": "I"
+    },
+    {
+     "field": "min-d",
+     "value": "LORT D actor minimum: $776, $807, $839, $889 (as of 2.13.23, 7.1.24, 6.30.25, 6.29.26).",
+     "quote": "D $776 $807 $839 $889",
+     "where": "II.A, Rule 55(B)"
+    },
+    {
+     "field": "min-c",
+     "value": "LORT C: $972, $1011, $1051, $1114.",
+     "quote": "C $972 $1011 $1051 $1114",
+     "where": "II.A, Rule 55(B)"
+    },
+    {
+     "field": "min-a-plus",
+     "value": "LORT A+: $1867, $1942, $2020, $2117 (12.29.25), $2244 (6.29.26).",
+     "quote": "A+ $1867 $1942 $2020 $2117 $2244",
+     "where": "II.A, Rule 55(B)"
+    }
+   ],
+   "notes": "No per diem amounts in the summary.",
+   "sha256": "e16552e9a583f1f85e1b0f200b30c93d08c295364824335824fb28754e6b707a"
+  },
+  {
+   "id": "b27-G1-20",
+   "title": "LORT: 2023-27 LORT-AEA Collective Bargaining Agreement (lort.org)",
+   "url": "https://lort.org/assets/documents/2023-27-LORT-AEA-Collective-Bargaining-Agreement.pdf",
+   "retrieved": "2026-10-25T17:04:23Z",
+   "http": "200",
+   "bytes": 1420359,
+   "download": "dl/lort-aea-2023-27-cba-pdf/document.pdf",
+   "text": "dl/lort-aea-2023-27-cba-pdf/document.txt",
+   "facts": [
+    {
+     "field": "per-diem",
+     "value": "Per diem $50.00, February 13, 2023 to June 27, 2027.",
+     "quote": "Per Diem. Effective February 13, 2023, through June 27, 2027, the per diem shall be $50.00.",
+     "where": "Rule 55(L)(3), p.90"
+    },
+    {
+     "field": "per-diem-exception",
+     "value": "Not owed if all meals are provided or the local tour is an evening call only.",
+     "quote": "However, if all meals are provided, or if the local tour is for an evening rehearsal or performance only, for which the Actor or Stage Manager is not called by the Theatre until 6:00 PM, this provision does not apply.",
+     "where": "Rule 55(L)(4)"
+    },
+    {
+     "field": "per-diem-when",
+     "value": "Owed on local or overnight tour days returning after 6 PM.",
+     "quote": "When an Actor or Stage Manager performs or rehearses on a local tour or overnight tour and does not return to the home Theatre until after 6:00 PM, that Actor or Stage Manager shall be entitled to the per diem specified in (L)(3) above.",
+     "where": "Rule 55(L)(4)"
+    },
+    {
+     "field": "overnight-tour",
+     "value": "Overnight tours: touring minimum plus per diem.",
+     "quote": "Each member of the company giving four or fewer performances away from the Resident Theatre on overnight tours shall receive no less than the sum specified in section (L)(1) above plus per diem.",
+     "where": "Rule 55(L)(2)(a), p.89"
+    },
+    {
+     "field": "rehearsing-away",
+     "value": "Rehearsing away from the theatre's city: housing and per diem for that period.",
+     "quote": "When an Actor or Stage Manager is required to rehearse away from the city or greater metropolitan area in which the contracting Theatre is located, for such rehearsal period only, the Actor or Stage Manager shall (i) be provided housing, in accordance with Rule 30, and be paid per diem, in accordance with Rule 55(L)(3);",
+     "where": "Rule 51(G)"
+    },
+    {
+     "field": "second-city-16-weeks",
+     "value": "A transfer for 16+ weeks needs no per diem.",
+     "quote": "In the transfer of a company from its home city to a second city for a fixed engagement of 16 or more weeks, there shall be no per diem required.",
+     "where": "Rule 55(U), p.92"
+    },
+    {
+     "field": "housing",
+     "value": "Housing (with taxes and utilities) at no cost to the actor.",
+     "quote": "Housing, including room taxes and utilities, shall be provided at no cost to the Actor or Stage Manager.",
+     "where": "Rule 30(A), p.31"
+    },
+    {
+     "field": "local-releases-housing",
+     "value": "An actor who says in writing they are local releases the theatre from housing.",
+     "quote": "Should the Actor or Stage Manager inform the Theatre in writing that the Actor or Stage Manager is or will be local to the Theatre’s city or greater metropolitan area on or before the first day of employment, the Theatre shall be relieved of any further obligation to the Actor or Stage Manager with respect to housing accommodations.",
+     "where": "Rule 30(G)(10), p.33"
+    },
+    {
+     "field": "rehearsal-pay",
+     "value": "Full contractual salary from the first call, rehearsal or performance; no separate rehearsal rate.",
+     "quote": "Full contractual salary shall be paid commencing with the date the Actor or Stage Manager is called upon to report to the theatre or for rehearsal or performance.",
+     "where": "Rule 55(A)(1), p.86"
+    },
+    {
+     "field": "first-week-prorate",
+     "value": "A rehearsal-only first week may be prorated in sixths.",
+     "quote": "However, when the Actor or Stage Manager is involved solely in rehearsal in their first week of employment, salary may be pro-rated in sixths and the Actor or Stage Manager shall be so advised by rider.",
+     "where": "Rule 55(A)(2)"
+    },
+    {
+     "field": "min-d",
+     "value": "LORT D: $776, $807, $839, $889 (as of 2/13/23, 7/1/24, 6/30/25, 6/29/26).",
+     "quote": "“D” $776 $807 $839 $889",
+     "where": "Rule 55(B), p.87"
+    },
+    {
+     "field": "min-a-plus",
+     "value": "A+ in this text: $2141 as of 6/29/26 and $2244 as of 12/27/2026 (the summary gives $2117 as of 12.29.25 and $2244 as of 6.29.26).",
+     "quote": "“A+” $1867 $1942 $2020 $2141 $2244",
+     "where": "Rule 55(B), p.87"
+    }
+   ],
+   "notes": "No \"out-of-town per diem\" for an actor engaged from outside the theatre's area is stated: Rule 30 gives such an actor housing at no cost; the $50 per diem attaches to tours (55(L)) and rehearsals away from the theatre's city (51(G)). No rehearsal salary distinct from the performance salary is stated.",
+   "sha256": "cbea24de961a59a26e3ebdc9a38a51c7b6f621e4ed240313ba3284dcacb303e3"
+  },
+  {
+   "id": "b25-N23",
+   "title": "Television Academy: 78th Emmy Awards Rules and Procedures, Version 4 (04.07.26)",
+   "url": "https://www.televisionacademy.com/rules",
+   "retrieved": "2026-10-25T08:52Z (file time of scratchpad/dl-emmy/rules.pdf; fetched by brief 27's F, not by this agent)",
+   "http": "200",
+   "bytes": 1841317,
+   "download": "dl/emmy-78th-rules-pdf-copy/document.pdf",
+   "text": "dl/emmy-78th-rules-pdf-copy/document.txt",
+   "facts": [
+    {
+     "field": "arbiter",
+     "value": "The Emmy Awards Committee is the final arbiter of eligibility.",
+     "quote": "The Emmy Awards Committee, on behalf of the Board of Governors, is the final arbiter of any, and all Emmy Awards eligibility matters",
+     "where": "Introduction, p.1"
+    },
+    {
+     "field": "placement-not-assured",
+     "value": "Entering a category does not assure placement.",
+     "quote": "Entry in a category or posting a For Your Consideration video assigned to a category does not assure placement in that category.",
+     "where": "Introduction"
+    },
+    {
+     "field": "placement-not-final",
+     "value": "Placement final 72 hours before nominating ballots.",
+     "quote": "Category placement will not be finalized until 72 hours prior to the posting of the nominating ballots.",
+     "where": "Introduction"
+    },
+    {
+     "field": "who-enters",
+     "value": "Producers enter programs; individuals may enter themselves.",
+     "quote": "Producers may enter their programs for nominations in all categories. Individuals may enter themselves (and their team if the entry is for a team achievement) for specific individual awards.",
+     "where": "Entry Procedures 4"
+    },
+    {
+     "field": "multiple-general",
+     "value": "In most categories, several entries if for different programs.",
+     "quote": "In most categories/areas an eligible individual or the identical team may enter multiple achievements per category or area if the achievements are for different programs.",
+     "where": "Entry Procedures 5"
+    },
+    {
+     "field": "one-bid",
+     "value": "One achievement, one category; the Awards Committee approves placement.",
+     "quote": "every entrant is eligible to place their achievement in only one appropriate category. Final approval of category placement is determined by the Awards Committee.",
+     "where": "Entry Procedures 6"
+    },
+    {
+     "field": "entrant-chooses",
+     "value": "The entrant decides lead, supporting or guest; guest only under 50% of episodes.",
+     "quote": "It is the decision of the entrant whether to enter as a lead, supporting or guest performer, however, only performers appearing in less than 50% of the eligible episodes can submit in the Guest Performer categories",
+     "where": "Performer Awards, Entry Information, p.47 (PDF p.51)"
+    },
+    {
+     "field": "follow-show",
+     "value": "Performers follow the show's category (comedy/drama).",
+     "quote": "All performers must enter categories that follow the categorization of their shows",
+     "where": "Performer Awards, Entry Information"
+    },
+    {
+     "field": "same-character",
+     "value": "Same character on several programs: one category.",
+     "quote": "A performer who plays the same character in more than one series/program may only enter in one category in the current eligibility year.",
+     "where": "Performer Awards, Entry Information"
+    },
+    {
+     "field": "multiple-performing",
+     "value": "Confirmed section: several entries in a performing category if for different programs and characters.",
+     "quote": "Lead, supporting, and guest performers may enter multiple achievements in a performing category if the achievements are for different programs (provided the performer is playing a different character).",
+     "where": "Performer Awards, Entry Information, p.47 (PDF p.51)"
+    },
+    {
+     "field": "guest-after-principal",
+     "value": "Nominated as lead/supporting: no guest for that role later.",
+     "quote": "If a performer has been nominated or has won in a Lead or Supporting Performer category, the performer will not be eligible to submit in a Guest Performer category in a subsequent Emmy year for playing the same role in the same series.",
+     "where": "Performer Awards, Guest Performer Eligibility"
+    },
+    {
+     "field": "voice-not-acting",
+     "value": "Voice-over performers and narrators may not enter lead, supporting or guest.",
+     "quote": "Voice-over performers and narrators may not enter in lead, support or guest performer categories.",
+     "where": "Performer Awards, p.48"
+    },
+    {
+     "field": "vo-category",
+     "value": "Category 75: Outstanding Character Voice-Over Performance.",
+     "quote": "Category 75 OUTSTANDING CHARACTER VOICE-OVER PERFORMANCE",
+     "where": "Category 75, p.49 (PDF p.53)"
+    },
+    {
+     "field": "vo-scope",
+     "value": "Continuing or single performance in a series or special.",
+     "quote": "For a continuing or single voice-over performance in a series or a special",
+     "where": "Category 75"
+    },
+    {
+     "field": "vo-animation-age",
+     "value": "Animated programs for audiences 13 and above.",
+     "quote": "Animation Character Voice-Over eligibility is for programming that targets an audience age 13 and above.",
+     "where": "Category 75"
+    },
+    {
+     "field": "vo-childrens-to-cafe",
+     "value": "Children's animation (under 13) only in the Children's & Family Emmys.",
+     "quote": "Children’s animated programs, which target an audience under the age of 13 will only be eligible in the Children’s & Family Emmys.",
+     "where": "Category 75 (also Animation Awards)"
+    },
+    {
+     "field": "vo-any-visual",
+     "value": "Any character voice-over, however the visual is produced.",
+     "quote": "Eligibility in this category includes any voice-over performance where a character is portrayed no matter how the visual is produced.",
+     "where": "Category 75"
+    },
+    {
+     "field": "vo-multiple-characters",
+     "value": "Several characters in an episode: each a separate entry.",
+     "quote": "Performers who voice multiple characters within an episode or special can submit all characters, provided that each character is submitted as a separate entry.",
+     "where": "Category 75"
+    },
+    {
+     "field": "vo-ai",
+     "value": "AI-manipulated voices must submit the original recording.",
+     "quote": "Any production that has manipulated the voice of the performer with AI must also submit the original recording for the submission to be vetted for eligibility.",
+     "where": "Category 75"
+    },
+    {
+     "field": "vo-video",
+     "value": "Submission video at most 2.5 minutes.",
+     "quote": "For all submissions, the video must be no more than 2½ minutes.",
+     "where": "Category 75, Editing Instructions"
+    },
+    {
+     "field": "vo-single-episode",
+     "value": "From a single episode or special.",
+     "quote": "All entries must upload an edited video file of the entrant’s voice-over appearances from a single episode of a series or a special",
+     "where": "Category 75, Upload Instructions"
+    },
+    {
+     "field": "category-award",
+     "value": "A \"Category\" is head-to-head voting, highest vote-getter wins (Category 75 is a Category, not a Juried award).",
+     "quote": "The definition of a category award is a single, must-give award that is the result of head-to-head competition with the highest vote-getter receiving an Emmy.",
+     "where": "Awards Definitions 1"
+    },
+    {
+     "field": "vo-voters-animation",
+     "value": "The Animation peer group votes Character Voice-Over through its directors, executive producers, producers and voice-over performers.",
+     "quote": "*(directors, executive producers, producers, and voice-over performers from the animation peer group)",
+     "where": "Appendix II"
+    },
+    {
+     "field": "narrator-as-character",
+     "value": "Narration performed as a character goes to Character Voice-Over.",
+     "quote": "If the narration is performed as a character rather than a narrator, even if credited as the narrator, the performer must submit in the character voice-over category.",
+     "where": "Category 76"
+    },
+    {
+     "field": "animated-individuals",
+     "value": "Animated programs over 20 minutes: individuals eligible in a list of categories that includes \"Character Voice-Over\" (short form animation's list includes it too).",
+     "quote": "Individuals who work on animated programs (over 20 minutes) are also eligible in the following individual achievement categories:",
+     "where": "Animated Program"
+    },
+    {
+     "field": "short-form-animated-individuals",
+     "value": "Short-form animated programs (2-20 minutes) have their own list of individual categories, which includes Character Voice-Over.",
+     "quote": "Short Form Animated programs (between 2-20 minutes) are also eligible in the following individual achievement categories:",
+     "where": "Animated Program"
+    },
+    {
+     "field": "vo-voters-performers",
+     "value": "The Performers peer group's additional ballots include Character Voice-Over Performance (column layout read row by row).",
+     "quote": "Performers Performer Character Voice-Over Performance Narrator Host",
+     "where": "Appendix II"
+    },
+    {
+     "field": "no-other-competition",
+     "value": "A program in this competition cannot have entered another national Emmy competition.",
+     "quote": "A program (along with its individual achievements) entering in this year’s competition cannot have been submitted into any other national Emmy competition (Daytime, Children’s & Family, News & Documentary, Sports or International).",
+     "where": "Criteria for Eligibility 4"
+    },
+    {
+     "field": "moving-competitions",
+     "value": "Moving to another category or competition needs an Industry Panel appeal.",
+     "quote": "A program that has entered in one category one year must appeal to move it to another category or Emmy competition (Daytime, Children’s & Family, International, News & Documentary, and Sports) in any subsequent year, with the approval of the Industry Panel.",
+     "where": "Criteria for Eligibility 3b"
+    },
+    {
+     "field": "children-game-shows",
+     "value": "Children-only game and reality competition shows go to CAFE.",
+     "quote": "Game shows and Reality Competition programs with solely children as contestants must enter in the Children’s & Family Emmy Awards.",
+     "where": "Reality categories"
+    }
+   ],
+   "notes": "Appendix II also lists \"Character Voice-Over Performance\" on the Performers peer group's additional ballots (column layout; see the Performers row). The Television Academy's age line (under 13 to CAFE) differs from NATAS's (infancy to 15, b27-G1-15).",
+   "sha256": "dd53240a87574ab50ad934b39c84fbea19839adad579444dc62742eaba4e2d90",
+   "downloadNote": "copied from scratchpad/dl-emmy (fetched earlier in this session by brief 27's F; the register's b25-S45 URL serves the same 1,841,317-byte PDF)"
+  },
+  {
+   "id": "b25-S18",
+   "title": "Pact: Pact Equity TV Agreement Rates (2024 to 2026 rate card)",
+   "url": "https://www.pact.co.uk/static/5ba494d5-7e25-4185-a6aaf2d71f000ff7/Pact-Equity-TV-Agreement-rate-card-2024-to-2026.pdf",
+   "retrieved": "2026-10-25T17:07:08Z",
+   "http": "200",
+   "bytes": 107976,
+   "download": "dl/pact-equity-tv-rates-2024-26-pdf/document.pdf",
+   "text": "dl/pact-equity-tv-rates-2024-26-pdf/document.txt",
+   "facts": [
+    {
+     "field": "columns",
+     "value": "Columns: Current, 2024, 2025, 2026.",
+     "quote": "Service Current 2024 2025 2026",
+     "where": "header"
+    },
+    {
+     "field": "engagement-fee",
+     "value": "UK Television Engagement fee: £557.00, £596.00, £617.00, £635.50 (2026).",
+     "quote": "UK Television Engagement fee £557.00 £596.00 £617.00 £635.50",
+     "where": "row 1"
+    },
+    {
+     "field": "production-day",
+     "value": "Production day: £61.50, £66.00, £68.00, £70.00.",
+     "quote": "Production day £61.50 £66.00 £68.00 £70.00",
+     "where": "row 2"
+    },
+    {
+     "field": "regional",
+     "value": "Regional Engagement Fee: £158.50 in 2026.",
+     "quote": "Regional Engagement Fee £139.00 £148.50 £154.00 £158.50",
+     "where": "row"
+    },
+    {
+     "field": "one-day-4a",
+     "value": "One Day Engagement T(8)4a: £309.50 in 2026.",
+     "quote": "One Day Engagement T(8)4a £271.50 £290.50 £300.50 £309.50",
+     "where": "row"
+    },
+    {
+     "field": "one-day-4b",
+     "value": "One Day Engagement T(8)4b: £402.00 in 2026.",
+     "quote": "One Day Engagement T(8)4b £352.50 £377.00 £390.50 £402.00",
+     "where": "row"
+    },
+    {
+     "field": "multi-episodic",
+     "value": "Multi-episodic Cat B: £178.00 in 2026.",
+     "quote": "Multi-episodic Cat B £156.00 £167.00 £173.00 £178.00",
+     "where": "row"
+    },
+    {
+     "field": "rehearsal-day",
+     "value": "Rehearsal period day T(14): £132.50 in 2026.",
+     "quote": "Rehearsal period day T (14) £116.00 £124.00 £128.50 £132.50",
+     "where": "row"
+    },
+    {
+     "field": "travel",
+     "value": "Travel T(44)2: £25.50 in 2026.",
+     "quote": "Travel T(44)2 £22.50 £24.00 £25.00 £25.50",
+     "where": "row"
+    },
+    {
+     "field": "svod",
+     "value": "Appendix TL SVOD Engagement Fee: £848.00 in 2026.",
+     "quote": "Appendix TL SVOD Engagement Fee £743.50 £795.50 £823.50 £848.00",
+     "where": "row"
+    }
+   ],
+   "notes": "Not stated on the rate card: whether the engagement fee is per episode, per programme or per day, and what it covers (days included, uses, repeats). The rate card gives labels and clause references only (e.g. T(8)4a); the agreement that defines them, \"Pact Equity TV Agreement (2021)\", is Member Only Content on Pact (b25-S17) and was not attempted. The date each column takes effect is not stated.",
+   "sha256": "04c9a66b6e9ff24010ef753f6d41dfb0382c24323d3c9f31bd77a420a9ebe0b2"
+  },
+  {
+   "id": "b25-S17",
+   "title": "Pact: Contracting On-Screen Talent (resource hub)",
+   "url": "https://www.pact.co.uk/resource-hub/contracting-on-screen-talent.html",
+   "retrieved": "2026-10-25T17:07:17Z",
+   "http": "200",
+   "bytes": 89489,
+   "download": "dl/pact-contracting-on-screen-talent-page/page.html",
+   "text": "dl/pact-contracting-on-screen-talent-page/page.txt",
+   "facts": [
+    {
+     "field": "agreement-members-only",
+     "value": "The 2021 TV Agreement itself is members-only.",
+     "quote": "This agreement provides the minimum terms and conditions for all artists (excluding instrumental musicians, crowd artistes and walk-on/background artists performing only in those capacities)...",
+     "where": "listing, Pact Equity TV Agreement (2021)"
+    },
+    {
+     "field": "rate-card-listed",
+     "value": "The rate card is listed.",
+     "quote": "Pact Equity TV Agreement rates 2024 - 2026.",
+     "where": "listing"
+    },
+    {
+     "field": "rate-card-date",
+     "value": "The listing above the rate card shows the date 31 Oct 2023.",
+     "quote": "31 Oct 2023",
+     "where": "listing"
+    }
+   ],
+   "notes": "Both listings carry \"Member Only Content\"; neither document was requested from a members area.",
+   "sha256": "d25f7fd734dd80b6bdb3ed13122f810e287708049a1019a778cd359e59f73c72"
+  },
+  {
+   "id": "b25-S19",
+   "title": "Equity (UK): Rates and agreements",
+   "url": "https://www.equity.org.uk/advice-and-support/rates-and-agreements",
+   "retrieved": "2026-10-25T17:07:36Z",
+   "http": "200",
+   "bytes": 70078,
+   "download": "dl/equity-uk-rates-and-agreements-page/page.html",
+   "text": "dl/equity-uk-rates-and-agreements-page/page.txt",
+   "facts": [
+    {
+     "field": "agreements-cover",
+     "value": "Equity agreements set minimum weekly and daily rates plus holiday, hours, living-away and meal allowances.",
+     "quote": "As well as minimum weekly and daily rates of pay, they lay out terms and working conditions such as holiday, hours, living away allowance, and daily meal allowances.",
+     "where": "body"
+    }
+   ],
+   "notes": "The TV rates sit behind a script-driven selector; no TV agreement text or link is in the page.",
+   "sha256": "6e864b910dcccf6f29d0df2694970f1982a32c7e5812852bfc132fd1f07401cd"
+  }
+ ]
+}

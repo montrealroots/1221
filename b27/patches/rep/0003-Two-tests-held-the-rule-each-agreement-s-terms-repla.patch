@@ -1,0 +1,75 @@
+From 2c62955f964b24458fa3f2b8d90c0220196f4e85 Mon Sep 17 00:00:00 2001
+From: Claude <noreply@anthropic.com>
+Date: Sun, 25 Oct 2026 19:08:09 +0000
+Subject: [PATCH 3/9] Two tests held the rule each agreement's terms replaced,
+ so they read the agreement now
+
+tests/propay.test.ts called coveredWork, the one rule for every agreement that went when each agreement got its own
+terms; it reads coveredUnder on the same agreement, a legit department's first terms, with the same answers.
+tests/pro-work.test.ts held that a role an agent can submit for never came openly while represented; a voice part or
+work abroad an agreement leaves out now comes openly, as its terms say, so the check reads whether the agreement covers
+the role.
+
+Co-Authored-By: Claude Opus 5.5 <noreply@anthropic.com>
+Claude-Session: https://claude.ai/code/session_01HBdcuKzBBMbipfFQSByALG
+---
+ tests/pro-work.test.ts | 6 ++++--
+ tests/propay.test.ts   | 9 ++++++---
+ 2 files changed, 10 insertions(+), 5 deletions(-)
+
+diff --git a/tests/pro-work.test.ts b/tests/pro-work.test.ts
+index 8130aa34..45de3fd7 100644
+--- a/tests/pro-work.test.ts
++++ b/tests/pro-work.test.ts
+@@ -28,6 +28,7 @@ import { genreState } from '@/engine/systems/engagement';
+ import { PROJECTS, RATES, projectById } from '@/engine/content/careerwork';
+ import { AGENTS } from '@/engine/content/agents';
+ import { MEETING_KIND } from '@/engine/systems/proagent';
++import { submitsFor } from '@/engine/systems/representation';
+ import { CLASSES_KIND } from '@/engine/systems/school';
+ import { type Agreement, type Opportunity, activeAgreement } from '@/engine/systems/pro';
+ import {
+@@ -279,8 +280,9 @@ describe('J1: fictional roles, posted on a schedule', () => {
+       expect(o.agreementId).toBe(a.id);
+       expect(projectOf(o).access.agent).toBe(true);
+     }
+-    // Represented, a role open to both comes through him; an open-only one is posted openly still.
+-    expect(sim.player.pro!.opportunities.filter((o) => o.postedAt > a.signedAt! && o.via === 'open').every((o) => !projectOf(o).access.agent)).toBe(true);
++    // Represented, a role open to both comes through him; an open-only one is posted openly still, and from 2026-10-25
++    // (brief 27) so is one his agreement doesn't cover, a voice part or work abroad (`submitsFor`).
++    expect(sim.player.pro!.opportunities.filter((o) => o.postedAt > a.signedAt! && o.via === 'open').every((o) => !projectOf(o).access.agent || !submitsFor(a, projectOf(o)))).toBe(true);
+   });
+ });
+ 
+diff --git a/tests/propay.test.ts b/tests/propay.test.ts
+index 2d76bd9d..664bc67d 100644
+--- a/tests/propay.test.ts
++++ b/tests/propay.test.ts
+@@ -19,9 +19,10 @@ import { loadSave } from '@/engine';
+ import { breaches } from '@/engine/core/invariants';
+ import { PROJECTS, RATES, UNIONS, projectById, type ProjectTemplate } from '@/engine/content/careerwork';
+ import {
+-  BILLS_KEPT, DUES_KIND, PAY_KIND, RELEASE_KIND, SAG_ELIGIBLE_KIND, commissionOn, coveredWork, eligibilityRead, joinSagRefusal, keepBills, negotiatedAmount, sagWorkRefusal, schedulePay,
++  BILLS_KEPT, DUES_KIND, PAY_KIND, RELEASE_KIND, SAG_ELIGIBLE_KIND, commissionOn, eligibilityRead, joinSagRefusal, keepBills, negotiatedAmount, sagWorkRefusal, schedulePay,
+   workEligibilityRefusal, withholdingOn,
+ } from '@/engine/systems/propay';
++import { coveredUnder } from '@/engine/systems/representation';
+ import { yearOf } from '@/engine/systems/earnings';
+ import { figuresFor } from '@/engine/systems/taxreturn';
+ import { documentsOf } from '@/engine/systems/documents';
+@@ -252,8 +253,10 @@ describe('commission, only when owed, checked to the cent against the postings',
+     expect(commissionOn(sim, sim.player, within, within.pay[0]!, 1_051_00)).toMatchObject({ how: 'tail', amount: 105_10 });
+     const late = booked(sim, { project: 'calder-street', days: runDays(at(2026, 9, 21), 1), amount: 1_051_00, per: 'week', via: 'agent', offerAt: at(2026, 7, 1) });
+     expect(commissionOn(sim, sim.player, late, late.pay[0]!, 1_051_00)).toMatchObject({ how: 'unrepresented', amount: 0 });
+-    expect(coveredWork({ medium: 'stage', place: { city: 'London', cityId: 'uk-eng-london', venue: 'a theater' } })).toBe(false);
+-    expect(coveredWork(projectById('calder-street')!)).toBe(true);
++    // Until 2026-10-25 one rule for every agreement (`coveredWork`); from then each agreement's own terms, here a legit
++    // department's first ones (brief 27, `coveredUnder`, tests/b27-representation.test.ts).
++    expect(coveredUnder(a, { medium: 'stage', place: { city: 'London', cityId: 'uk-eng-london', venue: 'a theater' } })).toBe(false);
++    expect(coveredUnder(a, projectById('calder-street')!)).toBe(true);
+     // TEST SETUP: a project in London, which no project in the game is, outside the agreement's United States.
+     const abroad = { ...projectById('calder-street')!, id: 'test-abroad', place: { city: 'London', cityId: 'uk-eng-london', venue: 'a theater in the West End' } };
+     (PROJECTS as ProjectTemplate[]).push(abroad);
+-- 
+2.43.0
+

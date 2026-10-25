@@ -1,0 +1,31 @@
+From ee1f2c3b9850153d6b3c7355a0b6a4dff283b633 Mon Sep 17 00:00:00 2001
+From: Claude <noreply@anthropic.com>
+Date: Sun, 25 Oct 2026 21:48:38 +0000
+Subject: [PATCH 9/9] The own agent's panel is held to carry no real-agent line
+ in the words that line now has
+
+The rewording of a real agent's answer left the screen test looking for its old phrase on the game's own agent's
+panel, so a panel that said it for every agent passed (the mutation survived). It looks for the line's own words now.
+
+Co-Authored-By: Claude Opus 5.5 <noreply@anthropic.com>
+Claude-Session: https://claude.ai/code/session_01HBdcuKzBBMbipfFQSByALG
+---
+ tests/b27-representation-screen.test.ts | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+
+diff --git a/tests/b27-representation-screen.test.ts b/tests/b27-representation-screen.test.ts
+index 3e20dd9b..ba5d3d86 100644
+--- a/tests/b27-representation-screen.test.ts
++++ b/tests/b27-representation-screen.test.ts
+@@ -110,7 +110,7 @@ describe('Asking For Different Terms, on the Representation tab', () => {
+     const shown = drawn(sim, PATACK.id).shown;
+     expect(shown).toContain(`Ask To Add Work Abroad: work in the UK and Australia to be covered too. The game puts the chance the office agrees at ${chanceTenths(askChance(sim, sim.player, PATACK, 'abroad'))}.`);
+     expect(shown).toContain(`The commission is the unions’ and New York’s rule, and no ask changes it. ${realTermsWords(PATACK)}`);
+-    expect(drawn(offeredAgreeing('rep-screen-own')).shown).not.toContain('pages say nothing of the terms');
++    expect(drawn(offeredAgreeing('rep-screen-own')).shown).not.toContain('say nothing of the terms its agents agree to');
+   }, 300_000);
+ 
+   it('PLAYER JOURNEY: Celia Brannock’s panel gives her voice-over department, her office’s own rule, its one way in, and the voice demo her approach sends', () => {
+-- 
+2.43.0
+

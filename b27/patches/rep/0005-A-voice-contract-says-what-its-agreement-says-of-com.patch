@@ -1,0 +1,792 @@
+From 71073db965cd363f353f956551f872f204a87838 Mon Sep 17 00:00:00 2001
+From: Claude <noreply@anthropic.com>
+Date: Sun, 25 Oct 2026 20:15:57 +0000
+Subject: [PATCH 5/9] A voice contract says what its agreement says of
+ commission, and the office's answer is shown to read its keenness
+
+The review's two blocking findings. Every voice part's contract still said voice-over was outside an agent's agreement
+and owed no commission, while the pay took ten percent under an agreement that covers voice-over. The clause is now made
+from the agreement the engagement is made under, by the pay's own rule (owedAgreement, then coveredUnder): commission
+owed where the terms take voice-over in, the reason none is where they leave it out, and no clause when nobody
+represented the actor, as on any other contract. And no test proved the answer to an ask depends on how keen the office
+is: the journeys drew under every chance or over every chance, so an answer ignoring the stored chance passed. A twin
+now does it: a life whose draw falls between the chance as things stand and the chance with a day missed on its record,
+agreed in one and kept in the other, each at the chance its panel shows.
+
+From the should-fix and note findings, decided rather than deferred because each was cheap and clearly right:
+- A festival introduction names the entry's own festival (institutionById), not Sundance whatever the entry, and says a
+  film was in the official selection until it has screened; the work the office has to go on says the same.
+- The guide's agreement entry ends it "when its term is up", not its year, and the new entry's example states its
+  result as a chance, worked from TERMS, rather than as certain.
+- DealVersion's how and ask and the festival introductions' moment went: nothing read them, and the version's number,
+  the agreement's ask and the introduction's via say each.
+- The industry reference lists an agency's other departments, so Celia Brannock no longer sits under a page that names
+  only the legit one; the slate-reach decider samples a part's reach as reachOf gives it; voice-over added to a legit
+  agreement is handled by the agent with the voice-over department, as the submission it makes says; and a real
+  agent's answer, on the notice and the Terms panel, says the agency's pages give no terms, so it's the game's.
+- The older-save test loads the save and plays the ask and the term to its end, as the review's probe did.
+
+The festival route still waits on the festivals cluster's call, which is that cluster's and the integration's.
+
+Co-Authored-By: Claude Opus 5.5 <noreply@anthropic.com>
+Claude-Session: https://claude.ai/code/session_01HBdcuKzBBMbipfFQSByALG
+---
+ src/engine/content/guide/career.ts   |  13 +-
+ src/engine/decided.ts                |   7 +-
+ src/engine/systems/contracts.ts      |  40 +++++-
+ src/engine/systems/pro.ts            |   5 +-
+ src/engine/systems/proagent.ts       |   8 +-
+ src/engine/systems/reference.ts      |   4 +-
+ src/engine/systems/representation.ts |  61 +++++----
+ src/ui/career/RepresentationPane.tsx |   4 +-
+ tests/b27-representation.test.ts     | 188 +++++++++++++++++++++++----
+ tests/career-workflows.test.ts       |   5 +-
+ 10 files changed, 271 insertions(+), 64 deletions(-)
+
+diff --git a/src/engine/content/guide/career.ts b/src/engine/content/guide/career.ts
+index 743d4f5f..8c1f5e7a 100644
+--- a/src/engine/content/guide/career.ts
++++ b/src/engine/content/guide/career.ts
+@@ -32,7 +32,7 @@ import { formatMoney } from '../../core/money';
+ import { countWords } from '../../core/text';
+ import { DEMO, HEADSHOTS, NAME_MOST, REEL, RESUME, SESSION_HOURS, SKILL_LISTED_AT, SPECIAL_SKILLS, clockWords } from '../../systems/pro';
+ import { AGENT_TIMES, COOLDOWN_WORDS, GATE, REFERRAL_BAND, TEN, TIME_WORDS, TRAVEL_MINUTES, routesWords, tripWords } from '../../systems/proagent';
+-import { ASK_LABEL, TERMS, termWords, voiceDepartment } from '../../systems/representation';
++import { ASK_LABEL, TERMS, chanceTenths, termWords, termsChance, voiceDepartment } from '../../systems/representation';
+ import { YALE_DRAMA } from '../school';
+ import { AGENTS, agencyOf } from '../agents';
+ import { AGREEMENT, AUDITION_TOWNS, UNIONS } from '../careerwork';
+@@ -82,6 +82,8 @@ const AGENCY = agencyOf(AGENT);
+ /** The real agents beside the game's own (from 2026-10-24, brief 25's Module 3), and their office. */
+ const REAL = AGENTS.filter((a) => a.real);
+ const REAL_OFFICE = agencyOf(REAL[0]!);
++/** The factors at the bar in Asking For Different Terms' example, which its chance is worked from. */
++const EXAMPLE_AT_BAR = 5;
+ /** The voice-over agent (from 2026-10-25, brief 27): the game's own, in its agency's voice-over department. */
+ const VOICE_AGENT = AGENTS.find((a) => voiceDepartment(a))!;
+ const REP_CHAPTER = CHAPTER_FOR['pro.agent_notice']!.title;
+@@ -513,7 +515,7 @@ export const CAREER_GUIDE: readonly GuideEntry[] = [
+     questions: ['What does the agreement say?', 'How much commission does an agent take?', 'How do I end the agreement?', 'Can I have two agents?'],
+     where: on('representation', 'Career, Representation, The Agreement'),
+     available: `From the guide’s chapter “${REP_CHAPTER}”.`,
+-    short: `When an agent offers to represent you, The Agreement shows every term before you answer, each marked A Published Rule or The Game’s Own Term. It runs a year from the day you sign it, or ${termWords(TERMS.shorterDays)} where you asked for a shorter term and the office agreed, and the offer stands ${word(AGREEMENT.offerStandsDays / 7)} weeks.\n\nSigning changes nothing at the School and gives no permission to work. It can end by agreement at any time, or under Equity’s or SAG-AFTRA’s rules, or when its year is up. You have one agent at a time: another agent’s agreement can’t start while one runs.`,
++    short: `When an agent offers to represent you, The Agreement shows every term before you answer, each marked A Published Rule or The Game’s Own Term. It runs a year from the day you sign it, or ${termWords(TERMS.shorterDays)} where you asked for a shorter term and the office agreed, and the offer stands ${word(AGREEMENT.offerStandsDays / 7)} weeks.\n\nSigning changes nothing at the School and gives no permission to work. It can end by agreement at any time, or under Equity’s or SAG-AFTRA’s rules, or when its term is up. You have one agent at a time: another agent’s agreement can’t start while one runs.`,
+     steps: [
+       'Read every term under The Agreement.',
+       'Press Accept The Agreement, or Decline The Agreement.',
+@@ -572,7 +574,7 @@ export const CAREER_GUIDE: readonly GuideEntry[] = [
+     later: [
+       'Agreed, The Agreement’s terms change, and Asking For Different Terms keeps the terms as first offered.',
+       `A shorter term ends the agreement ${termWords(TERMS.shorterDays)} after you sign it.`,
+-      'Voice-over added, the agency’s voice-over department submits you for voice parts, and the commission is taken on them.',
++      'Voice-over added, your agent submits you for voice parts with the agency’s voice-over department, and the commission is taken on them.',
+       'Work abroad added, your agent submits you for work in the UK and Australia, and the commission is taken on it.',
+     ],
+     interpret: [
+@@ -593,9 +595,10 @@ export const CAREER_GUIDE: readonly GuideEntry[] = [
+       { to: 'career.commission', kind: 'evaluation', why: 'Commission is taken only on what the agreement covers, so voice-over or work abroad added carries it.' },
+     ],
+     example: {
+-      setup: `${AGENT.name} has offered you an agreement, and five of the factors are at the bar.`,
++      setup: `${AGENT.name} has offered you an agreement, and ${word(EXAMPLE_AT_BAR)} of the factors are at the bar.`,
+       steps: [`Press ${ASK_LABEL.voice}.`, `Move the clock on ${word(TERMS.answerDays)} days.`],
+-      result: 'The office agrees, What It Covers adds voice-over work, and a voice part can now come to you through the agency.',
++      // A chance, said as one (from the review of 2026-10-25: until then the result read as certain, "The office agrees").
++      result: `The game puts the chance at ${chanceTenths(termsChance('voice', EXAMPLE_AT_BAR, GATE))}. If the office agrees, What It Covers adds voice-over work, and a voice part can come to you through your agent; if it doesn’t, the terms stay as offered.`,
+     },
+   },
+   {
+diff --git a/src/engine/decided.ts b/src/engine/decided.ts
+index 8f24e080..abd40de1 100644
+--- a/src/engine/decided.ts
++++ b/src/engine/decided.ts
+@@ -46,7 +46,7 @@ import { priorityOf } from './systems/classmates';
+ import { AGENTS } from './content/agents';
+ import { GATE, LEVELS, chancesFor, drawOf, offerOutcome, replyOutcome, rosterFor } from './systems/proagent';
+ import { ASKS, termsChance, termsDraw } from './systems/representation';
+-import { DIRECT, HOLD, NEGOTIATE, castingDraw, postingsAt, releaseFate, slateReach } from './systems/projobs';
++import { DIRECT, HOLD, NEGOTIATE, castingDraw, postingsAt, reachOf, releaseFate, slateReach } from './systems/projobs';
+ import { productionsOf, seriesOfYear, slatePartsAt } from './systems/slate';
+ import { PROJECTS } from './content/careerwork';
+ import { SERIES, seriesById } from './content/series';
+@@ -702,7 +702,10 @@ defineDecider<{ sim: Simulation; represented: number; credits: number; skill: nu
+     const out: string[] = [];
+     for (let n = 0; n < 16; n += 1) {
+       const at = sim.now + n * 7 * MS_DAY;
+-      out.push(slatePartsAt(sim, at).filter((t) => t.access.agent || t.access.open).map((t) => Math.round(slateReach(sim, p, t, represented === 1 && t.access.agent ? 'agent' : 'open', at) * 100)).join(','));
++      // The way each part reaches the actor as the game gives it (`reachOf`, from the review of 2026-10-25): until then any
++      // part an agent could submit for came through the agent here, a voice part under an agreement that leaves voice-over
++      // out included, which the game opens to the actor's own submission.
++      out.push(slatePartsAt(sim, at).filter((t) => t.access.agent || t.access.open).map((t) => Math.round(slateReach(sim, p, t, reachOf(t, p.pro!.agreements[0]) === 'agent' ? 'agent' : 'open', at) * 100)).join(','));
+     }
+     return out.join(' ');
+   },
+diff --git a/src/engine/systems/contracts.ts b/src/engine/systems/contracts.ts
+index 37a4d508..9580902c 100644
+--- a/src/engine/systems/contracts.ts
++++ b/src/engine/systems/contracts.ts
+@@ -57,7 +57,9 @@ import { inSaveMoney } from './banking';
+ import { payeeAccount } from './cash';
+ import { recordWages } from './earnings';
+ import { businessDaysOn } from './permission';
+-import { PAY_KIND, projectOf, weekOf, withholdingOn } from './propay';
++import { PAY_KIND, owedAgreement, projectOf, weekOf, withholdingOn } from './propay';
++import { coveredUnder, outsideWords } from './representation';
++import { agencyOf, agentById } from '../content/agents';
+ import { seasonNumber } from './series';
+ import { KIND_WORDS, counted, overtimeHours } from './projobs';
+ import { dubDaysOf, formatOf, promoFor, promoTerm } from './workflow';
+@@ -201,8 +203,11 @@ export function contractFor(sim: Simulation, e: Engagement, offer: NonNullable<i
+     clauses.push({ kind: 'episodes', ordered: s.episodes, guaranteed: t.schedule.guaranteed, expected: t.schedule.expected, daysEach: s.daysEach, numbers: extra.season.guaranteed, further: extra.season.further.map((n) => ({ n, status: 'pending' as const })) });
+   }
+   if (s && extra.option) clauses.push({ kind: 'option', season: seasonNumber(sim, s, extra.option.year), year: extra.option.year, by: extra.option.by, raise: OPTION_RAISE, status: 'open' });
+-  // The workflow's rules last (from 2026-10-24, brief 25's Module 5, `workflowRules`).
++  // The workflow's rules last (from 2026-10-24, brief 25's Module 5, `workflowRules`), and voice-over's commission by the
++  // agreement it's made under (from 2026-10-25, brief 27, `voiceCommission`).
+   clauses.push(...workflowRules(t));
++  const voiceRule = voiceCommission(sim, e, t);
++  if (voiceRule) clauses.push(voiceRule);
+   // A promotional film for the release, and what it pays (from 2026-10-25, brief 27's loop 34, `promoTerm`).
+   const estimate = e.pay.reduce((n, p) => n + (p.deferred ? 0 : p.promised), 0);
+   if (promoFor(t)) clauses.push({ kind: 'rule', id: 'promo', words: promoTerm(t, estimate) });
+@@ -236,10 +241,39 @@ function workflowRules(t: ProjectTemplate): ContractClause[] {
+   if (t.schedule.kind === 'shoot' && t.schedule.stuntDays?.length) out.push({ kind: 'rule', id: 'stunts', words: 'A stunt is done by you only with your consent, given before it, and with a qualified stunt coordinator there and consulted, as the agreement sets. Without your consent the stunt double does it.' });
+   if (t.intimacy) out.push({ kind: 'rule', id: 'intimacy', words: `The part has ${t.intimacy.words}. It’s shot on a closed set with an intimacy coordinator, only with your written consent describing it; you can withdraw consent until it’s shot, and a body double does it then, as the agreement allows. Declining it doesn’t cost you the part, the pay or the credit.` });
+   if (fmt.looping) out.push({ kind: 'rule', id: 'looping', words: `The production can recall you within ${fmt.looping} months of the wrap to loop: a four-hour session paid half a day, as the agreement sets.` });
+-  if (voiceOnlyFormat(fmt.workflow)) out.push({ kind: 'rule', id: 'voice-over', words: 'Voice-over work is outside an agent’s agreement, so no commission is owed on it.' });
+   return out;
+ }
+ 
++/** The person whose career holds an engagement: the player's, in play, and anyone's whose record has it. */
++const holderOf = (sim: Simulation, e: Engagement): Person | undefined =>
++  (sim.player.pro?.engagements.includes(e) ? sim.player : Object.values(sim.universe.people).find((p) => p.pro?.engagements.includes(e)));
++
++/**
++ * Whether commission is owed on voice-over work, said on its contract, by the agreement it's made under as the pay reads
++ * it (`owedAgreement`, then `coveredUnder`, the rule `commissionOn` applies): covered where the agreement's terms take in
++ * voice-over (a voice-over department's, or one an office agreed to add it to), and otherwise not, saying why. Made
++ * unrepresented, there's no agreement to speak of and no clause, as on any other work.
++ *
++ * From 2026-10-24 (brief 25's Module 5) to 2026-10-25 every voice contract said "Voice-over work is outside an agent’s
++ * agreement, so no commission is owed on it", one rule for every agreement. Brief 27 gave each agreement its own terms and
++ * left the sentence standing, so a voice part booked under an agreement that covers voice-over said no commission was
++ * owed while the pay took ten percent of it (found by the review of 2026-10-25).
++ */
++function voiceCommission(sim: Simulation, e: Engagement, t: ProjectTemplate): ContractClause | undefined {
++  if (!voiceOnlyFormat(formatOf(t).workflow)) return undefined;
++  const person = holderOf(sim, e);
++  const owed = person ? owedAgreement(person, e) : undefined;
++  if (!owed) return undefined;
++  const agent = agentById(owed.agreement.agentId);
++  const agency = agent ? agencyOf(agent).name : 'your agency';
++  return {
++    kind: 'rule', id: 'voice-over',
++    words: coveredUnder(owed.agreement, t)
++      ? `Your agreement with ${agency} covers voice-over work, so commission is owed on this work as on the rest it covers.`
++      : `No commission is owed on this work: ${outsideWords(owed.agreement, t, agency)}.`,
++  };
++}
++
+ const voiceOnlyFormat = (w: string): boolean => w === 'voice' || w === 'dubbing' || w === 'narration';
+ 
+ /** The raise an option on a next season carries (ASSUMPTION, the game's terms). */
+diff --git a/src/engine/systems/pro.ts b/src/engine/systems/pro.ts
+index e6c5395f..7e1abe60 100644
+--- a/src/engine/systems/pro.ts
++++ b/src/engine/systems/pro.ts
+@@ -232,9 +232,10 @@ export interface AgentRelation extends HasHistory {
+   referrals?: { engagementId: ProId; by: string; job: string; at: Instant; band?: Band }[];
+   /**
+    * The introductions at a festival where the actor's film screened (`introduceAtFestival`, `systems/representation.ts`,
+-   * from 2026-10-25, brief 27), one for each festival entry: the film it showed is work the office has to go on.
++   * from 2026-10-25, brief 27), one for each festival entry: the film it showed is work the office has to go on. Until the
++   * review of 2026-10-25 each kept the moment too, which nothing read; the introduction's own is `via.at`.
+    */
+-  festivals?: { entryId: ProId; creditId: ProId; festival: string; at: Instant }[];
++  festivals?: { entryId: ProId; creditId: ProId; festival: string }[];
+   /**
+    * The reasons for the last decision, as Why It Went This Way shows them (`systems/proagent.ts`, from 2026-10-21): copied
+    * in when it's made, so they read as they were after the record has moved on.
+diff --git a/src/engine/systems/proagent.ts b/src/engine/systems/proagent.ts
+index 88619f93..9f455816 100644
+--- a/src/engine/systems/proagent.ts
++++ b/src/engine/systems/proagent.ts
+@@ -288,8 +288,10 @@ interface Seen { what: string; band?: Band; medium: 'stage' | 'screen' | 'voice'
+ /**
+  * The work his office has to go on: the showcase's scenes as the School recorded them, once the School has followed
+  * them up; the reel sent, or the current one, or for a voice department the voice demo (from 2026-10-25, brief 27,
+- * `sampleKind`); each job a referral came from; and each film a festival screened where the office met the actor
+- * (`introduceAtFestival`). A night on stage he wasn't told of, and a class piece, are never among them.
++ * `sampleKind`); each job a referral came from; and each film in a festival's official selection where the office met the
++ * actor (`introduceAtFestival`), said so whether it had screened yet or not (from the review of 2026-10-25: until then
++ * "which the festival screened", for a film met before its screening too). A night on stage he wasn't told of, and a
++ * class piece, are never among them.
+  */
+ function workSeen(person: Person, agent: Agent, rel: AgentRelation | undefined, sampleId?: ProId): Seen[] {
+   const pro = person.pro;
+@@ -306,7 +308,7 @@ function workSeen(person: Person, agent: Agent, rel: AgentRelation | undefined,
+   }
+   for (const f of rel?.festivals ?? []) {
+     const c = pro?.credits.find((x) => x.id === f.creditId);
+-    out.push({ what: `${c?.project ?? 'your film'}, which ${f.festival} screened`, ...(c?.band ? { band: c.band } : {}), medium: 'screen' });
++    out.push({ what: `${c?.project ?? 'your film'}, in ${f.festival}’s official selection`, ...(c?.band ? { band: c.band } : {}), medium: 'screen' });
+   }
+   return out;
+ }
+diff --git a/src/engine/systems/reference.ts b/src/engine/systems/reference.ts
+index 679d8216..7065ac2a 100644
+--- a/src/engine/systems/reference.ts
++++ b/src/engine/systems/reference.ts
+@@ -481,7 +481,9 @@ function agencyPage(person: Person, id: string): RefPage | undefined {
+   const name = a?.name ?? record!.name;
+   const facts: RefFact[] = [];
+   if (a) {
+-    facts.push(fact('Office', a.office.city, a.real ? 'verified' : 'simulated'), fact('Department', `${a.department.called}, also called ${a.department.alsoCalled}`, a.real ? 'verified' : 'simulated'), fact('Submissions', a.policy.words, a.real ? 'verified' : 'simulated'));
++    // Its other departments too (from 2026-10-25, brief 27's review: until then the page gave only the legit department,
++    // and listed the voice-over agent under it).
++    facts.push(fact('Office', a.office.city, a.real ? 'verified' : 'simulated'), ...[a.department, ...(a.otherDepartments ?? [])].map((d) => fact('Department', `${d.called}, also called ${d.alsoCalled}`, a.real ? 'verified' : 'simulated')), fact('Submissions', a.policy.words, a.real ? 'verified' : 'simulated'));
+   }
+   if (record) {
+     facts.push(fieldFact('About', record.about, (v) => v));
+diff --git a/src/engine/systems/representation.ts b/src/engine/systems/representation.ts
+index 7d518c24..44360030 100644
+--- a/src/engine/systems/representation.ts
++++ b/src/engine/systems/representation.ts
+@@ -14,10 +14,10 @@
+  * **Now each agreement keeps its terms as versions** (`AgreementDeal` on `Agreement.deal`): the first as offered, from the
+  * agent's department (`firstDeal`), and a second where the office agrees to the actor's ask. Three things read the current
+  * one (`dealOf`): when it ends (the accept's `endsAt`), the commission (`coveredUnder`, read by `commissionOn` in
+- * `systems/propay.ts`) and the offers its agent handles (`makeOffer`, `systems/projobs.ts`), and which parts its agent
+- * submits the actor for (`submitsFor`, read by `reachOf`). The words the player reads under The Agreement are built from it
+- * (`termsFor`), so the term that says it and the rule that reads it can't part. The commission's cap stays as it is: no
+- * ask can touch it.
++ * `systems/propay.ts`, and by the clause a voice part's contract carries on it, `contractFor` in `systems/contracts.ts`)
++ * and the offers its agent handles (`makeOffer`, `systems/projobs.ts`), and which parts its agent submits the actor for
++ * (`submitsFor`, read by `reachOf`). The words the player reads under The Agreement are built from it (`termsFor`), so the
++ * term that says it and the rule that reads it can't part. The commission's cap stays as it is: no ask can touch it.
+  *
+  * **The ask** (`pro.ask_terms`): once, while the agreement is offered, the actor asks for a shorter term, for voice-over to be
+  * added (only where the agency has a voice department in the game), or for work abroad to be added (where the game has work
+@@ -35,7 +35,9 @@
+  * **The festival introduction** (`introduceAtFestival`): an agent whose routes include `festival` meets the actor at a
+  * festival where their film was selected and screens, an introduction the approach reads as it reads the School's
+  * follow-up or a referral (`AgentRelation.via`), with the film among the work the office has to go on. The festival's own
+- * system calls it when the player attends the screening and does its press; this file builds what it leads to.
++ * system calls it when the player attends the screening and does its press; this file builds what it leads to. The
++ * festival is named from the entry's own institution (`institutionById`): until the review of 2026-10-25 a call that
++ * named none said Sundance, whatever festival the entry was for.
+  *
+  * Every figure here is the game's ASSUMPTION, said where it's defined and where a player reads it.
+  */
+@@ -46,6 +48,7 @@ import type { Person } from '../domain/model';
+ import { formatDate, formatTime, formatWeekdayDate, type Instant } from '../core/time';
+ import { countWords, spokenList } from '../core/text';
+ import { CITIES } from '../content/geography';
++import { institutionById } from '../content/awards';
+ import { AGENTS, agencyCovers, agencyOf, agentById, departmentOf, type Agent, type AgentId } from '../content/agents';
+ import { AGREEMENT, AGREEMENT_TERMS, type AgreementTerm, type ProjectTemplate } from '../content/careerwork';
+ import type { MaterialKind, MaterialPurpose, Agreement, ProId } from './pro';
+@@ -66,16 +69,17 @@ export type DealScope = 'legit' | 'voice';
+ /** What the actor can ask for: a shorter term, voice-over added, or work abroad added. */
+ export type TermsAsk = 'shorter' | 'voice' | 'abroad';
+ 
+-/** One version of an agreement's terms: what it covers, where (country ids), for how long, and how it came to be. */
++/**
++ * One version of an agreement's terms: what it covers, where (country ids), for how long, and from when. The first is the
++ * terms as offered, a later one an ask the office agreed to (`Agreement.ask` says which). Until the review of 2026-10-25 a
++ * version kept `how` and `ask` as well, which nothing read: the version's number and the agreement's ask said both.
++ */
+ export interface DealVersion {
+   version: number;
+   at: Instant;
+   scope: DealScope[];
+   territory: string[];
+   termDays: number;
+-  how: 'offered' | 'agreed';
+-  /** The ask it answered, where the office agreed to one. */
+-  ask?: TermsAsk;
+ }
+ 
+ /** An agreement's terms, every version kept, the last the one in force. */
+@@ -141,7 +145,7 @@ export const purposeOf = (agent: Agent): Extract<MaterialPurpose, 'representatio
+ 
+ /** The terms an agent's office offers first: its department's work, in the US, for `AGREEMENT.termDays`. */
+ export function firstDeal(agent: Agent, at: Instant): DealVersion {
+-  return { version: 1, at, scope: [voiceDepartment(agent) ? 'voice' : 'legit'], territory: [...TERMS.home], termDays: AGREEMENT.termDays, how: 'offered' };
++  return { version: 1, at, scope: [voiceDepartment(agent) ? 'voice' : 'legit'], territory: [...TERMS.home], termDays: AGREEMENT.termDays };
+ }
+ 
+ /**
+@@ -152,7 +156,7 @@ export function dealOf(a: Agreement): DealVersion {
+   const kept = a.deal?.versions.at(-1);
+   if (kept) return kept;
+   const agent = agentById(a.agentId);
+-  return agent ? firstDeal(agent, a.offeredAt) : { version: 1, at: a.offeredAt, scope: ['legit'], territory: [...TERMS.home], termDays: AGREEMENT.termDays, how: 'offered' };
++  return agent ? firstDeal(agent, a.offeredAt) : { version: 1, at: a.offeredAt, scope: ['legit'], territory: [...TERMS.home], termDays: AGREEMENT.termDays };
+ }
+ 
+ /** What a version covers, in words: "stage, film and television work", "voice-over work", or both. */
+@@ -181,7 +185,10 @@ export function termsFor(d: DealVersion): AgreementTerm[] {
+   const set = (id: AgreementTerm['id'], words: string) => { const t = terms.find((x) => x.id === id); if (t) t.words = words; };
+   const legit = d.scope.includes('legit');
+   if (d.scope.includes('voice')) {
+-    set('scope', legit ? 'Stage, film and television work, and voice-over work: animation, dubbing and narration, which the agency’s voice-over department handles.' : 'Voice-over work: animation, dubbing and narration, the work the agent’s department covers.');
++    // Who handles the voice-over work added to a legit agreement: the agent, with the agency's voice-over department (from
++    // the review of 2026-10-25; until then the words said the department handled it, while the submissions it makes say
++    // the agent submitted you).
++    set('scope', legit ? 'Stage, film and television work, and voice-over work: animation, dubbing and narration, which your agent handles with the agency’s voice-over department.' : 'Voice-over work: animation, dubbing and narration, the work the agent’s department covers.');
+     set('excluded', legit ? 'Commercials aren’t covered. An agency usually handles them in another department.' : 'Stage, film and television work on camera, and commercials, aren’t covered. The agency handles them in its other departments.');
+   }
+   if (d.territory.some((c) => !TERMS.home.includes(c))) set('territory', `Work anywhere in the United States, and in ${ABROAD_WORDS()}, where the game has work abroad.`);
+@@ -264,6 +271,12 @@ export function termsDraw(sim: Simulation, personId: string, agentId: AgentId, a
+ /** When the office answers an ask made now: two days on, at its usual hour on its own clock. */
+ const answerTime = (sim: Simulation, agent: Agent): Instant => onDayAt(sim.now, TERMS.answerDays, AGENT_TIMES.answerHour, officeZone(agent));
+ 
++/**
++ * What the game says of a real agent's answer (from the review of 2026-10-25): the agency's pages say nothing of its terms,
++ * so whether the office agrees is the game's, as every chance an office takes you further is (`REAL_CHANCE_WORDS`).
++ */
++export const realTermsWords = (agent: Agent): string => `${agencyOf(agent).name}’s pages say nothing of the terms its agents agree to, so whether ${agent.words.office} agrees is the game’s invention, not a fact about ${agent.name}.`;
++
+ /** How an ask came out, in a sentence's end. */
+ const answerWords = (agent: Agent, answer: NonNullable<AgreementAsk['answer']>): string => (answer === 'agreed' ? `${agent.words.office} agreed` : `${agent.words.office} kept the terms as offered`);
+ 
+@@ -300,7 +313,7 @@ export function askWaiting(sim: Simulation, person: Person, agent: Agent): strin
+ /** The terms an agreed ask makes, from the version in force. */
+ function agreedVersion(d: DealVersion, ask: TermsAsk, at: Instant): DealVersion {
+   return {
+-    version: d.version + 1, at, how: 'agreed', ask,
++    version: d.version + 1, at,
+     scope: ask === 'voice' ? [...d.scope, 'voice'] : [...d.scope],
+     territory: ask === 'abroad' ? [...d.territory, ...TERMS.abroad.filter((c) => !d.territory.includes(c))] : [...d.territory],
+     termDays: ask === 'shorter' ? TERMS.shorterDays : d.termDays,
+@@ -328,7 +341,7 @@ function answerAsk(sim: Simulation, person: Person, agent: Agent, a: Agreement):
+   sim.notify({
+     category: 'career', importance: 65, route: REPRESENTATION_ROUTE, refType: 'pro-agent', refId: agent.id,
+     title: agreed ? `${agent.name}’s Office Agreed To Your Ask` : `${agent.name}’s Office Kept Its Terms`,
+-    body: `${agreed ? `${capital(officeOf(agent))} agreed to ${askWords(ask.what, before)}, and The Agreement on the Representation tab now says so.` : `${capital(officeOf(agent))} kept the agreement’s terms as it offered them, without ${askWords(ask.what, before)}.`} The offer stands until ${formatDate(a.standsUntil, z)}: accept it or decline it there.`,
++    body: `${agreed ? `${capital(officeOf(agent))} agreed to ${askWords(ask.what, before)}, and The Agreement on the Representation tab now says so.` : `${capital(officeOf(agent))} kept the agreement’s terms as it offered them, without ${askWords(ask.what, before)}.`} The offer stands until ${formatDate(a.standsUntil, z)}: accept it or decline it there.${agent.real ? ` ${realTermsWords(agent)}` : ''}`,
+   });
+ }
+ 
+@@ -342,7 +355,10 @@ function answerAsk(sim: Simulation, person: Person, agent: Agent, a: Agreement):
+  * there, the film goes among the work the office has to go on (`AgentRelation.festivals`, read by `workSeen` and
+  * `caseKeys`), and, where no approach is under way or held, the meeting is the introduction the approach needs
+  * (`via`, read by `sendRefusal`), as the School's follow-up and a referral are. Once for each festival entry: a second
+- * call for it, or one for an entry not selected, does nothing. Returns the agents it introduced.
++ * call for it, or one for an entry not selected, does nothing. Returns the agents it introduced. The festival is the
++ * entry's own (`institutionById`), named as `festival` says where the caller gives a name; and the film "screened" there
++ * once the entry says so, and was "in the official selection" before (until the review of 2026-10-25 an unnamed call said
++ * Sundance and every call said "screened").
+  *
+  * ASSUMPTION, the game's: that an agent's office meets the actors of films it sees at a festival. A festival publishes its
+  * films and its screenings, not who comes, and the notice says the meeting is the game's.
+@@ -352,7 +368,8 @@ export function introduceAtFestival(sim: Simulation, person: Person, entryId: Pr
+   if (!entry || (entry.state !== 'selected' && entry.state !== 'screened')) return [];
+   const film = person.pro?.credits.find((c) => c.id === entry.creditId);
+   if (!film) return [];
+-  const name = festival ?? `the ${entry.year} Sundance Film Festival`;
++  const name = festival ?? `the ${entry.year} ${institutionById(entry.institution).name}`;
++  const shown = entry.state === 'screened' ? 'screened' : 'was in the official selection';
+   const z = sim.zone;
+   const introduced: AgentId[] = [];
+   for (const agent of AGENTS.filter((a) => a.routes.includes('festival'))) {
+@@ -360,22 +377,22 @@ export function introduceAtFestival(sim: Simulation, person: Person, entryId: Pr
+     if (rel.festivals?.some((f) => f.entryId === entry.id)) continue;
+     const unread = rel.noticeShownAt === undefined;
+     rel.noticeShownAt ??= sim.now;
+-    note(sim, rel, 'discovered', 'discovered', `You first heard of ${agent.words.him} at ${name}, where ${film.project} screened.`);
+-    (rel.festivals ??= []).push({ entryId: entry.id, creditId: film.id, festival: name, at: sim.now });
++    note(sim, rel, 'discovered', 'discovered', `You first heard of ${agent.words.him} at ${name}, where ${film.project} ${shown}.`);
++    (rel.festivals ??= []).push({ entryId: entry.id, creditId: film.id, festival: name });
+     const held = underWay(sim, agent, rel) ?? tooSoon(sim, rel);
+     const key = `festival:${entry.id}`;
+     const intro = unread ? ` ${agent.notice}` : '';
+     const how = `In the game an agent’s office meets the actors of the films it sees at a festival. The festival publishes its films and screenings, not who comes, so the meeting is the game’s.`;
+     const title = `${agent.name}’s Office Met You At The Festival`;
+     if (held) {
+-      note(sim, rel, 'introduced', key, `You met ${agent.words.office} at ${name}, where ${film.project} screened. Where you stood with it didn’t change, and it has the film to go on.`);
+-      if (person.id === sim.universe.playerId) sim.notify({ category: 'career', importance: 55, route: REPRESENTATION_ROUTE, refType: 'pro-agent', refId: agent.id, title, body: `You met ${officeOf(agent)} at ${name}, where ${film.project} screened. Where you stand with it doesn’t change: ${held} It has the film to go on now.${intro} ${how}` });
++      note(sim, rel, 'introduced', key, `You met ${agent.words.office} at ${name}, where ${film.project} ${shown}. Where you stood with it didn’t change, and it has the film to go on.`);
++      if (person.id === sim.universe.playerId) sim.notify({ category: 'career', importance: 55, route: REPRESENTATION_ROUTE, refType: 'pro-agent', refId: agent.id, title, body: `You met ${officeOf(agent)} at ${name}, where ${film.project} ${shown}. Where you stand with it doesn’t change: ${held} It has the film to go on now.${intro} ${how}` });
+       continue;
+     }
+     rel.via = { route: 'festival', at: sim.now, by: name };
+     setStage(sim, rel, 'introduced');
+-    note(sim, rel, 'introduced', key, `${capital(agent.words.office)} met you at ${name}, where ${film.project} screened: an introduction, so you could send it your materials.`);
+-    if (person.id === sim.universe.playerId) sim.notify({ category: 'career', importance: 60, route: REPRESENTATION_ROUTE, refType: 'pro-agent', refId: agent.id, title, body: `You met ${officeOf(agent)} at ${name}, on ${formatDate(sim.now, z)}, where ${film.project} screened. It’s an introduction: you can send it your materials from the Career screen’s Representation tab, and it has the film to go on.${intro} ${how}` });
++    note(sim, rel, 'introduced', key, `${capital(agent.words.office)} met you at ${name}, where ${film.project} ${shown}: an introduction, so you could send it your materials.`);
++    if (person.id === sim.universe.playerId) sim.notify({ category: 'career', importance: 60, route: REPRESENTATION_ROUTE, refType: 'pro-agent', refId: agent.id, title, body: `You met ${officeOf(agent)} at ${name}, on ${formatDate(sim.now, z)}, where ${film.project} ${shown}. It’s an introduction: you can send it your materials from the Career screen’s Representation tab, and it has the film to go on.${intro} ${how}` });
+     introduced.push(agent.id);
+   }
+   return introduced;
+diff --git a/src/ui/career/RepresentationPane.tsx b/src/ui/career/RepresentationPane.tsx
+index d024f33b..057e7011 100644
+--- a/src/ui/career/RepresentationPane.tsx
++++ b/src/ui/career/RepresentationPane.tsx
+@@ -33,7 +33,7 @@ import {
+   nextStep, noticeRefusal, offeredAgreement, officeTitle, referralRefusal, referrersOf, relationOf, sendRefusal, signRefusal, stillOwed, supplyRefusal,
+   type EndHow, type Level,
+ } from '@/engine/systems/proagent';
+-import { ASKS, ASK_LABEL, askChance, askRefusal, askWords, chanceTenths, dealOf, purposeOf, sampleName, scopeWords, termWords, territoryWords } from '@/engine/systems/representation';
++import { ASKS, ASK_LABEL, askChance, askRefusal, askWords, chanceTenths, dealOf, purposeOf, realTermsWords, sampleName, scopeWords, termWords, territoryWords } from '@/engine/systems/representation';
+ 
+ const LEVEL_TONE: Readonly<Record<Level, string>> = { short: 'chip chip-negative', near: 'chip chip-warning', at: 'chip chip-info', beyond: 'chip chip-positive' };
+ 
+@@ -391,7 +391,7 @@ function TermsPanel({ agent }: { agent: Agent }) {
+             <WhyNot reasons={open.map(({ a, no }) => [ASK_LABEL[a], no] as const)} />
+           </>
+         )}
+-        <Fine>{`Every term you can ask about is the game’s own, and so are the shorter term, the time ${office} takes to answer and the chance it agrees, which rises with how many of the factors under Why It Went This Way are at the bar or beyond. The commission is the unions’ and New York’s rule, and no ask changes it.`}</Fine>
++        <Fine>{`Every term you can ask about is the game’s own, and so are the shorter term, the time ${office} takes to answer and the chance it agrees, which rises with how many of the factors under Why It Went This Way are at the bar or beyond. The commission is the unions’ and New York’s rule, and no ask changes it.${agent.real ? ` ${realTermsWords(agent)}` : ''}`}</Fine>
+       </div>
+     </Panel>
+   );
+diff --git a/tests/b27-representation.test.ts b/tests/b27-representation.test.ts
+index 7a307bf9..95e44c3f 100644
+--- a/tests/b27-representation.test.ts
++++ b/tests/b27-representation.test.ts
+@@ -6,9 +6,10 @@
+  *
+  * Held here: the actor's one ask for different terms on an offered agreement, answered by the office two days on at a
+  * chance that reads how keen it is, the terms kept as versions and read by when the agreement ends, by the commission and
+- * by which parts the agent submits the actor for; Halberd Talent's voice-over department, whose office asks for a voice
+- * demo, weighs it as a legit office weighs a reel, offers an agreement for voice-over and puts the actor up for voice
+- * parts; and an introduction at a festival, read by the approach as a referral is.
++ * by which parts the agent submits the actor for, and by the clause a voice part's contract carries on its commission;
++ * Halberd Talent's voice-over department, whose office asks for a voice demo, weighs it as a legit office weighs a reel,
++ * offers an agreement for voice-over and puts the actor up for voice parts; and an introduction at a festival, read by the
++ * approach as a referral is.
+  *
+  * PLAYER JOURNEYS: a graduate's life (tests/fakes/b20-career.ts), played by the clock and the commands a player sends,
+  * each falsifiability twin the same save opened again (`twin`) with one input changed. TEST SETUP, said where it's done:
+@@ -27,18 +28,21 @@ import { AGREEMENT, AGREEMENT_TERMS, projectById, type ProjectTemplate } from '@
+ import { BRIEFS } from '@/engine/content/briefs';
+ import { MARKETS } from '@/engine/content/slate';
+ import { CITIES } from '@/engine/content/geography';
+-import { addCredit, currentOf, type Agreement, type Engagement } from '@/engine/systems/pro';
++import { addCredit, currentOf, noteEvent, type Agreement, type Engagement } from '@/engine/systems/pro';
+ import { GATE, caseKeys, interestOf, relationOf, sendRefusal, signRefusal } from '@/engine/systems/proagent';
+ import {
+-  TERMS, askChance, askRefusal, coveredUnder, dealOf, introduceAtFestival, submitsFor, termsChance, termsFor,
++  TERMS, askChance, askRefusal, chanceTenths, coveredUnder, dealOf, introduceAtFestival, realTermsWords, submitsFor, termsChance, termsFor,
+ } from '@/engine/systems/representation';
+ import { commissionOn } from '@/engine/systems/propay';
+-import { DIRECT, askMoreRefusal, payTermsOf, postingTimes, postingsAt, reachOf } from '@/engine/systems/projobs';
++import { pageOf } from '@/engine/systems/reference';
++import { DIRECT, askMoreRefusal, payTermsOf, postingTimes, postingsAt, reachOf, slateReach } from '@/engine/systems/projobs';
+ import { keepProject, slatePartsAt } from '@/engine/systems/slate';
+ import { voiceOnly } from '@/engine/systems/workflow';
+ import { AGENT, SURE, at, finishedJob, graduate, played, portfolio, reel, represent, twin, zone } from './fakes/b20-career';
+ import { booked } from './fakes/career-work';
+ import { GUIDE_BY_ID } from '@/engine/content/guide';
++import { deciders } from '@/engine/core/deciders';
++import '@/engine/decided';
+ 
+ const PERSON = 'person_000001';
+ const CELIA = agentById('celia-brannock')!;
+@@ -113,7 +117,7 @@ describe('asking for different terms (Part 6, loop 8)', () => {
+     const sim = yes();
+     const a = offered(sim);
+     // As offered: a legit department's work in the US for a year, the words `AGREEMENT_TERMS` has always had.
+-    expect(a.deal!.versions).toEqual([{ version: 1, at: at(2026, 9, 30, 10), scope: ['legit'], territory: ['us'], termDays: AGREEMENT.termDays, how: 'offered' }]);
++    expect(a.deal!.versions).toEqual([{ version: 1, at: at(2026, 9, 30, 10), scope: ['legit'], territory: ['us'], termDays: AGREEMENT.termDays }]);
+     expect(a.terms).toEqual(AGREEMENT_TERMS);
+     // The chance is said before the ask: the shorter term's, read from the factors at the bar as things stand.
+     const chance = askChance(sim, sim.player, AGENT, 'shorter');
+@@ -130,7 +134,7 @@ describe('asking for different terms (Part 6, loop 8)', () => {
+     played(back, r.answerAt + MS_HOUR);
+     const agreed = offered(back);
+     expect(agreed.ask).toMatchObject({ what: 'shorter', answer: 'agreed', answeredAt: at(2026, 10, 2, 10) });
+-    expect(agreed.deal!.versions.map((v) => [v.version, v.termDays, v.how])).toEqual([[1, 365, 'offered'], [2, TERMS.shorterDays, 'agreed']]);
++    expect(agreed.deal!.versions.map((v) => [v.version, v.termDays, v.at])).toEqual([[1, 365, at(2026, 9, 30, 10)], [2, TERMS.shorterDays, at(2026, 10, 2, 10)]]);
+     expect(agreed.terms.find((t) => t.id === 'duration')!.words).toBe('Six months from the day you sign it, the shorter term you asked for.');
+     expect(agreed.terms.find((t) => t.id === 'termination')!.words).toMatch(/Otherwise it ends when its six months are up\.$/);
+     expect(notices(back).at(-1)).toBe('Thomas Ashgrove’s Office Agreed To Your Ask: Thomas Ashgrove’s office at Halberd Talent agreed to a term of six months instead of one year, and The Agreement on the Representation tab now says so. The offer stands until October 14, 2026: accept it or decline it there.');
+@@ -180,6 +184,28 @@ describe('asking for different terms (Part 6, loop 8)', () => {
+     expect(askChance(sim, sim.player, AGENT, 'abroad')).toBeLessThan(before);
+   }, 300_000);
+ 
++  it('PLAYER JOURNEY: the answer reads how keen the office is: in a life whose draw falls between two chances, the shorter term asked as things stand is agreed; in the twin with a missed day on its record, reliability falls below the bar, the chance said falls a tenth, and the same ask is kept', () => {
++    const { sim, keen, cool } = lifeBetween('rep-mid');
++    // THE TWINS: the same offer opened twice; in one, a day of the finished job missed on its record (TEST SETUP, as the
++    // work loop's `missDay` notes one), which reliability counts against the actor.
++    const asIs = twin(sim);
++    const missed = withMissedDay(twin(sim));
++    expect([askChance(asIs, asIs.player, AGENT, 'shorter'), askChance(missed, missed.player, AGENT, 'shorter')]).toEqual([keen, cool]);
++    expect(interestOf(missed, missed.player, AGENT, missed.now).factors.find((f) => f.id === 'reliability')!.level).toBe('near');
++    expect(cool).toBe(Math.round((keen - TERMS.perFactor) * 100) / 100);
++    // The draw is the agreement's, the same in both: between the two chances.
++    const u = termsDraw(sim.universe.meta.seed, AGENT, offered(sim).id);
++    expect(cool <= u && u < keen).toBe(true);
++    // Each asks at the chance its panel shows, and the office answers by it.
++    const a = asked(asIs, 'shorter');
++    const b = asked(missed, 'shorter');
++    expect([a.chance, b.chance]).toEqual([keen, cool]);
++    expect([chanceTenths(a.chance), chanceTenths(b.chance)]).toEqual([`about ${Math.round(keen * 10)} in 10`, `about ${Math.round(cool * 10)} in 10`]);
++    expect(offered(asIs).ask).toMatchObject({ chance: keen, answer: 'agreed' });
++    expect(offered(missed).ask).toMatchObject({ chance: cool, answer: 'kept' });
++    expect([dealOf(offered(asIs)).termDays, dealOf(offered(missed)).termDays]).toEqual([TERMS.shorterDays, AGREEMENT.termDays]);
++  }, 300_000);
++
+   it('refuses an ask with no offer, one too late for its answer, voice-over where it’s covered already or the agency has no department for it, and work abroad for voice work, each in words', () => {
+     const sim = yes();
+     // Too late: the answer would come after the offer lapses.
+@@ -194,6 +220,10 @@ describe('asking for different terms (Part 6, loop 8)', () => {
+     const patack = offeredBy(seedFor('rep-patack', (s) => offers(s, PATACK)), PATACK);
+     expect(askRefusal(patack, patack.player, PATACK, 'voice')).toBe('The game knows of no voice-over department at Stewart Talent’s New York office, since the pages it read name none, so voice-over can’t be added to this agreement.');
+     expect(askRefusal(patack, patack.player, PATACK, 'abroad')).toBeUndefined();
++    // A real agent's answer, whichever it is, says it's the game's: the agency's pages give no terms.
++    asked(patack, 'abroad', PATACK);
++    expect(notices(patack).at(-1)).toMatch(new RegExp(`^Dan Patack’s Office (Agreed To Your Ask|Kept Its Terms): .+ ${realTermsWords(PATACK)}$`));
++    expect(realTermsWords(PATACK)).toBe('Stewart Talent’s pages say nothing of the terms its agents agree to, so whether the office agrees is the game’s invention, not a fact about Dan Patack.');
+   }, 300_000);
+ });
+ 
+@@ -236,7 +266,7 @@ describe('what the terms cover, read by the commission and the agent’s submiss
+     expect([...TERMS.abroad].sort()).toEqual(abroadMarkets);
+   });
+ 
+-  it('PLAYER JOURNEY: voice-over added at Halberd Talent: its voice-over department puts the actor up for a voice part, sending the voice demo, and the pay carries commission; the twin without it meets the same part open', () => {
++  it('PLAYER JOURNEY: voice-over added at Halberd Talent: the agent puts the actor up for a voice part with its voice-over department, sending the voice demo, and the pay carries commission; the twin without it meets the same part open', () => {
+     const voice = yes();
+     asked(voice, 'voice');
+     voice.must({ kind: 'pro.accept_agreement', payload: {} });
+@@ -246,7 +276,8 @@ describe('what the terms cover, read by the commission and the agent’s submiss
+     const withVoice = voice.player.pro!.agreements[0]!;
+     const without = home.player.pro!.agreements[0]!;
+     expect(dealOf(withVoice).scope).toEqual(['legit', 'voice']);
+-    expect(withVoice.terms.find((t) => t.id === 'scope')!.words).toBe('Stage, film and television work, and voice-over work: animation, dubbing and narration, which the agency’s voice-over department handles.');
++    // Handled by the agent, with the agency's voice-over department, as the submission below says he submitted the actor.
++    expect(withVoice.terms.find((t) => t.id === 'scope')!.words).toBe('Stage, film and television work, and voice-over work: animation, dubbing and narration, which your agent handles with the agency’s voice-over department.');
+     expect(withVoice.terms.find((t) => t.id === 'excluded')!.words).toBe('Commercials aren’t covered. An agency usually handles them in another department.');
+     const lantern = projectById('lantern-row')!;
+     expect([reachOf(lantern, withVoice), reachOf(lantern, without)]).toEqual(['agent', 'open']);
+@@ -273,7 +304,7 @@ describe('what the terms cover, read by the commission and the agent’s submiss
+ });
+ 
+ describe('the offers an agent handles, by what the agreement covers', () => {
+-  it('PLAYER JOURNEY: a voice part offered without an audition while the agreement leaves voice-over out: the actor’s own, at scale, with no ask for more; with voice-over covered, a voice part from the same office comes through the agent at scale plus ten', () => {
++  it('PLAYER JOURNEY: a voice part offered without an audition while the agreement leaves voice-over out: the actor’s own, at scale, with no ask for more, and its contract says no commission is owed, as the pay takes none; with voice-over covered, a voice part from the same office comes through the agent at scale plus ten, and its contract says commission is owed, as the pay takes it', () => {
+     // TEST SETUP: represented by Thomas Ashgrove under an agreement as the agent's builder writes one: his first terms.
+     const legit = graduate('rep-offers');
+     represent(legit);
+@@ -281,14 +312,23 @@ describe('the offers an agent handles, by what the agreement covers', () => {
+     const scale = payTermsOf(own).each!;
+     expect([own.via, own.agreementId, own.offer!.amount]).toEqual(['open', undefined, scale]);
+     expect(askMoreRefusal(legit, legit.player, own)).toBe('Thomas Ashgrove doesn’t negotiate this one: your agreement with Halberd Talent leaves out voice-over work, and this is that, so the offer is as it stands.');
++    // Accepted, its contract says what the pay does: no commission, and why.
++    const ownWork = acceptedWork(legit, own.id);
++    expect(voiceClause(ownWork)).toBe('No commission is owed on this work: your agreement with Halberd Talent leaves out voice-over work, and this is that.');
++    expect(commissionOn(legit, legit.player, ownWork, ownWork.pay[0]!, ownWork.pay[0]!.promised)).toMatchObject({ how: 'uncovered', amount: 0, words: 'No commission: your agreement with Halberd Talent leaves out voice-over work, and this is that.' });
+     // THE TWIN: the same life with voice-over covered (TEST SETUP: the agreement's terms as the office's agreement to the ask leaves them).
+     const voiced = graduate('rep-offers');
+     const a = represent(voiced);
+-    a.deal = { versions: [{ version: 1, at: a.offeredAt, scope: ['legit'], territory: ['us'], termDays: 365, how: 'offered' }, { version: 2, at: a.offeredAt, scope: ['legit', 'voice'], territory: ['us'], termDays: 365, how: 'agreed', ask: 'voice' }] };
++    a.deal = { versions: [{ version: 1, at: a.offeredAt, scope: ['legit'], territory: ['us'], termDays: 365 }, { version: 2, at: a.offeredAt, scope: ['legit', 'voice'], territory: ['us'], termDays: 365 }] };
+     const through = directVoiceOffer(voiced, 'agent');
+     expect([through.via, through.agreementId]).toEqual(['agent', a.id]);
+     expect(through.offer!.amount).toBe(Math.round(payTermsOf(through).each! * 1.1));
+     expect(askMoreRefusal(voiced, voiced.player, through)).toBeUndefined();
++    // Accepted, its contract says commission is owed, and the pay takes it.
++    const throughWork = acceptedWork(voiced, through.id);
++    expect(voiceClause(throughWork)).toBe('Your agreement with Halberd Talent covers voice-over work, so commission is owed on this work as on the rest it covers.');
++    const owed = commissionOn(voiced, voiced.player, throughWork, throughWork.pay[0]!, throughWork.pay[0]!.promised);
++    expect([owed.how, owed.amount > 0]).toEqual(['term', true]);
+   }, 300_000);
+ });
+ 
+@@ -345,6 +385,10 @@ describe('Halberd Talent’s voice-over department (Part 6 medium, Part 7 voice
+     expect(reachOf(projectById('lantern-row')!, hers)).toBe('agent');
+     expect(reachOf(projectById('calloway-files')!, hers)).toBeUndefined();
+     expect(coveredUnder(hers, projectById('gull-season')!)).toBe(false);
++    // The industry reference's page for her agency gives both its departments, and her among its agents.
++    const page = pageOf(sim, sim.player, { kind: 'company', id: 'agency:halberd-talent' })!;
++    expect(page.sections[0]!.facts.filter((f) => f.label === 'Department').map((f) => f.words)).toEqual(['Legit, also called Theatrical', 'Voice-Over, also called Voice']);
++    expect(page.sections.find((x) => x.title === 'Its Agents In The Game')!.facts.map((f) => [f.label, f.words])).toContainEqual(['Celia Brannock', 'Agent, Voice-Over Department']);
+     // THE TWIN: the life that never mixed a demo lets the request's date pass, and her office notes it didn't come and
+     // decides on what it had, its reliability counting it against the actor.
+     const due = rel(waiting, CELIA).request!.by;
+@@ -385,7 +429,7 @@ describe('an introduction at a festival (AgentRoute festival)', () => {
+     expect(rel(sim).via).toEqual({ route: 'festival', at: sim.now, by: 'the 2028 Sundance Film Festival' });
+     expect(rel(sim).stage).toBe('introduced');
+     expect(notices(sim).at(-1)).toMatch(/^Thomas Ashgrove’s Office Met You At The Festival: You met Thomas Ashgrove’s office at Halberd Talent at the 2028 Sundance Film Festival, on .+, where Last Bus To Eastview screened\. It’s an introduction: you can send it your materials from the Career screen’s Representation tab, and it has the film to go on\. In the game an agent’s office meets the actors of the films it sees at a festival\. The festival publishes its films and screenings, not who comes, so the meeting is the game’s\.$/);
+-    expect(interestOf(sim, sim.player, AGENT, sim.now).factors.find((f) => f.id === 'work')!.words).toContain('Last Bus To Eastview, which the 2028 Sundance Film Festival screened, at best Strong');
++    expect(interestOf(sim, sim.player, AGENT, sim.now).factors.find((f) => f.id === 'work')!.words).toContain('Last Bus To Eastview, in the 2028 Sundance Film Festival’s official selection, at best Strong');
+     expect(caseKeys(sim.player, rel(sim))).toContain(`festival:${entry.id}`);
+     // Once for each entry; never a real agent, whose whereabouts the game doesn't invent, nor the voice-over office.
+     expect(introduceAtFestival(sim, sim.player, entry.id)).toEqual([]);
+@@ -418,6 +462,22 @@ describe('an introduction at a festival (AgentRoute festival)', () => {
+     expect(rel(sim).festivals!.map((f) => f.entryId)).toEqual([entry.id]);
+     expect(rel(sim).history.at(-1)!.words).toBe('You met his office at the 2028 Sundance Film Festival, where Last Bus To Eastview screened. Where you stood with it didn’t change, and it has the film to go on.');
+   }, 300_000);
++
++  it('names the festival the entry is for, and says the film was in the official selection where it hasn’t screened yet', () => {
++    const sim = graduate('rep-festival-named');
++    sim.must({ kind: 'pro.agent_notice', payload: {} });
++    portfolio(sim);
++    const entry = sundanceEntry(sim, 'selected', 'cannes');
++    // A name the festival's system gives is the one said.
++    const named = twin(sim);
++    expect(introduceAtFestival(named, named.player, entry.id, 'the 79th Cannes Film Festival')).toEqual([AGENT.id]);
++    expect(rel(named).via!.by).toBe('the 79th Cannes Film Festival');
++    expect(introduceAtFestival(sim, sim.player, entry.id)).toEqual([AGENT.id]);
++    expect(rel(sim).via).toEqual({ route: 'festival', at: sim.now, by: 'the 2028 Cannes Film Festival' });
++    expect(rel(sim).history.at(-1)!.words).toBe('His office met you at the 2028 Cannes Film Festival, where Last Bus To Eastview was in the official selection: an introduction, so you could send it your materials.');
++    expect(notices(sim).at(-1)).toMatch(/^Thomas Ashgrove’s Office Met You At The Festival: You met Thomas Ashgrove’s office at Halberd Talent at the 2028 Cannes Film Festival, on .+, where Last Bus To Eastview was in the official selection\. /);
++    expect(interestOf(sim, sim.player, AGENT, sim.now).factors.find((f) => f.id === 'work')!.words).toContain('Last Bus To Eastview, in the 2028 Cannes Film Festival’s official selection, at best Strong');
++  }, 300_000);
+ });
+ 
+ describe('one agent at a time, whatever each covers', () => {
+@@ -425,27 +485,106 @@ describe('one agent at a time, whatever each covers', () => {
+     const sim = graduate('rep-one-at-a-time');
+     // TEST SETUP: his agreement signed, and hers offered, each as the agent's builder writes one.
+     const his = represent(sim);
+-    sim.player.pro!.agreements.push({ id: 'celia-offer', agentId: CELIA.id, offeredAt: sim.now, standsUntil: sim.now + 14 * MS_DAY, status: 'offered', terms: termsFor({ ...dealOf(his), scope: ['voice'] }), deal: { versions: [{ version: 1, at: sim.now, scope: ['voice'], territory: ['us'], termDays: 365, how: 'offered' }] } });
++    sim.player.pro!.agreements.push({ id: 'celia-offer', agentId: CELIA.id, offeredAt: sim.now, standsUntil: sim.now + 14 * MS_DAY, status: 'offered', terms: termsFor({ ...dealOf(his), scope: ['voice'] }), deal: { versions: [{ version: 1, at: sim.now, scope: ['voice'], territory: ['us'], termDays: 365 }] } });
+     expect(signRefusal(sim, sim.player, CELIA)).toMatch(/^Thomas Ashgrove at Halberd Talent represents you until \w+ \d+, \d{4}, for stage, film and television work\. In the game you have one agent at a time, so this agreement can’t start while that one runs\. You can decline it, or end the other first\.$/);
+   });
+ });
+ 
++describe('the slate’s reach, as its decider samples it', () => {
++  it('samples a represented life’s voice parts as the game reaches them under a legit agreement: openly, not through the agent', () => {
++    const d = deciders().find((x) => x.id === 'pro.slate_reach')!;
++    const input = (d.sample as (seed: number) => { sim: Simulation; represented: number })(1);
++    expect(input.represented).toBe(1);
++    const weeks = String((d.decide as (i: unknown) => string)(input)).split(' ');
++    const sim = input.sim;
++    let voiced = 0;
++    weeks.forEach((week, n) => {
++      const when = sim.now + n * 7 * MS_DAY;
++      const parts = slatePartsAt(sim, when).filter((t) => t.access.agent || t.access.open);
++      const said = week.split(',').map(Number);
++      parts.forEach((t, i) => {
++        if (!voiceOnly(t)) return;
++        expect(reachOf(t, sim.player.pro!.agreements[0])).toBe('open');
++        const open = Math.round(slateReach(sim, sim.player, t, 'open', when) * 100);
++        const agent = Math.round(slateReach(sim, sim.player, t, 'agent', when) * 100);
++        if (open !== agent) voiced += 1;
++        expect(said[i], `${t.id} in week ${n}`).toBe(open);
++      });
++    });
++    // Parts where the two ways in differ, so the sample tells them apart.
++    expect(voiced).toBeGreaterThan(0);
++  });
++});
++
+ describe('an older save’s agreement', () => {
+-  it('reads as the words it was offered with: a legit department’s work in the US for a year, and a voice department’s voice-over', () => {
+-    const sim = graduate('rep-older');
+-    // TEST SETUP: an agreement written as the agent's builder wrote one before 2026-10-25, with no terms as versions.
+-    const a = represent(sim);
++  it('PLAYER JOURNEY: an agreement offered before 2026-10-25, with no terms as versions, saved and loaded: it reads as the words it was offered with, takes the ask, and the shorter term agreed ends it at six months; one accepted then keeps its terms and its end', () => {
++    const sim = yes();
++    // TEST SETUP: the offered agreement as the agent's builder wrote one before 2026-10-25, with no terms as versions.
++    delete offered(sim).deal;
++    const old = twin(sim);
++    const a = offered(old);
+     expect(a.deal).toBeUndefined();
+     expect(dealOf(a)).toMatchObject({ version: 1, scope: ['legit'], territory: ['us'], termDays: AGREEMENT.termDays });
+-    expect(termsFor(dealOf(a))).toEqual(AGREEMENT_TERMS);
++    expect(termsFor(dealOf(a))).toEqual(a.terms);
+     expect(dealOf({ ...a, agentId: CELIA.id }).scope).toEqual(['voice']);
+-  });
++    asked(old, 'shorter');
++    const agreed = offered(old);
++    expect(agreed.deal!.versions.map((v) => [v.version, v.termDays])).toEqual([[1, AGREEMENT.termDays], [2, TERMS.shorterDays]]);
++    old.must({ kind: 'pro.accept_agreement', payload: {} });
++    const signed = old.player.pro!.agreements.find((x) => x.id === agreed.id)!;
++    expect(signed.endsAt).toBe(addDays(signed.signedAt!, TERMS.shorterDays, zone));
++    played(old, signed.endsAt! + MS_HOUR);
++    expect(signed).toMatchObject({ status: 'ended', endedHow: 'term' });
++    // One accepted before then (TEST SETUP: as the builder wrote it), saved and loaded: its first terms, and its end.
++    const before = graduate('rep-older');
++    const kept = represent(before);
++    const back = twin(before).player.pro!.agreements.find((x) => x.id === kept.id)!;
++    expect(back.deal).toBeUndefined();
++    expect(dealOf(back)).toMatchObject({ scope: ['legit'], territory: ['us'], termDays: AGREEMENT.termDays });
++    expect([coveredUnder(back, projectById('gull-season')!), coveredUnder(back, projectById('salt-road')!)]).toEqual([true, false]);
++    expect(back.endsAt).toBe(kept.endsAt);
++  }, 300_000);
+ });
+ 
+ // ---------------------------------------------------------------------------------------------------------------------
+ // Setup helpers
+ // ---------------------------------------------------------------------------------------------------------------------
+ 
++/** An offer accepted through the Opportunities tab's command, and the engagement it books. */
++function acceptedWork(sim: Simulation, opportunityId: string): Engagement {
++  const r = sim.must<{ engagementId: string }>({ kind: 'pro.accept_offer', payload: { opportunityId } });
++  return sim.player.pro!.engagements.find((e) => e.id === r.engagementId)!;
++}
++
++/** What a voice part's contract says of commission, as the Work tab shows its clauses. */
++const voiceClause = (e: Engagement): string | undefined => e.contract!.clauses.flatMap((c) => (c.kind === 'rule' && c.id === 'voice-over' ? [c.words] : []))[0];
++
++/** TEST SETUP: a day of the life's finished job missed, on its record as the work loop's `missDay` notes one. */
++function withMissedDay(sim: Simulation): Simulation {
++  const e = sim.player.pro!.engagements.find((x) => x.status === 'finished')!;
++  noteEvent(sim, e, { kind: 'problem', key: 'missed:1', words: `You missed a shoot day of ${projectById(e.projectId)!.project}.` });
++  return sim;
++}
++
++/**
++ * TEST SETUP: the first life of a prefix offered an agreement whose ask's draw falls between two chances for a shorter
++ * term: at or over the chance with a day missed on its record, under the chance as things stand. Each chance is the
++ * game's, read from the life's own factors (`askChance`).
++ */
++function lifeBetween(prefix: string): { sim: Simulation; keen: number; cool: number } {
++  for (let i = 0; i < 20_000; i += 1) {
++    const seed = `${prefix}-${i}`;
++    if (!offers(seed, AGENT)) continue;
++    const sim = offeredBy(seed);
++    const keen = askChance(sim, sim.player, AGENT, 'shorter');
++    const missed = withMissedDay(twin(sim));
++    const cool = askChance(missed, missed.player, AGENT, 'shorter');
++    const u = termsDraw(seed, AGENT, offered(sim).id);
++    if (cool <= u && u < keen) return { sim, keen, cool };
++  }
++  throw new Error(`No life for ${prefix}`);
++}
++
+ /** A voice brief taped and mixed into a voice demo, by the Player Profile's and the Portfolio tab's commands. */
+ function demo(sim: Simulation): void {
+   sim.must({ kind: 'brief.choose', payload: { brief: VOICE_BRIEF.id, reading: VOICE_BRIEF.readings[0]!.id } });
+@@ -466,11 +605,14 @@ function finishedVoiceJob(sim: Simulation): Engagement {
+   return e;
+ }
+ 
+-/** TEST SETUP: a film credited and the Sundance entry the awards' system leaves for it, in a state. */
+-function sundanceEntry(sim: Simulation, state: 'screened' | 'not-selected') {
++/**
++ * TEST SETUP: a film credited and the Sundance entry the awards' system leaves for it, in a state; or, for another
++ * festival, the entry the festivals' own system will leave (cast, since the entry's type names Sundance alone until it lands).
++ */
++function sundanceEntry(sim: Simulation, state: 'screened' | 'selected' | 'not-selected', institution: 'sundance' | 'cannes' = 'sundance') {
+   const t = projectById('eastview')!;
+   const credit = addCredit(sim, sim.player, { kind: 'screen', project: t.project, role: t.role.part, company: t.company, year: 2027, medium: 'film', status: 'shot', at: sim.now - MS_DAY, band: 'strong' });
+-  const entry = { id: sim.nextId('pro'), institution: 'sundance' as const, year: 2028, category: 'us-short' as never, creditId: credit.id, engagementId: 'none', state, noticeAt: sim.now - MS_DAY, ...(state === 'screened' ? { screenedAt: sim.now } : {}) };
++  const entry = { id: sim.nextId('pro'), institution: institution as 'sundance', year: 2028, category: 'us-short' as never, creditId: credit.id, engagementId: 'none', state, noticeAt: sim.now - MS_DAY, ...(state === 'screened' ? { screenedAt: sim.now } : {}) };
+   (sim.player.pro!.festivals ??= []).push(entry);
+   return entry;
+ }
+diff --git a/tests/career-workflows.test.ts b/tests/career-workflows.test.ts
+index 9946a97d..aaf43384 100644
+--- a/tests/career-workflows.test.ts
++++ b/tests/career-workflows.test.ts
+@@ -625,7 +625,10 @@ describe('W12: the formats apart', () => {
+     // no agent could.
+     for (const id of ['lantern-row', 'kite-and-crow', 'salt-road', 'tidewater-narrator']) expect(projectById(id)!.access, id).toEqual({ agent: true, open: 'anyone' });
+     const voice = accept(sim, offerFor(sim, 'salt-road', at(2027, 6, 7)));
+-    expect(voice.contract!.clauses.some((x) => x.kind === 'rule' && x.id === 'voice-over')).toBe(true);
++    // Unrepresented, its contract says nothing of an agent's commission, as no other contract does. Until 2026-10-25 every
++    // voice contract said voice-over was outside an agent's agreement; from then it says what the agreement it's made under
++    // covers (tests/b27-representation.test.ts), and there's none here.
++    expect(voice.contract!.clauses.some((x) => x.kind === 'rule' && x.id === 'voice-over')).toBe(false);
+     expect(decisionsFor(projectById('salt-road')!).map((d) => d.id)).toEqual(['sync', 'stressful']);
+     // Represented, the agent's agreement still leaves voice-over out: no commission on a dub paid over scale, and the
+     // agreement's on a feature paid the same (TEST SETUP: the agreement and both bookings written as the systems write them).
+-- 
+2.43.0
+

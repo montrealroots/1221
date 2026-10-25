@@ -1,0 +1,87 @@
+From 19051b01b2861c4a9d97e6f362f2fa9d1033cd35 Mon Sep 17 00:00:00 2001
+From: Claude <noreply@anthropic.com>
+Date: Sun, 25 Oct 2026 20:42:05 +0000
+Subject: [PATCH 5/6] An option given up no longer names the work it was given
+ up for, since nothing read the name
+
+`givenUpFor` was written on the clause and read only by the test that held it, a declared word with no reader. What an
+option given up changes is read from the record's `optionsGivenUp` (the season's casting and the casting office's word)
+and said by the clause's `settled`, which the Work tab shows; the journey now holds those instead.
+
+Co-Authored-By: Claude Opus 5.5 <noreply@anthropic.com>
+Claude-Session: https://claude.ai/code/session_01HBdcuKzBBMbipfFQSByALG
+---
+ src/engine/systems/continuity.ts |  1 -
+ src/engine/systems/pro.ts        |  5 ++---
+ tests/b27-option-hold.test.ts    | 10 ++++++----
+ 3 files changed, 8 insertions(+), 8 deletions(-)
+
+diff --git a/src/engine/systems/continuity.ts b/src/engine/systems/continuity.ts
+index 71679336..60bff30e 100644
+--- a/src/engine/systems/continuity.ts
++++ b/src/engine/systems/continuity.ts
+@@ -153,7 +153,6 @@ function seasonFor(s: SeriesTemplate, year: number): string {
+ export function giveUpOptions(sim: Simulation, person: Person, taken: Engagement, t: ProjectTemplate, spans: readonly { from: Instant; to: Instant }[]): void {
+   for (const h of heldOptions(person, spans, taken.id)) {
+     h.option.status = 'expired';
+-    h.option.givenUpFor = taken.id;
+     const why = `You took ${t.role.part} in ${t.project} on days the option held, so you gave it up.`;
+     h.option.settled = { at: sim.now, why };
+     if (person.pro && h.t.series) (person.pro.optionsGivenUp ??= []).push({ casting: h.t.casting, seriesId: h.t.series, part: h.t.role.part, year: h.option.year, at: sim.now });
+diff --git a/src/engine/systems/pro.ts b/src/engine/systems/pro.ts
+index 064a3c8a..82c80dd3 100644
+--- a/src/engine/systems/pro.ts
++++ b/src/engine/systems/pro.ts
+@@ -561,11 +561,10 @@ export type ContractClause =
+     kind: 'option'; season: number; year: number; by: Instant; raise: number; status: 'open' | 'exercised' | 'expired'; settled?: { at: Instant; why: string; engagementId?: ProId };
+     /**
+      * From 2026-10-25 (the owner's brief 27, loop 20; `systems/continuity.ts`): the actor's ask to be released from it,
+-     * against an offer on the days it holds, and the production's answer; and the engagement it was given up for, where
+-     * the actor took work on its days without a release.
++     * against an offer on the days it holds, and the production's answer. An option given up is said by `settled` and
++     * kept in the record's `optionsGivenUp`, which the season's casting and the casting office's word read.
+      */
+     release?: { at: Instant; answerAt: Instant; against: ProId; answer?: 'granted' | 'refused' };
+-    givenUpFor?: ProId;
+   }
+   // A workflow's rule (from 2026-10-24, brief 25's Module 5, `workflowRules`, `systems/contracts.ts`): its words.
+   | { kind: 'rule'; id: 'rehearsal-paid' | 'dubbing' | 'stressful' | 'days-only' | 'stunts' | 'intimacy' | 'looping' | 'voice-over' | 'residuals-unread' | 'promo'; words: string };
+diff --git a/tests/b27-option-hold.test.ts b/tests/b27-option-hold.test.ts
+index 72ecd2ae..c0b24026 100644
+--- a/tests/b27-option-hold.test.ts
++++ b/tests/b27-option-hold.test.ts
+@@ -103,7 +103,7 @@ describe('an option’s hold on the actor’s dates', () => {
+     expect(notices(released).some((n) => n.startsWith('Released From The Option On Assistant DA Whitlock | Bright Harbor Television released you from its option'))).toBe(true);
+     expect(acceptWarning(released, released.player, o1) ?? '').not.toContain('holds an option on you');
+     released.must({ kind: 'pro.accept_offer', payload: { opportunityId: o1.id } });
+-    expect(r1.givenUpFor).toBeUndefined();
++    expect(r1.settled!.why).toBe('Bright Harbor Television released you from its option as Assistant DA Whitlock, at your asking.');
+     expect(gaveUpWith(released.player, WHITLOCK.casting)).toBe(false);
+ 
+     // Asked and refused: the option stands, the warning says so; accepted anyway, it's given up.
+@@ -118,9 +118,10 @@ describe('an option’s hold on the actor’s dates', () => {
+     expect(optionReleaseRefusal(refused, refused.player, o2)).toMatch(/^Bright Harbor Television refused on .*: the option stands\. Decline the offer, or accept it and give the option up\.$/);
+ 
+     // Accepted without a release (the refused fork goes on, and the falsifiability twin of the released one): given up.
+-    const taken = refused.must<{ engagementId: string }>({ kind: 'pro.accept_offer', payload: { opportunityId: o2.id } }).engagementId;
++    refused.must({ kind: 'pro.accept_offer', payload: { opportunityId: o2.id } });
+     const gone = clauseOf(ef.contract, 'option')!;
+-    expect(gone).toMatchObject({ status: 'expired', givenUpFor: taken });
++    expect(gone.status).toBe('expired');
++    expect(refused.player.pro!.optionsGivenUp).toEqual([expect.objectContaining({ casting: WHITLOCK.casting, seriesId: CALLOWAY.id, part: WHITLOCK.role.part, year: 2027 })]);
+     expect(gone.settled!.why).toBe(`You took ${projectById(o2.projectId)!.role.part} in ${projectById(o2.projectId)!.project} on days the option held, so you gave it up.`);
+     expect(notices(refused).some((n) => n.startsWith('You Gave Up The Option On Assistant DA Whitlock | '))).toBe(true);
+     expect(gaveUpWith(refused.player, WHITLOCK.casting)).toBe(true);
+@@ -147,7 +148,8 @@ describe('an option’s hold on the actor’s dates', () => {
+     expect(clauseOf(ed.contract, 'option')!.status).toBe('open');
+     declined.advanceTo(option.by + MS_HOUR);
+     expect(clauseOf(ed.contract, 'option')!.status).not.toBe('open');
+-    expect(clauseOf(ed.contract, 'option')!.givenUpFor).toBeUndefined();
++    expect(clauseOf(ed.contract, 'option')!.settled!.why).not.toContain('you gave it up');
++    expect(declined.player.pro!.optionsGivenUp ?? []).toEqual([]);
+   }, 900_000);
+ 
+   it('refuses an ask the production couldn’t answer before the offer lapses', () => {
+-- 
+2.43.0
+

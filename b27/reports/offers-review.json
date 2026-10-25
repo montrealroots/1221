@@ -1,0 +1,172 @@
+{
+ "verdict": "The cluster is mostly built as its brief asks, and mostly connected and tested. Item by item: (1) Negotiation through the agent is built: the player picks pay, episodes or promo; the answer is raised, kept, traded or withdrawn; nobody negotiates without an agent; and datesOf, promisedPay, contractFor, renewFromOption, promoSession and callPromo read every answer. The promo ask was widened below $25,000, and the register's §18.B(5) quote (\"Producer may bargain...\") supports that. The promo trade-off only exists above $25,000, which no part reaches. (2) Self-tape takes are built: each take has its own draw, there are 3 a day and 8 kept, the sent take is replayed, and casting reads it. (3) Approach and direction are only partly built. The choice is falsifiable and can win or lose a callback. But in-person auditions and callbacks are judged on the 'audition' task, which has no responsiveness dimension. So the direction's 'reach for adaptability', the Open side's listening and the Driven side's responsiveness lean are never read. Keeping your choice against an 'open' direction costs nothing. The guide and the decision text say adaptability decides it. The test asserts only that the input was recorded. (4) Conditional offers, changed requirements and recasting are built and change who can be booked. The age-range half of a changed requirement is untested. (5) Withdrawing with notice versus not turning up, and asking to reschedule a chemistry read or screen test, are built, and the cut and directOfferFor read them. Save compatibility looks sound: both pins stay at 94, the new fields are optional with defaults, and the migration and save-load tests pass. I found no fabricated real-world fact; the comment citing N13 §18.B swaps subsections (3) and (5). The smaller defects: a chemistry read's clash notice now points to a button that refuses it; Tape It can be enabled when the command will refuse; a conditional offer's hold can be re-offered, which drops the negotiated terms and contradicts the condition text; several new fields are written but never read; and the callPromo hook and the conditional offer's memory check are untested.",
+ "tests_run": "All commands run in CLONE at 0e4a7bd2:\n- `nice -n 19 npx tsc --noEmit -p .` returned at once (a composite tsconfig whose project references aren't built by plain tsc -p, so it checked nothing). `-p tsconfig.app.json`: 0 errors. `-p tsconfig.node.json`: 0 errors.\n- `npx eslint` on the 14 changed .ts/.tsx files: clean (exit 0).\n- `node tools/deciders.mjs --check`: passes, 64 registered (6 new: pro.withdraw, pro.trade, pro.conditional, pro.rewrite, pro.recast, pro.reschedule).\n- New tests, one file at a time (`nice -n 19 npx vitest run tests/<file>`): b27-offer-terms 7/7 passed; b27-sides 6/6 passed; b27-casting-turns 5/5 passed.\n- Existing tests that import the changed modules, one at a time:\n  - b27-offers 4/4, b27-promo 5/5, career-contracts 15/15, pro-work 36/36, tutorial 18/18, b20-career-skill 5/5, guide 14/14, deciders 212/212, b27-holds 3/3, b20-guide-chapters 37/37, b20-guide-promises 8/8.\n  - migration-94 4/4, b20-career-saveload 2/2, save-migration 4/4, b27-award-effects 2/2, journey-career 13/13.\n  - b20-guide-wiring: 2 failed, 5 passed. The failures are 'controls: expected Array(212) to deeply equal Array(219)' and 'pro.ask_more at projobs.ts:2857', both waiting on the shared wiring.json; the 'sends only keys its command takes' test passed.\n- Reviewer probe: a temporary tests/zz-review-offers-probe.test.ts, deleted afterwards; `git status` is clean. At an in-person audition:\n  - Audition task dims are believability, interpretation, execution, connection, consistency (no responsiveness).\n  - Overall with no note 48.7; with adaptability ×5 on responsiveness 48.7; with adaptability ×5 on connection 47.9.\n  - Keep against an 'open' direction 48.7, the same as no note 48.7. Keep against 'driven' 47.5.\n  - Directions across slate parts (played measured): driven 95, open 70, expansive 48, restrained 158, set 26.\n- Mutations: 9 run (R1–R9), each restored with `git checkout --`. Results are in /tmp/claude-0/-home-user-1221/93119f3d-c8d9-5356-8130-0e0fe32e5c95/scratchpad/rev-offers/mutations.txt.",
+ "mutations": [
+  {
+   "claim": "Casting reads the take the player selects (item 2)",
+   "mutation": "offers.ts sendTake: `const x = r.takes![take]!` -> `r.takes![0]!`",
+   "killed": true
+  },
+  {
+   "claim": "A negotiated guaranteed-episode count changes the days booked and the pay promised (item 1)",
+   "mutation": "projobs.ts pro.accept_offer: `datesOf(o!)` -> `datesOf({ projectId, postedAt })`, ignoring the offer's episodes",
+   "killed": true
+  },
+  {
+   "claim": "An office that remembers a no-show halves its cuts (item 5)",
+   "mutation": "offers.ts castingLift: `remembers(...) ? (1+lift)*NOTICE.cut-1 : lift` -> `false ? ... : lift`",
+   "killed": true
+  },
+  {
+   "claim": "The production's call to the promotional film says and uses the bargained pay (item 1, the callPromo hook)",
+   "mutation": "projobs.ts callPromo: `e.contract?.promo ?? promoPay(...)` -> `promoPay(...)`",
+   "killed": false
+  },
+  {
+   "claim": "An office that remembers a no-show makes no conditional offer (items 4/5)",
+   "mutation": "offers.ts conditionalOfferFor: drop the `remembers(person, t.casting, at)` check",
+   "killed": false
+  },
+  {
+   "claim": "A changed age range is what eligibility and the release check read (item 4)",
+   "mutation": "offers.ts requirementsOf: `ages: o.rewrite?.ages ?? t.requirements.ages` -> `ages: t.requirements.ages`",
+   "killed": false
+  },
+  {
+   "claim": "Following a direction reads adaptability (item 3)",
+   "mutation": "offers.ts approachRead: `mergeInputs(read.inputs, follow ? NOTE_INPUTS : {})` -> `mergeInputs(read.inputs, {})`",
+   "killed": true
+  },
+  {
+   "claim": "A withdrawal less than a day before a round in person is late and remembered (item 5)",
+   "mutation": "offers.ts withNotice: body -> `return true`",
+   "killed": true
+  },
+  {
+   "claim": "A self-tape never sent isn't counted as a no-show (item 5)",
+   "mutation": "offers.ts rememberMiss: remove the `return` after the self-tape branch, so a self-tape miss falls through to remember()",
+   "killed": false
+  }
+ ],
+ "findings": [
+  {
+   "id": "F1",
+   "severity": "blocking",
+   "criterion": "decorative",
+   "claim": "At an in-person audition or callback, following casting's direction 'reaches for adaptability' (NOTE_INPUTS on responsiveness), but those rounds are judged on TASK_PROFILES.audition, which has no responsiveness dimension. So the input is never read. The Open side's listening and the Driven side's responsiveness lean are also unread in person, and keeping your choice against an 'open' direction costs nothing. Yet the guide and the decision say adaptability decides whether to follow. This also undercuts the report's claim that 'open' stands in for reader work.",
+   "evidence": "- offers.ts:105 `NOTE_INPUTS = { responsiveness: [{ ability: 'adaptability', weight: 0.5 }] }`; offers.ts:208 merges it in.\n- projobs.ts auditionContext uses TASK_PROFILES.audition for every in-person audition or callback. tasks.ts:285-291 gives that task the dims believability, interpretation, execution, connection and consistency only.\n- evaluation.ts:442 loops only over `ctx.task.dims`.\n- offers.ts:205 applies MISFIT only where `x >= 1.1 && ctx.task.dims[d]`. Open leans responsiveness 1.25 and connection 1.05, so nothing is held back.\n- Probe at an in-person audition: no note 48.7; adaptability ×5 on responsiveness 48.7 (no effect); on connection 47.9. Keep vs 'open' 48.7 = no note 48.7. 'open' was the direction for 70 of 397 directed slate parts.\n- Text that says otherwise: career.ts:900 'how well you adapt on the spot'; career.ts:914 'an actor who adapts well loses little, and one who doesn’t may do better keeping their choice'; offers.ts:290 'asks you to adapt on the spot'.\n- Weak test: b27-sides.test.ts:244 asserts only that adaptability was recorded on the work record. Mutation R7 was killed only by that line.",
+   "file": "src/engine/systems/offers.ts",
+   "line": 105,
+   "suggested_fix": "Judge the in-person rounds with a responsiveness dimension (an 'audition' profile that has one, as tape and chemistry do), or move the direction's adaptability onto a dimension the audition task has. Make keeping against any direction cost something. Replace line 244 with a twin that differs only in adaptability and shows the followed read changing."
+  },
+  {
+   "id": "F2",
+   "severity": "should-fix",
+   "criterion": "contradiction",
+   "claim": "A chemistry read or screen test that clashes with the calendar still gets the notice 'press Ask For Another Time ... Casting moves it once'. This change makes that command refuse both rounds.",
+   "evidence": "- projobs.ts:1658 (setRound, for every in-person round including chemistry and test): `It clashes with ... press Ask For Another Time on the Opportunities tab, at least a day ahead. Casting moves it once.`\n- projobs.ts:1268 (moveRefusal, new): `if (r.round === 'chemistry' || r.round === 'test') return 'A ... is set around other people’s days: Ask To Reschedule asks the production, which may say no.'`",
+   "file": "src/engine/systems/projobs.ts",
+   "line": 1658,
+   "suggested_fix": "For later rounds, point the clash words at Ask To Reschedule and its chance."
+  },
+  {
+   "id": "F3",
+   "severity": "should-fix",
+   "criterion": "contradiction",
+   "claim": "Path: a conditional offer is accepted on its condition (status 'callback', hold 'held'), another offer stands on those days, and the player presses Ask Them To Decide. A yes runs makeOffer, which rebuilds o.offer from scratch. That drops any negotiated episodes, promo or optionRaise, and the notice and card show the condition text again ('Accepting it now holds your dates and sets the screen test; nothing is booked or paid'). But accepting now books outright, because acceptOnCondition returns undefined once `condition.accepted` is set, and condition.outcome is never set. Found by reading the code; not run.",
+   "evidence": "- projobs.ts:1369-1378: holdAskRefusal allows any held part that isn't 'offered'.\n- projobs.ts HOLD_KIND (about 2650-2654): `makeOffer(s, person, o)` on yes.\n- makeOffer (1775): `o.offer = { at, until, rate, amount, per, units, version: 1 }`; 1791 appends conditionWords(o).\n- offers.ts acceptOnCondition: `if (!o.condition || o.condition.accepted) return undefined`.\n- OpportunitiesPane: `{o.condition && <p>{conditionWords(o)}</p>}` alongside acceptLabel 'Accept The Offer'.",
+   "file": "src/engine/systems/offers.ts",
+   "suggested_fix": "Refuse Ask Them To Decide on a part accepted on condition, or have the HOLD answer settle the condition (outcome 'met') and keep the accepted terms."
+  },
+  {
+   "id": "F4",
+   "severity": "should-fix",
+   "criterion": "weak-test",
+   "claim": "Half of all changed requirements move the playing ages (`r.next() < 0.5`), but no test covers that branch. Breaking requirementsOf so it ignores the changed ages makes age changes words-only: eligibility and rewriteAt's release check read the old range. Every test still passes.",
+   "evidence": "- Mutation R6: offers.ts:715 `ages: o.rewrite?.ages ?? t.requirements.ages` -> `ages: t.requirements.ages`. b27-casting-turns stayed at 5 passed.\n- b27-casting-turns' rewrite test picks only `rewriteDrawn(...)?.skill !== undefined`.",
+   "file": "tests/b27-casting-turns.test.ts",
+   "suggested_fix": "Add a twin for an age change: one actor released, one kept, with eligibilityProblems reading the new range."
+  },
+  {
+   "id": "F5",
+   "severity": "should-fix",
+   "criterion": "weak-test",
+   "claim": "The callPromo hook (the production's call to the promotional film, which says and uses the bargained pay) has no test. The promo journey schedules PROMO_KIND by hand, bypassing callPromo, so the notice 'It pays $X, as your agent bargained' could break silently.",
+   "evidence": "- Mutation R4: projobs.ts callPromo `e.contract?.promo ?? promoPay(...)` -> `promoPay(...)`. b27-offer-terms stayed at 7 passed.\n- b27-offer-terms.test.ts: 'TEST SETUP: the production’s call to the promotional film, as `callPromo` sets one, brought to the clock tomorrow' sets `e.promo` and schedules PROMO_KIND directly.",
+   "file": "tests/b27-offer-terms.test.ts",
+   "suggested_fix": "Drive the call through callPromo (or the release's own path) and assert its notice and the amount paid."
+  },
+  {
+   "id": "F6",
+   "severity": "should-fix",
+   "criterion": "contradiction",
+   "claim": "The Tape It button is enabled from tapeRefusal, but pro.tape_audition now refuses with recordRefusal, which adds the 3-a-day and 8-kept limits. After three takes in a day the button looks enabled, and pressing it refuses.",
+   "evidence": "- OpportunitiesPane.tsx:158 `const tapeNo = tapeRefusal(sim, person, o)`; :183 `disabled={!!tapeNo}`.\n- projobs.ts:2873 `const no = recordRefusal(s, person, o)`. offers.ts recordRefusal adds `You’ve recorded three takes today...`.",
+   "file": "src/ui/career/OpportunitiesPane.tsx",
+   "line": 158,
+   "suggested_fix": "Use recordRefusal for Tape It's disabled state and its WhyNot line."
+  },
+  {
+   "id": "F7",
+   "severity": "note",
+   "criterion": "contradiction",
+   "claim": "A conditional offer stores its reason in o.direct. So makeOffer and the offer card say it was offered 'without an audition', next to 'It’s offered on one condition: the screen test ... goes your way'. The What Needs You decision labels the action 'Accept The Offer', while the card says 'Accept On Its Condition'.",
+   "evidence": "- offers.ts offerOnCondition: `o.direct = { engagementId, words }`.\n- projobs.ts:1792 `${o.direct ? ' without an audition' : ''}`.\n- OpportunitiesPane: `{o.direct && <p>{`Offered without an audition. ${o.direct.words}`}</p>}`.\n- makeOffer's decision actions: `{ label: 'Accept The Offer', ... }`.",
+   "file": "src/engine/systems/projobs.ts",
+   "line": 1792,
+   "suggested_fix": "Keep the conditional offer's reason on o.condition rather than o.direct, or word the line for the condition; label the decision's action 'Accept On Its Condition'."
+  },
+  {
+   "id": "F8",
+   "severity": "note",
+   "criterion": "real-world",
+   "claim": "The offers.ts header swaps the N13 subsections. It cites §18.B(5) for the $25,000-or-more bargaining and §18.B(3) for the minimum below it. The register has it the other way round. Two pro.ts comments, which this change wrote, say the bargained promo applies to 'work of $25,000 or more', but only the branch below $25,000 is reachable.",
+   "evidence": "- register.json b25-N13: '(§18.B(3))' is 'Performers receiving $25,000 or more ... individual bargaining'; '(§18.B(5))' is 'All other performers ... minimum compensation payable shall be day performer minimum scale'.\n- offers.ts:12-13: 'agreement leaves to bargain (N13 §18.B(5)), and a day performer's minimum below it ... (§18.B(3))'.\n- pro.ts:285 and :624: 'bargained for work of $25,000 or more'.",
+   "file": "src/engine/systems/offers.ts",
+   "line": 12,
+   "suggested_fix": "Swap the subsection numbers; reword the pro.ts comments to cover both branches."
+  },
+  {
+   "id": "F9",
+   "severity": "note",
+   "criterion": "decorative",
+   "claim": "Some new fields are written and never read: a take's `sides`, the round's `sent` (read only inside rememberMiss, which is never reached once a take is sent), `rewrite.words`, `reschedule.to`, and a no-show's `how` and `projectId`.",
+   "evidence": "grep across src: `x.sides`, `.sent`, `rewrite.words`, `reschedule.to` and noShows `.how` have no readers outside the line that writes them. offers.ts:839 is the only `r.sent` read, and it runs from missRound, which can't run after sendTake has set the round done.",
+   "file": "src/engine/systems/offers.ts",
+   "suggested_fix": "Show the sent take and the take's sides on the Takes list or the history, or drop the fields."
+  },
+  {
+   "id": "F10",
+   "severity": "note",
+   "criterion": "weak-test",
+   "claim": "Two claims have no test: conditionalOfferFor's office-memory check (mutation R5 survived), and that an unsent self-tape isn't counted as a no-show (mutation R9 survived).",
+   "evidence": "R5 dropped `remembers(...)` from conditionalOfferFor: b27-casting-turns stayed at 5 passed. R9 removed the self-tape `return` in rememberMiss: b27-sides stayed at 6 passed.",
+   "file": "tests/b27-casting-turns.test.ts"
+  },
+  {
+   "id": "F11",
+   "severity": "note",
+   "criterion": "contradiction",
+   "claim": "After casting changes the playing ages, the offer card's 'The Role In Full' and the settled list still print the part's original range.",
+   "evidence": "OpportunitiesPane.tsx:88 `Playing ages ${t.requirements.ages[0]} to ${t.requirements.ages[1]}`; eligibility reads requirementsOf(o, t).",
+   "file": "src/ui/career/OpportunitiesPane.tsx",
+   "line": 88
+  },
+  {
+   "id": "F12",
+   "severity": "note",
+   "criterion": "other",
+   "claim": "Scope notes:\n- Ask To Reschedule (granted at a stated chance) covers only chemistry reads and screen tests. In-person auditions and callbacks still move for certain with Ask For Another Time.\n- Casting gives a direction only to an actor who chose a way of playing.\n- Reader or partner work isn't modelled (see F1 on 'open').\n- The episodes ask doesn't check that the added episode's days are clear, so a yes can leave an offer that a clash then makes unacceptable, with the original terms gone.\n- Once a trade gives up the option raise, the option clause says 'the same day rate', but renewFromOption pays at least next season's scale plus ten, which can be more.\n- The guide's 'your chance at each of its decisions is 50%' applies only at casting's cuts, not to the hold or conditional answers.",
+   "evidence": "offers.ts rescheduleRefusal; giveNote `!sidesOf(o.playing).length` returns false; termsAskRefusal has no clash check; projobs.ts renewFromOption `Math.max(..., negotiatedAmount(scale, ...))`; WorkPane.tsx option clause words.",
+   "file": "src/engine/systems/offers.ts"
+  },
+  {
+   "id": "F13",
+   "severity": "note",
+   "criterion": "house-standard",
+   "claim": "Left for the primary agent:\n- b20-guide-wiring fails 2/7 until the shared wiring.json is regenerated, so the edited stop-choice expectation can't be checked yet.\n- The career-universe README's K4 section still says negotiation is 'raised or kept'.\n- The implementer ran a broad `pkill -f \"vitest run tests/\"`, which may have stopped other clusters' runs.\n- The commits use the harness's Opus 5.5 trailer, not the Fable 5.1 that implementer-common.md asks for.",
+   "evidence": "ex-b20-guide-wiring: 'controls: expected [ Array(212) ] to deeply equal [ Array(219) ]' and 'pro.ask_more at src/engine/systems/projobs.ts:2857: expected false to be true'. git log 4cba6159..g27-offers trailers: 'Co-Authored-By: Claude Opus 5.5'.",
+   "file": "tests/b20-guide-wiring.test.ts"
+  }
+ ]
+}

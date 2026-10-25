@@ -1,0 +1,410 @@
+From c80b0f64afe35e0ef4bb7fdff13a05ab3d5b7020 Mon Sep 17 00:00:00 2001
+From: Claude <noreply@anthropic.com>
+Date: Sun, 25 Oct 2026 22:15:01 +0000
+Subject: [PATCH 3/3] Why It Went This Way gives the techniques apart from the
+ language, and the guide names the language where it explains fit
+MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
+
+The review of the first cut found the settled role's line "your techniques are N% of the way" printing fitOf's
+`demands`, which the language had joined: a fluent speaker whose techniques were all mastered read 93%, and the line
+never named the language the fit had weighed. Fit now also carries `techniques`, the techniques alone, and the line
+says the language in a sentence of its own, naming the weaker of the actor's two languages, the one the fit counts
+(`languageFitWords`). `demands` and `fit` are untouched, so casting's chance, an agent's reach and every figure the
+first cut measured stand as they were; splitting the language out of `demands` instead would have moved them all.
+
+The guide and the tutorial said less than the code: Auditions gave the fit as genres and techniques, Finding Work's
+eligibility, needs and refusals left the language out, and the tutorial's résumé had no languages. They name it now.
+The Languages entry's fit read showed the fit's figures ("80% as well"), and the card said "Casting reads", both of
+which STYLE.md keeps from the player; they say it in words, from `suitsWords`, which reads LANGUAGE_FIT, so a figure
+changed changes the words with it.
+
+Comments the first cut had made untrue were brought up to date: the projobs header and slateReach's fit bullet, fitOf's
+own doc, PartPrep's three stacked doc comments (merged into one), and content/slate.ts, which now says why the language
+draw went in under SLATE_VERSION 1 rather than a new version: a save's own copy of a posted part is the one the session
+keeps.
+
+Left to integration, since the record is the primary's: tests/b20-guide-wiring.test.ts fails until
+docs/verification/audit-2026-10-21/areas/guide/wiring.json is rewritten for the new Work On Your … control and the
+moved handler lines (`node tools/wiring.mjs --write`, then that line's reading).
+
+Co-Authored-By: Claude Opus 5.5 <noreply@anthropic.com>
+Claude-Session: https://claude.ai/code/session_01HBdcuKzBBMbipfFQSByALG
+---
+ src/engine/content/guide/career.ts  | 15 ++++++---
+ src/engine/content/slate.ts         |  6 ++++
+ src/engine/content/tutorial.ts      |  3 +-
+ src/engine/systems/pro.ts           | 16 +++++-----
+ src/engine/systems/projobs.ts       | 19 ++++++++----
+ src/engine/systems/speaking.ts      | 34 +++++++++++++++++++--
+ src/ui/career/OpportunitiesPane.tsx |  7 +++--
+ tests/b27-languages.test.ts         | 47 +++++++++++++++++++++++++++--
+ 8 files changed, 120 insertions(+), 27 deletions(-)
+
+diff --git a/src/engine/content/guide/career.ts b/src/engine/content/guide/career.ts
+index 9913677e..7419a541 100644
+--- a/src/engine/content/guide/career.ts
++++ b/src/engine/content/guide/career.ts
+@@ -47,7 +47,7 @@ import { CEREMONY } from '../../systems/ceremony';
+ import { VISIBILITY, ordinal } from '../../systems/awards';
+ import { READ_ON } from '../catalog';
+ import { formatDateKey } from '../../core/time';
+-import { LANGUAGE_FIT, LANGUAGE_PREP, PART_LANGUAGE } from '../../systems/speaking';
++import { LANGUAGE_FIT, LANGUAGE_PREP, PART_LANGUAGE, suitsWords } from '../../systems/speaking';
+ import type { GuideEntry } from './types';
+ 
+ const CAREER = '/workspace/career';
+@@ -717,11 +717,12 @@ export const CAREER_GUIDE: readonly GuideEntry[] = [
+       'Headshots and a résumé, made on the Portfolio tab, and a reel where the casting office asks for one.',
+       'A role that takes your own submission, before its window closes.',
+       'The role’s playing ages, and Equity membership for an Equity open call.',
++      'Where the role’s character speaks another language as well as English, that language. Languages says how well you need it.',
+     ],
+     costs: [{ label: 'Time', value: 'None: a submission is sent at once' }, { label: 'Money', value: 'None' }],
+     reads: [
+       { label: 'Materials', value: 'Your current headshots, résumé and reel, as What’s Missing reads them' },
+-      { label: 'Eligibility', value: 'The role’s playing ages, an open call’s union, and the days you’re already booked' },
++      { label: 'Eligibility', value: 'The role’s playing ages, an open call’s union, a language its character speaks besides English, and the days you’re already booked' },
+     ],
+     now: ['The role moves to In Progress, with what you sent and when each was made.'],
+     later: [`${word(WORK.replyDays).charAt(0).toUpperCase()}${word(WORK.replyDays).slice(1)} days on, the casting office answers with an audition in person or a self-tape, and a notice says when and where.`],
+@@ -734,6 +735,7 @@ export const CAREER_GUIDE: readonly GuideEntry[] = [
+       'You have no headshots, and every submission starts with one.',
+       'The casting office takes submissions only from agents.',
+       'It’s an open call for Equity members, and you aren’t one yet.',
++      'The character speaks another language as well as English, and you don’t speak it.',
+       'Submissions closed.',
+     ],
+     mistakes: ['Waiting to make headshots until a role you want is posted. A role’s window is a week; make them first.'],
+@@ -775,8 +777,8 @@ export const CAREER_GUIDE: readonly GuideEntry[] = [
+       { label: 'Money', value: 'None' },
+     ],
+     reads: [
+-      { label: 'Your Audition', value: 'Your abilities and techniques, the sides’ preparation, how well you know the project’s genres and the day’s condition, judged as every piece of work is' },
+-      { label: 'The Role’s Fit', value: 'How well you know its genres, each by its share as Genres explains, and its techniques against yours' },
++      { label: 'Your Audition', value: 'Your abilities and techniques, the sides’ preparation, how well you know the project’s genres and the day’s condition, judged as every piece of work is. If you speak the part’s other language conversationally, its preparation counts too' },
++      { label: 'The Role’s Fit', value: 'How well you know its genres, each by its share as Genres explains, its techniques against yours, and, where its character speaks another language as well as English, how well you speak that and English, as Languages explains' },
+       { label: 'The Field', value: 'How many other actors that kind of work draws, estimated' },
+     ],
+     now: ['A step moves its part of the preparation on and the clock with it. A self-tape is judged at once and kept on your work record.'],
+@@ -834,7 +836,9 @@ export const CAREER_GUIDE: readonly GuideEntry[] = [
+       { label: 'Money', value: 'None' },
+     ],
+     reads: [
+-      { label: 'Casting’s Fit', value: `How well you speak the part’s language and English, the weaker of the two counting: a native speaker of both suits it best, a fluent one ${Math.round(LANGUAGE_FIT.fluent * 100)}% as well and a conversational one ${Math.round(LANGUAGE_FIT.conversational * 100)}%`, estimate: true },
++      // In words, not the figures (from 2026-10-25's review, docs/STYLE.md "No internal concepts"): until then "a fluent one
++      // 80% as well and a conversational one 50%".
++      { label: 'Casting’s Fit', value: `How well you speak the part’s language and English, the weaker of the two counting. A native speaker of both suits it best, a fluent one ${suitsWords(LANGUAGE_FIT.fluent)} and a conversational one ${suitsWords(LANGUAGE_FIT.conversational)}`, estimate: true },
+       { label: 'Your Audition And Your Work', value: 'For a conversational speaker, how far the language has been prepared, beside the rest of the preparation, read on how believable you seem and how cleanly you deliver the lines' },
+       { label: 'Your Résumé', value: 'Every language you speak and how well, except native English' },
+     ],
+@@ -843,6 +847,7 @@ export const CAREER_GUIDE: readonly GuideEntry[] = [
+     interpret: [
+       'Native is a language you grew up speaking, fluent one you’re at ease in, and conversational one you can hold a conversation in.',
+       'Until a conversational speaker’s language is prepared, Why It Went This Way can say that working on the part’s language held the audition back.',
++      'Why It Went This Way, under a settled role, names the part’s language and the weaker of your two languages, the one casting’s fit counts.',
+     ],
+     unavailable: [
+       'The character speaks a language you don’t speak.',
+diff --git a/src/engine/content/slate.ts b/src/engine/content/slate.ts
+index 0b52f691..6fe3e507 100644
+--- a/src/engine/content/slate.ts
++++ b/src/engine/content/slate.ts
+@@ -31,6 +31,12 @@ import type { Skill } from './school';
+  * The generator's version, in every id it makes. A change to what it makes from the same draws (a word list, a rate, a
+  * profile) is a new version, so a later build never makes a different production under an id a save already holds; what a
+  * save was shown is kept in the save itself (`systems/slate.ts`, `keepProject`).
++ *
++ * One change went in under version 1 by that second rule (2026-10-25, the owner's brief 27): a part's other language
++ * (`partLanguage`, `systems/speaking.ts`), drawn on a stream of its own so no other draw moved and every id, title and
++ * part stayed the one it was. A part a save was posted before that day is the save's own copy, with no language, and
++ * the save's copy is the one the session keeps (`restoreSlate` puts it back first and `addProjects` keeps the first copy
++ * of an id it's given), so only a part no save had seen could come with one.
+  */
+ export const SLATE_VERSION = 1;
+ 
+diff --git a/src/engine/content/tutorial.ts b/src/engine/content/tutorial.ts
+index 2889bcc2..684f5f1a 100644
+--- a/src/engine/content/tutorial.ts
++++ b/src/engine/content/tutorial.ts
+@@ -460,7 +460,8 @@ export const CHAPTERS: readonly Chapter[] = [
+       'The Portfolio tab holds what a submission sends: your profile, headshots, a résumé, a reel and a voice demo. Each says where it came from, when it was made and what’s in it. Each button says its time and cost before you press it.',
+       'Your Profile shows the name you work under. To change it, type a name under Professional Name and press Use This Name. Leave it blank and press it to go back to your own name. Your résumé uses the name you choose.',
+       `Book A Headshot Session takes ${counted(PRO_HEADSHOTS.minutes / 60, 'hour')} and costs about ${formatMoney(PRO_HEADSHOTS.cost, 'USD')}, both estimated. Photographers work by day, so a session starts ${PRO_SESSION_HOURS}. Headshots more than two years old read as out of date.`,
+-      'Make Your Résumé takes an hour. It lists your name, training, unions, credits and special skills from your record, with School credits and professional credits apart. Practice, practice briefs and self-tapes are never credits.',
++      // The languages from 2026-10-25 (the owner's brief 27, `resumeNow`): until then the line, like the résumé, had none.
++      'Make Your Résumé takes an hour. It lists your name, training, unions, credits, special skills and the languages you speak besides native English from your record, with School credits and professional credits apart. Practice, practice briefs and self-tapes are never credits.',
+       'Once something new is on your record, such as a part played or a skill grown, your résumé reads as behind. Press Update Your Résumé to bring it up to date.',
+       `A reel is cut only from recorded work: self-tapes of practice briefs, the School’s filmed monologues once they’re posted at the end of your last term, and screen work once it’s released. Choose up to ${word(PRO_REEL.most)} pieces under Recorded Work To Cut From and press Cut A Reel. It takes two hours and about ${formatMoney(PRO_REEL.cost, 'USD')}, both estimated.`,
+       'A night on stage and a class piece aren’t recorded, so they can’t go on a reel. A voice brief is a sound recording, so it can’t either.',
+diff --git a/src/engine/systems/pro.ts b/src/engine/systems/pro.ts
+index 9b93c1a3..3697e24c 100644
+--- a/src/engine/systems/pro.ts
++++ b/src/engine/systems/pro.ts
+@@ -316,16 +316,14 @@ export interface Opportunity extends HasHistory {
+   rounds?: AuditionRound[];
+ }
+ 
+-/** How far the sides or the part stand, in a practice brief's three parts (`systems/briefs.ts`), each 0 to 1. */
+ /**
+- * A part's preparation: the breakdown, the lines and rehearsal, and from 2026-10-24 (brief 25's Module 5) the workflow's
+- * own where it has one (`SpecialStep`, `content/workflows.ts`): finding the voice, watching the original, the movement,
+- * the pronunciations, the period's movement, the choreography, the fight rehearsal.
+- */
+-/**
+- * How far each part of the preparation stands, 0 to 1. `language` from 2026-10-25 (brief 27): the part's other language
+- * worked on by an actor who speaks it conversationally (`systems/speaking.ts`); absent, it stands where their level
+- * starts it (`LANGUAGE_PREP.start`), on every part prepared before that day too.
++ * How far the sides or the part stand, each part 0 to 1: a practice brief's three (`systems/briefs.ts`), the breakdown,
++ * the lines and rehearsal; from 2026-10-24 (brief 25's Module 5) the workflow's own where it has one (`SpecialStep`,
++ * `content/workflows.ts`): finding the voice, watching the original, the movement, the pronunciations, the period's
++ * movement, the choreography, the fight rehearsal; and from 2026-10-25 (brief 27) `language`, the part's other language
++ * worked on by an actor who speaks it conversationally (`systems/speaking.ts`). Absent, the language stands where their
++ * level starts it (`LANGUAGE_PREP.start`), on every part prepared before that day too. Until 2026-10-25's review the
++ * three sentences were three doc comments stacked above this one interface.
+  */
+ export interface PartPrep { interpretation: number; memorization: number; rehearsal: number; special?: number; language?: number }
+ 
+diff --git a/src/engine/systems/projobs.ts b/src/engine/systems/projobs.ts
+index fb6cb830..2b96a1c9 100644
+--- a/src/engine/systems/projobs.ts
++++ b/src/engine/systems/projobs.ts
+@@ -23,7 +23,8 @@
+  * an open call themselves.
+  *
+  * **Casting is decided apart from quality (J5).** What casting reads, in order: the audition's band (how good it was),
+- * the role's fit (genre knowledge, and the role's techniques against the actor's), availability and eligibility, which
++ * the role's fit (genre knowledge, and the role's techniques against the actor's, and from 2026-10-25 a language its
++ * character speaks besides English, `systems/speaking.ts`), availability and eligibility, which
+  * are checked and never drawn, and then the field of other actors, a draw by the decider `pro.casting` at a chance the
+  * band, the fit and the kind of work give (`CASTING`). The chance never reaches certainty, so a strong actor can lose a
+  * role, and a developing actor whose band and fit suit a smaller project can book it.
+@@ -592,8 +593,11 @@ export function inScope(agentId: string, t: ProjectTemplate): boolean {
+ /**
+  * The role's fit: how well you know its genre, and its techniques against yours (and, from 2026-10-25, brief 27, how well
+  * you speak a language its character speaks besides English, `languageDemand`), each 0 to 1, and the two together.
++ * `techniques` is the techniques alone, which Why It Went This Way shows apart from the language (from 2026-10-25: that
++ * day's first cut showed `demands`, the language folded in, as the techniques, and a part asking Spanish of a fluent
++ * speaker whose techniques were all mastered said they were 93% of the way).
+  */
+-export interface Fit { genre: number; demands: number; fit: number }
++export interface Fit { genre: number; demands: number; fit: number; techniques: number }
+ 
+ /**
+  * What a role asks of the genres: its own requirement, or its project's, as the material states it (`requirementOfRole`,
+@@ -606,7 +610,9 @@ export const projectGenresOf = (t: ProjectTemplate) => requirementOfRole(t);
+ /**
+  * How well the role suits the actor, from the record: the project's genres known, weighed (`relevantGenre`), against
+  * what a brief counts complete (`BRIEF.complete.genre`); and the role's techniques against the actor's, each at most
+- * mastered (`MASTERED`), by the role's weights. The two count alike. ASSUMPTION: the game's reading of "fit".
++ * mastered (`MASTERED`), by the role's weights, with, from 2026-10-25 (brief 27), a language the character speaks besides
++ * English weighed beside them (`languageDemand`, `systems/speaking.ts`). The two count alike. ASSUMPTION: the game's
++ * reading of "fit".
+  *
+  * Two things read the genre part, and they're different contributions (from 2026-10-22, the owner's brief 21): casting's
+  * reading of the actor for the part (here, half the fit, which sets casting's chance with the round's band,
+@@ -624,8 +630,9 @@ export function fitOf(person: Person, t: ProjectTemplate): Fit {
+   // A part written for a character who speaks another language as well as English (from 2026-10-25, brief 27,
+   // `languageDemand`): how well the actor speaks it, and their English, weighs beside the techniques.
+   const tongue = languageDemand(person, t);
+-  const demands = total + tongue.weight > 0 ? (asks.reduce((a, [s, w]) => a + w * clamp((person.craft?.[s] ?? 0) / MASTERED, 0, 1), 0) + tongue.weight * tongue.f) / (total + tongue.weight) : 1;
+-  return { genre: r3(genre), demands: r3(demands), fit: r3((genre + demands) / 2) };
++  const known = asks.reduce((a, [s, w]) => a + w * clamp((person.craft?.[s] ?? 0) / MASTERED, 0, 1), 0);
++  const demands = total + tongue.weight > 0 ? (known + tongue.weight * tongue.f) / (total + tongue.weight) : 1;
++  return { genre: r3(genre), demands: r3(demands), fit: r3((genre + demands) / 2), techniques: r3(total > 0 ? known / total : 1) };
+ }
+ 
+ /** A fit as a phrase. */
+@@ -775,7 +782,7 @@ export function postingsAt(sim: Simulation, person: Person, at: Instant): { proj
+  * - **the playing age**: a part outside the actor's age by more than `CASTING.playingSpread` years reaches nobody's agent and
+  *   no open call they'd answer;
+  * - **fit**: an agent puts up a client the part suits, so the agent's chance rises with the part's fit (`fitOf`: its genres'
+- *   knowledge and the techniques it asks), from a third at no fit;
++ *   knowledge and the techniques it asks, and from 2026-10-25 its character's other language), from a third at no fit;
+  * - **experience**: a lead in professional screen work comes to an actor with three professional credits or more, and to
+  *   anyone else a fifth as often; a supporting part through an agent to one with a credit, and half as often without;
+  * - **relationships**: a company or casting office the actor has worked for comes back to them a half again as often;
+diff --git a/src/engine/systems/speaking.ts b/src/engine/systems/speaking.ts
+index 2a77e5d1..0b725a49 100644
+--- a/src/engine/systems/speaking.ts
++++ b/src/engine/systems/speaking.ts
+@@ -99,6 +99,9 @@ export function languageRefusal(person: Person, t: Pick<ProjectTemplate, 'requir
+  */
+ export const LANGUAGE_FIT = { weight: 2, native: 1, fluent: 0.8, conversational: 0.5 } as const;
+ 
++/** How well a level suits a part, 0 to 1 (`LANGUAGE_FIT`); a language not spoken, not at all. */
++const suits = (level: LanguageLevel | undefined): number => (level ? LANGUAGE_FIT[level] : 0);
++
+ /**
+  * The language's share of a part's demands, for `fitOf`: its weight, and how well the actor suits it, 0 to 1, the weaker
+  * of the part's language and their English, since the character speaks both. Nothing for a part in English alone.
+@@ -106,10 +109,35 @@ export const LANGUAGE_FIT = { weight: 2, native: 1, fluent: 0.8, conversational:
+ export function languageDemand(person: Person, t: Pick<ProjectTemplate, 'requirements'>): { weight: number; f: number } {
+   const id = t.requirements.language;
+   if (!id) return { weight: 0, f: 0 };
+-  const suits = (level: LanguageLevel | undefined): number => (level ? LANGUAGE_FIT[level] : 0);
+   return { weight: LANGUAGE_FIT.weight, f: Math.min(suits(levelIn(person, id)), suits(levelIn(person, ENGLISH))) };
+ }
+ 
++/**
++ * How well a level suits a part beside a native speaker, in words, from its share of a native speaker's fit
++ * (`LANGUAGE_FIT`): what the guide and Why It Went This Way say in place of the figure (docs/STYLE.md, "No internal
++ * concepts"), so a figure changed changes the words with it.
++ */
++export const suitsWords = (f: number): string => (f >= LANGUAGE_FIT.native ? 'as well' : f >= 0.7 ? 'nearly as well' : f >= 0.4 ? 'about half as well' : 'far less well');
++
++/**
++ * The language's part of the fit, for Why It Went This Way under a settled role, beside the genre and the techniques
++ * (`fitOf`'s `techniques`): which language the character speaks, and the weaker of the actor's two, which is the one
++ * casting's fit counts (`languageDemand`). Nothing for a part in English alone. Until the review of 2026-10-25's first
++ * cut, the line gave the techniques with the language folded in, and never named the language.
++ */
++export function languageFitWords(person: Person, t: Pick<ProjectTemplate, 'requirements'>): string | undefined {
++  const name = partLanguageName(t);
++  if (!name) return undefined;
++  const head = `Its character speaks ${name} as well as English`;
++  const part = levelIn(person, t.requirements.language!);
++  const english = levelIn(person, ENGLISH);
++  if (!part) return `${head}, and you don’t speak ${name}, which lowers your fit.`;
++  if (!english) return `${head}, and you don’t speak English, which lowers your fit.`;
++  if (part === 'native' && english === 'native') return `${head}, and you speak both natively, which suits it best.`;
++  const weaker = part === english ? `Your ${name} and your English are both ${part}` : suits(part) < suits(english) ? `Your ${name} is ${part}` : `Your English is ${english}`;
++  return `${head}. ${weaker}, which suits it ${suitsWords(languageDemand(person, t).f)} as a native speaker of both would.`;
++}
++
+ // ---------------------------------------------------------------------------------------------------------------------
+ // The preparation
+ // ---------------------------------------------------------------------------------------------------------------------
+@@ -201,7 +229,9 @@ export function languageWords(person: Person, t: Pick<ProjectTemplate, 'requirem
+   const head = `The character speaks ${name} as well as English.`;
+   if (!level) return `${head} You don’t speak ${name}, so you can’t be put up for it.`;
+   // Casting reads the weaker of the two languages (`languageDemand`): said where it's short of a native speaker's.
+-  const closer = languageDemand(person, t).f < LANGUAGE_FIT.native ? ' Casting reads an actor native in both languages as a closer fit.' : '';
++  // From 2026-10-25's review it says so without "reads", the engine's word (docs/STYLE.md): until then "Casting reads an
++  // actor native in both languages as a closer fit."
++  const closer = languageDemand(person, t).f < LANGUAGE_FIT.native ? ' A native speaker of both would be a closer fit.' : '';
+   if (level === 'conversational') return `${head} Your ${name} is conversational, so the part takes more preparation: press ${languageStepLabel(name)} with the sides, and again with the part if you’re cast.${closer}`;
+   return `${head} Your ${name} is ${level}, so it needs no preparation of its own.${closer}`;
+ }
+diff --git a/src/ui/career/OpportunitiesPane.tsx b/src/ui/career/OpportunitiesPane.tsx
+index b95e15eb..9b5c4916 100644
+--- a/src/ui/career/OpportunitiesPane.tsx
++++ b/src/ui/career/OpportunitiesPane.tsx
+@@ -31,7 +31,7 @@ import { requirementWords } from '@/engine/systems/engagement';
+ import { productionById, productionWords } from '@/engine/content/catalog';
+ import { projectKey } from '@/engine/systems/reference';
+ import { openReference } from '@/ui/career/ReferencePane';
+-import { LANGUAGE_PREP, languageStepLabel, languageToWork, languageWords } from '@/engine/systems/speaking';
++import { LANGUAGE_PREP, languageFitWords, languageStepLabel, languageToWork, languageWords } from '@/engine/systems/speaking';
+ 
+ const NY = 'America/New_York';
+ const STEPS: readonly BriefStep[] = ['read', 'lines', 'rehearse'];
+@@ -328,6 +328,7 @@ function Settled({ o }: { o: Opportunity }) {
+   const t = projectOf(o);
+   const decided = (o.rounds ?? []).filter((r) => r.casting);
+   const fit = fitOf(person, t);
++  const tongue = languageFitWords(person, t);
+   return (
+     <li className="col gap-1">
+       {/* The outcome alone where it names the project already: until 2026-10-21 "Jess, Static On Route 9: You accepted
+@@ -340,7 +341,9 @@ function Settled({ o }: { o: Opportunity }) {
+             {decided.map((r) => (
+               <li key={r.round}>{`The ${ROUND_WORDS[r.round].noun}: ${r.band ? BAND_LABEL[r.band] : 'not judged'}${r.held ? `. ${r.held.charAt(0).toUpperCase()}${r.held.slice(1)}` : ''}. The role’s fit: ${fitWords(r.casting!.fit)}. The field: ${FIELD_WORDS[t.kind]}. Casting’s chance from those, estimated: ${chanceWords(r.casting!.chance)}. ${r.casting!.yes ? 'It went your way.' : 'It went to another actor.'}`}</li>
+             ))}
+-            <li>{`Your fit for it now: you know its genre ${pct(fit.genre)} of the way, and your techniques are ${pct(fit.demands)} of the way to what the part asks at mastery.`}</li>
++            {/* The techniques alone, and the character's other language said apart (from 2026-10-25, brief 27): until the
++                review of that day's first cut the techniques' figure had the language folded in. */}
++            <li>{`Your fit for it now: you know its genre ${pct(fit.genre)} of the way, and your techniques are ${pct(fit.techniques)} of the way to what the part asks at mastery.${tongue ? ` ${tongue}` : ''}`}</li>
+           </ul>
+         </details>
+       )}
+diff --git a/tests/b27-languages.test.ts b/tests/b27-languages.test.ts
+index 1240c1b5..bd7eed66 100644
+--- a/tests/b27-languages.test.ts
++++ b/tests/b27-languages.test.ts
+@@ -19,7 +19,7 @@ import type { Simulation } from '@/engine/core/simulation';
+ import { MS_DAY, MS_HOUR, ageOn, dateKey } from '@/engine/core/time';
+ import { deserialise, serialise } from '@/engine/persistence/adapter';
+ import { newLifeConfig, type NewSaveConfig } from '@/engine/world/bootstrap';
+-import type { ProjectTemplate } from '@/engine/content/careerwork';
++import { PROJECTS, type ProjectTemplate } from '@/engine/content/careerwork';
+ import { ENGLISH_ONLY, languagesOf, spokenName, type SpokenLanguage } from '@/engine/content/languages';
+ import { genreState } from '@/engine/systems/engagement';
+ import { currentOf, resumeNow, type Engagement, type Opportunity, type WorkUnit } from '@/engine/systems/pro';
+@@ -32,6 +32,8 @@ import {
+ } from '@/engine/systems/projobs';
+ import { LANGUAGE_PREP, PART_LANGUAGE, languageRefusal, languageWords } from '@/engine/systems/speaking';
+ import { evaluate } from '@/engine/systems/evaluation';
++import { GUIDE_BY_ID } from '@/engine/content/guide';
++import { CHAPTERS } from '@/engine/content/tutorial';
+ import { graduate, played, playRound, portfolio, prepareAll, reload, skilled } from './fakes/career-world';
+ 
+ // The Career screen drawn over the save, as tests/b27-voice-demo.test.ts draws it.
+@@ -261,6 +263,30 @@ describe('a part in another language, played', () => {
+     expect(e.prep!.language).toBeCloseTo(LANGUAGE_PREP.start + (o.prep!.language! - LANGUAGE_PREP.start) / 2, 2);
+     expect(coldE.prep!.language).toBe(LANGUAGE_PREP.start);
+     expect(shown(talk, 'opportunities')).toContain(`Work On Your ${name} (120 Minutes)`);
++
++    // Why It Went This Way, under the settled role, gives the techniques alone and says the language apart, naming the
++    // weaker of the actor's two. The falsifiability test: only the levels change, and only the language's sentence moves.
++    // Until the review of 2026-10-25's first cut the techniques' figure had the language folded in: 93% for a fluent
++    // speaker whose techniques were all mastered, and less for a conversational one.
++    const twin = (languages: SpokenLanguage[]) => { const s = reload(talk); s.player.languages = languages; return shown(s, 'opportunities'); };
++    const lang = t.requirements.language!;
++    const techniques = 'your techniques are 100% of the way to what the part asks at mastery.';
++    const head = `${techniques} Its character speaks ${name} as well as English`;
++    expect(shown(talk, 'opportunities')).toContain(`${head}. Your ${name} is conversational, which suits it about half as well as a native speaker of both would.`);
++    expect(twin([{ id: 'en', level: 'native' }, { id: lang, level: 'fluent' }])).toContain(`${head}. Your ${name} is fluent, which suits it nearly as well as a native speaker of both would.`);
++    expect(twin([{ id: 'en', level: 'fluent' }, { id: lang, level: 'native' }])).toContain(`${head}. Your English is fluent, which suits it nearly as well as a native speaker of both would.`);
++    expect(twin([{ id: 'en', level: 'fluent' }, { id: lang, level: 'fluent' }])).toContain(`${head}. Your ${name} and your English are both fluent, which suits it nearly as well as a native speaker of both would.`);
++    expect(twin([{ id: 'en', level: 'native' }, { id: lang, level: 'native' }])).toContain(`${head}, and you speak both natively, which suits it best.`);
++    expect(twin([{ id: 'en', level: 'native' }])).toContain(`${head}, and you don’t speak ${name}, which lowers your fit.`);
++    // A role settled for a part in English alone (TEST SETUP: the settled role pointed at one of the fixed parts, which
++    // carry no language): the line ends with the techniques.
++    const plain = reload(talk);
++    plain.player.pro!.opportunities.find((x) => x.id === o.id)!.projectId = PROJECTS.find((x) => !x.requirements.language)!.id;
++    const alone = shown(plain, 'opportunities');
++    expect(alone).toContain(techniques);
++    expect(alone).not.toContain('Its character speaks');
++    expect(alone).not.toContain('undefined');
++
+     const before = e.prep!.language!;
+     const worked = talk.execute({ kind: 'pro.prepare', payload: { engagementId: e.id, step: 'language' } });
+     expect(worked.error).toBeUndefined();
+@@ -338,7 +364,7 @@ describe('the work reads the language', () => {
+     const shot = (e: Engagement) => evaluate(sim, sim.player, { ...workContext(sim, sim.player, e, screen, 0), expected: true }).overall;
+     expect(shot(booked())).toBeLessThan(shot(booked(LANGUAGE_PREP.complete)));
+     // The words on the card name the language and the actor's level.
+-    expect(languageWords(sim.player, stage)).toBe('The character speaks Spanish as well as English. Your Spanish is conversational, so the part takes more preparation: press Work On Your Spanish with the sides, and again with the part if you’re cast. Casting reads an actor native in both languages as a closer fit.');
++    expect(languageWords(sim.player, stage)).toBe('The character speaks Spanish as well as English. Your Spanish is conversational, so the part takes more preparation: press Work On Your Spanish with the sides, and again with the part if you’re cast. A native speaker of both would be a closer fit.');
+   });
+ 
+   it('the résumé lists every language but native English, and a life with none on record lists none', () => {
+@@ -352,6 +378,23 @@ describe('the work reads the language', () => {
+   });
+ });
+ 
++describe('the guide, where it explains fit and eligibility', () => {
++  it('names the character’s other language beside the genres, the techniques, the ages and the union, and says the fit in words, not figures', () => {
++    // Until the review of 2026-10-25's first cut, Auditions gave the fit as genres and techniques alone, Finding Work's
++    // eligibility and refusals left the language out, the tutorial's résumé had no languages, and Languages showed the
++    // fit's figures ("a fluent one 80% as well").
++    const languages = GUIDE_BY_ID['career.languages']!;
++    const fit = languages.reads.find((r) => r.label === 'Casting’s Fit')!.value;
++    expect(fit).toContain('A native speaker of both suits it best, a fluent one nearly as well and a conversational one about half as well');
++    expect(fit).not.toMatch(/\d/);
++    expect(GUIDE_BY_ID['career.auditions']!.reads.find((r) => r.label === 'The Role’s Fit')!.value).toContain('how well you speak that and English');
++    const finding = GUIDE_BY_ID['career.opportunities']!;
++    expect(finding.reads.find((r) => r.label === 'Eligibility')!.value).toContain('a language its character speaks besides English');
++    expect(finding.unavailable).toContain('The character speaks another language as well as English, and you don’t speak it.');
++    expect(CHAPTERS.find((c) => c.id === 'career')!.body.join(' ')).toContain('special skills and the languages you speak besides native English');
++  });
++});
++
+ describe('creation’s Languages, as the player has it', () => {
+   type El = { type: unknown; props: Record<string, unknown> };
+   /** Every element a component's tree holds, its own children walked. */
+-- 
+2.43.0
+

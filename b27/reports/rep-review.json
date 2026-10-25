@@ -1,0 +1,183 @@
+{
+ "verdict": "The cluster builds all three brief items. Item 1, asking for different terms, is built: the player asks once, while the offer stands, for a shorter term, voice-over added or the UK and Australia added. The office answers two days later at a labeled chance computed from interestOf. The terms are kept as versions on Agreement.deal and read by the term's end (proagent.ts:1250, endedWords), by the commission (coveredUnder in propay.ts:356), by the offers the agent handles (projobs.ts:1749, 1769) and by the agent's submissions (submitsFor in reachOf, projobs.ts:674). The commission cap is untouched. Item 2, the voice department, is built: Halberd's voice-over department and the invented Celia Brannock, the 'voice' field and the 'demo' material. Her office asks for a demo, weighs it as a reel's band, offers a voice-over agreement, takes commission on voice work and submits for all four voice kinds. Item 3, the festival introduction, is built as a route and an exported introduceAtFestival, tested directly. Every new piece of state has a reader except two audit-only fields (DealVersion.how and .ask). Save schema stays 94 in both pins, and an agreement shaped as BASE wrote it loads, takes an ask and ends at its term. tsc on the app config and eslint are clean. All 25 existing affected files I ran pass except b20-guide-wiring, whose wiring list is a shared record. Two blocking defects remain. (1) Downstream contradiction: contracts.ts:239 still writes \"Voice-over work is outside an agent's agreement, so no commission is owed on it\" into every voice part's contract, while the pay now takes 10% under an agreement that covers voice-over. (2) Weak test: no test proves the answer actually depends on how keen the office is. Making the draw ignore the stored chance survives every test, because the journeys only use draws under 0.1 or at least 0.9. Several comments the change made false are left in the present tense. The festival route is promised in player text but nothing outside tests calls it until the festivals cluster lands.",
+ "tests_run": "All runs in CLONE with nice -n 19.\n- `npx tsc --noEmit -p .`: exit 0, but it checks nothing, since the root tsconfig has files: [].\n- `npx tsc --noEmit -p tsconfig.app.json` (covers src and tests): exit 0.\n- `npx eslint --max-warnings=0` on the 19 changed .ts/.tsx files: exit 0.\n- New tests: b27-representation 15/15 passed; b27-representation-screen 3/3 passed.\n- Existing files that import changed modules, run one at a time:\n  - b20-guide-wiring: 2 failed, 5 passed. The failing list is the shared wiring.json; the second failure is pro.ask_more's handler line moving in projobs.ts.\n  - Passed: tutorial 18, guide 14, help-mechanics 15, deciders 198, career-contracts 15, b20-agent-ask-lapse 1, b20-career-effects 7, b20-career-history 4, b20-career-saveload 2, b20-guide-chapters 37, b20-guide-screens 15, b27-award-effects 2, career-agents 11, career-workflows 20, journey-agent 16, journey-career-older 8, journey-career 13, pro-agent 9, pro-app 7, pro-core 27, pro-representation-screen 5, pro-showcase 15, pro-work 36, propay-screen 7, propay 21.\n- A temporary probe file, tests/zz-review-probe.test.ts (since deleted), passed 5/5. It showed:\n  - P1: a voice contract under a voice-over agreement carries the 'voice-over' no-commission clause while commissionOn gives 90000 cents, 'term'.\n  - P2: an agreement offered with no deal (as BASE wrote it), saved and loaded through serialise/loadSave, takes an ask, is agreed, accepted, reaches lantern-row through the agent, and ends by term after 365 days.\n  - P3: an old-shaped accepted agreement, saved and loaded, reads legit/US/365 and ends by term.\n  - P5: Harbor Line under an agreement with work abroad added is reached openly and carries 90000 commission.\n- Mutations: 7, each run against b27-representation.test.ts and restored with git checkout. The first was also run against the screen test.\n- Final `git status --short`: empty, at HEAD 2c62955f.",
+ "mutations": [
+  {
+   "claim": "The office agrees or not at a chance reading how keen it is (interestOf), stored on the ask",
+   "mutation": "representation.ts:315 answerAsk: `termsDraw(...) < ask.chance` changed to `termsDraw(...) < TERMS.base[ask.what]` (the answer ignores keenness)",
+   "killed": false
+  },
+  {
+   "claim": "The agreement ends when its terms in force say (a shorter term agreed ends at 182 days)",
+   "mutation": "proagent.ts:1250 accept handler: `addDays(s.now, dealOf(a).termDays, ...)` changed to `addDays(s.now, AGREEMENT.termDays, ...)`",
+   "killed": true
+  },
+  {
+   "claim": "Commission and coverage read the agreement's own territory (abroad added covers London)",
+   "mutation": "representation.ts:207 coveredUnder: `d.territory.includes(...)` changed to `TERMS.home.includes(...)`",
+   "killed": true
+  },
+  {
+   "claim": "The agent submits only for work the agreement covers (submitsFor read by reachOf)",
+   "mutation": "representation.ts:217 submitsFor: `coveredUnder(a,t) && (voiceOnly(t) || inScope(...))` changed to `voiceOnly(t) ? coveredUnder(a,t) : inScope(...)`",
+   "killed": true
+  },
+  {
+   "claim": "A voice department weighs the voice demo as a legit office weighs a reel (workSeen)",
+   "mutation": "proagent.ts workSeen: `const kind = sampleKind(agent)` changed to `const kind = 'reel'`",
+   "killed": true
+  },
+  {
+   "claim": "A festival introduction is the way in that sendRefusal reads (rel.via)",
+   "mutation": "representation.ts:375: deleted `rel.via = { route: 'festival', ... }`",
+   "killed": true
+  },
+  {
+   "claim": "The agent handles (and negotiates scale plus ten on) only offers of covered work",
+   "mutation": "projobs.ts:1769 makeOffer: dropped `&& coveredUnder(agreement, t)`",
+   "killed": true
+  }
+ ],
+ "findings": [
+  {
+   "id": "R1",
+   "severity": "blocking",
+   "criterion": "contradiction",
+   "claim": "Every voice part's contract still says voice-over work is outside an agent's agreement and owes no commission. Under an agreement that covers voice-over (Celia Brannock's, or Thomas Ashgrove's with voice-over added), the pay now takes 10% on the same engagement, and the Work tab shows both.",
+   "evidence": "src/engine/systems/contracts.ts:239: `if (voiceOnlyFormat(fmt.workflow)) out.push({ kind: 'rule', id: 'voice-over', words: 'Voice-over work is outside an agent’s agreement, so no commission is owed on it.' });` is unconditional. WorkPane.tsx:422 renders e.contract.clauses. Probe P1, a lantern-row booking under a voice-scope agreement: the clause was present, and commissionOn returned amount 90000, how 'term', '10% of $9,000.00 gross…'. tests/career-workflows.test.ts:628 still asserts the clause on every voice contract; its comment was changed to 'outside a legit agent's agreement', but the code was not.",
+   "file": "src/engine/systems/contracts.ts",
+   "line": 239,
+   "suggested_fix": "Build the clause from the engagement's agreement. In contractFor, look up owedAgreement or the agreement in force and call coveredUnder. Say the no-commission sentence only when the agreement leaves voice-over out, or when nobody represents the actor. Otherwise say commission is owed under the agreement with the agency. Add a test with a voice-covered agreement that asserts the clause and commissionOn agree."
+  },
+  {
+   "id": "R2",
+   "severity": "blocking",
+   "criterion": "weak-test",
+   "claim": "No test proves the office's answer depends on how keen it is. The brief asks for a labeled chance reading interestOf. The answer could ignore the stored chance, or use any fixed figure between 0.1 and 0.9, and all 18 tests would still pass.",
+   "evidence": "Mutation A: representation.ts:315 changed `< ask.chance` to `< TERMS.base[ask.what]`. b27-representation passed 15/15 and b27-representation-screen 3/3. The journeys pick lives with `u < TERMS.least` (test line 102: `lifeWhere('rep-yes', (u) => u < TERMS.least)`) or `u >= TERMS.most` (line 156), so any chance gives the same outcome. The 'chance tracks keenness' test (lines 170-181) only checks termsChance and askChance, never the answer. The decider pro.agent_terms calls termsChance and termsDraw directly, not answerAsk.",
+   "file": "tests/b27-representation.test.ts",
+   "line": 102,
+   "suggested_fix": "Add a falsifiability twin. Pick a life whose draw falls between two chances: for example, a draw between the chance at the current factors and the chance after one more missed meeting, which lowers reliability. Make the same ask in both. Assert one life is agreed and the other kept, and that ask.chance is the figure the panel showed."
+  },
+  {
+   "id": "R3",
+   "severity": "should-fix",
+   "criterion": "house-standard",
+   "claim": "Comments the change made false are left in the present tense, in the change's own files and directly beside the lines it changed.",
+   "evidence": "- careerwork.ts:549-551: 'Voice-over work (the animated parts, the dub, the narration) is outside an agent's agreement (`AGREEMENT_TERMS`' What It Leaves Out), so it's posted for the actor's own submission.' The four projects below it had their access flipped to `{ agent: true, ... }` by this patch.\n- careerwork.ts:518-519, Harbor Line: '…so this is outside it: no agent puts the actor up for it, and none is owed commission.' Probe P5 found 90000 commission under an agreement with work abroad added.\n- propay.ts:22-23, header: 'its scope is stage, film and television in the United States (… commercials and voice-over sit elsewhere)'.\n- propay.ts:155, COVERED_MEDIA doc: '… in the US'.\n- projobs.ts:586, inScope doc: 'his' department. It reads agencyOf(agent).department, which isn't Celia's department.",
+   "file": "src/engine/content/careerwork.ts",
+   "line": 551,
+   "suggested_fix": "Rewrite each in the past tense with the date it stopped being true. Say that from 2026-10-25 coverage is each agreement's own terms (coveredUnder): voice-over where an agreement covers it, and the UK and Australia where an office agreed to add them."
+  },
+  {
+   "id": "R4",
+   "severity": "should-fix",
+   "criterion": "downstream",
+   "claim": "Player text now promises the festival as a way in: Thomas Ashgrove's notice, the send refusal, How To Reach, nextStep, the guide's career.agent and the tutorial. At this commit nothing outside tests calls introduceAtFestival, so the route can't be met in play. The festivals cluster's brief also tells it the function lives in proagent.ts, but it is in representation.ts.",
+   "evidence": "`grep -rn introduceAtFestival src` finds only its definition (representation.ts:350) and comments. agents.ts notice: '…or an introduction at a festival where your film screens.' scratchpad/b27/cluster-festivals.md: 'the festival introduction the representation cluster built (an `AgentRoute` and an exported function in `src/engine/systems/proagent.ts`; find it, call it, test the call)'. The implementer flagged the dependency in part 6 of the report.",
+   "file": "src/engine/systems/representation.ts",
+   "line": 350,
+   "suggested_fix": "At integration, confirm the festivals cluster's attendance calls introduceAtFestival and that a played test covers the call. Tell that cluster the function is in representation.ts. If the call doesn't land, remove 'festival' from Thomas Ashgrove's routes and revert his notice, as the report says."
+  },
+  {
+   "id": "R5",
+   "severity": "should-fix",
+   "criterion": "real-world",
+   "claim": "When no festival name is passed, introduceAtFestival names the Sundance Film Festival rather than the entry's own institution. It also says the film 'screened' for an entry that is only selected. Once the festivals cluster adds Cannes, Venice, the Berlinale and IDFA entries, a call without a name would put Sundance on a film it never showed.",
+   "evidence": "representation.ts:355: `const name = festival ?? `the ${entry.year} Sundance Film Festival`;`. Line 352 accepts `entry.state === 'selected'`. The notice and history at lines 363, 371-378 say 'where ${film.project} screened'. FestivalEntry has `institution` (awards.ts:87).",
+   "file": "src/engine/systems/representation.ts",
+   "line": 355,
+   "suggested_fix": "Derive the name from entry.institution through the awards content's institution names, or require the name argument. Word the selected-but-unscreened case as 'selected' rather than 'screened', or accept only 'screened'."
+  },
+  {
+   "id": "R6",
+   "severity": "should-fix",
+   "criterion": "contradiction",
+   "claim": "The guide's career.agreement entry still says the agreement ends 'when its year is up', which is false for a six-month agreement. The new career.agreement-terms example states a 7-in-10 chance as a certain result.",
+   "evidence": "guide/career.ts:516: 'It can end by agreement at any time, or under Equity’s or SAG-AFTRA’s rules, or when its year is up.' The same entry's first paragraph was edited to mention the six months. In career.agreement-terms, the example's setup is 'five of the factors are at the bar' with GATE = 4 (proagent.ts:123), so the voice ask's chance is 0.7. Its result reads 'The office agrees, What It Covers adds voice-over work…'.",
+   "file": "src/engine/content/guide/career.ts",
+   "line": 516,
+   "suggested_fix": "Say 'when its term is up (a year, or six months where the office agreed to a shorter one)'. Word the example's result as one outcome of a chance, e.g. 'If the office agrees…'."
+  },
+  {
+   "id": "R7",
+   "severity": "note",
+   "criterion": "decorative",
+   "claim": "Some new fields are written and never read: DealVersion.how, DealVersion.ask and AgentRelation.festivals[].at. They are audit-only history.",
+   "evidence": "Grep finds `.how` and `.ask` on versions only written, in agreedVersion and firstDeal. `festivals[].at` is pushed at representation.ts:364 and not read; `.festival` and `.creditId` are read by workSeen at proagent.ts:307.",
+   "file": "src/engine/systems/representation.ts",
+   "line": 76,
+   "suggested_fix": "Have TermsPanel read version.how and version.ask (it already reads .at), or drop the fields."
+  },
+  {
+   "id": "R8",
+   "severity": "note",
+   "criterion": "downstream",
+   "claim": "The industry reference's Halberd Talent page shows only its Legit department, but lists Celia Brannock under it as 'Agent, Voice-Over Department'. The implementer reported this.",
+   "evidence": "reference.ts:484 builds the Department fact from `a.department` only; reference.ts:491 lists agents with g.role.",
+   "file": "src/engine/systems/reference.ts",
+   "line": 484,
+   "suggested_fix": "List otherDepartments on the agency page."
+  },
+  {
+   "id": "R9",
+   "severity": "note",
+   "criterion": "downstream",
+   "claim": "The pro.slate_reach decider's sample now treats voice parts as reached through an agent for any represented life. The game gives that reach only under an agreement that covers voice-over; under a default legit agreement they come openly.",
+   "evidence": "decided.ts:705: `represented === 1 && t.access.agent ? 'agent' : 'open'`. The voice kinds' access.agent became true (slate.ts KIND_PROFILES).",
+   "file": "src/engine/decided.ts",
+   "line": 705,
+   "suggested_fix": "Compute the sample's reach with reachOf(t, <a legit first-terms agreement>) so it matches what the game gives."
+  },
+  {
+   "id": "R10",
+   "severity": "note",
+   "criterion": "real-world",
+   "claim": "Real Stewart Talent agents can now agree to revised terms (a shorter term, or work abroad). That is a new simulated behaviour of real people, labeled as the game's only in the Terms panel's fine print. It follows the existing pattern of real agents' simulated offers, and voice-over and the festival are correctly withheld from real agents. Raise it for the owner's rule on real people.",
+   "evidence": "Test line 196: `expect(askRefusal(patack, …, 'abroad')).toBeUndefined()`. Notification title at representation.ts:330: `${agent.name}’s Office Agreed To Your Ask`. A search for 'Celia Brannock' agent found no real agent of that name, so the invented agent is clean.",
+   "file": "src/engine/systems/representation.ts",
+   "line": 330,
+   "suggested_fix": "Optionally add REAL_CHANCE_WORDS, or a line saying the answer is the game's, to the Terms panel and the answer notice for a real agent."
+  },
+  {
+   "id": "R11",
+   "severity": "note",
+   "criterion": "contradiction",
+   "claim": "With voice-over added to Thomas Ashgrove's agreement, the terms say the agency's voice-over department handles voice work, but the submission history says 'Thomas Ashgrove submitted you'.",
+   "evidence": "representation.ts:184: 'which the agency’s voice-over department handles'. Test line 269 asserts /^Thomas Ashgrove submitted you for …voice demo…/.",
+   "file": "src/engine/systems/representation.ts",
+   "line": 184,
+   "suggested_fix": "Word the scope as 'which your agent handles with the agency’s voice-over department', or name the department in the submission."
+  },
+  {
+   "id": "R12",
+   "severity": "note",
+   "criterion": "weak-test",
+   "claim": "The 'older save' test only calls dealOf on an in-memory agreement and never loads a save. A real round trip works: my probes P2 and P3 serialised and loaded agreements shaped as BASE wrote them (no deal), asked, accepted and played to the term's end. The schema stays 94 in model.ts:494 and guard.js:25.",
+   "evidence": "tests/b27-representation.test.ts:434-442. Probe P2: an ask on an agreement with no deal after twin() was agreed, accepted, ran 365 days and ended 'term'. Probe P3: dealOf read legit/US/365 after load and the agreement ended 'term'.",
+   "file": "tests/b27-representation.test.ts",
+   "line": 434,
+   "suggested_fix": "Make it load: twin() an agreement with deal deleted, then ask, accept and play to the end."
+  },
+  {
+   "id": "R13",
+   "severity": "note",
+   "criterion": "other",
+   "claim": "The report says 'tsc --noEmit clean', but `tsc --noEmit -p .` type-checks nothing, because the root tsconfig.json has files: [] with references. I ran `tsc --noEmit -p tsconfig.app.json`, which covers src and tests, and it is clean. Running it updated the tsbuildinfo cache in the linked, shared node_modules (/home/user/1221/node_modules/.tmp/tsconfig.app.tsbuildinfo, mtime 19:13:44). That is a build cache, not source.",
+   "evidence": "tsconfig.json: `\"files\": [], \"references\": [...]`. The -p . run finished in 0.98s with exit 0; the app config ran 1m28s with exit 0.",
+   "file": "tsconfig.json",
+   "line": 1,
+   "suggested_fix": "Verify with `npm run typecheck` (tsc -b) or `-p tsconfig.app.json`."
+  },
+  {
+   "id": "R14",
+   "severity": "note",
+   "criterion": "missing-requirement",
+   "claim": "Known limits, reported by the implementer. One agent at a time stays, so a player represented by a Stewart Talent agent has no way to voice representation; it comes only through Halberd. b20-guide-wiring fails 2 tests until the primary agent regenerates the shared wiring list. The shared records still name coveredWork (CAPABILITIES.md, the career-world register's consumers, completion-matrix.json).",
+   "evidence": "signRefusal at proagent.ts:770-777. The b20-guide-wiring log shows 'controls: expected [ Array(212) ] to deeply equal [ Array(213) ]' and 'pro.ask_more at src/engine/systems/projobs.ts:2857 … expected false to be true'. WIRING = docs/verification/audit-2026-10-21/areas/guide/wiring.json, which implementers may not edit.",
+   "file": "src/engine/systems/proagent.ts",
+   "line": 770,
+   "suggested_fix": "The primary agent regenerates wiring.json, effects, text-inventory, surfaces and capabilities after integration."
+  }
+ ]
+}

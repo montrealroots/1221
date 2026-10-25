@@ -1,0 +1,56 @@
+From 6cf0bdab5fdb4d74aebba777c563e8ed83f08ed2 Mon Sep 17 00:00:00 2001
+From: Claude <noreply@anthropic.com>
+Date: Sun, 25 Oct 2026 21:46:42 +0000
+Subject: [PATCH 8/9] A real agent's answer says what the pages the game read
+ don't give, not what the agency's pages don't
+
+The line the review's fixes put on a real agent's answer said "Stewart Talent's pages say nothing of the terms its
+agents agree to", a claim about every page the agency has. The game read four (N05, N09, N11, S101), so the line says
+what those didn't give.
+
+Co-Authored-By: Claude Opus 5.5 <noreply@anthropic.com>
+Claude-Session: https://claude.ai/code/session_01HBdcuKzBBMbipfFQSByALG
+---
+ src/engine/systems/representation.ts | 7 ++++---
+ tests/b27-representation.test.ts     | 4 ++--
+ 2 files changed, 6 insertions(+), 5 deletions(-)
+
+diff --git a/src/engine/systems/representation.ts b/src/engine/systems/representation.ts
+index 44360030..27dedeac 100644
+--- a/src/engine/systems/representation.ts
++++ b/src/engine/systems/representation.ts
+@@ -272,10 +272,11 @@ export function termsDraw(sim: Simulation, personId: string, agentId: AgentId, a
+ const answerTime = (sim: Simulation, agent: Agent): Instant => onDayAt(sim.now, TERMS.answerDays, AGENT_TIMES.answerHour, officeZone(agent));
+ 
+ /**
+- * What the game says of a real agent's answer (from the review of 2026-10-25): the agency's pages say nothing of its terms,
+- * so whether the office agrees is the game's, as every chance an office takes you further is (`REAL_CHANCE_WORDS`).
++ * What the game says of a real agent's answer (from the review of 2026-10-25): the agency's pages the game read (its
++ * sources, N05, N09, N11 and S101) say nothing of its terms, so whether the office agrees is the game's, as every chance
++ * an office takes you further is (`REAL_CHANCE_WORDS`).
+  */
+-export const realTermsWords = (agent: Agent): string => `${agencyOf(agent).name}’s pages say nothing of the terms its agents agree to, so whether ${agent.words.office} agrees is the game’s invention, not a fact about ${agent.name}.`;
++export const realTermsWords = (agent: Agent): string => `The pages the game read from ${agencyOf(agent).name} say nothing of the terms its agents agree to, so whether ${agent.words.office} agrees is the game’s invention, not a fact about ${agent.name}.`;
+ 
+ /** How an ask came out, in a sentence's end. */
+ const answerWords = (agent: Agent, answer: NonNullable<AgreementAsk['answer']>): string => (answer === 'agreed' ? `${agent.words.office} agreed` : `${agent.words.office} kept the terms as offered`);
+diff --git a/tests/b27-representation.test.ts b/tests/b27-representation.test.ts
+index 91abaa2d..5f6d33ba 100644
+--- a/tests/b27-representation.test.ts
++++ b/tests/b27-representation.test.ts
+@@ -220,10 +220,10 @@ describe('asking for different terms (Part 6, loop 8)', () => {
+     const patack = offeredBy(seedFor('rep-patack', (s) => offers(s, PATACK)), PATACK);
+     expect(askRefusal(patack, patack.player, PATACK, 'voice')).toBe('The game knows of no voice-over department at Stewart Talent’s New York office, since the pages it read name none, so voice-over can’t be added to this agreement.');
+     expect(askRefusal(patack, patack.player, PATACK, 'abroad')).toBeUndefined();
+-    // A real agent's answer, whichever it is, says it's the game's: the agency's pages give no terms.
++    // A real agent's answer, whichever it is, says it's the game's: the agency's pages the game read give no terms.
+     asked(patack, 'abroad', PATACK);
+     expect(notices(patack).at(-1)).toMatch(new RegExp(`^Dan Patack’s Office (Agreed To Your Ask|Kept Its Terms): .+ ${realTermsWords(PATACK)}$`));
+-    expect(realTermsWords(PATACK)).toBe('Stewart Talent’s pages say nothing of the terms its agents agree to, so whether the office agrees is the game’s invention, not a fact about Dan Patack.');
++    expect(realTermsWords(PATACK)).toBe('The pages the game read from Stewart Talent say nothing of the terms its agents agree to, so whether the office agrees is the game’s invention, not a fact about Dan Patack.');
+   }, 300_000);
+ });
+ 
+-- 
+2.43.0
+

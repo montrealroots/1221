@@ -1,0 +1,142 @@
+From 2a4ac610d0f6d0a5296bb73794e86c13e0d8cf35 Mon Sep 17 00:00:00 2001
+From: Claude <noreply@anthropic.com>
+Date: Sun, 25 Oct 2026 18:04:12 +0000
+Subject: [PATCH 2/9] The ask's answer reads no guard nothing can trip, and the
+ tests hold every voice kind and every refusal they name
+
+Mutation testing the representation work left two survivors. The answer's handler checked the offer was still offered and
+unanswered, but only an ask puts it on the clock and declining calls it off with the offer's other items, so no player
+could reach either check; it reads only what it needs now. Reverting one of the four voice kinds' agent access went
+unnoticed because the journey found a voice part of another kind; the journey now reads each kind the slate makes. A
+voice demo sent with an approach, a life whose recorded work is all voice, and the one-agent refusal naming what the
+other agreement covers each got a test, since each had a line no test would miss. The tutorial's factors name voice
+work for a voice-over department, which the chapter's list said was stage and screen for every office.
+
+Co-Authored-By: Claude Opus 5.5 <noreply@anthropic.com>
+Claude-Session: https://claude.ai/code/session_01HBdcuKzBBMbipfFQSByALG
+---
+ src/engine/content/tutorial.ts       |  2 +-
+ src/engine/systems/representation.ts |  5 ++--
+ tests/b27-representation.test.ts     | 41 ++++++++++++++++++++++++++--
+ 3 files changed, 42 insertions(+), 6 deletions(-)
+
+diff --git a/src/engine/content/tutorial.ts b/src/engine/content/tutorial.ts
+index e31843e1..0e01c0ec 100644
+--- a/src/engine/content/tutorial.ts
++++ b/src/engine/content/tutorial.ts
+@@ -503,7 +503,7 @@ export const CHAPTERS: readonly Chapter[] = [
+       `For a referral, press Ask For A Referral beside a finished job under How To Reach: its work has to be judged ${PRO_BAR} or better. After the showcase, the School follows up on its own, and its notice says whether ${PRO_AGENT.name}’s office asked to meet you.`,
+       `Then press Send Your Materials. The office answers in about ${counted(PRO_TIMES.replyDays / 7, 'week')}: it asks for more, asks to meet, passes, or doesn’t answer at all, which after ${counted(PRO_TIMES.silenceDays / 7, 'week')} counts as no. Each answer comes as a notice, and the agent’s History panel keeps every step.`,
+       `When it asks for more, make what it asked for on the Portfolio tab and press Send What His Office Asked For, or Send What The Office Asked For for a real agent, by its date. A meeting goes on your calendar, and the clock stops at it. If you can’t make it, Ask To Move moves it ${PRO_TIMES.moveDays === 7 ? 'a week' : plural(PRO_TIMES.moveDays, 'day')}, once. A meeting missed closes the approach.`,
+-      `Why It Went This Way gives the game’s reasons for each decision, factor by factor, each against a bar the game sets: your work, stage and screen, training, fit with the department, availability and reliability, and for ${PRO_AGENT.name} the room on his list, which the game assumes. An approach needs ${word(PRO_GATE)} at the bar or beyond, then a chance against the year’s other actors. Better work raises it, and it’s never certain.`,
++      `Why It Went This Way gives the game’s reasons for each decision, factor by factor, each against a bar the game sets: your work, stage and screen (or voice work, for a voice-over department), training, fit with the department, availability and reliability, and for ${PRO_AGENT.name} the room on his list, which the game assumes. An approach needs ${word(PRO_GATE)} at the bar or beyond, then a chance against the year’s other actors. Better work raises it, and it’s never certain.`,
+       `After a pass, the office looks again only after ${PRO_HOLDS.pass}, and after no answer or a declined offer ${PRO_HOLDS.silence}, and then only at something new: a new credit, a better reel or a referral.`,
+       `If an agent offers to represent you, The Agreement shows every term first, each marked A Published Rule or The Game’s Own Term. Before you answer, you can ask the office once for different terms, under Asking For Different Terms: ${ASK_LABEL.shorter}, ${ASK_LABEL.voice} where the agency has a voice-over department, or ${ASK_LABEL.abroad}. It answers ${word(TERMS.answerDays)} days later, and what the agreement covers decides which parts the agent puts you up for and which pay carries commission.`,
+       'Press Accept The Agreement or Decline The Agreement before the offer lapses. Signing doesn’t change your place at the School or your permission to work, and you have one agent at a time: another’s agreement can’t start while one runs.',
+diff --git a/src/engine/systems/representation.ts b/src/engine/systems/representation.ts
+index 77c24f25..7d518c24 100644
+--- a/src/engine/systems/representation.ts
++++ b/src/engine/systems/representation.ts
+@@ -409,8 +409,9 @@ export function registerRepresentation(sim: Simulation): void {
+     const person = s.universe.people[String(item.payload.personId)];
+     const agent = agentById(String(item.payload.agentId));
+     const a = person?.pro?.agreements.find((x) => x.id === item.payload.agreementId);
+-    // Declined since, or answered already: nothing left to answer.
+-    if (!person || !agent || !a || a.status !== 'offered' || !a.ask || a.ask.answer) return;
++    // Only an ask puts this on the clock; declining the offer calls it off with the rest of its items, and the offer can't be
++    // accepted or lapse before it comes.
++    if (!person || !agent || !a) return;
+     answerAsk(s, person, agent, a);
+   });
+ }
+diff --git a/tests/b27-representation.test.ts b/tests/b27-representation.test.ts
+index a73faebd..7a307bf9 100644
+--- a/tests/b27-representation.test.ts
++++ b/tests/b27-representation.test.ts
+@@ -34,7 +34,7 @@ import {
+ } from '@/engine/systems/representation';
+ import { commissionOn } from '@/engine/systems/propay';
+ import { DIRECT, askMoreRefusal, payTermsOf, postingTimes, postingsAt, reachOf } from '@/engine/systems/projobs';
+-import { keepProject, productionsOf } from '@/engine/systems/slate';
++import { keepProject, slatePartsAt } from '@/engine/systems/slate';
+ import { voiceOnly } from '@/engine/systems/workflow';
+ import { AGENT, SURE, at, finishedJob, graduate, played, portfolio, reel, represent, twin, zone } from './fakes/b20-career';
+ import { booked } from './fakes/career-work';
+@@ -250,6 +250,11 @@ describe('what the terms cover, read by the commission and the agent’s submiss
+     expect(withVoice.terms.find((t) => t.id === 'excluded')!.words).toBe('Commercials aren’t covered. An agency usually handles them in another department.');
+     const lantern = projectById('lantern-row')!;
+     expect([reachOf(lantern, withVoice), reachOf(lantern, without)]).toEqual(['agent', 'open']);
++    // Every kind of voice work the slate makes, as it makes it: an animated series, an animated feature, a dub, a narration.
++    for (const kind of ['animated-series', 'animated-feature', 'dub', 'documentary'] as const) {
++      const t = firstPart(voice, (x) => x.kind === kind && voiceOnly(x));
++      expect([kind, reachOf(t, withVoice), reachOf(t, without)]).toEqual([kind, 'agent', 'open']);
++    }
+     // On-camera work stays the agent's in both.
+     const calloway = projectById('calloway-files')!;
+     expect([reachOf(calloway, withVoice), reachOf(calloway, without)]).toEqual(['agent', 'agent']);
+@@ -301,6 +306,11 @@ describe('Halberd Talent’s voice-over department (Part 6 medium, Part 7 voice
+     expect(rel(sim, CELIA).history.at(-1)!.words).toBe('You checked your materials for an approach: headshots and a résumé were there, and you had no voice demo.');
+     expect(sendRefusal(sim, sim.player, CELIA)).toBe('Her office takes no submissions it hasn’t asked for. It sees your materials only through a referral from someone you’ve worked with.');
+     sim.must({ kind: 'pro.ask_referral', payload: { agentId: CELIA.id, engagementId: job.id } });
++    // A life that mixed a demo first sends it with the headshots and the résumé, as a legit office is sent the reel.
++    const early = twin(sim);
++    demo(early);
++    early.must({ kind: 'pro.send_materials', payload: { agentId: CELIA.id } });
++    expect(rel(early, CELIA).history.at(-1)).toMatchObject({ words: 'You sent your headshots, your résumé and your voice demo to her office, on Hollis Reed Casting’s referral.', ref: currentOf(early.player.pro, 'demo')!.id });
+     sim.must({ kind: 'pro.send_materials', payload: { agentId: CELIA.id } });
+     expect(rel(sim, CELIA).history.at(-1)!.words).toBe('You sent your headshots and your résumé to her office, on Hollis Reed Casting’s referral.');
+     for (let k = 0; k < 20 && rel(sim, CELIA).stage === 'sent'; k += 1) played(sim, sim.now + MS_DAY);
+@@ -346,6 +356,21 @@ describe('Halberd Talent’s voice-over department (Part 6 medium, Part 7 voice
+   }, 300_000);
+ });
+ 
++describe('a voice department’s fit, for a life whose recorded work is all voice', () => {
++  it('reads voice tapes as the work her department covers, and his doesn’t', () => {
++    const sim = graduate('rep-voice-fit');
++    // TEST SETUP: a life with no School on its record, as one that never trained there has none.
++    delete sim.player.school;
++    sim.player.pro!.credits = [];
++    sim.must({ kind: 'brief.choose', payload: { brief: VOICE_BRIEF.id, reading: VOICE_BRIEF.readings[0]!.id } });
++    sim.must({ kind: 'practice.self_tape', payload: { genre: VOICE_BRIEF.kinds[0], brief: VOICE_BRIEF.id } });
++    const fit = (agent: Agent) => interestOf(sim, sim.player, agent, sim.now).factors.find((f) => f.id === 'fit')!;
++    expect(fit(CELIA)).toMatchObject({ level: 'at', words: 'Your recorded work is voice work, which her department covers.' });
++    expect(fit(AGENT)).toMatchObject({ level: 'short', words: 'Your recorded work is voice work, which his department doesn’t cover.' });
++    expect(interestOf(sim, sim.player, CELIA, sim.now).factors.find((f) => f.id === 'relevance')).toMatchObject({ level: 'near', words: 'You’ve taped voice briefs, and have no voice demo or voice credit yet. Mix A Voice Demo on the Portfolio tab would give it something to hear.' });
++  });
++});
++
+ describe('an introduction at a festival (AgentRoute festival)', () => {
+   it('PLAYER JOURNEY: met at Sundance where the film screened: the office’s introduction opens the send its policy refused, the film is work it has to go on and something new; once an entry; the twin not introduced is still refused', () => {
+     const sim = graduate('rep-festival');
+@@ -395,6 +420,16 @@ describe('an introduction at a festival (AgentRoute festival)', () => {
+   }, 300_000);
+ });
+ 
++describe('one agent at a time, whatever each covers', () => {
++  it('refuses Celia Brannock’s voice-over agreement while Thomas Ashgrove’s runs, naming what his covers, since the work loop and the pay read one agreement', () => {
++    const sim = graduate('rep-one-at-a-time');
++    // TEST SETUP: his agreement signed, and hers offered, each as the agent's builder writes one.
++    const his = represent(sim);
++    sim.player.pro!.agreements.push({ id: 'celia-offer', agentId: CELIA.id, offeredAt: sim.now, standsUntil: sim.now + 14 * MS_DAY, status: 'offered', terms: termsFor({ ...dealOf(his), scope: ['voice'] }), deal: { versions: [{ version: 1, at: sim.now, scope: ['voice'], territory: ['us'], termDays: 365, how: 'offered' }] } });
++    expect(signRefusal(sim, sim.player, CELIA)).toMatch(/^Thomas Ashgrove at Halberd Talent represents you until \w+ \d+, \d{4}, for stage, film and television work\. In the game you have one agent at a time, so this agreement can’t start while that one runs\. You can decline it, or end the other first\.$/);
++  });
++});
++
+ describe('an older save’s agreement', () => {
+   it('reads as the words it was offered with: a legit department’s work in the US for a year, and a voice department’s voice-over', () => {
+     const sim = graduate('rep-older');
+@@ -440,9 +475,9 @@ function sundanceEntry(sim: Simulation, state: 'screened' | 'not-selected') {
+   return entry;
+ }
+ 
+-/** The first slate part, from now on, that a test needs. */
++/** The first slate part, from now on, that a test needs: a production's or a series' (`slatePartsAt`). */
+ function firstPart(sim: Simulation, pick: (t: ProjectTemplate) => boolean): ProjectTemplate {
+-  for (let w = 1; w < 400; w += 1) for (const p of productionsOf(sim, sim.now + w * 7 * MS_DAY)) for (const t of p.parts) if (pick(t)) return t;
++  for (let w = 1; w < 400; w += 1) for (const t of slatePartsAt(sim, sim.now + w * 7 * MS_DAY)) if (pick(t)) return t;
+   throw new Error('no such part');
+ }
+ 
+-- 
+2.43.0
+

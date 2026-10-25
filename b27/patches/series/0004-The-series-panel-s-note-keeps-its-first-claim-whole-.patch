@@ -1,0 +1,32 @@
+From eaa441a123bab1f1ba19cbac1f0faab74ee65387 Mon Sep 17 00:00:00 2001
+From: Claude <noreply@anthropic.com>
+Date: Sun, 25 Oct 2026 20:37:34 +0000
+Subject: [PATCH 4/6] The series panel's note keeps its first claim whole and
+ adds the real series after it
+
+Saying the real series' later seasons in the same breath had split "the game's simulation for series it invents, never a
+published figure", the words tests/b27-audience.test.ts holds the panel to and the claim the note makes first; the real
+series now follow it as a clause of their own, and the sentence says the same two things.
+
+Co-Authored-By: Claude Opus 5.5 <noreply@anthropic.com>
+Claude-Session: https://claude.ai/code/session_01HBdcuKzBBMbipfFQSByALG
+---
+ src/ui/career/IndustryPane.tsx | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+
+diff --git a/src/ui/career/IndustryPane.tsx b/src/ui/career/IndustryPane.tsx
+index f0868831..bd390ff5 100644
+--- a/src/ui/career/IndustryPane.tsx
++++ b/src/ui/career/IndustryPane.tsx
+@@ -340,7 +340,7 @@ function SeriesPanel() {
+             </div>
+           );
+         }) : <p className="small" style={{ margin: 0 }}>You haven’t worked on a series yet. One you’ve worked on shows here, each season’s audience as it finishes.</p>}
+-        <Fine>Each season’s audience and reviews are the game’s simulation, never a published figure, for series it invents and for a real series’ seasons after the one its pages had on the air: a broadcast series counted in viewers an episode, a streaming one in hours viewed a week, never the one as the other. Your part in a season moves them a little. The network reads them, with the series’ age, when it says whether there’s another season.</Fine>
++        <Fine>Each season’s audience and reviews are the game’s simulation for series it invents, never a published figure, and so are those of a real series’ seasons after the one its pages had on the air: a broadcast series counted in viewers an episode, a streaming one in hours viewed a week, never the one as the other. Your part in a season moves them a little. The network reads them, with the series’ age, when it says whether there’s another season.</Fine>
+       </div>
+     </Panel>
+   );
+-- 
+2.43.0
+

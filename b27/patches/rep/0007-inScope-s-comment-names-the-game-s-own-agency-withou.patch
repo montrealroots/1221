@@ -1,0 +1,33 @@
+From 5aa6b2b6ed6a699b6090297ecdab4bbe2e58597f Mon Sep 17 00:00:00 2001
+From: Claude <noreply@anthropic.com>
+Date: Sun, 25 Oct 2026 21:42:30 +0000
+Subject: [PATCH 7/9] inScope's comment names the game's own agency without its
+ name, which the engine's code never carries
+
+The comment written for the review named Halberd Talent, and tests/pro-core.test.ts holds the engine's systems to naming
+no agent or agency, so that a second one stays an entry of data. It says "the game's own agency's" instead.
+
+Co-Authored-By: Claude Opus 5.5 <noreply@anthropic.com>
+Claude-Session: https://claude.ai/code/session_01HBdcuKzBBMbipfFQSByALG
+---
+ src/engine/systems/projobs.ts | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
+
+diff --git a/src/engine/systems/projobs.ts b/src/engine/systems/projobs.ts
+index 7966efa2..b6ce113c 100644
+--- a/src/engine/systems/projobs.ts
++++ b/src/engine/systems/projobs.ts
+@@ -585,8 +585,8 @@ export function fieldOf(t: ProjectTemplate): AgentField {
+ 
+ /**
+  * Whether an agent's agency's own department covers a project's field: Television, Film, Off-Broadway and Regional Theater
+- * among Halberd Talent's. Its other departments aren't read (from 2026-10-25, brief 27, the voice-over department): its
+- * one reader, `submitsFor` (`systems/representation.ts`), answers a voice part by the agreement's cover alone, and a
++ * among the game's own agency's. Its other departments aren't read (from 2026-10-25, brief 27, the voice-over department):
++ * its one reader, `submitsFor` (`systems/representation.ts`), answers a voice part by the agreement's cover alone, and a
+  * voice-over agreement covers nothing on camera or on stage, so a voice-over agent's is never asked.
+  */
+ export function inScope(agentId: string, t: ProjectTemplate): boolean {
+-- 
+2.43.0
+

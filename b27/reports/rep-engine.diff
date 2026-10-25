@@ -1,0 +1,470 @@
+diff --git a/src/engine/content/careerwork.ts b/src/engine/content/careerwork.ts
+index 71642f97..74811374 100644
+--- a/src/engine/content/careerwork.ts
++++ b/src/engine/content/careerwork.ts
+@@ -289,7 +289,11 @@ export interface ProjectTemplate {
+     | { kind: 'week'; weeks: number }
+     // Sessions on weekdays `everyDays` apart, each `minutes` long from `hour` (Module 5): the booth, the dub, the capture stage.
+     | { kind: 'sessions'; sessions: number; everyDays: number; minutes: number; hour: number };
+-  /** Who can put the actor up for it: an agent, and the actor's own submission where it's open. */
++  /**
++   * Who can put the actor up for it: an agent, and the actor's own submission where it's open. A voice part's agent is one
++   * whose agreement covers voice-over (`submitsFor`, `systems/representation.ts`): until 2026-10-25 no agent's did, and a
++   * voice part took the actor's own submission only.
++   */
+   access: { agent: boolean; open: false | 'anyone' | 'equity-members' };
+   pay: RateId;
+   /** Work abroad: the production's company there, its hotel, and who pays (`TripTerms`). Absent, the work is a trip from home and back each day. */
+@@ -511,8 +515,12 @@ export const PROJECTS: readonly ProjectTemplate[] = [
+   // and the hotel. ASSUMPTIONS: a US studio's feature engages an American actor it casts from the US under the SAG-AFTRA
+   // Basic Agreement, its weekly performer's minimum, though the game hasn't read the agreement's terms for work abroad;
+   // its casting office takes self-tapes for the part from anyone in the US; the shoot is eight weekdays, eight weeks after
+-  // the posting, so a visa can be decided before the flight. An agent's agreement covers work in the United States
+-  // (`AGREEMENT_TERMS`' territory), so this is outside it: no agent puts the actor up for it, and none is owed commission.
++  // the posting, so a visa can be decided before the flight. Until 2026-10-25 every agent's agreement covered work in the
++  // United States only (`AGREEMENT_TERMS`' territory), so this was outside all of them: no agent put the actor up for it,
++  // and none was owed commission. From then an office can agree to add work abroad (brief 27, `coveredUnder`,
++  // `systems/representation.ts`), and under that agreement it's covered work and owes commission, as the agreement's
++  // Exclusive has it; its casting office still takes self-tapes from anyone in the US and no agent's submission
++  // (`access.agent` false), so the actor still submits for it themselves.
+   {
+     id: 'harbor-line', kind: 'overseas-feature', format: 'studio-feature', fictional: true,
+     project: 'Harbor Line', company: 'Larkspur Pictures', casting: 'Brandt Casting',
+@@ -543,8 +551,11 @@ export const PROJECTS: readonly ProjectTemplate[] = [
+   },
+   // Module 5's productions (from 2026-10-24, the owner's brief 25, Part 8): one or more for each way of working the
+   // game didn't have (`content/workflows.ts`), every name, company and casting office invented, every part written for
+-  // either. Their schedules' lengths are assumed. Voice-over work (the animated parts, the dub, the narration) is outside
+-  // an agent's agreement (`AGREEMENT_TERMS`' What It Leaves Out), so it's posted for the actor's own submission.
++  // either. Their schedules' lengths are assumed. Voice-over work (the animated parts, the dub, the narration) was outside
++  // every agent's agreement until 2026-10-25 (`AGREEMENT_TERMS`' What It Leaves Out), so it was posted for the actor's
++  // own submission only. From then it's covered where an agreement's terms take it in, a voice-over department's or one an
++  // office agreed to add it to (brief 27, `coveredUnder`), and that agreement's agent puts the actor up for it too
++  // (`access.agent`, read through `submitsFor`); a legit agreement as first offered still leaves it out.
+   {
+     id: 'half-past-normal', kind: 'multicam-comedy', format: 'multicam-comedy', fictional: true,
+     project: 'Half Past Normal', company: 'Corner Booth Productions', casting: 'Wexley Casting',
+@@ -567,7 +578,7 @@ export const PROJECTS: readonly ProjectTemplate[] = [
+     requirements: { ages: [18, 60], sends: ['headshot', 'resume'] },
+     stages: { audition: 'self-tape', callback: true },
+     schedule: { kind: 'sessions', sessions: 3, everyDays: 14, minutes: 240, hour: 10 },
+-    access: { agent: false, open: 'anyone' }, pay: 'animation-session',
++    access: { agent: true, open: 'anyone' }, pay: 'animation-session',
+   },
+   {
+     id: 'kite-and-crow', kind: 'animated-feature', format: 'animated-feature', fictional: true,
+@@ -579,7 +590,7 @@ export const PROJECTS: readonly ProjectTemplate[] = [
+     requirements: { ages: [18, 60], sends: ['headshot', 'resume'] },
+     stages: { audition: 'self-tape', callback: true },
+     schedule: { kind: 'sessions', sessions: 4, everyDays: 35, minutes: 240, hour: 10 },
+-    access: { agent: false, open: 'anyone' }, pay: 'sag-tv-day',
++    access: { agent: true, open: 'anyone' }, pay: 'sag-tv-day',
+   },
+   {
+     id: 'salt-road', kind: 'dub', format: 'dub', fictional: true,
+@@ -591,7 +602,7 @@ export const PROJECTS: readonly ProjectTemplate[] = [
+     requirements: { ages: [25, 55], sends: ['headshot', 'resume'] },
+     stages: { audition: 'self-tape', callback: false },
+     schedule: { kind: 'sessions', sessions: 3, everyDays: 1, minutes: 480, hour: 9 },
+-    access: { agent: false, open: 'anyone' }, pay: 'sag-tv-day',
++    access: { agent: true, open: 'anyone' }, pay: 'sag-tv-day',
+     dub: [
+       [{ character: 'Harbormaster Brandt', lines: 60 }],
+       [{ character: 'Harbormaster Brandt', lines: 45 }, { character: 'a ferry captain', lines: 4 }, { character: 'a radio announcer', lines: 3 }, { character: 'a fisherman', lines: 2 }],
+@@ -621,7 +632,7 @@ export const PROJECTS: readonly ProjectTemplate[] = [
+     requirements: { ages: [25, 65], sends: ['headshot', 'resume'] },
+     stages: { audition: 'self-tape', callback: false },
+     schedule: { kind: 'sessions', sessions: 3, everyDays: 2, minutes: 240, hour: 10 },
+-    access: { agent: false, open: 'anyone' }, pay: 'sag-tv-day',
++    access: { agent: true, open: 'anyone' }, pay: 'sag-tv-day',
+   },
+   {
+     id: 'tidewater-reenactment', kind: 'documentary', format: 'reenactment', fictional: true,
+diff --git a/src/engine/content/slate.ts b/src/engine/content/slate.ts
+index 0b52f691..a1e5a4fd 100644
+--- a/src/engine/content/slate.ts
++++ b/src/engine/content/slate.ts
+@@ -144,7 +144,11 @@ export interface KindProfile {
+ 
+ const SCREEN_SENDS = ['headshot', 'resume', 'reel'] as const;
+ const STAGE_SENDS = ['headshot', 'resume'] as const;
+-/** Voice casting listens: a voice demo where screen casting asks for a reel (until 2026-10-24, brief 27, the screen's three). */
++/**
++ * Voice casting listens: a voice demo where screen casting asks for a reel (until 2026-10-24, brief 27, the screen's three).
++ * From 2026-10-25 it takes an agent's submission too, where the agent's agreement covers voice-over (`submitsFor`,
++ * `systems/representation.ts`), as well as the actor's own: until then its kinds took the actor's own only.
++ */
+ const VOICE_SENDS = ['headshot', 'resume', 'demo'] as const;
+ const FATE_FILM = { never: 0.08, pushed: 0.12, weeks: [3, 10] } as const;
+ const FATE_TV = { never: 0.04, pushed: 0.1, weeks: [2, 6] } as const;
+@@ -215,7 +219,7 @@ export const KIND_PROFILES: Readonly<Partial<Record<ProjectKind, KindProfile>>>
+   'animated-series': {
+     format: 'animated-series', medium: 'television', union: 'sag-aftra', contract: 'SAG-AFTRA Television Animation', pay: 'animation-session',
+     schedules: [{ kind: 'sessions', sessions: 3, everyDays: 14, minutes: 240, hour: 10 }, { kind: 'sessions', sessions: 2, everyDays: 21, minutes: 240, hour: 10 }],
+-    audition: 'self-tape', callback: 0.5, access: { agent: false, open: 'anyone' }, sizes: { 'co-star': 2, supporting: 1 }, parts: [1, 2],
++    audition: 'self-tape', callback: 0.5, access: { agent: true, open: 'anyone' }, sizes: { 'co-star': 2, supporting: 1 }, parts: [1, 2],
+     genreSets: [['animated', 'comedy'], ['animated', 'adventure'], ['animated', 'childrens']],
+     sends: VOICE_SENDS, lead: [21, 42], fate: FATE_TV, techniques: { voice: 2, voiceover: 2 }, stakes: 1,
+     series: { episodes: 13, everyDays: 14, daysEach: 1, program: 'half-hour', renew: 0.6, revive: 0.1 },
+@@ -279,7 +283,7 @@ export const KIND_PROFILES: Readonly<Partial<Record<ProjectKind, KindProfile>>>
+   'animated-feature': {
+     format: 'animated-feature', medium: 'film', union: 'sag-aftra', contract: 'SAG-AFTRA Basic Agreement', pay: 'sag-tv-day',
+     schedules: [{ kind: 'sessions', sessions: 4, everyDays: 35, minutes: 240, hour: 10 }, { kind: 'sessions', sessions: 3, everyDays: 28, minutes: 240, hour: 10 }],
+-    audition: 'self-tape', callback: 0.6, access: { agent: false, open: 'anyone' }, sizes: { supporting: 2, 'co-star': 2 }, parts: [1, 2],
++    audition: 'self-tape', callback: 0.6, access: { agent: true, open: 'anyone' }, sizes: { supporting: 2, 'co-star': 2 }, parts: [1, 2],
+     genreSets: [['animated', 'adventure'], ['animated', 'fantasy'], ['animated', 'family']],
+     sends: VOICE_SENDS, lead: [28, 56], fate: FATE_FILM, techniques: { voice: 2, voiceover: 2 }, stakes: 2,
+   },
+@@ -293,14 +297,14 @@ export const KIND_PROFILES: Readonly<Partial<Record<ProjectKind, KindProfile>>>
+   dub: {
+     format: 'dub', medium: 'film', union: 'sag-aftra', contract: 'SAG-AFTRA Basic Agreement (Dialogue Replacement)', pay: 'sag-tv-day',
+     schedules: [{ kind: 'sessions', sessions: 3, everyDays: 1, minutes: 480, hour: 9 }, { kind: 'sessions', sessions: 2, everyDays: 1, minutes: 480, hour: 9 }],
+-    audition: 'self-tape', callback: 0, access: { agent: false, open: 'anyone' }, sizes: { supporting: 2, 'co-star': 1 }, parts: [1, 2],
++    audition: 'self-tape', callback: 0, access: { agent: true, open: 'anyone' }, sizes: { supporting: 2, 'co-star': 1 }, parts: [1, 2],
+     genreSets: [['drama', 'thriller'], ['animated', 'adventure'], ['crime', 'drama']],
+     sends: VOICE_SENDS, lead: [14, 35], fate: { never: 0.05, pushed: 0.08, weeks: [1, 4] }, techniques: { voice: 2, voiceover: 1 }, stakes: 1,
+   },
+   documentary: {
+     format: 'narration', medium: 'film', union: 'sag-aftra', contract: 'SAG-AFTRA Basic Agreement', pay: 'sag-tv-day',
+     schedules: [{ kind: 'sessions', sessions: 3, everyDays: 2, minutes: 240, hour: 10 }, { kind: 'sessions', sessions: 2, everyDays: 3, minutes: 240, hour: 10 }],
+-    audition: 'self-tape', callback: 0, access: { agent: false, open: 'anyone' }, sizes: { lead: 1 }, parts: [1, 1],
++    audition: 'self-tape', callback: 0, access: { agent: true, open: 'anyone' }, sizes: { lead: 1 }, parts: [1, 1],
+     genreSets: [['documentary', 'nature_documentary'], ['documentary', 'true_crime'], ['documentary', 'biographical']],
+     sends: VOICE_SENDS, lead: [21, 42], fate: { never: 0.06, pushed: 0.1, weeks: [2, 6] }, techniques: { voiceover: 2, speech: 1 }, stakes: 1,
+   },
+diff --git a/src/engine/decided.ts b/src/engine/decided.ts
+index 3ddcb0f3..abd40de1 100644
+--- a/src/engine/decided.ts
++++ b/src/engine/decided.ts
+@@ -45,7 +45,8 @@ import { therapyLifts } from './systems/therapy';
+ import { priorityOf } from './systems/classmates';
+ import { AGENTS } from './content/agents';
+ import { GATE, LEVELS, chancesFor, drawOf, offerOutcome, replyOutcome, rosterFor } from './systems/proagent';
+-import { DIRECT, HOLD, NEGOTIATE, castingDraw, postingsAt, releaseFate, slateReach } from './systems/projobs';
++import { ASKS, termsChance, termsDraw } from './systems/representation';
++import { DIRECT, HOLD, NEGOTIATE, castingDraw, postingsAt, reachOf, releaseFate, slateReach } from './systems/projobs';
+ import { productionsOf, seriesOfYear, slatePartsAt } from './systems/slate';
+ import { PROJECTS } from './content/careerwork';
+ import { SERIES, seriesById } from './content/series';
+@@ -607,6 +608,26 @@ defineDecider<{ sim: Simulation; year: number }, string>({
+   decide: ({ sim, year }) => JSON.stringify(rosterFor(sim, AGENTS[0]!, year)),
+ });
+ 
++defineDecider<{ sim: Simulation; ask: number; atBar: number; agreement: number }, string>({
++  id: 'pro.agent_terms',
++  decides: 'An agent’s office’s answer when the actor asks once for different terms on the agreement it offered (TERMS): agreed or kept as offered, its chance by what was asked and by how many of the factors the office weighs are at the bar or beyond.',
++  drawnIn: 'src/engine/systems/representation.ts',
++  reads: {
++    // What was asked: a shorter term, voice-over added or work abroad added, each with its own chance.
++    ask: (o, t) => ({ ...o, ask: Math.round(t * 2) }),
++    // How many of the seven factors are at the bar or beyond: a keener office, a likelier yes.
++    atBar: (o, t) => ({ ...o, atBar: Math.round(t * 7) }),
++    // Which agreement: each draws its own.
++    agreement: (o, t) => ({ ...o, agreement: 1 + Math.round(t * 40) }),
++    world: (o, t) => ({ ...o, sim: atYale(Math.round(t * 20)) }),
++  },
++  sample: (seed) => ({ sim: atYale(seed), ask: seed % 3, atBar: 3 + (seed % 5), agreement: 1 + seed }),
++  decide: ({ sim, ask, atBar, agreement }) => {
++    const chance = termsChance(ASKS[ask]!, atBar, GATE);
++    return Array.from({ length: 30 }, (_, n) => (termsDraw(sim, sim.player.id, AGENTS[0]!.id, `agreement-${agreement + n}`) < chance ? '1' : '0')).join('');
++  },
++});
++
+ // ---------------------------------------------------------------------------
+ // Professional work (from 2026-10-21, brief 19's J1 and J5, `systems/projobs.ts`)
+ // ---------------------------------------------------------------------------
+@@ -681,7 +702,10 @@ defineDecider<{ sim: Simulation; represented: number; credits: number; skill: nu
+     const out: string[] = [];
+     for (let n = 0; n < 16; n += 1) {
+       const at = sim.now + n * 7 * MS_DAY;
+-      out.push(slatePartsAt(sim, at).filter((t) => t.access.agent || t.access.open).map((t) => Math.round(slateReach(sim, p, t, represented === 1 && t.access.agent ? 'agent' : 'open', at) * 100)).join(','));
++      // The way each part reaches the actor as the game gives it (`reachOf`, from the review of 2026-10-25): until then any
++      // part an agent could submit for came through the agent here, a voice part under an agreement that leaves voice-over
++      // out included, which the game opens to the actor's own submission.
++      out.push(slatePartsAt(sim, at).filter((t) => t.access.agent || t.access.open).map((t) => Math.round(slateReach(sim, p, t, reachOf(t, p.pro!.agreements[0]) === 'agent' ? 'agent' : 'open', at) * 100)).join(','));
+     }
+     return out.join(' ');
+   },
+diff --git a/src/engine/systems/contracts.ts b/src/engine/systems/contracts.ts
+index 37a4d508..9580902c 100644
+--- a/src/engine/systems/contracts.ts
++++ b/src/engine/systems/contracts.ts
+@@ -57,7 +57,9 @@ import { inSaveMoney } from './banking';
+ import { payeeAccount } from './cash';
+ import { recordWages } from './earnings';
+ import { businessDaysOn } from './permission';
+-import { PAY_KIND, projectOf, weekOf, withholdingOn } from './propay';
++import { PAY_KIND, owedAgreement, projectOf, weekOf, withholdingOn } from './propay';
++import { coveredUnder, outsideWords } from './representation';
++import { agencyOf, agentById } from '../content/agents';
+ import { seasonNumber } from './series';
+ import { KIND_WORDS, counted, overtimeHours } from './projobs';
+ import { dubDaysOf, formatOf, promoFor, promoTerm } from './workflow';
+@@ -201,8 +203,11 @@ export function contractFor(sim: Simulation, e: Engagement, offer: NonNullable<i
+     clauses.push({ kind: 'episodes', ordered: s.episodes, guaranteed: t.schedule.guaranteed, expected: t.schedule.expected, daysEach: s.daysEach, numbers: extra.season.guaranteed, further: extra.season.further.map((n) => ({ n, status: 'pending' as const })) });
+   }
+   if (s && extra.option) clauses.push({ kind: 'option', season: seasonNumber(sim, s, extra.option.year), year: extra.option.year, by: extra.option.by, raise: OPTION_RAISE, status: 'open' });
+-  // The workflow's rules last (from 2026-10-24, brief 25's Module 5, `workflowRules`).
++  // The workflow's rules last (from 2026-10-24, brief 25's Module 5, `workflowRules`), and voice-over's commission by the
++  // agreement it's made under (from 2026-10-25, brief 27, `voiceCommission`).
+   clauses.push(...workflowRules(t));
++  const voiceRule = voiceCommission(sim, e, t);
++  if (voiceRule) clauses.push(voiceRule);
+   // A promotional film for the release, and what it pays (from 2026-10-25, brief 27's loop 34, `promoTerm`).
+   const estimate = e.pay.reduce((n, p) => n + (p.deferred ? 0 : p.promised), 0);
+   if (promoFor(t)) clauses.push({ kind: 'rule', id: 'promo', words: promoTerm(t, estimate) });
+@@ -236,10 +241,39 @@ function workflowRules(t: ProjectTemplate): ContractClause[] {
+   if (t.schedule.kind === 'shoot' && t.schedule.stuntDays?.length) out.push({ kind: 'rule', id: 'stunts', words: 'A stunt is done by you only with your consent, given before it, and with a qualified stunt coordinator there and consulted, as the agreement sets. Without your consent the stunt double does it.' });
+   if (t.intimacy) out.push({ kind: 'rule', id: 'intimacy', words: `The part has ${t.intimacy.words}. It’s shot on a closed set with an intimacy coordinator, only with your written consent describing it; you can withdraw consent until it’s shot, and a body double does it then, as the agreement allows. Declining it doesn’t cost you the part, the pay or the credit.` });
+   if (fmt.looping) out.push({ kind: 'rule', id: 'looping', words: `The production can recall you within ${fmt.looping} months of the wrap to loop: a four-hour session paid half a day, as the agreement sets.` });
+-  if (voiceOnlyFormat(fmt.workflow)) out.push({ kind: 'rule', id: 'voice-over', words: 'Voice-over work is outside an agent’s agreement, so no commission is owed on it.' });
+   return out;
+ }
+ 
++/** The person whose career holds an engagement: the player's, in play, and anyone's whose record has it. */
++const holderOf = (sim: Simulation, e: Engagement): Person | undefined =>
++  (sim.player.pro?.engagements.includes(e) ? sim.player : Object.values(sim.universe.people).find((p) => p.pro?.engagements.includes(e)));
++
++/**
++ * Whether commission is owed on voice-over work, said on its contract, by the agreement it's made under as the pay reads
++ * it (`owedAgreement`, then `coveredUnder`, the rule `commissionOn` applies): covered where the agreement's terms take in
++ * voice-over (a voice-over department's, or one an office agreed to add it to), and otherwise not, saying why. Made
++ * unrepresented, there's no agreement to speak of and no clause, as on any other work.
++ *
++ * From 2026-10-24 (brief 25's Module 5) to 2026-10-25 every voice contract said "Voice-over work is outside an agent’s
++ * agreement, so no commission is owed on it", one rule for every agreement. Brief 27 gave each agreement its own terms and
++ * left the sentence standing, so a voice part booked under an agreement that covers voice-over said no commission was
++ * owed while the pay took ten percent of it (found by the review of 2026-10-25).
++ */
++function voiceCommission(sim: Simulation, e: Engagement, t: ProjectTemplate): ContractClause | undefined {
++  if (!voiceOnlyFormat(formatOf(t).workflow)) return undefined;
++  const person = holderOf(sim, e);
++  const owed = person ? owedAgreement(person, e) : undefined;
++  if (!owed) return undefined;
++  const agent = agentById(owed.agreement.agentId);
++  const agency = agent ? agencyOf(agent).name : 'your agency';
++  return {
++    kind: 'rule', id: 'voice-over',
++    words: coveredUnder(owed.agreement, t)
++      ? `Your agreement with ${agency} covers voice-over work, so commission is owed on this work as on the rest it covers.`
++      : `No commission is owed on this work: ${outsideWords(owed.agreement, t, agency)}.`,
++  };
++}
++
+ const voiceOnlyFormat = (w: string): boolean => w === 'voice' || w === 'dubbing' || w === 'narration';
+ 
+ /** The raise an option on a next season carries (ASSUMPTION, the game's terms). */
+diff --git a/src/engine/systems/pro.ts b/src/engine/systems/pro.ts
+index a6ac2c78..7e1abe60 100644
+--- a/src/engine/systems/pro.ts
++++ b/src/engine/systems/pro.ts
+@@ -45,6 +45,7 @@
+ import type { SimRun } from './charts';
+ import type { AwardEntry, FestivalEntry } from './awards';
+ import type { GuildEntry } from './actorawards';
++import type { AgreementAsk, AgreementDeal } from './representation';
+ import type { Simulation } from '../core/simulation';
+ import { CommandError } from '../core/simulation';
+ import type { Person } from '../domain/model';
+@@ -95,7 +96,10 @@ export type ProEventKind =
+   | 'ask-lapsed'
+   // A trip for work abroad, step by step (from 2026-10-23, the owner's brief 25, `systems/worktrip.ts`), and its work
+   // visa applied for and decided.
+-  | 'departed' | 'arrived' | 'checked-in' | 'checked-out' | 'home' | 'missed-flight' | 'visa-applied' | 'visa-granted';
++  | 'departed' | 'arrived' | 'checked-in' | 'checked-out' | 'home' | 'missed-flight' | 'visa-applied' | 'visa-granted'
++  // The actor's ask for different terms on an offered agreement, and the office's answer (from 2026-10-25, the owner's
++  // brief 27, loop 8, `systems/representation.ts`).
++  | 'terms-asked' | 'terms-agreed' | 'terms-kept';
+ 
+ /** One event in a history: a stable id, when, what, its words as the player reads them, and what it's about. */
+ export interface ProEvent {
+@@ -157,8 +161,11 @@ export interface ProCredit {
+ 
+ /** From 2026-10-24 (brief 27, Part 7) a voice demo too: recordings of the voice alone, for voice casting, which a reel can't hold. */
+ export type MaterialKind = 'headshot' | 'resume' | 'reel' | 'demo';
+-/** What an agent's office can ask for: never a voice demo, since no agent's department in the game covers voice work. */
+-export type AgentMaterial = Exclude<MaterialKind, 'demo'>;
++/**
++ * What an agent's office can ask for. Until 2026-10-25 never a voice demo, since no agent's department in the game covered
++ * voice work; from then a voice-over department's office asks for one (brief 27, `systems/proagent.ts`'s `requestable`).
++ */
++export type AgentMaterial = MaterialKind;
+ 
+ /** One recorded piece on a reel, copied in when it's cut, so it reads the same after its source has gone from the record. */
+ export interface MaterialPiece {
+@@ -223,6 +230,12 @@ export interface AgentRelation extends HasHistory {
+    * 2026-10-21): kept whole, so a job can refer the player only once however long the history runs.
+    */
+   referrals?: { engagementId: ProId; by: string; job: string; at: Instant; band?: Band }[];
++  /**
++   * The introductions at a festival where the actor's film screened (`introduceAtFestival`, `systems/representation.ts`,
++   * from 2026-10-25, brief 27), one for each festival entry: the film it showed is work the office has to go on. Until the
++   * review of 2026-10-25 each kept the moment too, which nothing read; the introduction's own is `via.at`.
++   */
++  festivals?: { entryId: ProId; creditId: ProId; festival: string }[];
+   /**
+    * The reasons for the last decision, as Why It Went This Way shows them (`systems/proagent.ts`, from 2026-10-21): copied
+    * in when it's made, so they read as they were after the record has moved on.
+@@ -246,6 +259,15 @@ export interface Agreement {
+   endsAt?: Instant;
+   endedAt?: Instant;
+   endedHow?: EndedHow;
++  /**
++   * What it covers, where and for how long, each version kept, the first as offered and a second where the office agreed
++   * to the actor's ask (from 2026-10-25, the owner's brief 27, Part 6 and loop 8; `systems/representation.ts`). An older
++   * save's agreement has none and reads as the words it was offered with (`dealOf`): its department's work in the US for
++   * a year.
++   */
++  deal?: AgreementDeal;
++  /** The actor's one ask for different terms while it was offered, and the office's answer (from 2026-10-25). */
++  ask?: AgreementAsk;
+ }
+ 
+ export type OpportunityStatus =
+diff --git a/src/engine/systems/projobs.ts b/src/engine/systems/projobs.ts
+index 2f29b17f..b6ce113c 100644
+--- a/src/engine/systems/projobs.ts
++++ b/src/engine/systems/projobs.ts
+@@ -94,6 +94,7 @@ import { EQUITY_JOINED, PAY_KIND, SAG_QUALIFIES, dropPaydays, eligibilityRead, n
+ import { TRIP, US_RULES, abroadRead, awayOn, bookTrip, extendTrip, needsTrip, planTrip, registerWorkTrips, tripOf, tripSpans, whereAt, whereWords, windowOf as tripWindow } from './worktrip';
+ import { weatherOn, type DayWeather } from './weather';
+ import { AGENT_TIMES, MEETING_KIND, TRAVEL_MINUTES } from './proagent';
++import { coveredUnder, outsideWords, submitsFor } from './representation';
+ import { companiesAs, productionById } from '../content/catalog';
+ import { episodeDays, episodesFrom, seasonYearAt, seriesById } from '../content/series';
+ import { clauseOf, contractFor, entitle, overtimeOf, paysOvertime, OPTION_RAISE } from './contracts';
+@@ -582,7 +583,12 @@ export function fieldOf(t: ProjectTemplate): AgentField {
+   return 'film';
+ }
+ 
+-/** Whether an agent's department covers a project's field: Television, Film, Off-Broadway and Regional Theater among his. */
++/**
++ * Whether an agent's agency's own department covers a project's field: Television, Film, Off-Broadway and Regional Theater
++ * among the game's own agency's. Its other departments aren't read (from 2026-10-25, brief 27, the voice-over department):
++ * its one reader, `submitsFor` (`systems/representation.ts`), answers a voice part by the agreement's cover alone, and a
++ * voice-over agreement covers nothing on camera or on stage, so a voice-over agent's is never asked.
++ */
+ export function inScope(agentId: string, t: ProjectTemplate): boolean {
+   const agent = agentById(agentId);
+   return !!agent && agencyOf(agent).department.fields.includes(fieldOf(t));
+@@ -668,7 +674,9 @@ export function postingTimes(from: Instant, to: Instant): Instant[] {
+  * its office casts through agents only and nobody represents them.
+  */
+ export function reachOf(t: ProjectTemplate, agreement: Agreement | undefined): 'agent' | 'open' | undefined {
+-  if (agreement && t.access.agent && inScope(agreement.agentId, t)) return 'agent';
++  // What the agreement covers, by its own terms (from 2026-10-25, brief 27, `submitsFor`): until then the department's
++  // fields alone, so an agent put the actor up for work abroad its agreement left out.
++  if (agreement && t.access.agent && submitsFor(agreement, t)) return 'agent';
+   return t.access.open ? 'open' : undefined;
+ }
+ 
+@@ -1740,7 +1748,13 @@ export const askedAmount = (amount: Money): Money => Math.round((amount * (1 + N
+ export function askMoreRefusal(sim: Simulation, person: Person, o: Opportunity | undefined): string | undefined {
+   if (!o || o.status !== 'offered' || !o.offer) return 'There’s no offer standing.';
+   if (o.offer.asked) return o.offer.asked.answer ? `${agentFor(o)?.name ?? 'Your agent'} asked once already, on ${formatDate(o.offer.asked.at, NY)}.` : `${agentFor(o)?.name ?? 'Your agent'} has asked; the answer comes on ${formatWeekdayDate(o.offer.asked.answerAt, NY)} at ${formatTime(o.offer.asked.answerAt, NY)}.`;
+-  if (!activeAgreement(person, sim.now)) return 'An agent asks for more on your behalf, and none represents you, so the offer is as it stands.';
++  const agreement = activeAgreement(person, sim.now);
++  if (!agreement) return 'An agent asks for more on your behalf, and none represents you, so the offer is as it stands.';
++  // Work the agreement doesn't cover is the actor's own (from 2026-10-25, brief 27, `coveredUnder`).
++  if (!o.agreementId && !coveredUnder(agreement, projectOf(o))) {
++    const agent = agentById(agreement.agentId);
++    return `${agent?.name ?? 'Your agent'} doesn’t negotiate this one: ${outsideWords(agreement, projectOf(o), agent ? agencyOf(agent).name : 'your agency')}, so the offer is as it stands.`;
++  }
+   if (o.offer.amount === undefined) return 'The pay is deferred, so there’s no figure to ask more of.';
+   return undefined;
+ }
+@@ -1755,7 +1769,9 @@ function makeOffer(sim: Simulation, person: Person, o: Opportunity): void {
+   // He handles the offer where an agreement's in force, the actor's own submission too: covered work is his (the
+   // agreement's Exclusive and What The Agent Does, `AGREEMENT_TERMS`).
+   const agreement = activeAgreement(person, sim.now);
+-  if (agreement && !o.agreementId) { o.agentId = agreement.agentId; o.agreementId = agreement.id; }
++  // Only work the agreement covers (from 2026-10-25, brief 27, `coveredUnder`): until then every offer while represented,
++  // so the agent negotiated scale plus ten on a dub its agreement left out and took no commission on it.
++  if (agreement && !o.agreementId && coveredUnder(agreement, t)) { o.agentId = agreement.agentId; o.agreementId = agreement.id; }
+   // Represented, a SAG-AFTRA offer is scale plus 10%, so his commission comes out of the ten (`negotiatedAmount`,
+   // `systems/propay.ts`; wired at the merge, 2026-10-21).
+   if (o.offer.amount !== undefined) o.offer.amount = negotiatedAmount(o.offer.amount, t.union, o.agreementId !== undefined);
+diff --git a/src/engine/systems/propay.ts b/src/engine/systems/propay.ts
+index 0cdfbaed..44c52502 100644
+--- a/src/engine/systems/propay.ts
++++ b/src/engine/systems/propay.ts
+@@ -19,8 +19,11 @@
+  * its postings, in the save's currency (`inSaveMoney`).
+  *
+  * **Commission, only when owed** (`commissionOn`), each rule from `representation.md`:
+- * - **None unrepresented**, and none on work the agreement doesn't cover: its scope is stage, film and television in the
+- *   United States (`AGREEMENT_TERMS`, a simulation term; commercials and voice-over sit elsewhere).
++ * - **None unrepresented**, and none on work the agreement doesn't cover. Until 2026-10-25 that was one scope for every
++ *   agreement, stage, film and television in the United States (`AGREEMENT_TERMS`, a simulation term; commercials and
++ *   voice-over sat elsewhere). From then it's each agreement's own terms (`coveredUnder`, `systems/representation.ts`,
++ *   brief 27): that scope as a legit department first offers it, voice-over as a voice-over department does, and
++ *   voice-over or the UK and Australia where an office agreed to add them.
+  * - **Equity:** 5% on a weekly salary of $525 or less, 10% above (S28). Its rehearsal period at minimum salary,
+  *   commissionable at 5% under Tier II (S28), isn't told apart: the game's pay doesn't split rehearsal weeks from
+  *   performance weeks. None on the Equity-minimum part of per diem (S28): no engagement pays per diem.
+@@ -103,7 +106,7 @@ import { homeOf, recordWages, stateOf, yearOf } from './earnings';
+ import { nonresidentFor, connecticutTax } from './taxreturn';
+ import { inTheBank, owe, payFromBank } from './spending';
+ import { contributionOn, lateDays } from './contracts';
+-import { voiceOnly } from './workflow';
++import { coveredUnder, uncoveredWords } from './representation';
+ import { businessDaysOn, f1Of, usWorkAuthorized, weeklyHours } from './permission';
+ import { WORK_RULES } from '../content/workrules';
+ import { addYears, citizenOf, documentsOf } from './documents';
+@@ -152,7 +155,11 @@ export const BILLS_KEPT = 12;
+  */
+ export const SAG_QUALIFIES: readonly ProjectKind[] = ['network-drama', 'network-comedy', 'low-budget', 'overseas-feature'];
+ 
+-/** What an agreement's scope covers: stage, film and television (`AGREEMENT_TERMS`, a simulation term), in the US. */
++/**
++ * The media a legit scope covers: stage, film and television (`AGREEMENT_TERMS`, a simulation term). Until 2026-10-25
++ * every agreement's, in the US; from then each agreement's territory is its own, and voice-over a scope of its own
++ * (`coveredUnder`, `systems/representation.ts`).
++ */
+ export const COVERED_MEDIA: readonly ProMedium[] = ['stage', 'film', 'television'];
+ 
+ /** SAG-AFTRA's joining: the initiation fee and half a year's base dues (S20, a search engine's copy). */
+@@ -286,14 +293,11 @@ export function owedAgreement(person: Person, e: Engagement): { agreement: Agree
+   return tail ? { agreement: tail, how: 'tail' } : undefined;
+ }
+ 
+-/**
+- * Whether an agreement covers a project's work: stage, film and television, in the United States, and from 2026-10-24
+- * (brief 25's Module 5) not voice-over, which the agreement's What It Leaves Out says an agency handles in another
+- * department (`AGREEMENT_TERMS`): an animated part, a dub, a narration.
+- */
+-export const coveredWork = (project: Pick<ProjectTemplate, 'medium' | 'place'> & Partial<Pick<ProjectTemplate, 'format'>>): boolean =>
+-  COVERED_MEDIA.includes(project.medium) && (CITIES.get(project.place.cityId)?.countryId ?? (project.place.cityId.startsWith('us-') ? 'us' : '')) === 'us'
+-  && !(project.format && voiceOnly({ format: project.format }));
++// `coveredWork`, whether an agreement covered a project's work (stage, film and television in the United States, and from
++// 2026-10-24, brief 25's Module 5, not voice-over), went on 2026-10-25 (brief 27): it was one rule for every agreement,
++// and each agreement keeps its own terms from then, which the commission reads (`coveredUnder`, `systems/representation.ts`).
++// Those are its rule for a legit department's first terms; a voice-over department's, or voice-over or work abroad an
++// office agreed to add, cover more.
+ 
+ export interface Commission {
+   /** The agreement it's owed under, and the agency's name, where it's owed. */
+@@ -356,7 +360,7 @@ export function commissionOn(sim: Simulation, person: Person, e: Engagement, p:
+   if (!owed || !project) return { how: 'unrepresented', rule: 'none', amount: 0, rate: 0, words: 'No commission: you weren’t represented when you made this contract.' };
+   const agent = agentById(owed.agreement.agentId);
+   const agency = agent ? agencyOf(agent).name : 'your agency';
+-  if (!coveredWork(project)) return { agreement: owed.agreement, agency, how: 'uncovered', rule: 'none', amount: 0, rate: 0, words: voiceOnly(project) ? `No commission: your agreement with ${agency} leaves out voice-over work, and this is that.` : `No commission: your agreement with ${agency} covers stage, film and television work in the US, and this isn’t that.` };
++  if (!coveredUnder(owed.agreement, project)) return { agreement: owed.agreement, agency, how: 'uncovered', rule: 'none', amount: 0, rate: 0, words: uncoveredWords(owed.agreement, project, agency) };
+   const how = owed.how === 'tail' ? 'tail' : termEnd(owed.agreement) <= at ? 'continuing' : 'term';
+   const still = how === 'continuing' ? ` It’s still owed after your agreement with ${agency} ended, because you made the contract while it ran.` : how === 'tail' ? ` It’s owed after your agreement ended, because ${agency} passed on the offer while it ran and you accepted it within ${AGREEMENT.tailDays} days.` : '';
+   const ten = AGREEMENT.commission;
+diff --git a/src/engine/systems/reference.ts b/src/engine/systems/reference.ts
+index 679d8216..7065ac2a 100644
+--- a/src/engine/systems/reference.ts
++++ b/src/engine/systems/reference.ts
+@@ -481,7 +481,9 @@ function agencyPage(person: Person, id: string): RefPage | undefined {
+   const name = a?.name ?? record!.name;
+   const facts: RefFact[] = [];
+   if (a) {
+-    facts.push(fact('Office', a.office.city, a.real ? 'verified' : 'simulated'), fact('Department', `${a.department.called}, also called ${a.department.alsoCalled}`, a.real ? 'verified' : 'simulated'), fact('Submissions', a.policy.words, a.real ? 'verified' : 'simulated'));
++    // Its other departments too (from 2026-10-25, brief 27's review: until then the page gave only the legit department,
++    // and listed the voice-over agent under it).
++    facts.push(fact('Office', a.office.city, a.real ? 'verified' : 'simulated'), ...[a.department, ...(a.otherDepartments ?? [])].map((d) => fact('Department', `${d.called}, also called ${d.alsoCalled}`, a.real ? 'verified' : 'simulated')), fact('Submissions', a.policy.words, a.real ? 'verified' : 'simulated'));
+   }
+   if (record) {
+     facts.push(fieldFact('About', record.about, (v) => v));

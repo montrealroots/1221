@@ -1,0 +1,30 @@
+From 9ff168262df18ca947abe5f1ac813f05060cb87c Mon Sep 17 00:00:00 2001
+From: Claude <noreply@anthropic.com>
+Date: Sun, 25 Oct 2026 20:43:24 +0000
+Subject: [PATCH 6/6] The release decider says the routes its draw now decides
+
+`pro.release`'s stream goes on past the late, streaming and shelved shares into `routeOf` since the routes were built, so
+its description listing only those three stopped being the whole of what the draw decides.
+
+Co-Authored-By: Claude Opus 5.5 <noreply@anthropic.com>
+Claude-Session: https://claude.ai/code/session_01HBdcuKzBBMbipfFQSByALG
+---
+ src/engine/decided.ts | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+
+diff --git a/src/engine/decided.ts b/src/engine/decided.ts
+index e4b02570..8b25242c 100644
+--- a/src/engine/decided.ts
++++ b/src/engine/decided.ts
+@@ -897,7 +897,7 @@ defineDecider<{ sim: Simulation; first: number }, string>({
+ 
+ defineDecider<{ sim: Simulation; first: number; after: number }, string>({
+   id: 'pro.release',
+-  decides: 'A slate production’s way out after the wrap (RELEASE_FATE): on time, held back months, sent to streaming instead of cinemas, or shelved, by the way its format comes out.',
++  decides: 'A slate production’s way out after the wrap (RELEASE_FATE): on time, held back months, sent to streaming instead of cinemas, or shelved, and from 2026-10-25 a limited release, another distributor’s later date or a film abroad first (routeOf), by the way its format comes out.',
+   drawnIn: 'src/engine/systems/projobs.ts',
+   reads: {
+     first: (o, t) => ({ ...o, first: Math.round(t * 100) }),
+-- 
+2.43.0
+

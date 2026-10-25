@@ -1,0 +1,165 @@
+From f815aee1e281220bfdd9dd9c535fa3e3a108d79e Mon Sep 17 00:00:00 2001
+From: Claude <noreply@anthropic.com>
+Date: Sun, 25 Oct 2026 20:33:08 +0000
+Subject: [PATCH 6/9] The fixes' claims each have a test that fails without
+ them, a real agent's panel and an earlier agreement included
+
+Mutation-testing the review's fixes left one claim unheld: a voice contract's clause read from the first agreement on
+the record passed, since every life had only the one in force. The offer twins now carry an earlier agreement that ended
+a month before, so a clause that reads anything but the agreement the work is made under (owedAgreement) says the wrong
+thing. Two more claims had no test at all: the Terms panel's line that a real agent's answer is the game's (a real
+agent's offer, drawn), and the guide's example and end of term (pinned to TERMS and the factors its setup names).
+
+Co-Authored-By: Claude Opus 5.5 <noreply@anthropic.com>
+Claude-Session: https://claude.ai/code/session_01HBdcuKzBBMbipfFQSByALG
+---
+ tests/b27-representation-screen.test.ts | 32 +++++++++++++++++--------
+ tests/b27-representation.test.ts        | 28 ++++++++++++++++++----
+ 2 files changed, 45 insertions(+), 15 deletions(-)
+
+diff --git a/tests/b27-representation-screen.test.ts b/tests/b27-representation-screen.test.ts
+index 7e891b49..3e20dd9b 100644
+--- a/tests/b27-representation-screen.test.ts
++++ b/tests/b27-representation-screen.test.ts
+@@ -16,7 +16,7 @@ import type { Simulation } from '@/engine/core/simulation';
+ import { MS_DAY, MS_HOUR } from '@/engine/core/time';
+ import { rngFor } from '@/engine/core/rng';
+ import { agentById } from '@/engine/content/agents';
+-import { TERMS, askChance, chanceTenths } from '@/engine/systems/representation';
++import { TERMS, askChance, chanceTenths, realTermsWords } from '@/engine/systems/representation';
+ import { relationOf, signRefusal } from '@/engine/systems/proagent';
+ import { GUIDE_BY_ID } from '@/engine/content/guide';
+ import { AGENT, SURE, finishedJob, graduate, played, portfolio, reel, twin } from './fakes/b20-career';
+@@ -34,6 +34,7 @@ vi.mock('@/app/game-context', () => {
+ const { WorkspaceRouter } = await import('@/ui/workspaces/WorkspaceRouter');
+ 
+ const CELIA = agentById('celia-brannock')!;
++const PATACK = agentById('dan-patack')!;
+ const promise = (entry: string, to: string) => GUIDE_BY_ID[entry]!.connections.find((c) => c.to === to)!.why;
+ const PERSON = 'person_000001';
+ 
+@@ -46,24 +47,27 @@ function drawn(sim: Simulation, agent = AGENT.id): { html: string; shown: string
+ }
+ const button = (html: string, label: string) => [...html.matchAll(/<button([^>]*)>([^<]*)(?:<span class="lock-word">Locked<\/span>)?<\/button>/g)].filter((m) => m[2] === label).map((m) => ({ disabled: m[1]!.includes('disabled=""'), title: /title="([^"]*)"/.exec(m[1]!)?.[1]?.replace(/&quot;/g, '"') }));
+ 
+-/** TEST SETUP: the first life of a prefix whose office offers an agreement and agrees to any ask, read from the game's draws. */
+-function offeredAgreeing(prefix: string): Simulation {
++/**
++ * TEST SETUP: the first life of a prefix whose office offers an agreement and agrees to any ask, read from the game's draws
++ * (for another agent, any offer, whatever its answer would be).
++ */
++function offeredAgreeing(prefix: string, agentId: string = AGENT.id): Simulation {
+   for (let i = 0; i < 20_000; i += 1) {
+     const seed = `${prefix}-${i}`;
+-    const d = (step: 'interest' | 'offer') => rngFor(seed, 'pro.agent', PERSON, AGENT.id, 'approach-1', step).next();
++    const d = (step: 'interest' | 'offer') => rngFor(seed, 'pro.agent', PERSON, agentId, 'approach-1', step).next();
+     if (!(d('interest') < SURE.meet && d('offer') < SURE.offer)) continue;
+     const sim = graduate(seed);
+-    sim.must({ kind: 'pro.agent_notice', payload: {} });
++    sim.must({ kind: 'pro.agent_notice', payload: { agentId } });
+     portfolio(sim);
+     const job = finishedJob(sim, 'strong');
+     sim.must({ kind: 'pro.update_resume', payload: {} });
+-    sim.must({ kind: 'pro.agent_check', payload: {} });
+-    sim.must({ kind: 'pro.ask_referral', payload: { engagementId: job.id } });
++    sim.must({ kind: 'pro.agent_check', payload: { agentId } });
++    sim.must({ kind: 'pro.ask_referral', payload: { agentId, engagementId: job.id } });
+     reel(sim);
+-    sim.must({ kind: 'pro.send_materials', payload: {} });
+-    for (let k = 0; k < 60 && relationOf(sim.player, AGENT.id)!.stage !== 'offered'; k += 1) played(sim, sim.now + MS_DAY);
++    sim.must({ kind: 'pro.send_materials', payload: { agentId } });
++    for (let k = 0; k < 60 && relationOf(sim.player, agentId)!.stage !== 'offered'; k += 1) played(sim, sim.now + MS_DAY);
+     const a = sim.player.pro!.agreements.find((x) => x.status === 'offered')!;
+-    if (rngFor(seed, 'pro.agent_terms', PERSON, AGENT.id, a.id).next() < TERMS.least) return sim;
++    if (agentId !== AGENT.id || rngFor(seed, 'pro.agent_terms', PERSON, AGENT.id, a.id).next() < TERMS.least) return sim;
+   }
+   throw new Error('no life');
+ }
+@@ -101,6 +105,14 @@ describe('Asking For Different Terms, on the Representation tab', () => {
+     expect(drawn(sim).shown).toContain('Where (The Game’s Own Term) Work anywhere in the United States, and in the UK and Australia, where the game has work abroad.');
+   }, 300_000);
+ 
++  it('PLAYER JOURNEY: a real agent’s offer: the panel says the game invents whether the office agrees, since the agency’s pages give no terms; the game’s own agent’s says nothing of it', () => {
++    const sim = offeredAgreeing('rep-screen-real', PATACK.id);
++    const shown = drawn(sim, PATACK.id).shown;
++    expect(shown).toContain(`Ask To Add Work Abroad: work in the UK and Australia to be covered too. The game puts the chance the office agrees at ${chanceTenths(askChance(sim, sim.player, PATACK, 'abroad'))}.`);
++    expect(shown).toContain(`The commission is the unions’ and New York’s rule, and no ask changes it. ${realTermsWords(PATACK)}`);
++    expect(drawn(offeredAgreeing('rep-screen-own')).shown).not.toContain('pages say nothing of the terms');
++  }, 300_000);
++
+   it('PLAYER JOURNEY: Celia Brannock’s panel gives her voice-over department, her office’s own rule, its one way in, and the voice demo her approach sends', () => {
+     const sim = graduate('rep-screen-celia');
+     sim.must({ kind: 'pro.agent_notice', payload: { agentId: CELIA.id } });
+diff --git a/tests/b27-representation.test.ts b/tests/b27-representation.test.ts
+index 95e44c3f..91abaa2d 100644
+--- a/tests/b27-representation.test.ts
++++ b/tests/b27-representation.test.ts
+@@ -305,8 +305,10 @@ describe('what the terms cover, read by the commission and the agent’s submiss
+ 
+ describe('the offers an agent handles, by what the agreement covers', () => {
+   it('PLAYER JOURNEY: a voice part offered without an audition while the agreement leaves voice-over out: the actor’s own, at scale, with no ask for more, and its contract says no commission is owed, as the pay takes none; with voice-over covered, a voice part from the same office comes through the agent at scale plus ten, and its contract says commission is owed, as the pay takes it', () => {
+-    // TEST SETUP: represented by Thomas Ashgrove under an agreement as the agent's builder writes one: his first terms.
++    // TEST SETUP: represented by Thomas Ashgrove under an agreement as the agent's builder writes one: his first terms; and
++    // an earlier agreement with him that ended a month ago, which the contracts below don't read.
+     const legit = graduate('rep-offers');
++    endedBefore(legit);
+     represent(legit);
+     const own = directVoiceOffer(legit, 'open');
+     const scale = payTermsOf(own).each!;
+@@ -318,13 +320,14 @@ describe('the offers an agent handles, by what the agreement covers', () => {
+     expect(commissionOn(legit, legit.player, ownWork, ownWork.pay[0]!, ownWork.pay[0]!.promised)).toMatchObject({ how: 'uncovered', amount: 0, words: 'No commission: your agreement with Halberd Talent leaves out voice-over work, and this is that.' });
+     // THE TWIN: the same life with voice-over covered (TEST SETUP: the agreement's terms as the office's agreement to the ask leaves them).
+     const voiced = graduate('rep-offers');
++    endedBefore(voiced);
+     const a = represent(voiced);
+     a.deal = { versions: [{ version: 1, at: a.offeredAt, scope: ['legit'], territory: ['us'], termDays: 365 }, { version: 2, at: a.offeredAt, scope: ['legit', 'voice'], territory: ['us'], termDays: 365 }] };
+     const through = directVoiceOffer(voiced, 'agent');
+     expect([through.via, through.agreementId]).toEqual(['agent', a.id]);
+     expect(through.offer!.amount).toBe(Math.round(payTermsOf(through).each! * 1.1));
+     expect(askMoreRefusal(voiced, voiced.player, through)).toBeUndefined();
+-    // Accepted, its contract says commission is owed, and the pay takes it.
++    // Accepted, its contract says commission is owed, and the pay takes it: the agreement it's made under, not the earlier one.
+     const throughWork = acceptedWork(voiced, through.id);
+     expect(voiceClause(throughWork)).toBe('Your agreement with Halberd Talent covers voice-over work, so commission is owed on this work as on the rest it covers.');
+     const owed = commissionOn(voiced, voiced.player, throughWork, throughWork.pay[0]!, throughWork.pay[0]!.promised);
+@@ -490,12 +493,22 @@ describe('one agent at a time, whatever each covers', () => {
+   });
+ });
+ 
++describe('the guide on the terms', () => {
++  it('states the ask’s result as a chance, worked from the game’s own figures, and the agreement’s end by its term, whatever its length', () => {
++    const example = GUIDE_BY_ID['career.agreement-terms']!.example!;
++    expect(example.setup).toBe('Thomas Ashgrove has offered you an agreement, and five of the factors are at the bar.');
++    expect(example.result).toBe(`The game puts the chance at ${chanceTenths(termsChance('voice', 5, GATE))}. If the office agrees, What It Covers adds voice-over work, and a voice part can come to you through your agent; if it doesn’t, the terms stay as offered.`);
++    expect(GUIDE_BY_ID['career.agreement']!.short).toContain('or when its term is up.');
++    expect(GUIDE_BY_ID['career.agreement']!.short).not.toContain('its year is up');
++  });
++});
++
+ describe('the slate’s reach, as its decider samples it', () => {
+   it('samples a represented life’s voice parts as the game reaches them under a legit agreement: openly, not through the agent', () => {
+-    const d = deciders().find((x) => x.id === 'pro.slate_reach')!;
+-    const input = (d.sample as (seed: number) => { sim: Simulation; represented: number })(1);
++    const d = deciders().find((x) => x.id === 'pro.slate_reach')! as unknown as { sample: (seed: number) => { sim: Simulation; represented: number }; decide: (input: unknown) => string };
++    const input = d.sample(1);
+     expect(input.represented).toBe(1);
+-    const weeks = String((d.decide as (i: unknown) => string)(input)).split(' ');
++    const weeks = d.decide(input).split(' ');
+     const sim = input.sim;
+     let voiced = 0;
+     weeks.forEach((week, n) => {
+@@ -556,6 +569,11 @@ function acceptedWork(sim: Simulation, opportunityId: string): Engagement {
+   return sim.player.pro!.engagements.find((e) => e.id === r.engagementId)!;
+ }
+ 
++/** TEST SETUP: an agreement with Thomas Ashgrove, on his first terms, that ended by agreement a month ago, as the builder leaves one. */
++function endedBefore(sim: Simulation): void {
++  sim.player.pro!.agreements.push({ id: 'ended-before', agentId: AGENT.id, offeredAt: sim.now - 70 * MS_DAY, standsUntil: sim.now - 56 * MS_DAY, status: 'ended', terms: termsFor(dealOf({ agentId: AGENT.id, offeredAt: sim.now - 70 * MS_DAY } as Agreement)), signedAt: sim.now - 60 * MS_DAY, endsAt: sim.now + 305 * MS_DAY, endedAt: sim.now - 30 * MS_DAY, endedHow: 'agreement' });
++}
++
+ /** What a voice part's contract says of commission, as the Work tab shows its clauses. */
+ const voiceClause = (e: Engagement): string | undefined => e.contract!.clauses.flatMap((c) => (c.kind === 'rule' && c.id === 'voice-over' ? [c.words] : []))[0];
+ 
+-- 
+2.43.0
+
