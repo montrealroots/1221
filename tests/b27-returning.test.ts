@@ -108,7 +108,12 @@ describe('a recurring part grown at its option', () => {
       if (optionDrawn(sim, e) && optionDrawn(sim, asWorking) && u < growChance('strong', ratio) && u >= growChance('working', ratio) && !work.includes('exceptional')) seed = `b27-returning-grow-${k}`;
     }
     expect(seed).not.toBe('');
+    // The season's audience is read: over its outlet's bar the part grows more often, under it less, and a played season's
+    // audience stands somewhere other than exactly at the bar.
+    expect(growChance('strong', 1.5)).toBeGreaterThan(growChance('strong', 1));
+    expect(growChance('strong', 0.5)).toBeLessThan(growChance('strong', 1));
     const { sim, e } = playedPart(seed, WHITLOCK.id, 'strong');
+    expect(audienceRatio(sim, CALLOWAY, 2026)).not.toBe(1);
     played(sim, at(2027, 6, 1));
     const option = clauseOf(e.contract, 'option')!;
     const old = sim.player.pro!.opportunities.find((x) => x.id === e.opportunityId)!.offer!.amount!;
