@@ -20,9 +20,10 @@ import { AXES, APPROACH_EFFECT } from '@/engine/content/approaches';
 import type { Axis, AxisValue } from '@/engine/content/material';
 import { keepProject, productionsOf } from '@/engine/systems/slate';
 import type { Opportunity } from '@/engine/systems/pro';
-import { bandOfQuality } from '@/engine/systems/evaluation';
+import { bandOfQuality, replay } from '@/engine/systems/evaluation';
+import { TASK_PROFILES } from '@/engine/content/tasks';
 import { AUDITION_KIND, TAPE_DUE_KIND, chanceOf, fitOf, travels, tripMinutes, writtenFor } from '@/engine/systems/projobs';
-import { NOTE_KIND, TAKES, noteFor, sceneOfPart } from '@/engine/systems/offers';
+import { NOTE_KIND, TAKES, followedPrep, noteFor, remembers, roundWords, sceneOfPart, takeWords } from '@/engine/systems/offers';
 import { axisSuitability } from '@/engine/systems/interpretation';
 import { answerStop, stopChoices, type Stop } from '@/engine/world/clock';
 import { graduate, played, prepareAll, reload, tend } from './fakes/career-world';
@@ -134,6 +135,8 @@ describe('a self-tape’s takes', () => {
     played(twin, r.at + 2 * MS_DAY);
     const fit = fitOf(sim.player, t).fit;
     expect(r.casting!.chance).toBe(chanceOf(r.band!, fit, t.kind, 'callback'));
+    // Why It Went This Way says which take went.
+    expect(roundWords(r)).toBe(` You sent take ${best.take + 1} of the three takes you recorded.`);
     expect(opp(twin, o.id).rounds![0]!.casting!.chance).toBe(chanceOf(bandOfQuality(worst.overall), fit, t.kind, 'callback'));
   }, 240_000);
 
@@ -149,6 +152,8 @@ describe('a self-tape’s takes', () => {
     expect([o.status, o.rounds![0]!.status]).toEqual(['lapsed', 'missed']);
     expect(o.history.some((h) => h.words === `You recorded two takes for ${t.role.part} and sent none of them.`)).toBe(true);
     expect((sim.player.work ?? []).filter((w) => w.what.startsWith(`${t.role.part}, ${t.project}`))).toEqual([]);
+    // A self-tape not sent isn't a no-show: its casting office remembers nothing of it.
+    expect([sim.player.pro!.noShows ?? [], remembers(sim.player, t.casting, sim.now)]).toEqual([[], false]);
   }, 240_000);
 });
 
@@ -179,6 +184,9 @@ describe('how you play the sides', () => {
         };
         const withIt = run(lean.side);
         const against = run(lean.other);
+        // Each take keeps how it was played, and its line says so.
+        const kept = withIt.o.rounds![0]!.takes![0]!;
+        expect([kept.sides, takeWords(kept, 0)]).toEqual([[lean.side], expect.stringContaining(`, played ${APPROACH_EFFECT[lean.side].label.toLowerCase()}: `)]);
         if (withIt.take.overall > against.take.overall) moved += 1;
         const bandHi = bandOfQuality(withIt.take.overall);
         const bandLo = bandOfQuality(against.take.overall);
@@ -235,19 +243,22 @@ describe('casting’s direction in the room', () => {
         const rf = f.o.rounds![0]!;
         const rh = h.o.rounds![0]!;
         expect([rf.status, rh.status, rf.note!.answer, rh.note!.answer]).toEqual(['done', 'done', 'follow', 'hold']);
-        // Followed, the side asked for is how it's played from then, its rehearsal halved; kept, the read is held back where
-        // the side asked for leans (the round's judgment, as the work record keeps it).
-        expect([f.o.playing![lean.axis], f.o.playing!.prep, h.o.playing![lean.axis], h.o.playing!.prep]).toEqual([lean.side, 0.5, lean.other, 1]);
+        // Followed, the side asked for is how it's played from then, with the share of its rehearsal the actor's adaptability
+        // carries over (`followedPrep`); kept, the read is held back on answering the note (the round's judgment, as the work
+        // record keeps it, judged as an audition with a direction).
+        expect([f.o.playing![lean.axis], f.o.playing!.prep, h.o.playing![lean.axis], h.o.playing!.prep]).toEqual([lean.side, followedPrep(1, level), lean.other, 1]);
         const judged = (x: { sim: Sim }) => (x.sim.player.work ?? []).find((w) => w.what === `${t.role.part}, ${t.project}: Audition`)!;
-        expect(Object.values(judged(h).inputs.fit ?? {}).some((x) => x.label.includes('casting asked for it'))).toBe(true);
-        expect(Object.values(judged(f).inputs.fit ?? {}).some((x) => x.label.includes('casting asked for it'))).toBe(false);
-        expect(judged(f).inputs.inputs?.responsiveness?.some((x) => x.ability === 'adaptability')).toBe(true);
+        expect([judged(f).task, judged(h).task]).toEqual(['auditionDirected', 'auditionDirected']);
+        expect(judged(h).inputs.fit?.responsiveness?.label).toMatch(/you kept your choice rather than take the note$/);
+        expect(judged(f).inputs.fit?.responsiveness).toBeUndefined();
         if (rf.band === rh.band) continue;
         const [win, lose] = rf.overall! > rh.overall! ? [f, h] : [h, f];
         if (!(u < chanceOf(win.o.rounds![0]!.band!, fit, t.kind, 'callback') && u >= chanceOf(lose.o.rounds![0]!.band!, fit, t.kind, 'callback'))) continue;
         played(win.sim, win.o.rounds![0]!.at + 2 * MS_DAY);
         played(lose.sim, lose.o.rounds![0]!.at + 2 * MS_DAY);
         shown = { follow: f.o, hold: h.o };
+        // Why It Went This Way says what casting asked and the answer, which its judgment read.
+        expect([roundWords(rf), roundWords(rh)]).toEqual([` Casting asked for it ${APPROACH_EFFECT[lean.side].label.toLowerCase()}, and you followed the direction.`, ` Casting asked for it ${APPROACH_EFFECT[lean.side].label.toLowerCase()}, and you kept your choice.`]);
       }
     }
     // The stop: its item is the direction's, ten minutes into the audition, with the two answers beside Go.
@@ -263,6 +274,60 @@ describe('casting’s direction in the room', () => {
     expect(shown).toBeDefined();
     const statuses = [shown!.follow.status, shown!.hold.status].sort();
     expect(statuses).toEqual(['callback', 'passed']);
+  }, 300_000);
+
+  it('PLAYER JOURNEY: the same directed audition, the twins differing only in adaptability: the actor who adapts well does better following the direction, the one who doesn’t keeping their choice; keeping costs how the note is answered whatever casting asked, an open read included', () => {
+    const base = graduate('b27-direction-adapt');
+    // A directed part, played against what it asks, and one whose direction is to play it open.
+    let directed: { t: ProjectTemplate; week: number; sides: Record<string, AxisValue> } | undefined;
+    let opened: { t: ProjectTemplate; week: number; sides: Record<string, AxisValue> } | undefined;
+    for (const { t, week } of parts(base, 'in-person')) {
+      const lean = leaning(t);
+      const against = { [lean.axis]: lean.other } as Record<string, AxisValue>;
+      if (!directed && noteFor(t, { ...against, chosenAt: 0, prep: 0 })) directed = { t, week, sides: against };
+      const set = lean.axis === 'structure' ? against : { structure: 'set' as AxisValue, [lean.axis]: lean.side };
+      if (!opened && noteFor(t, { ...set, chosenAt: 0, prep: 0 })?.side === 'open') opened = { t, week, sides: set };
+      if (directed && opened) break;
+    }
+    expect(directed && opened).toBeDefined();
+    /** Played to casting's direction and answered, at 60 in everything but adaptability, the input the twins differ by. */
+    const run = (x: NonNullable<typeof directed>, adaptability: number, follow: boolean) => {
+      const sim = reload(base);
+      played(sim, x.week);
+      // TEST SETUP: the actor's levels; the sides prepared and the way of playing them rehearsed in full, as Prepare's steps
+      // would leave them, the way chosen through its own command.
+      setSkill(sim, 60);
+      (sim.player.attrs as unknown as Record<string, number>).adaptability = adaptability;
+      const o = atRound(sim, x.t, x.week);
+      sim.must({ kind: 'pro.choose_approach', payload: { opportunityId: o.id, ...x.sides } });
+      o.prep = { interpretation: 1, memorization: 1, rehearsal: 1 };
+      o.playing!.prep = 1;
+      const stop = toDirection(sim, o.rounds![0]!.at + MS_HOUR)!;
+      expect(answerStop(sim, stop, stopChoices(NOTE_KIND).find((c) => c.label === (follow ? 'Follow The Direction' : 'Keep Your Choice'))!).refused).toBeUndefined();
+      const w = (sim.player.work ?? []).find((y) => y.what === `${x.t.role.part}, ${x.t.project}: Audition`)!;
+      return { overall: o.rounds![0]!.overall!, w, responsiveness: w.dims.responsiveness! };
+    };
+    const [hiF, hiK, loF, loK] = [run(directed!, 90, true), run(directed!, 90, false), run(directed!, 20, true), run(directed!, 20, false)];
+    // The round casting directed is judged on answering the note as well: an audition with a direction, its responsiveness
+    // read from listening and adaptability.
+    expect(hiF.w.task).toBe('auditionDirected');
+    expect(Object.keys(hiF.w.dims)).toContain('responsiveness');
+    // The audition's own five as they stand, and responsiveness beside them.
+    const { responsiveness, ...five } = TASK_PROFILES.auditionDirected!.dims;
+    expect([five, responsiveness?.inputs.map((x) => ('ability' in x ? x.ability : 'techniques'))]).toEqual([TASK_PROFILES.audition!.dims, ['listening', 'adaptability']]);
+    // Adaptability alone moves the followed read, and decides which answer is the better one.
+    expect(hiF.overall).toBeGreaterThan(loF.overall);
+    expect(hiF.overall).toBeGreaterThan(hiK.overall);
+    expect(loK.overall).toBeGreaterThan(loF.overall);
+    // Following takes the note on adaptability more than keeping does: the followed reads' responsiveness lies further apart.
+    expect(hiF.responsiveness - loF.responsiveness).toBeGreaterThan(2 * (hiK.responsiveness - loK.responsiveness));
+    // Kept against a direction to play it open, the read is held back on answering the note, as on any other direction:
+    // judged again from the same record without that hold, it comes out higher.
+    const k = run(opened!, 60, false);
+    expect(k.w.inputs.fit?.responsiveness?.label).toBe('Casting’s direction: asked to play it open, you kept your choice rather than take the note');
+    const freed = replay({ ...k.w, inputs: { ...k.w.inputs, fit: Object.fromEntries(Object.entries(k.w.inputs.fit!).filter(([d]) => d !== 'responsiveness')) } }, TASK_PROFILES[k.w.task]!)!;
+    expect(replay(k.w, TASK_PROFILES[k.w.task]!)!.overall).toBe(k.w.overall);
+    expect(freed.overall).toBeGreaterThan(k.w.overall);
   }, 300_000);
 
   it('PLAYER JOURNEY: no direction without a way of playing chosen, or where the choice is already what the part asks: judged at the audition itself, as before', () => {

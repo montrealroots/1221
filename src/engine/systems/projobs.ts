@@ -110,8 +110,8 @@ import { simulateRun } from './charts';
 import { keepProject, pushedPart, restoreSlate, slatePartsAt } from './slate';
 // Offers and auditions, the actor's side of them (from 2026-10-25, brief 27's cluster of that name): `systems/offers.ts`.
 import {
-  acceptOnCondition, answerAsk, approachRead, approachToRehearse, askTerms, castingLift, conditionWords, decideCondition, giveNote, guaranteedOf, offerOnCondition, recastKey,
-  recordRefusal, recordTake, registerOffers, rehearseApproach, rememberMiss, remembers, requirementsOf, reviseDecision, rewriteAt, sendTake, termItem, termsAskRefusal,
+  acceptOnCondition, answerAsk, approachRead, approachToRehearse, askTerms, castingLift, conditionWords, decideCondition, firmOnHold, giveNote, guaranteedOf, offerOnCondition, recastKey,
+  recordRefusal, recordTake, registerOffers, rehearseApproach, rememberMiss, remembers, requirementsOf, rescheduleAskWords, reviseDecision, rewriteAt, sendTake, termItem, termsAskRefusal,
   type OfferHooks, type TermItem,
 } from './offers';
 
@@ -1663,7 +1663,9 @@ function setRound(sim: Simulation, person: Person, o: Opportunity, which: Round)
     : `${castingAs(t)} asked for a self-tape${which === 'callback' ? ' for the callback' : ''} for ${t.role.part} in ${t.project}, due ${when}.`;
   note(sim, person, o, { kind: which === 'audition' ? 'audition' : 'callback', key: `${which}:set`, words: noted });
   const next = form === 'in-person' ? 'Prepare the sides on the Career screen’s Opportunities tab before you go.' : 'Prepare the sides, then press Tape It on the Career screen’s Opportunities tab.';
-  const clashWords = clash.length ? ` It clashes with ${spokenList(clash)}. To ask for another time, press Ask For Another Time on the Opportunities tab, at least a day ahead. Casting moves it once.` : '';
+  // A chemistry read's or a screen test's clash points at Ask To Reschedule, which asks the production (from 2026-10-25,
+  // `rescheduleAskWords`): until then every round's pointed at Ask For Another Time, which refuses those two from that day.
+  const clashWords = clash.length ? ` It clashes with ${spokenList(clash)}. ${later ? rescheduleAskWords(which as 'chemistry' | 'test') : 'To ask for another time, press Ask For Another Time on the Opportunities tab, at least a day ahead. Casting moves it once.'}` : '';
   // A chemistry read or a screen test brings a hold on the part's days, once (from 2026-10-25, brief 27, loop 20; `HOLD`).
   const holdWords = later && !o.hold ? placeHold(sim, person, o) : '';
   const agent = agentFor(o);
@@ -1776,7 +1778,7 @@ export function askMoreRefusal(sim: Simulation, person: Person, o: Opportunity |
     return `${agent?.name ?? 'Your agent'} doesn’t negotiate this one: ${outsideWords(agreement, projectOf(o), agent ? agencyOf(agent).name : 'your agency')}, so the offer is as it stands.`;
   }
   // A term other than the pay (from 2026-10-25, `systems/offers.ts`): a recurring part's episodes, a promotional film's pay.
-  if (item !== 'pay') return termsAskRefusal(o, item);
+  if (item !== 'pay') return termsAskRefusal(person, o, item);
   if (o.offer.amount === undefined) return 'The pay is deferred, so there’s no figure to ask more of.';
   return undefined;
 }
@@ -1816,7 +1818,8 @@ function makeOffer(sim: Simulation, person: Person, o: Opportunity): void {
     urgency: 80, category: 'career', title: `An Offer For ${t.role.part}`, dueAt: until, route: '/workspace/career', refType: 'pro.offer', refId: o.id,
     detail: `${agent ? `${agent.name} passed on an offer. ` : ''}${words}${warning ? ` ${warning}` : ''}`,
     actions: [
-      { label: 'Accept The Offer', commandKind: 'pro.accept_offer', payload: { opportunityId: o.id } },
+      // A conditional offer's acceptance is named as its card names it (from 2026-10-25, `CONDITIONAL`): it books nothing yet.
+      o.condition ? { label: 'Accept On Its Condition', commandKind: 'pro.accept_offer', payload: { opportunityId: o.id } } : { label: 'Accept The Offer', commandKind: 'pro.accept_offer', payload: { opportunityId: o.id } },
       { label: 'Decline The Offer', commandKind: 'pro.decline_offer', payload: { opportunityId: o.id } },
     ],
   });
@@ -2011,8 +2014,11 @@ export function callPromo(sim: Simulation, person: Person, e: Engagement, t: Pro
     sim.schedule({ at, kind: PROMO_KIND, label: `${t.project}: Promotional Film`, category: 'career', priority: 38, requiresPlayer: true, durationMinutes: PROMO.hours * 60, travelMinutes: 30, locationId: person.currentLocationId, refType: 'pro.engagement', refId: e.id, payload: { personId: person.id, engagementId: e.id } });
     const forWork = e.contract?.estimate ?? e.pay.reduce((n, x) => n + (x.deferred ? 0 : x.promised), 0);
     // What the agent bargained for it, where it was (from 2026-10-25, the contract's `promo`), the agreement's rule otherwise.
-    const paid = e.contract?.promo ?? promoPay(t, forWork, at);
-    const words = `${t.company} called you to appear in a promotional film for ${t.project}’s release: ${countWords(PROMO.hours)} hours at a studio near you on ${formatWeekdayDate(at, NY)} at 10:00 AM, talking about the work and ${t.role.part}. ${e.contract?.promo !== undefined ? `It pays ${formatMoney(e.contract.promo, 'USD')}, as your agent bargained.` : paid !== undefined ? `It pays a day performer’s minimum, ${formatMoney(paid, 'USD')}.` : 'Your contract has it unpaid.'} Being there makes you a little more visible to casting for a while. If you miss it, ${t.company} will remember.`;
+    // Said here; `promoSession` pays it. A first cut also read the bargain into the rule's figure, which only the rule's
+    // sentence used, where the bargain is never set (brief 27's review, F5).
+    const bargained = e.contract?.promo;
+    const paid = promoPay(t, forWork, at);
+    const words = `${t.company} called you to appear in a promotional film for ${t.project}’s release: ${countWords(PROMO.hours)} hours at a studio near you on ${formatWeekdayDate(at, NY)} at 10:00 AM, talking about the work and ${t.role.part}. ${bargained !== undefined ? `It pays ${formatMoney(bargained, 'USD')}, as your agent bargained.` : paid !== undefined ? `It pays a day performer’s minimum, ${formatMoney(paid, 'USD')}.` : 'Your contract has it unpaid.'} Being there makes you a little more visible to casting for a while. If you miss it, ${t.company} will remember.`;
     noteEvent(sim, e, { kind: 'booked', key: 'promo', words });
     tell(sim, person, `${t.project} Calls You For A Promotional Film`, words, 70);
     return;
@@ -2666,6 +2672,8 @@ export function registerProJobs(sim: Simulation): void {
       // Booked: the rounds still to come are dropped, and the offer is made now.
       s.timeline.cancelFor('pro.opportunity', o.id, s.now);
       note(s, person, o, { kind: 'offer', key: 'hold:booked', words: `Asked to decide, ${t.casting} chose you for ${t.role.part} rather than let you go to ${other}.` });
+      // A part accepted on its condition is booked on the terms accepted, not offered again (from 2026-10-25, `firmOnHold`).
+      if (firmOnHold(s, person, o, other, OFFER_HOOKS)) return;
       makeOffer(s, person, o);
       return;
     }

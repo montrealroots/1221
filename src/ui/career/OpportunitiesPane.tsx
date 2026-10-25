@@ -25,7 +25,7 @@ import { activeAgreement, type Engagement, type Opportunity } from '@/engine/sys
 import {
   DEFERRED_WHY, FIELD_WORDS, ILL_DAY, MISSES, OUTSIDE_WORK, ROUND_WORDS, acceptRefusal, holdAskRefusal, holding, askMoreRefusal, acceptWarning, againWords, agrees, castingAs, chanceWords, conditionsFor, counted, datesOf, decidesAt, drawnWords, kindPhrase, reachWords,
   demandsWords, eligibilityProblems, fitOf, fitWords, inSessionAny, materialProblems, moveRefusal, payTermsOf, payWords, prepMinutes,
-  prepareRefusal, projectGenresOf, projectOf, requestFor, requestRefusal, roundToCome, submitRefusal, tapeRefusal, writtenFor, writtenForWords, intimacyWords,
+  prepareRefusal, projectGenresOf, projectOf, requestFor, requestRefusal, roundToCome, submitRefusal, writtenFor, writtenForWords, intimacyWords,
 } from '@/engine/systems/projobs';
 import { requirementWords } from '@/engine/systems/engagement';
 import { productionById, productionWords } from '@/engine/content/catalog';
@@ -36,7 +36,7 @@ import { promoFor } from '@/engine/systems/workflow';
 // Offers and auditions, the actor's side (from 2026-10-25, brief 27's cluster of that name): `systems/offers.ts`.
 import {
   TERM_ITEMS, approachPreview, askAnswerWords, askLabel, chooseRefusal, conditionStanding, conditionWords, noteRefusal, noteWaiting, recastWords, recordRefusal, rememberedWords,
-  rescheduleRefusal, rescheduleWords, sceneOfPart, sendRefusal, takeWords, termsChangedWords, withdrawRefusal, withdrawWarning, type TermItem,
+  requirementsOf, rescheduleRefusal, rescheduleWords, roundWords, sceneOfPart, sendRefusal, takeWords, termsChangedWords, withdrawRefusal, withdrawWarning, type TermItem,
 } from '@/engine/systems/offers';
 
 const NY = 'America/New_York';
@@ -67,9 +67,11 @@ function daysWords(t: ProjectTemplate, n: number): string {
 }
 
 /** What the role is, in the lines a casting notice gives. */
-function RoleFacts({ t, o }: { t: ProjectTemplate; o: Pick<Opportunity, 'projectId' | 'postedAt'> & Partial<Pick<Opportunity, 'offer'>> }) {
+function RoleFacts({ t, o }: { t: ProjectTemplate; o: Pick<Opportunity, 'projectId' | 'postedAt'> & Partial<Pick<Opportunity, 'offer' | 'rewrite'>> }) {
   const person = useWorld((s) => s.player);
   const days = datesOf(o);
+  // The playing ages as casting changed them, where it did (from 2026-10-25, `requirementsOf`): the part's own until then.
+  const ages = requirementsOf(o, t).ages;
   return (
     <dl className="col gap-2 small" style={{ margin: 0 }}>
       {/* Its page in Productions And People (from 2026-10-25, brief 27's K8), where its company, series and history link on. */}
@@ -85,7 +87,7 @@ function RoleFacts({ t, o }: { t: ProjectTemplate; o: Pick<Opportunity, 'project
       {t.intimacy && <div><dt className="strong">An Intimate Scene</dt><dd style={{ margin: 0 }}>{intimacyWords(t)}</dd></div>}
       {/* What the part asks of the genres, in words (`requirementWords`, from 2026-10-22, the owner's brief 22): until then
           its project's tags, a broad genre beside its own kind ("Domestic Drama, Drama"), the order deciding nothing said. */}
-      <div><dt className="strong">What It Asks</dt><dd style={{ margin: 0 }}>{`${requirementWords(projectGenresOf(t)) ?? 'No genre the game names'}. ${writtenForWords(t)} Playing ages ${t.requirements.ages[0]} to ${t.requirements.ages[1]}. ${demandsWords(person, t)}`}</dd></div>
+      <div><dt className="strong">What It Asks</dt><dd style={{ margin: 0 }}>{`${requirementWords(projectGenresOf(t)) ?? 'No genre the game names'}. ${writtenForWords(t)} Playing ages ${ages[0]} to ${ages[1]}${o.rewrite?.ages ? ', as casting changed them' : ''}. ${demandsWords(person, t)}`}</dd></div>
       <div><dt className="strong">When And Where</dt><dd style={{ margin: 0 }}>{`${cap(daysWords(t, days.length))} ${spanWords(days)}, at ${t.place.venue} in ${t.place.city}. ${reachWords(person, t, days)}`}</dd></div>
       <div><dt className="strong">Pay</dt><dd style={{ margin: 0 }}>{payWords(payTermsOf(o), o.offer?.amount)}</dd></div>
       <div><dt className="strong">The Audition</dt><dd style={{ margin: 0 }}>{`${t.stages.audition === 'in-person' ? 'In person' : 'A self-tape'}${t.stages.callback ? ', then a callback for those casting wants to see again' : ''}.`}</dd></div>
@@ -155,7 +157,9 @@ function InProgress({ o }: { o: Opportunity }) {
   const t = projectOf(o);
   const r = roundToCome(o);
   const agent = o.agentId ? agentById(o.agentId) : undefined;
-  const tapeNo = tapeRefusal(sim, person, o);
+  // Tape It records a take and sends it, so the day's takes and those kept count against it too (from 2026-10-25,
+  // `recordRefusal`): until then it read the self-tape's own rules alone and showed enabled where the command refused.
+  const tapeNo = recordRefusal(sim, person, o);
   const moveNo = moveRefusal(sim, person, o);
   // A chemistry read or a screen test asks the production to move it (from 2026-10-25, `RESCHEDULE`): Ask To Reschedule.
   const later = r?.form === 'in-person' && (r.round === 'chemistry' || r.round === 'test');
@@ -170,6 +174,8 @@ function InProgress({ o }: { o: Opportunity }) {
       <h3 style={{ margin: 0 }}>{`${t.role.part}, ${t.project}`}</h3>
       <p className="small" style={{ margin: 0 }}>{next}</p>
       {agent && <p className="xs dim" style={{ margin: 0 }}>{`Through ${agent.name}.`}</p>}
+      {/* What casting changed about the part during casting, in its words (from 2026-10-25, `REWRITE`). */}
+      {o.rewrite && <p className="small" style={{ margin: 0 }}>{o.rewrite.words}</p>}
       {/* A conditional offer accepted, its round still to come (from 2026-10-25, `CONDITIONAL`). */}
       {conditionStanding(o) && <p className="small" style={{ margin: 0 }}>{conditionStanding(o)}</p>}
       {rememberedWords(person, t, sim.now) && <p className="xs dim" style={{ margin: 0 }}>{rememberedWords(person, t, sim.now)}</p>}
@@ -449,7 +455,7 @@ function Settled({ o }: { o: Opportunity }) {
           <summary>Why It Went This Way</summary>
           <ul style={{ margin: 'var(--s2) 0 0', paddingLeft: '1.1rem' }}>
             {decided.map((r) => (
-              <li key={r.round}>{`The ${ROUND_WORDS[r.round].noun}: ${r.band ? BAND_LABEL[r.band] : 'not judged'}${r.held ? `. ${r.held.charAt(0).toUpperCase()}${r.held.slice(1)}` : ''}. The role’s fit: ${fitWords(r.casting!.fit)}. The field: ${FIELD_WORDS[t.kind]}. Casting’s chance from those, estimated: ${chanceWords(r.casting!.chance)}. ${r.casting!.yes ? 'It went your way.' : 'It went to another actor.'}`}</li>
+              <li key={r.round}>{`The ${ROUND_WORDS[r.round].noun}: ${r.band ? BAND_LABEL[r.band] : 'not judged'}${r.held ? `. ${r.held.charAt(0).toUpperCase()}${r.held.slice(1)}` : ''}. The role’s fit: ${fitWords(r.casting!.fit)}. The field: ${FIELD_WORDS[t.kind]}. Casting’s chance from those, estimated: ${chanceWords(r.casting!.chance)}. ${r.casting!.yes ? 'It went your way.' : 'It went to another actor.'}${roundWords(r)}`}</li>
             ))}
             <li>{`Your fit for it now: you know its genre ${pct(fit.genre)} of the way, and your techniques are ${pct(fit.demands)} of the way to what the part asks at mastery.`}</li>
           </ul>
