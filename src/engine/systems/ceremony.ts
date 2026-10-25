@@ -287,13 +287,20 @@ export function watchRefusal(sim: Simulation, person: Person, entryId: string): 
 export function ceremonyLines(person: Person, n: Nomination): string[] {
   const c = person.pro?.credits.find((x) => x.id === n.creditId);
   const name = nominationCategory(person, n);
-  const others = nomineesOf(n) - 1;
+  // The player's other parts among the nominees (from 2026-10-25, brief 27's F: an Emmy category's one field holds every
+  // entry of the player's, `fieldFor` in `systems/awards.ts`); until then each nomination's field held only itself.
+  const again = (n.field?.nominees ?? []).filter((id) => id.startsWith('you:') && id !== `you:${n.creditId}`).map((id) => person.pro?.credits.find((x) => x.id === id.slice(4))).filter((x): x is NonNullable<typeof x> => !!x);
+  const others = nomineesOf(n) - 1 - again.length;
   const won = n.state === 'won';
   const tie = n.institution === 'actor-awards' && (n.field?.winners?.length ?? 0) > 1;
+  // Lost to another of the player's own parts in the category.
+  const mine = n.state === 'lost' && n.institution === 'emmys' ? again.find((x) => n.field?.winner === `you:${x.id}`) : undefined;
   const lines = [
-    `First come the nominees for ${name}: you, for ${c?.role ?? 'your part'} in ${c?.project ?? 'your work'}, and ${others === 1 ? 'one other performer' : `${others} other performers`}.`,
+    `First come the nominees for ${name}: you, for ${c?.role ?? 'your part'} in ${c?.project ?? 'your work'}, ${again.map((x) => `you again, for ${x.role} in ${x.project}, `).join('')}and ${others === 1 ? 'one other performer' : `${others} other performers`}.`,
     'Then the envelope is opened.',
-    won ? `${tie ? 'It’s a tie, and you’re one of the winners' : 'It’s you'}: you won ${name} at ${awardTitle(n)}.` : 'It goes to another nominee. You didn’t win, and your nomination stands.',
+    won ? `${tie ? 'It’s a tie, and you’re one of the winners' : 'It’s you'}: you won ${name} at ${awardTitle(n)}.`
+      : mine ? `It’s you, for ${mine.role} in ${mine.project}: you won ${name} at ${awardTitle(n)} for that part, and this nomination stands.`
+        : 'It goes to another nominee. You didn’t win, and your nomination stands.',
   ];
   if (n.attend?.outcome === 'there' && won) lines.push(n.attend.speech ? SPEECH_WORDS[n.attend.speech.band] : 'You went up, said thank you, and sat down.');
   return lines;

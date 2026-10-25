@@ -18,8 +18,11 @@
  * (`breaches`, money among them) and that every page Productions And People lists opens, and prints one JSON summary.
  *
  *   npx vite-node tools/long-career.ts -- --save degree|last-term --years 4 [--out <file>] [--transcript <file>] [--keep <file.json.gz>]
+ *     [--from <file.json.gz>] [--until-invited]
  *
- * `--keep` writes the played save, gzipped, for the built app's walks to open.
+ * `--keep` writes the played save, gzipped, for the built app's walks to open. `--from` plays on from a save `--keep`
+ * wrote, with `--save`'s player. `--until-invited` ends the run at the first invitation to a ceremony still to answer,
+ * before it's answered, so a walk can answer it in the built app (`docs/verification/career-universe-2026-10-24/walk/ceremony.mjs`).
  */
 import { readFileSync, writeFileSync } from 'node:fs';
 import { gunzipSync, gzipSync } from 'node:zlib';
@@ -39,7 +42,7 @@ import { askMoreRefusal } from '../src/engine/systems/projobs';
 import { joinSagRefusal } from '../src/engine/systems/propay';
 import { entryRefusal } from '../src/engine/systems/awards';
 import { actorSubmitRefusal } from '../src/engine/systems/actorawards';
-import { SPEECH_KIND, nominationsOf, prepareRemarksRefusal } from '../src/engine/systems/ceremony';
+import { SPEECH_KIND, nominationsOf, prepareRemarksRefusal, rsvpBy } from '../src/engine/systems/ceremony';
 import { pageOf, refIndex } from '../src/engine/systems/reference';
 import { graduatingActor, playTo, press, transcriptFrom, unsignedActor, type CareerStep, type Player } from './career-player';
 
@@ -49,8 +52,10 @@ const years = Number(arg('years', '4'));
 const out = arg('out', '');
 const transcriptOut = arg('transcript', '');
 const keepOut = arg('keep', '');
+const from = arg('from', `tests/fixtures/journey-j01-${which}-8283f80c.json.gz`);
+const untilInvited = process.argv.includes('--until-invited');
 
-const raw = gunzipSync(readFileSync(`tests/fixtures/journey-j01-${which}-8283f80c.json.gz`)).toString('utf8');
+const raw = gunzipSync(readFileSync(from)).toString('utf8');
 const sim: Simulation = loadSave(deserialise(raw) as never);
 const startedAt = sim.now;
 
@@ -114,6 +119,7 @@ const recognition: CareerStep = (s, player) => {
   }
   for (const n of nominationsOf(person)) {
     if (n.state !== 'nominated') continue;
+    if (untilInvited && !n.attend?.rsvp && s.now < rsvpBy(n)) throw new Error(`invited: ${n.id}, to answer by ${formatDate(rsvpBy(n), s.zone)}`);
     if (!n.attend?.rsvp && !press(s, t, `Go To The Ceremony for ${n.id}`, 'pro.ceremony_rsvp', { entryId: n.id, attend: true })) press(s, t, `Watch From Home for ${n.id}`, 'pro.ceremony_rsvp', { entryId: n.id, attend: false });
     const p = zonedParts(s.now, s.zone);
     if (p.hour >= 18 && !prepareRemarksRefusal(s, person, n.id)) { press(s, t, `Prepare Your Remarks for ${n.id}`, 'pro.ceremony_prepare', { entryId: n.id }); if (s.now > before) return true; }

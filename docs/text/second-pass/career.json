@@ -603,9 +603,9 @@
  },
  "src/engine/content/guide/career.ts#CAREER_GUIDE [career.awards]": {
   "status": "Rewritten",
-  "hash": "aceb22e7fdab",
+  "hash": "5ee92ea5b3c4",
   "on": "2026-10-25",
-  "evidence": "Written for brief 27's K7 (Parts 11, 14 and 15; loops 44 to 47: the Actor Awards by its 33rd Rules & Regulations, the ceremony for every nomination, and what an award does after it) to docs/STYLE.md and docs/GLOSSARY.md, every rule the 33rd's own and every invention said as the game's: read where the player meets it in tests/b27-actor-awards.test.ts (eligibility and each refusal, Submit Yourself and its refusals, the production's submission, the nomination and the show's notices, the résumé's line), tests/b27-ceremony.test.ts (the invitation's question and notice, Go To The Ceremony and Watch From Home, a clash's refusal, Prepare Your Remarks, the trip's notices there and home, a missed flight, the room's loss, You Won At, the speech's words, the moment let pass, You Weren't At) and tests/b27-award-effects.test.ts (the agent's office seeing the recognition). Numbers under ten in words; dates with their comma; no engine words.",
+  "evidence": "Brief 27, F (2026-10-25): the Emmy paragraph says two parts of yours in one category, for different shows, are entries in one field, both can be nominated and only one can win, as the game now decides it (tests/career-awards.test.ts 'two guest parts'; N23).",
   "first": "Pending"
  },
  "src/engine/content/guide/career.ts#CAREER_GUIDE [career.commission]": {

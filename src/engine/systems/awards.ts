@@ -38,7 +38,7 @@ import { formatOf, voiceOnly } from './workflow';
 import { spend, spendRefusal } from './spending';
 import { inSaveMoney } from './banking';
 import { saveCurrency } from '../core/money';
-import { plural } from '../core/text';
+import { countWords, plural } from '../core/text';
 import { countryOfPlace } from '../content/geography';
 import { requirementOfRole } from './engagement';
 import { peakOf } from './charts';
@@ -65,7 +65,11 @@ export interface AwardEntry {
   enteredBy?: 'you' | 'production';
   enteredAt?: Instant;
   fee?: Money;
-  /** The category's field, kept with the competition: its size, the nominations, the nominees' ids ('you' among them, where so), the winner's. */
+  /**
+   * The category's field, kept with the competition: its size, the nominations, the nominees' ids, the winner's. The
+   * player's entries are `you:<credit>`, every one in the category together (`fieldFor`); a field drawn before
+   * 2026-10-25 held one entry of the player's, as `you` (`isYou`).
+   */
   field?: { submissions: number; nominations: number; nominees: string[]; standing: Record<string, number>; winner?: string };
   /** When the result is the player's to see: the ceremony. */
   ceremonyAt: Instant;
@@ -320,13 +324,33 @@ export function fieldDrawn(sim: Simulation, year: number, category: string): { s
   return { submissions, others: Array.from({ length: submissions - 1 }, (_, k) => ({ id: `${year}:${category}:${k + 1}`, votes: tenths(FIELD.mean + FIELD.spread * normal(rng.next(), rng.next())) })) };
 }
 
-/** A category's field for a year: its submissions and each entrant's standing, the player's from the work and visibility. */
-function fieldFor(sim: Simulation, person: Person, a: AwardEntry, c: ProCredit): { submissions: number; votes: { id: string; votes: number }[] } {
-  const { submissions, others } = fieldDrawn(sim, a.year, a.category);
-  const mine = sim.rng('awards.field', a.year, a.category, c.project, c.role);
-  const yours = (STANDING[c.band ?? 'working'] ?? 55) + FIELD.visibilityWeight * visibilityOf(person, dayAt(emmyEdition(a.year).nominationsAnnounced, 9) - MS_DAY) + FIELD.yours * normal(mine.next(), mine.next());
-  return { submissions, votes: [...others, { id: 'you', votes: tenths(yours) }] };
+/**
+ * A category's field for a year, every entry of the player's in it together: its submissions and each entrant's standing,
+ * the player's from the work and visibility, each entry `you:<credit>` with its own draw. The 78th's rules let a performer
+ * "enter multiple achievements in a performing category if the achievements are for different programs", and a category
+ * award is "a single, must-give award … with the highest vote-getter receiving an Emmy" (N23, Performer Awards and
+ * Emmy Winners, read again on 2026-10-25). Until brief 27's F each entry drew a field of its own with the player in it
+ * once, so two entries in one category could both win: a long career (`tools/long-career.ts`) won Outstanding Guest
+ * Actress In A Comedy Series three times at the 84th, and the drama award three times. One entry's field is the one it
+ * drew before.
+ */
+function fieldFor(sim: Simulation, person: Person, mine: readonly { a: AwardEntry; c: ProCredit }[]): { submissions: number; votes: { id: string; votes: number }[] } {
+  const { year, category } = mine[0]!.a;
+  const { submissions, others } = fieldDrawn(sim, year, category);
+  const seen = visibilityOf(person, dayAt(emmyEdition(year).nominationsAnnounced, 9) - MS_DAY);
+  const yours = mine.map(({ c }) => {
+    const r = sim.rng('awards.field', year, category, c.project, c.role);
+    return { id: youIn(c.id), votes: tenths((STANDING[c.band ?? 'working'] ?? 55) + FIELD.visibilityWeight * seen + FIELD.yours * normal(r.next(), r.next())) };
+  });
+  return { submissions: submissions - 1 + mine.length, votes: [...others, ...yours] };
 }
+
+/** The player's entry's id in a field. */
+export const youIn = (creditId: string): string => `you:${creditId}`;
+/** Whether an id in an entry's field is that entry: `you:<credit>`, or `you` in a field drawn before 2026-10-25. */
+export const isYou = (a: Pick<AwardEntry, 'creditId'>, id: string | undefined): boolean => id === 'you' || id === youIn(a.creditId);
+/** How many of a field's nominees are the player's. */
+export const yoursIn = (nominees: readonly string[]): number => nominees.filter((id) => id === 'you' || id.startsWith('you:')).length;
 
 /** The final round (decider `awards.final`): a peer vote for one among the nominees, each nominee's standing kept from the nominations, with the round's own draw. */
 export function finalDrawn(sim: Simulation, year: number, category: string, nominees: readonly string[], standing: Readonly<Record<string, number>>): string {
@@ -469,16 +493,29 @@ function emmyStep(sim: Simulation, person: Person, c: ProCredit, now: Instant, t
   if (!a || a.state !== 'entered') return;
   const announced = dayAt(ed.nominationsAnnounced, 9);
   if (now >= announced && !a.field) {
-    const { submissions, votes } = fieldFor(sim, person, a, c);
+    // Every entry of the player's in the category, its work still eligible there, in the one field; one its work no longer
+    // holds is disqualified at its own credit's step.
+    const mine = list.filter((x) => x.year === a!.year && x.category === a!.category && x.state === 'entered' && !x.field).flatMap((x) => {
+      const xc = x === a ? c : person.pro!.credits.find((y) => y.id === x.creditId);
+      const ok = xc && (x === a || (() => { const k = emmyCheck(sim, person, xc); return k.eligible && k.year === x.year && k.category === x.category; })());
+      return ok ? [{ a: x, c: xc }] : [];
+    });
+    const { submissions, votes } = fieldFor(sim, person, mine);
     const target = nominationsFor(submissions);
     const nominees = nominate(votes, target);
-    a.field = { submissions, nominations: nominees.length, nominees, standing: Object.fromEntries(votes.filter((v) => nominees.includes(v.id)).map((v) => [v.id, v.votes])) };
-    a.state = nominees.includes('you') ? 'nominated' : 'not-nominated';
-    const name = categoryName(person, a.category);
-    tell(a.state === 'nominated' ? 'You’re Nominated For An Emmy' : 'The Emmy Nominations Are Out',
-      a.state === 'nominated'
-        ? `You’re one of ${nominees.length} nominees for ${name} at the ${ordinal(ed.number)} Emmy Awards, for ${c.role} in ${c.project}. ${invitation(sim, person, a)}`
-        : `You weren’t nominated for ${name} at the ${ordinal(ed.number)} Emmy Awards, for ${c.role} in ${c.project}: ${nominees.length} of ${submissions} entries were.`);
+    const standing = Object.fromEntries(votes.filter((v) => nominees.includes(v.id)).map((v) => [v.id, v.votes]));
+    for (const { a: x, c: xc } of mine) {
+      x.field = { submissions, nominations: nominees.length, nominees: [...nominees], standing: { ...standing } };
+      x.state = nominees.includes(youIn(xc.id)) ? 'nominated' : 'not-nominated';
+      const name = categoryName(person, x.category);
+      const also = yoursIn(nominees) - (x.state === 'nominated' ? 1 : 0);
+      // Two parts of the player's in one category: the 78th's single award, said (N23).
+      const others = also > 0 ? ` ${also === 1 ? 'Another part of yours is' : `${countWords(also).replace(/^./, (m) => m.toUpperCase())} other parts of yours are`} nominated in the category too, and only one of the ${countWords(also + 1)} can win it.` : '';
+      tell(x.state === 'nominated' ? 'You’re Nominated For An Emmy' : 'The Emmy Nominations Are Out',
+        x.state === 'nominated'
+          ? `You’re one of ${nominees.length} nominees for ${name} at the ${ordinal(ed.number)} Emmy Awards, for ${xc.role} in ${xc.project}.${others} ${invitation(sim, person, x)}`
+          : `You weren’t nominated for ${name} at the ${ordinal(ed.number)} Emmy Awards, for ${xc.role} in ${xc.project}: ${nominees.length} of ${submissions} entries were.`);
+    }
   }
 }
 
@@ -489,7 +526,7 @@ function resultStep(sim: Simulation, person: Person, a: AwardEntry, now: Instant
   if (!c) return;
   if (now >= dayAt(ed.finalEnds, 23) && a.field.winner === undefined) a.field.winner = finalDrawn(sim, a.year, a.category, a.field.nominees, a.field.standing);
   if (now >= a.ceremonyAt && a.field.winner !== undefined) {
-    a.state = a.field.winner === 'you' ? 'won' : 'lost';
+    a.state = isYou(a, a.field.winner) ? 'won' : 'lost';
     // Going, the show itself tells it (from 2026-10-25, brief 27's K7, `systems/ceremony.ts`); otherwise it's read from home.
     if (a.attend?.rsvp !== 'attending') tell(`The ${EMMY_CATEGORIES[a.category].at === 'creative-arts' ? 'Creative Arts Emmys' : 'Emmy Awards'} Tonight`, `${categoryName(person, a.category)} was presented tonight, with you among its ${a.field.nominations} nominees for ${c.role} in ${c.project}. Watch the ceremony, or read the result, on the Career screen’s Charts And Awards tab.`);
   }
@@ -535,7 +572,11 @@ export function recapWords(person: Person, a: AwardEntry): string {
   const name = categoryName(person, a.category);
   const ed = emmyEdition(a.year);
   if (a.state === 'won') return `You won ${name} at the ${ordinal(ed.number)} Emmy Awards, for ${c?.role} in ${c?.project}.`;
-  if (a.state === 'lost') return `Nominated for ${name} at the ${ordinal(ed.number)} Emmy Awards, for ${c?.role} in ${c?.project}. You didn’t win.`;
+  if (a.state === 'lost') {
+    // Lost to another of the player's own parts in the one field (`fieldFor`).
+    const other = a.field?.winner?.startsWith('you:') && !isYou(a, a.field.winner) ? person.pro?.credits.find((x) => `you:${x.id}` === a.field!.winner) : undefined;
+    return `Nominated for ${name} at the ${ordinal(ed.number)} Emmy Awards, for ${c?.role} in ${c?.project}. ${other ? `You won it for ${other.role} in ${other.project} instead.` : 'You didn’t win.'}`;
+  }
   if (a.state === 'nominated') return `Nominated for ${name} at the ${ordinal(ed.number)} Emmy Awards; it’s presented on ${formatDate(a.ceremonyAt, NY)}.`;
   if (a.state === 'not-nominated') return `Entered for ${name} at the ${ordinal(ed.number)} Emmy Awards, and not nominated.`;
   if (a.state === 'disqualified') return `Disqualified from ${name} at the ${ordinal(ed.number)} Emmy Awards: ${a.why ?? 'the work no longer met the rules'}`;

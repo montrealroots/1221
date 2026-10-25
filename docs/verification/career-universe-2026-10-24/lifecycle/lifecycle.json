@@ -667,16 +667,19 @@
     "ui.career-reference"
    ],
    "decisions": "Look up any project the career touched.",
-   "states": "Each project’s history kept: the posting’s, the work’s, the credit’s, the awards’.",
+   "states": "A credit kept for good; a posting, the work and its pay kept while anything to come still reads them, past the 40 latest postings and 20 latest finished engagements (keepBounded); a page reads what the record holds.",
    "timed": "None.",
    "exits": "A page no longer held says so.",
-   "status": "Implemented, Verification Incomplete",
+   "status": "Implemented And Verified",
    "tests": [
     "tests/b27-reference.test.ts",
     "tests/pro-core.test.ts"
    ],
-   "docs": [],
-   "why": "Not yet played in the built app or on a phone; brief 27’s F plays it."
+   "docs": [
+    "docs/verification/career-universe-2026-10-24/walk/k8",
+    "docs/verification/career-universe-2026-10-24/long"
+   ],
+   "entry": "Two long careers (four and four and a half years) walked on the built app at three sizes (emulation, not a physical phone): each project page opened, its company and Back."
   },
   {
    "loop": 38,
@@ -862,12 +865,14 @@
    "states": "A page held or not for this player; the trail of pages followed.",
    "timed": "None: pages read the clock.",
    "exits": "Back and the trail; a page no longer held says so.",
-   "status": "Implemented, Verification Incomplete",
+   "status": "Implemented And Verified",
    "tests": [
     "tests/b27-reference.test.ts"
    ],
-   "docs": [],
-   "why": "Not yet played in the built app or on a phone; brief 27’s F plays it."
+   "docs": [
+    "docs/verification/career-universe-2026-10-24/walk/k8"
+   ],
+   "entry": "Walked on the built app at three sizes from two long careers (emulation, not a physical phone): the front page, a project, its company and Back, an action and the same page on return, a series, season and episode, Find."
   },
   {
    "loop": 49,

@@ -18,7 +18,7 @@ import {
   simulateRun, titleAcross, weeksBy, weeksOf, weeksSoFar,
 } from '@/engine/systems/charts';
 import {
-  FIELD, VISIBILITY, ceremonyLines, deadlineOf, emmyCheck, entryFee, entryRefusal, festivalCheck, festivalCheckWords, nominate, nominationsFor,
+  FIELD, VISIBILITY, ceremonyLines, deadlineOf, emmyCheck, entryFee, entryRefusal, festivalCheck, festivalCheckWords, fieldDrawn, nominate, nominationsFor,
   recapWords, recognitionOf, visibilityOf, watchRefusal,
 } from '@/engine/systems/awards';
 import { CASTING_KIND, castingDraw, payTermsOf } from '@/engine/systems/projobs';
@@ -364,7 +364,7 @@ describe('X8 to X12: entry, the field, the nominations, the ceremony', () => {
     expect(a.state).toBe('not-nominated');
     expect(a.field!.nominations).toBe(nominationsFor(a.field!.submissions));
     expect(a.field!.submissions).toBeGreaterThanOrEqual(FIELD.leastSubmissions);
-    expect(a.field!.nominees).not.toContain('you');
+    expect(a.field!.nominees).not.toContain(`you:${c.id}`);
     expect(watchRefusal(sim, sim.player, a.id)).toBe('You weren’t nominated, so there’s no ceremony of yours to watch.');
     sim.advanceTo(CREATIVE_ARTS);
     expect(entryOf(sim).state).toBe('not-nominated');
@@ -415,7 +415,7 @@ describe('X8 to X12: entry, the field, the nominations, the ceremony', () => {
     expect(resumeNow(sim.player, sim.now).lines).toContain('Emmy nomination: Outstanding Guest Actress In A Drama Series, for Desk Clerk in The Calloway Files, 2027');
     sim.must({ kind: 'pro.update_resume', payload: {} });
     sim.advanceTo(FINAL_ENDS);
-    expect(entryOf(sim).field!.winner).toBe('you');
+    expect(entryOf(sim).field!.winner).toBe(`you:${c.id}`);
     // Settled, and still the player's to learn: until the ceremony it reads as a nomination.
     expect(entryOf(sim).state).toBe('nominated');
     const reloaded = reload(sim);
@@ -439,6 +439,58 @@ describe('X8 to X12: entry, the field, the nominations, the ceremony', () => {
     expect(recognitionOf(reload(sim).player).map((r) => r.words)).toEqual(['You won Outstanding Guest Actress In A Drama Series at the 79th Emmy Awards, for Desk Clerk in The Calloway Files.']);
     // A program's award is never the performer's: every category the game enters is a performer's.
     expect(Object.values(EMMY_CATEGORIES).every((k) => /Actor|Actress|Performance/.test(k.actorName))).toBe(true);
+  });
+
+  it('PLAYER JOURNEY: two guest parts of yours in one category, for different programs, are one field: both nominated, one award, and the notices, the ceremony and the recap say which part won it', () => {
+    // The 78th's rules: a performer "may enter multiple achievements in a performing category if the achievements are for
+    // different programs", and a category award is "a single, must-give award" (N23). Until brief 27's F each entry drew a
+    // field of its own, and a long career won one guest award three times at one show (tools/long-career.ts).
+    const sim = graduate('awards-journey-0');
+    skilled(sim);
+    ensurePro(sim, sim.player).sag = { eligibleSince: sim.now - 60 * MS_DAY, memberSince: sim.now - 30 * MS_DAY };
+    // TEST SETUP: two offers as casting writes them, a guest part in each of two dramas, on days that don't meet.
+    const offers = [offerFor(sim, 'calloway-files', at(2026, 9, 7)), offerFor(sim, 'northern-line', at(2026, 8, 17))];
+    for (const o of offers) sim.must({ kind: 'pro.accept_offer', payload: { opportunityId: o.id } });
+    const es = offers.map((o) => sim.player.pro!.engagements.find((x) => x.opportunityId === o.id)!);
+    for (const e of es) prepared(sim, e, ['read', 'lines', 'rehearse']);
+    for (let n = 0; n < 6 && es.some((e) => e.status !== 'finished'); n += 1) played(sim, Math.max(...es.map((e) => e.days.at(-1)!.to)) + MS_HOUR);
+    const [calloway, ferry] = es.map((e) => sim.player.pro!.credits.find((x) => x.engagementId === e.id)!) as [ProCredit, ProCredit];
+    played(sim, at(2027, 4, 1));
+    for (const c of [calloway, ferry]) {
+      expect(emmyCheck(sim, sim.player, c)).toMatchObject({ eligible: true, year: 2027, category: 'guest-drama' });
+      sim.must({ kind: 'pro.award_enter', payload: { creditId: c.id } });
+    }
+    sim.advanceTo(NOMINATIONS);
+    const [a, b] = sim.player.pro!.awards!;
+    // One field: the same nominees and count, both parts in it, the count one more than a lone entry's.
+    expect(b!.field).toEqual(a!.field);
+    expect(a!.field!.submissions).toBe(fieldDrawn(sim, 2027, 'guest-drama').submissions + 1);
+    expect(a!.field!.nominees.filter((id) => id.startsWith('you:')).sort()).toEqual([`you:${calloway.id}`, `you:${ferry.id}`].sort());
+    expect([a!.state, b!.state]).toEqual(['nominated', 'nominated']);
+    expect(notices(sim).filter((n) => n.includes('Another part of yours is nominated in the category too, and only one of the two can win it.')).length).toBe(2);
+    played(sim, CREATIVE_ARTS);
+    // One award: this seed's final round gives it to the Calloway part (its premise).
+    expect([a!.state, b!.state]).toEqual(['won', 'lost']);
+    expect(b!.field!.winner).toBe(`you:${calloway.id}`);
+    expect(recapWords(sim.player, b!)).toBe('Nominated for Outstanding Guest Actress In A Drama Series at the 79th Emmy Awards, for The Ferry Engineer in Northern Line. You won it for Desk Clerk in The Calloway Files instead.');
+    const lines = ceremonyLines(sim.player, b!);
+    expect(lines[0]).toBe(`First come the nominees for Outstanding Guest Actress In A Drama Series: you, for The Ferry Engineer in Northern Line, you again, for Desk Clerk in The Calloway Files, and ${a!.field!.nominations - 2} other performers.`);
+    expect(lines.at(-1)).toBe('It’s you, for Desk Clerk in The Calloway Files: you won Outstanding Guest Actress In A Drama Series at the 79th Emmy Awards for that part, and this nomination stands.');
+    expect(recognitionOf(sim.player).filter((r) => r.words.startsWith('You won')).length).toBe(1);
+  });
+
+  it('a field drawn before brief 27’s F, the player in it as `you`, is still read as the player’s: won at the ceremony, its lines unchanged', () => {
+    const { sim, c } = wrapped('awards-journey-0', 'calloway-files');
+    sim.must({ kind: 'pro.award_enter', payload: { creditId: c.id } });
+    sim.advanceTo(FINAL_ENDS);
+    // TEST SETUP: the field as a build before 2026-10-25 kept it, the player's id `you` (a save from then holds such fields).
+    const f = entryOf(sim).field!;
+    const old = { ...f, nominees: f.nominees.map((id) => (id === `you:${c.id}` ? 'you' : id)), standing: Object.fromEntries(Object.entries(f.standing).map(([k, v]) => [k === `you:${c.id}` ? 'you' : k, v])), winner: 'you' };
+    entryOf(sim).field = old;
+    const back = reload(sim);
+    back.advanceTo(CREATIVE_ARTS);
+    expect(entryOf(back).state).toBe('won');
+    expect(ceremonyLines(back.player, entryOf(back))[0]).toBe(`First come the nominees for Outstanding Guest Actress In A Drama Series: you, for Desk Clerk in The Calloway Files, and ${old.nominations - 1} other performers.`);
   });
 
   it('ANON-04, T92: an entry whose scenes were all cut in the edit is disqualified at the nominations, the pay untouched', () => {

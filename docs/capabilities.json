@@ -3448,7 +3448,7 @@
         "interaction": "Implemented",
         "verified": "Partial"
       },
-      "limits": "It holds the records the career already reads, never another service's: the IMDb-style database of 2026-10-08 (database-search, drill-down) stays retired, and no plot, review, trivia or image is held. A catalog production's page names only the parts the game drew from it that were posted to the player. Not yet played in the built app or on a phone; brief 27's F does."
+      "limits": "It holds the records the career already reads, never another service's: the IMDb-style database of 2026-10-08 (database-search, drill-down) stays retired, and no plot, review, trivia or image is held. A catalog production's page names only the parts the game drew from it that were posted to the player. Until brief 27's F it hadn't been played in the built app; F walked it at three sizes from two long careers' saves (docs/verification/career-universe-2026-10-24/walk/k8), by Chromium's emulation, not on a physical phone."
     }
   ]
 }
