@@ -2,7 +2,7 @@
 // app, at a desk (1440 x 900), on a phone on its side (844 x 390) and upright (390 x 844), each from a long career's save
 // (`tools/long-career.ts --keep`). At each size, pressed as a player presses it:
 //   1. Career, then Productions And People: the front page, its lists and Find;
-//   2. a project under Your Work, the first whose page offers an action, and its company and Back to it;
+//   2. a project under Your Work, the latest whose page offers an action, and its company and Back to it;
 //   3. that action, to the tab it names, then Productions And People again: the same page, the same trail;
 //   4. the trail's first crumb to the front page, a series, its season under way and an episode, each a link on the
 //      page before, and Back twice to the series;
@@ -91,11 +91,17 @@ for (const size of SIZES) {
     });
     let project = null;
     await step('project', async () => {
-      // The first project under Your Work whose page offers an action, else the first: each opened, and Back if it has none.
-      const entries = () => page.locator('#main section, #main .card').filter({ has: page.getByRole('heading', { name: /^Your Work$/ }) }).first().locator('button.link');
-      const count = Math.min(8, await entries().count());
+      // The latest project under Your Work whose page offers an action, else the latest: each opened, newest first, and Back
+      // if it has none. A long career's oldest work is past the record's bound (`keepBounded`), its credit kept and its
+      // posting and work gone, so it has nothing to act on.
+      const panel = () => page.locator('#main section, #main .card').filter({ has: page.getByRole('heading', { name: /^Your Work$/ }) }).first();
+      const all = panel().getByRole('button', { name: /^Show All/ });
+      if (await all.count()) await press(all.first());
+      const entries = () => panel().locator('button.link');
+      const total = await entries().count();
+      const count = Math.min(8, total);
       for (let i = 0; i < count; i += 1) {
-        const e = entries().nth(i);
+        const e = entries().nth(total - 1 - i);
         project = (await e.textContent())?.trim();
         await press(e);
         if (await page.getByRole('heading', { name: /^What You Can Do$/ }).count()) return { project, withAction: true, tried: i + 1 };
@@ -157,7 +163,7 @@ for (const size of SIZES) {
     await step('recognition', async () => {
       await tab('Charts And Awards');
       const body = await page.locator('#main').innerText();
-      return { actorAwards: /Actor Awards/.test(body), ceremony: /(Go To The Ceremony|Watch From Home|Prepare Your Remarks|Go Up And Accept|You went up|watched)/i.test(body) };
+      return { actorAwards: /Actor Awards/.test(body), ceremony: /(Go To The Ceremony|Watch From Home|Prepare Your Remarks|Go Up And Accept|Then the envelope is opened|You went up)/.test(body) };
     });
   } catch (e) {
     steps.push({ step: 'open', ok: false, error: String(e.message ?? e).slice(0, 300) });

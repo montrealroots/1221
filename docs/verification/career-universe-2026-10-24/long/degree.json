@@ -1,0 +1,164 @@
+{
+ "save": "degree",
+ "commit": "7545e2d7, its source played before the commit was made (the ceremony, the record bound and the career player as committed there)",
+ "from": "August 4, 2029",
+ "to": "August 4, 2033",
+ "yearsAsked": 4,
+ "ended": null,
+ "seconds": 1177,
+ "yearly": [
+  {
+   "at": "August 4, 2030",
+   "credits": 7,
+   "booked": 10,
+   "cash": "$80,356.48"
+  },
+  {
+   "at": "August 4, 2031",
+   "credits": 26,
+   "booked": 28,
+   "cash": "$128,524"
+  },
+  {
+   "at": "August 3, 2032",
+   "credits": 46,
+   "booked": 50,
+   "cash": "$188,836"
+  },
+  {
+   "at": "August 3, 2033",
+   "credits": 61,
+   "booked": 50,
+   "cash": "$248,628"
+  },
+  {
+   "at": "August 4, 2033",
+   "credits": 61,
+   "booked": 50,
+   "cash": "$248,618"
+  }
+ ],
+ "opportunities": {
+  "total": 41,
+  "byStatus": {
+   "passed": 16,
+   "booked": 6,
+   "lapsed": 12,
+   "declined": 6,
+   "open": 1
+  },
+  "byOrigin": {
+   "fixed": 7,
+   "drawn": 1,
+   "slate": 33
+  },
+  "direct": 9,
+  "held": 0,
+  "rounds": {
+   "audition:done": 19,
+   "callback:done": 4,
+   "audition:missed": 3
+  }
+ },
+ "engagements": {
+  "total": 50,
+  "byStatus": {
+   "finished": 45,
+   "canceled": 1,
+   "working": 1,
+   "booked": 3
+  },
+  "byOrigin": {
+   "fixed": 8,
+   "slate": 40,
+   "drawn": 2
+  },
+  "byFormat": {
+   "independent-feature": 10,
+   "serialized-comedy": 6,
+   "animated-series": 3,
+   "animated-feature": 1,
+   "single-camera-comedy": 4,
+   "short": 3,
+   "procedural": 8,
+   "multicam-comedy": 2,
+   "serialized-drama": 7,
+   "play": 3,
+   "limited-series": 2,
+   "narration": 1
+  }
+ },
+ "happened": {
+  "loop": 24,
+  "promo": 8,
+  "release": 2,
+  "cut": 6,
+  "weather": 4
+ },
+ "credits": {
+  "total": 61,
+  "byStatus": {
+   "released": 53,
+   "shot": 6,
+   "performed": 2
+  },
+  "byMedium": {
+   "film": 16,
+   "television": 43,
+   "stage": 2
+  },
+  "withRun": 9,
+  "release": {
+   "on-time": 53,
+   "late": 6
+  }
+ },
+ "awards": {
+  "emmys": {
+   "lost": 12,
+   "not-nominated": 4,
+   "won": 7,
+   "nominated": 9,
+   "entered": 8
+  },
+  "actorAwards": {
+   "not-nominated": 26,
+   "lost": 3,
+   "won": 5
+  },
+  "festivals": {
+   "not-selected": 8,
+   "not-submitted": 2
+  },
+  "attended": {
+   "declined:to come:-": 8,
+   "attending:there:-": 8,
+   "attending:there:speech": 11,
+   "attending:to come:-": 9
+  }
+ },
+ "representation": {
+  "agreements": {
+   "ended": 3,
+   "lapsed": 2,
+   "accepted": 1
+  },
+  "relations": {
+   "thomas-ashgrove": "passed",
+   "dan-patack": "represented",
+   "jay-schachter": "passed",
+   "rachel-grandizio": "declined"
+  }
+ },
+ "unions": {
+  "sag": "member"
+ },
+ "reference": {
+  "entries": 350,
+  "yourWork": 81,
+  "unopened": []
+ },
+ "breaches": [],
+ "reloadSame": true,
+ "transcriptLines": 9103
+}

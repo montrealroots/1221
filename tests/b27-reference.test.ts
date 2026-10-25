@@ -22,10 +22,10 @@ import { describe, expect, it, vi } from 'vitest';
 import { createElement } from 'react';
 import { renderToStaticMarkup } from 'react-dom/server';
 import type { Simulation } from '@/engine/core/simulation';
-import { MS_DAY, MS_HOUR } from '@/engine/core/time';
+import { MS_DAY, MS_HOUR, formatDate } from '@/engine/core/time';
 import { CATALOG, productionById } from '@/engine/content/catalog';
 import { PROJECTS, projectById } from '@/engine/content/careerwork';
-import { SERIES, addSeries, episodeDays, type SeriesTemplate } from '@/engine/content/series';
+import { SERIES, addSeries, episodeDays, seasonWindow, type SeriesTemplate } from '@/engine/content/series';
 import { audienceWords, decisionWords, decisionsTo, seasonAudience } from '@/engine/systems/series';
 import { productionsOf } from '@/engine/systems/slate';
 import type { Opportunity } from '@/engine/systems/pro';
@@ -251,6 +251,9 @@ describe('the game’s own projects', () => {
     expect(section(page, 'Seasons')!.facts.some((f) => f.to?.season === canceled.year)).toBe(false);
     const renewed = said.find((d) => d.what === 'renewed')!;
     expect(section(page, 'Seasons')!.facts.find((f) => f.to?.season === renewed.year)!.words).toMatch(/^Renewed; shot from /);
+    // The season before the cancellation, stopped by the word: shot to that day, said so.
+    const stopped = pageOf(sim, sim.player, { kind: 'season', id: s!.id, season: canceled.year - 1 })!;
+    expect(factOf(stopped, 'The Season', 'The Shoot')!.words).toBe(`Shot from ${formatDate(seasonWindow(s!, canceled.year - 1).from, sim.zone)} to ${formatDate(canceled.at, sim.zone)}, when the network ended it`);
   });
 
   it('says a release is shelved only once the player has been told; the falsifiability twin on time says when it came out', () => {

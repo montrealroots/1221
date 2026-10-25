@@ -336,9 +336,15 @@ export function seasonsKnown(sim: Simulation, s: SeriesTemplate): number[] {
   return out;
 }
 
-/** A season's shoot, from its first day to its last, said as past, under way or to come. */
+/**
+ * A season's shoot, from its first day to its last, said as past, under way or to come; and, once the network's word has
+ * stopped it early, to that day. Until brief 27's F walk of a long career's save, a season the network canceled in May
+ * said it was shot to the end of its window, beside the word that stopped it a fortnight before.
+ */
 function shootWords(sim: Simulation, s: SeriesTemplate, year: number): string {
   const w = seasonWindow(s, year);
+  const ends = productionEnds(sim, s, year);
+  if (ends < w.to && ends <= sim.now) return `shot from ${dated(sim, w.from)} to ${dated(sim, ends)}, when the network ended it`;
   const last = instantFromZoned({ year: year + 1, month: s.season.to[0], day: s.season.to[1], hour: 12, minute: 0 }, 'America/New_York');
   const span = `${dated(sim, w.from)} to ${dated(sim, last)}`;
   return w.to <= sim.now ? `shot from ${span}` : w.from <= sim.now ? `shooting from ${span}` : `to shoot from ${span}`;

@@ -1,0 +1,145 @@
+{
+ "save": "last-term",
+ "commit": "7545e2d7, its source played before the commit was made (the ceremony, the record bound and the career player as committed there)",
+ "from": "March 1, 2029",
+ "to": "August 31, 2033",
+ "yearsAsked": 4.5,
+ "ended": null,
+ "seconds": 891,
+ "yearly": [
+  {
+   "at": "March 1, 2030",
+   "credits": 4,
+   "booked": 6,
+   "cash": "$88,235.25"
+  },
+  {
+   "at": "March 1, 2031",
+   "credits": 12,
+   "booked": 14,
+   "cash": "$109,232"
+  },
+  {
+   "at": "February 29, 2032",
+   "credits": 15,
+   "booked": 16,
+   "cash": "$106,562"
+  },
+  {
+   "at": "February 28, 2033",
+   "credits": 16,
+   "booked": 17,
+   "cash": "$96,239.07"
+  },
+  {
+   "at": "August 31, 2033",
+   "credits": 16,
+   "booked": 18,
+   "cash": "$89,232.00"
+  }
+ ],
+ "opportunities": {
+  "total": 42,
+  "byStatus": {
+   "lapsed": 39,
+   "booked": 1,
+   "open": 2
+  },
+  "byOrigin": {
+   "fixed": 19,
+   "slate": 23
+  },
+  "direct": 1,
+  "held": 0,
+  "rounds": {}
+ },
+ "engagements": {
+  "total": 18,
+  "byStatus": {
+   "finished": 16,
+   "canceled": 1,
+   "booked": 1
+  },
+  "byOrigin": {
+   "slate": 16,
+   "fixed": 2
+  },
+  "byFormat": {
+   "serialized-drama": 3,
+   "independent-feature": 4,
+   "serialized-comedy": 2,
+   "procedural": 1,
+   "multicam-comedy": 1,
+   "limited-series": 1,
+   "tv-movie": 1,
+   "animated-series": 2,
+   "animated-feature": 1,
+   "play": 1,
+   "student-film": 1
+  }
+ },
+ "happened": {
+  "loop": 4,
+  "release": 1,
+  "cut": 1,
+  "promo": 4
+ },
+ "credits": {
+  "total": 16,
+  "byStatus": {
+   "released": 14,
+   "shot": 1,
+   "performed": 1
+  },
+  "byMedium": {
+   "television": 11,
+   "film": 4,
+   "stage": 1
+  },
+  "withRun": 3,
+  "release": {
+   "on-time": 14,
+   "shelved": 1
+  }
+ },
+ "awards": {
+  "emmys": {
+   "lost": 1,
+   "not-nominated": 8,
+   "won": 2
+  },
+  "actorAwards": {
+   "lost": 2,
+   "not-nominated": 8,
+   "won": 1,
+   "submitted": 1
+  },
+  "festivals": {
+   "not-selected": 3
+  },
+  "attended": {
+   "declined:to come:-": 3,
+   "attending:there:-": 2,
+   "attending:there:speech": 1
+  }
+ },
+ "representation": {
+  "agreements": {
+   "ended": 1
+  },
+  "relations": {
+   "thomas-ashgrove": "ended"
+  }
+ },
+ "unions": {
+  "sag": "member"
+ },
+ "reference": {
+  "entries": 242,
+  "yourWork": 45,
+  "unopened": []
+ },
+ "breaches": [],
+ "reloadSame": true,
+ "transcriptLines": 3363
+}

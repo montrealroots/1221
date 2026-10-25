@@ -1,0 +1,456 @@
+{
+ "save": "/tmp/claude-0/-home-user-1221/93119f3d-c8d9-5356-8130-0e0fe32e5c95/scratchpad/b27/long2/degree.json.gz",
+ "base": "http://localhost:4241",
+ "sizes": [
+  {
+   "size": "desk-1440x900",
+   "ok": true,
+   "steps": [
+    {
+     "step": "front-page",
+     "ok": true,
+     "error": null,
+     "read": {
+      "groups": [
+       "Your Work",
+       "Series",
+       "Productions The Game Read",
+       "Companies And Agencies",
+       "People"
+      ]
+     },
+     "pageWider": 0,
+     "controlsOut": [],
+     "heading": "Your Work",
+     "tab": "Productions And People",
+     "problems": []
+    },
+    {
+     "step": "project",
+     "ok": true,
+     "error": null,
+     "read": {
+      "project": "The Margins On Larkin Street",
+      "withAction": true,
+      "tried": 1
+     },
+     "pageWider": 0,
+     "controlsOut": [],
+     "heading": "The Margins On Larkin Street Simulated",
+     "tab": "Productions And People",
+     "problems": []
+    },
+    {
+     "step": "company-and-back",
+     "ok": true,
+     "error": null,
+     "read": {
+      "opened": "Briar Row Pictures",
+      "heading": "Briar Row Pictures Simulated",
+      "backTo": "The Margins On Larkin Street Simulated"
+     },
+     "pageWider": 0,
+     "controlsOut": [],
+     "heading": "The Margins On Larkin Street Simulated",
+     "tab": "Productions And People",
+     "problems": []
+    },
+    {
+     "step": "action-and-return",
+     "ok": true,
+     "error": null,
+     "read": {
+      "pressed": "Open Charts And Awards",
+      "opened": "Charts And Awards",
+      "cameBackTo": "The Margins On Larkin Street Simulated"
+     },
+     "pageWider": 0,
+     "controlsOut": [],
+     "heading": "The Margins On Larkin Street Simulated",
+     "tab": "Productions And People",
+     "problems": []
+    },
+    {
+     "step": "series",
+     "ok": true,
+     "error": null,
+     "read": {
+      "heading": "The Calloway Files Simulated"
+     },
+     "pageWider": 0,
+     "controlsOut": [],
+     "heading": "The Calloway Files Simulated",
+     "tab": "Productions And People",
+     "problems": []
+    },
+    {
+     "step": "season",
+     "ok": true,
+     "error": null,
+     "read": {
+      "heading": "The Calloway Files: The Eleventh Season Simulated"
+     },
+     "pageWider": 0,
+     "controlsOut": [],
+     "heading": "The Calloway Files: The Eleventh Season Simulated",
+     "tab": "Productions And People",
+     "problems": []
+    },
+    {
+     "step": "episode",
+     "ok": true,
+     "error": null,
+     "read": {
+      "heading": "The Calloway Files: Episode 1 Simulated"
+     },
+     "pageWider": 0,
+     "controlsOut": [],
+     "heading": "The Calloway Files: Episode 1 Simulated",
+     "tab": "Productions And People",
+     "problems": []
+    },
+    {
+     "step": "back-to-series",
+     "ok": true,
+     "error": null,
+     "read": {
+      "heading": "The Calloway Files Simulated"
+     },
+     "pageWider": 0,
+     "controlsOut": [],
+     "heading": "The Calloway Files Simulated",
+     "tab": "Productions And People",
+     "problems": []
+    },
+    {
+     "step": "find-a-person",
+     "ok": true,
+     "error": null,
+     "read": {
+      "heading": "Tim Minear Verified"
+     },
+     "pageWider": 0,
+     "controlsOut": [],
+     "heading": "Tim Minear Verified",
+     "tab": "Productions And People",
+     "problems": []
+    },
+    {
+     "step": "recognition",
+     "ok": true,
+     "error": null,
+     "read": {
+      "actorAwards": true,
+      "ceremony": true
+     },
+     "pageWider": 0,
+     "controlsOut": [],
+     "heading": "Your Recognition",
+     "tab": "Charts And Awards",
+     "problems": []
+    }
+   ],
+   "problems": []
+  },
+  {
+   "size": "side-844x390",
+   "ok": true,
+   "steps": [
+    {
+     "step": "front-page",
+     "ok": true,
+     "error": null,
+     "read": {
+      "groups": [
+       "Your Work",
+       "Series",
+       "Productions The Game Read",
+       "Companies And Agencies",
+       "People"
+      ]
+     },
+     "pageWider": 0,
+     "controlsOut": [],
+     "heading": "Your Work",
+     "tab": "Productions And People",
+     "problems": []
+    },
+    {
+     "step": "project",
+     "ok": true,
+     "error": null,
+     "read": {
+      "project": "The Margins On Larkin Street",
+      "withAction": true,
+      "tried": 1
+     },
+     "pageWider": 0,
+     "controlsOut": [],
+     "heading": "The Margins On Larkin Street Simulated",
+     "tab": "Productions And People",
+     "problems": []
+    },
+    {
+     "step": "company-and-back",
+     "ok": true,
+     "error": null,
+     "read": {
+      "opened": "Briar Row Pictures",
+      "heading": "Briar Row Pictures Simulated",
+      "backTo": "The Margins On Larkin Street Simulated"
+     },
+     "pageWider": 0,
+     "controlsOut": [],
+     "heading": "The Margins On Larkin Street Simulated",
+     "tab": "Productions And People",
+     "problems": []
+    },
+    {
+     "step": "action-and-return",
+     "ok": true,
+     "error": null,
+     "read": {
+      "pressed": "Open Charts And Awards",
+      "opened": "Charts And Awards",
+      "cameBackTo": "The Margins On Larkin Street Simulated"
+     },
+     "pageWider": 0,
+     "controlsOut": [],
+     "heading": "The Margins On Larkin Street Simulated",
+     "tab": "Productions And People",
+     "problems": []
+    },
+    {
+     "step": "series",
+     "ok": true,
+     "error": null,
+     "read": {
+      "heading": "The Calloway Files Simulated"
+     },
+     "pageWider": 0,
+     "controlsOut": [],
+     "heading": "The Calloway Files Simulated",
+     "tab": "Productions And People",
+     "problems": []
+    },
+    {
+     "step": "season",
+     "ok": true,
+     "error": null,
+     "read": {
+      "heading": "The Calloway Files: The Eleventh Season Simulated"
+     },
+     "pageWider": 0,
+     "controlsOut": [],
+     "heading": "The Calloway Files: The Eleventh Season Simulated",
+     "tab": "Productions And People",
+     "problems": []
+    },
+    {
+     "step": "episode",
+     "ok": true,
+     "error": null,
+     "read": {
+      "heading": "The Calloway Files: Episode 1 Simulated"
+     },
+     "pageWider": 0,
+     "controlsOut": [],
+     "heading": "The Calloway Files: Episode 1 Simulated",
+     "tab": "Productions And People",
+     "problems": []
+    },
+    {
+     "step": "back-to-series",
+     "ok": true,
+     "error": null,
+     "read": {
+      "heading": "The Calloway Files Simulated"
+     },
+     "pageWider": 0,
+     "controlsOut": [],
+     "heading": "The Calloway Files Simulated",
+     "tab": "Productions And People",
+     "problems": []
+    },
+    {
+     "step": "find-a-person",
+     "ok": true,
+     "error": null,
+     "read": {
+      "heading": "Tim Minear Verified"
+     },
+     "pageWider": 0,
+     "controlsOut": [],
+     "heading": "Tim Minear Verified",
+     "tab": "Productions And People",
+     "problems": []
+    },
+    {
+     "step": "recognition",
+     "ok": true,
+     "error": null,
+     "read": {
+      "actorAwards": true,
+      "ceremony": true
+     },
+     "pageWider": 0,
+     "controlsOut": [],
+     "heading": "Your Recognition",
+     "tab": "Charts And Awards",
+     "problems": []
+    }
+   ],
+   "problems": []
+  },
+  {
+   "size": "upright-390x844",
+   "ok": true,
+   "steps": [
+    {
+     "step": "front-page",
+     "ok": true,
+     "error": null,
+     "read": {
+      "groups": [
+       "Your Work",
+       "Series",
+       "Productions The Game Read",
+       "Companies And Agencies",
+       "People"
+      ]
+     },
+     "pageWider": 0,
+     "controlsOut": [],
+     "heading": "Your Work",
+     "tab": "Productions And People",
+     "problems": []
+    },
+    {
+     "step": "project",
+     "ok": true,
+     "error": null,
+     "read": {
+      "project": "The Margins On Larkin Street",
+      "withAction": true,
+      "tried": 1
+     },
+     "pageWider": 0,
+     "controlsOut": [],
+     "heading": "The Margins On Larkin Street Simulated",
+     "tab": "Productions And People",
+     "problems": []
+    },
+    {
+     "step": "company-and-back",
+     "ok": true,
+     "error": null,
+     "read": {
+      "opened": "Briar Row Pictures",
+      "heading": "Briar Row Pictures Simulated",
+      "backTo": "The Margins On Larkin Street Simulated"
+     },
+     "pageWider": 0,
+     "controlsOut": [],
+     "heading": "The Margins On Larkin Street Simulated",
+     "tab": "Productions And People",
+     "problems": []
+    },
+    {
+     "step": "action-and-return",
+     "ok": true,
+     "error": null,
+     "read": {
+      "pressed": "Open Charts And Awards",
+      "opened": "Charts And Awards",
+      "cameBackTo": "The Margins On Larkin Street Simulated"
+     },
+     "pageWider": 0,
+     "controlsOut": [],
+     "heading": "The Margins On Larkin Street Simulated",
+     "tab": "Productions And People",
+     "problems": []
+    },
+    {
+     "step": "series",
+     "ok": true,
+     "error": null,
+     "read": {
+      "heading": "The Calloway Files Simulated"
+     },
+     "pageWider": 0,
+     "controlsOut": [],
+     "heading": "The Calloway Files Simulated",
+     "tab": "Productions And People",
+     "problems": []
+    },
+    {
+     "step": "season",
+     "ok": true,
+     "error": null,
+     "read": {
+      "heading": "The Calloway Files: The Eleventh Season Simulated"
+     },
+     "pageWider": 0,
+     "controlsOut": [],
+     "heading": "The Calloway Files: The Eleventh Season Simulated",
+     "tab": "Productions And People",
+     "problems": []
+    },
+    {
+     "step": "episode",
+     "ok": true,
+     "error": null,
+     "read": {
+      "heading": "The Calloway Files: Episode 1 Simulated"
+     },
+     "pageWider": 0,
+     "controlsOut": [],
+     "heading": "The Calloway Files: Episode 1 Simulated",
+     "tab": "Productions And People",
+     "problems": []
+    },
+    {
+     "step": "back-to-series",
+     "ok": true,
+     "error": null,
+     "read": {
+      "heading": "The Calloway Files Simulated"
+     },
+     "pageWider": 0,
+     "controlsOut": [],
+     "heading": "The Calloway Files Simulated",
+     "tab": "Productions And People",
+     "problems": []
+    },
+    {
+     "step": "find-a-person",
+     "ok": true,
+     "error": null,
+     "read": {
+      "heading": "Tim Minear Verified"
+     },
+     "pageWider": 0,
+     "controlsOut": [],
+     "heading": "Tim Minear Verified",
+     "tab": "Productions And People",
+     "problems": []
+    },
+    {
+     "step": "recognition",
+     "ok": true,
+     "error": null,
+     "read": {
+      "actorAwards": true,
+      "ceremony": true
+     },
+     "pageWider": 0,
+     "controlsOut": [],
+     "heading": "Your Recognition",
+     "tab": "Charts And Awards",
+     "problems": []
+    }
+   ],
+   "problems": []
+  }
+ ]
+}
