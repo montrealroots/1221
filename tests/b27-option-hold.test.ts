@@ -23,7 +23,7 @@ import { productionsOf } from '@/engine/systems/slate';
 import { ensurePro, type Engagement, type Opportunity } from '@/engine/systems/pro';
 import { clauseOf } from '@/engine/systems/contracts';
 import { DIRECT, acceptRefusal, acceptWarning, datesOf, directOfferFor, payTermsOf, postingTimes, postingsAt, spansOf, travels, writtenFor } from '@/engine/systems/projobs';
-import { gaveUpWith, heldOptions, optionDays, optionReleaseRefusal, releaseAnswerAt, releaseGranted } from '@/engine/systems/continuity';
+import { OPTION_RELEASE, gaveUpWith, heldOptions, optionDays, optionReleaseRefusal, releaseAnswerAt, releaseChance, releaseGranted } from '@/engine/systems/continuity';
 import type { Simulation } from '@/engine/core/simulation';
 import { at, graduate, notices, played, reload } from './fakes/career-world';
 import { represent } from './fakes/b20-career';
@@ -156,5 +156,10 @@ describe('an option’s hold on the actor’s dates', () => {
     o.offer!.until = sim.now + 2 * MS_HOUR;
     expect(optionReleaseRefusal(sim, sim.player, o)).toMatch(/^The offer lapses on .* before Bright Harbor Television could answer, so it’s a choice between them now\.$/);
     expect(sim.execute({ kind: 'pro.ask_option_release', payload: { opportunityId: 'none' } }).error).toBe('There’s no offer standing to weigh against an option.');
+    // How much the production wants the actor back is read: work judged Exceptional is let go less often than Working work,
+    // each within the answer's bounds.
+    const judged = (band: 'exceptional' | 'working'): Engagement => ({ ...e, log: e.log!.map((l) => (l.band ? { ...l, band } : l)) });
+    expect(releaseChance(judged('exceptional'))).toBeLessThan(releaseChance(judged('working')));
+    for (const band of ['exceptional', 'working'] as const) expect(releaseChance(judged(band))).toBeGreaterThanOrEqual(OPTION_RELEASE.least);
   }, 900_000);
 });
