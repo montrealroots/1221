@@ -28,6 +28,7 @@ import { genreState } from '@/engine/systems/engagement';
 import { PROJECTS, RATES, projectById } from '@/engine/content/careerwork';
 import { AGENTS } from '@/engine/content/agents';
 import { MEETING_KIND } from '@/engine/systems/proagent';
+import { submitsFor } from '@/engine/systems/representation';
 import { CLASSES_KIND } from '@/engine/systems/school';
 import { type Agreement, type Opportunity, activeAgreement } from '@/engine/systems/pro';
 import {
@@ -279,8 +280,9 @@ describe('J1: fictional roles, posted on a schedule', () => {
       expect(o.agreementId).toBe(a.id);
       expect(projectOf(o).access.agent).toBe(true);
     }
-    // Represented, a role open to both comes through him; an open-only one is posted openly still.
-    expect(sim.player.pro!.opportunities.filter((o) => o.postedAt > a.signedAt! && o.via === 'open').every((o) => !projectOf(o).access.agent)).toBe(true);
+    // Represented, a role open to both comes through him; an open-only one is posted openly still, and from 2026-10-25
+    // (brief 27) so is one his agreement doesn't cover, a voice part or work abroad (`submitsFor`).
+    expect(sim.player.pro!.opportunities.filter((o) => o.postedAt > a.signedAt! && o.via === 'open').every((o) => !projectOf(o).access.agent || !submitsFor(a, projectOf(o)))).toBe(true);
   });
 });
 
