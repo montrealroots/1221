@@ -6,7 +6,9 @@
  * accepted, with what giving the option up costs; Ask To Be Released and its refusals' words; the production's answer the
  * next afternoon, granted or refused by its draw; accepted after a release, nothing given up; accepted without one, the
  * option given up, the part in that season posted to the actor no more and the casting office offering nothing without an
- * audition; declined, the option standing to its last day. Each branch a fork of one played save.
+ * audition; declined, the option standing to its last day. Each branch a fork of one played save. From the review of
+ * 2026-10-25: a second offer on the option's days while an ask is pending on another says so, as the ask's refusal does,
+ * and a release granted after the offer was declined says there's nothing left to accept.
  *
  * PLAYER JOURNEYS: a graduate's Assistant DA Whitlock on The Calloway Files in its 2026 season, the offer accepted through
  * the command and played by the clock into June 2027, the option open; then an offer on the option's days, and the
@@ -97,6 +99,13 @@ describe('an option’s hold on the actor’s dates', () => {
     expect(asked.answerAt).toBe(releaseAnswerAt(released.now));
     expect(optionReleaseRefusal(released, released.player, o1)).toMatch(/^You’ve asked; Bright Harbor Television answers on /);
     expect(released.execute({ kind: 'pro.ask_option_release', payload: { opportunityId: o1.id } }).error).toMatch(/^You’ve asked;/);
+    // A second offer on the option's days, while the ask on the first is pending, says so as the ask's refusal does.
+    const second = conflicting(released, er).find(({ t }) => t.id !== t1.id)!;
+    const o1b = offered(released, second.t, second.week);
+    expect(acceptWarning(released, released.player, o1b)).toMatch(/You’ve asked Bright Harbor Television to release you, over another offer; the answer comes on /);
+    expect(acceptWarning(released, released.player, o1b)).not.toContain('Ask To Be Released, on this offer');
+    expect(optionReleaseRefusal(released, released.player, o1b)).toMatch(/^You’ve asked; Bright Harbor Television answers on /);
+    o1b.status = 'withdrawn';
     released.advanceTo(asked.answerAt + MS_HOUR);
     const r1 = clauseOf(er.contract, 'option')!;
     expect(r1).toMatchObject({ status: 'expired', release: { answer: 'granted' } });
@@ -139,6 +148,17 @@ describe('an option’s hold on the actor’s dates', () => {
     const when = [...Array(60).keys()].map((k) => at(2027, 9, 6) + k * WEEK).find((m) => released.rng('pro.direct', dateKey(m, 'America/New_York'), slate.id).next() < DIRECT.chance)!;
     expect(directOfferFor(released, released.player, slate, when)).toBeDefined();
     expect(directOfferFor(refused, refused.player, slate, when)).toBeUndefined();
+
+    // Asked, then declined before the answer: the release, granted, says there's nothing left to accept.
+    const late = reload(sim);
+    const el = late.player.pro!.engagements.find((x) => x.id === e.id)!;
+    const o4 = offerAnswered(late, el, true);
+    const a4 = late.must<{ answerAt: number }>({ kind: 'pro.ask_option_release', payload: { opportunityId: o4.id } });
+    late.must({ kind: 'pro.decline_offer', payload: { opportunityId: o4.id } });
+    late.advanceTo(a4.answerAt + MS_HOUR);
+    const part4 = projectById(o4.projectId)!.role.part;
+    expect(notices(late).some((n) => n.startsWith(`Released From The Option On Assistant DA Whitlock | Bright Harbor Television released you from its option as Assistant DA Whitlock. The offer for ${part4} isn’t standing any more, and nothing holds those days now,`))).toBe(true);
+    expect(notices(late).some((n) => n.includes(`You can accept the offer for ${part4}`))).toBe(false);
 
     // Declined: the option stands to its last day, and the production decides then as it would have.
     const declined = reload(sim);

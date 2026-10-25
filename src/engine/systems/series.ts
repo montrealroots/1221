@@ -11,9 +11,10 @@
  * it's judged and the record keeps whole (`ProRecord.seasonMarks`, `systems/market.ts`), each season reading only what
  * was posted before the word that follows it; so the seasons still read the same on every asking.
  *
- * **From 2026-10-25** (brief 27, Part 13): a series back after its cancellation may come back on another network, which
- * renews it from its own chance after (`PICKUP`); and two real series are continued after their verified baseline
- * (`REAL_SERIES`, `content/series.ts`), every season after it the simulation's, said so wherever a word on it is read.
+ * **From 2026-10-25** (brief 27, Part 13): a series back after its cancellation may come back on another network
+ * (`PICKUP`), which is then the network its seasons are seen on and says each word on them, at the series' own chance;
+ * and two real series are continued after their verified baseline (`REAL_SERIES`, `content/series.ts`), every season
+ * after it the simulation's, said so wherever a word on it is read.
  *
  * **What a decision does** (`registerSeries`, at the first stop of the clock after it, before anything due then):
  * canceled, the season's production stops that day, so a part not yet cast in it closes, and work booked in it for days
@@ -109,8 +110,8 @@ export function seasonAudienceWith(sim: Simulation, s: SeriesTemplate, year: num
  * tenth season). Its order, the contract, is the seasons it needs no word on. ASSUMPTION each weight, the game's.
  */
 export const RENEW_WEIGHTS = { audience: 0.25, critics: 0.15, age: { after: 9, each: 0.03 }, least: 0.05, most: 0.95 } as const;
-/** From 2026-10-25 a series another network picked up is renewed from that network's own chance (`PICKUP.renew`), `base`. */
-export function renewChance(sim: Simulation, s: SeriesTemplate, year: number, base: number = s.chance.renew): number {
+export function renewChance(sim: Simulation, s: SeriesTemplate, year: number): number {
+  const base = s.chance.renew;
   const last = seasonAudience(sim, s, year - 1);
   if (!last) return base;
   const audience = clamp(last.average / AUDIENCE[outletOf(s)].bar - 1, -1, 1);
@@ -123,11 +124,18 @@ export function renewChance(sim: Simulation, s: SeriesTemplate, year: number, ba
  * A canceled series picked up by another network (from 2026-10-25, the owner's brief 27, Part 13: "Revival or a
  * distributor change where plausible"; loop 41's "A later revival: requires a plausible new project event"): of the
  * series that come back, the share that come back on another outlet of the same kind, a broadcast series on another
- * network and a streaming one on another service, so its audience is counted as it was; and that network's own chance of
- * each season after. The network's name is the game's invention, from the slate's company words. ASSUMPTION each figure,
- * drawn by the series and the year it's back (decider `pro.pickup`).
+ * network and a streaming one on another service, so its audience is counted as it was. The network's name is the game's
+ * invention, from the slate's company words. ASSUMPTION the figure, drawn by the series and the year it's back (decider
+ * `pro.pickup`), on its own stream, so whether the series comes back is drawn as it was.
+ *
+ * The network that picks it up is the one its seasons are seen on (`networkOf`), on its credits and its pages, and the
+ * one whose word each May its decisions are said in; its seasons are renewed at the series' own chance, read from their
+ * audience and reviews as any series' are. Until the review of 2026-10-25 a pickup renewed it at a chance of the new
+ * network's own, `PICKUP.renew`: since decisions are worked out from the seed on every asking, a save from before, told
+ * a season was renewed after a revival, read it as canceled once the pickup's draw fell to another network (10 of 100
+ * saves of The Calloway Files by 2045), and the option and the season's casting with it.
  */
-export const PICKUP = { chance: 0.5, renew: 0.5 } as const;
+export const PICKUP = { chance: 0.5 } as const;
 
 /** Whether a series back in `year` came back on another network, and its name; nothing where its own network brought it back. */
 export function pickupOf(sim: Simulation, s: SeriesTemplate, year: number): string | undefined {
@@ -137,10 +145,14 @@ export function pickupOf(sim: Simulation, s: SeriesTemplate, year: number): stri
   return `${r.pick(COMPANY_WORDS.first)} ${r.pick(COMPANY_WORDS.second)} ${r.pick(kinds)}`;
 }
 
-/** The network a season of the series is seen on: the last that brought it back by `year`, or its own. */
+/**
+ * The network a season of the series is seen on: the last that brought it back by `year`, or its own, `since` the year
+ * another picked it up. A revival by its own network after a pickup takes it home: until the review of 2026-10-25 it
+ * kept the network that had picked it up, so its credits said "Seen on" one while its word said its own brought it back.
+ */
 export function networkOf(sim: Simulation, s: SeriesTemplate, year: number): { name: string; since?: number } {
   let net: { name: string; since?: number } = { name: s.company };
-  for (const d of decisionsTo(sim, s, year)) if (d.what === 'revived' && d.year <= year && d.network) net = { name: d.network, since: d.year };
+  for (const d of decisionsTo(sim, s, year)) if (d.what === 'revived' && d.year <= year) net = d.network ? { name: d.network, since: d.year } : { name: s.company };
   return net;
 }
 
@@ -157,19 +169,17 @@ export function decisionsTo(sim: Simulation, s: SeriesTemplate, year: number): S
   const out: SeasonDecision[] = [];
   let on = true;
   let offSince = 0;
-  let base = s.chance.renew;
   for (let y = s.orderedThrough + 1; y <= year; y += 1) {
     const draw = sim.rng('pro.series', s.id, y).next();
     if (on) {
       // Read from the last season's audience and reviews (`renewChance`, from 2026-10-25, brief 27): until then the
       // series' own chance alone, the same whatever its seasons did.
-      if (draw < renewChance(sim, s, y, base)) out.push({ year: y, at: decisionAt(s, y), what: 'renewed' });
+      if (draw < renewChance(sim, s, y)) out.push({ year: y, at: decisionAt(s, y), what: 'renewed' });
       else { on = false; offSince = y; out.push({ year: y, at: decisionAt(s, y), what: 'canceled' }); }
     } else if (y - offSince >= s.chance.reviveAfter && draw < s.chance.revive) {
       on = true;
-      // Back on another network, by its own draw, which renews it from then by its own chance (`PICKUP`).
+      // Back on another network, by its own draw (`PICKUP`): who has it, never whether it came back or what the next word is.
       const network = pickupOf(sim, s, y);
-      if (network) base = PICKUP.renew;
       out.push({ year: y, at: decisionAt(s, y), what: 'revived', ...(network ? { network } : {}) });
     }
   }
@@ -269,18 +279,32 @@ export function decisionWords(sim: Simulation, s: SeriesTemplate, d: SeasonDecis
   const last = d.what === 'revived' ? undefined : seasonAudience(sim, s, d.year - 1);
   const why = last ? ` Its last season averaged ${audienceWords(last)} and critics scored it ${last.critics} of 100, both the game’s estimates.` : '';
   // A real series' word is the simulation's (from 2026-10-25, brief 27, Part 13), and says so.
-  const real = s.real ? ' It’s the game’s own continuation of the real series, not an announcement.' : '';
+  const real = continuationWords(s);
   const sim_ = s.real ? ', in the game’s simulation,' : ',';
-  if (d.what === 'canceled') return `On ${when}${sim_} the network canceled ${s.title}, and its production stopped that day.${why}${real}`;
+  // Who says it: the network its last season was seen on, where another picked it up (`PICKUP`, `networkOf`); and a
+  // revival by its own network after that, the one that first aired it. Until the review of 2026-10-25 every word said
+  // "the network", which after a pickup read as the network that had picked it up.
+  const on = networkOf(sim, s, d.year - 1);
+  const says = on.since !== undefined ? (d.what === 'revived' ? 'the network that first aired it' : on.name) : 'the network';
+  if (d.what === 'canceled') return `On ${when}${sim_} ${says} canceled ${s.title}, and its production stopped that day.${why}${real}`;
   const n = seasonNumber(sim, s, d.year);
   const its = numbered(s) ? `, its ${ordinal(n)}` : '';
   // The month its season begins, its own: a serialized series' February until 2026-10-25 read "July", every series' then.
   const month = new Intl.DateTimeFormat('en-US', { month: 'long', timeZone: NY }).format(new Date(seasonWindow(s, d.year).from));
-  if (d.what === 'renewed') return `On ${when}${sim_} the network renewed ${s.title} for a season beginning in ${month}${its}.${why}${real}`;
+  if (d.what === 'renewed') return `On ${when}${sim_} ${says} renewed ${s.title} for a season beginning in ${month}${its}.${why}${real}`;
   // Back on another network (`PICKUP`): who, and that it's the game's invention.
   if (d.network) return `On ${when}${sim_} ${d.network}, a ${outletOf(s) === 'streaming' ? 'streaming service' : 'network'} invented for the game, picked up ${s.title} after its cancellation, for a season beginning in ${month}${its}.${real}`;
-  return `On ${when}${sim_} the network brought ${s.title} back for a season beginning in ${month}${its}.${real}`;
+  return `On ${when}${sim_} ${says} brought ${s.title} back for a season beginning in ${month}${its}.${real}`;
 }
+
+/**
+ * What a word on a real series' simulated future adds (from 2026-10-25, brief 27, Part 13: "Generated future offers,
+ * characters, renewals, and cancellations must belong explicitly to the simulation"): that it's the game's own, said with
+ * the network's words, a revival's character plans, a guest part's invitation back and an option with no season to take
+ * up. Nothing for a series the game invents, whose words say so already. Until the review of 2026-10-25 only the
+ * network's words said it.
+ */
+export const continuationWords = (s: SeriesTemplate): string => (s.real ? ' It’s the game’s own continuation of the real series, not an announcement.' : '');
 
 const ORD = ['first', 'second', 'third', 'fourth', 'fifth', 'sixth', 'seventh', 'eighth', 'ninth', 'tenth', 'eleventh', 'twelfth', 'thirteenth', 'fourteenth', 'fifteenth', 'sixteenth', 'seventeenth', 'eighteenth', 'nineteenth', 'twentieth'];
 export const ordinal = (n: number): string => ORD[n - 1] ?? `${n}th`;
@@ -476,7 +500,8 @@ export function registerSeries(sim: Simulation, hooks: SeriesHooks): void {
       if (!t || e.revival?.year === year) continue;
       const returns = revivalReturns(s, series, year, t);
       e.revival = { year, returns };
-      const words = `${series.title} is back after ${counted(off, 'year')} off, and its producers want ${t.role.part} back, with a new contract for its new season.`;
+      // A real series' revival is the simulation's, and says so (`continuationWords`).
+      const words = `${series.title} is back after ${counted(off, 'year')} off, and its producers want ${t.role.part} back, with a new contract for its new season.${continuationWords(series)}`;
       if (returns && hooks.bringBack(s, person, t, e, words)) {
         noteEvent(s, e, { kind: 'success', key: `revival:${year}`, words: `The producers of ${series.title} brought ${t.role.part} back for its new season, with an offer.` });
         continue;
@@ -484,8 +509,9 @@ export function registerSeries(sim: Simulation, hooks: SeriesHooks): void {
       const why = returns
         ? `${series.title} is back, and its producers wanted ${t.role.part} back, but its new season had no work for the part to offer you.`
         : `${series.title} is back after ${counted(off, 'year')} off without ${t.role.part}: its producers’ plans for the new season don’t bring the character back.`;
-      noteEvent(s, e, { kind: 'problem', key: `revival:${year}`, words: why });
-      hooks.tell(s, person, `${series.title} Comes Back Without ${t.role.part}`, `${why} Your work in its earlier seasons stays on your credits, and a part in it can still come through a new casting.`, 60);
+      const said = `${why}${continuationWords(series)}`;
+      noteEvent(s, e, { kind: 'problem', key: `revival:${year}`, words: said });
+      hooks.tell(s, person, `${series.title} Comes Back Without ${t.role.part}`, `${said} Your work in its earlier seasons stays on your credits, and a part in it can still come through a new casting.`, 60);
     }
   });
 
@@ -528,7 +554,7 @@ export function registerSeries(sim: Simulation, hooks: SeriesHooks): void {
       // A real series whose pages give no number names the season by its year (from 2026-10-25, `numbered`).
       hooks.tell(s, person, `No ${numbered(series) ? `${titled(ordinal(option.season))} Season` : `Season Beginning In ${option.year}`} For ${t.role.part}`, `${why} So there’s no contract for you in ${t.project}’s next season. A part in it can still come through a new casting.`, 70);
     };
-    if (!seasonMade(s, series, option.year)) { lapse(`${series.title} has no next season, so the option on you lapsed.`); return; }
+    if (!seasonMade(s, series, option.year)) { lapse(`${series.title} has no next season, so the option on you lapsed.${continuationWords(series)}`); return; }
     const days = episodeWorkDays(t, seasonWindow(series, option.year).from, t.schedule.kind === 'episodes' ? t.schedule.guaranteed : 0, option.year);
     const no = hooks.refusal(person, days, e.id);
     if (no) { lapse(`${t.company} couldn’t take up its option on you as ${t.role.part}: ${midSentence(no)}.`); return; }

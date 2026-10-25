@@ -49,7 +49,7 @@ import { noteEvent, type ContractClause, type Engagement, type Opportunity } fro
 import { clauseOf, OPTION_RAISE } from './contracts';
 import { termOf, qualityOf, productionKey } from './market';
 import {
-  AUDIENCE, OPTION_CHANCE, bestBandOf, networkOf, optionDrawn, outletOf, seasonAudience, seasonMade, seasonName,
+  AUDIENCE, OPTION_CHANCE, bestBandOf, continuationWords, networkOf, optionDrawn, outletOf, seasonAudience, seasonMade, seasonName,
   type SeriesHooks,
 } from './series';
 import { WORK, datesOf, spansOf, projectOf, type WorkDay } from './projobs';
@@ -129,7 +129,9 @@ const offerSpans = (person: Person, o: Opportunity) => spansOf(person, projectOf
 
 /**
  * What accepting an offer does to the options holding its days, said before it's pressed: the option, what it holds, and
- * what giving it up costs; and where the actor asked to be released, where that stands.
+ * what giving it up costs; and where the actor asked to be released, on this offer or another, where that stands, as the
+ * ask's refusal says it (`optionReleaseRefusal`). Until the review of 2026-10-25 an ask pending on another offer read
+ * "Ask To Be Released, on this offer, asks …", which the command then refused with "You've asked".
  */
 export function optionWarning(person: Person, o: Opportunity): string | undefined {
   const held = heldOptions(person, offerSpans(person, o));
@@ -137,9 +139,10 @@ export function optionWarning(person: Person, o: Opportunity): string | undefine
   return held.map(({ e, t, option, days }) => {
     const s = seriesOfOption(t);
     const season = s ? seasonFor(s, option.year) : `the next season of ${t.project}`;
-    const ask = option.release?.against === o.id && !option.release.answer
-      ? ` You’ve asked ${t.company} to release you; the answer comes on ${formatWeekdayDate(option.release.answerAt, NY)} at ${formatTime(option.release.answerAt, NY)}.`
-      : option.release?.answer === 'refused' ? ` ${t.company} refused to release you from it.` : ` Ask To Be Released, on this offer, asks ${t.company} to let you go first.`;
+    const r = option.release;
+    const ask = r && !r.answer
+      ? ` You’ve asked ${t.company} to release you${r.against === o.id ? '' : ', over another offer'}; the answer comes on ${formatWeekdayDate(r.answerAt, NY)} at ${formatTime(r.answerAt, NY)}.`
+      : r?.answer === 'refused' ? ` ${t.company} refused to release you from it.` : ` Ask To Be Released, on this offer, asks ${t.company} to let you go first.`;
     return `${t.company} holds an option on you as ${e.role} for ${season}, and its guaranteed episodes fall on some of the same days, ${daysWords(days)}. Accepting this gives the option up: the part in that season goes to another actor, and ${t.casting} won’t offer you a part without an audition again.${ask}`;
   }).join(' ');
 }
@@ -399,17 +402,23 @@ export function registerContinuity(sim: Simulation, hooks: SeriesHooks): void {
     if (!person || !e || !t || option?.status !== 'open' || option.release?.against !== against || option.release.answer) return;
     const offer = person.pro?.opportunities.find((x) => x.id === against);
     const what = offer ? `the offer for ${projectOf(offer).role.part}` : 'the other offer';
+    // What's left to choose, by where the offer stands now: declined before the answer, there's nothing to accept. Until
+    // the review of 2026-10-25 a release granted after the offer was declined still said "You can accept the offer".
+    const standing = offer?.status === 'offered' && (offer.offer?.until ?? 0) > s.now;
+    const gone = `${what.charAt(0).toUpperCase()}${what.slice(1)} isn’t standing any more`;
     if (releaseGranted(s, e, against)) {
       option.release.answer = 'granted';
       option.status = 'expired';
       option.settled = { at: s.now, why: `${t.company} released you from its option as ${e.role}, at your asking.` };
       noteEvent(s, e, { kind: 'success', key: `option:${option.year}`, words: option.settled.why });
-      tellOf(s, person, `Released From The Option On ${e.role}`, `${t.company} released you from its option as ${e.role}. You can accept ${what} without giving anything up, and a part in ${t.project}’s next season can still come through a new casting.`, 70);
+      const then = standing ? `You can accept ${what} without giving anything up` : `${gone}, and nothing holds those days now`;
+      tellOf(s, person, `Released From The Option On ${e.role}`, `${t.company} released you from its option as ${e.role}. ${then}, and a part in ${t.project}’s next season can still come through a new casting.`, 70);
       return;
     }
     option.release.answer = 'refused';
     noteEvent(s, e, { kind: 'problem', key: `option:release:${against}:refused`, words: `${t.company} wouldn’t release you from its option as ${e.role}.` });
-    tellOf(s, person, `The Option On ${e.role} Stands`, `${t.company} won’t release you from its option as ${e.role}. You can decline ${what}, or accept it and give the option up.`, 70);
+    const then = standing ? `You can decline ${what}, or accept it and give the option up.` : `${gone}, so the option stands as it was.`;
+    tellOf(s, person, `The Option On ${e.role} Stands`, `${t.company} won’t release you from its option as ${e.role}. ${then}`, 70);
   });
 
   // A guest part brought back (`INVITE`): offered without an audition for days in the new season, or said why not.
@@ -427,12 +436,13 @@ export function registerContinuity(sim: Simulation, hooks: SeriesHooks): void {
     const rt = recurringPart(t, year);
     keepPart(person, rt, series);
     const band = bestBandOf(e);
-    const words = `Your work as ${t.role.part} in ${seasonName(s, series, year - 1)} of ${series.title} was ${band ? BAND_LABEL[band] : 'strong'}, and its producers want ${t.role.part} back as a recurring character in its new season, with a new contract: ${countWords(INVITE.guaranteed)} episodes guaranteed.`;
+    // A real series' new season is the simulation's, and says so (`continuationWords`).
+    const words = `Your work as ${t.role.part} in ${seasonName(s, series, year - 1)} of ${series.title} was ${band ? BAND_LABEL[band] : 'strong'}, and its producers want ${t.role.part} back as a recurring character in its new season, with a new contract: ${countWords(INVITE.guaranteed)} episodes guaranteed.${continuationWords(series)}`;
     if (hooks.bringBack(s, person, rt, e, words)) {
       noteEvent(s, e, { kind: 'success', key: `invite:${year}:offered`, words: `The producers of ${series.title} offered ${t.role.part} back as a recurring character for its new season.` });
       return;
     }
-    const why = `${series.title}’s producers wanted ${t.role.part} back as a recurring character, but its new season had no work for the part to offer you.`;
+    const why = `${series.title}’s producers wanted ${t.role.part} back as a recurring character, but its new season had no work for the part to offer you.${continuationWords(series)}`;
     noteEvent(s, e, { kind: 'problem', key: `invite:${year}:none`, words: why });
     tellOf(s, person, `${series.title} Can’t Bring Back ${t.role.part}`, `${why} Your work in it stays on your credits.`, 60);
   });
@@ -451,7 +461,7 @@ export function registerContinuity(sim: Simulation, hooks: SeriesHooks): void {
     if (!picked) {
       const c = e.creditId ? person.pro.credits.find((x) => x.id === e.creditId) : undefined;
       if (c && c.status === 'shot') {
-        c.release = { kind: 'shelved', told: true };
+        c.release = { kind: 'shelved' };
         for (const i of s.universe.scheduled.filter((x) => x.status === 'pending' && ((x.kind === 'pro.release' && x.refId === c.id) || (x.kind === 'pro.promo' && x.refId === e.id)))) s.timeline.cancel(i.id, s.now);
         delete e.promo;
       }

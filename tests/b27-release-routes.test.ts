@@ -8,6 +8,12 @@
  * said, its weeks abroad before its US opening, and the Actor Awards placing it by its run at home, or not at all where the
  * two fall in different years.
  *
+ * From the review of 2026-10-25: a limited release widens exactly where audiences score it at the bar, the same film with
+ * a weaker part never reaching its wide opening; a week abroad is the week at home's share, so a run's takings abroad keep
+ * to its kind's range whether it opened wide, in a few cinemas and widened, or never widened; and a film abroad first shows
+ * in Productions And People from its first week abroad. Until then a limited release that never widened took twice its US
+ * gross abroad, and nothing tested that a limited release ever stayed small.
+ *
  * PLAYER JOURNEYS: a graduate played by the clock to the wrap (tests/fakes/career-world.ts), the offer accepted through the
  * command, then the clock to the release. Each film is found where its production's own draw gives the route, never
  * forced. TEST SETUP, said where it's done: the offer on the record as casting's draws would leave one; a credit built
@@ -19,9 +25,9 @@ import { PROJECTS } from '@/engine/content/careerwork';
 import { productionsOf, seriesOfYear, seriesParts } from '@/engine/systems/slate';
 import { premiereOf } from '@/engine/systems/awards';
 import { actorCheck } from '@/engine/systems/actorawards';
-import { LIMITED } from '@/engine/systems/charts';
-import { homeOpening, runOf, splitYearsWhy } from '@/engine/systems/market';
-import { creditWords } from '@/engine/systems/reference';
+import { INTERNATIONAL, LIMITED, totalsOf } from '@/engine/systems/charts';
+import { FORTUNE, homeOpening, runOf, splitYearsWhy } from '@/engine/systems/market';
+import { creditWords, pageOf, projectKey } from '@/engine/systems/reference';
 import type { ProCredit } from '@/engine/systems/pro';
 import { RELEASE_FATE, releaseFate } from '@/engine/systems/projobs';
 import { formatOf } from '@/engine/systems/workflow';
@@ -52,6 +58,45 @@ describe('a finished production’s other ways out', () => {
     expect(seriesKinds).not.toContain('distributor');
   });
 
+  it('widen a limited release only where audiences score it at the bar, and keep a run’s takings abroad to its kind’s share of its takings at home, however it opened', () => {
+    const sim = graduate('b27-routes-runs');
+    const releasedAt = instantFromZoned({ year: 2027, month: 6, day: 4, hour: 12, minute: 0 }, NY);
+    const ever = Number.MAX_SAFE_INTEGER;
+    // TEST SETUP: a credit for the part, judged as given, with the way out given: the run is read from these alone.
+    const credit = (band: 'exceptional' | 'unready', release: NonNullable<ProCredit['release']>): ProCredit => ({ id: 'c', kind: 'screen', project: 'x', role: 'Ivy', company: 'x', year: 2027, medium: 'film', status: 'released', at: 0, band, release });
+    let films = 0;
+    let straddled = 0;
+    let stayedSmall = 0;
+    for (let w = 1; w <= 120; w += 1) for (const p of productionsOf(sim, sim.now + w * WEEK)) {
+      const t = p.parts.find((x) => x.role.size === 'lead');
+      if (!t || formatOf(t).after !== 'theatrical') continue;
+      films += 1;
+      const [lo, hi] = INTERNATIONAL[t.kind]!;
+      const widened: Record<string, boolean> = {};
+      for (const band of ['exceptional', 'unready'] as const) {
+        const wide = runOf(sim, t, credit(band, { kind: 'on-time' }), releasedAt)!;
+        const limited = runOf(sim, t, credit(band, { kind: 'limited', weeks: 3 }), releasedAt)!;
+        // Widened exactly where the audience's score reaches the bar, and only then reaching the wide opening.
+        widened[band] = limited.limited!.widened;
+        expect(limited.limited!.widened).toBe(limited.response!.audience >= FORTUNE.widen);
+        const top = Math.max(...limited.weeks.map((x) => x.gross));
+        if (limited.limited!.widened) expect(top).toBe(wide.weeks[0]!.gross);
+        else { stayedSmall += 1; expect(top).toBeLessThan(wide.weeks[0]!.gross * LIMITED.share * 2); }
+        // Abroad, the kind's share of the run at home, however it opened.
+        for (const run of [wide, limited]) {
+          const total = totalsOf(run, ever);
+          expect(total.international! / total.domestic, `${t.id} ${band}`).toBeGreaterThanOrEqual(lo - 0.005);
+          expect(total.international! / total.domestic, `${t.id} ${band}`).toBeLessThanOrEqual(hi + 0.005);
+        }
+      }
+      // The falsifiability twin: the same film, the part judged Exceptional and Unready, one side of the bar each.
+      if (widened.exceptional && !widened.unready) straddled += 1;
+    }
+    expect(films).toBeGreaterThan(30);
+    expect(straddled).toBeGreaterThan(0);
+    expect(stayedSmall).toBeGreaterThan(0);
+  });
+
   it('places a film released abroad first by its run at home, and not at all where the two fall in different years', () => {
     const c = (days: number): ProCredit => ({ id: 'c', kind: 'screen', project: 'The Errand', role: 'Ivy', company: 'x', year: 2027, medium: 'film', status: 'shot', at: 0, release: { kind: 'territory', days, first: 'the United Kingdom' } });
     const dec = instantFromZoned({ year: 2027, month: 12, day: 10, hour: 12, minute: 0 }, NY);
@@ -71,6 +116,7 @@ describe('a release in a few cinemas first, by another distributor, or abroad fi
     expect(notices(sim).some((n) => n.startsWith(`${t.project} Is Released | ${t.project} opened in a limited release, in a few cinemas in Los Angeles and New York, so`))).toBe(true);
     const run = c!.run!;
     expect(run.limited?.weeks).toBe(c!.release!.weeks);
+    expect(run.limited!.widened).toBe(run.response!.audience >= FORTUNE.widen);
     // The falsifiability twin: the same production released on time, as its run would read, opens wide.
     const wide = runOf(sim, t, { ...c!, release: { kind: 'on-time' }, run: undefined }, c!.releasedAt!)!;
     expect(run.weeks[0]!.gross).toBe(Math.round(wide.weeks[0]!.gross * LIMITED.share));
@@ -107,8 +153,14 @@ describe('a release in a few cinemas first, by another distributor, or abroad fi
     expect(c!.releasedAt).toBe(due);
     const run = c!.run!;
     expect(run.before?.length).toBe(fate.days! / 7);
-    expect(run.opening).toBe(homeOpening(c!.releasedAt, c!));
+    // Its run at home begins its distributor's days after its first week abroad, and the chart's weeks from then.
+    expect(run.opening).toBe(addDays(run.before![0]!.from, fate.days!, NY));
+    expect(run.weeks[0]!.from).toBe(run.opening);
     expect(run.opening).toBeGreaterThan(c!.releasedAt! + (fate.days! - 7) * MS_DAY);
+    // Shown from its first week abroad, before it opens at home.
+    sim.advanceTo(run.before![0]!.to + MS_HOUR);
+    const showing = pageOf(sim, sim.player, projectKey(t))!.sections.flatMap((x) => x.facts).find((f) => f.label === 'In Cinemas');
+    expect(showing?.words).toMatch(new RegExp(`^Opened in ${fate.first} on .*, and opens in the US on .*: one week abroad so far\\.$`));
     expect(notices(sim).some((n) => n.startsWith(`${t.project} Is Released | ${t.project} opened in ${fate.first} first, and opens in the US on`))).toBe(true);
     const check = actorCheck(sim, sim.player, c!);
     if (!splitYearsWhy(c!.releasedAt, c!)) expect(check.year).toBe(zonedParts(run.opening, NY).year);
