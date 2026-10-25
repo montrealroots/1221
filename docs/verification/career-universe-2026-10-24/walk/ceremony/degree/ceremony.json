@@ -1,0 +1,336 @@
+{
+ "save": "docs/verification/career-universe-2026-10-24/long/degree-save.json.gz",
+ "base": "http://localhost:4241",
+ "sizes": [
+  {
+   "size": "desk-1440x900",
+   "ok": true,
+   "steps": [
+    {
+     "step": "invitation",
+     "ok": true,
+     "error": null,
+     "read": {
+      "show": "the 85th Creative Arts Emmys",
+      "invited": 0,
+      "going": 6,
+      "goButtons": 0
+     },
+     "pageWider": 0,
+     "controlsOut": [],
+     "clock": "11:00 AM·August 4, 2033EDTPaused",
+     "problems": []
+    },
+    {
+     "step": "go",
+     "ok": true,
+     "error": null,
+     "read": {
+      "skipped": "answered in the save",
+      "going": 6
+     },
+     "pageWider": 0,
+     "controlsOut": [],
+     "clock": "11:00 AM·August 4, 2033EDTPaused",
+     "problems": []
+    },
+    {
+     "step": "prepare",
+     "ok": true,
+     "error": null,
+     "read": {
+      "skipped": "Your remarks are as ready as they’ll get.",
+      "prepared": 99
+     },
+     "pageWider": 0,
+     "controlsOut": [],
+     "clock": "11:00 AM·August 4, 2033EDTPaused",
+     "problems": []
+    },
+    {
+     "step": "to-the-show",
+     "ok": true,
+     "error": null,
+     "read": {
+      "stops": 9,
+      "atShow": true,
+      "show": "the 85th Creative Arts Emmys",
+      "last": [
+       "The Crossing: Shoot Day 3",
+       "The Crossing: Shoot Day 4",
+       "Car To JFK In New York",
+       "The 85th Creative Arts Emmys"
+      ],
+      "speeches": 1
+     },
+     "pageWider": 0,
+     "controlsOut": [],
+     "clock": "12:00 AM·September 6, 2033EDTPaused",
+     "problems": []
+    },
+    {
+     "step": "speech",
+     "ok": true,
+     "error": null,
+     "read": {
+      "speeches": [
+       {
+        "stop": "The 85th Creative Arts Emmys: Outstanding Guest Actress In A Drama Series",
+        "toast": null
+       }
+      ]
+     },
+     "pageWider": 0,
+     "controlsOut": [],
+     "clock": "12:00 AM·September 6, 2033EDTPaused",
+     "problems": []
+    },
+    {
+     "step": "after",
+     "ok": true,
+     "error": null,
+     "read": {
+      "won": 18,
+      "speechWords": [
+       "Your speech landed",
+       "Your speech was the night’s",
+       "Your speech was the night’s",
+       "Your speech was the night’s",
+       "Your speech was the night’s",
+       "Your speech was the night’s",
+       "Your speech was the night’s",
+       "Your speech was the night’s"
+      ],
+      "stillGoing": 0,
+      "watch": 5
+     },
+     "pageWider": 0,
+     "controlsOut": [],
+     "clock": "12:00 AM·September 6, 2033EDTPaused",
+     "problems": []
+    }
+   ],
+   "problems": []
+  },
+  {
+   "size": "side-844x390",
+   "ok": true,
+   "steps": [
+    {
+     "step": "invitation",
+     "ok": true,
+     "error": null,
+     "read": {
+      "show": "the 85th Creative Arts Emmys",
+      "invited": 0,
+      "going": 6,
+      "goButtons": 0
+     },
+     "pageWider": 0,
+     "controlsOut": [],
+     "clock": "11:00 AM·August 4, 2033EDTPaused",
+     "problems": []
+    },
+    {
+     "step": "go",
+     "ok": true,
+     "error": null,
+     "read": {
+      "skipped": "answered in the save",
+      "going": 6
+     },
+     "pageWider": 0,
+     "controlsOut": [],
+     "clock": "11:00 AM·August 4, 2033EDTPaused",
+     "problems": []
+    },
+    {
+     "step": "prepare",
+     "ok": true,
+     "error": null,
+     "read": {
+      "skipped": "Your remarks are as ready as they’ll get.",
+      "prepared": 99
+     },
+     "pageWider": 0,
+     "controlsOut": [],
+     "clock": "11:00 AM·August 4, 2033EDTPaused",
+     "problems": []
+    },
+    {
+     "step": "to-the-show",
+     "ok": true,
+     "error": null,
+     "read": {
+      "stops": 9,
+      "atShow": true,
+      "show": "the 85th Creative Arts Emmys",
+      "last": [
+       "The Crossing: Shoot Day 3",
+       "The Crossing: Shoot Day 4",
+       "Car To JFK In New York",
+       "The 85th Creative Arts Emmys"
+      ],
+      "speeches": 1
+     },
+     "pageWider": 0,
+     "controlsOut": [],
+     "clock": "12:00 AM·September 6, 2033EDTPaused",
+     "problems": []
+    },
+    {
+     "step": "speech",
+     "ok": true,
+     "error": null,
+     "read": {
+      "speeches": [
+       {
+        "stop": "The 85th Creative Arts Emmys: Outstanding Guest Actress In A Drama Series",
+        "toast": null
+       }
+      ]
+     },
+     "pageWider": 0,
+     "controlsOut": [],
+     "clock": "12:00 AM·September 6, 2033EDTPaused",
+     "problems": []
+    },
+    {
+     "step": "after",
+     "ok": true,
+     "error": null,
+     "read": {
+      "won": 18,
+      "speechWords": [
+       "Your speech landed",
+       "Your speech was the night’s",
+       "Your speech was the night’s",
+       "Your speech was the night’s",
+       "Your speech was the night’s",
+       "Your speech was the night’s",
+       "Your speech was the night’s",
+       "Your speech was the night’s"
+      ],
+      "stillGoing": 0,
+      "watch": 5
+     },
+     "pageWider": 0,
+     "controlsOut": [],
+     "clock": "12:00 AM·September 6, 2033EDTPaused",
+     "problems": []
+    }
+   ],
+   "problems": []
+  },
+  {
+   "size": "upright-390x844",
+   "ok": true,
+   "steps": [
+    {
+     "step": "invitation",
+     "ok": true,
+     "error": null,
+     "read": {
+      "show": "the 85th Creative Arts Emmys",
+      "invited": 0,
+      "going": 6,
+      "goButtons": 0
+     },
+     "pageWider": 0,
+     "controlsOut": [],
+     "clock": "11:00 AM·August 4, 2033EDTPaused",
+     "problems": []
+    },
+    {
+     "step": "go",
+     "ok": true,
+     "error": null,
+     "read": {
+      "skipped": "answered in the save",
+      "going": 6
+     },
+     "pageWider": 0,
+     "controlsOut": [],
+     "clock": "11:00 AM·August 4, 2033EDTPaused",
+     "problems": []
+    },
+    {
+     "step": "prepare",
+     "ok": true,
+     "error": null,
+     "read": {
+      "skipped": "Your remarks are as ready as they’ll get.",
+      "prepared": 99
+     },
+     "pageWider": 0,
+     "controlsOut": [],
+     "clock": "11:00 AM·August 4, 2033EDTPaused",
+     "problems": []
+    },
+    {
+     "step": "to-the-show",
+     "ok": true,
+     "error": null,
+     "read": {
+      "stops": 9,
+      "atShow": true,
+      "show": "the 85th Creative Arts Emmys",
+      "last": [
+       "The Crossing: Shoot Day 3",
+       "The Crossing: Shoot Day 4",
+       "Car To JFK In New York",
+       "The 85th Creative Arts Emmys"
+      ],
+      "speeches": 1
+     },
+     "pageWider": 0,
+     "controlsOut": [],
+     "clock": "12:00 AM·September 6, 2033EDTPaused",
+     "problems": []
+    },
+    {
+     "step": "speech",
+     "ok": true,
+     "error": null,
+     "read": {
+      "speeches": [
+       {
+        "stop": "The 85th Creative Arts Emmys: Outstanding Guest Actress In A Drama Series",
+        "toast": null
+       }
+      ]
+     },
+     "pageWider": 0,
+     "controlsOut": [],
+     "clock": "12:00 AM·September 6, 2033EDTPaused",
+     "problems": []
+    },
+    {
+     "step": "after",
+     "ok": true,
+     "error": null,
+     "read": {
+      "won": 18,
+      "speechWords": [
+       "Your speech landed",
+       "Your speech was the night’s",
+       "Your speech was the night’s",
+       "Your speech was the night’s",
+       "Your speech was the night’s",
+       "Your speech was the night’s",
+       "Your speech was the night’s",
+       "Your speech was the night’s"
+      ],
+      "stillGoing": 0,
+      "watch": 5
+     },
+     "pageWider": 0,
+     "controlsOut": [],
+     "clock": "12:00 AM·September 6, 2033EDTPaused",
+     "problems": []
+    }
+   ],
+   "problems": []
+  }
+ ]
+}

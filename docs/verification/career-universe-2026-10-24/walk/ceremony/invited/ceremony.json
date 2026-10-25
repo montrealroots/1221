@@ -1,0 +1,375 @@
+{
+ "save": "docs/verification/career-universe-2026-10-24/long/degree-invited-save.json.gz",
+ "base": "http://localhost:4241",
+ "sizes": [
+  {
+   "size": "desk-1440x900",
+   "ok": true,
+   "steps": [
+    {
+     "step": "invitation",
+     "ok": true,
+     "error": null,
+     "read": {
+      "show": "the 40th Actor Awards",
+      "invited": 4,
+      "going": 0,
+      "goButtons": 4
+     },
+     "pageWider": 0,
+     "controlsOut": [],
+     "clock": "9:00 AM·January 6, 2034ESTPaused",
+     "problems": []
+    },
+    {
+     "step": "go",
+     "ok": true,
+     "error": null,
+     "read": {
+      "toast": "You’re going to the 40th Actor Awards.",
+      "going": 4,
+      "invitedStill": 0
+     },
+     "pageWider": 0,
+     "controlsOut": [],
+     "clock": "9:00 AM·January 6, 2034ESTPaused",
+     "problems": []
+    },
+    {
+     "step": "prepare",
+     "ok": true,
+     "error": null,
+     "read": {
+      "toast": "Your remarks are 35% prepared.",
+      "prepared": 35,
+      "nominations": 4
+     },
+     "pageWider": 0,
+     "controlsOut": [],
+     "clock": "10:00 AM·January 6, 2034ESTPaused",
+     "problems": []
+    },
+    {
+     "step": "to-the-show",
+     "ok": true,
+     "error": null,
+     "read": {
+      "stops": 41,
+      "atShow": true,
+      "show": "the 40th Actor Awards",
+      "last": [
+       "Carver Hill Vigil: Performance",
+       "Carver Hill Vigil: Performance",
+       "Car To JFK In New York",
+       "The 40th Actor Awards"
+      ],
+      "speeches": 3
+     },
+     "pageWider": 0,
+     "controlsOut": [],
+     "clock": "12:00 AM·March 1, 2034ESTPaused",
+     "problems": []
+    },
+    {
+     "step": "speech",
+     "ok": true,
+     "error": null,
+     "read": {
+      "speeches": [
+       {
+        "stop": "The 40th Actor Awards: Outstanding Performance by a Female Actor in a Leading Role",
+        "toast": null
+       },
+       {
+        "stop": "The 40th Actor Awards: Outstanding Performance by a Female Actor in a Drama Series",
+        "toast": null
+       },
+       {
+        "stop": "The 40th Actor Awards: Outstanding Performance by a Female Actor in a Television Movie or Limited Series",
+        "toast": null
+       }
+      ]
+     },
+     "pageWider": 0,
+     "controlsOut": [],
+     "clock": "12:00 AM·March 1, 2034ESTPaused",
+     "problems": []
+    },
+    {
+     "step": "after",
+     "ok": true,
+     "error": null,
+     "read": {
+      "won": 21,
+      "speechWords": [
+       "Your speech landed",
+       "Your speech was the night’s",
+       "Your speech was the night’s",
+       "Your speech was the night’s",
+       "Your speech was the night’s",
+       "You said what you’d meant to",
+       "Your speech was the night’s",
+       "Your speech was the night’s",
+       "Your speech was the night’s",
+       "Your speech landed",
+       "Your speech landed"
+      ],
+      "stillGoing": 0,
+      "watch": 5
+     },
+     "pageWider": 0,
+     "controlsOut": [],
+     "clock": "12:00 AM·March 1, 2034ESTPaused",
+     "problems": []
+    }
+   ],
+   "problems": []
+  },
+  {
+   "size": "side-844x390",
+   "ok": true,
+   "steps": [
+    {
+     "step": "invitation",
+     "ok": true,
+     "error": null,
+     "read": {
+      "show": "the 40th Actor Awards",
+      "invited": 4,
+      "going": 0,
+      "goButtons": 4
+     },
+     "pageWider": 0,
+     "controlsOut": [],
+     "clock": "9:00 AM·January 6, 2034ESTPaused",
+     "problems": []
+    },
+    {
+     "step": "go",
+     "ok": true,
+     "error": null,
+     "read": {
+      "toast": "You’re going to the 40th Actor Awards.",
+      "going": 4,
+      "invitedStill": 0
+     },
+     "pageWider": 0,
+     "controlsOut": [],
+     "clock": "9:00 AM·January 6, 2034ESTPaused",
+     "problems": []
+    },
+    {
+     "step": "prepare",
+     "ok": true,
+     "error": null,
+     "read": {
+      "toast": "Your remarks are 35% prepared.",
+      "prepared": 35,
+      "nominations": 4
+     },
+     "pageWider": 0,
+     "controlsOut": [],
+     "clock": "10:00 AM·January 6, 2034ESTPaused",
+     "problems": []
+    },
+    {
+     "step": "to-the-show",
+     "ok": true,
+     "error": null,
+     "read": {
+      "stops": 41,
+      "atShow": true,
+      "show": "the 40th Actor Awards",
+      "last": [
+       "Carver Hill Vigil: Performance",
+       "Carver Hill Vigil: Performance",
+       "Car To JFK In New York",
+       "The 40th Actor Awards"
+      ],
+      "speeches": 3
+     },
+     "pageWider": 0,
+     "controlsOut": [],
+     "clock": "12:00 AM·March 1, 2034ESTPaused",
+     "problems": []
+    },
+    {
+     "step": "speech",
+     "ok": true,
+     "error": null,
+     "read": {
+      "speeches": [
+       {
+        "stop": "The 40th Actor Awards: Outstanding Performance by a Female Actor in a Leading Role",
+        "toast": null
+       },
+       {
+        "stop": "The 40th Actor Awards: Outstanding Performance by a Female Actor in a Drama Series",
+        "toast": null
+       },
+       {
+        "stop": "The 40th Actor Awards: Outstanding Performance by a Female Actor in a Television Movie or Limited Series",
+        "toast": null
+       }
+      ]
+     },
+     "pageWider": 0,
+     "controlsOut": [],
+     "clock": "12:00 AM·March 1, 2034ESTPaused",
+     "problems": []
+    },
+    {
+     "step": "after",
+     "ok": true,
+     "error": null,
+     "read": {
+      "won": 21,
+      "speechWords": [
+       "Your speech landed",
+       "Your speech was the night’s",
+       "Your speech was the night’s",
+       "Your speech was the night’s",
+       "Your speech was the night’s",
+       "You said what you’d meant to",
+       "Your speech was the night’s",
+       "Your speech was the night’s",
+       "Your speech was the night’s",
+       "Your speech landed",
+       "Your speech landed"
+      ],
+      "stillGoing": 0,
+      "watch": 5
+     },
+     "pageWider": 0,
+     "controlsOut": [],
+     "clock": "12:00 AM·March 1, 2034ESTPaused",
+     "problems": []
+    }
+   ],
+   "problems": []
+  },
+  {
+   "size": "upright-390x844",
+   "ok": true,
+   "steps": [
+    {
+     "step": "invitation",
+     "ok": true,
+     "error": null,
+     "read": {
+      "show": "the 40th Actor Awards",
+      "invited": 4,
+      "going": 0,
+      "goButtons": 4
+     },
+     "pageWider": 0,
+     "controlsOut": [],
+     "clock": "9:00 AM·January 6, 2034ESTPaused",
+     "problems": []
+    },
+    {
+     "step": "go",
+     "ok": true,
+     "error": null,
+     "read": {
+      "toast": "You’re going to the 40th Actor Awards.",
+      "going": 4,
+      "invitedStill": 0
+     },
+     "pageWider": 0,
+     "controlsOut": [],
+     "clock": "9:00 AM·January 6, 2034ESTPaused",
+     "problems": []
+    },
+    {
+     "step": "prepare",
+     "ok": true,
+     "error": null,
+     "read": {
+      "toast": "Your remarks are 35% prepared.",
+      "prepared": 35,
+      "nominations": 4
+     },
+     "pageWider": 0,
+     "controlsOut": [],
+     "clock": "10:00 AM·January 6, 2034ESTPaused",
+     "problems": []
+    },
+    {
+     "step": "to-the-show",
+     "ok": true,
+     "error": null,
+     "read": {
+      "stops": 41,
+      "atShow": true,
+      "show": "the 40th Actor Awards",
+      "last": [
+       "Carver Hill Vigil: Performance",
+       "Carver Hill Vigil: Performance",
+       "Car To JFK In New York",
+       "The 40th Actor Awards"
+      ],
+      "speeches": 3
+     },
+     "pageWider": 0,
+     "controlsOut": [],
+     "clock": "12:00 AM·March 1, 2034ESTPaused",
+     "problems": []
+    },
+    {
+     "step": "speech",
+     "ok": true,
+     "error": null,
+     "read": {
+      "speeches": [
+       {
+        "stop": "The 40th Actor Awards: Outstanding Performance by a Female Actor in a Leading Role",
+        "toast": null
+       },
+       {
+        "stop": "The 40th Actor Awards: Outstanding Performance by a Female Actor in a Drama Series",
+        "toast": null
+       },
+       {
+        "stop": "The 40th Actor Awards: Outstanding Performance by a Female Actor in a Television Movie or Limited Series",
+        "toast": null
+       }
+      ]
+     },
+     "pageWider": 0,
+     "controlsOut": [],
+     "clock": "12:00 AM·March 1, 2034ESTPaused",
+     "problems": []
+    },
+    {
+     "step": "after",
+     "ok": true,
+     "error": null,
+     "read": {
+      "won": 21,
+      "speechWords": [
+       "Your speech landed",
+       "Your speech was the night’s",
+       "Your speech was the night’s",
+       "Your speech was the night’s",
+       "Your speech was the night’s",
+       "You said what you’d meant to",
+       "Your speech was the night’s",
+       "Your speech was the night’s",
+       "Your speech was the night’s",
+       "Your speech landed",
+       "Your speech landed"
+      ],
+      "stillGoing": 0,
+      "watch": 5
+     },
+     "pageWider": 0,
+     "controlsOut": [],
+     "clock": "12:00 AM·March 1, 2034ESTPaused",
+     "problems": []
+    }
+   ],
+   "problems": []
+  }
+ ]
+}

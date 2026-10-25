@@ -1,11 +1,11 @@
 {
  "save": "degree",
- "commit": "1ad8f7af",
+ "commit": "f32cf407",
  "from": "August 4, 2029",
  "to": "August 4, 2033",
  "yearsAsked": 4,
  "ended": null,
- "seconds": 936,
+ "seconds": 911,
  "yearly": [
   {
    "at": "August 4, 2030",
@@ -23,19 +23,19 @@
    "at": "August 3, 2032",
    "credits": 46,
    "booked": 50,
-   "cash": "$188,836"
+   "cash": "$189,061"
   },
   {
    "at": "August 3, 2033",
    "credits": 61,
    "booked": 50,
-   "cash": "$248,628"
+   "cash": "$251,969"
   },
   {
    "at": "August 4, 2033",
    "credits": 61,
    "booked": 50,
-   "cash": "$248,618"
+   "cash": "$251,959"
   }
  ],
  "opportunities": {
@@ -118,8 +118,9 @@
    "lost": 12,
    "not-nominated": 8,
    "won": 3,
-   "nominated": 9,
-   "entered": 8
+   "nominated": 6,
+   "entered": 8,
+   "not-entered": 3
   },
   "actorAwards": {
    "not-nominated": 26,
@@ -134,7 +135,7 @@
    "declined:to come:-": 5,
    "attending:there:-": 11,
    "attending:there:speech": 7,
-   "attending:to come:-": 9
+   "attending:to come:-": 6
   }
  },
  "representation": {
@@ -160,5 +161,5 @@
  },
  "breaches": [],
  "reloadSame": true,
- "transcriptLines": 9088
+ "transcriptLines": 9108
 }

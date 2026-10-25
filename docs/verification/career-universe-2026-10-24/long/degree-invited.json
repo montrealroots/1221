@@ -1,0 +1,135 @@
+{
+ "save": "degree",
+ "commit": "f32cf407",
+ "from": "August 4, 2033",
+ "to": "January 6, 2034",
+ "yearsAsked": 1,
+ "ended": "invited: pro_0004oh, to answer by February 21, 2034",
+ "seconds": 154,
+ "yearly": [],
+ "opportunities": {
+  "total": 46,
+  "byStatus": {
+   "passed": 12,
+   "booked": 8,
+   "lapsed": 18,
+   "declined": 2,
+   "audition": 2,
+   "open": 4
+  },
+  "byOrigin": {
+   "slate": 35,
+   "fixed": 11
+  },
+  "direct": 7,
+  "held": 0,
+  "rounds": {
+   "audition:done": 16,
+   "callback:done": 8,
+   "callback:missed": 1,
+   "audition:missed": 2,
+   "audition:set": 2
+  }
+ },
+ "engagements": {
+  "total": 55,
+  "byStatus": {
+   "finished": 51,
+   "canceled": 2,
+   "working": 2
+  },
+  "byOrigin": {
+   "fixed": 6,
+   "slate": 47,
+   "drawn": 2
+  },
+  "byFormat": {
+   "independent-feature": 11,
+   "animated-series": 4,
+   "animated-feature": 1,
+   "short": 5,
+   "procedural": 12,
+   "multicam-comedy": 3,
+   "serialized-comedy": 3,
+   "serialized-drama": 7,
+   "single-camera-comedy": 3,
+   "limited-series": 2,
+   "narration": 1,
+   "play": 2,
+   "student-film": 1
+  }
+ },
+ "happened": {
+  "loop": 23,
+  "promo": 9,
+  "release": 3,
+  "weather": 5,
+  "cut": 6
+ },
+ "credits": {
+  "total": 74,
+  "byStatus": {
+   "released": 57,
+   "shot": 14,
+   "performed": 3
+  },
+  "byMedium": {
+   "film": 21,
+   "television": 50,
+   "stage": 3
+  },
+  "withRun": 9,
+  "release": {
+   "on-time": 65,
+   "late": 6
+  }
+ },
+ "awards": {
+  "emmys": {
+   "lost": 17,
+   "not-nominated": 8,
+   "won": 4,
+   "entered": 13,
+   "not-entered": 3
+  },
+  "actorAwards": {
+   "not-nominated": 36,
+   "lost": 3,
+   "won": 5,
+   "nominated": 4
+  },
+  "festivals": {
+   "not-selected": 10,
+   "not-submitted": 2
+  },
+  "attended": {
+   "declined:to come:-": 5,
+   "attending:there:-": 16,
+   "attending:there:speech": 8
+  }
+ },
+ "representation": {
+  "agreements": {
+   "ended": 3,
+   "lapsed": 2,
+   "accepted": 1
+  },
+  "relations": {
+   "thomas-ashgrove": "passed",
+   "dan-patack": "represented",
+   "jay-schachter": "passed",
+   "rachel-grandizio": "declined"
+  }
+ },
+ "unions": {
+  "sag": "member"
+ },
+ "reference": {
+  "entries": 353,
+  "yourWork": 81,
+  "unopened": []
+ },
+ "breaches": [],
+ "reloadSame": true,
+ "transcriptLines": 1041
+}

@@ -832,12 +832,15 @@
    "states": "Invited, going or watching; the show; a win accepted with a speech, unanswered, or without the actor.",
    "timed": "The answer’s day, the trip, the show, the moment to go up.",
    "exits": "A missed flight: the win accepted without them.",
-   "status": "Implemented, Verification Incomplete",
+   "status": "Implemented And Verified",
    "tests": [
     "tests/b27-ceremony.test.ts"
    ],
-   "docs": [],
-   "why": "Not yet played in the built app or on a phone; brief 27’s F plays it."
+   "docs": [
+    "docs/verification/career-universe-2026-10-24/walk/ceremony",
+    "docs/verification/career-universe-2026-10-24/long"
+   ],
+   "entry": "Played on the built app at three sizes (emulation, not a physical phone) from a long career stopped at an open invitation: one Go To The Ceremony for four nominations, the remarks, 41 stops gone to, the show and three wins accepted; and from the degree career, nine Emmy nominations at one show."
   },
   {
    "loop": 47,

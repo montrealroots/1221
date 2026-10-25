@@ -1,11 +1,11 @@
 {
  "save": "last-term",
- "commit": "1ad8f7af",
+ "commit": "f32cf407",
  "from": "March 1, 2029",
  "to": "August 31, 2033",
  "yearsAsked": 4.5,
  "ended": null,
- "seconds": 667,
+ "seconds": 614,
  "yearly": [
   {
    "at": "March 1, 2030",
@@ -17,25 +17,25 @@
    "at": "March 1, 2031",
    "credits": 12,
    "booked": 14,
-   "cash": "$109,232"
+   "cash": "$109,457"
   },
   {
    "at": "February 29, 2032",
    "credits": 15,
    "booked": 16,
-   "cash": "$106,562"
+   "cash": "$106,787"
   },
   {
    "at": "February 28, 2033",
    "credits": 16,
    "booked": 17,
-   "cash": "$96,239.07"
+   "cash": "$96,464.07"
   },
   {
    "at": "August 31, 2033",
    "credits": 16,
    "booked": 18,
-   "cash": "$89,232.00"
+   "cash": "$89,457.00"
   }
  ],
  "opportunities": {
@@ -105,8 +105,9 @@
  "awards": {
   "emmys": {
    "lost": 2,
-   "not-nominated": 8,
-   "won": 1
+   "not-nominated": 7,
+   "won": 1,
+   "not-entered": 1
   },
   "actorAwards": {
    "lost": 2,
@@ -141,5 +142,5 @@
  },
  "breaches": [],
  "reloadSame": true,
- "transcriptLines": 3363
+ "transcriptLines": 3361
 }
