@@ -647,11 +647,10 @@ export type ContractClause =
     kind: 'option'; season: number; year: number; by: Instant; raise: number; status: 'open' | 'exercised' | 'expired'; settled?: { at: Instant; why: string; engagementId?: ProId };
     /**
      * From 2026-10-25 (the owner's brief 27, loop 20; `systems/continuity.ts`): the actor's ask to be released from it,
-     * against an offer on the days it holds, and the production's answer; and the engagement it was given up for, where
-     * the actor took work on its days without a release.
+     * against an offer on the days it holds, and the production's answer. An option given up is said by `settled` and
+     * kept in the record's `optionsGivenUp`, which the season's casting and the casting office's word read.
      */
     release?: { at: Instant; answerAt: Instant; against: ProId; answer?: 'granted' | 'refused' };
-    givenUpFor?: ProId;
   }
   // A workflow's rule (from 2026-10-24, brief 25's Module 5, `workflowRules`, `systems/contracts.ts`): its words.
   | { kind: 'rule'; id: 'rehearsal-paid' | 'dubbing' | 'stressful' | 'days-only' | 'stunts' | 'intimacy' | 'looping' | 'voice-over' | 'residuals-unread' | 'promo'; words: string };

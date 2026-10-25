@@ -153,7 +153,6 @@ function seasonFor(s: SeriesTemplate, year: number): string {
 export function giveUpOptions(sim: Simulation, person: Person, taken: Engagement, t: ProjectTemplate, spans: readonly { from: Instant; to: Instant }[]): void {
   for (const h of heldOptions(person, spans, taken.id)) {
     h.option.status = 'expired';
-    h.option.givenUpFor = taken.id;
     const why = `You took ${t.role.part} in ${t.project} on days the option held, so you gave it up.`;
     h.option.settled = { at: sim.now, why };
     if (person.pro && h.t.series) (person.pro.optionsGivenUp ??= []).push({ casting: h.t.casting, seriesId: h.t.series, part: h.t.role.part, year: h.option.year, at: sim.now });
