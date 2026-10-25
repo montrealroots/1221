@@ -409,8 +409,9 @@ export function registerRepresentation(sim: Simulation): void {
     const person = s.universe.people[String(item.payload.personId)];
     const agent = agentById(String(item.payload.agentId));
     const a = person?.pro?.agreements.find((x) => x.id === item.payload.agreementId);
-    // Declined since, or answered already: nothing left to answer.
-    if (!person || !agent || !a || a.status !== 'offered' || !a.ask || a.ask.answer) return;
+    // Only an ask puts this on the clock; declining the offer calls it off with the rest of its items, and the offer can't be
+    // accepted or lapse before it comes.
+    if (!person || !agent || !a) return;
     answerAsk(s, person, agent, a);
   });
 }

@@ -34,7 +34,7 @@ import {
 } from '@/engine/systems/representation';
 import { commissionOn } from '@/engine/systems/propay';
 import { DIRECT, askMoreRefusal, payTermsOf, postingTimes, postingsAt, reachOf } from '@/engine/systems/projobs';
-import { keepProject, productionsOf } from '@/engine/systems/slate';
+import { keepProject, slatePartsAt } from '@/engine/systems/slate';
 import { voiceOnly } from '@/engine/systems/workflow';
 import { AGENT, SURE, at, finishedJob, graduate, played, portfolio, reel, represent, twin, zone } from './fakes/b20-career';
 import { booked } from './fakes/career-work';
@@ -250,6 +250,11 @@ describe('what the terms cover, read by the commission and the agent’s submiss
     expect(withVoice.terms.find((t) => t.id === 'excluded')!.words).toBe('Commercials aren’t covered. An agency usually handles them in another department.');
     const lantern = projectById('lantern-row')!;
     expect([reachOf(lantern, withVoice), reachOf(lantern, without)]).toEqual(['agent', 'open']);
+    // Every kind of voice work the slate makes, as it makes it: an animated series, an animated feature, a dub, a narration.
+    for (const kind of ['animated-series', 'animated-feature', 'dub', 'documentary'] as const) {
+      const t = firstPart(voice, (x) => x.kind === kind && voiceOnly(x));
+      expect([kind, reachOf(t, withVoice), reachOf(t, without)]).toEqual([kind, 'agent', 'open']);
+    }
     // On-camera work stays the agent's in both.
     const calloway = projectById('calloway-files')!;
     expect([reachOf(calloway, withVoice), reachOf(calloway, without)]).toEqual(['agent', 'agent']);
@@ -301,6 +306,11 @@ describe('Halberd Talent’s voice-over department (Part 6 medium, Part 7 voice 
     expect(rel(sim, CELIA).history.at(-1)!.words).toBe('You checked your materials for an approach: headshots and a résumé were there, and you had no voice demo.');
     expect(sendRefusal(sim, sim.player, CELIA)).toBe('Her office takes no submissions it hasn’t asked for. It sees your materials only through a referral from someone you’ve worked with.');
     sim.must({ kind: 'pro.ask_referral', payload: { agentId: CELIA.id, engagementId: job.id } });
+    // A life that mixed a demo first sends it with the headshots and the résumé, as a legit office is sent the reel.
+    const early = twin(sim);
+    demo(early);
+    early.must({ kind: 'pro.send_materials', payload: { agentId: CELIA.id } });
+    expect(rel(early, CELIA).history.at(-1)).toMatchObject({ words: 'You sent your headshots, your résumé and your voice demo to her office, on Hollis Reed Casting’s referral.', ref: currentOf(early.player.pro, 'demo')!.id });
     sim.must({ kind: 'pro.send_materials', payload: { agentId: CELIA.id } });
     expect(rel(sim, CELIA).history.at(-1)!.words).toBe('You sent your headshots and your résumé to her office, on Hollis Reed Casting’s referral.');
     for (let k = 0; k < 20 && rel(sim, CELIA).stage === 'sent'; k += 1) played(sim, sim.now + MS_DAY);
@@ -344,6 +354,21 @@ describe('Halberd Talent’s voice-over department (Part 6 medium, Part 7 voice 
     expect(interestOf(waiting, waiting.player, CELIA, waiting.now).factors.find((f) => f.id === 'reliability')!.level).toBe('near');
     expect(rel(sim, CELIA).history.some((e) => e.kind === 'request-missed')).toBe(false);
   }, 300_000);
+});
+
+describe('a voice department’s fit, for a life whose recorded work is all voice', () => {
+  it('reads voice tapes as the work her department covers, and his doesn’t', () => {
+    const sim = graduate('rep-voice-fit');
+    // TEST SETUP: a life with no School on its record, as one that never trained there has none.
+    delete sim.player.school;
+    sim.player.pro!.credits = [];
+    sim.must({ kind: 'brief.choose', payload: { brief: VOICE_BRIEF.id, reading: VOICE_BRIEF.readings[0]!.id } });
+    sim.must({ kind: 'practice.self_tape', payload: { genre: VOICE_BRIEF.kinds[0], brief: VOICE_BRIEF.id } });
+    const fit = (agent: Agent) => interestOf(sim, sim.player, agent, sim.now).factors.find((f) => f.id === 'fit')!;
+    expect(fit(CELIA)).toMatchObject({ level: 'at', words: 'Your recorded work is voice work, which her department covers.' });
+    expect(fit(AGENT)).toMatchObject({ level: 'short', words: 'Your recorded work is voice work, which his department doesn’t cover.' });
+    expect(interestOf(sim, sim.player, CELIA, sim.now).factors.find((f) => f.id === 'relevance')).toMatchObject({ level: 'near', words: 'You’ve taped voice briefs, and have no voice demo or voice credit yet. Mix A Voice Demo on the Portfolio tab would give it something to hear.' });
+  });
 });
 
 describe('an introduction at a festival (AgentRoute festival)', () => {
@@ -395,6 +420,16 @@ describe('an introduction at a festival (AgentRoute festival)', () => {
   }, 300_000);
 });
 
+describe('one agent at a time, whatever each covers', () => {
+  it('refuses Celia Brannock’s voice-over agreement while Thomas Ashgrove’s runs, naming what his covers, since the work loop and the pay read one agreement', () => {
+    const sim = graduate('rep-one-at-a-time');
+    // TEST SETUP: his agreement signed, and hers offered, each as the agent's builder writes one.
+    const his = represent(sim);
+    sim.player.pro!.agreements.push({ id: 'celia-offer', agentId: CELIA.id, offeredAt: sim.now, standsUntil: sim.now + 14 * MS_DAY, status: 'offered', terms: termsFor({ ...dealOf(his), scope: ['voice'] }), deal: { versions: [{ version: 1, at: sim.now, scope: ['voice'], territory: ['us'], termDays: 365, how: 'offered' }] } });
+    expect(signRefusal(sim, sim.player, CELIA)).toMatch(/^Thomas Ashgrove at Halberd Talent represents you until \w+ \d+, \d{4}, for stage, film and television work\. In the game you have one agent at a time, so this agreement can’t start while that one runs\. You can decline it, or end the other first\.$/);
+  });
+});
+
 describe('an older save’s agreement', () => {
   it('reads as the words it was offered with: a legit department’s work in the US for a year, and a voice department’s voice-over', () => {
     const sim = graduate('rep-older');
@@ -440,9 +475,9 @@ function sundanceEntry(sim: Simulation, state: 'screened' | 'not-selected') {
   return entry;
 }
 
-/** The first slate part, from now on, that a test needs. */
+/** The first slate part, from now on, that a test needs: a production's or a series' (`slatePartsAt`). */
 function firstPart(sim: Simulation, pick: (t: ProjectTemplate) => boolean): ProjectTemplate {
-  for (let w = 1; w < 400; w += 1) for (const p of productionsOf(sim, sim.now + w * 7 * MS_DAY)) for (const t of p.parts) if (pick(t)) return t;
+  for (let w = 1; w < 400; w += 1) for (const t of slatePartsAt(sim, sim.now + w * 7 * MS_DAY)) if (pick(t)) return t;
   throw new Error('no such part');
 }
 
