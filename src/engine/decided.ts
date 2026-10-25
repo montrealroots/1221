@@ -45,7 +45,7 @@ import { therapyLifts } from './systems/therapy';
 import { priorityOf } from './systems/classmates';
 import { AGENTS } from './content/agents';
 import { GATE, LEVELS, chancesFor, drawOf, offerOutcome, replyOutcome, rosterFor } from './systems/proagent';
-import { DIRECT, NEGOTIATE, castingDraw, postingsAt, slateReach } from './systems/projobs';
+import { DIRECT, HOLD, NEGOTIATE, castingDraw, postingsAt, slateReach } from './systems/projobs';
 import { productionsOf, seriesOfYear, slatePartsAt } from './systems/slate';
 import { PROJECTS } from './content/careerwork';
 import { SERIES } from './content/series';
@@ -735,6 +735,22 @@ defineDecider<{ sim: Simulation; band: number; worked: number }, string>({
     const b = (['unready', 'working', 'strong', 'exceptional'] as const)[band]!;
     const chance = Math.min(1, NEGOTIATE.yes[b] + (worked ? NEGOTIATE.worked : 0));
     return Array.from({ length: 40 }, (_, n) => (sim.rng('pro.negotiate', PROJECTS[n % PROJECTS.length]!.id, sim.now + n * 86_400_000).next() < chance ? '1' : '0')).join('');
+  },
+});
+
+defineDecider<{ sim: Simulation; band: number }, string>({
+  id: 'pro.hold',
+  decides: 'A production’s answer when asked to decide on a part it holds, against another offer on the same days (HOLD): booked with an offer or the hold let go, its chance by the last round’s band.',
+  drawnIn: 'src/engine/systems/projobs.ts',
+  reads: {
+    // The last round's band: a stronger one, a likelier booking.
+    band: (o, t) => ({ ...o, band: Math.round(t * 3) }),
+    world: (o, t) => ({ ...o, sim: atYale(Math.round(t * 20)) }),
+  },
+  sample: (seed) => ({ sim: atYale(seed), band: seed % 4 }),
+  decide: ({ sim, band }) => {
+    const chance = HOLD.book[(['unready', 'working', 'strong', 'exceptional'] as const)[band]!];
+    return Array.from({ length: 40 }, (_, n) => (sim.rng('pro.hold', PROJECTS[n % PROJECTS.length]!.id, sim.now + n * 86_400_000).next() < chance ? '1' : '0')).join('');
   },
 });
 

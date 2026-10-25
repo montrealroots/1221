@@ -43,8 +43,8 @@ commit, what's done, what remains and the exact next step. `README.md` is the re
 | C | The foundation matrix's outstanding rows (110 IVI, 4 Decision Required after the merge) | Classified (`foundation/OUTSTANDING.md`): 4 decisions escalated, 20 behind them, 85 measured again in F, 5 read by an audit after K |
 | K1 | The geographic coverage matrix and the research register | Done (this commit): 252 countries and territories, 170,911 places; 124 pages in the register, brief 25's unread sources asked for again |
 | K2 | The ongoing project and opportunity lifecycle (Area B) | Done (this commit): the slate, with the UK's rules verified for its London work |
-| K3 | Representation depth and versioned materials | In progress: what briefs 19 to 25 built read against Parts 6 and 7; the voice demo built (this commit); managers, lawyers and publicists not in the game, said so |
-| K4 | Discovery, submission, auditions, direct offers, negotiation, holds and options | In progress: the chemistry read, the screen test, direct offers and asking for more through the agent built; holds next |
+| K3 | Representation depth and versioned materials | In progress: what briefs 19 to 25 built read against Parts 6 and 7; the voice demo built (`60a43de2`); managers, lawyers and publicists not in the game, said so |
+| K4 | Discovery, submission, auditions, direct offers, negotiation, holds and options | Built: the chemistry read, the screen test, direct offers, asking for more through the agent, and holds; options were brief 25's (a series part's) |
 | K5 | Preparation, production, travel, changes, wrap, compensation, expenses, residuals | Waiting |
 | K6 | Release, publicity, weekly charts, renewal and returning work | Waiting |
 | K7 | Festivals, awards, the ceremony | Waiting |
@@ -67,8 +67,8 @@ commit, what's done, what remains and the exact next step. `README.md` is the re
 
 ## Next Step
 
-K4's holds (loop 20): a production that has seen the actor at a chemistry read or a screen test holds their dates, and
-a conflicting offer asks for the hold to be released or lets it go. Chemistry reads, screen tests, direct offers and
-asking for more through the agent are built (README, K4). Then K3's close. Then K5 to K8 and F, as the table
-says. Before F: the 85 measured criteria are measured again on the finished commit, and the four decisions above stay
+K3's close, then K5: preparation, production, travel, changes and absence, wrap and post-production, compensation,
+expenses, residuals and money owed (Parts 10 and 11, and the supplement's loops 21 to 32). Read `systems/projobs.ts`'s
+work days, `systems/propay.ts` and `systems/worktrip.ts` first, then build what's missing. K4 is built (README, K4). Then
+K6 to K8 and F, as the table says. Before F: the 85 measured criteria are measured again on the finished commit, and the four decisions above stay
 with the owner.

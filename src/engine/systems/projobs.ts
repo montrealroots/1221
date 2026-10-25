@@ -213,6 +213,17 @@ export const DIRECT = { chance: 0.5, bands: ['strong', 'exceptional'] as readonl
 export const NEGOTIATE = { ask: 0.2, yes: { unready: 0, working: 0.15, strong: 0.35, exceptional: 0.55 } as Readonly<Record<Band, number>>, worked: 0.15, answerHour: 15 } as const;
 
 /**
+ * A hold (from 2026-10-25, the owner's brief 27, loop 20: "A hold or option begins → record its scope, dates, and terms →
+ * show how it affects availability → a conflicting opportunity arrives → evaluate permitted responses → release,
+ * exercise, negotiate, or decline"): a production that asks the actor to a chemistry read or a screen test holds the
+ * part's work days until the part is settled, booking nothing and paying nothing ("Do not treat every hold as a signed
+ * paid engagement"). Accepting another offer on the same days lets the hold go, and the part with it; or the actor asks
+ * the production to decide first, and it answers the next afternoon at three, booking them with an offer, its chance by
+ * the last round's band, or letting the hold go. ASSUMPTION each figure; drawn on its own stream (decider `pro.hold`).
+ */
+export const HOLD = { book: { unready: 0, working: 0.15, strong: 0.45, exceptional: 0.7 } as Readonly<Record<Band, number>>, answerHour: 15 } as const;
+
+/**
  * Casting's chance, ASSUMPTION every figure: by the band of the round it reads (a callback's cut from the first
  * audition, the final from the last), the fit (the chance at no fit is `fitFloor` of it), and the field each kind of
  * work draws (more actors for a network co-star than a student film). Held to `least` and `most`: a perfect audition
@@ -294,6 +305,7 @@ export const TAPE_DUE_KIND = 'pro.tape_due';
 export const CASTING_KIND = 'pro.casting_decision';
 export const OFFER_KIND = 'pro.offer_lapse';
 export const NEGOTIATE_KIND = 'pro.negotiate_answer';
+export const HOLD_KIND = 'pro.hold_answer';
 export const WORK_DAY_KIND = 'pro.work_day';
 export const RELEASE_KIND = 'pro.release';
 export const SCHOOL_ANSWER_KIND = 'pro.school_answer';
@@ -1181,7 +1193,88 @@ export function acceptWarning(sim: Simulation, person: Person, o: Opportunity): 
   const days = datesOf(o);
   const school = schoolWarning(sim, person, o, days);
   const trip = abroadWarning(sim, person, o, days);
-  return [trip, school].filter(Boolean).join(' ') || undefined;
+  const held = holdWarning(person, o, days);
+  return [held, trip, school].filter(Boolean).join(' ') || undefined;
+}
+
+// ---------------------------------------------------------------------------------------------------------------------
+// Holds (from 2026-10-25, the owner's brief 27, loop 20; `HOLD`)
+// ---------------------------------------------------------------------------------------------------------------------
+
+/** The days a part holds: its work, and a trip's days away where it travels. */
+const heldSpans = (person: Person, o: Opportunity) => spansOf(person, projectOf(o), datesOf(o));
+const overlaps = (a: readonly { from: Instant; to: Instant }[], b: readonly { from: Instant; to: Instant }[]) => a.some((x) => b.some((y) => x.from < y.to && x.to > y.from));
+
+/** Whether a part's hold on the actor's dates still stands: put on, and the part not yet settled. */
+export const holding = (o: Opportunity): boolean => o.hold?.status === 'held' && (o.status === 'audition' || o.status === 'callback' || o.status === 'offered');
+
+/** The actor's other parts whose holds stand on any of these days. */
+export function holdsOn(person: Person, days: readonly { from: Instant; to: Instant }[], except?: string): Opportunity[] {
+  return (person.pro?.opportunities ?? []).filter((x) => x.id !== except && holding(x) && overlaps(heldSpans(person, x), days));
+}
+
+/** The offers standing on a held part's days, the soonest to lapse first: what its production is asked to decide against. */
+export function offersAgainst(person: Person, o: Opportunity): Opportunity[] {
+  const held = heldSpans(person, o);
+  return (person.pro?.opportunities ?? [])
+    .filter((x) => x.id !== o.id && x.status === 'offered' && x.offer && overlaps(spansOf(person, projectOf(x), datesOf(x)), held))
+    .sort((a, b) => a.offer!.until - b.offer!.until);
+}
+
+/** A hold's days as a player reads them: "from June 3 to June 9". */
+const holdSpanWords = (o: Opportunity): string => {
+  const days = datesOf(o);
+  return days.length === 1 ? `on ${formatDate(days[0]!.from, NY)}` : `from ${formatDate(days[0]!.from, NY)} to ${formatDate(days[days.length - 1]!.from, NY)}`;
+};
+
+/** When the production answers an ask to decide: the next afternoon at three. */
+export const holdAnswerAt = (now: Instant): Instant => dayAt(addDays(now, 1, NY), HOLD.answerHour);
+
+/** What accepting an offer does to the parts holding its days, said before it's pressed. */
+function holdWarning(person: Person, o: Opportunity, days: readonly WorkDay[]): string | undefined {
+  const held = holdsOn(person, spansOf(person, projectOf(o), days), o.id);
+  if (!held.length) return undefined;
+  return held.map((x) => {
+    const h = projectOf(x);
+    return x.status === 'offered'
+      ? `The offer for ${h.role.part} in ${h.project} is on some of the same days, and ${h.casting} ${agrees(h, 'holds', 'hold')} them. Accepting this declines it.`
+      : `${castingAs(h)} ${agrees(h, 'holds', 'hold')} some of the same days for ${h.role.part} in ${h.project} until the part is cast. Accepting this lets that hold go and withdraws you from the part; Ask Them To Decide, on that part, asks ${h.casting} to book you or let you go first.`;
+  }).join(' ');
+}
+
+/** Why the production can't be asked to decide on a held part now, or nothing. */
+export function holdAskRefusal(sim: Simulation, person: Person, o: Opportunity | undefined): string | undefined {
+  if (!o || !holding(o)) return 'No hold stands on your dates for this part.';
+  const t = projectOf(o);
+  if (o.status === 'offered') return `${castingAs(t)} ${agrees(t, 'has', 'have')} decided: the offer stands, to accept or decline.`;
+  if (o.hold!.asked) return `You’ve asked; the answer comes on ${formatWeekdayDate(o.hold!.asked.answerAt, NY)} at ${formatTime(o.hold!.asked.answerAt, NY)}.`;
+  const against = offersAgainst(person, o)[0];
+  if (!against) return 'No other offer stands on these days, so there’s nothing to ask the production to decide against.';
+  const answerAt = holdAnswerAt(sim.now);
+  if (against.offer!.until <= answerAt) return `The offer for ${projectOf(against).role.part} lapses on ${formatDate(against.offer!.until, NY)} at ${formatTime(against.offer!.until, NY)}, before ${t.casting} could answer, so it’s a choice between them now.`;
+  return undefined;
+}
+
+/** A hold put on: its days and its terms in the history, and the notice's sentence saying it. */
+function placeHold(sim: Simulation, person: Person, o: Opportunity): string {
+  const t = projectOf(o);
+  const days = datesOf(o);
+  o.hold = { at: sim.now, from: days[0]!.from, to: days[days.length - 1]!.to, status: 'held' };
+  const span = holdSpanWords(o);
+  note(sim, person, o, { kind: 'callback', key: 'hold:set', words: `${castingAs(t)} put a hold on your dates for ${t.role.part}, ${span}, until the part was cast. It booked nothing and paid nothing.` });
+  const against = offersAgainst(person, o)[0];
+  return ` ${castingAs(t)} ${agrees(t, 'puts', 'put')} a hold on your dates, ${span}, until the part is cast: it asks you to keep those days free, and it isn’t a booking and pays nothing.${against ? ` The offer for ${projectOf(against).role.part} is on some of the same days: accepting it lets this hold go, and Ask Them To Decide on the Opportunities tab asks ${t.casting} to book you or let you go first.` : ''}`;
+}
+
+/** The notice's sentence when a part ends while its hold stands. */
+const holdGone = (o: Opportunity): string => (holding(o) ? ' The hold on your dates is let go.' : '');
+
+/** A held part let go: its rounds and offer off the clock, and settled with the words. */
+function letGo(sim: Simulation, person: Person, o: Opportunity, status: Opportunity['status'], words: string): void {
+  sim.timeline.cancelFor('pro.opportunity', o.id, sim.now);
+  sim.timeline.cancelFor('pro.offer', o.id, sim.now);
+  note(sim, person, o, { kind: status === 'declined' ? 'declined' : status === 'passed' ? 'passed' : 'ended', key: 'hold:let-go', words });
+  settle(sim, person, o, status, words);
 }
 
 /**
@@ -1372,6 +1465,12 @@ function agentTries(sim: Simulation, person: Person, o: Opportunity): void {
 
 /** An opportunity settled: its status, when, the outcome in words, and the record kept to its bounds. */
 function settle(sim: Simulation, person: Person, o: Opportunity, status: Opportunity['status'], outcome: string): void {
+  // A hold ends with its part (`HOLD`): the booking it became, or let go with the rest, in the history either way.
+  if (holding(o)) {
+    o.hold!.status = status === 'booked' ? 'booked' : 'released';
+    o.hold!.settled = { at: sim.now, why: outcome };
+    note(sim, person, o, { kind: 'ended', key: 'hold:ended', words: status === 'booked' ? 'The hold on your dates became the booking.' : `The hold on your dates, ${holdSpanWords(o)}, was let go.` });
+  }
   o.status = status;
   o.resolvedAt = sim.now;
   o.outcome = outcome;
@@ -1434,8 +1533,10 @@ function setRound(sim: Simulation, person: Person, o: Opportunity, which: Round)
   note(sim, person, o, { kind: which === 'audition' ? 'audition' : 'callback', key: `${which}:set`, words: noted });
   const next = form === 'in-person' ? 'Prepare the sides on the Career screen’s Opportunities tab before you go.' : 'Prepare the sides, then press Tape It on the Career screen’s Opportunities tab.';
   const clashWords = clash.length ? ` It clashes with ${spokenList(clash)}. To ask for another time, press Ask For Another Time on the Opportunities tab, at least a day ahead. Casting moves it once.` : '';
+  // A chemistry read or a screen test brings a hold on the part's days, once (from 2026-10-25, brief 27, loop 20; `HOLD`).
+  const holdWords = later && !o.hold ? placeHold(sim, person, o) : '';
   const agent = agentFor(o);
-  tell(sim, person, later ? `A ${ROUND_WORDS[which].name} For ${t.role.part}` : which === 'callback' ? `A Callback For ${t.role.part}` : form === 'in-person' ? `An Audition For ${t.role.part}` : `A Self-Tape For ${t.role.part}`, `${agent ? `${agent.name} passed this on: ` : ''}${words}${clashWords} ${next}`, 80);
+  tell(sim, person, later ? `A ${ROUND_WORDS[which].name} For ${t.role.part}` : which === 'callback' ? `A Callback For ${t.role.part}` : form === 'in-person' ? `An Audition For ${t.role.part}` : `A Self-Tape For ${t.role.part}`, `${agent ? `${agent.name} passed this on: ` : ''}${words}${clashWords}${holdWords} ${next}`, 80);
   return r;
 }
 
@@ -1492,17 +1593,19 @@ function missRound(sim: Simulation, person: Person, o: Opportunity, r: AuditionR
       ? `You were ${/^(in|on) /.test(elsewhere) ? '' : 'at '}${elsewhere}, so you missed the ${ROUND_WORDS[r.round].noun} for ${t.role.part} on ${formatDate(r.at, NY)} at ${formatTime(r.at, NY)}, and ${t.casting} moved on without you.`
       : `You missed the ${ROUND_WORDS[r.round].noun} for ${t.role.part} on ${formatDate(r.at, NY)} at ${formatTime(r.at, NY)}, so ${t.casting} moved on without you.`;
   note(sim, person, o, { kind: 'problem', key: `${r.round}:missed`, words });
+  const gone = holdGone(o);
   settle(sim, person, o, 'lapsed', words);
-  tell(sim, person, r.form === 'self-tape' ? `Your Self-Tape For ${t.role.part} Wasn’t In` : `You Missed The ${ROUND_WORDS[r.round].name} For ${t.role.part}`, words, 75);
+  tell(sim, person, r.form === 'self-tape' ? `Your Self-Tape For ${t.role.part} Wasn’t In` : `You Missed The ${ROUND_WORDS[r.round].name} For ${t.role.part}`, `${words}${gone}`, 75);
 }
 
 /** Casting passed: said, with where to see what went into it. */
 function pass(sim: Simulation, person: Person, o: Opportunity, why: string): void {
   const t = projectOf(o);
+  const gone = holdGone(o);
   note(sim, person, o, { kind: 'passed', key: 'passed', words: why });
   settle(sim, person, o, 'passed', why);
   const agent = agentFor(o);
-  tell(sim, person, `Not Cast As ${t.role.part}`, `${agent ? `${agent.name} passed this on: ` : ''}${why} Casting doesn’t give its reasons. The Opportunities tab shows what went into it: your audition, the role’s fit and the field.`, 65);
+  tell(sim, person, `Not Cast As ${t.role.part}`, `${agent ? `${agent.name} passed this on: ` : ''}${why}${gone} Casting doesn’t give its reasons. The Opportunities tab shows what went into it: your audition, the role’s fit and the field.`, 65);
 }
 
 /**
@@ -2160,14 +2263,39 @@ export function registerProJobs(sim: Simulation): void {
     tell(s, person, yes ? `The Offer For ${t.role.part} Is Raised` : `The Offer For ${t.role.part} Stands`, words, 70);
   });
 
+  sim.onSchedule(HOLD_KIND, (item, s) => {
+    const at = located(s, item);
+    const asked = at?.o.hold?.asked;
+    // Casting's own word may have come first: an offer, or the part gone to another actor, and nothing's left to answer.
+    if (!at || !asked || asked.answer || !holding(at.o) || at.o.status === 'offered') return;
+    const { person, o } = at;
+    const t = projectOf(o);
+    const last = o.rounds?.filter((r) => r.band).at(-1)?.band ?? 'working';
+    const yes = s.rng('pro.hold', o.projectId, o.postedAt).next() < HOLD.book[last];
+    asked.answer = yes ? 'booked' : 'released';
+    const against = opportunityOf(person, asked.against);
+    const other = against ? projectOf(against).role.part : 'the other part';
+    if (yes) {
+      // Booked: the rounds still to come are dropped, and the offer is made now.
+      s.timeline.cancelFor('pro.opportunity', o.id, s.now);
+      note(s, person, o, { kind: 'offer', key: 'hold:booked', words: `Asked to decide, ${t.casting} chose you for ${t.role.part} rather than let you go to ${other}.` });
+      makeOffer(s, person, o);
+      return;
+    }
+    const words = `Asked to decide, ${t.casting} let ${agrees(t, 'its', 'their')} hold go rather than choose before the offer for ${other} lapsed, and went on without you for ${t.role.part}.`;
+    letGo(s, person, o, 'passed', words);
+    tell(s, person, `The Hold On ${t.role.part} Is Let Go`, `${words} You’re free to take ${other}.`, 70);
+  });
+
   sim.onSchedule(OFFER_KIND, (item, s) => {
     const at = located(s, item);
     if (!at || at.o.status !== 'offered' || !at.o.offer || at.o.offer.until > s.now) return;
     const t = projectOf(at.o);
     const words = `You didn’t answer the offer for ${t.role.part} by ${formatDate(at.o.offer.until, NY)} at ${formatTime(at.o.offer.until, NY)}, so it lapsed.`;
+    const gone = holdGone(at.o);
     note(s, at.person, at.o, { kind: 'lapsed', key: 'lapsed', words });
     settle(s, at.person, at.o, 'lapsed', words);
-    tell(s, at.person, `The Offer For ${t.role.part} Lapsed`, words, 70);
+    tell(s, at.person, `The Offer For ${t.role.part} Lapsed`, `${words}${gone}`, 70);
   });
 
   sim.onSchedule(WORK_DAY_KIND, (item, s) => {
@@ -2395,6 +2523,23 @@ export function registerProJobs(sim: Simulation): void {
     return { asked: amount, answerAt };
   });
 
+  // Asking a production that holds the actor's dates to decide first, against another offer on them (`HOLD`).
+  sim.onCommand<{ opportunityId: string }, { answerAt: Instant; against: string }>('pro.ask_hold', (p, { sim: s }) => {
+    const person = s.player;
+    const o = opportunityOf(person, p?.opportunityId);
+    const no = holdAskRefusal(s, person, o);
+    if (no) throw new CommandError(no);
+    const t = projectOf(o!);
+    const against = offersAgainst(person, o!)[0]!;
+    const answerAt = holdAnswerAt(s.now);
+    o!.hold!.asked = { at: s.now, against: against.id, answerAt };
+    s.schedule({ at: answerAt, kind: HOLD_KIND, label: `The Answer On The Hold For ${t.role.part}`, category: 'career', priority: 40, refType: 'pro.hold', refId: o!.id, payload: { personId: person.id, opportunityId: o!.id } });
+    const agreement = activeAgreement(person, s.now);
+    const who = agentFor(o!)?.name ?? (agreement ? agentById(agreement.agentId)?.name : undefined) ?? 'You';
+    note(s, person, o!, { kind: 'callback', key: 'hold:asked', words: `${who} asked ${t.casting} to book you as ${t.role.part} or let you go, with the offer for ${projectOf(against).role.part} on some of the same days.` });
+    return { answerAt, against: against.id };
+  });
+
   sim.onCommand<{ opportunityId: string }, { engagementId: string; days: number }>('pro.accept_offer', (p, { sim: s }) => {
     const person = s.player;
     const o = opportunityOf(person, p?.opportunityId);
@@ -2430,6 +2575,14 @@ export function registerProJobs(sim: Simulation): void {
     // The part's scenes and the order they're shot in (from 2026-10-24, brief 25's Module 5, `planWork`).
     planWork(s, e, t);
     s.timeline.cancelFor('pro.offer', o!.id, s.now);
+    // Work taken on days another part holds lets that hold go, and the part with it (`HOLD`), as the offer said it would.
+    for (const x of holdsOn(person, spansOf(person, t, days), o!.id)) {
+      const h = projectOf(x);
+      const offered = x.status === 'offered';
+      const why = `You took ${t.role.part} in ${t.project} on some of the same days, so ${offered ? `you declined ${h.role.part} in ${h.project}` : `you withdrew from ${h.role.part} in ${h.project}`} and its hold was let go.`;
+      letGo(s, person, x, offered ? 'declined' : 'withdrawn', why);
+      tell(s, person, offered ? `You Declined ${h.role.part}` : `You Withdrew From ${h.role.part}`, why, 60);
+    }
     const words = `You accepted ${t.role.part} in ${t.project}: ${counted(days.length, 'work day')}, from ${formatDate(days[0]!.from, NY)}.`;
     noteEvent(s, e, { kind: 'booked', key: 'booked', words });
     note(s, person, o!, { kind: 'booked', key: 'booked', words });

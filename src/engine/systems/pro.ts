@@ -268,6 +268,18 @@ export interface Opportunity extends HasHistory {
   };
   /** Offered without an audition (from 2026-10-24, brief 27, loop 16): the work for the same casting office that's why, said. */
   direct?: { engagementId: ProId; words: string };
+  /**
+   * A hold on the actor's dates (from 2026-10-25, the owner's brief 27, loop 20): put on the part's work days when casting
+   * asks for a chemistry read or a screen test, from the first day's start to the last's end, and kept until the part is
+   * settled, booked or let go. It books nothing and pays nothing (`systems/projobs.ts`'s `HOLD`). `asked` is the actor's
+   * ask that the production decide early, against another offer on the same days, and its answer.
+   */
+  hold?: {
+    at: Instant; from: Instant; to: Instant;
+    status: 'held' | 'booked' | 'released';
+    asked?: { at: Instant; against: ProId; answerAt: Instant; answer?: 'booked' | 'released' };
+    settled?: { at: Instant; why: string };
+  };
   /** When it was settled, booked or not, and why, in the player's words. */
   resolvedAt?: Instant;
   outcome?: string;

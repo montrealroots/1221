@@ -349,6 +349,18 @@
  "pro.apply_work_visa": {
   "status": "Not Tested"
  },
+ "pro.ask_hold": {
+  "status": "Verified",
+  "by": [
+   "inspection",
+   "automated"
+  ],
+  "on": "68c2c004",
+  "evidence": [
+   "tests/b27-holds.test.ts",
+   "src/engine/systems/projobs.ts:2527 the command; src/engine/systems/projobs.ts:1246 holdAskRefusal: no hold, already offered, asked already, no other offer, one lapsing before the answer"
+  ]
+ },
  "pro.ask_more": {
   "status": "Verified",
   "by": [
@@ -533,6 +545,18 @@
    "tests/pro-core.test.ts",
    "tests/pro-screen.test.ts",
    "tests/pro-core.test.ts the career’s 32 test files, 423 tests, run on this commit: all green"
+  ]
+ },
+ "pro.hold_answer": {
+  "status": "Verified",
+  "by": [
+   "inspection",
+   "automated"
+  ],
+  "on": "68c2c004",
+  "evidence": [
+   "tests/b27-holds.test.ts",
+   "src/engine/systems/projobs.ts:2266 the answer: booked with an offer or the hold let go, by the last round's band and the draw"
   ]
  },
  "pro.invite": {

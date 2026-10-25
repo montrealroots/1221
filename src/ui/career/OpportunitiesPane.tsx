@@ -23,7 +23,7 @@ import { FORMATS } from '@/engine/content/workflows';
 import { STEP_WORDS, stepOf, workflowOf } from '@/engine/systems/workflow';
 import { activeAgreement, type Engagement, type Opportunity } from '@/engine/systems/pro';
 import {
-  DEFERRED_WHY, FIELD_WORDS, MISSES, OUTSIDE_WORK, ROUND_WORDS, acceptRefusal, askMoreRefusal, askedAmount, acceptWarning, againWords, agrees, castingAs, chanceWords, conditionsFor, counted, datesOf, decidesAt, drawnWords, kindPhrase, reachWords,
+  DEFERRED_WHY, FIELD_WORDS, MISSES, OUTSIDE_WORK, ROUND_WORDS, acceptRefusal, holdAskRefusal, holding, askMoreRefusal, askedAmount, acceptWarning, againWords, agrees, castingAs, chanceWords, conditionsFor, counted, datesOf, decidesAt, drawnWords, kindPhrase, reachWords,
   demandsWords, eligibilityProblems, fitOf, fitWords, inSessionAny, materialProblems, moveRefusal, payTermsOf, payWords, prepMinutes,
   prepareRefusal, projectGenresOf, projectOf, requestFor, requestRefusal, roundToCome, submitRefusal, tapeRefusal, writtenFor, writtenForWords, intimacyWords,
 } from '@/engine/systems/projobs';
@@ -164,9 +164,38 @@ function InProgress({ o }: { o: Opportunity }) {
         </div>
       )}
       {r && <WhyNot reasons={[[r.form === 'self-tape' ? 'Tape It' : 'Ask For Another Time', r.form === 'self-tape' ? tapeNo : moveNo]]} />}
+      <Hold o={o} />
       <SchoolRule o={o} />
       <History o={o} />
     </article>
+  );
+}
+
+/**
+ * A hold on the actor's dates (from 2026-10-25, the owner's brief 27, loop 20; `HOLD`): its days and terms, the ask
+ * that the production decide first against another offer on them, and its answer to come.
+ */
+function Hold({ o }: { o: Opportunity }) {
+  const { sim, run, toast } = useGame();
+  const person = useWorld((s) => s.player);
+  if (!holding(o)) return null;
+  const t = projectOf(o);
+  const days = datesOf(o);
+  const no = holdAskRefusal(sim, person, o);
+  const asked = o.hold!.asked;
+  return (
+    <div className="col gap-2">
+      <p className="small" style={{ margin: 0 }}>{`${castingAs(t)} ${agrees(t, 'holds', 'hold')} your dates for it, ${spanWords(days)}, until the part is cast. It isn’t a booking and pays nothing.`}</p>
+      {asked && !asked.answer && <p className="small" style={{ margin: 0 }}>{`You asked ${t.casting} to decide first. The answer comes on ${formatWeekdayDate(asked.answerAt, NY)} at ${formatTime(asked.answerAt, NY)}.`}</p>}
+      {o.status !== 'offered' && (
+        <>
+          <div className="row gap-2" style={{ flexWrap: 'wrap' }}>
+            <Gated feature="pro.ask_hold" className="btn btn-sm" disabled={!!no} title={no} onClick={() => { const x = run<{ answerAt: number }>('pro.ask_hold', { opportunityId: o.id }); if (x.ok) toast(`Asked. The answer comes on ${formatWeekdayDate(x.value!.answerAt, NY)}.`, 'positive'); }}>Ask Them To Decide</Gated>
+          </div>
+          <WhyNot reasons={[['Ask Them To Decide', no]]} />
+        </>
+      )}
+    </div>
   );
 }
 
@@ -245,6 +274,7 @@ function OfferCard({ o }: { o: Opportunity }) {
       {agent && <p className="xs dim" style={{ margin: 0 }}>{`${agent.name} passed it on.`}</p>}
       {o.direct && <p className="small" style={{ margin: 0 }}>{`Offered without an audition. ${o.direct.words}`}</p>}
       {asked && <p className="small" style={{ margin: 0 }}>{asked.answer === 'raised' ? `Raised to ${formatMoney(asked.amount, 'USD')} a ${o.offer!.per}, as your agent asked.` : asked.answer === 'kept' ? `Kept at its offer, where your agent asked for ${formatMoney(asked.amount, 'USD')} a ${o.offer!.per}.` : `Your agent asked for ${formatMoney(asked.amount, 'USD')} a ${o.offer!.per}. The answer comes on ${formatWeekdayDate(asked.answerAt, NY)} at ${formatTime(asked.answerAt, NY)}.`}</p>}
+      <Hold o={o} />
       {warning && <p className="callout callout-warning small" style={{ margin: 0 }}>{warning}</p>}
       <p className="xs dim" style={{ margin: 0 }}>{t.medium === 'stage' ? `Missing a day: the company’s understudy covers ${counted(MISSES.stage, 'performance')}, with a written warning; another and the company replaces you.` : 'Missing a day: a shoot can’t wait, so the production replaces you.'}</p>
       <div className="row gap-2" style={{ flexWrap: 'wrap' }}>

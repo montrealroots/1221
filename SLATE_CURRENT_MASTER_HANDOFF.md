@@ -18,7 +18,7 @@ date at each milestone.)
 - **Blocked, and said so:** SAG-AFTRA's pages, USCIS, the Academy, BAFTA, France-Visas, Japan's foreign ministry and the
   ATO refuse this environment (HTTP 403); none is worked around, and the game names each as unread where it uses it.
 
-**Completion, by the matrix:** 549 of 665 rows in scope Implemented And Verified (82.5%); 112 Implemented, Verification Incomplete, 0 Partially Implemented, 0 Not Implemented, 0 Blocked Externally, 4 Decision Required, 41 Explicitly Deferred.
+**Completion, by the matrix:** 549 of 666 rows in scope Implemented And Verified (82.4%); 113 Implemented, Verification Incomplete, 0 Partially Implemented, 0 Not Implemented, 0 Blocked Externally, 4 Decision Required, 41 Explicitly Deferred.
 
 # Brief 26, The Complete Game Connectivity, Logic And Functionality Sweep, Complete And Merged (#64), 2026-10-24
 

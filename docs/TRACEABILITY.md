@@ -17,9 +17,9 @@ Implemented**: no screen offers it, or no test runs it. No status here says a sc
 SLATE has no tests of its screens, and nothing is deployed.
 
 - Verified (journey): 61
-- Implemented But Unverified: 126
+- Implemented But Unverified: 127
 - Partially Implemented: 0
-- Commands in all: 187
+- Commands in all: 188
 
 ## Commands
 
@@ -128,10 +128,11 @@ SLATE has no tests of its screens, and nothing is deployed.
 | `practice.exercise` | Implemented But Unverified | You As An Actor | ProfileWorkspace.tsx | `systems/practice.ts` | There’s no such tier. (also practiceRefusal, focusRefusal) | — | — | — | 32 | — |
 | `practice.self_tape` | Verified (journey) | You As An Actor | BriefPane.tsx | `systems/briefs.ts` | — (also tapeRefusal) | — | — | — | 46 | journey-agent.test.ts |
 | `pro.accept_agreement` | Verified (journey) | Representation | RepresentationPane.tsx | `systems/proagent.ts` | — (also signRefusal) | — | — | pro.agent_term_end | 6 | journey-agent.test.ts |
-| `pro.accept_offer` | Implemented But Unverified | Finding Work | OpportunitiesPane.tsx | `systems/projobs.ts` | — (also acceptRefusal) | engagements (added to) | — | booked | 22 | — |
+| `pro.accept_offer` | Implemented But Unverified | Finding Work | OpportunitiesPane.tsx | `systems/projobs.ts` | — (also acceptRefusal) | engagements (added to) | — | booked | 23 | — |
 | `pro.agent_check` | Verified (journey) | Representation | RepresentationPane.tsx | `systems/proagent.ts` | — (also checkRefusal) | — | — | — | 10 | journey-agent.test.ts |
 | `pro.agent_notice` | Verified (journey) | Representation | RepresentationPane.tsx | `systems/proagent.ts` | — (also noticeRefusal) | — | — | — | 8 | journey-agent.test.ts |
 | `pro.apply_work_visa` | Implemented But Unverified | Finding Work | WorkPane.tsx | `systems/worktrip.ts` | — (also visaRefusal) | — | — | — | 2 | — |
+| `pro.ask_hold` | Implemented But Unverified | Finding Work | OpportunitiesPane.tsx | `systems/projobs.ts` | — (also holdAskRefusal) | — | — | pro.hold_answer; callback | 1 | — |
 | `pro.ask_more` | Implemented But Unverified | Finding Work | OpportunitiesPane.tsx | `systems/projobs.ts` | — (also askMoreRefusal) | — | — | pro.negotiate_answer; offer | 1 | — |
 | `pro.ask_pay` | Implemented But Unverified | Finding Work | WorkPane.tsx | `systems/contracts.ts` | — (also askRefusal) | — | — | pro.pay.payday; problem | 1 | — |
 | `pro.ask_referral` | Verified (journey) | Representation | RepresentationPane.tsx | `systems/proagent.ts` | — (also referralRefusal) | — | — | — | 7 | journey-agent.test.ts |
@@ -274,12 +275,13 @@ money, what it sets going next, and how many test files name it or its constant.
 | `pro.agent_request_due` | `systems/proagent.ts` | systems/proagent.ts | — | — | — | 0 |
 | `pro.agent_silence` | `systems/proagent.ts` | systems/proagent.ts | — | — | — | 0 |
 | `pro.agent_term_end` | `systems/proagent.ts` | systems/proagent.ts | — | — | — | 0 |
-| `pro.audition` | `systems/projobs.ts` | systems/projobs.ts | — | — | — | 10 |
-| `pro.casting_decision` | `systems/projobs.ts` | systems/projobs.ts | — | — | — | 5 |
+| `pro.audition` | `systems/projobs.ts` | systems/projobs.ts | — | — | — | 12 |
+| `pro.casting_decision` | `systems/projobs.ts` | systems/projobs.ts | — | — | — | 7 |
+| `pro.hold_answer` | `systems/projobs.ts` | systems/projobs.ts | — | — | offer | 0 |
 | `pro.invite` | `systems/workflow.ts` | systems/workflow.ts | — | — | — | 2 |
 | `pro.loop` | `systems/workflow.ts` | systems/workflow.ts | — | — | — | 2 |
 | `pro.negotiate_answer` | `systems/projobs.ts` | systems/projobs.ts | — | — | offer | 0 |
-| `pro.offer_lapse` | `systems/projobs.ts` | systems/projobs.ts | — | — | lapsed | 2 |
+| `pro.offer_lapse` | `systems/projobs.ts` | systems/projobs.ts | — | — | lapsed | 4 |
 | `pro.pay.dues` | `systems/propay.ts` | systems/propay.ts | — | — | — | 4 |
 | `pro.pay.payday` | `systems/propay.ts` | systems/contracts.ts; systems/propay.ts | — | — | — | 8 |
 | `pro.pay.release` | `systems/propay.ts` | systems/projobs.ts; systems/propay.ts | — | — | — | 4 |
@@ -287,7 +289,7 @@ money, what it sets going next, and how many test files name it or its constant.
 | `pro.reply` | `systems/projobs.ts` | systems/proagent.ts; systems/projobs.ts | — | — | — | 6 |
 | `pro.residual.air` | `systems/contracts.ts` | systems/contracts.ts | — | — | — | 0 |
 | `pro.residual.pay` | `systems/contracts.ts` | systems/contracts.ts | — | — | pro.pay.payday; problem | 2 |
-| `pro.school_answer` | `systems/projobs.ts` | systems/projobs.ts | engagements (added to) | — | pro.negotiate_answer; offer; booked; and 3 more | 0 |
+| `pro.school_answer` | `systems/projobs.ts` | systems/projobs.ts | engagements (added to) | — | pro.negotiate_answer; offer; pro.hold_answer; and 5 more | 0 |
 | `pro.series.episode` | `systems/series.ts` | systems/series.ts | — | — | booked; problem | 2 |
 | `pro.series.option` | `systems/series.ts` | systems/series.ts | — | — | problem; booked | 2 |
 | `pro.tape_due` | `systems/projobs.ts` | systems/projobs.ts | — | — | — | 2 |

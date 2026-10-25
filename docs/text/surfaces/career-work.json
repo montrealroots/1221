@@ -603,5 +603,48 @@
     "ref": "tests/b27-offers.test.ts: 'PLAYER JOURNEY: kept at its offer by its draw, said; refused without an agent, and with no figure to ask more of'"
    }
   ]
+ },
+ {
+  "surface": "A hold on the actor's dates: the round's notice, the part's card, the warning on another offer, Ask Them To Decide, the answer and the history",
+  "where": "Career, Opportunities, In Progress (the hold's line, Ask Them To Decide and its refusal, the answer to come) and Offers (the hold's line, the warning on another offer on the same days); What Needs You, the offer; the notices; the role's What Happened",
+  "sources": [
+   "src/engine/systems/projobs.ts#holdSpanWords",
+   "src/engine/systems/projobs.ts#holdWarning",
+   "src/engine/systems/projobs.ts#holdAskRefusal",
+   "src/engine/systems/projobs.ts#placeHold [callback]",
+   "src/engine/systems/projobs.ts#placeHold",
+   "src/engine/systems/projobs.ts#holdGone",
+   "src/engine/systems/projobs.ts#settle [ended]",
+   "src/engine/systems/projobs.ts#registerProJobs <pro.ask_hold>",
+   "src/engine/systems/projobs.ts#registerProJobs [callback]",
+   "src/ui/career/OpportunitiesPane.tsx#Hold"
+  ],
+  "states": [
+   "first use",
+   "confirmation",
+   "notification",
+   "success",
+   "setback",
+   "unavailable",
+   "history",
+   "explanation"
+  ],
+  "outcome": "Revised",
+  "why": "New with brief 27's K4: a hold says its days and that it isn't a booking and pays nothing; another offer on those days says what accepting it does; the ask says when the answer comes; the answer says booked or let go; each refusal says why; the history keeps how the hold ended.",
+  "changes": "Written new: the hold's sentence in the round's notice, its line on the card, the warning on another offer, the withdrawal's notice, Ask Them To Decide's label, refusals, history lines and answer notice.",
+  "evidence": [
+   {
+    "kind": "test",
+    "ref": "tests/b27-holds.test.ts: 'PLAYER JOURNEY: put on at the cut into a chemistry read, its days and terms said and kept, booking nothing and paying nothing; another offer on the same days says what accepting it does, and accepting it lets the hold go and withdraws the actor, said'"
+   },
+   {
+    "kind": "test",
+    "ref": "tests/b27-holds.test.ts: 'PLAYER JOURNEY: asked to decide first, the production books the actor by its draw: the offer made now, the chemistry read dropped, and the hold the booking once it’s accepted'"
+   },
+   {
+    "kind": "test",
+    "ref": "tests/b27-holds.test.ts: 'PLAYER JOURNEY: asked to decide first, the production lets the hold go by its draw, said, and the other offer is free to take; asked too late, refused'"
+   }
+  ]
  }
 ]

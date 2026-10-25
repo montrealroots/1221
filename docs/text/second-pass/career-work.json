@@ -916,6 +916,34 @@
   "evidence": "Written for brief 19's work loop to docs/STYLE.md and docs/GLOSSARY.md; read where the player meets it in tests/pro-work.test.ts and tests/pro-opportunities-screen.test.ts, with tools/voice-check.mjs, tools/tics.mjs and tools/title-case.mjs passing",
   "first": "Rewritten And Verified"
  },
+ "src/engine/systems/projobs.ts#holdAskRefusal": {
+  "status": "Rewritten",
+  "hash": "f45d9dccd314",
+  "on": "2026-10-25",
+  "evidence": "Written for brief 27's K4 (loop 20: holds, options and conflicts) to docs/STYLE.md and docs/GLOSSARY.md, and read where the player meets it: tests/b27-holds.test.ts holds the chemistry read's notice saying a hold is on the player's dates and that it isn't a booking and pays nothing, the history's line in the past (put a hold on your dates for ..., until the part was cast), the warning on another offer on the same days (Accepting this lets that hold go and withdraws you from the part), the withdrawal it brings (You took ... on some of the same days, so you withdrew from ... and its hold was let go; You Withdrew From ...), the refusals of Ask Them To Decide (no other offer, asked already, an offer lapsing before the answer), and the answer's words (Asked to decide, ... chose you for ...; The Hold On ... Is Let Go, You're free to take ...); the hold's end in the history (The hold on your dates became the booking). The rest of these sources' words are as they were, held by brief 19's, brief 25's and brief 27's tests. tools/voice-check.mjs, tools/tics.mjs, tools/title-case.mjs, tools/plural-check.mjs and tools/spelling.mjs pass",
+  "first": "Pending"
+ },
+ "src/engine/systems/projobs.ts#holdGone": {
+  "status": "Rewritten",
+  "hash": "74853d7e0a0e",
+  "on": "2026-10-25",
+  "evidence": "Written for brief 27's K4 (loop 20: holds, options and conflicts) to docs/STYLE.md and docs/GLOSSARY.md, and read where the player meets it: tests/b27-holds.test.ts holds the chemistry read's notice saying a hold is on the player's dates and that it isn't a booking and pays nothing, the history's line in the past (put a hold on your dates for ..., until the part was cast), the warning on another offer on the same days (Accepting this lets that hold go and withdraws you from the part), the withdrawal it brings (You took ... on some of the same days, so you withdrew from ... and its hold was let go; You Withdrew From ...), the refusals of Ask Them To Decide (no other offer, asked already, an offer lapsing before the answer), and the answer's words (Asked to decide, ... chose you for ...; The Hold On ... Is Let Go, You're free to take ...); the hold's end in the history (The hold on your dates became the booking). The rest of these sources' words are as they were, held by brief 19's, brief 25's and brief 27's tests. tools/voice-check.mjs, tools/tics.mjs, tools/title-case.mjs, tools/plural-check.mjs and tools/spelling.mjs pass",
+  "first": "Pending"
+ },
+ "src/engine/systems/projobs.ts#holdSpanWords": {
+  "status": "Rewritten",
+  "hash": "720da5a83d6e",
+  "on": "2026-10-25",
+  "evidence": "Written for brief 27's K4 (loop 20: holds, options and conflicts) to docs/STYLE.md and docs/GLOSSARY.md, and read where the player meets it: tests/b27-holds.test.ts holds the chemistry read's notice saying a hold is on the player's dates and that it isn't a booking and pays nothing, the history's line in the past (put a hold on your dates for ..., until the part was cast), the warning on another offer on the same days (Accepting this lets that hold go and withdraws you from the part), the withdrawal it brings (You took ... on some of the same days, so you withdrew from ... and its hold was let go; You Withdrew From ...), the refusals of Ask Them To Decide (no other offer, asked already, an offer lapsing before the answer), and the answer's words (Asked to decide, ... chose you for ...; The Hold On ... Is Let Go, You're free to take ...); the hold's end in the history (The hold on your dates became the booking). The rest of these sources' words are as they were, held by brief 19's, brief 25's and brief 27's tests. tools/voice-check.mjs, tools/tics.mjs, tools/title-case.mjs, tools/plural-check.mjs and tools/spelling.mjs pass",
+  "first": "Pending"
+ },
+ "src/engine/systems/projobs.ts#holdWarning": {
+  "status": "Rewritten",
+  "hash": "ea4c56b4be1b",
+  "on": "2026-10-25",
+  "evidence": "Written for brief 27's K4 (loop 20: holds, options and conflicts) to docs/STYLE.md and docs/GLOSSARY.md, and read where the player meets it: tests/b27-holds.test.ts holds the chemistry read's notice saying a hold is on the player's dates and that it isn't a booking and pays nothing, the history's line in the past (put a hold on your dates for ..., until the part was cast), the warning on another offer on the same days (Accepting this lets that hold go and withdraws you from the part), the withdrawal it brings (You took ... on some of the same days, so you withdrew from ... and its hold was let go; You Withdrew From ...), the refusals of Ask Them To Decide (no other offer, asked already, an offer lapsing before the answer), and the answer's words (Asked to decide, ... chose you for ...; The Hold On ... Is Let Go, You're free to take ...); the hold's end in the history (The hold on your dates became the booking). The rest of these sources' words are as they were, held by brief 19's, brief 25's and brief 27's tests. tools/voice-check.mjs, tools/tics.mjs, tools/title-case.mjs, tools/plural-check.mjs and tools/spelling.mjs pass",
+  "first": "Pending"
+ },
  "src/engine/systems/projobs.ts#intimacyWords": {
   "status": "Rewritten",
   "hash": "08fe2161b2af",
@@ -1023,10 +1051,10 @@
  },
  "src/engine/systems/projobs.ts#pass": {
   "status": "Rewritten",
-  "hash": "2bee5e24779e",
-  "on": "2026-10-21",
-  "evidence": "Written for brief 19's work loop to docs/STYLE.md and docs/GLOSSARY.md; read where the player meets it in tests/pro-work.test.ts and tests/pro-opportunities-screen.test.ts, with tools/voice-check.mjs, tools/tics.mjs and tools/title-case.mjs passing",
-  "first": "Rewritten And Verified"
+  "hash": "e2575ac7e87d",
+  "on": "2026-10-25",
+  "evidence": "Written for brief 27's K4 (loop 20: holds, options and conflicts) to docs/STYLE.md and docs/GLOSSARY.md, and read where the player meets it: tests/b27-holds.test.ts holds the chemistry read's notice saying a hold is on the player's dates and that it isn't a booking and pays nothing, the history's line in the past (put a hold on your dates for ..., until the part was cast), the warning on another offer on the same days (Accepting this lets that hold go and withdraws you from the part), the withdrawal it brings (You took ... on some of the same days, so you withdrew from ... and its hold was let go; You Withdrew From ...), the refusals of Ask Them To Decide (no other offer, asked already, an offer lapsing before the answer), and the answer's words (Asked to decide, ... chose you for ...; The Hold On ... Is Let Go, You're free to take ...); the hold's end in the history (The hold on your dates became the booking). The rest of these sources' words are as they were, held by brief 19's, brief 25's and brief 27's tests. tools/voice-check.mjs, tools/tics.mjs, tools/title-case.mjs, tools/plural-check.mjs and tools/spelling.mjs pass",
+  "first": "Pending"
  },
  "src/engine/systems/projobs.ts#payWords": {
   "status": "Rewritten",
@@ -1041,6 +1069,20 @@
   "on": "2026-10-22",
   "evidence": "tests/b22-authorization.test.ts (the acceptance warning and Released As Hester Vane, Nell and Robin word for word) and tests/pro-work.test.ts (Replaced As, paid on its payday)",
   "first": "Rewritten And Verified"
+ },
+ "src/engine/systems/projobs.ts#placeHold": {
+  "status": "Rewritten",
+  "hash": "98e029d85c66",
+  "on": "2026-10-25",
+  "evidence": "Written for brief 27's K4 (loop 20: holds, options and conflicts) to docs/STYLE.md and docs/GLOSSARY.md, and read where the player meets it: tests/b27-holds.test.ts holds the chemistry read's notice saying a hold is on the player's dates and that it isn't a booking and pays nothing, the history's line in the past (put a hold on your dates for ..., until the part was cast), the warning on another offer on the same days (Accepting this lets that hold go and withdraws you from the part), the withdrawal it brings (You took ... on some of the same days, so you withdrew from ... and its hold was let go; You Withdrew From ...), the refusals of Ask Them To Decide (no other offer, asked already, an offer lapsing before the answer), and the answer's words (Asked to decide, ... chose you for ...; The Hold On ... Is Let Go, You're free to take ...); the hold's end in the history (The hold on your dates became the booking). The rest of these sources' words are as they were, held by brief 19's, brief 25's and brief 27's tests. tools/voice-check.mjs, tools/tics.mjs, tools/title-case.mjs, tools/plural-check.mjs and tools/spelling.mjs pass",
+  "first": "Pending"
+ },
+ "src/engine/systems/projobs.ts#placeHold [callback]": {
+  "status": "Rewritten",
+  "hash": "5f47fcfae73e",
+  "on": "2026-10-25",
+  "evidence": "Written for brief 27's K4 (loop 20: holds, options and conflicts) to docs/STYLE.md and docs/GLOSSARY.md, and read where the player meets it: tests/b27-holds.test.ts holds the chemistry read's notice saying a hold is on the player's dates and that it isn't a booking and pays nothing, the history's line in the past (put a hold on your dates for ..., until the part was cast), the warning on another offer on the same days (Accepting this lets that hold go and withdraws you from the part), the withdrawal it brings (You took ... on some of the same days, so you withdrew from ... and its hold was let go; You Withdrew From ...), the refusals of Ask Them To Decide (no other offer, asked already, an offer lapsing before the answer), and the answer's words (Asked to decide, ... chose you for ...; The Hold On ... Is Let Go, You're free to take ...); the hold's end in the history (The hold on your dates became the booking). The rest of these sources' words are as they were, held by brief 19's, brief 25's and brief 27's tests. tools/voice-check.mjs, tools/tics.mjs, tools/title-case.mjs, tools/plural-check.mjs and tools/spelling.mjs pass",
+  "first": "Pending"
  },
  "src/engine/systems/projobs.ts#post": {
   "status": "Rewritten",
@@ -1072,16 +1114,23 @@
  },
  "src/engine/systems/projobs.ts#registerProJobs": {
   "status": "Rewritten",
-  "hash": "d1edbc9dd46d",
+  "hash": "0dfebaa4f641",
   "on": "2026-10-25",
-  "evidence": "Written for brief 27's K4 (loops 16 and 18: a direct offer and asking for more through the agent) to docs/STYLE.md and docs/GLOSSARY.md, and read where the player meets it: tests/b27-offers.test.ts holds the direct offer's reason in the offer's decision and history (offered you ... without an audition, cast you as ... where your work was Strong), the ask's history line, its refusals (no agent, asked once already, the answer to come), and the answer's notices (The Offer For ... Is Raised, The Offer For ... Stands) with their words; the release notice of a voice credit now names the voice demo, which brief 27's K3 made. The rest of these sources' words are as they were, held by brief 19's and brief 25's tests. tools/voice-check.mjs, tools/tics.mjs, tools/title-case.mjs, tools/plural-check.mjs and tools/spelling.mjs pass",
+  "evidence": "Written for brief 27's K4 (loop 20: holds, options and conflicts) to docs/STYLE.md and docs/GLOSSARY.md, and read where the player meets it: tests/b27-holds.test.ts holds the chemistry read's notice saying a hold is on the player's dates and that it isn't a booking and pays nothing, the history's line in the past (put a hold on your dates for ..., until the part was cast), the warning on another offer on the same days (Accepting this lets that hold go and withdraws you from the part), the withdrawal it brings (You took ... on some of the same days, so you withdrew from ... and its hold was let go; You Withdrew From ...), the refusals of Ask Them To Decide (no other offer, asked already, an offer lapsing before the answer), and the answer's words (Asked to decide, ... chose you for ...; The Hold On ... Is Let Go, You're free to take ...); the hold's end in the history (The hold on your dates became the booking). The rest of these sources' words are as they were, held by brief 19's, brief 25's and brief 27's tests. tools/voice-check.mjs, tools/tics.mjs, tools/title-case.mjs, tools/plural-check.mjs and tools/spelling.mjs pass",
+  "first": "Pending"
+ },
+ "src/engine/systems/projobs.ts#registerProJobs [callback]": {
+  "status": "Rewritten",
+  "hash": "0fdac7d3afa7",
+  "on": "2026-10-25",
+  "evidence": "Written for brief 27's K4 (loop 20: holds, options and conflicts) to docs/STYLE.md and docs/GLOSSARY.md, and read where the player meets it: tests/b27-holds.test.ts holds the chemistry read's notice saying a hold is on the player's dates and that it isn't a booking and pays nothing, the history's line in the past (put a hold on your dates for ..., until the part was cast), the warning on another offer on the same days (Accepting this lets that hold go and withdraws you from the part), the withdrawal it brings (You took ... on some of the same days, so you withdrew from ... and its hold was let go; You Withdrew From ...), the refusals of Ask Them To Decide (no other offer, asked already, an offer lapsing before the answer), and the answer's words (Asked to decide, ... chose you for ...; The Hold On ... Is Let Go, You're free to take ...); the hold's end in the history (The hold on your dates became the booking). The rest of these sources' words are as they were, held by brief 19's, brief 25's and brief 27's tests. tools/voice-check.mjs, tools/tics.mjs, tools/title-case.mjs, tools/plural-check.mjs and tools/spelling.mjs pass",
   "first": "Pending"
  },
  "src/engine/systems/projobs.ts#registerProJobs [offer]": {
   "status": "Rewritten",
-  "hash": "5e84968afcac",
+  "hash": "83ab8f52cf9d",
   "on": "2026-10-25",
-  "evidence": "Written for brief 27's K4 (loops 16 and 18: a direct offer and asking for more through the agent) to docs/STYLE.md and docs/GLOSSARY.md, and read where the player meets it: tests/b27-offers.test.ts holds the direct offer's reason in the offer's decision and history (offered you ... without an audition, cast you as ... where your work was Strong), the ask's history line, its refusals (no agent, asked once already, the answer to come), and the answer's notices (The Offer For ... Is Raised, The Offer For ... Stands) with their words; the release notice of a voice credit now names the voice demo, which brief 27's K3 made. The rest of these sources' words are as they were, held by brief 19's and brief 25's tests. tools/voice-check.mjs, tools/tics.mjs, tools/title-case.mjs, tools/plural-check.mjs and tools/spelling.mjs pass",
+  "evidence": "Written for brief 27's K4 (loop 20: holds, options and conflicts) to docs/STYLE.md and docs/GLOSSARY.md, and read where the player meets it: tests/b27-holds.test.ts holds the chemistry read's notice saying a hold is on the player's dates and that it isn't a booking and pays nothing, the history's line in the past (put a hold on your dates for ..., until the part was cast), the warning on another offer on the same days (Accepting this lets that hold go and withdraws you from the part), the withdrawal it brings (You took ... on some of the same days, so you withdrew from ... and its hold was let go; You Withdrew From ...), the refusals of Ask Them To Decide (no other offer, asked already, an offer lapsing before the answer), and the answer's words (Asked to decide, ... chose you for ...; The Hold On ... Is Let Go, You're free to take ...); the hold's end in the history (The hold on your dates became the booking). The rest of these sources' words are as they were, held by brief 19's, brief 25's and brief 27's tests. tools/voice-check.mjs, tools/tics.mjs, tools/title-case.mjs, tools/plural-check.mjs and tools/spelling.mjs pass",
   "first": "Pending"
  },
  "src/engine/systems/projobs.ts#registerProJobs [problem]": {
@@ -1114,10 +1163,17 @@
  },
  "src/engine/systems/projobs.ts#registerProJobs <pro.accept_offer>": {
   "status": "Rewritten",
-  "hash": "674a680457ae",
-  "on": "2026-10-21",
-  "evidence": "Written for brief 19's work loop to docs/STYLE.md and docs/GLOSSARY.md; read where the player meets it in tests/pro-work.test.ts and tests/pro-opportunities-screen.test.ts, with tools/voice-check.mjs, tools/tics.mjs and tools/title-case.mjs passing",
-  "first": "Rewritten And Verified"
+  "hash": "30794859229e",
+  "on": "2026-10-25",
+  "evidence": "Written for brief 27's K4 (loop 20: holds, options and conflicts) to docs/STYLE.md and docs/GLOSSARY.md, and read where the player meets it: tests/b27-holds.test.ts holds the chemistry read's notice saying a hold is on the player's dates and that it isn't a booking and pays nothing, the history's line in the past (put a hold on your dates for ..., until the part was cast), the warning on another offer on the same days (Accepting this lets that hold go and withdraws you from the part), the withdrawal it brings (You took ... on some of the same days, so you withdrew from ... and its hold was let go; You Withdrew From ...), the refusals of Ask Them To Decide (no other offer, asked already, an offer lapsing before the answer), and the answer's words (Asked to decide, ... chose you for ...; The Hold On ... Is Let Go, You're free to take ...); the hold's end in the history (The hold on your dates became the booking). The rest of these sources' words are as they were, held by brief 19's, brief 25's and brief 27's tests. tools/voice-check.mjs, tools/tics.mjs, tools/title-case.mjs, tools/plural-check.mjs and tools/spelling.mjs pass",
+  "first": "Pending"
+ },
+ "src/engine/systems/projobs.ts#registerProJobs <pro.ask_hold>": {
+  "status": "Rewritten",
+  "hash": "2ed55a700873",
+  "on": "2026-10-25",
+  "evidence": "Written for brief 27's K4 (loop 20: holds, options and conflicts) to docs/STYLE.md and docs/GLOSSARY.md, and read where the player meets it: tests/b27-holds.test.ts holds the chemistry read's notice saying a hold is on the player's dates and that it isn't a booking and pays nothing, the history's line in the past (put a hold on your dates for ..., until the part was cast), the warning on another offer on the same days (Accepting this lets that hold go and withdraws you from the part), the withdrawal it brings (You took ... on some of the same days, so you withdrew from ... and its hold was let go; You Withdrew From ...), the refusals of Ask Them To Decide (no other offer, asked already, an offer lapsing before the answer), and the answer's words (Asked to decide, ... chose you for ...; The Hold On ... Is Let Go, You're free to take ...); the hold's end in the history (The hold on your dates became the booking). The rest of these sources' words are as they were, held by brief 19's, brief 25's and brief 27's tests. tools/voice-check.mjs, tools/tics.mjs, tools/title-case.mjs, tools/plural-check.mjs and tools/spelling.mjs pass",
+  "first": "Pending"
  },
  "src/engine/systems/projobs.ts#registerProJobs <pro.ask_more>": {
   "status": "Rewritten",
@@ -1236,6 +1292,13 @@
   "hash": "0c8e527bf216",
   "on": "2026-10-24",
   "evidence": "Written for brief 27's K4 (Part 9: chemistry reads and screen tests) to docs/STYLE.md and docs/GLOSSARY.md, and read where the player meets it: tests/b27-rounds.test.ts plays a feature's lead through the callback, the chemistry read and the screen test by the clock, holding each notice (A Chemistry Read For, A Screen Test For), each history line in the past (asked you to read with the actors already cast, Your chemistry read for ... was), the work record's task, the offer at the end, and a chemistry read slept through (You missed the chemistry read for, You Missed The Chemistry Read For). The audition's and the callback's words are as they were, held by brief 19's tests. tools/voice-check.mjs, tools/tics.mjs, tools/title-case.mjs, tools/plural-check.mjs and tools/spelling.mjs pass",
+  "first": "Pending"
+ },
+ "src/engine/systems/projobs.ts#settle [ended]": {
+  "status": "Rewritten",
+  "hash": "6a3728d8efc7",
+  "on": "2026-10-25",
+  "evidence": "Written for brief 27's K4 (loop 20: holds, options and conflicts) to docs/STYLE.md and docs/GLOSSARY.md, and read where the player meets it: tests/b27-holds.test.ts holds the chemistry read's notice saying a hold is on the player's dates and that it isn't a booking and pays nothing, the history's line in the past (put a hold on your dates for ..., until the part was cast), the warning on another offer on the same days (Accepting this lets that hold go and withdraws you from the part), the withdrawal it brings (You took ... on some of the same days, so you withdrew from ... and its hold was let go; You Withdrew From ...), the refusals of Ask Them To Decide (no other offer, asked already, an offer lapsing before the answer), and the answer's words (Asked to decide, ... chose you for ...; The Hold On ... Is Let Go, You're free to take ...); the hold's end in the history (The hold on your dates became the booking). The rest of these sources' words are as they were, held by brief 19's, brief 25's and brief 27's tests. tools/voice-check.mjs, tools/tics.mjs, tools/title-case.mjs, tools/plural-check.mjs and tools/spelling.mjs pass",
   "first": "Pending"
  },
  "src/engine/systems/projobs.ts#spansOf": {
@@ -1440,6 +1503,13 @@
   "on": "2026-10-21",
   "evidence": "Written for brief 19's work loop to docs/STYLE.md and docs/GLOSSARY.md; read where the player meets it in tests/pro-work.test.ts and tests/pro-opportunities-screen.test.ts, with tools/voice-check.mjs, tools/tics.mjs and tools/title-case.mjs passing",
   "first": "Rewritten And Verified"
+ },
+ "src/ui/career/OpportunitiesPane.tsx#Hold": {
+  "status": "Rewritten",
+  "hash": "162b334ec6a2",
+  "on": "2026-10-25",
+  "evidence": "Written for brief 27's K4 (loop 20: holds, options and conflicts) to docs/STYLE.md and docs/GLOSSARY.md, and read where the player meets it: tests/b27-holds.test.ts holds the chemistry read's notice saying a hold is on the player's dates and that it isn't a booking and pays nothing, the history's line in the past (put a hold on your dates for ..., until the part was cast), the warning on another offer on the same days (Accepting this lets that hold go and withdraws you from the part), the withdrawal it brings (You took ... on some of the same days, so you withdrew from ... and its hold was let go; You Withdrew From ...), the refusals of Ask Them To Decide (no other offer, asked already, an offer lapsing before the answer), and the answer's words (Asked to decide, ... chose you for ...; The Hold On ... Is Let Go, You're free to take ...); the hold's end in the history (The hold on your dates became the booking). The rest of these sources' words are as they were, held by brief 19's, brief 25's and brief 27's tests. tools/voice-check.mjs, tools/tics.mjs, tools/title-case.mjs, tools/plural-check.mjs and tools/spelling.mjs pass",
+  "first": "Pending"
  },
  "src/ui/career/OpportunitiesPane.tsx#InProgress": {
   "status": "Rewritten",

@@ -515,12 +515,13 @@ describe('p-traits-line', () => {
  * dimension by its own conditions), worked out here from the tasks: the dimensions in which some task reads the
  * ability and lists fatigue for that dimension. Interpretation, “the choices made”, lists it in no task, so Imagination,
  * read in it alone until 2026-10-16, had nothing; from then a scene, a taped brief and a night read a little of it in
- * believability, the magic if (`BASE_INPUTS`), which fatigue reaches. Emotional Depth’s connection is read only in partnered work, which lists no condition
- * for it. Until 2026-10-13 this was every dimension the ability shapes but interpretation, which held the Profile’s
- * over-report: Emotional Depth tired in connection.
+ * believability, the magic if (`BASE_INPUTS`), which fatigue reaches. Emotional Depth’s connection was read only in partnered work, which lists no
+ * condition for it, until brief 27's K4 (2026-10-24) added the chemistry read, whose connection reads it and lists fatigue,
+ * as an improvisation's does; from then Today names it. Until 2026-10-13 this was every dimension the ability shapes but
+ * interpretation, which held the Profile’s over-report: Emotional Depth tired in connection, with no task then behind it.
  */
 const TIRED: Readonly<Record<string, readonly string[]>> = {
-  'Emotional Depth': ['believability'],
+  'Emotional Depth': ['believability', 'connection'],
   Presence: ['connection'],
   // From 2026-10-24 (brief 25's Module 5) a dub's execution reads listening, a booth's and a dub's believability the voice
   // and a reenactment's believability the body, where fatigue reaches each; until then these three said less.

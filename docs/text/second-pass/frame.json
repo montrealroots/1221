@@ -2043,6 +2043,13 @@
   "reason": "Developer notes on each random draw, read only by tests/deciders.test.ts and tools/deciders.mjs; nothing the game ships imports decided.ts.",
   "first": "Pending"
  },
+ "src/engine/decided.ts#top [pro.hold]": {
+  "status": "Retained",
+  "hash": "c732dcae7c8c",
+  "on": "2026-10-25",
+  "reason": "A decider's description, read by tests/deciders.test.ts and tools/deciders.mjs and never shown to a player: it says what decides a production's answer when asked to decide on a part it holds, and what moves its chance.",
+  "first": "Pending"
+ },
  "src/engine/decided.ts#top [pro.late_pay]": {
   "status": "Retained",
   "hash": "4cbf32288284",

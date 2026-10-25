@@ -205,6 +205,100 @@
    "prior": null
   },
   {
+   "id": "pro.ask_hold",
+   "kind": "command",
+   "area": "career",
+   "mechanic": true,
+   "seeded": false,
+   "readBy": "career",
+   "readAt": "68c2c004",
+   "where": "Career, Opportunities, In Progress: Ask Them To Decide on a part whose production holds the actor's dates; grayed with holdAskRefusal's words.",
+   "prerequisites": "A hold standing on the part (put on at the cut into a chemistry read or a screen test), the part not yet offered, not asked before, and another offer standing on some of the same days that doesn't lapse before the answer.",
+   "reads": "The hold and the part's days, the actor's standing offers and their days and deadlines, the agreement in force (who asks), the clock.",
+   "changes": "The ask on the hold (when, against which offer, when the answer comes), the answer on the clock, and a history line.",
+   "consumers": [
+    {
+     "what": "the answer next afternoon books the actor or lets the hold go, by its draw",
+     "at": "src/engine/systems/projobs.ts:2274"
+    },
+    {
+     "what": "booked, the offer is made now and the rounds still to come are dropped",
+     "at": "src/engine/systems/projobs.ts:2282"
+    },
+    {
+     "what": "let go, the part is settled and the other offer is free",
+     "at": "src/engine/systems/projobs.ts:2286"
+    },
+    {
+     "what": "asked once, a second ask is refused, and an offer lapsing before the answer refuses it",
+     "at": "src/engine/systems/projobs.ts:1246"
+    }
+   ],
+   "experienced": "At once the part's card says the answer comes the next afternoon; then a notice of the offer, or one that the hold is let go and the other offer free to take.",
+   "saveLoad": "The professional record (`person.pro`) and the calendar's pending `pro.*` items are in the save; every handler reads the record's own state (a status, a key, a guard) before acting, so a load runs nothing twice and drops nothing. Held to the byte across a save and a load before each step of a part and of an approach by tests/b20-career-saveload.test.ts.",
+   "evidence": {
+    "tests": [
+     "tests/b27-holds.test.ts"
+    ],
+    "comparisons": [
+     "b27-holds: one part's draw books the actor, another's lets the hold go"
+    ],
+    "mutations": [
+     "b27-holds: the answer never booking, the hold never ending, no hold put on, and the too-late refusal removed, each failed a test"
+    ],
+    "journeys": [
+     "b27-holds: held at the cut, asked, booked and accepted; held, asked and let go, the other offer accepted"
+    ]
+   },
+   "missing": "No played life of the long runs reaches a hold yet: they're replayed in brief 27's F.",
+   "status": "Implemented And Verified",
+   "why": "",
+   "prior": null
+  },
+  {
+   "id": "pro.hold_answer",
+   "kind": "scheduled",
+   "area": "career",
+   "mechanic": true,
+   "seeded": false,
+   "readBy": "career",
+   "readAt": "68c2c004",
+   "where": "The production's answer when asked to decide on a part it holds, the afternoon after the ask, at three.",
+   "prerequisites": "The hold still standing, asked and not yet answered, and casting's own word not come first.",
+   "reads": "The last round's band and the draw (pro.hold).",
+   "changes": "Booked: the rounds still to come off the calendar and the offer made. Let go: the part settled as passed, its hold released, a notice saying the other offer is free.",
+   "consumers": [
+    {
+     "what": "booked, the offer and its decision",
+     "at": "src/engine/systems/projobs.ts:2282"
+    },
+    {
+     "what": "let go, the hold released with the part",
+     "at": "src/engine/systems/projobs.ts:1470"
+    }
+   ],
+   "experienced": "An offer for the part in What Needs You, or a notice that the hold is let go.",
+   "saveLoad": "The professional record (`person.pro`) and the calendar's pending `pro.*` items are in the save; every handler reads the record's own state (a status, a key, a guard) before acting, so a load runs nothing twice and drops nothing. Held to the byte across a save and a load before each step of a part and of an approach by tests/b20-career-saveload.test.ts.",
+   "evidence": {
+    "tests": [
+     "tests/b27-holds.test.ts"
+    ],
+    "comparisons": [
+     "b27-holds: booked by one part's draw, let go by another's"
+    ],
+    "mutations": [
+     "b27-holds: the answer never booking failed the booked journey"
+    ],
+    "journeys": [
+     "b27-holds"
+    ]
+   },
+   "missing": "None found.",
+   "status": "Implemented And Verified",
+   "why": "",
+   "prior": null
+  },
+  {
    "id": "pro.agent_check",
    "kind": "command",
    "area": "career",

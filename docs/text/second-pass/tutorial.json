@@ -127,9 +127,9 @@
  },
  "src/engine/content/tutorial.ts#CHAPTERS [finding-work]": {
   "status": "Rewritten",
-  "hash": "846d18fd0cc4",
+  "hash": "4b6ccfc0ef64",
   "on": "2026-10-25",
-  "evidence": "Written for brief 27's K4 (loops 16 and 18: a direct offer and asking for more through the agent) to docs/STYLE.md and docs/GLOSSARY.md, and read where the player meets it: tests/b27-offers.test.ts holds the direct offer's reason in the offer's decision and history (offered you ... without an audition, cast you as ... where your work was Strong), the ask's history line, its refusals (no agent, asked once already, the answer to come), and the answer's notices (The Offer For ... Is Raised, The Offer For ... Stands) with their words; the release notice of a voice credit now names the voice demo, which brief 27's K3 made. The rest of these sources' words are as they were, held by brief 19's and brief 25's tests. tools/voice-check.mjs, tools/tics.mjs, tools/title-case.mjs, tools/plural-check.mjs and tools/spelling.mjs pass",
+  "evidence": "Written for brief 27's K4 (loop 20: holds, options and conflicts) to docs/STYLE.md and docs/GLOSSARY.md, and read where the player meets it: tests/b27-holds.test.ts holds the chemistry read's notice saying a hold is on the player's dates and that it isn't a booking and pays nothing, the history's line in the past (put a hold on your dates for ..., until the part was cast), the warning on another offer on the same days (Accepting this lets that hold go and withdraws you from the part), the withdrawal it brings (You took ... on some of the same days, so you withdrew from ... and its hold was let go; You Withdrew From ...), the refusals of Ask Them To Decide (no other offer, asked already, an offer lapsing before the answer), and the answer's words (Asked to decide, ... chose you for ...; The Hold On ... Is Let Go, You're free to take ...); the hold's end in the history (The hold on your dates became the booking). The rest of these sources' words are as they were, held by brief 19's, brief 25's and brief 27's tests. tools/voice-check.mjs, tools/tics.mjs, tools/title-case.mjs, tools/plural-check.mjs and tools/spelling.mjs pass",
   "first": "Pending"
  },
  "src/engine/content/tutorial.ts#CHAPTERS [life]": {

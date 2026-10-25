@@ -336,8 +336,10 @@ describe('p-abilities', () => {
     // and a dub's believability the voice, and a reenactment's believability the body, each where fatigue reaches; until
     // then Listening was tired in connection and responsiveness alone, Vocal Expression in execution and consistency, and
     // Physical Expression in execution.
+    // From 2026-10-24 (brief 27's K4) a chemistry read's connection reads Emotional Depth and lists fatigue, as an
+    // improvisation's does, so Today names connection with believability; until then it named believability alone.
     const TIRED: Record<string, string> = {
-      'Emotional Depth': 'believability', Imagination: 'believability', Presence: 'connection', 'Listening And Responsiveness': 'connection, responsiveness, execution',
+      'Emotional Depth': 'believability, connection', Imagination: 'believability', Presence: 'connection', 'Listening And Responsiveness': 'connection, responsiveness, execution',
       Focus: 'execution, consistency', Memory: 'execution', Adaptability: 'responsiveness', Composure: 'consistency',
       'Vocal Expression': 'execution, consistency, believability', 'Physical Expression': 'execution, believability', Discipline: 'consistency, execution', Stamina: 'believability, connection, execution, consistency, responsiveness',
     };
@@ -364,9 +366,10 @@ describe('p-abilities', () => {
         expect(Number(m![1]), name).toBe(said[i]);
         expect(m![2], name).toBe(TIRED[name]);
       }
-      // Emotional Depth shapes connection, in partnered work only, where it lists no condition: Today leaves it out.
-      // Until 2026-10-13 it named it, and this held every dimension an ability shapes but interpretation.
-      expect(rows.get('Emotional Depth')!.slice(4, 6)).toEqual([`Readiness ${said[i]}, under 60: believability`, 'Believability, Connection']);
+      // Emotional Depth shaped connection in partnered work alone, which lists no condition, and Today left it out until
+      // brief 27's chemistry read (2026-10-24), which lists fatigue there. Until 2026-10-13 it named it with no task
+      // behind it, and this held every dimension an ability shapes but interpretation.
+      expect(rows.get('Emotional Depth')!.slice(4, 6)).toEqual([`Readiness ${said[i]}, under 60: believability, connection`, 'Believability, Connection']);
     });
     // Rested at 8 AM, by the same hand over 60: nothing on any of the twelve.
     const morning = ada('g31-today');

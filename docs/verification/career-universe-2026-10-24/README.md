@@ -369,8 +369,27 @@ notice, the offer versioned (1, then 2 when raised), its chance by the last roun
 office cast the actor before (`NEGOTIATE`, decider `pro.negotiate`). Without an agent nobody asks, and a second ask is
 refused, so it isn't rerolling for pay. Held by `tests/b27-offers.test.ts`: the rule for a direct offer, read across 200
 weeks of the slate with some of each draw, and none for work judged Working; a direct offer played by the clock to its
-decision; an ask raised and the booking paying the raised rate; an ask kept, and the refusal with no agent. **Still
-missing in K4:** holds (loop 20).
+decision; an ask raised and the booking paying the raised rate; an ask kept, and the refusal with no agent.
+
+**Then holds** (loop 20). Casting's cut into a chemistry read or a screen test puts a hold on the part's work days until
+it's cast (`HOLD`, `systems/projobs.ts`), said in the round's notice and on the part's card with its days, and kept in the
+history; it books nothing and pays nothing, so no engagement or pay comes of it. Another offer on some of the same days
+says before it's pressed what accepting it does, and accepting it lets the hold go and withdraws the actor from the part
+(an offered one is declined), said. Or the actor asks the production to decide first (`pro.ask_hold`, Ask Them To
+Decide): it answers the next afternoon at three (`pro.hold_answer`), offering the part now, the rounds still to come
+dropped, or letting the hold go and going on without them, its chance by the last round's band (decider `pro.hold`). The
+ask is refused with no other offer, once asked, once the part is offered, and when the other offer lapses before the
+answer could come. The hold ends with the part, as the booking it became or let go, and the history says which. Held by
+`tests/b27-holds.test.ts`: a hold put on at the cut by the clock and let go by accepting another offer; one booked by its
+draw and accepted; one let go by its draw and the other offer taken; and each refusal. Breaking the answer, the hold's
+end, its placing or the too-late refusal each failed a test.
+
+**Found on the way:** the clean-clone gate on `68cb2816` (the chemistry read's commit) failed two of 5846 tests:
+`tests/evidence-g31-ui.test.ts` and `tests/evidence2-b11.test.ts` held that Today names fatigue in Emotional Depth's
+believability alone, because the only task reading it in connection, partnered work, listed no condition there. The
+chemistry read's connection reads Emotional Depth and lists fatigue, as an improvisation's does, so Today names
+connection too, and is right to. The two tests now hold that; the comment in `ProfileWorkspace.tsx` that said "only
+partnered work reads it" was corrected in the same commit.
 
 ## Defects Found And Fixed
 

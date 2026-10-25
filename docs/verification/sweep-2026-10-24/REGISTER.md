@@ -7,7 +7,7 @@ persistence and world mechanics that matrix has no row for. Each carries the swe
 code, by a test the gate runs, by playing the built app), the commit, the evidence and what was found. Only Verified and Fixed And
 Verified count as done, out of every row not Deferred. Not Tested is the honest default: nothing is counted done for having a row.
 
-**Coverage:** 1131 of 1156 in scope Verified or Fixed And Verified (97.8%); 1124 Verified, 7 Fixed And Verified, 0 Failed, 0 Blocked, 20 Deferred, 25 Not Tested. By inspection 1151, automated 1151, interactive 34.
+**Coverage:** 1133 of 1158 in scope Verified or Fixed And Verified (97.8%); 1126 Verified, 7 Fixed And Verified, 0 Failed, 0 Blocked, 20 Deferred, 25 Not Tested. By inspection 1153, automated 1153, interactive 34.
 
 ## Totals
 
@@ -20,10 +20,10 @@ Verified count as done, out of every row not Deferred. Not Tested is the honest 
 | benefits | 77 | 63 |  |  |  | 14 |  | 77 | 77 |  |
 | papers | 103 | 97 |  |  |  | 6 |  | 103 | 103 |  |
 | life | 87 | 84 |  |  |  |  | 3 | 84 | 84 |  |
-| career | 109 | 94 |  |  |  |  | 15 | 94 | 94 |  |
+| career | 111 | 96 |  |  |  |  | 15 | 96 | 96 |  |
 | guide | 70 | 63 |  |  |  |  | 7 | 63 | 63 | 25 |
 | persistence | 12 | 11 | 1 |  |  |  |  | 12 | 12 | 9 |
-| **All** | **1176** | **1124** | **7** | **0** | **0** | **20** | **25** | **1151** | **1151** | **34** |
+| **All** | **1178** | **1126** | **7** | **0** | **0** | **20** | **25** | **1153** | **1153** | **34** |
 
 ## Creation
 
@@ -1053,6 +1053,8 @@ Verified count as done, out of every row not Deferred. Not Tested is the honest 
 | `pro.accept_offer` | command | Career, Opportunities, Offers: Accept The Offer, and What Needs You's question with the same action; grayed with accept… | Implemented And Verified | Verified | inspection, automated | 9018cc4e | tests/b20-career-defects.test.ts; tests/b20-career-effects.test.ts; tests/b20-career-saveload.test.ts; tests/b22-authorization.test.ts; tests/pro-opportunities-screen.test.ts; tests/pro-work.test.ts; src/engine/systems/… |  |
 | `pro.ask_more` | command | Career, Opportunities, Offers: Ask For (the figure) A Day or A Week on a standing offer; grayed with askMoreRefusal's w… | Implemented And Verified | Verified | inspection, automated | 68cb2816 | tests/b27-offers.test.ts; src/engine/systems/projobs.ts:2375 the command; src/engine/systems/projobs.ts:1529 askMoreRefusal: no offer, asked already, no agent, no figure |  |
 | `pro.negotiate_answer` | scheduled | The production's answer to the agent's ask, the afternoon after it, at three. | Implemented And Verified | Verified | inspection, automated | 68cb2816 | tests/b27-offers.test.ts; src/engine/systems/projobs.ts:2140 the answer: raised to what was asked or kept, by the band, the casting office and the draw |  |
+| `pro.ask_hold` | command | Career, Opportunities, In Progress: Ask Them To Decide on a part whose production holds the actor's dates; grayed with … | Implemented And Verified | Verified | inspection, automated | 68c2c004 | tests/b27-holds.test.ts; src/engine/systems/projobs.ts:2527 the command; src/engine/systems/projobs.ts:1246 holdAskRefusal: no hold, already offered, asked already, no other offer, one lapsing before the answer |  |
+| `pro.hold_answer` | scheduled | The production's answer when asked to decide on a part it holds, the afternoon after the ask, at three. | Implemented And Verified | Verified | inspection, automated | 68c2c004 | tests/b27-holds.test.ts; src/engine/systems/projobs.ts:2266 the answer: booked with an offer or the hold let go, by the last round's band and the draw |  |
 | `pro.agent_check` | command | Career, Representation, How To Reach Him: Check Your Materials, grayed with checkRefusal's words. | Implemented And Verified | Verified | inspection, automated | 9018cc4e | tests/journey-agent.test.ts; tests/pro-representation-screen.test.ts; tests/b20-career-effects.test.ts; src/engine/systems/proagent.ts:1021-1035 the command; src/engine/systems/proagent.ts:543-551 checkRefusal: unread, … |  |
 | `pro.agent_notice` | command | Career, Representation: the notice that he and his agency are invented, at the top of his panel, and I've Read This. | Implemented And Verified | Verified | inspection, automated | 9018cc4e | tests/pro-agent.test.ts; tests/journey-agent.test.ts; tests/pro-representation-screen.test.ts; tests/b20-career-effects.test.ts; src/engine/systems/proagent.ts:1010-1019 the command; src/engine/systems/proagent.ts:502-5… |  |
 | `pro.ask_referral` | command | Career, Representation, How To Reach Him: Ask For A Referral beside each finished job, grayed with its reason. | Implemented And Verified | Verified | inspection, automated | 9018cc4e | tests/journey-agent.test.ts; tests/journey-career-older.test.ts; tests/pro-agent.test.ts; tests/b20-career-effects.test.ts; src/engine/systems/proagent.ts:1037-1052 the command; src/engine/systems/proagent.ts:573-586 re… |  |

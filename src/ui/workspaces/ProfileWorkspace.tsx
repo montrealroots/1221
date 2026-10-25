@@ -128,7 +128,8 @@ export function nextGenre(person: Person): { id: string; why: 'part' | 'loved' }
  * What today’s condition does to the dimensions an ability is read in: each named cause and the dimensions it reaches,
  * task by task, as the evaluation applies a condition (`judge`, each task’s dimension by its own conditions). Until
  * 2026-10-13 a cause named any dimension the ability is read in anywhere that some task’s same dimension listed it for,
- * so Emotional Depth read tired in connection, which only partnered work reads it in and lists no condition for, and
+ * so Emotional Depth read tired in connection, which only partnered work then read it in, listing no condition for it
+ * (from 2026-10-24 brief 27's chemistry read reads it there and lists fatigue, so Today names it with a task behind it), and
  * after a sprain Vocal Expression in consistency (read only in voice work, which an injury doesn’t reach) and Discipline
  * in execution (read only in written work, which only fatigue does).
  */
