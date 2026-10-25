@@ -28,7 +28,7 @@
 import type { Simulation } from '../src/engine/core/simulation';
 import type { ScheduledItem } from '../src/engine/core/scheduler';
 import { MS_HOUR, formatDateTime, zonedParts } from '../src/engine/core/time';
-import { answerStop, type Answer } from '../src/engine/world/clock';
+import { answerStop, carryOnTo, type Answer } from '../src/engine/world/clock';
 import { suggestedSleep, occupiedAt } from '../src/engine/systems/life';
 import { schoolEnded } from '../src/engine/systems/school';
 import { AGENTS } from '../src/engine/content/agents';
@@ -98,14 +98,21 @@ const said = (sim: Simulation, t: Transcript | undefined, line: string) => t?.li
 /** The clock moved to `to` as the top bar moves it: stopped at each commitment that wants the player, and answered. */
 export function go(sim: Simulation, to: number, player: Player = {}): void {
   let r = sim.advanceTo(to, { stopOnPlayerRequired: true });
+  // Where the jump is headed: the top bar's target, then, once a stop is answered with Go, as far as that carries it, as
+  // the screen carries it (`halt`, `app/game-context.tsx`, keeps the carried-on instant as the next stop's). Until
+  // 2026-10-25 every later stop of the jump was given the first target, so a choice that carries on, Go Up And Accept at
+  // a minute past eight, asked for the clock back at eight (`tools/long-career.ts` found it).
+  let wanted = to;
   for (let n = 0; r.interruptedBy && n < 50; n += 1) {
     const item = r.interruptedBy;
     readNotices(sim, player.transcript);
     const answer = player.stop?.(sim, item) ?? 'go';
     said(sim, player.transcript, `STOP | ${item.label} | ${answer === 'go' ? 'Go' : answer === 'stand' ? 'Stand Here' : answer.label}`);
-    const done = answerStop(sim, { item, wanted: to, sentFrom: r.sentFrom }, answer);
+    const stop = { item, wanted, sentFrom: r.sentFrom };
+    const done = answerStop(sim, stop, answer);
     if (done.refused) said(sim, player.transcript, `REFUSED | ${done.refused}`);
     if (!done.result) return;
+    wanted = carryOnTo(stop, answer) ?? wanted;
     r = done.result;
   }
 }

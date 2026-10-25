@@ -3178,7 +3178,7 @@
    "where": "The invitation's question, or Your Recognition: Go To The Ceremony or Watch From Home, on a nomination, by a week before the show.",
    "prerequisites": "A nomination not yet given; the answer's day not passed; going, no booking on the trip's days.",
    "reads": "The nomination, the show's day and place, the trip's planned days, the player's bookings and trips.",
-   "changes": "Going: the trip booked as a work trip's legs are, the show's call on the clock, the answer kept. Not going: what going booked called off.",
+   "changes": "Going: the trip booked as a work trip's legs are, the show's call on the clock, the answer kept, for every nomination of the player's at that show at once (from brief 27's F: one show, one trip, one answer). Not going: what going booked called off, for them all.",
    "consumers": [
     {
      "what": "the trip booked",
@@ -3203,7 +3203,8 @@
      "b27-ceremony: going and watching from home, each played to the show"
     ],
     "mutations": [
-     "b27-ceremony: a clash not read and no trip booked each failed a test"
+     "b27-ceremony: a clash not read and no trip booked each failed a test",
+     "b27-ceremony: a second nomination left unanswered, an answer not carried to a later nomination, and declining one keeping the others going each failed a test"
     ],
     "journeys": [
      "b27-ceremony: a nominee to the show by the clock, and one watching from home"
@@ -3225,7 +3226,7 @@
    "where": "Your Recognition: Prepare Your Remarks, an hour at a time, on a show the player is going to.",
    "prerequisites": "Going to the show; before it; the remarks not yet as ready as they get.",
    "reads": "How far the remarks are prepared.",
-   "changes": "The remarks 35% further of the way left, and an hour on the clock.",
+   "changes": "The remarks 35% further of the way left, for every nomination of the player's the show will be there for, and an hour on the clock.",
    "consumers": [
     {
      "what": "the speech reads the remarks",
@@ -3307,7 +3308,7 @@
    "where": "The show's hour in Los Angeles, for a nominee going (`CEREMONY_KIND`).",
    "prerequisites": "Going to the show, said through `pro.ceremony_rsvp`.",
    "reads": "Whether the trip got the player there and they're awake and well; the settled result.",
-   "changes": "In the room or not; a loss told in the room, adding nothing; a win sets the moment to go up; absent, the win accepted without them.",
+   "changes": "Every nomination of the player's at the show, in the room or not by the one trip; a loss told in the room, adding nothing; each win sets its moment to go up, a minute apart; absent, a win accepted without them.",
    "consumers": [
     {
      "what": "the moment to go up set",
@@ -3328,7 +3329,8 @@
      "b27-ceremony: in the room and absent by a missed flight"
     ],
     "mutations": [
-     "b27-ceremony: the trip not read failed a test"
+     "b27-ceremony: the trip not read failed a test",
+     "b27-ceremony: the evening resolving one nomination of two failed a test"
     ],
     "journeys": [
      "b27-ceremony: the night played by the clock, the trip there and home"

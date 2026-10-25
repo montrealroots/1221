@@ -1584,7 +1584,7 @@ function settle(sim: Simulation, person: Person, o: Opportunity, status: Opportu
   const last = person.pro?.lastPosted?.[o.projectId];
   if (last?.id === o.id) Object.assign(last, { status, outcome });
   sim.resolveDecision('pro.offer', o.id, 'career');
-  keepBounded(ensurePro(sim, person));
+  keepBounded(ensurePro(sim, person), sim.now);
 }
 
 /**
@@ -1951,7 +1951,7 @@ function finish(sim: Simulation, person: Person, e: Engagement, t: ProjectTempla
   if (releaseAt !== undefined) callPromo(sim, person, e, t, releaseAt);
   const rel = e.agentId ? person.pro?.relations[e.agentId] : undefined;
   if (rel) noteEvent(sim, rel, { kind: 'success', key: `eng:${e.id}:finished`, words: `You finished ${t.role.part} in ${t.project}.`, ref: e.id });
-  keepBounded(ensurePro(sim, person));
+  keepBounded(ensurePro(sim, person), sim.now);
   tell(sim, person, t.medium === 'stage' ? `${t.project} Closed` : `You Wrapped ${t.project}`, `${t.medium === 'stage' ? `The run of ${t.project} is over` : `${t.project} wrapped`}, and ${t.role.part} is on your professional credits${t.medium === 'stage' ? '' : voiceOnly(t) ? `, not yet released. It’s your voice with no picture of you, so it can go on a voice demo and not a reel${RELEASE_DAYS[t.kind] ? `; it comes out about ${counted(Math.round(RELEASE_DAYS[t.kind]! / 30), 'month')} on, estimated` : ''}` : `, not yet released. Its footage can go on a reel once it comes out${RELEASE_DAYS[t.kind] ? `, about ${counted(Math.round(RELEASE_DAYS[t.kind]! / 30), 'month')} on, estimated` : ''}`}. Update your résumé on the Portfolio tab to add it.`, 70);
 }
 
@@ -2050,7 +2050,7 @@ function keptWords(e: Engagement, worked: Set<number>): string {
 function replace(sim: Simulation, person: Person, e: Engagement, t: ProjectTemplate, what: string): void {
   const worked = callOff(sim, e, t);
   noteEvent(sim, e, { kind: 'problem', key: 'replaced', words: `${t.company} replaced you as ${t.role.part} after you missed ${what}.` });
-  keepBounded(ensurePro(sim, person));
+  keepBounded(ensurePro(sim, person), sim.now);
   tell(sim, person, `Replaced As ${t.role.part}`, `You missed ${what} of ${t.project}, and ${t.company} replaced you as ${t.role.part}. ${keptWords(e, worked)}`, 90);
 }
 
@@ -2077,7 +2077,7 @@ export function release(sim: Simulation, person: Person, e: Engagement, t: Proje
   const begun = (e.log ?? []).some((l) => l.status === 'worked');
   const worked = callOff(sim, e, t);
   noteEvent(sim, e, { kind: 'problem', key: 'released', words: `${t.company} released you as ${t.role.part} on ${formatDate(sim.now, NY)}: ${why.charAt(0).toLowerCase()}${why.slice(1)}.` });
-  keepBounded(ensurePro(sim, person));
+  keepBounded(ensurePro(sim, person), sim.now);
   tell(sim, person, `Released As ${t.role.part}`, `${why}. So ${t.company} can’t ${begun ? 'keep you on' : 'start you'} as ${t.role.part} in ${t.project}, and has released you. ${keptWords(e, worked)}`, 90);
 }
 
@@ -2193,7 +2193,7 @@ function renewFromOption(sim: Simulation, person: Person, e: Engagement, t: Proj
   next.contract = contractFor(sim, next, o.offer!, t, undefined, { ...seasonOf(t, next), version: (e.contract?.version ?? 1) + 1, renews: e.id });
   scheduleSeason(sim, person, next);
   noteEvent(sim, next, { kind: 'booked', key: 'booked', words });
-  keepBounded(pro);
+  keepBounded(pro, sim.now);
   tell(sim, person, `${t.company} Takes Up Its Option`, `${words} It’s the next version of your contract, for the season beginning in July, and it guarantees ${counted(clauseOf(next.contract, 'episodes')?.numbers.length ?? 0, 'episode')} again. The Work tab has it.`, 80);
   return next;
 }
@@ -2210,7 +2210,7 @@ const SEASON_HOOKS = {
   callOff: (sim: Simulation, person: Person, e: Engagement, t: ProjectTemplate, why: string) => {
     const worked = callOff(sim, e, t);
     noteEvent(sim, e, { kind: 'problem', key: 'series:canceled', words: why });
-    keepBounded(ensurePro(sim, person));
+    keepBounded(ensurePro(sim, person), sim.now);
     tell(sim, person, `${t.project} Is Canceled`, `${why} So your work as ${t.role.part} is called off. ${keptWords(e, worked)}`, 85);
   },
   addDays: (sim: Simulation, person: Person, e: Engagement, t: ProjectTemplate, days: readonly WorkDay[]) => {
@@ -2447,7 +2447,7 @@ function applyFates(sim: Simulation, person: Person): void {
     if (fate.kind === 'dropped') {
       callOff(sim, e, t);
       noteEvent(sim, e, { kind: 'problem', key: 'slate-fate', words: `${t.company} called off ${t.project} on ${formatDate(sim.now, NY)}, before its first day: it won’t be made.` });
-      keepBounded(pro);
+      keepBounded(pro, sim.now);
       tell(sim, person, `${t.project} Won’t Be Made`, `${t.company} called off ${t.project} before its first day, so your work in it as ${t.role.part} is off your calendar. You hadn’t worked a day of it, so nothing is owed: the agreement’s terms for a production abandoned before it starts weren’t read, so the game pays nothing more.`, 85);
       continue;
     }
@@ -2461,7 +2461,7 @@ function applyFates(sim: Simulation, person: Person): void {
       ...(old?.agentId ? { agentId: old.agentId } : {}), ...(old?.agreementId ? { agreementId: old.agreementId } : {}),
     };
     pro.opportunities.push(o);
-    keepBounded(pro);
+    keepBounded(pro, sim.now);
     tell(sim, person, `${t.project} Is Pushed Back`, `${t.company} pushed ${t.project} back ${counted(fate.weeks, 'week')}, from ${formatDate(first, NY)}, and released you from the old dates, so they’re off your calendar. It offers you ${t.role.part} again for the new dates.`, 80);
     makeOffer(sim, person, o);
   }

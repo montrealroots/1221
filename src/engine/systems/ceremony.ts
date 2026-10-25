@@ -75,6 +75,13 @@ const PLACE = { emmys: { city: 'Los Angeles', cityId: 'us-ca-losangeles' }, 'act
 export type Nomination = AwardEntry | GuildEntry;
 export const nominationsOf = (person: Person): Nomination[] => [...(person.pro?.awards ?? []), ...(person.pro?.guild ?? [])];
 export const nominationById = (person: Person, id: unknown): Nomination | undefined => nominationsOf(person).find((n) => n.id === id);
+/**
+ * The player's other nominations at the same show, the same night: one show, one trip and one answer for them all. Until
+ * brief 27's F each nomination was its own invitation and booked its own trip, so a second nomination at the 84th Creative
+ * Arts Emmys found the first's trip a clash and could only be watched from home, while its nominee sat in the room (a long
+ * career, `tools/long-career.ts`, found it: 12 of its 15 nominations).
+ */
+export const sameShow = (person: Person, n: Nomination): Nomination[] => nominationsOf(person).filter((m) => m.id !== n.id && m.ceremonyAt === n.ceremonyAt && showTitle(m) === showTitle(n));
 
 const ordinalOf = (n: number) => `${n}${n % 100 >= 11 && n % 100 <= 13 ? 'th' : ({ 1: 'st', 2: 'nd', 3: 'rd' } as Record<number, string>)[n % 10] ?? 'th'}`;
 const capital = (s: string) => s.charAt(0).toUpperCase() + s.slice(1);
@@ -112,8 +119,19 @@ const spanOf = (n: Nomination) => ({ from: n.ceremonyAt - MS_HOUR, to: n.ceremon
 export function invitation(sim: Simulation, person: Person, n: Nomination): string {
   const at = `${formatWeekdayDate(n.ceremonyAt, NY)}, at ${formatTime(n.ceremonyAt, NY)}`;
   if (sim.now >= rsvpBy(n)) return `It’s presented in ${placeOf(n).city} on ${at}.`;
-  const words = `As a nominee you’re invited to ${showTitle(n)} in ${placeOf(n).city} on ${at}. Say by ${formatDate(rsvpBy(n), NY)}, whether you’ll go; going means flying out ahead and home the morning after, and the trip isn’t charged to you.`;
-  if (person.id === sim.universe.playerId) {
+  // Already answered for this show: the same answer, the same trip.
+  const answered = sameShow(person, n).find((m) => m.attend?.rsvp);
+  if (answered) {
+    n.attend = { ...answered.attend!, prepared: answered.attend!.prepared ?? 0 };
+    delete n.attend.outcome;
+    delete n.attend.accepted;
+    delete n.attend.speech;
+    return answered.attend!.rsvp === 'attending' ? `You’re going to ${showTitle(n)} already, so you’ll be in the room for this one too.` : `You’ve said you’ll watch ${showTitle(n)} from home.`;
+  }
+  const words = `As a nominee you’re invited to ${showTitle(n)} in ${placeOf(n).city} on ${at}. Say by ${formatDate(rsvpBy(n), NY)}, whether you’ll go; going means flying out ahead and home the morning after, and the trip isn’t charged to you. Your answer is for the whole show, every nomination of yours at it.`;
+  // One question a show: a second nomination announced with the first is answered with it.
+  const asked = sameShow(person, n).some((m) => Object.values(sim.universe.decisions).some((d) => d.refType === 'pro.ceremony' && d.refId === m.id && d.resolvedAt === undefined));
+  if (person.id === sim.universe.playerId && !asked) {
     sim.requireDecision({
       urgency: 60, category: 'career', title: `Will You Go To ${titled(showTitle(n))}?`, detail: words, dueAt: rsvpBy(n), route: '/workspace/career', refType: 'pro.ceremony', refId: n.id,
       actions: [
@@ -163,14 +181,18 @@ export function rsvp(sim: Simulation, person: Person, entryId: string, attend: b
   const no = rsvpRefusal(sim, person, entryId, attend, hooks);
   if (no) throw new CommandError(no);
   const n = nominationById(person, entryId)!;
-  sim.resolveDecision('pro.ceremony', n.id, 'career');
+  // The answer is the show's: every nomination of the player's at it goes, or is watched from home, together.
+  const all = [n, ...sameShow(person, n).filter((m) => m.state === 'nominated')];
+  for (const m of all) sim.resolveDecision('pro.ceremony', m.id, 'career');
   const place = placeOf(n);
   if (!attend) {
-    const trip = n.attend?.tripId ? tripsOf(person).find((t) => t.id === n.attend!.tripId) : undefined;
-    if (trip) cancelTrip(sim, trip);
-    sim.timeline.cancelFor('pro.ceremony', n.id, sim.now);
-    n.attend = { rsvp: 'declined', at: sim.now };
-    return n.attend;
+    for (const m of all) {
+      const trip = m.attend?.tripId ? tripsOf(person).find((t) => t.id === m.attend!.tripId) : undefined;
+      if (trip && trip.status !== 'canceled') cancelTrip(sim, trip);
+      sim.timeline.cancelFor('pro.ceremony', m.id, sim.now);
+      m.attend = { rsvp: 'declined', at: sim.now };
+    }
+    return n.attend!;
   }
   const far = needsTrip(person.currentLocationId, place.cityId);
   const trip = far ? bookCeremonyTrip(sim, person, { engagementId: n.engagementId, entryId: n.id, title: showTitle(n), cityId: place.cityId, span: spanOf(n) }) : undefined;
@@ -178,8 +200,8 @@ export function rsvp(sim: Simulation, person: Person, entryId: string, attend: b
     at: n.ceremonyAt, kind: CEREMONY_KIND, label: titled(showTitle(n)), category: 'career', priority: 39, requiresPlayer: true, durationMinutes: CEREMONY.hours * 60,
     travelMinutes: far ? TRIP.hotelMinutes : 60, locationId: place.cityId, refType: 'pro.ceremony', refId: n.id, payload: { personId: person.id, entryId: n.id },
   });
-  n.attend = { rsvp: 'attending', at: sim.now, ...(trip ? { tripId: trip.id } : {}), prepared: n.attend?.prepared ?? 0 };
-  return n.attend;
+  for (const m of all) m.attend = { rsvp: 'attending', at: sim.now, ...(trip ? { tripId: trip.id } : {}), prepared: m.attend?.prepared ?? 0 };
+  return n.attend!;
 }
 
 /** Why the player can't prepare remarks for this show now, or nothing. */
@@ -198,9 +220,11 @@ export function prepareRemarks(sim: Simulation, person: Person, entryId: string)
   if (no) throw new CommandError(no);
   const n = nominationById(person, entryId)!;
   const p = n.attend!.prepared ?? 0;
-  n.attend!.prepared = Math.round((p + CEREMONY.prepare.gain * (1 - p)) * 1000) / 1000;
+  const next = Math.round((p + CEREMONY.prepare.gain * (1 - p)) * 1000) / 1000;
+  // One evening's remarks, for whichever of the show's awards it brings the player up for.
+  for (const m of [n, ...sameShow(person, n)]) if (m.attend?.rsvp === 'attending') m.attend.prepared = next;
   sim.advanceTo(sim.now + CEREMONY.prepare.minutes * MIN);
-  return { prepared: n.attend!.prepared, minutes: CEREMONY.prepare.minutes };
+  return { prepared: next, minutes: CEREMONY.prepare.minutes };
 }
 
 // ---------------------------------------------------------------------------------------------------------------------
@@ -282,27 +306,33 @@ export function registerCeremonies(sim: Simulation, hooks: CeremonyHooks): void 
   // The show's hour: in the room or not; the result told; a winner in the room asked to go up.
   sim.onSchedule(CEREMONY_KIND, (item, s) => {
     const person = s.universe.people[String(item.payload.personId)];
-    const n = person ? nominationById(person, item.payload.entryId) : undefined;
-    if (!person || !n || n.attend?.rsvp !== 'attending' || n.attend.outcome) return;
+    const first = person ? nominationById(person, item.payload.entryId) : undefined;
+    if (!person || !first || first.attend?.rsvp !== 'attending' || first.attend.outcome) return;
     hooks.settle(s, person);
-    const trip = n.attend.tripId ? tripsOf(person).find((t) => t.id === n.attend!.tripId) : undefined;
+    // The show's one evening: every nomination of the player's at it, there or not by the one trip.
+    const trip = first.attend.tripId ? tripsOf(person).find((t) => t.id === first.attend!.tripId) : undefined;
     const there = (!trip || trip.status === 'there') && hooks.there(person, item.at);
-    n.attend.outcome = there ? 'there' : 'absent';
-    const title = titled(showTitle(n));
-    const c = person.pro?.credits.find((x) => x.id === n.creditId);
-    const name = nominationCategory(person, n);
-    if (!there) {
-      hooks.tell(s, person, `You Weren’t At ${title}`, `You weren’t in the room for ${name}${trip && trip.status !== 'there' ? ', since the trip never got you there' : ''}. ${n.state === 'won' ? `You won it, for ${c?.role} in ${c?.project}, and it was accepted without you.` : 'It went to another nominee; your nomination stands.'}`);
-      return;
+    const title = titled(showTitle(first));
+    let wins = 0;
+    for (const n of [first, ...sameShow(person, first)].filter((m) => m.attend?.rsvp === 'attending' && !m.attend.outcome)) {
+      n.attend!.outcome = there ? 'there' : 'absent';
+      const c = person.pro?.credits.find((x) => x.id === n.creditId);
+      const name = nominationCategory(person, n);
+      if (!there) {
+        hooks.tell(s, person, `You Weren’t At ${title}`, `You weren’t in the room for ${name}${trip && trip.status !== 'there' ? ', since the trip never got you there' : ''}. ${n.state === 'won' ? `You won it, for ${c?.role} in ${c?.project}, and it was accepted without you.` : 'It went to another nominee; your nomination stands.'}`);
+        continue;
+      }
+      n.watchedAt ??= item.at;
+      if (n.state !== 'won') {
+        hooks.tell(s, person, title, `You were in the room for ${name}. It went to another nominee: you didn’t win, and your nomination stands.`);
+        continue;
+      }
+      // The moment to go up: a stop of its own, its choice Go Up And Accept; gone on past, a thank you and a seat. A second
+      // win the same night is announced a minute after the first's moment.
+      wins += 1;
+      s.schedule({ at: item.at + wins * CEREMONY.announcedMinutes * MIN, kind: SPEECH_KIND, label: `${title}: ${capital(name)}`, category: 'career', priority: 39, requiresPlayer: true, durationMinutes: 5, locationId: placeOf(n).cityId, refType: 'pro.ceremony', refId: n.id, payload: { personId: person.id, entryId: n.id } });
+      hooks.tell(s, person, `You Won At ${title}`, `It’s you: you won ${name} at ${awardTitle(n)}, for ${c?.role} in ${c?.project}. Go up and accept it.`);
     }
-    n.watchedAt ??= item.at;
-    if (n.state !== 'won') {
-      hooks.tell(s, person, title, `You were in the room for ${name}. It went to another nominee: you didn’t win, and your nomination stands.`);
-      return;
-    }
-    // The moment to go up: a stop of its own, its choice Go Up And Accept; gone on past, a thank you and a seat.
-    s.schedule({ at: item.at + CEREMONY.announcedMinutes * MIN, kind: SPEECH_KIND, label: `${title}: ${capital(name)}`, category: 'career', priority: 39, requiresPlayer: true, durationMinutes: 5, locationId: placeOf(n).cityId, refType: 'pro.ceremony', refId: n.id, payload: { personId: person.id, entryId: n.id } });
-    hooks.tell(s, person, `You Won At ${title}`, `It’s you: you won ${name} at ${awardTitle(n)}, for ${c?.role} in ${c?.project}. Go up and accept it.`);
   });
   // Gone on past the moment: thanked, and sat down.
   sim.onSchedule(SPEECH_KIND, (item, s) => {

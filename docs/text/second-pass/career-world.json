@@ -939,9 +939,9 @@
  },
  "src/engine/systems/ceremony.ts#invitation": {
   "status": "Rewritten",
-  "hash": "53d2b3a80846",
+  "hash": "3c53e4544d10",
   "on": "2026-10-25",
-  "evidence": "Written for brief 27's K7 (Parts 11, 14 and 15; loops 44 to 47: the Actor Awards by its 33rd Rules & Regulations, the ceremony for every nomination, and what an award does after it) to docs/STYLE.md and docs/GLOSSARY.md, every rule the 33rd's own and every invention said as the game's: read where the player meets it in tests/b27-actor-awards.test.ts (eligibility and each refusal, Submit Yourself and its refusals, the production's submission, the nomination and the show's notices, the résumé's line), tests/b27-ceremony.test.ts (the invitation's question and notice, Go To The Ceremony and Watch From Home, a clash's refusal, Prepare Your Remarks, the trip's notices there and home, a missed flight, the room's loss, You Won At, the speech's words, the moment let pass, You Weren't At) and tests/b27-award-effects.test.ts (the agent's office seeing the recognition). Numbers under ten in words; dates with their comma; no engine words.",
+  "evidence": "Revised in brief 27's F to docs/STYLE.md: the invitation now says the answer is for the whole show, every nomination of the player's at it, and a nomination announced after the answer says so in the player's words (going already, so in the room for this one too; or watching from home). Read where the player meets it in tests/b27-ceremony.test.ts ('two nominations at one show: one answer, one trip and one evening, both in the room').",
   "first": "Pending"
  },
  "src/engine/systems/ceremony.ts#NY": {

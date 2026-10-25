@@ -839,12 +839,13 @@ export const finished = (e: Engagement): boolean => e.status === 'finished' || e
  * finished engagements to the last `ENGAGEMENTS_KEPT`, each kind of material to the last `MATERIALS_KEPT`. What's live
  * is never trimmed. Until 2026-10-21 (brief 20) the counts of what was were kept too, and nothing read them.
  */
-export function keepBounded(pro: ProRecord): void {
+export function keepBounded(pro: ProRecord, now?: Instant): void {
   const done = pro.opportunities.filter(resolved).sort((a, b) => (a.resolvedAt ?? a.postedAt) - (b.resolvedAt ?? b.postedAt));
   const dropO = new Set(done.slice(0, Math.max(0, done.length - OPPORTUNITIES_KEPT)));
   if (dropO.size) pro.opportunities = pro.opportunities.filter((o) => !dropO.has(o));
   const over = pro.engagements.filter(finished).sort((a, b) => (a.finishedAt ?? 0) - (b.finishedAt ?? 0));
-  const dropE = new Set(over.slice(0, Math.max(0, over.length - ENGAGEMENTS_KEPT)));
+  // Past the most recent, a finished engagement goes only once nothing to come still reads it (`stillRead`).
+  const dropE = new Set(over.slice(0, Math.max(0, over.length - ENGAGEMENTS_KEPT)).filter((e) => !stillRead(pro, e, now)));
   if (dropE.size) pro.engagements = pro.engagements.filter((e) => !dropE.has(e));
   for (const kind of ['headshot', 'resume', 'reel', 'demo'] as const) {
     const all = pro.materials.filter((m) => m.kind === kind).sort((a, b) => a.made - b.made);
@@ -864,6 +865,25 @@ export function keepBounded(pro: ProRecord): void {
   }
 }
 
+/**
+ * Whether a finished engagement is still read by something to come (from 2026-10-25, brief 27's F): a payment not yet
+ * received; its credit's release, held back or not yet come, unless it was shelved and said so; a release within
+ * `LIVE_AFTER_RELEASE`, while an Emmy year and its entry or an Actor Awards year and its submissions can still name it; or
+ * an award, Actor Awards or festival entry not yet settled. Until then the twenty most recent were kept and older ones went
+ * whatever read them, and a long career (`tools/long-career.ts`) had eight Emmy entries and four Actor Awards submissions
+ * disqualified, "This work's scenes are no longer in the game", by the game's own trimming.
+ */
+export const LIVE_AFTER_RELEASE = 730 * 86_400_000;
+function stillRead(pro: ProRecord, e: Engagement, now: Instant | undefined): boolean {
+  if (e.pay.some((p) => !p.received && !p.deferred)) return true;
+  const c = pro.credits.find((x) => x.engagementId === e.id);
+  if (!c) return false;
+  if (c.status === 'shot' && !e.history.some((h) => h.key === 'release:shelved')) return true;
+  if (c.releasedAt !== undefined && now !== undefined && now - c.releasedAt < LIVE_AFTER_RELEASE) return true;
+  const open: readonly string[] = ['entered', 'submitted', 'nominated', 'selected'];
+  return [...(pro.awards ?? []), ...(pro.guild ?? []), ...(pro.festivals ?? [])].some((x) => x.creditId === c.id && open.includes(x.state));
+}
+
 /** The current material of a kind: the latest made. */
 export function currentOf(pro: ProRecord | undefined, kind: MaterialKind): Material | undefined {
   return pro?.materials.filter((m) => m.kind === kind).sort((a, b) => b.made - a.made)[0];
@@ -875,7 +895,7 @@ function addMaterial(sim: Simulation, pro: ProRecord, m: Omit<Material, 'id' | '
   made[m.kind] = (made[m.kind] ?? pro.materials.filter((x) => x.kind === m.kind).length) + 1;
   const material: Material = { id: sim.nextId('pro'), version: made[m.kind]!, ...m };
   pro.materials.push(material);
-  keepBounded(pro);
+  keepBounded(pro, sim.now);
   return material;
 }
 

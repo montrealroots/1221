@@ -20,7 +20,7 @@ import { MS_DAY, MS_HOUR } from '@/engine/core/time';
 import { healthOf } from '@/engine/systems/health';
 import { VISIBILITY, visibilityOf } from '@/engine/systems/awards';
 import { tripsOf } from '@/engine/systems/worktrip';
-import { CEREMONY, CEREMONY_KIND, SPEECH_KIND, ceremonyLines, rsvpBy, rsvpRefusal } from '@/engine/systems/ceremony';
+import { CEREMONY, CEREMONY_KIND, SPEECH_KIND, ceremonyLines, invitation, rsvpBy, rsvpRefusal } from '@/engine/systems/ceremony';
 import { answerStop, stopChoices } from '@/engine/world/clock';
 import type { GuildEntry } from '@/engine/systems/actorawards';
 import { notices, played, tend } from './fakes/career-world';
@@ -96,6 +96,39 @@ describe('the ceremony', () => {
     const cold = run(0);
     expect(['working', 'unready']).toContain(cold.band);
     expect(cold.lift).toBeCloseTo(VISIBILITY.won, 2);
+  }, 600_000);
+
+  it('PLAYER JOURNEY: two nominations at one show: one answer, one trip and one evening, both in the room; the falsifiability twin watching from home watches both', () => {
+    const second = (sim: Sim, g: GuildEntry): GuildEntry => {
+      // TEST SETUP: a second nomination at the same show, written as the committees' nominations write one (a long career
+      // reached four at one Creative Arts Emmys, tools/long-career.ts).
+      const g2: GuildEntry = { ...structuredClone(g), id: sim.nextId('pro'), category: g.category === 'tv-drama' ? 'tv-comedy' : 'tv-drama' };
+      sim.player.pro!.guild!.push(g2);
+      return g2;
+    };
+    const { sim, g } = nominated('b27-aa-8');
+    const g2 = second(sim, g);
+    going(sim, g);
+    expect(g2.attend).toEqual(expect.objectContaining({ rsvp: 'attending', tripId: g.attend!.tripId }));
+    expect(tripsOf(sim.player).filter((t) => t.purpose && t.status !== 'canceled').length).toBe(1);
+    expect(sim.universe.scheduled.filter((i) => i.kind === CEREMONY_KIND && i.status === 'pending').length).toBe(1);
+    // A third announced after the answer is given the same answer, and no question.
+    const g3 = second(sim, g);
+    expect(invitation(sim, sim.player, g3)).toBe('You’re going to the 34th Actor Awards already, so you’ll be in the room for this one too.');
+    expect([g3.attend!.rsvp, g3.attend!.tripId]).toEqual(['attending', g.attend!.tripId]);
+    expect(Object.values(sim.universe.decisions).some((d) => d.refType === 'pro.ceremony' && d.refId === g3.id)).toBe(false);
+    // Remarks for the evening, for whichever award brings the actor up.
+    prepared(sim, g, 1);
+    expect(g2.attend!.prepared).toBe(g.attend!.prepared);
+    played(sim, SHOW + MS_HOUR);
+    expect([g.attend!.outcome, g2.attend!.outcome, g3.attend!.outcome]).toEqual(['there', 'there', 'there']);
+    expect(notices(sim).filter((n) => n.startsWith('The 34th Actor Awards | You were in the room for')).length).toBe([g, g2, g3].filter((x) => x.state !== 'won').length);
+    // The twin: watching from home for one is watching from home for both.
+    const twin = nominated('b27-aa-8');
+    const t2 = second(twin.sim, twin.g);
+    twin.sim.must({ kind: 'pro.ceremony_rsvp', payload: { entryId: t2.id, attend: false } });
+    expect([twin.g.attend!.rsvp, t2.attend!.rsvp]).toEqual(['declined', 'declined']);
+    expect(twin.sim.universe.scheduled.some((i) => i.kind === CEREMONY_KIND && i.status === 'pending')).toBe(false);
   }, 600_000);
 
   it('PLAYER JOURNEY: a winner who doesn’t go up within half an hour says thank you and sits down, and no speech is judged', () => {

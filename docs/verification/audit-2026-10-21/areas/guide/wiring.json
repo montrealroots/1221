@@ -580,7 +580,7 @@
    "kind": "pro.ceremony_rsvp",
    "payload": "{ entryId: n.id, attend: true }",
    "verdict": "Right",
-   "handler": "src/engine/systems/ceremony.ts:314",
+   "handler": "src/engine/systems/ceremony.ts:344",
    "note": "Go To The Ceremony on a nomination answers the invitation, by the entry's id: going books the trip and the show's call; its refusal (rsvpRefusal, a clash or the day passed) is its title and grays it. Read on 2026-10-25 by its builder (brief 27's K7), pressed through the command in tests/b27-ceremony.test.ts."
   },
   {
@@ -591,7 +591,7 @@
    "kind": "pro.ceremony_accept",
    "payload": "{ entryId: n.id }",
    "verdict": "Right",
-   "handler": "src/engine/systems/ceremony.ts:316",
+   "handler": "src/engine/systems/ceremony.ts:346",
    "note": "Go Up And Accept, shown only to a winner in the room within half an hour of the show's start, gives the speech, by the entry's id. Read on 2026-10-25 by its builder (brief 27's K7); the stop's own choice is the way the clock offers it (tests/b27-ceremony.test.ts)."
   },
   {
@@ -602,7 +602,7 @@
    "kind": "pro.ceremony_prepare",
    "payload": "{ entryId: n.id }",
    "verdict": "Right",
-   "handler": "src/engine/systems/ceremony.ts:315",
+   "handler": "src/engine/systems/ceremony.ts:345",
    "note": "Prepare Your Remarks on a show the player is going to spends the hour on the remarks, by the entry's id; its refusal (prepareRemarksRefusal) is its title. Read on 2026-10-25 by its builder (brief 27's K7), pressed through the command in tests/b27-ceremony.test.ts."
   },
   {
@@ -624,7 +624,7 @@
    "kind": "pro.ceremony_rsvp",
    "payload": "{ entryId: n.id, attend: false }",
    "verdict": "Right",
-   "handler": "src/engine/systems/ceremony.ts:314",
+   "handler": "src/engine/systems/ceremony.ts:344",
    "note": "Watch From Home answers the invitation the other way, by the entry's id, calling off a trip going had booked. Read on 2026-10-25 by its builder (brief 27's K7), pressed through the command in tests/b27-ceremony.test.ts."
   },
   {
@@ -635,7 +635,7 @@
    "kind": "pro.watch_ceremony",
    "payload": "{ entryId: a.id }",
    "verdict": "Right",
-   "handler": "src/engine/systems/ceremony.ts:328",
+   "handler": "src/engine/systems/ceremony.ts:358",
    "note": "Watch The Ceremony under a nomination shows its ceremony from the result settled at the final round, by the entry's id; its refusal (watchRefusal) is its title and grays it until the award is presented, and the lines stay once watched. Read on 2026-10-24 by its builder (brief 25's Module 6), pressed through the command in tests/career-awards-screen.test.ts."
   },
   {
@@ -646,7 +646,7 @@
    "kind": "pro.watch_ceremony",
    "payload": "{ entryId: g.id }",
    "verdict": "Right",
-   "handler": "src/engine/systems/ceremony.ts:328",
+   "handler": "src/engine/systems/ceremony.ts:358",
    "note": "Watch The Show under an Actor Awards nomination shows the settled result once the show is given, by the entry's id; its refusal (watchRefusal) is its title. Read on 2026-10-25 by its builder (brief 27's K7), pressed through the command in tests/b27-ceremony.test.ts."
   },
   {
@@ -1649,7 +1649,7 @@
    "kind": "pro.update_resume",
    "payload": "",
    "verdict": "Right",
-   "handler": "src/engine/systems/pro.ts:1397"
+   "handler": "src/engine/systems/pro.ts:1417"
   },
   {
    "file": "src/ui/workspaces/CareerWorkspace.tsx",
@@ -1659,7 +1659,7 @@
    "kind": "pro.headshots",
    "payload": "",
    "verdict": "Right",
-   "handler": "src/engine/systems/pro.ts:1380"
+   "handler": "src/engine/systems/pro.ts:1400"
   },
   {
    "file": "src/ui/workspaces/CareerWorkspace.tsx",
@@ -1669,7 +1669,7 @@
    "kind": "pro.cut_reel",
    "payload": "{ pieces: chosen }",
    "verdict": "Right",
-   "handler": "src/engine/systems/pro.ts:1409"
+   "handler": "src/engine/systems/pro.ts:1429"
   },
   {
    "file": "src/ui/workspaces/CareerWorkspace.tsx",
@@ -1679,7 +1679,7 @@
    "kind": "pro.mix_demo",
    "payload": "{ pieces: chosen }",
    "verdict": "Right",
-   "handler": "src/engine/systems/pro.ts:1430",
+   "handler": "src/engine/systems/pro.ts:1450",
    "note": "Mix A Voice Demo mixes the ticked voice recordings into a new version of the demo, its cost from the bank and two hours on the clock; its refusal (demoRefusal) is its title. Read on 2026-10-24 by its builder (brief 27, K3), pressed through the Portfolio tab in tests/b27-voice-demo.test.ts."
   },
   {
@@ -1690,7 +1690,7 @@
    "kind": "pro.set_name",
    "payload": "{ name }",
    "verdict": "Right",
-   "handler": "src/engine/systems/pro.ts:1368"
+   "handler": "src/engine/systems/pro.ts:1388"
   },
   {
    "file": "src/ui/workspaces/PapersWorkspace.tsx",
@@ -2162,7 +2162,7 @@
    "kind": "pro.ceremony_rsvp",
    "payload": "{ entryId: n.id, attend: true }",
    "verdict": "Right",
-   "handler": "src/engine/systems/ceremony.ts:314"
+   "handler": "src/engine/systems/ceremony.ts:344"
   },
   {
    "file": "src/engine/systems/ceremony.ts",
@@ -2170,7 +2170,7 @@
    "kind": "pro.ceremony_rsvp",
    "payload": "{ entryId: n.id, attend: false }",
    "verdict": "Right",
-   "handler": "src/engine/systems/ceremony.ts:314"
+   "handler": "src/engine/systems/ceremony.ts:344"
   },
   {
    "file": "src/engine/systems/permission.ts",
@@ -2221,7 +2221,7 @@
    "kind": "pro.ceremony_accept",
    "payload": "(item) => ({ entryId: item.payload.entryId })",
    "verdict": "Right",
-   "handler": "src/engine/systems/ceremony.ts:316"
+   "handler": "src/engine/systems/ceremony.ts:346"
   },
   {
    "file": "src/engine/systems/proagent.ts",

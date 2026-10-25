@@ -27,7 +27,7 @@ import { AGREEMENT_TERMS, PROJECTS, RATES, minimumOn, type RateId } from '@/engi
 import {
   ENGAGEMENTS_KEPT, HEADSHOTS, HISTORY_KEPT, MATERIALS_KEPT, OPPORTUNITIES_KEPT, REEL, RESUME, activeAgreement, addCredit, countOf, currentOf,
   headshotRefusal, keepBounded, materialsCheck, noteEvent, proCreditWords, profileOf, reelSources, releaseScreenCredit, resumeBehind, schoolCreditWords,
-  type Agreement, type AgentRelation, type Engagement, type Opportunity,
+  type Agreement, type AgentRelation, type Engagement, type Opportunity, type ProCredit,
 } from '@/engine/systems/pro';
 
 const zone = 'America/New_York';
@@ -393,6 +393,37 @@ describe('the history and the bounds', () => {
     expect(pro.engagements.filter((e) => e.status === 'finished').map((e) => e.id)).toEqual(Array.from({ length: ENGAGEMENTS_KEPT }, (_, i) => `e${i + 5}`));
     expect(pro.materials.map((m) => m.id)).toEqual(['m3', 'm4', 'm5', 'm6', 'm7', 'm8']);
     expect(MATERIALS_KEPT).toBe(6);
+  });
+
+  it('keeps an older finished engagement while something to come still reads it, and lets it go once nothing does', () => {
+    // A long career (tools/long-career.ts, brief 27's F) had entries disqualified when the twenty-engagement bound took the
+    // work they named. TEST SETUP: twenty-five finished engagements, each with a credit, the five oldest each read by one
+    // thing to come; the falsifiability twin's five read by nothing.
+    const DAY = 86_400_000;
+    const now = 2000 * DAY;
+    const build = (live: boolean) => {
+      const sim = student(`pro-bounds-live-${live}`);
+      const pro = sim.player.pro!;
+      pro.engagements = Array.from({ length: 25 }, (_, i): Engagement => ({ id: `e${i}`, opportunityId: 'o0', projectId: PROJECTS[0]!.id, role: 'Nell', status: 'finished', days: [], pay: [], finishedAt: i, history: [], counts: {} }));
+      pro.credits = pro.engagements.map((e, i): ProCredit => ({ id: `c${i}`, kind: 'screen', project: 'P', role: 'Nell', company: 'C', year: 2030, medium: 'television', status: 'released', releasedAt: now - 1000 * DAY, engagementId: e.id, at: 0 }));
+      if (live) {
+        pro.engagements[0]!.pay = [{ id: 'p0', key: 'e0:w1', promised: 100_00, currency: 'USD', promisedAt: 0, due: now + DAY }];
+        Object.assign(pro.credits[1]!, { status: 'shot', releasedAt: undefined });
+        pro.credits[2]!.releasedAt = now - 100 * DAY;
+        pro.awards = [{ id: 'a3', institution: 'emmys', year: 2031, category: 'guest-drama', creditId: 'c3', engagementId: 'e3', state: 'entered', ceremonyAt: now + 30 * DAY } as never];
+        pro.guild = [{ id: 'g4', institution: 'actor-awards', year: 2031, category: 'tv-drama', creditId: 'c4', engagementId: 'e4', state: 'nominated', ceremonyAt: now + 30 * DAY } as never];
+      } else {
+        pro.engagements[0]!.pay = [{ id: 'p0', key: 'e0:w1', promised: 100_00, currency: 'USD', promisedAt: 0, due: 0, received: { at: 0, gross: 100_00, withheld: 0, commission: 0, net: 100_00, via: 'direct' } }];
+        pro.engagements[1]!.history.push({ id: 'h1', at: 0, kind: 'problem', key: 'release:shelved', words: 'Shelved.' });
+        Object.assign(pro.credits[1]!, { status: 'shot', releasedAt: undefined });
+        pro.awards = [{ id: 'a3', institution: 'emmys', year: 2031, category: 'guest-drama', creditId: 'c3', engagementId: 'e3', state: 'lost', ceremonyAt: 0 } as never];
+        pro.guild = [{ id: 'g4', institution: 'actor-awards', year: 2031, category: 'tv-drama', creditId: 'c4', engagementId: 'e4', state: 'not-nominated', ceremonyAt: 0 } as never];
+      }
+      keepBounded(pro, now);
+      return pro.engagements.map((e) => e.id);
+    };
+    expect(build(true)).toEqual(Array.from({ length: 25 }, (_, i) => `e${i}`));
+    expect(build(false)).toEqual(Array.from({ length: ENGAGEMENTS_KEPT }, (_, i) => `e${i + 5}`));
   });
 
   it('holds an agreement in force from its signing to its end or its term’s last day, and never one offered, declined or let lapse', () => {
