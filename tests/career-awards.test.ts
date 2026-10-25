@@ -18,7 +18,7 @@ import {
   simulateRun, titleAcross, weeksBy, weeksOf, weeksSoFar,
 } from '@/engine/systems/charts';
 import {
-  FIELD, VISIBILITY, ceremonyLines, deadlineOf, emmyCheck, entryFee, entryRefusal, festivalCheck, festivalCheckWords, fieldDrawn, nominate, nominationsFor,
+  FIELD, VISIBILITY, ceremonyLines, deadlineOf, emmyCheck, entryFee, entryRefusal, festivalCheck, festivalCheckWords, fieldDrawn, nominate, nominationsFor, productionEnters,
   recapWords, recognitionOf, visibilityOf, watchRefusal,
 } from '@/engine/systems/awards';
 import { CASTING_KIND, castingDraw, payTermsOf } from '@/engine/systems/projobs';
@@ -477,6 +477,28 @@ describe('X8 to X12: entry, the field, the nominations, the ceremony', () => {
     expect(lines[0]).toBe(`First come the nominees for Outstanding Guest Actress In A Drama Series: you, for The Ferry Engineer in Northern Line, you again, for Desk Clerk in The Calloway Files, and ${a!.field!.nominations - 2} other performers.`);
     expect(lines.at(-1)).toBe('It’s you, for Desk Clerk in The Calloway Files: you won Outstanding Guest Actress In A Drama Series at the 79th Emmy Awards for that part, and this nomination stands.');
     expect(recognitionOf(sim.player).filter((r) => r.words.startsWith('You won')).length).toBe(1);
+  });
+
+  it('two parts of yours in one program are one entry in a category, as the rules allow more only for different programs: the second refused, and not entered by its production', () => {
+    const { sim, c, e } = wrapped('awards-journey-0', 'calloway-files');
+    const strong = c.band === 'strong' || c.band === 'exceptional';
+    // TEST SETUP: a second guest part in the same program, as the slate makes one in a later episode, the same work under
+    // another part's name, one whose production would enter it on its own (its draw, the premise, held here).
+    sim.advanceTo(at(2027, 4, 1));
+    expect(creditIn(sim, c.id).status).toBe('released');
+    const role = ['Night Clerk', 'Records Clerk', 'Court Clerk', 'Desk Sergeant', 'Day Clerk', 'Second Clerk'].find((r) => productionEnters(sim, 2027, c.project, r, strong))!;
+    expect(role).toBeDefined();
+    const e2 = { ...structuredClone(sim.player.pro!.engagements.find((x) => x.id === e.id)!), id: sim.nextId('pro') };
+    const c2 = { ...structuredClone(creditIn(sim, c.id)), id: sim.nextId('pro'), engagementId: e2.id, role };
+    sim.player.pro!.engagements.push(e2);
+    sim.player.pro!.credits.push(c2);
+    expect(emmyCheck(sim, sim.player, c2)).toMatchObject({ eligible: true, year: 2027, category: 'guest-drama' });
+    sim.must({ kind: 'pro.award_enter', payload: { creditId: c.id } });
+    expect(entryRefusal(sim, sim.player, c2.id)).toBe('Desk Clerk in The Calloway Files is entered for Outstanding Guest Actress In A Drama Series at the 79th Emmy Awards already, and a performer can enter a category more than once only for different programs.');
+    sim.advanceTo(at(2027, 5, 8, 12));
+    const second = sim.player.pro!.awards!.find((a) => a.creditId === c2.id)!;
+    expect(second.state).toBe('not-entered');
+    expect(recapWords(sim.player, second)).toBe('Not entered for the 79th Emmy Awards: another part of yours in The Calloway Files is entered in the category, and a performer can enter a category more than once only for different programs.');
   });
 
   it('a credit whose part the record no longer holds says when its Emmy year was, not that its scenes are gone', () => {

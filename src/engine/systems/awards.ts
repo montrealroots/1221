@@ -237,6 +237,17 @@ export const deadlineOf = (ed: EmmyEdition): Instant => {
 };
 
 /** Why the player can't enter this credit now, or nothing. */
+/**
+ * Another entry of the player's in the same year and category for the same program, a program being its title as the
+ * credit names it (from 2026-10-25, brief 27's F). The 78th's rules let a performer "enter multiple achievements in a
+ * performing category if the achievements are for different programs" (N23, Performer Awards). Until then a long career's
+ * two parts in The Errand Of Penwick were both entered for one guest award, and both nominated.
+ */
+function sameProgramEntry(person: Person, c: ProCredit, year: number, category: EmmyCategory): AwardEntry | undefined {
+  return awardsOf(person).find((a) => a.creditId !== c.id && a.year === year && a.category === category && a.state !== 'not-entered' && a.state !== 'disqualified'
+    && person.pro?.credits.find((x) => x.id === a.creditId)?.project === c.project);
+}
+
 export function entryRefusal(sim: Simulation, person: Person, creditId: string): string | undefined {
   const c = person.pro?.credits.find((x) => x.id === creditId);
   if (!c) return 'There’s no such credit.';
@@ -245,6 +256,9 @@ export function entryRefusal(sim: Simulation, person: Person, creditId: string):
   const ed = emmyEdition(check.year);
   const mine = awardsOf(person).find((a) => a.creditId === c.id && a.year === check.year);
   if (mine && mine.state !== 'not-entered') return `It’s already entered for the ${ordinal(ed.number)} Emmy Awards.`;
+  const other = sameProgramEntry(person, c, check.year, check.category);
+  const oc = other ? person.pro!.credits.find((x) => x.id === other.creditId)! : undefined;
+  if (oc) return `${oc.role} in ${c.project} is entered for ${categoryName(person, check.category)} at the ${ordinal(ed.number)} Emmy Awards already, and a performer can enter a category more than once only for different programs.`;
   if (sim.now > deadlineOf(ed)) return `The entry deadline for the ${ordinal(ed.number)} Emmy Awards was ${longDay(ed.entryDeadline)}${ed.projected ? ', as the game projects it' : ''}.`;
   if (spendRefusal(sim, person, entryFee(sim), 'career')) return `Your bank can’t cover the ${formatMoney(entryFee(sim), saveCurrency(sim.universe))} entry.`;
   return undefined;
@@ -499,8 +513,10 @@ function emmyStep(sim: Simulation, person: Person, c: ProCredit, now: Instant, t
   let a = list.find((x) => x.creditId === c.id && x.year === check.year);
   if (now > deadlineOf(ed) && !a) {
     // A production enters only work it had by the deadline: a part booked after it waits for the next year's, if any.
-    const entered = c.at <= deadlineOf(ed) && productionEnters(sim, check.year, c.project, c.role, c.band === 'strong' || c.band === 'exceptional');
-    a = { id: sim.nextId('pro'), institution: 'emmys', year: check.year, category: check.category, creditId: c.id, engagementId: c.engagementId!, state: entered ? 'entered' : 'not-entered', ceremonyAt: ceremonyOf(ed, check.category), ...(entered ? { enteredBy: 'production' as const, enteredAt: deadlineOf(ed) } : {}) };
+    // Nor a second part of the player's in a program it has entered in this category (`sameProgramEntry`).
+    const twice = sameProgramEntry(person, c, check.year, check.category);
+    const entered = c.at <= deadlineOf(ed) && !twice && productionEnters(sim, check.year, c.project, c.role, c.band === 'strong' || c.band === 'exceptional');
+    a = { id: sim.nextId('pro'), institution: 'emmys', year: check.year, category: check.category, creditId: c.id, engagementId: c.engagementId!, state: entered ? 'entered' : 'not-entered', ceremonyAt: ceremonyOf(ed, check.category), ...(entered ? { enteredBy: 'production' as const, enteredAt: deadlineOf(ed) } : {}), ...(twice ? { why: `another part of yours in ${c.project} is entered in the category, and a performer can enter a category more than once only for different programs.` } : {}) };
     list.push(a);
     if (entered) tell(`${c.project} Entered You For The Emmys`, `You’re entered for ${categoryName(person, check.category)} at the ${ordinal(ed.number)} Emmy Awards, for ${c.role}, by its production. The nominations are announced on ${longDay(ed.nominationsAnnounced)}.`);
   }
@@ -594,7 +610,7 @@ export function recapWords(person: Person, a: AwardEntry): string {
   if (a.state === 'nominated') return `Nominated for ${name} at the ${ordinal(ed.number)} Emmy Awards; it’s presented on ${formatDate(a.ceremonyAt, NY)}.`;
   if (a.state === 'not-nominated') return `Entered for ${name} at the ${ordinal(ed.number)} Emmy Awards, and not nominated.`;
   if (a.state === 'disqualified') return `Disqualified from ${name} at the ${ordinal(ed.number)} Emmy Awards: ${a.why ?? 'the work no longer met the rules'}`;
-  if (a.state === 'not-entered') return `Not entered for the ${ordinal(ed.number)} Emmy Awards: the entry deadline passed.`;
+  if (a.state === 'not-entered') return `Not entered for the ${ordinal(ed.number)} Emmy Awards: ${a.why ?? 'the entry deadline passed.'}`;
   return `Entered for ${name} at the ${ordinal(ed.number)} Emmy Awards${a.enteredBy === 'production' ? ' by the production' : ''}; the nominations are announced on ${longDay(ed.nominationsAnnounced)}.`;
 }
 

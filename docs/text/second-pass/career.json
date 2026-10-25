@@ -603,9 +603,9 @@
  },
  "src/engine/content/guide/career.ts#CAREER_GUIDE [career.awards]": {
   "status": "Rewritten",
-  "hash": "5ee92ea5b3c4",
+  "hash": "6fcfd01f7371",
   "on": "2026-10-25",
-  "evidence": "Brief 27, F (2026-10-25): the Emmy paragraph says two parts of yours in one category, for different shows, are entries in one field, both can be nominated and only one can win, as the game now decides it (tests/career-awards.test.ts 'two guest parts'; N23).",
+  "evidence": "Brief 27, F (2026-10-25): a second part of the player's in the same program is refused an entry in the same category and year, and not entered by its production, as the 78th's rules allow several entries in a performing category only for different programs (N23); found in the degree career's 85th Creative Arts Emmys, where two parts in The Errand Of Penwick were both nominated. tests/career-awards.test.ts 'one program': the Emmy paragraph says two parts in the same show can't both be entered in one category.",
   "first": "Pending"
  },
  "src/engine/content/guide/career.ts#CAREER_GUIDE [career.commission]": {

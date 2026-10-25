@@ -569,7 +569,7 @@
    "kind": "pro.award_enter",
    "payload": "{ creditId: c.id }",
    "verdict": "Right",
-   "handler": "src/engine/systems/awards.ts:667",
+   "handler": "src/engine/systems/awards.ts:683",
    "note": "Enter Yourself under an eligible television part enters that credit for its Emmy year and pays the fee, by the credit's id; its refusal (entryRefusal) is its title and grays it, and the part then says where its entry stands. Read on 2026-10-24 by its builder (brief 25's Module 6), pressed through the command in tests/career-awards-screen.test.ts."
   },
   {

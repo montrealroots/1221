@@ -1073,7 +1073,7 @@ The tab also shows the game’s own box office for your films, each season’s a
     now: ['Entering puts the part under Your Recognition as entered, and the fee is taken from your bank.'],
     later: [
       `At the nominations, each category has its own field of entries, and the Academy’s table sets how many are nominated: ${EMMY_RULES.nominationsBySubmissions.map(([n, k]) => `${k} from ${n} entries`).join(', ')}.`,
-      'Two parts of yours in one Emmy category, for different shows, are two entries in the same field: both can be nominated, and only one can win.',
+      'Two parts of yours in one Emmy category, for different shows, are two entries in the same field: both can be nominated, and only one can win. Two parts in the same show can’t both be entered in one category.',
       'The winner is settled when the final round of voting ends, and you learn it when the award is presented: guest and voice-over awards at the Creative Arts Emmys, the others at the telecast.',
       `A festival’s answer comes about ${longDayOf(SUNDANCE_2027.notice)} for its ${SUNDANCE_2027.year} festival, in ${SUNDANCE_2027.place}.`,
       `The Actor Awards’ committees, members drawn at random, nominate ${countWords(ACTOR_RULES.nominees)} in each category, more only for a tie, and of two performances of yours in one category only the one with more votes. Every paid-up member in the US and Canada votes the winner, and a tie gives the award to each tied. The ${ordinal(ACTOR_AWARDS_33.number)} show is on ${longDayOf(ACTOR_AWARDS_33.ceremony)}.`,

@@ -2844,7 +2844,7 @@
     },
     {
      "what": "the actor more visible to casting",
-     "at": "src/engine/systems/awards.ts:651"
+     "at": "src/engine/systems/awards.ts:667"
     },
     {
      "what": "missed, the direct offer on its strength gone",
@@ -2939,15 +2939,15 @@
    "consumers": [
     {
      "what": "the fee paid from the bank",
-     "at": "src/engine/systems/awards.ts:260"
+     "at": "src/engine/systems/awards.ts:274"
     },
     {
      "what": "the nominations read only an entered performance",
-     "at": "src/engine/systems/awards.ts:507"
+     "at": "src/engine/systems/awards.ts:523"
     },
     {
      "what": "the field is drawn and the nominations made for it",
-     "at": "src/engine/systems/awards.ts:517"
+     "at": "src/engine/systems/awards.ts:533"
     },
     {
      "what": "Your Recognition says where it stands",
@@ -2962,9 +2962,12 @@
      "tests/career-awards-screen.test.ts"
     ],
     "comparisons": [],
-    "mutations": [],
+    "mutations": [
+     "career-awards (brief 27's F, F20 to F22): a second entry for one program allowed, its production entering it, and its recap blaming the deadline, each failed a test"
+    ],
     "journeys": [
-     "tests/career-awards-screen.test.ts"
+     "tests/career-awards-screen.test.ts",
+     "career-awards 'one program': a second guest part in The Calloway Files refused an entry beside the first, and not entered by its production at the deadline"
     ]
    },
    "missing": "A performer's choice of category, which the rules leave to the entrant, is the game's (a part in under half the episodes enters as a guest).",
@@ -3032,23 +3035,23 @@
    "consumers": [
     {
      "what": "an entry whose work no longer meets the rules is disqualified",
-     "at": "src/engine/systems/awards.ts:491"
+     "at": "src/engine/systems/awards.ts:505"
     },
     {
      "what": "the winner settled at the final round's end",
-     "at": "src/engine/systems/awards.ts:541"
-    },
-    {
-     "what": "the result given at the ceremony",
-     "at": "src/engine/systems/awards.ts:543"
-    },
-    {
-     "what": "the production submits its film",
      "at": "src/engine/systems/awards.ts:557"
     },
     {
+     "what": "the result given at the ceremony",
+     "at": "src/engine/systems/awards.ts:559"
+    },
+    {
+     "what": "the production submits its film",
+     "at": "src/engine/systems/awards.ts:573"
+    },
+    {
      "what": "the festival selects it or doesn't",
-     "at": "src/engine/systems/awards.ts:564"
+     "at": "src/engine/systems/awards.ts:580"
     },
     {
      "what": "casting reads the recognition it leaves",
@@ -3142,7 +3145,7 @@
    "consumers": [
     {
      "what": "a nomination counts toward visibility",
-     "at": "src/engine/systems/awards.ts:654"
+     "at": "src/engine/systems/awards.ts:670"
     },
     {
      "what": "on the résumé's lines",
@@ -3276,7 +3279,7 @@
    "consumers": [
     {
      "what": "a strong speech counts toward visibility",
-     "at": "src/engine/systems/awards.ts:657"
+     "at": "src/engine/systems/awards.ts:673"
     },
     {
      "what": "the ceremony's lines say it",
