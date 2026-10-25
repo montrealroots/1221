@@ -347,13 +347,14 @@ describe('i-ui-text', () => {
       }
     }
     const personal = steps[2]!;
-    // Your Family beside the background, from 2026-10-14 (the family a life comes from, `FamilyChoice`).
-    expect(headings(personal.html).filter((t) => !t.startsWith('Who Are You'))).toEqual(['Genres', 'Background', 'Your Family']);
+    // Your Family beside the background, from 2026-10-14 (the family a life comes from, `FamilyChoice`); Languages between
+    // them from 2026-10-25 (brief 27, `LanguagesCard`).
+    expect(headings(personal.html).filter((t) => !t.startsWith('Who Are You'))).toEqual(['Genres', 'Background', 'Languages', 'Your Family']);
     expect(personal.controls.filter((c) => c.type === 'button' && c.props.className === 'chip')).toHaveLength(149);
     expect(personal.controls.find((c) => c.type === 'label' && c.props.htmlFor === 'background')?.text).toBe('In Your Own Words');
     // Review says back the genres and the background, under that one heading.
-    // The family between them from 2026-10-14, as Review names it.
-    expect(steps[4]!.text).toContain('Genres & Background Genres Comedy Family Wealthy, No Need Found In Your Own Words —');
+    // The family between them from 2026-10-14, as Review names it, and the languages after the genres from 2026-10-25.
+    expect(steps[4]!.text).toContain('Genres & Background Genres Comedy Languages English (Native) Family Wealthy, No Need Found In Your Own Words —');
   });
 
   it('PLAYER JOURNEY: the Profile, on the first morning and after a week lived, has no Interests section and no interest in its words or its controls; it says the genres back', () => {
