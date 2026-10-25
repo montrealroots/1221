@@ -39,6 +39,9 @@ import { TRIP, routeSourceWords } from '../../systems/worktrip';
 import { CONTRIBUTION, LATE, OPTION_RAISE, PER_DIEM, RERUN_CEILING, RESIDUALS, contributionRate, overtimeOf } from '../../systems/contracts';
 import { SERIES } from '../series';
 import { REVIVAL } from '../../systems/series';
+import { GROW, INVITE, OPTION_RELEASE, PILOT } from '../../systems/continuity';
+import { FORTUNE } from '../../systems/market';
+import { PILOTS } from '../../systems/slate';
 import { AFTER_WRAP, PROMO, STUNT, VOICE, WORKFLOWS } from '../workflows';
 import { JURISDICTIONS } from '../jurisdictions';
 import { BRIEF } from '../../systems/briefs';
@@ -1084,7 +1087,7 @@ The tab also shows the game’s own box office for your films, each season’s a
       'The Actor Awards’ eligibility, categories, fee, window, committees, nominee count and final vote are its 33rd Rules & Regulations’. Its show is held in Los Angeles in the game, as its last was, and so are the Emmys’; neither’s rules name a place.',
       'How many enter a category, how the votes go, whether a production enters you or submits its film, and whether the festival selects it are the game’s, and no other nominee is ever named. So are a speech’s weights and the week to say whether you’ll go.',
       'An agent’s office reads your recognition as a step up in your work, once, however much of it there is. A production you ask for more is likelier to agree by half your visibility, which fades as recognition does.',
-      'A film’s box office is the production’s, not your pay, and how well your part went doesn’t move it. The published charts are the providers’ own figures, each in its own unit and week.',
+      'A film’s box office is the production’s, not your pay. The production’s own quality and how well your part went move how it opens and holds, a lead’s part more than a small one, and neither decides it alone. The published charts are the providers’ own figures, each in its own unit and week.',
       'A series’ season audience is the game’s estimate, in viewers an episode for a broadcast series and hours viewed a week for a streaming one, never one as the other. The network reads it, with the season’s reviews and how long the series has run, when it says whether there’s another season: a big audience makes another likelier, never certain.',
       `Recognition makes casting a little likelier to choose you, fading over three years, and at most ${Math.round(VISIBILITY.most * 100)}% better; so, a little, does a promotional film you appeared in for a release. Neither changes a contract or how your work is judged.`,
     ],
@@ -1104,6 +1107,65 @@ The tab also shows the game’s own box office for your films, each season’s a
       setup: 'A graduate plays a guest part in two episodes of a drama series’ ten, on the air in March.',
       steps: ['Open Charts And Awards and read the part’s eligibility.', 'Press Enter Yourself before the entry deadline in May.', 'Read the nominations in July, and press Watch The Ceremony in September.'],
       result: `The part is entered as a guest part in a drama series, for ${usd(EMMY_RULES.fees.processing + EMMY_RULES.fees.perEntrant)}. The vote decides the nomination; the ceremony shows the result settled at the final round, and watching it or not changes nothing.`,
+    },
+  },
+  // From 2026-10-25 (the owner's brief 27, Parts 8, 12 and 13, loops 20 and 33 to 41): pilots, an option's hold, a part
+  // brought back or grown, a series picked up elsewhere, a real series continued, a release's other ways out and what
+  // moves its fortunes (`systems/continuity.ts`, `systems/market.ts`). Every figure is the rules' own, imported.
+  {
+    id: 'career.series',
+    title: 'Pilots, Options And A Release’s Fortunes',
+    goal: 'career',
+    covers: ['pro.ask_option_release'],
+    synonyms: ['pilot', 'picked up', 'pickup', 'passed on', 'option', 'released from the option', 'ask to be released', 'recurring character', 'guest part', 'bigger part', 'more episodes', 'limited release', 'new distributor', 'opened abroad', 'worldwide', 'international', 'reviews', 'critics', 'audience', 'abbott elementary', 'another network'],
+    questions: ['What happens to a pilot I shot?', 'Can I take other work while an option holds me?', 'How do I get out of an option?', 'Can a guest part come back?', 'Does my performance help a film or a series?', 'Why did my film open in only a few cinemas?', 'Are the new seasons of 9-1-1 real?'],
+    where: on('opportunities', 'Career, Opportunities, Offers'),
+    available: `From the guide’s chapter “${WORK_CHAPTER}”, once you’ve accepted work.`,
+    short: `A pilot is shot as an episode is. On May ${PILOTS.word.day} its network picks it up to series or passes on it. Picked up, the production can take up its option on you for the first season; passed on, the pilot never airs.\n\nAn option on a series’ next season holds you for that season’s guaranteed episodes until it’s settled. An offer on any of those days says so. Decline the offer, accept it and give the option up, or press Ask To Be Released and wait for the production’s answer.`,
+    steps: [
+      'Open Career, then Opportunities, and read an offer’s warning: it names any option holding some of its days, and what giving it up costs.',
+      'To keep the option, press Decline The Offer. To take the work anyway, press Accept The Offer: the option is given up.',
+      'To ask first, press Ask To Be Released on the offer. The production answers the next afternoon at three. Released, accept the offer with nothing given up; refused, the option stands and you choose again.',
+      'On the Work tab, open The Contract on the engagement to read the option, the days it holds and, once it’s taken up, whether the part grew.',
+      'On Charts And Awards, read a film’s weeks at home and abroad, its reviews and its way out, and each season’s audience for a series you’ve worked on.',
+    ],
+    needs: ['An offer standing on days an open option holds. The answer has to come before the offer lapses.'],
+    costs: [{ label: 'Asking To Be Released', value: 'Nothing but the wait: the answer comes the next afternoon' }, { label: 'Giving Up An Option', value: 'The part in that season goes to another actor, and its casting office won’t offer you a part without an audition again' }],
+    reads: [
+      { label: 'How The Work Went', value: `Whether a production releases you from its option: the less it wanted you back, the likelier, between ${Math.round(OPTION_RELEASE.least * 100)}% and ${Math.round(OPTION_RELEASE.most * 100)}%`, estimate: true },
+      { label: 'Your Part In A Pilot', value: `With the pilot’s own quality, whether its network picks it up: about ${Math.round(PILOT.chance.base * 100)}% for an ordinary pilot, a lead’s exceptional work adding up to ${Math.round(PILOT.chance.part * 100)} points`, estimate: true },
+      { label: 'Your Part In A Film', value: `With the production’s own quality, how it opens and holds and how critics and audiences take it: a lead counts in full, a supporting part ${Math.round(FORTUNE.size.supporting * 10)} tenths, a co-star a quarter`, estimate: true },
+      { label: 'Your Part In A Season', value: 'A little of its audience and its reviews, which the network reads when it decides on another', estimate: true },
+    ],
+    now: ['Asking puts the production’s answer on the clock. Accepting work against an option gives the option up at once.'],
+    later: [
+      `A guest part you played Strong or better can come back. When the network renews the series, its producers weigh it, about ${countWords(Math.round(INVITE.chance.exceptional * 10))} times in ten for Exceptional work and ${countWords(Math.round(INVITE.chance.strong * 10))} for Strong, and bring the character back as a recurring part in the new season, offered without an audition, ${countWords(INVITE.guaranteed)} episodes guaranteed.`,
+      `When a production takes up its option, it may write more for the part: ${countWords(GROW.episodes)} more episodes guaranteed and ${Math.round(GROW.raise * 100)}% more a day on top of the option’s raise, likelier the better your work and the bigger the season’s audience.`,
+      'A canceled series that comes back may come back on another network or streaming service. The series’ page in Productions And People names it, and so does your credit for work in it.',
+      '9-1-1 and Abbott Elementary are real series. The season their pages had on the air is real; every season after it is the game’s own continuation, said so wherever it shows, and a guest part in either is cast only in those seasons.',
+      'A finished film may open in a limited release, a few weeks in a few cinemas that widens only if audiences take to it; be taken over by another distributor, which moves its date; or open abroad first and at home some weeks later. Its notice says which, and the awards read the date and the run that follow.',
+    ],
+    interpret: [
+      'Every network, distributor, pilot and season here is the game’s, but the real series’ seasons their pages had on the air.',
+      'A film’s US weeks are ranked in the game’s own chart, and its takings abroad sit beside them. Every figure is in US dollars, so the worldwide total adds like to like. Reviews and audience scores are the game’s estimates.',
+      'For the Actor Awards, a film that opened abroad first counts its run in the US. Where its first showing and that run fall in different years, the game doesn’t place it in either.',
+    ],
+    unavailable: [
+      '“No production holds an option on you on any of this offer’s days.”',
+      '“There’s no offer standing to weigh against an option.”',
+    ],
+    mistakes: ['Accepting work on an option’s days without reading the offer’s warning: the option goes, and with it the part in that season.', 'Expecting a strong part to make a hit by itself: the production’s own quality and the draw count for more.'],
+    next: ['Read Charts, Festivals And Awards: a release’s date and run decide its awards year.'],
+    related: ['career.offers', 'career.contracts', 'career.awards', 'career.reference'],
+    connections: [
+      { to: 'career.contracts', kind: 'prerequisite', why: 'An option is a term of a recurring part’s or a pilot’s contract.' },
+      { to: 'career.offers', kind: 'immediate', why: 'Accepting an offer on an option’s days gives the option up.' },
+      { to: 'career.awards', kind: 'scheduled', why: 'A release’s way out sets the date and the run its awards read.' },
+    ],
+    example: {
+      setup: 'A recurring part’s season is over and the production’s option on you for the next one is open. An offer comes for a feature shooting in August, on two of the option’s days.',
+      steps: ['Read the offer’s warning.', 'Press Ask To Be Released.', 'Read the answer the next afternoon.'],
+      result: 'Released, you accept the feature with nothing given up. Refused, you decline it and keep the option, or accept it and the part in the next season goes to another actor.',
     },
   },
   // From 2026-10-25 (the owner's brief 27, K8): Productions And People, the industry reference (`systems/reference.ts`).

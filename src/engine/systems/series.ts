@@ -6,7 +6,14 @@
  * there's another: a draw keyed by the series and the year (decider `pro.series`), at the series' chance. A canceled
  * series can come back from its second year off, by the same kind of draw. Nothing here keeps state: a season's fate is
  * worked out from the seed each time it's asked, so a reload, a jump past several Mays or a save opened years on reads
- * the same seasons. What the player was told is kept on their own records, where it happened.
+ * the same seasons. What the player was told is kept on their own records, where it happened. From 2026-10-25 (brief 27,
+ * Part 12) a season's audience reads one thing more, the player's own judged work in it, which the work day posts once as
+ * it's judged and the record keeps whole (`ProRecord.seasonMarks`, `systems/market.ts`), each season reading only what
+ * was posted before the word that follows it; so the seasons still read the same on every asking.
+ *
+ * **From 2026-10-25** (brief 27, Part 13): a series back after its cancellation may come back on another network, which
+ * renews it from its own chance after (`PICKUP`); and two real series are continued after their verified baseline
+ * (`REAL_SERIES`, `content/series.ts`), every season after it the simulation's, said so wherever a word on it is read.
  *
  * **What a decision does** (`registerSeries`, at the first stop of the clock after it, before anything due then):
  * canceled, the season's production stops that day, so a part not yet cast in it closes, and work booked in it for days
@@ -21,14 +28,20 @@ import type { Simulation } from '../core/simulation';
 import type { Person } from '../domain/model';
 import { MS_DAY, addDays, formatDate, formatWeekdayDate, instantFromZoned, zonedParts, type Instant } from '../core/time';
 import { PROJECTS, projectById, type ProjectTemplate } from '../content/careerwork';
-import { decisionAt, episodeDays, seasonWindow, seasonYearAt, seriesById, SERIES, type SeriesTemplate } from '../content/series';
+import { decisionAt, episodeDays, seasonWindow, seasonYearAt, seriesById, simulatedFrom, REAL_SERIES, SERIES, type SeriesTemplate } from '../content/series';
+import { COMPANY_WORDS } from '../content/slate';
+import { FORTUNE, seasonTerm } from './market';
+import { registerContinuity, growthOf } from './continuity';
 import { finished, noteEvent, type Engagement, type Opportunity } from './pro';
 import type { Band } from './coursework';
 import { clauseOf, type ContractExtra } from './contracts';
 import { WORK, counted, episodeOfDay, episodeOn, episodeWorkDays, type WorkDay } from './projobs';
 
-/** The network's word on one season: another, no more, or back after time off. */
-export interface SeasonDecision { year: number; at: Instant; what: 'renewed' | 'canceled' | 'revived' }
+/**
+ * The network's word on one season: another, no more, or back after time off; and, from 2026-10-25 (brief 27, Part 13),
+ * where it came back on another network, that network (`PICKUP`).
+ */
+export interface SeasonDecision { year: number; at: Instant; what: 'renewed' | 'canceled' | 'revived'; network?: string }
 
 const NY = 'America/New_York';
 const clamp = (x: number, lo: number, hi: number) => Math.max(lo, Math.min(hi, x));
@@ -52,18 +65,39 @@ export const AUDIENCE = {
   critics: { least: 40, most: 95, middle: 65 },
 } as const;
 
+/**
+ * How many seasons a series had before `year`'s, by the years since its first: a real series' counted on from its
+ * baseline's number (from 2026-10-25), so 9-1-1 fades and costs more as a series in its tenth season does.
+ */
+const ageOf = (s: SeriesTemplate, year: number): number => (s.real?.baseline.season ?? 1) - 1 + year - s.firstSeason;
+
 /** How a series is seen: its own outlet, or, kept from before it had one, by when its network decides. */
 export const outletOf = (s: SeriesTemplate): 'broadcast' | 'streaming' => s.outlet ?? (s.decide.month === 1 ? 'streaming' : 'broadcast');
 
-/** A season's audience and its reviews, the game's simulation: what it averaged, in its outlet's unit, and critics' score. */
+/**
+ * A season's audience and its reviews, the game's simulation: what it averaged, in its outlet's unit, and critics' score.
+ * From 2026-10-25 (the owner's brief 27, Part 12: "A strong player performance must matter without guaranteeing a hit")
+ * both read the player's judged work in the season (`seasonTerm`, `systems/market.ts`): the audience moved by a natural
+ * log of `FORTUNE.season` times the term, the critics by `FORTUNE.seasonCritics` times it, inside the drift a season
+ * draws on its own. Until then neither read it. A real series is simulated only after its baseline season, which has
+ * no figure here: the catalog's pages give none.
+ */
 export function seasonAudience(sim: Simulation, s: SeriesTemplate, year: number): { unit: 'viewers' | 'hours'; average: number; critics: number } | undefined {
-  if (year < s.firstSeason) return undefined;
+  return seasonAudienceWith(sim, s, year, seasonTerm(sim, s, year));
+}
+
+/** A season's audience and its reviews with the player's term given (`seasonAudience` reads it from the record). */
+export function seasonAudienceWith(sim: Simulation, s: SeriesTemplate, year: number, term: number): { unit: 'viewers' | 'hours'; average: number; critics: number } | undefined {
+  const from = simulatedFrom(s);
+  if (year < from) return undefined;
   const spec = AUDIENCE[outletOf(s)];
   let v = spec.first[0] + sim.rng('pro.audience', s.id).next() * (spec.first[1] - spec.first[0]);
-  for (let y = s.firstSeason + 1; y <= year; y += 1) v *= 1 + (sim.rng('pro.audience', s.id, y).next() * 2 - 1) * AUDIENCE.drift;
-  const n = year - s.firstSeason + 1;
+  for (let y = from + 1; y <= year; y += 1) v *= 1 + (sim.rng('pro.audience', s.id, y).next() * 2 - 1) * AUDIENCE.drift;
+  const n = ageOf(s, year) + 1;
   if (n > AUDIENCE.fade.after) v *= (1 - AUDIENCE.fade.share) ** (n - AUDIENCE.fade.after);
-  const critics = Math.round(AUDIENCE.critics.least + sim.rng('pro.audience', s.id, year, 'critics').next() * (AUDIENCE.critics.most - AUDIENCE.critics.least));
+  v *= Math.exp(FORTUNE.season * term);
+  const drawn = AUDIENCE.critics.least + sim.rng('pro.audience', s.id, year, 'critics').next() * (AUDIENCE.critics.most - AUDIENCE.critics.least);
+  const critics = Math.round(clamp(drawn + FORTUNE.seasonCritics * term, 0, 100));
   return { unit: spec.unit, average: Math.round(v * 10) / 10, critics };
 }
 
@@ -75,13 +109,39 @@ export function seasonAudience(sim: Simulation, s: SeriesTemplate, year: number)
  * tenth season). Its order, the contract, is the seasons it needs no word on. ASSUMPTION each weight, the game's.
  */
 export const RENEW_WEIGHTS = { audience: 0.25, critics: 0.15, age: { after: 9, each: 0.03 }, least: 0.05, most: 0.95 } as const;
-export function renewChance(sim: Simulation, s: SeriesTemplate, year: number): number {
+/** From 2026-10-25 a series another network picked up is renewed from that network's own chance (`PICKUP.renew`), `base`. */
+export function renewChance(sim: Simulation, s: SeriesTemplate, year: number, base: number = s.chance.renew): number {
   const last = seasonAudience(sim, s, year - 1);
-  if (!last) return s.chance.renew;
+  if (!last) return base;
   const audience = clamp(last.average / AUDIENCE[outletOf(s)].bar - 1, -1, 1);
   const critics = (last.critics - AUDIENCE.critics.middle) / (AUDIENCE.critics.most - AUDIENCE.critics.middle);
-  const age = Math.max(0, year - s.firstSeason - RENEW_WEIGHTS.age.after) * RENEW_WEIGHTS.age.each;
-  return clamp(s.chance.renew + RENEW_WEIGHTS.audience * audience + RENEW_WEIGHTS.critics * critics - age, RENEW_WEIGHTS.least, RENEW_WEIGHTS.most);
+  const age = Math.max(0, ageOf(s, year) - RENEW_WEIGHTS.age.after) * RENEW_WEIGHTS.age.each;
+  return clamp(base + RENEW_WEIGHTS.audience * audience + RENEW_WEIGHTS.critics * critics - age, RENEW_WEIGHTS.least, RENEW_WEIGHTS.most);
+}
+
+/**
+ * A canceled series picked up by another network (from 2026-10-25, the owner's brief 27, Part 13: "Revival or a
+ * distributor change where plausible"; loop 41's "A later revival: requires a plausible new project event"): of the
+ * series that come back, the share that come back on another outlet of the same kind, a broadcast series on another
+ * network and a streaming one on another service, so its audience is counted as it was; and that network's own chance of
+ * each season after. The network's name is the game's invention, from the slate's company words. ASSUMPTION each figure,
+ * drawn by the series and the year it's back (decider `pro.pickup`).
+ */
+export const PICKUP = { chance: 0.5, renew: 0.5 } as const;
+
+/** Whether a series back in `year` came back on another network, and its name; nothing where its own network brought it back. */
+export function pickupOf(sim: Simulation, s: SeriesTemplate, year: number): string | undefined {
+  const r = sim.rng('pro.pickup', s.id, year);
+  if (r.next() >= PICKUP.chance) return undefined;
+  const kinds = outletOf(s) === 'streaming' ? ['Streaming', 'Plus'] : ['Television', 'Network'];
+  return `${r.pick(COMPANY_WORDS.first)} ${r.pick(COMPANY_WORDS.second)} ${r.pick(kinds)}`;
+}
+
+/** The network a season of the series is seen on: the last that brought it back by `year`, or its own. */
+export function networkOf(sim: Simulation, s: SeriesTemplate, year: number): { name: string; since?: number } {
+  let net: { name: string; since?: number } = { name: s.company };
+  for (const d of decisionsTo(sim, s, year)) if (d.what === 'revived' && d.year <= year && d.network) net = { name: d.network, since: d.year };
+  return net;
 }
 
 /** A season's audience in the player's words: "6.2 million viewers an episode", "18.4 million hours a week". */
@@ -97,16 +157,20 @@ export function decisionsTo(sim: Simulation, s: SeriesTemplate, year: number): S
   const out: SeasonDecision[] = [];
   let on = true;
   let offSince = 0;
+  let base = s.chance.renew;
   for (let y = s.orderedThrough + 1; y <= year; y += 1) {
     const draw = sim.rng('pro.series', s.id, y).next();
     if (on) {
       // Read from the last season's audience and reviews (`renewChance`, from 2026-10-25, brief 27): until then the
       // series' own chance alone, the same whatever its seasons did.
-      if (draw < renewChance(sim, s, y)) out.push({ year: y, at: decisionAt(s, y), what: 'renewed' });
+      if (draw < renewChance(sim, s, y, base)) out.push({ year: y, at: decisionAt(s, y), what: 'renewed' });
       else { on = false; offSince = y; out.push({ year: y, at: decisionAt(s, y), what: 'canceled' }); }
     } else if (y - offSince >= s.chance.reviveAfter && draw < s.chance.revive) {
       on = true;
-      out.push({ year: y, at: decisionAt(s, y), what: 'revived' });
+      // Back on another network, by its own draw, which renews it from then by its own chance (`PICKUP`).
+      const network = pickupOf(sim, s, y);
+      if (network) base = PICKUP.renew;
+      out.push({ year: y, at: decisionAt(s, y), what: 'revived', ...(network ? { network } : {}) });
     }
   }
   return out;
@@ -120,12 +184,28 @@ export function seasonMade(sim: Simulation, s: SeriesTemplate, year: number): bo
   return last?.year === year && last.what !== 'canceled';
 }
 
-/** The season's number: one for each season made from the first, through this one. */
+/**
+ * The season's number: one for each season made from the first, through this one; a real series' counted on from its
+ * baseline's number (from 2026-10-25). A real series whose pages give no number is counted from its baseline as one, for
+ * the record alone: the player reads its seasons by their years (`seasonName`).
+ */
 export function seasonNumber(sim: Simulation, s: SeriesTemplate, year: number): number {
-  let n = 0;
+  let n = (s.real?.baseline.season ?? 1) - 1;
   for (let y = s.firstSeason; y <= year; y += 1) if (seasonMade(sim, s, y)) n += 1;
   return n;
 }
+
+/** Whether a series' seasons are said by their number: every one but a real series whose pages give none. */
+export const numbered = (s: SeriesTemplate): boolean => !s.real || s.real.baseline.season !== undefined;
+
+/** A season by name: "the eleventh season", or, for a real series whose pages give no number, "the season beginning in 2027". */
+export function seasonName(sim: Simulation, s: SeriesTemplate, year: number): string {
+  if (numbered(s)) return `the ${ordinal(seasonNumber(sim, s, year))} season`;
+  return year <= s.real!.baseline.year ? `the season on the air in ${s.real!.baseline.year}` : `the season beginning in ${year}`;
+}
+
+/** Whether a season of a series is the simulation's: every one of a series the game invents, and a real one's after its baseline. */
+export const simulatedSeason = (s: SeriesTemplate, year: number): boolean => year >= simulatedFrom(s);
 
 /**
  * When the season beginning in `year` stops being made: at the end of its window, or at the network's word on the next
@@ -147,7 +227,9 @@ export function inProduction(sim: Simulation, seriesId: string, days: readonly {
   if (!s) return true;
   return days.every((d) => {
     const year = seasonYearAt(s, d.from);
-    if (year === undefined || !seasonMade(sim, s, year)) return false;
+    // A real series' baseline season is the real production's, never the game's to cast in (from 2026-10-25, brief 27,
+    // `REAL_SERIES`): until then a part drawn from 9-1-1 was posted for days in its real tenth season.
+    if (year === undefined || !seasonMade(sim, s, year) || !simulatedSeason(s, year)) return false;
     const ends = productionEnds(sim, s, year);
     return d.from < ends || ends > at;
   });
@@ -160,7 +242,8 @@ export function inProduction(sim: Simulation, seriesId: string, days: readonly {
  */
 export function seriesInPlay(sim: Simulation): SeriesTemplate[] {
   const kept = sim.universe.people[sim.universe.playerId]?.pro?.series;
-  return [...SERIES, ...Object.values(kept ?? {})];
+  // The real series the simulation continues (from 2026-10-25, brief 27, `REAL_SERIES`).
+  return [...SERIES, ...REAL_SERIES, ...Object.values(kept ?? {})];
 }
 
 /** The parts of a series the save knows: the fixed parts, and the slate parts the player was shown. */
@@ -185,11 +268,18 @@ export function decisionWords(sim: Simulation, s: SeriesTemplate, d: SeasonDecis
   // What the network read (from 2026-10-25, brief 27, `renewChance`): the last season's audience and reviews, the game's.
   const last = d.what === 'revived' ? undefined : seasonAudience(sim, s, d.year - 1);
   const why = last ? ` Its last season averaged ${audienceWords(last)} and critics scored it ${last.critics} of 100, both the game’s estimates.` : '';
-  if (d.what === 'canceled') return `On ${when}, the network canceled ${s.title}, and its production stopped that day.${why}`;
+  // A real series' word is the simulation's (from 2026-10-25, brief 27, Part 13), and says so.
+  const real = s.real ? ' It’s the game’s own continuation of the real series, not an announcement.' : '';
+  const sim_ = s.real ? ', in the game’s simulation,' : ',';
+  if (d.what === 'canceled') return `On ${when}${sim_} the network canceled ${s.title}, and its production stopped that day.${why}${real}`;
   const n = seasonNumber(sim, s, d.year);
+  const its = numbered(s) ? `, its ${ordinal(n)}` : '';
   // The month its season begins, its own: a serialized series' February until 2026-10-25 read "July", every series' then.
   const month = new Intl.DateTimeFormat('en-US', { month: 'long', timeZone: NY }).format(new Date(seasonWindow(s, d.year).from));
-  return d.what === 'renewed' ? `On ${when}, the network renewed ${s.title} for a season beginning in ${month}, its ${ordinal(n)}.${why}` : `On ${when}, the network brought ${s.title} back for a season beginning in ${month}, its ${ordinal(n)}.`;
+  if (d.what === 'renewed') return `On ${when}${sim_} the network renewed ${s.title} for a season beginning in ${month}${its}.${why}${real}`;
+  // Back on another network (`PICKUP`): who, and that it's the game's invention.
+  if (d.network) return `On ${when}${sim_} ${d.network}, a ${outletOf(s) === 'streaming' ? 'streaming service' : 'network'} invented for the game, picked up ${s.title} after its cancellation, for a season beginning in ${month}${its}.${real}`;
+  return `On ${when}${sim_} the network brought ${s.title} back for a season beginning in ${month}${its}.${real}`;
 }
 
 const ORD = ['first', 'second', 'third', 'fourth', 'fifth', 'sixth', 'seventh', 'eighth', 'ninth', 'tenth', 'eleventh', 'twelfth', 'thirteenth', 'fourteenth', 'fifteenth', 'sixteenth', 'seventeenth', 'eighteenth', 'nineteenth', 'twentieth'];
@@ -275,8 +365,11 @@ export interface SeriesHooks {
   addDays: (sim: Simulation, person: Person, e: Engagement, t: ProjectTemplate, days: readonly WorkDay[]) => void;
   /** The work over at its last day. */
   finish: (sim: Simulation, person: Person, e: Engagement, t: ProjectTemplate) => void;
-  /** The next season's engagement, from an option taken up. */
-  renew: (sim: Simulation, person: Person, e: Engagement, t: ProjectTemplate, days: readonly WorkDay[]) => Engagement;
+  /**
+   * The next season's engagement, from an option taken up; from 2026-10-25 (brief 27, Part 13) with the part grown
+   * (`GROW`), or a pilot's option taken up into its series' first season (`PILOT`), where either is so.
+   */
+  renew: (sim: Simulation, person: Person, e: Engagement, t: ProjectTemplate, days: readonly WorkDay[], how?: { grow?: { episodes: number; raise: number }; first?: true }) => Engagement;
   /** Why work on these days can't be taken, or nothing: permission, SAG-AFTRA's thirty days, a clash. */
   refusal: (person: Person, days: readonly WorkDay[], except: string) => string | undefined;
   /** A revival's offer for a character the actor played, without an audition (`REVIVAL`): whether one could be made. */
@@ -319,6 +412,9 @@ export function revivalCastAt(s: SeriesTemplate, year: number): Instant {
 }
 
 export function registerSeries(sim: Simulation, hooks: SeriesHooks): void {
+  // Pilots, an option's hold on the actor's dates, a guest part's invitation back and a part grown (from 2026-10-25,
+  // the owner's brief 27, Parts 8 and 13 and loop 20; `systems/continuity.ts`).
+  registerContinuity(sim, hooks);
   // The network's word, at the first stop of the clock after it, before anything due there.
   sim.onPassage('pro.series', (s, from) => {
     const person = s.universe.people[s.universe.playerId];
@@ -429,16 +525,20 @@ export function registerSeries(sim: Simulation, hooks: SeriesHooks): void {
       option.status = 'expired';
       option.settled = { at: s.now, why };
       noteEvent(s, e, { kind: 'problem', key: `option:${option.year}`, words: `${why}` });
-      hooks.tell(s, person, `No ${titled(ordinal(option.season))} Season For ${t.role.part}`, `${why} So there’s no contract for you in ${t.project}’s next season. A part in it can still come through a new casting.`, 70);
+      // A real series whose pages give no number names the season by its year (from 2026-10-25, `numbered`).
+      hooks.tell(s, person, `No ${numbered(series) ? `${titled(ordinal(option.season))} Season` : `Season Beginning In ${option.year}`} For ${t.role.part}`, `${why} So there’s no contract for you in ${t.project}’s next season. A part in it can still come through a new casting.`, 70);
     };
     if (!seasonMade(s, series, option.year)) { lapse(`${series.title} has no next season, so the option on you lapsed.`); return; }
     const days = episodeWorkDays(t, seasonWindow(series, option.year).from, t.schedule.kind === 'episodes' ? t.schedule.guaranteed : 0, option.year);
     const no = hooks.refusal(person, days, e.id);
     if (no) { lapse(`${t.company} couldn’t take up its option on you as ${t.role.part}: ${midSentence(no)}.`); return; }
     if (!optionDrawn(s, e)) { lapse(`${t.company} let its option on you as ${t.role.part} lapse on ${formatDate(option.by, NY)}.`); return; }
-    const next = hooks.renew(s, person, e, t, days);
+    // The part grown, where the work and the season's audience bring it and its further days are clear (from 2026-10-25,
+    // brief 27, Part 13, `GROW`): until then every option carried the part on as it was.
+    const grown = growthOf(s, person, e, t, series, option.year, days, hooks.refusal);
+    const next = hooks.renew(s, person, e, t, grown.days, grown.grow ? { grow: grown.grow } : undefined);
     option.status = 'exercised';
-    option.settled = { at: s.now, why: `${t.company} took up its option on you as ${t.role.part} for the ${ordinal(option.season)} season.`, engagementId: next.id };
+    option.settled = { at: s.now, why: `${t.company} took up its option on you as ${t.role.part} for ${seasonName(s, series, option.year)}.`, engagementId: next.id };
     noteEvent(s, e, { kind: 'booked', key: `option:${option.year}`, words: option.settled.why });
   });
 }

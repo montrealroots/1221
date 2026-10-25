@@ -31,6 +31,7 @@ import { requirementWords } from '@/engine/systems/engagement';
 import { productionById, productionWords } from '@/engine/content/catalog';
 import { projectKey } from '@/engine/systems/reference';
 import { openReference } from '@/ui/career/ReferencePane';
+import { OptionRelease } from '@/ui/career/OptionRelease';
 
 const NY = 'America/New_York';
 const STEPS: readonly BriefStep[] = ['read', 'lines', 'rehearse'];
@@ -279,6 +280,8 @@ function OfferCard({ o }: { o: Opportunity }) {
       {asked && <p className="small" style={{ margin: 0 }}>{asked.answer === 'raised' ? `Raised to ${formatMoney(asked.amount, 'USD')} a ${o.offer!.per}, as your agent asked.` : asked.answer === 'kept' ? `Kept at its offer, where your agent asked for ${formatMoney(asked.amount, 'USD')} a ${o.offer!.per}.` : `Your agent asked for ${formatMoney(asked.amount, 'USD')} a ${o.offer!.per}. The answer comes on ${formatWeekdayDate(asked.answerAt, NY)} at ${formatTime(asked.answerAt, NY)}.`}</p>}
       <Hold o={o} />
       {warning && <p className="callout callout-warning small" style={{ margin: 0 }}>{warning}</p>}
+      {/* An option holding some of its days (from 2026-10-25, brief 27's loop 20): Ask To Be Released. */}
+      <OptionRelease o={o} />
       <p className="xs dim" style={{ margin: 0 }}>{t.medium === 'stage' ? `Missing a day: the company’s understudy covers ${counted(MISSES.stage, 'performance')}, with a written warning; another and the company replaces you.` : ILL_DAY.sizes.includes(t.role.size) ? 'Missing a day: a shoot can’t wait, so sleeping through one costs you the part; laid up or in hospital, the production shoots around you once, and the day isn’t paid.' : 'Missing a day: a shoot can’t wait, so the production replaces you.'}</p>
       <div className="row gap-2" style={{ flexWrap: 'wrap' }}>
         <Gated feature="pro.accept_offer" className="btn btn-sm btn-primary" disabled={!!no} title={no} onClick={() => { const r = run('pro.accept_offer', { opportunityId: o.id }); if (r.ok) toast(`Booked: ${t.role.part}.`, 'positive'); }}>Accept The Offer</Gated>

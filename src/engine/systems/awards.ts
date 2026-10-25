@@ -113,7 +113,8 @@ export function premiereOf(sim: Simulation, person: Person, c: ProCredit): Insta
   // day it will come, so an Emmy year read before the hold-back is said is the one the release falls in.
   if (c.release?.kind === 'shelved') return undefined;
   const at = sim.universe.scheduled.find((i) => i.status === 'pending' && i.kind === 'pro.release' && i.refId === c.id && i.payload.personId === person.id)?.at;
-  return at !== undefined && c.release?.kind === 'late' && !c.release.told ? addDays(at, c.release.days ?? 0, NY) : at;
+  // Taken over by another distributor, its date moved as a hold-back's is (from 2026-10-25, `routeOf`, `systems/market.ts`).
+  return at !== undefined && (c.release?.kind === 'late' || c.release?.kind === 'distributor') && !c.release.told ? addDays(at, c.release.days ?? 0, NY) : at;
 }
 
 const engagementOf = (person: Person, c: ProCredit): Engagement | undefined => (c.engagementId ? person.pro?.engagements.find((e) => e.id === c.engagementId) : undefined);

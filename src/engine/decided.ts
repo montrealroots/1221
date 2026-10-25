@@ -49,7 +49,9 @@ import { DIRECT, HOLD, NEGOTIATE, castingDraw, postingsAt, releaseFate, slateRea
 import { productionsOf, seriesOfYear, slatePartsAt } from './systems/slate';
 import { PROJECTS } from './content/careerwork';
 import { SERIES, seriesById } from './content/series';
-import { decisionsTo, episodeDrawn, optionDrawn, revivalReturns, seasonAudience } from './systems/series';
+import { decisionsTo, episodeDrawn, optionDrawn, pickupOf, revivalReturns, seasonAudienceWith } from './systems/series';
+import { FORTUNE, responseOf } from './systems/market';
+import { grows, invitedBack, pilotPicked, releaseGranted } from './systems/continuity';
 import { actorFieldDrawn, actorProductionSubmits, actorWinners } from './systems/actorawards';
 import { speechOf } from './systems/ceremony';
 import { lateDays, rerunDrawn } from './systems/contracts';
@@ -782,19 +784,21 @@ defineDecider<{ sim: Simulation; year: number; renew: number }, string>({
   decide: ({ sim, year, renew }) => decisionsTo(sim, { ...SERIES[0]!, chance: { ...SERIES[0]!.chance, renew } }, year).map((d) => `${d.year}:${d.what}`).join(' '),
 });
 
-defineDecider<{ sim: Simulation; year: number; outlet: number }, string>({
+defineDecider<{ sim: Simulation; year: number; outlet: number; performance: number }, string>({
   id: 'pro.audience',
-  decides: 'A season of a series’ audience and reviews, the game’s simulation (AUDIENCE): its first season within its outlet’s range, each after moving from the last, the long-running fading, and critics’ score.',
+  decides: 'A season of a series’ audience and reviews, the game’s simulation (AUDIENCE): its first season within its outlet’s range, each after moving from the last, the long-running fading, critics’ score, and from 2026-10-25 the player’s judged part in it (FORTUNE).',
   drawnIn: 'src/engine/systems/series.ts',
   reads: {
     // Which season: each moves from the last.
     year: (o, t) => ({ ...o, year: SERIES[0]!.firstSeason + Math.round(t * 15) }),
     // Broadcast in viewers or streaming in hours.
     outlet: (o, t) => ({ ...o, outlet: Math.round(t) }),
+    // The player's part in the season, its size times its band, from unready to a lead's exceptional work.
+    performance: (o, t) => ({ ...o, performance: t * 2 - 1 }),
     world: (o, t) => ({ ...o, sim: atYale(Math.round(t * 20)) }),
   },
-  sample: (seed) => ({ sim: atYale(seed), year: SERIES[0]!.firstSeason + (seed % 12), outlet: seed % 2 }),
-  decide: ({ sim, year, outlet }) => { const a = seasonAudience(sim, { ...SERIES[0]!, outlet: outlet ? 'streaming' : 'broadcast' }, year)!; return `${a.unit} ${a.average} ${a.critics}`; },
+  sample: (seed) => ({ sim: atYale(seed), year: SERIES[0]!.firstSeason + (seed % 12), outlet: seed % 2, performance: 0 }),
+  decide: ({ sim, year, outlet, performance }) => { const a = seasonAudienceWith(sim, { ...SERIES[0]!, outlet: outlet ? 'streaming' : 'broadcast' }, year, performance)!; return `${a.unit} ${a.average} ${a.critics}`; },
 });
 
 defineDecider<{ sim: Simulation; band: number }, string>({
@@ -1014,16 +1018,97 @@ defineDecider<{ sim: Simulation; first: number }, string>({
 // The charts' and the awards' draws (from 2026-10-24, brief 25's Module 6, `systems/charts.ts` and `systems/awards.ts`),
 // each keyed by the film, the year or the category, never an id.
 
-defineDecider<{ sim: Simulation; first: number }, string>({
+defineDecider<{ sim: Simulation; first: number; performance: number }, string>({
   id: 'charts.gross',
-  decides: 'A film’s run in the game’s own weekly chart: its opening, how it falls each week, and its rank among the game’s own unnamed releases.',
+  decides: 'A film’s run in the game’s own weekly chart: its opening, how it falls each week, its rank among the game’s own unnamed releases, its takings abroad, and from 2026-10-25 the player’s part lifting its opening (FORTUNE).',
   drawnIn: 'src/engine/systems/charts.ts',
   reads: {
     first: (o, t) => ({ ...o, first: Math.round(t * 100) }),
+    // The player's part in it, its size times its band, from unready to a lead's exceptional work.
+    performance: (o, t) => ({ ...o, performance: t * 2 - 1 }),
     world: (o, t) => ({ ...o, sim: atYale(Math.round(t * 20)) }),
   },
-  sample: (seed) => ({ sim: atYale(seed), first: seed * 7 }),
-  decide: ({ sim, first }) => Array.from({ length: 12 }, (_, n) => { const run = simulateRun(sim, `film-${first + n}`, 'low-budget', (first + n) * 7 * 86_400_000); return run ? `${run.weeks[0]!.gross}:${run.weeks.length}:${run.weeks[0]!.rank}` : '-'; }).join(','),
+  sample: (seed) => ({ sim: atYale(seed), first: seed * 7, performance: 0 }),
+  decide: ({ sim, first, performance }) => Array.from({ length: 12 }, (_, n) => { const run = simulateRun(sim, `film-${first + n}`, 'low-budget', (first + n) * 7 * 86_400_000, { lift: FORTUNE.gross * performance }); return run ? `${run.weeks[0]!.gross}:${run.weeks.length}:${run.weeks[0]!.rank}:${run.weeks[0]!.international}` : '-'; }).join(','),
+});
+
+// The series, releases and market cluster's draws (from 2026-10-25, the owner's brief 27, Parts 8, 12 and 13; `systems/
+// market.ts`, `systems/continuity.ts`), each keyed by the production, the engagement or the series and the year.
+
+defineDecider<{ sim: Simulation; first: number; performance: number }, string>({
+  id: 'pro.quality',
+  decides: 'A production’s own quality, and the critics’ and audience’s response to a film it reads with the player’s part (FORTUNE), the game’s simulation.',
+  drawnIn: 'src/engine/systems/market.ts',
+  reads: {
+    first: (o, t) => ({ ...o, first: Math.round(t * 100) }),
+    performance: (o, t) => ({ ...o, performance: t * 2 - 1 }),
+    world: (o, t) => ({ ...o, sim: atYale(Math.round(t * 20)) }),
+  },
+  sample: (seed) => ({ sim: atYale(seed), first: seed * 7, performance: 0 }),
+  decide: ({ sim, first, performance }) => Array.from({ length: 12 }, (_, n) => { const r = responseOf(sim, { project: `p${first + n}` }, performance); return `${r.critics}:${r.audience}`; }).join(','),
+});
+
+defineDecider<{ sim: Simulation; first: number; performance: number }, string>({
+  id: 'pro.pilot',
+  decides: 'A pilot’s network word: picked up to series or passed on, at a chance its own quality and the player’s part in it move (PILOT).',
+  drawnIn: 'src/engine/systems/continuity.ts',
+  reads: {
+    first: (o, t) => ({ ...o, first: Math.round(t * 100) }),
+    performance: (o, t) => ({ ...o, performance: t * 2 - 1 }),
+    world: (o, t) => ({ ...o, sim: atYale(Math.round(t * 20)) }),
+  },
+  sample: (seed) => ({ sim: atYale(seed), first: seed * 7, performance: 0 }),
+  decide: ({ sim, first, performance }) => Array.from({ length: 40 }, (_, n) => (pilotPicked(sim, { project: `pilot-${first + n}` } as never, performance) ? '1' : '0')).join(''),
+});
+
+defineDecider<{ sim: Simulation; band: number }, string>({
+  id: 'pro.recurring',
+  decides: 'A guest part brought back as a recurring character at the network’s renewal: its chance by the best the work was judged at, none for working work (INVITE).',
+  drawnIn: 'src/engine/systems/continuity.ts',
+  reads: {
+    band: (o, t) => ({ ...o, band: Math.round(t * 4) - 1 }),
+    world: (o, t) => ({ ...o, sim: atYale(Math.round(t * 20)) }),
+  },
+  sample: (seed) => ({ sim: atYale(seed), band: (seed % 5) - 1 }),
+  decide: ({ sim, band }) => Array.from({ length: 40 }, (_, n) => (invitedBack(sim, judged(`e${n}`, band), 2031) ? '1' : '0')).join(''),
+});
+
+defineDecider<{ sim: Simulation; band: number; ratio: number }, string>({
+  id: 'pro.grow',
+  decides: 'A recurring part grown at its option, more episodes and more pay: its chance by the best the work was judged at and the season’s audience against its bar (GROW).',
+  drawnIn: 'src/engine/systems/continuity.ts',
+  reads: {
+    band: (o, t) => ({ ...o, band: Math.round(t * 4) - 1 }),
+    // The last season's audience against its outlet's bar, from half to twice.
+    ratio: (o, t) => ({ ...o, ratio: 0.5 + t * 1.5 }),
+    world: (o, t) => ({ ...o, sim: atYale(Math.round(t * 20)) }),
+  },
+  sample: (seed) => ({ sim: atYale(seed), band: (seed % 5) - 1, ratio: 1 }),
+  decide: ({ sim, band, ratio }) => Array.from({ length: 40 }, (_, n) => (grows(sim, judged(`e${n}`, band), 2031, ratio) ? '1' : '0')).join(''),
+});
+
+defineDecider<{ sim: Simulation; band: number }, string>({
+  id: 'pro.option_release',
+  decides: 'A production asked to release the actor from its option, against another offer: likelier the less it wanted the actor back (OPTION_RELEASE).',
+  drawnIn: 'src/engine/systems/continuity.ts',
+  reads: {
+    band: (o, t) => ({ ...o, band: Math.round(t * 4) - 1 }),
+    world: (o, t) => ({ ...o, sim: atYale(Math.round(t * 20)) }),
+  },
+  sample: (seed) => ({ sim: atYale(seed), band: (seed % 5) - 1 }),
+  decide: ({ sim, band }) => Array.from({ length: 40 }, (_, n) => (releaseGranted(sim, judged(`e${n}`, band), `o${n}`) ? '1' : '0')).join(''),
+});
+
+defineDecider<{ sim: Simulation; year: number }, string>({
+  id: 'pro.pickup',
+  decides: 'A canceled series coming back on another network or streaming service, and that network’s name, the game’s invention (PICKUP).',
+  drawnIn: 'src/engine/systems/series.ts',
+  reads: {
+    year: (o, t) => ({ ...o, year: 2030 + Math.round(t * 15) }),
+    world: (o, t) => ({ ...o, sim: atYale(Math.round(t * 20)) }),
+  },
+  sample: (seed) => ({ sim: atYale(seed), year: 2032 + (seed % 10) }),
+  decide: ({ sim, year }) => Array.from({ length: 20 }, (_, n) => pickupOf(sim, { ...SERIES[0]!, id: `test-pickup-${n}` }, year) ?? '-').join(','),
 });
 
 defineDecider<{ sim: Simulation; first: number }, string>({

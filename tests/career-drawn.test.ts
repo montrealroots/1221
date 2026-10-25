@@ -16,6 +16,8 @@ import { renderToStaticMarkup } from 'react-dom/server';
 import { MS_DAY, MS_HOUR, zonedParts } from '@/engine/core/time';
 import { PROJECTS, RATES, projectById } from '@/engine/content/careerwork';
 import { CATALOG, companiesAs, productionById, productionWords } from '@/engine/content/catalog';
+import { REAL_SERIES } from '@/engine/content/series';
+import { seasonMade } from '@/engine/systems/series';
 import { ensurePro, type Opportunity } from '@/engine/systems/pro';
 import { f1Of } from '@/engine/systems/permission';
 import { WORK, acceptRefusal, acceptWarning, castingDraw, drawnWords, fieldOf, kindPhrase, projectOf, reachWords, roleWords } from '@/engine/systems/projobs';
@@ -122,12 +124,21 @@ describe('C11: casting keyed by the posting', () => {
 
 const isDrawn = (o: Pick<Opportunity, 'projectId'>) => !!projectById(o.projectId)?.drawn;
 
-/** The first seed whose represented, skilled graduate is offered a drawn part, through the agent's breakdowns. */
+/**
+ * The first seed whose represented, skilled graduate is offered a drawn part, through the agent's breakdowns. From
+ * 2026-10-25 (brief 27, `REAL_SERIES`) a drawn part is cast only in a season of its series the game simulates, after the
+ * one its pages had on the air, so the clock goes on to the network's first word on one, in a save whose word on 9-1-1
+ * or Abbott Elementary is another season; until then the part was posted from the graduate's first autumn, in the real
+ * tenth season.
+ */
 function offeredDrawn(): { sim: ReturnType<typeof graduate>; o: Opportunity } {
   for (let n = 0; n < 40; n += 1) {
     const sim = graduate(`drawn-${n}`);
+    if (!REAL_SERIES.some((s) => seasonMade(sim, s, 2027))) continue;
     skilled(sim);
     portfolio(sim);
+    // TEST SETUP: the clock on, unplayed, to the network's first word on a simulated season.
+    tended(sim, at(2027, 5, 20));
     signed(sim, sim.now); // TEST SETUP: an agreement in force, as the agent's system writes one
     for (let w = 0; w < 30; w += 1) {
       const o = sim.player.pro!.opportunities.find((x) => isDrawn(x) && (x.status === 'audition' || x.status === 'callback'));

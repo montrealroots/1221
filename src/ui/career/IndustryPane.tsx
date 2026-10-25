@@ -31,8 +31,9 @@ import { CITIES, COUNTRIES } from '@/engine/content/geography';
 import { spokenList } from '@/engine/core/text';
 import { countryWords } from '@/engine/systems/worktrip';
 import {
-  REFERENCE, currentOf, figureWords, latestOf, longDate, movementOf, movementWords, peakOf, titleAcross, weekEnd, weekWords, weeksBy, weeksSoFar,
+  REFERENCE, currentOf, figureWords, latestOf, longDate, movementOf, movementWords, peakOf, titleAcross, totalsOf, weekEnd, weekWords, weeksBy, weeksSoFar,
 } from '@/engine/systems/charts';
+import { routeWords } from '@/engine/systems/market';
 import {
   VISIBILITY, ceremonyLines, eligibleWords, emmyCheck, entryFee, entryRefusal, festivalCheck, festivalCheckWords, festivalWords,
   internationalWhy, projectOfCredit, recapWords, visibilityOf, watchRefusal,
@@ -43,7 +44,7 @@ import { CEREMONY, acceptRefusal, prepareRemarksRefusal, rsvpBy, rsvpRefusal, sh
 import { bookedClash } from '@/engine/systems/projobs';
 import { projectById } from '@/engine/content/careerwork';
 import { seasonWindow, seriesById } from '@/engine/content/series';
-import { audienceWords, decisionsTo, decisionWords, ordinal, seasonAudience, seasonMade, seasonNumber } from '@/engine/systems/series';
+import { audienceWords, decisionsTo, decisionWords, seasonAudience, seasonMade, seasonName, simulatedSeason } from '@/engine/systems/series';
 
 export function IndustryPane() {
   return (
@@ -271,19 +272,27 @@ function BoxOfficePanel() {
         {films.length ? films.map((c) => {
           const weeks = weeksSoFar(c.run!, sim.now);
           const peak = peakOf(c.run, sim.now);
+          // Its totals in their currency, its reception and its way out (from 2026-10-25, the owner's brief 27, Part 12).
+          const totals = totalsOf(c.run!, sim.now);
+          const usd = (n: number) => formatMoney(n * 100, 'USD', { cents: false });
+          const route = routeWords(c);
+          const intl = c.run!.currency !== undefined;
           return (
             <div key={c.id} className="col gap-2">
               <p className="small strong" style={{ margin: 0 }}>{c.project}</p>
               <p className="small" style={{ margin: 0 }}>
-                {`Opened ${formatDate(c.run!.opening, sim.zone)}. ${peak !== undefined ? `Its best week was No. ${peak} in the game’s own chart.` : 'It hasn’t made the game’s own Top 10.'}`}
+                {`Opened in the US on ${formatDate(c.run!.opening, sim.zone)}. ${peak !== undefined ? `Its best week was No. ${peak} in the game’s own chart.` : 'It hasn’t made the game’s own Top 10.'}${route ? ` ${route}` : ''}`}
               </p>
+              {totals.worldwide !== undefined && <p className="small" style={{ margin: 0 }}>{`So far ${usd(totals.domestic)} in the US and ${usd(totals.international!)} abroad: ${usd(totals.worldwide)} worldwide, every figure in US dollars.`}</p>}
+              {c.run!.response && <p className="small" style={{ margin: 0 }}>{`Critics scored it ${c.run!.response.critics} of 100 and audiences ${c.run!.response.audience} of 100, both simulated.`}</p>}
               <table className="pay-table">
-                <thead><tr><th>Week Of</th><th className="num">Gross</th><th>Place</th></tr></thead>
+                <thead><tr><th>Week Of</th><th className="num">In The US</th>{intl && <th className="num">Abroad</th>}<th>Place</th></tr></thead>
                 <tbody>
                   {weeks.map((w) => (
                     <tr key={w.from}>
                       <td>{formatDate(w.from, sim.zone)}</td>
-                      <td className="num">{formatMoney(w.gross * 100, 'USD', { cents: false })}</td>
+                      <td className="num">{usd(w.gross)}</td>
+                      {intl && <td className="num">{w.international !== undefined ? usd(w.international) : 'Not Reported'}</td>}
                       <td>{w.rank === 'outside' ? 'Outside The Top 10' : `No. ${w.rank}`}</td>
                     </tr>
                   ))}
@@ -292,7 +301,7 @@ function BoxOfficePanel() {
             </div>
           );
         }) : <p className="small" style={{ margin: 0 }}>None of your films is in cinemas. When one opens, its weeks show here as the clock reaches them.</p>}
-        <Fine>The game’s own box office: a simulation for films the game invents, never a published figure. A film’s gross is the production’s, not your pay, and a good week pays you nothing. How well your part went doesn’t move it.</Fine>
+        <Fine>The game’s own box office: a simulation for films the game invents, never a published figure, the US weeks ranked in the game’s own chart and the takings abroad beside them, all in US dollars. A film’s gross is the production’s, not your pay, and a good week pays you nothing. The production’s own quality and your part in it move how a film opens and holds, a lead’s part more than a small one, and neither decides it alone.</Fine>
       </div>
     </Panel>
   );
@@ -313,7 +322,8 @@ function SeriesPanel() {
         {series.length ? series.map((s) => {
           // The seasons that have finished airing, the last three, each with what it averaged and the network's word after it.
           const done: number[] = [];
-          for (let y = s.firstSeason; seasonWindow(s, y).to <= sim.now; y += 1) if (seasonMade(sim, s, y)) done.push(y);
+          // A real series' seasons from the first the game simulates (from 2026-10-25, brief 27, `simulatedSeason`).
+          for (let y = s.firstSeason; seasonWindow(s, y).to <= sim.now; y += 1) if (seasonMade(sim, s, y) && simulatedSeason(s, y)) done.push(y);
           const said = decisionsTo(sim, s, new Date(sim.now).getUTCFullYear() + 1).filter((d) => d.at <= sim.now);
           return (
             <div key={s.id} className="col gap-2">
@@ -323,14 +333,14 @@ function SeriesPanel() {
                   {done.slice(-3).map((y) => {
                     const a = seasonAudience(sim, s, y)!;
                     const word = said.find((d) => d.year === y + 1);
-                    return <li key={y}>{`Its ${ordinal(seasonNumber(sim, s, y))} season: ${audienceWords(a)}, critics ${a.critics} of 100.${word ? ` ${decisionWords(sim, s, word).replace(/ Its last season averaged .*$/, '')}` : ''}`}</li>;
+                    return <li key={y}>{`${seasonName(sim, s, y).replace(/^the/, 'Its')}: ${audienceWords(a)}, critics ${a.critics} of 100.${word ? ` ${decisionWords(sim, s, word).replace(/ Its last season averaged .*$/, '')}` : ''}`}</li>;
                   })}
                 </ul>
               ) : <p className="small" style={{ margin: 0 }}>No season of it has finished airing yet.</p>}
             </div>
           );
         }) : <p className="small" style={{ margin: 0 }}>You haven’t worked on a series yet. One you’ve worked on shows here, each season’s audience as it finishes.</p>}
-        <Fine>Each season’s audience and reviews are the game’s simulation for series it invents, never a published figure: a broadcast series counted in viewers an episode, a streaming one in hours viewed a week, never the one as the other. The network reads them, with the series’ age, when it says whether there’s another season.</Fine>
+        <Fine>Each season’s audience and reviews are the game’s simulation, never a published figure, for series it invents and for a real series’ seasons after the one its pages had on the air: a broadcast series counted in viewers an episode, a streaming one in hours viewed a week, never the one as the other. Your part in a season moves them a little. The network reads them, with the series’ age, when it says whether there’s another season.</Fine>
       </div>
     </Panel>
   );

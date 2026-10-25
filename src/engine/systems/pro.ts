@@ -152,7 +152,20 @@ export interface ProCredit {
    * `RELEASE_FATE`): on time, held back so many days, sent to streaming instead of cinemas, or shelved. Drawn at the wrap
    * for a slate production, said when its release comes due; `told` once the hold-back has been said.
    */
-  release?: { kind: 'on-time' | 'late' | 'streaming' | 'shelved'; days?: number; told?: true };
+  release?: {
+    kind: 'on-time' | 'late' | 'streaming' | 'shelved' | 'limited' | 'distributor' | 'territory'; days?: number; told?: true;
+    /**
+     * From 2026-10-25 (brief 27, loop 33's "Different distributor. Limited release." and Part 12's "Territory-specific
+     * releases"; `systems/market.ts`): a limited release's weeks in a few cinemas before it can widen; the distributor that
+     * took it over, its date moved `days`; and where a release in some territories first opens, the rest `days` later.
+     */
+    weeks?: number; distributor?: string; first?: string;
+  };
+  /**
+   * The network its season was seen on, where another picked the series up after its cancellation (from 2026-10-25, brief
+   * 27, Part 13: "Revival or a distributor change"; `systems/continuity.ts`'s `networkOf`). A credit made before has none.
+   */
+  network?: string;
 }
 
 /** From 2026-10-24 (brief 27, Part 7) a voice demo too: recordings of the voice alone, for voice casting, which a reel can't hold. */
@@ -471,6 +484,14 @@ export interface Engagement extends HasHistory {
    * `REVIVAL`): the season it's back for, and whether its producers bring the character back, by a new offer.
    */
   revival?: { year: number; returns: boolean };
+  /**
+   * The producers' word on bringing a guest part back as a recurring character, at the network's renewal (from 2026-10-25,
+   * the owner's brief 27, Part 13: "Guest work leading to a recurring engagement"; `systems/continuity.ts`'s `INVITE`): the
+   * season it's for, and whether they do. Given once; an engagement from before has none and is never asked.
+   */
+  invite?: { year: number; invited: boolean };
+  /** A pilot's word from its network (brief 27, Part 8; `systems/continuity.ts`'s `PILOT`): when, picked up or not, and the series it became. */
+  pilot?: { at: Instant; picked: boolean; seriesId?: string };
 }
 
 /** One unit of a part's work (`systems/workflow.ts`): a scene, a loop, a chapter or a sequence. */
@@ -536,7 +557,16 @@ export type ContractClause =
   | { kind: 'trip'; words: string }
   | { kind: 'per-diem'; perDay: Money; days: number }
   | { kind: 'episodes'; ordered: number; guaranteed: number; expected: number; daysEach: number; numbers: number[]; further: { n: number; status: 'pending' | 'called' | 'not-called' | 'off'; at?: Instant }[] }
-  | { kind: 'option'; season: number; year: number; by: Instant; raise: number; status: 'open' | 'exercised' | 'expired'; settled?: { at: Instant; why: string; engagementId?: ProId } }
+  | {
+    kind: 'option'; season: number; year: number; by: Instant; raise: number; status: 'open' | 'exercised' | 'expired'; settled?: { at: Instant; why: string; engagementId?: ProId };
+    /**
+     * From 2026-10-25 (the owner's brief 27, loop 20; `systems/continuity.ts`): the actor's ask to be released from it,
+     * against an offer on the days it holds, and the production's answer; and the engagement it was given up for, where
+     * the actor took work on its days without a release.
+     */
+    release?: { at: Instant; answerAt: Instant; against: ProId; answer?: 'granted' | 'refused' };
+    givenUpFor?: ProId;
+  }
   // A workflow's rule (from 2026-10-24, brief 25's Module 5, `workflowRules`, `systems/contracts.ts`): its words.
   | { kind: 'rule'; id: 'rehearsal-paid' | 'dubbing' | 'stressful' | 'days-only' | 'stunts' | 'intimacy' | 'looping' | 'voice-over' | 'residuals-unread' | 'promo'; words: string };
 
@@ -562,6 +592,12 @@ export interface Contract {
   series?: { id: string; year: number; season: number };
   /** The engagement whose option made it. */
   renews?: ProId;
+  /**
+   * A recurring part grown at the option (from 2026-10-25, the owner's brief 27, Part 13: "A recurring character receiving
+   * a larger role"; `systems/continuity.ts`'s `GROW`): the episodes guaranteed beyond the part's own, and the raise beyond
+   * the option's.
+   */
+  grew?: { episodes: number; raise: number };
   clauses: ContractClause[];
 }
 
@@ -726,6 +762,21 @@ export interface ProRecord {
   projects?: Record<string, import('../content/careerwork').ProjectTemplate>;
   /** The slate's series the actor has met, by id, as they were (brief 27): what a season's decisions read for them. */
   series?: Record<string, import('../content/series').SeriesTemplate>;
+  /**
+   * The player's judged work in each series, by the series' id (from 2026-10-25, the owner's brief 27, Part 12: "A strong
+   * player performance must matter without guaranteeing a hit"; `systems/market.ts`'s `markWork`): one posting a judged
+   * day, its season by the year it began, when, and what it weighs, the part's size times the band (`FORTUNE`). A season's
+   * audience reads the postings made before the network's word on the next. Kept whole, never trimmed with the
+   * engagements, so a past season reads the same for good. A save from before has none, and its seasons read as they did.
+   */
+  seasonMarks?: Record<string, { y: number; at: Instant; v: number }[]>;
+  /**
+   * The options the actor gave up by taking work on their days without a release (from 2026-10-25, the owner's brief 27,
+   * loop 20; `systems/continuity.ts`'s `giveUpOptions`): the casting office, the series, the part and the season, kept
+   * whole past the engagements' bounds, since the casting office's word and the season's casting read them later. A save
+   * from before has none.
+   */
+  optionsGivenUp?: { casting: string; seriesId: string; part: string; year: number; at: Instant }[];
 }
 
 // ---------------------------------------------------------------------------------------------------------------------

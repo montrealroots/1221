@@ -321,6 +321,11 @@ export interface ProjectTemplate {
   /** An anthology's next story, offered only to an actor whose work in this earlier one was strong (Module 5). */
   invitedFrom?: string;
   /**
+   * A pilot (from 2026-10-25, the owner's brief 27, Part 8: "Pilots"; `systems/continuity.ts`): the network it's made for,
+   * which picks it up to series or passes on it at `decideAt`. Shot as an episode of its kind is.
+   */
+  pilot?: { network: string; decideAt: number };
+  /**
    * A part the slate made (from 2026-10-24, the owner's brief 27, Area B; `systems/slate.ts`): the production it's in, the
    * week and market that made it, the generator's version, and what becomes of the production. Absent on the fixed parts.
    */
@@ -743,7 +748,9 @@ export const PROJECTS: readonly ProjectTemplate[] = [
   // build read, so the game sets the work in Los Angeles, its assumption, and says so; a trip from home, as the
   // production's.
   {
-    id: 'nine-one-one-guest', kind: 'network-drama', format: 'procedural', fictional: false,
+    // In the simulation's seasons of 9-1-1 after its tenth (`REAL_SERIES`, from 2026-10-25, brief 27, Part 13): until then
+    // posted any week, its days falling in the real tenth season the words said it came after.
+    id: 'nine-one-one-guest', kind: 'network-drama', format: 'procedural', fictional: false, series: 'real-nine-one-one',
     drawn: { production: 'nine-one-one', season: 'a season of 9-1-1 the game imagines, after its tenth', placeWhy: 'The game sets this part’s shoot in Los Angeles: no page it read says where 9-1-1 films.' },
     project: '9-1-1', company: '20th Television', casting: 'the production’s casting office',
     medium: 'television', genres: ['police_procedural', 'disaster'],
@@ -758,7 +765,7 @@ export const PROJECTS: readonly ProjectTemplate[] = [
     leadDays: 28,
   },
   {
-    id: 'abbott-guest', kind: 'network-comedy', format: 'single-camera-comedy', fictional: false,
+    id: 'abbott-guest', kind: 'network-comedy', format: 'single-camera-comedy', fictional: false, series: 'real-abbott-elementary',
     drawn: { production: 'abbott-elementary', season: 'a season of Abbott Elementary the game imagines', placeWhy: 'The game sets this part’s shoot in Los Angeles: no page it read says where Abbott Elementary films.' },
     project: 'Abbott Elementary', company: 'Warner Bros. Television and 20th Television', casting: 'the production’s casting office',
     medium: 'television', genres: ['comedy'],

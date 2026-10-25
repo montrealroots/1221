@@ -106,8 +106,9 @@ import { AFTER_WRAP, PROMO, RELEASED, type After } from '../content/workflows';
 import { awardsPassage, registerAwards, visibilityOf } from './awards';
 import { actorAwardsPassage, registerActorAwards } from './actorawards';
 import { registerCeremonies } from './ceremony';
-import { simulateRun } from './charts';
 import { keepProject, pushedPart, restoreSlate, slatePartsAt } from './slate';
+import { markWork, releasedWords, routeOf, runOf, takenOverWords } from './market';
+import { atWrap, gaveUpWith, giveUpOptions, inviteStands, optionGivenUp, optionWarning, pilotOfferWords, pilotTerms } from './continuity';
 
 // ---------------------------------------------------------------------------------------------------------------------
 // The rules: each a published one with its source, or the game's ASSUMPTION
@@ -290,25 +291,29 @@ export const MISSES = { stage: 1, screen: 0 } as const;
  * (decider `pro.release`), by the way its format comes out: a film for cinemas may be held back, sent to streaming instead,
  * or shelved; a series or a broadcast may be held back or shelved. The fixed parts briefs 19 to 25 wrote keep their
  * releases as written. ASSUMPTION every chance and the hold-back's months: nobody publishes how often a finished film or
- * series is held back or shelved.
+ * series is held back or shelved. From 2026-10-25 the quoted "Different distributor" and "Limited release" are drawn too,
+ * with Part 12's "Territory-specific releases", from what was the on-time share, so late, streaming and shelved come as
+ * they did: a film's limited release, a release by another distributor (never a series' season alone), and a film abroad
+ * first (`routeOf`, `systems/market.ts`). Until then only late, streaming and shelved were. A pilot has none of these:
+ * its network's word decides whether it airs (`systems/continuity.ts`).
  */
-export const RELEASE_FATE: Readonly<Partial<Record<After, { late: number; streaming?: number; shelved: number }>>> = {
-  theatrical: { late: 0.12, streaming: 0.12, shelved: 0.04 },
-  streaming: { late: 0.08, shelved: 0.02 },
-  broadcast: { late: 0.06, shelved: 0.02 },
+export const RELEASE_FATE: Readonly<Partial<Record<After, { late: number; streaming?: number; shelved: number; limited?: number; distributor?: number; territory?: number }>>> = {
+  theatrical: { late: 0.12, streaming: 0.12, shelved: 0.04, limited: 0.12, distributor: 0.05, territory: 0.05 },
+  streaming: { late: 0.08, shelved: 0.02, distributor: 0.04 },
+  broadcast: { late: 0.06, shelved: 0.02, distributor: 0.04 },
 };
 export const RELEASE_LATE = { least: 60, most: 240 } as const;
 
 /** A slate production's way out, by its own stream: on time unless its format's chances say otherwise. */
 export function releaseFate(sim: Simulation, t: ProjectTemplate): NonNullable<ProCredit['release']> {
-  const odds = t.slate ? RELEASE_FATE[formatOf(t).after] : undefined;
+  const odds = t.slate && !t.pilot ? RELEASE_FATE[formatOf(t).after] : undefined;
   if (!odds) return { kind: 'on-time' };
   const r = sim.rng('pro.release', t.slate!.production);
   const u = r.next();
   if (u < odds.shelved) return { kind: 'shelved' };
   if (u < odds.shelved + (odds.streaming ?? 0)) return { kind: 'streaming' };
   if (u < odds.shelved + (odds.streaming ?? 0) + odds.late) return { kind: 'late', days: RELEASE_LATE.least + Math.floor(r.next() * (RELEASE_LATE.most - RELEASE_LATE.least)) };
-  return { kind: 'on-time' };
+  return routeOf(r, u - (odds.shelved + (odds.streaming ?? 0) + odds.late), odds, t) ?? { kind: 'on-time' };
 }
 
 /** How long after it's shot a screen project comes out, so its footage can go on a reel. ASSUMPTION, by kind. */
@@ -748,6 +753,9 @@ export function postingsAt(sim: Simulation, person: Person, at: Instant): { proj
       // A revival's season, where its producers said whether the actor's character comes back (from 2026-10-25, brief 27's
       // loop 41, `REVIVAL`): their word stands for it, an offer or none, so the part isn't posted to the actor again in it.
       if (person.pro?.engagements.some((e) => e.projectId === t.id && e.revival?.year === season)) continue;
+      // Nor a part whose option the actor gave up for the season, now another actor's, nor a guest part its producers are
+      // bringing back as a recurring character then (from 2026-10-25, brief 27, `systems/continuity.ts`).
+      if (optionGivenUp(person, t, season) || inviteStands(person, t, season)) continue;
     } else if (person.pro?.engagements.some((e) => e.projectId === t.id && e.status !== 'canceled') || person.pro?.credits.some((c) => c.project === t.project && c.role === t.role.part)) continue;
     if (t.slate) {
       // A slate part reaches the actor by the slate's own reach (`slateReach`), drawn on its own stream.
@@ -1301,7 +1309,9 @@ export function acceptWarning(sim: Simulation, person: Person, o: Opportunity): 
   const school = schoolWarning(sim, person, o, days);
   const trip = abroadWarning(sim, person, o, days);
   const held = holdWarning(person, o, days);
-  return [held, trip, school].filter(Boolean).join(' ') || undefined;
+  // An option holding some of its days (from 2026-10-25, brief 27's loop 20, `optionWarning`).
+  const option = optionWarning(person, o);
+  return [held, option, trip, school].filter(Boolean).join(' ') || undefined;
 }
 
 // ---------------------------------------------------------------------------------------------------------------------
@@ -1722,6 +1732,8 @@ function pass(sim: Simulation, person: Person, o: Opportunity, why: string): voi
 export function directOfferFor(sim: Simulation, person: Person, t: ProjectTemplate, at: Instant): { engagementId: ProId; words: string } | undefined {
   const pro = person.pro;
   if (!pro || !t.slate || t.role.size === 'lead') return undefined;
+  // A casting office whose option the actor gave up offers nothing without an audition again (from 2026-10-25, loop 20).
+  if (gaveUpWith(person, t.casting)) return undefined;
   // A promotional film missed for that work (from 2026-10-25, brief 27's loop 34, `promoSession`) leaves it out.
   const before = pro.engagements
     .filter((e) => finished(e) && e.status !== 'canceled' && e.promo?.status !== 'missed' && projectById(e.projectId)?.casting === t.casting)
@@ -1796,6 +1808,9 @@ export function termsWords(t: ProjectTemplate, amount: Money | undefined, days: 
   else if (amount !== undefined && paysOvertime(t.pay) && ot > 0) out.push(`Each day runs ten hours with an hour for lunch, so its last hour of work is overtime at time and one-half, ${formatMoney(overtimeOf(amount, ot), 'USD')} more a day.`);
   // How the work is done (Module 5), and what it asks before anyone's cast: an intimate scene.
   out.push(formatOf(t).words);
+  // A pilot's network word and its option (from 2026-10-25, brief 27, Part 8, `pilotOfferWords`).
+  const pilot = pilotOfferWords(t);
+  if (pilot) out.push(pilot);
   if (t.dub) out.push(`The dub’s pay follows the agreement’s rule for replacing another actor’s lines: its ${counted(t.dub.length, 'session')} pay ${spokenList(t.dub.map((d) => counted(dubDaysOf(d), 'day')))} in turn.`);
   if (t.intimacy) out.push(intimacyWords(t));
   const s = t.series ? seriesById(t.series) : undefined;
@@ -1934,8 +1949,11 @@ function finish(sim: Simulation, person: Person, e: Engagement, t: ProjectTempla
       releaseAt = dayAt(addDays(sim.now, days, NY), 12);
       sim.schedule({ at: releaseAt, kind: RELEASE_KIND, label: `${t.project} Is Released`, category: 'career', priority: 60, refType: 'pro.credit', refId: c.id, payload: { personId: person.id, creditId: c.id } });
       // A release held back or shelved has no promotional film set for its first date: the later one's is set when it's said.
-      if (c.release.kind === 'late' || c.release.kind === 'shelved') releaseAt = undefined;
+      // So with another distributor's later date (from 2026-10-25).
+      if (c.release.kind === 'late' || c.release.kind === 'shelved' || c.release.kind === 'distributor') releaseAt = undefined;
     }
+    // The network its season is seen on, and a pilot's airing after its network's word (`atWrap`, from 2026-10-25, brief 27).
+    if (atWrap(sim, person, e, t, c.id)) releaseAt = undefined;
   } else if (e.creditId && best) {
     const c = person.pro?.credits.find((x) => x.id === e.creditId);
     if (c) c.band = best;
@@ -2166,12 +2184,14 @@ function specialOn(sim: Simulation, person: Person, x: { engagement: Engagement 
  * first guaranteed episodes. Through the same agreement as the last, so its commission is owed as a renewal of a contract
  * made in the agreement's term (`AGREEMENT_TERMS`' What You Still Owe After It Ends).
  */
-function renewFromOption(sim: Simulation, person: Person, e: Engagement, t: ProjectTemplate, days: readonly WorkDay[]): Engagement {
+function renewFromOption(sim: Simulation, person: Person, e: Engagement, t: ProjectTemplate, days: readonly WorkDay[], how?: { grow?: { episodes: number; raise: number }; first?: true }): Engagement {
   const pro = ensurePro(sim, person);
   const old = opportunityOf(person, e.opportunityId);
   const scale = rateOn(RATES[t.pay], days[0]!.from) ?? 0;
-  const amount = Math.max(Math.round((old?.offer?.amount ?? scale) * (1 + OPTION_RAISE)), negotiatedAmount(scale, t.union, e.agreementId !== undefined));
-  const words = `${t.company} took up its option on you as ${t.role.part}: ${counted(days.length, 'shoot day')} from ${formatDate(days[0]!.from, NY)}, at ${formatMoney(amount, 'USD')} a day.`;
+  // A part grown takes its raise on top of the option's (from 2026-10-25, brief 27, `GROW`, `systems/continuity.ts`).
+  const amount = Math.max(Math.round((old?.offer?.amount ?? scale) * (1 + OPTION_RAISE + (how?.grow?.raise ?? 0))), negotiatedAmount(scale, t.union, e.agreementId !== undefined));
+  const grew = how?.grow ? ` The production wrote more for the part: ${counted(how.grow.episodes, 'more episode')} guaranteed, and ${Math.round(how.grow.raise * 100)}% more a day on top of the option’s raise.` : '';
+  const words = `${t.company} took up its option on you as ${t.role.part}: ${counted(days.length, 'shoot day')} from ${formatDate(days[0]!.from, NY)}, at ${formatMoney(amount, 'USD')} a day.${grew}`;
   const o: Opportunity = {
     id: sim.nextId('pro'), projectId: t.id, via: old?.via ?? 'agent', status: 'booked', postedAt: sim.now, submitBy: sim.now, history: [], counts: {},
     offer: { at: sim.now, until: sim.now, rate: t.pay, amount, per: 'day', units: days.length }, resolvedAt: sim.now, outcome: words,
@@ -2191,11 +2211,28 @@ function renewFromOption(sim: Simulation, person: Person, e: Engagement, t: Proj
   schedulePay(sim, person, next);
   bookDays(sim, person, next, t);
   next.contract = contractFor(sim, next, o.offer!, t, undefined, { ...seasonOf(t, next), version: (e.contract?.version ?? 1) + 1, renews: e.id });
+  if (how?.grow) growContract(next.contract, t, how.grow);
   scheduleSeason(sim, person, next);
   noteEvent(sim, next, { kind: 'booked', key: 'booked', words });
   keepBounded(pro, sim.now);
-  tell(sim, person, `${t.company} Takes Up Its Option`, `${words} It’s the next version of your contract, for the season beginning in July, and it guarantees ${counted(clauseOf(next.contract, 'episodes')?.numbers.length ?? 0, 'episode')} again. The Work tab has it.`, 80);
+  // The season's own month (from 2026-10-25: "July" for every series until then, a serialized one's February too), and a
+  // pilot's series' first season said as its first.
+  const month = new Intl.DateTimeFormat('en-US', { month: 'long', timeZone: NY }).format(new Date(days[0]!.from));
+  const n = counted(clauseOf(next.contract, 'episodes')?.numbers.length ?? 0, 'episode');
+  tell(sim, person, `${t.company} Takes Up Its Option`, `${words} ${how?.first ? `It’s your contract for the series’ first season, beginning in ${month}, and it guarantees ${n}.` : `It’s the next version of your contract, for the season beginning in ${month}, and it guarantees ${n}${how?.grow ? '' : ' again'}.`} The Work tab has it.`, 80);
   return next;
+}
+
+/** A grown part's contract (`GROW`): its guaranteed episodes as booked, its expected ones more by as many, and the growth kept. */
+function growContract(c: NonNullable<Engagement['contract']>, t: ProjectTemplate, grow: { episodes: number; raise: number }): void {
+  c.grew = grow;
+  const ep = clauseOf(c, 'episodes');
+  const s = t.series ? seriesById(t.series) : undefined;
+  if (!ep || !s) return;
+  ep.guaranteed = ep.numbers.length;
+  ep.expected += grow.episodes;
+  let n = Math.max(...ep.numbers, ...ep.further.map((f) => f.n));
+  while (ep.further.length < ep.expected - ep.numbers.length && n < s.episodes) { n += 1; ep.further.push({ n, status: 'pending' }); }
 }
 
 /** The work loop's steps lent to the seasons (`registerSeries`). */
@@ -2720,6 +2757,8 @@ export function registerProJobs(sim: Simulation): void {
     // took nothing but its waking hours, so eleven hours on set cost less than a six-hour School rehearsal call, which
     // takes these eight on top of its own.
     person.wellbeing.energy = clamp(person.wellbeing.energy - ESTIMATE.energy.rehearsal, 0, 100);
+    // A judged day of series work, posted for its season's audience (`markWork`, from 2026-10-25, brief 27, Part 12).
+    markWork(person, e, t, e.log[e.log.length - 1]!);
     if (e.log.filter((l) => l.status === 'worked').length === 1) noteEvent(s, e, { kind: 'worked', key: 'first', words: `Your first day as ${t.role.part} in ${t.project}.` });
     if (i === e.days.length - 1 && e.status === 'working' && !episodesPending(e)) finish(s, person, e, t);
   });
@@ -2746,13 +2785,15 @@ export function registerProJobs(sim: Simulation): void {
     // never out, so its footage never goes on a reel and it never has a premiere.
     const fate = pre?.release;
     const held = pre && e && projectById(e.projectId);
-    if (person && pre && held && fate?.kind === 'late' && !fate.told) {
+    // Taken over by another distributor, its date moved (from 2026-10-25, brief 27, `routeOf`), said as a hold-back is.
+    if (person && pre && held && (fate?.kind === 'late' || fate?.kind === 'distributor') && !fate.told) {
       fate.told = true;
       const at = addDays(s.now, fate.days!, NY);
       s.schedule({ at, kind: RELEASE_KIND, label: `${pre.project} Is Released`, category: 'career', priority: 60, refType: 'pro.credit', refId: pre.id, payload: { personId: person.id, creditId: pre.id } });
-      const words = `${pre.project}’s distributor held back its release to ${formatDate(at, NY)}. ${pre.role} stays on your credits as shot until then, and its footage can go on a reel once it’s out.`;
-      noteEvent(s, e, { kind: 'problem', key: 'release:late', words });
-      tell(s, person, `${pre.project}’s Release Is Held Back`, words, 60);
+      const moved = fate.kind === 'distributor';
+      const words = moved ? takenOverWords(pre, at) : `${pre.project}’s distributor held back its release to ${formatDate(at, NY)}. ${pre.role} stays on your credits as shot until then, and its footage can go on a reel once it’s out.`;
+      noteEvent(s, e, { kind: 'problem', key: moved ? 'release:distributor' : 'release:late', words });
+      tell(s, person, moved ? `${pre.project} Has A New Distributor` : `${pre.project}’s Release Is Held Back`, words, 60);
       // Its promotional film, for the later date (from 2026-10-25, brief 27's loop 34).
       callPromo(s, person, e, held, at);
       return;
@@ -2777,8 +2818,10 @@ export function registerProJobs(sim: Simulation): void {
     // and read by the clock: the game's simulation, never a published figure, and never pay.
     // Sent to streaming instead of cinemas (`RELEASE_FATE`): no weekly chart of its own in cinemas.
     const streamed = c.release?.kind === 'streaming';
-    if (t && formatOf(t).after === 'theatrical' && !streamed) c.run ??= simulateRun(s, t.id, t.kind, c.releasedAt ?? s.now);
-    const out = t ? (streamed ? `${RELEASED.streaming}, its distributor having sent it to streaming instead of cinemas` : RELEASED[formatOf(t).after]) : 'is out';
+    // Its run reads the production's quality and the player's part, and its way out (`runOf`, from 2026-10-25, brief 27):
+    // until then its kind and its draw alone (`simulateRun`).
+    if (t && formatOf(t).after === 'theatrical' && !streamed) c.run ??= runOf(s, t, c, c.releasedAt ?? s.now);
+    const out = t ? (streamed ? `${RELEASED.streaming}, its distributor having sent it to streaming instead of cinemas` : releasedWords(t, c, c.releasedAt ?? s.now) ?? RELEASED[formatOf(t).after]) : 'is out';
     const words = c.voice ? `${c.project} ${out}, so ${c.role} shows as released on your credits. It’s your voice with no picture of you, so it goes on a voice demo, not a reel: Mix A Voice Demo on the Portfolio tab lists it.` : `${c.project} ${out}, so ${c.role} shows as released on your credits, and its footage can go on your reel. Cut A Reel on the Portfolio tab lists it.`;
     tell(s, person, `${c.project} Is Released`, cut && t ? `${words} The edit cut one of your scenes, ${unitWord(t, cut)}: the part stays on your credits with the pay, and the reel can use only the scenes kept.` : words, 60);
   });
@@ -2926,6 +2969,8 @@ export function registerProJobs(sim: Simulation): void {
     // production's word on each further episode, and its option on the next season (`systems/series.ts`).
     e.contract = contractFor(s, e, o!.offer!, t, trip, seasonOf(t, e));
     scheduleSeason(s, person, e);
+    // A pilot's option on the series' first season, and its network's word on the clock (from 2026-10-25, `pilotTerms`).
+    pilotTerms(s, person, e, t);
     // The part's scenes and the order they're shot in (from 2026-10-24, brief 25's Module 5, `planWork`).
     planWork(s, e, t);
     s.timeline.cancelFor('pro.offer', o!.id, s.now);
@@ -2937,6 +2982,8 @@ export function registerProJobs(sim: Simulation): void {
       letGo(s, person, x, offered ? 'declined' : 'withdrawn', why);
       tell(s, person, offered ? `You Declined ${h.role.part}` : `You Withdrew From ${h.role.part}`, why, 60);
     }
+    // And an option holding its days, given up, as the offer said (from 2026-10-25, brief 27's loop 20, `giveUpOptions`).
+    giveUpOptions(s, person, e, t, spansOf(person, t, days));
     const words = `You accepted ${t.role.part} in ${t.project}: ${counted(days.length, 'work day')}, from ${formatDate(days[0]!.from, NY)}.`;
     noteEvent(s, e, { kind: 'booked', key: 'booked', words });
     note(s, person, o!, { kind: 'booked', key: 'booked', words });
