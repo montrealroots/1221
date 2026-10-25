@@ -872,31 +872,34 @@ amount (`TAX_PLAN_KIND`). One reader was believed in and wasn’t there, and the
   weight (`APPROACH.introduction`), and a project's reception, which is the
   save's own and labeled so. The companies' facts are the research's; these
   numbers are SLATE's.
-- **The weather decides the bills' energy and the flu's weeks, and more.**
-  This said "and nothing else" until 2026-10-01. Since 2026-09-28 it also
-  decides sleep lost to a hot night (`heatLoss`), whether a run or a swim can
-  happen (`FINE`, `systems/dwelling.ts`) and a roof's storm and gale damage
-  (`systems/homes.ts`), and since 2026-09-30 whether a visual flight can go
-  (`NOT_VISUAL`, `systems/aviation.ts`). Since 2026-09-27 (`systems/seasons.ts`), a month's bills carry its
-  heating and cooling by the home's degree days, from the EIA's 2020 survey,
-  and the flu comes in the town's cold weeks, or its wet ones where it's warm
-  all year, keeping its 8.9% a year (Tamerius et al., 2013). Holidays that
-  day too: the Federal Reserve's by a US bank's business days and
-  SAG-AFTRA's by a shoot (`content/usholidays.ts`), and since 2026-09-28
-  every other bank's by its country's and its customer's region's public
-  and bank holidays (`content/bankdays.ts`), from the holiday files a save
-  now loads with its places; a country whose file can't be fetched keeps
-  weekends only. Since that day a US town's year of energy is its state's
-  household spending against the nation's (the EIA's RECS 2020, Table
-  CE3.6.ST), and air conditioning's ownership by country is each home's
-  own (`content/homes.ts`), read by its bills. What's estimated: the
-  energy share of SLATE's bills and the degree-day rates outside the US.
-  What isn't modeled: a year's energy by the climate outside the US (a
-  Reykjavík flat costs what a Los Angeles one does in a year, only paid in
-  other months), since SLATE's climate normals miss measured degree days by
-  too much to price, Los Angeles's 1,025 cooling to ASHRAE's 373; and
-  humidity, which Minor et al. (2022) found shortens sleep at its highs and
-  more at its lows, but put no figure to.
+- **The weather decides the flu's weeks, where a workout is, and a day on location.**
+  This said "and nothing else" until 2026-10-01, and until 2026-10-25 it
+  listed what the weather decided on the line that ran to the scope reset of
+  2026-10-09: sleep lost to a hot night (`heatLoss`), a roof's storm and gale
+  damage (`systems/homes.ts`), whether a visual flight could go (`NOT_VISUAL`,
+  `systems/aviation.ts`), and a month's bills' heating and cooling by the
+  home's degree days, from the EIA's 2020 survey. The home, the land, the cars
+  and the travel went in that reset, and each of those readers with them; the
+  bills' energy went with the bills the same day (`systems/seasons.ts` says
+  so). What reads the weather now: the flu comes in the town's cold weeks, or
+  its wet ones where it's warm all year, keeping its 8.9% a year
+  (`systems/seasons.ts`, since 2026-09-27; Tamerius et al., 2013); a workout
+  is a run in fine weather or indoors, the heat read as it feels (`FINE`,
+  `trainingAt`, `systems/life.ts`; a run has read the sky since 2026-09-28,
+  and the heat index since 2026-10-01, below); and since 2026-10-25 (the
+  owner's brief 27, Part 11) a day on location whose forecast in the shoot's
+  town, read the evening before, is a thunderstorm, fog or wind of 40 km/h or
+  more is called off, the days after it slipped, the flight home booked again
+  and the day paid or not by the part's agreement (`WEATHER_DAY`,
+  `systems/projobs.ts`; `tests/b27-weather.test.ts`). Holidays were built the
+  same day as the flu's weeks: the Federal Reserve's by a US bank's business
+  days and SAG-AFTRA's by a shoot (`content/usholidays.ts`), and since
+  2026-09-28 every other bank's by its country's and its customer's region's
+  public and bank holidays (`content/bankdays.ts`), from the holiday files a
+  save loads with its places; a country whose file can't be fetched keeps
+  weekends only. What isn't modeled: humidity's effect on sleep, which Minor
+  et al. (2022) found shortens sleep at its highs and more at its lows, but
+  put no figure to.
 - **Some of the machinery is built and nothing in play uses it.** Found
   by the dead-word audit of 2026-09-27; what was plainly dead went that day
   (six preferences, `Booking.weeksPaid`, the rail's locked path, the

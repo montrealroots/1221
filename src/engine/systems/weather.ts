@@ -9,8 +9,12 @@
  * that drives a day is blended from the days around it.
  *
  * A thunderstorm called off an outdoor shift here until 2026-09-26, and an
- * exterior shoot day before that. Both systems went; the sky decides nothing
- * now but what it shows.
+ * exterior shoot day before that. Both systems went, and this said the sky
+ * decided nothing but what it showed. A run has read it since 2026-09-28
+ * (`FINE`, `trainingAt`, now in `systems/life.ts`), and since 2026-10-25
+ * (brief 27, Part 11) a day on location reads `weatherOn` the evening before:
+ * a thunderstorm, fog or wind of 40 km/h or more calls it off (`WEATHER_DAY`,
+ * `systems/projobs.ts`).
  */
 
 import type { Simulation } from '../core/simulation';
