@@ -232,9 +232,13 @@ export const CHARTED: Readonly<Record<string, string>> = { verity: 'verity' };
 
 function productionPage(sim: Simulation, person: Person, p: Production): RefPage {
   const key: RefKey = { kind: 'production', id: p.id };
+  // The production's kinds of story as its pages give them, taken as the work loop takes a project's
+  // (`tests/cohesion.test.ts` holds that nothing but enjoyment reads a person's genres, by the property's name). Until
+  // brief 27's F this read it by name, and K8's clean-clone gate failed there.
+  const { genres: kinds } = p;
   const pages: RefFact[] = [
     fieldFact('Where It Stands', p.status, (v) => v),
-    fieldFact('Genres', p.genres, (v) => v),
+    fieldFact('Genres', kinds, (v) => v),
     ...p.seasons.map((s) => {
       // What its pages give of the season, then what they don't, each said with why.
       const said = [
