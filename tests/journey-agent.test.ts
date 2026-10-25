@@ -167,10 +167,11 @@ describe('G2 and V5: the stages and the routes, an incomplete submission and its
     // "Tape a practice brief on the Player Profile first.", were copied into the history).
     expect(rel(sim).history.at(-1)!.words).toBe('You checked your materials for an approach: headshots and a résumé were there, and you had no reel.');
     expect(run(sim, 'pro.agent_check').error).toBe('Your materials passed the check on September 3, 2026.');
-    // Unsolicited: refused in the agency's own published words, quoted from its data.
+    // Unsolicited: refused in the agency's own published words, quoted from its data. From 2026-10-25 (brief 27) the
+    // festival is among the ways in too, which the refusal names.
     const unsolicited = run(sim, 'pro.send_materials').error!;
-    expect(unsolicited).toBe(`${agencyOf(AGENT).policy.words} It sees your materials only through the School’s follow-up after the showcase, or a referral from someone you’ve worked with.`);
-    expect(nextStep(sim, sim.player, AGENT)).toBe('His office takes materials only through the School’s follow-up after the showcase or a referral. Under How To Reach Him, ask someone you’ve worked with for a referral.');
+    expect(unsolicited).toBe(`${agencyOf(AGENT).policy.words} It sees your materials only through the School’s follow-up after the showcase, a referral from someone you’ve worked with or an introduction at a festival where your film screens.`);
+    expect(nextStep(sim, sim.player, AGENT)).toBe('His office takes materials only through the School’s follow-up after the showcase, a referral or an introduction at a festival. Under How To Reach Him, ask someone you’ve worked with for a referral.');
     // A referral: from a finished job judged well enough, once, from the person who made it.
     const job = finishedJob(sim, 'strong');
     expect(referrersOf(sim, sim.player, AGENT)).toEqual([{ engagementId: job.id, by: 'Pennick Casting', job: 'Nell in A House On Calder Street', band: 'strong' }]);

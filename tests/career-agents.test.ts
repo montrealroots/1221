@@ -105,7 +105,9 @@ describe('A1: agencies and agents are records apart, each real field a page’s 
 
   it('keeps the game’s own agent and agency, and says they’re invented', () => {
     const own = AGENTS.filter((a) => !a.real);
-    expect(own.map((a) => a.id)).toEqual(['thomas-ashgrove']);
+    // Until 2026-10-25 he was the only one; brief 27 put Celia Brannock in his agency's voice-over department.
+    expect(own.map((a) => a.id)).toEqual(['thomas-ashgrove', 'celia-brannock']);
+    expect(own[1]!.notice).toMatch(/^Celia Brannock and Halberd Talent are invented for the game\. /);
     expect(own[0]!.notice).toMatch(/^Thomas Ashgrove and Halberd Talent are invented for the game\. /);
     expect(AGENCIES.filter((a) => !a.real).map((a) => a.id)).toEqual(['halberd-talent']);
   });

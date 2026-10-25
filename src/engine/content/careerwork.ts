@@ -289,7 +289,11 @@ export interface ProjectTemplate {
     | { kind: 'week'; weeks: number }
     // Sessions on weekdays `everyDays` apart, each `minutes` long from `hour` (Module 5): the booth, the dub, the capture stage.
     | { kind: 'sessions'; sessions: number; everyDays: number; minutes: number; hour: number };
-  /** Who can put the actor up for it: an agent, and the actor's own submission where it's open. */
+  /**
+   * Who can put the actor up for it: an agent, and the actor's own submission where it's open. A voice part's agent is one
+   * whose agreement covers voice-over (`submitsFor`, `systems/representation.ts`): until 2026-10-25 no agent's did, and a
+   * voice part took the actor's own submission only.
+   */
   access: { agent: boolean; open: false | 'anyone' | 'equity-members' };
   pay: RateId;
   /** Work abroad: the production's company there, its hotel, and who pays (`TripTerms`). Absent, the work is a trip from home and back each day. */
@@ -567,7 +571,7 @@ export const PROJECTS: readonly ProjectTemplate[] = [
     requirements: { ages: [18, 60], sends: ['headshot', 'resume'] },
     stages: { audition: 'self-tape', callback: true },
     schedule: { kind: 'sessions', sessions: 3, everyDays: 14, minutes: 240, hour: 10 },
-    access: { agent: false, open: 'anyone' }, pay: 'animation-session',
+    access: { agent: true, open: 'anyone' }, pay: 'animation-session',
   },
   {
     id: 'kite-and-crow', kind: 'animated-feature', format: 'animated-feature', fictional: true,
@@ -579,7 +583,7 @@ export const PROJECTS: readonly ProjectTemplate[] = [
     requirements: { ages: [18, 60], sends: ['headshot', 'resume'] },
     stages: { audition: 'self-tape', callback: true },
     schedule: { kind: 'sessions', sessions: 4, everyDays: 35, minutes: 240, hour: 10 },
-    access: { agent: false, open: 'anyone' }, pay: 'sag-tv-day',
+    access: { agent: true, open: 'anyone' }, pay: 'sag-tv-day',
   },
   {
     id: 'salt-road', kind: 'dub', format: 'dub', fictional: true,
@@ -591,7 +595,7 @@ export const PROJECTS: readonly ProjectTemplate[] = [
     requirements: { ages: [25, 55], sends: ['headshot', 'resume'] },
     stages: { audition: 'self-tape', callback: false },
     schedule: { kind: 'sessions', sessions: 3, everyDays: 1, minutes: 480, hour: 9 },
-    access: { agent: false, open: 'anyone' }, pay: 'sag-tv-day',
+    access: { agent: true, open: 'anyone' }, pay: 'sag-tv-day',
     dub: [
       [{ character: 'Harbormaster Brandt', lines: 60 }],
       [{ character: 'Harbormaster Brandt', lines: 45 }, { character: 'a ferry captain', lines: 4 }, { character: 'a radio announcer', lines: 3 }, { character: 'a fisherman', lines: 2 }],
@@ -621,7 +625,7 @@ export const PROJECTS: readonly ProjectTemplate[] = [
     requirements: { ages: [25, 65], sends: ['headshot', 'resume'] },
     stages: { audition: 'self-tape', callback: false },
     schedule: { kind: 'sessions', sessions: 3, everyDays: 2, minutes: 240, hour: 10 },
-    access: { agent: false, open: 'anyone' }, pay: 'sag-tv-day',
+    access: { agent: true, open: 'anyone' }, pay: 'sag-tv-day',
   },
   {
     id: 'tidewater-reenactment', kind: 'documentary', format: 'reenactment', fictional: true,

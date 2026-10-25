@@ -9,6 +9,11 @@
  * from the record as it's drawn; every control runs a command through `run`, behind its guide chapter (`<Gated>`), with
  * the command's own refusal said under it before it's pressed (`WhyNot`). Nothing here gives his contact details,
  * which the game doesn't hold.
+ *
+ * From 2026-10-25 (the owner's brief 27, Part 6 and loop 8; `systems/representation.ts`): Asking For Different Terms, the
+ * one ask while an agreement is offered, each ask with its chance and its refusal, and the terms as they stand and as
+ * first offered; an agent's own department and its rule on submissions (Halberd Talent's voice-over department); the
+ * materials a voice department's approach sends, a voice demo for the reel; and the festival among the ways in.
  */
 
 import { useGame, useWorld } from '@/app/game-context';
@@ -17,17 +22,18 @@ import { Gated } from '@/ui/guide/Guide';
 import { useKept } from '@/ui/kept';
 import { formatDate, formatDateTime } from '@/engine/core/time';
 import { AGREEMENT } from '@/engine/content/careerwork';
-import { AGENTS, FIELD_LABEL, agencyOf, type Agent } from '@/engine/content/agents';
+import { AGENTS, FIELD_LABEL, agencyOf, departmentOf, policyOf, type Agent, type AgentRoute } from '@/engine/content/agents';
 import { AGENCY_RECORDS, fieldWords } from '@/engine/content/agencies';
 import { spokenList } from '@/engine/core/text';
 import { materialsCheck } from '@/engine/systems/pro';
 import { BAND_LABEL } from '@/engine/systems/coursework';
 import { countWords } from '@/engine/systems/school';
 import {
-  COOLDOWN_WORDS, GATE, LEVEL_LABEL, REAL_CHANCE_WORDS, REFERRAL_BAND, STAGE_LABEL, TEN, TIME_WORDS, agreementInForce, answerRefusal, checkRefusal, endRefusal, himTitle, historyOf, interestOf, meetingOf, moveRefusal,
+  COOLDOWN_WORDS, GATE, LEVEL_LABEL, REAL_CHANCE_WORDS, REFERRAL_BAND, STAGE_LABEL, TEN, TIME_WORDS, agreementInForce, answerRefusal, checkRefusal, endRefusal, factorLabel, himTitle, historyOf, interestOf, meetingOf, moveRefusal,
   nextStep, noticeRefusal, offeredAgreement, officeTitle, referralRefusal, referrersOf, relationOf, sendRefusal, signRefusal, stillOwed, supplyRefusal,
   type EndHow, type Level,
 } from '@/engine/systems/proagent';
+import { ASKS, ASK_LABEL, askChance, askRefusal, askWords, chanceTenths, dealOf, purposeOf, sampleName, scopeWords, termWords, territoryWords } from '@/engine/systems/representation';
 
 const LEVEL_TONE: Readonly<Record<Level, string>> = { short: 'chip chip-negative', near: 'chip chip-warning', at: 'chip chip-info', beyond: 'chip chip-positive' };
 
@@ -105,6 +111,7 @@ function AgentPanels({ agent }: { agent: Agent }) {
           <MeetingPanel agent={agent} />
           <WhyPanel agent={agent} />
           <AgreementPanel agent={agent} />
+          <TermsPanel agent={agent} />
           <HistoryPanel agent={agent} />
         </>
       )}
@@ -117,6 +124,8 @@ function AgentPanel({ agent }: { agent: Agent }) {
   const { sim, run, toast } = useGame();
   const person = useWorld((s) => s.player);
   const agency = agencyOf(agent);
+  // The agent's own department and its words for the rule on submissions (from 2026-10-25, the voice-over department's).
+  const department = departmentOf(agent);
   const rel = relationOf(person, agent.id);
   const read = rel?.noticeShownAt !== undefined;
   const no = noticeRefusal(sim, person, agent);
@@ -135,8 +144,8 @@ function AgentPanel({ agent }: { agent: Agent }) {
           </div>
         )}
         <dl className="col gap-2 small" style={{ margin: 0 }}>
-          <div><dt className="strong">Department</dt><dd style={{ margin: 0 }}>{`${agency.department.called}, also called ${agency.department.alsoCalled}: ${spokenList(agency.department.fields.map((f) => FIELD_LABEL[f]))}`}</dd></div>
-          <div><dt className="strong">Submissions</dt><dd style={{ margin: 0 }}>{agency.policy.words}</dd></div>
+          <div><dt className="strong">Department</dt><dd style={{ margin: 0 }}>{`${department.called}, also called ${department.alsoCalled}: ${spokenList(department.fields.map((f) => FIELD_LABEL[f]))}`}</dd></div>
+          <div><dt className="strong">Submissions</dt><dd style={{ margin: 0 }}>{policyOf(agent).words}</dd></div>
           <div><dt className="strong">{`Where You Stand With ${himTitle(agent)}`}</dt><dd style={{ margin: 0 }}>{STAGE_LABEL[rel?.stage ?? 'none']}</dd></div>
           <div><dt className="strong">What’s Next</dt><dd style={{ margin: 0 }}>{nextStep(sim, person, agent)}</dd></div>
         </dl>
@@ -156,8 +165,8 @@ function ReachPanel({ agent }: { agent: Agent }) {
   return (
     <Panel title={`How To Reach ${himTitle(agent)}`} help="career.agent">
       <div className="col gap-3">
-        <p className="small" style={{ margin: 0 }}>{agent.routes.includes('showcase') ? `${capital(agent.words.office)} takes your materials two ways in the game: through the School’s follow-up after the showcase, or a referral from someone you’ve worked with on a finished job.` : `${capital(agent.words.office)} takes your materials one way in the game: a referral from someone you’ve worked with on a finished job. The game reads a referral as not unsolicited.`}</p>
-        {via && <p className="small" style={{ margin: 0 }}>{via.route === 'showcase' ? `The School’s follow-up introduced you on ${formatDate(via.at, sim.zone)}.` : `${capital(via.by ?? 'A referral')} referred you on ${formatDate(via.at, sim.zone)}.`}</p>}
+        <p className="small" style={{ margin: 0 }}>{waysIn(agent)}</p>
+        {via && <p className="small" style={{ margin: 0 }}>{via.route === 'showcase' ? `The School’s follow-up introduced you on ${formatDate(via.at, sim.zone)}.` : via.route === 'festival' ? `You met ${agent.words.office} at ${via.by ?? 'a festival'} on ${formatDate(via.at, sim.zone)}.` : `${capital(via.by ?? 'A referral')} referred you on ${formatDate(via.at, sim.zone)}.`}</p>}
         <div className="col gap-2">
           <h3 className="eyebrow" style={{ margin: 0 }}>People You’ve Worked With</h3>
           {jobs.length ? (
@@ -187,7 +196,8 @@ function MaterialsPanel({ agent }: { agent: Agent }) {
   const { sim, run, toast } = useGame();
   const person = useWorld((s) => s.player);
   const rel = relationOf(person, agent.id);
-  const problems = materialsCheck(person, 'representation', sim.now);
+  // A voice department's approach is checked as voice casting checks it, with a voice demo for the reel (from 2026-10-25).
+  const problems = materialsCheck(person, purposeOf(agent), sim.now);
   const checkNo = checkRefusal(sim, person, agent);
   const sendNo = sendRefusal(sim, person, agent);
   const supplyNo = supplyRefusal(sim, person, agent);
@@ -197,7 +207,7 @@ function MaterialsPanel({ agent }: { agent: Agent }) {
       <div className="col gap-3">
         {problems.length
           ? <ul className="small" style={{ margin: 0, paddingLeft: '1.1rem' }}>{problems.map((p) => <li key={`${p.kind}:${p.problem}`}>{p.words}</li>)}</ul>
-          : <p className="small" style={{ margin: 0 }}>Your headshots, résumé and reel are all current.</p>}
+          : <p className="small" style={{ margin: 0 }}>{`Your headshots, résumé and ${sampleName(agent)} are all current.`}</p>}
         <div className="row gap-2" style={{ flexWrap: 'wrap' }}>
           <Gated feature="pro.agent_check" className="btn btn-sm" disabled={!!checkNo} title={checkNo} onClick={() => { const r = run('pro.agent_check', { agentId: agent.id }); if (r.ok) toast('Your materials have what an approach needs.', 'positive'); }}>Check Your Materials</Gated>
           <Gated feature="pro.send_materials" className="btn btn-sm" disabled={!!sendNo} title={sendNo} onClick={() => { const r = run('pro.send_materials', { agentId: agent.id }); if (r.ok) toast(`Your materials went to ${agent.words.office}.`, 'positive'); }}>Send Your Materials</Gated>
@@ -286,7 +296,7 @@ function WhyPanel({ agent }: { agent: Agent }) {
             </div>
           </div>
         )}
-        <Fine>{`The bar, the ${countWords(GATE)} factors an approach needs and the chances are all the game’s own, none of them ${agent.words.his}. Better work raises the chance, and the game never makes it certain. ${agent.roster ? 'Room On His List is drawn for each year and assumed.' : REAL_CHANCE_WORDS}`}</Fine>
+        <Fine>{`The bar, the ${countWords(GATE)} factors an approach needs and the chances are all the game’s own, none of them ${agent.words.his}. Better work raises the chance, and the game never makes it certain. ${agent.roster ? `${factorLabel(agent, 'roster').replace(' (Assumed)', '')} is drawn for each year and assumed.` : REAL_CHANCE_WORDS}`}</Fine>
       </div>
     </Panel>
   );
@@ -347,6 +357,46 @@ function AgreementPanel({ agent }: { agent: Agent }) {
   );
 }
 
+/**
+ * Asking For Different Terms (from 2026-10-25, brief 27): the terms as they stand and as first offered, the one ask while
+ * the agreement is offered, each with the game's chance and its refusal, and the office's answer once it comes.
+ */
+function TermsPanel({ agent }: { agent: Agent }) {
+  const { sim, run, toast } = useGame();
+  const person = useWorld((s) => s.player);
+  const offered = offeredAgreement(person, agent);
+  const shown = offered ?? agreementInForce(person, agent, sim.now);
+  if (!shown) return null;
+  const z = sim.zone;
+  const d = dealOf(shown);
+  const first = shown.deal?.versions[0] ?? d;
+  const ask = shown.ask;
+  const office = agent.words.office;
+  const open = offered && !ask ? ASKS.map((a) => ({ a, no: askRefusal(sim, person, agent, a) })) : [];
+  return (
+    <Panel title="Asking For Different Terms" help="career.agreement-terms">
+      <div className="col gap-3">
+        <p className="small" style={{ margin: 0 }}>{`As it stands, it covers ${scopeWords(d)} ${territoryWords(d)}, for ${termWords(d.termDays)} from the day you sign it${d.version > 1 ? `, as ${office} agreed on ${formatDate(d.at, z)}` : ', as offered'}.`}</p>
+        {d.version > 1 && <p className="small" style={{ margin: 0 }}>{`As first offered, it covered ${scopeWords(first)} ${territoryWords(first)}, for ${termWords(first.termDays)}.`}</p>}
+        {ask && <p className="small" style={{ margin: 0 }}>{ask.answer ? `You asked for ${askWords(ask.what, first)} on ${formatDate(ask.at, z)}, and ${office} ${ask.answer === 'agreed' ? 'agreed' : 'kept the terms as offered'} on ${formatDate(ask.answeredAt!, z)}.` : `You asked for ${askWords(ask.what, d)} on ${formatDate(ask.at, z)}. ${capital(office)} answers on ${formatDateTime(ask.answerAt, z)}, and you can accept the agreement once it has.`}</p>}
+        {offered && !ask && (
+          <>
+            <p className="small" style={{ margin: 0 }}>{`Before you answer the offer, you can ask ${office} once to change it:`}</p>
+            <ul className="small col gap-1" style={{ margin: 0, paddingLeft: '1.1rem' }}>
+              {open.filter((x) => !x.no).map(({ a }) => <li key={a}>{`${ASK_LABEL[a]}: ${askWords(a, d)}. The game puts the chance ${office} agrees at ${chanceTenths(askChance(sim, person, agent, a))}.`}</li>)}
+            </ul>
+            <div className="row gap-2" style={{ flexWrap: 'wrap' }}>
+              {open.map(({ a, no }) => <Gated key={a} feature="pro.ask_terms" className="btn btn-sm" disabled={!!no} title={no} onClick={() => { const r = run<{ answerAt: number }>('pro.ask_terms', { agentId: agent.id, ask: a }); if (r.ok) toast(`${capital(office)} answers on ${formatDateTime(r.value!.answerAt, z)}.`, 'positive'); }}>{ASK_LABEL[a]}</Gated>)}
+            </div>
+            <WhyNot reasons={open.map(({ a, no }) => [ASK_LABEL[a], no] as const)} />
+          </>
+        )}
+        <Fine>{`Every term you can ask about is the game’s own, and so are the shorter term, the time ${office} takes to answer and the chance it agrees, which rises with how many of the factors under Why It Went This Way are at the bar or beyond. The commission is the unions’ and New York’s rule, and no ask changes it.`}</Fine>
+      </div>
+    </Panel>
+  );
+}
+
 /** Every step, newest first, with its date. */
 function HistoryPanel({ agent }: { agent: Agent }) {
   const { sim } = useGame();
@@ -362,6 +412,19 @@ function HistoryPanel({ agent }: { agent: Agent }) {
 }
 
 const capital = (s: string): string => s.charAt(0).toUpperCase() + s.slice(1);
+/** Each way in as How To Reach says it (from 2026-10-25, built from the agent's routes, an introduction at a festival among them). */
+const WAY: Readonly<Record<AgentRoute, string>> = {
+  showcase: 'through the School’s follow-up after the showcase',
+  referral: 'a referral from someone you’ve worked with on a finished job',
+  festival: 'an introduction at a festival where your film screens and you do its press',
+};
+function waysIn(agent: Agent): string {
+  const ways = agent.routes.map((r) => WAY[r]);
+  const office = capital(agent.words.office);
+  if (ways.length === 1) return `${office} takes your materials one way in the game: ${ways[0]}. The game reads a referral as not unsolicited.`;
+  const said = ways.length === 2 ? `${ways[0]}, or ${ways[1]}` : `${ways.slice(0, -1).join(', ')} or ${ways.at(-1)}`;
+  return `${office} takes your materials ${countWords(ways.length)} ways in the game: ${said}.`;
+}
 /** A sentence without its full stop, to go on inside another. */
 const unstopped = (s: string): string => s.replace(/\.$/, '');
 /**

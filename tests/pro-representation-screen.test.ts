@@ -145,7 +145,7 @@ describe('the Representation tab', () => {
     sim.must({ kind: 'pro.update_resume', payload: {} });
     sim.must({ kind: 'pro.agent_check', payload: {} });
     const checked = drawn(sim);
-    const policy = `${agencyOf(AGENT).policy.words} It sees your materials only through the School’s follow-up after the showcase, or a referral from someone you’ve worked with.`;
+    const policy = `${agencyOf(AGENT).policy.words} It sees your materials only through the School’s follow-up after the showcase, a referral from someone you’ve worked with or an introduction at a festival where your film screens.`;
     expect(button(checked.html, 'Send Your Materials')).toEqual([{ disabled: true, title: policy, locked: false }]);
     expect(checked.shown).toContain(`Send Your Materials: ${policy}`);
     expect(checked.shown).toContain('Where You Stand With Him Materials Checked');
