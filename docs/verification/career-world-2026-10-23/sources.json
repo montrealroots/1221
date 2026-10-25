@@ -2795,6 +2795,11 @@
      "at": "2026-10-24",
      "how": "the downloads page, https://www.televisionacademy.com/downloads",
      "result": "HTTP 200"
+    },
+    {
+     "at": "2026-10-25",
+     "how": "fetched again by brief 27's F, https://www.televisionacademy.com/rules, which serves 2026-rules-procedures-v4.pdf",
+     "result": "HTTP 200 (a PDF), read for its performer and winner rules"
     }
    ],
    "facts": [
@@ -2847,6 +2852,16 @@
      "field": "nominations-date",
      "value": "July 8, 2026",
      "quote": "Nominees will be announced live on July 8, 2026"
+    },
+    {
+     "field": "several-entries",
+     "value": "A performer may enter more than one performance in a performing category, each for a different program and a different character",
+     "quote": "Lead, supporting, and guest performers may enter multiple achievements in a performing category if the achievements are for different programs (provided the performer is playing a different character)."
+    },
+    {
+     "field": "category-award",
+     "value": "A category award is one award, to the highest vote-getter",
+     "quote": "The definition of a category award is a single, must-give award that is the result of head-to-head competition with the highest vote-getter receiving an Emmy."
     }
    ]
   },

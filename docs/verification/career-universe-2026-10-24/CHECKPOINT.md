@@ -49,7 +49,7 @@ commit, what's done, what remains and the exact next step. `README.md` is the re
 | K6 | Release, publicity, weekly charts, renewal and returning work | Built: what brief 25 built read against Parts 12 and 13; a finished production's way out, a season's audience read by renewal, a promotional film for a release, and a revival's character plans |
 | K7 | Festivals, awards, the ceremony | Built: the Actor Awards by its 33rd rules, the ceremony for every nomination (invitation, trip, remarks, the moment to go up and the speech), an agent's and a negotiation's read of recognition; a festival's attendance and other institutions not built, each said why |
 | K8 | The industry reference | Built: Productions And People, a seventh Career tab over the records the career already reads: real productions, companies, agencies and people as their pages had them, the game's projects, series, seasons and episodes to the clock, the player's part and history, each fact tagged, links, actions to the tab that acts and the trail kept; the retired database not restored. K7's four commands opened by Finding Work (defect 12) |
-| F | The lifecycle and career matrices, long careers, final runs, the gate, the receipt | Waiting |
+| F | The lifecycle and career matrices, long careers, final runs, the gate, the receipt | Under way: the lifecycle matrix (56 loops) and the career feature matrix (81 features); two long careers played (`long/`) and walked on the built app at three sizes (`walk/k8`); six defects found by them and fixed (13 to 18, README), the last the Emmy field (`1ad8f7af`); the long careers played again on it; the ceremony's built-app walk, the final runs, the gate and the receipt to come |
 
 ## Outstanding Decisions (For The Owner)
 
@@ -67,8 +67,12 @@ commit, what's done, what remains and the exact next step. `README.md` is the re
 
 ## Next Step
 
-F: the lifecycle and career feature matrices, long careers, the final runs, the gate in a clean clone, the receipt and the
-handoff. K3 to K8 are built (README). Start by measuring the 85 criteria again on the finished commit
-(`foundation/OUTSTANDING.md`), then replay the final runs and the long careers so that the effects rows' "No played life of the
-long runs reaches one yet" can be read again. Productions And People and the ceremony haven't been played in the built app or
-on a phone yet: F does it. The four decisions above stay with the owner.
+F, after `1ad8f7af`. Done: the lifecycle matrix (`lifecycle/`), the career feature matrix (`career-matrix/`), two long careers
+and their built-app walk, and defects 13 to 18. Next, in order:
+1. the long careers' replay on `1ad8f7af` copied into `long/` (the first pair ran on `7545e2d7`, before the Emmy field);
+2. the ceremony walked on the built app (`walk/ceremony.mjs`), from a save stopped at an open invitation
+   (`tools/long-career.ts --from long/degree-save.json.gz --until-invited`), and lifecycle loop 46 read again;
+3. the final runs on the final source commit (`S=… P=f27 bash docs/verification/career-genre-2026-10-22/final-runs/runs/queue22.sh
+   <commit>`, every lane, the judge's included), gathered, folded and the 85 criteria measured again;
+4. the gate in a clean clone of the final commit, then the receipt (Part 20's list) and the handoff.
+The four decisions above stay with the owner.
