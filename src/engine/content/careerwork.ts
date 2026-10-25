@@ -264,6 +264,12 @@ export interface ProjectTemplate {
     /** Techniques the part needs at a level, where it needs any. */
     skills?: Partial<Record<Skill, number>>;
     /**
+     * A language the character speaks as well as English, by its code (`content/languages.ts`), on a share of the slate's
+     * parts from 2026-10-25 (brief 27; `partLanguage`, `systems/speaking.ts`). Read by eligibility, casting's fit and the
+     * preparation. A part kept in a save from before has none, and is in English alone, as it was posted.
+     */
+    language?: string;
+    /**
      * What a submission sends: a headshot and a résumé always, a reel where screen casting asks for one, and, from
      * 2026-10-24 (brief 27), a voice demo where voice casting does.
      */

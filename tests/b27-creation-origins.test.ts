@@ -103,3 +103,32 @@ describe('a bank account kept abroad comes from where they lived and banked, nev
     expect(anyRefusesBirth).toBe(false);
   });
 });
+
+// From 2026-10-25 (brief 27, Part 7): what they speak, asked on Genres & Background beside the genres and the background.
+describe('creation asks what they speak, and the life speaks it', () => {
+  const genres = 2 as never;
+  it('starts with English, natively, and won’t leave Genres & Background with English under fluent, a language twice, none native, or more than six', () => {
+    const base = config({ homeRegionId: 'us-ny-newyork', citizenshipId: 'us' });
+    expect(base.languages).toEqual([{ id: 'en', level: 'native' }]);
+    expect(validate(base, genres)).toEqual([]);
+    expect(validate({ ...base, languages: [{ id: 'en', level: 'fluent' }, { id: 'ko', level: 'native' }] }, genres)).toEqual([]);
+    expect(validate({ ...base, languages: [{ id: 'en', level: 'conversational' }, { id: 'ko', level: 'native' }] }, genres)).toEqual(['Your training and every part in the game are in English, so list English as native or fluent.']);
+    expect(validate({ ...base, languages: [{ id: 'ko', level: 'native' }] }, genres)).toEqual(['Your training and every part in the game are in English, so list English as native or fluent.']);
+    expect(validate({ ...base, languages: [{ id: 'en', level: 'native' }, { id: 'ko', level: 'fluent' }, { id: 'ko', level: 'conversational' }] }, genres)).toEqual(['You’ve listed Korean twice.']);
+    expect(validate({ ...base, languages: [{ id: 'en', level: 'fluent' }, { id: 'ko', level: 'fluent' }] }, genres)).toEqual(['Mark the language you grew up speaking as native.']);
+    expect(validate({ ...base, languages: [{ id: 'en', level: 'native' }, { id: 'xx', level: 'fluent' }] }, genres)).toEqual(['Choose each language and how well you speak it from the lists.']);
+    const seven = ['es', 'fr', 'de', 'it', 'pt', 'ja'].map((id) => ({ id, level: 'conversational' as const }));
+    expect(validate({ ...base, languages: [{ id: 'en', level: 'native' }, ...seven] }, genres)).toEqual(['List six languages at most.']);
+    // The other steps don't ask it.
+    expect(validate({ ...base, languages: [{ id: 'ko', level: 'native' }] }, identity)).not.toContain('Your training and every part in the game are in English, so list English as native or fluent.');
+  });
+
+  it('PLAYER JOURNEY: born in Seoul, Korean natively and English fluently: the life keeps both through a save and a load', () => {
+    const sim = life('b27-seoul-ko', { homeRegionId: 'kr-11-seoul', citizenshipId: 'kr', languages: [{ id: 'en', level: 'fluent' }, { id: 'ko', level: 'native' }] });
+    expect(sim.player.languages).toEqual([{ id: 'en', level: 'fluent' }, { id: 'ko', level: 'native' }]);
+    const back = loadSave(deserialise(serialise(sim.universe)) as never);
+    expect(back.player.languages).toEqual([{ id: 'en', level: 'fluent' }, { id: 'ko', level: 'native' }]);
+    // The falsifiability test: the same creation saying English alone gives a life that speaks English alone.
+    expect(life('b27-seoul-en', { homeRegionId: 'kr-11-seoul', citizenshipId: 'kr' }).player.languages).toEqual([{ id: 'en', level: 'native' }]);
+  });
+});

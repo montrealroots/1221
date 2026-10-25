@@ -55,6 +55,7 @@ import { plural, spokenList } from '../core/text';
 import { CITIES } from '../content/geography';
 import { YALE_DRAMA, type Skill } from '../content/school';
 import { MASTERED, TECHNIQUE_LABEL } from '../content/abilities';
+import { ENGLISH, languagesOf, spokenName } from '../content/languages';
 import { BRIEF_BY_ID } from '../content/briefs';
 import type { AgentId, AgentRoute } from '../content/agents';
 import type { AgreementTerm, ProMedium, RateId } from '../content/careerwork';
@@ -383,7 +384,12 @@ export interface Opportunity extends HasHistory {
  * own where it has one (`SpecialStep`, `content/workflows.ts`): finding the voice, watching the original, the movement,
  * the pronunciations, the period's movement, the choreography, the fight rehearsal.
  */
-export interface PartPrep { interpretation: number; memorization: number; rehearsal: number; special?: number }
+/**
+ * How far each part of the preparation stands, 0 to 1. `language` from 2026-10-25 (brief 27): the part's other language
+ * worked on by an actor who speaks it conversationally (`systems/speaking.ts`); absent, it stands where their level
+ * starts it (`LANGUAGE_PREP.start`), on every part prepared before that day too.
+ */
+export interface PartPrep { interpretation: number; memorization: number; rehearsal: number; special?: number; language?: number }
 
 /** One audition round (`systems/projobs.ts`): in person at a time, or a self-tape due by one. */
 export interface AuditionRound {
@@ -1221,6 +1227,13 @@ export function resumeNow(person: Person, at: Instant): { name: string; lines: s
   // What a résumé behind lacks names a skill as one (from 2026-10-21): "doesn’t have … and Singing" read as a thing it
   // was missing, not a special skill newly on the record (brief 19's app walk).
   for (const s of p.skills) add(`skill:${s.skill}${s.mastered ? ':mastered' : ''}`, `Special skill: ${s.label}${s.mastered ? ', mastered' : ''}`, `${s.label} as a ${s.mastered ? 'mastered ' : ''}special skill`);
+  // The languages they speak, each with how well (from 2026-10-25, the owner's brief 27, Part 7), but native English, which
+  // every part the game offers takes for granted. A save from before has none on record, so its résumé lists none.
+  for (const l of languagesOf(person)) {
+    if (l.id === ENGLISH && l.level === 'native') continue;
+    const name = spokenName(l.id) ?? l.id;
+    add(`language:${l.id}:${l.level}`, `Language: ${name}, ${l.level}`, `${name} (${l.level}) among your languages`);
+  }
   return { name: p.name, lines, keys, labels };
 }
 

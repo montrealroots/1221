@@ -18,6 +18,7 @@ import { idAlreadyIssued } from '../core/ids';
 import { ETHNICITY_BY_ID } from '../content/ethnicity';
 import { GENRE_BY_ID } from '../content/film-genres';
 import { ceilingAt } from '../content/lifespan';
+import { ENGLISH_ONLY, cleanLanguages, type SpokenLanguage } from '../content/languages';
 
 /** The ids on a list this build recognises, deduplicated, in the order given. */
 function known(ids: readonly string[] | undefined, table: Readonly<Record<string, unknown>>): string[] {
@@ -87,6 +88,11 @@ export interface NewSaveConfig {
   /** Genres & Background. The interests were asked here too until 2026-10-10. */
   /** Genres they love: a rehearsal or a night of a play of the kind is a better day (`systems/enjoyment.ts`). */
   genres: string[];
+  /**
+   * The languages they speak, each with how well (from 2026-10-25, brief 27), asked with the genres and the background.
+   * Absent on a life a test or a tool makes, which speaks English natively (`languagesOf`).
+   */
+  languages?: SpokenLanguage[];
   /** The life before this one, in their own words. Flavor, and said back to them. */
   background: string;
   // `beforeActing` (the body they started with, and the day job it led to)
@@ -217,7 +223,8 @@ export const withFamily = (config: NewSaveConfig, wealth: StartingWealth): NewSa
  * choose their own town and day.
  */
 export function newLifeConfig(): NewSaveConfig {
-  return atSchool(withFamily({ ...defaultConfig(), homeRegionId: '', birthYear: 2002 }, 'wealthy'));
+  // English, natively, until the player says otherwise on Genres & Background (from 2026-10-25, brief 27).
+  return atSchool(withFamily({ ...defaultConfig(), homeRegionId: '', birthYear: 2002, languages: ENGLISH_ONLY.map((l) => ({ ...l })) }, 'wealthy'));
 }
 
 /**
@@ -404,6 +411,9 @@ export function createUniverse(slot: 1 | 2 | 3, seed: string, config: NewSaveCon
     // Cleaned by the same rule the engine reads them by, so what is written
     // and what is read can never drift apart.
     genres: known(config.genres, GENRE_BY_ID),
+    // What they speak, cleaned by the rule creation holds the list to (`cleanLanguages`, from 2026-10-25), and absent
+    // where nothing was said, which reads as English, natively.
+    ...(config.languages ? { languages: cleanLanguages(config.languages) } : {}),
     // Kept as the player wrote it, and printed back on their own page. It
     // decides nothing, and the step says so; what they did before, beside it,
     // is the part that does.

@@ -49,6 +49,10 @@ import { termAccount } from '@/engine/systems/school';
 import { bodyUnits } from '@/engine/systems/body';
 import { outOf, said } from '@/ui/looks/words';
 import { spokenList } from '@/engine/core/text';
+import {
+  ENGLISH, ENGLISH_ONLY, LANGUAGES_MOST, LANGUAGE_LEVELS, LEVEL_LABEL, SPOKEN, languagesProblems, spokenName,
+  type LanguageLevel, type SpokenLanguage,
+} from '@/engine/content/languages';
 
 /**
  * How far back the last year a character can be born in sits from the year
@@ -891,7 +895,72 @@ function PersonalStep({
         </div>
       </div>
 
+      <LanguagesCard config={config} setConfig={setConfig} />
+
       {config.school && <FamilyChoice config={config} setConfig={setConfig} />}
+    </div>
+  );
+}
+
+/**
+ * The languages they speak, each with how well (from 2026-10-25, the owner's brief 27, Part 7: "Languages and accents").
+ * English always, at native or fluent, and up to five more, each from the game's list of real languages (`SPOKEN`). A part
+ * written for a character who speaks one of them as well as English reads it (`systems/speaking.ts`), and the résumé lists
+ * them. Until then creation asked nothing of it, and every life spoke English alone.
+ */
+export function LanguagesCard({ config, setConfig }: { config: NewSaveConfig; setConfig: React.Dispatch<React.SetStateAction<NewSaveConfig>> }) {
+  const list: readonly SpokenLanguage[] = config.languages ?? ENGLISH_ONLY;
+  const setList = (next: SpokenLanguage[]) => setConfig((c) => ({ ...c, languages: next }));
+  const unused = SPOKEN.filter((x) => !list.some((l) => l.id === x.id));
+  return (
+    <div className="card">
+      <div className="panel-head">
+        <div>
+          <h2>Languages</h2>
+          <p className="muted small">
+            The languages you speak, and how well. Your training and every part in the game are in English. Some parts
+            are written for a character who speaks another language too. If you speak it fluently or natively, you’re
+            ready for it. If you speak it conversationally, the part takes more preparation. If you don’t speak it, you
+            can’t be put up for it. Your résumé lists your languages.
+          </p>
+        </div>
+        <span className="chip chip-accent">{`${list.length} Listed`}</span>
+      </div>
+      <div className="col gap-3">
+        {list.map((l, i) => {
+          const name = spokenName(l.id) ?? l.id;
+          return (
+            <div key={l.id} className="row gap-2" style={{ alignItems: 'flex-end', flexWrap: 'wrap' }}>
+              <div className="field" style={{ margin: 0 }}>
+                <label htmlFor={`language-${i}`}>{name}</label>
+                <select
+                  id={`language-${i}`}
+                  value={l.level}
+                  onChange={(e) => setList(list.map((x) => (x.id === l.id ? { ...x, level: e.target.value as LanguageLevel } : x)))}
+                >
+                  {LANGUAGE_LEVELS.filter((level) => l.id !== ENGLISH || level !== 'conversational').map((level) => <option key={level} value={level}>{LEVEL_LABEL[level]}</option>)}
+                </select>
+              </div>
+              {l.id !== ENGLISH && (
+                <button type="button" className="btn btn-ghost btn-sm" onClick={() => setList(list.filter((x) => x.id !== l.id))}>{`Remove ${name}`}</button>
+              )}
+            </div>
+          );
+        })}
+        {list.length < LANGUAGES_MOST && (
+          <div className="field" style={{ margin: 0 }}>
+            <label htmlFor="language-add">Add A Language</label>
+            <select id="language-add" value="" onChange={(e) => { if (e.target.value) setList([...list, { id: e.target.value, level: 'fluent' }]); }}>
+              <option value="">Choose A Language</option>
+              {unused.map((x) => <option key={x.id} value={x.id}>{x.name}</option>)}
+            </select>
+          </div>
+        )}
+        <p className="xs dim" style={{ margin: 0 }}>
+          Native is a language you grew up speaking. Fluent is one you’re at ease in. Conversational is one you can hold a
+          conversation in. Mark at least one as native.
+        </p>
+      </div>
     </div>
   );
 }
@@ -1385,6 +1454,7 @@ export function ReviewStep({ config, setConfig }: { config: NewSaveConfig; setCo
       <div className="card">
         <div className="eyebrow" style={{ marginBottom: 'var(--s3)' }}>Genres &amp; Background</div>
         <Line label="Genres" value={namesOf(FILM_GENRES, config.genres)} />
+        <Line label="Languages" value={(config.languages ?? ENGLISH_ONLY).map((l) => `${spokenName(l.id) ?? l.id} (${LEVEL_LABEL[l.level]})`).join(', ')} />
         {config.school && <Line label="Family" value={`${wealthLabel(config.wealth)}, ${findsNeed(config) ? 'Need Found' : 'No Need Found'}`} />}
         {/* A sentence of the player's own, so it is set as one, not squeezed
             into the right-hand column a line gives a value. */}
@@ -1484,6 +1554,8 @@ export function validate(config: NewSaveConfig, step: StepIndex): string[] {
     if (!CITIES.get(config.homeRegionId)) issues.push('Choose the town or city you were born in.');
     if (!isCitizenship(config.citizenshipId)) issues.push('Choose your citizenship.');
   }
+  // What they speak (from 2026-10-25, brief 27): English at native or fluent, each language once, one of them native.
+  if (step === STEP['Genres & Background']) issues.push(...languagesProblems(config.languages ?? ENGLISH_ONLY));
   if (step === STEP['Starting Point']) {
     if (!CITIES.get(config.startLocationId)) issues.push('Choose the town or city you live in.');
     // Nothing on the page sets the start date; this guards a draft that came in wrong.

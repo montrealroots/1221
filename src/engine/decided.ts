@@ -682,6 +682,25 @@ defineDecider<{ sim: Simulation; week: number }, string>({
   },
 });
 
+// From 2026-10-25 (brief 27, Part 7): a slate part's other language, its own stream keyed by the part.
+defineDecider<{ sim: Simulation; week: number }, string>({
+  id: 'pro.language',
+  decides: 'Which of the slate\u2019s parts are written for a character who speaks another language as well as English, and which language (PART_LANGUAGE, PART_LANGUAGES), each by the part\u2019s own id.',
+  drawnIn: 'src/engine/systems/speaking.ts',
+  reads: {
+    // Which week: each Monday makes its own parts, each with its own draw.
+    week: (o, t) => ({ ...o, week: Math.round(t * 50) }),
+    // Which world: the save's seed makes its own slate and its own draws.
+    world: (o, t) => ({ ...o, sim: atYale(Math.round(t * 20)) }),
+  },
+  sample: (seed) => ({ sim: atYale(seed), week: seed * 3 }),
+  decide: ({ sim, week }) => {
+    const out: string[] = [];
+    for (let n = 0; n < 4; n += 1) out.push(productionsOf(sim, sim.now + (week + n) * 7 * MS_DAY).flatMap((p) => p.parts).map((t) => t.requirements.language ?? '-').join(','));
+    return out.join(' ');
+  },
+});
+
 defineDecider<{ sim: Simulation; represented: number; credits: number; skill: number }, string>({
   id: 'pro.slate_reach',
   decides: 'Which of the slate\u2019s parts reach the actor in a week (SLATE_REACH): an agent\u2019s breakdown or an open posting, the part\u2019s fit, the playing age, the actor\u2019s credits, the companies they\u2019ve worked for, where they live and when they\u2019re booked.',

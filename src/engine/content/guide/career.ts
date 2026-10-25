@@ -54,6 +54,7 @@ import { CEREMONY } from '../../systems/ceremony';
 import { VISIBILITY, ordinal } from '../../systems/awards';
 import { READ_ON } from '../catalog';
 import { formatDateKey } from '../../core/time';
+import { LANGUAGE_FIT, LANGUAGE_PREP, PART_LANGUAGE } from '../../systems/speaking';
 import type { GuideEntry } from './types';
 
 const CAREER = '/workspace/career';
@@ -159,7 +160,7 @@ export const CAREER_GUIDE: readonly GuideEntry[] = [
     questions: ['Can I work under another name?', 'Why isn’t my self-tape a credit?', 'Which skills go on my résumé?'],
     where: on('portfolio', 'Career, Portfolio, Your Profile'),
     available: `From the guide’s chapter “${CHAPTER}”.`,
-    short: 'Your Profile is what a submission says about you: the name you work under, your training, your School credits and professional credits kept apart, your special skills, when you’re free, where you’re based and whether you can work in the US.\n\nYou set one thing here: your professional name. Everything else is read from your record.',
+    short: 'Your Profile is what a submission says about you: the name you work under, your training, your School credits and professional credits kept apart, your special skills, the languages you speak, when you’re free, where you’re based and whether you can work in the US.\n\nYou set one thing here: your professional name. Everything else is read from your record.',
     steps: [
       'Open Career, then the Portfolio tab.',
       'Under Professional Name, type the name you want to work under.',
@@ -248,7 +249,7 @@ export const CAREER_GUIDE: readonly GuideEntry[] = [
     questions: ['How do I make a résumé?', 'Why is my résumé behind?', 'What goes on my résumé?'],
     where: on('portfolio', 'Career, Portfolio, Résumé'),
     available: `From the guide’s chapter “${CHAPTER}”.`,
-    short: `Your résumé is made from your record: your name, your unions, your training, your professional credits, any Emmy nomination or win and Sundance selection, your School credits and your special skills. Making it takes ${hours(RESUME.minutes)} at your own desk, estimated, and costs nothing.\n\nOnce something new is on your record, it reads as behind, and the panel names what it’s missing.`,
+    short: `Your résumé is made from your record: your name, your unions, your training, your professional credits, any Emmy nomination or win and Sundance selection, your School credits, your special skills and the languages you speak besides native English. Making it takes ${hours(RESUME.minutes)} at your own desk, estimated, and costs nothing.\n\nOnce something new is on your record, it reads as behind, and the panel names what it’s missing.`,
     steps: [
       'Open Career, then the Portfolio tab.',
       'Under Résumé, press Make Your Résumé, or Update Your Résumé once you have one.',
@@ -869,6 +870,61 @@ export const CAREER_GUIDE: readonly GuideEntry[] = [
       setup: 'A self-tape asked for by Thursday at six, with the sides not yet prepared.',
       steps: ['Press Break It Down, Learn The Lines and Rehearse It On Your Feet until they can do no more.', 'Press Tape It.'],
       result: 'An hour on, the tape is judged and shown with its band, and the casting office decides on the Friday after it’s due.',
+    },
+  },
+  // From 2026-10-25 (the owner's brief 27, Part 7, "Languages and accents"; Part 9's language preparation): what the
+  // languages chosen at creation do, from `systems/speaking.ts`, its figures the rules' own.
+  {
+    id: 'career.languages',
+    title: 'Languages',
+    goal: 'career',
+    covers: [],
+    synonyms: ['language', 'languages', 'bilingual', 'second language', 'native speaker', 'fluent', 'conversational'],
+    questions: ['What do my languages do?', 'Why can’t I submit for a part in another language?', 'How do I prepare a part in a language I only speak a little?'],
+    where: on('opportunities', 'Career, Opportunities, The Language'),
+    available: `From the guide’s chapter “${WORK_CHAPTER}”. You choose your languages when you create your character, on Genres & Background, and they stay as you chose them.`,
+    short: `Some parts are written for a character who speaks another language as well as English: about one in ${Math.round(1 / PART_LANGUAGE.share)} of the parts the game invents, estimated. The Language, on the part’s card, says which language and where you stand.\n\nIf you speak it fluently or natively, you’re ready for it. If you speak it conversationally, you can be submitted, but the part takes more preparation. If you don’t speak it, you can’t submit yourself, and an agent won’t put you up for it.`,
+    steps: [
+      'Open Career, then the Opportunities tab.',
+      'Read The Language on a role’s card: the character’s other language, and how well you speak it.',
+      'If you speak it conversationally, press Work On Your Spanish (or the part’s language) beside the other steps when you prepare the sides, and again on the part once you’re booked.',
+    ],
+    needs: [
+      'The language, chosen when you created your character.',
+      `Free for ${hours(LANGUAGE_PREP.minutes)} on the sides, or ${hours(LANGUAGE_PREP.minutes * WORK.partTimes)} on the part, and awake.`,
+    ],
+    costs: [
+      { label: 'Time', value: `${hours(LANGUAGE_PREP.minutes)} a session on the sides, ${hours(LANGUAGE_PREP.minutes * WORK.partTimes)} on the part`, estimate: true },
+      { label: 'Money', value: 'None' },
+    ],
+    reads: [
+      { label: 'Casting’s Fit', value: `How well you speak the part’s language and English, the weaker of the two counting: a native speaker of both suits it best, a fluent one ${Math.round(LANGUAGE_FIT.fluent * 100)}% as well and a conversational one ${Math.round(LANGUAGE_FIT.conversational * 100)}%`, estimate: true },
+      { label: 'Your Audition And Your Work', value: 'For a conversational speaker, how far the language has been prepared, beside the rest of the preparation, read on how believable you seem and how cleanly you deliver the lines' },
+      { label: 'Your Résumé', value: 'Every language you speak and how well, except native English' },
+    ],
+    now: ['A session moves your preparation of the language on, and the clock with it. It grows your Accents And Dialects a little, and that technique makes each session go further.'],
+    later: ['Once you’re booked, the part starts from half of what you did on the sides, as the rest of its preparation does.'],
+    interpret: [
+      'Native is a language you grew up speaking, fluent one you’re at ease in, and conversational one you can hold a conversation in.',
+      'Until a conversational speaker’s language is prepared, Why It Went This Way can say that working on the part’s language held the audition back.',
+    ],
+    unavailable: [
+      'The character speaks a language you don’t speak.',
+      'You speak the part’s language fluently or natively, so it needs no work of its own.',
+      'You’ve done all this step can do.',
+    ],
+    mistakes: ['Taping a self-tape before the language is prepared. A conversational speaker’s tape is held back until it is.'],
+    next: ['Prepare the rest of the sides, then tape it or go to the audition.'],
+    related: ['career.auditions', 'career.opportunities', 'career.resume'],
+    connections: [
+      { to: 'career.auditions', kind: 'evaluation', why: 'For a conversational speaker, the language’s preparation is read when an audition is judged, beside the rest of the sides.' },
+      { to: 'career.opportunities', kind: 'prerequisite', why: 'A part written in a language you don’t speak can’t be submitted for.' },
+      { to: 'career.resume', kind: 'history', why: 'Your résumé lists the languages you speak and how well.' },
+    ],
+    example: {
+      setup: 'A graduate who speaks Spanish conversationally, asked for a self-tape for a part whose character speaks Spanish as well as English.',
+      steps: ['Press Break It Down, Learn The Lines and Rehearse It On Your Feet.', 'Press Work On Your Spanish once a day for four days.', 'Press Tape It.'],
+      result: `Each session takes ${hours(LANGUAGE_PREP.minutes)} and moves your Spanish on, less each time as it nears complete. Taped once it’s complete, the language holds the tape back no more than a fluent speaker’s would.`,
     },
   },
   {

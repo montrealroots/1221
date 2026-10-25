@@ -38,6 +38,7 @@ import {
   TERM_ITEMS, approachPreview, askAnswerWords, askLabel, chooseRefusal, conditionStanding, conditionWords, noteRefusal, noteWaiting, recastWords, recordRefusal, rememberedWords,
   requirementsOf, rescheduleRefusal, rescheduleWords, roundWords, sceneOfPart, sendRefusal, takeWords, termsChangedWords, withdrawRefusal, withdrawWarning, type TermItem,
 } from '@/engine/systems/offers';
+import { LANGUAGE_PREP, languageStepLabel, languageToWork, languageWords } from '@/engine/systems/speaking';
 
 const NY = 'America/New_York';
 const STEPS: readonly BriefStep[] = ['read', 'lines', 'rehearse'];
@@ -88,6 +89,8 @@ function RoleFacts({ t, o }: { t: ProjectTemplate; o: Pick<Opportunity, 'project
       {/* What the part asks of the genres, in words (`requirementWords`, from 2026-10-22, the owner's brief 22): until then
           its project's tags, a broad genre beside its own kind ("Domestic Drama, Drama"), the order deciding nothing said. */}
       <div><dt className="strong">What It Asks</dt><dd style={{ margin: 0 }}>{`${requirementWords(projectGenresOf(t)) ?? 'No genre the game names'}. ${writtenForWords(t)} Playing ages ${ages[0]} to ${ages[1]}${o.rewrite?.ages ? ', as casting changed them' : ''}. ${demandsWords(person, t)}`}</dd></div>
+      {/* A character who speaks another language as well as English, and where the actor stands (from 2026-10-25, brief 27). */}
+      {t.requirements.language && <div><dt className="strong">The Language</dt><dd style={{ margin: 0 }}>{languageWords(person, t)}</dd></div>}
       <div><dt className="strong">When And Where</dt><dd style={{ margin: 0 }}>{`${cap(daysWords(t, days.length))} ${spanWords(days)}, at ${t.place.venue} in ${t.place.city}. ${reachWords(person, t, days)}`}</dd></div>
       <div><dt className="strong">Pay</dt><dd style={{ margin: 0 }}>{payWords(payTermsOf(o), o.offer?.amount)}</dd></div>
       <div><dt className="strong">The Audition</dt><dd style={{ margin: 0 }}>{`${t.stages.audition === 'in-person' ? 'In person' : 'A self-tape'}${t.stages.callback ? ', then a callback for those casting wants to see again' : ''}.`}</dd></div>
@@ -331,7 +334,11 @@ function Prepare({ target, prep, what }: { target: { opportunityId: string } | {
     return [`${s.label} (${counted(x ? prepMinutes(x, step) : s.minutes, 'Minute')})`, prepareRefusal(sim, person, x, step)] as const;
   });
   const own = special ? [`${special.label}${special.minutes ? ` (${counted(special.minutes, 'Minute')})` : ''}`, prepareRefusal(sim, person, x, 'special')] as const : undefined;
-  const parts = [...(steps.includes('read') ? [`the breakdown ${pct(p.interpretation)}`] : []), ...(steps.includes('lines') ? [`the lines ${pct(p.memorization)}`] : []), ...(steps.includes('rehearse') ? [`rehearsal on your feet ${pct(p.rehearsal)}`] : []), ...(special ? [`${special.label.toLowerCase()} ${pct(eng?.prep?.special ?? 0)}`] : [])];
+  // The part's other language, for an actor who speaks it conversationally (from 2026-10-25, brief 27, `languageToWork`).
+  const held = opp ? projectOf(opp) : eng ? projectById(eng.projectId) : undefined;
+  const tongue = held && x ? languageToWork(person, held) : undefined;
+  const speak = tongue && x ? [`${languageStepLabel(tongue)} (${counted(prepMinutes(x, 'language'), 'Minute')})`, prepareRefusal(sim, person, x, 'language')] as const : undefined;
+  const parts = [...(steps.includes('read') ? [`the breakdown ${pct(p.interpretation)}`] : []), ...(steps.includes('lines') ? [`the lines ${pct(p.memorization)}`] : []), ...(steps.includes('rehearse') ? [`rehearsal on your feet ${pct(p.rehearsal)}`] : []), ...(special ? [`${special.label.toLowerCase()} ${pct(eng?.prep?.special ?? 0)}`] : []), ...(tongue ? [`your ${tongue} ${pct((opp ?? eng)?.prep?.language ?? LANGUAGE_PREP.start)}`] : [])];
   return (
     <div className="col gap-2">
       <p className="small" style={{ margin: 0 }}>{`Preparing ${what}: ${parts.join(', ')}.`}</p>
@@ -340,8 +347,9 @@ function Prepare({ target, prep, what }: { target: { opportunityId: string } | {
           <Gated key={step} feature="pro.prepare" className="btn btn-sm" disabled={!!reasons[i]![1]} title={reasons[i]![1]} onClick={() => { const r = run<{ minutes: number }>('pro.prepare', { ...target, step }); if (r.ok) toast(`${BRIEF.steps[step].label}: done.`, 'positive'); }}>{reasons[i]![0]}</Gated>
         ))}
         {own && special && <Gated feature="pro.prepare" className="btn btn-sm" disabled={!!own[1]} title={own[1]} onClick={() => { const r = run<{ minutes: number }>('pro.prepare', { ...target, step: 'special' }); if (r.ok) toast(`${special.label}: done.`, 'positive'); }}>{own[0]}</Gated>}
+        {speak && tongue && <Gated feature="pro.prepare" className="btn btn-sm" disabled={!!speak[1]} title={speak[1]} onClick={() => { const r = run<{ minutes: number }>('pro.prepare', { ...target, step: 'language' }); if (r.ok) toast(`${languageStepLabel(tongue)}: done.`, 'positive'); }}>{speak[0]}</Gated>}
       </div>
-      <WhyNot reasons={own ? [...reasons, own] : reasons} />
+      <WhyNot reasons={[...reasons, ...(own ? [own] : []), ...(speak ? [speak] : [])]} />
     </div>
   );
 }
