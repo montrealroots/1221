@@ -106,9 +106,9 @@
  },
  "src/engine/content/tutorial.ts#CHAPTERS [career]": {
   "status": "Rewritten",
-  "hash": "f28ccf1cd74d",
-  "on": "2026-10-24",
-  "evidence": "Written for brief 27's K3 (Part 7, voice samples: the voice demo) to docs/STYLE.md and docs/GLOSSARY.md, and read where the player meets it: tests/b27-voice-demo.test.ts draws the Portfolio tab's Voice Demo panel before and after a recording and after the mix, presses Mix A Voice Demo through its command, and holds the refusals, a slate voice part's casting asking for a demo, the submission that sends it and names its version after another is mixed; tests/pro-core.test.ts and tests/career-workflows.test.ts hold the reel's refusal that now says a voice recording goes on a demo. On reading, three sentences that opened with Nothing were turned round (tools/tics.mjs). tools/voice-check.mjs, tools/tics.mjs, tools/title-case.mjs, tools/plural-check.mjs and tools/spelling.mjs pass",
+  "hash": "2d75b1d802e1",
+  "on": "2026-10-25",
+  "evidence": "Written for brief 27's K8 and K7 to docs/STYLE.md: the Your Career chapter's paragraph on Productions And People and its name, and the Finding Work chapter's paragraph on the Actor Awards and the ceremony with its four buttons' names, each as its tab says it; read on the chapter's page by tests/help-mechanics.test.ts (every paragraph and name of each chapter on its page) and held to the screens by tests/tutorial.test.ts (every command and control a chapter opens).",
   "first": "Pending"
  },
  "src/engine/content/tutorial.ts#CHAPTERS [clock]": {
@@ -127,9 +127,9 @@
  },
  "src/engine/content/tutorial.ts#CHAPTERS [finding-work]": {
   "status": "Rewritten",
-  "hash": "c2878ba56381",
+  "hash": "d06401d964da",
   "on": "2026-10-25",
-  "evidence": "Written for brief 27's K5 (loop 28: illness and absence by their contractual rule, not one universal number) to docs/STYLE.md and docs/GLOSSARY.md, and read where the player meets it: tests/b27-ill.test.ts holds the notice ... Shoots Around You (You were laid up on ..., so ... shot around you and slipped the rest of your days a working day each; A day lost to your own illness or injury isn't paid, SAG-AFTRA's agreement's exception ...; Another day lost the same way and the production recasts the part), a smaller part recast as before and a second day recast; the offer card, the Day look's cost of a missed call, the guide's Offers And Booked Work and Your Day, and the tutorial's Finding Work now say the same, where each had said a shoot replaces you for any day missed. The weather day's slip, shared with it, says what tests/b27-weather.test.ts holds. tools/voice-check.mjs, tools/tics.mjs, tools/title-case.mjs, tools/plural-check.mjs and tools/spelling.mjs pass",
+  "evidence": "Written for brief 27's K8 and K7 to docs/STYLE.md: the Your Career chapter's paragraph on Productions And People and its name, and the Finding Work chapter's paragraph on the Actor Awards and the ceremony with its four buttons' names, each as its tab says it; read on the chapter's page by tests/help-mechanics.test.ts (every paragraph and name of each chapter on its page) and held to the screens by tests/tutorial.test.ts (every command and control a chapter opens).",
   "first": "Pending"
  },
  "src/engine/content/tutorial.ts#CHAPTERS [life]": {

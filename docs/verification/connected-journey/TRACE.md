@@ -1,13 +1,13 @@
 # Every Touched Feature, Traced
 
-Written by `tools/trace.ts` from the guide's registry and the tests; don't edit it by hand. 49 entries in the four
+Written by `tools/trace.ts` from the guide's registry and the tests; don't edit it by hand. 50 entries in the four
 areas the connected-journey pass of 2026-10-12 rebuilt, and from 2026-10-20 the career's (brief 19), each traced Action →
 Preconditions → Costs → State → Consumer → Feedback → History → Later consequence. The words are the guide's own, which
 carry the rules' figures; the four areas' entries' claims were checked against the engine by a second reader when they
 were written, and the career's by the tests that drive each of its commands.
 
 **Unconsumed** (a row nothing reads): none.
-**Read Only** (screens and looks, changing nothing): `start.home`, `start.find`, `productions.casting`, `productions.nights`, `craft.profile`, `craft.work`, `craft.identity`, `career.overview`, `career.reasons`, `career.pay`, `career.commission`.
+**Read Only** (screens and looks, changing nothing): `start.home`, `start.find`, `productions.casting`, `productions.nights`, `craft.profile`, `craft.work`, `craft.identity`, `career.overview`, `career.reasons`, `career.pay`, `career.commission`, `career.reference`.
 **Untested** (a command no test drives): none.
 
 ## Getting Started
@@ -1500,6 +1500,29 @@ The Career screen, your professional profile and name, headshots, your résumé 
   - The Actor Awards’ committees, members drawn at random, nominate five in each category, more only for a tie, and of two performances of yours in one category only the one with more votes. Every paid-up member in the US and Canada votes the winner, and a tie gives the award to each tied. The 33rd show is on February 28.
   - At the show, losing changes nothing but the record. Winning in the room, you go up; not going up within half an hour, you say thank you and sit down. Watched from home, a win is accepted without you.
 - **Tested by:** `pro.award_enter`: `tests/career-awards-screen.test.ts`, `tests/career-awards.test.ts`; `pro.watch_ceremony`: `tests/b27-ceremony.test.ts`, `tests/career-awards-screen.test.ts`, `tests/career-awards.test.ts`; `pro.actor_submit`: `tests/b27-actor-awards.test.ts`; `pro.ceremony_rsvp`: `tests/b27-ceremony.test.ts`; `pro.ceremony_prepare`: `tests/b27-ceremony.test.ts`; `pro.ceremony_accept`: `tests/b27-ceremony.test.ts`
+
+### Productions And People (`career.reference`)
+
+- **Action:** `ui.career-reference`, at Career, Productions And People (`/workspace/career?tab=reference`). Opens: From the guide’s chapter “Your Career”.
+- **Preconditions:**
+  - Its chapter in the guide, read.
+- **Costs:**
+  - Time: None: reading it moves no clock
+  - Money: None
+- **State (what changes at once):**
+  - Reading a page changes nothing: no clock moves and nothing is sent.
+- **Consumer (what reads it):**
+  - (none)
+- **Feedback (how to read what comes back):**
+  - A real production’s page holds only what its official pages said on the day the game read them, never all of its work, and says where they didn’t say.
+  - A part shows only once it’s been posted to you, and a page shows only your part, never who else is being cast. A part the game drew from a real production is the game’s own, and its page says so.
+  - A release held back or shelved shows once you’ve been told, a season’s audience once the season has finished, and a network’s word once it’s said.
+  - A real person named on a production’s pages is only that: nothing between you and them happens in the game.
+- **History (kept in the record):**
+  - (none)
+- **Later consequence:**
+  - A page grows as your career does: a part posted to you adds its project, a finished season its audience, a network’s word itself, and an ended chart week its figure.
+- **Tested by:** a screen or a look; the UI journeys (`tools/acceptance-ui.mjs`)
 
 ### Work Abroad (`career.work-abroad`)
 

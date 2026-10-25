@@ -45,11 +45,13 @@ import { BRIEF } from '../../systems/briefs';
 import { ACTOR_AWARDS_33, ACTOR_RULES, EMMY_RULES, SUNDANCE_2027 } from '../awards';
 import { CEREMONY } from '../../systems/ceremony';
 import { VISIBILITY, ordinal } from '../../systems/awards';
+import { READ_ON } from '../catalog';
+import { formatDateKey } from '../../core/time';
 import type { GuideEntry } from './types';
 
 const CAREER = '/workspace/career';
 /** A Career section's id: a parameter typed by its literals would read to `tools/title-case.mjs` as a label. */
-type Section = 'overview' | 'portfolio' | 'representation' | 'opportunities' | 'work' | 'industry';
+type Section = 'overview' | 'portfolio' | 'representation' | 'opportunities' | 'work' | 'industry' | 'reference';
 const on = (section: Section, label: string) => ({ route: CAREER, tab: section, label });
 
 const CHAPTER = CHAPTER_FOR['ui.career']!.title;
@@ -1101,6 +1103,55 @@ The tab also shows the game’s own box office for your films, each season’s a
       setup: 'A graduate plays a guest part in two episodes of a drama series’ ten, on the air in March.',
       steps: ['Open Charts And Awards and read the part’s eligibility.', 'Press Enter Yourself before the entry deadline in May.', 'Read the nominations in July, and press Watch The Ceremony in September.'],
       result: `The part is entered as a guest part in a drama series, for ${usd(EMMY_RULES.fees.processing + EMMY_RULES.fees.perEntrant)}. The vote decides the nomination; the ceremony shows the result settled at the final round, and watching it or not changes nothing.`,
+    },
+  },
+  // From 2026-10-25 (the owner's brief 27, K8): Productions And People, the industry reference (`systems/reference.ts`).
+  {
+    id: 'career.reference',
+    title: 'Productions And People',
+    goal: 'career',
+    covers: ['ui.career-reference'],
+    synonyms: ['productions', 'people', 'cast', 'credits', 'filmography', 'company', 'companies', 'casting office', 'agency', 'series', 'season', 'episode', 'look up', 'real or invented'],
+    questions: ['Where can I look up a production?', 'Who else is in a show?', 'Which company makes it?', 'Is this real or invented?', 'What happened with my part?', 'Can I see other parts being cast?'],
+    where: on('reference', 'Career, Productions And People'),
+    available: `From the guide’s chapter “${CHAPTER}”.`,
+    short: `Productions And People looks up the productions, companies and people your career touches. A real production, company, agency or person shows what its own pages said when the game read them, each fact tagged Verified, or Not Given where no page said. The game’s own projects, series, seasons and episodes are tagged Simulated, and so is what its clock has done with them. Your postings, your work, your credits and your awards are tagged Yours.
+
+A link opens the page it names, Back goes back a page, and the trail at the top goes back further. A page’s buttons open the tab where you can act on it, and coming back finds the same page.`,
+    steps: [
+      'Open Career, then Productions And People.',
+      'Press a name under Your Work, Series, Productions The Game Read, Companies And Agencies or People, or type it under Find.',
+      'Read the page: each fact says whether it’s Verified, Not Given, Simulated or Yours.',
+      'Press a linked name to open its page, and Back to return.',
+      'Where a page has What You Can Do, press its button to go to the tab where you can act.',
+    ],
+    needs: ['Its chapter in the guide, read.'],
+    costs: [{ label: 'Time', value: 'None: reading it moves no clock' }, { label: 'Money', value: 'None' }],
+    reads: [
+      { label: 'A Real Production', value: `Its official pages, as the game read them on ${formatDateKey(READ_ON)}` },
+      { label: 'The Game’s Own', value: 'The projects posted to you and the series on the air, with what the clock has done with them', estimate: true },
+      { label: 'Yours', value: 'Your postings, work, credits, award entries and agents’ answers' },
+    ],
+    now: ['Reading a page changes nothing: no clock moves and nothing is sent.'],
+    later: ['A page grows as your career does: a part posted to you adds its project, a finished season its audience, a network’s word itself, and an ended chart week its figure.'],
+    interpret: [
+      'A real production’s page holds only what its official pages said on the day the game read them, never all of its work, and says where they didn’t say.',
+      'A part shows only once it’s been posted to you, and a page shows only your part, never who else is being cast. A part the game drew from a real production is the game’s own, and its page says so.',
+      'A release held back or shelved shows once you’ve been told, a season’s audience once the season has finished, and a network’s word once it’s said.',
+      'A real person named on a production’s pages is only that: nothing between you and them happens in the game.',
+    ],
+    unavailable: ['“Nothing here by that name.”'],
+    mistakes: ['Reading a real production’s page as an offer of work: no real production casts in the game, and a part the game drew from one says so.'],
+    next: ['Read Charts, Festivals And Awards: a credit’s page sends you there to enter or go.'],
+    related: ['career.opportunities', 'career.awards', 'career.agent'],
+    connections: [
+      { to: 'career.opportunities', kind: 'optional', why: 'A role’s Open Its Page opens its project here, and the project’s page sends you back to answer it.' },
+      { to: 'career.awards', kind: 'optional', why: 'A credit’s page lists its award entries, and sends you to Charts And Awards to enter or go.' },
+    ],
+    example: {
+      setup: 'A graduate booked as a guest on The Calloway Files, the shoot done.',
+      steps: ['Open Productions And People and press The Calloway Files under Your Work.', 'Press the series, then its eighth season.'],
+      result: 'The project’s page shows the part, the booking and the shoot as Yours, and its company and casting office as Simulated. The season’s page names the episode the shoot fell on, and says its audience isn’t measured until the season has finished.',
     },
   },
   // From 2026-10-23 (the owner's brief 25): work abroad, Sydney first, its visa and its trip (`systems/worktrip.ts`).

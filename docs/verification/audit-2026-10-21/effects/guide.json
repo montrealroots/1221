@@ -591,6 +591,41 @@
    "readAt": "c4832549"
   },
   {
+   "id": "ui.career-reference",
+   "kind": "ui",
+   "area": "guide",
+   "mechanic": false,
+   "seeded": false,
+   "where": "Career, Productions And People (src/ui/career/ReferencePane.tsx); a role's Open Its Page on the Opportunities tab opens a project's page there.",
+   "prerequisites": "“Your Career” read: until then the tab says what to read first and opens the guide.",
+   "reads": "The catalog, the agencies' and agents' records and the charts as this build read them; the projects posted to the player, the series in play and the player's own record, each to the clock (`pageOf`, `refIndex`, `systems/reference.ts`).",
+   "changes": "Nothing in the world: a page opens, and the trail of pages followed is kept while the player is elsewhere, never in the save. Its actions turn the Career screen to the tab where the player can act.",
+   "consumers": [],
+   "experienced": "The front page's lists and Find; a page with each fact tagged Verified, Not Given, Simulated or Yours; links to related pages; Back and the trail; What You Can Do.",
+   "saveLoad": "Nothing of its own: every page is read from the save as it stands, and the trail isn't saved.",
+   "evidence": {
+    "tests": [
+     "tests/b27-reference.test.ts"
+    ],
+    "comparisons": [
+     "b27-reference: a part drawn from a real production before and after it's posted; a season's audience before and after it finishes; a shelved release before and after it's told, and its twin on time"
+    ],
+    "mutations": [
+     "b27-reference: a drawn part met unposted, a page for a project nobody posted, a chart week or an audience or the network's word before its time, a shelved release before it's told, the trail not kept and the tab not turned each failed a test (16 of 16)"
+    ],
+    "journeys": [
+     "b27-reference: the Desk Clerk's project followed to its series, season and episode; the tab left for Charts And Awards and found again on the same page"
+    ]
+   },
+   "missing": "None found.",
+   "status": "Implemented And Verified",
+   "why": "",
+   "prior": null,
+   "purpose": "Looks up the productions, companies and people the career touches, real ones as their pages had them and the game's own said to be the game's, with the player's part in each and a way to the tab where they can act.",
+   "readBy": "guide",
+   "readAt": "52d65a60"
+  },
+  {
    "id": "ui.profile",
    "kind": "ui",
    "area": "guide",
@@ -1963,6 +1998,36 @@
    "seeded": false,
    "readBy": "career",
    "readAt": "brief 25"
+  },
+  {
+   "id": "promise.career.reference>career.opportunities",
+   "kind": "optional",
+   "claim": "A role’s Open Its Page opens its project here, and the project’s page sends you back to answer it.",
+   "entryFile": "src/engine/content/guide/career.ts",
+   "holds": "RoleFacts' Open Its Page calls openReference with the part's projectKey (src/ui/career/OpportunitiesPane.tsx, src/ui/career/ReferencePane.tsx), and a project's page offers Open Opportunities while its posting is open, submitted, auditioning, called back or offered (`actionsFor`, src/engine/systems/reference.ts).",
+   "tests": [
+    "tests/b27-reference.test.ts"
+   ],
+   "status": "Implemented And Verified",
+   "why": "",
+   "seeded": false,
+   "readBy": "guide",
+   "readAt": "brief 27"
+  },
+  {
+   "id": "promise.career.reference>career.awards",
+   "kind": "optional",
+   "claim": "A credit’s page lists its award entries, and sends you to Charts And Awards to enter or go.",
+   "entryFile": "src/engine/content/guide/career.ts",
+   "holds": "A project's page lists each award and festival entry of its credits in the Charts And Awards tab's own words (`honorFacts`), and offers Open Charts And Awards for a credit on screen (`actionsFor`, src/engine/systems/reference.ts).",
+   "tests": [
+    "tests/b27-reference.test.ts"
+   ],
+   "status": "Implemented And Verified",
+   "why": "",
+   "seeded": false,
+   "readBy": "guide",
+   "readAt": "brief 27"
   }
  ]
 }

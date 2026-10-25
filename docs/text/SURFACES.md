@@ -2,17 +2,17 @@
 
 Every surface a player can reach that shows text, written by `tools/surfaces.mjs` from `surfaces/*.json` (from 2026-10-20, the owner's brief 17, section 2). Each row says where the player meets it, the sources it draws on, the states it's met in, what reading it in context found, what changed, and the evidence. `--check` fails a source no row claims.
 
-**351 surfaces; 5086 of 5086 sources claimed; 212 revised, 139 kept.**
+**352 surfaces; 5120 of 5120 sources claimed; 213 revised, 139 kept.**
 
 | Area | Sources | Claimed |
 |---|---|---|
-| career | 152 | 152 |
+| career | 153 | 153 |
 | career-agent | 75 | 75 |
 | career-pay | 65 | 65 |
 | career-showcase | 23 | 23 |
 | career-work | 239 | 239 |
-| career-world | 194 | 194 |
-| frame | 562 | 562 |
+| career-world | 226 | 226 |
+| frame | 563 | 563 |
 | health | 178 | 178 |
 | material-a | 507 | 507 |
 | material-b | 492 | 492 |
@@ -129,6 +129,7 @@ Every surface a player can reach that shows text, written by `tools/surfaces.mjs
 | Unions And Festivals Around The World | Career, Charts And Awards, the last panel | details, explanation, empty | Revised | New with brief 27's Part 5: says what two federations' own lists name where the actor lives and in every country they cover, never ranks them, and says none has dealt with the actor. **Changed:** Written new: the panel, its sentence for where the actor lives, the list by country and its note on how the organizations were chosen. Each organization's name is kept as its federation's list prints it. | test: tests/b27-slate-screens.test.ts: 'says what FIA and FIAPF list where the actor lives, then every country either list names, each in its own name' |
 | The Actor Awards: a credit's eligibility or its refusal, Submit Yourself and its refusals, a production's submission, the nominations' and the show's notices, each submission's line | Career, Charts And Awards, Your Recognition, The Actor Awards; the notices; the Awards And Festivals panel's line for the Actor Awards | ordinary, unavailable, notification, success, setback, history, explanation | Revised | New with brief 27's K7: each rule the 33rd's own, said where it refuses; a later year said as the 33rd's rules carried forward; other nominees never named. **Changed:** Written new: the eligibility and refusal lines, Submit Yourself and its refusals, the production's submission notice, the nomination and not-nominated notices, The Actor Awards Tonight, each submission's recap. | test: tests/b27-actor-awards.test.ts: 'places a performance by the rules, and refuses what they refuse, each in its own words'; test: tests/b27-actor-awards.test.ts: 'PLAYER JOURNEY: submitted through the command, the fee paid and a second refused; nominated by the committees; the show’s result; the résumé’s line and visibility'; test: tests/b27-actor-awards.test.ts: 'PLAYER JOURNEY: a production submits a performance the player didn’t, where its draw says so' |
 | The ceremony: the invitation's question and notice, going or watching from home and their refusals, preparing remarks, the night's notices, the moment to go up and the speech, the trip there and home | The question Will You Go To …?; Career, Charts And Awards, Your Recognition, under each nomination; the clock's stops (the show, the moment to go up); the notices; the trip's legs | ordinary, unavailable, notification, success, setback, failure, history | Revised | New with brief 27's K7: the invitation says when, where and by when to answer, and that the trip isn't charged; each refusal says why; a loss in the room says only that the player didn't win; a speech says how it went; a missed flight says what it cost. **Changed:** Written new: every line of the ceremony and of a ceremony's trip. | test: tests/b27-ceremony.test.ts: 'invites a nominee with a question due a week before the show, and going books the trip and the show’s call; one that clashes is refused'; test: tests/b27-ceremony.test.ts: 'PLAYER JOURNEY: played to the show, a win in the room goes up to accept; prepared remarks give a speech that makes the actor more visible; the falsifiability twin unprepared doesn’t'; test: tests/b27-ceremony.test.ts: 'PLAYER JOURNEY: laid up across the flight out, the trip is off and the show goes on without the actor, the win accepted without them' |
+| Productions And People: the front page's lists and Find, each page of a real production, a game's project, a series, a season, an episode, a company, a casting office, an agency and a person, each fact's tag, the trail and Back, and each page's actions | Career, Productions And People; a role's Open Its Page on the Opportunities tab | ordinary, empty, unavailable, locked, details, history, explanation | Revised | New with brief 27's K8: a real record's field as its official pages gave it and tagged Verified, a field no page gave said as Not Given with why, the game's own tagged Simulated and the player's own Yours; a part only once it's posted to the player; the glossary's How This Works kept for the help, so the tab is Productions And People, never the reference. **Changed:** Written new: the tab, its front page, every page's sections and facts, the tags, the trail, Back, the actions and the page no longer held. | test: tests/b27-reference.test.ts: 'says each field its official pages gave, tagged Verified, and what they didn’t as Not Given; its companies and people link to pages that link back'; test: tests/b27-reference.test.ts: 'PLAYER JOURNEY: the Desk Clerk’s project shows the part, the work, the credit and what happened, and links to its company, its casting office, its series, the season and the episode its shoot fell on'; test: tests/b27-reference.test.ts: 'PLAYER JOURNEY: a role’s project opened from Opportunities, followed to its series; Charts And Awards opened as its action opens it, and coming back finds the same page and trail' |
 
 ## career
 

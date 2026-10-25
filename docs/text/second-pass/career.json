@@ -692,6 +692,13 @@
   "evidence": "Written for brief 27's K3 (Part 7, voice samples: the voice demo) to docs/STYLE.md and docs/GLOSSARY.md, and read where the player meets it: tests/b27-voice-demo.test.ts draws the Portfolio tab's Voice Demo panel before and after a recording and after the mix, presses Mix A Voice Demo through its command, and holds the refusals, a slate voice part's casting asking for a demo, the submission that sends it and names its version after another is mixed; tests/pro-core.test.ts and tests/career-workflows.test.ts hold the reel's refusal that now says a voice recording goes on a demo. On reading, three sentences that opened with Nothing were turned round (tools/tics.mjs). tools/voice-check.mjs, tools/tics.mjs, tools/title-case.mjs, tools/plural-check.mjs and tools/spelling.mjs pass",
   "first": "Pending"
  },
+ "src/engine/content/guide/career.ts#CAREER_GUIDE [career.reference]": {
+  "status": "Rewritten",
+  "hash": "431f4ecc343b",
+  "on": "2026-10-25",
+  "evidence": "Written for brief 27's K8 (Part 16 and loop 48: the industry reference, Productions And People) to docs/STYLE.md and docs/GLOSSARY.md, every real record's field said as its official pages gave it and tagged Verified, what they didn't give said as Not Given with why, the game's own tagged Simulated and the player's Yours, the glossary's How This Works kept for the help and no page called the reference on screen: read where the player meets it in tests/b27-reference.test.ts (a real production's page and its companies' and people's, a published chart's week, a part drawn from a real production once it's posted, the Desk Clerk's project with its series, season and episode, a season's audience, the network's word, a shelved release, the agents, Find, and the Career screen's Productions And People tab with its trail, its Back and its actions). Numbers under ten in words; dates with their comma; no engine words.",
+  "first": "Pending"
+ },
  "src/engine/content/guide/career.ts#CAREER_GUIDE [career.resume]": {
   "status": "Rewritten",
   "hash": "ca16b2ac53bd",
@@ -743,9 +750,9 @@
  },
  "src/engine/content/guide/career.ts#CAREER_GUIDE [optional]": {
   "status": "Rewritten",
-  "hash": "347dae2b74be",
-  "on": "2026-10-24",
-  "evidence": "Written for brief 27's K3 (Part 7, voice samples: the voice demo) to docs/STYLE.md and docs/GLOSSARY.md, and read where the player meets it: tests/b27-voice-demo.test.ts draws the Portfolio tab's Voice Demo panel before and after a recording and after the mix, presses Mix A Voice Demo through its command, and holds the refusals, a slate voice part's casting asking for a demo, the submission that sends it and names its version after another is mixed; tests/pro-core.test.ts and tests/career-workflows.test.ts hold the reel's refusal that now says a voice recording goes on a demo. On reading, three sentences that opened with Nothing were turned round (tools/tics.mjs). tools/voice-check.mjs, tools/tics.mjs, tools/title-case.mjs, tools/plural-check.mjs and tools/spelling.mjs pass",
+  "hash": "240eca78c59a",
+  "on": "2026-10-25",
+  "evidence": "Written for brief 27's K8 (Part 16 and loop 48: the industry reference, Productions And People) to docs/STYLE.md and docs/GLOSSARY.md, every real record's field said as its official pages gave it and tagged Verified, what they didn't give said as Not Given with why, the game's own tagged Simulated and the player's Yours, the glossary's How This Works kept for the help and no page called the reference on screen: read where the player meets it in tests/b27-reference.test.ts (a real production's page and its companies' and people's, a published chart's week, a part drawn from a real production once it's posted, the Desk Clerk's project with its series, season and episode, a season's audience, the network's word, a shelved release, the agents, Find, and the Career screen's Productions And People tab with its trail, its Back and its actions). Numbers under ten in words; dates with their comma; no engine words.",
   "first": "Pending"
  },
  "src/engine/content/guide/career.ts#CAREER_GUIDE [prerequisite]": {

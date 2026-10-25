@@ -647,6 +647,90 @@ The first of them survived until a case was added for a film made outside SAG-AF
 every fixed part outside them was refused by another rule first. **Found on the way:** the institutions test held each
 institution's sources to brief 25's source file alone, and now reads brief 27's register too.
 
+## K8: Productions And People, The Industry Reference
+
+Part 16 and loop 48, read against what the game had. **Already in the game:** the catalog's real productions as their
+official pages had them on October 23, 2026, field by field, each read, in conflict, assumed or unknown with why
+(`content/catalog.ts`, brief 25); the agencies' records and the real agents named on an office's page
+(`content/agencies.ts`, `content/agents.ts`); the published charts' snapshots (`content/charts.ts`); the game's own
+projects, the slate's productions and series, their seasons and their audiences; and the player's whole professional
+record. Each was shown only where it was used: a production beside a part drawn from it, a chart on its panel. **Not
+restored:** the IMDb-style database brief 7 built on 2026-10-08 (`world/database.ts`, 540 Wikidata titles and 2,663
+people, The Industry screen), which the owner's scope of 2026-10-09 retired. The brief asks for the previously mapped
+concept "where compatible with the current scope", and the scope holds the records the career reads, not a second
+encyclopedia beside them; nor any plot, review, trivia or image, which IMDb's terms forbid reusing
+(`docs/research/world/research-entertainment-database.json`).
+
+**Built** (`systems/reference.ts`, `ui/career/ReferencePane.tsx`): a seventh tab on the Career screen, **Productions And
+People**. It isn't called the reference on screen, because the glossary keeps "the reference" for the help, How This Works.
+Its front page lists your own work first, then the series, the productions the game read, the companies and agencies, and
+the people, with Find over all of them. Every page tags each fact:
+- **Verified**: a real record's field as its official page gave it, or a published chart's week.
+- **Not Given**: what no page gave, with the page's own why.
+- **Simulated**: the game's inventions and what its clock has done with them.
+- **Yours**: the player's posting, work, credit, history, award entries and agents' answers.
+
+Each kind of page is built from those records:
+- **A real production:** its fields; its companies, which link to company pages that link back; its people and cast, which link to person pages listing every credit the pages read; and, for Verity, the published chart's week once that week has ended.
+- **A game project:** its company, casting office, format, genres, place and agreement; the player's part, the posting's outcome, the work's dates, the credit as far as the player has been told, and what happened, the posting's and the work's history said once; its run in the game's own chart; its award and festival entries in the Charts And Awards tab's own words.
+- **A series:** its seasons, ordered or renewed, and the network's word once it's said.
+- **A season:** its shoot past, under way or to come, its audience once it's finished, and the episodes the player's work fell on.
+- **An episode:** its shoot, and whether the player was in it.
+- **An agency:** its real record and the game's office together.
+- **A person:** a real person's credits in the pages read; an agent and where the player stands; the player.
+
+Links open pages. Back and the trail at the top go back, and the trail is kept while another tab is open, so an action that opens Opportunities, Work, Charts And Awards, Representation or Portfolio, and the tab bar back, find the same page. A role on the Opportunities tab opens its project with Open Its Page. The tab opens with the guide's "Your Career", as its other controls do.
+
+**What it never shows**, by the loop's "Keep public information separate from confidential casting access":
+- a project nobody posted to the player, or its casting office;
+- any part of a production but the player's own: a slate production's other parts aren't named;
+- a part the game drew from a real production, until it's posted, and then as the game's own character that no one at the real production is casting;
+- a release held back or shelved, before the player's been told;
+- a season's audience, before the season has finished;
+- the network's word, before it's said;
+- a canceled season;
+- the game's own agent, before the player has met him;
+- a chart's week, before it ends.
+
+A real person is said to be only what the pages say of their work, with "nothing between you and them happens in the game", so no real name reads as an offer of work.
+
+Held by `tests/b27-reference.test.ts`:
+- every catalog production's page against its record, each cast credit and company followed and linked back;
+- Verity's chart week before and after it ended;
+- 9-1-1's drawn part before and after it's posted;
+- a slate production's other parts never named, and a never-posted project with no page;
+- the Desk Clerk's project followed to its company, casting office, series, season and the episode its shoot fell on, and the same pages after a save and a load;
+- a credit's award entries;
+- a season's audience before and after the season ends;
+- the network's word, and no canceled season;
+- a shelved release before and after it's told, and the falsifiability twin on time;
+- the agents, real and invented;
+- Find;
+- the Career screen drawn over the real kept store, with a role's project opened, followed, left for Charts And Awards and found again.
+
+All seventeen mutations failed a test:
+- a drawn part met unposted;
+- a page for a project nobody posted;
+- a chart week before it ends;
+- an audience before the season ends;
+- a shelved release before it's told;
+- the booking said twice;
+- the invented agent before he's met;
+- the Work tab for finished work;
+- a canceled season listed;
+- the episode not read from the days;
+- not given said as verified;
+- a company naming nothing back;
+- Find by the start only;
+- the tab not turned;
+- the trail not kept;
+- the network's word before it's said;
+- an award entry left off.
+
+The canceled season survived until the network's word had a test: the Desk Clerk's series had no word yet.
+
+**Found on the way:** K7's four commands (`pro.actor_submit`, `pro.ceremony_rsvp`, `pro.ceremony_prepare`, `pro.ceremony_accept`) were in no chapter of the guide, so `tests/tutorial.test.ts` failed three cases on K7's commit. The Finding Work chapter opens them now, with a paragraph and their buttons' names (defect 12).
+
 ## Defects Found And Fixed
 
 | # | Where | What stood | What stands | Held by |
@@ -662,4 +746,5 @@ institution's sources to brief 25's source file alone, and now reads brief 27's 
 | 9 | The guide's Work Abroad chapter | "so far, Australia", and a visa that cost nothing, after the UK's routes were verified | the UK's three routes, fees and timings, read from the routes | `tests/b20-guide-chapters.test.ts`, `docs/verification/connected-journey/TRACE.md` |
 | 10 | `worktrip.ts`, a way home booked again | waited on the canceled leg before it, canceled itself, and left the trip in the work's town | the leg before it that still counts is read, so a way booked again starts afresh | `tests/b27-weather.test.ts` |
 | 11 | `workflow.ts`'s `clearWeekday`, a recall to loop set after a reshoot | kept off other loops alone, so a loop drawn after a reshoot could land on its day, the two set for the same hours | kept off any recall set: a loop, a reshoot or pickup session, a promotional film | `tests/b27-promo.test.ts` |
+| 12 | `tutorial.ts`, the guide's Finding Work chapter (K7's commit) | K7's four commands in no chapter, so the coverage matrix's three cases failed in `tests/tutorial.test.ts` | Finding Work opens them, with a paragraph and their buttons' names, and the coverage matrix's row says so | `tests/tutorial.test.ts`, `tests/help-mechanics.test.ts` |
 

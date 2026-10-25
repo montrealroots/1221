@@ -472,6 +472,8 @@ export const CHAPTERS: readonly Chapter[] = [
       'Your permission to work is read for each date of the work when you book it, and signing with an agency changes none of it. On an F-1 while you’re a student, outside acting work isn’t open to you. On OPT after your degree, every day from a job’s first day to its last counts as a day with work, and the days before a booked job begins count as days without work.',
       `Your degree makes you a member of Actors’ Equity, and ${formatMoney(PRO_UNIONS.equity.down, 'USD')} of its initiation fee is taken then. A SAG-AFTRA role on a TV show or a theatrical or Low Budget film lets you join SAG-AFTRA. From the ${PRO_UNIONS.sagAftra.joinWithinDays}th day after that work began, SAG-AFTRA work needs you to be a member: press Join SAG-AFTRA on the Work tab first.`,
       'If a button is grayed out, the line under it says why: you’re busy then, your bank can’t cover it, or your résumé already has everything on your record.',
+      // From 2026-10-25 (the owner's brief 27, K8): Productions And People, the industry reference (`systems/reference.ts`).
+      'Productions And People, the last tab, looks up the productions, companies and people your career touches: real ones as their own pages had them when the game read them, the game’s own marked Simulated, and your part in each. A link opens the page it names, Back goes back, and a page’s buttons open the tab where you can act.',
       // Until 2026-10-21 this sent the player to Papers' chapter; “Representation” comes between them from then (brief 19).
       'Read “Representation” next. It opens the agent’s panel on the Career screen: how to reach him, and the agreement.',
     ],
@@ -482,8 +484,8 @@ export const CHAPTERS: readonly Chapter[] = [
       `Commission is taken only on work you contracted while represented: ${pct(PRO_AGREEMENT.commission)} at most, ${pct(PRO_AGREEMENT.equityLowTier.rate)} on an Equity contract paying ${formatMoney(PRO_AGREEMENT.equityLowTier.weeklyAtOrBelow, 'USD')} a week or less, and on SAG-AFTRA work only what’s paid over scale. A contract made while an agreement ran still carries it after the agreement ends.`,
       `Equity’s initiation fee is ${formatMoney(PRO_UNIONS.equity.initiation, 'USD')}, paid within three years, and its basic dues ${formatMoney(PRO_UNIONS.equity.yearlyDues / 2, 'USD')} each May and November. Joining SAG-AFTRA costs about ${formatMoney(sagJoinUsd(), 'USD')}, read from a search engine’s copy of its pages. Each union takes working dues from union pay.`,
     ],
-    names: ['Career', 'Overview', 'Portfolio', 'Work', 'Use This Name', 'Book A Headshot Session', 'Make Your Résumé and Update Your Résumé', 'Cut A Reel', 'Mix A Voice Demo', 'Join SAG-AFTRA'],
-    opens: ['ui.career', 'pro.set_name', 'pro.headshots', 'pro.update_resume', 'pro.cut_reel', 'pro.mix_demo', 'pro.join_sag'],
+    names: ['Career', 'Overview', 'Portfolio', 'Work', 'Productions And People', 'Use This Name', 'Book A Headshot Session', 'Make Your Résumé and Update Your Résumé', 'Cut A Reel', 'Mix A Voice Demo', 'Join SAG-AFTRA'],
+    opens: ['ui.career', 'ui.career-reference', 'pro.set_name', 'pro.headshots', 'pro.update_resume', 'pro.cut_reel', 'pro.mix_demo', 'pro.join_sag'],
   },
   // From 2026-10-21 (the owner's brief 19): the agent's relationship, his office's interest and the agreement
   // (`systems/proagent.ts`), after the portfolio an approach sends. The agent is named from `AGENTS`.
@@ -539,6 +541,8 @@ export const CHAPTERS: readonly Chapter[] = [
       'Each kind of work is done its own way, and How The Work Is Done on the engagement says how: its days, its preparation and the choices it asks of you, such as Ask For Another Take on a shoot day or Use The Double for a stunt. After each day it keeps that day’s report.',
       // From 2026-10-24 (brief 25's Module 6): the charts, the Emmy Awards and Sundance.
       'Charts And Awards, on the Career screen, says what each part on television is eligible for at the Emmy Awards. Press Enter Yourself before the entry deadline to enter it, or the production may. A film goes to Sundance only if its production submits it. When an award you’re nominated for is presented, press Watch The Ceremony, or just read the result. The tab also shows your films’ weeks in cinemas and the weekly charts Box Office Mojo, Netflix and Nielsen publish.',
+      // From 2026-10-25 (the owner's brief 27, K7): the Actor Awards, and the ceremony for every nomination.
+      'At the Actor Awards, press Submit Yourself under a part while submissions are open, or its production may submit it. Nominated for any award, say by a week before the show whether you’ll go: Go To The Ceremony books the trip, and Watch From Home doesn’t. Going, press Prepare Your Remarks, and if you win, press Go Up And Accept when the clock stops for it.',
       'Read “Cover, Benefits And Returns” next. It opens Papers: your health cover, benefits and tax returns.',
     ],
     more: [
@@ -546,8 +550,8 @@ export const CHAPTERS: readonly Chapter[] = [
       `The School’s rule is its Bulletin’s. Asking ${PRO_OUTSIDE.aheadDays} days ahead, ${PRO_OUTSIDE.mostDays} working days at most, ${counted(PRO_OUTSIDE.mostClassDays, 'class day')} at most, a student film not counting as professional work, and the dean’s week are the game’s readings of its words.`,
       'An agent represents you only under an agreement you accept. While it’s in force the agent submits you for the roles a casting office releases to agents, asks for scale plus ten on SAG-AFTRA work at the minimum, and passes on every answer and offer.',
     ],
-    names: ['Opportunities', 'Submit Yourself', `${PRO_STEPS}`, 'Tape It', 'Ask For Another Time', 'Accept The Offer and Decline The Offer', 'Ask For More', 'Ask Them To Decide', 'Ask The School', 'Apply For The Visa', 'Ask About It', 'Ask For Another Take', 'Use The Double', 'Enter Yourself', 'Watch The Ceremony'],
-    opens: ['pro.submit', 'pro.prepare', 'pro.tape_audition', 'pro.move_audition', 'pro.accept_offer', 'pro.decline_offer', 'pro.ask_more', 'pro.ask_hold', 'pro.request_outside_work', 'pro.apply_work_visa', 'pro.ask_pay', 'pro.work_choice', 'pro.award_enter', 'pro.watch_ceremony'],
+    names: ['Opportunities', 'Submit Yourself', `${PRO_STEPS}`, 'Tape It', 'Ask For Another Time', 'Accept The Offer and Decline The Offer', 'Ask For More', 'Ask Them To Decide', 'Ask The School', 'Apply For The Visa', 'Ask About It', 'Ask For Another Take', 'Use The Double', 'Enter Yourself', 'Go To The Ceremony and Watch From Home', 'Prepare Your Remarks', 'Go Up And Accept', 'Watch The Ceremony'],
+    opens: ['pro.submit', 'pro.prepare', 'pro.tape_audition', 'pro.move_audition', 'pro.accept_offer', 'pro.decline_offer', 'pro.ask_more', 'pro.ask_hold', 'pro.request_outside_work', 'pro.apply_work_visa', 'pro.ask_pay', 'pro.work_choice', 'pro.award_enter', 'pro.actor_submit', 'pro.ceremony_rsvp', 'pro.ceremony_prepare', 'pro.ceremony_accept', 'pro.watch_ceremony'],
   },
   // Until 2026-10-12 this chapter opened enrollment only after Yale Health had ended, with a gap before the new cover,
   // and counted a plan dropped or left unpaid as cover lost (`mayEnroll`, `healthMonth`); offered Mexico City's Seguro de

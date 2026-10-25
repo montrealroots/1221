@@ -7,7 +7,7 @@ persistence and world mechanics that matrix has no row for. Each carries the swe
 code, by a test the gate runs, by playing the built app), the commit, the evidence and what was found. Only Verified and Fixed And
 Verified count as done, out of every row not Deferred. Not Tested is the honest default: nothing is counted done for having a row.
 
-**Coverage:** 1144 of 1169 in scope Verified or Fixed And Verified (97.9%); 1137 Verified, 7 Fixed And Verified, 0 Failed, 0 Blocked, 20 Deferred, 25 Not Tested. By inspection 1164, automated 1164, interactive 34.
+**Coverage:** 1147 of 1172 in scope Verified or Fixed And Verified (97.9%); 1140 Verified, 7 Fixed And Verified, 0 Failed, 0 Blocked, 20 Deferred, 25 Not Tested. By inspection 1167, automated 1167, interactive 34.
 
 ## Totals
 
@@ -21,9 +21,9 @@ Verified count as done, out of every row not Deferred. Not Tested is the honest 
 | papers | 103 | 97 |  |  |  | 6 |  | 103 | 103 |  |
 | life | 87 | 84 |  |  |  |  | 3 | 84 | 84 |  |
 | career | 122 | 107 |  |  |  |  | 15 | 107 | 107 |  |
-| guide | 70 | 63 |  |  |  |  | 7 | 63 | 63 | 25 |
+| guide | 73 | 66 |  |  |  |  | 7 | 66 | 66 | 25 |
 | persistence | 12 | 11 | 1 |  |  |  |  | 12 | 12 | 9 |
-| **All** | **1189** | **1137** | **7** | **0** | **0** | **20** | **25** | **1164** | **1164** | **34** |
+| **All** | **1192** | **1140** | **7** | **0** | **0** | **20** | **25** | **1167** | **1167** | **34** |
 
 ## Creation
 
@@ -1189,6 +1189,7 @@ Verified count as done, out of every row not Deferred. Not Tested is the honest 
 | `ui.look-after` | ui | The top bar: Look After Yourself (src/ui/shell/TimeControls.tsx). | Implemented And Verified | Verified | inspection, automated, interactive | 691556f0 | tests/b20-guide-chapters.test.ts; tests/evidence2-b01.test.ts; tests/look-after.test.ts; tests/looking-after.test.ts; src/ui/shell/TimeControls.tsx:716-785 Look After Yourself: the menu locked until chapter 8, each line… |  |
 | `ui.career` | ui | The rail’s Career, under Your Work (src/ui/shell/destinations.ts), and the screen’s address (src/ui/workspaces/Workspac… | Implemented And Verified | Verified | inspection, automated, interactive | 691556f0 | tests/b20-guide-promises.test.ts; tests/pro-screen.test.ts; src/ui/shell/destinations.ts:77 Career under Your Work, locked until chapter 13; src/ui/workspaces/WorkspaceRouter.tsx:31-54 the screen or Locked; docs/verific… |  |
 | `ui.career-reasons` | ui | Career, Representation: Show The Reasons under Why It Went This Way (src/ui/career/RepresentationPane.tsx). | Implemented And Verified | Verified | inspection, automated | 691556f0 | tests/pro-representation-screen.test.ts; tests/journey-agent.test.ts; src/ui/career/RepresentationPane.tsx:190-235 Why It Went This Way: the last decision’s factors as they were and as they stand; src/ui/career/Represen… |  |
+| `ui.career-reference` | ui | Career, Productions And People (src/ui/career/ReferencePane.tsx); a role's Open Its Page on the Opportunities tab opens… | Implemented And Verified | Verified | inspection, automated | 52d65a60 | tests/b27-reference.test.ts; src/ui/career/ReferencePane.tsx:36 the tab, behind chapter 13 (useFeature); src/ui/career/ReferencePane.tsx:96 a page with its trail and Back; src/engine/systems/reference.ts:553 pageOf, eve… |  |
 | `ui.profile` | ui | The rail’s Player Profile, under You, and your name at the rail’s foot (src/ui/shell/destinations.ts, src/ui/shell/Game… | Implemented And Verified | Verified | inspection, automated, interactive | 691556f0 | tests/b20-guide-promises.test.ts; tests/language-frame.test.ts; src/ui/shell/destinations.ts:54 Player Profile under You and src/ui/shell/GameShell.tsx:176-190 your name at the rail’s foot, locked until chapter 12; src/… |  |
 | `ui.calendar` | ui | Home, Up Next (src/ui/screens/Home.tsx:274, drawn by UpNext at :423-513), with Back To Home at the Calendar’s head (src… | Implemented And Verified | Verified | inspection, automated | 86890e43 | tests/b20-guide-chapters.test.ts; tests/b20-guide-promises.test.ts; tests/b20-guide-screens.test.ts; src/ui/workspaces/CalendarWorkspace.tsx:300-392 the plan form sends calendar.schedule and shows a refusal beside the f… |  |
 | `ui.go` | ui | A stop’s dialog: Go (src/ui/shell/TimeControls.tsx, `onGo`), when the clock stops at a commitment. | Implemented And Verified | Verified | inspection, automated | 86890e43 | tests/b20-guide-chapters.test.ts; tests/time-stops.test.ts; tests/guide-examples-start-day-body.test.ts; src/ui/shell/TimeControls.tsx:316-420 the stop: Go through the commitment’s hours as the same jump (src/engine/wor… |  |
@@ -1238,6 +1239,8 @@ Verified count as done, out of every row not Deferred. Not Tested is the honest 
 | `promise.career.workflows>career.pay` | promise | src/engine/content/guide/career.ts | Implemented And Verified | Not Tested |  |  |  |  |
 | `promise.career.awards>career.workflows` | promise | src/engine/content/guide/career.ts | Implemented And Verified | Not Tested |  |  |  |  |
 | `promise.career.awards>career.offers` | promise | src/engine/content/guide/career.ts | Implemented And Verified | Not Tested |  |  |  |  |
+| `promise.career.reference>career.opportunities` | promise | src/engine/content/guide/career.ts | Implemented And Verified | Verified | inspection, automated | 52d65a60 | tests/b27-reference.test.ts; src/ui/career/OpportunitiesPane.tsx:69 Open Its Page; src/engine/systems/reference.ts:202 actionsFor, Open Opportunities while the posting is in play |  |
+| `promise.career.reference>career.awards` | promise | src/engine/content/guide/career.ts | Implemented And Verified | Verified | inspection, automated | 52d65a60 | tests/b27-reference.test.ts; src/engine/systems/reference.ts:192 honorFacts, each entry in the tab's own words; src/engine/systems/reference.ts:202 actionsFor, Open Charts And Awards for a credit on screen |  |
 | `route./home` | route | Home: the rail’s top, the brand, H (src/app/game-context.tsx) | — | Verified | inspection, automated, interactive | 691556f0 | src/ui/workspaces/WorkspaceRouter.tsx:31-39 a route opens its screen once its chapter is read, Locked (src/ui/workspaces/WorkspaceRouter.tsx:41-54) until then, and an address no screen has says so (src/ui/workspaces/Wor… |  |
 | `route./workspace/profile` | route | Player Profile: the menu (src/ui/shell/destinations.ts) | — | Verified | inspection, automated, interactive | 691556f0 | src/ui/workspaces/WorkspaceRouter.tsx:31-39 a route opens its screen once its chapter is read, Locked (src/ui/workspaces/WorkspaceRouter.tsx:41-54) until then, and an address no screen has says so (src/ui/workspaces/Wor… |  |
 | `route./workspace/calendar` | route | Calendar: from Home alone, with Back To Home (src/ui/shell/destinations.ts) | — | Verified | inspection, automated, interactive | 691556f0 | src/ui/workspaces/WorkspaceRouter.tsx:31-39 a route opens its screen once its chapter is read, Locked (src/ui/workspaces/WorkspaceRouter.tsx:41-54) until then, and an address no screen has says so (src/ui/workspaces/Wor… |  |

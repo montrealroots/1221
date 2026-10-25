@@ -4946,5 +4946,46 @@
   ],
   "rows": "pro.award_enter and pro.watch_ceremony are traced in docs/verification/connected-journey/TRACE.md (the guide’s career.awards), not rows of the audit.",
   "weakTests": []
+ },
+ {
+  "on": "2026-10-25",
+  "against": "52d65a60",
+  "by": "its builder",
+  "id": "career-reference",
+  "claim": "Brief 27’s K8: Productions And People, the industry reference. A real production’s, company’s, agency’s or person’s fields as its official pages gave them, tagged Verified, and Not Given with why; the game’s own projects, series, seasons and episodes tagged Simulated, to the clock; the player’s part, work, credit, history and award entries tagged Yours; links between the records; actions that open the tab where the player can act; the trail kept while another tab is open.",
+  "implementation": "src/engine/systems/reference.ts (pageOf, refIndex, refFind, projectKey, metParts, seasonsKnown, creditWords); src/ui/career/ReferencePane.tsx (ReferencePane, openReference); src/ui/career/OpportunitiesPane.tsx (Open Its Page); src/ui/shell/sections.ts; src/ui/workspaces/CareerWorkspace.tsx.",
+  "consumers": "The Career screen’s Productions And People tab; the Opportunities tab’s Open Its Page.",
+  "uiEvidence": {
+   "needed": true,
+   "have": "tests/b27-reference.test.ts draws the Career screen over the real kept store: a role’s project opened as Open Its Page opens it, followed to its series, Charts And Awards opened and the tab found again on the same page and trail, and the front page."
+  },
+  "evidence": [
+   {
+    "kind": "journey",
+    "where": "tests/b27-reference.test.ts ‘PLAYER JOURNEY: the Desk Clerk’s project shows the part, the work, the credit and what happened, and links to its company, its casting office, its series, the season and the episode its shoot fell on’",
+    "asserts": "Every page a link away read from the played save, the same after a save and a load.",
+    "reachesAction": true,
+    "checksConsequence": true,
+    "independent": false,
+    "problem": "Written by the builder of the code it reads."
+   },
+   {
+    "kind": "comparison",
+    "where": "tests/b27-reference.test.ts ‘names a part the game drew from it only once that part is posted to the player’, ‘shows a season’s audience only once the season has finished’, ‘says a release is shelved only once the player has been told’",
+    "asserts": "The same page before and after the posting, the season’s end and the release’s word, and an on-time twin.",
+    "reachesAction": true,
+    "checksConsequence": true,
+    "independent": false,
+    "problem": "Written by the builder."
+   }
+  ],
+  "verdict": "partial",
+  "partialClass": "missing-evidence",
+  "gaps": [
+   "No reader independent of the builder has read it against the standard: this entry is the builder’s own reading, made on 2026-10-25.",
+   "Not yet played in the built app, wide or on a phone: brief 27’s F does."
+  ],
+  "rows": "It runs no command; ui.career-reference is the effects matrix’s row (docs/verification/audit-2026-10-21/effects/guide.json).",
+  "weakTests": []
  }
 ]

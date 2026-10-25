@@ -48,7 +48,7 @@ commit, what's done, what remains and the exact next step. `README.md` is the re
 | K5 | Preparation, production, travel, changes, wrap, compensation, expenses, residuals | Built: what briefs 19 to 25 built read against Parts 10 and 11; the weather day, reshoots and pickups, a day laid up shot around; fittings, a call sheet document, flight delays and expense claims not built, each said why |
 | K6 | Release, publicity, weekly charts, renewal and returning work | Built: what brief 25 built read against Parts 12 and 13; a finished production's way out, a season's audience read by renewal, a promotional film for a release, and a revival's character plans |
 | K7 | Festivals, awards, the ceremony | Built: the Actor Awards by its 33rd rules, the ceremony for every nomination (invitation, trip, remarks, the moment to go up and the speech), an agent's and a negotiation's read of recognition; a festival's attendance and other institutions not built, each said why |
-| K8 | The industry reference | Waiting |
+| K8 | The industry reference | Built: Productions And People, a seventh Career tab over the records the career already reads: real productions, companies, agencies and people as their pages had them, the game's projects, series, seasons and episodes to the clock, the player's part and history, each fact tagged, links, actions to the tab that acts and the trail kept; the retired database not restored. K7's four commands opened by Finding Work (defect 12) |
 | F | The lifecycle and career matrices, long careers, final runs, the gate, the receipt | Waiting |
 
 ## Outstanding Decisions (For The Owner)
@@ -67,7 +67,8 @@ commit, what's done, what remains and the exact next step. `README.md` is the re
 
 ## Next Step
 
-K8: the industry reference (Part 16): projects, people, companies, seasons and episodes, each connected to what the player
-can do about it. Read `content/industry.ts`, `systems/slate.ts` and the Charts And Awards tab first. K3 to K7 are built
-(README). Then F, as the table says. Before F: the 85 measured criteria are measured again on the finished commit, and the
-four decisions above stay with the owner.
+F: the lifecycle and career feature matrices, long careers, the final runs, the gate in a clean clone, the receipt and the
+handoff. K3 to K8 are built (README). Start by measuring the 85 criteria again on the finished commit
+(`foundation/OUTSTANDING.md`), then replay the final runs and the long careers so that the effects rows' "No played life of the
+long runs reaches one yet" can be read again. Productions And People and the ceremony haven't been played in the built app or
+on a phone yet: F does it. The four decisions above stay with the owner.

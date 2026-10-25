@@ -1049,6 +1049,202 @@
   "evidence": "Written for brief 25's Module 6 (the published charts as dated imports, the game's own box office, the awards and festivals inventory, the Emmy Awards by the 78th's rules and Sundance by its 2027 festival's) to docs/STYLE.md and docs/GLOSSARY.md, every rule the read sources' own and every invention said as the game's; read where the player meets it in tests/career-awards-screen.test.ts (the Charts And Awards tab and the Portfolio drawn before the work, after the wrap, after the entry, at the nominations and after the ceremony, through the clock and a reload at each stage) and tests/career-awards.test.ts (each refusal, notice, recap and festival word), with tools/voice-check.mjs, tools/tics.mjs and tools/title-case.mjs clean.",
   "first": "Pending"
  },
+ "src/engine/systems/reference.ts#ACTION": {
+  "status": "Rewritten",
+  "hash": "7392555fc066",
+  "on": "2026-10-25",
+  "evidence": "Written for brief 27's K8 (Part 16 and loop 48: the industry reference, Productions And People) to docs/STYLE.md and docs/GLOSSARY.md, every real record's field said as its official pages gave it and tagged Verified, what they didn't give said as Not Given with why, the game's own tagged Simulated and the player's Yours, the glossary's How This Works kept for the help and no page called the reference on screen: read where the player meets it in tests/b27-reference.test.ts (a real production's page and its companies' and people's, a published chart's week, a part drawn from a real production once it's posted, the Desk Clerk's project with its series, season and episode, a season's audience, the network's word, a shelved release, the agents, Find, and the Career screen's Productions And People tab with its trail, its Back and its actions). Numbers under ten in words; dates with their comma; no engine words.",
+  "first": "Pending"
+ },
+ "src/engine/systems/reference.ts#actionsFor": {
+  "status": "Rewritten",
+  "hash": "e820d059705e",
+  "on": "2026-10-25",
+  "evidence": "Written for brief 27's K8 (Part 16 and loop 48: the industry reference, Productions And People) to docs/STYLE.md and docs/GLOSSARY.md, every real record's field said as its official pages gave it and tagged Verified, what they didn't give said as Not Given with why, the game's own tagged Simulated and the player's Yours, the glossary's How This Works kept for the help and no page called the reference on screen: read where the player meets it in tests/b27-reference.test.ts (a real production's page and its companies' and people's, a published chart's week, a part drawn from a real production once it's posted, the Desk Clerk's project with its series, season and episode, a season's audience, the network's word, a shelved release, the agents, Find, and the Career screen's Productions And People tab with its trail, its Back and its actions). Numbers under ten in words; dates with their comma; no engine words.",
+  "first": "Pending"
+ },
+ "src/engine/systems/reference.ts#agencyPage": {
+  "status": "Rewritten",
+  "hash": "1061503f50a1",
+  "on": "2026-10-25",
+  "evidence": "Written for brief 27's K8 (Part 16 and loop 48: the industry reference, Productions And People) to docs/STYLE.md and docs/GLOSSARY.md, every real record's field said as its official pages gave it and tagged Verified, what they didn't give said as Not Given with why, the game's own tagged Simulated and the player's Yours, the glossary's How This Works kept for the help and no page called the reference on screen: read where the player meets it in tests/b27-reference.test.ts (a real production's page and its companies' and people's, a published chart's week, a part drawn from a real production once it's posted, the Desk Clerk's project with its series, season and episode, a season's audience, the network's word, a shelved release, the agents, Find, and the Career screen's Productions And People tab with its trail, its Back and its actions). Numbers under ten in words; dates with their comma; no engine words.",
+  "first": "Pending"
+ },
+ "src/engine/systems/reference.ts#agentPage": {
+  "status": "Rewritten",
+  "hash": "0feb0623f5b4",
+  "on": "2026-10-25",
+  "evidence": "Written for brief 27's K8 (Part 16 and loop 48: the industry reference, Productions And People) to docs/STYLE.md and docs/GLOSSARY.md, every real record's field said as its official pages gave it and tagged Verified, what they didn't give said as Not Given with why, the game's own tagged Simulated and the player's Yours, the glossary's How This Works kept for the help and no page called the reference on screen: read where the player meets it in tests/b27-reference.test.ts (a real production's page and its companies' and people's, a published chart's week, a part drawn from a real production once it's posted, the Desk Clerk's project with its series, season and episode, a season's audience, the network's word, a shelved release, the agents, Find, and the Career screen's Productions And People tab with its trail, its Back and its actions). Numbers under ten in words; dates with their comma; no engine words.",
+  "first": "Pending"
+ },
+ "src/engine/systems/reference.ts#castingPage": {
+  "status": "Rewritten",
+  "hash": "4449a8e70042",
+  "on": "2026-10-25",
+  "evidence": "Written for brief 27's K8 (Part 16 and loop 48: the industry reference, Productions And People) to docs/STYLE.md and docs/GLOSSARY.md, every real record's field said as its official pages gave it and tagged Verified, what they didn't give said as Not Given with why, the game's own tagged Simulated and the player's Yours, the glossary's How This Works kept for the help and no page called the reference on screen: read where the player meets it in tests/b27-reference.test.ts (a real production's page and its companies' and people's, a published chart's week, a part drawn from a real production once it's posted, the Desk Clerk's project with its series, season and episode, a season's audience, the network's word, a shelved release, the agents, Find, and the Career screen's Productions And People tab with its trail, its Back and its actions). Numbers under ten in words; dates with their comma; no engine words.",
+  "first": "Pending"
+ },
+ "src/engine/systems/reference.ts#catalogCompanyPage": {
+  "status": "Rewritten",
+  "hash": "6022450844d7",
+  "on": "2026-10-25",
+  "evidence": "Written for brief 27's K8 (Part 16 and loop 48: the industry reference, Productions And People) to docs/STYLE.md and docs/GLOSSARY.md, every real record's field said as its official pages gave it and tagged Verified, what they didn't give said as Not Given with why, the game's own tagged Simulated and the player's Yours, the glossary's How This Works kept for the help and no page called the reference on screen: read where the player meets it in tests/b27-reference.test.ts (a real production's page and its companies' and people's, a published chart's week, a part drawn from a real production once it's posted, the Desk Clerk's project with its series, season and episode, a season's audience, the network's word, a shelved release, the agents, Find, and the Career screen's Productions And People tab with its trail, its Back and its actions). Numbers under ten in words; dates with their comma; no engine words.",
+  "first": "Pending"
+ },
+ "src/engine/systems/reference.ts#creditWords": {
+  "status": "Rewritten",
+  "hash": "ef6ccfe32518",
+  "on": "2026-10-25",
+  "evidence": "Written for brief 27's K8 (Part 16 and loop 48: the industry reference, Productions And People) to docs/STYLE.md and docs/GLOSSARY.md, every real record's field said as its official pages gave it and tagged Verified, what they didn't give said as Not Given with why, the game's own tagged Simulated and the player's Yours, the glossary's How This Works kept for the help and no page called the reference on screen: read where the player meets it in tests/b27-reference.test.ts (a real production's page and its companies' and people's, a published chart's week, a part drawn from a real production once it's posted, the Desk Clerk's project with its series, season and episode, a season's audience, the network's word, a shelved release, the agents, Find, and the Career screen's Productions And People tab with its trail, its Back and its actions). Numbers under ten in words; dates with their comma; no engine words.",
+  "first": "Pending"
+ },
+ "src/engine/systems/reference.ts#ENGAGEMENT_WORDS": {
+  "status": "Rewritten",
+  "hash": "a3937b2fbc48",
+  "on": "2026-10-25",
+  "evidence": "Written for brief 27's K8 (Part 16 and loop 48: the industry reference, Productions And People) to docs/STYLE.md and docs/GLOSSARY.md, every real record's field said as its official pages gave it and tagged Verified, what they didn't give said as Not Given with why, the game's own tagged Simulated and the player's Yours, the glossary's How This Works kept for the help and no page called the reference on screen: read where the player meets it in tests/b27-reference.test.ts (a real production's page and its companies' and people's, a published chart's week, a part drawn from a real production once it's posted, the Desk Clerk's project with its series, season and episode, a season's audience, the network's word, a shelved release, the agents, Find, and the Career screen's Productions And People tab with its trail, its Back and its actions). Numbers under ten in words; dates with their comma; no engine words.",
+  "first": "Pending"
+ },
+ "src/engine/systems/reference.ts#episodePage": {
+  "status": "Rewritten",
+  "hash": "52e77a921458",
+  "on": "2026-10-25",
+  "evidence": "Written for brief 27's K8 (Part 16 and loop 48: the industry reference, Productions And People) to docs/STYLE.md and docs/GLOSSARY.md, every real record's field said as its official pages gave it and tagged Verified, what they didn't give said as Not Given with why, the game's own tagged Simulated and the player's Yours, the glossary's How This Works kept for the help and no page called the reference on screen: read where the player meets it in tests/b27-reference.test.ts (a real production's page and its companies' and people's, a published chart's week, a part drawn from a real production once it's posted, the Desk Clerk's project with its series, season and episode, a season's audience, the network's word, a shelved release, the agents, Find, and the Career screen's Productions And People tab with its trail, its Back and its actions). Numbers under ten in words; dates with their comma; no engine words.",
+  "first": "Pending"
+ },
+ "src/engine/systems/reference.ts#episodesWords": {
+  "status": "Rewritten",
+  "hash": "9ba0bbd8d27c",
+  "on": "2026-10-25",
+  "evidence": "Written for brief 27's K8 (Part 16 and loop 48: the industry reference, Productions And People) to docs/STYLE.md and docs/GLOSSARY.md, every real record's field said as its official pages gave it and tagged Verified, what they didn't give said as Not Given with why, the game's own tagged Simulated and the player's Yours, the glossary's How This Works kept for the help and no page called the reference on screen: read where the player meets it in tests/b27-reference.test.ts (a real production's page and its companies' and people's, a published chart's week, a part drawn from a real production once it's posted, the Desk Clerk's project with its series, season and episode, a season's audience, the network's word, a shelved release, the agents, Find, and the Career screen's Productions And People tab with its trail, its Back and its actions). Numbers under ten in words; dates with their comma; no engine words.",
+  "first": "Pending"
+ },
+ "src/engine/systems/reference.ts#gameCompanyPage": {
+  "status": "Rewritten",
+  "hash": "2f20a31b20d3",
+  "on": "2026-10-25",
+  "evidence": "Written for brief 27's K8 (Part 16 and loop 48: the industry reference, Productions And People) to docs/STYLE.md and docs/GLOSSARY.md, every real record's field said as its official pages gave it and tagged Verified, what they didn't give said as Not Given with why, the game's own tagged Simulated and the player's Yours, the glossary's How This Works kept for the help and no page called the reference on screen: read where the player meets it in tests/b27-reference.test.ts (a real production's page and its companies' and people's, a published chart's week, a part drawn from a real production once it's posted, the Desk Clerk's project with its series, season and episode, a season's audience, the network's word, a shelved release, the agents, Find, and the Career screen's Productions And People tab with its trail, its Back and its actions). Numbers under ten in words; dates with their comma; no engine words.",
+  "first": "Pending"
+ },
+ "src/engine/systems/reference.ts#honorFacts": {
+  "status": "Rewritten",
+  "hash": "a6a3fb150174",
+  "on": "2026-10-25",
+  "evidence": "Written for brief 27's K8 (Part 16 and loop 48: the industry reference, Productions And People) to docs/STYLE.md and docs/GLOSSARY.md, every real record's field said as its official pages gave it and tagged Verified, what they didn't give said as Not Given with why, the game's own tagged Simulated and the player's Yours, the glossary's How This Works kept for the help and no page called the reference on screen: read where the player meets it in tests/b27-reference.test.ts (a real production's page and its companies' and people's, a published chart's week, a part drawn from a real production once it's posted, the Desk Clerk's project with its series, season and episode, a season's audience, the network's word, a shelved release, the agents, Find, and the Career screen's Productions And People tab with its trail, its Back and its actions). Numbers under ten in words; dates with their comma; no engine words.",
+  "first": "Pending"
+ },
+ "src/engine/systems/reference.ts#inEpisode": {
+  "status": "Rewritten",
+  "hash": "67ac330ebf73",
+  "on": "2026-10-25",
+  "evidence": "Written for brief 27's K8 (Part 16 and loop 48: the industry reference, Productions And People) to docs/STYLE.md and docs/GLOSSARY.md, every real record's field said as its official pages gave it and tagged Verified, what they didn't give said as Not Given with why, the game's own tagged Simulated and the player's Yours, the glossary's How This Works kept for the help and no page called the reference on screen: read where the player meets it in tests/b27-reference.test.ts (a real production's page and its companies' and people's, a published chart's week, a part drawn from a real production once it's posted, the Desk Clerk's project with its series, season and episode, a season's audience, the network's word, a shelved release, the agents, Find, and the Career screen's Productions And People tab with its trail, its Back and its actions). Numbers under ten in words; dates with their comma; no engine words.",
+  "first": "Pending"
+ },
+ "src/engine/systems/reference.ts#KNOWN_LABEL": {
+  "status": "Rewritten",
+  "hash": "3f940fb0e8f8",
+  "on": "2026-10-25",
+  "evidence": "Written for brief 27's K8 (Part 16 and loop 48: the industry reference, Productions And People) to docs/STYLE.md and docs/GLOSSARY.md, every real record's field said as its official pages gave it and tagged Verified, what they didn't give said as Not Given with why, the game's own tagged Simulated and the player's Yours, the glossary's How This Works kept for the help and no page called the reference on screen: read where the player meets it in tests/b27-reference.test.ts (a real production's page and its companies' and people's, a published chart's week, a part drawn from a real production once it's posted, the Desk Clerk's project with its series, season and episode, a season's audience, the network's word, a shelved release, the agents, Find, and the Career screen's Productions And People tab with its trail, its Back and its actions). Numbers under ten in words; dates with their comma; no engine words.",
+  "first": "Pending"
+ },
+ "src/engine/systems/reference.ts#MADE_LABEL": {
+  "status": "Rewritten",
+  "hash": "ae964a45b093",
+  "on": "2026-10-25",
+  "evidence": "Written for brief 27's K8 (Part 16 and loop 48: the industry reference, Productions And People) to docs/STYLE.md and docs/GLOSSARY.md, every real record's field said as its official pages gave it and tagged Verified, what they didn't give said as Not Given with why, the game's own tagged Simulated and the player's Yours, the glossary's How This Works kept for the help and no page called the reference on screen: read where the player meets it in tests/b27-reference.test.ts (a real production's page and its companies' and people's, a published chart's week, a part drawn from a real production once it's posted, the Desk Clerk's project with its series, season and episode, a season's audience, the network's word, a shelved release, the agents, Find, and the Career screen's Productions And People tab with its trail, its Back and its actions). Numbers under ten in words; dates with their comma; no engine words.",
+  "first": "Pending"
+ },
+ "src/engine/systems/reference.ts#OPPORTUNITY_WORDS": {
+  "status": "Rewritten",
+  "hash": "af6e64bbffbd",
+  "on": "2026-10-25",
+  "evidence": "Written for brief 27's K8 (Part 16 and loop 48: the industry reference, Productions And People) to docs/STYLE.md and docs/GLOSSARY.md, every real record's field said as its official pages gave it and tagged Verified, what they didn't give said as Not Given with why, the game's own tagged Simulated and the player's Yours, the glossary's How This Works kept for the help and no page called the reference on screen: read where the player meets it in tests/b27-reference.test.ts (a real production's page and its companies' and people's, a published chart's week, a part drawn from a real production once it's posted, the Desk Clerk's project with its series, season and episode, a season's audience, the network's word, a shelved release, the agents, Find, and the Career screen's Productions And People tab with its trail, its Back and its actions). Numbers under ten in words; dates with their comma; no engine words.",
+  "first": "Pending"
+ },
+ "src/engine/systems/reference.ts#productionPage": {
+  "status": "Rewritten",
+  "hash": "3d696107fa85",
+  "on": "2026-10-25",
+  "evidence": "Written for brief 27's K8 (Part 16 and loop 48: the industry reference, Productions And People) to docs/STYLE.md and docs/GLOSSARY.md, every real record's field said as its official pages gave it and tagged Verified, what they didn't give said as Not Given with why, the game's own tagged Simulated and the player's Yours, the glossary's How This Works kept for the help and no page called the reference on screen: read where the player meets it in tests/b27-reference.test.ts (a real production's page and its companies' and people's, a published chart's week, a part drawn from a real production once it's posted, the Desk Clerk's project with its series, season and episode, a season's audience, the network's word, a shelved release, the agents, Find, and the Career screen's Productions And People tab with its trail, its Back and its actions). Numbers under ten in words; dates with their comma; no engine words.",
+  "first": "Pending"
+ },
+ "src/engine/systems/reference.ts#projectPage": {
+  "status": "Rewritten",
+  "hash": "3b71c6791c0d",
+  "on": "2026-10-25",
+  "evidence": "Written for brief 27's K8 (Part 16 and loop 48: the industry reference, Productions And People) to docs/STYLE.md and docs/GLOSSARY.md, every real record's field said as its official pages gave it and tagged Verified, what they didn't give said as Not Given with why, the game's own tagged Simulated and the player's Yours, the glossary's How This Works kept for the help and no page called the reference on screen: read where the player meets it in tests/b27-reference.test.ts (a real production's page and its companies' and people's, a published chart's week, a part drawn from a real production once it's posted, the Desk Clerk's project with its series, season and episode, a season's audience, the network's word, a shelved release, the agents, Find, and the Career screen's Productions And People tab with its trail, its Back and its actions). Numbers under ten in words; dates with their comma; no engine words.",
+  "first": "Pending"
+ },
+ "src/engine/systems/reference.ts#realPersonPage": {
+  "status": "Rewritten",
+  "hash": "a4293684be73",
+  "on": "2026-10-25",
+  "evidence": "Written for brief 27's K8 (Part 16 and loop 48: the industry reference, Productions And People) to docs/STYLE.md and docs/GLOSSARY.md, every real record's field said as its official pages gave it and tagged Verified, what they didn't give said as Not Given with why, the game's own tagged Simulated and the player's Yours, the glossary's How This Works kept for the help and no page called the reference on screen: read where the player meets it in tests/b27-reference.test.ts (a real production's page and its companies' and people's, a published chart's week, a part drawn from a real production once it's posted, the Desk Clerk's project with its series, season and episode, a season's audience, the network's word, a shelved release, the agents, Find, and the Career screen's Productions And People tab with its trail, its Back and its actions). Numbers under ten in words; dates with their comma; no engine words.",
+  "first": "Pending"
+ },
+ "src/engine/systems/reference.ts#refIndex": {
+  "status": "Rewritten",
+  "hash": "3ca74f2535e8",
+  "on": "2026-10-25",
+  "evidence": "Written for brief 27's K8 (Part 16 and loop 48: the industry reference, Productions And People) to docs/STYLE.md and docs/GLOSSARY.md, every real record's field said as its official pages gave it and tagged Verified, what they didn't give said as Not Given with why, the game's own tagged Simulated and the player's Yours, the glossary's How This Works kept for the help and no page called the reference on screen: read where the player meets it in tests/b27-reference.test.ts (a real production's page and its companies' and people's, a published chart's week, a part drawn from a real production once it's posted, the Desk Clerk's project with its series, season and episode, a season's audience, the network's word, a shelved release, the agents, Find, and the Career screen's Productions And People tab with its trail, its Back and its actions). Numbers under ten in words; dates with their comma; no engine words.",
+  "first": "Pending"
+ },
+ "src/engine/systems/reference.ts#ROLE_LABEL": {
+  "status": "Rewritten",
+  "hash": "eed0439f01e8",
+  "on": "2026-10-25",
+  "evidence": "Written for brief 27's K8 (Part 16 and loop 48: the industry reference, Productions And People) to docs/STYLE.md and docs/GLOSSARY.md, every real record's field said as its official pages gave it and tagged Verified, what they didn't give said as Not Given with why, the game's own tagged Simulated and the player's Yours, the glossary's How This Works kept for the help and no page called the reference on screen: read where the player meets it in tests/b27-reference.test.ts (a real production's page and its companies' and people's, a published chart's week, a part drawn from a real production once it's posted, the Desk Clerk's project with its series, season and episode, a season's audience, the network's word, a shelved release, the agents, Find, and the Career screen's Productions And People tab with its trail, its Back and its actions). Numbers under ten in words; dates with their comma; no engine words.",
+  "first": "Pending"
+ },
+ "src/engine/systems/reference.ts#runFacts": {
+  "status": "Rewritten",
+  "hash": "c3a5f260ef83",
+  "on": "2026-10-25",
+  "evidence": "Written for brief 27's K8 (Part 16 and loop 48: the industry reference, Productions And People) to docs/STYLE.md and docs/GLOSSARY.md, every real record's field said as its official pages gave it and tagged Verified, what they didn't give said as Not Given with why, the game's own tagged Simulated and the player's Yours, the glossary's How This Works kept for the help and no page called the reference on screen: read where the player meets it in tests/b27-reference.test.ts (a real production's page and its companies' and people's, a published chart's week, a part drawn from a real production once it's posted, the Desk Clerk's project with its series, season and episode, a season's audience, the network's word, a shelved release, the agents, Find, and the Career screen's Productions And People tab with its trail, its Back and its actions). Numbers under ten in words; dates with their comma; no engine words.",
+  "first": "Pending"
+ },
+ "src/engine/systems/reference.ts#scopeWords": {
+  "status": "Rewritten",
+  "hash": "c3d536aa1511",
+  "on": "2026-10-25",
+  "evidence": "Written for brief 27's K8 (Part 16 and loop 48: the industry reference, Productions And People) to docs/STYLE.md and docs/GLOSSARY.md, every real record's field said as its official pages gave it and tagged Verified, what they didn't give said as Not Given with why, the game's own tagged Simulated and the player's Yours, the glossary's How This Works kept for the help and no page called the reference on screen: read where the player meets it in tests/b27-reference.test.ts (a real production's page and its companies' and people's, a published chart's week, a part drawn from a real production once it's posted, the Desk Clerk's project with its series, season and episode, a season's audience, the network's word, a shelved release, the agents, Find, and the Career screen's Productions And People tab with its trail, its Back and its actions). Numbers under ten in words; dates with their comma; no engine words.",
+  "first": "Pending"
+ },
+ "src/engine/systems/reference.ts#seasonPage": {
+  "status": "Rewritten",
+  "hash": "2bc9e75db624",
+  "on": "2026-10-25",
+  "evidence": "Written for brief 27's K8 (Part 16 and loop 48: the industry reference, Productions And People) to docs/STYLE.md and docs/GLOSSARY.md, every real record's field said as its official pages gave it and tagged Verified, what they didn't give said as Not Given with why, the game's own tagged Simulated and the player's Yours, the glossary's How This Works kept for the help and no page called the reference on screen: read where the player meets it in tests/b27-reference.test.ts (a real production's page and its companies' and people's, a published chart's week, a part drawn from a real production once it's posted, the Desk Clerk's project with its series, season and episode, a season's audience, the network's word, a shelved release, the agents, Find, and the Career screen's Productions And People tab with its trail, its Back and its actions). Numbers under ten in words; dates with their comma; no engine words.",
+  "first": "Pending"
+ },
+ "src/engine/systems/reference.ts#seriesPage": {
+  "status": "Rewritten",
+  "hash": "5438dff1cc49",
+  "on": "2026-10-25",
+  "evidence": "Written for brief 27's K8 (Part 16 and loop 48: the industry reference, Productions And People) to docs/STYLE.md and docs/GLOSSARY.md, every real record's field said as its official pages gave it and tagged Verified, what they didn't give said as Not Given with why, the game's own tagged Simulated and the player's Yours, the glossary's How This Works kept for the help and no page called the reference on screen: read where the player meets it in tests/b27-reference.test.ts (a real production's page and its companies' and people's, a published chart's week, a part drawn from a real production once it's posted, the Desk Clerk's project with its series, season and episode, a season's audience, the network's word, a shelved release, the agents, Find, and the Career screen's Productions And People tab with its trail, its Back and its actions). Numbers under ten in words; dates with their comma; no engine words.",
+  "first": "Pending"
+ },
+ "src/engine/systems/reference.ts#shootWords": {
+  "status": "Rewritten",
+  "hash": "5842184c9d9a",
+  "on": "2026-10-25",
+  "evidence": "Written for brief 27's K8 (Part 16 and loop 48: the industry reference, Productions And People) to docs/STYLE.md and docs/GLOSSARY.md, every real record's field said as its official pages gave it and tagged Verified, what they didn't give said as Not Given with why, the game's own tagged Simulated and the player's Yours, the glossary's How This Works kept for the help and no page called the reference on screen: read where the player meets it in tests/b27-reference.test.ts (a real production's page and its companies' and people's, a published chart's week, a part drawn from a real production once it's posted, the Desk Clerk's project with its series, season and episode, a season's audience, the network's word, a shelved release, the agents, Find, and the Career screen's Productions And People tab with its trail, its Back and its actions). Numbers under ten in words; dates with their comma; no engine words.",
+  "first": "Pending"
+ },
+ "src/engine/systems/reference.ts#youPage": {
+  "status": "Rewritten",
+  "hash": "2b25b4e7e2b2",
+  "on": "2026-10-25",
+  "evidence": "Written for brief 27's K8 (Part 16 and loop 48: the industry reference, Productions And People) to docs/STYLE.md and docs/GLOSSARY.md, every real record's field said as its official pages gave it and tagged Verified, what they didn't give said as Not Given with why, the game's own tagged Simulated and the player's Yours, the glossary's How This Works kept for the help and no page called the reference on screen: read where the player meets it in tests/b27-reference.test.ts (a real production's page and its companies' and people's, a published chart's week, a part drawn from a real production once it's posted, the Desk Clerk's project with its series, season and episode, a season's audience, the network's word, a shelved release, the agents, Find, and the Career screen's Productions And People tab with its trail, its Back and its actions). Numbers under ten in words; dates with their comma; no engine words.",
+  "first": "Pending"
+ },
+ "src/engine/systems/reference.ts#yourPart": {
+  "status": "Rewritten",
+  "hash": "a51cf7d9a4c5",
+  "on": "2026-10-25",
+  "evidence": "Written for brief 27's K8 (Part 16 and loop 48: the industry reference, Productions And People) to docs/STYLE.md and docs/GLOSSARY.md, every real record's field said as its official pages gave it and tagged Verified, what they didn't give said as Not Given with why, the game's own tagged Simulated and the player's Yours, the glossary's How This Works kept for the help and no page called the reference on screen: read where the player meets it in tests/b27-reference.test.ts (a real production's page and its companies' and people's, a published chart's week, a part drawn from a real production once it's posted, the Desk Clerk's project with its series, season and episode, a season's audience, the network's word, a shelved release, the agents, Find, and the Career screen's Productions And People tab with its trail, its Back and its actions). Numbers under ten in words; dates with their comma; no engine words.",
+  "first": "Pending"
+ },
  "src/engine/systems/worktrip.ts#abroadRead": {
   "status": "Rewritten",
   "hash": "e6e8346350d2",
@@ -1355,6 +1551,34 @@
   "hash": "674dcd68076f",
   "on": "2026-10-24",
   "evidence": "Written for brief 27's Part 5 (real organizations worldwide, chosen by official lists) to docs/STYLE.md and docs/GLOSSARY.md: the Charts And Awards tab's Unions And Festivals Around The World, read where the player meets it in tests/b27-slate-screens.test.ts (where you live, in the United States, every country either list names and every organization in its own name, and that none has dealt with the player); tools/voice-check.mjs, tools/tics.mjs, tools/title-case.mjs and tools/plural-check.mjs pass",
+  "first": "Pending"
+ },
+ "src/ui/career/ReferencePane.tsx#Entries": {
+  "status": "Rewritten",
+  "hash": "2b1d1a1bc9fd",
+  "on": "2026-10-25",
+  "evidence": "Written for brief 27's K8 (Part 16 and loop 48: the industry reference, Productions And People) to docs/STYLE.md and docs/GLOSSARY.md, every real record's field said as its official pages gave it and tagged Verified, what they didn't give said as Not Given with why, the game's own tagged Simulated and the player's Yours, the glossary's How This Works kept for the help and no page called the reference on screen: read where the player meets it in tests/b27-reference.test.ts (a real production's page and its companies' and people's, a published chart's week, a part drawn from a real production once it's posted, the Desk Clerk's project with its series, season and episode, a season's audience, the network's word, a shelved release, the agents, Find, and the Career screen's Productions And People tab with its trail, its Back and its actions). Numbers under ten in words; dates with their comma; no engine words.",
+  "first": "Pending"
+ },
+ "src/ui/career/ReferencePane.tsx#FrontPage": {
+  "status": "Rewritten",
+  "hash": "c71e62e91f46",
+  "on": "2026-10-25",
+  "evidence": "Written for brief 27's K8 (Part 16 and loop 48: the industry reference, Productions And People) to docs/STYLE.md and docs/GLOSSARY.md, every real record's field said as its official pages gave it and tagged Verified, what they didn't give said as Not Given with why, the game's own tagged Simulated and the player's Yours, the glossary's How This Works kept for the help and no page called the reference on screen: read where the player meets it in tests/b27-reference.test.ts (a real production's page and its companies' and people's, a published chart's week, a part drawn from a real production once it's posted, the Desk Clerk's project with its series, season and episode, a season's audience, the network's word, a shelved release, the agents, Find, and the Career screen's Productions And People tab with its trail, its Back and its actions). Numbers under ten in words; dates with their comma; no engine words.",
+  "first": "Pending"
+ },
+ "src/ui/career/ReferencePane.tsx#PageView": {
+  "status": "Rewritten",
+  "hash": "d9a2e6768e86",
+  "on": "2026-10-25",
+  "evidence": "Written for brief 27's K8 (Part 16 and loop 48: the industry reference, Productions And People) to docs/STYLE.md and docs/GLOSSARY.md, every real record's field said as its official pages gave it and tagged Verified, what they didn't give said as Not Given with why, the game's own tagged Simulated and the player's Yours, the glossary's How This Works kept for the help and no page called the reference on screen: read where the player meets it in tests/b27-reference.test.ts (a real production's page and its companies' and people's, a published chart's week, a part drawn from a real production once it's posted, the Desk Clerk's project with its series, season and episode, a season's audience, the network's word, a shelved release, the agents, Find, and the Career screen's Productions And People tab with its trail, its Back and its actions). Numbers under ten in words; dates with their comma; no engine words.",
+  "first": "Pending"
+ },
+ "src/ui/career/ReferencePane.tsx#ReferencePane": {
+  "status": "Rewritten",
+  "hash": "6aa50520c5f7",
+  "on": "2026-10-25",
+  "evidence": "Written for brief 27's K8 (Part 16 and loop 48: the industry reference, Productions And People) to docs/STYLE.md and docs/GLOSSARY.md, every real record's field said as its official pages gave it and tagged Verified, what they didn't give said as Not Given with why, the game's own tagged Simulated and the player's Yours, the glossary's How This Works kept for the help and no page called the reference on screen: read where the player meets it in tests/b27-reference.test.ts (a real production's page and its companies' and people's, a published chart's week, a part drawn from a real production once it's posted, the Desk Clerk's project with its series, season and episode, a season's audience, the network's word, a shelved release, the agents, Find, and the Career screen's Productions And People tab with its trail, its Back and its actions). Numbers under ten in words; dates with their comma; no engine words.",
   "first": "Pending"
  }
 }

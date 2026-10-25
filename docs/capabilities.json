@@ -608,7 +608,7 @@
         "interaction": "Implemented",
         "verified": "Missing"
       },
-      "limits": "Until 2026-10-12 this was called Verified on tools/rail-check.mjs alone, a check outside the gate, which clicks Your Career and its Auditions section: Career went in the scope reset of 2026-10-09, so the check can’t pass, and no test in the gate checks a tab kept (the tests that render the screens replace useKept with a tab they choose and a setter that does nothing). Its goal named filters, a page and the scroll, and its entry The Industry: since the reset only the three screens’ tabs are kept, The Industry went, and useKeptScroll has no caller. Unfinished forms aren’t kept"
+      "limits": "Until 2026-10-12 this was called Verified on tools/rail-check.mjs alone, a check outside the gate, which clicks Your Career and its Auditions section: Career went in the scope reset of 2026-10-09, so the check can’t pass. Until 2026-10-25 no test in the gate checked a tab kept (the tests that render the screens replaced useKept with a tab they chose and a setter that did nothing); from then tests/b27-reference.test.ts draws the Career screen over the real store, its tab and Productions And People's trail kept while another tab is open, though School's, Bank's and Papers' own tabs are still unchecked. Its goal named filters, a page and the scroll, and its entry The Industry: since the reset only the three screens’ tabs are kept, The Industry went, and useKeptScroll has no caller. Unfinished forms aren’t kept"
     },
     {
       "id": "drill-down",
@@ -3406,6 +3406,49 @@
         "verified": "Partial"
       },
       "limits": "Built on 2026-10-24 for brief 25's Module 6. pro.award_enter and pro.watch_ceremony are played through the commands and the clock (tests/career-awards.test.ts, tests/career-awards-screen.test.ts, which draws the Charts And Awards tab and the Portfolio), each stage saved and loaded. It isn’t called Verified because tools/capabilities.mjs and tools/coverage.mjs count a command’s row as read only by the review of 2026-10-13. No other award or festival decides anything, their rules unread or refused; no chart is fetched or updated by the game; a performer's choice of category is the game's"
+    },
+    {
+      "id": "career-reference",
+      "goal": "Look up the productions, companies and people the career touches (brief 27's K8, Part 16 and loop 48): a real production's, company's, agency's or person's fields as its official pages gave them, tagged Verified, and Not Given with why where they didn't; the game's own projects, series, seasons and episodes tagged Simulated, each to the clock; the player's part, work, credit, history and award entries tagged Yours; links between the records; actions that open the tab where the player can act; and the trail of pages kept while another tab is open",
+      "entry": "Career, Productions And People (Your Work, Series, Productions The Game Read, Companies And Agencies, People, Find); a role's Open Its Page on the Opportunities tab",
+      "entities": [
+        "RefKey",
+        "RefPage",
+        "RefFact",
+        "RefEntry",
+        "Production (catalog)",
+        "AgencyRecord",
+        "Agent",
+        "ProjectTemplate",
+        "SeriesTemplate"
+      ],
+      "state": "src/engine/systems/reference.ts",
+      "preconditions": "“Your Career” read (ui.career-reference). A project's page only for a part posted to the player, booked or credited; a season's only once ordered or renewed; an invented agent's only once met.",
+      "commands": [],
+      "effects": "None in the world: a page is read from the save as it stands; the trail is kept for the session (ui/kept.ts), and an action turns the Career screen to its tab",
+      "persists": "Nothing of its own: it reads Person.pro (opportunities, engagements, credits, awards, guild, festivals, relations, projects, series)",
+      "readers": [
+        "the Career screen's Productions And People tab (ReferencePane)",
+        "OpportunitiesPane's Open Its Page (openReference)"
+      ],
+      "looks": [],
+      "routes": [
+        "/workspace/career"
+      ],
+      "saveLoad": "tests/b27-reference.test.ts",
+      "provenance": "content/catalog.ts, content/agencies.ts and content/agents.ts as this build read their pages (docs/verification/career-world-2026-10-23/sources.json); content/charts.ts's snapshots; the game's own projects and series, said to be the game's",
+      "tests": [
+        "tests/b27-reference.test.ts"
+      ],
+      "manual": "",
+      "status": "Implemented",
+      "layers": {
+        "schema": "Implemented",
+        "content": "Implemented",
+        "interaction": "Implemented",
+        "verified": "Partial"
+      },
+      "limits": "It holds the records the career already reads, never another service's: the IMDb-style database of 2026-10-08 (database-search, drill-down) stays retired, and no plot, review, trivia or image is held. A catalog production's page names only the parts the game drew from it that were posted to the player. Not yet played in the built app or on a phone; brief 27's F does."
     }
   ]
 }

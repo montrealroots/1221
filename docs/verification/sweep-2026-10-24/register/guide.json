@@ -380,6 +380,30 @@
  "promise.career.contracts>career.unions": {
   "status": "Not Tested"
  },
+ "promise.career.reference>career.awards": {
+  "status": "Verified",
+  "by": [
+   "inspection",
+   "automated"
+  ],
+  "on": "52d65a60",
+  "evidence": [
+   "tests/b27-reference.test.ts",
+   "src/engine/systems/reference.ts:192 honorFacts, each entry in the tab's own words; src/engine/systems/reference.ts:202 actionsFor, Open Charts And Awards for a credit on screen"
+  ]
+ },
+ "promise.career.reference>career.opportunities": {
+  "status": "Verified",
+  "by": [
+   "inspection",
+   "automated"
+  ],
+  "on": "52d65a60",
+  "evidence": [
+   "tests/b27-reference.test.ts",
+   "src/ui/career/OpportunitiesPane.tsx:69 Open Its Page; src/engine/systems/reference.ts:202 actionsFor, Open Opportunities while the posting is in play"
+  ]
+ },
  "promise.career.workflows>career.contracts": {
   "status": "Not Tested"
  },
@@ -729,6 +753,18 @@
    "tests/journey-agent.test.ts",
    "src/ui/career/RepresentationPane.tsx:190-235 Why It Went This Way: the last decision’s factors as they were and as they stand; src/ui/career/RepresentationPane.tsx:218 Show The Reasons, gated by chapter 14; docs/verification/sweep-2026-10-24/walk/capture/audit.json Career Representation on two played lives",
    "tests/b20-guide-chapters.test.ts the guide area’s 32 test files (tutorial, guide, the six b20-guide files, navigation, portrait, b23-pages, b23-turn, help-mechanics, guide-chapter-facts, time-controls, whynot-time, the seven guide-examples files, pro-screen, pro-representation-screen, language-frame, look-after, looking-after, evidence2-b01, journey-agent, evidence-g33-ui, looks), run on 691556f0: all green, 413 tests"
+  ]
+ },
+ "ui.career-reference": {
+  "status": "Verified",
+  "by": [
+   "inspection",
+   "automated"
+  ],
+  "on": "52d65a60",
+  "evidence": [
+   "tests/b27-reference.test.ts",
+   "src/ui/career/ReferencePane.tsx:36 the tab, behind chapter 13 (useFeature); src/ui/career/ReferencePane.tsx:96 a page with its trail and Back; src/engine/systems/reference.ts:553 pageOf, every page read from the save to the clock"
   ]
  },
  "ui.go": {

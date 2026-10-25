@@ -15,10 +15,16 @@ date at each milestone.)
   festivals on the résumé), K4 (the chemistry read and screen test, direct offers, asking for more, holds), K5 (the
   weather day, reshoots and pickups, a day laid up shot around), K6 (a finished production's way out, a season's audience
   read by renewal, publicity, a revival's character plans; its clean gate on `7e12b026` exit 0, 521 files, 5,916 tests)
-  and K7 (the Actor Awards by its 33rd rules, the ceremony for every nomination, an agent's and a negotiation's read of
-  recognition; the README says what wasn't built and why).
-- **Next:** K8, the industry reference (Part 16): projects, people, companies, seasons and episodes, each joined to what
-  the player can do. Then F (the final runs, the 85 measured rows measured again, the gate in a clean clone, the receipt).
+  K7 (the Actor Awards by its 33rd rules, the ceremony for every nomination, an agent's and a negotiation's read of
+  recognition; the README says what wasn't built and why; its four commands were in no guide chapter, which
+  `tests/tutorial.test.ts` failed on its commit, `52d65a60`, and K8's commit put right, defect 12) and K8 (Productions And
+  People, a seventh Career tab: the productions, companies, agencies and people the career touches, real ones as their
+  pages had them and the game's own to the clock, each fact tagged Verified, Not Given, Simulated or Yours, with the
+  player's part and history, links, actions to the tab that acts, and the trail kept; nothing posted to another actor,
+  and no fate, audience or word before its time; the retired database of 2026-10-08 not restored).
+- **Next:** F (the lifecycle and career matrices, the long careers and final runs played again, the 85 measured rows
+  measured again, Productions And People and the ceremony played in the built app, the gate in a clean clone, the
+  receipt).
 - **Blocked, and said so:** SAG-AFTRA's pages, USCIS, the Academy, BAFTA, France-Visas, Japan's foreign ministry and the
   ATO refuse this environment (HTTP 403); none is worked around, and the game names each as unread where it uses it.
 

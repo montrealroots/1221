@@ -129,7 +129,7 @@ SLATE has no tests of its screens, and nothing is deployed.
 | `practice.self_tape` | Verified (journey) | You As An Actor | BriefPane.tsx | `systems/briefs.ts` | — (also tapeRefusal) | — | — | — | 46 | journey-agent.test.ts |
 | `pro.accept_agreement` | Verified (journey) | Representation | RepresentationPane.tsx | `systems/proagent.ts` | — (also signRefusal) | — | — | pro.agent_term_end | 6 | journey-agent.test.ts |
 | `pro.accept_offer` | Implemented But Unverified | Finding Work | OpportunitiesPane.tsx | `systems/projobs.ts` | — (also acceptRefusal) | engagements (added to) | — | booked | 30 | — |
-| `pro.actor_submit` | Implemented But Unverified | — | IndustryPane.tsx | `systems/actorawards.ts` | — | — | — | — | 1 | — |
+| `pro.actor_submit` | Implemented But Unverified | Finding Work | IndustryPane.tsx | `systems/actorawards.ts` | — | — | — | — | 1 | — |
 | `pro.agent_check` | Verified (journey) | Representation | RepresentationPane.tsx | `systems/proagent.ts` | — (also checkRefusal) | — | — | — | 10 | journey-agent.test.ts |
 | `pro.agent_notice` | Verified (journey) | Representation | RepresentationPane.tsx | `systems/proagent.ts` | — (also noticeRefusal) | — | — | — | 8 | journey-agent.test.ts |
 | `pro.apply_work_visa` | Implemented But Unverified | Finding Work | WorkPane.tsx | `systems/worktrip.ts` | — (also visaRefusal) | — | — | — | 2 | — |
@@ -139,9 +139,9 @@ SLATE has no tests of its screens, and nothing is deployed.
 | `pro.ask_referral` | Verified (journey) | Representation | RepresentationPane.tsx | `systems/proagent.ts` | — (also referralRefusal) | — | — | — | 7 | journey-agent.test.ts |
 | `pro.ask_to_move` | Verified (journey) | Representation | RepresentationPane.tsx TimeControls.tsx | `systems/proagent.ts` | — (also moveRefusal) | — | — | — | 3 | journey-agent.test.ts |
 | `pro.award_enter` | Implemented But Unverified | Finding Work | IndustryPane.tsx | `systems/awards.ts` | — | — | — | — | 2 | — |
-| `pro.ceremony_accept` | Implemented But Unverified | — | IndustryPane.tsx TimeControls.tsx | `systems/ceremony.ts` | — | — | — | — | 1 | — |
-| `pro.ceremony_prepare` | Implemented But Unverified | — | IndustryPane.tsx | `systems/ceremony.ts` | — | — | — | — | 1 | — |
-| `pro.ceremony_rsvp` | Implemented But Unverified | — | IndustryPane.tsx | `systems/ceremony.ts` | — | — | — | — | 1 | — |
+| `pro.ceremony_accept` | Implemented But Unverified | Finding Work | IndustryPane.tsx TimeControls.tsx | `systems/ceremony.ts` | — | — | — | — | 1 | — |
+| `pro.ceremony_prepare` | Implemented But Unverified | Finding Work | IndustryPane.tsx | `systems/ceremony.ts` | — | — | — | — | 1 | — |
+| `pro.ceremony_rsvp` | Implemented But Unverified | Finding Work | IndustryPane.tsx | `systems/ceremony.ts` | — | — | — | — | 1 | — |
 | `pro.cut_reel` | Verified (journey) | Your Career | CareerWorkspace.tsx | `systems/pro.ts` | Your bank can’t cover …, so nothing was charged. (also reelRefusal) | — | Yes | reel | 5 | journey-agent.test.ts |
 | `pro.decline_agreement` | Verified (journey) | Representation | RepresentationPane.tsx | `systems/proagent.ts` | — (also answerRefusal) | — | — | — | 4 | journey-agent.test.ts |
 | `pro.decline_offer` | Implemented But Unverified | Finding Work | OpportunitiesPane.tsx | `systems/projobs.ts` | There’s no offer to decline. | — | — | declined | 4 | — |

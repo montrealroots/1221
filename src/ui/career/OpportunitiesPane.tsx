@@ -29,6 +29,8 @@ import {
 } from '@/engine/systems/projobs';
 import { requirementWords } from '@/engine/systems/engagement';
 import { productionById, productionWords } from '@/engine/content/catalog';
+import { projectKey } from '@/engine/systems/reference';
+import { openReference } from '@/ui/career/ReferencePane';
 
 const NY = 'America/New_York';
 const STEPS: readonly BriefStep[] = ['read', 'lines', 'rehearse'];
@@ -63,7 +65,8 @@ function RoleFacts({ t, o }: { t: ProjectTemplate; o: Pick<Opportunity, 'project
   const days = datesOf(o);
   return (
     <dl className="col gap-2 small" style={{ margin: 0 }}>
-      <div><dt className="strong">The Project</dt><dd style={{ margin: 0 }}>{`${t.project}, ${kindPhrase(t)}, by ${t.company}, cast by ${t.casting}. ${t.contract}.`}</dd></div>
+      {/* Its page in Productions And People (from 2026-10-25, brief 27's K8), where its company, series and history link on. */}
+      <div><dt className="strong">The Project</dt><dd style={{ margin: 0 }}>{`${t.project}, ${kindPhrase(t)}, by ${t.company}, cast by ${t.casting}. ${t.contract}. `}<button type="button" className="link" onClick={() => openReference(projectKey(t))}>Open Its Page</button></dd></div>
       {/* A part drawn from a real production says so before anything else about it (from 2026-10-23, brief 25's Module 2, C8). */}
       {t.drawn && <div><dt className="strong">The Game’s Own Part</dt><dd style={{ margin: 0 }}>{drawnWords(t)}</dd></div>}
       {t.drawn && productionById(t.drawn.production) && (

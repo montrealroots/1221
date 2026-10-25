@@ -3696,6 +3696,13 @@
   "evidence": "Brief 19 added Career under Your Work, with its Overview and Portfolio tabs; read on the rail and the breadcrumbs in tests/evidence2-b10.test.ts, tests/language-frame.test.ts and tests/pro-screen.test.ts",
   "first": "Pending"
  },
+ "src/ui/shell/sections.ts#SECTIONS [reference]": {
+  "status": "Rewritten",
+  "hash": "d0890d6f02fb",
+  "on": "2026-10-25",
+  "evidence": "Written for brief 27's K8 (Part 16 and loop 48: the industry reference, Productions And People) to docs/STYLE.md and docs/GLOSSARY.md, every real record's field said as its official pages gave it and tagged Verified, what they didn't give said as Not Given with why, the game's own tagged Simulated and the player's Yours, the glossary's How This Works kept for the help and no page called the reference on screen: read where the player meets it in tests/b27-reference.test.ts (a real production's page and its companies' and people's, a published chart's week, a part drawn from a real production once it's posted, the Desk Clerk's project with its series, season and episode, a season's audience, the network's word, a shelved release, the agents, Find, and the Career screen's Productions And People tab with its trail, its Back and its actions). Numbers under ten in words; dates with their comma; no engine words.",
+  "first": "Pending"
+ },
  "src/ui/shell/sections.ts#SECTIONS [representation]": {
   "status": "Rewritten",
   "hash": "360bc539904b",

@@ -5,7 +5,8 @@
  * Opportunities with its (`ui/career/OpportunitiesPane.tsx`, `systems/projobs.ts`) and Work, the engagements' pay and the
  * unions, with the pay's (`ui/career/WorkPane.tsx`); none is shown before it's playable (`ui/shell/sections.ts`). Charts
  * And Awards came on 2026-10-24 (brief 25's Module 6, `ui/career/IndustryPane.tsx`), and with it the Portfolio's
- * Recognition, a nomination, a win or a festival selection kept there for good.
+ * Recognition, a nomination, a win or a festival selection kept there for good. Productions And People came on 2026-10-25
+ * (brief 27's K8, `ui/career/ReferencePane.tsx`): the productions, companies and people the career touches.
  *
  * Every line is read from the record where the engine keeps it, worked out as it's drawn (`profileOf`,
  * `materialsCheck`, `reelSources`), and every control runs a command through `run`, behind its guide chapter
@@ -31,10 +32,11 @@ import {
 } from '@/engine/systems/pro';
 import { OpportunitiesPane } from '@/ui/career/OpportunitiesPane';
 import { IndustryPane } from '@/ui/career/IndustryPane';
+import { ReferencePane } from '@/ui/career/ReferencePane';
 import { recognitionOf } from '@/engine/systems/awards';
 import { TabBar } from '@/ui/components/TabBar';
 
-type CareerTab = 'overview' | 'portfolio' | 'representation' | 'opportunities' | 'work' | 'industry';
+type CareerTab = 'overview' | 'portfolio' | 'representation' | 'opportunities' | 'work' | 'industry' | 'reference';
 
 /** Its tabs, as the rail lists them too (`ui/shell/sections.ts`). */
 const CAREER_TABS = SECTIONS['/workspace/career'] as readonly { id: CareerTab; label: string }[];
@@ -44,6 +46,7 @@ export function CareerWorkspace() {
   const panes: Record<CareerTab, JSX.Element> = {
     overview: <OverviewPane toPortfolio={() => setTab('portfolio')} />, portfolio: <PortfolioPane />,
     representation: <RepresentationPane />, opportunities: <OpportunitiesPane />, work: <WorkPane />, industry: <IndustryPane />,
+    reference: <ReferencePane />,
   };
   return (
     <>
