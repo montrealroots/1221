@@ -107,7 +107,9 @@ const SKIP_DIRS = new Set(['node_modules', 'dist', '.git', 'coverage']);
  * Assistant Director. "Correcting" that is editing a source, not fixing a typo.
  */
 // And from 2026-10-05 the depth report, a generated list of makers' own names ("Simply Vera Vera Wang" is Kohl's label).
-const NOT_OURS = ['docs/research', 'docs/CATALOG-DEPTH.md'];
+// And from 2026-10-25 brief 27's research register, whose facts carry the pages' own words: Cannes' Article 9 says "the
+// Palme d’or or the Grand Prix", which this check read as a stutter the day the register took the festivals' rules in.
+const NOT_OURS = ['docs/research', 'docs/CATALOG-DEPTH.md', 'docs/verification/career-universe-2026-10-24/research'];
 const oursToCheck = (path) => !NOT_OURS.some((dir) => path.replace(/\\/g, '/').startsWith(dir));
 /** The two files that are lists of wrong words, and so are full of them. */
 const SKIP_FILES = new Set(['tools/typos.mjs', 'tools/spelling.mjs']);
