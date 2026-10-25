@@ -232,9 +232,10 @@ export interface AgentRelation extends HasHistory {
   referrals?: { engagementId: ProId; by: string; job: string; at: Instant; band?: Band }[];
   /**
    * The introductions at a festival where the actor's film screened (`introduceAtFestival`, `systems/representation.ts`,
-   * from 2026-10-25, brief 27), one for each festival entry: the film it showed is work the office has to go on.
+   * from 2026-10-25, brief 27), one for each festival entry: the film it showed is work the office has to go on. Until the
+   * review of 2026-10-25 each kept the moment too, which nothing read; the introduction's own is `via.at`.
    */
-  festivals?: { entryId: ProId; creditId: ProId; festival: string; at: Instant }[];
+  festivals?: { entryId: ProId; creditId: ProId; festival: string }[];
   /**
    * The reasons for the last decision, as Why It Went This Way shows them (`systems/proagent.ts`, from 2026-10-21): copied
    * in when it's made, so they read as they were after the record has moved on.

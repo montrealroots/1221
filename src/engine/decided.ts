@@ -46,7 +46,7 @@ import { priorityOf } from './systems/classmates';
 import { AGENTS } from './content/agents';
 import { GATE, LEVELS, chancesFor, drawOf, offerOutcome, replyOutcome, rosterFor } from './systems/proagent';
 import { ASKS, termsChance, termsDraw } from './systems/representation';
-import { DIRECT, HOLD, NEGOTIATE, castingDraw, postingsAt, releaseFate, slateReach } from './systems/projobs';
+import { DIRECT, HOLD, NEGOTIATE, castingDraw, postingsAt, reachOf, releaseFate, slateReach } from './systems/projobs';
 import { productionsOf, seriesOfYear, slatePartsAt } from './systems/slate';
 import { PROJECTS } from './content/careerwork';
 import { SERIES, seriesById } from './content/series';
@@ -702,7 +702,10 @@ defineDecider<{ sim: Simulation; represented: number; credits: number; skill: nu
     const out: string[] = [];
     for (let n = 0; n < 16; n += 1) {
       const at = sim.now + n * 7 * MS_DAY;
-      out.push(slatePartsAt(sim, at).filter((t) => t.access.agent || t.access.open).map((t) => Math.round(slateReach(sim, p, t, represented === 1 && t.access.agent ? 'agent' : 'open', at) * 100)).join(','));
+      // The way each part reaches the actor as the game gives it (`reachOf`, from the review of 2026-10-25): until then any
+      // part an agent could submit for came through the agent here, a voice part under an agreement that leaves voice-over
+      // out included, which the game opens to the actor's own submission.
+      out.push(slatePartsAt(sim, at).filter((t) => t.access.agent || t.access.open).map((t) => Math.round(slateReach(sim, p, t, reachOf(t, p.pro!.agreements[0]) === 'agent' ? 'agent' : 'open', at) * 100)).join(','));
     }
     return out.join(' ');
   },

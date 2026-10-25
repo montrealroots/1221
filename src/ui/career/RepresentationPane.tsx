@@ -33,7 +33,7 @@ import {
   nextStep, noticeRefusal, offeredAgreement, officeTitle, referralRefusal, referrersOf, relationOf, sendRefusal, signRefusal, stillOwed, supplyRefusal,
   type EndHow, type Level,
 } from '@/engine/systems/proagent';
-import { ASKS, ASK_LABEL, askChance, askRefusal, askWords, chanceTenths, dealOf, purposeOf, sampleName, scopeWords, termWords, territoryWords } from '@/engine/systems/representation';
+import { ASKS, ASK_LABEL, askChance, askRefusal, askWords, chanceTenths, dealOf, purposeOf, realTermsWords, sampleName, scopeWords, termWords, territoryWords } from '@/engine/systems/representation';
 
 const LEVEL_TONE: Readonly<Record<Level, string>> = { short: 'chip chip-negative', near: 'chip chip-warning', at: 'chip chip-info', beyond: 'chip chip-positive' };
 
@@ -391,7 +391,7 @@ function TermsPanel({ agent }: { agent: Agent }) {
             <WhyNot reasons={open.map(({ a, no }) => [ASK_LABEL[a], no] as const)} />
           </>
         )}
-        <Fine>{`Every term you can ask about is the game’s own, and so are the shorter term, the time ${office} takes to answer and the chance it agrees, which rises with how many of the factors under Why It Went This Way are at the bar or beyond. The commission is the unions’ and New York’s rule, and no ask changes it.`}</Fine>
+        <Fine>{`Every term you can ask about is the game’s own, and so are the shorter term, the time ${office} takes to answer and the chance it agrees, which rises with how many of the factors under Why It Went This Way are at the bar or beyond. The commission is the unions’ and New York’s rule, and no ask changes it.${agent.real ? ` ${realTermsWords(agent)}` : ''}`}</Fine>
       </div>
     </Panel>
   );

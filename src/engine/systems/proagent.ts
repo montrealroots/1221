@@ -288,8 +288,10 @@ interface Seen { what: string; band?: Band; medium: 'stage' | 'screen' | 'voice'
 /**
  * The work his office has to go on: the showcase's scenes as the School recorded them, once the School has followed
  * them up; the reel sent, or the current one, or for a voice department the voice demo (from 2026-10-25, brief 27,
- * `sampleKind`); each job a referral came from; and each film a festival screened where the office met the actor
- * (`introduceAtFestival`). A night on stage he wasn't told of, and a class piece, are never among them.
+ * `sampleKind`); each job a referral came from; and each film in a festival's official selection where the office met the
+ * actor (`introduceAtFestival`), said so whether it had screened yet or not (from the review of 2026-10-25: until then
+ * "which the festival screened", for a film met before its screening too). A night on stage he wasn't told of, and a
+ * class piece, are never among them.
  */
 function workSeen(person: Person, agent: Agent, rel: AgentRelation | undefined, sampleId?: ProId): Seen[] {
   const pro = person.pro;
@@ -306,7 +308,7 @@ function workSeen(person: Person, agent: Agent, rel: AgentRelation | undefined, 
   }
   for (const f of rel?.festivals ?? []) {
     const c = pro?.credits.find((x) => x.id === f.creditId);
-    out.push({ what: `${c?.project ?? 'your film'}, which ${f.festival} screened`, ...(c?.band ? { band: c.band } : {}), medium: 'screen' });
+    out.push({ what: `${c?.project ?? 'your film'}, in ${f.festival}’s official selection`, ...(c?.band ? { band: c.band } : {}), medium: 'screen' });
   }
   return out;
 }
