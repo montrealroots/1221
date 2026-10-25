@@ -1,11 +1,11 @@
 {
  "save": "last-term",
- "commit": "7545e2d7, its source played before the commit was made (the ceremony, the record bound and the career player as committed there)",
+ "commit": "1ad8f7af",
  "from": "March 1, 2029",
  "to": "August 31, 2033",
  "yearsAsked": 4.5,
  "ended": null,
- "seconds": 891,
+ "seconds": 667,
  "yearly": [
   {
    "at": "March 1, 2030",
@@ -104,9 +104,9 @@
  },
  "awards": {
   "emmys": {
-   "lost": 1,
+   "lost": 2,
    "not-nominated": 8,
-   "won": 2
+   "won": 1
   },
   "actorAwards": {
    "lost": 2,

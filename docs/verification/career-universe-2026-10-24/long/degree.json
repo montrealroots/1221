@@ -1,11 +1,11 @@
 {
  "save": "degree",
- "commit": "7545e2d7, its source played before the commit was made (the ceremony, the record bound and the career player as committed there)",
+ "commit": "1ad8f7af",
  "from": "August 4, 2029",
  "to": "August 4, 2033",
  "yearsAsked": 4,
  "ended": null,
- "seconds": 1177,
+ "seconds": 936,
  "yearly": [
   {
    "at": "August 4, 2030",
@@ -116,8 +116,8 @@
  "awards": {
   "emmys": {
    "lost": 12,
-   "not-nominated": 4,
-   "won": 7,
+   "not-nominated": 8,
+   "won": 3,
    "nominated": 9,
    "entered": 8
   },
@@ -131,9 +131,9 @@
    "not-submitted": 2
   },
   "attended": {
-   "declined:to come:-": 8,
-   "attending:there:-": 8,
-   "attending:there:speech": 11,
+   "declined:to come:-": 5,
+   "attending:there:-": 11,
+   "attending:there:speech": 7,
    "attending:to come:-": 9
   }
  },
@@ -160,5 +160,5 @@
  },
  "breaches": [],
  "reloadSame": true,
- "transcriptLines": 9103
+ "transcriptLines": 9088
 }
