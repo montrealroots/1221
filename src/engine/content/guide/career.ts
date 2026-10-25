@@ -1239,7 +1239,8 @@ export const CAREER_GUIDE: readonly GuideEntry[] = [
     interpret: [
       'The overtime, the contribution’s rates, the per diem and the rerun’s share and ceiling are SAG-AFTRA’s agreements’ own, as AMPTP publishes them. The eleven-hour shoot day’s hour for lunch is estimated.',
       `When an episode is on the air, whether it’s rerun, the series’ seasons and how late a non-union producer pays, ${Math.round(LATE.chance * 10)} times in ten, by one to four weeks, are the game’s own.`,
-      'A renewal brings no contract by itself: a part in a renewed series comes only through its option or a new casting.',
+      // Until 2026-10-25 (brief 27, `INVITE`) a part came back only through its option or a new casting.
+      'A renewal brings no contract by itself: a part in a renewed series comes only through its option, a new casting, or its producers asking a guest part back.',
     ],
     unavailable: ['“You can ask about a payment once it’s past its payday and unpaid.”'],
     mistakes: [

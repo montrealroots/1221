@@ -1107,7 +1107,7 @@ defineDecider<{ sim: Simulation; first: number; performance: number }, string>({
 
 defineDecider<{ sim: Simulation; band: number }, string>({
   id: 'pro.recurring',
-  decides: 'A guest part brought back as a recurring character at the network’s renewal: its chance by the best the work was judged at, none for working work (INVITE).',
+  decides: 'A guest part brought back as a recurring character, six weeks before a season ordered or renewed: its chance by the best the work was judged at, none for working work (INVITE).',
   drawnIn: 'src/engine/systems/continuity.ts',
   reads: {
     band: (o, t) => ({ ...o, band: Math.round(t * 4) - 1 }),

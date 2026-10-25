@@ -571,9 +571,9 @@ export interface Engagement extends HasHistory {
    */
   revival?: { year: number; returns: boolean };
   /**
-   * The producers' word on bringing a guest part back as a recurring character, at the network's renewal (from 2026-10-25,
-   * the owner's brief 27, Part 13: "Guest work leading to a recurring engagement"; `systems/continuity.ts`'s `INVITE`): the
-   * season it's for, and whether they do. Given once; an engagement from before has none and is never asked.
+   * The producers' word on bringing a guest part back as a recurring character, six weeks before a season ordered or renewed
+   * (from 2026-10-25, the owner's brief 27, Part 13: "Guest work leading to a recurring engagement"; `systems/continuity.ts`'s
+   * `INVITE`): the season it's for, and whether they do. Given once; an engagement from before has none and is never asked.
    */
   invite?: { year: number; invited: boolean };
   /** A pilot's word from its network (brief 27, Part 8; `systems/continuity.ts`'s `PILOT`): when, picked up or not, and the series it became. */

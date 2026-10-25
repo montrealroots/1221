@@ -203,7 +203,7 @@ export function optionReleaseRefusal(sim: Simulation, person: Person, o: Opportu
 // ---------------------------------------------------------------------------------------------------------------------
 
 /**
- * The producers' chance of bringing a guest part back as a recurring character in the season the network renewed, by the
+ * The producers' chance of bringing a guest part back as a recurring character in a season ordered or renewed, by the
  * best its work was judged: none for working or unready work. The part they offer guarantees two episodes and expects
  * five. ASSUMPTION each, the game's; drawn by the engagement and the season (decider `pro.recurring`).
  */
