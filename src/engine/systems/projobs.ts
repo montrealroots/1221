@@ -585,8 +585,8 @@ export function fieldOf(t: ProjectTemplate): AgentField {
 
 /**
  * Whether an agent's agency's own department covers a project's field: Television, Film, Off-Broadway and Regional Theater
- * among Halberd Talent's. Its other departments aren't read (from 2026-10-25, brief 27, the voice-over department): its
- * one reader, `submitsFor` (`systems/representation.ts`), answers a voice part by the agreement's cover alone, and a
+ * among the game's own agency's. Its other departments aren't read (from 2026-10-25, brief 27, the voice-over department):
+ * its one reader, `submitsFor` (`systems/representation.ts`), answers a voice part by the agreement's cover alone, and a
  * voice-over agreement covers nothing on camera or on stage, so a voice-over agent's is never asked.
  */
 export function inScope(agentId: string, t: ProjectTemplate): boolean {
