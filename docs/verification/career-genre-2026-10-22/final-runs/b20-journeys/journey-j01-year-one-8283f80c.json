@@ -6,21 +6,21 @@
    "part": 1,
    "from": "2027-06-01",
    "to": "2028-03-31",
-   "secs": 80,
+   "secs": 70,
    "reloads": 9
   },
   {
    "part": 2,
    "from": "2028-03-31",
    "to": "2029-01-29",
-   "secs": 81,
+   "secs": 75,
    "reloads": 11
   },
   {
    "part": 3,
    "from": "2029-01-29",
    "to": "2029-09-01",
-   "secs": 129,
+   "secs": 139,
    "reloads": 6,
    "done": true
   }
@@ -39,7 +39,7 @@
    "4:good",
    "5:good"
   ],
-  "bank": 75589,
+  "bank": 76309,
   "audit": 0,
   "breaches": 0,
   "documents": [
@@ -297,7 +297,7 @@
   }
  ],
  "reloads": {
-  "n": 36,
+  "n": 37,
   "notSame": []
  },
  "notices": [
@@ -3762,12 +3762,48 @@
    "Thomas Ashgrove’s Office Passed"
   ],
   [
+   "2029-06-06",
+   "A Self-Tape For The Narrator"
+  ],
+  [
+   "2029-06-13",
+   "Not Cast As The Narrator"
+  ],
+  [
    "2029-06-14",
    "Happy Birthday: 27"
   ],
   [
+   "2029-06-20",
+   "A Self-Tape For Tamsin"
+  ],
+  [
    "2029-06-21",
    "A New Card Is On Its Way"
+  ],
+  [
+   "2029-06-27",
+   "Small Quarry Is Pushed Back"
+  ],
+  [
+   "2029-07-04",
+   "A Self-Tape For Dana Kell"
+  ],
+  [
+   "2029-07-09",
+   "Not Cast As Dana Kell"
+  ],
+  [
+   "2029-07-15",
+   "You’ve Arrived In Los Angeles"
+  ],
+  [
+   "2029-07-26",
+   "You’re Home From Los Angeles"
+  ],
+  [
+   "2029-07-26",
+   "Per Diem For Small Quarry"
   ],
   [
    "2029-08-01",
@@ -3778,6 +3814,10 @@
    "A Self-Tape For Robin"
   ],
   [
+   "2029-08-01",
+   "A Self-Tape For An Oyster Tonger Of 1890"
+  ],
+  [
    "2029-08-08",
    "An Audition For Ivy"
   ],
@@ -3786,16 +3826,8 @@
    "Not Cast As Robin"
   ],
   [
-   "2029-08-15",
-   "An Audition For Hester Vane"
-  ],
-  [
-   "2029-08-16",
-   "Not Cast As Ivy"
-  ],
-  [
-   "2029-08-21",
-   "Not Cast As Hester Vane"
+   "2029-08-08",
+   "Not Cast As An Oyster Tonger Of 1890"
   ],
   [
    "2029-09-01",
@@ -3839,7 +3871,7 @@
     "at": "2027-12-10T22:20",
     "what": "term 2 reviewed: good",
     "same": true,
-    "bytes": 1351498,
+    "bytes": 1370035,
     "credit": {
      "at": "2027-12-10T22:20",
      "what": "term 2 reviewed: good",
@@ -3859,7 +3891,7 @@
     "at": "2028-01-01T12:20",
     "what": "the end of 2027",
     "same": true,
-    "bytes": 1340359,
+    "bytes": 1359639,
     "credit": {
      "at": "2028-01-01T12:20",
      "what": "the end of 2027",
@@ -3879,7 +3911,7 @@
     "at": "2028-04-28T21:05",
     "what": "term 3 reviewed: good",
     "same": true,
-    "bytes": 1532020,
+    "bytes": 1562695,
     "credit": {
      "at": "2028-04-28T21:05",
      "what": "term 3 reviewed: good",
@@ -3899,7 +3931,7 @@
     "at": "2028-12-08T22:20",
     "what": "term 4 reviewed: good",
     "same": true,
-    "bytes": 1653601,
+    "bytes": 1682667,
     "credit": {
      "at": "2028-12-08T22:20",
      "what": "term 4 reviewed: good",
@@ -3919,7 +3951,7 @@
     "at": "2029-01-01T12:20",
     "what": "the end of 2028",
     "same": true,
-    "bytes": 1648214,
+    "bytes": 1678065,
     "credit": {
      "at": "2029-01-01T12:20",
      "what": "the end of 2028",
@@ -3939,7 +3971,7 @@
     "at": "2029-04-27T21:05",
     "what": "term 5 reviewed: good",
     "same": true,
-    "bytes": 1740032,
+    "bytes": 1767479,
     "credit": {
      "at": "2029-04-27T21:05",
      "what": "term 5 reviewed: good",
@@ -3959,7 +3991,7 @@
     "at": "2029-05-21T14:25",
     "what": "the School’s end: graduated",
     "same": true,
-    "bytes": 1747741,
+    "bytes": 1769387,
     "credit": {
      "at": "2029-05-21T14:25",
      "what": "the School’s end: graduated",
@@ -3973,6 +4005,26 @@
      "score": 850,
      "income12": 3353.32,
      "bank": 491110.72
+    }
+   },
+   {
+    "at": "2029-07-11T21:45",
+    "what": "the first booking: Tamsin in Small Quarry",
+    "same": true,
+    "bytes": 1817666,
+    "credit": {
+     "at": "2029-07-11T21:45",
+     "what": "the first booking: Tamsin in Small Quarry",
+     "cards": [
+      {
+       "name": "Chase Freedom Unlimited",
+       "limit": 162280,
+       "owed": 0
+      }
+     ],
+     "score": 850,
+     "income12": 3353.31,
+     "bank": 490348.41
     }
    }
   ],
@@ -4090,7 +4142,21 @@
     "bank": 491110.72
    },
    {
-    "at": "2029-09-01T11:45",
+    "at": "2029-07-11T21:45",
+    "what": "the first booking: Tamsin in Small Quarry",
+    "cards": [
+     {
+      "name": "Chase Freedom Unlimited",
+      "limit": 162280,
+      "owed": 0
+     }
+    ],
+    "score": 850,
+    "income12": 3353.31,
+    "bank": 490348.41
+   },
+   {
+    "at": "2029-09-01T11:30",
     "what": "the journey’s end",
     "cards": [
      {
@@ -4101,7 +4167,7 @@
     ],
     "score": 850,
     "income12": 3353.32,
-    "bank": 75589.18
+    "bank": 76309.18
    }
   ],
   "forks": [
@@ -4111,8 +4177,8 @@
     "days": 14,
     "same": true,
     "bytes": [
-     1126979,
-     1126979
+     1138941,
+     1138941
     ],
     "straight": {
      "now": "2027-09-16T01:35",
@@ -4135,7 +4201,9 @@
      ],
      "opportunities": [
       "route-nine lapsed",
-      "paper-moons-ivy lapsed"
+      "paper-moons-ivy lapsed",
+      "s1.oikt0.2027-09-06.new-york.ultra-low-budget.0.0 lapsed",
+      "lamplighters open"
      ],
      "engagements": [],
      "work": [
@@ -4166,7 +4234,9 @@
      ],
      "opportunities": [
       "route-nine lapsed",
-      "paper-moons-ivy lapsed"
+      "paper-moons-ivy lapsed",
+      "s1.oikt0.2027-09-06.new-york.ultra-low-budget.0.0 lapsed",
+      "lamplighters open"
      ],
      "engagements": [],
      "work": [
@@ -4176,7 +4246,7 @@
      ],
      "transactions": 436
     },
-    "secs": 6
+    "secs": 5
    },
    {
     "why": "a union bill due 2030-05-21T14:00: Initiation fee, part 2 of 3",
@@ -4184,8 +4254,8 @@
     "days": 14,
     "same": true,
     "bytes": [
-     1749008,
-     1749008
+     1771912,
+     1771912
     ],
     "straight": {
      "now": "2029-06-04T15:00",
@@ -4195,7 +4265,9 @@
       "You Met Thomas Ashgrove’s Office",
       "Thomas Ashgrove’s Office Passed"
      ],
-     "opportunities": [],
+     "opportunities": [
+      "tidewater-narrator submitted"
+     ],
      "engagements": [],
      "work": [],
      "transactions": 1148
@@ -4208,67 +4280,122 @@
       "You Met Thomas Ashgrove’s Office",
       "Thomas Ashgrove’s Office Passed"
      ],
-     "opportunities": [],
+     "opportunities": [
+      "tidewater-narrator submitted"
+     ],
      "engagements": [],
      "work": [],
      "transactions": 1148
+    },
+    "secs": 18
+   },
+   {
+    "why": "an audition (self-tape) set for 2029-06-10T22:00, The Narrator in Tidewater: The Last Oyster Towns",
+    "at": "2029-06-06T14:00",
+    "days": 14,
+    "same": true,
+    "bytes": [
+     1777771,
+     1777771
+    ],
+    "straight": {
+     "now": "2029-06-20T14:00",
+     "bank": 490814.22,
+     "standing": "graduated",
+     "notices": [
+      "A Self-Tape For The Narrator",
+      "Not Cast As The Narrator",
+      "Happy Birthday: 27",
+      "A Self-Tape For Tamsin"
+     ],
+     "opportunities": [
+      "tidewater-narrator passed",
+      "s1.oikt0.2029-06-18.los-angeles.ultra-low-budget.0.1 audition"
+     ],
+     "engagements": [],
+     "work": [
+      "The Narrator, Tidewater: The Last Oyster Towns: Audition, Taped 60"
+     ],
+     "transactions": 1164
+    },
+    "reopened": {
+     "now": "2029-06-20T14:00",
+     "bank": 490814.22,
+     "standing": "graduated",
+     "notices": [
+      "A Self-Tape For The Narrator",
+      "Not Cast As The Narrator",
+      "Happy Birthday: 27",
+      "A Self-Tape For Tamsin"
+     ],
+     "opportunities": [
+      "tidewater-narrator passed",
+      "s1.oikt0.2029-06-18.los-angeles.ultra-low-budget.0.1 audition"
+     ],
+     "engagements": [],
+     "work": [
+      "The Narrator, Tidewater: The Last Oyster Towns: Audition, Taped 60"
+     ],
+     "transactions": 1164
     },
     "secs": 21
    },
    {
-    "why": "an audition (self-tape) set for 2029-08-05T22:00, Robin in Last Bus To Eastview",
-    "at": "2029-08-01T14:00",
+    "why": "an offer standing: An Offer For Tamsin",
+    "at": "2029-06-27T21:00",
     "days": 14,
     "same": true,
     "bytes": [
-     1774203,
-     1774203
+     1817666,
+     1817666
     ],
     "straight": {
-     "now": "2029-08-15T14:30",
-     "bank": 490001.92,
+     "now": "2029-07-11T21:45",
+     "bank": 490348.41,
      "standing": "graduated",
      "notices": [
-      "A Self-Tape For Robin",
-      "An Audition For Ivy",
-      "Not Cast As Robin",
-      "An Audition For Hester Vane"
+      "Small Quarry Is Pushed Back",
+      "A Self-Tape For Dana Kell",
+      "Not Cast As Dana Kell"
      ],
      "opportunities": [
-      "eastview passed",
-      "paper-moons-ivy audition",
-      "winter-ledger-hester audition"
+      "s1.oikt0.2029-06-18.los-angeles.ultra-low-budget.0.1 booked",
+      "s1.oikt0.2029-06-18.los-angeles.ultra-low-budget.0.1.p booked",
+      "harbor-line passed"
      ],
-     "engagements": [],
+     "engagements": [
+      "s1.oikt0.2029-06-18.los-angeles.ultra-low-budget.0.1 canceled 0 worked",
+      "s1.oikt0.2029-06-18.los-angeles.ultra-low-budget.0.1.p booked 0 worked"
+     ],
      "work": [
-      "Robin, Last Bus To Eastview: Audition, Taped 62.3",
-      "Ivy, Paper Moons: Audition 65.5"
+      "Dana Kell, Harbor Line: Audition, Taped 59.5"
      ],
-     "transactions": 1224
+     "transactions": 1188
     },
     "reopened": {
-     "now": "2029-08-15T14:30",
-     "bank": 490001.92,
+     "now": "2029-07-11T21:45",
+     "bank": 490348.41,
      "standing": "graduated",
      "notices": [
-      "A Self-Tape For Robin",
-      "An Audition For Ivy",
-      "Not Cast As Robin",
-      "An Audition For Hester Vane"
+      "Small Quarry Is Pushed Back",
+      "A Self-Tape For Dana Kell",
+      "Not Cast As Dana Kell"
      ],
      "opportunities": [
-      "eastview passed",
-      "paper-moons-ivy audition",
-      "winter-ledger-hester audition"
+      "s1.oikt0.2029-06-18.los-angeles.ultra-low-budget.0.1 booked",
+      "s1.oikt0.2029-06-18.los-angeles.ultra-low-budget.0.1.p booked",
+      "harbor-line passed"
      ],
-     "engagements": [],
+     "engagements": [
+      "s1.oikt0.2029-06-18.los-angeles.ultra-low-budget.0.1 canceled 0 worked",
+      "s1.oikt0.2029-06-18.los-angeles.ultra-low-budget.0.1.p booked 0 worked"
+     ],
      "work": [
-      "Robin, Last Bus To Eastview: Audition, Taped 62.3",
-      "Ivy, Paper Moons: Audition 65.5"
+      "Dana Kell, Harbor Line: Audition, Taped 59.5"
      ],
-     "transactions": 1224
+     "transactions": 1188
     },
-    "secs": 20
+    "secs": 19
    }
   ],
   "workDays": [],
@@ -4320,8 +4447,8 @@
   "ledger": {
    "pass": true,
    "evidence": [
-    "12 accounts (3 the player's), 1246 transactions; every balance the sum of its postings: true; ledger audit 0 problems",
-    "the player's: checking Chase Total Checking 75589.18; savings Chase Savings 0 (closed); credit_card Chase Freedom Unlimited 0"
+    "13 accounts (3 the player's), 1247 transactions; every balance the sum of its postings: true; ledger audit 0 problems",
+    "the player's: checking Chase Total Checking 76309.18; savings Chase Savings 0 (closed); credit_card Chase Freedom Unlimited 0"
    ],
    "fails": []
   },
@@ -4339,7 +4466,7 @@
    "evidence": [
     "classmates 15: bonds 58 54 48 77 36 40 36 92 70 51 43 35 27 45 19",
     "agents: thomas-ashgrove passed (discovered,introduced,checked,sent,meeting-set,meeting-kept,passed); agreements none",
-    "engagements: none",
+    "engagements: Tamsin in Small Quarry canceled (0 worked, 0/0 paid); Tamsin in Small Quarry booked (0 worked, 0/2 paid); Ivy in Paper Moons booked (0 worked, 0/1 paid)",
     "credits: none"
    ],
    "fails": []
@@ -4355,13 +4482,20 @@
  "routes": {
   "represented": [],
   "unsigned": [
-   "no agreement in 2029-05-21T14:00 to 2029-09-01T11:45; 3 open calls submitted to of those kept"
+   "no agreement in 2029-05-21T14:00 to 2029-09-01T11:30; 6 open calls submitted to of those kept"
   ],
-  "success": [],
+  "success": [
+   "Tamsin in Small Quarry: canceled, 0 payments received",
+   "Tamsin in Small Quarry: booked, 0 payments received",
+   "Ivy in Paper Moons: booked, 0 payments received",
+   "audition for s1.oikt0.2029-06-18.los-angeles.ultra-low-budget.0.1 went on (strong)",
+   "audition for paper-moons-ivy went on (strong)"
+  ],
   "failure": [
+   "audition for tidewater-narrator working: not cast (chance 12%)",
+   "audition for harbor-line working: not cast (chance 22%)",
    "audition for eastview working: not cast (chance 14%)",
-   "audition for paper-moons-ivy strong: not cast (chance 30%)",
-   "audition for winter-ledger-hester working: not cast (chance 23%)",
+   "audition for tidewater-reenactment strong: not cast (chance 26%)",
    "thomas-ashgrove: passed"
   ],
   "delay": [],

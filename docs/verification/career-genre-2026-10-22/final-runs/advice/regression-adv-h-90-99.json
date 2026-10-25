@@ -1,5 +1,5 @@
 {
- "commit": "124bec77ffd48842793f3d084939ae1b02b6e420",
+ "commit": "f32cf4078d2fef0001f0f2051f4e72b9d7ce61c0",
  "clean": true,
  "command": "npx vite-node tools/advice.ts -- --cases adv-h-90..99 --held-out --out docs/verification/career-genre-2026-10-22/final-runs/advice/regression-adv-h-90-99.json",
  "roles": {

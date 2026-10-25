@@ -5,7 +5,7 @@
   "seed": "j13-1",
   "done": true,
   "played": "2026-08-24 to 2029-08-04",
-  "secs": 202,
+  "secs": 218,
   "expected": "graduated 2029-05-21: good at the last review; at most one concern, remedied",
   "actual": "graduated 2029-05-21 (0:good 1:good 2:good 3:good 4:good 5:good)",
   "checks": {
@@ -27,7 +27,7 @@
   "seed": "j13-2",
   "done": true,
   "played": "2026-08-24 to 2029-08-04",
-  "secs": 210,
+  "secs": 229,
   "expected": "graduated 2029-05-21: more Unready pieces in the first year than J01; a second concern no defect, a warning a surprise",
   "actual": "graduated 2029-05-21 (0:good 1:good 2:concern 3:warning 4:good 5:concern)",
   "checks": {
@@ -49,7 +49,7 @@
   "seed": "j13-3",
   "done": true,
   "played": "2026-08-24 to 2029-08-04",
-  "secs": 445,
+  "secs": 488,
   "expected": "graduated 2029-05-21: the advised inputs rise most here of J03 to J05",
   "actual": "graduated 2029-05-21 (0:good 1:good 2:good 3:good 4:good 5:good)",
   "checks": {
@@ -71,7 +71,7 @@
   "seed": "j13-3",
   "done": true,
   "played": "2026-08-24 to 2029-08-04",
-  "secs": 360,
+  "secs": 430,
   "expected": "graduated 2029-05-21: between J03 and J05",
   "actual": "graduated 2029-05-21 (0:good 1:good 2:good 3:good 4:good 5:good)",
   "checks": {
@@ -93,7 +93,7 @@
   "seed": "j13-3",
   "done": true,
   "played": "2026-08-24 to 2029-08-04",
-  "secs": 255,
+  "secs": 273,
   "expected": "graduated 2029-05-21: its favorite rises most here; the advice may repeat, justified while unmoved",
   "actual": "graduated 2029-05-21 (0:good 1:good 2:good 3:good 4:good 5:good)",
   "checks": {
@@ -115,7 +115,7 @@
   "seed": "j13-4",
   "done": true,
   "played": "2026-08-24 to 2029-08-04",
-  "secs": 490,
+  "secs": 494,
   "expected": "graduated 2029-05-21: the advised inputs rise most here of J06 to J08",
   "actual": "graduated 2029-05-21 (0:good 1:good 2:good 3:good 4:good 5:good)",
   "checks": {
@@ -137,7 +137,7 @@
   "seed": "j13-4",
   "done": true,
   "played": "2026-08-24 to 2029-08-04",
-  "secs": 386,
+  "secs": 406,
   "expected": "graduated 2029-05-21: between J06 and J08",
   "actual": "graduated 2029-05-21 (0:good 1:good 2:good 3:good 4:good 5:good)",
   "checks": {
@@ -159,7 +159,7 @@
   "seed": "j13-4",
   "done": true,
   "played": "2026-08-24 to 2029-08-04",
-  "secs": 265,
+  "secs": 274,
   "expected": "graduated 2029-05-21: its favorite rises most here",
   "actual": "graduated 2029-05-21 (0:good 1:good 2:good 3:good 4:good 5:good)",
   "checks": {
@@ -181,7 +181,7 @@
   "seed": "j13-5",
   "done": true,
   "played": "2026-08-24 to 2029-08-04",
-  "secs": 479,
+  "secs": 508,
   "expected": "graduated 2029-05-21: the generalist J11 is compared with",
   "actual": "graduated 2029-05-21 (0:good 1:good 2:good 3:good 4:good 5:good)",
   "checks": {
@@ -203,7 +203,7 @@
   "seed": "j13-6",
   "done": true,
   "played": "2026-08-24 to 2029-08-04",
-  "secs": 457,
+  "secs": 498,
   "expected": "graduated 2029-05-21: the generalist J12 is compared with",
   "actual": "graduated 2029-05-21 (0:good 1:good 2:good 3:good 4:good 5:good)",
   "checks": {
@@ -225,7 +225,7 @@
   "seed": "j13-5",
   "done": true,
   "played": "2026-08-24 to 2029-08-04",
-  "secs": 516,
+  "secs": 580,
   "expected": "graduated 2029-05-21: above J09 where its strengths are read, below where its 49s are; its 90s stay above its 49s",
   "actual": "graduated 2029-05-21 (0:good 1:good 2:good 3:good 4:good 5:good)",
   "checks": {
@@ -269,7 +269,7 @@
   "seed": "j13-7",
   "done": true,
   "played": "2026-08-24 to 2029-08-04",
-  "secs": 205,
+  "secs": 220,
   "expected": "graduated 2029-05-21: complete pieces at mastery; any short of it limited by preparation, condition, fit or suitability",
   "actual": "graduated 2029-05-21 (0:good 1:good 2:good 3:good 4:good 5:good)",
   "checks": {
@@ -291,7 +291,7 @@
   "seed": "j13-8",
   "done": true,
   "played": "2026-08-24 to 2029-08-04",
-  "secs": 198,
+  "secs": 200,
   "expected": "graduated 2029-05-21: as J13",
   "actual": "graduated 2029-05-21 (0:good 1:good 2:good 3:good 4:good 5:good)",
   "checks": {
@@ -313,7 +313,7 @@
   "seed": "j13-9",
   "done": true,
   "played": "2026-08-24 to 2028-02-23",
-  "secs": 23,
+  "secs": 30,
   "expected": "dismissed 2027-12-10: concern December 2026, warning April 2027, dismissed at the third review, each review warned in its term",
   "actual": "dismissed 2027-12-10 (0:concern 1:warning 2:dismissed)",
   "checks": {
@@ -335,7 +335,7 @@
   "seed": "j13-10",
   "done": true,
   "played": "2026-08-24 to 2028-02-23",
-  "secs": 26,
+  "secs": 32,
   "expected": "dismissed 2027-12-10: as J15; F-1 status ends with the dismissal, OPT refused for leaving without the degree",
   "actual": "dismissed 2027-12-10 (0:concern 1:warning 2:dismissed)",
   "checks": {
@@ -357,7 +357,7 @@
   "seed": "j13-11",
   "done": true,
   "played": "2026-08-24 to 2029-08-04",
-  "secs": 203,
+  "secs": 221,
   "expected": "graduated 2029-05-21: warned in the first term; that term good",
   "actual": "graduated 2029-05-21 (0:good 1:good 2:good 3:good 4:good 5:good)",
   "checks": {
@@ -379,7 +379,7 @@
   "seed": "j13-12",
   "done": true,
   "played": "2026-08-24 to 2029-08-04",
-  "secs": 206,
+  "secs": 231,
   "expected": "graduated 2029-05-21: concern at the first review, good at the second",
   "actual": "graduated 2029-05-21 (0:concern 1:good 2:good 3:good 4:good 5:good)",
   "checks": {
@@ -401,7 +401,7 @@
   "seed": "j13-13",
   "done": true,
   "played": "2026-08-24 to 2029-08-04",
-  "secs": 201,
+  "secs": 213,
   "expected": "graduated 2029-05-21: scholarship each term, 14% withheld; out of status sixty days after the program ends",
   "actual": "graduated 2029-05-21 (0:good 1:concern 2:good 3:good 4:good 5:good)",
   "checks": {
@@ -423,7 +423,7 @@
   "seed": "j13-14",
   "done": true,
   "played": "2026-08-24 to 2030-08-03",
-  "secs": 276,
+  "secs": 343,
   "expected": "graduated 2030-05-20: course failed, concern, repeat, terms past six billed, a hold and its late fee, paid, registered, degree in 2030",
   "actual": "graduated 2030-05-20 (0:good 1:concern 2:good 3:good 4:good 5:good 6:good 7:good)",
   "checks": {
@@ -445,7 +445,7 @@
   "seed": "j13-15",
   "done": true,
   "played": "2026-08-24 to 2028-11-09",
-  "secs": 121,
+  "secs": 149,
   "expected": "graduated 2029-05-21: illness excused; work ill judged lower by condition",
   "actual": "good 2026-08-24 (0:good 1:good 2:concern 3:good)",
   "checks": {
@@ -467,7 +467,7 @@
   "seed": "j13-16",
   "done": true,
   "played": "2026-08-24 to 2030-08-03",
-  "secs": 244,
+  "secs": 278,
   "expected": "graduated 2030-05-20: the dean’s medical leave, the return with the class of 2030, the degree in 2030",
   "actual": "graduated 2030-05-20 (2:good 3:good 4:good 5:good 6:good 7:good)",
   "checks": {
@@ -489,7 +489,7 @@
   "seed": "j13-17",
   "done": true,
   "played": "2026-08-24 to 2029-08-04",
-  "secs": 191,
+  "secs": 196,
   "expected": "graduated 2029-05-21: as J21",
   "actual": "graduated 2029-05-21 (0:good 1:good 2:good 3:good 4:good 5:good)",
   "checks": {
@@ -511,7 +511,7 @@
   "seed": "j13-f1",
   "done": true,
   "played": "2026-08-24 to 2029-08-04",
-  "secs": 204,
+  "secs": 211,
   "expected": "graduated 2029-05-21: the bank asks a photo ID while none is in force; renewed, issued, the old canceled, the ask gone",
   "actual": "graduated 2029-05-21 (0:good 1:good 2:good 3:good 4:good 5:good)",
   "checks": {
@@ -533,7 +533,7 @@
   "seed": "j13-f2",
   "done": true,
   "played": "2026-08-24 to 2029-08-04",
-  "secs": 230,
+  "secs": 233,
   "expected": "graduated 2029-05-21: the spring plan owed and said, paid the first day there’s money",
   "actual": "graduated 2029-05-21 (0:good 1:good 2:good 3:good 4:good 5:good)",
   "checks": {

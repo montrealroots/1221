@@ -6,14 +6,14 @@
    "part": 1,
    "from": "2028-02-23",
    "to": "2028-12-23",
-   "secs": 94,
+   "secs": 84,
    "reloads": 10
   },
   {
    "part": 2,
    "from": "2028-12-23",
    "to": "2029-09-01",
-   "secs": 161,
+   "secs": 151,
    "reloads": 7,
    "done": true
   }
@@ -5487,7 +5487,7 @@
     "at": "2028-04-28T21:20",
     "what": "term 3 reviewed: good",
     "same": true,
-    "bytes": 1431866,
+    "bytes": 1446482,
     "credit": {
      "at": "2028-04-28T21:20",
      "what": "term 3 reviewed: good",
@@ -5507,7 +5507,7 @@
     "at": "2028-12-08T22:25",
     "what": "term 4 reviewed: concern",
     "same": true,
-    "bytes": 1581629,
+    "bytes": 1620252,
     "credit": {
      "at": "2028-12-08T22:25",
      "what": "term 4 reviewed: concern",
@@ -5521,7 +5521,7 @@
     "at": "2029-01-01T12:05",
     "what": "the end of 2028",
     "same": true,
-    "bytes": 1574217,
+    "bytes": 1609067,
     "credit": {
      "at": "2029-01-01T12:05",
      "what": "the end of 2028",
@@ -5535,7 +5535,7 @@
     "at": "2029-04-27T21:00",
     "what": "term 5 reviewed: good",
     "same": true,
-    "bytes": 1659169,
+    "bytes": 1694292,
     "credit": {
      "at": "2029-04-27T21:00",
      "what": "term 5 reviewed: good",
@@ -5549,7 +5549,7 @@
     "at": "2029-05-21T14:00",
     "what": "the School’s end: graduated",
     "same": true,
-    "bytes": 1659536,
+    "bytes": 1692974,
     "credit": {
      "at": "2029-05-21T14:00",
      "what": "the School’s end: graduated",
@@ -5637,8 +5637,8 @@
     "days": 14,
     "same": true,
     "bytes": [
-     1347108,
-     1347108
+     1355957,
+     1355957
     ],
     "straight": {
      "now": "2028-03-09T04:25",
@@ -5654,7 +5654,12 @@
       "Jordan Asks To Rehearse"
      ],
      "opportunities": [
-      "eastview open"
+      "tidewater-reenactment lapsed",
+      "s1.kccse.2028-02-28.new-york.dub.0.0 lapsed",
+      "g1.kccse.2025.los-angeles.animated-series.1.s3.1 lapsed",
+      "g1.kccse.2027.los-angeles.animated-series.0.s1.1 lapsed",
+      "eastview open",
+      "g1.kccse.2027.los-angeles.animated-series.0.s1.0 open"
      ],
      "engagements": [],
      "work": [
@@ -5679,7 +5684,12 @@
       "Jordan Asks To Rehearse"
      ],
      "opportunities": [
-      "eastview open"
+      "tidewater-reenactment lapsed",
+      "s1.kccse.2028-02-28.new-york.dub.0.0 lapsed",
+      "g1.kccse.2025.los-angeles.animated-series.1.s3.1 lapsed",
+      "g1.kccse.2027.los-angeles.animated-series.0.s1.1 lapsed",
+      "eastview open",
+      "g1.kccse.2027.los-angeles.animated-series.0.s1.0 open"
      ],
      "engagements": [],
      "work": [
@@ -5690,7 +5700,7 @@
      ],
      "transactions": 666
     },
-    "secs": 13
+    "secs": 11
    },
    {
     "why": "a union bill due 2030-05-21T14:00: Initiation fee, part 2 of 3",
@@ -5698,8 +5708,8 @@
     "days": 14,
     "same": true,
     "bytes": [
-     1653666,
-     1653666
+     1685170,
+     1685170
     ],
     "straight": {
      "now": "2029-06-04T14:20",
@@ -5715,6 +5725,7 @@
      "opportunities": [
       "winter-ledger lapsed",
       "eastview lapsed",
+      "s1.kccse.2029-05-21.new-york.documentary.0.0 lapsed",
       "paper-moons open"
      ],
      "engagements": [],
@@ -5735,13 +5746,14 @@
      "opportunities": [
       "winter-ledger lapsed",
       "eastview lapsed",
+      "s1.kccse.2029-05-21.new-york.documentary.0.0 lapsed",
       "paper-moons open"
      ],
      "engagements": [],
      "work": [],
      "transactions": 897
     },
-    "secs": 20
+    "secs": 18
    }
   ],
   "workDays": [],

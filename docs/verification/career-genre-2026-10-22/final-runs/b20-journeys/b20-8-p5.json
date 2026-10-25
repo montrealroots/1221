@@ -3,8 +3,8 @@
  "part": 5,
  "from": "2029-11-01",
  "to": "2030-03-01",
- "secs": 43,
- "reloads": 59,
+ "secs": 42,
+ "reloads": 60,
  "done": true,
  "standing": "graduated",
  "schoolEnd": "2029-05-21T14:00",
@@ -22,18 +22,19 @@
   "2029-01-01T12:00 the end of 2028: same",
   "2029-04-27T21:25 term 5 reviewed: good: same",
   "2029-05-21T14:45 the School’s end: graduated: same",
-  "2029-08-16T22:00 the first booking: Ivy in Paper Moons: same",
-  "2029-08-27T22:00 the first work day: same",
-  "2030-01-01T12:15 the end of 2029: same"
+  "2029-06-04T14:45 the first booking: Robin in Last Bus To Eastview: same",
+  "2029-06-25T22:00 the first work day: same",
+  "2029-06-28T16:00 the first pay: same",
+  "2030-01-01T12:45 the end of 2029: same"
  ],
  "forks": [
   "2026-09-01T11:25 a rehearsal with a partner booked for 2026-09-01T23:00 on Scene Study: same",
   "2029-05-21T14:45 a union bill due 2030-05-21T14:00: Initiation fee, part 2 of 3: same",
-  "2029-07-04T14:15 an audition (self-tape) set for 2029-07-08T22:00, Jess in Static On Route 9: same",
+  "2029-06-04T21:45 an callback (self-tape) set for 2029-06-07T22:00, The Crow in The Kite And The Crow: same",
   "2029-08-02T21:30 an offer standing: An Offer For Ivy: same"
  ],
- "workDays": 3,
- "notices": 944,
- "bank": 67138.88,
+ "workDays": 5,
+ "notices": 973,
+ "bank": 67363.88,
  "errors": []
 }

@@ -3,8 +3,8 @@
  "part": 4,
  "from": "2029-06-04",
  "to": "2029-11-01",
- "secs": 99,
- "reloads": 52,
+ "secs": 123,
+ "reloads": 53,
  "done": false,
  "standing": "graduated",
  "schoolEnd": "2029-05-21T14:00",
@@ -21,15 +21,17 @@
   "2028-12-08T22:15 term 4 reviewed: good: same",
   "2029-01-01T12:15 the end of 2028: same",
   "2029-04-27T21:10 term 5 reviewed: good: same",
-  "2029-05-21T14:30 the School’s end: graduated: same"
+  "2029-05-21T14:30 the School’s end: graduated: same",
+  "2029-08-29T21:45 the first booking: The Narrator in Tidewater: The Last Oyster Towns: same"
  ],
  "forks": [
   "2026-09-01T11:15 a rehearsal with a partner booked for 2026-09-01T23:00 on Scene Study: same",
   "2029-05-21T14:30 a union bill due 2030-05-21T14:00: Initiation fee, part 2 of 3: same",
-  "2029-09-05T14:30 an audition (in-person) set for 2029-09-10T15:00, Felix in Paper Moons: same"
+  "2029-07-11T14:30 an audition (self-tape) set for 2029-07-15T22:00, Quinn Escobar in The Almanac: same",
+  "2029-08-15T21:00 an offer standing: An Offer For The Narrator: same"
  ],
  "workDays": 0,
- "notices": 948,
- "bank": 68640.62,
+ "notices": 967,
+ "bank": 67002.59,
  "errors": []
 }

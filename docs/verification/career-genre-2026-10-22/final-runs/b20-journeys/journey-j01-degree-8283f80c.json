@@ -6,7 +6,7 @@
    "part": 1,
    "from": "2029-08-04",
    "to": "2029-12-01",
-   "secs": 81,
+   "secs": 77,
    "reloads": 3,
    "done": true
   }
@@ -25,7 +25,7 @@
    "4:good",
    "5:good"
   ],
-  "bank": 72228,
+  "bank": 74500,
   "audit": 0,
   "breaches": 0,
   "documents": [
@@ -171,7 +171,7 @@
   }
  ],
  "reloads": {
-  "n": 5,
+  "n": 7,
   "notSame": []
  },
  "notices": [
@@ -2184,6 +2184,10 @@
    "An Audition For Hester Vane"
   ],
   [
+   "2029-08-15",
+   "A Self-Tape For An Oyster Tonger Of 1890"
+  ],
+  [
    "2029-08-16",
    "Not Cast As Ivy"
   ],
@@ -2192,8 +2196,16 @@
    "Not Cast As Hester Vane"
   ],
   [
+   "2029-08-22",
+   "Not Cast As An Oyster Tonger Of 1890"
+  ],
+  [
    "2029-08-29",
    "A Self-Tape For Robin"
+  ],
+  [
+   "2029-08-29",
+   "A Self-Tape For Harbormaster Brandt"
   ],
   [
    "2029-09-01",
@@ -2201,15 +2213,55 @@
   ],
   [
    "2029-09-05",
+   "A Self-Tape For The Narrator"
+  ],
+  [
+   "2029-09-05",
    "Not Cast As Robin"
+  ],
+  [
+   "2029-09-05",
+   "Not Cast As Harbormaster Brandt"
+  ],
+  [
+   "2029-09-12",
+   "Not Cast As The Narrator"
+  ],
+  [
+   "2029-09-26",
+   "A Self-Tape For The Crow"
+  ],
+  [
+   "2029-09-26",
+   "An Audition For The Apprentice Lamplighter"
+  ],
+  [
+   "2029-10-01",
+   "Not Cast As The Crow"
+  ],
+  [
+   "2029-10-02",
+   "Not Cast As The Apprentice Lamplighter"
   ],
   [
    "2029-10-10",
    "A Self-Tape For Jess"
   ],
   [
+   "2029-10-10",
+   "A Self-Tape For Tamsin Ibarra"
+  ],
+  [
+   "2029-10-17",
+   "A Self-Tape For Dana Kell"
+  ],
+  [
    "2029-10-17",
    "Not Cast As Jess"
+  ],
+  [
+   "2029-10-22",
+   "Not Cast As Dana Kell"
   ],
   [
    "2029-11-01",
@@ -2224,8 +2276,40 @@
    "An Audition For Ivy"
   ],
   [
+   "2029-11-14",
+   "You’ve Arrived In Los Angeles"
+  ],
+  [
    "2029-11-21",
    "A Self-Tape For Robin"
+  ],
+  [
+   "2029-11-21",
+   "A Self-Tape For The Narrator"
+  ],
+  [
+   "2029-11-22",
+   "Paid For The Weather Of Dunmore"
+  ],
+  [
+   "2029-11-23",
+   "The Weather Of Dunmore Calls You For A Promotional Film"
+  ],
+  [
+   "2029-11-23",
+   "You Wrapped The Weather Of Dunmore"
+  ],
+  [
+   "2029-11-25",
+   "You’re Home From Los Angeles"
+  ],
+  [
+   "2029-11-25",
+   "Per Diem For The Weather Of Dunmore"
+  ],
+  [
+   "2029-11-29",
+   "Paid For The Weather Of Dunmore"
   ]
  ],
  "b20": {
@@ -2262,13 +2346,33 @@
     }
    },
    {
-    "at": "2029-11-29T22:45",
-    "what": "the first booking: Ivy in Paper Moons",
+    "at": "2029-10-31T21:45",
+    "what": "the first booking: Tamsin Ibarra in The Weather Of Dunmore",
     "same": true,
-    "bytes": 1759101,
+    "bytes": 1801281,
     "credit": {
-     "at": "2029-11-29T22:45",
-     "what": "the first booking: Ivy in Paper Moons",
+     "at": "2029-10-31T21:45",
+     "what": "the first booking: Tamsin Ibarra in The Weather Of Dunmore",
+     "cards": [
+      {
+       "name": "Chase Freedom Unlimited",
+       "limit": 162280,
+       "owed": 0
+      }
+     ],
+     "score": 850,
+     "income12": 2935.92,
+     "bank": 74798.18
+    }
+   },
+   {
+    "at": "2029-11-17T02:00",
+    "what": "the first work day",
+    "same": true,
+    "bytes": 1796476,
+    "credit": {
+     "at": "2029-11-17T02:00",
+     "what": "the first work day",
      "cards": [
       {
        "name": "Chase Freedom Unlimited",
@@ -2278,7 +2382,27 @@
      ],
      "score": 850,
      "income12": 2380.41,
-     "bank": 73034.18
+     "bank": 73164.18
+    }
+   },
+   {
+    "at": "2029-11-23T02:00",
+    "what": "the first pay",
+    "same": true,
+    "bytes": 1795913,
+    "credit": {
+     "at": "2029-11-23T02:00",
+     "what": "the first pay",
+     "cards": [
+      {
+       "name": "Chase Freedom Unlimited",
+       "limit": 162280,
+       "owed": 0
+      }
+     ],
+     "score": 850,
+     "income12": 2380.41,
+     "bank": 73362.76
     }
    }
   ],
@@ -2298,8 +2422,22 @@
     "bank": 491656.92
    },
    {
-    "at": "2029-11-29T22:45",
-    "what": "the first booking: Ivy in Paper Moons",
+    "at": "2029-10-31T21:45",
+    "what": "the first booking: Tamsin Ibarra in The Weather Of Dunmore",
+    "cards": [
+     {
+      "name": "Chase Freedom Unlimited",
+      "limit": 162280,
+      "owed": 0
+     }
+    ],
+    "score": 850,
+    "income12": 2935.92,
+    "bank": 74798.18
+   },
+   {
+    "at": "2029-11-17T02:00",
+    "what": "the first work day",
     "cards": [
      {
       "name": "Chase Freedom Unlimited",
@@ -2309,10 +2447,24 @@
     ],
     "score": 850,
     "income12": 2380.41,
-    "bank": 73034.18
+    "bank": 73164.18
    },
    {
-    "at": "2029-12-01T12:45",
+    "at": "2029-11-23T02:00",
+    "what": "the first pay",
+    "cards": [
+     {
+      "name": "Chase Freedom Unlimited",
+      "limit": 162280,
+      "owed": 0
+     }
+    ],
+    "score": 850,
+    "income12": 2380.41,
+    "bank": 73362.76
+   },
+   {
+    "at": "2029-12-01T12:15",
     "what": "the journey’s end",
     "cards": [
      {
@@ -2322,8 +2474,8 @@
      }
     ],
     "score": 850,
-    "income12": 1825.01,
-    "bank": 72228.18
+    "income12": 3505.01,
+    "bank": 74499.66
    }
   ],
   "forks": [
@@ -2333,8 +2485,8 @@
     "days": 14,
     "same": true,
     "bytes": [
-     1752729,
-     1752729
+     1754749,
+     1754749
     ],
     "straight": {
      "now": "2029-08-18T18:45",
@@ -2343,15 +2495,18 @@
      "notices": [
       "An Audition For Ivy",
       "An Audition For Hester Vane",
+      "A Self-Tape For An Oyster Tonger Of 1890",
       "Not Cast As Ivy"
      ],
      "opportunities": [
       "paper-moons-ivy passed",
-      "winter-ledger-hester audition"
+      "winter-ledger-hester audition",
+      "tidewater-reenactment audition"
      ],
      "engagements": [],
      "work": [
-      "Ivy, Paper Moons: Audition 62.9"
+      "Ivy, Paper Moons: Audition 62.9",
+      "An Oyster Tonger Of 1890, Tidewater: The Last Oyster Towns: Audition, Taped 64.6"
      ],
      "transactions": 1227
     },
@@ -2362,19 +2517,22 @@
      "notices": [
       "An Audition For Ivy",
       "An Audition For Hester Vane",
+      "A Self-Tape For An Oyster Tonger Of 1890",
       "Not Cast As Ivy"
      ],
      "opportunities": [
       "paper-moons-ivy passed",
-      "winter-ledger-hester audition"
+      "winter-ledger-hester audition",
+      "tidewater-reenactment audition"
      ],
      "engagements": [],
      "work": [
-      "Ivy, Paper Moons: Audition 62.9"
+      "Ivy, Paper Moons: Audition 62.9",
+      "An Oyster Tonger Of 1890, Tidewater: The Last Oyster Towns: Audition, Taped 64.6"
      ],
      "transactions": 1227
     },
-    "secs": 19
+    "secs": 18
    },
    {
     "why": "an audition (in-person) set for 2029-08-20T15:00, Hester Vane in The Winter Ledger",
@@ -2382,104 +2540,167 @@
     "days": 14,
     "same": true,
     "bytes": [
-     1763002,
-     1763002
+     1767710,
+     1767710
     ],
     "straight": {
-     "now": "2029-09-01T20:00",
+     "now": "2029-09-01T20:15",
      "bank": 76184.18,
      "standing": "graduated",
      "notices": [
       "Not Cast As Hester Vane",
+      "Not Cast As An Oyster Tonger Of 1890",
       "A Self-Tape For Robin",
+      "A Self-Tape For Harbormaster Brandt",
       "Unclaimed Money"
      ],
      "opportunities": [
       "winter-ledger-hester passed",
-      "eastview audition"
+      "tidewater-reenactment passed",
+      "eastview audition",
+      "salt-road audition"
      ],
      "engagements": [],
      "work": [
-      "Hester Vane, The Winter Ledger: Audition 62.5",
-      "Robin, Last Bus To Eastview: Audition, Taped 60.1"
+      "Hester Vane, The Winter Ledger: Audition 62.4",
+      "Robin, Last Bus To Eastview: Audition, Taped 58.5",
+      "Harbormaster Brandt, The Salt Road: Audition, Taped 58.1"
      ],
      "transactions": 1246
     },
     "reopened": {
-     "now": "2029-09-01T20:00",
+     "now": "2029-09-01T20:15",
      "bank": 76184.18,
      "standing": "graduated",
      "notices": [
       "Not Cast As Hester Vane",
+      "Not Cast As An Oyster Tonger Of 1890",
       "A Self-Tape For Robin",
+      "A Self-Tape For Harbormaster Brandt",
       "Unclaimed Money"
      ],
      "opportunities": [
       "winter-ledger-hester passed",
-      "eastview audition"
+      "tidewater-reenactment passed",
+      "eastview audition",
+      "salt-road audition"
      ],
      "engagements": [],
      "work": [
-      "Hester Vane, The Winter Ledger: Audition 62.5",
-      "Robin, Last Bus To Eastview: Audition, Taped 60.1"
+      "Hester Vane, The Winter Ledger: Audition 62.4",
+      "Robin, Last Bus To Eastview: Audition, Taped 58.5",
+      "Harbormaster Brandt, The Salt Road: Audition, Taped 58.1"
      ],
      "transactions": 1246
     },
-    "secs": 20
+    "secs": 14
    },
    {
-    "why": "an offer standing: An Offer For Ivy",
-    "at": "2029-11-15T22:30",
+    "why": "an offer standing: An Offer For Tamsin Ibarra",
+    "at": "2029-10-17T21:15",
     "days": 14,
     "same": true,
     "bytes": [
-     1759101,
-     1759101
+     1801281,
+     1801281
     ],
     "straight": {
-     "now": "2029-11-29T22:45",
-     "bank": 73034.18,
+     "now": "2029-10-31T21:45",
+     "bank": 74798.18,
      "standing": "graduated",
      "notices": [
-      "A Self-Tape For Robin",
-      "Not Cast As Robin"
+      "Not Cast As Dana Kell"
      ],
      "opportunities": [
-      "paper-moons-ivy booked",
-      "eastview passed"
+      "s1.oikt0.2029-10-08.los-angeles.ultra-low-budget.0.0 booked",
+      "harbor-line passed"
      ],
      "engagements": [
-      "paper-moons-ivy booked 0 worked"
+      "s1.oikt0.2029-10-08.los-angeles.ultra-low-budget.0.0 booked 0 worked"
      ],
      "work": [
-      "Robin, Last Bus To Eastview: Audition, Taped 64.6"
+      "Dana Kell, Harbor Line: Audition, Taped 62.1"
      ],
-     "transactions": 1339
+     "transactions": 1307
     },
     "reopened": {
-     "now": "2029-11-29T22:45",
-     "bank": 73034.18,
+     "now": "2029-10-31T21:45",
+     "bank": 74798.18,
      "standing": "graduated",
      "notices": [
-      "A Self-Tape For Robin",
-      "Not Cast As Robin"
+      "Not Cast As Dana Kell"
      ],
      "opportunities": [
-      "paper-moons-ivy booked",
-      "eastview passed"
+      "s1.oikt0.2029-10-08.los-angeles.ultra-low-budget.0.0 booked",
+      "harbor-line passed"
      ],
      "engagements": [
-      "paper-moons-ivy booked 0 worked"
+      "s1.oikt0.2029-10-08.los-angeles.ultra-low-budget.0.0 booked 0 worked"
      ],
      "work": [
-      "Robin, Last Bus To Eastview: Audition, Taped 64.6"
+      "Dana Kell, Harbor Line: Audition, Taped 62.1"
      ],
-     "transactions": 1339
+     "transactions": 1307
     },
-    "secs": 12
+    "secs": 11
    }
   ],
-  "workDays": [],
+  "workDays": [
+   {
+    "at": "2029-11-16T15:00",
+    "project": "The Weather Of Dunmore",
+    "role": "Tamsin Ibarra",
+    "status": "worked",
+    "band": "working",
+    "authorized": true,
+    "papers": []
+   },
+   {
+    "at": "2029-11-19T15:00",
+    "project": "The Weather Of Dunmore",
+    "role": "Tamsin Ibarra",
+    "status": "worked",
+    "band": "working",
+    "authorized": true,
+    "papers": []
+   },
+   {
+    "at": "2029-11-20T15:00",
+    "project": "The Weather Of Dunmore",
+    "role": "Tamsin Ibarra",
+    "status": "worked",
+    "band": "working",
+    "authorized": true,
+    "papers": []
+   },
+   {
+    "at": "2029-11-21T15:00",
+    "project": "The Weather Of Dunmore",
+    "role": "Tamsin Ibarra",
+    "status": "worked",
+    "band": "working",
+    "authorized": true,
+    "papers": []
+   },
+   {
+    "at": "2029-11-22T15:00",
+    "project": "The Weather Of Dunmore",
+    "role": "Tamsin Ibarra",
+    "status": "worked",
+    "band": "strong",
+    "authorized": true,
+    "papers": []
+   },
+   {
+    "at": "2029-11-23T15:00",
+    "project": "The Weather Of Dunmore",
+    "role": "Tamsin Ibarra",
+    "status": "worked",
+    "band": "strong",
+    "authorized": true,
+    "papers": []
+   }
+  ],
   "errors": [],
   "opening": {
    "fixture": "tests/fixtures/journey-j01-degree-8283f80c.json.gz",
@@ -2520,7 +2741,7 @@
    "pass": true,
    "evidence": [
     "standing graduated, reviews 0:good 1:good 2:good 3:good 4:good 5:good, credits 2027 Carlotta Festival Of New Plays (A Leading Part In A New Play, lead); 2027 Directors’ Thesis Production I (Hedda Tesman, lead); 2028 Directors’ Thesis Production III (Barbara Undershaft, lead); 2028 Directors’ Thesis Production II (The Bride, lead); 2029 Shakespeare Repertory Project I (Hermione, lead)",
-    "genres practiced drama 40.1, domestic_drama 37, tragedy 30.2, romantic_drama 30.2, political_drama 25.1, comedy 21.1, satire 21.1, romance 6.6, tragicomedy 6.6, fairy_tale 6.6; from plays and jobs: drama, domestic_drama, political_drama, comedy, satire, tragedy, romantic_drama, romance, tragicomedy, fairy_tale; loved at creation: none",
+    "genres practiced drama 40.1, domestic_drama 37, tragedy 30.2, romantic_drama 30.2, mystery 26.5, thriller 26.5, political_drama 25.1, comedy 21.1, satire 21.1, romance 6.6, tragicomedy 6.6, fairy_tale 6.6; from plays and jobs: drama, domestic_drama, political_drama, comedy, satire, tragedy, romantic_drama, romance, tragicomedy, fairy_tale, thriller, mystery; loved at creation: none",
     "development (brief 13's check 3): not run"
    ],
    "fails": []
@@ -2528,8 +2749,8 @@
   "ledger": {
    "pass": true,
    "evidence": [
-    "12 accounts (3 the player's), 1342 transactions; every balance the sum of its postings: true; ledger audit 0 problems",
-    "the player's: checking Chase Total Checking 72228.18; savings Chase Savings 0 (closed); credit_card Chase Freedom Unlimited 0"
+    "14 accounts (3 the player's), 1345 transactions; every balance the sum of its postings: true; ledger audit 0 problems",
+    "the player's: checking Chase Total Checking 74499.66; savings Chase Savings 0 (closed); credit_card Chase Freedom Unlimited 0"
    ],
    "fails": []
   },
@@ -2537,7 +2758,7 @@
    "pass": true,
    "evidence": [
     "documents: license Class D (Operator) driver license valid to 2028-06-14",
-    "work days 0: none",
+    "work days 6: 2029-11-16 Tamsin Ibarra worked; 2029-11-19 Tamsin Ibarra worked; 2029-11-20 Tamsin Ibarra worked; 2029-11-21 Tamsin Ibarra worked; 2029-11-22 Tamsin Ibarra worked; 2029-11-23 Tamsin Ibarra worked",
     "authorized now true; OPT: OPT is for a student on an F-1, and you’re a US citizen.; out of status never"
    ],
    "fails": []
@@ -2547,8 +2768,8 @@
    "evidence": [
     "classmates 15: bonds 48 36 36 82 27 49 44 92 98 51 50 35 35 48 19",
     "agents: none; agreements none",
-    "engagements: Ivy in Paper Moons booked (0 worked, 0/1 paid)",
-    "credits: none"
+    "engagements: Tamsin Ibarra in The Weather Of Dunmore finished (6 worked, 2/2 paid)",
+    "credits: screen Tamsin Ibarra in The Weather Of Dunmore shot strong"
    ],
    "fails": []
   },
@@ -2563,18 +2784,26 @@
  "routes": {
   "represented": [],
   "unsigned": [
-   "no agreement in ? to 2029-12-01T12:45; 6 open calls submitted to of those kept"
+   "no agreement in ? to 2029-12-01T12:15; 14 open calls submitted to of those kept"
   ],
   "success": [
-   "Ivy in Paper Moons: booked, 0 payments received",
-   "audition for paper-moons-ivy went on (strong)"
+   "Tamsin Ibarra in The Weather Of Dunmore: finished, 2 payments received",
+   "audition for s1.oikt0.2029-10-08.los-angeles.ultra-low-budget.0.0 went on (working)"
   ],
   "failure": [
    "audition for paper-moons-ivy working: not cast (chance 15%)",
    "audition for winter-ledger-hester working: not cast (chance 24%)",
+   "audition for tidewater-reenactment working: not cast (chance 12%)",
    "audition for eastview working: not cast (chance 13%)",
+   "audition for salt-road working: not cast (chance 12%)",
+   "audition for tidewater-narrator working: not cast (chance 12%)",
+   "audition for kite-and-crow working: not cast (chance 22%)",
+   "audition for lamplighters working: not cast (chance 24%)",
    "audition for route-nine working: not cast (chance 11%)",
-   "audition for eastview working: not cast (chance 14%)"
+   "audition for harbor-line working: not cast (chance 22%)",
+   "audition for paper-moons-ivy strong: not cast (chance 33%)",
+   "audition for eastview working: not cast (chance 14%)",
+   "audition for tidewater-narrator working: not cast (chance 12%)"
   ],
   "delay": [],
   "decline": [],

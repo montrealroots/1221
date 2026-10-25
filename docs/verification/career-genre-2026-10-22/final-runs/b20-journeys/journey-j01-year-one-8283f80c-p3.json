@@ -3,8 +3,8 @@
  "part": 3,
  "from": "2029-01-29",
  "to": "2029-09-01",
- "secs": 129,
- "reloads": 36,
+ "secs": 139,
+ "reloads": 37,
  "done": true,
  "standing": "graduated",
  "schoolEnd": "2029-05-21T14:00",
@@ -18,15 +18,17 @@
   "2028-12-08T22:20 term 4 reviewed: good: same",
   "2029-01-01T12:20 the end of 2028: same",
   "2029-04-27T21:05 term 5 reviewed: good: same",
-  "2029-05-21T14:25 the School’s end: graduated: same"
+  "2029-05-21T14:25 the School’s end: graduated: same",
+  "2029-07-11T21:45 the first booking: Tamsin in Small Quarry: same"
  ],
  "forks": [
   "2027-09-02T01:10 a rehearsal with a partner booked for 2027-09-04T23:00 on A Game Played Through: same",
   "2029-05-21T14:25 a union bill due 2030-05-21T14:00: Initiation fee, part 2 of 3: same",
-  "2029-08-01T14:00 an audition (self-tape) set for 2029-08-05T22:00, Robin in Last Bus To Eastview: same"
+  "2029-06-06T14:00 an audition (self-tape) set for 2029-06-10T22:00, The Narrator in Tidewater: The Last Oyster Towns: same",
+  "2029-06-27T21:00 an offer standing: An Offer For Tamsin: same"
  ],
  "workDays": 0,
- "notices": 875,
- "bank": 75589.18,
+ "notices": 883,
+ "bank": 76309.18,
  "errors": []
 }

@@ -23,8 +23,10 @@ August 8, 2029 at 9:00 PM | PRESS | Prepare the sides (rehearse) for paper-moons
 August 8, 2029 at 9:45 PM | PRESS | Prepare the sides (rehearse) for paper-moons-ivy | done
 August 9, 2029 at 9:30 AM | PRESS | Prepare the sides (rehearse) for paper-moons-ivy | done
 August 13, 2029 at 9:15 AM | PRESS | Submit Yourself for winter-ledger-hester | done
+August 13, 2029 at 9:15 AM | PRESS | Submit Yourself for tidewater-reenactment | done
 August 13, 2029 at 11:00 AM | STOP | Audition: Ivy, Paper Moons | Go
 August 15, 2029 at 10:00 AM | NOTICE | An Audition For Hester Vane | Ostrander Vale Casting wants to see you for Hester Vane in The Winter Ledger: the company’s main stage in Hudson, Monday, August 20, 2029 at 11:00 AM. Getting there takes about two hours each way. Prepare the sides on the Career screen’s Opportunities tab before you go.
+August 15, 2029 at 10:00 AM | NOTICE | A Self-Tape For An Oyster Tonger Of 1890 | The film’s producers ask for a self-tape for An Oyster Tonger Of 1890 in Tidewater: The Last Oyster Towns, due Sunday, August 19, 2029 at 6:00 PM. Prepare the sides, then press Tape It on the Career screen’s Opportunities tab.
 August 15, 2029 at 10:30 AM | PRESS | Prepare the sides (read) for winter-ledger-hester | done
 August 15, 2029 at 11:00 AM | PRESS | Prepare the sides (read) for winter-ledger-hester | done
 August 15, 2029 at 11:30 AM | PRESS | Prepare the sides (lines) for winter-ledger-hester | done
@@ -43,11 +45,34 @@ August 15, 2029 at 7:45 PM | PRESS | Prepare the sides (rehearse) for winter-led
 August 15, 2029 at 8:30 PM | PRESS | Prepare the sides (rehearse) for winter-ledger-hester | done
 August 15, 2029 at 9:15 PM | PRESS | Prepare the sides (rehearse) for winter-ledger-hester | done
 August 16, 2029 at 9:00 AM | PRESS | Prepare the sides (rehearse) for winter-ledger-hester | done
+August 16, 2029 at 9:45 AM | PRESS | Prepare the sides (read) for tidewater-reenactment | done
+August 16, 2029 at 10:15 AM | PRESS | Prepare the sides (read) for tidewater-reenactment | done
+August 16, 2029 at 10:45 AM | PRESS | Prepare the sides (lines) for tidewater-reenactment | done
+August 16, 2029 at 11:15 AM | PRESS | Prepare the sides (lines) for tidewater-reenactment | done
+August 16, 2029 at 11:45 AM | PRESS | Prepare the sides (lines) for tidewater-reenactment | done
+August 16, 2029 at 12:15 PM | PRESS | Prepare the sides (rehearse) for tidewater-reenactment | done
+August 16, 2029 at 1:00 PM | PRESS | Prepare the sides (rehearse) for tidewater-reenactment | done
+August 16, 2029 at 1:45 PM | PRESS | Prepare the sides (rehearse) for tidewater-reenactment | done
+August 16, 2029 at 2:30 PM | PRESS | Prepare the sides (rehearse) for tidewater-reenactment | done
+August 16, 2029 at 3:15 PM | PRESS | Prepare the sides (rehearse) for tidewater-reenactment | done
+August 16, 2029 at 4:00 PM | PRESS | Prepare the sides (rehearse) for tidewater-reenactment | done
+August 16, 2029 at 4:45 PM | PRESS | Prepare the sides (rehearse) for tidewater-reenactment | done
 August 16, 2029 at 5:00 PM | NOTICE | Not Cast As Ivy | The film’s director cast another actor as Ivy. Casting doesn’t give its reasons. The Opportunities tab shows what went into it: your audition, the role’s fit and the field.
+August 16, 2029 at 5:30 PM | PRESS | Prepare the sides (rehearse) for tidewater-reenactment | done
+August 16, 2029 at 6:15 PM | PRESS | Prepare the sides (rehearse) for tidewater-reenactment | done
+August 16, 2029 at 7:00 PM | PRESS | Prepare the sides (rehearse) for tidewater-reenactment | done
+August 16, 2029 at 7:45 PM | PRESS | Prepare the sides (rehearse) for tidewater-reenactment | done
+August 16, 2029 at 8:30 PM | PRESS | Prepare the sides (rehearse) for tidewater-reenactment | done
+August 16, 2029 at 9:15 PM | PRESS | Prepare the sides (rehearse) for tidewater-reenactment | done
+August 17, 2029 at 9:00 AM | PRESS | Prepare the sides (rehearse) for tidewater-reenactment | done
+August 17, 2029 at 9:45 AM | PRESS | Tape It for tidewater-reenactment | done
 August 20, 2029 at 11:00 AM | STOP | Audition: Hester Vane, The Winter Ledger | Go
 August 21, 2029 at 5:00 PM | NOTICE | Not Cast As Hester Vane | Ostrander Vale Casting didn’t call you back for Hester Vane. Casting doesn’t give its reasons. The Opportunities tab shows what went into it: your audition, the role’s fit and the field.
+August 22, 2029 at 5:00 PM | NOTICE | Not Cast As An Oyster Tonger Of 1890 | The film’s producers cast another actor as An Oyster Tonger Of 1890. Casting doesn’t give its reasons. The Opportunities tab shows what went into it: your audition, the role’s fit and the field.
 August 27, 2029 at 9:45 AM | PRESS | Submit Yourself for eastview | done
+August 27, 2029 at 9:45 AM | PRESS | Submit Yourself for salt-road | done
 August 29, 2029 at 10:00 AM | NOTICE | A Self-Tape For Robin | The producers ask for a self-tape for Robin in Last Bus To Eastview, due Sunday, September 2, 2029 at 6:00 PM. Prepare the sides, then press Tape It on the Career screen’s Opportunities tab.
+August 29, 2029 at 10:00 AM | NOTICE | A Self-Tape For Harbormaster Brandt | Northlight Dubbing’s casting director asks for a self-tape for Harbormaster Brandt in The Salt Road, due Sunday, September 2, 2029 at 6:00 PM. Prepare the sides, then press Tape It on the Career screen’s Opportunities tab.
 August 29, 2029 at 10:45 AM | PRESS | Prepare the sides (read) for eastview | done
 August 29, 2029 at 11:15 AM | PRESS | Prepare the sides (read) for eastview | done
 August 29, 2029 at 11:45 AM | PRESS | Prepare the sides (lines) for eastview | done
@@ -67,16 +92,104 @@ August 29, 2029 at 8:45 PM | PRESS | Prepare the sides (rehearse) for eastview |
 August 29, 2029 at 9:30 PM | PRESS | Prepare the sides (rehearse) for eastview | done
 August 30, 2029 at 9:15 AM | PRESS | Prepare the sides (rehearse) for eastview | done
 August 30, 2029 at 10:00 AM | PRESS | Tape It for eastview | done
+August 30, 2029 at 11:00 AM | PRESS | Prepare the sides (read) for salt-road | done
+August 30, 2029 at 11:30 AM | PRESS | Prepare the sides (read) for salt-road | done
+August 30, 2029 at 12:00 PM | PRESS | Prepare the sides (lines) for salt-road | done
+August 30, 2029 at 12:30 PM | PRESS | Prepare the sides (lines) for salt-road | done
+August 30, 2029 at 1:00 PM | PRESS | Prepare the sides (lines) for salt-road | done
+August 30, 2029 at 1:30 PM | PRESS | Prepare the sides (rehearse) for salt-road | done
+August 30, 2029 at 2:15 PM | PRESS | Prepare the sides (rehearse) for salt-road | done
+August 30, 2029 at 3:00 PM | PRESS | Prepare the sides (rehearse) for salt-road | done
+August 30, 2029 at 3:45 PM | PRESS | Prepare the sides (rehearse) for salt-road | done
+August 30, 2029 at 4:30 PM | PRESS | Prepare the sides (rehearse) for salt-road | done
+August 30, 2029 at 5:15 PM | PRESS | Prepare the sides (rehearse) for salt-road | done
+August 30, 2029 at 6:00 PM | PRESS | Prepare the sides (rehearse) for salt-road | done
+August 30, 2029 at 6:45 PM | PRESS | Prepare the sides (rehearse) for salt-road | done
+August 30, 2029 at 7:30 PM | PRESS | Prepare the sides (rehearse) for salt-road | done
+August 30, 2029 at 8:15 PM | PRESS | Prepare the sides (rehearse) for salt-road | done
+August 30, 2029 at 9:00 PM | PRESS | Prepare the sides (rehearse) for salt-road | done
+August 30, 2029 at 9:45 PM | PRESS | Prepare the sides (rehearse) for salt-road | done
+August 31, 2029 at 9:30 AM | PRESS | Prepare the sides (rehearse) for salt-road | done
+August 31, 2029 at 10:15 AM | PRESS | Tape It for salt-road | done
 September 1, 2029 at 12:00 AM | NOTICE | Unclaimed Money | $413,168 left unused in Chase Savings for three years went to the state’s unclaimed-property office. It can be claimed back from that office.
+September 3, 2029 at 9:15 AM | PRESS | Submit Yourself for tidewater-narrator | done
+September 5, 2029 at 10:00 AM | NOTICE | A Self-Tape For The Narrator | The film’s producers ask for a self-tape for The Narrator in Tidewater: The Last Oyster Towns, due Sunday, September 9, 2029 at 6:00 PM. Prepare the sides, then press Tape It on the Career screen’s Opportunities tab.
+September 5, 2029 at 10:15 AM | PRESS | Prepare the sides (read) for tidewater-narrator | done
+September 5, 2029 at 10:45 AM | PRESS | Prepare the sides (read) for tidewater-narrator | done
+September 5, 2029 at 11:15 AM | PRESS | Prepare the sides (lines) for tidewater-narrator | done
+September 5, 2029 at 11:45 AM | PRESS | Prepare the sides (lines) for tidewater-narrator | done
+September 5, 2029 at 12:15 PM | PRESS | Prepare the sides (lines) for tidewater-narrator | done
+September 5, 2029 at 12:45 PM | PRESS | Prepare the sides (rehearse) for tidewater-narrator | done
+September 5, 2029 at 1:30 PM | PRESS | Prepare the sides (rehearse) for tidewater-narrator | done
+September 5, 2029 at 2:15 PM | PRESS | Prepare the sides (rehearse) for tidewater-narrator | done
+September 5, 2029 at 3:00 PM | PRESS | Prepare the sides (rehearse) for tidewater-narrator | done
+September 5, 2029 at 3:45 PM | PRESS | Prepare the sides (rehearse) for tidewater-narrator | done
+September 5, 2029 at 4:30 PM | PRESS | Prepare the sides (rehearse) for tidewater-narrator | done
 September 5, 2029 at 5:00 PM | NOTICE | Not Cast As Robin | The producers cast another actor as Robin. Casting doesn’t give its reasons. The Opportunities tab shows what went into it: your audition, the role’s fit and the field.
-October 8, 2029 at 9:00 AM | PRESS | Submit Yourself for route-nine | done
+September 5, 2029 at 5:00 PM | NOTICE | Not Cast As Harbormaster Brandt | Northlight Dubbing’s casting director cast another actor as Harbormaster Brandt. Casting doesn’t give its reasons. The Opportunities tab shows what went into it: your audition, the role’s fit and the field.
+September 5, 2029 at 5:15 PM | PRESS | Prepare the sides (rehearse) for tidewater-narrator | done
+September 5, 2029 at 6:00 PM | PRESS | Prepare the sides (rehearse) for tidewater-narrator | done
+September 5, 2029 at 6:45 PM | PRESS | Prepare the sides (rehearse) for tidewater-narrator | done
+September 5, 2029 at 7:30 PM | PRESS | Prepare the sides (rehearse) for tidewater-narrator | done
+September 5, 2029 at 8:15 PM | PRESS | Prepare the sides (rehearse) for tidewater-narrator | done
+September 5, 2029 at 9:00 PM | PRESS | Prepare the sides (rehearse) for tidewater-narrator | done
+September 5, 2029 at 9:45 PM | PRESS | Prepare the sides (rehearse) for tidewater-narrator | done
+September 6, 2029 at 9:30 AM | PRESS | Prepare the sides (rehearse) for tidewater-narrator | done
+September 6, 2029 at 10:15 AM | PRESS | Tape It for tidewater-narrator | done
+September 12, 2029 at 5:00 PM | NOTICE | Not Cast As The Narrator | The film’s producers cast another actor as The Narrator. Casting doesn’t give its reasons. The Opportunities tab shows what went into it: your audition, the role’s fit and the field.
+September 24, 2029 at 9:15 AM | PRESS | Submit Yourself for kite-and-crow | done
+September 24, 2029 at 9:15 AM | PRESS | Submit Yourself for lamplighters | done
+September 26, 2029 at 10:00 AM | NOTICE | A Self-Tape For The Crow | Oyelaran Casting asks for a self-tape for The Crow in The Kite And The Crow, due Sunday, September 30, 2029 at 6:00 PM. Prepare the sides, then press Tape It on the Career screen’s Opportunities tab.
+September 26, 2029 at 10:00 AM | NOTICE | An Audition For The Apprentice Lamplighter | Pell And Moran Casting wants to see you for The Apprentice Lamplighter in The Lamplighters: a 500-seat regional theater in New Haven, Monday, October 1, 2029 at 11:00 AM. Getting there takes about 30 minutes each way. Prepare the sides on the Career screen’s Opportunities tab before you go.
+September 26, 2029 at 10:15 AM | PRESS | Prepare the sides (read) for kite-and-crow | done
+September 26, 2029 at 10:45 AM | PRESS | Prepare the sides (read) for kite-and-crow | done
+September 26, 2029 at 11:15 AM | PRESS | Prepare the sides (lines) for kite-and-crow | done
+September 26, 2029 at 11:45 AM | PRESS | Prepare the sides (lines) for kite-and-crow | done
+September 26, 2029 at 12:15 PM | PRESS | Prepare the sides (lines) for kite-and-crow | done
+September 26, 2029 at 12:45 PM | PRESS | Prepare the sides (rehearse) for kite-and-crow | done
+September 26, 2029 at 1:30 PM | PRESS | Prepare the sides (rehearse) for kite-and-crow | done
+September 26, 2029 at 2:15 PM | PRESS | Prepare the sides (rehearse) for kite-and-crow | done
+September 26, 2029 at 3:00 PM | PRESS | Prepare the sides (rehearse) for kite-and-crow | done
+September 26, 2029 at 3:45 PM | PRESS | Prepare the sides (rehearse) for kite-and-crow | done
+September 26, 2029 at 4:30 PM | PRESS | Prepare the sides (rehearse) for kite-and-crow | done
+September 26, 2029 at 5:15 PM | PRESS | Prepare the sides (rehearse) for kite-and-crow | done
+September 26, 2029 at 6:00 PM | PRESS | Prepare the sides (rehearse) for kite-and-crow | done
+September 26, 2029 at 6:45 PM | PRESS | Prepare the sides (rehearse) for kite-and-crow | done
+September 26, 2029 at 7:30 PM | PRESS | Prepare the sides (rehearse) for kite-and-crow | done
+September 26, 2029 at 8:15 PM | PRESS | Prepare the sides (rehearse) for kite-and-crow | done
+September 26, 2029 at 9:00 PM | PRESS | Prepare the sides (rehearse) for kite-and-crow | done
+September 26, 2029 at 9:45 PM | PRESS | Prepare the sides (rehearse) for kite-and-crow | done
+September 27, 2029 at 9:30 AM | PRESS | Prepare the sides (rehearse) for kite-and-crow | done
+September 27, 2029 at 10:15 AM | PRESS | Tape It for kite-and-crow | done
+September 27, 2029 at 11:15 AM | PRESS | Prepare the sides (read) for lamplighters | done
+September 27, 2029 at 11:45 AM | PRESS | Prepare the sides (read) for lamplighters | done
+September 27, 2029 at 12:15 PM | PRESS | Prepare the sides (lines) for lamplighters | done
+September 27, 2029 at 12:45 PM | PRESS | Prepare the sides (lines) for lamplighters | done
+September 27, 2029 at 1:15 PM | PRESS | Prepare the sides (lines) for lamplighters | done
+September 27, 2029 at 1:45 PM | PRESS | Prepare the sides (rehearse) for lamplighters | done
+September 27, 2029 at 2:30 PM | PRESS | Prepare the sides (rehearse) for lamplighters | done
+September 27, 2029 at 3:15 PM | PRESS | Prepare the sides (rehearse) for lamplighters | done
+September 27, 2029 at 4:00 PM | PRESS | Prepare the sides (rehearse) for lamplighters | done
+September 27, 2029 at 4:45 PM | PRESS | Prepare the sides (rehearse) for lamplighters | done
+September 27, 2029 at 5:30 PM | PRESS | Prepare the sides (rehearse) for lamplighters | done
+September 27, 2029 at 6:15 PM | PRESS | Prepare the sides (rehearse) for lamplighters | done
+September 27, 2029 at 7:00 PM | PRESS | Prepare the sides (rehearse) for lamplighters | done
+September 27, 2029 at 7:45 PM | PRESS | Prepare the sides (rehearse) for lamplighters | done
+September 27, 2029 at 8:30 PM | PRESS | Prepare the sides (rehearse) for lamplighters | done
+September 27, 2029 at 9:15 PM | PRESS | Prepare the sides (rehearse) for lamplighters | done
+September 28, 2029 at 9:00 AM | PRESS | Prepare the sides (rehearse) for lamplighters | done
+October 1, 2029 at 11:00 AM | STOP | Audition: The Apprentice Lamplighter, The Lamplighters | Go
+October 1, 2029 at 5:00 PM | NOTICE | Not Cast As The Crow | Oyelaran Casting didn’t call you back for The Crow. Casting doesn’t give its reasons. The Opportunities tab shows what went into it: your audition, the role’s fit and the field.
+October 2, 2029 at 5:00 PM | NOTICE | Not Cast As The Apprentice Lamplighter | Pell And Moran Casting didn’t call you back for The Apprentice Lamplighter. Casting doesn’t give its reasons. The Opportunities tab shows what went into it: your audition, the role’s fit and the field.
+October 8, 2029 at 9:45 AM | PRESS | Submit Yourself for route-nine | done
+October 8, 2029 at 9:45 AM | PRESS | Submit Yourself for s1.oikt0.2029-10-08.los-angeles.ultra-low-budget.0.0 | done
 October 10, 2029 at 10:00 AM | NOTICE | A Self-Tape For Jess | Brisbane Hall Casting asks for a self-tape for Jess in Static On Route 9, due Sunday, October 14, 2029 at 6:00 PM. Prepare the sides, then press Tape It on the Career screen’s Opportunities tab.
-October 10, 2029 at 10:00 AM | PRESS | Prepare the sides (read) for route-nine | done
-October 10, 2029 at 10:30 AM | PRESS | Prepare the sides (read) for route-nine | done
-October 10, 2029 at 11:00 AM | PRESS | Prepare the sides (lines) for route-nine | done
-October 10, 2029 at 11:30 AM | PRESS | Prepare the sides (lines) for route-nine | done
-October 10, 2029 at 12:00 PM | PRESS | Prepare the sides (lines) for route-nine | done
-October 10, 2029 at 12:30 PM | PRESS | Prepare the sides (rehearse) for route-nine | done
+October 10, 2029 at 10:00 AM | NOTICE | A Self-Tape For Tamsin Ibarra | Brannigan Casting asks for a self-tape for Tamsin Ibarra in The Weather Of Dunmore, due Sunday, October 14, 2029 at 6:00 PM. Prepare the sides, then press Tape It on the Career screen’s Opportunities tab.
+October 10, 2029 at 10:45 AM | PRESS | Prepare the sides (read) for route-nine | done
+October 10, 2029 at 11:15 AM | PRESS | Prepare the sides (read) for route-nine | done
+October 10, 2029 at 11:45 AM | PRESS | Prepare the sides (lines) for route-nine | done
+October 10, 2029 at 12:15 PM | PRESS | Prepare the sides (lines) for route-nine | done
+October 10, 2029 at 12:45 PM | PRESS | Prepare the sides (lines) for route-nine | done
 October 10, 2029 at 1:15 PM | PRESS | Prepare the sides (rehearse) for route-nine | done
 October 10, 2029 at 2:00 PM | PRESS | Prepare the sides (rehearse) for route-nine | done
 October 10, 2029 at 2:45 PM | PRESS | Prepare the sides (rehearse) for route-nine | done
@@ -91,18 +204,70 @@ October 10, 2029 at 8:45 PM | PRESS | Prepare the sides (rehearse) for route-nin
 October 10, 2029 at 9:30 PM | PRESS | Prepare the sides (rehearse) for route-nine | done
 October 11, 2029 at 9:15 AM | PRESS | Prepare the sides (rehearse) for route-nine | done
 October 11, 2029 at 10:00 AM | PRESS | Tape It for route-nine | done
-October 15, 2029 at 12:00 PM | PRESS | Update Your Résumé | done
+October 11, 2029 at 11:00 AM | PRESS | Prepare the sides (read) for s1.oikt0.2029-10-08.los-angeles.ultra-low-budget.0.0 | done
+October 11, 2029 at 11:30 AM | PRESS | Prepare the sides (read) for s1.oikt0.2029-10-08.los-angeles.ultra-low-budget.0.0 | done
+October 11, 2029 at 12:00 PM | PRESS | Prepare the sides (lines) for s1.oikt0.2029-10-08.los-angeles.ultra-low-budget.0.0 | done
+October 11, 2029 at 12:30 PM | PRESS | Prepare the sides (lines) for s1.oikt0.2029-10-08.los-angeles.ultra-low-budget.0.0 | done
+October 11, 2029 at 1:00 PM | PRESS | Prepare the sides (lines) for s1.oikt0.2029-10-08.los-angeles.ultra-low-budget.0.0 | done
+October 11, 2029 at 1:30 PM | PRESS | Prepare the sides (rehearse) for s1.oikt0.2029-10-08.los-angeles.ultra-low-budget.0.0 | done
+October 11, 2029 at 2:15 PM | PRESS | Prepare the sides (rehearse) for s1.oikt0.2029-10-08.los-angeles.ultra-low-budget.0.0 | done
+October 11, 2029 at 3:00 PM | PRESS | Prepare the sides (rehearse) for s1.oikt0.2029-10-08.los-angeles.ultra-low-budget.0.0 | done
+October 11, 2029 at 3:45 PM | PRESS | Prepare the sides (rehearse) for s1.oikt0.2029-10-08.los-angeles.ultra-low-budget.0.0 | done
+October 11, 2029 at 4:30 PM | PRESS | Prepare the sides (rehearse) for s1.oikt0.2029-10-08.los-angeles.ultra-low-budget.0.0 | done
+October 11, 2029 at 5:15 PM | PRESS | Prepare the sides (rehearse) for s1.oikt0.2029-10-08.los-angeles.ultra-low-budget.0.0 | done
+October 11, 2029 at 6:00 PM | PRESS | Prepare the sides (rehearse) for s1.oikt0.2029-10-08.los-angeles.ultra-low-budget.0.0 | done
+October 11, 2029 at 6:45 PM | PRESS | Prepare the sides (rehearse) for s1.oikt0.2029-10-08.los-angeles.ultra-low-budget.0.0 | done
+October 11, 2029 at 7:30 PM | PRESS | Prepare the sides (rehearse) for s1.oikt0.2029-10-08.los-angeles.ultra-low-budget.0.0 | done
+October 11, 2029 at 8:15 PM | PRESS | Prepare the sides (rehearse) for s1.oikt0.2029-10-08.los-angeles.ultra-low-budget.0.0 | done
+October 11, 2029 at 9:00 PM | PRESS | Prepare the sides (rehearse) for s1.oikt0.2029-10-08.los-angeles.ultra-low-budget.0.0 | done
+October 11, 2029 at 9:45 PM | PRESS | Prepare the sides (rehearse) for s1.oikt0.2029-10-08.los-angeles.ultra-low-budget.0.0 | done
+October 12, 2029 at 9:30 AM | PRESS | Prepare the sides (rehearse) for s1.oikt0.2029-10-08.los-angeles.ultra-low-budget.0.0 | done
+October 12, 2029 at 10:15 AM | PRESS | Tape It for s1.oikt0.2029-10-08.los-angeles.ultra-low-budget.0.0 | done
+October 15, 2029 at 9:15 AM | PRESS | Submit Yourself for harbor-line | done
+October 16, 2029 at 12:15 PM | PRESS | Update Your Résumé | done
+October 17, 2029 at 10:00 AM | NOTICE | A Self-Tape For Dana Kell | Brandt Casting asks for a self-tape for Dana Kell in Harbor Line, due Sunday, October 21, 2029 at 6:00 PM. Prepare the sides, then press Tape It on the Career screen’s Opportunities tab.
+October 17, 2029 at 10:15 AM | PRESS | Prepare the sides (read) for harbor-line | done
+October 17, 2029 at 10:45 AM | PRESS | Prepare the sides (read) for harbor-line | done
+October 17, 2029 at 11:15 AM | PRESS | Prepare the sides (lines) for harbor-line | done
+October 17, 2029 at 11:45 AM | PRESS | Prepare the sides (lines) for harbor-line | done
+October 17, 2029 at 12:15 PM | PRESS | Prepare the sides (lines) for harbor-line | done
+October 17, 2029 at 12:45 PM | PRESS | Prepare the sides (rehearse) for harbor-line | done
+October 17, 2029 at 1:30 PM | PRESS | Prepare the sides (rehearse) for harbor-line | done
+October 17, 2029 at 2:15 PM | PRESS | Prepare the sides (rehearse) for harbor-line | done
+October 17, 2029 at 3:00 PM | PRESS | Prepare the sides (rehearse) for harbor-line | done
+October 17, 2029 at 3:45 PM | PRESS | Prepare the sides (rehearse) for harbor-line | done
+October 17, 2029 at 4:30 PM | PRESS | Prepare the sides (rehearse) for harbor-line | done
 October 17, 2029 at 5:00 PM | NOTICE | Not Cast As Jess | Brisbane Hall Casting cast another actor as Jess. Casting doesn’t give its reasons. The Opportunities tab shows what went into it: your audition, the role’s fit and the field.
+October 17, 2029 at 5:00 PM | WHAT NEEDS YOU | An Offer For Tamsin Ibarra | Brannigan Casting offers you Tamsin Ibarra in The Weather Of Dunmore, a fictional ultra-low-budget feature film. It pays $280.00 a day for six days, the SAG-AFTRA Ultra Low Budget Day Performer minimum. A live-action feature on an independent budget: two takes a scene and time for only one more in a day, the scenes shot by location, and a release in cinemas a year on. The work is from November 16, 2029 to November 23, 2029, in Los Angeles. The offer stands until October 20, 2029 at 5:00 PM. This work is in Los Angeles. You’d be away from November 13, 2029 to November 24, 2029. The production books and pays for your flights, the cars and the hotel, as the game assumes for a part away from where you live. | Accept The Offer, Decline The Offer
+October 17, 2029 at 5:15 PM | PRESS | Prepare the sides (rehearse) for harbor-line | done
+October 17, 2029 at 6:00 PM | PRESS | Prepare the sides (rehearse) for harbor-line | done
+October 17, 2029 at 6:45 PM | PRESS | Prepare the sides (rehearse) for harbor-line | done
+October 17, 2029 at 7:30 PM | PRESS | Prepare the sides (rehearse) for harbor-line | done
+October 17, 2029 at 8:15 PM | PRESS | Prepare the sides (rehearse) for harbor-line | done
+October 17, 2029 at 9:00 PM | PRESS | Prepare the sides (rehearse) for harbor-line | done
+October 17, 2029 at 9:45 PM | PRESS | Prepare the sides (rehearse) for harbor-line | done
+October 18, 2029 at 9:30 AM | PRESS | Prepare the sides (rehearse) for harbor-line | done
+October 18, 2029 at 10:15 AM | PRESS | Tape It for harbor-line | done
+October 18, 2029 at 11:15 AM | PRESS | Accept The Offer for s1.oikt0.2029-10-08.los-angeles.ultra-low-budget.0.0 | done
+October 18, 2029 at 11:15 AM | PRESS | Prepare the part (read) for s1.oikt0.2029-10-08.los-angeles.ultra-low-budget.0.0 | done
+October 18, 2029 at 12:15 PM | PRESS | Prepare the part (lines) for s1.oikt0.2029-10-08.los-angeles.ultra-low-budget.0.0 | done
+October 18, 2029 at 1:15 PM | PRESS | Prepare the part (rehearse) for s1.oikt0.2029-10-08.los-angeles.ultra-low-budget.0.0 | done
+October 18, 2029 at 2:45 PM | PRESS | Prepare the part (rehearse) for s1.oikt0.2029-10-08.los-angeles.ultra-low-budget.0.0 | done
+October 18, 2029 at 4:15 PM | PRESS | Prepare the part (rehearse) for s1.oikt0.2029-10-08.los-angeles.ultra-low-budget.0.0 | done
+October 18, 2029 at 5:45 PM | PRESS | Prepare the part (rehearse) for s1.oikt0.2029-10-08.los-angeles.ultra-low-budget.0.0 | done
+October 18, 2029 at 7:15 PM | PRESS | Prepare the part (rehearse) for s1.oikt0.2029-10-08.los-angeles.ultra-low-budget.0.0 | done
+October 18, 2029 at 8:45 PM | PRESS | Prepare the part (rehearse) for s1.oikt0.2029-10-08.los-angeles.ultra-low-budget.0.0 | done
+October 19, 2029 at 9:15 AM | PRESS | Prepare the part (rehearse) for s1.oikt0.2029-10-08.los-angeles.ultra-low-budget.0.0 | done
+October 22, 2029 at 5:00 PM | NOTICE | Not Cast As Dana Kell | Brandt Casting didn’t call you back for Dana Kell. Casting doesn’t give its reasons. The Opportunities tab shows what went into it: your audition, the role’s fit and the field.
 November 1, 2029 at 9:00 AM | NOTICE | Actors’ Equity Association: $600.00 Paid | Initiation fee, part 1 of 3, the down payment: $600.00 was taken from your bank.
 November 1, 2029 at 9:00 AM | NOTICE | Actors’ Equity Association: $88.00 Paid | Basic dues, half a year: $88.00 was taken from your bank.
-November 5, 2029 at 9:00 AM | PRESS | Submit Yourself for paper-moons-ivy | done
+November 5, 2029 at 9:45 AM | PRESS | Submit Yourself for paper-moons-ivy | done
 November 7, 2029 at 10:00 AM | NOTICE | An Audition For Ivy | The film’s director wants to see you for Ivy in Paper Moons: an apartment in Brooklyn in New York, Monday, November 12, 2029 at 11:00 AM. Getting there takes about two hours each way. Prepare the sides on the Career screen’s Opportunities tab before you go.
-November 7, 2029 at 10:00 AM | PRESS | Prepare the sides (read) for paper-moons-ivy | done
-November 7, 2029 at 10:30 AM | PRESS | Prepare the sides (read) for paper-moons-ivy | done
-November 7, 2029 at 11:00 AM | PRESS | Prepare the sides (lines) for paper-moons-ivy | done
-November 7, 2029 at 11:30 AM | PRESS | Prepare the sides (lines) for paper-moons-ivy | done
-November 7, 2029 at 12:00 PM | PRESS | Prepare the sides (lines) for paper-moons-ivy | done
-November 7, 2029 at 12:30 PM | PRESS | Prepare the sides (rehearse) for paper-moons-ivy | done
+November 7, 2029 at 10:45 AM | PRESS | Prepare the sides (read) for paper-moons-ivy | done
+November 7, 2029 at 11:15 AM | PRESS | Prepare the sides (read) for paper-moons-ivy | done
+November 7, 2029 at 11:45 AM | PRESS | Prepare the sides (lines) for paper-moons-ivy | done
+November 7, 2029 at 12:15 PM | PRESS | Prepare the sides (lines) for paper-moons-ivy | done
+November 7, 2029 at 12:45 PM | PRESS | Prepare the sides (lines) for paper-moons-ivy | done
 November 7, 2029 at 1:15 PM | PRESS | Prepare the sides (rehearse) for paper-moons-ivy | done
 November 7, 2029 at 2:00 PM | PRESS | Prepare the sides (rehearse) for paper-moons-ivy | done
 November 7, 2029 at 2:45 PM | PRESS | Prepare the sides (rehearse) for paper-moons-ivy | done
@@ -117,38 +282,55 @@ November 7, 2029 at 8:45 PM | PRESS | Prepare the sides (rehearse) for paper-moo
 November 7, 2029 at 9:30 PM | PRESS | Prepare the sides (rehearse) for paper-moons-ivy | done
 November 8, 2029 at 9:15 AM | PRESS | Prepare the sides (rehearse) for paper-moons-ivy | done
 November 12, 2029 at 11:00 AM | STOP | Audition: Ivy, Paper Moons | Go
-November 15, 2029 at 5:00 PM | WHAT NEEDS YOU | An Offer For Ivy | The film’s director offers you Ivy in Paper Moons, a fictional student film. The pay is deferred: a student film pays its actors only if it earns money later, and no film in the game does, so nothing is paid for its three days of work. The work is from December 10, 2029 to December 12, 2029, in New York. The offer stands until November 18, 2029 at 5:00 PM. | Accept The Offer, Decline The Offer
-November 15, 2029 at 5:30 PM | PRESS | Accept The Offer for paper-moons-ivy | done
-November 15, 2029 at 5:30 PM | PRESS | Prepare the part (read) for paper-moons-ivy | done
-November 15, 2029 at 6:30 PM | PRESS | Prepare the part (read) for paper-moons-ivy | done
-November 15, 2029 at 7:30 PM | PRESS | Prepare the part (lines) for paper-moons-ivy | done
-November 15, 2029 at 8:30 PM | PRESS | Prepare the part (lines) for paper-moons-ivy | done
-November 15, 2029 at 9:30 PM | PRESS | Prepare the part (lines) for paper-moons-ivy | done
-November 16, 2029 at 9:30 AM | PRESS | Prepare the part (lines) for paper-moons-ivy | done
-November 16, 2029 at 10:30 AM | PRESS | Prepare the part (rehearse) for paper-moons-ivy | done
-November 16, 2029 at 12:00 PM | PRESS | Prepare the part (rehearse) for paper-moons-ivy | done
-November 16, 2029 at 1:30 PM | PRESS | Prepare the part (rehearse) for paper-moons-ivy | done
-November 16, 2029 at 3:00 PM | PRESS | Prepare the part (rehearse) for paper-moons-ivy | done
-November 19, 2029 at 9:30 AM | PRESS | Submit Yourself for eastview | done
+November 13, 2029 at 1:30 PM | STOP | Car To JFK in New York | Go
+November 14, 2029 at 12:20 AM | NOTICE | You’ve Arrived In Los Angeles | You’ve arrived in Los Angeles, and the production’s car took you to a hotel near the work. Your first call is Friday, November 16, 2029 at 7:00 AM in Los Angeles (10:00 AM on Friday in New Haven).
+November 15, 2029 at 5:00 PM | NOTICE | Not Cast As Ivy | The film’s director cast another actor as Ivy. Casting doesn’t give its reasons. The Opportunities tab shows what went into it: your audition, the role’s fit and the field.
+November 16, 2029 at 10:00 AM | STOP | The Weather Of Dunmore: Shoot Day 1 | Go
+November 19, 2029 at 9:00 AM | PRESS | Submit Yourself for eastview | done
+November 19, 2029 at 9:00 AM | PRESS | Submit Yourself for tidewater-narrator | done
+November 19, 2029 at 10:00 AM | STOP | The Weather Of Dunmore: Shoot Day 2 | Go
+November 20, 2029 at 10:00 AM | STOP | The Weather Of Dunmore: Shoot Day 3 | Go
+November 21, 2029 at 10:00 AM | STOP | The Weather Of Dunmore: Shoot Day 4 | Go
 November 21, 2029 at 10:00 AM | NOTICE | A Self-Tape For Robin | The producers ask for a self-tape for Robin in Last Bus To Eastview, due Sunday, November 25, 2029 at 6:00 PM. Prepare the sides, then press Tape It on the Career screen’s Opportunities tab.
-November 21, 2029 at 10:30 AM | PRESS | Prepare the sides (read) for eastview | done
-November 21, 2029 at 11:00 AM | PRESS | Prepare the sides (read) for eastview | done
-November 21, 2029 at 11:30 AM | PRESS | Prepare the sides (lines) for eastview | done
-November 21, 2029 at 12:00 PM | PRESS | Prepare the sides (lines) for eastview | done
-November 21, 2029 at 12:30 PM | PRESS | Prepare the sides (lines) for eastview | done
-November 21, 2029 at 1:00 PM | PRESS | Prepare the sides (rehearse) for eastview | done
-November 21, 2029 at 1:45 PM | PRESS | Prepare the sides (rehearse) for eastview | done
-November 21, 2029 at 2:30 PM | PRESS | Prepare the sides (rehearse) for eastview | done
-November 21, 2029 at 3:15 PM | PRESS | Prepare the sides (rehearse) for eastview | done
-November 21, 2029 at 4:00 PM | PRESS | Prepare the sides (rehearse) for eastview | done
-November 21, 2029 at 4:45 PM | PRESS | Prepare the sides (rehearse) for eastview | done
-November 21, 2029 at 5:30 PM | PRESS | Prepare the sides (rehearse) for eastview | done
-November 21, 2029 at 6:15 PM | PRESS | Prepare the sides (rehearse) for eastview | done
-November 21, 2029 at 7:00 PM | PRESS | Prepare the sides (rehearse) for eastview | done
-November 21, 2029 at 7:45 PM | PRESS | Prepare the sides (rehearse) for eastview | done
-November 21, 2029 at 8:30 PM | PRESS | Prepare the sides (rehearse) for eastview | done
-November 21, 2029 at 9:15 PM | PRESS | Prepare the sides (rehearse) for eastview | done
-November 22, 2029 at 9:00 AM | PRESS | Prepare the sides (rehearse) for eastview | done
-November 22, 2029 at 9:45 AM | PRESS | Tape It for eastview | done
+November 21, 2029 at 10:00 AM | NOTICE | A Self-Tape For The Narrator | The film’s producers ask for a self-tape for The Narrator in Tidewater: The Last Oyster Towns, due Sunday, November 25, 2029 at 6:00 PM. Prepare the sides, then press Tape It on the Career screen’s Opportunities tab.
+November 21, 2029 at 9:00 PM | PRESS | Prepare the sides (read) for eastview | done
+November 21, 2029 at 9:30 PM | PRESS | Prepare the sides (read) for eastview | done
+November 22, 2029 at 9:00 AM | PRESS | Prepare the sides (read) for eastview | done
+November 22, 2029 at 10:00 AM | STOP | The Weather Of Dunmore: Shoot Day 5 | Go
+November 22, 2029 at 12:00 PM | NOTICE | Paid For The Weather Of Dunmore | Marrow Street Productions paid $280.00 for the week of November 16, 2029, less $21.42 withheld for tax, so $258.58 went into your Chase Total Checking.
+November 22, 2029 at 9:00 PM | PRESS | Prepare the sides (lines) for eastview | done
+November 22, 2029 at 9:30 PM | PRESS | Prepare the sides (lines) for eastview | done
+November 23, 2029 at 9:00 AM | PRESS | Prepare the sides (lines) for eastview | done
+November 23, 2029 at 10:00 AM | STOP | The Weather Of Dunmore: Shoot Day 6 | Go
+November 23, 2029 at 10:00 AM | NOTICE | The Weather Of Dunmore Calls You For A Promotional Film | Marrow Street Productions called you to appear in a promotional film for The Weather Of Dunmore’s release: three hours at a studio near you on Thursday, September 5, 2030 at 10:00 AM, talking about the work and Tamsin Ibarra. It pays a day performer’s minimum, $1,402.00. Being there makes you a little more visible to casting for a while. If you miss it, Marrow Street Productions will remember.
+November 23, 2029 at 10:00 AM | NOTICE | You Wrapped The Weather Of Dunmore | The Weather Of Dunmore wrapped, and Tamsin Ibarra is on your professional credits, not yet released. Its footage can go on a reel once it comes out, about 10 months on, estimated. Update your résumé on the Portfolio tab to add it.
+November 23, 2029 at 9:00 PM | PRESS | Prepare the sides (rehearse) for eastview | done
+November 23, 2029 at 9:45 PM | PRESS | Prepare the sides (rehearse) for eastview | done
+November 24, 2029 at 9:30 AM | PRESS | Prepare the sides (rehearse) for eastview | done
+November 24, 2029 at 10:15 AM | PRESS | Prepare the sides (rehearse) for eastview | done
+November 24, 2029 at 11:20 AM | STOP | Car To The Airport | Go
+November 24, 2029 at 12:00 PM | PRESS | Prepare the sides (rehearse) for eastview | done
+November 24, 2029 at 12:45 PM | PRESS | Tape It for eastview | done
+November 24, 2029 at 1:45 PM | PRESS | Prepare the sides (read) for tidewater-narrator | done
+November 24, 2029 at 2:15 PM | PRESS | Prepare the sides (read) for tidewater-narrator | done
+November 24, 2029 at 2:45 PM | PRESS | Prepare the sides (read) for tidewater-narrator | done
+November 24, 2029 at 3:15 PM | PRESS | Prepare the sides (lines) for tidewater-narrator | done
+November 24, 2029 at 3:45 PM | PRESS | Prepare the sides (lines) for tidewater-narrator | done
+November 24, 2029 at 4:15 PM | PRESS | Prepare the sides (lines) for tidewater-narrator | done
+November 24, 2029 at 4:45 PM | PRESS | Prepare the sides (lines) for tidewater-narrator | done
+November 24, 2029 at 5:15 PM | PRESS | Prepare the sides (lines) for tidewater-narrator | done
+November 24, 2029 at 5:45 PM | PRESS | Prepare the sides (lines) for tidewater-narrator | done
+November 24, 2029 at 6:15 PM | PRESS | Prepare the sides (lines) for tidewater-narrator | done
+November 24, 2029 at 6:45 PM | PRESS | Prepare the sides (rehearse) for tidewater-narrator | done
+November 24, 2029 at 7:30 PM | PRESS | Prepare the sides (rehearse) for tidewater-narrator | done
+November 24, 2029 at 8:15 PM | PRESS | Prepare the sides (rehearse) for tidewater-narrator | done
+November 24, 2029 at 9:00 PM | PRESS | Prepare the sides (rehearse) for tidewater-narrator | done
+November 24, 2029 at 9:45 PM | PRESS | Prepare the sides (rehearse) for tidewater-narrator | done
+November 24, 2029 at 10:10 PM | NOTICE | You’re Home From Los Angeles | You’re back in New Haven after The Weather Of Dunmore.
+November 24, 2029 at 10:10 PM | NOTICE | Per Diem For The Weather Of Dunmore | Marrow Street Productions paid your per diem for meals, $60.00 for each day of the 12 days you were away: $720.00 into your Chase Total Checking. It isn’t wages, so nothing was withheld and no commission was taken.
+November 25, 2029 at 9:30 AM | PRESS | Prepare the sides (rehearse) for tidewater-narrator | done
+November 25, 2029 at 10:15 AM | PRESS | Tape It for tidewater-narrator | done
+November 25, 2029 at 11:15 AM | PRESS | Update Your Résumé | done
 November 28, 2029 at 5:00 PM | NOTICE | Not Cast As Robin | The producers cast another actor as Robin. Casting doesn’t give its reasons. The Opportunities tab shows what went into it: your audition, the role’s fit and the field.
-November 30, 2029 at 1:45 PM | PRESS | Update Your Résumé | done
+November 28, 2029 at 5:00 PM | NOTICE | Not Cast As The Narrator | The film’s producers cast another actor as The Narrator. Casting doesn’t give its reasons. The Opportunities tab shows what went into it: your audition, the role’s fit and the field.
+November 29, 2029 at 12:00 PM | NOTICE | Paid For The Weather Of Dunmore | Marrow Street Productions paid $1,400.00 for the week of November 19, 2029, less $107.10 withheld for tax, so $1,292.90 went into your Chase Total Checking.

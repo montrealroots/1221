@@ -3,7 +3,7 @@
  "part": 2,
  "from": "2029-03-24",
  "to": "2029-09-01",
- "secs": 90,
+ "secs": 89,
  "reloads": 20,
  "done": true,
  "standing": "graduated",
@@ -23,7 +23,7 @@
   "2029-06-06T14:30 an audition (in-person) set for 2029-06-11T15:00, Felix in Paper Moons: same"
  ],
  "workDays": 0,
- "notices": 783,
+ "notices": 794,
  "bank": 64349.11,
  "errors": []
 }

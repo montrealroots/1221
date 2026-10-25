@@ -117,7 +117,7 @@ April 27, 2030 at 2:20 PM | PRESS | Cut A Reel (one piece) | done
 April 29, 2030 at 1:00 PM | NOTICE | The Actor Showcase In New York | You played your two scenes at the showcase in New York. Martin in The Reception: Working, 64 of 100. Cleaver in Justice: Working, 64 of 100. The faculty’s notes are on each scene’s card on the Coursework tab. Work on them before Los Angeles, where they’re shown again with the note taken. You play them again in New York on April 30.
 April 30, 2030 at 9:00 AM | NOTICE | The Actor Showcase In New York | You played your two scenes again at the showcase in New York. Martin in The Reception: Working, 64 of 100. Cleaver in Justice: Working, 63 of 100. You play them again in Los Angeles on May 7.
 May 7, 2030 at 9:00 AM | NOTICE | The Actor Showcase In Los Angeles | You played your two scenes at the showcase in Los Angeles. Martin in The Reception: Working, 64 of 100. Cleaver in Justice: Working, 62 of 100. You passed Actor Showcase.
-May 10, 2030 at 10:00 AM | NOTICE | The School’s Follow-Up After The Showcase | The School passed your showcase on to the agencies it follows up with, and Thomas Ashgrove’s office at Halberd Talent asked the School to pass on a request to meet you. Press Send Your Materials on the Career screen’s Representation tab by June 9, 2030, and his office sets a time. Thomas Ashgrove and Halberd Talent are invented for the game, as every agency, project and casting office in it is. His office takes no submissions it hasn’t asked for: it sees your materials through the School’s follow-up after the showcase, or a referral from someone you’ve worked with. He never gets in touch first. In the game agencies follow the showcase up through the School. The School publishes the showcase’s dates and places, not who comes, and the game doesn’t say he was there.
+May 10, 2030 at 10:00 AM | NOTICE | The School’s Follow-Up After The Showcase | The School passed your showcase on to the agencies it follows up with, and Thomas Ashgrove’s office at Halberd Talent asked the School to pass on a request to meet you. Press Send Your Materials on the Career screen’s Representation tab by June 9, 2030, and his office sets a time. Thomas Ashgrove and Halberd Talent are invented for the game. His office takes no submissions it hasn’t asked for: it sees your materials through the School’s follow-up after the showcase, or a referral from someone you’ve worked with. He never gets in touch first. In the game agencies follow the showcase up through the School. The School publishes the showcase’s dates and places, not who comes, and the game doesn’t say he was there.
 May 10, 2030 at 10:40 AM | PRESS | Check Your Materials | done
 May 10, 2030 at 10:40 AM | PRESS | Send Your Materials | done
 May 17, 2030 at 10:00 AM | NOTICE | A Meeting Is Set At Halberd Talent | Thomas Ashgrove’s office at Halberd Talent has set the meeting it asked the School to pass on: Friday, May 24, 2030 at 11:00 AM, at Halberd Talent’s New York office. It’s on your calendar with two hours to get there from New Haven, a time the game assumes. If you can’t make it, Ask To Move on the Representation tab moves it a week, once.
@@ -133,7 +133,15 @@ May 24, 2030 at 11:00 AM | NOTICE | You Met Thomas Ashgrove’s Office | You met
 May 29, 2030 at 10:00 AM | NOTICE | Thomas Ashgrove Offered You Representation | Thomas Ashgrove has offered to represent you at Halberd Talent: an agreement for one year. Every term is under The Agreement on the Career screen’s Representation tab, each marked as a published rule or the game’s own. The offer stands until June 12, 2030.
 May 29, 2030 at 10:00 AM | PRESS | Accept The Agreement | done
 June 3, 2030 at 9:00 AM | NOTICE | Submitted For Ferris | Thomas Ashgrove submitted you for Ferris in Gull Season, sending your headshots from April 27, 2030, your résumé from May 20, 2030 and your reel from April 27, 2030. Quillon Casting answers on Wednesday, June 5, 2030.
+June 3, 2030 at 9:00 AM | NOTICE | Submitted For The Ferry Engineer | Thomas Ashgrove submitted you for The Ferry Engineer in Northern Line, sending your headshots from April 27, 2030, your résumé from May 20, 2030 and your reel from April 27, 2030. Abernathy Rhee Casting answers on Wednesday, June 5, 2030.
+June 3, 2030 at 9:00 AM | NOTICE | Submitted For The Night Auditor | Thomas Ashgrove submitted you for The Night Auditor in Six Rooms, sending your headshots from April 27, 2030, your résumé from May 20, 2030 and your reel from April 27, 2030. Tolland Casting answers on Wednesday, June 5, 2030.
+June 3, 2030 at 9:00 AM | NOTICE | Submitted For Robin Quaid | Thomas Ashgrove submitted you for Robin Quaid in The Carnival, sending your headshots from April 27, 2030, your résumé from May 20, 2030 and your reel from April 27, 2030. Quillon Casting answers on Wednesday, June 5, 2030.
+June 3, 2030 at 9:00 AM | NOTICE | Submitted For Jules Rasmussen | Thomas Ashgrove submitted you for Jules Rasmussen in The Quarry, sending your headshots from April 27, 2030, your résumé from May 20, 2030 and your reel from April 27, 2030. Varga Casting answers on Wednesday, June 5, 2030.
 June 5, 2030 at 10:00 AM | NOTICE | A Self-Tape For Ferris | Thomas Ashgrove passed this on: Quillon Casting asks for a self-tape for Ferris in Gull Season, due Sunday, June 9, 2030 at 6:00 PM. Prepare the sides, then press Tape It on the Career screen’s Opportunities tab.
+June 5, 2030 at 10:00 AM | NOTICE | A Self-Tape For The Ferry Engineer | Thomas Ashgrove passed this on: Abernathy Rhee Casting asks for a self-tape for The Ferry Engineer in Northern Line, due Sunday, June 9, 2030 at 6:00 PM. Prepare the sides, then press Tape It on the Career screen’s Opportunities tab.
+June 5, 2030 at 10:00 AM | NOTICE | A Self-Tape For The Night Auditor | Thomas Ashgrove passed this on: Tolland Casting asks for a self-tape for The Night Auditor in Six Rooms, due Sunday, June 9, 2030 at 6:00 PM. Prepare the sides, then press Tape It on the Career screen’s Opportunities tab.
+June 5, 2030 at 10:00 AM | NOTICE | A Self-Tape For Robin Quaid | Thomas Ashgrove passed this on: Quillon Casting asks for a self-tape for Robin Quaid in The Carnival, due Sunday, June 9, 2030 at 6:00 PM. Prepare the sides, then press Tape It on the Career screen’s Opportunities tab.
+June 5, 2030 at 10:00 AM | NOTICE | A Self-Tape For Jules Rasmussen | Thomas Ashgrove passed this on: Varga Casting asks for a self-tape for Jules Rasmussen in The Quarry, due Sunday, June 9, 2030 at 6:00 PM. Prepare the sides, then press Tape It on the Career screen’s Opportunities tab.
 June 5, 2030 at 10:00 AM | PRESS | Prepare the sides (read) for gull-season-ferris | done
 June 5, 2030 at 10:30 AM | PRESS | Prepare the sides (read) for gull-season-ferris | done
 June 5, 2030 at 11:00 AM | PRESS | Prepare the sides (lines) for gull-season-ferris | done
@@ -154,128 +162,457 @@ June 5, 2030 at 9:00 PM | PRESS | Prepare the sides (rehearse) for gull-season-f
 June 5, 2030 at 9:45 PM | PRESS | Prepare the sides (rehearse) for gull-season-ferris | done
 June 6, 2030 at 9:30 AM | PRESS | Prepare the sides (rehearse) for gull-season-ferris | done
 June 6, 2030 at 10:15 AM | PRESS | Tape It for gull-season-ferris | done
+June 6, 2030 at 11:15 AM | PRESS | Prepare the sides (read) for northern-line | done
+June 6, 2030 at 11:45 AM | PRESS | Prepare the sides (read) for northern-line | done
+June 6, 2030 at 12:15 PM | PRESS | Prepare the sides (lines) for northern-line | done
+June 6, 2030 at 12:45 PM | PRESS | Prepare the sides (lines) for northern-line | done
+June 6, 2030 at 1:15 PM | PRESS | Prepare the sides (lines) for northern-line | done
+June 6, 2030 at 1:45 PM | PRESS | Prepare the sides (rehearse) for northern-line | done
+June 6, 2030 at 2:30 PM | PRESS | Prepare the sides (rehearse) for northern-line | done
+June 6, 2030 at 3:15 PM | PRESS | Prepare the sides (rehearse) for northern-line | done
+June 6, 2030 at 4:00 PM | PRESS | Prepare the sides (rehearse) for northern-line | done
+June 6, 2030 at 4:45 PM | PRESS | Prepare the sides (rehearse) for northern-line | done
+June 6, 2030 at 5:30 PM | PRESS | Prepare the sides (rehearse) for northern-line | done
+June 6, 2030 at 6:15 PM | PRESS | Prepare the sides (rehearse) for northern-line | done
+June 6, 2030 at 7:00 PM | PRESS | Prepare the sides (rehearse) for northern-line | done
+June 6, 2030 at 7:45 PM | PRESS | Prepare the sides (rehearse) for northern-line | done
+June 6, 2030 at 8:30 PM | PRESS | Prepare the sides (rehearse) for northern-line | done
+June 6, 2030 at 9:15 PM | PRESS | Prepare the sides (rehearse) for northern-line | done
+June 7, 2030 at 9:00 AM | PRESS | Prepare the sides (rehearse) for northern-line | done
+June 7, 2030 at 9:45 AM | PRESS | Tape It for northern-line | done
+June 7, 2030 at 10:45 AM | PRESS | Prepare the sides (read) for six-rooms | done
+June 7, 2030 at 11:15 AM | PRESS | Prepare the sides (read) for six-rooms | done
+June 7, 2030 at 11:45 AM | PRESS | Prepare the sides (lines) for six-rooms | done
+June 7, 2030 at 12:15 PM | PRESS | Prepare the sides (lines) for six-rooms | done
+June 7, 2030 at 12:45 PM | PRESS | Prepare the sides (lines) for six-rooms | done
+June 7, 2030 at 1:15 PM | PRESS | Prepare the sides (rehearse) for six-rooms | done
+June 7, 2030 at 2:00 PM | PRESS | Prepare the sides (rehearse) for six-rooms | done
+June 7, 2030 at 2:45 PM | PRESS | Prepare the sides (rehearse) for six-rooms | done
+June 7, 2030 at 3:30 PM | PRESS | Prepare the sides (rehearse) for six-rooms | done
+June 7, 2030 at 4:15 PM | PRESS | Prepare the sides (rehearse) for six-rooms | done
+June 7, 2030 at 5:00 PM | PRESS | Prepare the sides (rehearse) for six-rooms | done
+June 7, 2030 at 5:45 PM | PRESS | Prepare the sides (rehearse) for six-rooms | done
+June 7, 2030 at 6:30 PM | PRESS | Prepare the sides (rehearse) for six-rooms | done
+June 7, 2030 at 7:15 PM | PRESS | Prepare the sides (rehearse) for six-rooms | done
+June 7, 2030 at 8:00 PM | PRESS | Prepare the sides (rehearse) for six-rooms | done
+June 7, 2030 at 8:45 PM | PRESS | Prepare the sides (rehearse) for six-rooms | done
+June 7, 2030 at 9:30 PM | PRESS | Prepare the sides (rehearse) for six-rooms | done
+June 8, 2030 at 9:15 AM | PRESS | Prepare the sides (rehearse) for six-rooms | done
+June 8, 2030 at 10:00 AM | PRESS | Tape It for six-rooms | done
+June 8, 2030 at 11:00 AM | PRESS | Prepare the sides (read) for g1.1buqm.2025.los-angeles.serialized-drama.1.s6.1 | done
+June 8, 2030 at 11:30 AM | PRESS | Prepare the sides (read) for g1.1buqm.2025.los-angeles.serialized-drama.1.s6.1 | done
+June 8, 2030 at 12:00 PM | PRESS | Prepare the sides (lines) for g1.1buqm.2025.los-angeles.serialized-drama.1.s6.1 | done
+June 8, 2030 at 12:30 PM | PRESS | Prepare the sides (lines) for g1.1buqm.2025.los-angeles.serialized-drama.1.s6.1 | done
+June 8, 2030 at 1:00 PM | PRESS | Prepare the sides (lines) for g1.1buqm.2025.los-angeles.serialized-drama.1.s6.1 | done
+June 8, 2030 at 1:30 PM | PRESS | Prepare the sides (rehearse) for g1.1buqm.2025.los-angeles.serialized-drama.1.s6.1 | done
+June 8, 2030 at 2:15 PM | PRESS | Prepare the sides (rehearse) for g1.1buqm.2025.los-angeles.serialized-drama.1.s6.1 | done
+June 8, 2030 at 3:00 PM | PRESS | Prepare the sides (rehearse) for g1.1buqm.2025.los-angeles.serialized-drama.1.s6.1 | done
+June 8, 2030 at 3:45 PM | PRESS | Prepare the sides (rehearse) for g1.1buqm.2025.los-angeles.serialized-drama.1.s6.1 | done
+June 8, 2030 at 4:30 PM | PRESS | Prepare the sides (rehearse) for g1.1buqm.2025.los-angeles.serialized-drama.1.s6.1 | done
+June 8, 2030 at 5:15 PM | PRESS | Prepare the sides (rehearse) for g1.1buqm.2025.los-angeles.serialized-drama.1.s6.1 | done
+June 8, 2030 at 6:00 PM | PRESS | Prepare the sides (rehearse) for g1.1buqm.2025.los-angeles.serialized-drama.1.s6.1 | done
+June 8, 2030 at 6:45 PM | PRESS | Prepare the sides (rehearse) for g1.1buqm.2025.los-angeles.serialized-drama.1.s6.1 | done
+June 8, 2030 at 7:30 PM | PRESS | Prepare the sides (rehearse) for g1.1buqm.2025.los-angeles.serialized-drama.1.s6.1 | done
+June 8, 2030 at 8:15 PM | PRESS | Prepare the sides (rehearse) for g1.1buqm.2025.los-angeles.serialized-drama.1.s6.1 | done
+June 8, 2030 at 9:00 PM | PRESS | Prepare the sides (rehearse) for g1.1buqm.2025.los-angeles.serialized-drama.1.s6.1 | done
+June 8, 2030 at 9:45 PM | PRESS | Prepare the sides (rehearse) for g1.1buqm.2025.los-angeles.serialized-drama.1.s6.1 | done
+June 9, 2030 at 9:30 AM | PRESS | Prepare the sides (rehearse) for g1.1buqm.2025.los-angeles.serialized-drama.1.s6.1 | done
+June 9, 2030 at 10:15 AM | PRESS | Tape It for g1.1buqm.2025.los-angeles.serialized-drama.1.s6.1 | done
+June 9, 2030 at 11:15 AM | PRESS | Tape It for g1.1buqm.2030.new-york.serialized-drama.0.s1.0 | done
+June 10, 2030 at 9:00 AM | NOTICE | Submitted For Rowan | Thomas Ashgrove submitted you for Rowan in The Almanac Of Lowell Falls, sending your headshots from April 27, 2030, your résumé from May 20, 2030 and your reel from April 27, 2030. Moreau Casting answers on Wednesday, June 12, 2030.
+June 10, 2030 at 9:00 AM | NOTICE | Submitted For Emery Dunleavy | Thomas Ashgrove submitted you for Emery Dunleavy in Halloway Margins, sending your headshots from April 27, 2030, your résumé from May 20, 2030 and your reel from April 27, 2030. Mbeki Casting answers on Wednesday, June 12, 2030.
+June 10, 2030 at 9:00 AM | NOTICE | Submitted For Kwame | Thomas Ashgrove submitted you for Kwame in The Undertow Of Carver Hill, sending your headshots from April 27, 2030, your résumé from May 20, 2030 and your reel from April 27, 2030. Hargrove Casting answers on Wednesday, June 12, 2030.
+June 10, 2030 at 9:00 AM | NOTICE | Submitted For Jules | Thomas Ashgrove submitted you for Jules in The Errand On Mercer Street, sending your headshots from April 27, 2030, your résumé from May 20, 2030 and your reel from April 27, 2030. Iwata Casting answers on Wednesday, June 12, 2030.
 June 10, 2030 at 5:00 PM | NOTICE | Not Cast As Ferris | Thomas Ashgrove passed this on: Quillon Casting didn’t call you back for Ferris. Casting doesn’t give its reasons. The Opportunities tab shows what went into it: your audition, the role’s fit and the field.
+June 10, 2030 at 5:00 PM | NOTICE | Not Cast As The Ferry Engineer | Thomas Ashgrove passed this on: Abernathy Rhee Casting didn’t call you back for The Ferry Engineer. Casting doesn’t give its reasons. The Opportunities tab shows what went into it: your audition, the role’s fit and the field.
+June 10, 2030 at 5:00 PM | NOTICE | Not Cast As The Night Auditor | Thomas Ashgrove passed this on: Tolland Casting didn’t call you back for The Night Auditor. Casting doesn’t give its reasons. The Opportunities tab shows what went into it: your audition, the role’s fit and the field.
+June 10, 2030 at 5:00 PM | NOTICE | Not Cast As Jules Rasmussen | Thomas Ashgrove passed this on: Varga Casting didn’t call you back for Jules Rasmussen. Casting doesn’t give its reasons. The Opportunities tab shows what went into it: your audition, the role’s fit and the field.
+June 12, 2030 at 10:00 AM | NOTICE | A Self-Tape For Rowan | Thomas Ashgrove passed this on: Moreau Casting asks for a self-tape for Rowan in The Almanac Of Lowell Falls, due Sunday, June 16, 2030 at 6:00 PM. Prepare the sides, then press Tape It on the Career screen’s Opportunities tab.
+June 12, 2030 at 10:00 AM | NOTICE | A Self-Tape For Emery Dunleavy | Thomas Ashgrove passed this on: Mbeki Casting asks for a self-tape for Emery Dunleavy in Halloway Margins, due Sunday, June 16, 2030 at 6:00 PM. Prepare the sides, then press Tape It on the Career screen’s Opportunities tab.
+June 12, 2030 at 10:00 AM | NOTICE | A Self-Tape For Kwame | Thomas Ashgrove passed this on: Hargrove Casting asks for a self-tape for Kwame in The Undertow Of Carver Hill, due Sunday, June 16, 2030 at 6:00 PM. Prepare the sides, then press Tape It on the Career screen’s Opportunities tab.
+June 12, 2030 at 10:00 AM | NOTICE | An Audition For Jules | Thomas Ashgrove passed this on: Iwata Casting wants to see you for Jules in The Errand On Mercer Street: a studio lot in Burbank in Los Angeles, Monday, June 17, 2030 at 11:00 AM. Getting there takes about three hours each way. Prepare the sides on the Career screen’s Opportunities tab before you go.
+June 12, 2030 at 10:15 AM | PRESS | Prepare the sides (read) for g1.1buqm.2027.los-angeles.serialized-comedy.2.s4.0 | done
+June 12, 2030 at 10:45 AM | PRESS | Prepare the sides (read) for g1.1buqm.2027.los-angeles.serialized-comedy.2.s4.0 | done
+June 12, 2030 at 11:15 AM | PRESS | Prepare the sides (lines) for g1.1buqm.2027.los-angeles.serialized-comedy.2.s4.0 | done
+June 12, 2030 at 11:45 AM | PRESS | Prepare the sides (lines) for g1.1buqm.2027.los-angeles.serialized-comedy.2.s4.0 | done
+June 12, 2030 at 12:15 PM | PRESS | Prepare the sides (rehearse) for g1.1buqm.2027.los-angeles.serialized-comedy.2.s4.0 | done
+June 12, 2030 at 1:00 PM | PRESS | Prepare the sides (rehearse) for g1.1buqm.2027.los-angeles.serialized-comedy.2.s4.0 | done
+June 12, 2030 at 1:45 PM | PRESS | Prepare the sides (rehearse) for g1.1buqm.2027.los-angeles.serialized-comedy.2.s4.0 | done
+June 12, 2030 at 2:30 PM | PRESS | Prepare the sides (rehearse) for g1.1buqm.2027.los-angeles.serialized-comedy.2.s4.0 | done
+June 12, 2030 at 3:15 PM | PRESS | Prepare the sides (rehearse) for g1.1buqm.2027.los-angeles.serialized-comedy.2.s4.0 | done
+June 12, 2030 at 4:00 PM | PRESS | Prepare the sides (rehearse) for g1.1buqm.2027.los-angeles.serialized-comedy.2.s4.0 | done
+June 12, 2030 at 4:45 PM | PRESS | Prepare the sides (rehearse) for g1.1buqm.2027.los-angeles.serialized-comedy.2.s4.0 | done
+June 12, 2030 at 5:00 PM | NOTICE | Not Cast As Robin Quaid | Thomas Ashgrove passed this on: Quillon Casting cast another actor as Robin Quaid. Casting doesn’t give its reasons. The Opportunities tab shows what went into it: your audition, the role’s fit and the field.
+June 12, 2030 at 5:30 PM | PRESS | Prepare the sides (rehearse) for g1.1buqm.2027.los-angeles.serialized-comedy.2.s4.0 | done
+June 12, 2030 at 6:15 PM | PRESS | Prepare the sides (rehearse) for g1.1buqm.2027.los-angeles.serialized-comedy.2.s4.0 | done
+June 12, 2030 at 7:00 PM | PRESS | Prepare the sides (rehearse) for g1.1buqm.2027.los-angeles.serialized-comedy.2.s4.0 | done
+June 12, 2030 at 7:45 PM | PRESS | Prepare the sides (rehearse) for g1.1buqm.2027.los-angeles.serialized-comedy.2.s4.0 | done
+June 12, 2030 at 8:30 PM | PRESS | Prepare the sides (rehearse) for g1.1buqm.2027.los-angeles.serialized-comedy.2.s4.0 | done
+June 12, 2030 at 9:15 PM | PRESS | Prepare the sides (rehearse) for g1.1buqm.2027.los-angeles.serialized-comedy.2.s4.0 | done
+June 13, 2030 at 9:00 AM | PRESS | Prepare the sides (rehearse) for g1.1buqm.2027.los-angeles.serialized-comedy.2.s4.0 | done
+June 13, 2030 at 9:45 AM | PRESS | Tape It for g1.1buqm.2027.los-angeles.serialized-comedy.2.s4.0 | done
+June 13, 2030 at 10:45 AM | PRESS | Prepare the sides (read) for g1.1buqm.2029.new-york.serialized-drama.0.s2.1 | done
+June 13, 2030 at 11:15 AM | PRESS | Prepare the sides (read) for g1.1buqm.2029.new-york.serialized-drama.0.s2.1 | done
+June 13, 2030 at 11:45 AM | PRESS | Prepare the sides (lines) for g1.1buqm.2029.new-york.serialized-drama.0.s2.1 | done
+June 13, 2030 at 12:15 PM | PRESS | Prepare the sides (lines) for g1.1buqm.2029.new-york.serialized-drama.0.s2.1 | done
+June 13, 2030 at 12:45 PM | PRESS | Prepare the sides (lines) for g1.1buqm.2029.new-york.serialized-drama.0.s2.1 | done
+June 13, 2030 at 1:15 PM | PRESS | Prepare the sides (rehearse) for g1.1buqm.2029.new-york.serialized-drama.0.s2.1 | done
+June 13, 2030 at 2:00 PM | PRESS | Prepare the sides (rehearse) for g1.1buqm.2029.new-york.serialized-drama.0.s2.1 | done
+June 13, 2030 at 2:45 PM | PRESS | Prepare the sides (rehearse) for g1.1buqm.2029.new-york.serialized-drama.0.s2.1 | done
+June 13, 2030 at 3:30 PM | PRESS | Prepare the sides (rehearse) for g1.1buqm.2029.new-york.serialized-drama.0.s2.1 | done
+June 13, 2030 at 4:15 PM | PRESS | Prepare the sides (rehearse) for g1.1buqm.2029.new-york.serialized-drama.0.s2.1 | done
+June 13, 2030 at 5:00 PM | PRESS | Prepare the sides (rehearse) for g1.1buqm.2029.new-york.serialized-drama.0.s2.1 | done
+June 13, 2030 at 5:45 PM | PRESS | Prepare the sides (rehearse) for g1.1buqm.2029.new-york.serialized-drama.0.s2.1 | done
+June 13, 2030 at 6:30 PM | PRESS | Prepare the sides (rehearse) for g1.1buqm.2029.new-york.serialized-drama.0.s2.1 | done
+June 13, 2030 at 7:15 PM | PRESS | Prepare the sides (rehearse) for g1.1buqm.2029.new-york.serialized-drama.0.s2.1 | done
+June 13, 2030 at 8:00 PM | PRESS | Prepare the sides (rehearse) for g1.1buqm.2029.new-york.serialized-drama.0.s2.1 | done
+June 13, 2030 at 8:45 PM | PRESS | Prepare the sides (rehearse) for g1.1buqm.2029.new-york.serialized-drama.0.s2.1 | done
+June 13, 2030 at 9:30 PM | PRESS | Prepare the sides (rehearse) for g1.1buqm.2029.new-york.serialized-drama.0.s2.1 | done
 June 14, 2030 at 9:00 AM | NOTICE | Happy Birthday: 28 | You’re 28 today.
+June 14, 2030 at 9:15 AM | PRESS | Prepare the sides (rehearse) for g1.1buqm.2029.new-york.serialized-drama.0.s2.1 | done
+June 14, 2030 at 10:00 AM | PRESS | Tape It for g1.1buqm.2029.new-york.serialized-drama.0.s2.1 | done
+June 14, 2030 at 11:00 AM | PRESS | Prepare the sides (read) for g1.1buqm.2030.new-york.network-drama.1.s0.0 | done
+June 14, 2030 at 11:30 AM | PRESS | Prepare the sides (read) for g1.1buqm.2030.new-york.network-drama.1.s0.0 | done
+June 14, 2030 at 12:00 PM | PRESS | Prepare the sides (lines) for g1.1buqm.2030.new-york.network-drama.1.s0.0 | done
+June 14, 2030 at 12:30 PM | PRESS | Prepare the sides (lines) for g1.1buqm.2030.new-york.network-drama.1.s0.0 | done
+June 14, 2030 at 1:00 PM | PRESS | Prepare the sides (lines) for g1.1buqm.2030.new-york.network-drama.1.s0.0 | done
+June 14, 2030 at 1:30 PM | PRESS | Prepare the sides (rehearse) for g1.1buqm.2030.new-york.network-drama.1.s0.0 | done
+June 14, 2030 at 2:15 PM | PRESS | Prepare the sides (rehearse) for g1.1buqm.2030.new-york.network-drama.1.s0.0 | done
+June 14, 2030 at 3:00 PM | PRESS | Prepare the sides (rehearse) for g1.1buqm.2030.new-york.network-drama.1.s0.0 | done
+June 14, 2030 at 3:45 PM | PRESS | Prepare the sides (rehearse) for g1.1buqm.2030.new-york.network-drama.1.s0.0 | done
+June 14, 2030 at 4:30 PM | PRESS | Prepare the sides (rehearse) for g1.1buqm.2030.new-york.network-drama.1.s0.0 | done
+June 14, 2030 at 5:15 PM | PRESS | Prepare the sides (rehearse) for g1.1buqm.2030.new-york.network-drama.1.s0.0 | done
+June 14, 2030 at 6:00 PM | PRESS | Prepare the sides (rehearse) for g1.1buqm.2030.new-york.network-drama.1.s0.0 | done
+June 14, 2030 at 6:45 PM | PRESS | Prepare the sides (rehearse) for g1.1buqm.2030.new-york.network-drama.1.s0.0 | done
+June 14, 2030 at 7:30 PM | PRESS | Prepare the sides (rehearse) for g1.1buqm.2030.new-york.network-drama.1.s0.0 | done
+June 14, 2030 at 8:15 PM | PRESS | Prepare the sides (rehearse) for g1.1buqm.2030.new-york.network-drama.1.s0.0 | done
+June 14, 2030 at 9:00 PM | PRESS | Prepare the sides (rehearse) for g1.1buqm.2030.new-york.network-drama.1.s0.0 | done
+June 14, 2030 at 9:45 PM | PRESS | Prepare the sides (rehearse) for g1.1buqm.2030.new-york.network-drama.1.s0.0 | done
+June 15, 2030 at 9:30 AM | PRESS | Prepare the sides (rehearse) for g1.1buqm.2030.new-york.network-drama.1.s0.0 | done
+June 15, 2030 at 10:15 AM | PRESS | Tape It for g1.1buqm.2030.new-york.network-drama.1.s0.0 | done
+June 15, 2030 at 11:15 AM | PRESS | Prepare the sides (read) for g1.1buqm.2030.los-angeles.multicam-comedy.0.s1.1 | done
+June 15, 2030 at 11:45 AM | PRESS | Prepare the sides (read) for g1.1buqm.2030.los-angeles.multicam-comedy.0.s1.1 | done
+June 15, 2030 at 12:15 PM | PRESS | Prepare the sides (lines) for g1.1buqm.2030.los-angeles.multicam-comedy.0.s1.1 | done
+June 15, 2030 at 12:45 PM | PRESS | Prepare the sides (lines) for g1.1buqm.2030.los-angeles.multicam-comedy.0.s1.1 | done
+June 15, 2030 at 1:15 PM | PRESS | Prepare the sides (lines) for g1.1buqm.2030.los-angeles.multicam-comedy.0.s1.1 | done
+June 15, 2030 at 1:45 PM | PRESS | Prepare the sides (rehearse) for g1.1buqm.2030.los-angeles.multicam-comedy.0.s1.1 | done
+June 15, 2030 at 2:30 PM | PRESS | Prepare the sides (rehearse) for g1.1buqm.2030.los-angeles.multicam-comedy.0.s1.1 | done
+June 15, 2030 at 3:15 PM | PRESS | Prepare the sides (rehearse) for g1.1buqm.2030.los-angeles.multicam-comedy.0.s1.1 | done
+June 15, 2030 at 4:00 PM | PRESS | Prepare the sides (rehearse) for g1.1buqm.2030.los-angeles.multicam-comedy.0.s1.1 | done
+June 15, 2030 at 4:45 PM | PRESS | Prepare the sides (rehearse) for g1.1buqm.2030.los-angeles.multicam-comedy.0.s1.1 | done
+June 15, 2030 at 5:30 PM | PRESS | Prepare the sides (rehearse) for g1.1buqm.2030.los-angeles.multicam-comedy.0.s1.1 | done
+June 15, 2030 at 6:15 PM | PRESS | Prepare the sides (rehearse) for g1.1buqm.2030.los-angeles.multicam-comedy.0.s1.1 | done
+June 15, 2030 at 7:00 PM | PRESS | Prepare the sides (rehearse) for g1.1buqm.2030.los-angeles.multicam-comedy.0.s1.1 | done
+June 15, 2030 at 7:45 PM | PRESS | Prepare the sides (rehearse) for g1.1buqm.2030.los-angeles.multicam-comedy.0.s1.1 | done
+June 15, 2030 at 8:30 PM | PRESS | Prepare the sides (rehearse) for g1.1buqm.2030.los-angeles.multicam-comedy.0.s1.1 | done
+June 15, 2030 at 9:15 PM | PRESS | Prepare the sides (rehearse) for g1.1buqm.2030.los-angeles.multicam-comedy.0.s1.1 | done
+June 16, 2030 at 9:00 AM | PRESS | Prepare the sides (rehearse) for g1.1buqm.2030.los-angeles.multicam-comedy.0.s1.1 | done
 June 17, 2030 at 9:00 AM | NOTICE | Submitted For Desk Clerk | Thomas Ashgrove submitted you for Desk Clerk in The Calloway Files, sending your headshots from April 27, 2030, your résumé from May 20, 2030 and your reel from April 27, 2030. Kettering Casting answers on Wednesday, June 19, 2030.
+June 17, 2030 at 9:00 AM | NOTICE | Submitted For Ezra Ibarra | Thomas Ashgrove submitted you for Ezra Ibarra in The Almanac On Orrin Street, sending your headshots from April 27, 2030, your résumé from May 20, 2030 and your reel from April 27, 2030. Pennick Casting answers on Wednesday, June 19, 2030.
+June 17, 2030 at 9:00 AM | NOTICE | Submitted For Kwame | Thomas Ashgrove submitted you for Kwame in The Carnival On Prospect Street, sending your headshots from April 27, 2030, your résumé from May 20, 2030 and your reel from April 27, 2030. Achebe Casting answers on Wednesday, June 19, 2030.
+June 17, 2030 at 9:00 AM | NOTICE | Submitted For Jules | Thomas Ashgrove submitted you for Jules in The Ledger, sending your headshots from April 27, 2030, your résumé from May 20, 2030 and your reel from April 27, 2030. Lisle Casting answers on Wednesday, June 19, 2030.
+June 17, 2030 at 9:45 AM | PRESS | Submit Yourself for tidewater-reenactment | done
+June 17, 2030 at 11:00 AM | STOP | Audition: Jules, The Errand On Mercer Street | Go
+June 17, 2030 at 5:00 PM | NOTICE | A Callback For Emery Dunleavy | Thomas Ashgrove passed this on: Mbeki Casting asks for a self-tape for the callback for Emery Dunleavy in Halloway Margins, due Thursday, June 20, 2030 at 6:00 PM. Prepare the sides, then press Tape It on the Career screen’s Opportunities tab.
+June 17, 2030 at 5:00 PM | NOTICE | Not Cast As Kwame | Thomas Ashgrove passed this on: Hargrove Casting didn’t call you back for Kwame. Casting doesn’t give its reasons. The Opportunities tab shows what went into it: your audition, the role’s fit and the field.
+June 17, 2030 at 5:45 PM | PRESS | Tape It for g1.1buqm.2029.new-york.serialized-drama.0.s2.1 | done
+June 18, 2030 at 5:00 PM | NOTICE | Not Cast As Jules | Thomas Ashgrove passed this on: Iwata Casting didn’t call you back for Jules. Casting doesn’t give its reasons. The Opportunities tab shows what went into it: your audition, the role’s fit and the field.
 June 19, 2030 at 10:00 AM | NOTICE | A Self-Tape For Desk Clerk | Thomas Ashgrove passed this on: Kettering Casting asks for a self-tape for Desk Clerk in The Calloway Files, due Sunday, June 23, 2030 at 6:00 PM. Prepare the sides, then press Tape It on the Career screen’s Opportunities tab.
-June 19, 2030 at 10:15 AM | PRESS | Prepare the sides (read) for calloway-files | done
+June 19, 2030 at 10:00 AM | NOTICE | A Self-Tape For Ezra Ibarra | Thomas Ashgrove passed this on: Pennick Casting asks for a self-tape for Ezra Ibarra in The Almanac On Orrin Street, due Sunday, June 23, 2030 at 6:00 PM. Prepare the sides, then press Tape It on the Career screen’s Opportunities tab.
+June 19, 2030 at 10:00 AM | NOTICE | A Self-Tape For Kwame | Thomas Ashgrove passed this on: Achebe Casting asks for a self-tape for Kwame in The Carnival On Prospect Street, due Sunday, June 23, 2030 at 6:00 PM. Prepare the sides, then press Tape It on the Career screen’s Opportunities tab.
+June 19, 2030 at 10:00 AM | NOTICE | A Self-Tape For Jules | Thomas Ashgrove passed this on: Lisle Casting asks for a self-tape for Jules in The Ledger, due Sunday, June 23, 2030 at 6:00 PM. Prepare the sides, then press Tape It on the Career screen’s Opportunities tab.
+June 19, 2030 at 10:00 AM | NOTICE | A Self-Tape For An Oyster Tonger Of 1890 | The film’s producers ask for a self-tape for An Oyster Tonger Of 1890 in Tidewater: The Last Oyster Towns, due Sunday, June 23, 2030 at 6:00 PM. Prepare the sides, then press Tape It on the Career screen’s Opportunities tab.
 June 19, 2030 at 10:45 AM | PRESS | Prepare the sides (read) for calloway-files | done
-June 19, 2030 at 11:15 AM | PRESS | Prepare the sides (lines) for calloway-files | done
+June 19, 2030 at 11:15 AM | PRESS | Prepare the sides (read) for calloway-files | done
 June 19, 2030 at 11:45 AM | PRESS | Prepare the sides (lines) for calloway-files | done
-June 19, 2030 at 12:15 PM | PRESS | Prepare the sides (rehearse) for calloway-files | done
-June 19, 2030 at 1:00 PM | PRESS | Prepare the sides (rehearse) for calloway-files | done
-June 19, 2030 at 1:45 PM | PRESS | Prepare the sides (rehearse) for calloway-files | done
-June 19, 2030 at 2:30 PM | PRESS | Prepare the sides (rehearse) for calloway-files | done
-June 19, 2030 at 3:15 PM | PRESS | Prepare the sides (rehearse) for calloway-files | done
-June 19, 2030 at 4:00 PM | PRESS | Prepare the sides (rehearse) for calloway-files | done
-June 19, 2030 at 4:45 PM | PRESS | Prepare the sides (rehearse) for calloway-files | done
-June 19, 2030 at 5:30 PM | PRESS | Prepare the sides (rehearse) for calloway-files | done
-June 19, 2030 at 6:15 PM | PRESS | Prepare the sides (rehearse) for calloway-files | done
-June 19, 2030 at 7:00 PM | PRESS | Prepare the sides (rehearse) for calloway-files | done
-June 19, 2030 at 7:45 PM | PRESS | Prepare the sides (rehearse) for calloway-files | done
-June 19, 2030 at 8:30 PM | PRESS | Prepare the sides (rehearse) for calloway-files | done
-June 19, 2030 at 9:15 PM | PRESS | Prepare the sides (rehearse) for calloway-files | done
-June 20, 2030 at 9:00 AM | PRESS | Prepare the sides (rehearse) for calloway-files | done
-June 20, 2030 at 9:45 AM | PRESS | Tape It for calloway-files | done
+June 19, 2030 at 12:15 PM | PRESS | Prepare the sides (lines) for calloway-files | done
+June 19, 2030 at 12:45 PM | PRESS | Prepare the sides (rehearse) for calloway-files | done
+June 19, 2030 at 1:30 PM | PRESS | Prepare the sides (rehearse) for calloway-files | done
+June 19, 2030 at 2:15 PM | PRESS | Prepare the sides (rehearse) for calloway-files | done
+June 19, 2030 at 3:00 PM | PRESS | Prepare the sides (rehearse) for calloway-files | done
+June 19, 2030 at 3:45 PM | PRESS | Prepare the sides (rehearse) for calloway-files | done
+June 19, 2030 at 4:30 PM | PRESS | Prepare the sides (rehearse) for calloway-files | done
+June 19, 2030 at 5:00 PM | NOTICE | Not Cast As Rowan | Thomas Ashgrove passed this on: Moreau Casting cast another actor as Rowan. Casting doesn’t give its reasons. The Opportunities tab shows what went into it: your audition, the role’s fit and the field.
+June 19, 2030 at 5:15 PM | PRESS | Prepare the sides (rehearse) for calloway-files | done
+June 19, 2030 at 6:00 PM | PRESS | Prepare the sides (rehearse) for calloway-files | done
+June 19, 2030 at 6:45 PM | PRESS | Prepare the sides (rehearse) for calloway-files | done
+June 19, 2030 at 7:30 PM | PRESS | Prepare the sides (rehearse) for calloway-files | done
+June 19, 2030 at 8:15 PM | PRESS | Prepare the sides (rehearse) for calloway-files | done
+June 19, 2030 at 9:00 PM | PRESS | Prepare the sides (rehearse) for calloway-files | done
+June 19, 2030 at 9:45 PM | PRESS | Prepare the sides (rehearse) for calloway-files | done
+June 20, 2030 at 9:30 AM | PRESS | Prepare the sides (rehearse) for calloway-files | done
+June 20, 2030 at 10:15 AM | PRESS | Tape It for calloway-files | done
+June 20, 2030 at 11:15 AM | PRESS | Prepare the sides (read) for tidewater-reenactment | done
+June 20, 2030 at 11:45 AM | PRESS | Prepare the sides (read) for tidewater-reenactment | done
+June 20, 2030 at 12:15 PM | PRESS | Prepare the sides (lines) for tidewater-reenactment | done
+June 20, 2030 at 12:45 PM | PRESS | Prepare the sides (lines) for tidewater-reenactment | done
+June 20, 2030 at 1:15 PM | PRESS | Prepare the sides (lines) for tidewater-reenactment | done
+June 20, 2030 at 1:45 PM | PRESS | Prepare the sides (rehearse) for tidewater-reenactment | done
+June 20, 2030 at 2:30 PM | PRESS | Prepare the sides (rehearse) for tidewater-reenactment | done
+June 20, 2030 at 3:15 PM | PRESS | Prepare the sides (rehearse) for tidewater-reenactment | done
+June 20, 2030 at 4:00 PM | PRESS | Prepare the sides (rehearse) for tidewater-reenactment | done
+June 20, 2030 at 4:45 PM | PRESS | Prepare the sides (rehearse) for tidewater-reenactment | done
+June 20, 2030 at 5:30 PM | PRESS | Prepare the sides (rehearse) for tidewater-reenactment | done
+June 20, 2030 at 6:15 PM | PRESS | Prepare the sides (rehearse) for tidewater-reenactment | done
+June 20, 2030 at 7:00 PM | PRESS | Prepare the sides (rehearse) for tidewater-reenactment | done
+June 20, 2030 at 7:45 PM | PRESS | Prepare the sides (rehearse) for tidewater-reenactment | done
+June 20, 2030 at 8:30 PM | PRESS | Prepare the sides (rehearse) for tidewater-reenactment | done
+June 20, 2030 at 9:15 PM | PRESS | Prepare the sides (rehearse) for tidewater-reenactment | done
+June 21, 2030 at 9:00 AM | PRESS | Prepare the sides (rehearse) for tidewater-reenactment | done
+June 21, 2030 at 9:45 AM | PRESS | Tape It for tidewater-reenactment | done
+June 21, 2030 at 10:45 AM | PRESS | Prepare the sides (read) for g1.1buqm.2025.new-york.serialized-drama.0.s6.1 | done
+June 21, 2030 at 11:15 AM | PRESS | Prepare the sides (read) for g1.1buqm.2025.new-york.serialized-drama.0.s6.1 | done
+June 21, 2030 at 11:45 AM | PRESS | Prepare the sides (lines) for g1.1buqm.2025.new-york.serialized-drama.0.s6.1 | done
+June 21, 2030 at 12:15 PM | PRESS | Prepare the sides (lines) for g1.1buqm.2025.new-york.serialized-drama.0.s6.1 | done
+June 21, 2030 at 12:45 PM | PRESS | Prepare the sides (lines) for g1.1buqm.2025.new-york.serialized-drama.0.s6.1 | done
+June 21, 2030 at 1:15 PM | PRESS | Prepare the sides (rehearse) for g1.1buqm.2025.new-york.serialized-drama.0.s6.1 | done
+June 21, 2030 at 2:00 PM | PRESS | Prepare the sides (rehearse) for g1.1buqm.2025.new-york.serialized-drama.0.s6.1 | done
+June 21, 2030 at 2:45 PM | PRESS | Prepare the sides (rehearse) for g1.1buqm.2025.new-york.serialized-drama.0.s6.1 | done
+June 21, 2030 at 3:30 PM | PRESS | Prepare the sides (rehearse) for g1.1buqm.2025.new-york.serialized-drama.0.s6.1 | done
+June 21, 2030 at 4:15 PM | PRESS | Prepare the sides (rehearse) for g1.1buqm.2025.new-york.serialized-drama.0.s6.1 | done
+June 21, 2030 at 5:00 PM | PRESS | Prepare the sides (rehearse) for g1.1buqm.2025.new-york.serialized-drama.0.s6.1 | done
+June 21, 2030 at 5:45 PM | PRESS | Prepare the sides (rehearse) for g1.1buqm.2025.new-york.serialized-drama.0.s6.1 | done
+June 21, 2030 at 6:30 PM | PRESS | Prepare the sides (rehearse) for g1.1buqm.2025.new-york.serialized-drama.0.s6.1 | done
+June 21, 2030 at 7:15 PM | PRESS | Prepare the sides (rehearse) for g1.1buqm.2025.new-york.serialized-drama.0.s6.1 | done
+June 21, 2030 at 8:00 PM | PRESS | Prepare the sides (rehearse) for g1.1buqm.2025.new-york.serialized-drama.0.s6.1 | done
+June 21, 2030 at 8:45 PM | PRESS | Prepare the sides (rehearse) for g1.1buqm.2025.new-york.serialized-drama.0.s6.1 | done
+June 21, 2030 at 9:30 PM | PRESS | Prepare the sides (rehearse) for g1.1buqm.2025.new-york.serialized-drama.0.s6.1 | done
+June 22, 2030 at 9:15 AM | PRESS | Prepare the sides (rehearse) for g1.1buqm.2025.new-york.serialized-drama.0.s6.1 | done
+June 22, 2030 at 10:00 AM | PRESS | Tape It for g1.1buqm.2025.new-york.serialized-drama.0.s6.1 | done
+June 22, 2030 at 11:00 AM | PRESS | Prepare the sides (read) for g1.1buqm.2025.los-angeles.network-drama.0.s6.0 | done
+June 22, 2030 at 11:30 AM | PRESS | Prepare the sides (read) for g1.1buqm.2025.los-angeles.network-drama.0.s6.0 | done
+June 22, 2030 at 12:00 PM | PRESS | Prepare the sides (lines) for g1.1buqm.2025.los-angeles.network-drama.0.s6.0 | done
+June 22, 2030 at 12:30 PM | PRESS | Prepare the sides (lines) for g1.1buqm.2025.los-angeles.network-drama.0.s6.0 | done
+June 22, 2030 at 1:00 PM | PRESS | Prepare the sides (lines) for g1.1buqm.2025.los-angeles.network-drama.0.s6.0 | done
+June 22, 2030 at 1:30 PM | PRESS | Prepare the sides (rehearse) for g1.1buqm.2025.los-angeles.network-drama.0.s6.0 | done
+June 22, 2030 at 2:15 PM | PRESS | Prepare the sides (rehearse) for g1.1buqm.2025.los-angeles.network-drama.0.s6.0 | done
+June 22, 2030 at 3:00 PM | PRESS | Prepare the sides (rehearse) for g1.1buqm.2025.los-angeles.network-drama.0.s6.0 | done
+June 22, 2030 at 3:45 PM | PRESS | Prepare the sides (rehearse) for g1.1buqm.2025.los-angeles.network-drama.0.s6.0 | done
+June 22, 2030 at 4:30 PM | PRESS | Prepare the sides (rehearse) for g1.1buqm.2025.los-angeles.network-drama.0.s6.0 | done
+June 22, 2030 at 5:15 PM | PRESS | Prepare the sides (rehearse) for g1.1buqm.2025.los-angeles.network-drama.0.s6.0 | done
+June 22, 2030 at 6:00 PM | PRESS | Prepare the sides (rehearse) for g1.1buqm.2025.los-angeles.network-drama.0.s6.0 | done
+June 22, 2030 at 6:45 PM | PRESS | Prepare the sides (rehearse) for g1.1buqm.2025.los-angeles.network-drama.0.s6.0 | done
+June 22, 2030 at 7:30 PM | PRESS | Prepare the sides (rehearse) for g1.1buqm.2025.los-angeles.network-drama.0.s6.0 | done
+June 22, 2030 at 8:15 PM | PRESS | Prepare the sides (rehearse) for g1.1buqm.2025.los-angeles.network-drama.0.s6.0 | done
+June 22, 2030 at 9:00 PM | PRESS | Prepare the sides (rehearse) for g1.1buqm.2025.los-angeles.network-drama.0.s6.0 | done
+June 22, 2030 at 9:45 PM | PRESS | Prepare the sides (rehearse) for g1.1buqm.2025.los-angeles.network-drama.0.s6.0 | done
+June 23, 2030 at 9:30 AM | PRESS | Prepare the sides (rehearse) for g1.1buqm.2025.los-angeles.network-drama.0.s6.0 | done
+June 23, 2030 at 10:15 AM | PRESS | Tape It for g1.1buqm.2025.los-angeles.network-drama.0.s6.0 | done
+June 23, 2030 at 11:15 AM | PRESS | Tape It for g1.1buqm.2026.los-angeles.serialized-drama.2.s5.0 | done
+June 23, 2030 at 5:00 PM | NOTICE | Not Cast As Emery Dunleavy | Thomas Ashgrove passed this on: Mbeki Casting cast another actor as Emery Dunleavy. Casting doesn’t give its reasons. The Opportunities tab shows what went into it: your audition, the role’s fit and the field.
 June 24, 2030 at 9:00 AM | NOTICE | Submitted For Tobias Marsh | Thomas Ashgrove submitted you for Tobias Marsh in The Winter Ledger, sending your headshots from April 27, 2030 and your résumé from May 20, 2030. It’s a new casting of the part. The last time it was posted to you, on December 3, 2029: Submissions for Tobias Marsh closed on December 10, 2029. Ostrander Vale Casting answers on Wednesday, June 26, 2030.
 June 24, 2030 at 9:00 AM | NOTICE | Submitted For Jess | Thomas Ashgrove submitted you for Jess in Static On Route 9, sending your headshots from April 27, 2030, your résumé from May 20, 2030 and your reel from April 27, 2030. It’s a new casting of the part. The last time it was posted to you, on March 25, 2030: Submissions for Jess closed on April 1, 2030. Brisbane Hall Casting answers on Wednesday, June 26, 2030.
+June 24, 2030 at 5:00 PM | NOTICE | Not Cast As Ezra Ibarra | Thomas Ashgrove passed this on: Pennick Casting didn’t call you back for Ezra Ibarra. Casting doesn’t give its reasons. The Opportunities tab shows what went into it: your audition, the role’s fit and the field.
+June 24, 2030 at 5:00 PM | NOTICE | Not Cast As Jules | Thomas Ashgrove passed this on: Lisle Casting didn’t call you back for Jules. Casting doesn’t give its reasons. The Opportunities tab shows what went into it: your audition, the role’s fit and the field.
+June 25, 2030 at 11:15 AM | PRESS | Update Your Résumé | done
 June 26, 2030 at 10:00 AM | NOTICE | An Audition For Tobias Marsh | Thomas Ashgrove passed this on: Ostrander Vale Casting wants to see you for Tobias Marsh in The Winter Ledger: the company’s main stage in Hudson, Monday, July 1, 2030 at 11:00 AM. Getting there takes about two hours each way. Prepare the sides on the Career screen’s Opportunities tab before you go.
 June 26, 2030 at 10:00 AM | NOTICE | A Self-Tape For Jess | Thomas Ashgrove passed this on: Brisbane Hall Casting asks for a self-tape for Jess in Static On Route 9, due Sunday, June 30, 2030 at 6:00 PM. Prepare the sides, then press Tape It on the Career screen’s Opportunities tab.
+June 26, 2030 at 10:15 AM | PRESS | Prepare the sides (read) for winter-ledger | done
 June 26, 2030 at 10:45 AM | PRESS | Prepare the sides (read) for winter-ledger | done
-June 26, 2030 at 11:15 AM | PRESS | Prepare the sides (read) for winter-ledger | done
+June 26, 2030 at 11:15 AM | PRESS | Prepare the sides (lines) for winter-ledger | done
 June 26, 2030 at 11:45 AM | PRESS | Prepare the sides (lines) for winter-ledger | done
-June 26, 2030 at 12:15 PM | PRESS | Prepare the sides (lines) for winter-ledger | done
-June 26, 2030 at 12:45 PM | PRESS | Prepare the sides (rehearse) for winter-ledger | done
-June 26, 2030 at 1:30 PM | PRESS | Prepare the sides (rehearse) for winter-ledger | done
-June 26, 2030 at 2:15 PM | PRESS | Prepare the sides (rehearse) for winter-ledger | done
-June 26, 2030 at 3:00 PM | PRESS | Prepare the sides (rehearse) for winter-ledger | done
-June 26, 2030 at 3:45 PM | PRESS | Prepare the sides (rehearse) for winter-ledger | done
-June 26, 2030 at 4:30 PM | PRESS | Prepare the sides (rehearse) for winter-ledger | done
+June 26, 2030 at 12:15 PM | PRESS | Prepare the sides (rehearse) for winter-ledger | done
+June 26, 2030 at 1:00 PM | PRESS | Prepare the sides (rehearse) for winter-ledger | done
+June 26, 2030 at 1:45 PM | PRESS | Prepare the sides (rehearse) for winter-ledger | done
+June 26, 2030 at 2:30 PM | PRESS | Prepare the sides (rehearse) for winter-ledger | done
+June 26, 2030 at 3:15 PM | PRESS | Prepare the sides (rehearse) for winter-ledger | done
+June 26, 2030 at 4:00 PM | PRESS | Prepare the sides (rehearse) for winter-ledger | done
+June 26, 2030 at 4:45 PM | PRESS | Prepare the sides (rehearse) for winter-ledger | done
 June 26, 2030 at 5:00 PM | NOTICE | Not Cast As Desk Clerk | Thomas Ashgrove passed this on: Kettering Casting cast another actor as Desk Clerk. Casting doesn’t give its reasons. The Opportunities tab shows what went into it: your audition, the role’s fit and the field.
-June 26, 2030 at 5:15 PM | PRESS | Prepare the sides (rehearse) for winter-ledger | done
-June 26, 2030 at 6:00 PM | PRESS | Prepare the sides (rehearse) for winter-ledger | done
-June 26, 2030 at 6:45 PM | PRESS | Prepare the sides (rehearse) for winter-ledger | done
-June 26, 2030 at 7:30 PM | PRESS | Prepare the sides (rehearse) for winter-ledger | done
-June 26, 2030 at 8:15 PM | PRESS | Prepare the sides (rehearse) for winter-ledger | done
-June 26, 2030 at 9:00 PM | PRESS | Prepare the sides (rehearse) for winter-ledger | done
-June 26, 2030 at 9:45 PM | PRESS | Prepare the sides (rehearse) for winter-ledger | done
-June 27, 2030 at 9:30 AM | PRESS | Prepare the sides (rehearse) for winter-ledger | done
+June 26, 2030 at 5:00 PM | NOTICE | Not Cast As An Oyster Tonger Of 1890 | The film’s producers cast another actor as An Oyster Tonger Of 1890. Casting doesn’t give its reasons. The Opportunities tab shows what went into it: your audition, the role’s fit and the field.
+June 26, 2030 at 5:00 PM | NOTICE | Not Cast As Kwame | Thomas Ashgrove passed this on: Achebe Casting cast another actor as Kwame. Casting doesn’t give its reasons. The Opportunities tab shows what went into it: your audition, the role’s fit and the field.
+June 26, 2030 at 5:30 PM | PRESS | Prepare the sides (rehearse) for winter-ledger | done
+June 26, 2030 at 6:15 PM | PRESS | Prepare the sides (rehearse) for winter-ledger | done
+June 26, 2030 at 7:00 PM | PRESS | Prepare the sides (rehearse) for winter-ledger | done
+June 26, 2030 at 7:45 PM | PRESS | Prepare the sides (rehearse) for winter-ledger | done
+June 26, 2030 at 8:30 PM | PRESS | Prepare the sides (rehearse) for winter-ledger | done
+June 26, 2030 at 9:15 PM | PRESS | Prepare the sides (rehearse) for winter-ledger | done
+June 27, 2030 at 9:00 AM | PRESS | Prepare the sides (rehearse) for winter-ledger | done
+June 27, 2030 at 9:45 AM | PRESS | Prepare the sides (read) for route-nine | done
 June 27, 2030 at 10:15 AM | PRESS | Prepare the sides (read) for route-nine | done
-June 27, 2030 at 10:45 AM | PRESS | Prepare the sides (read) for route-nine | done
+June 27, 2030 at 10:45 AM | PRESS | Prepare the sides (lines) for route-nine | done
 June 27, 2030 at 11:15 AM | PRESS | Prepare the sides (lines) for route-nine | done
-June 27, 2030 at 11:45 AM | PRESS | Prepare the sides (lines) for route-nine | done
-June 27, 2030 at 12:15 PM | PRESS | Prepare the sides (rehearse) for route-nine | done
-June 27, 2030 at 1:00 PM | PRESS | Prepare the sides (rehearse) for route-nine | done
-June 27, 2030 at 1:45 PM | PRESS | Prepare the sides (rehearse) for route-nine | done
-June 27, 2030 at 2:30 PM | PRESS | Prepare the sides (rehearse) for route-nine | done
-June 27, 2030 at 3:15 PM | PRESS | Prepare the sides (rehearse) for route-nine | done
-June 27, 2030 at 4:00 PM | PRESS | Prepare the sides (rehearse) for route-nine | done
-June 27, 2030 at 4:45 PM | PRESS | Prepare the sides (rehearse) for route-nine | done
-June 27, 2030 at 5:30 PM | PRESS | Prepare the sides (rehearse) for route-nine | done
-June 27, 2030 at 6:15 PM | PRESS | Prepare the sides (rehearse) for route-nine | done
-June 27, 2030 at 7:00 PM | PRESS | Prepare the sides (rehearse) for route-nine | done
-June 27, 2030 at 7:45 PM | PRESS | Prepare the sides (rehearse) for route-nine | done
-June 27, 2030 at 8:30 PM | PRESS | Prepare the sides (rehearse) for route-nine | done
-June 27, 2030 at 9:15 PM | PRESS | Prepare the sides (rehearse) for route-nine | done
-June 28, 2030 at 9:00 AM | PRESS | Prepare the sides (rehearse) for route-nine | done
-June 28, 2030 at 9:45 AM | PRESS | Tape It for route-nine | done
-July 1, 2030 at 9:00 AM | NOTICE | Submitted For Callum | Thomas Ashgrove submitted you for Callum in A House On Calder Street, sending your headshots from April 27, 2030 and your résumé from May 20, 2030. Pennick Casting answers on Wednesday, July 3, 2030.
+June 27, 2030 at 11:45 AM | PRESS | Prepare the sides (rehearse) for route-nine | done
+June 27, 2030 at 12:30 PM | PRESS | Prepare the sides (rehearse) for route-nine | done
+June 27, 2030 at 1:15 PM | PRESS | Prepare the sides (rehearse) for route-nine | done
+June 27, 2030 at 2:00 PM | PRESS | Prepare the sides (rehearse) for route-nine | done
+June 27, 2030 at 2:45 PM | PRESS | Prepare the sides (rehearse) for route-nine | done
+June 27, 2030 at 3:30 PM | PRESS | Prepare the sides (rehearse) for route-nine | done
+June 27, 2030 at 4:15 PM | PRESS | Prepare the sides (rehearse) for route-nine | done
+June 27, 2030 at 5:00 PM | PRESS | Prepare the sides (rehearse) for route-nine | done
+June 27, 2030 at 5:45 PM | PRESS | Prepare the sides (rehearse) for route-nine | done
+June 27, 2030 at 6:30 PM | PRESS | Prepare the sides (rehearse) for route-nine | done
+June 27, 2030 at 7:15 PM | PRESS | Prepare the sides (rehearse) for route-nine | done
+June 27, 2030 at 8:00 PM | PRESS | Prepare the sides (rehearse) for route-nine | done
+June 27, 2030 at 8:45 PM | PRESS | Prepare the sides (rehearse) for route-nine | done
+June 27, 2030 at 9:30 PM | PRESS | Prepare the sides (rehearse) for route-nine | done
+June 28, 2030 at 9:15 AM | PRESS | Prepare the sides (rehearse) for route-nine | done
+June 28, 2030 at 10:00 AM | PRESS | Tape It for route-nine | done
+July 1, 2030 at 9:00 AM | NOTICE | Submitted For Callum | Thomas Ashgrove submitted you for Callum in A House On Calder Street, sending your headshots from April 27, 2030 and your résumé from June 25, 2030. Pennick Casting answers on Wednesday, July 3, 2030.
+July 1, 2030 at 9:00 AM | NOTICE | Submitted For Ferris Cordray | Thomas Ashgrove submitted you for Ferris Cordray in The Crossing On Fulton Street, sending your headshots from April 27, 2030 and your résumé from June 25, 2030. Iwata Casting answers on Wednesday, July 3, 2030.
+July 1, 2030 at 9:00 AM | NOTICE | Submitted For Hollis | Thomas Ashgrove submitted you for Hollis in The Ledger, sending your headshots from April 27, 2030, your résumé from June 25, 2030 and your reel from April 27, 2030. Hargrove Casting answers on Wednesday, July 3, 2030.
 July 1, 2030 at 11:00 AM | STOP | Audition: Tobias Marsh, The Winter Ledger | Go
-July 2, 2030 at 11:45 AM | PRESS | Update Your Résumé | done
 July 2, 2030 at 5:00 PM | NOTICE | Not Cast As Tobias Marsh | Thomas Ashgrove passed this on: Ostrander Vale Casting didn’t call you back for Tobias Marsh. Casting doesn’t give its reasons. The Opportunities tab shows what went into it: your audition, the role’s fit and the field.
 July 3, 2030 at 10:00 AM | NOTICE | An Audition For Callum | Thomas Ashgrove passed this on: Pennick Casting wants to see you for Callum in A House On Calder Street: a 199-seat theater in Manhattan in New York, Monday, July 8, 2030 at 11:00 AM. Getting there takes about two hours each way. Prepare the sides on the Career screen’s Opportunities tab before you go.
-July 3, 2030 at 10:45 AM | PRESS | Prepare the sides (read) for calder-street-callum | done
-July 3, 2030 at 11:15 AM | PRESS | Prepare the sides (read) for calder-street-callum | done
-July 3, 2030 at 11:45 AM | PRESS | Prepare the sides (lines) for calder-street-callum | done
-July 3, 2030 at 12:15 PM | PRESS | Prepare the sides (lines) for calder-street-callum | done
-July 3, 2030 at 12:45 PM | PRESS | Prepare the sides (rehearse) for calder-street-callum | done
-July 3, 2030 at 1:30 PM | PRESS | Prepare the sides (rehearse) for calder-street-callum | done
-July 3, 2030 at 2:15 PM | PRESS | Prepare the sides (rehearse) for calder-street-callum | done
-July 3, 2030 at 3:00 PM | PRESS | Prepare the sides (rehearse) for calder-street-callum | done
-July 3, 2030 at 3:45 PM | PRESS | Prepare the sides (rehearse) for calder-street-callum | done
-July 3, 2030 at 4:30 PM | PRESS | Prepare the sides (rehearse) for calder-street-callum | done
-July 3, 2030 at 5:00 PM | WHAT NEEDS YOU | An Offer For Jess | Thomas Ashgrove passed on an offer. Brisbane Hall Casting offers you Jess in Static On Route 9, a fictional ultra-low-budget feature film. It pays $308.00 a day for four days, above the SAG-AFTRA Ultra Low Budget Day Performer minimum of $280.00. The work is from July 29, 2030 to August 1, 2030, in New York. The offer stands until July 6, 2030 at 5:00 PM. | Accept The Offer, Decline The Offer
-July 3, 2030 at 5:15 PM | PRESS | Prepare the sides (rehearse) for calder-street-callum | done
-July 3, 2030 at 6:00 PM | PRESS | Prepare the sides (rehearse) for calder-street-callum | done
-July 3, 2030 at 6:45 PM | PRESS | Prepare the sides (rehearse) for calder-street-callum | done
-July 3, 2030 at 7:30 PM | PRESS | Prepare the sides (rehearse) for calder-street-callum | done
-July 3, 2030 at 8:15 PM | PRESS | Prepare the sides (rehearse) for calder-street-callum | done
-July 3, 2030 at 9:00 PM | PRESS | Prepare the sides (rehearse) for calder-street-callum | done
-July 3, 2030 at 9:45 PM | PRESS | Prepare the sides (rehearse) for calder-street-callum | done
-July 4, 2030 at 9:30 AM | PRESS | Prepare the sides (rehearse) for calder-street-callum | done
-July 4, 2030 at 10:15 AM | PRESS | Accept The Offer for route-nine | done
-July 4, 2030 at 10:15 AM | PRESS | Prepare the part (read) for route-nine | done
-July 4, 2030 at 11:15 AM | PRESS | Prepare the part (lines) for route-nine | done
-July 4, 2030 at 12:15 PM | PRESS | Prepare the part (rehearse) for route-nine | done
-July 4, 2030 at 1:45 PM | PRESS | Prepare the part (rehearse) for route-nine | done
-July 4, 2030 at 3:15 PM | PRESS | Prepare the part (rehearse) for route-nine | done
-July 4, 2030 at 4:45 PM | PRESS | Prepare the part (rehearse) for route-nine | done
-July 4, 2030 at 6:15 PM | PRESS | Prepare the part (rehearse) for route-nine | done
-July 4, 2030 at 7:45 PM | PRESS | Prepare the part (rehearse) for route-nine | done
-July 8, 2030 at 9:15 AM | PRESS | Submit Yourself for paper-moons | done
-July 8, 2030 at 11:00 AM | STOP | Audition: Callum, A House On Calder Street | Go
-July 9, 2030 at 5:00 PM | NOTICE | Not Cast As Callum | Thomas Ashgrove passed this on: Pennick Casting didn’t call you back for Callum. Casting doesn’t give its reasons. The Opportunities tab shows what went into it: your audition, the role’s fit and the field.
+July 3, 2030 at 10:00 AM | NOTICE | An Audition For Ferris Cordray | Thomas Ashgrove passed this on: Iwata Casting wants to see you for Ferris Cordray in The Crossing On Fulton Street: a theater in Brooklyn in New York, Monday, July 8, 2030 at 11:00 AM. Getting there takes about two hours each way. It clashes with Audition: Callum, A House On Calder Street at 11:00 AM. To ask for another time, press Ask For Another Time on the Opportunities tab, at least a day ahead. Casting moves it once. Prepare the sides on the Career screen’s Opportunities tab before you go.
+July 3, 2030 at 10:00 AM | NOTICE | A Self-Tape For Hollis | Thomas Ashgrove passed this on: Hargrove Casting asks for a self-tape for Hollis in The Ledger, due Sunday, July 7, 2030 at 6:00 PM. Prepare the sides, then press Tape It on the Career screen’s Opportunities tab.
+July 3, 2030 at 10:30 AM | PRESS | Ask For Another Time for calder-street-callum | done
+July 3, 2030 at 10:30 AM | PRESS | Prepare the sides (read) for calder-street-callum | done
+July 3, 2030 at 11:00 AM | PRESS | Prepare the sides (read) for calder-street-callum | done
+July 3, 2030 at 11:30 AM | PRESS | Prepare the sides (lines) for calder-street-callum | done
+July 3, 2030 at 12:00 PM | PRESS | Prepare the sides (lines) for calder-street-callum | done
+July 3, 2030 at 12:30 PM | PRESS | Prepare the sides (rehearse) for calder-street-callum | done
+July 3, 2030 at 1:15 PM | PRESS | Prepare the sides (rehearse) for calder-street-callum | done
+July 3, 2030 at 2:00 PM | PRESS | Prepare the sides (rehearse) for calder-street-callum | done
+July 3, 2030 at 2:45 PM | PRESS | Prepare the sides (rehearse) for calder-street-callum | done
+July 3, 2030 at 3:30 PM | PRESS | Prepare the sides (rehearse) for calder-street-callum | done
+July 3, 2030 at 4:15 PM | PRESS | Prepare the sides (rehearse) for calder-street-callum | done
+July 3, 2030 at 5:00 PM | NOTICE | Not Cast As Jess | Thomas Ashgrove passed this on: Brisbane Hall Casting cast another actor as Jess. Casting doesn’t give its reasons. The Opportunities tab shows what went into it: your audition, the role’s fit and the field.
+July 3, 2030 at 5:00 PM | PRESS | Prepare the sides (rehearse) for calder-street-callum | done
+July 3, 2030 at 5:45 PM | PRESS | Prepare the sides (rehearse) for calder-street-callum | done
+July 3, 2030 at 6:30 PM | PRESS | Prepare the sides (rehearse) for calder-street-callum | done
+July 3, 2030 at 7:15 PM | PRESS | Prepare the sides (rehearse) for calder-street-callum | done
+July 3, 2030 at 8:00 PM | PRESS | Prepare the sides (rehearse) for calder-street-callum | done
+July 3, 2030 at 8:45 PM | PRESS | Prepare the sides (rehearse) for calder-street-callum | done
+July 3, 2030 at 9:30 PM | PRESS | Prepare the sides (rehearse) for calder-street-callum | done
+July 4, 2030 at 9:15 AM | PRESS | Prepare the sides (rehearse) for calder-street-callum | done
+July 4, 2030 at 10:00 AM | PRESS | Prepare the sides (read) for s1.1buqm.2030-07-01.new-york.off-broadway.0.0 | done
+July 4, 2030 at 10:30 AM | PRESS | Prepare the sides (read) for s1.1buqm.2030-07-01.new-york.off-broadway.0.0 | done
+July 4, 2030 at 11:00 AM | PRESS | Prepare the sides (lines) for s1.1buqm.2030-07-01.new-york.off-broadway.0.0 | done
+July 4, 2030 at 11:30 AM | PRESS | Prepare the sides (lines) for s1.1buqm.2030-07-01.new-york.off-broadway.0.0 | done
+July 4, 2030 at 12:00 PM | PRESS | Prepare the sides (rehearse) for s1.1buqm.2030-07-01.new-york.off-broadway.0.0 | done
+July 4, 2030 at 12:45 PM | PRESS | Prepare the sides (rehearse) for s1.1buqm.2030-07-01.new-york.off-broadway.0.0 | done
+July 4, 2030 at 1:30 PM | PRESS | Prepare the sides (rehearse) for s1.1buqm.2030-07-01.new-york.off-broadway.0.0 | done
+July 4, 2030 at 2:15 PM | PRESS | Prepare the sides (rehearse) for s1.1buqm.2030-07-01.new-york.off-broadway.0.0 | done
+July 4, 2030 at 3:00 PM | PRESS | Prepare the sides (rehearse) for s1.1buqm.2030-07-01.new-york.off-broadway.0.0 | done
+July 4, 2030 at 3:45 PM | PRESS | Prepare the sides (rehearse) for s1.1buqm.2030-07-01.new-york.off-broadway.0.0 | done
+July 4, 2030 at 4:30 PM | PRESS | Prepare the sides (rehearse) for s1.1buqm.2030-07-01.new-york.off-broadway.0.0 | done
+July 4, 2030 at 5:15 PM | PRESS | Prepare the sides (rehearse) for s1.1buqm.2030-07-01.new-york.off-broadway.0.0 | done
+July 4, 2030 at 6:00 PM | PRESS | Prepare the sides (rehearse) for s1.1buqm.2030-07-01.new-york.off-broadway.0.0 | done
+July 4, 2030 at 6:45 PM | PRESS | Prepare the sides (rehearse) for s1.1buqm.2030-07-01.new-york.off-broadway.0.0 | done
+July 4, 2030 at 7:30 PM | PRESS | Prepare the sides (rehearse) for s1.1buqm.2030-07-01.new-york.off-broadway.0.0 | done
+July 4, 2030 at 8:15 PM | PRESS | Prepare the sides (rehearse) for s1.1buqm.2030-07-01.new-york.off-broadway.0.0 | done
+July 4, 2030 at 9:00 PM | PRESS | Prepare the sides (rehearse) for s1.1buqm.2030-07-01.new-york.off-broadway.0.0 | done
+July 4, 2030 at 9:45 PM | PRESS | Prepare the sides (rehearse) for s1.1buqm.2030-07-01.new-york.off-broadway.0.0 | done
+July 5, 2030 at 9:30 AM | PRESS | Prepare the sides (rehearse) for s1.1buqm.2030-07-01.new-york.off-broadway.0.0 | done
+July 5, 2030 at 10:15 AM | PRESS | Prepare the sides (read) for g1.1buqm.2029.los-angeles.network-comedy.1.s2.0 | done
+July 5, 2030 at 10:45 AM | PRESS | Prepare the sides (read) for g1.1buqm.2029.los-angeles.network-comedy.1.s2.0 | done
+July 5, 2030 at 11:15 AM | PRESS | Prepare the sides (lines) for g1.1buqm.2029.los-angeles.network-comedy.1.s2.0 | done
+July 5, 2030 at 11:45 AM | PRESS | Prepare the sides (lines) for g1.1buqm.2029.los-angeles.network-comedy.1.s2.0 | done
+July 5, 2030 at 12:15 PM | PRESS | Prepare the sides (rehearse) for g1.1buqm.2029.los-angeles.network-comedy.1.s2.0 | done
+July 5, 2030 at 1:00 PM | PRESS | Prepare the sides (rehearse) for g1.1buqm.2029.los-angeles.network-comedy.1.s2.0 | done
+July 5, 2030 at 1:45 PM | PRESS | Prepare the sides (rehearse) for g1.1buqm.2029.los-angeles.network-comedy.1.s2.0 | done
+July 5, 2030 at 2:30 PM | PRESS | Prepare the sides (rehearse) for g1.1buqm.2029.los-angeles.network-comedy.1.s2.0 | done
+July 5, 2030 at 3:15 PM | PRESS | Prepare the sides (rehearse) for g1.1buqm.2029.los-angeles.network-comedy.1.s2.0 | done
+July 5, 2030 at 4:00 PM | PRESS | Prepare the sides (rehearse) for g1.1buqm.2029.los-angeles.network-comedy.1.s2.0 | done
+July 5, 2030 at 4:45 PM | PRESS | Prepare the sides (rehearse) for g1.1buqm.2029.los-angeles.network-comedy.1.s2.0 | done
+July 5, 2030 at 5:30 PM | PRESS | Prepare the sides (rehearse) for g1.1buqm.2029.los-angeles.network-comedy.1.s2.0 | done
+July 5, 2030 at 6:15 PM | PRESS | Prepare the sides (rehearse) for g1.1buqm.2029.los-angeles.network-comedy.1.s2.0 | done
+July 5, 2030 at 7:00 PM | PRESS | Prepare the sides (rehearse) for g1.1buqm.2029.los-angeles.network-comedy.1.s2.0 | done
+July 5, 2030 at 7:45 PM | PRESS | Prepare the sides (rehearse) for g1.1buqm.2029.los-angeles.network-comedy.1.s2.0 | done
+July 5, 2030 at 8:30 PM | PRESS | Prepare the sides (rehearse) for g1.1buqm.2029.los-angeles.network-comedy.1.s2.0 | done
+July 5, 2030 at 9:15 PM | PRESS | Prepare the sides (rehearse) for g1.1buqm.2029.los-angeles.network-comedy.1.s2.0 | done
+July 6, 2030 at 9:00 AM | PRESS | Prepare the sides (rehearse) for g1.1buqm.2029.los-angeles.network-comedy.1.s2.0 | done
+July 6, 2030 at 9:45 AM | PRESS | Tape It for g1.1buqm.2029.los-angeles.network-comedy.1.s2.0 | done
+July 8, 2030 at 9:00 AM | NOTICE | Submitted For Hollis | Thomas Ashgrove submitted you for Hollis in The Inheritance Of Marrow Bay, sending your headshots from April 27, 2030, your résumé from June 25, 2030 and your reel from April 27, 2030. Halvorsen Casting answers on Wednesday, July 10, 2030.
+July 8, 2030 at 9:45 AM | PRESS | Submit Yourself for paper-moons | done
+July 8, 2030 at 9:45 AM | PRESS | Submit Yourself for harbor-line-arden | done
+July 8, 2030 at 9:45 AM | PRESS | Submit Yourself for salt-road | done
+July 8, 2030 at 11:00 AM | STOP | Audition: Ferris Cordray, The Crossing On Fulton Street | Go
+July 9, 2030 at 11:00 AM | STOP | Audition: Callum, A House On Calder Street | Go
+July 9, 2030 at 5:00 PM | NOTICE | A Callback For Ferris Cordray | Thomas Ashgrove passed this on: Iwata Casting wants to see you again for Ferris Cordray in The Crossing On Fulton Street: a theater in Brooklyn in New York, Monday, July 15, 2030 at 2:00 PM. Getting there takes about two hours each way. Prepare the sides on the Career screen’s Opportunities tab before you go.
+July 10, 2030 at 10:00 AM | NOTICE | A Self-Tape For Hollis | Thomas Ashgrove passed this on: Halvorsen Casting asks for a self-tape for Hollis in The Inheritance Of Marrow Bay, due Sunday, July 14, 2030 at 6:00 PM. Prepare the sides, then press Tape It on the Career screen’s Opportunities tab.
 July 10, 2030 at 10:00 AM | NOTICE | An Audition For Felix | The film’s director wants to see you for Felix in Paper Moons: an apartment in Brooklyn in New York, Monday, July 15, 2030 at 11:00 AM. Getting there takes about two hours each way. Prepare the sides on the Career screen’s Opportunities tab before you go.
-July 10, 2030 at 10:30 AM | PRESS | Prepare the sides (read) for paper-moons | done
-July 10, 2030 at 11:00 AM | PRESS | Prepare the sides (read) for paper-moons | done
-July 10, 2030 at 11:30 AM | PRESS | Prepare the sides (lines) for paper-moons | done
-July 10, 2030 at 12:00 PM | PRESS | Prepare the sides (lines) for paper-moons | done
-July 10, 2030 at 12:30 PM | PRESS | Prepare the sides (rehearse) for paper-moons | done
-July 10, 2030 at 1:15 PM | PRESS | Prepare the sides (rehearse) for paper-moons | done
-July 10, 2030 at 2:00 PM | PRESS | Prepare the sides (rehearse) for paper-moons | done
-July 10, 2030 at 2:45 PM | PRESS | Prepare the sides (rehearse) for paper-moons | done
-July 10, 2030 at 3:30 PM | PRESS | Prepare the sides (rehearse) for paper-moons | done
-July 10, 2030 at 4:15 PM | PRESS | Prepare the sides (rehearse) for paper-moons | done
-July 10, 2030 at 5:00 PM | PRESS | Prepare the sides (rehearse) for paper-moons | done
-July 10, 2030 at 5:45 PM | PRESS | Prepare the sides (rehearse) for paper-moons | done
-July 10, 2030 at 6:30 PM | PRESS | Prepare the sides (rehearse) for paper-moons | done
-July 10, 2030 at 7:15 PM | PRESS | Prepare the sides (rehearse) for paper-moons | done
-July 10, 2030 at 8:00 PM | PRESS | Prepare the sides (rehearse) for paper-moons | done
-July 10, 2030 at 8:45 PM | PRESS | Prepare the sides (rehearse) for paper-moons | done
-July 10, 2030 at 9:30 PM | PRESS | Prepare the sides (rehearse) for paper-moons | done
-July 11, 2030 at 9:15 AM | PRESS | Prepare the sides (rehearse) for paper-moons | done
-July 15, 2030 at 9:00 AM | PRESS | Submit Yourself for eastview | done
+July 10, 2030 at 10:00 AM | NOTICE | A Self-Tape For Miles Arden | Brandt Casting asks for a self-tape for Miles Arden in Harbor Line, due Sunday, July 14, 2030 at 6:00 PM. Prepare the sides, then press Tape It on the Career screen’s Opportunities tab.
+July 10, 2030 at 10:00 AM | NOTICE | A Self-Tape For Harbormaster Brandt | Northlight Dubbing’s casting director asks for a self-tape for Harbormaster Brandt in The Salt Road, due Sunday, July 14, 2030 at 6:00 PM. Prepare the sides, then press Tape It on the Career screen’s Opportunities tab.
+July 10, 2030 at 10:45 AM | PRESS | Prepare the sides (read) for paper-moons | done
+July 10, 2030 at 11:15 AM | PRESS | Prepare the sides (read) for paper-moons | done
+July 10, 2030 at 11:45 AM | PRESS | Prepare the sides (lines) for paper-moons | done
+July 10, 2030 at 12:15 PM | PRESS | Prepare the sides (lines) for paper-moons | done
+July 10, 2030 at 12:45 PM | PRESS | Prepare the sides (rehearse) for paper-moons | done
+July 10, 2030 at 1:30 PM | PRESS | Prepare the sides (rehearse) for paper-moons | done
+July 10, 2030 at 2:15 PM | PRESS | Prepare the sides (rehearse) for paper-moons | done
+July 10, 2030 at 3:00 PM | PRESS | Prepare the sides (rehearse) for paper-moons | done
+July 10, 2030 at 3:45 PM | PRESS | Prepare the sides (rehearse) for paper-moons | done
+July 10, 2030 at 4:30 PM | PRESS | Prepare the sides (rehearse) for paper-moons | done
+July 10, 2030 at 5:00 PM | NOTICE | Not Cast As Hollis | Thomas Ashgrove passed this on: Hargrove Casting cast another actor as Hollis. Casting doesn’t give its reasons. The Opportunities tab shows what went into it: your audition, the role’s fit and the field.
+July 10, 2030 at 5:00 PM | NOTICE | A Callback For Callum | Thomas Ashgrove passed this on: Pennick Casting wants to see you again for Callum in A House On Calder Street: a 199-seat theater in Manhattan in New York, Monday, July 15, 2030 at 2:00 PM. Getting there takes about two hours each way. It clashes with Callback: Ferris Cordray, The Crossing On Fulton Street at 2:00 PM. To ask for another time, press Ask For Another Time on the Opportunities tab, at least a day ahead. Casting moves it once. Prepare the sides on the Career screen’s Opportunities tab before you go.
+July 10, 2030 at 5:15 PM | PRESS | Ask For Another Time for calder-street-callum | done
+July 10, 2030 at 5:15 PM | PRESS | Prepare the sides (rehearse) for paper-moons | done
+July 10, 2030 at 6:00 PM | PRESS | Prepare the sides (rehearse) for paper-moons | done
+July 10, 2030 at 6:45 PM | PRESS | Prepare the sides (rehearse) for paper-moons | done
+July 10, 2030 at 7:30 PM | PRESS | Prepare the sides (rehearse) for paper-moons | done
+July 10, 2030 at 8:15 PM | PRESS | Prepare the sides (rehearse) for paper-moons | done
+July 10, 2030 at 9:00 PM | PRESS | Prepare the sides (rehearse) for paper-moons | done
+July 10, 2030 at 9:45 PM | PRESS | Prepare the sides (rehearse) for paper-moons | done
+July 11, 2030 at 9:30 AM | PRESS | Prepare the sides (rehearse) for paper-moons | done
+July 11, 2030 at 10:15 AM | PRESS | Prepare the sides (read) for harbor-line-arden | done
+July 11, 2030 at 10:45 AM | PRESS | Prepare the sides (read) for harbor-line-arden | done
+July 11, 2030 at 11:15 AM | PRESS | Prepare the sides (lines) for harbor-line-arden | done
+July 11, 2030 at 11:45 AM | PRESS | Prepare the sides (lines) for harbor-line-arden | done
+July 11, 2030 at 12:15 PM | PRESS | Prepare the sides (rehearse) for harbor-line-arden | done
+July 11, 2030 at 1:00 PM | PRESS | Prepare the sides (rehearse) for harbor-line-arden | done
+July 11, 2030 at 1:45 PM | PRESS | Prepare the sides (rehearse) for harbor-line-arden | done
+July 11, 2030 at 2:30 PM | PRESS | Prepare the sides (rehearse) for harbor-line-arden | done
+July 11, 2030 at 3:15 PM | PRESS | Prepare the sides (rehearse) for harbor-line-arden | done
+July 11, 2030 at 4:00 PM | PRESS | Prepare the sides (rehearse) for harbor-line-arden | done
+July 11, 2030 at 4:45 PM | PRESS | Prepare the sides (rehearse) for harbor-line-arden | done
+July 11, 2030 at 5:30 PM | PRESS | Prepare the sides (rehearse) for harbor-line-arden | done
+July 11, 2030 at 6:15 PM | PRESS | Prepare the sides (rehearse) for harbor-line-arden | done
+July 11, 2030 at 7:00 PM | PRESS | Prepare the sides (rehearse) for harbor-line-arden | done
+July 11, 2030 at 7:45 PM | PRESS | Prepare the sides (rehearse) for harbor-line-arden | done
+July 11, 2030 at 8:30 PM | PRESS | Prepare the sides (rehearse) for harbor-line-arden | done
+July 11, 2030 at 9:15 PM | PRESS | Prepare the sides (rehearse) for harbor-line-arden | done
+July 12, 2030 at 9:00 AM | PRESS | Prepare the sides (rehearse) for harbor-line-arden | done
+July 12, 2030 at 9:45 AM | PRESS | Tape It for harbor-line-arden | done
+July 12, 2030 at 10:45 AM | PRESS | Prepare the sides (read) for salt-road | done
+July 12, 2030 at 11:15 AM | PRESS | Prepare the sides (read) for salt-road | done
+July 12, 2030 at 11:45 AM | PRESS | Prepare the sides (lines) for salt-road | done
+July 12, 2030 at 12:15 PM | PRESS | Prepare the sides (lines) for salt-road | done
+July 12, 2030 at 12:45 PM | PRESS | Prepare the sides (lines) for salt-road | done
+July 12, 2030 at 1:15 PM | PRESS | Prepare the sides (rehearse) for salt-road | done
+July 12, 2030 at 2:00 PM | PRESS | Prepare the sides (rehearse) for salt-road | done
+July 12, 2030 at 2:45 PM | PRESS | Prepare the sides (rehearse) for salt-road | done
+July 12, 2030 at 3:30 PM | PRESS | Prepare the sides (rehearse) for salt-road | done
+July 12, 2030 at 4:15 PM | PRESS | Prepare the sides (rehearse) for salt-road | done
+July 12, 2030 at 5:00 PM | PRESS | Prepare the sides (rehearse) for salt-road | done
+July 12, 2030 at 5:45 PM | PRESS | Prepare the sides (rehearse) for salt-road | done
+July 12, 2030 at 6:30 PM | PRESS | Prepare the sides (rehearse) for salt-road | done
+July 12, 2030 at 7:15 PM | PRESS | Prepare the sides (rehearse) for salt-road | done
+July 12, 2030 at 8:00 PM | PRESS | Prepare the sides (rehearse) for salt-road | done
+July 12, 2030 at 8:45 PM | PRESS | Prepare the sides (rehearse) for salt-road | done
+July 12, 2030 at 9:30 PM | PRESS | Prepare the sides (rehearse) for salt-road | done
+July 13, 2030 at 9:15 AM | PRESS | Prepare the sides (rehearse) for salt-road | done
+July 13, 2030 at 10:00 AM | PRESS | Tape It for salt-road | done
+July 13, 2030 at 11:00 AM | PRESS | Prepare the sides (read) for g1.1buqm.2028.los-angeles.network-drama.3.s3.0 | done
+July 13, 2030 at 11:30 AM | PRESS | Prepare the sides (read) for g1.1buqm.2028.los-angeles.network-drama.3.s3.0 | done
+July 13, 2030 at 12:00 PM | PRESS | Prepare the sides (lines) for g1.1buqm.2028.los-angeles.network-drama.3.s3.0 | done
+July 13, 2030 at 12:30 PM | PRESS | Prepare the sides (lines) for g1.1buqm.2028.los-angeles.network-drama.3.s3.0 | done
+July 13, 2030 at 1:00 PM | PRESS | Prepare the sides (lines) for g1.1buqm.2028.los-angeles.network-drama.3.s3.0 | done
+July 13, 2030 at 1:30 PM | PRESS | Prepare the sides (rehearse) for g1.1buqm.2028.los-angeles.network-drama.3.s3.0 | done
+July 13, 2030 at 2:15 PM | PRESS | Prepare the sides (rehearse) for g1.1buqm.2028.los-angeles.network-drama.3.s3.0 | done
+July 13, 2030 at 3:00 PM | PRESS | Prepare the sides (rehearse) for g1.1buqm.2028.los-angeles.network-drama.3.s3.0 | done
+July 13, 2030 at 3:45 PM | PRESS | Prepare the sides (rehearse) for g1.1buqm.2028.los-angeles.network-drama.3.s3.0 | done
+July 13, 2030 at 4:30 PM | PRESS | Prepare the sides (rehearse) for g1.1buqm.2028.los-angeles.network-drama.3.s3.0 | done
+July 13, 2030 at 5:15 PM | PRESS | Prepare the sides (rehearse) for g1.1buqm.2028.los-angeles.network-drama.3.s3.0 | done
+July 13, 2030 at 6:00 PM | PRESS | Prepare the sides (rehearse) for g1.1buqm.2028.los-angeles.network-drama.3.s3.0 | done
+July 13, 2030 at 6:45 PM | PRESS | Prepare the sides (rehearse) for g1.1buqm.2028.los-angeles.network-drama.3.s3.0 | done
+July 13, 2030 at 7:30 PM | PRESS | Prepare the sides (rehearse) for g1.1buqm.2028.los-angeles.network-drama.3.s3.0 | done
+July 13, 2030 at 8:15 PM | PRESS | Prepare the sides (rehearse) for g1.1buqm.2028.los-angeles.network-drama.3.s3.0 | done
+July 13, 2030 at 9:00 PM | PRESS | Prepare the sides (rehearse) for g1.1buqm.2028.los-angeles.network-drama.3.s3.0 | done
+July 13, 2030 at 9:45 PM | PRESS | Prepare the sides (rehearse) for g1.1buqm.2028.los-angeles.network-drama.3.s3.0 | done
+July 14, 2030 at 9:30 AM | PRESS | Prepare the sides (rehearse) for g1.1buqm.2028.los-angeles.network-drama.3.s3.0 | done
+July 14, 2030 at 10:15 AM | PRESS | Tape It for g1.1buqm.2028.los-angeles.network-drama.3.s3.0 | done
+July 15, 2030 at 9:00 AM | NOTICE | Submitted For Reese | Thomas Ashgrove submitted you for Reese in The Assembly, sending your headshots from April 27, 2030, your résumé from June 25, 2030 and your reel from April 27, 2030. Brannigan Casting answers on Wednesday, July 17, 2030.
+July 15, 2030 at 9:00 AM | NOTICE | Submitted For Silas Jessop | Thomas Ashgrove submitted you for Silas Jessop in The Weather On Delancey Street, sending your headshots from April 27, 2030, your résumé from June 25, 2030 and your reel from April 27, 2030. Achebe Casting answers on Wednesday, July 17, 2030.
+July 15, 2030 at 9:15 AM | PRESS | Submit Yourself for eastview | done
 July 15, 2030 at 11:00 AM | STOP | Audition: Felix, Paper Moons | Go
+July 15, 2030 at 2:00 PM | STOP | Callback: Ferris Cordray, The Crossing On Fulton Street | Go
+July 15, 2030 at 2:00 PM | NOTICE | You Missed The Callback For Ferris Cordray | You were at the audition for Felix in New York, so you missed the callback for Ferris Cordray on July 15, 2030 at 2:00 PM, and Iwata Casting moved on without you.
+July 15, 2030 at 5:00 PM | NOTICE | Not Cast As Miles Arden | Brandt Casting didn’t call you back for Miles Arden. Casting doesn’t give its reasons. The Opportunities tab shows what went into it: your audition, the role’s fit and the field.
+July 16, 2030 at 11:00 AM | STOP | Callback: Callum, A House On Calder Street | Go
+July 17, 2030 at 10:00 AM | NOTICE | A Self-Tape For Reese | Thomas Ashgrove passed this on: Brannigan Casting asks for a self-tape for Reese in The Assembly, due Sunday, July 21, 2030 at 6:00 PM. Prepare the sides, then press Tape It on the Career screen’s Opportunities tab.
+July 17, 2030 at 10:00 AM | NOTICE | A Self-Tape For Silas Jessop | Thomas Ashgrove passed this on: Achebe Casting asks for a self-tape for Silas Jessop in The Weather On Delancey Street, due Sunday, July 21, 2030 at 6:00 PM. Prepare the sides, then press Tape It on the Career screen’s Opportunities tab.
 July 17, 2030 at 10:00 AM | NOTICE | A Self-Tape For Robin | The producers ask for a self-tape for Robin in Last Bus To Eastview, due Sunday, July 21, 2030 at 6:00 PM. Prepare the sides, then press Tape It on the Career screen’s Opportunities tab.
 July 17, 2030 at 10:30 AM | PRESS | Prepare the sides (read) for eastview | done
 July 17, 2030 at 11:00 AM | PRESS | Prepare the sides (read) for eastview | done
@@ -287,6 +624,8 @@ July 17, 2030 at 2:00 PM | PRESS | Prepare the sides (rehearse) for eastview | d
 July 17, 2030 at 2:45 PM | PRESS | Prepare the sides (rehearse) for eastview | done
 July 17, 2030 at 3:30 PM | PRESS | Prepare the sides (rehearse) for eastview | done
 July 17, 2030 at 4:15 PM | PRESS | Prepare the sides (rehearse) for eastview | done
+July 17, 2030 at 5:00 PM | NOTICE | Not Cast As Harbormaster Brandt | Northlight Dubbing’s casting director cast another actor as Harbormaster Brandt. Casting doesn’t give its reasons. The Opportunities tab shows what went into it: your audition, the role’s fit and the field.
+July 17, 2030 at 5:00 PM | NOTICE | Not Cast As Hollis | Thomas Ashgrove passed this on: Halvorsen Casting cast another actor as Hollis. Casting doesn’t give its reasons. The Opportunities tab shows what went into it: your audition, the role’s fit and the field.
 July 17, 2030 at 5:00 PM | PRESS | Prepare the sides (rehearse) for eastview | done
 July 17, 2030 at 5:45 PM | PRESS | Prepare the sides (rehearse) for eastview | done
 July 17, 2030 at 6:30 PM | PRESS | Prepare the sides (rehearse) for eastview | done
@@ -296,40 +635,241 @@ July 17, 2030 at 8:45 PM | PRESS | Prepare the sides (rehearse) for eastview | d
 July 17, 2030 at 9:30 PM | PRESS | Prepare the sides (rehearse) for eastview | done
 July 18, 2030 at 9:15 AM | PRESS | Prepare the sides (rehearse) for eastview | done
 July 18, 2030 at 10:00 AM | PRESS | Tape It for eastview | done
+July 18, 2030 at 11:00 AM | PRESS | Prepare the sides (read) for s1.1buqm.2030-07-15.new-york.action-feature.0.0 | done
+July 18, 2030 at 11:30 AM | PRESS | Prepare the sides (read) for s1.1buqm.2030-07-15.new-york.action-feature.0.0 | done
+July 18, 2030 at 12:00 PM | PRESS | Prepare the sides (lines) for s1.1buqm.2030-07-15.new-york.action-feature.0.0 | done
+July 18, 2030 at 12:30 PM | PRESS | Prepare the sides (lines) for s1.1buqm.2030-07-15.new-york.action-feature.0.0 | done
+July 18, 2030 at 1:00 PM | PRESS | Prepare the sides (lines) for s1.1buqm.2030-07-15.new-york.action-feature.0.0 | done
+July 18, 2030 at 1:30 PM | PRESS | Prepare the sides (rehearse) for s1.1buqm.2030-07-15.new-york.action-feature.0.0 | done
+July 18, 2030 at 2:15 PM | PRESS | Prepare the sides (rehearse) for s1.1buqm.2030-07-15.new-york.action-feature.0.0 | done
+July 18, 2030 at 3:00 PM | PRESS | Prepare the sides (rehearse) for s1.1buqm.2030-07-15.new-york.action-feature.0.0 | done
+July 18, 2030 at 3:45 PM | PRESS | Prepare the sides (rehearse) for s1.1buqm.2030-07-15.new-york.action-feature.0.0 | done
+July 18, 2030 at 4:30 PM | PRESS | Prepare the sides (rehearse) for s1.1buqm.2030-07-15.new-york.action-feature.0.0 | done
 July 18, 2030 at 5:00 PM | NOTICE | Not Cast As Felix | The film’s director cast another actor as Felix. Casting doesn’t give its reasons. The Opportunities tab shows what went into it: your audition, the role’s fit and the field.
-July 24, 2030 at 5:00 PM | WHAT NEEDS YOU | An Offer For Robin | Thomas Ashgrove passed on an offer. The producers offer you Robin in Last Bus To Eastview, a fictional non-union short film. It pays $125.00 a day for two days, an estimate. The work is from August 19, 2030 to August 20, 2030, in New York. The offer stands until July 27, 2030 at 5:00 PM. | Accept The Offer, Decline The Offer
-July 24, 2030 at 5:00 PM | PRESS | Accept The Offer for eastview | done
-July 24, 2030 at 5:00 PM | PRESS | Prepare the part (read) for eastview | done
-July 24, 2030 at 6:00 PM | PRESS | Prepare the part (read) for eastview | done
-July 24, 2030 at 7:00 PM | PRESS | Prepare the part (read) for eastview | done
-July 24, 2030 at 8:00 PM | PRESS | Prepare the part (lines) for eastview | done
-July 24, 2030 at 9:00 PM | PRESS | Prepare the part (lines) for eastview | done
-July 25, 2030 at 9:00 AM | PRESS | Prepare the part (lines) for eastview | done
-July 25, 2030 at 10:00 AM | PRESS | Prepare the part (rehearse) for eastview | done
-July 25, 2030 at 11:30 AM | PRESS | Prepare the part (rehearse) for eastview | done
-July 25, 2030 at 1:00 PM | PRESS | Prepare the part (rehearse) for eastview | done
-July 25, 2030 at 2:30 PM | PRESS | Prepare the part (rehearse) for eastview | done
+July 18, 2030 at 5:15 PM | PRESS | Prepare the sides (rehearse) for s1.1buqm.2030-07-15.new-york.action-feature.0.0 | done
+July 18, 2030 at 6:00 PM | PRESS | Prepare the sides (rehearse) for s1.1buqm.2030-07-15.new-york.action-feature.0.0 | done
+July 18, 2030 at 6:45 PM | PRESS | Prepare the sides (rehearse) for s1.1buqm.2030-07-15.new-york.action-feature.0.0 | done
+July 18, 2030 at 7:30 PM | PRESS | Prepare the sides (rehearse) for s1.1buqm.2030-07-15.new-york.action-feature.0.0 | done
+July 18, 2030 at 8:15 PM | PRESS | Prepare the sides (rehearse) for s1.1buqm.2030-07-15.new-york.action-feature.0.0 | done
+July 18, 2030 at 9:00 PM | PRESS | Prepare the sides (rehearse) for s1.1buqm.2030-07-15.new-york.action-feature.0.0 | done
+July 18, 2030 at 9:45 PM | PRESS | Prepare the sides (rehearse) for s1.1buqm.2030-07-15.new-york.action-feature.0.0 | done
+July 19, 2030 at 9:30 AM | PRESS | Prepare the sides (rehearse) for s1.1buqm.2030-07-15.new-york.action-feature.0.0 | done
+July 19, 2030 at 10:15 AM | PRESS | Tape It for s1.1buqm.2030-07-15.new-york.action-feature.0.0 | done
+July 19, 2030 at 11:15 AM | PRESS | Prepare the sides (read) for g1.1buqm.2030.los-angeles.network-comedy.0.s1.0 | done
+July 19, 2030 at 11:45 AM | PRESS | Prepare the sides (read) for g1.1buqm.2030.los-angeles.network-comedy.0.s1.0 | done
+July 19, 2030 at 12:15 PM | PRESS | Prepare the sides (lines) for g1.1buqm.2030.los-angeles.network-comedy.0.s1.0 | done
+July 19, 2030 at 12:45 PM | PRESS | Prepare the sides (lines) for g1.1buqm.2030.los-angeles.network-comedy.0.s1.0 | done
+July 19, 2030 at 1:15 PM | PRESS | Prepare the sides (lines) for g1.1buqm.2030.los-angeles.network-comedy.0.s1.0 | done
+July 19, 2030 at 1:45 PM | PRESS | Prepare the sides (rehearse) for g1.1buqm.2030.los-angeles.network-comedy.0.s1.0 | done
+July 19, 2030 at 2:30 PM | PRESS | Prepare the sides (rehearse) for g1.1buqm.2030.los-angeles.network-comedy.0.s1.0 | done
+July 19, 2030 at 3:15 PM | PRESS | Prepare the sides (rehearse) for g1.1buqm.2030.los-angeles.network-comedy.0.s1.0 | done
+July 19, 2030 at 4:00 PM | PRESS | Prepare the sides (rehearse) for g1.1buqm.2030.los-angeles.network-comedy.0.s1.0 | done
+July 19, 2030 at 4:45 PM | PRESS | Prepare the sides (rehearse) for g1.1buqm.2030.los-angeles.network-comedy.0.s1.0 | done
+July 19, 2030 at 5:00 PM | NOTICE | Not Cast As Callum | Thomas Ashgrove passed this on: Pennick Casting cast another actor as Callum. Casting doesn’t give its reasons. The Opportunities tab shows what went into it: your audition, the role’s fit and the field.
+July 19, 2030 at 5:30 PM | PRESS | Prepare the sides (rehearse) for g1.1buqm.2030.los-angeles.network-comedy.0.s1.0 | done
+July 19, 2030 at 6:15 PM | PRESS | Prepare the sides (rehearse) for g1.1buqm.2030.los-angeles.network-comedy.0.s1.0 | done
+July 19, 2030 at 7:00 PM | PRESS | Prepare the sides (rehearse) for g1.1buqm.2030.los-angeles.network-comedy.0.s1.0 | done
+July 19, 2030 at 7:45 PM | PRESS | Prepare the sides (rehearse) for g1.1buqm.2030.los-angeles.network-comedy.0.s1.0 | done
+July 19, 2030 at 8:30 PM | PRESS | Prepare the sides (rehearse) for g1.1buqm.2030.los-angeles.network-comedy.0.s1.0 | done
+July 19, 2030 at 9:15 PM | PRESS | Prepare the sides (rehearse) for g1.1buqm.2030.los-angeles.network-comedy.0.s1.0 | done
+July 20, 2030 at 9:00 AM | PRESS | Prepare the sides (rehearse) for g1.1buqm.2030.los-angeles.network-comedy.0.s1.0 | done
+July 20, 2030 at 9:45 AM | PRESS | Tape It for g1.1buqm.2030.los-angeles.network-comedy.0.s1.0 | done
+July 22, 2030 at 9:00 AM | NOTICE | Submitted For The Getaway Driver | Thomas Ashgrove submitted you for The Getaway Driver in Breakwater, sending your headshots from April 27, 2030, your résumé from June 25, 2030 and your reel from April 27, 2030. Castellane Casting answers on Wednesday, July 24, 2030.
+July 22, 2030 at 9:00 AM | NOTICE | Submitted For Reese Pike | Thomas Ashgrove submitted you for Reese Pike in 9-1-1, sending your headshots from April 27, 2030, your résumé from June 25, 2030 and your reel from April 27, 2030. The production’s casting office answers on Wednesday, July 24, 2030.
+July 22, 2030 at 9:00 AM | NOTICE | Submitted For Callum Ashdown | Thomas Ashgrove submitted you for Callum Ashdown in The Undertow, sending your headshots from April 27, 2030, your résumé from June 25, 2030 and your reel from April 27, 2030. Okonjo Casting answers on Wednesday, July 24, 2030.
+July 22, 2030 at 9:00 AM | NOTICE | Submitted For Kwame Strand | Thomas Ashgrove submitted you for Kwame Strand in The Weather On Delancey Street, sending your headshots from April 27, 2030, your résumé from June 25, 2030 and your reel from April 27, 2030. Achebe Casting answers on Wednesday, July 24, 2030.
+July 22, 2030 at 5:00 PM | NOTICE | Not Cast As Reese | Thomas Ashgrove passed this on: Brannigan Casting didn’t call you back for Reese. Casting doesn’t give its reasons. The Opportunities tab shows what went into it: your audition, the role’s fit and the field.
+July 24, 2030 at 10:00 AM | NOTICE | A Self-Tape For The Getaway Driver | Thomas Ashgrove passed this on: Castellane Casting asks for a self-tape for The Getaway Driver in Breakwater, due Sunday, July 28, 2030 at 6:00 PM. Prepare the sides, then press Tape It on the Career screen’s Opportunities tab.
+July 24, 2030 at 10:00 AM | NOTICE | A Self-Tape For Reese Pike | Thomas Ashgrove passed this on: The production’s casting office asks for a self-tape for Reese Pike in 9-1-1, due Sunday, July 28, 2030 at 6:00 PM. Prepare the sides, then press Tape It on the Career screen’s Opportunities tab.
+July 24, 2030 at 10:00 AM | NOTICE | An Audition For Callum Ashdown | Thomas Ashgrove passed this on: Okonjo Casting wants to see you for Callum Ashdown in The Undertow: a studio lot in Burbank in Los Angeles, Monday, July 29, 2030 at 11:00 AM. Getting there takes about three hours each way. Prepare the sides on the Career screen’s Opportunities tab before you go.
+July 24, 2030 at 10:00 AM | NOTICE | A Self-Tape For Kwame Strand | Thomas Ashgrove passed this on: Achebe Casting asks for a self-tape for Kwame Strand in The Weather On Delancey Street, due Sunday, July 28, 2030 at 6:00 PM. Prepare the sides, then press Tape It on the Career screen’s Opportunities tab.
+July 24, 2030 at 10:45 AM | PRESS | Prepare the sides (read) for breakwater | done
+July 24, 2030 at 11:15 AM | PRESS | Prepare the sides (read) for breakwater | done
+July 24, 2030 at 11:45 AM | PRESS | Prepare the sides (lines) for breakwater | done
+July 24, 2030 at 12:15 PM | PRESS | Prepare the sides (lines) for breakwater | done
+July 24, 2030 at 12:45 PM | PRESS | Prepare the sides (rehearse) for breakwater | done
+July 24, 2030 at 1:30 PM | PRESS | Prepare the sides (rehearse) for breakwater | done
+July 24, 2030 at 2:15 PM | PRESS | Prepare the sides (rehearse) for breakwater | done
+July 24, 2030 at 3:00 PM | PRESS | Prepare the sides (rehearse) for breakwater | done
+July 24, 2030 at 3:45 PM | PRESS | Prepare the sides (rehearse) for breakwater | done
+July 24, 2030 at 4:30 PM | PRESS | Prepare the sides (rehearse) for breakwater | done
+July 24, 2030 at 5:00 PM | NOTICE | Not Cast As Robin | The producers cast another actor as Robin. Casting doesn’t give its reasons. The Opportunities tab shows what went into it: your audition, the role’s fit and the field.
+July 24, 2030 at 5:00 PM | NOTICE | Not Cast As Silas Jessop | Thomas Ashgrove passed this on: Achebe Casting cast another actor as Silas Jessop. Casting doesn’t give its reasons. The Opportunities tab shows what went into it: your audition, the role’s fit and the field.
+July 24, 2030 at 5:15 PM | PRESS | Prepare the sides (rehearse) for breakwater | done
+July 24, 2030 at 6:00 PM | PRESS | Prepare the sides (rehearse) for breakwater | done
+July 24, 2030 at 6:45 PM | PRESS | Prepare the sides (rehearse) for breakwater | done
+July 24, 2030 at 7:30 PM | PRESS | Prepare the sides (rehearse) for breakwater | done
+July 24, 2030 at 8:15 PM | PRESS | Prepare the sides (rehearse) for breakwater | done
+July 24, 2030 at 9:00 PM | PRESS | Prepare the sides (rehearse) for breakwater | done
+July 24, 2030 at 9:45 PM | PRESS | Prepare the sides (rehearse) for breakwater | done
+July 25, 2030 at 9:30 AM | PRESS | Prepare the sides (rehearse) for breakwater | done
+July 25, 2030 at 10:15 AM | PRESS | Tape It for breakwater | done
+July 25, 2030 at 11:15 AM | PRESS | Prepare the sides (read) for nine-one-one-guest | done
+July 25, 2030 at 11:45 AM | PRESS | Prepare the sides (read) for nine-one-one-guest | done
+July 25, 2030 at 12:15 PM | PRESS | Prepare the sides (lines) for nine-one-one-guest | done
+July 25, 2030 at 12:45 PM | PRESS | Prepare the sides (lines) for nine-one-one-guest | done
+July 25, 2030 at 1:15 PM | PRESS | Prepare the sides (lines) for nine-one-one-guest | done
+July 25, 2030 at 1:45 PM | PRESS | Prepare the sides (rehearse) for nine-one-one-guest | done
+July 25, 2030 at 2:30 PM | PRESS | Prepare the sides (rehearse) for nine-one-one-guest | done
+July 25, 2030 at 3:15 PM | PRESS | Prepare the sides (rehearse) for nine-one-one-guest | done
+July 25, 2030 at 4:00 PM | PRESS | Prepare the sides (rehearse) for nine-one-one-guest | done
+July 25, 2030 at 4:45 PM | PRESS | Prepare the sides (rehearse) for nine-one-one-guest | done
+July 25, 2030 at 5:30 PM | PRESS | Prepare the sides (rehearse) for nine-one-one-guest | done
+July 25, 2030 at 6:15 PM | PRESS | Prepare the sides (rehearse) for nine-one-one-guest | done
+July 25, 2030 at 7:00 PM | PRESS | Prepare the sides (rehearse) for nine-one-one-guest | done
+July 25, 2030 at 7:45 PM | PRESS | Prepare the sides (rehearse) for nine-one-one-guest | done
+July 25, 2030 at 8:30 PM | PRESS | Prepare the sides (rehearse) for nine-one-one-guest | done
+July 25, 2030 at 9:15 PM | PRESS | Prepare the sides (rehearse) for nine-one-one-guest | done
 July 26, 2030 at 12:00 AM | NOTICE | A New Card Is On Its Way | Your debit card ending 1743 expires soon. The new one has the same number and expires August 24, 2034.
-July 29, 2030 at 7:00 AM | STOP | Static On Route 9: Shoot Day 1 | Go
-July 30, 2030 at 7:00 AM | STOP | Static On Route 9: Shoot Day 2 | Go
-July 31, 2030 at 7:00 AM | STOP | Static On Route 9: Shoot Day 3 | Go
+July 26, 2030 at 9:00 AM | PRESS | Prepare the sides (rehearse) for nine-one-one-guest | done
+July 26, 2030 at 9:45 AM | PRESS | Tape It for nine-one-one-guest | done
+July 26, 2030 at 10:45 AM | PRESS | Prepare the sides (read) for g1.1buqm.2027.los-angeles.multicam-comedy.1.s4.0 | done
+July 26, 2030 at 11:15 AM | PRESS | Prepare the sides (read) for g1.1buqm.2027.los-angeles.multicam-comedy.1.s4.0 | done
+July 26, 2030 at 11:45 AM | PRESS | Prepare the sides (lines) for g1.1buqm.2027.los-angeles.multicam-comedy.1.s4.0 | done
+July 26, 2030 at 12:15 PM | PRESS | Prepare the sides (lines) for g1.1buqm.2027.los-angeles.multicam-comedy.1.s4.0 | done
+July 26, 2030 at 12:45 PM | PRESS | Prepare the sides (lines) for g1.1buqm.2027.los-angeles.multicam-comedy.1.s4.0 | done
+July 26, 2030 at 1:15 PM | PRESS | Prepare the sides (rehearse) for g1.1buqm.2027.los-angeles.multicam-comedy.1.s4.0 | done
+July 26, 2030 at 2:00 PM | PRESS | Prepare the sides (rehearse) for g1.1buqm.2027.los-angeles.multicam-comedy.1.s4.0 | done
+July 26, 2030 at 2:45 PM | PRESS | Prepare the sides (rehearse) for g1.1buqm.2027.los-angeles.multicam-comedy.1.s4.0 | done
+July 26, 2030 at 3:30 PM | PRESS | Prepare the sides (rehearse) for g1.1buqm.2027.los-angeles.multicam-comedy.1.s4.0 | done
+July 26, 2030 at 4:15 PM | PRESS | Prepare the sides (rehearse) for g1.1buqm.2027.los-angeles.multicam-comedy.1.s4.0 | done
+July 26, 2030 at 5:00 PM | PRESS | Prepare the sides (rehearse) for g1.1buqm.2027.los-angeles.multicam-comedy.1.s4.0 | done
+July 26, 2030 at 5:45 PM | PRESS | Prepare the sides (rehearse) for g1.1buqm.2027.los-angeles.multicam-comedy.1.s4.0 | done
+July 26, 2030 at 6:30 PM | PRESS | Prepare the sides (rehearse) for g1.1buqm.2027.los-angeles.multicam-comedy.1.s4.0 | done
+July 26, 2030 at 7:15 PM | PRESS | Prepare the sides (rehearse) for g1.1buqm.2027.los-angeles.multicam-comedy.1.s4.0 | done
+July 26, 2030 at 8:00 PM | PRESS | Prepare the sides (rehearse) for g1.1buqm.2027.los-angeles.multicam-comedy.1.s4.0 | done
+July 26, 2030 at 8:45 PM | PRESS | Prepare the sides (rehearse) for g1.1buqm.2027.los-angeles.multicam-comedy.1.s4.0 | done
+July 26, 2030 at 9:30 PM | PRESS | Prepare the sides (rehearse) for g1.1buqm.2027.los-angeles.multicam-comedy.1.s4.0 | done
+July 27, 2030 at 9:15 AM | PRESS | Prepare the sides (rehearse) for g1.1buqm.2027.los-angeles.multicam-comedy.1.s4.0 | done
+July 27, 2030 at 10:00 AM | PRESS | Prepare the sides (read) for g1.1buqm.2030.los-angeles.network-comedy.0.s0.0 | done
+July 27, 2030 at 10:30 AM | PRESS | Prepare the sides (read) for g1.1buqm.2030.los-angeles.network-comedy.0.s0.0 | done
+July 27, 2030 at 11:00 AM | PRESS | Prepare the sides (lines) for g1.1buqm.2030.los-angeles.network-comedy.0.s0.0 | done
+July 27, 2030 at 11:30 AM | PRESS | Prepare the sides (lines) for g1.1buqm.2030.los-angeles.network-comedy.0.s0.0 | done
+July 27, 2030 at 12:00 PM | PRESS | Prepare the sides (rehearse) for g1.1buqm.2030.los-angeles.network-comedy.0.s0.0 | done
+July 27, 2030 at 12:45 PM | PRESS | Prepare the sides (rehearse) for g1.1buqm.2030.los-angeles.network-comedy.0.s0.0 | done
+July 27, 2030 at 1:30 PM | PRESS | Prepare the sides (rehearse) for g1.1buqm.2030.los-angeles.network-comedy.0.s0.0 | done
+July 27, 2030 at 2:15 PM | PRESS | Prepare the sides (rehearse) for g1.1buqm.2030.los-angeles.network-comedy.0.s0.0 | done
+July 27, 2030 at 3:00 PM | PRESS | Prepare the sides (rehearse) for g1.1buqm.2030.los-angeles.network-comedy.0.s0.0 | done
+July 27, 2030 at 3:45 PM | PRESS | Prepare the sides (rehearse) for g1.1buqm.2030.los-angeles.network-comedy.0.s0.0 | done
+July 27, 2030 at 4:30 PM | PRESS | Prepare the sides (rehearse) for g1.1buqm.2030.los-angeles.network-comedy.0.s0.0 | done
+July 27, 2030 at 5:15 PM | PRESS | Prepare the sides (rehearse) for g1.1buqm.2030.los-angeles.network-comedy.0.s0.0 | done
+July 27, 2030 at 6:00 PM | PRESS | Prepare the sides (rehearse) for g1.1buqm.2030.los-angeles.network-comedy.0.s0.0 | done
+July 27, 2030 at 6:45 PM | PRESS | Prepare the sides (rehearse) for g1.1buqm.2030.los-angeles.network-comedy.0.s0.0 | done
+July 27, 2030 at 7:30 PM | PRESS | Prepare the sides (rehearse) for g1.1buqm.2030.los-angeles.network-comedy.0.s0.0 | done
+July 27, 2030 at 8:15 PM | PRESS | Prepare the sides (rehearse) for g1.1buqm.2030.los-angeles.network-comedy.0.s0.0 | done
+July 27, 2030 at 9:00 PM | PRESS | Prepare the sides (rehearse) for g1.1buqm.2030.los-angeles.network-comedy.0.s0.0 | done
+July 27, 2030 at 9:45 PM | PRESS | Prepare the sides (rehearse) for g1.1buqm.2030.los-angeles.network-comedy.0.s0.0 | done
+July 28, 2030 at 9:30 AM | PRESS | Prepare the sides (rehearse) for g1.1buqm.2030.los-angeles.network-comedy.0.s0.0 | done
+July 28, 2030 at 10:15 AM | PRESS | Tape It for g1.1buqm.2030.los-angeles.network-comedy.0.s0.0 | done
+July 29, 2030 at 11:00 AM | STOP | Audition: Callum Ashdown, The Undertow | Go
+July 29, 2030 at 5:00 PM | NOTICE | Not Cast As The Getaway Driver | Thomas Ashgrove passed this on: Castellane Casting didn’t call you back for The Getaway Driver. Casting doesn’t give its reasons. The Opportunities tab shows what went into it: your audition, the role’s fit and the field.
+July 30, 2030 at 5:00 PM | NOTICE | A Callback For Callum Ashdown | Thomas Ashgrove passed this on: Okonjo Casting wants to see you again for Callum Ashdown in The Undertow: a studio lot in Burbank in Los Angeles, Monday, August 5, 2030 at 2:00 PM. Getting there takes about three hours each way. Prepare the sides on the Career screen’s Opportunities tab before you go.
+July 31, 2030 at 5:00 PM | NOTICE | Not Cast As Reese Pike | Thomas Ashgrove passed this on: The production’s casting office cast another actor as Reese Pike. Casting doesn’t give its reasons. The Opportunities tab shows what went into it: your audition, the role’s fit and the field.
+July 31, 2030 at 5:00 PM | NOTICE | Not Cast As Kwame Strand | Thomas Ashgrove passed this on: Achebe Casting cast another actor as Kwame Strand. Casting doesn’t give its reasons. The Opportunities tab shows what went into it: your audition, the role’s fit and the field.
 August 1, 2030 at 12:30 AM | NOTICE | Your Health Cover Ended | You have no health cover from August 1, 2030. You have 60 days to enroll in the marketplace. Enroll on Papers, under Health Cover.
-August 1, 2030 at 7:00 AM | STOP | Static On Route 9: Shoot Day 4 | Go
-August 1, 2030 at 7:00 AM | NOTICE | You Wrapped Static On Route 9 | Static On Route 9 wrapped, and Jess is on your professional credits, not yet released. Its footage can go on a reel once it comes out, about 10 months on, estimated. Update your résumé on the Portfolio tab to add it.
-August 1, 2030 at 6:00 PM | PRESS | Update Your Résumé | done
-August 8, 2030 at 12:00 PM | NOTICE | Pay Held For You At Halberd Talent | Dead Air Films paid $1,232.00 for Static On Route 9, the week of July 29, 2030, into Halberd Talent’s client trust account, less $94.24 withheld for tax. Halberd Talent passes it on to you by August 13, 2030, less $112.00 commission.
-August 13, 2030 at 12:00 PM | NOTICE | Paid On From Halberd Talent | Halberd Talent passed on your pay for Static On Route 9, the week of July 29, 2030: $1,137.76 held for you, less $112.00 commission, so $1,025.76 went into your Chase Total Checking.
-August 19, 2030 at 7:00 AM | STOP | Last Bus To Eastview: Shoot Day 1 | Go
-August 19, 2030 at 9:00 AM | NOTICE | Submitted For Ferris | Thomas Ashgrove submitted you for Ferris in Gull Season, sending your headshots from April 27, 2030, your résumé from August 1, 2030 and your reel from April 27, 2030. It’s a new casting of the part. The last time it was posted to you, on June 3, 2030: Quillon Casting didn’t call you back for Ferris. Quillon Casting answers on Wednesday, August 21, 2030.
-August 20, 2030 at 7:00 AM | STOP | Last Bus To Eastview: Shoot Day 2 | Go
-August 20, 2030 at 7:00 AM | NOTICE | You Wrapped Last Bus To Eastview | Last Bus To Eastview wrapped, and Robin is on your professional credits, not yet released. Its footage can go on a reel once it comes out, about five months on, estimated. Update your résumé on the Portfolio tab to add it.
-August 20, 2030 at 6:00 PM | PRESS | Update Your Résumé | done
+August 5, 2030 at 9:00 AM | NOTICE | Submitted For The Apprentice Lamplighter | Thomas Ashgrove submitted you for The Apprentice Lamplighter in The Lamplighters, sending your headshots from April 27, 2030 and your résumé from June 25, 2030. It’s a new casting of the part. The last time it was posted to you, on April 15, 2030: Submissions for The Apprentice Lamplighter closed on April 22, 2030. Pell And Moran Casting answers on Wednesday, August 7, 2030.
+August 5, 2030 at 9:00 AM | NOTICE | Submitted For The Orchard’s Bookkeeper | Thomas Ashgrove submitted you for The Orchard’s Bookkeeper in The Glass Orchard, sending your headshots from April 27, 2030, your résumé from June 25, 2030 and your reel from April 27, 2030. Imbert Casting answers on Wednesday, August 7, 2030.
+August 5, 2030 at 2:00 PM | STOP | Callback: Callum Ashdown, The Undertow | Go
+August 7, 2030 at 10:00 AM | NOTICE | An Audition For The Apprentice Lamplighter | Thomas Ashgrove passed this on: Pell And Moran Casting wants to see you for The Apprentice Lamplighter in The Lamplighters: a 500-seat regional theater in New Haven, Monday, August 12, 2030 at 11:00 AM. Getting there takes about 30 minutes each way. Prepare the sides on the Career screen’s Opportunities tab before you go.
+August 7, 2030 at 10:00 AM | NOTICE | A Self-Tape For The Orchard’s Bookkeeper | Thomas Ashgrove passed this on: Imbert Casting asks for a self-tape for The Orchard’s Bookkeeper in The Glass Orchard, due Sunday, August 11, 2030 at 6:00 PM. Prepare the sides, then press Tape It on the Career screen’s Opportunities tab.
+August 7, 2030 at 10:45 AM | PRESS | Prepare the sides (read) for lamplighters | done
+August 7, 2030 at 11:15 AM | PRESS | Prepare the sides (read) for lamplighters | done
+August 7, 2030 at 11:45 AM | PRESS | Prepare the sides (lines) for lamplighters | done
+August 7, 2030 at 12:15 PM | PRESS | Prepare the sides (lines) for lamplighters | done
+August 7, 2030 at 12:45 PM | PRESS | Prepare the sides (rehearse) for lamplighters | done
+August 7, 2030 at 1:30 PM | PRESS | Prepare the sides (rehearse) for lamplighters | done
+August 7, 2030 at 2:15 PM | PRESS | Prepare the sides (rehearse) for lamplighters | done
+August 7, 2030 at 3:00 PM | PRESS | Prepare the sides (rehearse) for lamplighters | done
+August 7, 2030 at 3:45 PM | PRESS | Prepare the sides (rehearse) for lamplighters | done
+August 7, 2030 at 4:30 PM | PRESS | Prepare the sides (rehearse) for lamplighters | done
+August 7, 2030 at 5:15 PM | PRESS | Prepare the sides (rehearse) for lamplighters | done
+August 7, 2030 at 6:00 PM | PRESS | Prepare the sides (rehearse) for lamplighters | done
+August 7, 2030 at 6:45 PM | PRESS | Prepare the sides (rehearse) for lamplighters | done
+August 7, 2030 at 7:30 PM | PRESS | Prepare the sides (rehearse) for lamplighters | done
+August 7, 2030 at 8:15 PM | PRESS | Prepare the sides (rehearse) for lamplighters | done
+August 7, 2030 at 9:00 PM | PRESS | Prepare the sides (rehearse) for lamplighters | done
+August 7, 2030 at 9:45 PM | PRESS | Prepare the sides (rehearse) for lamplighters | done
+August 8, 2030 at 9:30 AM | PRESS | Prepare the sides (rehearse) for lamplighters | done
+August 8, 2030 at 10:15 AM | PRESS | Prepare the sides (read) for glass-orchard | done
+August 8, 2030 at 10:45 AM | PRESS | Prepare the sides (read) for glass-orchard | done
+August 8, 2030 at 11:15 AM | PRESS | Prepare the sides (lines) for glass-orchard | done
+August 8, 2030 at 11:45 AM | PRESS | Prepare the sides (lines) for glass-orchard | done
+August 8, 2030 at 12:15 PM | PRESS | Prepare the sides (rehearse) for glass-orchard | done
+August 8, 2030 at 1:00 PM | PRESS | Prepare the sides (rehearse) for glass-orchard | done
+August 8, 2030 at 1:45 PM | PRESS | Prepare the sides (rehearse) for glass-orchard | done
+August 8, 2030 at 2:30 PM | PRESS | Prepare the sides (rehearse) for glass-orchard | done
+August 8, 2030 at 3:15 PM | PRESS | Prepare the sides (rehearse) for glass-orchard | done
+August 8, 2030 at 4:00 PM | PRESS | Prepare the sides (rehearse) for glass-orchard | done
+August 8, 2030 at 4:45 PM | PRESS | Prepare the sides (rehearse) for glass-orchard | done
+August 8, 2030 at 5:00 PM | NOTICE | Not Cast As Callum Ashdown | Thomas Ashgrove passed this on: Okonjo Casting cast another actor as Callum Ashdown. Casting doesn’t give its reasons. The Opportunities tab shows what went into it: your audition, the role’s fit and the field.
+August 8, 2030 at 5:30 PM | PRESS | Prepare the sides (rehearse) for glass-orchard | done
+August 8, 2030 at 6:15 PM | PRESS | Prepare the sides (rehearse) for glass-orchard | done
+August 8, 2030 at 7:00 PM | PRESS | Prepare the sides (rehearse) for glass-orchard | done
+August 8, 2030 at 7:45 PM | PRESS | Prepare the sides (rehearse) for glass-orchard | done
+August 8, 2030 at 8:30 PM | PRESS | Prepare the sides (rehearse) for glass-orchard | done
+August 8, 2030 at 9:15 PM | PRESS | Prepare the sides (rehearse) for glass-orchard | done
+August 9, 2030 at 9:00 AM | PRESS | Prepare the sides (rehearse) for glass-orchard | done
+August 9, 2030 at 9:45 AM | PRESS | Tape It for glass-orchard | done
+August 12, 2030 at 9:00 AM | NOTICE | Submitted For The Night Auditor | Thomas Ashgrove submitted you for The Night Auditor in Six Rooms, sending your headshots from April 27, 2030, your résumé from June 25, 2030 and your reel from April 27, 2030. It’s a new casting of the part. The last time it was posted to you, on June 3, 2030: Tolland Casting didn’t call you back for The Night Auditor. Tolland Casting answers on Wednesday, August 14, 2030.
+August 12, 2030 at 9:00 AM | NOTICE | Submitted For The Lamp Shop’s Owner | Thomas Ashgrove submitted you for The Lamp Shop’s Owner in A Light On Pell Street, sending your headshots from April 27, 2030, your résumé from June 25, 2030 and your reel from April 27, 2030. Vossberg Casting answers on Wednesday, August 14, 2030.
+August 12, 2030 at 11:00 AM | STOP | Audition: The Apprentice Lamplighter, The Lamplighters | Go
+August 12, 2030 at 5:00 PM | NOTICE | A Callback For The Orchard’s Bookkeeper | Thomas Ashgrove passed this on: Imbert Casting asks for a self-tape for the callback for The Orchard’s Bookkeeper in The Glass Orchard, due Thursday, August 15, 2030 at 6:00 PM. Prepare the sides, then press Tape It on the Career screen’s Opportunities tab.
+August 12, 2030 at 5:45 PM | PRESS | Tape It for glass-orchard | done
+August 13, 2030 at 5:00 PM | NOTICE | Not Cast As The Apprentice Lamplighter | Thomas Ashgrove passed this on: Pell And Moran Casting didn’t call you back for The Apprentice Lamplighter. Casting doesn’t give its reasons. The Opportunities tab shows what went into it: your audition, the role’s fit and the field.
+August 14, 2030 at 10:00 AM | NOTICE | A Self-Tape For The Night Auditor | Thomas Ashgrove passed this on: Tolland Casting asks for a self-tape for The Night Auditor in Six Rooms, due Sunday, August 18, 2030 at 6:00 PM. Prepare the sides, then press Tape It on the Career screen’s Opportunities tab.
+August 14, 2030 at 10:00 AM | NOTICE | A Self-Tape For The Lamp Shop’s Owner | Thomas Ashgrove passed this on: Vossberg Casting asks for a self-tape for The Lamp Shop’s Owner in A Light On Pell Street, due Sunday, August 18, 2030 at 6:00 PM. Prepare the sides, then press Tape It on the Career screen’s Opportunities tab.
+August 14, 2030 at 10:45 AM | PRESS | Prepare the sides (read) for six-rooms | done
+August 14, 2030 at 11:15 AM | PRESS | Prepare the sides (read) for six-rooms | done
+August 14, 2030 at 11:45 AM | PRESS | Prepare the sides (lines) for six-rooms | done
+August 14, 2030 at 12:15 PM | PRESS | Prepare the sides (lines) for six-rooms | done
+August 14, 2030 at 12:45 PM | PRESS | Prepare the sides (rehearse) for six-rooms | done
+August 14, 2030 at 1:30 PM | PRESS | Prepare the sides (rehearse) for six-rooms | done
+August 14, 2030 at 2:15 PM | PRESS | Prepare the sides (rehearse) for six-rooms | done
+August 14, 2030 at 3:00 PM | PRESS | Prepare the sides (rehearse) for six-rooms | done
+August 14, 2030 at 3:45 PM | PRESS | Prepare the sides (rehearse) for six-rooms | done
+August 14, 2030 at 4:30 PM | PRESS | Prepare the sides (rehearse) for six-rooms | done
+August 14, 2030 at 5:15 PM | PRESS | Prepare the sides (rehearse) for six-rooms | done
+August 14, 2030 at 6:00 PM | PRESS | Prepare the sides (rehearse) for six-rooms | done
+August 14, 2030 at 6:45 PM | PRESS | Prepare the sides (rehearse) for six-rooms | done
+August 14, 2030 at 7:30 PM | PRESS | Prepare the sides (rehearse) for six-rooms | done
+August 14, 2030 at 8:15 PM | PRESS | Prepare the sides (rehearse) for six-rooms | done
+August 14, 2030 at 9:00 PM | PRESS | Prepare the sides (rehearse) for six-rooms | done
+August 14, 2030 at 9:45 PM | PRESS | Prepare the sides (rehearse) for six-rooms | done
+August 15, 2030 at 9:30 AM | PRESS | Prepare the sides (rehearse) for six-rooms | done
+August 15, 2030 at 10:15 AM | PRESS | Tape It for six-rooms | done
+August 15, 2030 at 11:15 AM | PRESS | Prepare the sides (read) for pell-street | done
+August 15, 2030 at 11:45 AM | PRESS | Prepare the sides (read) for pell-street | done
+August 15, 2030 at 12:15 PM | PRESS | Prepare the sides (lines) for pell-street | done
+August 15, 2030 at 12:45 PM | PRESS | Prepare the sides (lines) for pell-street | done
+August 15, 2030 at 1:15 PM | PRESS | Prepare the sides (lines) for pell-street | done
+August 15, 2030 at 1:45 PM | PRESS | Prepare the sides (rehearse) for pell-street | done
+August 15, 2030 at 2:30 PM | PRESS | Prepare the sides (rehearse) for pell-street | done
+August 15, 2030 at 3:15 PM | PRESS | Prepare the sides (rehearse) for pell-street | done
+August 15, 2030 at 4:00 PM | PRESS | Prepare the sides (rehearse) for pell-street | done
+August 15, 2030 at 4:45 PM | PRESS | Prepare the sides (rehearse) for pell-street | done
+August 15, 2030 at 5:30 PM | PRESS | Prepare the sides (rehearse) for pell-street | done
+August 15, 2030 at 6:15 PM | PRESS | Prepare the sides (rehearse) for pell-street | done
+August 15, 2030 at 7:00 PM | PRESS | Prepare the sides (rehearse) for pell-street | done
+August 15, 2030 at 7:45 PM | PRESS | Prepare the sides (rehearse) for pell-street | done
+August 15, 2030 at 8:30 PM | PRESS | Prepare the sides (rehearse) for pell-street | done
+August 15, 2030 at 9:15 PM | PRESS | Prepare the sides (rehearse) for pell-street | done
+August 16, 2030 at 9:00 AM | PRESS | Prepare the sides (rehearse) for pell-street | done
+August 16, 2030 at 9:45 AM | PRESS | Tape It for pell-street | done
+August 18, 2030 at 5:00 PM | NOTICE | Not Cast As The Orchard’s Bookkeeper | Thomas Ashgrove passed this on: Imbert Casting cast another actor as The Orchard’s Bookkeeper. Casting doesn’t give its reasons. The Opportunities tab shows what went into it: your audition, the role’s fit and the field.
+August 19, 2030 at 9:00 AM | NOTICE | Submitted For Ferris | Thomas Ashgrove submitted you for Ferris in Gull Season, sending your headshots from April 27, 2030, your résumé from June 25, 2030 and your reel from April 27, 2030. It’s a new casting of the part. The last time it was posted to you, on June 3, 2030: Quillon Casting didn’t call you back for Ferris. Quillon Casting answers on Wednesday, August 21, 2030.
+August 19, 2030 at 9:00 AM | NOTICE | Submitted For Kwame | Thomas Ashgrove submitted you for Kwame in The Undertow Of Carver Hill, sending your headshots from April 27, 2030, your résumé from June 25, 2030 and your reel from April 27, 2030. It’s a new casting of the part. The last time it was posted to you, on June 10, 2030: Hargrove Casting didn’t call you back for Kwame. Hargrove Casting answers on Wednesday, August 21, 2030.
+August 19, 2030 at 9:00 AM | NOTICE | Submitted For Jules Rasmussen | Thomas Ashgrove submitted you for Jules Rasmussen in The Quarry, sending your headshots from April 27, 2030, your résumé from June 25, 2030 and your reel from April 27, 2030. It’s a new casting of the part. The last time it was posted to you, on June 3, 2030: Varga Casting didn’t call you back for Jules Rasmussen. Varga Casting answers on Wednesday, August 21, 2030.
+August 19, 2030 at 5:00 PM | NOTICE | A Callback For The Night Auditor | Thomas Ashgrove passed this on: Tolland Casting asks for a self-tape for the callback for The Night Auditor in Six Rooms, due Thursday, August 22, 2030 at 6:00 PM. Prepare the sides, then press Tape It on the Career screen’s Opportunities tab.
+August 19, 2030 at 5:00 PM | NOTICE | A Callback For The Lamp Shop’s Owner | Thomas Ashgrove passed this on: Vossberg Casting asks for a self-tape for the callback for The Lamp Shop’s Owner in A Light On Pell Street, due Thursday, August 22, 2030 at 6:00 PM. Prepare the sides, then press Tape It on the Career screen’s Opportunities tab.
+August 19, 2030 at 5:45 PM | PRESS | Tape It for six-rooms | done
+August 19, 2030 at 6:45 PM | PRESS | Tape It for pell-street | done
 August 21, 2030 at 10:00 AM | NOTICE | A Self-Tape For Ferris | Thomas Ashgrove passed this on: Quillon Casting asks for a self-tape for Ferris in Gull Season, due Sunday, August 25, 2030 at 6:00 PM. Prepare the sides, then press Tape It on the Career screen’s Opportunities tab.
-August 21, 2030 at 10:00 AM | PRESS | Prepare the sides (read) for gull-season-ferris | done
-August 21, 2030 at 10:30 AM | PRESS | Prepare the sides (read) for gull-season-ferris | done
-August 21, 2030 at 11:00 AM | PRESS | Prepare the sides (lines) for gull-season-ferris | done
-August 21, 2030 at 11:30 AM | PRESS | Prepare the sides (lines) for gull-season-ferris | done
-August 21, 2030 at 12:00 PM | PRESS | Prepare the sides (rehearse) for gull-season-ferris | done
+August 21, 2030 at 10:00 AM | NOTICE | A Self-Tape For Kwame | Thomas Ashgrove passed this on: Hargrove Casting asks for a self-tape for Kwame in The Undertow Of Carver Hill, due Sunday, August 25, 2030 at 6:00 PM. Prepare the sides, then press Tape It on the Career screen’s Opportunities tab.
+August 21, 2030 at 10:00 AM | NOTICE | A Self-Tape For Jules Rasmussen | Thomas Ashgrove passed this on: Varga Casting asks for a self-tape for Jules Rasmussen in The Quarry, due Sunday, August 25, 2030 at 6:00 PM. Prepare the sides, then press Tape It on the Career screen’s Opportunities tab.
+August 21, 2030 at 10:45 AM | PRESS | Prepare the sides (read) for gull-season-ferris | done
+August 21, 2030 at 11:15 AM | PRESS | Prepare the sides (read) for gull-season-ferris | done
+August 21, 2030 at 11:45 AM | PRESS | Prepare the sides (lines) for gull-season-ferris | done
+August 21, 2030 at 12:15 PM | PRESS | Prepare the sides (lines) for gull-season-ferris | done
 August 21, 2030 at 12:45 PM | PRESS | Prepare the sides (rehearse) for gull-season-ferris | done
 August 21, 2030 at 1:30 PM | PRESS | Prepare the sides (rehearse) for gull-season-ferris | done
 August 21, 2030 at 2:15 PM | PRESS | Prepare the sides (rehearse) for gull-season-ferris | done
@@ -345,7 +885,87 @@ August 21, 2030 at 9:00 PM | PRESS | Prepare the sides (rehearse) for gull-seaso
 August 21, 2030 at 9:45 PM | PRESS | Prepare the sides (rehearse) for gull-season-ferris | done
 August 22, 2030 at 9:30 AM | PRESS | Prepare the sides (rehearse) for gull-season-ferris | done
 August 22, 2030 at 10:15 AM | PRESS | Tape It for gull-season-ferris | done
-August 22, 2030 at 12:00 PM | NOTICE | Pay Held For You At Halberd Talent | Ferrous Pictures paid $250.00 for Last Bus To Eastview, the week of August 19, 2030, into Halberd Talent’s client trust account, less $19.13 withheld for tax. Halberd Talent passes it on to you by August 27, 2030, less $25.00 commission.
-August 26, 2030 at 5:00 PM | NOTICE | A Callback For Ferris | Thomas Ashgrove passed this on: Quillon Casting asks for a self-tape for the callback for Ferris in Gull Season, due Thursday, August 29, 2030 at 6:00 PM. Prepare the sides, then press Tape It on the Career screen’s Opportunities tab.
-August 26, 2030 at 5:15 PM | PRESS | Tape It for gull-season-ferris | done
-August 27, 2030 at 12:00 PM | NOTICE | Paid On From Halberd Talent | Halberd Talent passed on your pay for Last Bus To Eastview, the week of August 19, 2030: $230.87 held for you, less $25.00 commission, so $205.87 went into your Chase Total Checking.
+August 22, 2030 at 11:15 AM | PRESS | Prepare the sides (read) for g1.1buqm.2030.new-york.network-drama.1.s0.0 | done
+August 22, 2030 at 11:45 AM | PRESS | Prepare the sides (read) for g1.1buqm.2030.new-york.network-drama.1.s0.0 | done
+August 22, 2030 at 12:15 PM | PRESS | Prepare the sides (lines) for g1.1buqm.2030.new-york.network-drama.1.s0.0 | done
+August 22, 2030 at 12:45 PM | PRESS | Prepare the sides (lines) for g1.1buqm.2030.new-york.network-drama.1.s0.0 | done
+August 22, 2030 at 1:15 PM | PRESS | Prepare the sides (lines) for g1.1buqm.2030.new-york.network-drama.1.s0.0 | done
+August 22, 2030 at 1:45 PM | PRESS | Prepare the sides (rehearse) for g1.1buqm.2030.new-york.network-drama.1.s0.0 | done
+August 22, 2030 at 2:30 PM | PRESS | Prepare the sides (rehearse) for g1.1buqm.2030.new-york.network-drama.1.s0.0 | done
+August 22, 2030 at 3:15 PM | PRESS | Prepare the sides (rehearse) for g1.1buqm.2030.new-york.network-drama.1.s0.0 | done
+August 22, 2030 at 4:00 PM | PRESS | Prepare the sides (rehearse) for g1.1buqm.2030.new-york.network-drama.1.s0.0 | done
+August 22, 2030 at 4:45 PM | PRESS | Prepare the sides (rehearse) for g1.1buqm.2030.new-york.network-drama.1.s0.0 | done
+August 22, 2030 at 5:30 PM | PRESS | Prepare the sides (rehearse) for g1.1buqm.2030.new-york.network-drama.1.s0.0 | done
+August 22, 2030 at 6:15 PM | PRESS | Prepare the sides (rehearse) for g1.1buqm.2030.new-york.network-drama.1.s0.0 | done
+August 22, 2030 at 7:00 PM | PRESS | Prepare the sides (rehearse) for g1.1buqm.2030.new-york.network-drama.1.s0.0 | done
+August 22, 2030 at 7:45 PM | PRESS | Prepare the sides (rehearse) for g1.1buqm.2030.new-york.network-drama.1.s0.0 | done
+August 22, 2030 at 8:30 PM | PRESS | Prepare the sides (rehearse) for g1.1buqm.2030.new-york.network-drama.1.s0.0 | done
+August 22, 2030 at 9:15 PM | PRESS | Prepare the sides (rehearse) for g1.1buqm.2030.new-york.network-drama.1.s0.0 | done
+August 23, 2030 at 9:00 AM | PRESS | Prepare the sides (rehearse) for g1.1buqm.2030.new-york.network-drama.1.s0.0 | done
+August 23, 2030 at 9:45 AM | PRESS | Tape It for g1.1buqm.2030.new-york.network-drama.1.s0.0 | done
+August 23, 2030 at 10:45 AM | PRESS | Prepare the sides (read) for g1.1buqm.2030.new-york.serialized-drama.0.s1.0 | done
+August 23, 2030 at 11:15 AM | PRESS | Prepare the sides (read) for g1.1buqm.2030.new-york.serialized-drama.0.s1.0 | done
+August 23, 2030 at 11:45 AM | PRESS | Prepare the sides (lines) for g1.1buqm.2030.new-york.serialized-drama.0.s1.0 | done
+August 23, 2030 at 12:15 PM | PRESS | Prepare the sides (lines) for g1.1buqm.2030.new-york.serialized-drama.0.s1.0 | done
+August 23, 2030 at 12:45 PM | PRESS | Prepare the sides (lines) for g1.1buqm.2030.new-york.serialized-drama.0.s1.0 | done
+August 23, 2030 at 1:15 PM | PRESS | Prepare the sides (rehearse) for g1.1buqm.2030.new-york.serialized-drama.0.s1.0 | done
+August 23, 2030 at 2:00 PM | PRESS | Prepare the sides (rehearse) for g1.1buqm.2030.new-york.serialized-drama.0.s1.0 | done
+August 23, 2030 at 2:45 PM | PRESS | Prepare the sides (rehearse) for g1.1buqm.2030.new-york.serialized-drama.0.s1.0 | done
+August 23, 2030 at 3:30 PM | PRESS | Prepare the sides (rehearse) for g1.1buqm.2030.new-york.serialized-drama.0.s1.0 | done
+August 23, 2030 at 4:15 PM | PRESS | Prepare the sides (rehearse) for g1.1buqm.2030.new-york.serialized-drama.0.s1.0 | done
+August 23, 2030 at 5:00 PM | PRESS | Prepare the sides (rehearse) for g1.1buqm.2030.new-york.serialized-drama.0.s1.0 | done
+August 23, 2030 at 5:45 PM | PRESS | Prepare the sides (rehearse) for g1.1buqm.2030.new-york.serialized-drama.0.s1.0 | done
+August 23, 2030 at 6:30 PM | PRESS | Prepare the sides (rehearse) for g1.1buqm.2030.new-york.serialized-drama.0.s1.0 | done
+August 23, 2030 at 7:15 PM | PRESS | Prepare the sides (rehearse) for g1.1buqm.2030.new-york.serialized-drama.0.s1.0 | done
+August 23, 2030 at 8:00 PM | PRESS | Prepare the sides (rehearse) for g1.1buqm.2030.new-york.serialized-drama.0.s1.0 | done
+August 23, 2030 at 8:45 PM | PRESS | Prepare the sides (rehearse) for g1.1buqm.2030.new-york.serialized-drama.0.s1.0 | done
+August 23, 2030 at 9:30 PM | PRESS | Prepare the sides (rehearse) for g1.1buqm.2030.new-york.serialized-drama.0.s1.0 | done
+August 24, 2030 at 9:15 AM | PRESS | Prepare the sides (rehearse) for g1.1buqm.2030.new-york.serialized-drama.0.s1.0 | done
+August 24, 2030 at 10:00 AM | PRESS | Tape It for g1.1buqm.2030.new-york.serialized-drama.0.s1.0 | done
+August 25, 2030 at 5:00 PM | NOTICE | Not Cast As The Night Auditor | Thomas Ashgrove passed this on: Tolland Casting cast another actor as The Night Auditor. Casting doesn’t give its reasons. The Opportunities tab shows what went into it: your audition, the role’s fit and the field.
+August 25, 2030 at 5:00 PM | NOTICE | Not Cast As The Lamp Shop’s Owner | Thomas Ashgrove passed this on: Vossberg Casting cast another actor as The Lamp Shop’s Owner. Casting doesn’t give its reasons. The Opportunities tab shows what went into it: your audition, the role’s fit and the field.
+August 26, 2030 at 9:00 AM | NOTICE | Submitted For Ezra Ibarra | Thomas Ashgrove submitted you for Ezra Ibarra in The Almanac On Orrin Street, sending your headshots from April 27, 2030, your résumé from June 25, 2030 and your reel from April 27, 2030. It’s a new casting of the part. The last time it was posted to you, on June 17, 2030: Pennick Casting didn’t call you back for Ezra Ibarra. Pennick Casting answers on Wednesday, August 28, 2030.
+August 26, 2030 at 9:00 AM | NOTICE | Submitted For Ferris Quaid | Thomas Ashgrove submitted you for Ferris Quaid in Penwick Tenants, sending your headshots from April 27, 2030, your résumé from June 25, 2030 and your reel from April 27, 2030. Quillon Casting answers on Wednesday, August 28, 2030.
+August 26, 2030 at 5:00 PM | NOTICE | Not Cast As Ferris | Thomas Ashgrove passed this on: Quillon Casting didn’t call you back for Ferris. Casting doesn’t give its reasons. The Opportunities tab shows what went into it: your audition, the role’s fit and the field.
+August 26, 2030 at 5:00 PM | NOTICE | Not Cast As Kwame | Thomas Ashgrove passed this on: Hargrove Casting didn’t call you back for Kwame. Casting doesn’t give its reasons. The Opportunities tab shows what went into it: your audition, the role’s fit and the field.
+August 26, 2030 at 5:00 PM | NOTICE | Not Cast As Jules Rasmussen | Thomas Ashgrove passed this on: Varga Casting didn’t call you back for Jules Rasmussen. Casting doesn’t give its reasons. The Opportunities tab shows what went into it: your audition, the role’s fit and the field.
+August 28, 2030 at 10:00 AM | NOTICE | A Self-Tape For Ezra Ibarra | Thomas Ashgrove passed this on: Pennick Casting asks for a self-tape for Ezra Ibarra in The Almanac On Orrin Street, due Sunday, September 1, 2030 at 6:00 PM. Prepare the sides, then press Tape It on the Career screen’s Opportunities tab.
+August 28, 2030 at 10:00 AM | NOTICE | A Self-Tape For Ferris Quaid | Thomas Ashgrove passed this on: Quillon Casting asks for a self-tape for Ferris Quaid in Penwick Tenants, due Sunday, September 1, 2030 at 6:00 PM. Prepare the sides, then press Tape It on the Career screen’s Opportunities tab.
+August 28, 2030 at 10:00 AM | PRESS | Prepare the sides (read) for g1.1buqm.2025.new-york.serialized-drama.0.s6.1 | done
+August 28, 2030 at 10:30 AM | PRESS | Prepare the sides (read) for g1.1buqm.2025.new-york.serialized-drama.0.s6.1 | done
+August 28, 2030 at 11:00 AM | PRESS | Prepare the sides (lines) for g1.1buqm.2025.new-york.serialized-drama.0.s6.1 | done
+August 28, 2030 at 11:30 AM | PRESS | Prepare the sides (lines) for g1.1buqm.2025.new-york.serialized-drama.0.s6.1 | done
+August 28, 2030 at 12:00 PM | PRESS | Prepare the sides (rehearse) for g1.1buqm.2025.new-york.serialized-drama.0.s6.1 | done
+August 28, 2030 at 12:45 PM | PRESS | Prepare the sides (rehearse) for g1.1buqm.2025.new-york.serialized-drama.0.s6.1 | done
+August 28, 2030 at 1:30 PM | PRESS | Prepare the sides (rehearse) for g1.1buqm.2025.new-york.serialized-drama.0.s6.1 | done
+August 28, 2030 at 2:15 PM | PRESS | Prepare the sides (rehearse) for g1.1buqm.2025.new-york.serialized-drama.0.s6.1 | done
+August 28, 2030 at 3:00 PM | PRESS | Prepare the sides (rehearse) for g1.1buqm.2025.new-york.serialized-drama.0.s6.1 | done
+August 28, 2030 at 3:45 PM | PRESS | Prepare the sides (rehearse) for g1.1buqm.2025.new-york.serialized-drama.0.s6.1 | done
+August 28, 2030 at 4:30 PM | PRESS | Prepare the sides (rehearse) for g1.1buqm.2025.new-york.serialized-drama.0.s6.1 | done
+August 28, 2030 at 5:15 PM | PRESS | Prepare the sides (rehearse) for g1.1buqm.2025.new-york.serialized-drama.0.s6.1 | done
+August 28, 2030 at 6:00 PM | PRESS | Prepare the sides (rehearse) for g1.1buqm.2025.new-york.serialized-drama.0.s6.1 | done
+August 28, 2030 at 6:45 PM | PRESS | Prepare the sides (rehearse) for g1.1buqm.2025.new-york.serialized-drama.0.s6.1 | done
+August 28, 2030 at 7:30 PM | PRESS | Prepare the sides (rehearse) for g1.1buqm.2025.new-york.serialized-drama.0.s6.1 | done
+August 28, 2030 at 8:15 PM | PRESS | Prepare the sides (rehearse) for g1.1buqm.2025.new-york.serialized-drama.0.s6.1 | done
+August 28, 2030 at 9:00 PM | PRESS | Prepare the sides (rehearse) for g1.1buqm.2025.new-york.serialized-drama.0.s6.1 | done
+August 28, 2030 at 9:45 PM | PRESS | Prepare the sides (rehearse) for g1.1buqm.2025.new-york.serialized-drama.0.s6.1 | done
+August 29, 2030 at 9:30 AM | PRESS | Prepare the sides (rehearse) for g1.1buqm.2025.new-york.serialized-drama.0.s6.1 | done
+August 29, 2030 at 10:15 AM | PRESS | Tape It for g1.1buqm.2025.new-york.serialized-drama.0.s6.1 | done
+August 29, 2030 at 11:15 AM | PRESS | Prepare the sides (read) for g1.1buqm.2029.los-angeles.network-drama.1.s2.1 | done
+August 29, 2030 at 11:45 AM | PRESS | Prepare the sides (read) for g1.1buqm.2029.los-angeles.network-drama.1.s2.1 | done
+August 29, 2030 at 12:15 PM | PRESS | Prepare the sides (lines) for g1.1buqm.2029.los-angeles.network-drama.1.s2.1 | done
+August 29, 2030 at 12:45 PM | PRESS | Prepare the sides (lines) for g1.1buqm.2029.los-angeles.network-drama.1.s2.1 | done
+August 29, 2030 at 1:15 PM | PRESS | Prepare the sides (lines) for g1.1buqm.2029.los-angeles.network-drama.1.s2.1 | done
+August 29, 2030 at 1:45 PM | PRESS | Prepare the sides (rehearse) for g1.1buqm.2029.los-angeles.network-drama.1.s2.1 | done
+August 29, 2030 at 2:30 PM | PRESS | Prepare the sides (rehearse) for g1.1buqm.2029.los-angeles.network-drama.1.s2.1 | done
+August 29, 2030 at 3:15 PM | PRESS | Prepare the sides (rehearse) for g1.1buqm.2029.los-angeles.network-drama.1.s2.1 | done
+August 29, 2030 at 4:00 PM | PRESS | Prepare the sides (rehearse) for g1.1buqm.2029.los-angeles.network-drama.1.s2.1 | done
+August 29, 2030 at 4:45 PM | PRESS | Prepare the sides (rehearse) for g1.1buqm.2029.los-angeles.network-drama.1.s2.1 | done
+August 29, 2030 at 5:30 PM | PRESS | Prepare the sides (rehearse) for g1.1buqm.2029.los-angeles.network-drama.1.s2.1 | done
+August 29, 2030 at 6:15 PM | PRESS | Prepare the sides (rehearse) for g1.1buqm.2029.los-angeles.network-drama.1.s2.1 | done
+August 29, 2030 at 7:00 PM | PRESS | Prepare the sides (rehearse) for g1.1buqm.2029.los-angeles.network-drama.1.s2.1 | done
+August 29, 2030 at 7:45 PM | PRESS | Prepare the sides (rehearse) for g1.1buqm.2029.los-angeles.network-drama.1.s2.1 | done
+August 29, 2030 at 8:30 PM | PRESS | Prepare the sides (rehearse) for g1.1buqm.2029.los-angeles.network-drama.1.s2.1 | done
+August 29, 2030 at 9:15 PM | PRESS | Prepare the sides (rehearse) for g1.1buqm.2029.los-angeles.network-drama.1.s2.1 | done
+August 30, 2030 at 9:00 AM | PRESS | Prepare the sides (rehearse) for g1.1buqm.2029.los-angeles.network-drama.1.s2.1 | done
+August 30, 2030 at 9:45 AM | PRESS | Tape It for g1.1buqm.2029.los-angeles.network-drama.1.s2.1 | done

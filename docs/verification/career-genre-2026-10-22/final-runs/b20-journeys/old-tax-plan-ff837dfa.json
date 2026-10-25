@@ -13,14 +13,14 @@
    "part": 2,
    "from": "2028-02-16",
    "to": "2028-12-16",
-   "secs": 86,
+   "secs": 93,
    "reloads": 10
   },
   {
    "part": 3,
    "from": "2028-12-16",
    "to": "2029-09-01",
-   "secs": 173,
+   "secs": 183,
    "reloads": 8,
    "done": true
   }
@@ -6365,7 +6365,7 @@
     "at": "2027-05-02T20:10",
     "what": "term 1 reviewed: good",
     "same": true,
-    "bytes": 838866,
+    "bytes": 839438,
     "credit": {
      "at": "2027-05-02T20:10",
      "what": "term 1 reviewed: good",
@@ -6385,7 +6385,7 @@
     "at": "2027-12-10T22:15",
     "what": "term 2 reviewed: good",
     "same": true,
-    "bytes": 1315520,
+    "bytes": 1340206,
     "credit": {
      "at": "2027-12-10T22:15",
      "what": "term 2 reviewed: good",
@@ -6405,7 +6405,7 @@
     "at": "2028-01-01T12:55",
     "what": "the end of 2027",
     "same": true,
-    "bytes": 1312489,
+    "bytes": 1339417,
     "credit": {
      "at": "2028-01-01T12:55",
      "what": "the end of 2027",
@@ -6425,7 +6425,7 @@
     "at": "2028-04-28T21:05",
     "what": "term 3 reviewed: concern",
     "same": true,
-    "bytes": 1504446,
+    "bytes": 1537991,
     "credit": {
      "at": "2028-04-28T21:05",
      "what": "term 3 reviewed: concern",
@@ -6439,7 +6439,7 @@
     "at": "2028-12-08T22:10",
     "what": "term 4 reviewed: warning",
     "same": true,
-    "bytes": 1571493,
+    "bytes": 1596878,
     "credit": {
      "at": "2028-12-08T22:10",
      "what": "term 4 reviewed: warning",
@@ -6453,7 +6453,7 @@
     "at": "2029-01-01T12:50",
     "what": "the end of 2028",
     "same": true,
-    "bytes": 1558146,
+    "bytes": 1583035,
     "credit": {
      "at": "2029-01-01T12:50",
      "what": "the end of 2028",
@@ -6467,7 +6467,7 @@
     "at": "2029-04-27T21:25",
     "what": "term 5 reviewed: good",
     "same": true,
-    "bytes": 1616656,
+    "bytes": 1639391,
     "credit": {
      "at": "2029-04-27T21:25",
      "what": "term 5 reviewed: good",
@@ -6481,7 +6481,7 @@
     "at": "2029-05-21T14:25",
     "what": "the School’s end: graduated",
     "same": true,
-    "bytes": 1612615,
+    "bytes": 1632968,
     "credit": {
      "at": "2029-05-21T14:25",
      "what": "the School’s end: graduated",
@@ -6605,8 +6605,8 @@
     "days": 14,
     "same": true,
     "bytes": [
-     838866,
-     838866
+     839438,
+     839438
     ],
     "straight": {
      "now": "2027-05-02T20:10",
@@ -6625,6 +6625,7 @@
       "Chase Closed An Account"
      ],
      "opportunities": [
+      "harbor-line-arden lapsed",
       "winter-ledger open"
      ],
      "engagements": [],
@@ -6657,6 +6658,7 @@
       "Chase Closed An Account"
      ],
      "opportunities": [
+      "harbor-line-arden lapsed",
       "winter-ledger open"
      ],
      "engagements": [],
@@ -6680,8 +6682,8 @@
     "days": 14,
     "same": true,
     "bytes": [
-     1609116,
-     1609116
+     1632703,
+     1632703
     ],
     "straight": {
      "now": "2029-06-04T14:25",
@@ -6690,7 +6692,10 @@
      "notices": [
       "No Money For Food Today"
      ],
-     "opportunities": [],
+     "opportunities": [
+      "s1.1bkr0.2029-06-04.new-york.student-film.0.0 open",
+      "s1.1bkr0.2029-06-04.new-york.student-film.1.0 open"
+     ],
      "engagements": [],
      "work": [],
      "transactions": 726
@@ -6702,12 +6707,15 @@
      "notices": [
       "No Money For Food Today"
      ],
-     "opportunities": [],
+     "opportunities": [
+      "s1.1bkr0.2029-06-04.new-york.student-film.0.0 open",
+      "s1.1bkr0.2029-06-04.new-york.student-film.1.0 open"
+     ],
      "engagements": [],
      "work": [],
      "transactions": 726
     },
-    "secs": 23
+    "secs": 25
    }
   ],
   "workDays": [],

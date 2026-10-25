@@ -3,23 +3,25 @@
  "part": 1,
  "from": "2029-08-04",
  "to": "2029-12-01",
- "secs": 81,
- "reloads": 5,
+ "secs": 77,
+ "reloads": 7,
  "done": true,
  "standing": "graduated",
  "careerFrom": "2029-08-04T14:15",
  "notSame": 0,
  "transitions": [
   "2029-08-04T14:15 opened: same",
-  "2029-11-29T22:45 the first booking: Ivy in Paper Moons: same"
+  "2029-10-31T21:45 the first booking: Tamsin Ibarra in The Weather Of Dunmore: same",
+  "2029-11-17T02:00 the first work day: same",
+  "2029-11-23T02:00 the first pay: same"
  ],
  "forks": [
   "2029-08-04T18:15 a union bill due 2029-11-01T13:00: Initiation fee, part 1 of 3, the down payment: same",
   "2029-08-18T19:45 an audition (in-person) set for 2029-08-20T15:00, Hester Vane in The Winter Ledger: same",
-  "2029-11-15T22:30 an offer standing: An Offer For Ivy: same"
+  "2029-10-17T21:15 an offer standing: An Offer For Tamsin Ibarra: same"
  ],
- "workDays": 0,
- "notices": 513,
- "bank": 72228.18,
+ "workDays": 6,
+ "notices": 534,
+ "bank": 74499.66,
  "errors": []
 }

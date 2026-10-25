@@ -3,8 +3,8 @@
  "part": 3,
  "from": "2029-11-10",
  "to": "2030-09-01",
- "secs": 160,
- "reloads": 44,
+ "secs": 136,
+ "reloads": 41,
  "done": true,
  "standing": "graduated",
  "schoolEnd": "2030-05-20T14:00",
@@ -20,19 +20,15 @@
   "2030-01-01T12:15 the end of 2029: same",
   "2030-04-26T21:20 term 7 reviewed: good: same",
   "2030-05-20T14:40 the School’s end: graduated: same",
-  "2030-06-03T15:00 a signing: same",
-  "2030-07-17T21:45 the first booking: Jess in Static On Route 9: same",
-  "2030-07-29T22:00 the first work day: same",
-  "2030-08-13T16:00 the first pay: same"
+  "2030-06-03T15:00 a signing: same"
  ],
  "forks": [
   "2028-03-12T14:55 a rehearsal with a partner booked for 2028-03-13T23:00 on A Choreographed Sequence: same",
   "2030-05-20T14:40 a union bill due 2031-05-20T14:00: Initiation fee, part 2 of 3: same",
-  "2030-06-05T14:00 an audition (self-tape) set for 2030-06-09T22:00, Ferris in Gull Season: same",
-  "2030-07-03T21:15 an offer standing: An Offer For Jess: same"
+  "2030-06-05T14:00 an audition (self-tape) set for 2030-06-09T22:00, Ferris in Gull Season: same"
  ],
- "workDays": 6,
- "notices": 933,
- "bank": 70383.07,
+ "workDays": 0,
+ "notices": 1021,
+ "bank": 69151.44,
  "errors": []
 }

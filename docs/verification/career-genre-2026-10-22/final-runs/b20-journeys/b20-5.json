@@ -14,35 +14,35 @@
    "part": 1,
    "from": "2026-08-24",
    "to": "2027-06-01",
-   "secs": 22,
+   "secs": 27,
    "reloads": 8
   },
   {
    "part": 2,
    "from": "2027-06-01",
    "to": "2028-06-01",
-   "secs": 76,
+   "secs": 77,
    "reloads": 12
   },
   {
    "part": 3,
    "from": "2028-06-01",
    "to": "2029-06-04",
-   "secs": 115,
+   "secs": 128,
    "reloads": 12
   },
   {
    "part": 4,
    "from": "2029-06-04",
-   "to": "2029-11-14",
-   "secs": 112,
+   "to": "2029-11-01",
+   "secs": 110,
    "reloads": 5
   },
   {
    "part": 5,
-   "from": "2029-11-14",
+   "from": "2029-11-01",
    "to": "2030-03-01",
-   "secs": 53,
+   "secs": 43,
    "reloads": 4,
    "done": true
   }
@@ -158,17 +158,17 @@
    "lead": 5
   },
   "abilities": {
-   "emotionalDepth": 97.1,
+   "emotionalDepth": 90,
    "presence": 67.8,
-   "listening": 66.9,
-   "imagination": 71.7,
-   "focus": 60,
-   "memory": 61.4,
-   "adaptability": 64.4,
+   "listening": 65.8,
+   "imagination": 92.3,
+   "focus": 59.5,
+   "memory": 61.7,
+   "adaptability": 55.9,
    "composure": 66,
    "vocal": 63.2,
    "physical": 69.6,
-   "discipline": 92.3,
+   "discipline": 90.1,
    "stamina": 35
   },
   "startAbilities": {
@@ -187,150 +187,8 @@
   },
   "replays": [
    {
-    "what": "Your Showcase Scene, New York",
-    "own": 60.81,
-    "atStart": 52.25,
-    "rose": [
-     "emotionalDepth",
-     "imagination",
-     "adaptability",
-     "composure",
-     "listening",
-     "presence",
-     "memory",
-     "vocal",
-     "physical",
-     "focus",
-     "discipline"
-    ],
-    "fell": [
-     "stamina"
-    ],
-    "fallsUndone": 61.07
-   },
-   {
-    "what": "Your Showcase Scene, revised",
-    "own": 58.95,
-    "atStart": 50.45,
-    "rose": [
-     "emotionalDepth",
-     "imagination",
-     "adaptability",
-     "composure",
-     "listening",
-     "presence",
-     "memory",
-     "vocal",
-     "physical",
-     "focus",
-     "discipline"
-    ],
-    "fell": [
-     "stamina"
-    ],
-    "fallsUndone": 59.74
-   },
-   {
-    "what": "Your Showcase Scene, revised",
-    "own": 60.88,
-    "atStart": 52.26,
-    "rose": [
-     "emotionalDepth",
-     "imagination",
-     "adaptability",
-     "composure",
-     "listening",
-     "presence",
-     "memory",
-     "vocal",
-     "physical",
-     "focus",
-     "discipline"
-    ],
-    "fell": [
-     "stamina"
-    ],
-    "fallsUndone": 61.14
-   },
-   {
-    "what": "Felix, Paper Moons: Audition",
-    "own": 66.46,
-    "atStart": 54.4,
-    "rose": [
-     "emotionalDepth",
-     "imagination",
-     "memory",
-     "vocal",
-     "physical",
-     "presence",
-     "composure"
-    ]
-   },
-   {
-    "what": "Robin, Last Bus To Eastview: Audition, Taped",
-    "own": 64.24,
-    "atStart": 54.61,
-    "rose": [
-     "emotionalDepth",
-     "imagination",
-     "listening",
-     "presence",
-     "memory",
-     "focus",
-     "composure",
-     "discipline",
-     "adaptability"
-    ]
-   },
-   {
-    "what": "Jess, Static On Route 9: Audition, Taped",
-    "own": 58.54,
-    "atStart": 48.8,
-    "rose": [
-     "emotionalDepth",
-     "imagination",
-     "listening",
-     "presence",
-     "memory",
-     "focus",
-     "composure",
-     "discipline",
-     "adaptability"
-    ]
-   },
-   {
-    "what": "Robin, Last Bus To Eastview: Audition, Taped",
-    "own": 68.13,
-    "atStart": 55.81,
-    "rose": [
-     "emotionalDepth",
-     "imagination",
-     "listening",
-     "presence",
-     "memory",
-     "focus",
-     "composure",
-     "discipline",
-     "adaptability"
-    ]
-   },
-   {
-    "what": "Felix, Paper Moons: Audition",
-    "own": 71.78,
-    "atStart": 55.49,
-    "rose": [
-     "emotionalDepth",
-     "imagination",
-     "memory",
-     "vocal",
-     "physical",
-     "presence",
-     "composure"
-    ]
-   },
-   {
     "what": "Tobias Marsh, The Winter Ledger: Audition",
-    "own": 64.2,
+    "own": 65.99,
     "atStart": 51.17,
     "rose": [
      "emotionalDepth",
@@ -343,9 +201,85 @@
     ]
    },
    {
+    "what": "An Oyster Tonger Of 1890, Tidewater: The Last Oyster Towns: Audition, Taped",
+    "own": 68.53,
+    "atStart": 56.6,
+    "rose": [
+     "emotionalDepth",
+     "imagination",
+     "listening",
+     "presence",
+     "memory",
+     "focus",
+     "composure",
+     "discipline",
+     "adaptability"
+    ]
+   },
+   {
+    "what": "Silas Quaid, Penwick Ledger: Audition",
+    "own": 69.18,
+    "atStart": 53.25,
+    "rose": [
+     "emotionalDepth",
+     "imagination",
+     "memory",
+     "vocal",
+     "physical",
+     "presence",
+     "composure"
+    ]
+   },
+   {
+    "what": "The Crow, The Kite And The Crow: Audition, Taped",
+    "own": 65.61,
+    "atStart": 53.3,
+    "rose": [
+     "emotionalDepth",
+     "imagination",
+     "listening",
+     "presence",
+     "memory",
+     "focus",
+     "composure",
+     "discipline",
+     "adaptability"
+    ]
+   },
+   {
+    "what": "The Apprentice Lamplighter, The Lamplighters: Audition",
+    "own": 64.84,
+    "atStart": 49.06,
+    "rose": [
+     "emotionalDepth",
+     "imagination",
+     "memory",
+     "vocal",
+     "physical",
+     "presence",
+     "composure"
+    ]
+   },
+   {
+    "what": "Pickett The Ferret, Lantern Row: Audition, Taped",
+    "own": 66.62,
+    "atStart": 54.32,
+    "rose": [
+     "emotionalDepth",
+     "imagination",
+     "listening",
+     "presence",
+     "memory",
+     "focus",
+     "composure",
+     "discipline",
+     "adaptability"
+    ]
+   },
+   {
     "what": "Jess, Static On Route 9: Audition, Taped",
-    "own": 67.27,
-    "atStart": 54.63,
+    "own": 65.79,
+    "atStart": 51.77,
     "rose": [
      "emotionalDepth",
      "imagination",
@@ -360,8 +294,8 @@
    },
    {
     "what": "Robin, Last Bus To Eastview: Audition, Taped",
-    "own": 70.03,
-    "atStart": 56.02,
+    "own": 68.18,
+    "atStart": 55.32,
     "rose": [
      "emotionalDepth",
      "imagination",
@@ -376,8 +310,54 @@
    },
    {
     "what": "Felix, Paper Moons: Audition",
-    "own": 74.48,
-    "atStart": 55.68,
+    "own": 72.91,
+    "atStart": 55.04,
+    "rose": [
+     "emotionalDepth",
+     "imagination",
+     "memory",
+     "vocal",
+     "physical",
+     "presence",
+     "composure"
+    ]
+   },
+   {
+    "what": "Harbormaster Brandt, The Salt Road: Audition, Taped",
+    "own": 67.29,
+    "atStart": 53.74,
+    "rose": [
+     "emotionalDepth",
+     "imagination",
+     "listening",
+     "presence",
+     "memory",
+     "focus",
+     "composure",
+     "discipline",
+     "adaptability"
+    ]
+   },
+   {
+    "what": "An Oyster Tonger Of 1890, Tidewater: The Last Oyster Towns: Audition, Taped",
+    "own": 70.12,
+    "atStart": 56.6,
+    "rose": [
+     "emotionalDepth",
+     "imagination",
+     "listening",
+     "presence",
+     "memory",
+     "focus",
+     "composure",
+     "discipline",
+     "adaptability"
+    ]
+   },
+   {
+    "what": "Callum Farrow, The Accounts On Lyle Street: Audition",
+    "own": 71.22,
+    "atStart": 53.21,
     "rose": [
      "emotionalDepth",
      "imagination",
@@ -435,8 +415,8 @@
    "speedUnknown": 1
   },
   "firstLimits": {
-   "preparation": 63,
-   "ability": 279,
+   "preparation": 75,
+   "ability": 289,
    "condition": 7,
    "technique": 15
   },
@@ -485,10 +465,10 @@
   "3 development": {
    "pass": true,
    "evidence": [
-    "abilities emotionalDepth 51.7→97.1, presence 66→67.8, listening 49.7→66.9, imagination 52→71.7, focus 50.4→60, memory 48.3→61.4, adaptability 50→64.4, composure 44.3→66, vocal 48→63.2, physical 55.1→69.6, discipline 57.5→92.3, stamina 50→35",
-    "last pieces at their own levels, then with what rose put back: 60.81/52.25 58.95/50.45 60.88/52.26 66.46/54.4 64.24/54.61 58.54/48.8 68.13/55.81 71.78/55.49 64.2/51.17 67.27/54.63 70.03/56.02 74.48/55.68",
-    "with what fell put back up: 60.81→61.07 (stamina) 58.95→59.74 (stamina) 60.88→61.14 (stamina)",
-    "first limits short of mastery: {\"preparation\":63,\"ability\":279,\"condition\":7,\"technique\":15}",
+    "abilities emotionalDepth 51.7→90, presence 66→67.8, listening 49.7→65.8, imagination 52→92.3, focus 50.4→59.5, memory 48.3→61.7, adaptability 50→55.9, composure 44.3→66, vocal 48→63.2, physical 55.1→69.6, discipline 57.5→90.1, stamina 50→35",
+    "last pieces at their own levels, then with what rose put back: 65.99/51.17 68.53/56.6 69.18/53.25 65.61/53.3 64.84/49.06 66.62/54.32 65.79/51.77 68.18/55.32 72.91/55.04 67.29/53.74 70.12/56.6 71.22/53.21",
+    "with what fell put back up: nothing fell",
+    "first limits short of mastery: {\"preparation\":75,\"ability\":289,\"condition\":7,\"technique\":15}",
     "genres known 7; satire speed 1.16, unmet absurdist 1",
     "fell: stamina 50→35 (stamina falls unworked: `settleTheBody`)"
    ],
@@ -497,11 +477,11 @@
   "4 advice": {
    "pass": true,
    "evidence": [
-    "183 weekly reads, 9 first targets: vocal, imagination, focus, physical, composure, adaptability, emotionalDepth, listening, screen",
+    "183 weekly reads, 9 first targets: vocal, imagination, focus, physical, composure, adaptability, voiceover, screen, emotionalDepth",
     "all full said in 0 weeks",
     "1 weeks the same words over a move under what's shown",
     "standing said in 40 weeks (noted where the player practices or tapes)",
-    "circumstances: a condition named among the five in 41 weeks (condition:injury, condition:stamina), a preparation in 87"
+    "circumstances: a condition named among the five in 41 weeks (condition:injury, condition:stamina), a preparation in 103"
    ],
    "fails": []
   },
@@ -510,7 +490,7 @@
    "evidence": [
     "daily changes of energy and stamina correlate at 0.04 over 1285 mornings",
     "health events 11: 2026-09-12 injury back 35 days | 2026-11-30 care emergency: The emergency room, Yale New Haven Hospital, York Street Campus Emergency Department; in hospital to 2026-11-30 | 2027-04-17 injury sprain 7 days | 2027-04-26 care emergency: The emergency room, Yale New Haven Hospital, York Street Campus Emergency Department; in hospital to 2027-04-26 | 2027-10-19 care visit: A doctor’s visit, Yale Health Center, Student Health | 2027-11-06 injury back 38 days | 2028-03-18 injury sprain 7 days | 2028-03-20 in hospital to 2028-03-20",
-    "called in sick 0 days; work ill or hurt 57 at 44.9, well 307 at 58.4; excused class days by term 1,0,0,1,1,0"
+    "called in sick 0 days; work ill or hurt 57 at 44.9, well 329 at 58.7; excused class days by term 1,0,0,1,1,0"
    ],
    "fails": []
   },
@@ -569,10 +549,15 @@
    "Ran Lines With Priya": 1,
    "Ran Lines With Nadia": 1,
    "Owen: A Different Reading": 1,
-   "Not Cast As Felix": 1
+   "Not Cast As The Apprentice Lamplighter": 2,
+   "Not Cast As Pickett The Ferret": 2,
+   "Not Cast As Harbormaster Brandt": 2,
+   "Not Cast As Felix": 1,
+   "Not Cast As An Oyster Tonger Of 1890": 1
   },
   "sameWordsTwice": [
-   "Not Cast As Robin | The producers cast another actor as Robin. Casting doesn’t give its reasons. The Opportunities tab shows what went into  ×2",
+   "Not Cast As Robin | The producers cast another actor as Robin. Casting doesn’t give its reasons. The Opportunities tab shows what went into  ×3",
+   "Not Cast As The Narrator | The film’s producers cast another actor as The Narrator. Casting doesn’t give its reasons. The Opportunities tab  ×2",
    "Not Cast As Jess | Brisbane Hall Casting cast another actor as Jess. Casting doesn’t give its reasons. The Opportunities tab shows what went ×2"
   ],
   "onceATerm": {
@@ -595,14 +580,14 @@
    "targets": {
     "none": 2,
     "vocal": 48,
-    "imagination": 26,
+    "imagination": 41,
     "focus": 27,
     "physical": 2,
-    "composure": 39,
-    "adaptability": 6,
-    "emotionalDepth": 19,
-    "listening": 1,
-    "screen": 13
+    "composure": 40,
+    "adaptability": 4,
+    "voiceover": 2,
+    "screen": 4,
+    "emotionalDepth": 13
    },
    "longRuns": [
     {
@@ -670,44 +655,44 @@
     },
     {
      "from": "2029-04-15",
-     "to": "2029-06-03",
+     "to": "2029-05-27",
      "target": "composure",
-     "weeks": 8,
-     "newWords": 6,
-     "moved": 6,
+     "weeks": 7,
+     "newWords": 5,
+     "moved": 5,
      "stripped": 2
     },
     {
-     "from": "2029-07-22",
+     "from": "2029-07-01",
      "to": "2029-09-09",
-     "target": "emotionalDepth",
-     "weeks": 8,
-     "newWords": 7,
-     "moved": 7,
+     "target": "imagination",
+     "weeks": 11,
+     "newWords": 10,
+     "moved": 10,
      "stripped": 6
     },
     {
-     "from": "2029-09-16",
-     "to": "2029-10-14",
-     "target": "screen",
-     "weeks": 5,
-     "newWords": 4,
-     "moved": 4,
-     "stripped": 3
+     "from": "2029-11-25",
+     "to": "2029-12-30",
+     "target": "emotionalDepth",
+     "weeks": 6,
+     "newWords": 5,
+     "moved": 5,
+     "stripped": 1
     },
     {
-     "from": "2030-01-06",
+     "from": "2030-01-13",
      "to": "2030-02-24",
-     "target": "screen",
-     "weeks": 8,
-     "newWords": 7,
-     "moved": 7,
-     "stripped": 4
+     "target": "emotionalDepth",
+     "weeks": 7,
+     "newWords": 6,
+     "moved": 6,
+     "stripped": 3
     }
    ],
-   "runs": 50,
+   "runs": 51,
    "staleRuns": 0,
-   "wordsOnlyChanges": 64
+   "wordsOnlyChanges": 58
   },
   "feedback": {
    "notes": 268,
@@ -737,15 +722,14 @@
    "sceneShowings": 74,
    "scenesAgain": 10,
    "exercises": {
-    "graded-exposure": 111,
-    "adjustments": 64,
-    "sense-memory": 486,
-    "concentration": 3,
-    "repetition": 9,
-    "self-tape-practice": 361,
-    "given-circumstances": 62
+    "graded-exposure": 114,
+    "copy-reading": 61,
+    "given-circumstances": 400,
+    "sense-memory": 352,
+    "self-tape-practice": 80,
+    "adjustments": 5
    },
-   "longestSameExercise": 146
+   "longestSameExercise": 164
   },
   "interpretations": 51
  },
@@ -1092,7 +1076,7 @@
    }
   },
   {
-   "at": "2029-11-19T14:30",
+   "at": "2029-11-19T14:05",
    "events": [
     "the flu to 2029-11-24"
    ],
@@ -4339,13 +4323,45 @@
    "Your MFA Is Conferred"
   ],
   [
+   "2029-05-23",
+   "A Self-Tape For The Crow"
+  ],
+  [
+   "2029-05-28",
+   "A Callback For The Crow"
+  ],
+  [
+   "2029-05-30",
+   "A Self-Tape For Harbormaster Brandt"
+  ],
+  [
+   "2029-05-30",
+   "An Audition For The Apprentice Lamplighter"
+  ],
+  [
    "2029-05-31",
    "OPT Approved",
    "You may work in the United States from May 31, 2029 to May 31, 2030. Every day from the first day of a job to its last counts as a day with work, and every other day as one without, the days before a job you’ve booked be"
   ],
   [
+   "2029-06-03",
+   "Not Cast As The Crow"
+  ],
+  [
+   "2029-06-05",
+   "Not Cast As The Apprentice Lamplighter"
+  ],
+  [
+   "2029-06-06",
+   "Not Cast As Harbormaster Brandt"
+  ],
+  [
    "2029-06-14",
    "Happy Birthday: 27"
+  ],
+  [
+   "2029-06-20",
+   "A Self-Tape For Pickett The Ferret"
   ],
   [
    "2029-06-21",
@@ -4356,8 +4372,20 @@
    "No Answer From Thomas Ashgrove’s Office"
   ],
   [
+   "2029-06-25",
+   "Not Cast As Pickett The Ferret"
+  ],
+  [
    "2029-06-27",
    "An Audition For Felix"
+  ],
+  [
+   "2029-06-27",
+   "A Self-Tape For Miles Arden"
+  ],
+  [
+   "2029-07-02",
+   "Not Cast As Miles Arden"
   ],
   [
    "2029-07-05",
@@ -4369,12 +4397,20 @@
   ],
   [
    "2029-07-18",
+   "A Self-Tape For The Narrator"
+  ],
+  [
+   "2029-07-18",
    "Not Cast As Robin"
   ],
   [
    "2029-07-19",
    "Connecticut DRS Made Your Return",
    "Failure To File Notice, on your 2028 Connecticut return: you didn’t file, so DRS worked out what you owe from what was reported. File your own within 60 days, or it’s assessed."
+  ],
+  [
+   "2029-07-25",
+   "Not Cast As The Narrator"
   ],
   [
    "2029-08-01",
@@ -4401,8 +4437,16 @@
    "The marketplace is only for citizens and people lawfully present, and you’re out of status."
   ],
   [
+   "2029-09-05",
+   "An Audition For The Apprentice Lamplighter"
+  ],
+  [
    "2029-09-12",
    "A Self-Tape For Jess"
+  ],
+  [
+   "2029-09-12",
+   "A Self-Tape For An Oyster Tonger Of 1890"
   ],
   [
    "2029-09-17",
@@ -4415,7 +4459,15 @@
   ],
   [
    "2029-09-19",
+   "A Self-Tape For Pickett The Ferret"
+  ],
+  [
+   "2029-09-19",
    "Not Cast As Jess"
+  ],
+  [
+   "2029-09-26",
+   "A Self-Tape For Harbormaster Brandt"
   ],
   [
    "2029-10-11",
@@ -4438,8 +4490,36 @@
    "An Audition For Felix"
   ],
   [
+   "2029-10-31",
+   "A Self-Tape For The Narrator"
+  ],
+  [
+   "2029-10-31",
+   "An Audition For Lionel Thibodeaux"
+  ],
+  [
+   "2029-10-31",
+   "Not Cast As Robin"
+  ],
+  [
    "2029-11-01",
    "Actors’ Equity Association: $88.00 Paid"
+  ],
+  [
+   "2029-11-07",
+   "A Self-Tape For Kwame Ibarra"
+  ],
+  [
+   "2029-11-07",
+   "Not Cast As The Narrator"
+  ],
+  [
+   "2029-11-08",
+   "Not Cast As Lionel Thibodeaux"
+  ],
+  [
+   "2029-11-14",
+   "Not Cast As Kwame Ibarra"
   ],
   [
    "2029-11-16",
@@ -4461,6 +4541,38 @@
   [
    "2029-11-27",
    "Not Cast As Tobias Marsh"
+  ],
+  [
+   "2029-11-28",
+   "A Self-Tape For An Oyster Tonger Of 1890"
+  ],
+  [
+   "2029-11-28",
+   "An Audition For Silas Quaid"
+  ],
+  [
+   "2029-12-05",
+   "A Self-Tape For The Crow"
+  ],
+  [
+   "2029-12-05",
+   "An Audition For The Apprentice Lamplighter"
+  ],
+  [
+   "2029-12-05",
+   "Not Cast As An Oyster Tonger Of 1890"
+  ],
+  [
+   "2029-12-06",
+   "Not Cast As Silas Quaid"
+  ],
+  [
+   "2029-12-10",
+   "Not Cast As The Crow"
+  ],
+  [
+   "2029-12-12",
+   "A Self-Tape For Pickett The Ferret"
   ],
   [
    "2029-12-16",
@@ -4489,6 +4601,22 @@
   [
    "2030-01-09",
    "Not Cast As Robin"
+  ],
+  [
+   "2030-01-16",
+   "A Self-Tape For Harbormaster Brandt"
+  ],
+  [
+   "2030-02-06",
+   "A Self-Tape For An Oyster Tonger Of 1890"
+  ],
+  [
+   "2030-02-06",
+   "An Audition For Callum Farrow"
+  ],
+  [
+   "2030-02-12",
+   "Not Cast As Callum Farrow"
   ],
   [
    "2030-02-27",
@@ -7754,14 +7882,15 @@
   "2029 spring performance: 3 @ 54.7",
   "2029 spring voice: 12 @ 67.7",
   "2029 spring movement: 9 @ 66.2",
-  "2029 spring audition: 6 @ 58.9",
+  "2029 spring audition: 7 @ 58.5",
   "2029 spring camera: 8 @ 61.6",
   "2029 spring song: 3 @ 68.9",
   "2029 spring scene: 6 @ 59.9",
-  "2029 fall audition: 3 @ 67.6",
-  "2029 fall tape: 3 @ 63.6",
-  "2030 spring tape: 2 @ 68.2",
-  "2030 spring audition: 1 @ 74.4"
+  "2029 spring tape: 5 @ 58.4",
+  "2029 fall audition: 7 @ 66",
+  "2029 fall tape: 12 @ 65.1",
+  "2030 spring tape: 4 @ 68.3",
+  "2030 spring audition: 2 @ 71.9"
  ],
  "advice": [
   [
@@ -8911,322 +9040,322 @@
   [
    "2029-05-27",
    "composure",
-   55.82,
-   0.96,
+   55.4,
+   0.9,
    1,
-   "composure 0.96 emotionalDepth 0.54 adaptability 0.48 focus 0.47 listening 0.44"
+   "composure 0.9 prep:genre emotionalDepth 0.52 imagination 0.46 adaptability 0.45"
   ],
   [
    "2029-06-03",
-   "composure",
-   58.48,
-   0.46,
+   "voiceover",
+   56.67,
+   0.58,
    1,
-   "composure 0.46 adaptability 0.43 emotionalDepth 0.43 listening 0.4 focus 0.36"
+   "prep:genre voiceover 0.58 composure 0.57 imagination 0.5 emotionalDepth 0.47"
   ],
   [
    "2029-06-10",
-   "emotionalDepth",
-   68.27,
-   0.41,
+   "imagination",
+   67.4,
+   0.49,
    1,
-   "emotionalDepth 0.41 composure 0.41 adaptability 0.4 listening 0.38 focus 0.36"
+   "prep:genre imagination 0.49 voiceover 0.49 composure 0.47 emotionalDepth 0.45"
   ],
   [
    "2029-06-17",
-   "emotionalDepth",
-   69.97,
-   0.38,
+   "imagination",
+   68.96,
+   0.46,
    1,
-   "emotionalDepth 0.38 adaptability 0.38 composure 0.37 listening 0.36 focus 0.34"
+   "prep:genre imagination 0.46 voiceover 0.46 emotionalDepth 0.43 composure 0.42"
   ],
   [
    "2029-06-24",
-   "emotionalDepth",
-   71.56,
-   0.37,
+   "voiceover",
+   61.14,
+   0.48,
    1,
-   "emotionalDepth 0.37 composure 0.37 adaptability 0.36 focus 0.35 listening 0.34"
+   "prep:genre voiceover 0.48 imagination 0.46 emotionalDepth 0.41 composure 0.35"
   ],
   [
    "2029-07-01",
-   "adaptability",
-   59.37,
-   0.35,
+   "imagination",
+   70.14,
+   0.48,
    1,
-   "adaptability 0.35 emotionalDepth 0.34 focus 0.34 listening 0.33 composure 0.33"
+   "prep:genre imagination 0.48 voiceover 0.43 emotionalDepth 0.4 composure 0.32"
   ],
   [
    "2029-07-08",
-   "adaptability",
-   60.51,
-   0.39,
+   "imagination",
+   71.92,
+   0.42,
    1,
-   "adaptability 0.39 composure 0.38 listening 0.37 emotionalDepth 0.33 focus 0.29"
+   "prep:genre imagination 0.42 composure 0.42 emotionalDepth 0.41 voiceover 0.36"
   ],
   [
    "2029-07-15",
-   "listening",
-   66.38,
-   0.35,
+   "imagination",
+   73.37,
+   0.39,
    1,
-   "listening 0.35 composure 0.35 adaptability 0.35 emotionalDepth 0.33 focus 0.27"
+   "prep:genre imagination 0.39 emotionalDepth 0.39 composure 0.38 screen 0.33"
   ],
   [
    "2029-07-22",
-   "emotionalDepth",
-   73.38,
-   0.32,
+   "imagination",
+   74.74,
+   0.4,
    1,
-   "emotionalDepth 0.32 adaptability 0.32 composure 0.32 listening 0.3 focus 0.27"
+   "prep:genre imagination 0.4 emotionalDepth 0.39 voiceover 0.38 composure 0.35"
   ],
   [
    "2029-07-29",
-   "emotionalDepth",
-   74.9,
-   0.31,
+   "imagination",
+   76.31,
+   0.39,
    1,
-   "emotionalDepth 0.31 adaptability 0.31 composure 0.31 listening 0.3 focus 0.3"
+   "prep:genre imagination 0.39 emotionalDepth 0.38 voiceover 0.38 composure 0.35"
   ],
   [
    "2029-08-05",
-   "emotionalDepth",
-   76.46,
-   0.31,
+   "imagination",
+   77.75,
+   0.38,
    1,
-   "emotionalDepth 0.31 adaptability 0.31 composure 0.31 focus 0.3 listening 0.3"
+   "prep:genre imagination 0.38 emotionalDepth 0.38 voiceover 0.37 composure 0.35"
   ],
   [
    "2029-08-12",
-   "emotionalDepth",
-   78.02,
-   0.31,
+   "imagination",
+   79.07,
+   0.37,
    1,
-   "emotionalDepth 0.31 focus 0.31 composure 0.31 adaptability 0.31 listening 0.3"
+   "prep:genre imagination 0.37 voiceover 0.37 emotionalDepth 0.37 composure 0.36"
   ],
   [
    "2029-08-19",
-   "emotionalDepth",
-   79.6,
-   0.31,
+   "imagination",
+   80.61,
+   0.37,
    1,
-   "emotionalDepth 0.31 focus 0.31 adaptability 0.31 composure 0.31 listening 0.3"
+   "prep:genre imagination 0.37 voiceover 0.37 emotionalDepth 0.37 composure 0.36"
   ],
   [
    "2029-08-26",
-   "emotionalDepth",
-   81.18,
-   0.31,
+   "imagination",
+   82.11,
+   0.36,
    1,
-   "emotionalDepth 0.31 adaptability 0.31 focus 0.31 composure 0.3 listening 0.3"
+   "prep:genre imagination 0.36 emotionalDepth 0.36 composure 0.36 voiceover 0.36"
   ],
   [
    "2029-09-02",
-   "emotionalDepth",
-   82.72,
-   0.31,
+   "imagination",
+   83.47,
+   0.36,
    1,
-   "emotionalDepth 0.31 focus 0.3 composure 0.3 adaptability 0.3 listening 0.3"
+   "prep:genre imagination 0.36 emotionalDepth 0.36 composure 0.35 voiceover 0.35"
   ],
   [
    "2029-09-09",
-   "emotionalDepth",
-   84.31,
-   0.31,
+   "imagination",
+   84.73,
+   0.35,
    1,
-   "emotionalDepth 0.31 focus 0.3 adaptability 0.3 composure 0.3 listening 0.3"
+   "prep:genre imagination 0.35 emotionalDepth 0.35 composure 0.35 voiceover 0.35"
   ],
   [
    "2029-09-16",
    "screen",
-   55.66,
-   0.42,
+   55.25,
+   0.43,
    1,
-   "prep:genre screen 0.42 imagination 0.32 emotionalDepth 0.31 composure 0.3"
+   "prep:genre screen 0.43 emotionalDepth 0.36 imagination 0.35 composure 0.32"
   ],
   [
    "2029-09-23",
    "screen",
-   58.4,
-   0.4,
+   57.62,
+   0.37,
    1,
-   "prep:genre screen 0.4 imagination 0.32 emotionalDepth 0.31 composure 0.31"
+   "prep:genre screen 0.37 imagination 0.36 emotionalDepth 0.35 composure 0.3"
   ],
   [
    "2029-09-30",
-   "screen",
-   60.97,
+   "imagination",
+   85.6,
    0.38,
    1,
-   "prep:genre screen 0.38 imagination 0.32 composure 0.31 emotionalDepth 0.31"
+   "prep:genre imagination 0.38 screen 0.38 emotionalDepth 0.34 voiceover 0.32"
   ],
   [
    "2029-10-07",
-   "screen",
-   63.39,
-   0.36,
+   "imagination",
+   87.19,
+   0.38,
    1,
-   "prep:genre screen 0.36 imagination 0.32 composure 0.31 emotionalDepth 0.31"
+   "prep:genre imagination 0.38 screen 0.38 emotionalDepth 0.34 composure 0.32"
   ],
   [
    "2029-10-14",
-   "screen",
-   65.65,
-   0.33,
+   "imagination",
+   88.78,
+   0.38,
    1,
-   "prep:genre screen 0.33 imagination 0.32 composure 0.31 emotionalDepth 0.31"
+   "prep:genre imagination 0.38 screen 0.38 composure 0.35 emotionalDepth 0.35"
   ],
   [
    "2029-10-21",
-   "emotionalDepth",
-   85.42,
-   0.31,
+   "screen",
+   59.63,
+   0.36,
    1,
-   "prep:genre emotionalDepth 0.31 imagination 0.31 screen 0.31 composure 0.31"
+   "prep:genre screen 0.36 imagination 0.36 composure 0.36 emotionalDepth 0.35"
   ],
   [
    "2029-10-28",
    "imagination",
-   67.31,
-   0.32,
+   90.74,
+   0.35,
    1,
-   "prep:genre imagination 0.32 screen 0.32 emotionalDepth 0.31 listening 0.29"
+   "prep:genre imagination 0.35 adaptability 0.35 screen 0.35 listening 0.34"
   ],
   [
    "2029-11-04",
    "imagination",
-   68.67,
-   0.31,
+   91.62,
+   0.37,
    1,
-   "prep:genre imagination 0.31 screen 0.31 emotionalDepth 0.31 listening 0.3"
+   "prep:genre imagination 0.37 voiceover 0.35 emotionalDepth 0.34 listening 0.33"
   ],
   [
    "2029-11-11",
-   "emotionalDepth",
-   86.9,
-   0.32,
+   "composure",
+   62.43,
+   0.44,
    1,
-   "prep:genre emotionalDepth 0.32 composure 0.32 imagination 0.31 screen 0.31"
+   "prep:genre composure 0.44 emotionalDepth 0.36 screen 0.35 imagination 0.33"
   ],
   [
    "2029-11-18",
-   "emotionalDepth",
-   88.51,
-   0.32,
+   "composure",
+   64.77,
+   0.36,
    1,
-   "prep:genre emotionalDepth 0.32 composure 0.32 imagination 0.31 screen 0.31"
+   "prep:genre composure 0.36 emotionalDepth 0.36 screen 0.35 imagination 0.33"
   ],
   [
    "2029-11-25",
    "emotionalDepth",
-   89.74,
-   0.33,
+   71.7,
+   0.35,
    1,
-   "prep:genre emotionalDepth 0.33 composure 0.32 imagination 0.31 screen 0.31"
+   "prep:genre emotionalDepth 0.35 screen 0.35 composure 0.34 imagination 0.33"
   ],
   [
    "2029-12-02",
-   "imagination",
-   70.51,
-   0.33,
+   "emotionalDepth",
+   72.82,
+   0.34,
    1,
-   "prep:genre imagination 0.33 emotionalDepth 0.33 composure 0.32 comedy 0.31"
+   "prep:genre emotionalDepth 0.34 imagination 0.34 adaptability 0.32 composure 0.32"
   ],
   [
    "2029-12-09",
    "emotionalDepth",
-   91.54,
-   0.33,
+   73.49,
+   0.34,
    1,
-   "prep:genre emotionalDepth 0.33 imagination 0.33 composure 0.32 comedy 0.31"
+   "prep:genre emotionalDepth 0.34 composure 0.32 imagination 0.31 adaptability 0.3"
   ],
   [
    "2029-12-16",
    "emotionalDepth",
-   93.15,
+   74.9,
    0.33,
    1,
-   "prep:genre emotionalDepth 0.33 imagination 0.33 composure 0.32 comedy 0.31"
+   "prep:genre emotionalDepth 0.33 composure 0.3 imagination 0.29 adaptability 0.25"
   ],
   [
    "2029-12-23",
    "emotionalDepth",
-   94.78,
+   76.52,
    0.33,
    1,
-   "prep:genre emotionalDepth 0.33 imagination 0.33 composure 0.32 comedy 0.31"
+   "prep:genre emotionalDepth 0.33 composure 0.3 imagination 0.29 adaptability 0.25"
   ],
   [
    "2029-12-30",
    "emotionalDepth",
-   96.42,
+   78.16,
    0.33,
    1,
-   "prep:genre emotionalDepth 0.33 imagination 0.33 composure 0.32 comedy 0.31"
+   "prep:genre emotionalDepth 0.33 composure 0.3 imagination 0.29 adaptability 0.25"
   ],
   [
    "2030-01-06",
    "screen",
-   69.43,
-   0.43,
+   62.39,
+   0.33,
    1,
-   "prep:genre screen 0.43 comedy 0.38 imagination 0.38 emotionalDepth 0.32"
+   "prep:genre screen 0.33 emotionalDepth 0.32 adaptability 0.31 listening 0.31"
   ],
   [
    "2030-01-13",
-   "screen",
-   71.11,
-   0.41,
+   "emotionalDepth",
+   80,
+   0.32,
    1,
-   "prep:genre screen 0.41 comedy 0.38 imagination 0.38 emotionalDepth 0.33"
+   "prep:genre emotionalDepth 0.32 screen 0.32 adaptability 0.31 listening 0.31"
   ],
   [
    "2030-01-20",
-   "screen",
-   72.94,
-   0.37,
+   "emotionalDepth",
+   81.37,
+   0.33,
    1,
-   "prep:genre screen 0.37 imagination 0.37 composure 0.35 emotionalDepth 0.34"
+   "prep:genre emotionalDepth 0.33 screen 0.32 imagination 0.31 composure 0.3"
   ],
   [
    "2030-01-27",
-   "screen",
-   74.52,
-   0.36,
+   "emotionalDepth",
+   83.01,
+   0.33,
    1,
-   "prep:genre screen 0.36 imagination 0.36 composure 0.35 emotionalDepth 0.34"
+   "prep:genre emotionalDepth 0.33 screen 0.33 imagination 0.31 composure 0.3"
   ],
   [
    "2030-02-03",
-   "screen",
-   76.15,
-   0.36,
+   "emotionalDepth",
+   84.65,
+   0.33,
    1,
-   "prep:genre screen 0.36 imagination 0.35 composure 0.35 emotionalDepth 0.34"
+   "prep:genre emotionalDepth 0.33 screen 0.33 imagination 0.31 composure 0.3"
   ],
   [
    "2030-02-10",
-   "screen",
-   77.8,
-   0.36,
+   "emotionalDepth",
+   85.76,
+   0.32,
    1,
-   "prep:genre screen 0.36 imagination 0.36 composure 0.35 emotionalDepth 0.34"
+   "prep:genre emotionalDepth 0.32 adaptability 0.32 imagination 0.32 listening 0.32"
   ],
   [
    "2030-02-17",
-   "screen",
-   79.46,
-   0.36,
+   "emotionalDepth",
+   87.37,
+   0.33,
    1,
-   "prep:genre screen 0.36 imagination 0.36 composure 0.35 emotionalDepth 0.34"
+   "prep:genre emotionalDepth 0.33 composure 0.33 imagination 0.3 adaptability 0.27"
   ],
   [
    "2030-02-24",
-   "screen",
-   81.11,
-   0.36,
+   "emotionalDepth",
+   89.02,
+   0.33,
    1,
-   "prep:genre screen 0.36 imagination 0.36 composure 0.35 emotionalDepth 0.34"
+   "prep:genre emotionalDepth 0.33 composure 0.33 imagination 0.3 adaptability 0.27"
   ]
  ],
  "monthly": [
@@ -10502,10 +10631,10 @@
     "focus": 59.5,
     "memory": 61.3,
     "adaptability": 54.9,
-    "composure": 57.7,
+    "composure": 56.6,
     "vocal": 63.2,
     "physical": 69.6,
-    "discipline": 62.2,
+    "discipline": 61.8,
     "stamina": 35
    },
    "genresKnown": 7,
@@ -10533,17 +10662,17 @@
    "standing": "graduated",
    "termsBegun": 6,
    "abilities": {
-    "emotionalDepth": 72.8,
+    "emotionalDepth": 67.1,
     "presence": 67.8,
     "listening": 65.8,
-    "imagination": 65.6,
-    "focus": 59.6,
+    "imagination": 70.1,
+    "focus": 59.5,
     "memory": 61.3,
-    "adaptability": 59.4,
-    "composure": 60.6,
+    "adaptability": 54.9,
+    "composure": 56.6,
     "vocal": 63.2,
     "physical": 69.6,
-    "discipline": 66.6,
+    "discipline": 65.9,
     "stamina": 35
    },
    "genresKnown": 7,
@@ -10571,17 +10700,17 @@
    "standing": "graduated",
    "termsBegun": 6,
    "abilities": {
-    "emotionalDepth": 75.6,
+    "emotionalDepth": 67.3,
     "presence": 67.8,
-    "listening": 66.6,
-    "imagination": 65.6,
-    "focus": 59.8,
-    "memory": 61.3,
-    "adaptability": 64,
-    "composure": 64.9,
+    "listening": 65.8,
+    "imagination": 77,
+    "focus": 59.5,
+    "memory": 61.4,
+    "adaptability": 54.9,
+    "composure": 57,
     "vocal": 63.2,
     "physical": 69.6,
-    "discipline": 70.5,
+    "discipline": 69.8,
     "stamina": 35
    },
    "genresKnown": 7,
@@ -10609,17 +10738,17 @@
    "standing": "graduated",
    "termsBegun": 6,
    "abilities": {
-    "emotionalDepth": 82.5,
+    "emotionalDepth": 69.5,
     "presence": 67.8,
-    "listening": 66.6,
-    "imagination": 65.6,
-    "focus": 59.8,
-    "memory": 61.3,
-    "adaptability": 64.2,
-    "composure": 64.9,
+    "listening": 65.8,
+    "imagination": 83.3,
+    "focus": 59.5,
+    "memory": 61.4,
+    "adaptability": 54.9,
+    "composure": 58.6,
     "vocal": 63.2,
     "physical": 69.6,
-    "discipline": 74.1,
+    "discipline": 73.5,
     "stamina": 35
    },
    "genresKnown": 7,
@@ -10647,17 +10776,17 @@
    "standing": "graduated",
    "termsBegun": 6,
    "abilities": {
-    "emotionalDepth": 85,
+    "emotionalDepth": 70.3,
     "presence": 67.8,
-    "listening": 66.6,
-    "imagination": 65.6,
-    "focus": 60,
-    "memory": 61.3,
-    "adaptability": 64.4,
-    "composure": 64.9,
+    "listening": 65.8,
+    "imagination": 85.8,
+    "focus": 59.5,
+    "memory": 61.4,
+    "adaptability": 54.9,
+    "composure": 59.8,
     "vocal": 63.2,
     "physical": 69.6,
-    "discipline": 77.2,
+    "discipline": 76.2,
     "stamina": 35
    },
    "genresKnown": 7,
@@ -10685,17 +10814,17 @@
    "standing": "graduated",
    "termsBegun": 6,
    "abilities": {
-    "emotionalDepth": 86.1,
+    "emotionalDepth": 70.3,
     "presence": 67.8,
-    "listening": 66.6,
-    "imagination": 68.1,
-    "focus": 60,
-    "memory": 61.3,
-    "adaptability": 64.4,
-    "composure": 65.1,
+    "listening": 65.8,
+    "imagination": 91.4,
+    "focus": 59.5,
+    "memory": 61.5,
+    "adaptability": 55.5,
+    "composure": 60.7,
     "vocal": 63.2,
     "physical": 69.6,
-    "discipline": 80.3,
+    "discipline": 79.2,
     "stamina": 35
    },
    "genresKnown": 7,
@@ -10723,17 +10852,17 @@
    "standing": "graduated",
    "termsBegun": 6,
    "abilities": {
-    "emotionalDepth": 90,
+    "emotionalDepth": 72.6,
     "presence": 67.8,
-    "listening": 66.9,
-    "imagination": 70.2,
-    "focus": 60,
-    "memory": 61.3,
-    "adaptability": 64.4,
-    "composure": 66,
+    "listening": 65.8,
+    "imagination": 92,
+    "focus": 59.5,
+    "memory": 61.6,
+    "adaptability": 55.5,
+    "composure": 65.1,
     "vocal": 63.2,
     "physical": 69.6,
-    "discipline": 83.3,
+    "discipline": 81.7,
     "stamina": 35
    },
    "genresKnown": 7,
@@ -10761,17 +10890,17 @@
    "standing": "graduated",
    "termsBegun": 6,
    "abilities": {
-    "emotionalDepth": 96.9,
+    "emotionalDepth": 78.6,
     "presence": 67.8,
-    "listening": 66.9,
-    "imagination": 70.7,
-    "focus": 60,
-    "memory": 61.3,
-    "adaptability": 64.4,
-    "composure": 66,
+    "listening": 65.8,
+    "imagination": 92.3,
+    "focus": 59.5,
+    "memory": 61.6,
+    "adaptability": 55.5,
+    "composure": 65.9,
     "vocal": 63.2,
     "physical": 69.6,
-    "discipline": 86.6,
+    "discipline": 84.7,
     "stamina": 35
    },
    "genresKnown": 7,
@@ -10799,17 +10928,17 @@
    "standing": "graduated",
    "termsBegun": 6,
    "abilities": {
-    "emotionalDepth": 97.1,
+    "emotionalDepth": 84.2,
     "presence": 67.8,
-    "listening": 66.9,
-    "imagination": 71.7,
-    "focus": 60,
-    "memory": 61.4,
-    "adaptability": 64.4,
-    "composure": 66,
+    "listening": 65.8,
+    "imagination": 92.3,
+    "focus": 59.5,
+    "memory": 61.7,
+    "adaptability": 55.5,
+    "composure": 65.9,
     "vocal": 63.2,
     "physical": 69.6,
-    "discipline": 89.5,
+    "discipline": 87.5,
     "stamina": 35
    },
    "genresKnown": 7,
@@ -10835,55 +10964,54 @@
  ],
  "practice": {
   "2029-05": {
-   "graded-exposure": 44
+   "graded-exposure": 32
   },
   "2029-06": {
-   "graded-exposure": 20,
-   "adjustments": 27,
-   "sense-memory": 68,
-   "concentration": 1
+   "copy-reading": 57,
+   "given-circumstances": 51
   },
   "2029-07": {
-   "adjustments": 35,
-   "concentration": 1,
-   "sense-memory": 42,
-   "graded-exposure": 35,
-   "repetition": 7
+   "given-circumstances": 113,
+   "graded-exposure": 2,
+   "sense-memory": 1
   },
   "2029-08": {
-   "sense-memory": 123,
-   "adjustments": 1
+   "given-circumstances": 95,
+   "sense-memory": 17,
+   "copy-reading": 4,
+   "graded-exposure": 8
   },
   "2029-09": {
-   "sense-memory": 42,
-   "adjustments": 1,
-   "concentration": 1,
-   "self-tape-practice": 72
+   "given-circumstances": 39,
+   "graded-exposure": 7,
+   "sense-memory": 9,
+   "self-tape-practice": 45
   },
   "2029-10": {
-   "self-tape-practice": 74,
-   "given-circumstances": 22,
-   "graded-exposure": 1,
-   "sense-memory": 19
+   "given-circumstances": 89,
+   "self-tape-practice": 19,
+   "graded-exposure": 5,
+   "adjustments": 3
   },
   "2029-11": {
-   "self-tape-practice": 7,
-   "given-circumstances": 27,
-   "repetition": 2,
-   "graded-exposure": 11,
-   "sense-memory": 69
+   "given-circumstances": 10,
+   "graded-exposure": 50,
+   "sense-memory": 34,
+   "self-tape-practice": 2
   },
   "2029-12": {
-   "given-circumstances": 5,
-   "sense-memory": 119
+   "sense-memory": 100,
+   "given-circumstances": 3,
+   "graded-exposure": 9
   },
   "2030-01": {
-   "sense-memory": 4,
-   "self-tape-practice": 100,
-   "given-circumstances": 8
+   "sense-memory": 94,
+   "self-tape-practice": 14
   },
   "2030-02": {
-   "self-tape-practice": 108
+   "sense-memory": 97,
+   "adjustments": 2,
+   "graded-exposure": 1
   }
  },
  "commands": {
@@ -10904,18 +11032,19 @@
   "life.look_after": 3,
   "documents.apply_opt": 1,
   "pro.headshots": 1,
-  "pro.update_resume": 3,
+  "pro.update_resume": 4,
   "pro.cut_reel": 1,
   "life.sleep refused": 6,
   "pro.agent_check": 1,
   "pro.send_materials": 1,
-  "practice.exercise": 1096,
-  "pro.submit": 10,
-  "pro.prepare": 188,
-  "pro.tape_audition": 5,
+  "pro.submit": 31,
+  "practice.exercise": 1012,
+  "pro.prepare": 571,
+  "pro.tape_audition": 21,
   "health.enroll": 1,
   "pro.decline_offer": 2,
-  "world.take_decision_action": 2
+  "world.take_decision_action": 2,
+  "pro.move_audition": 1
  },
  "b20": {
   "life": "b20-5",
@@ -10956,7 +11085,7 @@
     "at": "2026-12-11T22:20",
     "what": "term 0 reviewed: good",
     "same": true,
-    "bytes": 475317,
+    "bytes": 485658,
     "credit": {
      "at": "2026-12-11T22:20",
      "what": "term 0 reviewed: good",
@@ -10976,7 +11105,7 @@
     "at": "2027-01-01T12:20",
     "what": "the end of 2026",
     "same": true,
-    "bytes": 492767,
+    "bytes": 503307,
     "credit": {
      "at": "2027-01-01T12:20",
      "what": "the end of 2026",
@@ -10996,7 +11125,7 @@
     "at": "2027-04-23T21:25",
     "what": "term 1 reviewed: good",
     "same": true,
-    "bytes": 916004,
+    "bytes": 932394,
     "credit": {
      "at": "2027-04-23T21:25",
      "what": "term 1 reviewed: good",
@@ -11016,7 +11145,7 @@
     "at": "2027-12-10T22:25",
     "what": "term 2 reviewed: good",
     "same": true,
-    "bytes": 1356781,
+    "bytes": 1381739,
     "credit": {
      "at": "2027-12-10T22:25",
      "what": "term 2 reviewed: good",
@@ -11036,7 +11165,7 @@
     "at": "2028-01-01T12:25",
     "what": "the end of 2027",
     "same": true,
-    "bytes": 1347366,
+    "bytes": 1370577,
     "credit": {
      "at": "2028-01-01T12:25",
      "what": "the end of 2027",
@@ -11056,7 +11185,7 @@
     "at": "2028-04-28T21:25",
     "what": "term 3 reviewed: good",
     "same": true,
-    "bytes": 1540178,
+    "bytes": 1564778,
     "credit": {
      "at": "2028-04-28T21:25",
      "what": "term 3 reviewed: good",
@@ -11076,7 +11205,7 @@
     "at": "2028-12-08T22:05",
     "what": "term 4 reviewed: good",
     "same": true,
-    "bytes": 1680898,
+    "bytes": 1705173,
     "credit": {
      "at": "2028-12-08T22:05",
      "what": "term 4 reviewed: good",
@@ -11096,7 +11225,7 @@
     "at": "2029-01-01T12:05",
     "what": "the end of 2028",
     "same": true,
-    "bytes": 1677215,
+    "bytes": 1701369,
     "credit": {
      "at": "2029-01-01T12:05",
      "what": "the end of 2028",
@@ -11116,7 +11245,7 @@
     "at": "2029-04-27T21:20",
     "what": "term 5 reviewed: good",
     "same": true,
-    "bytes": 1765990,
+    "bytes": 1789629,
     "credit": {
      "at": "2029-04-27T21:20",
      "what": "term 5 reviewed: good",
@@ -11136,7 +11265,7 @@
     "at": "2029-05-21T14:40",
     "what": "the School’s end: graduated",
     "same": true,
-    "bytes": 1771216,
+    "bytes": 1791978,
     "credit": {
      "at": "2029-05-21T14:40",
      "what": "the School’s end: graduated",
@@ -11153,12 +11282,12 @@
     }
    },
    {
-    "at": "2030-01-01T12:30",
+    "at": "2030-01-01T12:45",
     "what": "the end of 2029",
     "same": true,
-    "bytes": 1781283,
+    "bytes": 1833148,
     "credit": {
-     "at": "2030-01-01T12:30",
+     "at": "2030-01-01T12:45",
      "what": "the end of 2029",
      "cards": [
       {
@@ -11329,7 +11458,7 @@
     "bank": 79161.97
    },
    {
-    "at": "2030-01-01T12:30",
+    "at": "2030-01-01T12:45",
     "what": "the end of 2029",
     "cards": [
      {
@@ -11343,7 +11472,7 @@
     "bank": 66120.34
    },
    {
-    "at": "2030-03-01T12:45",
+    "at": "2030-03-01T12:00",
     "what": "the journey’s end",
     "cards": [
      {
@@ -11364,8 +11493,8 @@
     "days": 14,
     "same": true,
     "bytes": [
-     209702,
-     209702
+     214494,
+     214494
     ],
     "straight": {
      "now": "2026-10-01T22:55",
@@ -11396,7 +11525,11 @@
      ],
      "opportunities": [
       "route-nine lapsed",
-      "eastview lapsed"
+      "tidewater-reenactment lapsed",
+      "s1.1hpc0.2026-09-14.new-york.student-film.0.0 lapsed",
+      "eastview lapsed",
+      "tidewater-narrator lapsed",
+      "s1.1hpc0.2026-09-21.los-angeles.ultra-low-budget.0.0 lapsed"
      ],
      "engagements": [],
      "work": [
@@ -11440,7 +11573,11 @@
      ],
      "opportunities": [
       "route-nine lapsed",
-      "eastview lapsed"
+      "tidewater-reenactment lapsed",
+      "s1.1hpc0.2026-09-14.new-york.student-film.0.0 lapsed",
+      "eastview lapsed",
+      "tidewater-narrator lapsed",
+      "s1.1hpc0.2026-09-21.los-angeles.ultra-low-budget.0.0 lapsed"
      ],
      "engagements": [],
      "work": [
@@ -11455,7 +11592,7 @@
      ],
      "transactions": 50
     },
-    "secs": 2
+    "secs": 3
    },
    {
     "why": "a union bill due 2030-05-21T14:00: Initiation fee, part 2 of 3",
@@ -11463,126 +11600,182 @@
     "days": 14,
     "same": true,
     "bytes": [
-     1770798,
-     1770798
+     1799134,
+     1799134
     ],
     "straight": {
-     "now": "2029-06-04T14:40",
+     "now": "2029-06-04T14:55",
      "bank": 78992.03,
      "standing": "graduated",
      "notices": [
-      "OPT Approved"
+      "A Self-Tape For The Crow",
+      "A Callback For The Crow",
+      "A Self-Tape For Harbormaster Brandt",
+      "An Audition For The Apprentice Lamplighter",
+      "OPT Approved",
+      "Not Cast As The Crow"
      ],
-     "opportunities": [],
+     "opportunities": [
+      "kite-and-crow passed",
+      "salt-road audition",
+      "lamplighters audition"
+     ],
      "engagements": [],
-     "work": [],
+     "work": [
+      "The Crow, The Kite And The Crow: Audition, Taped 57.2",
+      "The Crow, The Kite And The Crow: Callback, Taped 56.4",
+      "Harbormaster Brandt, The Salt Road: Audition, Taped 58.9"
+     ],
      "transactions": 1194
     },
     "reopened": {
-     "now": "2029-06-04T14:40",
+     "now": "2029-06-04T14:55",
      "bank": 78992.03,
      "standing": "graduated",
      "notices": [
-      "OPT Approved"
+      "A Self-Tape For The Crow",
+      "A Callback For The Crow",
+      "A Self-Tape For Harbormaster Brandt",
+      "An Audition For The Apprentice Lamplighter",
+      "OPT Approved",
+      "Not Cast As The Crow"
      ],
-     "opportunities": [],
+     "opportunities": [
+      "kite-and-crow passed",
+      "salt-road audition",
+      "lamplighters audition"
+     ],
      "engagements": [],
-     "work": [],
+     "work": [
+      "The Crow, The Kite And The Crow: Audition, Taped 57.2",
+      "The Crow, The Kite And The Crow: Callback, Taped 56.4",
+      "Harbormaster Brandt, The Salt Road: Audition, Taped 58.9"
+     ],
      "transactions": 1194
     },
-    "secs": 17
+    "secs": 20
    },
    {
-    "why": "an audition (in-person) set for 2029-07-02T15:00, Felix in Paper Moons",
-    "at": "2029-06-27T14:40",
+    "why": "an audition (self-tape) set for 2029-06-24T22:00, Pickett The Ferret in Lantern Row",
+    "at": "2029-06-20T14:55",
     "days": 14,
     "same": true,
     "bytes": [
-     1783602,
-     1783602
+     1817118,
+     1817118
     ],
     "straight": {
-     "now": "2029-07-11T15:00",
-     "bank": 78592.09,
+     "now": "2029-07-04T15:30",
+     "bank": 78672.09,
      "standing": "graduated",
      "notices": [
-      "Not Cast As Felix",
-      "A Self-Tape For Robin"
+      "A New Card Is On Its Way",
+      "No Answer From Thomas Ashgrove’s Office",
+      "Not Cast As Pickett The Ferret",
+      "An Audition For Felix",
+      "A Self-Tape For Miles Arden",
+      "Not Cast As Miles Arden"
      ],
      "opportunities": [
-      "paper-moons passed",
-      "eastview audition"
+      "lantern-row passed",
+      "g1.1hpc0.2027.new-york.animated-series.0.s3.0 lapsed",
+      "paper-moons audition",
+      "harbor-line-arden passed",
+      "g1.1hpc0.2025.los-angeles.animated-series.2.s5.1 open"
      ],
      "engagements": [],
      "work": [
-      "Felix, Paper Moons: Audition 66.2"
+      "Pickett The Ferret, Lantern Row: Audition, Taped 60.9",
+      "Miles Arden, Harbor Line: Audition, Taped 58.5",
+      "Felix, Paper Moons: Audition 66"
      ],
-     "transactions": 1235
+     "transactions": 1227
     },
     "reopened": {
-     "now": "2029-07-11T15:00",
-     "bank": 78592.09,
+     "now": "2029-07-04T15:30",
+     "bank": 78672.09,
      "standing": "graduated",
      "notices": [
-      "Not Cast As Felix",
-      "A Self-Tape For Robin"
+      "A New Card Is On Its Way",
+      "No Answer From Thomas Ashgrove’s Office",
+      "Not Cast As Pickett The Ferret",
+      "An Audition For Felix",
+      "A Self-Tape For Miles Arden",
+      "Not Cast As Miles Arden"
      ],
      "opportunities": [
-      "paper-moons passed",
-      "eastview audition"
+      "lantern-row passed",
+      "g1.1hpc0.2027.new-york.animated-series.0.s3.0 lapsed",
+      "paper-moons audition",
+      "harbor-line-arden passed",
+      "g1.1hpc0.2025.los-angeles.animated-series.2.s5.1 open"
      ],
      "engagements": [],
      "work": [
-      "Felix, Paper Moons: Audition 66.2"
+      "Pickett The Ferret, Lantern Row: Audition, Taped 60.9",
+      "Miles Arden, Harbor Line: Audition, Taped 58.5",
+      "Felix, Paper Moons: Audition 66"
      ],
-     "transactions": 1235
+     "transactions": 1227
     },
-    "secs": 17
+    "secs": 16
    },
    {
-    "why": "an offer standing: An Offer For Robin",
-    "at": "2029-10-31T21:05",
+    "why": "an offer standing: An Offer For An Oyster Tonger Of 1890",
+    "at": "2029-09-19T21:00",
     "days": 14,
     "same": true,
     "bytes": [
-     1807460,
-     1807460
+     1859247,
+     1859247
     ],
     "straight": {
-     "now": "2029-11-14T21:30",
-     "bank": 68461.53,
+     "now": "2029-10-03T21:00",
+     "bank": 69565.38,
      "standing": "graduated",
      "notices": [
-      "Actors’ Equity Association: $88.00 Paid"
+      "Not Cast As Jess",
+      "Not Cast As Pickett The Ferret",
+      "A Self-Tape For Harbormaster Brandt",
+      "Not Cast As Harbormaster Brandt"
      ],
      "opportunities": [
-      "eastview declined",
-      "paper-moons declined"
+      "route-nine passed",
+      "tidewater-reenactment declined",
+      "lantern-row passed",
+      "salt-road passed"
      ],
      "engagements": [],
      "work": [
-      "Felix, Paper Moons: Audition 72.2"
+      "Pickett The Ferret, Lantern Row: Audition, Taped 63.6",
+      "Harbormaster Brandt, The Salt Road: Audition, Taped 63.9"
      ],
-     "transactions": 1376
+     "transactions": 1329
     },
     "reopened": {
-     "now": "2029-11-14T21:30",
-     "bank": 68461.53,
+     "now": "2029-10-03T21:00",
+     "bank": 69565.38,
      "standing": "graduated",
      "notices": [
-      "Actors’ Equity Association: $88.00 Paid"
+      "Not Cast As Jess",
+      "Not Cast As Pickett The Ferret",
+      "A Self-Tape For Harbormaster Brandt",
+      "Not Cast As Harbormaster Brandt"
      ],
      "opportunities": [
-      "eastview declined",
-      "paper-moons declined"
+      "route-nine passed",
+      "tidewater-reenactment declined",
+      "lantern-row passed",
+      "salt-road passed"
      ],
      "engagements": [],
      "work": [
-      "Felix, Paper Moons: Audition 72.2"
+      "Pickett The Ferret, Lantern Row: Audition, Taped 63.6",
+      "Harbormaster Brandt, The Salt Road: Audition, Taped 63.9"
      ],
-     "transactions": 1376
+     "transactions": 1329
     },
-    "secs": 15
+    "secs": 13
    }
   ],
   "workDays": [],
@@ -11640,26 +11833,51 @@
  "routes": {
   "represented": [],
   "unsigned": [
-   "no agreement in 2029-05-21T14:00 to 2030-03-01T12:45; 10 open calls submitted to of those kept"
+   "no agreement in 2029-05-21T14:00 to 2030-03-01T12:00; 31 open calls submitted to of those kept"
   ],
   "success": [
-   "audition for eastview went on (strong)",
+   "audition for kite-and-crow went on (working)",
+   "audition for tidewater-reenactment went on (strong)",
    "audition for paper-moons went on (strong)"
   ],
   "failure": [
+   "callback for kite-and-crow working: not cast (chance 9%)",
+   "audition for salt-road working: not cast (chance 12%)",
+   "audition for lamplighters working: not cast (chance 23%)",
+   "audition for lantern-row working: not cast (chance 25%)",
    "audition for paper-moons strong: not cast (chance 43%)",
+   "audition for harbor-line-arden working: not cast (chance 22%)",
    "audition for eastview working: not cast (chance 19%)",
+   "audition for tidewater-narrator working: not cast (chance 12%)",
+   "audition for lamplighters working: not cast (chance 23%)",
    "audition for route-nine working: not cast (chance 11%)",
-   "audition for winter-ledger working: not cast (chance 23%)",
-   "audition for route-nine strong: not cast (chance 25%)",
+   "audition for lantern-row working: not cast (chance 25%)",
+   "audition for salt-road working: not cast (chance 12%)",
    "audition for eastview strong: not cast (chance 40%)",
    "audition for paper-moons strong: not cast (chance 44%)",
+   "audition for tidewater-narrator strong: not cast (chance 26%)",
+   "audition for s1.1hpc0.2029-10-29.new-york.student-film.0.0 strong: not cast (chance 43%)",
+   "audition for s1.1hpc0.2029-11-05.new-york.ultra-low-budget.0.1 strong: not cast (chance 32%)",
+   "audition for winter-ledger strong: not cast (chance 41%)",
+   "audition for tidewater-reenactment strong: not cast (chance 27%)",
+   "audition for s1.1hpc0.2029-11-26.new-york.student-film.0.0 strong: not cast (chance 35%)",
+   "audition for kite-and-crow strong: not cast (chance 39%)",
+   "audition for lamplighters working: not cast (chance 23%)",
+   "audition for lantern-row strong: not cast (chance 43%)",
+   "audition for route-nine strong: not cast (chance 24%)",
+   "audition for eastview strong: not cast (chance 40%)",
+   "audition for salt-road strong: not cast (chance 26%)",
+   "audition for tidewater-reenactment strong: not cast (chance 27%)",
+   "audition for s1.1hpc0.2030-02-04.philadelphia.lort.0.2 strong: not cast (chance 45%)",
    "thomas-ashgrove: unanswered"
   ],
-  "delay": [],
+  "delay": [
+   "audition for paper-moons moved 1",
+   "October 31, 2029 at 10:20 AM | PRESS | Ask For Another Time for paper-moons | done"
+  ],
   "decline": [
-   "November 1, 2029 at 10:05 AM | PRESS | Decline The Offer for eastview (There’s no permission to work in the US among your papers. Papers, under Permission To Work, shows what you hold. That rules out work on November 26,",
-   "November 8, 2029 at 5:30 PM | PRESS | Decline The Offer for paper-moons (There’s no permission to work in the US among your papers. Papers, under Permission To Work, shows what you hold. That rules out work on December 3"
+   "September 20, 2029 at 11:00 AM | PRESS | Decline The Offer for tidewater-reenactment (There’s no permission to work in the US among your papers. Papers, under Permission To Work, shows what you hold. That rules out work ",
+   "January 17, 2030 at 5:45 PM | PRESS | Decline The Offer for paper-moons (There’s no permission to work in the US among your papers. Papers, under Permission To Work, shows what you hold. That rules out work on February 1"
   ],
   "interruption": [
    "2026-09-12 injury back 35 days",
@@ -11685,7 +11903,9 @@
    "2028-10-30 to 2028-11-03 ill: condition 91.4 the morning before, 66.4 at its start, 86.8 a week after its end",
    "2029-11-19 to 2029-11-23 ill: condition 91 the morning before, 66 at its start, 87 a week after its end"
   ],
-  "clash": [],
+  "clash": [
+   "October 31, 2029 at 10:00 AM | NOTICE | An Audition For Lionel Thibodeaux | Moreau Casting wants to see you for Lionel Thibodeaux in Burning Margins: a stage in Long Island City and locations upstate in New York, Monday,"
+  ],
   "littleMoney": [],
   "poorPreparation": [
    "assignment_000001 Unready",
@@ -11708,8 +11928,8 @@
   "workAuthorization": [
    "F-1 Student Visa cancelled issued 2026-07-25 to 2029-07-30",
    "Employment Authorization, OPT cancelled issued 2029-05-31 to 2030-05-31",
-   "November 1, 2029 at 10:05 AM | PRESS | Decline The Offer for eastview (There’s no permission to work in the US among your papers. Papers, under Permission To Work, shows what you hold. That rules out work on November 26,",
-   "November 8, 2029 at 5:30 PM | PRESS | Decline The Offer for paper-moons (There’s no permission to work in the US among your papers. Papers, under Permission To Work, shows what you hold. That rules out work on December 3",
+   "September 20, 2029 at 11:00 AM | PRESS | Decline The Offer for tidewater-reenactment (There’s no permission to work in the US among your papers. Papers, under Permission To Work, shows what you hold. That rules out work ",
+   "January 17, 2030 at 5:45 PM | PRESS | Decline The Offer for paper-moons (There’s no permission to work in the US among your papers. Papers, under Permission To Work, shows what you hold. That rules out work on February 1",
    "May 31, 2029 at 10:15 AM | NOTICE | OPT Approved | You may work in the United States from May 31, 2029 to May 31, 2030. Every day from the first day of a job to its last counts as a day with work, and every other day as ",
    "August 30, 2029 at 12:00 AM | NOTICE | OPT Ended | You’d had more than 90 days without work since your OPT began, so it ended at the end of August 29, 2029, and with it your permission to work in the United States. A day",
    "August 30, 2029 at 12:00 AM | NOTICE | Out Of Status | You stayed in the United States past the end of your status, so you’re now out of status. In the game, your US visa is canceled and the Visa Waiver Program is closed"

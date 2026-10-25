@@ -14,35 +14,35 @@
    "part": 1,
    "from": "2026-08-24",
    "to": "2027-06-01",
-   "secs": 30,
+   "secs": 34,
    "reloads": 9
   },
   {
    "part": 2,
    "from": "2027-06-01",
    "to": "2028-06-01",
-   "secs": 88,
+   "secs": 93,
    "reloads": 12
   },
   {
    "part": 3,
    "from": "2028-06-01",
    "to": "2029-06-04",
-   "secs": 115,
+   "secs": 140,
    "reloads": 11
   },
   {
    "part": 4,
    "from": "2029-06-04",
    "to": "2029-11-01",
-   "secs": 32,
+   "secs": 46,
    "reloads": 5
   },
   {
    "part": 5,
    "from": "2029-11-01",
    "to": "2030-03-01",
-   "secs": 17,
+   "secs": 26,
    "reloads": 4,
    "done": true
   }
@@ -164,9 +164,9 @@
    "emotionalDepth": 99.6,
    "presence": 99.5,
    "listening": 99.5,
-   "imagination": 74.5,
-   "focus": 58.9,
-   "memory": 99.5,
+   "imagination": 68.8,
+   "focus": 59,
+   "memory": 98.7,
    "adaptability": 57.8,
    "composure": 54.1,
    "vocal": 99.6,
@@ -190,62 +190,8 @@
   },
   "replays": [
    {
-    "what": "Your Showcase Scene, revised",
-    "own": 74.63,
-    "atStart": 55.52,
-    "rose": [
-     "emotionalDepth",
-     "imagination",
-     "adaptability",
-     "composure",
-     "listening",
-     "presence",
-     "memory",
-     "vocal",
-     "physical",
-     "focus",
-     "discipline"
-    ],
-    "fell": [
-     "stamina"
-    ],
-    "fallsUndone": 74.95
-   },
-   {
-    "what": "Robin, Last Bus To Eastview: Audition, Taped",
-    "own": 67.61,
-    "atStart": 53.96,
-    "rose": [
-     "emotionalDepth",
-     "imagination",
-     "listening",
-     "presence",
-     "memory",
-     "focus",
-     "composure",
-     "discipline",
-     "adaptability"
-    ]
-   },
-   {
-    "what": "Jess, Static On Route 9: Audition, Taped",
-    "own": 66.75,
-    "atStart": 52.57,
-    "rose": [
-     "emotionalDepth",
-     "imagination",
-     "listening",
-     "presence",
-     "memory",
-     "focus",
-     "composure",
-     "discipline",
-     "adaptability"
-    ]
-   },
-   {
     "what": "Ivy, Paper Moons: Audition",
-    "own": 72.95,
+    "own": 73.94,
     "atStart": 55.88,
     "rose": [
      "emotionalDepth",
@@ -258,9 +204,9 @@
     ]
    },
    {
-    "what": "Hester Vane, The Winter Ledger: Audition",
-    "own": 70.75,
-    "atStart": 54.64,
+    "what": "Sabine Jessop, The Harbor Of Marrow Bay: Audition",
+    "own": 73.09,
+    "atStart": 55.31,
     "rose": [
      "emotionalDepth",
      "imagination",
@@ -272,9 +218,9 @@
     ]
    },
    {
-    "what": "Hester Vane, The Winter Ledger: Callback",
-    "own": 68.75,
-    "atStart": 51.61,
+    "what": "Sabine Jessop, The Harbor Of Marrow Bay: Callback",
+    "own": 71.29,
+    "atStart": 52.34,
     "rose": [
      "emotionalDepth",
      "imagination",
@@ -286,9 +232,23 @@
     ]
    },
    {
-    "what": "Robin, Last Bus To Eastview: Audition, Taped",
-    "own": 67.62,
-    "atStart": 53.96,
+    "what": "Inez, The Interval On Caldwell Street: Audition",
+    "own": 73.61,
+    "atStart": 55.5,
+    "rose": [
+     "emotionalDepth",
+     "imagination",
+     "memory",
+     "vocal",
+     "physical",
+     "presence",
+     "composure"
+    ]
+   },
+   {
+    "what": "An Oyster Tonger Of 1890, Tidewater: The Last Oyster Towns: Audition, Taped",
+    "own": 73.95,
+    "atStart": 59.46,
     "rose": [
      "emotionalDepth",
      "imagination",
@@ -302,48 +262,23 @@
     ]
    },
    {
-    "what": "Ivy, Paper Moons: Shoot Day 1",
-    "own": 74.18,
-    "atStart": 56.45,
+    "what": "Adaeze, Penwick Crossing: Audition",
+    "own": 73.68,
+    "atStart": 55.81,
     "rose": [
      "emotionalDepth",
      "imagination",
      "memory",
-     "focus",
-     "composure",
-     "discipline"
+     "vocal",
+     "physical",
+     "presence",
+     "composure"
     ]
    },
    {
-    "what": "Ivy, Paper Moons: Shoot Day 2",
-    "own": 74.75,
-    "atStart": 56.65,
-    "rose": [
-     "emotionalDepth",
-     "imagination",
-     "memory",
-     "focus",
-     "composure",
-     "discipline"
-    ]
-   },
-   {
-    "what": "Ivy, Paper Moons: Shoot Day 3",
-    "own": 75.25,
-    "atStart": 56.83,
-    "rose": [
-     "emotionalDepth",
-     "imagination",
-     "memory",
-     "focus",
-     "composure",
-     "discipline"
-    ]
-   },
-   {
-    "what": "Robin, Last Bus To Eastview: Audition, Taped",
-    "own": 67.77,
-    "atStart": 53.96,
+    "what": "Inez, The Margins On Caldwell Street: Audition, Taped",
+    "own": 73.36,
+    "atStart": 57.42,
     "rose": [
      "emotionalDepth",
      "imagination",
@@ -357,9 +292,25 @@
     ]
    },
    {
-    "what": "Hester Vane, The Winter Ledger: Audition",
-    "own": 72.01,
-    "atStart": 54.64,
+    "what": "Emery, The Margins On Caldwell Street: Audition, Taped",
+    "own": 73.36,
+    "atStart": 57.42,
+    "rose": [
+     "emotionalDepth",
+     "imagination",
+     "listening",
+     "presence",
+     "memory",
+     "focus",
+     "composure",
+     "discipline",
+     "adaptability"
+    ]
+   },
+   {
+    "what": "Adaeze, Penwick Crossing: Callback",
+    "own": 71.91,
+    "atStart": 52.87,
     "rose": [
      "emotionalDepth",
      "imagination",
@@ -368,11 +319,59 @@
      "physical",
      "presence",
      "composure"
+    ]
+   },
+   {
+    "what": "Inez, The Margins On Caldwell Street: Callback, Taped",
+    "own": 71.53,
+    "atStart": 54.45,
+    "rose": [
+     "emotionalDepth",
+     "imagination",
+     "listening",
+     "presence",
+     "memory",
+     "focus",
+     "composure",
+     "discipline",
+     "adaptability"
+    ]
+   },
+   {
+    "what": "Emery, The Margins On Caldwell Street: Callback, Taped",
+    "own": 71.53,
+    "atStart": 54.45,
+    "rose": [
+     "emotionalDepth",
+     "imagination",
+     "listening",
+     "presence",
+     "memory",
+     "focus",
+     "composure",
+     "discipline",
+     "adaptability"
+    ]
+   },
+   {
+    "what": "Pickett The Ferret, Lantern Row: Audition, Taped",
+    "own": 69.79,
+    "atStart": 55.96,
+    "rose": [
+     "emotionalDepth",
+     "imagination",
+     "listening",
+     "presence",
+     "memory",
+     "focus",
+     "composure",
+     "discipline",
+     "adaptability"
     ]
    }
   ],
   "keptReplayed": 160,
-  "keptMismatched": 0,
+  "keptMismatched": 3,
   "genres": [
    {
     "g": "satire",
@@ -410,7 +409,7 @@
     "practice": 41.3
    },
    {
-    "g": "coming_of_age",
+    "g": "slice_of_life",
     "f": 0,
     "practice": 27.1
    }
@@ -422,9 +421,9 @@
    "speedUnknown": 1
   },
   "firstLimits": {
-   "ability": 312,
-   "preparation": 47,
-   "technique": 9
+   "ability": 329,
+   "preparation": 60,
+   "technique": 10
   },
   "afterEnd": [],
   "memos": {
@@ -437,7 +436,7 @@
   },
   "yaleOwed": 0,
   "hold": false,
-  "bank": 80800,
+  "bank": 81137,
   "audit": 0,
   "breaches": 0,
   "outOfStatus": "2029-09-02",
@@ -471,10 +470,10 @@
   "3 development": {
    "pass": true,
    "evidence": [
-    "abilities emotionalDepth 54.9→99.6, presence 70.6→99.5, listening 54.7→99.5, imagination 54.7→74.5, focus 49.4→58.9, memory 56.2→99.5, adaptability 52.9→57.8, composure 44.3→54.1, vocal 54.7→99.6, physical 48.6→64.9, discipline 57.5→100, stamina 50→35",
-    "last pieces at their own levels, then with what rose put back: 74.63/55.52 67.61/53.96 66.75/52.57 72.95/55.88 70.75/54.64 68.75/51.61 67.62/53.96 74.18/56.45 74.75/56.65 75.25/56.83 67.77/53.96 72.01/54.64",
-    "with what fell put back up: 74.63→74.95 (stamina)",
-    "first limits short of mastery: {\"ability\":312,\"preparation\":47,\"technique\":9}",
+    "abilities emotionalDepth 54.9→99.6, presence 70.6→99.5, listening 54.7→99.5, imagination 54.7→68.8, focus 49.4→59, memory 56.2→98.7, adaptability 52.9→57.8, composure 44.3→54.1, vocal 54.7→99.6, physical 48.6→64.9, discipline 57.5→100, stamina 50→35",
+    "last pieces at their own levels, then with what rose put back: 73.94/55.88 73.09/55.31 71.29/52.34 73.61/55.5 73.95/59.46 73.68/55.81 73.36/57.42 73.36/57.42 71.91/52.87 71.53/54.45 71.53/54.45 69.79/55.96",
+    "with what fell put back up: nothing fell",
+    "first limits short of mastery: {\"ability\":329,\"preparation\":60,\"technique\":10}",
     "genres known 8; satire speed 1.16, unmet absurdist 1",
     "fell: stamina 50→35 (stamina falls unworked: `settleTheBody`)"
    ],
@@ -483,11 +482,11 @@
   "4 advice": {
    "pass": true,
    "evidence": [
-    "183 weekly reads, 6 first targets: vocal, imagination, focus, composure, adaptability, physical",
+    "183 weekly reads, 7 first targets: vocal, imagination, focus, composure, adaptability, physical, screen",
     "all full said in 0 weeks",
     "0 weeks the same words over a move under what's shown",
     "standing said in 175 weeks (noted where the player practices or tapes)",
-    "circumstances: a condition named among the five in 1 weeks (condition:stamina), a preparation in 71"
+    "circumstances: a condition named among the five in 1 weeks (condition:stamina), a preparation in 73"
    ],
    "fails": []
   },
@@ -496,16 +495,16 @@
    "evidence": [
     "daily changes of energy and stamina correlate at 0.02 over 1285 mornings",
     "health events 11: 2026-12-21 care emergency: The emergency room, Yale New Haven Hospital, York Street Campus Emergency Department; in hospital to 2026-12-21 | 2027-01-11 care emergency: The emergency room, Yale New Haven Hospital, York Street Campus Emergency Department; in hospital to 2027-01-11 | 2027-02-09 care visit: A doctor’s visit, Yale Health Center, Student Health | 2027-02-15 the flu to 2027-02-20 | 2027-06-22 care visit: A doctor’s visit, Yale Health Center, Student Health | 2027-07-23 care visit: A specialist, referred, Yale Health Center, Student Health | 2027-09-21 care visit: A doctor’s visit, Yale Health Center, Student Health | 2028-01-17 care emergency: The emergency room, Yale New Haven Hospital, York Street Campus Emergency Department; in hospital to 2028-01-17",
-    "called in sick 0 days; work ill or hurt 2 at 61.5, well 366 at 64.2; excused class days by term 0,1,0,0,0,0"
+    "called in sick 0 days; work ill or hurt 2 at 61.5, well 397 at 64.6; excused class days by term 0,1,0,0,0,0"
    ],
    "fails": []
   },
   "6 money": {
    "pass": true,
    "evidence": [
-    "55 reloads with the ledger balanced and no breach; at the end audit 0, breaches 0",
+    "56 reloads with the ledger balanced and no breach; at the end audit 0, breaches 0",
     "memos: Living-expense scholarship, the fall term of 2026: David Gef ×1; Living-expense scholarship, the spring term of 2027: David G ×1; Living-expense scholarship, the fall term of 2027: David Gef ×1; Living-expense scholarship, the spring term of 2028: David G ×1; Living-expense scholarship, the fall term of 2028: David Gef ×1; Living-expense scholarship, the spring term of 2029: David G ×1",
-    "holds 0, lifted 0; owed at the end 0; bank 80800"
+    "holds 0, lifted 0; owed at the end 0; bank 81137"
    ],
    "fails": []
   },
@@ -537,12 +536,14 @@
    "fails": []
   },
   "10 save and reload": {
-   "pass": true,
+   "pass": false,
    "evidence": [
-    "59 reloads (every thirty days and at each part), every one the same to the byte: true",
-    "160 kept results replayed from their inputs, 0 different"
+    "60 reloads (every thirty days and at each part), every one the same to the byte: true",
+    "160 kept results replayed from their inputs, 3 different"
    ],
-   "fails": []
+   "fails": [
+    "3 kept results replay to another figure"
+   ]
   }
  },
  "continuity": {
@@ -551,7 +552,9 @@
    "A Doctor’s Visit": 3,
    "The Summer Is Yours": 1,
    "Nadia: A Different Reading": 1,
-   "Not Cast As Robin": 1
+   "Not Cast As Robin": 2,
+   "Not Cast As Pickett The Ferret": 1,
+   "Not Cast As Ivy": 1
   },
   "sameWordsTwice": [
    "Ran Lines With Marcus | You and Marcus don’t have a scene together right now, so you ran their lines. It helped them, but not your own prepa ×2"
@@ -576,11 +579,12 @@
    "targets": {
     "none": 2,
     "vocal": 54,
-    "imagination": 14,
-    "focus": 55,
-    "composure": 38,
+    "imagination": 15,
+    "focus": 47,
+    "composure": 25,
     "adaptability": 16,
-    "physical": 4
+    "physical": 4,
+    "screen": 20
    },
    "longRuns": [
     {
@@ -666,44 +670,44 @@
     },
     {
      "from": "2029-05-06",
-     "to": "2029-07-29",
+     "to": "2029-06-03",
      "target": "focus",
-     "weeks": 13,
-     "newWords": 12,
-     "moved": 5,
-     "stripped": 9
-    },
-    {
-     "from": "2029-08-05",
-     "to": "2029-10-21",
-     "target": "composure",
-     "weeks": 12,
-     "newWords": 11,
+     "weeks": 5,
+     "newWords": 4,
      "moved": 3,
-     "stripped": 9
+     "stripped": 1
     },
     {
-     "from": "2029-10-28",
-     "to": "2029-12-16",
+     "from": "2029-06-24",
+     "to": "2029-11-04",
+     "target": "screen",
+     "weeks": 20,
+     "newWords": 19,
+     "moved": 8,
+     "stripped": 13
+    },
+    {
+     "from": "2029-11-11",
+     "to": "2029-12-23",
      "target": "imagination",
-     "weeks": 8,
-     "newWords": 7,
-     "moved": 1,
+     "weeks": 7,
+     "newWords": 6,
+     "moved": 3,
      "stripped": 4
     },
     {
-     "from": "2029-12-23",
+     "from": "2029-12-30",
      "to": "2030-02-24",
      "target": "composure",
-     "weeks": 10,
-     "newWords": 9,
-     "moved": 0,
-     "stripped": 7
+     "weeks": 9,
+     "newWords": 8,
+     "moved": 6,
+     "stripped": 6
     }
    ],
-   "runs": 46,
+   "runs": 47,
    "staleRuns": 0,
-   "wordsOnlyChanges": 85
+   "wordsOnlyChanges": 80
   },
   "feedback": {
    "notes": 269,
@@ -736,9 +740,8 @@
     "showing-for-classmates": 553,
     "repetition": 627,
     "sense-memory": 571,
-    "voice-work": 499,
-    "recall-drill": 504,
-    "given-circumstances": 87
+    "voice-work": 498,
+    "recall-drill": 491
    },
    "longestSameExercise": 627
   },
@@ -1087,7 +1090,7 @@
    }
   },
   {
-   "at": "2029-11-08T15:50",
+   "at": "2029-11-08T15:35",
    "events": [
     "care visit: A doctor’s visit, Fair Haven Community Health Care"
    ],
@@ -1703,11 +1706,11 @@
  ],
  "interpretationsSeen": 52,
  "reloads": {
-  "n": 59,
+  "n": 60,
   "notSame": []
  },
  "ledger": {
-  "n": 55,
+  "n": 56,
   "bad": []
  },
  "notices": [
@@ -4341,8 +4344,16 @@
    "Your MFA Is Conferred"
   ],
   [
+   "2029-05-23",
+   "A Self-Tape For Pickett The Ferret"
+  ],
+  [
    "2029-05-25",
    "Thomas Ashgrove’s Office Passed"
+  ],
+  [
+   "2029-05-28",
+   "A Callback For Pickett The Ferret"
   ],
   [
    "2029-05-31",
@@ -4350,8 +4361,20 @@
    "You may work in the United States from May 31, 2029 to May 31, 2030. Every day from the first day of a job to its last counts as a day with work, and every other day as one without, the days before a job you’ve booked be"
   ],
   [
+   "2029-06-03",
+   "Not Cast As Pickett The Ferret"
+  ],
+  [
    "2029-06-06",
    "A Self-Tape For Robin"
+  ],
+  [
+   "2029-06-06",
+   "An Audition For The Apprentice Lamplighter"
+  ],
+  [
+   "2029-06-12",
+   "A Callback For The Apprentice Lamplighter"
   ],
   [
    "2029-06-13",
@@ -4362,8 +4385,32 @@
    "Happy Birthday: 27"
   ],
   [
+   "2029-06-20",
+   "A Self-Tape For Dana Kell"
+  ],
+  [
+   "2029-06-20",
+   "A Self-Tape For Rosalind Nakashima"
+  ],
+  [
+   "2029-06-20",
+   "A Self-Tape For Marlowe"
+  ],
+  [
    "2029-06-21",
    "A New Card Is On Its Way"
+  ],
+  [
+   "2029-06-21",
+   "Not Cast As The Apprentice Lamplighter"
+  ],
+  [
+   "2029-06-25",
+   "A Callback For Dana Kell"
+  ],
+  [
+   "2029-06-25",
+   "A Callback For Marlowe"
   ],
   [
    "2029-06-27",
@@ -4374,13 +4421,25 @@
    "Not Cast As Jess"
   ],
   [
+   "2029-07-18",
+   "Revised Pages For Last Assembly"
+  ],
+  [
    "2029-07-19",
    "Connecticut DRS Made Your Return",
    "Failure To File Notice, on your 2028 Connecticut return: you didn’t file, so DRS worked out what you owe from what was reported. File your own within 60 days, or it’s assessed."
   ],
   [
+   "2029-07-19",
+   "You Wrapped Last Assembly"
+  ],
+  [
    "2029-07-25",
    "An Audition For Ivy"
+  ],
+  [
+   "2029-07-26",
+   "Paid For Last Assembly"
   ],
   [
    "2029-08-01",
@@ -4392,20 +4451,36 @@
    "An Audition For Hester Vane"
   ],
   [
+   "2029-08-01",
+   "A Self-Tape For The Narrator"
+  ],
+  [
+   "2029-08-02",
+   "Not Cast As Ivy"
+  ],
+  [
    "2029-08-07",
-   "A Callback For Hester Vane"
+   "Not Cast As Hester Vane"
+  ],
+  [
+   "2029-08-08",
+   "A Self-Tape For Pickett The Ferret"
+  ],
+  [
+   "2029-08-09",
+   "Released As Dana Kell"
+  ],
+  [
+   "2029-08-13",
+   "Not Cast As Pickett The Ferret"
   ],
   [
    "2029-08-15",
    "A Self-Tape For Robin"
   ],
   [
-   "2029-08-22",
-   "Not Cast As Robin"
-  ],
-  [
    "2029-08-29",
-   "You Wrapped Paper Moons"
+   "A Self-Tape For Kit"
   ],
   [
    "2029-09-01",
@@ -4418,12 +4493,28 @@
   ],
   [
    "2029-09-02",
-   "Released As Hester Vane"
+   "Released As The Narrator"
   ],
   [
    "2029-09-02",
    "Out Of Status",
    "You stayed in the United States past the end of your status, so you’re now out of status. In the game, your US visa is canceled and the Visa Waiver Program is closed to you from now on."
+  ],
+  [
+   "2029-09-05",
+   "Not Cast As Kit"
+  ],
+  [
+   "2029-09-12",
+   "A Self-Tape For Dana Kell"
+  ],
+  [
+   "2029-09-12",
+   "A Self-Tape For The Crow"
+  ],
+  [
+   "2029-09-12",
+   "A Self-Tape For Sage"
   ],
   [
    "2029-09-17",
@@ -4433,6 +4524,14 @@
   [
    "2029-09-17",
    "A Doctor’s Appointment"
+  ],
+  [
+   "2029-09-17",
+   "Not Cast As Dana Kell"
+  ],
+  [
+   "2029-09-17",
+   "Not Cast As The Crow"
   ],
   [
    "2029-10-01",
@@ -4469,8 +4568,16 @@
    "Actors’ Equity Association: $88.00 Paid"
   ],
   [
+   "2029-11-07",
+   "A Self-Tape For The Narrator"
+  ],
+  [
    "2029-11-08",
    "A Doctor’s Visit"
+  ],
+  [
+   "2029-11-14",
+   "Not Cast As The Narrator"
   ],
   [
    "2029-11-16",
@@ -4481,8 +4588,20 @@
    "Connecticut DRS Intends To Levy"
   ],
   [
+   "2029-12-05",
+   "A Self-Tape For Rosalind"
+  ],
+  [
    "2029-12-12",
    "An Audition For Hester Vane"
+  ],
+  [
+   "2029-12-12",
+   "A Self-Tape For Harbormaster Brandt"
+  ],
+  [
+   "2029-12-12",
+   "Not Cast As Rosalind"
   ],
   [
    "2029-12-16",
@@ -4493,12 +4612,88 @@
    "Connecticut DRS Levied Your Accounts"
   ],
   [
+   "2029-12-16",
+   "Last Assembly Is Released"
+  ],
+  [
    "2029-12-18",
+   "A Callback For Hester Vane"
+  ],
+  [
+   "2029-12-19",
+   "A Self-Tape For Pickett The Ferret"
+  ],
+  [
+   "2029-12-19",
+   "Not Cast As Harbormaster Brandt"
+  ],
+  [
+   "2029-12-26",
+   "An Audition For Ivy"
+  ],
+  [
+   "2029-12-27",
    "Not Cast As Hester Vane"
   ],
   [
-   "2030-02-25",
-   "Paper Moons Is Released"
+   "2030-01-16",
+   "An Audition For Sabine Jessop"
+  ],
+  [
+   "2030-01-22",
+   "A Callback For Sabine Jessop"
+  ],
+  [
+   "2030-01-30",
+   "An Audition For Inez"
+  ],
+  [
+   "2030-02-06",
+   "A Self-Tape For An Oyster Tonger Of 1890"
+  ],
+  [
+   "2030-02-06",
+   "An Audition For Adaeze"
+  ],
+  [
+   "2030-02-12",
+   "A Callback For Adaeze"
+  ],
+  [
+   "2030-02-13",
+   "A Self-Tape For Inez"
+  ],
+  [
+   "2030-02-13",
+   "A Self-Tape For Emery"
+  ],
+  [
+   "2030-02-13",
+   "Not Cast As An Oyster Tonger Of 1890"
+  ],
+  [
+   "2030-02-18",
+   "A Callback For Inez"
+  ],
+  [
+   "2030-02-18",
+   "A Callback For Emery"
+  ],
+  [
+   "2030-02-21",
+   "Not Cast As Adaeze"
+  ],
+  [
+   "2030-02-24",
+   "Not Cast As Inez"
+  ],
+  [
+   "2030-02-24",
+   "Not Cast As Emery"
+  ],
+  [
+   "2030-02-27",
+   "A Self-Tape For Pickett The Ferret"
   ]
  ],
  "shownNotices": 255,
@@ -7772,14 +7967,16 @@
   "2029 spring performance: 3 @ 67.5",
   "2029 spring voice: 12 @ 75.1",
   "2029 spring movement: 9 @ 71.1",
-  "2029 spring audition: 6 @ 65.1",
+  "2029 spring audition: 8 @ 65.7",
   "2029 spring camera: 8 @ 70.5",
   "2029 spring song: 3 @ 76.7",
   "2029 spring scene: 6 @ 74.6",
-  "2029 spring tape: 2 @ 67.4",
-  "2029 fall audition: 4 @ 71.7",
-  "2029 fall tape: 2 @ 68.7",
-  "2029 fall camera: 3 @ 75.1"
+  "2029 spring tape: 9 @ 68.7",
+  "2029 fall camera: 3 @ 70.6",
+  "2029 fall audition: 5 @ 72.5",
+  "2029 fall tape: 12 @ 69.4",
+  "2030 spring audition: 5 @ 72.4",
+  "2030 spring tape: 6 @ 72"
  ],
  "advice": [
   [
@@ -8930,321 +9127,321 @@
    "2029-05-27",
    "focus",
    58.94,
-   0.41,
+   0.37,
    1,
-   "focus 0.41 composure 0.34 adaptability 0.29 scene 0.2 imagination 0.19"
+   "prep:genre focus 0.37 composure 0.31 adaptability 0.28 imagination 0.24"
   ],
   [
    "2029-06-03",
    "focus",
    58.94,
-   0.4,
+   0.32,
    1,
-   "focus 0.4 composure 0.35 adaptability 0.29 imagination 0.2 scene 0.2"
+   "prep:genre focus 0.32 composure 0.29 imagination 0.29 adaptability 0.27"
   ],
   [
    "2029-06-10",
-   "focus",
-   58.94,
-   0.36,
+   "imagination",
+   68.5,
+   0.32,
    1,
-   "prep:genre focus 0.36 composure 0.32 adaptability 0.28 imagination 0.25"
+   "prep:genre imagination 0.32 focus 0.28 adaptability 0.26 composure 0.26"
   ],
   [
    "2029-06-17",
-   "focus",
-   58.94,
-   0.36,
+   "imagination",
+   68.5,
+   0.32,
    1,
-   "prep:genre focus 0.36 composure 0.32 adaptability 0.28 imagination 0.26"
+   "prep:genre imagination 0.32 composure 0.29 focus 0.24 adaptability 0.22"
   ],
   [
    "2029-06-24",
-   "focus",
-   58.94,
-   0.36,
+   "screen",
+   59.77,
+   0.53,
    1,
-   "prep:genre focus 0.36 composure 0.32 adaptability 0.28 imagination 0.26"
+   "prep:genre screen 0.53 imagination 0.41 composure 0.28 adaptability 0.14"
   ],
   [
    "2029-07-01",
-   "focus",
-   58.94,
-   0.32,
+   "screen",
+   59.77,
+   0.89,
    1,
-   "prep:genre focus 0.32 imagination 0.31 composure 0.3 screen 0.3"
+   "prep:genre screen 0.89 imagination 0.48 composure 0.23 adaptability 0.13"
   ],
   [
    "2029-07-08",
-   "focus",
-   58.94,
-   0.32,
+   "screen",
+   59.77,
+   0.89,
    1,
-   "prep:genre focus 0.32 imagination 0.31 composure 0.3 screen 0.3"
+   "prep:genre screen 0.89 imagination 0.48 composure 0.23 adaptability 0.13"
   ],
   [
    "2029-07-15",
-   "focus",
-   58.94,
-   0.32,
+   "screen",
+   59.77,
+   0.89,
    1,
-   "prep:genre focus 0.32 imagination 0.31 composure 0.3 screen 0.3"
+   "prep:genre screen 0.89 imagination 0.48 composure 0.23 adaptability 0.13"
   ],
   [
    "2029-07-22",
-   "focus",
-   58.94,
-   0.32,
+   "screen",
+   59.77,
+   1.04,
    1,
-   "prep:genre focus 0.32 imagination 0.31 composure 0.3 screen 0.3"
+   "prep:genre screen 1.04 prep:interpretation imagination 0.57 composure 0.2"
   ],
   [
    "2029-07-29",
-   "focus",
-   58.94,
-   0.31,
+   "screen",
+   59.77,
+   1.04,
    1,
-   "prep:genre focus 0.31 imagination 0.31 composure 0.3 screen 0.3"
+   "prep:genre screen 1.04 prep:interpretation imagination 0.57 composure 0.2"
   ],
   [
    "2029-08-05",
-   "composure",
-   54.11,
-   0.45,
+   "screen",
+   59.77,
+   0.81,
    1,
-   "prep:genre composure 0.45 screen 0.31 imagination 0.3 focus 0.26"
+   "prep:genre screen 0.81 prep:interpretation imagination 0.53 composure 0.34"
   ],
   [
    "2029-08-12",
-   "composure",
-   54.11,
-   0.59,
+   "screen",
+   59.77,
+   0.55,
    1,
-   "prep:genre composure 0.59 imagination 0.29 screen 0.28 focus 0.21"
+   "prep:genre prep:interpretation screen 0.55 imagination 0.48 composure 0.46"
   ],
   [
    "2029-08-19",
-   "composure",
-   54.11,
-   0.65,
+   "screen",
+   59.77,
+   0.5,
    1,
-   "prep:genre composure 0.65 comedy 0.38 imagination 0.32 screen 0.29"
+   "prep:genre screen 0.5 imagination 0.48 composure 0.43 comedy 0.25"
   ],
   [
    "2029-08-26",
-   "composure",
-   54.11,
-   0.65,
+   "screen",
+   59.77,
+   0.5,
    1,
-   "prep:genre composure 0.65 comedy 0.38 imagination 0.32 screen 0.29"
+   "prep:genre screen 0.5 imagination 0.48 composure 0.43 comedy 0.25"
   ],
   [
    "2029-09-02",
-   "composure",
-   54.11,
-   0.5,
+   "screen",
+   59.77,
+   0.54,
    1,
-   "prep:genre composure 0.5 imagination 0.48 screen 0.34 scene 0.28"
+   "prep:genre screen 0.54 imagination 0.48 composure 0.4 comedy 0.23"
   ],
   [
    "2029-09-09",
-   "composure",
-   54.11,
-   0.5,
+   "screen",
+   59.77,
+   0.54,
    1,
-   "prep:genre composure 0.5 imagination 0.48 screen 0.34 scene 0.28"
+   "prep:genre screen 0.54 imagination 0.48 composure 0.4 comedy 0.23"
   ],
   [
    "2029-09-16",
-   "composure",
-   54.11,
+   "screen",
+   59.77,
    0.5,
    1,
-   "prep:genre composure 0.5 imagination 0.48 screen 0.34 scene 0.28"
+   "prep:genre screen 0.5 imagination 0.48 composure 0.3 voiceover 0.25"
   ],
   [
    "2029-09-23",
-   "composure",
-   54.11,
+   "screen",
+   59.77,
    0.5,
    1,
-   "prep:genre composure 0.5 imagination 0.48 screen 0.34 scene 0.28"
+   "prep:genre screen 0.5 imagination 0.48 composure 0.3 voiceover 0.25"
   ],
   [
    "2029-09-30",
-   "composure",
-   54.11,
+   "screen",
+   59.77,
    0.5,
    1,
-   "prep:genre composure 0.5 imagination 0.48 screen 0.34 scene 0.28"
+   "prep:genre screen 0.5 imagination 0.48 composure 0.3 voiceover 0.25"
   ],
   [
    "2029-10-07",
-   "composure",
-   54.11,
+   "screen",
+   59.77,
    0.5,
    1,
-   "prep:genre composure 0.5 imagination 0.48 screen 0.34 scene 0.27"
+   "prep:genre screen 0.5 imagination 0.48 composure 0.3 voiceover 0.25"
   ],
   [
    "2029-10-14",
-   "composure",
-   54.11,
+   "screen",
+   59.77,
    0.5,
    1,
-   "prep:genre composure 0.5 imagination 0.48 screen 0.34 scene 0.27"
+   "prep:genre screen 0.5 imagination 0.48 composure 0.3 voiceover 0.25"
   ],
   [
    "2029-10-21",
-   "composure",
-   54.11,
+   "screen",
+   59.77,
    0.5,
    1,
-   "prep:genre composure 0.5 imagination 0.48 screen 0.34 scene 0.27"
+   "prep:genre screen 0.5 imagination 0.48 composure 0.3 voiceover 0.25"
   ],
   [
    "2029-10-28",
-   "imagination",
-   68.56,
+   "screen",
+   59.77,
    0.49,
    1,
-   "prep:genre imagination 0.49 composure 0.45 comedy 0.37 screen 0.37"
+   "prep:genre screen 0.49 imagination 0.48 comedy 0.34 composure 0.27"
   ],
   [
    "2029-11-04",
-   "imagination",
-   68.56,
+   "screen",
+   59.77,
    0.49,
    1,
-   "prep:genre imagination 0.49 composure 0.45 comedy 0.37 screen 0.37"
+   "prep:genre screen 0.49 imagination 0.48 comedy 0.34 composure 0.27"
   ],
   [
    "2029-11-11",
    "imagination",
-   68.56,
-   0.49,
+   68.7,
+   0.48,
    1,
-   "prep:genre imagination 0.49 composure 0.45 comedy 0.37 screen 0.37"
+   "prep:genre imagination 0.48 screen 0.41 voiceover 0.31 comedy 0.3"
   ],
   [
    "2029-11-18",
    "imagination",
-   68.56,
-   0.49,
+   68.7,
+   0.48,
    1,
-   "prep:genre imagination 0.49 composure 0.45 comedy 0.37 screen 0.37"
+   "prep:genre imagination 0.48 screen 0.41 voiceover 0.31 comedy 0.3"
   ],
   [
    "2029-11-25",
    "imagination",
-   68.56,
-   0.49,
+   68.7,
+   0.48,
    1,
-   "prep:genre imagination 0.49 composure 0.45 comedy 0.37 screen 0.37"
+   "prep:genre imagination 0.48 screen 0.41 voiceover 0.31 comedy 0.3"
   ],
   [
    "2029-12-02",
    "imagination",
-   68.56,
-   0.49,
+   68.7,
+   0.48,
    1,
-   "prep:genre imagination 0.49 composure 0.45 comedy 0.37 screen 0.37"
+   "prep:genre imagination 0.48 screen 0.41 voiceover 0.31 comedy 0.3"
   ],
   [
    "2029-12-09",
    "imagination",
-   68.56,
+   68.71,
    0.49,
    1,
-   "prep:genre imagination 0.49 composure 0.45 comedy 0.37 screen 0.37"
+   "prep:genre imagination 0.49 screen 0.46 comedy 0.32 voiceover 0.27"
   ],
   [
    "2029-12-16",
    "imagination",
-   68.57,
+   68.73,
    0.49,
    1,
-   "prep:genre imagination 0.49 composure 0.45 comedy 0.37 screen 0.37"
+   "prep:genre imagination 0.49 screen 0.46 voiceover 0.34 comedy 0.28"
   ],
   [
    "2029-12-23",
-   "composure",
-   54.11,
-   0.58,
+   "imagination",
+   68.75,
+   0.46,
    1,
-   "prep:genre composure 0.58 imagination 0.46 comedy 0.4 screen 0.31"
+   "prep:genre imagination 0.46 voiceover 0.34 screen 0.34 composure 0.31"
   ],
   [
    "2029-12-30",
    "composure",
    54.11,
-   0.58,
+   0.49,
    1,
-   "prep:genre composure 0.58 imagination 0.46 comedy 0.4 screen 0.31"
+   "prep:genre composure 0.49 imagination 0.43 comedy 0.35 voiceover 0.29"
   ],
   [
    "2030-01-06",
    "composure",
    54.11,
-   0.58,
+   0.64,
    1,
-   "prep:genre composure 0.58 imagination 0.46 comedy 0.4 screen 0.31"
+   "prep:genre composure 0.64 imagination 0.39 comedy 0.3 voiceover 0.25"
   ],
   [
    "2030-01-13",
    "composure",
    54.11,
-   0.58,
+   0.64,
    1,
-   "prep:genre composure 0.58 imagination 0.46 comedy 0.4 screen 0.31"
+   "prep:genre composure 0.64 imagination 0.39 comedy 0.3 voiceover 0.25"
   ],
   [
    "2030-01-20",
    "composure",
    54.11,
-   0.58,
+   0.64,
    1,
-   "prep:genre composure 0.58 imagination 0.46 comedy 0.4 screen 0.31"
+   "prep:genre composure 0.64 imagination 0.39 comedy 0.3 voiceover 0.25"
   ],
   [
    "2030-01-27",
    "composure",
    54.11,
-   0.58,
+   0.78,
    1,
-   "prep:genre composure 0.58 imagination 0.46 comedy 0.4 screen 0.31"
+   "prep:genre composure 0.78 imagination 0.36 comedy 0.28 voiceover 0.21"
   ],
   [
    "2030-02-03",
    "composure",
    54.11,
-   0.58,
+   0.91,
    1,
-   "prep:genre composure 0.58 imagination 0.46 comedy 0.4 screen 0.31"
+   "prep:genre composure 0.91 imagination 0.34 comedy 0.27 voiceover 0.17"
   ],
   [
    "2030-02-10",
    "composure",
    54.11,
-   0.58,
+   0.92,
    1,
-   "prep:genre composure 0.58 imagination 0.45 comedy 0.4 screen 0.31"
+   "prep:genre composure 0.92 imagination 0.34 character 0.21 comedy 0.18"
   ],
   [
    "2030-02-17",
    "composure",
    54.11,
-   0.58,
+   0.79,
    1,
-   "prep:genre composure 0.58 imagination 0.42 comedy 0.4 screen 0.31"
+   "prep:genre composure 0.79 imagination 0.38 screen 0.29 comedy 0.2"
   ],
   [
    "2030-02-24",
    "composure",
    54.11,
-   0.58,
+   0.64,
    1,
-   "prep:genre composure 0.58 comedy 0.4 imagination 0.39 screen 0.31"
+   "prep:genre composure 0.64 screen 0.44 imagination 0.43 comedy 0.23"
   ]
  ],
  "monthly": [
@@ -10518,10 +10715,10 @@
     "listening": 99.5,
     "imagination": 68.5,
     "focus": 58.9,
-    "memory": 68.5,
+    "memory": 68.6,
     "adaptability": 57.8,
     "composure": 54.1,
-    "vocal": 72,
+    "vocal": 71.7,
     "physical": 64.9,
     "discipline": 100,
     "stamina": 35
@@ -10554,12 +10751,12 @@
     "emotionalDepth": 99.6,
     "presence": 99.5,
     "listening": 99.5,
-    "imagination": 68.5,
+    "imagination": 68.6,
     "focus": 58.9,
     "memory": 68.6,
     "adaptability": 57.8,
     "composure": 54.1,
-    "vocal": 78.8,
+    "vocal": 77.3,
     "physical": 64.9,
     "discipline": 100,
     "stamina": 35
@@ -10592,18 +10789,18 @@
     "emotionalDepth": 99.6,
     "presence": 99.5,
     "listening": 99.5,
-    "imagination": 68.5,
+    "imagination": 68.6,
     "focus": 58.9,
-    "memory": 68.6,
+    "memory": 68.7,
     "adaptability": 57.8,
     "composure": 54.1,
-    "vocal": 85.9,
+    "vocal": 83.8,
     "physical": 64.9,
     "discipline": 100,
     "stamina": 35
    },
-   "genresKnown": 7,
-   "bank": 131877,
+   "genresKnown": 8,
+   "bank": 132215,
    "yaleOwed": 0,
    "hold": false,
    "mustRegister": false,
@@ -10630,18 +10827,18 @@
     "emotionalDepth": 99.6,
     "presence": 99.5,
     "listening": 99.5,
-    "imagination": 68.5,
-    "focus": 58.9,
-    "memory": 68.6,
+    "imagination": 68.6,
+    "focus": 59,
+    "memory": 68.7,
     "adaptability": 57.8,
     "composure": 54.1,
-    "vocal": 92.1,
+    "vocal": 89.7,
     "physical": 64.9,
     "discipline": 100,
     "stamina": 35
    },
    "genresKnown": 8,
-   "bank": 85073,
+   "bank": 85410,
    "yaleOwed": 0,
    "hold": false,
    "mustRegister": false,
@@ -10668,18 +10865,18 @@
     "emotionalDepth": 99.6,
     "presence": 99.5,
     "listening": 99.5,
-    "imagination": 68.5,
-    "focus": 58.9,
-    "memory": 68.6,
+    "imagination": 68.7,
+    "focus": 59,
+    "memory": 68.8,
     "adaptability": 57.8,
     "composure": 54.1,
-    "vocal": 99.2,
+    "vocal": 96.1,
     "physical": 64.9,
     "discipline": 100,
     "stamina": 35
    },
    "genresKnown": 8,
-   "bank": 84773,
+   "bank": 85110,
    "yaleOwed": 0,
    "hold": false,
    "mustRegister": false,
@@ -10706,9 +10903,9 @@
     "emotionalDepth": 99.6,
     "presence": 99.5,
     "listening": 99.5,
-    "imagination": 68.6,
-    "focus": 58.9,
-    "memory": 76.2,
+    "imagination": 68.7,
+    "focus": 59,
+    "memory": 73.2,
     "adaptability": 57.8,
     "composure": 54.1,
     "vocal": 99.6,
@@ -10717,7 +10914,7 @@
     "stamina": 35
    },
    "genresKnown": 8,
-   "bank": 84126,
+   "bank": 84463,
    "yaleOwed": 0,
    "hold": false,
    "mustRegister": false,
@@ -10744,9 +10941,9 @@
     "emotionalDepth": 99.6,
     "presence": 99.5,
     "listening": 99.5,
-    "imagination": 68.6,
-    "focus": 58.9,
-    "memory": 83.3,
+    "imagination": 68.7,
+    "focus": 59,
+    "memory": 80.1,
     "adaptability": 57.8,
     "composure": 54.1,
     "vocal": 99.6,
@@ -10755,7 +10952,7 @@
     "stamina": 35
    },
    "genresKnown": 8,
-   "bank": 83632,
+   "bank": 83969,
    "yaleOwed": 0,
    "hold": false,
    "mustRegister": false,
@@ -10782,9 +10979,9 @@
     "emotionalDepth": 99.6,
     "presence": 99.5,
     "listening": 99.5,
-    "imagination": 68.6,
-    "focus": 58.9,
-    "memory": 90.5,
+    "imagination": 68.8,
+    "focus": 59,
+    "memory": 86.3,
     "adaptability": 57.8,
     "composure": 54.1,
     "vocal": 99.6,
@@ -10793,7 +10990,7 @@
     "stamina": 35
    },
    "genresKnown": 8,
-   "bank": 81960,
+   "bank": 82298,
    "yaleOwed": 0,
    "hold": false,
    "mustRegister": false,
@@ -10820,9 +11017,9 @@
     "emotionalDepth": 99.6,
     "presence": 99.5,
     "listening": 99.5,
-    "imagination": 68.6,
-    "focus": 58.9,
-    "memory": 97.9,
+    "imagination": 68.8,
+    "focus": 59,
+    "memory": 93.2,
     "adaptability": 57.8,
     "composure": 54.1,
     "vocal": 99.6,
@@ -10831,7 +11028,7 @@
     "stamina": 35
    },
    "genresKnown": 8,
-   "bank": 81080,
+   "bank": 81417,
    "yaleOwed": 0,
    "hold": false,
    "mustRegister": false,
@@ -10934,41 +11131,40 @@
   },
   "2029-05": {
    "sense-memory": 74,
-   "voice-work": 35
+   "voice-work": 31
   },
   "2029-06": {
-   "voice-work": 112
+   "voice-work": 92
   },
   "2029-07": {
-   "voice-work": 120
+   "voice-work": 110
   },
   "2029-08": {
-   "voice-work": 107
+   "voice-work": 100
   },
   "2029-09": {
-   "voice-work": 120
+   "voice-work": 108
   },
   "2029-10": {
-   "voice-work": 5,
-   "recall-drill": 115
+   "voice-work": 57,
+   "recall-drill": 63
   },
   "2029-11": {
-   "recall-drill": 120
+   "recall-drill": 116
   },
   "2029-12": {
-   "recall-drill": 120
+   "recall-drill": 104
   },
   "2030-01": {
-   "recall-drill": 124
+   "recall-drill": 116
   },
   "2030-02": {
-   "recall-drill": 25,
-   "given-circumstances": 87
+   "recall-drill": 92
   }
  },
  "commands": {
-  "practice.exercise": 2841,
-  "life.sleep": 1290,
+  "practice.exercise": 2740,
+  "life.sleep": 1291,
   "school.prepare": 3905,
   "school.choose": 365,
   "school.ask_partner": 1176,
@@ -10989,12 +11185,13 @@
   "life.look_after": 1,
   "pro.agent_check": 1,
   "pro.send_materials": 1,
-  "pro.submit": 7,
-  "pro.prepare": 146,
-  "pro.tape_audition": 4,
-  "health.enroll": 1,
-  "pro.accept_offer": 2,
-  "world.take_decision_action": 2
+  "pro.submit": 30,
+  "pro.prepare": 572,
+  "pro.tape_audition": 27,
+  "pro.accept_offer": 3,
+  "world.take_decision_action": 7,
+  "pro.decline_offer": 4,
+  "health.enroll": 1
  },
  "b20": {
   "life": "b20-4",
@@ -11036,7 +11233,7 @@
     "at": "2026-12-11T22:25",
     "what": "term 0 reviewed: good",
     "same": true,
-    "bytes": 497291,
+    "bytes": 501975,
     "credit": {
      "at": "2026-12-11T22:25",
      "what": "term 0 reviewed: good",
@@ -11056,7 +11253,7 @@
     "at": "2027-01-01T12:25",
     "what": "the end of 2026",
     "same": true,
-    "bytes": 516753,
+    "bytes": 521438,
     "credit": {
      "at": "2027-01-01T12:25",
      "what": "the end of 2026",
@@ -11076,7 +11273,7 @@
     "at": "2027-04-23T21:25",
     "what": "term 1 reviewed: good",
     "same": true,
-    "bytes": 952731,
+    "bytes": 967072,
     "credit": {
      "at": "2027-04-23T21:25",
      "what": "term 1 reviewed: good",
@@ -11096,7 +11293,7 @@
     "at": "2027-12-10T22:05",
     "what": "term 2 reviewed: good",
     "same": true,
-    "bytes": 1388444,
+    "bytes": 1417262,
     "credit": {
      "at": "2027-12-10T22:05",
      "what": "term 2 reviewed: good",
@@ -11116,7 +11313,7 @@
     "at": "2028-01-01T12:05",
     "what": "the end of 2027",
     "same": true,
-    "bytes": 1381732,
+    "bytes": 1408567,
     "credit": {
      "at": "2028-01-01T12:05",
      "what": "the end of 2027",
@@ -11136,7 +11333,7 @@
     "at": "2028-04-28T21:20",
     "what": "term 3 reviewed: good",
     "same": true,
-    "bytes": 1556614,
+    "bytes": 1580103,
     "credit": {
      "at": "2028-04-28T21:20",
      "what": "term 3 reviewed: good",
@@ -11156,7 +11353,7 @@
     "at": "2028-12-08T22:30",
     "what": "term 4 reviewed: good",
     "same": true,
-    "bytes": 1683589,
+    "bytes": 1705015,
     "credit": {
      "at": "2028-12-08T22:30",
      "what": "term 4 reviewed: good",
@@ -11176,7 +11373,7 @@
     "at": "2029-01-01T12:30",
     "what": "the end of 2028",
     "same": true,
-    "bytes": 1678097,
+    "bytes": 1698885,
     "credit": {
      "at": "2029-01-01T12:30",
      "what": "the end of 2028",
@@ -11196,7 +11393,7 @@
     "at": "2029-04-27T21:05",
     "what": "term 5 reviewed: good",
     "same": true,
-    "bytes": 1764471,
+    "bytes": 1783075,
     "credit": {
      "at": "2029-04-27T21:05",
      "what": "term 5 reviewed: good",
@@ -11216,7 +11413,7 @@
     "at": "2029-05-21T14:25",
     "what": "the School’s end: graduated",
     "same": true,
-    "bytes": 1771629,
+    "bytes": 1789945,
     "credit": {
      "at": "2029-05-21T14:25",
      "what": "the School’s end: graduated",
@@ -11233,13 +11430,13 @@
     }
    },
    {
-    "at": "2029-08-16T22:00",
-    "what": "the first booking: Ivy in Paper Moons",
+    "at": "2029-07-11T21:45",
+    "what": "the first booking: Rosalind Nakashima in Last Assembly",
     "same": true,
-    "bytes": 1836963,
+    "bytes": 1839913,
     "credit": {
-     "at": "2029-08-16T22:00",
-     "what": "the first booking: Ivy in Paper Moons",
+     "at": "2029-07-11T21:45",
+     "what": "the first booking: Rosalind Nakashima in Last Assembly",
      "cards": [
       {
        "name": "Chase Freedom Unlimited",
@@ -11248,17 +11445,17 @@
       }
      ],
      "score": 850,
-     "income12": 3316.56,
-     "bank": 131684.26
+     "income12": 3316.57,
+     "bank": 132087.09
     }
    },
    {
-    "at": "2029-08-27T22:00",
+    "at": "2029-07-17T22:00",
     "what": "the first work day",
     "same": true,
-    "bytes": 1838884,
+    "bytes": 1843897,
     "credit": {
-     "at": "2029-08-27T22:00",
+     "at": "2029-07-17T22:00",
      "what": "the first work day",
      "cards": [
       {
@@ -11268,15 +11465,35 @@
       }
      ],
      "score": 850,
-     "income12": 3316.56,
-     "bank": 131574.26
+     "income12": 3316.57,
+     "bank": 132027.09
+    }
+   },
+   {
+    "at": "2029-07-26T16:00",
+    "what": "the first pay",
+    "same": true,
+    "bytes": 1851535,
+    "credit": {
+     "at": "2029-07-26T16:00",
+     "what": "the first pay",
+     "cards": [
+      {
+       "name": "Chase Freedom Unlimited",
+       "limit": 54094,
+       "owed": 0
+      }
+     ],
+     "score": 850,
+     "income12": 3316.57,
+     "bank": 132274.59
     }
    },
    {
     "at": "2030-01-01T12:30",
     "what": "the end of 2029",
     "same": true,
-    "bytes": 1810533,
+    "bytes": 1860023,
     "credit": {
      "at": "2030-01-01T12:30",
      "what": "the end of 2029",
@@ -11288,8 +11505,8 @@
       }
      ],
      "score": 850,
-     "income12": 1659.04,
-     "bank": 81960.22
+     "income12": 2034.04,
+     "bank": 82297.72
     }
    }
   ],
@@ -11449,8 +11666,8 @@
     "bank": 132656.32
    },
    {
-    "at": "2029-08-16T22:00",
-    "what": "the first booking: Ivy in Paper Moons",
+    "at": "2029-07-11T21:45",
+    "what": "the first booking: Rosalind Nakashima in Last Assembly",
     "cards": [
      {
       "name": "Chase Freedom Unlimited",
@@ -11459,11 +11676,11 @@
      }
     ],
     "score": 850,
-    "income12": 3316.56,
-    "bank": 131684.26
+    "income12": 3316.57,
+    "bank": 132087.09
    },
    {
-    "at": "2029-08-27T22:00",
+    "at": "2029-07-17T22:00",
     "what": "the first work day",
     "cards": [
      {
@@ -11473,8 +11690,22 @@
      }
     ],
     "score": 850,
-    "income12": 3316.56,
-    "bank": 131574.26
+    "income12": 3316.57,
+    "bank": 132027.09
+   },
+   {
+    "at": "2029-07-26T16:00",
+    "what": "the first pay",
+    "cards": [
+     {
+      "name": "Chase Freedom Unlimited",
+      "limit": 54094,
+      "owed": 0
+     }
+    ],
+    "score": 850,
+    "income12": 3316.57,
+    "bank": 132274.59
    },
    {
     "at": "2030-01-01T12:30",
@@ -11487,11 +11718,11 @@
      }
     ],
     "score": 850,
-    "income12": 1659.04,
-    "bank": 81960.22
+    "income12": 2034.04,
+    "bank": 82297.72
    },
    {
-    "at": "2030-03-01T12:30",
+    "at": "2030-03-01T12:00",
     "what": "the journey’s end",
     "cards": [
      {
@@ -11501,8 +11732,8 @@
      }
     ],
     "score": 850,
-    "income12": 968.3,
-    "bank": 80799.86
+    "income12": 1343.3,
+    "bank": 81137.36
    }
   ],
   "forks": [
@@ -11512,8 +11743,8 @@
     "days": 14,
     "same": true,
     "bytes": [
-     141322,
-     141322
+     142948,
+     142948
     ],
     "straight": {
      "now": "2026-09-15T11:15",
@@ -11542,7 +11773,9 @@
      "opportunities": [
       "winter-ledger-hester lapsed",
       "eastview lapsed",
-      "paper-moons-ivy lapsed"
+      "paper-moons-ivy lapsed",
+      "tidewater-reenactment lapsed",
+      "harbor-line open"
      ],
      "engagements": [],
      "work": [
@@ -11583,7 +11816,9 @@
      "opportunities": [
       "winter-ledger-hester lapsed",
       "eastview lapsed",
-      "paper-moons-ivy lapsed"
+      "paper-moons-ivy lapsed",
+      "tidewater-reenactment lapsed",
+      "harbor-line open"
      ],
      "engagements": [],
      "work": [
@@ -11597,7 +11832,7 @@
      ],
      "transactions": 29
     },
-    "secs": 1
+    "secs": 2
    },
    {
     "why": "a union bill due 2030-05-21T14:00: Initiation fee, part 2 of 3",
@@ -11605,177 +11840,216 @@
     "days": 14,
     "same": true,
     "bytes": [
-     1770994,
-     1770994
+     1792566,
+     1792566
     ],
     "straight": {
-     "now": "2029-06-04T14:25",
+     "now": "2029-06-04T14:55",
      "bank": 132516.71,
      "standing": "graduated",
      "notices": [
+      "A Self-Tape For Pickett The Ferret",
       "Thomas Ashgrove’s Office Passed",
-      "OPT Approved"
+      "A Callback For Pickett The Ferret",
+      "OPT Approved",
+      "Not Cast As Pickett The Ferret"
      ],
      "opportunities": [
-      "eastview submitted"
-     ],
-     "engagements": [],
-     "work": [],
-     "transactions": 1164
-    },
-    "reopened": {
-     "now": "2029-06-04T14:25",
-     "bank": 132516.71,
-     "standing": "graduated",
-     "notices": [
-      "Thomas Ashgrove’s Office Passed",
-      "OPT Approved"
-     ],
-     "opportunities": [
-      "eastview submitted"
-     ],
-     "engagements": [],
-     "work": [],
-     "transactions": 1164
-    },
-    "secs": 5
-   },
-   {
-    "why": "an audition (self-tape) set for 2029-06-10T22:00, Robin in Last Bus To Eastview",
-    "at": "2029-06-06T14:25",
-    "days": 14,
-    "same": true,
-    "bytes": [
-     1774842,
-     1774842
-    ],
-    "straight": {
-     "now": "2029-06-20T14:55",
-     "bank": 132326.71,
-     "standing": "graduated",
-     "notices": [
-      "Not Cast As Robin",
-      "Happy Birthday: 27"
-     ],
-     "opportunities": [
-      "eastview passed"
+      "lantern-row passed",
+      "eastview submitted",
+      "lamplighters submitted"
      ],
      "engagements": [],
      "work": [
-      "Robin, Last Bus To Eastview: Audition, Taped 67.1"
+      "Pickett The Ferret, Lantern Row: Audition, Taped 68.5",
+      "Pickett The Ferret, Lantern Row: Callback, Taped 67.5"
+     ],
+     "transactions": 1164
+    },
+    "reopened": {
+     "now": "2029-06-04T14:55",
+     "bank": 132516.71,
+     "standing": "graduated",
+     "notices": [
+      "A Self-Tape For Pickett The Ferret",
+      "Thomas Ashgrove’s Office Passed",
+      "A Callback For Pickett The Ferret",
+      "OPT Approved",
+      "Not Cast As Pickett The Ferret"
+     ],
+     "opportunities": [
+      "lantern-row passed",
+      "eastview submitted",
+      "lamplighters submitted"
+     ],
+     "engagements": [],
+     "work": [
+      "Pickett The Ferret, Lantern Row: Audition, Taped 68.5",
+      "Pickett The Ferret, Lantern Row: Callback, Taped 67.5"
+     ],
+     "transactions": 1164
+    },
+    "secs": 7
+   },
+   {
+    "why": "an audition (self-tape) set for 2029-06-10T22:00, Robin in Last Bus To Eastview",
+    "at": "2029-06-06T14:55",
+    "days": 14,
+    "same": true,
+    "bytes": [
+     1808955,
+     1808955
+    ],
+    "straight": {
+     "now": "2029-06-20T15:00",
+     "bank": 132326.71,
+     "standing": "graduated",
+     "notices": [
+      "A Callback For The Apprentice Lamplighter",
+      "Not Cast As Robin",
+      "Happy Birthday: 27",
+      "A Self-Tape For Dana Kell",
+      "A Self-Tape For Rosalind Nakashima",
+      "A Self-Tape For Marlowe"
+     ],
+     "opportunities": [
+      "eastview passed",
+      "lamplighters callback",
+      "s1.1hzbm.2029-06-11.new-york.documentary.0.0 lapsed",
+      "harbor-line audition",
+      "s1.1hzbm.2029-06-18.new-york.non-union-short.0.1 audition",
+      "s1.1hzbm.2029-06-18.los-angeles.ultra-low-budget.0.0 audition"
+     ],
+     "engagements": [],
+     "work": [
+      "Robin, Last Bus To Eastview: Audition, Taped 66.9",
+      "The Apprentice Lamplighter, The Lamplighters: Audition 69.4",
+      "The Apprentice Lamplighter, The Lamplighters: Callback 65.8"
      ],
      "transactions": 1181
     },
     "reopened": {
-     "now": "2029-06-20T14:55",
+     "now": "2029-06-20T15:00",
      "bank": 132326.71,
      "standing": "graduated",
      "notices": [
+      "A Callback For The Apprentice Lamplighter",
       "Not Cast As Robin",
-      "Happy Birthday: 27"
+      "Happy Birthday: 27",
+      "A Self-Tape For Dana Kell",
+      "A Self-Tape For Rosalind Nakashima",
+      "A Self-Tape For Marlowe"
      ],
      "opportunities": [
-      "eastview passed"
+      "eastview passed",
+      "lamplighters callback",
+      "s1.1hzbm.2029-06-11.new-york.documentary.0.0 lapsed",
+      "harbor-line audition",
+      "s1.1hzbm.2029-06-18.new-york.non-union-short.0.1 audition",
+      "s1.1hzbm.2029-06-18.los-angeles.ultra-low-budget.0.0 audition"
      ],
      "engagements": [],
      "work": [
-      "Robin, Last Bus To Eastview: Audition, Taped 67.1"
+      "Robin, Last Bus To Eastview: Audition, Taped 66.9",
+      "The Apprentice Lamplighter, The Lamplighters: Audition 69.4",
+      "The Apprentice Lamplighter, The Lamplighters: Callback 65.8"
      ],
      "transactions": 1181
     },
     "secs": 7
    },
    {
-    "why": "an offer standing: An Offer For Ivy",
-    "at": "2029-08-02T21:25",
+    "why": "an offer standing: An Offer For Rosalind Nakashima",
+    "at": "2029-06-27T21:15",
     "days": 14,
     "same": true,
     "bytes": [
-     1836963,
-     1836963
+     1839913,
+     1839913
     ],
     "straight": {
-     "now": "2029-08-16T22:00",
-     "bank": 131684.26,
+     "now": "2029-07-11T21:45",
+     "bank": 132087.09,
      "standing": "graduated",
      "notices": [
-      "A Callback For Hester Vane",
-      "A Self-Tape For Robin"
+      "Not Cast As Jess"
      ],
      "opportunities": [
-      "paper-moons-ivy booked",
-      "winter-ledger-hester booked",
-      "eastview audition"
+      "harbor-line booked",
+      "s1.1hzbm.2029-06-18.new-york.non-union-short.0.1 booked",
+      "s1.1hzbm.2029-06-18.los-angeles.ultra-low-budget.0.0 declined",
+      "route-nine passed",
+      "g1.1hzbm.2029.los-angeles.animated-series.1.s1.0 lapsed"
      ],
      "engagements": [
-      "paper-moons-ivy booked 0 worked",
-      "winter-ledger-hester booked 0 worked"
+      "s1.1hzbm.2029-06-18.new-york.non-union-short.0.1 booked 0 worked",
+      "harbor-line booked 0 worked"
      ],
      "work": [
-      "Hester Vane, The Winter Ledger: Audition 69.6",
-      "Hester Vane, The Winter Ledger: Callback 70",
-      "Robin, Last Bus To Eastview: Audition, Taped 68.3"
+      "Jess, Static On Route 9: Audition, Taped 66.3"
      ],
-     "transactions": 1242
+     "transactions": 1204
     },
     "reopened": {
-     "now": "2029-08-16T22:00",
-     "bank": 131684.26,
+     "now": "2029-07-11T21:45",
+     "bank": 132087.09,
      "standing": "graduated",
      "notices": [
-      "A Callback For Hester Vane",
-      "A Self-Tape For Robin"
+      "Not Cast As Jess"
      ],
      "opportunities": [
-      "paper-moons-ivy booked",
-      "winter-ledger-hester booked",
-      "eastview audition"
+      "harbor-line booked",
+      "s1.1hzbm.2029-06-18.new-york.non-union-short.0.1 booked",
+      "s1.1hzbm.2029-06-18.los-angeles.ultra-low-budget.0.0 declined",
+      "route-nine passed",
+      "g1.1hzbm.2029.los-angeles.animated-series.1.s1.0 lapsed"
      ],
      "engagements": [
-      "paper-moons-ivy booked 0 worked",
-      "winter-ledger-hester booked 0 worked"
+      "s1.1hzbm.2029-06-18.new-york.non-union-short.0.1 booked 0 worked",
+      "harbor-line booked 0 worked"
      ],
      "work": [
-      "Hester Vane, The Winter Ledger: Audition 69.6",
-      "Hester Vane, The Winter Ledger: Callback 70",
-      "Robin, Last Bus To Eastview: Audition, Taped 68.3"
+      "Jess, Static On Route 9: Audition, Taped 66.3"
      ],
-     "transactions": 1242
+     "transactions": 1204
     },
-    "secs": 6
+    "secs": 9
    }
   ],
   "workDays": [
    {
-    "at": "2029-08-27T11:00",
-    "project": "Paper Moons",
-    "role": "Ivy",
+    "at": "2029-07-17T11:00",
+    "project": "Last Assembly",
+    "role": "Rosalind Nakashima",
     "status": "worked",
     "band": "strong",
     "authorized": true,
     "papers": [
+     "F-1 Student Visa valid",
      "Employment Authorization, OPT valid"
     ]
    },
    {
-    "at": "2029-08-28T11:00",
-    "project": "Paper Moons",
-    "role": "Ivy",
+    "at": "2029-07-18T11:00",
+    "project": "Last Assembly",
+    "role": "Rosalind Nakashima",
     "status": "worked",
     "band": "strong",
     "authorized": true,
     "papers": [
+     "F-1 Student Visa valid",
      "Employment Authorization, OPT valid"
     ]
    },
    {
-    "at": "2029-08-29T11:00",
-    "project": "Paper Moons",
-    "role": "Ivy",
+    "at": "2029-07-19T11:00",
+    "project": "Last Assembly",
+    "role": "Rosalind Nakashima",
     "status": "worked",
     "band": "strong",
     "authorized": true,
     "papers": [
+     "F-1 Student Visa valid",
      "Employment Authorization, OPT valid"
     ]
    }
@@ -11791,7 +12065,7 @@
    "pass": true,
    "evidence": [
     "standing graduated, reviews 0:good 1:good 2:good 3:good 4:good 5:good, credits 2027 Carlotta Festival Of New Plays (A Leading Part In A New Play, lead); 2027 The Seagull (Nina); 2027 Directors’ Thesis Production I (Lady Bracknell, supporting); 2028 Directors’ Thesis Production III (Marie, lead); 2028 Directors’ Thesis Production II (Mrs. Alving, lead); 2029 Shakespeare Repertory Project I (Isabella, lead)",
-    "genres practiced satire 94.5, domestic_drama 94.2, tragicomedy 91.1, drama 83.4, tragedy 69.1, political_drama 58.2, farce 41.3, coming_of_age 27.1; from plays and jobs: comedy, satire, farce, tragedy, drama, tragicomedy, domestic_drama, political_drama, coming_of_age; loved at creation: period_drama",
+    "genres practiced satire 94.5, domestic_drama 94.2, tragicomedy 91.1, drama 83.4, tragedy 69.1, political_drama 58.2, farce 41.3, slice_of_life 27.1; from plays and jobs: comedy, satire, farce, tragedy, drama, tragicomedy, domestic_drama, political_drama, slice_of_life; loved at creation: period_drama",
     "development (brief 13's check 3): pass"
    ],
    "fails": []
@@ -11799,8 +12073,8 @@
   "ledger": {
    "pass": true,
    "evidence": [
-    "16 accounts (3 the player's), 1453 transactions; every balance the sum of its postings: true; ledger audit 0 problems",
-    "the player's: checking Chase Total Checking 80799.86; savings Chase Savings 0 (closed); credit_card Chase Freedom Unlimited 0"
+    "16 accounts (3 the player's), 1454 transactions; every balance the sum of its postings: true; ledger audit 0 problems",
+    "the player's: checking Chase Total Checking 81137.36; savings Chase Savings 0 (closed); credit_card Chase Freedom Unlimited 0"
    ],
    "fails": []
   },
@@ -11808,7 +12082,7 @@
    "pass": true,
    "evidence": [
     "documents: passport British Passport (Standard 34-Page) valid to 2032-11-03; visa F-1 Student Visa cancelled to 2029-07-30; permit Employment Authorization, OPT cancelled to 2030-05-31",
-    "work days 3: 2029-08-27 Ivy worked [Employment Authorization, OPT valid]; 2029-08-28 Ivy worked [Employment Authorization, OPT valid]; 2029-08-29 Ivy worked [Employment Authorization, OPT valid]",
+    "work days 3: 2029-07-17 Rosalind Nakashima worked [F-1 Student Visa valid, Employment Authorization, OPT valid]; 2029-07-18 Rosalind Nakashima worked [F-1 Student Visa valid, Employment Authorization, OPT valid]; 2029-07-19 Rosalind Nakashima worked [F-1 Student Visa valid, Employment Authorization, OPT valid]",
     "authorized now false; OPT: The time to apply closed on July 30, 2029, 60 days after your program ended.; out of status 2029-09-02"
    ],
    "fails": []
@@ -11818,8 +12092,8 @@
    "evidence": [
     "classmates 15: bonds 35 53 33 58 29 45 39 45 51 29 46 100 36 36 39",
     "agents: thomas-ashgrove passed (discovered,introduced,checked,sent,passed); agreements none",
-    "engagements: Ivy in Paper Moons finished (3 worked, 0/1 paid); Hester Vane in The Winter Ledger canceled (0 worked, 0/0 paid)",
-    "credits: student-film Ivy in Paper Moons released strong"
+    "engagements: Rosalind Nakashima in Last Assembly finished (3 worked, 1/1 paid); Dana Kell in Harbor Line canceled (0 worked, 0/0 paid); The Narrator in Tidewater: The Last Oyster Towns canceled (0 worked, 0/0 paid)",
+    "credits: screen Rosalind Nakashima in Last Assembly released strong"
    ],
    "fails": []
   },
@@ -11834,25 +12108,61 @@
  "routes": {
   "represented": [],
   "unsigned": [
-   "no agreement in 2029-05-21T14:00 to 2030-03-01T12:30; 7 open calls submitted to of those kept"
+   "no agreement in 2029-05-21T14:00 to 2030-03-01T12:00; 30 open calls submitted to of those kept"
   ],
   "success": [
-   "Ivy in Paper Moons: finished, 0 payments received",
-   "Hester Vane in The Winter Ledger: canceled, 0 payments received",
-   "audition for paper-moons-ivy went on (strong)",
+   "Rosalind Nakashima in Last Assembly: finished, 1 payments received",
+   "Dana Kell in Harbor Line: canceled, 0 payments received",
+   "The Narrator in Tidewater: The Last Oyster Towns: canceled, 0 payments received",
+   "audition for lantern-row went on (strong)",
+   "audition for lamplighters went on (strong)",
+   "audition for harbor-line went on (strong)",
+   "callback for harbor-line went on (strong)",
+   "audition for s1.1hzbm.2029-06-18.new-york.non-union-short.0.1 went on (strong)",
+   "audition for s1.1hzbm.2029-06-18.los-angeles.ultra-low-budget.0.0 went on (strong)",
+   "callback for s1.1hzbm.2029-06-18.los-angeles.ultra-low-budget.0.0 went on (strong)",
+   "audition for tidewater-narrator went on (strong)",
+   "audition for s1.1hzbm.2029-09-10.new-york.ultra-low-budget.0.0 went on (strong)",
    "audition for winter-ledger-hester went on (strong)",
-   "callback for winter-ledger-hester went on (strong)"
+   "audition for s1.1hzbm.2030-01-14.boston.lort.0.1 went on (strong)",
+   "callback for s1.1hzbm.2030-01-14.boston.lort.0.1 went on (strong)",
+   "audition for s1.1hzbm.2030-01-28.new-york.student-film.0.1 went on (strong)",
+   "audition for s1.1hzbm.2030-02-04.washington.lort.0.0 went on (strong)",
+   "audition for s1.1hzbm.2030-02-11.new-york.ultra-low-budget.0.0 went on (strong)",
+   "audition for s1.1hzbm.2030-02-11.new-york.ultra-low-budget.0.2 went on (strong)"
   ],
   "failure": [
+   "callback for lantern-row strong: not cast (chance 21%)",
    "audition for eastview strong: not cast (chance 27%)",
+   "callback for lamplighters strong: not cast (chance 21%)",
    "audition for route-nine strong: not cast (chance 24%)",
-   "audition for eastview strong: not cast (chance 0%)",
-   "audition for eastview strong: not cast (chance 27%)",
+   "audition for paper-moons-ivy strong: not cast (chance 35%)",
    "audition for winter-ledger-hester strong: not cast (chance 50%)",
+   "audition for lantern-row strong: not cast (chance 43%)",
+   "audition for eastview strong: not cast (chance 27%)",
+   "audition for s1.1hzbm.2029-08-27.new-york.ultra-low-budget.0.0 strong: not cast (chance 29%)",
+   "audition for harbor-line strong: not cast (chance 38%)",
+   "audition for kite-and-crow strong: not cast (chance 40%)",
+   "audition for eastview strong: not cast (chance 27%)",
+   "audition for tidewater-narrator strong: not cast (chance 25%)",
+   "audition for s1.1hzbm.2029-12-03.los-angeles.ultra-low-budget.0.0 strong: not cast (chance 29%)",
+   "callback for winter-ledger-hester strong: not cast (chance 24%)",
+   "audition for salt-road strong: not cast (chance 25%)",
+   "audition for lantern-row strong: not cast (chance 43%)",
+   "audition for paper-moons-ivy strong: not cast (chance 35%)",
+   "audition for tidewater-reenactment strong: not cast (chance 26%)",
+   "callback for s1.1hzbm.2030-02-04.washington.lort.0.0 strong: not cast (chance 24%)",
+   "callback for s1.1hzbm.2030-02-11.new-york.ultra-low-budget.0.0 strong: not cast (chance 29%)",
+   "callback for s1.1hzbm.2030-02-11.new-york.ultra-low-budget.0.2 strong: not cast (chance 29%)",
    "thomas-ashgrove: passed"
   ],
   "delay": [],
-  "decline": [],
+  "decline": [
+   "July 1, 2029 at 5:45 PM | PRESS | Decline The Offer for s1.1hzbm.2029-06-18.los-angeles.ultra-low-budget.0.0 (You’re booked for Your Trip To Sydney on August 9, 2029, so you can’t take this as well.) | done",
+   "September 19, 2029 at 5:00 PM | PRESS | Decline The Offer for s1.1hzbm.2029-09-10.new-york.ultra-low-budget.0.0 (There’s no permission to work in the US among your papers. Papers, under Permission To Work, shows what you",
+   "January 31, 2030 at 5:00 PM | PRESS | Decline The Offer for s1.1hzbm.2030-01-14.boston.lort.0.1 (There’s no permission to work in the US among your papers. Papers, under Permission To Work, shows what you hold. That rule",
+   "February 8, 2030 at 9:45 AM | PRESS | Decline The Offer for s1.1hzbm.2030-01-28.new-york.student-film.0.1 (There’s no permission to work in the US among your papers. Papers, under Permission To Work, shows what you hold."
+  ],
   "interruption": [
    "2026-12-21 care emergency: The emergency room, Yale New Haven Hospital, York Street Campus Emergency Department; in hospital to 2026-12-21",
    "2027-01-11 care emergency: The emergency room, Yale New Haven Hospital, York Street Campus Emergency Department; in hospital to 2027-01-11",
@@ -11873,7 +12183,9 @@
    "2028-01-17 to 2028-01-17 in hospital: condition 98.8 the morning before, 78.8 at its start, 90.9 a week after its end",
    "2029-01-01 to 2029-01-05 ill: condition 91.3 the morning before, 66.3 at its start, 87.3 a week after its end"
   ],
-  "clash": [],
+  "clash": [
+   "July 1, 2029 at 5:45 PM | PRESS | Decline The Offer for s1.1hzbm.2029-06-18.los-angeles.ultra-low-budget.0.0 (You’re booked for Your Trip To Sydney on August 9, 2029, so you can’t take this as well.) | done"
+  ],
   "littleMoney": [],
   "poorPreparation": [
    "assignment_00000c Unready",
@@ -11896,12 +12208,15 @@
   "workAuthorization": [
    "F-1 Student Visa cancelled issued 2026-07-25 to 2029-07-30",
    "Employment Authorization, OPT cancelled issued 2029-05-31 to 2030-05-31",
+   "September 19, 2029 at 5:00 PM | PRESS | Decline The Offer for s1.1hzbm.2029-09-10.new-york.ultra-low-budget.0.0 (There’s no permission to work in the US among your papers. Papers, under Permission To Work, shows what you",
+   "January 31, 2030 at 5:00 PM | PRESS | Decline The Offer for s1.1hzbm.2030-01-14.boston.lort.0.1 (There’s no permission to work in the US among your papers. Papers, under Permission To Work, shows what you hold. That rule",
+   "February 8, 2030 at 9:45 AM | PRESS | Decline The Offer for s1.1hzbm.2030-01-28.new-york.student-film.0.1 (There’s no permission to work in the US among your papers. Papers, under Permission To Work, shows what you hold.",
    "May 31, 2029 at 10:05 AM | NOTICE | OPT Approved | You may work in the United States from May 31, 2029 to May 31, 2030. Every day from the first day of a job to its last counts as a day with work, and every other day as ",
    "September 2, 2029 at 12:00 AM | NOTICE | OPT Ended | You’d had more than 90 days without work since your OPT began, so it ended at the end of September 1, 2029, and with it your permission to work in the United States. A",
    "September 2, 2029 at 12:00 AM | NOTICE | Out Of Status | You stayed in the United States past the end of your status, so you’re now out of status. In the game, your US visa is canceled and the Visa Waiver Program is clos",
-   "2029-08-27T11:00 worked under Employment Authorization, OPT valid",
-   "2029-08-28T11:00 worked under Employment Authorization, OPT valid",
-   "2029-08-29T11:00 worked under Employment Authorization, OPT valid"
+   "2029-07-17T11:00 worked under F-1 Student Visa valid, Employment Authorization, OPT valid",
+   "2029-07-18T11:00 worked under F-1 Student Visa valid, Employment Authorization, OPT valid",
+   "2029-07-19T11:00 worked under F-1 Student Visa valid, Employment Authorization, OPT valid"
   ]
  }
 }

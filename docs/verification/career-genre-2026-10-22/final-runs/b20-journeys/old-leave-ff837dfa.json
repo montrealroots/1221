@@ -6,21 +6,21 @@
    "part": 1,
    "from": "2028-03-12",
    "to": "2029-01-10",
-   "secs": 50,
+   "secs": 65,
    "reloads": 10
   },
   {
    "part": 2,
    "from": "2029-01-10",
    "to": "2029-11-10",
-   "secs": 77,
+   "secs": 94,
    "reloads": 10
   },
   {
    "part": 3,
    "from": "2029-11-10",
    "to": "2030-09-01",
-   "secs": 160,
+   "secs": 136,
    "reloads": 9,
    "done": true
   }
@@ -39,7 +39,7 @@
    "6:good",
    "7:good"
   ],
-  "bank": 70383,
+  "bank": 69151,
   "audit": 0,
   "breaches": 0,
   "documents": [
@@ -208,7 +208,7 @@
   }
  ],
  "acts": [
-  "2030-08-02 health.enroll"
+  "2030-08-01 health.enroll"
  ],
  "health": [
   {
@@ -283,7 +283,7 @@
   }
  ],
  "reloads": {
-  "n": 44,
+  "n": 41,
   "notSame": []
  },
  "notices": [
@@ -3908,12 +3908,92 @@
    "Submitted For Ferris"
   ],
   [
+   "2030-06-03",
+   "Submitted For The Ferry Engineer"
+  ],
+  [
+   "2030-06-03",
+   "Submitted For The Night Auditor"
+  ],
+  [
+   "2030-06-03",
+   "Submitted For Robin Quaid"
+  ],
+  [
+   "2030-06-03",
+   "Submitted For Jules Rasmussen"
+  ],
+  [
    "2030-06-05",
    "A Self-Tape For Ferris"
   ],
   [
+   "2030-06-05",
+   "A Self-Tape For The Ferry Engineer"
+  ],
+  [
+   "2030-06-05",
+   "A Self-Tape For The Night Auditor"
+  ],
+  [
+   "2030-06-05",
+   "A Self-Tape For Robin Quaid"
+  ],
+  [
+   "2030-06-05",
+   "A Self-Tape For Jules Rasmussen"
+  ],
+  [
+   "2030-06-10",
+   "Submitted For Rowan"
+  ],
+  [
+   "2030-06-10",
+   "Submitted For Emery Dunleavy"
+  ],
+  [
+   "2030-06-10",
+   "Submitted For Kwame"
+  ],
+  [
+   "2030-06-10",
+   "Submitted For Jules"
+  ],
+  [
    "2030-06-10",
    "Not Cast As Ferris"
+  ],
+  [
+   "2030-06-10",
+   "Not Cast As The Ferry Engineer"
+  ],
+  [
+   "2030-06-10",
+   "Not Cast As The Night Auditor"
+  ],
+  [
+   "2030-06-10",
+   "Not Cast As Jules Rasmussen"
+  ],
+  [
+   "2030-06-12",
+   "A Self-Tape For Rowan"
+  ],
+  [
+   "2030-06-12",
+   "A Self-Tape For Emery Dunleavy"
+  ],
+  [
+   "2030-06-12",
+   "A Self-Tape For Kwame"
+  ],
+  [
+   "2030-06-12",
+   "An Audition For Jules"
+  ],
+  [
+   "2030-06-12",
+   "Not Cast As Robin Quaid"
   ],
   [
    "2030-06-14",
@@ -3924,8 +4004,56 @@
    "Submitted For Desk Clerk"
   ],
   [
+   "2030-06-17",
+   "Submitted For Ezra Ibarra"
+  ],
+  [
+   "2030-06-17",
+   "Submitted For Kwame"
+  ],
+  [
+   "2030-06-17",
+   "Submitted For Jules"
+  ],
+  [
+   "2030-06-17",
+   "A Callback For Emery Dunleavy"
+  ],
+  [
+   "2030-06-17",
+   "Not Cast As Kwame"
+  ],
+  [
+   "2030-06-18",
+   "Not Cast As Jules"
+  ],
+  [
    "2030-06-19",
    "A Self-Tape For Desk Clerk"
+  ],
+  [
+   "2030-06-19",
+   "A Self-Tape For Ezra Ibarra"
+  ],
+  [
+   "2030-06-19",
+   "A Self-Tape For Kwame"
+  ],
+  [
+   "2030-06-19",
+   "A Self-Tape For Jules"
+  ],
+  [
+   "2030-06-19",
+   "A Self-Tape For An Oyster Tonger Of 1890"
+  ],
+  [
+   "2030-06-19",
+   "Not Cast As Rowan"
+  ],
+  [
+   "2030-06-23",
+   "Not Cast As Emery Dunleavy"
   ],
   [
    "2030-06-24",
@@ -3934,6 +4062,14 @@
   [
    "2030-06-24",
    "Submitted For Jess"
+  ],
+  [
+   "2030-06-24",
+   "Not Cast As Ezra Ibarra"
+  ],
+  [
+   "2030-06-24",
+   "Not Cast As Jules"
   ],
   [
    "2030-06-26",
@@ -3948,8 +4084,24 @@
    "Not Cast As Desk Clerk"
   ],
   [
+   "2030-06-26",
+   "Not Cast As An Oyster Tonger Of 1890"
+  ],
+  [
+   "2030-06-26",
+   "Not Cast As Kwame"
+  ],
+  [
    "2030-07-01",
    "Submitted For Callum"
+  ],
+  [
+   "2030-07-01",
+   "Submitted For Ferris Cordray"
+  ],
+  [
+   "2030-07-01",
+   "Submitted For Hollis"
   ],
   [
    "2030-07-02",
@@ -3960,64 +4112,264 @@
    "An Audition For Callum"
   ],
   [
+   "2030-07-03",
+   "An Audition For Ferris Cordray"
+  ],
+  [
+   "2030-07-03",
+   "A Self-Tape For Hollis"
+  ],
+  [
+   "2030-07-03",
+   "Not Cast As Jess"
+  ],
+  [
+   "2030-07-08",
+   "Submitted For Hollis"
+  ],
+  [
    "2030-07-09",
-   "Not Cast As Callum"
+   "A Callback For Ferris Cordray"
+  ],
+  [
+   "2030-07-10",
+   "A Self-Tape For Hollis"
   ],
   [
    "2030-07-10",
    "An Audition For Felix"
   ],
   [
+   "2030-07-10",
+   "A Self-Tape For Miles Arden"
+  ],
+  [
+   "2030-07-10",
+   "A Self-Tape For Harbormaster Brandt"
+  ],
+  [
+   "2030-07-10",
+   "Not Cast As Hollis"
+  ],
+  [
+   "2030-07-10",
+   "A Callback For Callum"
+  ],
+  [
+   "2030-07-15",
+   "Submitted For Reese"
+  ],
+  [
+   "2030-07-15",
+   "Submitted For Silas Jessop"
+  ],
+  [
+   "2030-07-15",
+   "You Missed The Callback For Ferris Cordray"
+  ],
+  [
+   "2030-07-15",
+   "Not Cast As Miles Arden"
+  ],
+  [
+   "2030-07-17",
+   "A Self-Tape For Reese"
+  ],
+  [
+   "2030-07-17",
+   "A Self-Tape For Silas Jessop"
+  ],
+  [
    "2030-07-17",
    "A Self-Tape For Robin"
+  ],
+  [
+   "2030-07-17",
+   "Not Cast As Harbormaster Brandt"
+  ],
+  [
+   "2030-07-17",
+   "Not Cast As Hollis"
   ],
   [
    "2030-07-18",
    "Not Cast As Felix"
   ],
   [
+   "2030-07-19",
+   "Not Cast As Callum"
+  ],
+  [
+   "2030-07-22",
+   "Submitted For The Getaway Driver"
+  ],
+  [
+   "2030-07-22",
+   "Submitted For Reese Pike"
+  ],
+  [
+   "2030-07-22",
+   "Submitted For Callum Ashdown"
+  ],
+  [
+   "2030-07-22",
+   "Submitted For Kwame Strand"
+  ],
+  [
+   "2030-07-22",
+   "Not Cast As Reese"
+  ],
+  [
+   "2030-07-24",
+   "A Self-Tape For The Getaway Driver"
+  ],
+  [
+   "2030-07-24",
+   "A Self-Tape For Reese Pike"
+  ],
+  [
+   "2030-07-24",
+   "An Audition For Callum Ashdown"
+  ],
+  [
+   "2030-07-24",
+   "A Self-Tape For Kwame Strand"
+  ],
+  [
+   "2030-07-24",
+   "Not Cast As Robin"
+  ],
+  [
+   "2030-07-24",
+   "Not Cast As Silas Jessop"
+  ],
+  [
    "2030-07-26",
    "A New Card Is On Its Way"
+  ],
+  [
+   "2030-07-29",
+   "Not Cast As The Getaway Driver"
+  ],
+  [
+   "2030-07-30",
+   "A Callback For Callum Ashdown"
+  ],
+  [
+   "2030-07-31",
+   "Not Cast As Reese Pike"
+  ],
+  [
+   "2030-07-31",
+   "Not Cast As Kwame Strand"
   ],
   [
    "2030-08-01",
    "Your Health Cover Ended"
   ],
   [
-   "2030-08-01",
-   "You Wrapped Static On Route 9"
+   "2030-08-05",
+   "Submitted For The Apprentice Lamplighter"
+  ],
+  [
+   "2030-08-05",
+   "Submitted For The Orchard’s Bookkeeper"
+  ],
+  [
+   "2030-08-07",
+   "An Audition For The Apprentice Lamplighter"
+  ],
+  [
+   "2030-08-07",
+   "A Self-Tape For The Orchard’s Bookkeeper"
   ],
   [
    "2030-08-08",
-   "Pay Held For You At Halberd Talent"
+   "Not Cast As Callum Ashdown"
+  ],
+  [
+   "2030-08-12",
+   "Submitted For The Night Auditor"
+  ],
+  [
+   "2030-08-12",
+   "Submitted For The Lamp Shop’s Owner"
+  ],
+  [
+   "2030-08-12",
+   "A Callback For The Orchard’s Bookkeeper"
   ],
   [
    "2030-08-13",
-   "Paid On From Halberd Talent"
+   "Not Cast As The Apprentice Lamplighter"
+  ],
+  [
+   "2030-08-14",
+   "A Self-Tape For The Night Auditor"
+  ],
+  [
+   "2030-08-14",
+   "A Self-Tape For The Lamp Shop’s Owner"
+  ],
+  [
+   "2030-08-18",
+   "Not Cast As The Orchard’s Bookkeeper"
   ],
   [
    "2030-08-19",
    "Submitted For Ferris"
   ],
   [
-   "2030-08-20",
-   "You Wrapped Last Bus To Eastview"
+   "2030-08-19",
+   "Submitted For Kwame"
+  ],
+  [
+   "2030-08-19",
+   "Submitted For Jules Rasmussen"
+  ],
+  [
+   "2030-08-19",
+   "A Callback For The Night Auditor"
+  ],
+  [
+   "2030-08-19",
+   "A Callback For The Lamp Shop’s Owner"
   ],
   [
    "2030-08-21",
    "A Self-Tape For Ferris"
   ],
   [
-   "2030-08-22",
-   "Pay Held For You At Halberd Talent"
+   "2030-08-21",
+   "A Self-Tape For Kwame"
+  ],
+  [
+   "2030-08-21",
+   "A Self-Tape For Jules Rasmussen"
+  ],
+  [
+   "2030-08-25",
+   "Not Cast As The Night Auditor"
+  ],
+  [
+   "2030-08-25",
+   "Not Cast As The Lamp Shop’s Owner"
   ],
   [
    "2030-08-26",
-   "A Callback For Ferris"
+   "Submitted For Ezra Ibarra"
   ],
   [
-   "2030-08-27",
-   "Paid On From Halberd Talent"
+   "2030-08-26",
+   "Submitted For Ferris Quaid"
+  ],
+  [
+   "2030-08-28",
+   "A Self-Tape For Ezra Ibarra"
+  ],
+  [
+   "2030-08-28",
+   "A Self-Tape For Ferris Quaid"
   ]
  ],
  "b20": {
@@ -4057,7 +4409,7 @@
     "at": "2028-04-28T21:10",
     "what": "term 3 reviewed: good",
     "same": true,
-    "bytes": 1065253,
+    "bytes": 1072503,
     "credit": {
      "at": "2028-04-28T21:10",
      "what": "term 3 reviewed: good",
@@ -4077,7 +4429,7 @@
     "at": "2028-12-08T22:25",
     "what": "term 4 reviewed: good",
     "same": true,
-    "bytes": 1441736,
+    "bytes": 1470286,
     "credit": {
      "at": "2028-12-08T22:25",
      "what": "term 4 reviewed: good",
@@ -4097,7 +4449,7 @@
     "at": "2029-01-01T12:25",
     "what": "the end of 2028",
     "same": true,
-    "bytes": 1452601,
+    "bytes": 1482146,
     "credit": {
      "at": "2029-01-01T12:25",
      "what": "the end of 2028",
@@ -4117,7 +4469,7 @@
     "at": "2029-04-27T21:20",
     "what": "term 5 reviewed: good",
     "same": true,
-    "bytes": 1660524,
+    "bytes": 1692459,
     "credit": {
      "at": "2029-04-27T21:20",
      "what": "term 5 reviewed: good",
@@ -4137,7 +4489,7 @@
     "at": "2029-12-14T22:15",
     "what": "term 6 reviewed: good",
     "same": true,
-    "bytes": 1809333,
+    "bytes": 1834088,
     "credit": {
      "at": "2029-12-14T22:15",
      "what": "term 6 reviewed: good",
@@ -4157,7 +4509,7 @@
     "at": "2030-01-01T12:15",
     "what": "the end of 2029",
     "same": true,
-    "bytes": 1808726,
+    "bytes": 1833995,
     "credit": {
      "at": "2030-01-01T12:15",
      "what": "the end of 2029",
@@ -4177,7 +4529,7 @@
     "at": "2030-04-26T21:20",
     "what": "term 7 reviewed: good",
     "same": true,
-    "bytes": 1899655,
+    "bytes": 1925310,
     "credit": {
      "at": "2030-04-26T21:20",
      "what": "term 7 reviewed: good",
@@ -4197,7 +4549,7 @@
     "at": "2030-05-20T14:40",
     "what": "the School’s end: graduated",
     "same": true,
-    "bytes": 1911436,
+    "bytes": 1935491,
     "credit": {
      "at": "2030-05-20T14:40",
      "what": "the School’s end: graduated",
@@ -4217,7 +4569,7 @@
     "at": "2030-06-03T15:00",
     "what": "a signing",
     "same": true,
-    "bytes": 1918949,
+    "bytes": 1953980,
     "credit": {
      "at": "2030-06-03T15:00",
      "what": "a signing",
@@ -4231,66 +4583,6 @@
      "score": 850,
      "income12": 3460.41,
      "bank": 70847.44
-    }
-   },
-   {
-    "at": "2030-07-17T21:45",
-    "what": "the first booking: Jess in Static On Route 9",
-    "same": true,
-    "bytes": 1960326,
-    "credit": {
-     "at": "2030-07-17T21:45",
-     "what": "the first booking: Jess in Static On Route 9",
-     "cards": [
-      {
-       "name": "Chase Freedom Unlimited",
-       "limit": 162280,
-       "owed": 0
-      }
-     ],
-     "score": 850,
-     "income12": 3457.02,
-     "bank": 70407.44
-    }
-   },
-   {
-    "at": "2030-07-29T22:00",
-    "what": "the first work day",
-    "same": true,
-    "bytes": 1968243,
-    "credit": {
-     "at": "2030-07-29T22:00",
-     "what": "the first work day",
-     "cards": [
-      {
-       "name": "Chase Freedom Unlimited",
-       "limit": 162280,
-       "owed": 0
-      }
-     ],
-     "score": 850,
-     "income12": 3457.02,
-     "bank": 70277.44
-    }
-   },
-   {
-    "at": "2030-08-13T16:00",
-    "what": "the first pay",
-    "same": true,
-    "bytes": 1973369,
-    "credit": {
-     "at": "2030-08-13T16:00",
-     "what": "the first pay",
-     "cards": [
-      {
-       "name": "Chase Freedom Unlimited",
-       "limit": 162280,
-       "owed": 0
-      }
-     ],
-     "score": 850,
-     "income12": 3453.51,
-     "bank": 71153.2
     }
    }
   ],
@@ -4436,49 +4728,7 @@
     "bank": 70847.44
    },
    {
-    "at": "2030-07-17T21:45",
-    "what": "the first booking: Jess in Static On Route 9",
-    "cards": [
-     {
-      "name": "Chase Freedom Unlimited",
-      "limit": 162280,
-      "owed": 0
-     }
-    ],
-    "score": 850,
-    "income12": 3457.02,
-    "bank": 70407.44
-   },
-   {
-    "at": "2030-07-29T22:00",
-    "what": "the first work day",
-    "cards": [
-     {
-      "name": "Chase Freedom Unlimited",
-      "limit": 162280,
-      "owed": 0
-     }
-    ],
-    "score": 850,
-    "income12": 3457.02,
-    "bank": 70277.44
-   },
-   {
-    "at": "2030-08-13T16:00",
-    "what": "the first pay",
-    "cards": [
-     {
-      "name": "Chase Freedom Unlimited",
-      "limit": 162280,
-      "owed": 0
-     }
-    ],
-    "score": 850,
-    "income12": 3453.51,
-    "bank": 71153.2
-   },
-   {
-    "at": "2030-09-01T11:15",
+    "at": "2030-09-01T11:45",
     "what": "the journey’s end",
     "cards": [
      {
@@ -4488,8 +4738,8 @@
      }
     ],
     "score": 850,
-    "income12": 4932,
-    "bank": 70383.07
+    "income12": 3450,
+    "bank": 69151.44
    }
   ],
   "forks": [
@@ -4499,8 +4749,8 @@
     "days": 14,
     "same": true,
     "bytes": [
-     949319,
-     949319
+     951051,
+     951051
     ],
     "straight": {
      "now": "2028-03-26T15:45",
@@ -4538,6 +4788,7 @@
       "Zoe: A Request For Help"
      ],
      "opportunities": [
+      "s1.1buqm.2028-03-13.new-york.musical.0.0 lapsed",
       "eastview open"
      ],
      "engagements": [],
@@ -4592,6 +4843,7 @@
       "Zoe: A Request For Help"
      ],
      "opportunities": [
+      "s1.1buqm.2028-03-13.new-york.musical.0.0 lapsed",
       "eastview open"
      ],
      "engagements": [],
@@ -4610,7 +4862,7 @@
      ],
      "transactions": 634
     },
-    "secs": 5
+    "secs": 6
    },
    {
     "why": "a union bill due 2031-05-20T14:00: Initiation fee, part 2 of 3",
@@ -4618,8 +4870,8 @@
     "days": 14,
     "same": true,
     "bytes": [
-     1918949,
-     1918949
+     1953980,
+     1953980
     ],
     "straight": {
      "now": "2030-06-03T15:00",
@@ -4629,10 +4881,18 @@
       "A Doctor’s Visit",
       "You Met Thomas Ashgrove’s Office",
       "Thomas Ashgrove Offered You Representation",
-      "Submitted For Ferris"
+      "Submitted For Ferris",
+      "Submitted For The Ferry Engineer",
+      "Submitted For The Night Auditor",
+      "Submitted For Robin Quaid",
+      "Submitted For Jules Rasmussen"
      ],
      "opportunities": [
-      "gull-season-ferris submitted"
+      "gull-season-ferris submitted",
+      "northern-line submitted",
+      "six-rooms submitted",
+      "g1.1buqm.2025.los-angeles.serialized-drama.1.s6.1 submitted",
+      "g1.1buqm.2030.new-york.serialized-drama.0.s1.0 submitted"
      ],
      "engagements": [],
      "work": [],
@@ -4646,16 +4906,24 @@
       "A Doctor’s Visit",
       "You Met Thomas Ashgrove’s Office",
       "Thomas Ashgrove Offered You Representation",
-      "Submitted For Ferris"
+      "Submitted For Ferris",
+      "Submitted For The Ferry Engineer",
+      "Submitted For The Night Auditor",
+      "Submitted For Robin Quaid",
+      "Submitted For Jules Rasmussen"
      ],
      "opportunities": [
-      "gull-season-ferris submitted"
+      "gull-season-ferris submitted",
+      "northern-line submitted",
+      "six-rooms submitted",
+      "g1.1buqm.2025.los-angeles.serialized-drama.1.s6.1 submitted",
+      "g1.1buqm.2030.new-york.serialized-drama.0.s1.0 submitted"
      ],
      "engagements": [],
      "work": [],
      "transactions": 1524
     },
-    "secs": 20
+    "secs": 19
    },
    {
     "why": "an audition (self-tape) set for 2030-06-09T22:00, Ferris in Gull Season",
@@ -4663,169 +4931,151 @@
     "days": 14,
     "same": true,
     "bytes": [
-     1924894,
-     1924894
+     2006343,
+     2006343
     ],
     "straight": {
-     "now": "2030-06-19T14:15",
+     "now": "2030-06-19T14:45",
      "bank": 70687.44,
      "standing": "graduated",
      "notices": [
-      "A Self-Tape For Ferris",
+      "A Self-Tape For The Ferry Engineer",
+      "A Self-Tape For The Night Auditor",
+      "A Self-Tape For Robin Quaid",
+      "A Self-Tape For Jules Rasmussen",
+      "Submitted For Rowan",
+      "Submitted For Emery Dunleavy",
+      "Submitted For Kwame",
+      "Submitted For Jules",
       "Not Cast As Ferris",
+      "Not Cast As The Ferry Engineer",
+      "Not Cast As The Night Auditor",
+      "Not Cast As Jules Rasmussen",
+      "A Self-Tape For Rowan",
+      "A Self-Tape For Emery Dunleavy",
+      "A Self-Tape For Kwame",
+      "An Audition For Jules",
+      "Not Cast As Robin Quaid",
       "Happy Birthday: 28",
       "Submitted For Desk Clerk",
-      "A Self-Tape For Desk Clerk"
+      "Submitted For Ezra Ibarra",
+      "Submitted For Kwame",
+      "Submitted For Jules",
+      "A Callback For Emery Dunleavy",
+      "Not Cast As Kwame",
+      "Not Cast As Jules",
+      "A Self-Tape For Desk Clerk",
+      "A Self-Tape For Ezra Ibarra",
+      "A Self-Tape For Kwame",
+      "A Self-Tape For Jules",
+      "A Self-Tape For An Oyster Tonger Of 1890"
      ],
      "opportunities": [
       "gull-season-ferris passed",
-      "calloway-files audition"
+      "northern-line passed",
+      "six-rooms passed",
+      "g1.1buqm.2025.los-angeles.serialized-drama.1.s6.1 passed",
+      "g1.1buqm.2030.new-york.serialized-drama.0.s1.0 passed",
+      "g1.1buqm.2027.los-angeles.serialized-comedy.2.s4.0 audition",
+      "g1.1buqm.2029.new-york.serialized-drama.0.s2.1 callback",
+      "g1.1buqm.2030.new-york.network-drama.1.s0.0 passed",
+      "g1.1buqm.2030.los-angeles.multicam-comedy.0.s1.1 passed",
+      "calloway-files audition",
+      "tidewater-reenactment audition",
+      "g1.1buqm.2025.new-york.serialized-drama.0.s6.1 audition",
+      "g1.1buqm.2025.los-angeles.network-drama.0.s6.0 audition",
+      "g1.1buqm.2026.los-angeles.serialized-drama.2.s5.0 audition",
+      "g1.1buqm.2030.new-york.animated-series.0.s1.1 open",
+      "g1.1buqm.2030.new-york.animated-series.0.s0.0 open"
      ],
      "engagements": [],
      "work": [
-      "Ferris, Gull Season: Audition, Taped 61.3"
+      "Ferris, Gull Season: Audition, Taped 61.4",
+      "The Ferry Engineer, Northern Line: Audition, Taped 60.5",
+      "The Night Auditor, Six Rooms: Audition, Taped 63.4",
+      "Robin Quaid, The Carnival: Audition, Taped 63.9",
+      "Jules Rasmussen, The Quarry: Audition, Taped 22.8",
+      "Rowan, The Almanac Of Lowell Falls: Audition, Taped 61.8",
+      "Emery Dunleavy, Halloway Margins: Audition, Taped 64.5",
+      "Kwame, The Undertow Of Carver Hill: Audition, Taped 65.4",
+      "Jules, The Errand On Mercer Street: Audition 62.2",
+      "Emery Dunleavy, Halloway Margins: Callback, Taped 61.9"
      ],
      "transactions": 1540
     },
     "reopened": {
-     "now": "2030-06-19T14:15",
+     "now": "2030-06-19T14:45",
      "bank": 70687.44,
      "standing": "graduated",
      "notices": [
-      "A Self-Tape For Ferris",
+      "A Self-Tape For The Ferry Engineer",
+      "A Self-Tape For The Night Auditor",
+      "A Self-Tape For Robin Quaid",
+      "A Self-Tape For Jules Rasmussen",
+      "Submitted For Rowan",
+      "Submitted For Emery Dunleavy",
+      "Submitted For Kwame",
+      "Submitted For Jules",
       "Not Cast As Ferris",
+      "Not Cast As The Ferry Engineer",
+      "Not Cast As The Night Auditor",
+      "Not Cast As Jules Rasmussen",
+      "A Self-Tape For Rowan",
+      "A Self-Tape For Emery Dunleavy",
+      "A Self-Tape For Kwame",
+      "An Audition For Jules",
+      "Not Cast As Robin Quaid",
       "Happy Birthday: 28",
       "Submitted For Desk Clerk",
-      "A Self-Tape For Desk Clerk"
+      "Submitted For Ezra Ibarra",
+      "Submitted For Kwame",
+      "Submitted For Jules",
+      "A Callback For Emery Dunleavy",
+      "Not Cast As Kwame",
+      "Not Cast As Jules",
+      "A Self-Tape For Desk Clerk",
+      "A Self-Tape For Ezra Ibarra",
+      "A Self-Tape For Kwame",
+      "A Self-Tape For Jules",
+      "A Self-Tape For An Oyster Tonger Of 1890"
      ],
      "opportunities": [
       "gull-season-ferris passed",
-      "calloway-files audition"
+      "northern-line passed",
+      "six-rooms passed",
+      "g1.1buqm.2025.los-angeles.serialized-drama.1.s6.1 passed",
+      "g1.1buqm.2030.new-york.serialized-drama.0.s1.0 passed",
+      "g1.1buqm.2027.los-angeles.serialized-comedy.2.s4.0 audition",
+      "g1.1buqm.2029.new-york.serialized-drama.0.s2.1 callback",
+      "g1.1buqm.2030.new-york.network-drama.1.s0.0 passed",
+      "g1.1buqm.2030.los-angeles.multicam-comedy.0.s1.1 passed",
+      "calloway-files audition",
+      "tidewater-reenactment audition",
+      "g1.1buqm.2025.new-york.serialized-drama.0.s6.1 audition",
+      "g1.1buqm.2025.los-angeles.network-drama.0.s6.0 audition",
+      "g1.1buqm.2026.los-angeles.serialized-drama.2.s5.0 audition",
+      "g1.1buqm.2030.new-york.animated-series.0.s1.1 open",
+      "g1.1buqm.2030.new-york.animated-series.0.s0.0 open"
      ],
      "engagements": [],
      "work": [
-      "Ferris, Gull Season: Audition, Taped 61.3"
+      "Ferris, Gull Season: Audition, Taped 61.4",
+      "The Ferry Engineer, Northern Line: Audition, Taped 60.5",
+      "The Night Auditor, Six Rooms: Audition, Taped 63.4",
+      "Robin Quaid, The Carnival: Audition, Taped 63.9",
+      "Jules Rasmussen, The Quarry: Audition, Taped 22.8",
+      "Rowan, The Almanac Of Lowell Falls: Audition, Taped 61.8",
+      "Emery Dunleavy, Halloway Margins: Audition, Taped 64.5",
+      "Kwame, The Undertow Of Carver Hill: Audition, Taped 65.4",
+      "Jules, The Errand On Mercer Street: Audition 62.2",
+      "Emery Dunleavy, Halloway Margins: Callback, Taped 61.9"
      ],
      "transactions": 1540
     },
-    "secs": 25
-   },
-   {
-    "why": "an offer standing: An Offer For Jess",
-    "at": "2030-07-03T21:15",
-    "days": 14,
-    "same": true,
-    "bytes": [
-     1960326,
-     1960326
-    ],
-    "straight": {
-     "now": "2030-07-17T21:45",
-     "bank": 70407.44,
-     "standing": "graduated",
-     "notices": [
-      "Not Cast As Callum",
-      "An Audition For Felix",
-      "A Self-Tape For Robin"
-     ],
-     "opportunities": [
-      "route-nine booked",
-      "calder-street-callum passed",
-      "paper-moons audition",
-      "eastview audition"
-     ],
-     "engagements": [
-      "route-nine booked 0 worked"
-     ],
-     "work": [
-      "Callum, A House On Calder Street: Audition 69.1",
-      "Felix, Paper Moons: Audition 71.8"
-     ],
-     "transactions": 1568
-    },
-    "reopened": {
-     "now": "2030-07-17T21:45",
-     "bank": 70407.44,
-     "standing": "graduated",
-     "notices": [
-      "Not Cast As Callum",
-      "An Audition For Felix",
-      "A Self-Tape For Robin"
-     ],
-     "opportunities": [
-      "route-nine booked",
-      "calder-street-callum passed",
-      "paper-moons audition",
-      "eastview audition"
-     ],
-     "engagements": [
-      "route-nine booked 0 worked"
-     ],
-     "work": [
-      "Callum, A House On Calder Street: Audition 69.1",
-      "Felix, Paper Moons: Audition 71.8"
-     ],
-     "transactions": 1568
-    },
-    "secs": 21
+    "secs": 17
    }
   ],
-  "workDays": [
-   {
-    "at": "2030-07-29T11:00",
-    "project": "Static On Route 9",
-    "role": "Jess",
-    "status": "worked",
-    "band": "working",
-    "authorized": true,
-    "papers": []
-   },
-   {
-    "at": "2030-07-30T11:00",
-    "project": "Static On Route 9",
-    "role": "Jess",
-    "status": "worked",
-    "band": "working",
-    "authorized": true,
-    "papers": []
-   },
-   {
-    "at": "2030-07-31T11:00",
-    "project": "Static On Route 9",
-    "role": "Jess",
-    "status": "worked",
-    "band": "working",
-    "authorized": true,
-    "papers": []
-   },
-   {
-    "at": "2030-08-01T11:00",
-    "project": "Static On Route 9",
-    "role": "Jess",
-    "status": "worked",
-    "band": "strong",
-    "authorized": true,
-    "papers": []
-   },
-   {
-    "at": "2030-08-19T11:00",
-    "project": "Last Bus To Eastview",
-    "role": "Robin",
-    "status": "worked",
-    "band": "working",
-    "authorized": true,
-    "papers": []
-   },
-   {
-    "at": "2030-08-20T11:00",
-    "project": "Last Bus To Eastview",
-    "role": "Robin",
-    "status": "worked",
-    "band": "strong",
-    "authorized": true,
-    "papers": []
-   }
-  ],
+  "workDays": [],
   "errors": [],
   "opening": {
    "fixture": "tests/fixtures/old-leave-ff837dfa.json.gz",
@@ -4866,7 +5116,7 @@
    "pass": true,
    "evidence": [
     "standing graduated, reviews 0:good 3:good 4:good 5:good 6:good 7:good, credits 2028 Carlotta Festival Of New Plays (A Leading Part In A New Play, lead); 2028 Yale Rep’s March Production (Vanya); 2028 Directors’ Thesis Production I (Woyzeck, lead); 2029 Directors’ Thesis Production III (Hjalmar Ekdal, lead); 2029 Directors’ Thesis Production II (Melchior Gabor, lead); 2030 Shakespeare Repertory Project I (Macbeth, lead)",
-    "genres practiced coming_of_age 94.2, satire 92, tragedy 89.2, domestic_drama 60.5, drama 57.6, tragicomedy 52.1, psychological_horror 34.4, historical_drama 29.1, supernatural 29.1, romantic_comedy 19; from plays and jobs: tragicomedy, drama, tragedy, comedy, satire, domestic_drama, coming_of_age, historical_drama, supernatural, psychological_horror, horror, romantic_comedy; loved at creation: none",
+    "genres practiced coming_of_age 94.2, satire 92, tragedy 89.2, domestic_drama 60.5, drama 57.6, tragicomedy 52.1, historical_drama 29.1, supernatural 29.1; from plays and jobs: tragicomedy, drama, tragedy, comedy, satire, domestic_drama, coming_of_age, historical_drama, supernatural; loved at creation: none",
     "development (brief 13's check 3): not run"
    ],
    "fails": []
@@ -4874,8 +5124,8 @@
   "ledger": {
    "pass": true,
    "evidence": [
-    "15 accounts (4 the player's), 1620 transactions; every balance the sum of its postings: true; ledger audit 0 problems",
-    "the player's: checking Chase Total Checking 70383.07; savings Chase Savings 0 (closed); credit_card Chase Freedom Unlimited 0; escrow Held For You By Halberd Talent 0"
+    "12 accounts (3 the player's), 1616 transactions; every balance the sum of its postings: true; ledger audit 0 problems",
+    "the player's: checking Chase Total Checking 69151.44; savings Chase Savings 0 (closed); credit_card Chase Freedom Unlimited 0"
    ],
    "fails": []
   },
@@ -4883,7 +5133,7 @@
    "pass": true,
    "evidence": [
     "documents: license Class D (Operator) driver license valid to 2028-06-14",
-    "work days 6: 2030-07-29 Jess worked; 2030-07-30 Jess worked; 2030-07-31 Jess worked; 2030-08-01 Jess worked; 2030-08-19 Robin worked; 2030-08-20 Robin worked",
+    "work days 0: none",
     "authorized now true; OPT: OPT is for a student on an F-1, and you’re a US citizen.; out of status never"
    ],
    "fails": []
@@ -4892,9 +5142,9 @@
    "pass": true,
    "evidence": [
     "classmates 15: bonds 28 17 9 17 23 24 68 31 74 62 21 22 5 29 13",
-    "agents: thomas-ashgrove represented (discovered,introduced,checked,sent,meeting-set,meeting-kept,offer,accepted,represented,opportunity,submitted,audition,audition,passed,opportunity,submitted,audition,audition,opportunity,opportunity,submitted,submitted,audition,audition,passed,audition,opportunity,submitted,audition,passed,audition,offer,booked,audition,passed,offer,booked,success,opportunity,submitted,success,audition,audition,callback,callback); agreements accepted",
-    "engagements: Jess in Static On Route 9 finished (4 worked, 1/1 paid); Robin in Last Bus To Eastview finished (2 worked, 1/1 paid)",
-    "credits: screen Jess in Static On Route 9 shot strong; screen Robin in Last Bus To Eastview shot strong"
+    "agents: thomas-ashgrove represented (callback,audition,audition,passed,audition,passed,audition,opportunity,opportunity,opportunity,opportunity,submitted,submitted,submitted,submitted,passed,audition,audition,audition,audition,passed,audition,audition,audition,audition,passed,callback,passed,passed,opportunity,opportunity,submitted,submitted,callback,audition,audition,passed,audition,opportunity,opportunity,submitted,submitted,audition,callback,callback,passed,audition,audition,audition,audition,passed,opportunity,opportunity,opportunity,submitted,submitted,submitted,callback,callback,callback,callback,audition,audition,audition,audition,audition,audition,passed,passed,opportunity,opportunity,submitted,submitted,passed,passed,passed,audition,audition,audition,audition); agreements accepted",
+    "engagements: none",
+    "credits: none"
    ],
    "fails": []
   },
@@ -4912,20 +5162,57 @@
   ],
   "unsigned": [],
   "success": [
-   "Jess in Static On Route 9: finished, 1 payments received",
-   "Robin in Last Bus To Eastview: finished, 1 payments received",
-   "audition for route-nine went on (working)",
-   "audition for eastview went on (working)",
-   "audition for gull-season-ferris went on (strong)"
+   "audition for g1.1buqm.2029.new-york.serialized-drama.0.s2.1 went on (working)",
+   "audition for calder-street-callum went on (strong)",
+   "audition for s1.1buqm.2030-07-01.new-york.off-broadway.0.0 went on (strong)",
+   "audition for g1.1buqm.2027.los-angeles.multicam-comedy.1.s4.0 went on (working)",
+   "audition for glass-orchard went on (working)",
+   "audition for six-rooms went on (strong)",
+   "audition for pell-street went on (strong)"
   ],
   "failure": [
    "audition for gull-season-ferris working: not cast (chance 23%)",
-   "audition for calloway-files strong: not cast (chance 20%)",
+   "audition for northern-line working: not cast (chance 25%)",
+   "audition for six-rooms working: not cast (chance 25%)",
+   "audition for g1.1buqm.2025.los-angeles.serialized-drama.1.s6.1 working: not cast (chance 11%)",
+   "audition for g1.1buqm.2030.new-york.serialized-drama.0.s1.0 unready: not cast (chance 6%)",
+   "audition for g1.1buqm.2027.los-angeles.serialized-comedy.2.s4.0 working: not cast (chance 10%)",
+   "callback for g1.1buqm.2029.new-york.serialized-drama.0.s2.1 working: not cast (chance 12%)",
+   "audition for g1.1buqm.2030.new-york.network-drama.1.s0.0 strong: not cast (chance 41%)",
+   "audition for g1.1buqm.2030.los-angeles.multicam-comedy.0.s1.1 working: not cast (chance 21%)",
+   "audition for calloway-files working: not cast (chance 9%)",
+   "audition for tidewater-reenactment strong: not cast (chance 27%)",
+   "audition for g1.1buqm.2025.new-york.serialized-drama.0.s6.1 working: not cast (chance 29%)",
+   "audition for g1.1buqm.2025.los-angeles.network-drama.0.s6.0 working: not cast (chance 9%)",
+   "audition for g1.1buqm.2026.los-angeles.serialized-drama.2.s5.0 unready: not cast (chance 6%)",
    "audition for winter-ledger working: not cast (chance 24%)",
-   "audition for calder-street-callum strong: not cast (chance 54%)",
-   "audition for paper-moons strong: not cast (chance 44%)"
+   "audition for route-nine working: not cast (chance 11%)",
+   "callback for calder-street-callum working: not cast (chance 13%)",
+   "audition for g1.1buqm.2029.los-angeles.network-comedy.1.s2.0 working: not cast (chance 8%)",
+   "audition for paper-moons strong: not cast (chance 44%)",
+   "audition for harbor-line-arden working: not cast (chance 22%)",
+   "audition for salt-road working: not cast (chance 12%)",
+   "audition for g1.1buqm.2028.los-angeles.network-drama.3.s3.0 strong: not cast (chance 20%)",
+   "audition for eastview working: not cast (chance 13%)",
+   "audition for s1.1buqm.2030-07-15.new-york.action-feature.0.0 working: not cast (chance 22%)",
+   "audition for g1.1buqm.2030.los-angeles.network-comedy.0.s1.0 strong: not cast (chance 21%)",
+   "audition for breakwater working: not cast (chance 22%)",
+   "audition for nine-one-one-guest working: not cast (chance 9%)",
+   "callback for g1.1buqm.2027.los-angeles.multicam-comedy.1.s4.0 working: not cast (chance 8%)",
+   "audition for g1.1buqm.2030.los-angeles.network-comedy.0.s0.0 working: not cast (chance 8%)",
+   "audition for lamplighters working: not cast (chance 24%)",
+   "callback for glass-orchard strong: not cast (chance 22%)",
+   "callback for six-rooms working: not cast (chance 10%)",
+   "callback for pell-street working: not cast (chance 11%)",
+   "audition for gull-season-ferris working: not cast (chance 24%)",
+   "audition for g1.1buqm.2030.new-york.network-drama.1.s0.0 strong: not cast (chance 42%)",
+   "audition for g1.1buqm.2030.new-york.serialized-drama.0.s1.0 strong: not cast (chance 44%)"
   ],
   "delay": [
+   "audition for calder-street-callum moved 1",
+   "callback for calder-street-callum moved 1",
+   "July 3, 2030 at 10:30 AM | PRESS | Ask For Another Time for calder-street-callum | done",
+   "July 10, 2030 at 5:15 PM | PRESS | Ask For Another Time for calder-street-callum | done",
    "2027-01-27 Your Leave Has Begun",
    "2028-01-03 Back From Your Leave"
   ],
@@ -4934,20 +5221,27 @@
    "2028-03-12 care visit: A doctor’s visit, Fair Haven Community Health Care; care visit: A doctor’s visit, Fair Haven Community Health Care; care emergency: The emergency room, Yale New Haven Hospital, York Street Campus Emergency Department; care visit: A specialist, referred, Fair Haven Community Health Care; care visit: A doctor’s visit, Fair Haven Community Health Care; care visit: A doctor’s visit, Fair Haven Community Health Care",
    "2030-02-23 injury bruise 5 days",
    "2030-04-01 care emergency: The emergency room, Yale New Haven Hospital, York Street Campus Emergency Department; in hospital to 2030-04-01",
-   "2030-05-21 care visit: A doctor’s visit, Yale Health Center, Student Health"
+   "2030-05-21 care visit: A doctor’s visit, Yale Health Center, Student Health",
+   "2030-07-15 You Missed The Callback For Ferris Cordray",
+   "s1.1buqm.2030-07-01.new-york.off-broadway.0.0 audition missed"
   ],
   "recovery": [
    "2030-02-24 to 2030-02-28 hurt: condition 91.1 the morning before, 91.1 at its start, 91.1 a week after its end",
    "2030-04-01 to 2030-04-01 in hospital: condition 91.1 the morning before, 71.1 at its start, 84.6 a week after its end"
   ],
-  "clash": [],
+  "clash": [
+   "July 3, 2030 at 10:00 AM | NOTICE | An Audition For Ferris Cordray | Thomas Ashgrove passed this on: Iwata Casting wants to see you for Ferris Cordray in The Crossing On Fulton Street: a theater in Brooklyn in New York, ",
+   "July 10, 2030 at 5:00 PM | NOTICE | A Callback For Callum | Thomas Ashgrove passed this on: Pennick Casting wants to see you again for Callum in A House On Calder Street: a 199-seat theater in Manhattan in New York, Mond"
+  ],
   "littleMoney": [],
   "poorPreparation": [
    "assignment_00000c Unready",
    "assignment_00000d Unready",
    "assignment_00000e Unready",
    "assignment_00000f Unready",
-   "assignment_00000p Unready"
+   "assignment_00000p Unready",
+   "g1.1buqm.2030.new-york.serialized-drama.0.s1.0 audition with the sides at 0%: unready",
+   "g1.1buqm.2026.los-angeles.serialized-drama.2.s5.0 audition with the sides at 0%: unready"
   ],
   "strongPreparation": [
    "assignment_000003 strong",

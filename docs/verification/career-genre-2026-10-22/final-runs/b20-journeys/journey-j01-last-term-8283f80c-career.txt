@@ -64,7 +64,7 @@ April 28, 2029 at 2:15 PM | PRESS | Cut A Reel (one piece) | done
 April 30, 2029 at 1:00 PM | NOTICE | The Actor Showcase In New York | You played your two scenes at the showcase in New York. Hedda in Hedda Gabler: Working, 62 of 100. The Father in Office Hours: Working, 63 of 100. The faculty’s notes are on each scene’s card on the Coursework tab. Work on them before Los Angeles, where they’re shown again with the note taken. You play them again in New York on May 1.
 May 1, 2029 at 9:00 AM | NOTICE | The Actor Showcase In New York | You played your two scenes again at the showcase in New York. Hedda in Hedda Gabler: Working, 63 of 100. The Father in Office Hours: Working, 63 of 100. You play them again in Los Angeles on May 8.
 May 8, 2029 at 9:00 AM | NOTICE | The Actor Showcase In Los Angeles | You played your two scenes at the showcase in Los Angeles. Hedda in Hedda Gabler: Working, 63 of 100. The Father in Office Hours: Working, 63 of 100. You passed Actor Showcase.
-May 11, 2029 at 10:00 AM | NOTICE | The School’s Follow-Up After The Showcase | The School passed your showcase on to the agencies it follows up with, and Thomas Ashgrove’s office at Halberd Talent asked the School to pass on a request to meet you. Press Send Your Materials on the Career screen’s Representation tab by June 10, 2029, and his office sets a time. Thomas Ashgrove and Halberd Talent are invented for the game, as every agency, project and casting office in it is. His office takes no submissions it hasn’t asked for: it sees your materials through the School’s follow-up after the showcase, or a referral from someone you’ve worked with. He never gets in touch first. In the game agencies follow the showcase up through the School. The School publishes the showcase’s dates and places, not who comes, and the game doesn’t say he was there.
+May 11, 2029 at 10:00 AM | NOTICE | The School’s Follow-Up After The Showcase | The School passed your showcase on to the agencies it follows up with, and Thomas Ashgrove’s office at Halberd Talent asked the School to pass on a request to meet you. Press Send Your Materials on the Career screen’s Representation tab by June 10, 2029, and his office sets a time. Thomas Ashgrove and Halberd Talent are invented for the game. His office takes no submissions it hasn’t asked for: it sees your materials through the School’s follow-up after the showcase, or a referral from someone you’ve worked with. He never gets in touch first. In the game agencies follow the showcase up through the School. The School publishes the showcase’s dates and places, not who comes, and the game doesn’t say he was there.
 May 11, 2029 at 10:35 AM | PRESS | Check Your Materials | done
 May 11, 2029 at 10:35 AM | PRESS | Send Your Materials | done
 May 18, 2029 at 10:00 AM | NOTICE | A Meeting Is Set At Halberd Talent | Thomas Ashgrove’s office at Halberd Talent has set the meeting it asked the School to pass on: Friday, May 25, 2029 at 11:00 AM, at Halberd Talent’s New York office. It’s on your calendar with two hours to get there from New Haven, a time the game assumes. If you can’t make it, Ask To Move on the Representation tab moves it a week, once.
@@ -98,34 +98,236 @@ May 30, 2029 at 8:45 PM | PRESS | Prepare the sides (rehearse) for paper-moons-i
 May 30, 2029 at 9:30 PM | PRESS | Prepare the sides (rehearse) for paper-moons-ivy | done
 May 31, 2029 at 9:15 AM | PRESS | Prepare the sides (rehearse) for paper-moons-ivy | done
 June 1, 2029 at 12:00 AM | WHAT NEEDS YOU | Chase Is About To Hand Chase Savings To The State | $413,157 in Chase Savings hasn’t been used for nearly three years. Unless you tell the bank to keep the account by August 24, 2029, it goes to the state’s unclaimed-property office as unclaimed money. | Keep The Account
+June 4, 2029 at 9:00 AM | NOTICE | Submitted For Odette | Thomas Ashgrove submitted you for Odette in The Harbor, sending your headshots from April 28, 2029, your résumé from May 21, 2029 and your reel from April 28, 2029. Kettering Casting answers on Wednesday, June 6, 2029.
+June 4, 2029 at 9:00 AM | NOTICE | Submitted For Sabine Bellweather | Thomas Ashgrove submitted you for Sabine Bellweather in Second Orchard, sending your headshots from April 28, 2029, your résumé from May 21, 2029 and your reel from April 28, 2029. Halvorsen Casting answers on Wednesday, June 6, 2029.
+June 4, 2029 at 9:00 AM | PRESS | Submit Yourself for tidewater-narrator | done
 June 4, 2029 at 11:00 AM | STOP | Audition: Ivy, Paper Moons | Go
+June 6, 2029 at 10:00 AM | NOTICE | A Self-Tape For Odette | Thomas Ashgrove passed this on: Kettering Casting asks for a self-tape for Odette in The Harbor, due Sunday, June 10, 2029 at 6:00 PM. Prepare the sides, then press Tape It on the Career screen’s Opportunities tab.
+June 6, 2029 at 10:00 AM | NOTICE | A Self-Tape For Sabine Bellweather | Thomas Ashgrove passed this on: Halvorsen Casting asks for a self-tape for Sabine Bellweather in Second Orchard, due Sunday, June 10, 2029 at 6:00 PM. Prepare the sides, then press Tape It on the Career screen’s Opportunities tab.
+June 6, 2029 at 10:00 AM | NOTICE | A Self-Tape For The Narrator | The film’s producers ask for a self-tape for The Narrator in Tidewater: The Last Oyster Towns, due Sunday, June 10, 2029 at 6:00 PM. Prepare the sides, then press Tape It on the Career screen’s Opportunities tab.
+June 6, 2029 at 10:30 AM | PRESS | Prepare the sides (read) for tidewater-narrator | done
+June 6, 2029 at 11:00 AM | PRESS | Prepare the sides (read) for tidewater-narrator | done
+June 6, 2029 at 11:30 AM | PRESS | Prepare the sides (lines) for tidewater-narrator | done
+June 6, 2029 at 12:00 PM | PRESS | Prepare the sides (lines) for tidewater-narrator | done
+June 6, 2029 at 12:30 PM | PRESS | Prepare the sides (lines) for tidewater-narrator | done
+June 6, 2029 at 1:00 PM | PRESS | Prepare the sides (rehearse) for tidewater-narrator | done
+June 6, 2029 at 1:45 PM | PRESS | Prepare the sides (rehearse) for tidewater-narrator | done
+June 6, 2029 at 2:30 PM | PRESS | Prepare the sides (rehearse) for tidewater-narrator | done
+June 6, 2029 at 3:15 PM | PRESS | Prepare the sides (rehearse) for tidewater-narrator | done
+June 6, 2029 at 4:00 PM | PRESS | Prepare the sides (rehearse) for tidewater-narrator | done
+June 6, 2029 at 4:45 PM | PRESS | Prepare the sides (rehearse) for tidewater-narrator | done
+June 6, 2029 at 5:30 PM | PRESS | Prepare the sides (rehearse) for tidewater-narrator | done
+June 6, 2029 at 6:15 PM | PRESS | Prepare the sides (rehearse) for tidewater-narrator | done
+June 6, 2029 at 7:00 PM | PRESS | Prepare the sides (rehearse) for tidewater-narrator | done
+June 6, 2029 at 7:45 PM | PRESS | Prepare the sides (rehearse) for tidewater-narrator | done
+June 6, 2029 at 8:30 PM | PRESS | Prepare the sides (rehearse) for tidewater-narrator | done
+June 6, 2029 at 9:15 PM | PRESS | Prepare the sides (rehearse) for tidewater-narrator | done
+June 7, 2029 at 9:00 AM | PRESS | Prepare the sides (rehearse) for tidewater-narrator | done
+June 7, 2029 at 9:45 AM | PRESS | Tape It for tidewater-narrator | done
+June 7, 2029 at 10:45 AM | PRESS | Prepare the sides (read) for g1.oikt0.2026.new-york.serialized-drama.0.s4.1 | done
+June 7, 2029 at 11:15 AM | PRESS | Prepare the sides (read) for g1.oikt0.2026.new-york.serialized-drama.0.s4.1 | done
+June 7, 2029 at 11:45 AM | PRESS | Prepare the sides (lines) for g1.oikt0.2026.new-york.serialized-drama.0.s4.1 | done
+June 7, 2029 at 12:15 PM | PRESS | Prepare the sides (lines) for g1.oikt0.2026.new-york.serialized-drama.0.s4.1 | done
+June 7, 2029 at 12:45 PM | PRESS | Prepare the sides (lines) for g1.oikt0.2026.new-york.serialized-drama.0.s4.1 | done
+June 7, 2029 at 1:15 PM | PRESS | Prepare the sides (rehearse) for g1.oikt0.2026.new-york.serialized-drama.0.s4.1 | done
+June 7, 2029 at 2:00 PM | PRESS | Prepare the sides (rehearse) for g1.oikt0.2026.new-york.serialized-drama.0.s4.1 | done
+June 7, 2029 at 2:45 PM | PRESS | Prepare the sides (rehearse) for g1.oikt0.2026.new-york.serialized-drama.0.s4.1 | done
+June 7, 2029 at 3:30 PM | PRESS | Prepare the sides (rehearse) for g1.oikt0.2026.new-york.serialized-drama.0.s4.1 | done
+June 7, 2029 at 4:15 PM | PRESS | Prepare the sides (rehearse) for g1.oikt0.2026.new-york.serialized-drama.0.s4.1 | done
 June 7, 2029 at 5:00 PM | NOTICE | Not Cast As Ivy | The film’s director cast another actor as Ivy. Casting doesn’t give its reasons. The Opportunities tab shows what went into it: your audition, the role’s fit and the field.
+June 7, 2029 at 5:00 PM | PRESS | Prepare the sides (rehearse) for g1.oikt0.2026.new-york.serialized-drama.0.s4.1 | done
+June 7, 2029 at 5:45 PM | PRESS | Prepare the sides (rehearse) for g1.oikt0.2026.new-york.serialized-drama.0.s4.1 | done
+June 7, 2029 at 6:30 PM | PRESS | Prepare the sides (rehearse) for g1.oikt0.2026.new-york.serialized-drama.0.s4.1 | done
+June 7, 2029 at 7:15 PM | PRESS | Prepare the sides (rehearse) for g1.oikt0.2026.new-york.serialized-drama.0.s4.1 | done
+June 7, 2029 at 8:00 PM | PRESS | Prepare the sides (rehearse) for g1.oikt0.2026.new-york.serialized-drama.0.s4.1 | done
+June 7, 2029 at 8:45 PM | PRESS | Prepare the sides (rehearse) for g1.oikt0.2026.new-york.serialized-drama.0.s4.1 | done
+June 7, 2029 at 9:30 PM | PRESS | Prepare the sides (rehearse) for g1.oikt0.2026.new-york.serialized-drama.0.s4.1 | done
+June 8, 2029 at 9:15 AM | PRESS | Prepare the sides (rehearse) for g1.oikt0.2026.new-york.serialized-drama.0.s4.1 | done
+June 8, 2029 at 10:00 AM | PRESS | Tape It for g1.oikt0.2026.new-york.serialized-drama.0.s4.1 | done
+June 8, 2029 at 11:00 AM | PRESS | Prepare the sides (read) for g1.oikt0.2029.los-angeles.serialized-drama.1.s1.1 | done
+June 8, 2029 at 11:30 AM | PRESS | Prepare the sides (read) for g1.oikt0.2029.los-angeles.serialized-drama.1.s1.1 | done
+June 8, 2029 at 12:00 PM | PRESS | Prepare the sides (lines) for g1.oikt0.2029.los-angeles.serialized-drama.1.s1.1 | done
+June 8, 2029 at 12:30 PM | PRESS | Prepare the sides (lines) for g1.oikt0.2029.los-angeles.serialized-drama.1.s1.1 | done
+June 8, 2029 at 1:00 PM | PRESS | Prepare the sides (lines) for g1.oikt0.2029.los-angeles.serialized-drama.1.s1.1 | done
+June 8, 2029 at 1:30 PM | PRESS | Prepare the sides (rehearse) for g1.oikt0.2029.los-angeles.serialized-drama.1.s1.1 | done
+June 8, 2029 at 2:15 PM | PRESS | Prepare the sides (rehearse) for g1.oikt0.2029.los-angeles.serialized-drama.1.s1.1 | done
+June 8, 2029 at 3:00 PM | PRESS | Prepare the sides (rehearse) for g1.oikt0.2029.los-angeles.serialized-drama.1.s1.1 | done
+June 8, 2029 at 3:45 PM | PRESS | Prepare the sides (rehearse) for g1.oikt0.2029.los-angeles.serialized-drama.1.s1.1 | done
+June 8, 2029 at 4:30 PM | PRESS | Prepare the sides (rehearse) for g1.oikt0.2029.los-angeles.serialized-drama.1.s1.1 | done
+June 8, 2029 at 5:15 PM | PRESS | Prepare the sides (rehearse) for g1.oikt0.2029.los-angeles.serialized-drama.1.s1.1 | done
+June 8, 2029 at 6:00 PM | PRESS | Prepare the sides (rehearse) for g1.oikt0.2029.los-angeles.serialized-drama.1.s1.1 | done
+June 8, 2029 at 6:45 PM | PRESS | Prepare the sides (rehearse) for g1.oikt0.2029.los-angeles.serialized-drama.1.s1.1 | done
+June 8, 2029 at 7:30 PM | PRESS | Prepare the sides (rehearse) for g1.oikt0.2029.los-angeles.serialized-drama.1.s1.1 | done
+June 8, 2029 at 8:15 PM | PRESS | Prepare the sides (rehearse) for g1.oikt0.2029.los-angeles.serialized-drama.1.s1.1 | done
+June 8, 2029 at 9:00 PM | PRESS | Prepare the sides (rehearse) for g1.oikt0.2029.los-angeles.serialized-drama.1.s1.1 | done
+June 8, 2029 at 9:45 PM | PRESS | Prepare the sides (rehearse) for g1.oikt0.2029.los-angeles.serialized-drama.1.s1.1 | done
+June 9, 2029 at 9:30 AM | PRESS | Prepare the sides (rehearse) for g1.oikt0.2029.los-angeles.serialized-drama.1.s1.1 | done
+June 9, 2029 at 10:15 AM | PRESS | Tape It for g1.oikt0.2029.los-angeles.serialized-drama.1.s1.1 | done
 June 11, 2029 at 9:00 AM | NOTICE | Submitted For Wren | Thomas Ashgrove submitted you for Wren in Gull Season, sending your headshots from April 28, 2029, your résumé from May 21, 2029 and your reel from April 28, 2029. Quillon Casting answers on Wednesday, June 13, 2029.
+June 11, 2029 at 9:00 AM | NOTICE | Submitted For Casey Marlow | Thomas Ashgrove submitted you for Casey Marlow in Abbott Elementary, sending your headshots from April 28, 2029, your résumé from May 21, 2029 and your reel from April 28, 2029. The production’s casting office answers on Wednesday, June 13, 2029.
+June 11, 2029 at 9:00 AM | NOTICE | Submitted For Blair | Thomas Ashgrove submitted you for Blair in Lowell Falls Station, sending your headshots from April 28, 2029, your résumé from May 21, 2029 and your reel from April 28, 2029. Halvorsen Casting answers on Wednesday, June 13, 2029.
+June 11, 2029 at 9:00 AM | NOTICE | Submitted For Avery | Thomas Ashgrove submitted you for Avery in Marrow Bay Crossing, sending your headshots from April 28, 2029, your résumé from May 21, 2029 and your reel from April 28, 2029. Achebe Casting answers on Wednesday, June 13, 2029.
+June 11, 2029 at 5:00 PM | NOTICE | Not Cast As Sabine Bellweather | Thomas Ashgrove passed this on: Halvorsen Casting didn’t call you back for Sabine Bellweather. Casting doesn’t give its reasons. The Opportunities tab shows what went into it: your audition, the role’s fit and the field.
 June 13, 2029 at 10:00 AM | NOTICE | A Self-Tape For Wren | Thomas Ashgrove passed this on: Quillon Casting asks for a self-tape for Wren in Gull Season, due Sunday, June 17, 2029 at 6:00 PM. Prepare the sides, then press Tape It on the Career screen’s Opportunities tab.
-June 13, 2029 at 10:30 AM | PRESS | Prepare the sides (read) for gull-season | done
-June 13, 2029 at 11:00 AM | PRESS | Prepare the sides (read) for gull-season | done
-June 13, 2029 at 11:30 AM | PRESS | Prepare the sides (lines) for gull-season | done
-June 13, 2029 at 12:00 PM | PRESS | Prepare the sides (lines) for gull-season | done
-June 13, 2029 at 12:30 PM | PRESS | Prepare the sides (lines) for gull-season | done
-June 13, 2029 at 1:00 PM | PRESS | Prepare the sides (rehearse) for gull-season | done
-June 13, 2029 at 1:45 PM | PRESS | Prepare the sides (rehearse) for gull-season | done
-June 13, 2029 at 2:30 PM | PRESS | Prepare the sides (rehearse) for gull-season | done
-June 13, 2029 at 3:15 PM | PRESS | Prepare the sides (rehearse) for gull-season | done
-June 13, 2029 at 4:00 PM | PRESS | Prepare the sides (rehearse) for gull-season | done
-June 13, 2029 at 4:45 PM | PRESS | Prepare the sides (rehearse) for gull-season | done
-June 13, 2029 at 5:30 PM | PRESS | Prepare the sides (rehearse) for gull-season | done
-June 13, 2029 at 6:15 PM | PRESS | Prepare the sides (rehearse) for gull-season | done
-June 13, 2029 at 7:00 PM | PRESS | Prepare the sides (rehearse) for gull-season | done
-June 13, 2029 at 7:45 PM | PRESS | Prepare the sides (rehearse) for gull-season | done
-June 13, 2029 at 8:30 PM | PRESS | Prepare the sides (rehearse) for gull-season | done
-June 13, 2029 at 9:15 PM | PRESS | Prepare the sides (rehearse) for gull-season | done
+June 13, 2029 at 10:00 AM | NOTICE | A Self-Tape For Casey Marlow | Thomas Ashgrove passed this on: The production’s casting office asks for a self-tape for Casey Marlow in Abbott Elementary, due Sunday, June 17, 2029 at 6:00 PM. Prepare the sides, then press Tape It on the Career screen’s Opportunities tab.
+June 13, 2029 at 10:00 AM | NOTICE | A Self-Tape For Blair | Thomas Ashgrove passed this on: Halvorsen Casting asks for a self-tape for Blair in Lowell Falls Station, due Sunday, June 17, 2029 at 6:00 PM. Prepare the sides, then press Tape It on the Career screen’s Opportunities tab.
+June 13, 2029 at 10:00 AM | NOTICE | A Self-Tape For Avery | Thomas Ashgrove passed this on: Achebe Casting asks for a self-tape for Avery in Marrow Bay Crossing, due Sunday, June 17, 2029 at 6:00 PM. Prepare the sides, then press Tape It on the Career screen’s Opportunities tab.
+June 13, 2029 at 10:15 AM | PRESS | Prepare the sides (read) for gull-season | done
+June 13, 2029 at 10:45 AM | PRESS | Prepare the sides (read) for gull-season | done
+June 13, 2029 at 11:15 AM | PRESS | Prepare the sides (lines) for gull-season | done
+June 13, 2029 at 11:45 AM | PRESS | Prepare the sides (lines) for gull-season | done
+June 13, 2029 at 12:15 PM | PRESS | Prepare the sides (lines) for gull-season | done
+June 13, 2029 at 12:45 PM | PRESS | Prepare the sides (rehearse) for gull-season | done
+June 13, 2029 at 1:30 PM | PRESS | Prepare the sides (rehearse) for gull-season | done
+June 13, 2029 at 2:15 PM | PRESS | Prepare the sides (rehearse) for gull-season | done
+June 13, 2029 at 3:00 PM | PRESS | Prepare the sides (rehearse) for gull-season | done
+June 13, 2029 at 3:45 PM | PRESS | Prepare the sides (rehearse) for gull-season | done
+June 13, 2029 at 4:30 PM | PRESS | Prepare the sides (rehearse) for gull-season | done
+June 13, 2029 at 5:00 PM | NOTICE | Not Cast As The Narrator | The film’s producers cast another actor as The Narrator. Casting doesn’t give its reasons. The Opportunities tab shows what went into it: your audition, the role’s fit and the field.
+June 13, 2029 at 5:00 PM | NOTICE | Not Cast As Odette | Thomas Ashgrove passed this on: Kettering Casting cast another actor as Odette. Casting doesn’t give its reasons. The Opportunities tab shows what went into it: your audition, the role’s fit and the field.
+June 13, 2029 at 5:15 PM | PRESS | Prepare the sides (rehearse) for gull-season | done
+June 13, 2029 at 6:00 PM | PRESS | Prepare the sides (rehearse) for gull-season | done
+June 13, 2029 at 6:45 PM | PRESS | Prepare the sides (rehearse) for gull-season | done
+June 13, 2029 at 7:30 PM | PRESS | Prepare the sides (rehearse) for gull-season | done
+June 13, 2029 at 8:15 PM | PRESS | Prepare the sides (rehearse) for gull-season | done
+June 13, 2029 at 9:00 PM | PRESS | Prepare the sides (rehearse) for gull-season | done
+June 13, 2029 at 9:45 PM | PRESS | Prepare the sides (rehearse) for gull-season | done
 June 14, 2029 at 9:00 AM | NOTICE | Happy Birthday: 27 | You’re 27 today.
-June 14, 2029 at 9:00 AM | PRESS | Prepare the sides (rehearse) for gull-season | done
-June 14, 2029 at 9:45 AM | PRESS | Tape It for gull-season | done
+June 14, 2029 at 9:30 AM | PRESS | Prepare the sides (rehearse) for gull-season | done
+June 14, 2029 at 10:15 AM | PRESS | Tape It for gull-season | done
+June 14, 2029 at 11:15 AM | PRESS | Prepare the sides (read) for abbott-guest | done
+June 14, 2029 at 11:45 AM | PRESS | Prepare the sides (read) for abbott-guest | done
+June 14, 2029 at 12:15 PM | PRESS | Prepare the sides (lines) for abbott-guest | done
+June 14, 2029 at 12:45 PM | PRESS | Prepare the sides (lines) for abbott-guest | done
+June 14, 2029 at 1:15 PM | PRESS | Prepare the sides (lines) for abbott-guest | done
+June 14, 2029 at 1:45 PM | PRESS | Prepare the sides (rehearse) for abbott-guest | done
+June 14, 2029 at 2:30 PM | PRESS | Prepare the sides (rehearse) for abbott-guest | done
+June 14, 2029 at 3:15 PM | PRESS | Prepare the sides (rehearse) for abbott-guest | done
+June 14, 2029 at 4:00 PM | PRESS | Prepare the sides (rehearse) for abbott-guest | done
+June 14, 2029 at 4:45 PM | PRESS | Prepare the sides (rehearse) for abbott-guest | done
+June 14, 2029 at 5:30 PM | PRESS | Prepare the sides (rehearse) for abbott-guest | done
+June 14, 2029 at 6:15 PM | PRESS | Prepare the sides (rehearse) for abbott-guest | done
+June 14, 2029 at 7:00 PM | PRESS | Prepare the sides (rehearse) for abbott-guest | done
+June 14, 2029 at 7:45 PM | PRESS | Prepare the sides (rehearse) for abbott-guest | done
+June 14, 2029 at 8:30 PM | PRESS | Prepare the sides (rehearse) for abbott-guest | done
+June 14, 2029 at 9:15 PM | PRESS | Prepare the sides (rehearse) for abbott-guest | done
+June 15, 2029 at 9:00 AM | PRESS | Prepare the sides (rehearse) for abbott-guest | done
+June 15, 2029 at 9:45 AM | PRESS | Tape It for abbott-guest | done
+June 15, 2029 at 10:45 AM | PRESS | Prepare the sides (read) for g1.oikt0.2029.new-york.network-drama.1.s1.0 | done
+June 15, 2029 at 11:15 AM | PRESS | Prepare the sides (read) for g1.oikt0.2029.new-york.network-drama.1.s1.0 | done
+June 15, 2029 at 11:45 AM | PRESS | Prepare the sides (lines) for g1.oikt0.2029.new-york.network-drama.1.s1.0 | done
+June 15, 2029 at 12:15 PM | PRESS | Prepare the sides (lines) for g1.oikt0.2029.new-york.network-drama.1.s1.0 | done
+June 15, 2029 at 12:45 PM | PRESS | Prepare the sides (lines) for g1.oikt0.2029.new-york.network-drama.1.s1.0 | done
+June 15, 2029 at 1:15 PM | PRESS | Prepare the sides (rehearse) for g1.oikt0.2029.new-york.network-drama.1.s1.0 | done
+June 15, 2029 at 2:00 PM | PRESS | Prepare the sides (rehearse) for g1.oikt0.2029.new-york.network-drama.1.s1.0 | done
+June 15, 2029 at 2:45 PM | PRESS | Prepare the sides (rehearse) for g1.oikt0.2029.new-york.network-drama.1.s1.0 | done
+June 15, 2029 at 3:30 PM | PRESS | Prepare the sides (rehearse) for g1.oikt0.2029.new-york.network-drama.1.s1.0 | done
+June 15, 2029 at 4:15 PM | PRESS | Prepare the sides (rehearse) for g1.oikt0.2029.new-york.network-drama.1.s1.0 | done
+June 15, 2029 at 5:00 PM | PRESS | Prepare the sides (rehearse) for g1.oikt0.2029.new-york.network-drama.1.s1.0 | done
+June 15, 2029 at 5:45 PM | PRESS | Prepare the sides (rehearse) for g1.oikt0.2029.new-york.network-drama.1.s1.0 | done
+June 15, 2029 at 6:30 PM | PRESS | Prepare the sides (rehearse) for g1.oikt0.2029.new-york.network-drama.1.s1.0 | done
+June 15, 2029 at 7:15 PM | PRESS | Prepare the sides (rehearse) for g1.oikt0.2029.new-york.network-drama.1.s1.0 | done
+June 15, 2029 at 8:00 PM | PRESS | Prepare the sides (rehearse) for g1.oikt0.2029.new-york.network-drama.1.s1.0 | done
+June 15, 2029 at 8:45 PM | PRESS | Prepare the sides (rehearse) for g1.oikt0.2029.new-york.network-drama.1.s1.0 | done
+June 15, 2029 at 9:30 PM | PRESS | Prepare the sides (rehearse) for g1.oikt0.2029.new-york.network-drama.1.s1.0 | done
+June 16, 2029 at 9:15 AM | PRESS | Prepare the sides (rehearse) for g1.oikt0.2029.new-york.network-drama.1.s1.0 | done
+June 16, 2029 at 10:00 AM | PRESS | Tape It for g1.oikt0.2029.new-york.network-drama.1.s1.0 | done
+June 16, 2029 at 11:00 AM | PRESS | Prepare the sides (read) for g1.oikt0.2029.los-angeles.network-comedy.1.s1.0 | done
+June 16, 2029 at 11:30 AM | PRESS | Prepare the sides (read) for g1.oikt0.2029.los-angeles.network-comedy.1.s1.0 | done
+June 16, 2029 at 12:00 PM | PRESS | Prepare the sides (lines) for g1.oikt0.2029.los-angeles.network-comedy.1.s1.0 | done
+June 16, 2029 at 12:30 PM | PRESS | Prepare the sides (lines) for g1.oikt0.2029.los-angeles.network-comedy.1.s1.0 | done
+June 16, 2029 at 1:00 PM | PRESS | Prepare the sides (lines) for g1.oikt0.2029.los-angeles.network-comedy.1.s1.0 | done
+June 16, 2029 at 1:30 PM | PRESS | Prepare the sides (rehearse) for g1.oikt0.2029.los-angeles.network-comedy.1.s1.0 | done
+June 16, 2029 at 2:15 PM | PRESS | Prepare the sides (rehearse) for g1.oikt0.2029.los-angeles.network-comedy.1.s1.0 | done
+June 16, 2029 at 3:00 PM | PRESS | Prepare the sides (rehearse) for g1.oikt0.2029.los-angeles.network-comedy.1.s1.0 | done
+June 16, 2029 at 3:45 PM | PRESS | Prepare the sides (rehearse) for g1.oikt0.2029.los-angeles.network-comedy.1.s1.0 | done
+June 16, 2029 at 4:30 PM | PRESS | Prepare the sides (rehearse) for g1.oikt0.2029.los-angeles.network-comedy.1.s1.0 | done
+June 16, 2029 at 5:15 PM | PRESS | Prepare the sides (rehearse) for g1.oikt0.2029.los-angeles.network-comedy.1.s1.0 | done
+June 16, 2029 at 6:00 PM | PRESS | Prepare the sides (rehearse) for g1.oikt0.2029.los-angeles.network-comedy.1.s1.0 | done
+June 16, 2029 at 6:45 PM | PRESS | Prepare the sides (rehearse) for g1.oikt0.2029.los-angeles.network-comedy.1.s1.0 | done
+June 16, 2029 at 7:30 PM | PRESS | Prepare the sides (rehearse) for g1.oikt0.2029.los-angeles.network-comedy.1.s1.0 | done
+June 16, 2029 at 8:15 PM | PRESS | Prepare the sides (rehearse) for g1.oikt0.2029.los-angeles.network-comedy.1.s1.0 | done
+June 16, 2029 at 9:00 PM | PRESS | Prepare the sides (rehearse) for g1.oikt0.2029.los-angeles.network-comedy.1.s1.0 | done
+June 16, 2029 at 9:45 PM | PRESS | Prepare the sides (rehearse) for g1.oikt0.2029.los-angeles.network-comedy.1.s1.0 | done
+June 17, 2029 at 9:30 AM | PRESS | Prepare the sides (rehearse) for g1.oikt0.2029.los-angeles.network-comedy.1.s1.0 | done
+June 17, 2029 at 10:15 AM | PRESS | Tape It for g1.oikt0.2029.los-angeles.network-comedy.1.s1.0 | done
+June 18, 2029 at 9:00 AM | NOTICE | Submitted For Sage | Thomas Ashgrove submitted you for Sage in The Assembly Of Lowell Falls, sending your headshots from April 28, 2029 and your résumé from May 21, 2029. Okonjo Casting answers on Wednesday, June 20, 2029.
+June 18, 2029 at 9:00 AM | NOTICE | Submitted For Wren Thibodeaux | Thomas Ashgrove submitted you for Wren Thibodeaux in The Crossing, sending your headshots from April 28, 2029, your résumé from May 21, 2029 and your reel from April 28, 2029. Pennick Casting answers on Wednesday, June 20, 2029.
+June 18, 2029 at 9:00 AM | NOTICE | Submitted For Avery Rasmussen | Thomas Ashgrove submitted you for Avery Rasmussen in The Crossing, sending your headshots from April 28, 2029, your résumé from May 21, 2029 and your reel from April 28, 2029. Pennick Casting answers on Wednesday, June 20, 2029.
 June 18, 2029 at 5:00 PM | NOTICE | Not Cast As Wren | Thomas Ashgrove passed this on: Quillon Casting didn’t call you back for Wren. Casting doesn’t give its reasons. The Opportunities tab shows what went into it: your audition, the role’s fit and the field.
+June 18, 2029 at 5:00 PM | NOTICE | Not Cast As Blair | Thomas Ashgrove passed this on: Halvorsen Casting didn’t call you back for Blair. Casting doesn’t give its reasons. The Opportunities tab shows what went into it: your audition, the role’s fit and the field.
+June 20, 2029 at 10:00 AM | NOTICE | An Audition For Sage | Thomas Ashgrove passed this on: Okonjo Casting wants to see you for Sage in The Assembly Of Lowell Falls: a 99-seat theater in the East Village in New York, Monday, June 25, 2029 at 11:00 AM. Getting there takes about two hours each way. Prepare the sides on the Career screen’s Opportunities tab before you go.
+June 20, 2029 at 10:00 AM | NOTICE | A Self-Tape For Wren Thibodeaux | Thomas Ashgrove passed this on: Pennick Casting asks for a self-tape for Wren Thibodeaux in The Crossing, due Sunday, June 24, 2029 at 6:00 PM. Prepare the sides, then press Tape It on the Career screen’s Opportunities tab.
+June 20, 2029 at 10:00 AM | NOTICE | A Self-Tape For Avery Rasmussen | Thomas Ashgrove passed this on: Pennick Casting asks for a self-tape for Avery Rasmussen in The Crossing, due Sunday, June 24, 2029 at 6:00 PM. Prepare the sides, then press Tape It on the Career screen’s Opportunities tab.
+June 20, 2029 at 10:15 AM | PRESS | Prepare the sides (read) for s1.oikt0.2029-06-18.new-york.off-broadway.0.1 | done
+June 20, 2029 at 10:45 AM | PRESS | Prepare the sides (read) for s1.oikt0.2029-06-18.new-york.off-broadway.0.1 | done
+June 20, 2029 at 11:15 AM | PRESS | Prepare the sides (lines) for s1.oikt0.2029-06-18.new-york.off-broadway.0.1 | done
+June 20, 2029 at 11:45 AM | PRESS | Prepare the sides (lines) for s1.oikt0.2029-06-18.new-york.off-broadway.0.1 | done
+June 20, 2029 at 12:15 PM | PRESS | Prepare the sides (lines) for s1.oikt0.2029-06-18.new-york.off-broadway.0.1 | done
+June 20, 2029 at 12:45 PM | PRESS | Prepare the sides (rehearse) for s1.oikt0.2029-06-18.new-york.off-broadway.0.1 | done
+June 20, 2029 at 1:30 PM | PRESS | Prepare the sides (rehearse) for s1.oikt0.2029-06-18.new-york.off-broadway.0.1 | done
+June 20, 2029 at 2:15 PM | PRESS | Prepare the sides (rehearse) for s1.oikt0.2029-06-18.new-york.off-broadway.0.1 | done
+June 20, 2029 at 3:00 PM | PRESS | Prepare the sides (rehearse) for s1.oikt0.2029-06-18.new-york.off-broadway.0.1 | done
+June 20, 2029 at 3:45 PM | PRESS | Prepare the sides (rehearse) for s1.oikt0.2029-06-18.new-york.off-broadway.0.1 | done
+June 20, 2029 at 4:30 PM | PRESS | Prepare the sides (rehearse) for s1.oikt0.2029-06-18.new-york.off-broadway.0.1 | done
+June 20, 2029 at 5:00 PM | NOTICE | Not Cast As Casey Marlow | Thomas Ashgrove passed this on: The production’s casting office cast another actor as Casey Marlow. Casting doesn’t give its reasons. The Opportunities tab shows what went into it: your audition, the role’s fit and the field.
+June 20, 2029 at 5:00 PM | NOTICE | Not Cast As Avery | Thomas Ashgrove passed this on: Achebe Casting cast another actor as Avery. Casting doesn’t give its reasons. The Opportunities tab shows what went into it: your audition, the role’s fit and the field.
+June 20, 2029 at 5:15 PM | PRESS | Prepare the sides (rehearse) for s1.oikt0.2029-06-18.new-york.off-broadway.0.1 | done
+June 20, 2029 at 6:00 PM | PRESS | Prepare the sides (rehearse) for s1.oikt0.2029-06-18.new-york.off-broadway.0.1 | done
+June 20, 2029 at 6:45 PM | PRESS | Prepare the sides (rehearse) for s1.oikt0.2029-06-18.new-york.off-broadway.0.1 | done
+June 20, 2029 at 7:30 PM | PRESS | Prepare the sides (rehearse) for s1.oikt0.2029-06-18.new-york.off-broadway.0.1 | done
+June 20, 2029 at 8:15 PM | PRESS | Prepare the sides (rehearse) for s1.oikt0.2029-06-18.new-york.off-broadway.0.1 | done
+June 20, 2029 at 9:00 PM | PRESS | Prepare the sides (rehearse) for s1.oikt0.2029-06-18.new-york.off-broadway.0.1 | done
+June 20, 2029 at 9:45 PM | PRESS | Prepare the sides (rehearse) for s1.oikt0.2029-06-18.new-york.off-broadway.0.1 | done
 June 21, 2029 at 12:00 AM | NOTICE | A New Card Is On Its Way | Your credit card ending 9931 expires soon. The new one has the same number and expires July 20, 2033.
-June 25, 2029 at 9:00 AM | NOTICE | Submitted For Desk Clerk | Thomas Ashgrove submitted you for Desk Clerk in The Calloway Files, sending your headshots from April 28, 2029, your résumé from May 21, 2029 and your reel from April 28, 2029. Kettering Casting answers on Wednesday, June 27, 2029.
+June 21, 2029 at 9:30 AM | PRESS | Prepare the sides (rehearse) for s1.oikt0.2029-06-18.new-york.off-broadway.0.1 | done
+June 21, 2029 at 10:15 AM | PRESS | Prepare the sides (read) for g1.oikt0.2028.new-york.network-drama.0.s2.0 | done
+June 21, 2029 at 10:45 AM | PRESS | Prepare the sides (read) for g1.oikt0.2028.new-york.network-drama.0.s2.0 | done
+June 21, 2029 at 11:15 AM | PRESS | Prepare the sides (lines) for g1.oikt0.2028.new-york.network-drama.0.s2.0 | done
+June 21, 2029 at 11:45 AM | PRESS | Prepare the sides (lines) for g1.oikt0.2028.new-york.network-drama.0.s2.0 | done
+June 21, 2029 at 12:15 PM | PRESS | Prepare the sides (lines) for g1.oikt0.2028.new-york.network-drama.0.s2.0 | done
+June 21, 2029 at 12:45 PM | PRESS | Prepare the sides (rehearse) for g1.oikt0.2028.new-york.network-drama.0.s2.0 | done
+June 21, 2029 at 1:30 PM | PRESS | Prepare the sides (rehearse) for g1.oikt0.2028.new-york.network-drama.0.s2.0 | done
+June 21, 2029 at 2:15 PM | PRESS | Prepare the sides (rehearse) for g1.oikt0.2028.new-york.network-drama.0.s2.0 | done
+June 21, 2029 at 3:00 PM | PRESS | Prepare the sides (rehearse) for g1.oikt0.2028.new-york.network-drama.0.s2.0 | done
+June 21, 2029 at 3:45 PM | PRESS | Prepare the sides (rehearse) for g1.oikt0.2028.new-york.network-drama.0.s2.0 | done
+June 21, 2029 at 4:30 PM | PRESS | Prepare the sides (rehearse) for g1.oikt0.2028.new-york.network-drama.0.s2.0 | done
+June 21, 2029 at 5:15 PM | PRESS | Prepare the sides (rehearse) for g1.oikt0.2028.new-york.network-drama.0.s2.0 | done
+June 21, 2029 at 6:00 PM | PRESS | Prepare the sides (rehearse) for g1.oikt0.2028.new-york.network-drama.0.s2.0 | done
+June 21, 2029 at 6:45 PM | PRESS | Prepare the sides (rehearse) for g1.oikt0.2028.new-york.network-drama.0.s2.0 | done
+June 21, 2029 at 7:30 PM | PRESS | Prepare the sides (rehearse) for g1.oikt0.2028.new-york.network-drama.0.s2.0 | done
+June 21, 2029 at 8:15 PM | PRESS | Prepare the sides (rehearse) for g1.oikt0.2028.new-york.network-drama.0.s2.0 | done
+June 21, 2029 at 9:00 PM | PRESS | Prepare the sides (rehearse) for g1.oikt0.2028.new-york.network-drama.0.s2.0 | done
+June 21, 2029 at 9:45 PM | PRESS | Prepare the sides (rehearse) for g1.oikt0.2028.new-york.network-drama.0.s2.0 | done
+June 22, 2029 at 9:30 AM | PRESS | Prepare the sides (rehearse) for g1.oikt0.2028.new-york.network-drama.0.s2.0 | done
+June 22, 2029 at 10:15 AM | PRESS | Tape It for g1.oikt0.2028.new-york.network-drama.0.s2.0 | done
+June 22, 2029 at 11:15 AM | PRESS | Prepare the sides (read) for g1.oikt0.2028.new-york.network-drama.0.s2.1 | done
+June 22, 2029 at 11:45 AM | PRESS | Prepare the sides (read) for g1.oikt0.2028.new-york.network-drama.0.s2.1 | done
+June 22, 2029 at 12:15 PM | PRESS | Prepare the sides (lines) for g1.oikt0.2028.new-york.network-drama.0.s2.1 | done
+June 22, 2029 at 12:45 PM | PRESS | Prepare the sides (lines) for g1.oikt0.2028.new-york.network-drama.0.s2.1 | done
+June 22, 2029 at 1:15 PM | PRESS | Prepare the sides (lines) for g1.oikt0.2028.new-york.network-drama.0.s2.1 | done
+June 22, 2029 at 1:45 PM | PRESS | Prepare the sides (rehearse) for g1.oikt0.2028.new-york.network-drama.0.s2.1 | done
+June 22, 2029 at 2:30 PM | PRESS | Prepare the sides (rehearse) for g1.oikt0.2028.new-york.network-drama.0.s2.1 | done
+June 22, 2029 at 3:15 PM | PRESS | Prepare the sides (rehearse) for g1.oikt0.2028.new-york.network-drama.0.s2.1 | done
+June 22, 2029 at 4:00 PM | PRESS | Prepare the sides (rehearse) for g1.oikt0.2028.new-york.network-drama.0.s2.1 | done
+June 22, 2029 at 4:45 PM | PRESS | Prepare the sides (rehearse) for g1.oikt0.2028.new-york.network-drama.0.s2.1 | done
+June 22, 2029 at 5:30 PM | PRESS | Prepare the sides (rehearse) for g1.oikt0.2028.new-york.network-drama.0.s2.1 | done
+June 22, 2029 at 6:15 PM | PRESS | Prepare the sides (rehearse) for g1.oikt0.2028.new-york.network-drama.0.s2.1 | done
+June 22, 2029 at 7:00 PM | PRESS | Prepare the sides (rehearse) for g1.oikt0.2028.new-york.network-drama.0.s2.1 | done
+June 22, 2029 at 7:45 PM | PRESS | Prepare the sides (rehearse) for g1.oikt0.2028.new-york.network-drama.0.s2.1 | done
+June 22, 2029 at 8:30 PM | PRESS | Prepare the sides (rehearse) for g1.oikt0.2028.new-york.network-drama.0.s2.1 | done
+June 22, 2029 at 9:15 PM | PRESS | Prepare the sides (rehearse) for g1.oikt0.2028.new-york.network-drama.0.s2.1 | done
+June 23, 2029 at 9:00 AM | PRESS | Prepare the sides (rehearse) for g1.oikt0.2028.new-york.network-drama.0.s2.1 | done
+June 23, 2029 at 9:45 AM | PRESS | Tape It for g1.oikt0.2028.new-york.network-drama.0.s2.1 | done
+June 24, 2029 at 1:45 PM | PRESS | Update Your Résumé | done
+June 25, 2029 at 9:00 AM | NOTICE | Submitted For Desk Clerk | Thomas Ashgrove submitted you for Desk Clerk in The Calloway Files, sending your headshots from April 28, 2029, your résumé from June 24, 2029 and your reel from April 28, 2029. Kettering Casting answers on Wednesday, June 27, 2029.
+June 25, 2029 at 9:00 AM | NOTICE | Submitted For Wren | Thomas Ashgrove submitted you for Wren in Lowell Falls Crossing, sending your headshots from April 28, 2029, your résumé from June 24, 2029 and your reel from April 28, 2029. Hargrove Casting answers on Wednesday, June 27, 2029.
+June 25, 2029 at 9:00 AM | NOTICE | Submitted For Vera | Thomas Ashgrove submitted you for Vera in Marrow Bay Crossing, sending your headshots from April 28, 2029, your résumé from June 24, 2029 and your reel from April 28, 2029. Achebe Casting answers on Wednesday, June 27, 2029.
+June 25, 2029 at 11:00 AM | STOP | Audition: Sage, The Assembly Of Lowell Falls | Go
+June 26, 2029 at 5:00 PM | NOTICE | A Callback For Sage | Thomas Ashgrove passed this on: Okonjo Casting wants to see you again for Sage in The Assembly Of Lowell Falls: a 99-seat theater in the East Village in New York, Monday, July 2, 2029 at 2:00 PM. Getting there takes about two hours each way. Prepare the sides on the Career screen’s Opportunities tab before you go.
 June 27, 2029 at 10:00 AM | NOTICE | A Self-Tape For Desk Clerk | Thomas Ashgrove passed this on: Kettering Casting asks for a self-tape for Desk Clerk in The Calloway Files, due Sunday, July 1, 2029 at 6:00 PM. Prepare the sides, then press Tape It on the Career screen’s Opportunities tab.
+June 27, 2029 at 10:00 AM | NOTICE | A Self-Tape For Wren | Thomas Ashgrove passed this on: Hargrove Casting asks for a self-tape for Wren in Lowell Falls Crossing, due Sunday, July 1, 2029 at 6:00 PM. Prepare the sides, then press Tape It on the Career screen’s Opportunities tab.
+June 27, 2029 at 10:00 AM | NOTICE | A Self-Tape For Vera | Thomas Ashgrove passed this on: Achebe Casting asks for a self-tape for Vera in Marrow Bay Crossing, due Sunday, July 1, 2029 at 6:00 PM. Prepare the sides, then press Tape It on the Career screen’s Opportunities tab.
 June 27, 2029 at 10:45 AM | PRESS | Prepare the sides (read) for calloway-files | done
 June 27, 2029 at 11:15 AM | PRESS | Prepare the sides (read) for calloway-files | done
 June 27, 2029 at 11:45 AM | PRESS | Prepare the sides (lines) for calloway-files | done
@@ -136,6 +338,8 @@ June 27, 2029 at 2:00 PM | PRESS | Prepare the sides (rehearse) for calloway-fil
 June 27, 2029 at 2:45 PM | PRESS | Prepare the sides (rehearse) for calloway-files | done
 June 27, 2029 at 3:30 PM | PRESS | Prepare the sides (rehearse) for calloway-files | done
 June 27, 2029 at 4:15 PM | PRESS | Prepare the sides (rehearse) for calloway-files | done
+June 27, 2029 at 5:00 PM | NOTICE | Not Cast As Wren Thibodeaux | Thomas Ashgrove passed this on: Pennick Casting cast another actor as Wren Thibodeaux. Casting doesn’t give its reasons. The Opportunities tab shows what went into it: your audition, the role’s fit and the field.
+June 27, 2029 at 5:00 PM | NOTICE | Not Cast As Avery Rasmussen | Thomas Ashgrove passed this on: Pennick Casting cast another actor as Avery Rasmussen. Casting doesn’t give its reasons. The Opportunities tab shows what went into it: your audition, the role’s fit and the field.
 June 27, 2029 at 5:00 PM | PRESS | Prepare the sides (rehearse) for calloway-files | done
 June 27, 2029 at 5:45 PM | PRESS | Prepare the sides (rehearse) for calloway-files | done
 June 27, 2029 at 6:30 PM | PRESS | Prepare the sides (rehearse) for calloway-files | done
@@ -145,21 +349,63 @@ June 27, 2029 at 8:45 PM | PRESS | Prepare the sides (rehearse) for calloway-fil
 June 27, 2029 at 9:30 PM | PRESS | Prepare the sides (rehearse) for calloway-files | done
 June 28, 2029 at 9:15 AM | PRESS | Prepare the sides (rehearse) for calloway-files | done
 June 28, 2029 at 10:00 AM | PRESS | Tape It for calloway-files | done
-July 2, 2029 at 9:00 AM | NOTICE | Submitted For Nell | Thomas Ashgrove submitted you for Nell in A House On Calder Street, sending your headshots from April 28, 2029 and your résumé from May 21, 2029. Pennick Casting answers on Wednesday, July 4, 2029.
-July 2, 2029 at 1:00 PM | PRESS | Update Your Résumé | done
+June 28, 2029 at 11:00 AM | PRESS | Prepare the sides (read) for g1.oikt0.2024.chicago.network-drama.1.s6.0 | done
+June 28, 2029 at 11:30 AM | PRESS | Prepare the sides (read) for g1.oikt0.2024.chicago.network-drama.1.s6.0 | done
+June 28, 2029 at 12:00 PM | PRESS | Prepare the sides (lines) for g1.oikt0.2024.chicago.network-drama.1.s6.0 | done
+June 28, 2029 at 12:30 PM | PRESS | Prepare the sides (lines) for g1.oikt0.2024.chicago.network-drama.1.s6.0 | done
+June 28, 2029 at 1:00 PM | PRESS | Prepare the sides (lines) for g1.oikt0.2024.chicago.network-drama.1.s6.0 | done
+June 28, 2029 at 1:30 PM | PRESS | Prepare the sides (rehearse) for g1.oikt0.2024.chicago.network-drama.1.s6.0 | done
+June 28, 2029 at 2:15 PM | PRESS | Prepare the sides (rehearse) for g1.oikt0.2024.chicago.network-drama.1.s6.0 | done
+June 28, 2029 at 3:00 PM | PRESS | Prepare the sides (rehearse) for g1.oikt0.2024.chicago.network-drama.1.s6.0 | done
+June 28, 2029 at 3:45 PM | PRESS | Prepare the sides (rehearse) for g1.oikt0.2024.chicago.network-drama.1.s6.0 | done
+June 28, 2029 at 4:30 PM | PRESS | Prepare the sides (rehearse) for g1.oikt0.2024.chicago.network-drama.1.s6.0 | done
+June 28, 2029 at 5:15 PM | PRESS | Prepare the sides (rehearse) for g1.oikt0.2024.chicago.network-drama.1.s6.0 | done
+June 28, 2029 at 6:00 PM | PRESS | Prepare the sides (rehearse) for g1.oikt0.2024.chicago.network-drama.1.s6.0 | done
+June 28, 2029 at 6:45 PM | PRESS | Prepare the sides (rehearse) for g1.oikt0.2024.chicago.network-drama.1.s6.0 | done
+June 28, 2029 at 7:30 PM | PRESS | Prepare the sides (rehearse) for g1.oikt0.2024.chicago.network-drama.1.s6.0 | done
+June 28, 2029 at 8:15 PM | PRESS | Prepare the sides (rehearse) for g1.oikt0.2024.chicago.network-drama.1.s6.0 | done
+June 28, 2029 at 9:00 PM | PRESS | Prepare the sides (rehearse) for g1.oikt0.2024.chicago.network-drama.1.s6.0 | done
+June 28, 2029 at 9:45 PM | PRESS | Prepare the sides (rehearse) for g1.oikt0.2024.chicago.network-drama.1.s6.0 | done
+June 29, 2029 at 9:30 AM | PRESS | Prepare the sides (rehearse) for g1.oikt0.2024.chicago.network-drama.1.s6.0 | done
+June 29, 2029 at 10:15 AM | PRESS | Tape It for g1.oikt0.2024.chicago.network-drama.1.s6.0 | done
+June 29, 2029 at 11:15 AM | PRESS | Prepare the sides (read) for g1.oikt0.2029.los-angeles.network-comedy.1.s0.0 | done
+June 29, 2029 at 11:45 AM | PRESS | Prepare the sides (read) for g1.oikt0.2029.los-angeles.network-comedy.1.s0.0 | done
+June 29, 2029 at 12:15 PM | PRESS | Prepare the sides (lines) for g1.oikt0.2029.los-angeles.network-comedy.1.s0.0 | done
+June 29, 2029 at 12:45 PM | PRESS | Prepare the sides (lines) for g1.oikt0.2029.los-angeles.network-comedy.1.s0.0 | done
+June 29, 2029 at 1:15 PM | PRESS | Prepare the sides (lines) for g1.oikt0.2029.los-angeles.network-comedy.1.s0.0 | done
+June 29, 2029 at 1:45 PM | PRESS | Prepare the sides (rehearse) for g1.oikt0.2029.los-angeles.network-comedy.1.s0.0 | done
+June 29, 2029 at 2:30 PM | PRESS | Prepare the sides (rehearse) for g1.oikt0.2029.los-angeles.network-comedy.1.s0.0 | done
+June 29, 2029 at 3:15 PM | PRESS | Prepare the sides (rehearse) for g1.oikt0.2029.los-angeles.network-comedy.1.s0.0 | done
+June 29, 2029 at 4:00 PM | PRESS | Prepare the sides (rehearse) for g1.oikt0.2029.los-angeles.network-comedy.1.s0.0 | done
+June 29, 2029 at 4:45 PM | PRESS | Prepare the sides (rehearse) for g1.oikt0.2029.los-angeles.network-comedy.1.s0.0 | done
+June 29, 2029 at 5:30 PM | PRESS | Prepare the sides (rehearse) for g1.oikt0.2029.los-angeles.network-comedy.1.s0.0 | done
+June 29, 2029 at 6:15 PM | PRESS | Prepare the sides (rehearse) for g1.oikt0.2029.los-angeles.network-comedy.1.s0.0 | done
+June 29, 2029 at 7:00 PM | PRESS | Prepare the sides (rehearse) for g1.oikt0.2029.los-angeles.network-comedy.1.s0.0 | done
+June 29, 2029 at 7:45 PM | PRESS | Prepare the sides (rehearse) for g1.oikt0.2029.los-angeles.network-comedy.1.s0.0 | done
+June 29, 2029 at 8:30 PM | PRESS | Prepare the sides (rehearse) for g1.oikt0.2029.los-angeles.network-comedy.1.s0.0 | done
+June 29, 2029 at 9:15 PM | PRESS | Prepare the sides (rehearse) for g1.oikt0.2029.los-angeles.network-comedy.1.s0.0 | done
+June 30, 2029 at 9:00 AM | PRESS | Prepare the sides (rehearse) for g1.oikt0.2029.los-angeles.network-comedy.1.s0.0 | done
+June 30, 2029 at 9:45 AM | PRESS | Tape It for g1.oikt0.2029.los-angeles.network-comedy.1.s0.0 | done
+July 2, 2029 at 9:00 AM | NOTICE | Submitted For Nell | Thomas Ashgrove submitted you for Nell in A House On Calder Street, sending your headshots from April 28, 2029 and your résumé from June 24, 2029. Pennick Casting answers on Wednesday, July 4, 2029.
+July 2, 2029 at 9:00 AM | NOTICE | Submitted For Pilar | Thomas Ashgrove submitted you for Pilar in The Almanac Of Carver Hill, sending your headshots from April 28, 2029, your résumé from June 24, 2029 and your reel from April 28, 2029. Iwata Casting answers on Wednesday, July 4, 2029.
+July 2, 2029 at 9:45 AM | PRESS | Submit Yourself for harbor-line | done
+July 2, 2029 at 2:00 PM | STOP | Callback: Sage, The Assembly Of Lowell Falls | Go
 July 4, 2029 at 10:00 AM | NOTICE | An Audition For Nell | Thomas Ashgrove passed this on: Pennick Casting wants to see you for Nell in A House On Calder Street: a 199-seat theater in Manhattan in New York, Monday, July 9, 2029 at 11:00 AM. Getting there takes about two hours each way. Prepare the sides on the Career screen’s Opportunities tab before you go.
-July 4, 2029 at 10:00 AM | PRESS | Prepare the sides (read) for calder-street | done
-July 4, 2029 at 10:30 AM | PRESS | Prepare the sides (read) for calder-street | done
-July 4, 2029 at 11:00 AM | PRESS | Prepare the sides (lines) for calder-street | done
-July 4, 2029 at 11:30 AM | PRESS | Prepare the sides (lines) for calder-street | done
-July 4, 2029 at 12:00 PM | PRESS | Prepare the sides (lines) for calder-street | done
-July 4, 2029 at 12:30 PM | PRESS | Prepare the sides (rehearse) for calder-street | done
+July 4, 2029 at 10:00 AM | NOTICE | A Self-Tape For Pilar | Thomas Ashgrove passed this on: Iwata Casting asks for a self-tape for Pilar in The Almanac Of Carver Hill, due Sunday, July 8, 2029 at 6:00 PM. Prepare the sides, then press Tape It on the Career screen’s Opportunities tab.
+July 4, 2029 at 10:00 AM | NOTICE | A Self-Tape For Dana Kell | Brandt Casting asks for a self-tape for Dana Kell in Harbor Line, due Sunday, July 8, 2029 at 6:00 PM. Prepare the sides, then press Tape It on the Career screen’s Opportunities tab.
+July 4, 2029 at 10:45 AM | PRESS | Prepare the sides (read) for calder-street | done
+July 4, 2029 at 11:15 AM | PRESS | Prepare the sides (read) for calder-street | done
+July 4, 2029 at 11:45 AM | PRESS | Prepare the sides (lines) for calder-street | done
+July 4, 2029 at 12:15 PM | PRESS | Prepare the sides (lines) for calder-street | done
+July 4, 2029 at 12:45 PM | PRESS | Prepare the sides (lines) for calder-street | done
 July 4, 2029 at 1:15 PM | PRESS | Prepare the sides (rehearse) for calder-street | done
 July 4, 2029 at 2:00 PM | PRESS | Prepare the sides (rehearse) for calder-street | done
 July 4, 2029 at 2:45 PM | PRESS | Prepare the sides (rehearse) for calder-street | done
 July 4, 2029 at 3:30 PM | PRESS | Prepare the sides (rehearse) for calder-street | done
 July 4, 2029 at 4:15 PM | PRESS | Prepare the sides (rehearse) for calder-street | done
 July 4, 2029 at 5:00 PM | NOTICE | Not Cast As Desk Clerk | Thomas Ashgrove passed this on: Kettering Casting cast another actor as Desk Clerk. Casting doesn’t give its reasons. The Opportunities tab shows what went into it: your audition, the role’s fit and the field.
+July 4, 2029 at 5:00 PM | NOTICE | Not Cast As Wren | Thomas Ashgrove passed this on: Hargrove Casting cast another actor as Wren. Casting doesn’t give its reasons. The Opportunities tab shows what went into it: your audition, the role’s fit and the field.
+July 4, 2029 at 5:00 PM | NOTICE | Not Cast As Vera | Thomas Ashgrove passed this on: Achebe Casting cast another actor as Vera. Casting doesn’t give its reasons. The Opportunities tab shows what went into it: your audition, the role’s fit and the field.
 July 4, 2029 at 5:00 PM | PRESS | Prepare the sides (rehearse) for calder-street | done
 July 4, 2029 at 5:45 PM | PRESS | Prepare the sides (rehearse) for calder-street | done
 July 4, 2029 at 6:30 PM | PRESS | Prepare the sides (rehearse) for calder-street | done
@@ -168,10 +414,58 @@ July 4, 2029 at 8:00 PM | PRESS | Prepare the sides (rehearse) for calder-street
 July 4, 2029 at 8:45 PM | PRESS | Prepare the sides (rehearse) for calder-street | done
 July 4, 2029 at 9:30 PM | PRESS | Prepare the sides (rehearse) for calder-street | done
 July 5, 2029 at 9:15 AM | PRESS | Prepare the sides (rehearse) for calder-street | done
-July 9, 2029 at 9:00 AM | NOTICE | Submitted For Jess | Thomas Ashgrove submitted you for Jess in Static On Route 9, sending your headshots from April 28, 2029, your résumé from July 2, 2029 and your reel from April 28, 2029. It’s a new casting of the part. The last time it was posted to you, on March 26, 2029: Submissions for Jess closed on April 2, 2029. Brisbane Hall Casting answers on Wednesday, July 11, 2029.
+July 5, 2029 at 10:00 AM | PRESS | Prepare the sides (read) for harbor-line | done
+July 5, 2029 at 10:30 AM | PRESS | Prepare the sides (read) for harbor-line | done
+July 5, 2029 at 11:00 AM | PRESS | Prepare the sides (lines) for harbor-line | done
+July 5, 2029 at 11:30 AM | PRESS | Prepare the sides (lines) for harbor-line | done
+July 5, 2029 at 12:00 PM | PRESS | Prepare the sides (lines) for harbor-line | done
+July 5, 2029 at 12:30 PM | PRESS | Prepare the sides (rehearse) for harbor-line | done
+July 5, 2029 at 1:15 PM | PRESS | Prepare the sides (rehearse) for harbor-line | done
+July 5, 2029 at 2:00 PM | PRESS | Prepare the sides (rehearse) for harbor-line | done
+July 5, 2029 at 2:45 PM | PRESS | Prepare the sides (rehearse) for harbor-line | done
+July 5, 2029 at 3:30 PM | PRESS | Prepare the sides (rehearse) for harbor-line | done
+July 5, 2029 at 4:15 PM | PRESS | Prepare the sides (rehearse) for harbor-line | done
+July 5, 2029 at 5:00 PM | NOTICE | Not Cast As Sage | Thomas Ashgrove passed this on: Okonjo Casting cast another actor as Sage. Casting doesn’t give its reasons. The Opportunities tab shows what went into it: your audition, the role’s fit and the field.
+July 5, 2029 at 5:00 PM | PRESS | Prepare the sides (rehearse) for harbor-line | done
+July 5, 2029 at 5:45 PM | PRESS | Prepare the sides (rehearse) for harbor-line | done
+July 5, 2029 at 6:30 PM | PRESS | Prepare the sides (rehearse) for harbor-line | done
+July 5, 2029 at 7:15 PM | PRESS | Prepare the sides (rehearse) for harbor-line | done
+July 5, 2029 at 8:00 PM | PRESS | Prepare the sides (rehearse) for harbor-line | done
+July 5, 2029 at 8:45 PM | PRESS | Prepare the sides (rehearse) for harbor-line | done
+July 5, 2029 at 9:30 PM | PRESS | Prepare the sides (rehearse) for harbor-line | done
+July 6, 2029 at 9:15 AM | PRESS | Prepare the sides (rehearse) for harbor-line | done
+July 6, 2029 at 10:00 AM | PRESS | Tape It for harbor-line | done
+July 6, 2029 at 11:00 AM | PRESS | Prepare the sides (read) for g1.oikt0.2029.atlanta.serialized-drama.0.s1.1 | done
+July 6, 2029 at 11:30 AM | PRESS | Prepare the sides (read) for g1.oikt0.2029.atlanta.serialized-drama.0.s1.1 | done
+July 6, 2029 at 12:00 PM | PRESS | Prepare the sides (lines) for g1.oikt0.2029.atlanta.serialized-drama.0.s1.1 | done
+July 6, 2029 at 12:30 PM | PRESS | Prepare the sides (lines) for g1.oikt0.2029.atlanta.serialized-drama.0.s1.1 | done
+July 6, 2029 at 1:00 PM | PRESS | Prepare the sides (lines) for g1.oikt0.2029.atlanta.serialized-drama.0.s1.1 | done
+July 6, 2029 at 1:30 PM | PRESS | Prepare the sides (rehearse) for g1.oikt0.2029.atlanta.serialized-drama.0.s1.1 | done
+July 6, 2029 at 2:15 PM | PRESS | Prepare the sides (rehearse) for g1.oikt0.2029.atlanta.serialized-drama.0.s1.1 | done
+July 6, 2029 at 3:00 PM | PRESS | Prepare the sides (rehearse) for g1.oikt0.2029.atlanta.serialized-drama.0.s1.1 | done
+July 6, 2029 at 3:45 PM | PRESS | Prepare the sides (rehearse) for g1.oikt0.2029.atlanta.serialized-drama.0.s1.1 | done
+July 6, 2029 at 4:30 PM | PRESS | Prepare the sides (rehearse) for g1.oikt0.2029.atlanta.serialized-drama.0.s1.1 | done
+July 6, 2029 at 5:15 PM | PRESS | Prepare the sides (rehearse) for g1.oikt0.2029.atlanta.serialized-drama.0.s1.1 | done
+July 6, 2029 at 6:00 PM | PRESS | Prepare the sides (rehearse) for g1.oikt0.2029.atlanta.serialized-drama.0.s1.1 | done
+July 6, 2029 at 6:45 PM | PRESS | Prepare the sides (rehearse) for g1.oikt0.2029.atlanta.serialized-drama.0.s1.1 | done
+July 6, 2029 at 7:30 PM | PRESS | Prepare the sides (rehearse) for g1.oikt0.2029.atlanta.serialized-drama.0.s1.1 | done
+July 6, 2029 at 8:15 PM | PRESS | Prepare the sides (rehearse) for g1.oikt0.2029.atlanta.serialized-drama.0.s1.1 | done
+July 6, 2029 at 9:00 PM | PRESS | Prepare the sides (rehearse) for g1.oikt0.2029.atlanta.serialized-drama.0.s1.1 | done
+July 6, 2029 at 9:45 PM | PRESS | Prepare the sides (rehearse) for g1.oikt0.2029.atlanta.serialized-drama.0.s1.1 | done
+July 7, 2029 at 9:30 AM | PRESS | Prepare the sides (rehearse) for g1.oikt0.2029.atlanta.serialized-drama.0.s1.1 | done
+July 7, 2029 at 10:15 AM | PRESS | Tape It for g1.oikt0.2029.atlanta.serialized-drama.0.s1.1 | done
+July 9, 2029 at 9:00 AM | NOTICE | Submitted For Jess | Thomas Ashgrove submitted you for Jess in Static On Route 9, sending your headshots from April 28, 2029, your résumé from June 24, 2029 and your reel from April 28, 2029. It’s a new casting of the part. The last time it was posted to you, on March 26, 2029: Submissions for Jess closed on April 2, 2029. Brisbane Hall Casting answers on Wednesday, July 11, 2029.
+July 9, 2029 at 9:00 AM | NOTICE | Submitted For Reese Pike | Thomas Ashgrove submitted you for Reese Pike in 9-1-1, sending your headshots from April 28, 2029, your résumé from June 24, 2029 and your reel from April 28, 2029. The production’s casting office answers on Wednesday, July 11, 2029.
+July 9, 2029 at 9:00 AM | NOTICE | Submitted For Hollis | Thomas Ashgrove submitted you for Hollis in The Ledger Of Fenwick Pass, sending your headshots from April 28, 2029, your résumé from June 24, 2029 and your reel from April 28, 2029. Castellano Casting answers on Wednesday, July 11, 2029.
+July 9, 2029 at 9:00 AM | NOTICE | Submitted For Rosalind Whitcombe | Thomas Ashgrove submitted you for Rosalind Whitcombe in The Harbor, sending your headshots from April 28, 2029, your résumé from June 24, 2029 and your reel from April 28, 2029. Kettering Casting answers on Wednesday, July 11, 2029.
 July 9, 2029 at 11:00 AM | STOP | Audition: Nell, A House On Calder Street | Go
-July 10, 2029 at 5:00 PM | NOTICE | A Callback For Nell | Thomas Ashgrove passed this on: Pennick Casting wants to see you again for Nell in A House On Calder Street: a 199-seat theater in Manhattan in New York, Monday, July 16, 2029 at 2:00 PM. Getting there takes about two hours each way. Prepare the sides on the Career screen’s Opportunities tab before you go.
+July 9, 2029 at 5:00 PM | NOTICE | Not Cast As Dana Kell | Brandt Casting didn’t call you back for Dana Kell. Casting doesn’t give its reasons. The Opportunities tab shows what went into it: your audition, the role’s fit and the field.
+July 9, 2029 at 5:00 PM | NOTICE | Not Cast As Pilar | Thomas Ashgrove passed this on: Iwata Casting didn’t call you back for Pilar. Casting doesn’t give its reasons. The Opportunities tab shows what went into it: your audition, the role’s fit and the field.
+July 10, 2029 at 5:00 PM | NOTICE | Not Cast As Nell | Thomas Ashgrove passed this on: Pennick Casting didn’t call you back for Nell. Casting doesn’t give its reasons. The Opportunities tab shows what went into it: your audition, the role’s fit and the field.
 July 11, 2029 at 10:00 AM | NOTICE | A Self-Tape For Jess | Thomas Ashgrove passed this on: Brisbane Hall Casting asks for a self-tape for Jess in Static On Route 9, due Sunday, July 15, 2029 at 6:00 PM. Prepare the sides, then press Tape It on the Career screen’s Opportunities tab.
+July 11, 2029 at 10:00 AM | NOTICE | A Self-Tape For Reese Pike | Thomas Ashgrove passed this on: The production’s casting office asks for a self-tape for Reese Pike in 9-1-1, due Sunday, July 15, 2029 at 6:00 PM. Prepare the sides, then press Tape It on the Career screen’s Opportunities tab.
+July 11, 2029 at 10:00 AM | NOTICE | A Self-Tape For Hollis | Thomas Ashgrove passed this on: Castellano Casting asks for a self-tape for Hollis in The Ledger Of Fenwick Pass, due Sunday, July 15, 2029 at 6:00 PM. Prepare the sides, then press Tape It on the Career screen’s Opportunities tab.
+July 11, 2029 at 10:00 AM | NOTICE | A Self-Tape For Rosalind Whitcombe | Thomas Ashgrove passed this on: Kettering Casting asks for a self-tape for Rosalind Whitcombe in The Harbor, due Sunday, July 15, 2029 at 6:00 PM. Prepare the sides, then press Tape It on the Career screen’s Opportunities tab.
 July 11, 2029 at 10:30 AM | PRESS | Prepare the sides (read) for route-nine | done
 July 11, 2029 at 11:00 AM | PRESS | Prepare the sides (read) for route-nine | done
 July 11, 2029 at 11:30 AM | PRESS | Prepare the sides (lines) for route-nine | done
@@ -191,12 +485,149 @@ July 11, 2029 at 8:30 PM | PRESS | Prepare the sides (rehearse) for route-nine |
 July 11, 2029 at 9:15 PM | PRESS | Prepare the sides (rehearse) for route-nine | done
 July 12, 2029 at 9:00 AM | PRESS | Prepare the sides (rehearse) for route-nine | done
 July 12, 2029 at 9:45 AM | PRESS | Tape It for route-nine | done
-July 16, 2029 at 2:00 PM | STOP | Callback: Nell, A House On Calder Street | Go
+July 12, 2029 at 10:45 AM | PRESS | Prepare the sides (read) for nine-one-one-guest | done
+July 12, 2029 at 11:15 AM | PRESS | Prepare the sides (read) for nine-one-one-guest | done
+July 12, 2029 at 11:45 AM | PRESS | Prepare the sides (lines) for nine-one-one-guest | done
+July 12, 2029 at 12:15 PM | PRESS | Prepare the sides (lines) for nine-one-one-guest | done
+July 12, 2029 at 12:45 PM | PRESS | Prepare the sides (lines) for nine-one-one-guest | done
+July 12, 2029 at 1:15 PM | PRESS | Prepare the sides (rehearse) for nine-one-one-guest | done
+July 12, 2029 at 2:00 PM | PRESS | Prepare the sides (rehearse) for nine-one-one-guest | done
+July 12, 2029 at 2:45 PM | PRESS | Prepare the sides (rehearse) for nine-one-one-guest | done
+July 12, 2029 at 3:30 PM | PRESS | Prepare the sides (rehearse) for nine-one-one-guest | done
+July 12, 2029 at 4:15 PM | PRESS | Prepare the sides (rehearse) for nine-one-one-guest | done
+July 12, 2029 at 5:00 PM | PRESS | Prepare the sides (rehearse) for nine-one-one-guest | done
+July 12, 2029 at 5:45 PM | PRESS | Prepare the sides (rehearse) for nine-one-one-guest | done
+July 12, 2029 at 6:30 PM | PRESS | Prepare the sides (rehearse) for nine-one-one-guest | done
+July 12, 2029 at 7:15 PM | PRESS | Prepare the sides (rehearse) for nine-one-one-guest | done
+July 12, 2029 at 8:00 PM | PRESS | Prepare the sides (rehearse) for nine-one-one-guest | done
+July 12, 2029 at 8:45 PM | PRESS | Prepare the sides (rehearse) for nine-one-one-guest | done
+July 12, 2029 at 9:30 PM | PRESS | Prepare the sides (rehearse) for nine-one-one-guest | done
+July 13, 2029 at 9:15 AM | PRESS | Prepare the sides (rehearse) for nine-one-one-guest | done
+July 13, 2029 at 10:00 AM | PRESS | Tape It for nine-one-one-guest | done
+July 13, 2029 at 11:00 AM | PRESS | Prepare the sides (read) for g1.oikt0.2025.los-angeles.network-drama.0.s5.0 | done
+July 13, 2029 at 11:30 AM | PRESS | Prepare the sides (read) for g1.oikt0.2025.los-angeles.network-drama.0.s5.0 | done
+July 13, 2029 at 12:00 PM | PRESS | Prepare the sides (lines) for g1.oikt0.2025.los-angeles.network-drama.0.s5.0 | done
+July 13, 2029 at 12:30 PM | PRESS | Prepare the sides (lines) for g1.oikt0.2025.los-angeles.network-drama.0.s5.0 | done
+July 13, 2029 at 1:00 PM | PRESS | Prepare the sides (lines) for g1.oikt0.2025.los-angeles.network-drama.0.s5.0 | done
+July 13, 2029 at 1:30 PM | PRESS | Prepare the sides (rehearse) for g1.oikt0.2025.los-angeles.network-drama.0.s5.0 | done
+July 13, 2029 at 2:15 PM | PRESS | Prepare the sides (rehearse) for g1.oikt0.2025.los-angeles.network-drama.0.s5.0 | done
+July 13, 2029 at 3:00 PM | PRESS | Prepare the sides (rehearse) for g1.oikt0.2025.los-angeles.network-drama.0.s5.0 | done
+July 13, 2029 at 3:45 PM | PRESS | Prepare the sides (rehearse) for g1.oikt0.2025.los-angeles.network-drama.0.s5.0 | done
+July 13, 2029 at 4:30 PM | PRESS | Prepare the sides (rehearse) for g1.oikt0.2025.los-angeles.network-drama.0.s5.0 | done
+July 13, 2029 at 5:15 PM | PRESS | Prepare the sides (rehearse) for g1.oikt0.2025.los-angeles.network-drama.0.s5.0 | done
+July 13, 2029 at 6:00 PM | PRESS | Prepare the sides (rehearse) for g1.oikt0.2025.los-angeles.network-drama.0.s5.0 | done
+July 13, 2029 at 6:45 PM | PRESS | Prepare the sides (rehearse) for g1.oikt0.2025.los-angeles.network-drama.0.s5.0 | done
+July 13, 2029 at 7:30 PM | PRESS | Prepare the sides (rehearse) for g1.oikt0.2025.los-angeles.network-drama.0.s5.0 | done
+July 13, 2029 at 8:15 PM | PRESS | Prepare the sides (rehearse) for g1.oikt0.2025.los-angeles.network-drama.0.s5.0 | done
+July 13, 2029 at 9:00 PM | PRESS | Prepare the sides (rehearse) for g1.oikt0.2025.los-angeles.network-drama.0.s5.0 | done
+July 13, 2029 at 9:45 PM | PRESS | Prepare the sides (rehearse) for g1.oikt0.2025.los-angeles.network-drama.0.s5.0 | done
+July 14, 2029 at 9:30 AM | PRESS | Prepare the sides (rehearse) for g1.oikt0.2025.los-angeles.network-drama.0.s5.0 | done
+July 14, 2029 at 10:15 AM | PRESS | Tape It for g1.oikt0.2025.los-angeles.network-drama.0.s5.0 | done
+July 14, 2029 at 11:15 AM | PRESS | Prepare the sides (read) for g1.oikt0.2026.new-york.serialized-drama.0.s4.0 | done
+July 14, 2029 at 11:45 AM | PRESS | Prepare the sides (read) for g1.oikt0.2026.new-york.serialized-drama.0.s4.0 | done
+July 14, 2029 at 12:15 PM | PRESS | Prepare the sides (lines) for g1.oikt0.2026.new-york.serialized-drama.0.s4.0 | done
+July 14, 2029 at 12:45 PM | PRESS | Prepare the sides (lines) for g1.oikt0.2026.new-york.serialized-drama.0.s4.0 | done
+July 14, 2029 at 1:15 PM | PRESS | Prepare the sides (lines) for g1.oikt0.2026.new-york.serialized-drama.0.s4.0 | done
+July 14, 2029 at 1:45 PM | PRESS | Prepare the sides (rehearse) for g1.oikt0.2026.new-york.serialized-drama.0.s4.0 | done
+July 14, 2029 at 2:30 PM | PRESS | Prepare the sides (rehearse) for g1.oikt0.2026.new-york.serialized-drama.0.s4.0 | done
+July 14, 2029 at 3:15 PM | PRESS | Prepare the sides (rehearse) for g1.oikt0.2026.new-york.serialized-drama.0.s4.0 | done
+July 14, 2029 at 4:00 PM | PRESS | Prepare the sides (rehearse) for g1.oikt0.2026.new-york.serialized-drama.0.s4.0 | done
+July 14, 2029 at 4:45 PM | PRESS | Prepare the sides (rehearse) for g1.oikt0.2026.new-york.serialized-drama.0.s4.0 | done
+July 14, 2029 at 5:30 PM | PRESS | Prepare the sides (rehearse) for g1.oikt0.2026.new-york.serialized-drama.0.s4.0 | done
+July 14, 2029 at 6:15 PM | PRESS | Prepare the sides (rehearse) for g1.oikt0.2026.new-york.serialized-drama.0.s4.0 | done
+July 14, 2029 at 7:00 PM | PRESS | Prepare the sides (rehearse) for g1.oikt0.2026.new-york.serialized-drama.0.s4.0 | done
+July 14, 2029 at 7:45 PM | PRESS | Prepare the sides (rehearse) for g1.oikt0.2026.new-york.serialized-drama.0.s4.0 | done
+July 14, 2029 at 8:30 PM | PRESS | Prepare the sides (rehearse) for g1.oikt0.2026.new-york.serialized-drama.0.s4.0 | done
+July 14, 2029 at 9:15 PM | PRESS | Prepare the sides (rehearse) for g1.oikt0.2026.new-york.serialized-drama.0.s4.0 | done
+July 15, 2029 at 9:00 AM | PRESS | Prepare the sides (rehearse) for g1.oikt0.2026.new-york.serialized-drama.0.s4.0 | done
+July 15, 2029 at 9:45 AM | PRESS | Tape It for g1.oikt0.2026.new-york.serialized-drama.0.s4.0 | done
+July 16, 2029 at 9:00 AM | NOTICE | Submitted For The Night Manager | Thomas Ashgrove submitted you for The Night Manager in Second Shift, sending your headshots from April 28, 2029, your résumé from June 24, 2029 and your reel from April 28, 2029. Dunmore Casting answers on Wednesday, July 18, 2029.
+July 16, 2029 at 9:00 AM | NOTICE | Submitted For Junie Yardley | Thomas Ashgrove submitted you for Junie Yardley in The Witness Of Ashby, sending your headshots from April 28, 2029 and your résumé from June 24, 2029. Delacroix Casting answers on Wednesday, July 18, 2029.
+July 18, 2029 at 10:00 AM | NOTICE | A Self-Tape For The Night Manager | Thomas Ashgrove passed this on: Dunmore Casting asks for a self-tape for The Night Manager in Second Shift, due Sunday, July 22, 2029 at 6:00 PM. Prepare the sides, then press Tape It on the Career screen’s Opportunities tab.
+July 18, 2029 at 10:00 AM | NOTICE | An Audition For Junie Yardley | Thomas Ashgrove passed this on: Delacroix Casting wants to see you for Junie Yardley in The Witness Of Ashby: a 199-seat theater in Manhattan in New York, Monday, July 23, 2029 at 11:00 AM. Getting there takes about two hours each way. Prepare the sides on the Career screen’s Opportunities tab before you go.
+July 18, 2029 at 10:45 AM | PRESS | Prepare the sides (read) for second-shift | done
+July 18, 2029 at 11:15 AM | PRESS | Prepare the sides (read) for second-shift | done
+July 18, 2029 at 11:45 AM | PRESS | Prepare the sides (lines) for second-shift | done
+July 18, 2029 at 12:15 PM | PRESS | Prepare the sides (lines) for second-shift | done
+July 18, 2029 at 12:45 PM | PRESS | Prepare the sides (lines) for second-shift | done
+July 18, 2029 at 1:15 PM | PRESS | Prepare the sides (rehearse) for second-shift | done
+July 18, 2029 at 2:00 PM | PRESS | Prepare the sides (rehearse) for second-shift | done
+July 18, 2029 at 2:45 PM | PRESS | Prepare the sides (rehearse) for second-shift | done
+July 18, 2029 at 3:30 PM | PRESS | Prepare the sides (rehearse) for second-shift | done
+July 18, 2029 at 4:15 PM | PRESS | Prepare the sides (rehearse) for second-shift | done
 July 18, 2029 at 5:00 PM | NOTICE | Not Cast As Jess | Thomas Ashgrove passed this on: Brisbane Hall Casting cast another actor as Jess. Casting doesn’t give its reasons. The Opportunities tab shows what went into it: your audition, the role’s fit and the field.
-July 19, 2029 at 5:00 PM | NOTICE | Not Cast As Nell | Thomas Ashgrove passed this on: Pennick Casting cast another actor as Nell. Casting doesn’t give its reasons. The Opportunities tab shows what went into it: your audition, the role’s fit and the field.
+July 18, 2029 at 5:00 PM | NOTICE | Not Cast As Reese Pike | Thomas Ashgrove passed this on: The production’s casting office cast another actor as Reese Pike. Casting doesn’t give its reasons. The Opportunities tab shows what went into it: your audition, the role’s fit and the field.
+July 18, 2029 at 5:00 PM | NOTICE | Not Cast As Hollis | Thomas Ashgrove passed this on: Castellano Casting cast another actor as Hollis. Casting doesn’t give its reasons. The Opportunities tab shows what went into it: your audition, the role’s fit and the field.
+July 18, 2029 at 5:00 PM | NOTICE | Not Cast As Rosalind Whitcombe | Thomas Ashgrove passed this on: Kettering Casting cast another actor as Rosalind Whitcombe. Casting doesn’t give its reasons. The Opportunities tab shows what went into it: your audition, the role’s fit and the field.
+July 18, 2029 at 5:00 PM | PRESS | Prepare the sides (rehearse) for second-shift | done
+July 18, 2029 at 5:45 PM | PRESS | Prepare the sides (rehearse) for second-shift | done
+July 18, 2029 at 6:30 PM | PRESS | Prepare the sides (rehearse) for second-shift | done
+July 18, 2029 at 7:15 PM | PRESS | Prepare the sides (rehearse) for second-shift | done
+July 18, 2029 at 8:00 PM | PRESS | Prepare the sides (rehearse) for second-shift | done
+July 18, 2029 at 8:45 PM | PRESS | Prepare the sides (rehearse) for second-shift | done
+July 18, 2029 at 9:30 PM | PRESS | Prepare the sides (rehearse) for second-shift | done
+July 19, 2029 at 9:15 AM | PRESS | Prepare the sides (rehearse) for second-shift | done
+July 19, 2029 at 10:00 AM | PRESS | Tape It for second-shift | done
+July 19, 2029 at 11:00 AM | PRESS | Prepare the sides (read) for s1.oikt0.2029-07-16.new-york.off-broadway.0.0 | done
+July 19, 2029 at 11:30 AM | PRESS | Prepare the sides (read) for s1.oikt0.2029-07-16.new-york.off-broadway.0.0 | done
+July 19, 2029 at 12:00 PM | PRESS | Prepare the sides (lines) for s1.oikt0.2029-07-16.new-york.off-broadway.0.0 | done
+July 19, 2029 at 12:30 PM | PRESS | Prepare the sides (lines) for s1.oikt0.2029-07-16.new-york.off-broadway.0.0 | done
+July 19, 2029 at 1:00 PM | PRESS | Prepare the sides (lines) for s1.oikt0.2029-07-16.new-york.off-broadway.0.0 | done
+July 19, 2029 at 1:30 PM | PRESS | Prepare the sides (rehearse) for s1.oikt0.2029-07-16.new-york.off-broadway.0.0 | done
+July 19, 2029 at 2:15 PM | PRESS | Prepare the sides (rehearse) for s1.oikt0.2029-07-16.new-york.off-broadway.0.0 | done
+July 19, 2029 at 3:00 PM | PRESS | Prepare the sides (rehearse) for s1.oikt0.2029-07-16.new-york.off-broadway.0.0 | done
+July 19, 2029 at 3:45 PM | PRESS | Prepare the sides (rehearse) for s1.oikt0.2029-07-16.new-york.off-broadway.0.0 | done
+July 19, 2029 at 4:30 PM | PRESS | Prepare the sides (rehearse) for s1.oikt0.2029-07-16.new-york.off-broadway.0.0 | done
+July 19, 2029 at 5:15 PM | PRESS | Prepare the sides (rehearse) for s1.oikt0.2029-07-16.new-york.off-broadway.0.0 | done
+July 19, 2029 at 6:00 PM | PRESS | Prepare the sides (rehearse) for s1.oikt0.2029-07-16.new-york.off-broadway.0.0 | done
+July 19, 2029 at 6:45 PM | PRESS | Prepare the sides (rehearse) for s1.oikt0.2029-07-16.new-york.off-broadway.0.0 | done
+July 19, 2029 at 7:30 PM | PRESS | Prepare the sides (rehearse) for s1.oikt0.2029-07-16.new-york.off-broadway.0.0 | done
+July 19, 2029 at 8:15 PM | PRESS | Prepare the sides (rehearse) for s1.oikt0.2029-07-16.new-york.off-broadway.0.0 | done
+July 19, 2029 at 9:00 PM | PRESS | Prepare the sides (rehearse) for s1.oikt0.2029-07-16.new-york.off-broadway.0.0 | done
+July 19, 2029 at 9:45 PM | PRESS | Prepare the sides (rehearse) for s1.oikt0.2029-07-16.new-york.off-broadway.0.0 | done
+July 20, 2029 at 9:30 AM | PRESS | Prepare the sides (rehearse) for s1.oikt0.2029-07-16.new-york.off-broadway.0.0 | done
+July 23, 2029 at 9:00 AM | NOTICE | Submitted For Assistant DA Whitlock | Thomas Ashgrove submitted you for Assistant DA Whitlock in The Calloway Files, sending your headshots from April 28, 2029, your résumé from June 24, 2029 and your reel from April 28, 2029. Kettering Casting answers on Wednesday, July 25, 2029.
+July 23, 2029 at 11:00 AM | STOP | Audition: Junie Yardley, The Witness Of Ashby | Go
+July 25, 2029 at 10:00 AM | NOTICE | A Self-Tape For Assistant DA Whitlock | Thomas Ashgrove passed this on: Kettering Casting asks for a self-tape for Assistant DA Whitlock in The Calloway Files, due Sunday, July 29, 2029 at 6:00 PM. Prepare the sides, then press Tape It on the Career screen’s Opportunities tab.
+July 25, 2029 at 10:30 AM | PRESS | Prepare the sides (read) for calloway-files-whitlock | done
+July 25, 2029 at 11:00 AM | PRESS | Prepare the sides (read) for calloway-files-whitlock | done
+July 25, 2029 at 11:30 AM | PRESS | Prepare the sides (lines) for calloway-files-whitlock | done
+July 25, 2029 at 12:00 PM | PRESS | Prepare the sides (lines) for calloway-files-whitlock | done
+July 25, 2029 at 12:30 PM | PRESS | Prepare the sides (lines) for calloway-files-whitlock | done
+July 25, 2029 at 1:00 PM | PRESS | Prepare the sides (rehearse) for calloway-files-whitlock | done
+July 25, 2029 at 1:45 PM | PRESS | Prepare the sides (rehearse) for calloway-files-whitlock | done
+July 25, 2029 at 2:30 PM | PRESS | Prepare the sides (rehearse) for calloway-files-whitlock | done
+July 25, 2029 at 3:15 PM | PRESS | Prepare the sides (rehearse) for calloway-files-whitlock | done
+July 25, 2029 at 4:00 PM | PRESS | Prepare the sides (rehearse) for calloway-files-whitlock | done
+July 25, 2029 at 4:45 PM | PRESS | Prepare the sides (rehearse) for calloway-files-whitlock | done
+July 25, 2029 at 5:00 PM | NOTICE | Not Cast As The Night Manager | Thomas Ashgrove passed this on: Dunmore Casting cast another actor as The Night Manager. Casting doesn’t give its reasons. The Opportunities tab shows what went into it: your audition, the role’s fit and the field.
+July 25, 2029 at 5:30 PM | PRESS | Prepare the sides (rehearse) for calloway-files-whitlock | done
+July 25, 2029 at 6:15 PM | PRESS | Prepare the sides (rehearse) for calloway-files-whitlock | done
+July 25, 2029 at 7:00 PM | PRESS | Prepare the sides (rehearse) for calloway-files-whitlock | done
+July 25, 2029 at 7:45 PM | PRESS | Prepare the sides (rehearse) for calloway-files-whitlock | done
+July 25, 2029 at 8:30 PM | PRESS | Prepare the sides (rehearse) for calloway-files-whitlock | done
+July 25, 2029 at 9:15 PM | PRESS | Prepare the sides (rehearse) for calloway-files-whitlock | done
+July 26, 2029 at 9:00 AM | PRESS | Prepare the sides (rehearse) for calloway-files-whitlock | done
+July 26, 2029 at 9:45 AM | PRESS | Tape It for calloway-files-whitlock | done
+July 26, 2029 at 5:00 PM | NOTICE | Not Cast As Junie Yardley | Thomas Ashgrove passed this on: Delacroix Casting cast another actor as Junie Yardley. Casting doesn’t give its reasons. The Opportunities tab shows what went into it: your audition, the role’s fit and the field.
+July 30, 2029 at 9:00 AM | NOTICE | Submitted For The Sentinel | Thomas Ashgrove submitted you for The Sentinel in Iron Meridian, sending your headshots from April 28, 2029, your résumé from June 24, 2029 and your reel from April 28, 2029. Breck And Hale Casting answers on Wednesday, August 1, 2029.
+July 30, 2029 at 9:00 AM | NOTICE | Submitted For The Apprentice Lamplighter | Thomas Ashgrove submitted you for The Apprentice Lamplighter in The Lamplighters, sending your headshots from April 28, 2029 and your résumé from June 24, 2029. Pell And Moran Casting answers on Wednesday, August 1, 2029.
+July 30, 2029 at 9:00 AM | NOTICE | Submitted For The Getaway Driver | Thomas Ashgrove submitted you for The Getaway Driver in Breakwater, sending your headshots from April 28, 2029, your résumé from June 24, 2029 and your reel from April 28, 2029. Castellane Casting answers on Wednesday, August 1, 2029.
+July 30, 2029 at 9:00 AM | NOTICE | Submitted For Bea Escobar | Thomas Ashgrove submitted you for Bea Escobar in The Station Of Halloway, sending your headshots from April 28, 2029, your résumé from June 24, 2029 and your reel from April 28, 2029. Delacroix Casting answers on Wednesday, August 1, 2029.
+July 30, 2029 at 9:00 AM | NOTICE | Submitted For Marlowe Bellweather | Thomas Ashgrove submitted you for Marlowe Bellweather in The Almanac Of Carver Hill, sending your headshots from April 28, 2029, your résumé from June 24, 2029 and your reel from April 28, 2029. Iwata Casting answers on Wednesday, August 1, 2029.
 July 30, 2029 at 9:45 AM | PRESS | Submit Yourself for eastview | done
+July 30, 2029 at 9:45 AM | PRESS | Submit Yourself for lantern-row | done
+July 30, 2029 at 9:45 AM | PRESS | Submit Yourself for tidewater-reenactment | done
+July 30, 2029 at 5:00 PM | NOTICE | Not Cast As Assistant DA Whitlock | Thomas Ashgrove passed this on: Kettering Casting didn’t call you back for Assistant DA Whitlock. Casting doesn’t give its reasons. The Opportunities tab shows what went into it: your audition, the role’s fit and the field.
 August 1, 2029 at 12:30 AM | NOTICE | Your Health Cover Ended | You have no health cover from August 1, 2029. You have 60 days to enroll in the marketplace. Enroll on Papers, under Health Cover.
+August 1, 2029 at 10:00 AM | NOTICE | An Audition For The Sentinel | Thomas Ashgrove passed this on: Breck And Hale Casting wants to see you for The Sentinel in Iron Meridian: a performance capture stage in Brooklyn in New York, Monday, August 6, 2029 at 11:00 AM. Getting there takes about two hours each way. Prepare the sides on the Career screen’s Opportunities tab before you go.
+August 1, 2029 at 10:00 AM | NOTICE | An Audition For The Apprentice Lamplighter | Thomas Ashgrove passed this on: Pell And Moran Casting wants to see you for The Apprentice Lamplighter in The Lamplighters: a 500-seat regional theater in New Haven, Monday, August 6, 2029 at 11:00 AM. Getting there takes about 30 minutes each way. It clashes with Audition: The Sentinel, Iron Meridian at 11:00 AM. To ask for another time, press Ask For Another Time on the Opportunities tab, at least a day ahead. Casting moves it once. Prepare the sides on the Career screen’s Opportunities tab before you go.
+August 1, 2029 at 10:00 AM | NOTICE | A Self-Tape For The Getaway Driver | Thomas Ashgrove passed this on: Castellane Casting asks for a self-tape for The Getaway Driver in Breakwater, due Sunday, August 5, 2029 at 6:00 PM. Prepare the sides, then press Tape It on the Career screen’s Opportunities tab.
+August 1, 2029 at 10:00 AM | NOTICE | A Self-Tape For Bea Escobar | Thomas Ashgrove passed this on: Delacroix Casting asks for a self-tape for Bea Escobar in The Station Of Halloway, due Sunday, August 5, 2029 at 6:00 PM. Prepare the sides, then press Tape It on the Career screen’s Opportunities tab.
+August 1, 2029 at 10:00 AM | NOTICE | A Self-Tape For Marlowe Bellweather | Thomas Ashgrove passed this on: Iwata Casting asks for a self-tape for Marlowe Bellweather in The Almanac Of Carver Hill, due Sunday, August 5, 2029 at 6:00 PM. Prepare the sides, then press Tape It on the Career screen’s Opportunities tab.
 August 1, 2029 at 10:00 AM | NOTICE | A Self-Tape For Robin | The producers ask for a self-tape for Robin in Last Bus To Eastview, due Sunday, August 5, 2029 at 6:00 PM. Prepare the sides, then press Tape It on the Career screen’s Opportunities tab.
+August 1, 2029 at 10:00 AM | NOTICE | A Self-Tape For Pickett The Ferret | Hollis Reed Casting asks for a self-tape for Pickett The Ferret in Lantern Row, due Sunday, August 5, 2029 at 6:00 PM. Prepare the sides, then press Tape It on the Career screen’s Opportunities tab.
+August 1, 2029 at 10:00 AM | NOTICE | A Self-Tape For An Oyster Tonger Of 1890 | The film’s producers ask for a self-tape for An Oyster Tonger Of 1890 in Tidewater: The Last Oyster Towns, due Sunday, August 5, 2029 at 6:00 PM. Prepare the sides, then press Tape It on the Career screen’s Opportunities tab.
 August 1, 2029 at 10:45 AM | PRESS | Prepare the sides (read) for eastview | done
 August 1, 2029 at 11:15 AM | PRESS | Prepare the sides (read) for eastview | done
 August 1, 2029 at 11:45 AM | PRESS | Prepare the sides (lines) for eastview | done
@@ -216,7 +647,93 @@ August 1, 2029 at 8:45 PM | PRESS | Prepare the sides (rehearse) for eastview | 
 August 1, 2029 at 9:30 PM | PRESS | Prepare the sides (rehearse) for eastview | done
 August 2, 2029 at 9:15 AM | PRESS | Prepare the sides (rehearse) for eastview | done
 August 2, 2029 at 10:00 AM | PRESS | Tape It for eastview | done
-August 6, 2029 at 9:00 AM | PRESS | Submit Yourself for paper-moons-ivy | done
+August 2, 2029 at 11:00 AM | PRESS | Prepare the sides (read) for lantern-row | done
+August 2, 2029 at 11:30 AM | PRESS | Prepare the sides (read) for lantern-row | done
+August 2, 2029 at 12:00 PM | PRESS | Prepare the sides (lines) for lantern-row | done
+August 2, 2029 at 12:30 PM | PRESS | Prepare the sides (lines) for lantern-row | done
+August 2, 2029 at 1:00 PM | PRESS | Prepare the sides (lines) for lantern-row | done
+August 2, 2029 at 1:30 PM | PRESS | Prepare the sides (rehearse) for lantern-row | done
+August 2, 2029 at 2:15 PM | PRESS | Prepare the sides (rehearse) for lantern-row | done
+August 2, 2029 at 3:00 PM | PRESS | Prepare the sides (rehearse) for lantern-row | done
+August 2, 2029 at 3:45 PM | PRESS | Prepare the sides (rehearse) for lantern-row | done
+August 2, 2029 at 4:30 PM | PRESS | Prepare the sides (rehearse) for lantern-row | done
+August 2, 2029 at 5:15 PM | PRESS | Prepare the sides (rehearse) for lantern-row | done
+August 2, 2029 at 6:00 PM | PRESS | Prepare the sides (rehearse) for lantern-row | done
+August 2, 2029 at 6:45 PM | PRESS | Prepare the sides (rehearse) for lantern-row | done
+August 2, 2029 at 7:30 PM | PRESS | Prepare the sides (rehearse) for lantern-row | done
+August 2, 2029 at 8:15 PM | PRESS | Prepare the sides (rehearse) for lantern-row | done
+August 2, 2029 at 9:00 PM | PRESS | Prepare the sides (rehearse) for lantern-row | done
+August 2, 2029 at 9:45 PM | PRESS | Prepare the sides (rehearse) for lantern-row | done
+August 3, 2029 at 9:30 AM | PRESS | Prepare the sides (rehearse) for lantern-row | done
+August 3, 2029 at 10:15 AM | PRESS | Tape It for lantern-row | done
+August 3, 2029 at 11:15 AM | PRESS | Ask For Another Time for iron-meridian | done
+August 3, 2029 at 11:15 AM | PRESS | Prepare the sides (read) for iron-meridian | done
+August 3, 2029 at 11:45 AM | PRESS | Prepare the sides (read) for iron-meridian | done
+August 3, 2029 at 12:15 PM | PRESS | Prepare the sides (lines) for iron-meridian | done
+August 3, 2029 at 12:45 PM | PRESS | Prepare the sides (lines) for iron-meridian | done
+August 3, 2029 at 1:15 PM | PRESS | Prepare the sides (lines) for iron-meridian | done
+August 3, 2029 at 1:45 PM | PRESS | Prepare the sides (rehearse) for iron-meridian | done
+August 3, 2029 at 2:30 PM | PRESS | Prepare the sides (rehearse) for iron-meridian | done
+August 3, 2029 at 3:15 PM | PRESS | Prepare the sides (rehearse) for iron-meridian | done
+August 3, 2029 at 4:00 PM | PRESS | Prepare the sides (rehearse) for iron-meridian | done
+August 3, 2029 at 4:45 PM | PRESS | Prepare the sides (rehearse) for iron-meridian | done
+August 3, 2029 at 5:30 PM | PRESS | Prepare the sides (rehearse) for iron-meridian | done
+August 3, 2029 at 6:15 PM | PRESS | Prepare the sides (rehearse) for iron-meridian | done
+August 3, 2029 at 7:00 PM | PRESS | Prepare the sides (rehearse) for iron-meridian | done
+August 3, 2029 at 7:45 PM | PRESS | Prepare the sides (rehearse) for iron-meridian | done
+August 3, 2029 at 8:30 PM | PRESS | Prepare the sides (rehearse) for iron-meridian | done
+August 3, 2029 at 9:15 PM | PRESS | Prepare the sides (rehearse) for iron-meridian | done
+August 4, 2029 at 9:00 AM | PRESS | Prepare the sides (rehearse) for iron-meridian | done
+August 4, 2029 at 9:45 AM | PRESS | Prepare the sides (read) for tidewater-reenactment | done
+August 4, 2029 at 10:15 AM | PRESS | Prepare the sides (read) for tidewater-reenactment | done
+August 4, 2029 at 10:45 AM | PRESS | Prepare the sides (lines) for tidewater-reenactment | done
+August 4, 2029 at 11:15 AM | PRESS | Prepare the sides (lines) for tidewater-reenactment | done
+August 4, 2029 at 11:45 AM | PRESS | Prepare the sides (lines) for tidewater-reenactment | done
+August 4, 2029 at 12:15 PM | PRESS | Prepare the sides (rehearse) for tidewater-reenactment | done
+August 4, 2029 at 1:00 PM | PRESS | Prepare the sides (rehearse) for tidewater-reenactment | done
+August 4, 2029 at 1:45 PM | PRESS | Prepare the sides (rehearse) for tidewater-reenactment | done
+August 4, 2029 at 2:30 PM | PRESS | Prepare the sides (rehearse) for tidewater-reenactment | done
+August 4, 2029 at 3:15 PM | PRESS | Prepare the sides (rehearse) for tidewater-reenactment | done
+August 4, 2029 at 4:00 PM | PRESS | Prepare the sides (rehearse) for tidewater-reenactment | done
+August 4, 2029 at 4:45 PM | PRESS | Prepare the sides (rehearse) for tidewater-reenactment | done
+August 4, 2029 at 5:30 PM | PRESS | Prepare the sides (rehearse) for tidewater-reenactment | done
+August 4, 2029 at 6:15 PM | PRESS | Prepare the sides (rehearse) for tidewater-reenactment | done
+August 4, 2029 at 7:00 PM | PRESS | Prepare the sides (rehearse) for tidewater-reenactment | done
+August 4, 2029 at 7:45 PM | PRESS | Prepare the sides (rehearse) for tidewater-reenactment | done
+August 4, 2029 at 8:30 PM | PRESS | Prepare the sides (rehearse) for tidewater-reenactment | done
+August 4, 2029 at 9:15 PM | PRESS | Prepare the sides (rehearse) for tidewater-reenactment | done
+August 5, 2029 at 9:00 AM | PRESS | Prepare the sides (rehearse) for tidewater-reenactment | done
+August 5, 2029 at 9:45 AM | PRESS | Tape It for tidewater-reenactment | done
+August 5, 2029 at 10:45 AM | PRESS | Prepare the sides (read) for lamplighters | done
+August 5, 2029 at 11:15 AM | PRESS | Prepare the sides (read) for lamplighters | done
+August 5, 2029 at 11:45 AM | PRESS | Prepare the sides (lines) for lamplighters | done
+August 5, 2029 at 12:15 PM | PRESS | Prepare the sides (lines) for lamplighters | done
+August 5, 2029 at 12:45 PM | PRESS | Prepare the sides (lines) for lamplighters | done
+August 5, 2029 at 1:15 PM | PRESS | Prepare the sides (rehearse) for lamplighters | done
+August 5, 2029 at 2:00 PM | PRESS | Prepare the sides (rehearse) for lamplighters | done
+August 5, 2029 at 2:45 PM | PRESS | Prepare the sides (rehearse) for lamplighters | done
+August 5, 2029 at 3:30 PM | PRESS | Prepare the sides (rehearse) for lamplighters | done
+August 5, 2029 at 4:15 PM | PRESS | Prepare the sides (rehearse) for lamplighters | done
+August 5, 2029 at 5:00 PM | PRESS | Prepare the sides (rehearse) for lamplighters | done
+August 5, 2029 at 5:45 PM | PRESS | Prepare the sides (rehearse) for lamplighters | done
+August 5, 2029 at 6:00 PM | NOTICE | Your Self-Tape For The Getaway Driver Wasn’t In | Your self-tape for The Getaway Driver wasn’t in by August 5, 2029 at 6:00 PM, so Castellane Casting moved on without it.
+August 5, 2029 at 6:00 PM | NOTICE | Your Self-Tape For Bea Escobar Wasn’t In | Your self-tape for Bea Escobar wasn’t in by August 5, 2029 at 6:00 PM, so Delacroix Casting moved on without it.
+August 5, 2029 at 6:00 PM | NOTICE | Your Self-Tape For Marlowe Bellweather Wasn’t In | Your self-tape for Marlowe Bellweather wasn’t in by August 5, 2029 at 6:00 PM, so Iwata Casting moved on without it.
+August 5, 2029 at 6:30 PM | PRESS | Prepare the sides (rehearse) for lamplighters | done
+August 5, 2029 at 7:15 PM | PRESS | Prepare the sides (rehearse) for lamplighters | done
+August 5, 2029 at 8:00 PM | PRESS | Prepare the sides (rehearse) for lamplighters | done
+August 5, 2029 at 8:45 PM | PRESS | Prepare the sides (rehearse) for lamplighters | done
+August 5, 2029 at 9:30 PM | PRESS | Prepare the sides (rehearse) for lamplighters | done
+August 6, 2029 at 9:00 AM | NOTICE | Submitted For The Lamp Shop’s Owner | Thomas Ashgrove submitted you for The Lamp Shop’s Owner in A Light On Pell Street, sending your headshots from April 28, 2029, your résumé from June 24, 2029 and your reel from April 28, 2029. Vossberg Casting answers on Wednesday, August 8, 2029.
+August 6, 2029 at 9:15 AM | PRESS | Submit Yourself for paper-moons-ivy | done
+August 6, 2029 at 11:00 AM | STOP | Audition: The Apprentice Lamplighter, The Lamplighters | Go
+August 6, 2029 at 5:00 PM | NOTICE | A Callback For Pickett The Ferret | Hollis Reed Casting asks for a self-tape for the callback for Pickett The Ferret in Lantern Row, due Thursday, August 9, 2029 at 6:00 PM. Prepare the sides, then press Tape It on the Career screen’s Opportunities tab.
+August 6, 2029 at 5:30 PM | PRESS | Tape It for lantern-row | done
+August 7, 2029 at 11:00 AM | STOP | Audition: The Sentinel, Iron Meridian | Go
+August 7, 2029 at 5:00 PM | NOTICE | A Callback For The Apprentice Lamplighter | Thomas Ashgrove passed this on: Pell And Moran Casting wants to see you again for The Apprentice Lamplighter in The Lamplighters: a 500-seat regional theater in New Haven, Monday, August 13, 2029 at 2:00 PM. Getting there takes about 30 minutes each way. Prepare the sides on the Career screen’s Opportunities tab before you go.
+August 7, 2029 at 5:30 PM | PRESS | Prepare the sides (rehearse) for lamplighters | done
+August 7, 2029 at 6:15 PM | PRESS | Prepare the sides (rehearse) for lamplighters | done
+August 8, 2029 at 10:00 AM | NOTICE | A Self-Tape For The Lamp Shop’s Owner | Thomas Ashgrove passed this on: Vossberg Casting asks for a self-tape for The Lamp Shop’s Owner in A Light On Pell Street, due Sunday, August 12, 2029 at 6:00 PM. Prepare the sides, then press Tape It on the Career screen’s Opportunities tab.
 August 8, 2029 at 10:00 AM | NOTICE | An Audition For Ivy | The film’s director wants to see you for Ivy in Paper Moons: an apartment in Brooklyn in New York, Monday, August 13, 2029 at 11:00 AM. Getting there takes about two hours each way. Prepare the sides on the Career screen’s Opportunities tab before you go.
 August 8, 2029 at 10:00 AM | PRESS | Prepare the sides (read) for paper-moons-ivy | done
 August 8, 2029 at 10:30 AM | PRESS | Prepare the sides (read) for paper-moons-ivy | done
@@ -230,6 +747,8 @@ August 8, 2029 at 2:45 PM | PRESS | Prepare the sides (rehearse) for paper-moons
 August 8, 2029 at 3:30 PM | PRESS | Prepare the sides (rehearse) for paper-moons-ivy | done
 August 8, 2029 at 4:15 PM | PRESS | Prepare the sides (rehearse) for paper-moons-ivy | done
 August 8, 2029 at 5:00 PM | NOTICE | Not Cast As Robin | The producers cast another actor as Robin. Casting doesn’t give its reasons. The Opportunities tab shows what went into it: your audition, the role’s fit and the field.
+August 8, 2029 at 5:00 PM | NOTICE | Not Cast As An Oyster Tonger Of 1890 | The film’s producers cast another actor as An Oyster Tonger Of 1890. Casting doesn’t give its reasons. The Opportunities tab shows what went into it: your audition, the role’s fit and the field.
+August 8, 2029 at 5:00 PM | NOTICE | Not Cast As The Sentinel | Thomas Ashgrove passed this on: Breck And Hale Casting didn’t call you back for The Sentinel. Casting doesn’t give its reasons. The Opportunities tab shows what went into it: your audition, the role’s fit and the field.
 August 8, 2029 at 5:00 PM | PRESS | Prepare the sides (rehearse) for paper-moons-ivy | done
 August 8, 2029 at 5:45 PM | PRESS | Prepare the sides (rehearse) for paper-moons-ivy | done
 August 8, 2029 at 6:30 PM | PRESS | Prepare the sides (rehearse) for paper-moons-ivy | done
@@ -238,43 +757,147 @@ August 8, 2029 at 8:00 PM | PRESS | Prepare the sides (rehearse) for paper-moons
 August 8, 2029 at 8:45 PM | PRESS | Prepare the sides (rehearse) for paper-moons-ivy | done
 August 8, 2029 at 9:30 PM | PRESS | Prepare the sides (rehearse) for paper-moons-ivy | done
 August 9, 2029 at 9:15 AM | PRESS | Prepare the sides (rehearse) for paper-moons-ivy | done
+August 9, 2029 at 10:00 AM | PRESS | Prepare the sides (read) for pell-street | done
+August 9, 2029 at 10:30 AM | PRESS | Prepare the sides (read) for pell-street | done
+August 9, 2029 at 11:00 AM | PRESS | Prepare the sides (lines) for pell-street | done
+August 9, 2029 at 11:30 AM | PRESS | Prepare the sides (lines) for pell-street | done
+August 9, 2029 at 12:00 PM | PRESS | Prepare the sides (lines) for pell-street | done
+August 9, 2029 at 12:30 PM | PRESS | Prepare the sides (rehearse) for pell-street | done
+August 9, 2029 at 1:15 PM | PRESS | Prepare the sides (rehearse) for pell-street | done
+August 9, 2029 at 2:00 PM | PRESS | Prepare the sides (rehearse) for pell-street | done
+August 9, 2029 at 2:45 PM | PRESS | Prepare the sides (rehearse) for pell-street | done
+August 9, 2029 at 3:30 PM | PRESS | Prepare the sides (rehearse) for pell-street | done
+August 9, 2029 at 4:15 PM | PRESS | Prepare the sides (rehearse) for pell-street | done
+August 9, 2029 at 5:00 PM | PRESS | Prepare the sides (rehearse) for pell-street | done
+August 9, 2029 at 5:45 PM | PRESS | Prepare the sides (rehearse) for pell-street | done
+August 9, 2029 at 6:30 PM | PRESS | Prepare the sides (rehearse) for pell-street | done
+August 9, 2029 at 7:15 PM | PRESS | Prepare the sides (rehearse) for pell-street | done
+August 9, 2029 at 8:00 PM | PRESS | Prepare the sides (rehearse) for pell-street | done
+August 9, 2029 at 8:45 PM | PRESS | Prepare the sides (rehearse) for pell-street | done
+August 9, 2029 at 9:30 PM | PRESS | Prepare the sides (rehearse) for pell-street | done
+August 10, 2029 at 9:15 AM | PRESS | Prepare the sides (rehearse) for pell-street | done
+August 10, 2029 at 10:00 AM | PRESS | Tape It for pell-street | done
+August 12, 2029 at 5:00 PM | NOTICE | Not Cast As Pickett The Ferret | Hollis Reed Casting cast another actor as Pickett The Ferret. Casting doesn’t give its reasons. The Opportunities tab shows what went into it: your audition, the role’s fit and the field.
+August 13, 2029 at 9:00 AM | NOTICE | Submitted For The Ferry Engineer | Thomas Ashgrove submitted you for The Ferry Engineer in Northern Line, sending your headshots from April 28, 2029, your résumé from June 24, 2029 and your reel from April 28, 2029. Abernathy Rhee Casting answers on Wednesday, August 15, 2029.
+August 13, 2029 at 9:00 AM | NOTICE | Submitted For Odette | Thomas Ashgrove submitted you for Odette in The Harbor, sending your headshots from April 28, 2029, your résumé from June 24, 2029 and your reel from April 28, 2029. It’s a new casting of the part. The last time it was posted to you, on June 4, 2029: Kettering Casting cast another actor as Odette. Kettering Casting answers on Wednesday, August 15, 2029.
 August 13, 2029 at 11:00 AM | STOP | Audition: Ivy, Paper Moons | Go
-August 16, 2029 at 5:00 PM | WHAT NEEDS YOU | An Offer For Ivy | Thomas Ashgrove passed on an offer. The film’s director offers you Ivy in Paper Moons, a fictional student film. The pay is deferred: a student film pays its actors only if it earns money later, and no film in the game does, so nothing is paid for its three days of work. The work is from September 10, 2029 to September 12, 2029, in New York. The offer stands until August 19, 2029 at 5:00 PM. | Accept The Offer, Decline The Offer
-August 16, 2029 at 5:30 PM | PRESS | Accept The Offer for paper-moons-ivy | done
-August 16, 2029 at 5:30 PM | PRESS | Prepare the part (read) for paper-moons-ivy | done
-August 16, 2029 at 6:30 PM | PRESS | Prepare the part (read) for paper-moons-ivy | done
-August 16, 2029 at 7:30 PM | PRESS | Prepare the part (read) for paper-moons-ivy | done
-August 16, 2029 at 8:30 PM | PRESS | Prepare the part (lines) for paper-moons-ivy | done
-August 16, 2029 at 9:30 PM | PRESS | Prepare the part (lines) for paper-moons-ivy | done
-August 17, 2029 at 9:30 AM | PRESS | Prepare the part (lines) for paper-moons-ivy | done
-August 17, 2029 at 10:30 AM | PRESS | Prepare the part (rehearse) for paper-moons-ivy | done
-August 17, 2029 at 12:00 PM | PRESS | Prepare the part (rehearse) for paper-moons-ivy | done
-August 17, 2029 at 1:30 PM | PRESS | Prepare the part (rehearse) for paper-moons-ivy | done
-August 17, 2029 at 3:00 PM | PRESS | Prepare the part (rehearse) for paper-moons-ivy | done
-August 20, 2029 at 9:00 AM | NOTICE | Submitted For Hester Vane | Thomas Ashgrove submitted you for Hester Vane in The Winter Ledger, sending your headshots from April 28, 2029 and your résumé from July 2, 2029. It’s a new casting of the part. The last time it was posted to you, on April 23, 2029: Submissions for Hester Vane closed on April 30, 2029. Ostrander Vale Casting answers on Wednesday, August 22, 2029.
+August 13, 2029 at 2:00 PM | STOP | Callback: The Apprentice Lamplighter, The Lamplighters | Go
+August 13, 2029 at 5:00 PM | NOTICE | Not Cast As The Lamp Shop’s Owner | Thomas Ashgrove passed this on: Vossberg Casting didn’t call you back for The Lamp Shop’s Owner. Casting doesn’t give its reasons. The Opportunities tab shows what went into it: your audition, the role’s fit and the field.
+August 15, 2029 at 10:00 AM | NOTICE | A Self-Tape For The Ferry Engineer | Thomas Ashgrove passed this on: Abernathy Rhee Casting asks for a self-tape for The Ferry Engineer in Northern Line, due Sunday, August 19, 2029 at 6:00 PM. Prepare the sides, then press Tape It on the Career screen’s Opportunities tab.
+August 15, 2029 at 10:00 AM | NOTICE | A Self-Tape For Odette | Thomas Ashgrove passed this on: Kettering Casting asks for a self-tape for Odette in The Harbor, due Sunday, August 19, 2029 at 6:00 PM. Prepare the sides, then press Tape It on the Career screen’s Opportunities tab.
+August 15, 2029 at 10:30 AM | PRESS | Prepare the sides (read) for northern-line | done
+August 15, 2029 at 11:00 AM | PRESS | Prepare the sides (read) for northern-line | done
+August 15, 2029 at 11:30 AM | PRESS | Prepare the sides (lines) for northern-line | done
+August 15, 2029 at 12:00 PM | PRESS | Prepare the sides (lines) for northern-line | done
+August 15, 2029 at 12:30 PM | PRESS | Prepare the sides (lines) for northern-line | done
+August 15, 2029 at 1:00 PM | PRESS | Prepare the sides (rehearse) for northern-line | done
+August 15, 2029 at 1:45 PM | PRESS | Prepare the sides (rehearse) for northern-line | done
+August 15, 2029 at 2:30 PM | PRESS | Prepare the sides (rehearse) for northern-line | done
+August 15, 2029 at 3:15 PM | PRESS | Prepare the sides (rehearse) for northern-line | done
+August 15, 2029 at 4:00 PM | PRESS | Prepare the sides (rehearse) for northern-line | done
+August 15, 2029 at 4:45 PM | PRESS | Prepare the sides (rehearse) for northern-line | done
+August 15, 2029 at 5:30 PM | PRESS | Prepare the sides (rehearse) for northern-line | done
+August 15, 2029 at 6:15 PM | PRESS | Prepare the sides (rehearse) for northern-line | done
+August 15, 2029 at 7:00 PM | PRESS | Prepare the sides (rehearse) for northern-line | done
+August 15, 2029 at 7:45 PM | PRESS | Prepare the sides (rehearse) for northern-line | done
+August 15, 2029 at 8:30 PM | PRESS | Prepare the sides (rehearse) for northern-line | done
+August 15, 2029 at 9:15 PM | PRESS | Prepare the sides (rehearse) for northern-line | done
+August 16, 2029 at 9:00 AM | PRESS | Prepare the sides (rehearse) for northern-line | done
+August 16, 2029 at 9:45 AM | PRESS | Tape It for northern-line | done
+August 16, 2029 at 10:45 AM | PRESS | Prepare the sides (read) for g1.oikt0.2026.new-york.serialized-drama.0.s4.1 | done
+August 16, 2029 at 11:15 AM | PRESS | Prepare the sides (read) for g1.oikt0.2026.new-york.serialized-drama.0.s4.1 | done
+August 16, 2029 at 11:45 AM | PRESS | Prepare the sides (lines) for g1.oikt0.2026.new-york.serialized-drama.0.s4.1 | done
+August 16, 2029 at 12:15 PM | PRESS | Prepare the sides (lines) for g1.oikt0.2026.new-york.serialized-drama.0.s4.1 | done
+August 16, 2029 at 12:45 PM | PRESS | Prepare the sides (lines) for g1.oikt0.2026.new-york.serialized-drama.0.s4.1 | done
+August 16, 2029 at 1:15 PM | PRESS | Prepare the sides (rehearse) for g1.oikt0.2026.new-york.serialized-drama.0.s4.1 | done
+August 16, 2029 at 2:00 PM | PRESS | Prepare the sides (rehearse) for g1.oikt0.2026.new-york.serialized-drama.0.s4.1 | done
+August 16, 2029 at 2:45 PM | PRESS | Prepare the sides (rehearse) for g1.oikt0.2026.new-york.serialized-drama.0.s4.1 | done
+August 16, 2029 at 3:30 PM | PRESS | Prepare the sides (rehearse) for g1.oikt0.2026.new-york.serialized-drama.0.s4.1 | done
+August 16, 2029 at 4:15 PM | PRESS | Prepare the sides (rehearse) for g1.oikt0.2026.new-york.serialized-drama.0.s4.1 | done
+August 16, 2029 at 5:00 PM | NOTICE | Not Cast As Ivy | The film’s director cast another actor as Ivy. Casting doesn’t give its reasons. The Opportunities tab shows what went into it: your audition, the role’s fit and the field.
+August 16, 2029 at 5:00 PM | NOTICE | Not Cast As The Apprentice Lamplighter | Thomas Ashgrove passed this on: Pell And Moran Casting cast another actor as The Apprentice Lamplighter. Casting doesn’t give its reasons. The Opportunities tab shows what went into it: your audition, the role’s fit and the field.
+August 16, 2029 at 5:00 PM | PRESS | Prepare the sides (rehearse) for g1.oikt0.2026.new-york.serialized-drama.0.s4.1 | done
+August 16, 2029 at 5:45 PM | PRESS | Prepare the sides (rehearse) for g1.oikt0.2026.new-york.serialized-drama.0.s4.1 | done
+August 16, 2029 at 6:30 PM | PRESS | Prepare the sides (rehearse) for g1.oikt0.2026.new-york.serialized-drama.0.s4.1 | done
+August 16, 2029 at 7:15 PM | PRESS | Prepare the sides (rehearse) for g1.oikt0.2026.new-york.serialized-drama.0.s4.1 | done
+August 16, 2029 at 8:00 PM | PRESS | Prepare the sides (rehearse) for g1.oikt0.2026.new-york.serialized-drama.0.s4.1 | done
+August 16, 2029 at 8:45 PM | PRESS | Prepare the sides (rehearse) for g1.oikt0.2026.new-york.serialized-drama.0.s4.1 | done
+August 16, 2029 at 9:30 PM | PRESS | Prepare the sides (rehearse) for g1.oikt0.2026.new-york.serialized-drama.0.s4.1 | done
+August 17, 2029 at 9:15 AM | PRESS | Prepare the sides (rehearse) for g1.oikt0.2026.new-york.serialized-drama.0.s4.1 | done
+August 17, 2029 at 10:00 AM | PRESS | Tape It for g1.oikt0.2026.new-york.serialized-drama.0.s4.1 | done
+August 20, 2029 at 9:00 AM | NOTICE | Submitted For Hester Vane | Thomas Ashgrove submitted you for Hester Vane in The Winter Ledger, sending your headshots from April 28, 2029 and your résumé from June 24, 2029. It’s a new casting of the part. The last time it was posted to you, on April 23, 2029: Submissions for Hester Vane closed on April 30, 2029. Ostrander Vale Casting answers on Wednesday, August 22, 2029.
+August 20, 2029 at 9:00 AM | NOTICE | Submitted For Casey Marlow | Thomas Ashgrove submitted you for Casey Marlow in Abbott Elementary, sending your headshots from April 28, 2029, your résumé from June 24, 2029 and your reel from April 28, 2029. It’s a new casting of the part. The last time it was posted to you, on June 11, 2029: The production’s casting office cast another actor as Casey Marlow. The production’s casting office answers on Wednesday, August 22, 2029.
+August 20, 2029 at 9:00 AM | NOTICE | Submitted For Ivy | Thomas Ashgrove submitted you for Ivy in Crooked Assembly, sending your headshots from April 28, 2029, your résumé from June 24, 2029 and your reel from April 28, 2029. Kettering Casting answers on Wednesday, August 22, 2029.
+August 20, 2029 at 5:00 PM | NOTICE | Not Cast As The Ferry Engineer | Thomas Ashgrove passed this on: Abernathy Rhee Casting didn’t call you back for The Ferry Engineer. Casting doesn’t give its reasons. The Opportunities tab shows what went into it: your audition, the role’s fit and the field.
 August 22, 2029 at 10:00 AM | NOTICE | An Audition For Hester Vane | Thomas Ashgrove passed this on: Ostrander Vale Casting wants to see you for Hester Vane in The Winter Ledger: the company’s main stage in Hudson, Monday, August 27, 2029 at 11:00 AM. Getting there takes about two hours each way. Prepare the sides on the Career screen’s Opportunities tab before you go.
+August 22, 2029 at 10:00 AM | NOTICE | A Self-Tape For Casey Marlow | Thomas Ashgrove passed this on: The production’s casting office asks for a self-tape for Casey Marlow in Abbott Elementary, due Sunday, August 26, 2029 at 6:00 PM. Prepare the sides, then press Tape It on the Career screen’s Opportunities tab.
+August 22, 2029 at 10:00 AM | NOTICE | An Audition For Ivy | Thomas Ashgrove passed this on: Kettering Casting wants to see you for Ivy in Crooked Assembly: a studio in Santa Clarita in Los Angeles, Monday, August 27, 2029 at 11:00 AM. Getting there takes about three hours each way. It clashes with Audition: Hester Vane, The Winter Ledger at 11:00 AM. To ask for another time, press Ask For Another Time on the Opportunities tab, at least a day ahead. Casting moves it once. Prepare the sides on the Career screen’s Opportunities tab before you go.
+August 22, 2029 at 10:00 AM | PRESS | Ask For Another Time for winter-ledger-hester | done
+August 22, 2029 at 10:00 AM | PRESS | Prepare the sides (read) for winter-ledger-hester | done
 August 22, 2029 at 10:30 AM | PRESS | Prepare the sides (read) for winter-ledger-hester | done
-August 22, 2029 at 11:00 AM | PRESS | Prepare the sides (read) for winter-ledger-hester | done
+August 22, 2029 at 11:00 AM | PRESS | Prepare the sides (lines) for winter-ledger-hester | done
 August 22, 2029 at 11:30 AM | PRESS | Prepare the sides (lines) for winter-ledger-hester | done
 August 22, 2029 at 12:00 PM | PRESS | Prepare the sides (lines) for winter-ledger-hester | done
-August 22, 2029 at 12:30 PM | PRESS | Prepare the sides (lines) for winter-ledger-hester | done
-August 22, 2029 at 1:00 PM | PRESS | Prepare the sides (rehearse) for winter-ledger-hester | done
-August 22, 2029 at 1:45 PM | PRESS | Prepare the sides (rehearse) for winter-ledger-hester | done
-August 22, 2029 at 2:30 PM | PRESS | Prepare the sides (rehearse) for winter-ledger-hester | done
-August 22, 2029 at 3:15 PM | PRESS | Prepare the sides (rehearse) for winter-ledger-hester | done
-August 22, 2029 at 4:00 PM | PRESS | Prepare the sides (rehearse) for winter-ledger-hester | done
-August 22, 2029 at 4:45 PM | PRESS | Prepare the sides (rehearse) for winter-ledger-hester | done
-August 22, 2029 at 5:30 PM | PRESS | Prepare the sides (rehearse) for winter-ledger-hester | done
-August 22, 2029 at 6:15 PM | PRESS | Prepare the sides (rehearse) for winter-ledger-hester | done
-August 22, 2029 at 7:00 PM | PRESS | Prepare the sides (rehearse) for winter-ledger-hester | done
-August 22, 2029 at 7:45 PM | PRESS | Prepare the sides (rehearse) for winter-ledger-hester | done
-August 22, 2029 at 8:30 PM | PRESS | Prepare the sides (rehearse) for winter-ledger-hester | done
-August 22, 2029 at 9:15 PM | PRESS | Prepare the sides (rehearse) for winter-ledger-hester | done
-August 23, 2029 at 9:00 AM | PRESS | Prepare the sides (rehearse) for winter-ledger-hester | done
-August 27, 2029 at 9:00 AM | NOTICE | Submitted For Wren | Thomas Ashgrove submitted you for Wren in Gull Season, sending your headshots from April 28, 2029, your résumé from July 2, 2029 and your reel from April 28, 2029. It’s a new casting of the part. The last time it was posted to you, on June 11, 2029: Quillon Casting didn’t call you back for Wren. Quillon Casting answers on Wednesday, August 29, 2029.
-August 27, 2029 at 11:00 AM | STOP | Audition: Hester Vane, The Winter Ledger | Go
-August 28, 2029 at 5:00 PM | NOTICE | Not Cast As Hester Vane | Thomas Ashgrove passed this on: Ostrander Vale Casting didn’t call you back for Hester Vane. Casting doesn’t give its reasons. The Opportunities tab shows what went into it: your audition, the role’s fit and the field.
+August 22, 2029 at 12:30 PM | PRESS | Prepare the sides (rehearse) for winter-ledger-hester | done
+August 22, 2029 at 1:15 PM | PRESS | Prepare the sides (rehearse) for winter-ledger-hester | done
+August 22, 2029 at 2:00 PM | PRESS | Prepare the sides (rehearse) for winter-ledger-hester | done
+August 22, 2029 at 2:45 PM | PRESS | Prepare the sides (rehearse) for winter-ledger-hester | done
+August 22, 2029 at 3:30 PM | PRESS | Prepare the sides (rehearse) for winter-ledger-hester | done
+August 22, 2029 at 4:15 PM | PRESS | Prepare the sides (rehearse) for winter-ledger-hester | done
+August 22, 2029 at 5:00 PM | NOTICE | Not Cast As Odette | Thomas Ashgrove passed this on: Kettering Casting cast another actor as Odette. Casting doesn’t give its reasons. The Opportunities tab shows what went into it: your audition, the role’s fit and the field.
+August 22, 2029 at 5:00 PM | PRESS | Prepare the sides (rehearse) for winter-ledger-hester | done
+August 22, 2029 at 5:45 PM | PRESS | Prepare the sides (rehearse) for winter-ledger-hester | done
+August 22, 2029 at 6:30 PM | PRESS | Prepare the sides (rehearse) for winter-ledger-hester | done
+August 22, 2029 at 7:15 PM | PRESS | Prepare the sides (rehearse) for winter-ledger-hester | done
+August 22, 2029 at 8:00 PM | PRESS | Prepare the sides (rehearse) for winter-ledger-hester | done
+August 22, 2029 at 8:45 PM | PRESS | Prepare the sides (rehearse) for winter-ledger-hester | done
+August 22, 2029 at 9:30 PM | PRESS | Prepare the sides (rehearse) for winter-ledger-hester | done
+August 23, 2029 at 9:15 AM | PRESS | Prepare the sides (rehearse) for winter-ledger-hester | done
+August 23, 2029 at 10:00 AM | PRESS | Prepare the sides (read) for abbott-guest | done
+August 23, 2029 at 10:30 AM | PRESS | Prepare the sides (read) for abbott-guest | done
+August 23, 2029 at 11:00 AM | PRESS | Prepare the sides (lines) for abbott-guest | done
+August 23, 2029 at 11:30 AM | PRESS | Prepare the sides (lines) for abbott-guest | done
+August 23, 2029 at 12:00 PM | PRESS | Prepare the sides (lines) for abbott-guest | done
+August 23, 2029 at 12:30 PM | PRESS | Prepare the sides (rehearse) for abbott-guest | done
+August 23, 2029 at 1:15 PM | PRESS | Prepare the sides (rehearse) for abbott-guest | done
+August 23, 2029 at 2:00 PM | PRESS | Prepare the sides (rehearse) for abbott-guest | done
+August 23, 2029 at 2:45 PM | PRESS | Prepare the sides (rehearse) for abbott-guest | done
+August 23, 2029 at 3:30 PM | PRESS | Prepare the sides (rehearse) for abbott-guest | done
+August 23, 2029 at 4:15 PM | PRESS | Prepare the sides (rehearse) for abbott-guest | done
+August 23, 2029 at 5:00 PM | PRESS | Prepare the sides (rehearse) for abbott-guest | done
+August 23, 2029 at 5:45 PM | PRESS | Prepare the sides (rehearse) for abbott-guest | done
+August 23, 2029 at 6:30 PM | PRESS | Prepare the sides (rehearse) for abbott-guest | done
+August 23, 2029 at 7:15 PM | PRESS | Prepare the sides (rehearse) for abbott-guest | done
+August 23, 2029 at 8:00 PM | PRESS | Prepare the sides (rehearse) for abbott-guest | done
+August 23, 2029 at 8:45 PM | PRESS | Prepare the sides (rehearse) for abbott-guest | done
+August 23, 2029 at 9:30 PM | PRESS | Prepare the sides (rehearse) for abbott-guest | done
+August 24, 2029 at 9:15 AM | PRESS | Prepare the sides (rehearse) for abbott-guest | done
+August 24, 2029 at 10:00 AM | PRESS | Tape It for abbott-guest | done
+August 24, 2029 at 11:00 AM | PRESS | Prepare the sides (read) for g1.oikt0.2026.los-angeles.multicam-comedy.0.s4.0 | done
+August 24, 2029 at 11:30 AM | PRESS | Prepare the sides (read) for g1.oikt0.2026.los-angeles.multicam-comedy.0.s4.0 | done
+August 24, 2029 at 12:00 PM | PRESS | Prepare the sides (lines) for g1.oikt0.2026.los-angeles.multicam-comedy.0.s4.0 | done
+August 24, 2029 at 12:30 PM | PRESS | Prepare the sides (lines) for g1.oikt0.2026.los-angeles.multicam-comedy.0.s4.0 | done
+August 24, 2029 at 1:00 PM | PRESS | Prepare the sides (lines) for g1.oikt0.2026.los-angeles.multicam-comedy.0.s4.0 | done
+August 24, 2029 at 1:30 PM | PRESS | Prepare the sides (rehearse) for g1.oikt0.2026.los-angeles.multicam-comedy.0.s4.0 | done
+August 24, 2029 at 2:15 PM | PRESS | Prepare the sides (rehearse) for g1.oikt0.2026.los-angeles.multicam-comedy.0.s4.0 | done
+August 24, 2029 at 3:00 PM | PRESS | Prepare the sides (rehearse) for g1.oikt0.2026.los-angeles.multicam-comedy.0.s4.0 | done
+August 24, 2029 at 3:45 PM | PRESS | Prepare the sides (rehearse) for g1.oikt0.2026.los-angeles.multicam-comedy.0.s4.0 | done
+August 24, 2029 at 4:30 PM | PRESS | Prepare the sides (rehearse) for g1.oikt0.2026.los-angeles.multicam-comedy.0.s4.0 | done
+August 24, 2029 at 5:15 PM | PRESS | Prepare the sides (rehearse) for g1.oikt0.2026.los-angeles.multicam-comedy.0.s4.0 | done
+August 24, 2029 at 6:00 PM | PRESS | Prepare the sides (rehearse) for g1.oikt0.2026.los-angeles.multicam-comedy.0.s4.0 | done
+August 24, 2029 at 6:45 PM | PRESS | Prepare the sides (rehearse) for g1.oikt0.2026.los-angeles.multicam-comedy.0.s4.0 | done
+August 24, 2029 at 7:30 PM | PRESS | Prepare the sides (rehearse) for g1.oikt0.2026.los-angeles.multicam-comedy.0.s4.0 | done
+August 24, 2029 at 8:15 PM | PRESS | Prepare the sides (rehearse) for g1.oikt0.2026.los-angeles.multicam-comedy.0.s4.0 | done
+August 24, 2029 at 9:00 PM | PRESS | Prepare the sides (rehearse) for g1.oikt0.2026.los-angeles.multicam-comedy.0.s4.0 | done
+August 24, 2029 at 9:45 PM | PRESS | Prepare the sides (rehearse) for g1.oikt0.2026.los-angeles.multicam-comedy.0.s4.0 | done
+August 25, 2029 at 9:30 AM | PRESS | Prepare the sides (rehearse) for g1.oikt0.2026.los-angeles.multicam-comedy.0.s4.0 | done
+August 27, 2029 at 9:00 AM | NOTICE | Submitted For Wren | Thomas Ashgrove submitted you for Wren in Gull Season, sending your headshots from April 28, 2029, your résumé from June 24, 2029 and your reel from April 28, 2029. It’s a new casting of the part. The last time it was posted to you, on June 11, 2029: Quillon Casting didn’t call you back for Wren. Quillon Casting answers on Wednesday, August 29, 2029.
+August 27, 2029 at 9:45 AM | PRESS | Submit Yourself for salt-road | done
+August 27, 2029 at 11:00 AM | STOP | Audition: Ivy, Crooked Assembly | Go
+August 28, 2029 at 11:00 AM | STOP | Audition: Hester Vane, The Winter Ledger | Go
+August 28, 2029 at 5:00 PM | NOTICE | A Callback For Ivy | Thomas Ashgrove passed this on: Kettering Casting wants to see you again for Ivy in Crooked Assembly: a studio in Santa Clarita in Los Angeles, Monday, September 3, 2029 at 2:00 PM. Getting there takes about three hours each way. Prepare the sides on the Career screen’s Opportunities tab before you go.
 August 29, 2029 at 10:00 AM | NOTICE | A Self-Tape For Wren | Thomas Ashgrove passed this on: Quillon Casting asks for a self-tape for Wren in Gull Season, due Sunday, September 2, 2029 at 6:00 PM. Prepare the sides, then press Tape It on the Career screen’s Opportunities tab.
+August 29, 2029 at 10:00 AM | NOTICE | A Self-Tape For Harbormaster Brandt | Northlight Dubbing’s casting director asks for a self-tape for Harbormaster Brandt in The Salt Road, due Sunday, September 2, 2029 at 6:00 PM. Prepare the sides, then press Tape It on the Career screen’s Opportunities tab.
 August 29, 2029 at 10:45 AM | PRESS | Prepare the sides (read) for gull-season | done
 August 29, 2029 at 11:15 AM | PRESS | Prepare the sides (read) for gull-season | done
 August 29, 2029 at 11:45 AM | PRESS | Prepare the sides (lines) for gull-season | done
@@ -285,6 +908,8 @@ August 29, 2029 at 2:00 PM | PRESS | Prepare the sides (rehearse) for gull-seaso
 August 29, 2029 at 2:45 PM | PRESS | Prepare the sides (rehearse) for gull-season | done
 August 29, 2029 at 3:30 PM | PRESS | Prepare the sides (rehearse) for gull-season | done
 August 29, 2029 at 4:15 PM | PRESS | Prepare the sides (rehearse) for gull-season | done
+August 29, 2029 at 5:00 PM | NOTICE | Not Cast As Casey Marlow | Thomas Ashgrove passed this on: The production’s casting office cast another actor as Casey Marlow. Casting doesn’t give its reasons. The Opportunities tab shows what went into it: your audition, the role’s fit and the field.
+August 29, 2029 at 5:00 PM | NOTICE | Not Cast As Hester Vane | Thomas Ashgrove passed this on: Ostrander Vale Casting didn’t call you back for Hester Vane. Casting doesn’t give its reasons. The Opportunities tab shows what went into it: your audition, the role’s fit and the field.
 August 29, 2029 at 5:00 PM | PRESS | Prepare the sides (rehearse) for gull-season | done
 August 29, 2029 at 5:45 PM | PRESS | Prepare the sides (rehearse) for gull-season | done
 August 29, 2029 at 6:30 PM | PRESS | Prepare the sides (rehearse) for gull-season | done
@@ -294,4 +919,23 @@ August 29, 2029 at 8:45 PM | PRESS | Prepare the sides (rehearse) for gull-seaso
 August 29, 2029 at 9:30 PM | PRESS | Prepare the sides (rehearse) for gull-season | done
 August 30, 2029 at 9:15 AM | PRESS | Prepare the sides (rehearse) for gull-season | done
 August 30, 2029 at 10:00 AM | PRESS | Tape It for gull-season | done
+August 30, 2029 at 11:00 AM | PRESS | Prepare the sides (read) for salt-road | done
+August 30, 2029 at 11:30 AM | PRESS | Prepare the sides (read) for salt-road | done
+August 30, 2029 at 12:00 PM | PRESS | Prepare the sides (lines) for salt-road | done
+August 30, 2029 at 12:30 PM | PRESS | Prepare the sides (lines) for salt-road | done
+August 30, 2029 at 1:00 PM | PRESS | Prepare the sides (lines) for salt-road | done
+August 30, 2029 at 1:30 PM | PRESS | Prepare the sides (rehearse) for salt-road | done
+August 30, 2029 at 2:15 PM | PRESS | Prepare the sides (rehearse) for salt-road | done
+August 30, 2029 at 3:00 PM | PRESS | Prepare the sides (rehearse) for salt-road | done
+August 30, 2029 at 3:45 PM | PRESS | Prepare the sides (rehearse) for salt-road | done
+August 30, 2029 at 4:30 PM | PRESS | Prepare the sides (rehearse) for salt-road | done
+August 30, 2029 at 5:15 PM | PRESS | Prepare the sides (rehearse) for salt-road | done
+August 30, 2029 at 6:00 PM | PRESS | Prepare the sides (rehearse) for salt-road | done
+August 30, 2029 at 6:45 PM | PRESS | Prepare the sides (rehearse) for salt-road | done
+August 30, 2029 at 7:30 PM | PRESS | Prepare the sides (rehearse) for salt-road | done
+August 30, 2029 at 8:15 PM | PRESS | Prepare the sides (rehearse) for salt-road | done
+August 30, 2029 at 9:00 PM | PRESS | Prepare the sides (rehearse) for salt-road | done
+August 30, 2029 at 9:45 PM | PRESS | Prepare the sides (rehearse) for salt-road | done
+August 31, 2029 at 9:30 AM | PRESS | Prepare the sides (rehearse) for salt-road | done
+August 31, 2029 at 10:15 AM | PRESS | Tape It for salt-road | done
 September 1, 2029 at 12:00 AM | NOTICE | Unclaimed Money | $413,168 left unused in Chase Savings for three years went to the state’s unclaimed-property office. It can be claimed back from that office.

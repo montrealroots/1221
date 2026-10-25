@@ -3,7 +3,7 @@
  "part": 3,
  "from": "2028-06-01",
  "to": "2029-06-04",
- "secs": 111,
+ "secs": 129,
  "reloads": 46,
  "done": false,
  "standing": "graduated",
@@ -28,7 +28,7 @@
   "2029-05-21T14:30 a union bill due 2030-05-21T14:00: Initiation fee, part 2 of 3: same"
  ],
  "workDays": 0,
- "notices": 932,
+ "notices": 935,
  "bank": 68640.62,
  "errors": []
 }

@@ -1,0 +1,481 @@
+{
+ "runs": {
+  "before": "/tmp/claude-0/-home-user-1221/93119f3d-c8d9-5356-8130-0e0fe32e5c95/scratchpad/b27/before/docs/verification/career-genre-2026-10-22/final-runs/runs",
+  "after": "docs/verification/career-genre-2026-10-22/final-runs/runs",
+  "held": false,
+  "files": 17,
+  "same": 17,
+  "explained": {},
+  "unexplained": {},
+  "missing": []
+ },
+ "advice": {
+  "before": "/tmp/claude-0/-home-user-1221/93119f3d-c8d9-5356-8130-0e0fe32e5c95/scratchpad/b27/before/docs/verification/career-genre-2026-10-22/final-runs/advice",
+  "after": "docs/verification/career-genre-2026-10-22/final-runs/advice",
+  "held": false,
+  "files": 31,
+  "same": 0,
+  "explained": {
+   "the run’s own record: its commit, whether its tree was clean, the files it read, its seconds": 33
+  },
+  "unexplained": {},
+  "missing": []
+ },
+ "journeys-final": {
+  "before": "/tmp/claude-0/-home-user-1221/93119f3d-c8d9-5356-8130-0e0fe32e5c95/scratchpad/b27/before/docs/verification/career-genre-2026-10-22/final-runs/journeys-final",
+  "after": "docs/verification/career-genre-2026-10-22/final-runs/journeys-final",
+  "held": false,
+  "files": 102,
+  "same": 7,
+  "explained": {
+   "the run’s own record: its commit, whether its tree was clean, the files it read, its seconds": 183
+  },
+  "unexplained": {},
+  "missing": []
+ },
+ "interface-final": {
+  "before": "/tmp/claude-0/-home-user-1221/93119f3d-c8d9-5356-8130-0e0fe32e5c95/scratchpad/b27/before/docs/verification/career-genre-2026-10-22/final-runs/interface-final",
+  "after": "docs/verification/career-genre-2026-10-22/final-runs/interface-final",
+  "held": false,
+  "files": 1,
+  "same": 1,
+  "explained": {},
+  "unexplained": {},
+  "missing": []
+ },
+ "journeys14-final": {
+  "before": "/tmp/claude-0/-home-user-1221/93119f3d-c8d9-5356-8130-0e0fe32e5c95/scratchpad/b27/before/docs/verification/career-genre-2026-10-22/final-runs/journeys14-final",
+  "after": "docs/verification/career-genre-2026-10-22/final-runs/journeys14-final",
+  "held": false,
+  "files": 0,
+  "same": 0,
+  "explained": {},
+  "unexplained": {},
+  "missing": []
+ },
+ "b20-journeys": {
+  "before": "/tmp/claude-0/-home-user-1221/93119f3d-c8d9-5356-8130-0e0fe32e5c95/scratchpad/b27/before/docs/verification/career-genre-2026-10-22/final-runs/b20-journeys",
+  "after": "docs/verification/career-genre-2026-10-22/final-runs/b20-journeys",
+  "held": false,
+  "files": 74,
+  "same": 4,
+  "explained": {
+   "the run’s own record: its commit, whether its tree was clean, the files it read, its seconds": 149,
+   "a count of notices: a rewrite changes which merge; the events are compared apart": 456,
+   "a measure of words: the journeys’ continuity counts text": 53
+  },
+  "unexplained": {
+   "b20-1-p4.json": {
+    "differences": 2,
+    "first": [
+     ".bank: 92333.02 before, 91929.87 after",
+     ".forks: 3 items before, 4 after"
+    ]
+   },
+   "b20-1-p5.json": {
+    "differences": 3,
+    "first": [
+     ".bank: 73598.97 before, 81101.82 after",
+     ".forks: 3 items before, 4 after",
+     ".workDays: 2 before, 15 after"
+    ]
+   },
+   "b20-1.json": {
+    "differences": 393,
+    "first": [
+     ".advice[143][2]: 55.69 before, 55.29 after",
+     ".advice[143][3]: 1.01 before, 0.9 after",
+     ".advice[144][2]: 58.36 before, 57.98 after",
+     ".advice[144][3]: 0.96 before, 0.86 after",
+     ".advice[145][2]: 60.51 before, 60.14 after",
+     ".advice[145][3]: 0.65 before, 0.63 after"
+    ]
+   },
+   "b20-2-p4.json": {
+    "differences": 4,
+    "first": [
+     ".bank: 78309.55 before, 77063.55 after",
+     ".reloads: 53 before, 52 after",
+     ".transitions: 13 items before, 12 after",
+     ".workDays: 3 before, 0 after"
+    ]
+   },
+   "b20-2-p5.json": {
+    "differences": 4,
+    "first": [
+     ".bank: 67796.71 before, 71911.82 after",
+     ".reloads: 59 before, 60 after",
+     ".transitions: 14 items before, 15 after",
+     ".workDays: 3 before, 5 after"
+    ]
+   },
+   "b20-2.json": {
+    "differences": 406,
+    "first": [
+     ".advice[144][2]: 57.89 before, 57.5 after",
+     ".advice[144][3]: 0.86 before, 0.81 after",
+     ".advice[145][2]: 60.42 before, 60.04 after",
+     ".advice[145][3]: 0.53 before, 0.52 after",
+     ".advice[146][1]: 'composure' before, 'imagination' after",
+     ".advice[146][2]: 61.24 before, 66.26 after"
+    ]
+   },
+   "b20-3-p4.json": {
+    "differences": 4,
+    "first": [
+     ".bank: 68640.62 before, 67002.59 after",
+     ".forks: 3 items before, 4 after",
+     ".reloads: 52 before, 53 after",
+     ".transitions: 11 items before, 12 after"
+    ]
+   },
+   "b20-3-p5.json": {
+    "differences": 2,
+    "first": [
+     ".reloads: 58 before, 59 after",
+     ".transitions: 12 items before, 13 after"
+    ]
+   },
+   "b20-3.json": {
+    "differences": 399,
+    "first": [
+     ".advice[143][2]: 56.18 before, 55.47 after",
+     ".advice[143][3]: 0.52 before, 0.53 after",
+     ".advice[144][1]: 'composure' before, 'emotionalDepth' after",
+     ".advice[144][2]: 57.99 before, 65.67 after",
+     ".advice[144][3]: 0.48 before, 0.44 after",
+     ".advice[145][1]: 'composure' before, 'emotionalDepth' after"
+    ]
+   },
+   "b20-4-p4.json": {
+    "differences": 3,
+    "first": [
+     ".bank: 131574.26 before, 132274.59 after",
+     ".reloads: 53 before, 54 after",
+     ".transitions: 13 items before, 14 after"
+    ]
+   },
+   "b20-4-p5.json": {
+    "differences": 3,
+    "first": [
+     ".bank: 80799.86 before, 81137.36 after",
+     ".reloads: 59 before, 60 after",
+     ".transitions: 14 items before, 15 after"
+    ]
+   },
+   "b20-4.json": {
+    "differences": 336,
+    "first": [
+     ".advice[143][3]: 0.41 before, 0.37 after",
+     ".advice[144][3]: 0.4 before, 0.32 after",
+     ".advice[145][1]: 'focus' before, 'imagination' after",
+     ".advice[145][2]: 58.94 before, 68.5 after",
+     ".advice[145][3]: 0.36 before, 0.32 after",
+     ".advice[146][1]: 'focus' before, 'imagination' after"
+    ]
+   },
+   "b20-5-p4.json": {
+    "differences": 1,
+    "first": [
+     ".to: '2029-11-14' before, '2029-11-01' after"
+    ]
+   },
+   "b20-5-p5.json": {
+    "differences": 1,
+    "first": [
+     ".from: '2029-11-14' before, '2029-11-01' after"
+    ]
+   },
+   "b20-5.json": {
+    "differences": 395,
+    "first": [
+     ".advice[143][2]: 55.82 before, 55.4 after",
+     ".advice[143][3]: 0.96 before, 0.9 after",
+     ".advice[144][1]: 'composure' before, 'voiceover' after",
+     ".advice[144][2]: 58.48 before, 56.67 after",
+     ".advice[144][3]: 0.46 before, 0.58 after",
+     ".advice[145][1]: 'emotionalDepth' before, 'imagination' after"
+    ]
+   },
+   "b20-6-p4.json": {
+    "differences": 5,
+    "first": [
+     ".bank: 73939.63 before, 489984.59 after",
+     ".forks: 4 items before, 3 after",
+     ".reloads: 53 before, 51 after",
+     ".transitions: 13 items before, 11 after",
+     ".workDays: 3 before, 0 after"
+    ]
+   },
+   "b20-6-p5.json": {
+    "differences": 3,
+    "first": [
+     ".bank: 67799.95 before, 66765.63 after",
+     ".transitions: 15 items before, 14 after",
+     ".workDays: 7 before, 3 after"
+    ]
+   },
+   "b20-6.json": {
+    "differences": 340,
+    "first": [
+     ".advice[149][2]: 64.04 before, 63.73 after",
+     ".advice[149][3]: 0.39 before, 0.44 after",
+     ".advice[150][2]: 66.26 before, 65.96 after",
+     ".advice[150][3]: 0.36 before, 0.41 after",
+     ".advice[151][3]: 0.42 before, 0.52 after",
+     ".advice[152][2]: 56.25 before, 57.4 after"
+    ]
+   },
+   "b20-7-p6.json": {
+    "differences": 4,
+    "first": [
+     ".bank: 62857.88 before, 67115.82 after",
+     ".reloads: 68 before, 69 after",
+     ".transitions: 16 items before, 17 after",
+     ".workDays: 3 before, 6 after"
+    ]
+   },
+   "b20-7-p7.json": {
+    "differences": 4,
+    "first": [
+     ".bank: 55770.63 before, 60920.07 after",
+     ".reloads: 75 before, 76 after",
+     ".transitions: 17 items before, 18 after",
+     ".workDays: 3 before, 12 after"
+    ]
+   },
+   "b20-7-p8.json": {
+    "differences": 4,
+    "first": [
+     ".bank: 50597.48 before, 55746.92 after",
+     ".reloads: 77 before, 78 after",
+     ".transitions: 17 items before, 18 after",
+     ".workDays: 3 before, 12 after"
+    ]
+   },
+   "b20-7.json": {
+    "differences": 408,
+    "first": [
+     ".advice[195][2]: 57.25 before, 56.47 after",
+     ".advice[195][3]: 1.07 before, 0.86 after",
+     ".advice[196][2]: 59.83 before, 59.08 after",
+     ".advice[196][3]: 0.82 before, 0.72 after",
+     ".advice[197][1]: 'adaptability' before, 'imagination' after",
+     ".advice[197][2]: 56.64 before, 68.47 after"
+    ]
+   },
+   "b20-8-p3.json": {
+    "differences": 3,
+    "first": [
+     ".bank: 78835.16 before, 78695.22 after",
+     ".reloads: 45 before, 46 after",
+     ".transitions: 11 items before, 12 after"
+    ]
+   },
+   "b20-8-p4.json": {
+    "differences": 4,
+    "first": [
+     ".bank: 77772.13 before, 78670.22 after",
+     ".reloads: 53 before, 54 after",
+     ".transitions: 13 items before, 14 after",
+     ".workDays: 3 before, 5 after"
+    ]
+   },
+   "b20-8-p5.json": {
+    "differences": 4,
+    "first": [
+     ".bank: 67138.88 before, 67363.88 after",
+     ".reloads: 59 before, 60 after",
+     ".transitions: 14 items before, 15 after",
+     ".workDays: 3 before, 5 after"
+    ]
+   },
+   "b20-8.json": {
+    "differences": 429,
+    "first": [
+     ".advice[143][2]: 56 before, 55.61 after",
+     ".advice[143][3]: 1.12 before, 1.01 after",
+     ".advice[144][2]: 58.65 before, 57.53 after",
+     ".advice[144][3]: 0.88 before, 0.78 after",
+     ".advice[145][1]: 'adaptability' before, 'voiceover' after",
+     ".advice[145][2]: 57.68 before, 53.22 after"
+    ]
+   },
+   "journey-j01-degree-8283f80c-p1.json": {
+    "differences": 4,
+    "first": [
+     ".bank: 72228.18 before, 74499.66 after",
+     ".reloads: 5 before, 7 after",
+     ".transitions: 2 items before, 4 after",
+     ".workDays: 0 before, 6 after"
+    ]
+   },
+   "journey-j01-degree-8283f80c.json": {
+    "differences": 46,
+    "first": [
+     ".b20.credit: 3 items before, 5 after",
+     ".b20.credit[1].at: '2029-11-29T22:45' before, '2029-10-31T21:45' after",
+     ".b20.credit[1].bank: 73034.18 before, 74798.18 after",
+     ".b20.credit[1].income12: 2380.41 before, 2935.92 after",
+     ".b20.credit[2].at: '2029-12-01T12:45' before, '2029-11-17T02:00' after",
+     ".b20.credit[2].bank: 72228.18 before, 73164.18 after"
+    ]
+   },
+   "journey-j01-last-term-8283f80c-p1.json": {
+    "differences": 3,
+    "first": [
+     ".forks: 4 items before, 3 after",
+     ".reloads: 10 before, 9 after",
+     ".transitions: 5 items before, 4 after"
+    ]
+   },
+   "journey-j01-last-term-8283f80c.json": {
+    "differences": 40,
+    "first": [
+     ".b20.credit: 6 items before, 5 after",
+     ".b20.credit[4].at: '2029-08-30T22:00' before, '2029-09-01T11:15' after",
+     ".b20.credit[4].bank: 489554.5 before, 75584.18 after",
+     ".b20.forks: 4 items before, 3 after",
+     ".b20.forks[0].bytes[0]: 1709283 before, 1710997 after",
+     ".b20.forks[0].bytes[1]: 1709283 before, 1710997 after"
+    ]
+   },
+   "journey-j01-year-one-8283f80c-p3.json": {
+    "differences": 4,
+    "first": [
+     ".bank: 75589.18 before, 76309.18 after",
+     ".forks: 3 items before, 4 after",
+     ".reloads: 36 before, 37 after",
+     ".transitions: 8 items before, 9 after"
+    ]
+   },
+   "journey-j01-year-one-8283f80c.json": {
+    "differences": 38,
+    "first": [
+     ".b20.credit: 9 items before, 10 after",
+     ".b20.credit[8].at: '2029-09-01T11:45' before, '2029-07-11T21:45' after",
+     ".b20.credit[8].bank: 75589.18 before, 490348.41 after",
+     ".b20.credit[8].income12: 3353.32 before, 3353.31 after",
+     ".b20.forks: 3 items before, 4 after",
+     ".b20.forks[0].bytes[0]: 1126979 before, 1138941 after"
+    ]
+   },
+   "old-leave-ff837dfa-p3.json": {
+    "differences": 5,
+    "first": [
+     ".bank: 70383.07 before, 69151.44 after",
+     ".forks: 4 items before, 3 after",
+     ".reloads: 44 before, 41 after",
+     ".transitions: 13 items before, 10 after",
+     ".workDays: 6 before, 0 after"
+    ]
+   },
+   "old-leave-ff837dfa.json": {
+    "differences": 44,
+    "first": [
+     ".b20.credit: 14 items before, 11 after",
+     ".b20.credit[10].at: '2030-07-17T21:45' before, '2030-09-01T11:45' after",
+     ".b20.credit[10].bank: 70407.44 before, 69151.44 after",
+     ".b20.credit[10].income12: 3457.02 before, 3450 after",
+     ".b20.forks: 4 items before, 3 after",
+     ".b20.forks[0].bytes[0]: 949319 before, 951051 after"
+    ]
+   },
+   "old-nonfiler-086d00ca.json": {
+    "differences": 20,
+    "first": [
+     ".b20.credit[5].at: '2029-09-01T11:00' before, '2029-09-01T11:15' after",
+     ".b20.forks[0].bytes[0]: 1450032 before, 1465490 after",
+     ".b20.forks[0].bytes[1]: 1450032 before, 1465490 after",
+     ".b20.forks[0].reopened.opportunities: 0 items before, 4 after",
+     ".b20.forks[0].straight.opportunities: 0 items before, 4 after",
+     ".b20.forks[1].bytes[0]: 1701416 before, 1734451 after"
+    ]
+   },
+   "old-state-plan-086d00ca.json": {
+    "differences": 13,
+    "first": [
+     ".b20.forks[0].bytes[0]: 1347108 before, 1355957 after",
+     ".b20.forks[0].bytes[1]: 1347108 before, 1355957 after",
+     ".b20.forks[0].reopened.opportunities: 1 items before, 6 after",
+     ".b20.forks[0].straight.opportunities: 1 items before, 6 after",
+     ".b20.forks[1].bytes[0]: 1653666 before, 1685170 after",
+     ".b20.forks[1].bytes[1]: 1653666 before, 1685170 after"
+    ]
+   },
+   "old-tax-plan-ff837dfa.json": {
+    "differences": 16,
+    "first": [
+     ".b20.forks[0].bytes[0]: 838866 before, 839438 after",
+     ".b20.forks[0].bytes[1]: 838866 before, 839438 after",
+     ".b20.forks[0].reopened.opportunities: 1 items before, 2 after",
+     ".b20.forks[0].straight.opportunities: 1 items before, 2 after",
+     ".b20.forks[1].bytes[0]: 1609116 before, 1632703 after",
+     ".b20.forks[1].bytes[1]: 1609116 before, 1632703 after"
+    ]
+   },
+   "table.json": {
+    "differences": 63,
+    "first": [
+     "[0].checks.10 save and reload: pass before, ['15 kept results replay to another figure'] after",
+     "[0].forks: 3 items before, 4 after",
+     "[0].routes.clash: 0 before, 3 after",
+     "[0].routes.decline: 0 before, 1 after",
+     "[0].routes.delay: 0 before, 4 after",
+     "[0].routes.failure: 10 before, 22 after"
+    ]
+   }
+  },
+  "missing": []
+ },
+ "app": {
+  "before": "/tmp/claude-0/-home-user-1221/93119f3d-c8d9-5356-8130-0e0fe32e5c95/scratchpad/b27/before/docs/verification/career-genre-2026-10-22/final-runs/app",
+  "after": "docs/verification/career-genre-2026-10-22/final-runs/app",
+  "held": false,
+  "files": 0,
+  "same": 0,
+  "explained": {},
+  "unexplained": {},
+  "missing": []
+ },
+ "app/walk": {
+  "before": "/tmp/claude-0/-home-user-1221/93119f3d-c8d9-5356-8130-0e0fe32e5c95/scratchpad/b27/before/docs/verification/career-genre-2026-10-22/final-runs/app/walk",
+  "after": "docs/verification/career-genre-2026-10-22/final-runs/app/walk",
+  "held": false,
+  "files": 0,
+  "same": 0,
+  "explained": {},
+  "unexplained": {},
+  "missing": []
+ },
+ "app/older": {
+  "before": "/tmp/claude-0/-home-user-1221/93119f3d-c8d9-5356-8130-0e0fe32e5c95/scratchpad/b27/before/docs/verification/career-genre-2026-10-22/final-runs/app/older",
+  "after": "docs/verification/career-genre-2026-10-22/final-runs/app/older",
+  "held": false,
+  "files": 2,
+  "same": 2,
+  "explained": {},
+  "unexplained": {},
+  "missing": []
+ },
+ "app/b21": {
+  "before": "/tmp/claude-0/-home-user-1221/93119f3d-c8d9-5356-8130-0e0fe32e5c95/scratchpad/b27/before/docs/verification/career-genre-2026-10-22/final-runs/app/b21",
+  "after": "docs/verification/career-genre-2026-10-22/final-runs/app/b21",
+  "held": false,
+  "files": 2,
+  "same": 2,
+  "explained": {},
+  "unexplained": {},
+  "missing": []
+ },
+ "app/b22": {
+  "before": "/tmp/claude-0/-home-user-1221/93119f3d-c8d9-5356-8130-0e0fe32e5c95/scratchpad/b27/before/docs/verification/career-genre-2026-10-22/final-runs/app/b22",
+  "after": "docs/verification/career-genre-2026-10-22/final-runs/app/b22",
+  "held": false,
+  "files": 2,
+  "same": 2,
+  "explained": {},
+  "unexplained": {},
+  "missing": []
+ }
+}

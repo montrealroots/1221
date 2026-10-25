@@ -3,8 +3,8 @@
  "part": 8,
  "from": "2031-02-01",
  "to": "2031-03-01",
- "secs": 10,
- "reloads": 77,
+ "secs": 13,
+ "reloads": 78,
  "done": true,
  "standing": "graduated",
  "schoolEnd": "2030-05-20T14:00",
@@ -25,18 +25,19 @@
   "2030-01-01T12:00 the end of 2029: same",
   "2030-04-26T21:15 term 7 reviewed: good: same",
   "2030-05-20T14:35 the School’s end: graduated: same",
-  "2030-07-25T22:00 the first booking: Felix in Paper Moons: same",
-  "2030-08-05T22:00 the first work day: same",
-  "2031-01-01T12:00 the end of 2030: same"
+  "2030-06-03T15:05 the first booking: The Narrator in Tidewater: The Last Oyster Towns: same",
+  "2030-06-24T18:00 the first work day: same",
+  "2030-07-04T16:15 the first pay: same",
+  "2031-01-01T12:15 the end of 2030: same"
  ],
  "forks": [
   "2026-09-01T11:15 a rehearsal with a partner booked for 2026-09-01T23:00 on Scene Study: same",
   "2030-05-20T14:35 a union bill due 2031-05-20T14:00: Initiation fee, part 2 of 3: same",
-  "2030-06-05T14:35 an audition (self-tape) set for 2030-06-09T22:00, Jess in Static On Route 9: same",
+  "2030-06-05T14:05 an audition (self-tape) set for 2030-06-09T22:00, Jess in Static On Route 9: same",
   "2030-07-11T21:30 an offer standing: An Offer For Felix: same"
  ],
- "workDays": 3,
- "notices": 1272,
- "bank": 50597.48,
+ "workDays": 12,
+ "notices": 1315,
+ "bank": 55746.92,
  "errors": []
 }

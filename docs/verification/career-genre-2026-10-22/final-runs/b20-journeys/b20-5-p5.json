@@ -1,9 +1,9 @@
 {
  "id": "b20-5",
  "part": 5,
- "from": "2029-11-14",
+ "from": "2029-11-01",
  "to": "2030-03-01",
- "secs": 53,
+ "secs": 43,
  "reloads": 57,
  "done": true,
  "standing": "graduated",
@@ -22,16 +22,16 @@
   "2029-01-01T12:05 the end of 2028: same",
   "2029-04-27T21:20 term 5 reviewed: good: same",
   "2029-05-21T14:40 the School’s end: graduated: same",
-  "2030-01-01T12:30 the end of 2029: same"
+  "2030-01-01T12:45 the end of 2029: same"
  ],
  "forks": [
   "2026-09-17T22:50 a rehearsal with a partner booked for 2026-09-18T23:00 on Scene Study: same",
   "2029-05-21T14:40 a union bill due 2030-05-21T14:00: Initiation fee, part 2 of 3: same",
-  "2029-06-27T14:40 an audition (in-person) set for 2029-07-02T15:00, Felix in Paper Moons: same",
-  "2029-10-31T21:05 an offer standing: An Offer For Robin: same"
+  "2029-06-20T14:55 an audition (self-tape) set for 2029-06-24T22:00, Pickett The Ferret in Lantern Row: same",
+  "2029-09-19T21:00 an offer standing: An Offer For An Oyster Tonger Of 1890: same"
  ],
  "workDays": 0,
- "notices": 934,
+ "notices": 970,
  "bank": 64800.3,
  "errors": []
 }

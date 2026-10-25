@@ -13,7 +13,7 @@
    "part": 2,
    "from": "2029-03-24",
    "to": "2029-09-01",
-   "secs": 90,
+   "secs": 89,
    "reloads": 5,
    "done": true
   }
@@ -3371,8 +3371,24 @@
    "Not Cast As Felix"
   ],
   [
+   "2029-06-20",
+   "An Audition For The Apprentice Lamplighter"
+  ],
+  [
    "2029-06-21",
    "A New Card Is On Its Way"
+  ],
+  [
+   "2029-06-26",
+   "Not Cast As The Apprentice Lamplighter"
+  ],
+  [
+   "2029-07-25",
+   "A Self-Tape For Harbormaster Brandt"
+  ],
+  [
+   "2029-07-25",
+   "A Self-Tape For Thaddeus"
   ],
   [
    "2029-08-01",
@@ -3381,6 +3397,34 @@
   [
    "2029-08-01",
    "A Self-Tape For Robin"
+  ],
+  [
+   "2029-08-01",
+   "Not Cast As Harbormaster Brandt"
+  ],
+  [
+   "2029-08-01",
+   "Not Cast As Thaddeus"
+  ],
+  [
+   "2029-08-15",
+   "A Self-Tape For Miles Arden"
+  ],
+  [
+   "2029-08-15",
+   "A Self-Tape For An Oyster Tonger Of 1890"
+  ],
+  [
+   "2029-08-20",
+   "Not Cast As Miles Arden"
+  ],
+  [
+   "2029-08-22",
+   "Not Cast As An Oyster Tonger Of 1890"
+  ],
+  [
+   "2029-08-29",
+   "A Self-Tape For The Crow"
   ],
   [
    "2029-09-01",
@@ -3424,7 +3468,7 @@
     "at": "2028-12-08T22:00",
     "what": "term 4 reviewed: good",
     "same": true,
-    "bytes": 1562361,
+    "bytes": 1587976,
     "credit": {
      "at": "2028-12-08T22:00",
      "what": "term 4 reviewed: good",
@@ -3444,7 +3488,7 @@
     "at": "2029-01-01T12:00",
     "what": "the end of 2028",
     "same": true,
-    "bytes": 1563513,
+    "bytes": 1589807,
     "credit": {
      "at": "2029-01-01T12:00",
      "what": "the end of 2028",
@@ -3464,7 +3508,7 @@
     "at": "2029-04-27T21:15",
     "what": "term 5 reviewed: good",
     "same": true,
-    "bytes": 1676381,
+    "bytes": 1712603,
     "credit": {
      "at": "2029-04-27T21:15",
      "what": "term 5 reviewed: good",
@@ -3484,7 +3528,7 @@
     "at": "2029-05-21T14:35",
     "what": "the School’s end: graduated",
     "same": true,
-    "bytes": 1693078,
+    "bytes": 1727615,
     "credit": {
      "at": "2029-05-21T14:35",
      "what": "the School’s end: graduated",
@@ -3573,7 +3617,7 @@
     "bank": 479329.02
    },
    {
-    "at": "2029-09-01T11:00",
+    "at": "2029-09-01T11:15",
     "what": "the journey’s end",
     "cards": [
      {
@@ -3594,8 +3638,8 @@
     "days": 14,
     "same": true,
     "bytes": [
-     1450032,
-     1450032
+     1465490,
+     1465490
     ],
     "straight": {
      "now": "2028-09-24T20:20",
@@ -3622,7 +3666,12 @@
       "Nadia Didn’t Hear Back",
       "Sofia Didn’t Come"
      ],
-     "opportunities": [],
+     "opportunities": [
+      "tidewater-narrator lapsed",
+      "g1.kccse.2027.los-angeles.animated-series.0.s2.0 lapsed",
+      "tidewater-reenactment lapsed",
+      "lantern-row open"
+     ],
      "engagements": [],
      "work": [
       "A Clown Turn 65.1",
@@ -3658,7 +3707,12 @@
       "Nadia Didn’t Hear Back",
       "Sofia Didn’t Come"
      ],
-     "opportunities": [],
+     "opportunities": [
+      "tidewater-narrator lapsed",
+      "g1.kccse.2027.los-angeles.animated-series.0.s2.0 lapsed",
+      "tidewater-reenactment lapsed",
+      "lantern-row open"
+     ],
      "engagements": [],
      "work": [
       "A Clown Turn 65.1",
@@ -3669,7 +3723,7 @@
      ],
      "transactions": 861
     },
-    "secs": 13
+    "secs": 12
    },
    {
     "why": "a union bill due 2030-05-21T14:00: Initiation fee, part 2 of 3",
@@ -3677,8 +3731,8 @@
     "days": 14,
     "same": true,
     "bytes": [
-     1701416,
-     1701416
+     1734451,
+     1734451
     ],
     "straight": {
      "now": "2029-06-04T15:30",
@@ -3696,12 +3750,13 @@
      "opportunities": [
       "winter-ledger passed",
       "eastview passed",
+      "s1.kccse.2029-05-21.new-york.documentary.0.0 lapsed",
       "paper-moons submitted"
      ],
      "engagements": [],
      "work": [
-      "Robin, Last Bus To Eastview: Audition, Taped 59.1",
-      "Tobias Marsh, The Winter Ledger: Audition 60.5"
+      "Robin, Last Bus To Eastview: Audition, Taped 59",
+      "Tobias Marsh, The Winter Ledger: Audition 60"
      ],
      "transactions": 1157
     },
@@ -3721,16 +3776,17 @@
      "opportunities": [
       "winter-ledger passed",
       "eastview passed",
+      "s1.kccse.2029-05-21.new-york.documentary.0.0 lapsed",
       "paper-moons submitted"
      ],
      "engagements": [],
      "work": [
-      "Robin, Last Bus To Eastview: Audition, Taped 59.1",
-      "Tobias Marsh, The Winter Ledger: Audition 60.5"
+      "Robin, Last Bus To Eastview: Audition, Taped 59",
+      "Tobias Marsh, The Winter Ledger: Audition 60"
      ],
      "transactions": 1157
     },
-    "secs": 19
+    "secs": 18
    },
    {
     "why": "an audition (in-person) set for 2029-06-11T15:00, Felix in Paper Moons",
@@ -3738,8 +3794,8 @@
     "days": 14,
     "same": true,
     "bytes": [
-     1708325,
-     1708325
+     1748452,
+     1748452
     ],
     "straight": {
      "now": "2029-06-20T14:45",
@@ -3747,14 +3803,19 @@
      "standing": "graduated",
      "notices": [
       "Happy Birthday: 27",
-      "Not Cast As Felix"
+      "Not Cast As Felix",
+      "An Audition For The Apprentice Lamplighter"
      ],
      "opportunities": [
-      "paper-moons passed"
+      "paper-moons passed",
+      "g1.kccse.2024.new-york.animated-series.0.s6.0 lapsed",
+      "g1.kccse.2027.new-york.animated-series.0.s3.0 lapsed",
+      "lamplighters audition",
+      "g1.kccse.2029.los-angeles.animated-series.0.s0.0 open"
      ],
      "engagements": [],
      "work": [
-      "Felix, Paper Moons: Audition 61.9"
+      "Felix, Paper Moons: Audition 63.5"
      ],
      "transactions": 1173
     },
@@ -3764,14 +3825,19 @@
      "standing": "graduated",
      "notices": [
       "Happy Birthday: 27",
-      "Not Cast As Felix"
+      "Not Cast As Felix",
+      "An Audition For The Apprentice Lamplighter"
      ],
      "opportunities": [
-      "paper-moons passed"
+      "paper-moons passed",
+      "g1.kccse.2024.new-york.animated-series.0.s6.0 lapsed",
+      "g1.kccse.2027.new-york.animated-series.0.s3.0 lapsed",
+      "lamplighters audition",
+      "g1.kccse.2029.los-angeles.animated-series.0.s0.0 open"
      ],
      "engagements": [],
      "work": [
-      "Felix, Paper Moons: Audition 61.9"
+      "Felix, Paper Moons: Audition 63.5"
      ],
      "transactions": 1173
     },
@@ -3862,14 +3928,19 @@
  "routes": {
   "represented": [],
   "unsigned": [
-   "no agreement in 2029-05-21T14:00 to 2029-09-01T11:00; 4 open calls submitted to of those kept"
+   "no agreement in 2029-05-21T14:00 to 2029-09-01T11:15; 10 open calls submitted to of those kept"
   ],
   "success": [],
   "failure": [
    "audition for winter-ledger working: not cast (chance 23%)",
    "audition for eastview working: not cast (chance 13%)",
    "audition for paper-moons working: not cast (chance 15%)",
+   "audition for lamplighters working: not cast (chance 24%)",
+   "audition for salt-road working: not cast (chance 12%)",
+   "audition for s1.kccse.2029-07-23.new-york.non-union-short.0.0 working: not cast (chance 14%)",
    "audition for eastview working: not cast (chance 13%)",
+   "audition for harbor-line-arden working: not cast (chance 23%)",
+   "audition for tidewater-reenactment strong: not cast (chance 26%)",
    "thomas-ashgrove: passed"
   ],
   "delay": [],
