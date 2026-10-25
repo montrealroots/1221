@@ -683,6 +683,33 @@ if os.path.exists(f'{B22F}/figures.json') and os.path.exists(f'{B21F}/figures.js
             elif not held and r['status'] == IAV:
                 r['status'] = IVI
                 r['missing'] = f"brief 22's figure moved from brief 21's ({FIG21.get(r['id'])}) to {FIG22[r['id']]}, with no reading in {B22MOVED} that its criterion still holds"
+# Brief 27's judge (career-universe-2026-10-24/final-runs/final/, from 2026-10-25), as brief 22's: briefs 25 and 27
+# changed two files the judge reads (`content/tasks.ts`, the career's workflows' tasks, and `systems/evaluation.ts`), so
+# every criterion brief 22 measured is measured again on brief 27's finished commit, each figure beside brief 22's ("the
+# same" where it is), in a folder of its own so brief 22's stays as it was measured. A figure that moved is read against
+# its criterion in brief 27's judge-moved.json ("figures"), as brief 22's were.
+B27F = 'docs/verification/career-universe-2026-10-24/final-runs/final'
+B27MOVED = 'docs/verification/career-universe-2026-10-24/final-runs/judge-moved.json'
+if os.path.exists(f'{B27F}/figures.json') and os.path.exists(f'{B22F}/figures.json'):
+    FIG27 = json.load(open(f'{B27F}/figures.json', encoding='utf-8'))
+    B27AT = re.search(r'^at (\w+)', open(f'{B27F}/exits.txt', encoding='utf-8').read(), re.M).group(1)
+    MOVED27 = json.load(open(B27MOVED, encoding='utf-8')).get('figures', {}) if os.path.exists(B27MOVED) else {}
+    for r in rows:
+        if r.get('measured') == {'commit': B22AT, 'watch': 'judge'}:
+            assert r['id'] in FIG27, r['id']
+            same = FIG27[r['id']] == FIG22.get(r['id'])
+            read = MOVED27.get(r['id'])
+            held = same or bool(read and read.get('was') == FIG22.get(r['id']) and read.get('now') == FIG27[r['id']] and read.get('holds') and read.get('why'))
+            r['measured'] = {'commit': B27AT, 'watch': 'judge'}
+            r['failure'] = f"{r['failure']}; on brief 27's finished commit ({B27AT}): {'the same' if same else FIG27[r['id']]}{'' if same or not read else ' (' + read['why'] + ')'}"
+            r['evidence'] = f"{r['evidence']}; {B27F}/README.md"
+            r['citations'] = r['citations'] + [{'file': f'{B27F}/figures.json'}] + ([] if same else [{'file': B27MOVED}] if read else [])
+            if not held and r['status'] == IAV and read and read.get('decision'):
+                r['status'] = DR
+                r['decision'] = read['decision']
+            elif not held and r['status'] == IAV:
+                r['status'] = IVI
+                r['missing'] = f"brief 27's figure moved from brief 22's ({FIG22.get(r['id'])}) to {FIG27[r['id']]}, with no reading in {B27MOVED} that its criterion still holds"
 # Brief 21's runs (genre-banking-2026-10-22/final-runs/, from 2026-10-22), as brief 20's: a pass that changed how genres
 # are weighed and read, and money's yields, a US card's late days and due day and standing orders, files the
 # measurements watch, so each measurement brief 20 held is made again on brief 21's tested commit, the same ways.
@@ -764,13 +791,19 @@ B21 = 'docs/verification/genre-banking-2026-10-22/final-runs'
 # brief 21's held rows on brief 22's runs, its advice/close.py the advice's four rows, and its judge.py the judge's four
 # area items and the Genre Audit's replacement, Genre Audit-R.
 B22 = 'docs/verification/career-genre-2026-10-22/final-runs'
-PASSES = [(B11, 'Brief 11')] + ([(B12, 'Brief 12')] if os.path.isdir(B12) else []) + ([(B13, 'Brief 13')] if os.path.isdir(B13) else []) + ([(B14, 'Brief 14')] if os.path.exists(f'{B14}/verification-result.json') else []) + ([(B15, 'Brief 15')] if os.path.exists(f'{B15}/verification-result.json') else []) + ([(B16, 'Brief 16')] if os.path.exists(f'{B16}/verification-result.json') else []) + ([(B17, 'Brief 17')] if os.path.exists(f'{B17}/verification-result.json') else []) + ([(B19, 'Brief 19')] if os.path.exists(f'{B19}/verification-result.json') else []) + ([(B20, 'Brief 20')] if os.path.exists(f'{B20}/verification-result.json') else []) + ([(B21, 'Brief 21')] if os.path.exists(f'{B21}/verification-result.json') else []) + ([(B22, 'Brief 22')] if os.path.exists(f'{B22}/verification-result.json') else [])
+# Brief 27's (career-universe-2026-10-24/final-runs/, from 2026-10-25) after brief 22's: its judge.py restates the judge's
+# four area items and Genre Audit-R on brief 27's finished commit. The runs it played again in place restate their rows
+# through brief 22's own verify.py and advice/close.py.
+B27 = 'docs/verification/career-universe-2026-10-24/final-runs'
+PASSES = [(B11, 'Brief 11')] + ([(B12, 'Brief 12')] if os.path.isdir(B12) else []) + ([(B13, 'Brief 13')] if os.path.isdir(B13) else []) + ([(B14, 'Brief 14')] if os.path.exists(f'{B14}/verification-result.json') else []) + ([(B15, 'Brief 15')] if os.path.exists(f'{B15}/verification-result.json') else []) + ([(B16, 'Brief 16')] if os.path.exists(f'{B16}/verification-result.json') else []) + ([(B17, 'Brief 17')] if os.path.exists(f'{B17}/verification-result.json') else []) + ([(B19, 'Brief 19')] if os.path.exists(f'{B19}/verification-result.json') else []) + ([(B20, 'Brief 20')] if os.path.exists(f'{B20}/verification-result.json') else []) + ([(B21, 'Brief 21')] if os.path.exists(f'{B21}/verification-result.json') else []) + ([(B22, 'Brief 22')] if os.path.exists(f'{B22}/verification-result.json') else []) + ([(B27, 'Brief 27')] if os.path.exists(f'{B27}/judge-result.json') else [])
 for d, brief, f in [(d, brief, f) for d, brief in PASSES for f in sorted(x for x in os.listdir(d) if x.endswith('-result.json'))]:
     area = f[:-len('-result.json')]
     result = json.load(open(f'{d}/{f}', encoding='utf-8'))
     for n in result.get('replacements', []):
         cites = [cite(e['file'], e.get('title')) for e in n.get('evidence', []) if e.get('file')]
-        rec = {'id': n['id'], 'group': f'{brief}: Replacement Criteria', 'kind': 'criterion', 'goal': n.get('criterion') or n.get('goal', 'Not recorded'),
+        # A replacement measured again by a later brief keeps the group of the brief that made it (brief 27's judge.py
+        # names brief 22's for Genre Audit-R), so it stays one row.
+        rec = {'id': n['id'], 'group': n.get('group', f'{brief}: Replacement Criteria'), 'kind': 'criterion', 'goal': n.get('criterion') or n.get('goal', 'Not recorded'),
                'entry': n.get('entry', 'Not recorded'), 'preconditions': f"The owner's authorization ({brief}); it replaces {n['replaces']}, which stays as historical evidence",
                'reads': n.get('reads', 'Not recorded'), 'decisions': 'None: a criterion, not a player decision', 'validation': n.get('threshold', n.get('criterion', 'Not recorded')),
                'changes': n.get('changes', 'Not recorded'), 'later': 'None', 'systems': n.get('systems', 'Not recorded'), 'sees': n.get('sees', 'Not recorded'),
