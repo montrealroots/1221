@@ -45,7 +45,7 @@ import { therapyLifts } from './systems/therapy';
 import { priorityOf } from './systems/classmates';
 import { AGENTS } from './content/agents';
 import { GATE, LEVELS, chancesFor, drawOf, offerOutcome, replyOutcome, rosterFor } from './systems/proagent';
-import { castingDraw, postingsAt, slateReach } from './systems/projobs';
+import { DIRECT, NEGOTIATE, castingDraw, postingsAt, slateReach } from './systems/projobs';
 import { productionsOf, seriesOfYear, slatePartsAt } from './systems/slate';
 import { PROJECTS } from './content/careerwork';
 import { SERIES } from './content/series';
@@ -701,7 +701,40 @@ defineDecider<{ sim: Simulation; band: number; fit: number; kind: number }, stri
   sample: (seed) => ({ sim: atYale(seed), band: seed % 4, fit: (seed % 5) / 4, kind: seed % PROJECTS.length }),
   decide: ({ sim, band, fit, kind }) => {
     const b = (['unready', 'working', 'strong', 'exceptional'] as const)[band]!;
-    return (['callback', 'final'] as const).map((round) => Array.from({ length: 40 }, (_, n) => (castingDraw(sim, { postedAt: sim.now + n * 7 * 86_400_000, projectId: PROJECTS[kind]!.id }, round, b, fit).yes ? '1' : '0')).join('')).join(' ');
+    // The chemistry read's and the screen test's cuts too, from 2026-10-24 (brief 27, Part 9).
+    return (['callback', 'chemistry', 'test', 'final'] as const).map((round) => Array.from({ length: 40 }, (_, n) => (castingDraw(sim, { postedAt: sim.now + n * 7 * 86_400_000, projectId: PROJECTS[kind]!.id }, round, b, fit).yes ? '1' : '0')).join('')).join(' ');
+  },
+});
+
+defineDecider<{ sim: Simulation; week: number }, string>({
+  id: 'pro.direct',
+  decides: 'A direct offer or a posting (DIRECT): a part from a casting office that cast the actor before, the work judged Strong or better, offered without an audition, drawn by its week and the part.',
+  drawnIn: 'src/engine/systems/projobs.ts',
+  reads: {
+    // Which week: each Monday's parts draw their own.
+    week: (o, t) => ({ ...o, week: Math.round(t * 50) }),
+    world: (o, t) => ({ ...o, sim: atYale(Math.round(t * 20)) }),
+  },
+  sample: (seed) => ({ sim: atYale(seed), week: seed * 3 }),
+  decide: ({ sim, week }) => Array.from({ length: 24 }, (_, n) => (sim.rng('pro.direct', String(week), `part-${n}`).next() < DIRECT.chance ? '1' : '0')).join(''),
+});
+
+defineDecider<{ sim: Simulation; band: number; worked: number }, string>({
+  id: 'pro.negotiate',
+  decides: 'A production’s answer to an agent’s ask (NEGOTIATE): raised to what was asked or kept, its chance by the last round’s band, and more where its casting office cast the actor before.',
+  drawnIn: 'src/engine/systems/projobs.ts',
+  reads: {
+    // The last round's band: a stronger one, a likelier yes.
+    band: (o, t) => ({ ...o, band: Math.round(t * 3) }),
+    // Worked for the casting office before.
+    worked: (o, t) => ({ ...o, worked: Math.round(t) }),
+    world: (o, t) => ({ ...o, sim: atYale(Math.round(t * 20)) }),
+  },
+  sample: (seed) => ({ sim: atYale(seed), band: seed % 4, worked: (seed >> 2) % 2 }),
+  decide: ({ sim, band, worked }) => {
+    const b = (['unready', 'working', 'strong', 'exceptional'] as const)[band]!;
+    const chance = Math.min(1, NEGOTIATE.yes[b] + (worked ? NEGOTIATE.worked : 0));
+    return Array.from({ length: 40 }, (_, n) => (sim.rng('pro.negotiate', PROJECTS[n % PROJECTS.length]!.id, sim.now + n * 86_400_000).next() < chance ? '1' : '0')).join('');
   },
 });
 

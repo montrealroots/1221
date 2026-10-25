@@ -349,6 +349,18 @@
  "pro.apply_work_visa": {
   "status": "Not Tested"
  },
+ "pro.ask_more": {
+  "status": "Verified",
+  "by": [
+   "inspection",
+   "automated"
+  ],
+  "on": "68cb2816",
+  "evidence": [
+   "tests/b27-offers.test.ts",
+   "src/engine/systems/projobs.ts:2375 the command; src/engine/systems/projobs.ts:1529 askMoreRefusal: no offer, asked already, no agent, no figure"
+  ]
+ },
  "pro.ask_pay": {
   "status": "Not Tested"
  },
@@ -572,6 +584,18 @@
    "src/engine/systems/projobs.ts:1629-1645 the command moves it once, the item rescheduled; src/engine/systems/projobs.ts:848-855 moveRefusal; src/engine/systems/projobs.ts:814-830 otherTime",
    "tests/pro-work.test.ts",
    "tests/pro-core.test.ts the career’s 32 test files, 423 tests, run on this commit: all green"
+  ]
+ },
+ "pro.negotiate_answer": {
+  "status": "Verified",
+  "by": [
+   "inspection",
+   "automated"
+  ],
+  "on": "68cb2816",
+  "evidence": [
+   "tests/b27-offers.test.ts",
+   "src/engine/systems/projobs.ts:2140 the answer: raised to what was asked or kept, by the band, the casting office and the draw"
   ]
  },
  "pro.offer_lapse": {

@@ -127,9 +127,9 @@
  },
  "src/engine/content/tutorial.ts#CHAPTERS [finding-work]": {
   "status": "Rewritten",
-  "hash": "f6783d6d5abb",
-  "on": "2026-10-24",
-  "evidence": "Written for brief 25's Module 6 to docs/STYLE.md and docs/GLOSSARY.md: Finding Work's paragraph on Charts And Awards, naming Enter Yourself and Watch The Ceremony as the tab names them; the chapter's opened commands issued in tests/career-awards-screen.test.ts, its names checked by tools/guide-quotes.mjs, with tools/voice-check.mjs and tools/tics.mjs clean.",
+  "hash": "846d18fd0cc4",
+  "on": "2026-10-25",
+  "evidence": "Written for brief 27's K4 (loops 16 and 18: a direct offer and asking for more through the agent) to docs/STYLE.md and docs/GLOSSARY.md, and read where the player meets it: tests/b27-offers.test.ts holds the direct offer's reason in the offer's decision and history (offered you ... without an audition, cast you as ... where your work was Strong), the ask's history line, its refusals (no agent, asked once already, the answer to come), and the answer's notices (The Offer For ... Is Raised, The Offer For ... Stands) with their words; the release notice of a voice credit now names the voice demo, which brief 27's K3 made. The rest of these sources' words are as they were, held by brief 19's and brief 25's tests. tools/voice-check.mjs, tools/tics.mjs, tools/title-case.mjs, tools/plural-check.mjs and tools/spelling.mjs pass",
   "first": "Pending"
  },
  "src/engine/content/tutorial.ts#CHAPTERS [life]": {

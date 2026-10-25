@@ -119,6 +119,92 @@
    "prior": "pro.accept_offer"
   },
   {
+   "id": "pro.ask_more",
+   "kind": "command",
+   "area": "career",
+   "mechanic": true,
+   "seeded": false,
+   "readBy": "career",
+   "readAt": "68cb2816",
+   "where": "Career, Opportunities, Offers: Ask For (the figure) A Day or A Week on a standing offer; grayed with askMoreRefusal's words.",
+   "prerequisites": "An offer standing, with a figure; an agent representing the actor; not asked before on this offer.",
+   "reads": "The offer and its amount, the agreement in force, the clock.",
+   "changes": "The ask on the offer (a fifth over, in whole dollars, and when the answer comes), the offer standing a day past the answer, its lapse moved with it, the answer on the clock, and a history line.",
+   "consumers": [
+    {
+     "what": "the answer next afternoon raises the offer to what was asked or keeps it, by its draw",
+     "at": "src/engine/systems/projobs.ts:2140"
+    },
+    {
+     "what": "raised, the offer's amount is what the contract and the pay read",
+     "at": "src/engine/systems/projobs.ts:2152"
+    },
+    {
+     "what": "the offer's lapse moves to a day past the answer",
+     "at": "src/engine/systems/projobs.ts:2390"
+    },
+    {
+     "what": "asked once, a second ask is refused",
+     "at": "src/engine/systems/projobs.ts:1529"
+    }
+   ],
+   "experienced": "At once the offer card says what was asked and when the answer comes; the next afternoon a notice says the offer was raised or stands, and the card says which.",
+   "saveLoad": "The professional record (`person.pro`) and the calendar's pending `pro.*` items are in the save; every handler reads the record's own state (a status, a key, a guard) before acting, so a load runs nothing twice and drops nothing. Held to the byte across a save and a load before each step of a part and of an approach by tests/b20-career-saveload.test.ts.",
+   "evidence": {
+    "tests": [
+     "tests/b27-offers.test.ts"
+    ],
+    "comparisons": [
+     "b27-offers: one part's draw raises the offer and another's keeps it; the raised figure is the contract's rate"
+    ],
+    "mutations": [],
+    "journeys": [
+     "b27-offers: asked, answered, accepted at the raised figure"
+    ]
+   },
+   "missing": "No played life of the long runs asks yet: they're replayed in brief 27's F.",
+   "status": "Implemented And Verified",
+   "why": "",
+   "prior": null
+  },
+  {
+   "id": "pro.negotiate_answer",
+   "kind": "scheduled",
+   "area": "career",
+   "mechanic": true,
+   "seeded": false,
+   "readBy": "career",
+   "readAt": "68cb2816",
+   "where": "The production's answer to the agent's ask, the afternoon after it, at three.",
+   "prerequisites": "The offer still standing, asked and not yet answered.",
+   "reads": "The last round's band, whether its casting office cast the actor before, the ask, and the draw (pro.negotiate).",
+   "changes": "The offer's amount raised to what was asked and its version to 2, or kept; the answer on the ask; a history line and a notice.",
+   "consumers": [
+    {
+     "what": "the offer card and the contract read the amount",
+     "at": "src/engine/systems/projobs.ts:2152"
+    }
+   ],
+   "experienced": "A notice that the offer was raised or stands, and until when; the card says which.",
+   "saveLoad": "The professional record (`person.pro`) and the calendar's pending `pro.*` items are in the save; every handler reads the record's own state (a status, a key, a guard) before acting, so a load runs nothing twice and drops nothing. Held to the byte across a save and a load before each step of a part and of an approach by tests/b20-career-saveload.test.ts.",
+   "evidence": {
+    "tests": [
+     "tests/b27-offers.test.ts"
+    ],
+    "comparisons": [
+     "b27-offers: raised by one part's draw, kept by another's"
+    ],
+    "mutations": [],
+    "journeys": [
+     "b27-offers"
+    ]
+   },
+   "missing": "None found.",
+   "status": "Implemented And Verified",
+   "why": "",
+   "prior": null
+  },
+  {
    "id": "pro.agent_check",
    "kind": "command",
    "area": "career",

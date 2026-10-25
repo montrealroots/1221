@@ -256,7 +256,18 @@ export interface Opportunity extends HasHistory {
   // `auditionAt` and `callbackAt` went on 2026-10-21 (brief 20's D1, values written and never read): the work loop set
   // them beside each round's own `at` (`rounds`), which everything reads, and nothing read them. A save that has them
   // keeps them, unread.
-  offer?: { at: Instant; until: Instant; rate: RateId; amount?: Money; per: 'day' | 'week'; units: number };
+  offer?: {
+    at: Instant; until: Instant; rate: RateId; amount?: Money; per: 'day' | 'week'; units: number;
+    /**
+     * The offer's version and what the agent asked for (from 2026-10-24, the owner's brief 27, loop 18): asked once, a fifth
+     * over the offer, and answered the next afternoon; raised, `amount` is what was asked and the version 2. The amount
+     * the engine pays is `amount`, the one the screens show.
+     */
+    version?: number;
+    asked?: { at: Instant; amount: Money; answerAt: Instant; answer?: 'raised' | 'kept' };
+  };
+  /** Offered without an audition (from 2026-10-24, brief 27, loop 16): the work for the same casting office that's why, said. */
+  direct?: { engagementId: ProId; words: string };
   /** When it was settled, booked or not, and why, in the player's words. */
   resolvedAt?: Instant;
   outcome?: string;

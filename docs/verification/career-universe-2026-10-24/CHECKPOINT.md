@@ -44,7 +44,7 @@ commit, what's done, what remains and the exact next step. `README.md` is the re
 | K1 | The geographic coverage matrix and the research register | Done (this commit): 252 countries and territories, 170,911 places; 124 pages in the register, brief 25's unread sources asked for again |
 | K2 | The ongoing project and opportunity lifecycle (Area B) | Done (this commit): the slate, with the UK's rules verified for its London work |
 | K3 | Representation depth and versioned materials | In progress: what briefs 19 to 25 built read against Parts 6 and 7; the voice demo built (this commit); managers, lawyers and publicists not in the game, said so |
-| K4 | Discovery, submission, auditions, direct offers, negotiation, holds and options | In progress: the chemistry read and the screen test built; direct offers, the player's negotiation and holds next |
+| K4 | Discovery, submission, auditions, direct offers, negotiation, holds and options | In progress: the chemistry read, the screen test, direct offers and asking for more through the agent built; holds next |
 | K5 | Preparation, production, travel, changes, wrap, compensation, expenses, residuals | Waiting |
 | K6 | Release, publicity, weekly charts, renewal and returning work | Waiting |
 | K7 | Festivals, awards, the ceremony | Waiting |
@@ -67,9 +67,8 @@ commit, what's done, what remains and the exact next step. `README.md` is the re
 
 ## Next Step
 
-K3's close, then K4: discovery, submission and auditions (Parts 9 and the supplement's loops 11 to 17). Read
-`systems/projobs.ts`'s rounds (self-tape, in person, callback) and the workflows' sessions first, then build what's
-missing: chemistry reads and screen tests as rounds of their own where a kind has one, a direct offer without an
-audition, holds and options, and a negotiation step where the agreement supports one. Then K5 to K8 and F, as the table
+K4's holds (loop 20): a production that has seen the actor at a chemistry read or a screen test holds their dates, and
+a conflicting offer asks for the hold to be released or lets it go. Chemistry reads, screen tests, direct offers and
+asking for more through the agent are built (README, K4). Then K3's close. Then K5 to K8 and F, as the table
 says. Before F: the 85 measured criteria are measured again on the finished commit, and the four decisions above stay
 with the owner.

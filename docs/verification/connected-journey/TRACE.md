@@ -1337,7 +1337,7 @@ The Career screen, your professional profile and name, headshots, your résumé 
   - For a self-tape, an hour free before it’s due.
   - For a new time, a day’s notice, asked once.
 - **Costs:**
-  - Time: 30 minutes to 45 minutes a step; an hour for a self-tape; an audition in person 30 minutes, with the trip each way (an estimate)
+  - Time: 30 minutes to 45 minutes a step; an hour for a self-tape; an audition in person 30 minutes, a chemistry read an hour and a screen test five hours, with the trip each way (an estimate)
   - Money: None
 - **State (what changes at once):**
   - A step moves its part of the preparation on and the clock with it. A self-tape is judged at once and kept on your work record.
@@ -1352,11 +1352,12 @@ The Career screen, your professional profile and name, headshots, your résumé 
   - (none)
 - **Later consequence:**
   - A day after a first audition casting decides whether to call you back, and three days after the last whether to offer you the role. A notice says which.
+  - A lead in screen work, and a supporting part in a romance, has a chemistry read after the callback: the sides played in person with the actors already cast, judged above all on how you listen and answer them. A feature’s lead has a screen test after that: the part filmed on set in costume and makeup, take after take. Casting decides after each whether you go on.
 - **Tested by:** `pro.prepare`: `tests/career-awards-screen.test.ts`, `tests/career-awards.test.ts`, `tests/career-workflows-screen.test.ts`, `tests/career-workflows.test.ts`, `tests/journey-career.test.ts`, `tests/pro-work.test.ts`; `pro.tape_audition`: `tests/journey-career.test.ts`, `tests/pro-work.test.ts`; `pro.move_audition`: `tests/pro-work.test.ts`
 
 ### Offers And Booked Work (`career.offers`)
 
-- **Action:** `pro.accept_offer`, `pro.decline_offer`, at Career, Opportunities, Offers (`/workspace/career?tab=opportunities`). Opens: From the guide’s chapter “Finding Work”, once casting makes you an offer.
+- **Action:** `pro.accept_offer`, `pro.decline_offer`, `pro.ask_more`, at Career, Opportunities, Offers (`/workspace/career?tab=opportunities`). Opens: From the guide’s chapter “Finding Work”, once casting makes you an offer.
 - **Preconditions:**
   - Permission to work in the US for every day of it, as Papers shows it.
   - No other booking on the same days, and in the summer no School call on them.
@@ -1376,9 +1377,11 @@ The Career screen, your professional profile and name, headshots, your résumé 
 - **History (kept in the record):**
   - Your Résumé: The part goes on your professional credits, and your résumé reads as behind until it has it.
 - **Later consequence:**
+  - Asked for more, the production answers the next afternoon: it raises the offer to what your agent asked, or keeps its offer, and the offer then stands a day past the answer. How your last round went makes a raise likelier, and so does having worked for its casting office.
+  - A casting office that cast you before, where your work was Strong or better, may offer you a later part without an audition, never a lead. The offer says why.
   - A stage part goes on your credits at its first night; a screen part when it’s shot, and as released once it comes out, when its footage can go on a reel.
   - Miss a shoot day, or a second day of a run, and the production replaces you.
-- **Tested by:** `pro.accept_offer`: `tests/b20-benefits-safetynet.test.ts`, `tests/b20-benefits-tax.test.ts`, `tests/b20-benefits-unemployment.test.ts`, `tests/b20-career-defects.test.ts`, `tests/b20-career-effects.test.ts`, `tests/b20-career-history.test.ts`, `tests/b20-career-skill.test.ts`, `tests/b20-guide-screens.test.ts`, `tests/b20-life-fatigue.test.ts`, `tests/b20-papers-work.test.ts`, `tests/b21-genre-proof.test.ts`, `tests/b22-authorization.test.ts`, `tests/b27-slate-screens.test.ts`, `tests/b27-slate.test.ts`, `tests/career-awards-screen.test.ts`, `tests/career-awards.test.ts`, `tests/career-contracts.test.ts`, `tests/career-drawn.test.ts`, `tests/career-workflows-screen.test.ts`, `tests/career-workflows.test.ts`, `tests/career-world-sydney.test.ts`, `tests/pro-opportunities-screen.test.ts`, `tests/pro-work.test.ts`; `pro.decline_offer`: `tests/b20-career-effects.test.ts`, `tests/b20-career-history.test.ts`, `tests/b20-guide-screens.test.ts`, `tests/pro-work.test.ts`
+- **Tested by:** `pro.accept_offer`: `tests/b20-benefits-safetynet.test.ts`, `tests/b20-benefits-tax.test.ts`, `tests/b20-benefits-unemployment.test.ts`, `tests/b20-career-defects.test.ts`, `tests/b20-career-effects.test.ts`, `tests/b20-career-history.test.ts`, `tests/b20-career-skill.test.ts`, `tests/b20-guide-screens.test.ts`, `tests/b20-life-fatigue.test.ts`, `tests/b20-papers-work.test.ts`, `tests/b21-genre-proof.test.ts`, `tests/b22-authorization.test.ts`, `tests/b27-offers.test.ts`, `tests/b27-slate-screens.test.ts`, `tests/b27-slate.test.ts`, `tests/career-awards-screen.test.ts`, `tests/career-awards.test.ts`, `tests/career-contracts.test.ts`, `tests/career-drawn.test.ts`, `tests/career-workflows-screen.test.ts`, `tests/career-workflows.test.ts`, `tests/career-world-sydney.test.ts`, `tests/pro-opportunities-screen.test.ts`, `tests/pro-work.test.ts`; `pro.decline_offer`: `tests/b20-career-effects.test.ts`, `tests/b20-career-history.test.ts`, `tests/b20-guide-screens.test.ts`, `tests/pro-work.test.ts`; `pro.ask_more`: `tests/b27-offers.test.ts`
 
 ### Work While You’re At The School (`career.outside-work`)
 

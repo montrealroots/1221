@@ -23,7 +23,7 @@ import { FORMATS } from '@/engine/content/workflows';
 import { STEP_WORDS, stepOf, workflowOf } from '@/engine/systems/workflow';
 import { activeAgreement, type Engagement, type Opportunity } from '@/engine/systems/pro';
 import {
-  DEFERRED_WHY, FIELD_WORDS, MISSES, OUTSIDE_WORK, ROUND_WORDS, acceptRefusal, acceptWarning, againWords, agrees, castingAs, chanceWords, conditionsFor, counted, datesOf, decidesAt, drawnWords, kindPhrase, reachWords,
+  DEFERRED_WHY, FIELD_WORDS, MISSES, OUTSIDE_WORK, ROUND_WORDS, acceptRefusal, askMoreRefusal, askedAmount, acceptWarning, againWords, agrees, castingAs, chanceWords, conditionsFor, counted, datesOf, decidesAt, drawnWords, kindPhrase, reachWords,
   demandsWords, eligibilityProblems, fitOf, fitWords, inSessionAny, materialProblems, moveRefusal, payTermsOf, payWords, prepMinutes,
   prepareRefusal, projectGenresOf, projectOf, requestFor, requestRefusal, roundToCome, submitRefusal, tapeRefusal, writtenFor, writtenForWords, intimacyWords,
 } from '@/engine/systems/projobs';
@@ -227,6 +227,10 @@ function OfferCard({ o }: { o: Opportunity }) {
   const warning = acceptWarning(sim, person, o);
   const agent = o.agentId ? agentById(o.agentId) : undefined;
   const days = datesOf(o);
+  // Asking for more through the agent (from 2026-10-24, brief 27, loop 18): once, a fifth over the offer.
+  const askNo = askMoreRefusal(sim, person, o);
+  const asked = o.offer?.asked;
+  const askLabel = o.offer?.amount !== undefined ? `Ask For ${formatMoney(askedAmount(o.offer.amount), 'USD')} A ${o.offer.per === 'week' ? 'Week' : 'Day'}` : 'Ask For More';
   return (
     <article className="engagement" aria-label={`${t.role.part}, ${t.project}`}>
       <div className="engagement-head">
@@ -239,13 +243,16 @@ function OfferCard({ o }: { o: Opportunity }) {
         <div><dt>Deadline</dt><dd>{`The offer stands until ${formatWeekdayDate(o.offer!.until, NY)} at ${formatTime(o.offer!.until, NY)}.`}</dd></div>
       </dl>
       {agent && <p className="xs dim" style={{ margin: 0 }}>{`${agent.name} passed it on.`}</p>}
+      {o.direct && <p className="small" style={{ margin: 0 }}>{`Offered without an audition. ${o.direct.words}`}</p>}
+      {asked && <p className="small" style={{ margin: 0 }}>{asked.answer === 'raised' ? `Raised to ${formatMoney(asked.amount, 'USD')} a ${o.offer!.per}, as your agent asked.` : asked.answer === 'kept' ? `Kept at its offer, where your agent asked for ${formatMoney(asked.amount, 'USD')} a ${o.offer!.per}.` : `Your agent asked for ${formatMoney(asked.amount, 'USD')} a ${o.offer!.per}. The answer comes on ${formatWeekdayDate(asked.answerAt, NY)} at ${formatTime(asked.answerAt, NY)}.`}</p>}
       {warning && <p className="callout callout-warning small" style={{ margin: 0 }}>{warning}</p>}
       <p className="xs dim" style={{ margin: 0 }}>{t.medium === 'stage' ? `Missing a day: the company’s understudy covers ${counted(MISSES.stage, 'performance')}, with a written warning; another and the company replaces you.` : 'Missing a day: a shoot can’t wait, so the production replaces you.'}</p>
       <div className="row gap-2" style={{ flexWrap: 'wrap' }}>
         <Gated feature="pro.accept_offer" className="btn btn-sm btn-primary" disabled={!!no} title={no} onClick={() => { const r = run('pro.accept_offer', { opportunityId: o.id }); if (r.ok) toast(`Booked: ${t.role.part}.`, 'positive'); }}>Accept The Offer</Gated>
         <Gated feature="pro.decline_offer" className="btn btn-sm" onClick={() => { const r = run('pro.decline_offer', { opportunityId: o.id }); if (r.ok) toast(`Declined: ${t.role.part}.`, 'neutral'); }}>Decline The Offer</Gated>
+        <Gated feature="pro.ask_more" className="btn btn-sm" disabled={!!askNo} title={askNo} onClick={() => { const r = run<{ answerAt: number }>('pro.ask_more', { opportunityId: o.id }); if (r.ok) toast(`Asked. The answer comes on ${formatWeekdayDate(r.value!.answerAt, NY)}.`, 'positive'); }}>{askLabel}</Gated>
       </div>
-      <WhyNot reasons={[['Accept The Offer', no]]} />
+      <WhyNot reasons={[['Accept The Offer', no], [askLabel, askNo]]} />
       <details className="section-fold">
         <summary>The Role In Full</summary>
         <RoleFacts t={t} o={o} />

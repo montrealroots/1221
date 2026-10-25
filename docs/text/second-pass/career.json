@@ -638,9 +638,9 @@
  },
  "src/engine/content/guide/career.ts#CAREER_GUIDE [career.offers]": {
   "status": "Rewritten",
-  "hash": "fd161aff6cd3",
-  "on": "2026-10-22",
-  "evidence": "Said again for brief 21 (2026-10-22) to docs/STYLE.md and docs/GLOSSARY.md: a work's several genres, each by its share, and where knowing them counts; the mechanics it names played in tests/b20-career-effects.test.ts, tests/evidence-g20-school.test.ts, tests/evidence-g23-school.test.ts and tests/guide-examples-*.test.ts, with tools/voice-check.mjs, tools/tics.mjs, tools/title-case.mjs, tools/spelling.mjs and tools/plural-check.mjs passing",
+  "hash": "4aa4bfcd67fc",
+  "on": "2026-10-25",
+  "evidence": "Written for brief 27's K4 (loops 16 and 18: a direct offer and asking for more through the agent) to docs/STYLE.md and docs/GLOSSARY.md, and read where the player meets it: tests/b27-offers.test.ts holds the direct offer's reason in the offer's decision and history (offered you ... without an audition, cast you as ... where your work was Strong), the ask's history line, its refusals (no agent, asked once already, the answer to come), and the answer's notices (The Offer For ... Is Raised, The Offer For ... Stands) with their words; the release notice of a voice credit now names the voice demo, which brief 27's K3 made. The rest of these sources' words are as they were, held by brief 19's and brief 25's tests. tools/voice-check.mjs, tools/tics.mjs, tools/title-case.mjs, tools/plural-check.mjs and tools/spelling.mjs pass",
   "first": "Pending"
  },
  "src/engine/content/guide/career.ts#CAREER_GUIDE [career.opportunities]": {

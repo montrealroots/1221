@@ -566,5 +566,42 @@
     "ref": "tests/b27-rounds.test.ts: 'PLAYER JOURNEY: a chemistry read slept through lapses the part, and says so'"
    }
   ]
+ },
+ {
+  "surface": "A direct offer and asking for more: the offer card, its decision, the ask's answer and the history",
+  "where": "Career, Opportunities, Offers (Offered without an audition, Ask For … A Day or A Week, what was asked and the answer); What Needs You, the offer; the notices; the role's What Happened",
+  "sources": [
+   "src/engine/systems/projobs.ts#directOfferFor",
+   "src/engine/systems/projobs.ts#askMoreRefusal",
+   "src/engine/systems/projobs.ts#registerProJobs <pro.ask_more>",
+   "src/engine/systems/projobs.ts#registerProJobs [offer]"
+  ],
+  "states": [
+   "first use",
+   "confirmation",
+   "notification",
+   "success",
+   "setback",
+   "unavailable",
+   "history",
+   "explanation"
+  ],
+  "outcome": "Revised",
+  "why": "New with brief 27's K4: a direct offer says why it came without an audition; the ask says what it asks and when the answer comes; the answer says raised or kept and how long the offer stands; each refusal says why.",
+  "changes": "Written new: the direct offer's reason, the ask's label, refusals, history line and answer notices, and the offer card's lines for each.",
+  "evidence": [
+   {
+    "kind": "test",
+    "ref": "tests/b27-offers.test.ts: 'PLAYER JOURNEY: posted that week, the part comes as an offer, no audition set, the offer saying why'"
+   },
+   {
+    "kind": "test",
+    "ref": "tests/b27-offers.test.ts: 'PLAYER JOURNEY: asked once, a fifth over; raised the next afternoon by its draw, the offer versioned, standing a day past the answer, and the raise what the booking pays'"
+   },
+   {
+    "kind": "test",
+    "ref": "tests/b27-offers.test.ts: 'PLAYER JOURNEY: kept at its offer by its draw, said; refused without an agent, and with no figure to ask more of'"
+   }
+  ]
  }
 ]

@@ -2029,6 +2029,13 @@
   "evidence": "Written for brief 25's Module 5 to docs/STYLE.md: each of the five draws the ways of working make, said in the player's terms, registered and checked by tools/deciders.mjs and each drawn in tests/career-workflows.test.ts (the board, the screamed lines, the revised pages, the recall to loop and the scene cut), with tools/voice-check.mjs clean.",
   "first": "Pending"
  },
+ "src/engine/decided.ts#top [pro.direct]": {
+  "status": "Retained",
+  "hash": "d4dfcde7a8cd",
+  "on": "2026-10-25",
+  "reason": "A decider's description, read by tests/deciders.test.ts and tools/deciders.mjs and never shown to a player: it says what decides whether a part from a casting office that cast the actor before comes as an offer without an audition, and what moves it.",
+  "first": "Pending"
+ },
  "src/engine/decided.ts#top [pro.episode]": {
   "status": "Retained",
   "hash": "986d428b8445",
@@ -2048,6 +2055,13 @@
   "hash": "93a725da5d19",
   "on": "2026-10-24",
   "evidence": "Written for brief 25's Module 5 to docs/STYLE.md: each of the five draws the ways of working make, said in the player's terms, registered and checked by tools/deciders.mjs and each drawn in tests/career-workflows.test.ts (the board, the screamed lines, the revised pages, the recall to loop and the scene cut), with tools/voice-check.mjs clean.",
+  "first": "Pending"
+ },
+ "src/engine/decided.ts#top [pro.negotiate]": {
+  "status": "Retained",
+  "hash": "76351ee0c4a9",
+  "on": "2026-10-25",
+  "reason": "A decider's description, read by tests/deciders.test.ts and tools/deciders.mjs and never shown to a player: it says what decides a production's answer to an agent's ask for more, and what moves its chance.",
   "first": "Pending"
  },
  "src/engine/decided.ts#top [pro.option]": {

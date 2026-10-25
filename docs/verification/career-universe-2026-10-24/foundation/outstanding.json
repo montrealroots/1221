@@ -1,9 +1,9 @@
 {
  "written": "by outstanding.mjs, from completion-matrix.json and criteria.json",
- "completion": "Completion, by the matrix: 549 of 664 rows in scope Implemented And Verified (82.6%); 111 Implemented, Verification Incomplete, 0 Partially Implemented, 0 Not Implemented, 0 Blocked Externally, 4 Decision Required, 41 Explicitly Deferred.",
+ "completion": "Completion, by the matrix: 549 of 665 rows in scope Implemented And Verified (82.5%); 112 Implemented, Verification Incomplete, 0 Partially Implemented, 0 Not Implemented, 0 Blocked Externally, 4 Decision Required, 41 Explicitly Deferred.",
  "byClass": {
   "Proof in a played life, behind a product decision": 20,
-  "Proof: no audit reading yet": 6,
+  "Proof: no audit reading yet": 7,
   "A product decision": 4,
   "Proof: a measurement behind the code": 85
  },
@@ -134,6 +134,16 @@
    "status": "Implemented, Verification Incomplete",
    "requirement": "Work abroad: a role in Sydney found, auditioned for on tape and accepted as a contract; the 408 visa it needs applied for and granted; the production's flights, cars and hotel; the work there, paid as wages earned in Australia; and the trip home | Work Abroad (`career.work-abroad`)",
    "implementation": "`systems/worktrip.ts` | WorkPane.tsx",
+   "class": "Proof: no audit reading yet",
+   "lacks": "Brief 25's command, traced in connected-journey/TRACE.md and tested, but read by no audit row, so the matrix can't call it verified.",
+   "action": "Read by an audit row once brief 27's career milestones (K2 to K7) settle the command, so the reading isn't made stale by them."
+  },
+  {
+   "id": "pro.ask_more",
+   "group": "Commands Traced Outside The Audit",
+   "status": "Implemented, Verification Incomplete",
+   "requirement": "Find professional work and do it: fictional roles posted each Monday, a submission that sends the portfolio, an audition in person or on tape and a callback where the project has one, casting's decision, an offer accepted or declined, the work days on the calendar judged, and the lasting credit; thr…",
+   "implementation": "`systems/projobs.ts` | OpportunitiesPane.tsx",
    "class": "Proof: no audit reading yet",
    "lacks": "Brief 25's command, traced in connected-journey/TRACE.md and tested, but read by no audit row, so the matrix can't call it verified.",
    "action": "Read by an audit row once brief 27's career milestones (K2 to K7) settle the command, so the reading isn't made stale by them."

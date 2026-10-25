@@ -741,6 +741,13 @@
   "evidence": "Written for brief 27's Area B (a production's fate reaching work booked in it) to docs/STYLE.md; read as the player meets it in tests/b27-slate.test.ts's two PLAYER JOURNEYS (never made: the notice once and the engagement's history line; pushed back: the notice and the offer again). On reading, the call-off notice's reason, which said the game owes nothing more since the agreement's own terms weren't read, was rewritten in the form the residuals' notes use. tools/voice-check.mjs and tools/tics.mjs pass",
   "first": "Pending"
  },
+ "src/engine/systems/projobs.ts#askMoreRefusal": {
+  "status": "Rewritten",
+  "hash": "13788be9af6b",
+  "on": "2026-10-25",
+  "evidence": "Written for brief 27's K4 (loops 16 and 18: a direct offer and asking for more through the agent) to docs/STYLE.md and docs/GLOSSARY.md, and read where the player meets it: tests/b27-offers.test.ts holds the direct offer's reason in the offer's decision and history (offered you ... without an audition, cast you as ... where your work was Strong), the ask's history line, its refusals (no agent, asked once already, the answer to come), and the answer's notices (The Offer For ... Is Raised, The Offer For ... Stands) with their words; the release notice of a voice credit now names the voice demo, which brief 27's K3 made. The rest of these sources' words are as they were, held by brief 19's and brief 25's tests. tools/voice-check.mjs, tools/tics.mjs, tools/title-case.mjs, tools/plural-check.mjs and tools/spelling.mjs pass",
+  "first": "Pending"
+ },
  "src/engine/systems/projobs.ts#attendedAcross": {
   "status": "Rewritten",
   "hash": "9048309bbc00",
@@ -838,6 +845,13 @@
   "on": "2026-10-21",
   "evidence": "Rewritten on 2026-10-21 after the built app's walk read each technique with its level in a clause, four things for two; read where the player meets it in tests/pro-opportunities-screen.test.ts (What It Asks), with tools/voice-check.mjs, tools/tics.mjs and tools/title-case.mjs passing",
   "first": "Rewritten And Verified"
+ },
+ "src/engine/systems/projobs.ts#directOfferFor": {
+  "status": "Rewritten",
+  "hash": "403915382b7a",
+  "on": "2026-10-25",
+  "evidence": "Written for brief 27's K4 (loops 16 and 18: a direct offer and asking for more through the agent) to docs/STYLE.md and docs/GLOSSARY.md, and read where the player meets it: tests/b27-offers.test.ts holds the direct offer's reason in the offer's decision and history (offered you ... without an audition, cast you as ... where your work was Strong), the ask's history line, its refusals (no agent, asked once already, the answer to come), and the answer's notices (The Offer For ... Is Raised, The Offer For ... Stands) with their words; the release notice of a voice credit now names the voice demo, which brief 27's K3 made. The rest of these sources' words are as they were, held by brief 19's and brief 25's tests. tools/voice-check.mjs, tools/tics.mjs, tools/title-case.mjs, tools/plural-check.mjs and tools/spelling.mjs pass",
+  "first": "Pending"
  },
  "src/engine/systems/projobs.ts#drawnWords": {
   "status": "Rewritten",
@@ -946,16 +960,16 @@
  },
  "src/engine/systems/projobs.ts#makeOffer": {
   "status": "Rewritten",
-  "hash": "cf67e328165d",
-  "on": "2026-10-24",
-  "evidence": "Written for brief 25's Module 4 (contracts, pay states, overtime, the producer's contribution, residuals, the per diem, a recurring part's season and a series' seasons) to docs/STYLE.md and docs/GLOSSARY.md, every rule's figure the agreements' own and every invention said as the game's; read where the player meets it in tests/career-contracts.test.ts (the offer, the contract, each payment's state, the notices of each episode, option, decision, telecast, rerun, residual and per diem, through a played recurring part), with tools/voice-check.mjs, tools/tics.mjs and tools/title-case.mjs clean.",
+  "hash": "af8b26866d2a",
+  "on": "2026-10-25",
+  "evidence": "Written for brief 27's K4 (loops 16 and 18: a direct offer and asking for more through the agent) to docs/STYLE.md and docs/GLOSSARY.md, and read where the player meets it: tests/b27-offers.test.ts holds the direct offer's reason in the offer's decision and history (offered you ... without an audition, cast you as ... where your work was Strong), the ask's history line, its refusals (no agent, asked once already, the answer to come), and the answer's notices (The Offer For ... Is Raised, The Offer For ... Stands) with their words; the release notice of a voice credit now names the voice demo, which brief 27's K3 made. The rest of these sources' words are as they were, held by brief 19's and brief 25's tests. tools/voice-check.mjs, tools/tics.mjs, tools/title-case.mjs, tools/plural-check.mjs and tools/spelling.mjs pass",
   "first": "Pending"
  },
  "src/engine/systems/projobs.ts#makeOffer [offer]": {
   "status": "Rewritten",
-  "hash": "033169d7417a",
-  "on": "2026-10-24",
-  "evidence": "Written for brief 25's Module 4 (contracts, pay states, overtime, the producer's contribution, residuals, the per diem, a recurring part's season and a series' seasons) to docs/STYLE.md and docs/GLOSSARY.md, every rule's figure the agreements' own and every invention said as the game's; read where the player meets it in tests/career-contracts.test.ts (the offer, the contract, each payment's state, the notices of each episode, option, decision, telecast, rerun, residual and per diem, through a played recurring part), with tools/voice-check.mjs, tools/tics.mjs and tools/title-case.mjs clean.",
+  "hash": "25fa16104ac4",
+  "on": "2026-10-25",
+  "evidence": "Written for brief 27's K4 (loops 16 and 18: a direct offer and asking for more through the agent) to docs/STYLE.md and docs/GLOSSARY.md, and read where the player meets it: tests/b27-offers.test.ts holds the direct offer's reason in the offer's decision and history (offered you ... without an audition, cast you as ... where your work was Strong), the ask's history line, its refusals (no agent, asked once already, the answer to come), and the answer's notices (The Offer For ... Is Raised, The Offer For ... Stands) with their words; the release notice of a voice credit now names the voice demo, which brief 27's K3 made. The rest of these sources' words are as they were, held by brief 19's and brief 25's tests. tools/voice-check.mjs, tools/tics.mjs, tools/title-case.mjs, tools/plural-check.mjs and tools/spelling.mjs pass",
   "first": "Pending"
  },
  "src/engine/systems/projobs.ts#MATERIAL_WORDS": {
@@ -1058,9 +1072,16 @@
  },
  "src/engine/systems/projobs.ts#registerProJobs": {
   "status": "Rewritten",
-  "hash": "fdb7786f3569",
-  "on": "2026-10-24",
-  "evidence": "Written for brief 27's K4 (Part 9: chemistry reads and screen tests) to docs/STYLE.md and docs/GLOSSARY.md, and read where the player meets it: tests/b27-rounds.test.ts plays a feature's lead through the callback, the chemistry read and the screen test by the clock, holding each notice (A Chemistry Read For, A Screen Test For), each history line in the past (asked you to read with the actors already cast, Your chemistry read for ... was), the work record's task, the offer at the end, and a chemistry read slept through (You missed the chemistry read for, You Missed The Chemistry Read For). The audition's and the callback's words are as they were, held by brief 19's tests. tools/voice-check.mjs, tools/tics.mjs, tools/title-case.mjs, tools/plural-check.mjs and tools/spelling.mjs pass",
+  "hash": "d1edbc9dd46d",
+  "on": "2026-10-25",
+  "evidence": "Written for brief 27's K4 (loops 16 and 18: a direct offer and asking for more through the agent) to docs/STYLE.md and docs/GLOSSARY.md, and read where the player meets it: tests/b27-offers.test.ts holds the direct offer's reason in the offer's decision and history (offered you ... without an audition, cast you as ... where your work was Strong), the ask's history line, its refusals (no agent, asked once already, the answer to come), and the answer's notices (The Offer For ... Is Raised, The Offer For ... Stands) with their words; the release notice of a voice credit now names the voice demo, which brief 27's K3 made. The rest of these sources' words are as they were, held by brief 19's and brief 25's tests. tools/voice-check.mjs, tools/tics.mjs, tools/title-case.mjs, tools/plural-check.mjs and tools/spelling.mjs pass",
+  "first": "Pending"
+ },
+ "src/engine/systems/projobs.ts#registerProJobs [offer]": {
+  "status": "Rewritten",
+  "hash": "5e84968afcac",
+  "on": "2026-10-25",
+  "evidence": "Written for brief 27's K4 (loops 16 and 18: a direct offer and asking for more through the agent) to docs/STYLE.md and docs/GLOSSARY.md, and read where the player meets it: tests/b27-offers.test.ts holds the direct offer's reason in the offer's decision and history (offered you ... without an audition, cast you as ... where your work was Strong), the ask's history line, its refusals (no agent, asked once already, the answer to come), and the answer's notices (The Offer For ... Is Raised, The Offer For ... Stands) with their words; the release notice of a voice credit now names the voice demo, which brief 27's K3 made. The rest of these sources' words are as they were, held by brief 19's and brief 25's tests. tools/voice-check.mjs, tools/tics.mjs, tools/title-case.mjs, tools/plural-check.mjs and tools/spelling.mjs pass",
   "first": "Pending"
  },
  "src/engine/systems/projobs.ts#registerProJobs [problem]": {
@@ -1097,6 +1118,13 @@
   "on": "2026-10-21",
   "evidence": "Written for brief 19's work loop to docs/STYLE.md and docs/GLOSSARY.md; read where the player meets it in tests/pro-work.test.ts and tests/pro-opportunities-screen.test.ts, with tools/voice-check.mjs, tools/tics.mjs and tools/title-case.mjs passing",
   "first": "Rewritten And Verified"
+ },
+ "src/engine/systems/projobs.ts#registerProJobs <pro.ask_more>": {
+  "status": "Rewritten",
+  "hash": "d87bd1a2908c",
+  "on": "2026-10-25",
+  "evidence": "Written for brief 27's K4 (loops 16 and 18: a direct offer and asking for more through the agent) to docs/STYLE.md and docs/GLOSSARY.md, and read where the player meets it: tests/b27-offers.test.ts holds the direct offer's reason in the offer's decision and history (offered you ... without an audition, cast you as ... where your work was Strong), the ask's history line, its refusals (no agent, asked once already, the answer to come), and the answer's notices (The Offer For ... Is Raised, The Offer For ... Stands) with their words; the release notice of a voice credit now names the voice demo, which brief 27's K3 made. The rest of these sources' words are as they were, held by brief 19's and brief 25's tests. tools/voice-check.mjs, tools/tics.mjs, tools/title-case.mjs, tools/plural-check.mjs and tools/spelling.mjs pass",
+  "first": "Pending"
  },
  "src/engine/systems/projobs.ts#registerProJobs <pro.decline_offer>": {
   "status": "Rewritten",
@@ -1429,9 +1457,9 @@
  },
  "src/ui/career/OpportunitiesPane.tsx#OfferCard": {
   "status": "Rewritten",
-  "hash": "d2227897dc5a",
-  "on": "2026-10-23",
-  "evidence": "Read against docs/STYLE.md for brief 23; the offer card rendered on the walk's offer save by docs/verification/ui-2026-10-23/app/capture.mjs and tests/navigation.test.ts",
+  "hash": "13cfb27c57ef",
+  "on": "2026-10-25",
+  "evidence": "Written for brief 27's K4 (loops 16 and 18: a direct offer and asking for more through the agent) to docs/STYLE.md and docs/GLOSSARY.md, and read where the player meets it: tests/b27-offers.test.ts holds the direct offer's reason in the offer's decision and history (offered you ... without an audition, cast you as ... where your work was Strong), the ask's history line, its refusals (no agent, asked once already, the answer to come), and the answer's notices (The Offer For ... Is Raised, The Offer For ... Stands) with their words; the release notice of a voice credit now names the voice demo, which brief 27's K3 made. The rest of these sources' words are as they were, held by brief 19's and brief 25's tests. tools/voice-check.mjs, tools/tics.mjs, tools/title-case.mjs, tools/plural-check.mjs and tools/spelling.mjs pass",
   "first": "Pending"
  },
  "src/ui/career/OpportunitiesPane.tsx#OpenRole": {

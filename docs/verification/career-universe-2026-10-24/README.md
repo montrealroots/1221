@@ -358,6 +358,20 @@ it's missed; the guide's Auditions And Callbacks says what each is. Held by `tes
 played by the clock through every round to an offer; the falsifiability test, a twin whose listening and adaptability
 are weak reading the chemistry read lower and nothing else set between them; and a chemistry read slept through.
 
+**Then a direct offer and asking for more** (loops 16 and 18). A slate part from a casting office that cast the actor
+before, the work judged Strong or better, comes as an offer rather than a posting half the time it reaches them
+(`DIRECT`, decider `pro.direct`), never for a lead, which still auditions, and never where the work was judged Working;
+the offer says why, in its history, in its decision in What Needs You and on its card ("... cast you as ... in ...,
+where your work was Strong."), so no audition is put in merely because the workflow had one. An agent can then ask once
+for a fifth more (`pro.ask_more`, Ask For More on the offer): the lapse moves to a day past the answer, which comes the
+next afternoon at three (`pro.negotiate_answer`), raising the offer to what was asked or keeping it, each said in a
+notice, the offer versioned (1, then 2 when raised), its chance by the last round's band and a little more where the
+office cast the actor before (`NEGOTIATE`, decider `pro.negotiate`). Without an agent nobody asks, and a second ask is
+refused, so it isn't rerolling for pay. Held by `tests/b27-offers.test.ts`: the rule for a direct offer, read across 200
+weeks of the slate with some of each draw, and none for work judged Working; a direct offer played by the clock to its
+decision; an ask raised and the booking paying the raised rate; an ask kept, and the refusal with no agent. **Still
+missing in K4:** holds (loop 20).
+
 ## Defects Found And Fixed
 
 | # | Where | What stood | What stands | Held by |
