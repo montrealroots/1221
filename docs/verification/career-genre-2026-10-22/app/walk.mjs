@@ -29,6 +29,8 @@ const dir = `${OUT}/${WIDTH}`;
 mkdirSync(dir, { recursive: true });
 const SAVES = 'docs/verification/career-genre-2026-10-22/app/saves';
 const saves = readdirSync(SAVES).filter((f) => f.endsWith('.json.gz')).sort();
+/** A genre's name as a screen says it, in title case: "Drama", "Coming Of Age", "Children’s". */
+const G = '[A-Z][A-Za-z’\\-]*(?: [A-Z][A-Za-z’\\-]*)*';
 /** What each save's screens must say, [where, a pattern, true where it must not]: brief 22's words. */
 const EXPECT = {
   before: [
@@ -42,7 +44,12 @@ const EXPECT = {
     ['Guide, Permission To Work', /On OPT, each day is counted once it’s over: a day with work from a job’s first day to its last/],
   ],
   roles: [
-    ['Career, Opportunities', /What It Asks\s*(Psychological Horror|Coming Of Age|Farce|Domestic Drama|Police Procedural|Psychological Thriller|Romantic Comedy)\. /],
+    // Until brief 27's final runs this held one named genre out of seven, the ones the roles save's seed posted on brief
+    // 22's slate (route-nine, paper-moons-ivy). Brief 27's slate posts generated projects, and the same seed's first open
+    // roles asked "Drama and Romance, about evenly" and "Animated and Children’s, about evenly" (9f974984, 2026-10-25),
+    // which failed it though they're brief 22's own words for a mix (`requirementWords`). It holds those words' three
+    // forms now: one genre, several about evenly, or mostly one with some others.
+    ['Career, Opportunities', new RegExp(`What It Asks\\s*(${G}|${G}(, ${G})* and ${G}, about evenly|Mostly ${G}, with some ${G}((, ${G})* and ${G})?)\\. Written for`)],
     ['Career, Opportunities', /What It Asks\s*[^.]*, (Horror|Drama|Comedy|Crime|Thriller)\./, true],
     ['Guide, Genres', /Each play, part, class scene and professional role says how much of each genre it asks/],
     ['Guide, Genres', /counts at 65%: Psychological Horror known counts toward Horror/],
