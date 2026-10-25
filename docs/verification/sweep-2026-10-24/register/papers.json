@@ -11,7 +11,6 @@
    "tests/coverage-gaps-papers.test.ts",
    "tests/citizenship.test.ts",
    "src/engine/systems/citizenship.ts:100-109 the decision: naturalized, said once",
-   "tests/citizenship.test.ts",
    "tests/papers-complete.test.ts the papers and benefits areas’ 70 test files, 507 tests, run on 388d9a1e: all green; tests/b26-papers-repeats.test.ts, the repeat, reload and call-off probe on a New Haven life, green"
   ]
  },
@@ -31,9 +30,7 @@
    "tests/papers-transitions.test.ts",
    "tests/defects-g24-1.test.ts",
    "src/engine/systems/identity.ts:315-347 the command: idCardRefusal (src/engine/systems/identity.ts:148-193) first, the fee from the bank once, a citizen’s card in force at the counter or mailed, a non-citizen’s after SAVE’s days and limited to lawful presence; a second press refused, One is already on its way",
-   "tests/b20-papers-ids.test.ts",
    "tests/b26-papers-repeats.test.ts",
-   "tests/papers-transitions.test.ts",
    "tests/papers-complete.test.ts the papers and benefits areas’ 70 test files, 507 tests, run on 388d9a1e: all green; tests/b26-papers-repeats.test.ts, the repeat, reload and call-off probe on a New Haven life, green"
   ]
  },
@@ -52,8 +49,6 @@
    "tests/evidence-g15-papers.test.ts",
    "tests/evidence2-b12.test.ts",
    "src/engine/systems/permission.ts:376-390 the command: optRefusal (src/engine/systems/permission.ts:131-144), the fee once, pending to its day, the status’s decision answered",
-   "tests/b20-papers-work.test.ts",
-   "tests/permission.test.ts",
    "tests/papers-complete.test.ts the papers and benefits areas’ 70 test files, 507 tests, run on 388d9a1e: all green; tests/b26-papers-repeats.test.ts, the repeat, reload and call-off probe on a New Haven life, green"
   ]
  },
@@ -70,7 +65,6 @@
    "tests/remaining-papers.test.ts",
    "tests/documents.test.ts",
    "src/engine/systems/documents.ts:333-350 the command: passportRefusal (src/engine/systems/documents.ts:479-492), the office’s terms where they are, the fee once, pending to its day; a second press refused",
-   "tests/b20-papers-ids.test.ts",
    "tests/b26-papers-repeats.test.ts",
    "tests/papers-complete.test.ts the papers and benefits areas’ 70 test files, 507 tests, run on 388d9a1e: all green; tests/b26-papers-repeats.test.ts, the repeat, reload and call-off probe on a New Haven life, green"
   ]
@@ -88,7 +82,6 @@
    "tests/evidence-g16-papers.test.ts",
    "tests/evidence-g17-papers.test.ts",
    "src/engine/systems/taxid.ts:62-71 the command: ssnRefusal (src/engine/systems/taxid.ts:46-59), the office’s hour, the card in three weeks",
-   "tests/b20-papers-ids.test.ts",
    "tests/coverage-gaps-number.test.ts",
    "tests/papers-complete.test.ts the papers and benefits areas’ 70 test files, 507 tests, run on 388d9a1e: all green; tests/b26-papers-repeats.test.ts, the repeat, reload and call-off probe on a New Haven life, green"
   ]
@@ -106,7 +99,6 @@
    "tests/editorial-papers.test.ts",
    "tests/remaining-papers.test.ts",
    "src/engine/systems/documents.ts:322-331 a pending document decided on its day, one waiting on its visit passed by; src/engine/systems/documents.ts:580-612 issue, a passport replacing the old (src/engine/systems/documents.ts:494-504)",
-   "tests/b20-papers-ids.test.ts",
    "tests/documents.test.ts",
    "tests/papers-complete.test.ts the papers and benefits areas’ 70 test files, 507 tests, run on 388d9a1e: all green; tests/b26-papers-repeats.test.ts, the repeat, reload and call-off probe on a New Haven life, green"
   ]
@@ -124,7 +116,6 @@
    "tests/evidence-g15-papers.test.ts",
    "tests/remaining-papers.test.ts",
    "src/engine/systems/identity.ts:304-313 the card or license comes: pending only, valid from its day, said once; once across a reload",
-   "tests/b20-papers-ids.test.ts",
    "tests/b26-papers-repeats.test.ts",
    "tests/papers-complete.test.ts the papers and benefits areas’ 70 test files, 507 tests, run on 388d9a1e: all green; tests/b26-papers-repeats.test.ts, the repeat, reload and call-off probe on a New Haven life, green"
   ]
@@ -142,7 +133,6 @@
    "tests/coverage-gaps-papers.test.ts",
    "src/engine/systems/citizenship.ts:85-99 the command; src/engine/systems/citizenship.ts:59-83 naturalizeRefusal",
    "tests/citizenship.test.ts",
-   "tests/coverage-gaps-papers.test.ts",
    "tests/papers-complete.test.ts the papers and benefits areas’ 70 test files, 507 tests, run on 388d9a1e: all green; tests/b26-papers-repeats.test.ts, the repeat, reload and call-off probe on a New Haven life, green"
   ]
  },
@@ -161,8 +151,6 @@
    "tests/permission.test.ts",
    "tests/propay.test.ts",
    "src/engine/systems/permission.ts:467-470 an older save’s week: settled by the day (src/engine/systems/permission.ts:312-327) and not booked again",
-   "tests/b22-authorization.test.ts",
-   "tests/permission.test.ts",
    "tests/papers-complete.test.ts the papers and benefits areas’ 70 test files, 507 tests, run on 388d9a1e: all green; tests/b26-papers-repeats.test.ts, the repeat, reload and call-off probe on a New Haven life, green"
   ]
  },
@@ -180,8 +168,6 @@
    "tests/evidence2-b06.test.ts",
    "tests/evidence-g16-papers.test.ts",
    "src/engine/systems/permission.ts:393-429 OPT decided: denied where the degree wasn’t had, else twelve months from the later of the program’s end and now, counted by the day, said once",
-   "tests/b20-papers-work.test.ts",
-   "tests/permission.test.ts",
    "tests/papers-complete.test.ts the papers and benefits areas’ 70 test files, 507 tests, run on 388d9a1e: all green; tests/b26-papers-repeats.test.ts, the repeat, reload and call-off probe on a New Haven life, green"
   ]
  },
@@ -214,7 +200,6 @@
    "tests/residence.test.ts",
    "tests/remaining-09-journeys.test.ts",
    "src/engine/systems/residence.ts:208-210 the command refuses with the rule",
-   "tests/residence.test.ts",
    "tests/papers-complete.test.ts the papers and benefits areas’ 70 test files, 507 tests, run on 388d9a1e: all green; tests/b26-papers-repeats.test.ts, the repeat, reload and call-off probe on a New Haven life, green"
   ]
  },
@@ -287,8 +272,6 @@
    "tests/guide-examples-papers.test.ts",
    "tests/commands-kept.test.ts",
    "src/engine/systems/residence.ts:189-191 the command refuses every route; src/engine/systems/residence.ts:114-149 routeRefusal",
-   "tests/residence.test.ts",
-   "tests/remaining-09-journeys.test.ts",
    "tests/papers-complete.test.ts the papers and benefits areas’ 70 test files, 507 tests, run on 388d9a1e: all green; tests/b26-papers-repeats.test.ts, the repeat, reload and call-off probe on a New Haven life, green"
   ]
  },
@@ -304,8 +287,6 @@
    "tests/commands-kept.test.ts",
    "tests/residence.test.ts",
    "src/engine/systems/residence.ts:193-204 the command; src/engine/systems/residence.ts:165-180 settleRefusal",
-   "tests/residence.test.ts",
-   "tests/commands-kept.test.ts",
    "tests/papers-complete.test.ts the papers and benefits areas’ 70 test files, 507 tests, run on 388d9a1e: all green; tests/b26-papers-repeats.test.ts, the repeat, reload and call-off probe on a New Haven life, green"
   ]
  },
@@ -321,7 +302,6 @@
    "tests/evidence-g16-papers.test.ts",
    "tests/evidence-g17-papers.test.ts",
    "src/engine/systems/taxid.ts:73-78 the card comes: applied only, issued, said once with what a bank can now do",
-   "tests/b20-papers-ids.test.ts",
    "tests/papers-transitions.test.ts",
    "tests/papers-complete.test.ts the papers and benefits areas’ 70 test files, 507 tests, run on 388d9a1e: all green; tests/b26-papers-repeats.test.ts, the repeat, reload and call-off probe on a New Haven life, green"
   ]
@@ -340,7 +320,6 @@
    "tests/evidence3-lifepapers.test.ts",
    "tests/defects3-50-70.test.ts",
    "src/engine/systems/permission.ts:431-465 the status looked at: the ending said once as a decision with OPT’s way, then out of status, the F-1 canceled; src/engine/systems/permission.ts:221-226 scheduleUsStatus keeps one on the calendar",
-   "tests/b20-papers-work.test.ts",
    "tests/visas.test.ts",
    "tests/papers-complete.test.ts the papers and benefits areas’ 70 test files, 507 tests, run on 388d9a1e: all green; tests/b26-papers-repeats.test.ts, the repeat, reload and call-off probe on a New Haven life, green"
   ]
@@ -355,7 +334,6 @@
   "evidence": [
    "tests/paper-visits.test.ts",
    "src/engine/systems/papervisits.ts:159-193 the visit: kept where present, decided its days after; missed, booked once more or the application ended, said; reached only from a save made before 2026-10-09, as tests/paper-visits.test.ts sets one up",
-   "tests/paper-visits.test.ts",
    "tests/papers-complete.test.ts the papers and benefits areas’ 70 test files, 507 tests, run on 388d9a1e: all green; tests/b26-papers-repeats.test.ts, the repeat, reload and call-off probe on a New Haven life, green"
   ]
  },
@@ -369,7 +347,6 @@
   "evidence": [
    "tests/b22-authorization.test.ts",
    "src/engine/systems/permission.ts:245 the event; src/engine/systems/permission.ts:340 emitted as OPT ends; src/engine/systems/projobs.ts:1561 pro.release_unauthorized releases the work booked past it",
-   "tests/b22-authorization.test.ts",
    "tests/papers-complete.test.ts the papers and benefits areas’ 70 test files, 507 tests, run on 388d9a1e: all green; tests/b26-papers-repeats.test.ts, the repeat, reload and call-off probe on a New Haven life, green"
   ]
  },
@@ -417,8 +394,6 @@
    "tests/remaining-health-eligibility.test.ts",
    "tests/remaining-09-hardship.test.ts",
    "src/engine/systems/health.ts:2291-2307 the command: applyRefusal (src/engine/systems/health.ts:1185-1209), the notice of noncompliance and its decision on the calendar",
-   "tests/remaining-health-eligibility.test.ts",
-   "tests/remaining-09-hardship.test.ts",
    "tests/papers-complete.test.ts the papers and benefits areas’ 70 test files, 507 tests, run on 388d9a1e: all green; tests/b26-papers-repeats.test.ts, the repeat, reload and call-off probe on a New Haven life, green"
   ]
  },
@@ -452,7 +427,6 @@
    "tests/scope-health.test.ts",
    "tests/evidence3-lifepapers.test.ts",
    "src/engine/systems/appointments.ts:242-268 the visit: missed or not seen at a members’ practice, owed and said; kept, the care billed (src/engine/systems/health.ts:1835-1942), prescriptions renewed, a referral drawn",
-   "tests/b20-papers-health.test.ts",
    "tests/clinics.test.ts",
    "tests/papers-complete.test.ts the papers and benefits areas’ 70 test files, 507 tests, run on 388d9a1e: all green; tests/b26-papers-repeats.test.ts, the repeat, reload and call-off probe on a New Haven life, green"
   ]
@@ -471,7 +445,6 @@
    "tests/b20-papers-defects.test.ts",
    "src/engine/systems/health.ts:2177-2191 the bill due: paid from the bank, else medical debt opened or added to and said",
    "tests/remaining-health-billing.test.ts",
-   "tests/b20-papers-defects.test.ts",
    "tests/papers-complete.test.ts the papers and benefits areas’ 70 test files, 507 tests, run on 388d9a1e: all green; tests/b26-papers-repeats.test.ts, the repeat, reload and call-off probe on a New Haven life, green"
   ]
  },
@@ -489,7 +462,6 @@
    "tests/evidence-g07-life.test.ts",
    "src/engine/systems/appointments.ts:270-279 the command: a visit owed, none booked, the place’s wait; booked once, the need no longer owed",
    "tests/b26-papers-repeats.test.ts",
-   "tests/b20-papers-health.test.ts",
    "tests/papers-complete.test.ts the papers and benefits areas’ 70 test files, 507 tests, run on 388d9a1e: all green; tests/b26-papers-repeats.test.ts, the repeat, reload and call-off probe on a New Haven life, green"
   ]
  },
@@ -595,8 +567,6 @@
    "tests/need-paths.test.ts",
    "tests/remaining-health-eligibility.test.ts",
    "src/engine/systems/health.ts:2262-2289 the command: mayEnroll (src/engine/systems/health.ts:657-695, marketplaceOpen src/engine/systems/health.ts:697-723), the program from its start with the care since priced again, or the marketplace from its first; enrolled twice refused",
-   "tests/b20-papers-health.test.ts",
-   "tests/remaining-health-eligibility.test.ts",
    "tests/papers-complete.test.ts the papers and benefits areas’ 70 test files, 507 tests, run on 388d9a1e: all green; tests/b26-papers-repeats.test.ts, the repeat, reload and call-off probe on a New Haven life, green"
   ]
  },
@@ -630,8 +600,6 @@
    "tests/scope-cover.test.ts",
    "tests/b20-papers-defects.test.ts",
    "src/engine/systems/health.ts:2128-2134 the month; src/engine/systems/health.ts:843-1017 healthMonth: a plan ended for status, the credit or Yale Health, the renewal once, premiums, the dental plan, cover lost said once with the way back, the debt on the record",
-   "tests/b20-papers-defects.test.ts",
-   "tests/evidence3-lifepapers.test.ts",
    "tests/coverage-gaps-life.test.ts",
    "tests/papers-complete.test.ts the papers and benefits areas’ 70 test files, 507 tests, run on 388d9a1e: all green; tests/b26-papers-repeats.test.ts, the repeat, reload and call-off probe on a New Haven life, green"
   ]
@@ -665,7 +633,6 @@
   "evidence": [
    "tests/coverage-gaps-life.test.ts",
    "src/engine/systems/health.ts:2247-2260 the command; src/engine/systems/health.ts:1604-1611 prepayRefusal",
-   "tests/coverage-gaps-life.test.ts",
    "tests/papers-complete.test.ts the papers and benefits areas’ 70 test files, 507 tests, run on 388d9a1e: all green; tests/b26-papers-repeats.test.ts, the repeat, reload and call-off probe on a New Haven life, green"
   ]
  },
@@ -681,8 +648,6 @@
    "tests/remaining-health-eligibility.test.ts",
    "tests/remaining-09-journeys.test.ts",
    "src/engine/systems/health.ts:2309-2320 the command: hardshipRefusal (src/engine/systems/health.ts:1162-1183), granted at once (src/engine/systems/health.ts:1136-1160)",
-   "tests/remaining-09-hardship.test.ts",
-   "tests/remaining-health-eligibility.test.ts",
    "tests/papers-complete.test.ts the papers and benefits areas’ 70 test files, 507 tests, run on 388d9a1e: all green; tests/b26-papers-repeats.test.ts, the repeat, reload and call-off probe on a New Haven life, green"
   ]
  },
@@ -700,7 +665,6 @@
    "tests/life-fixes.test.ts",
    "src/engine/systems/therapy.ts:117-126 the command: therapyRefusal (src/engine/systems/therapy.ts:76-83), the first session on the practice’s working day; in a course already refused",
    "tests/therapy.test.ts",
-   "tests/b20-papers-defects.test.ts",
    "tests/papers-complete.test.ts the papers and benefits areas’ 70 test files, 507 tests, run on 388d9a1e: all green; tests/b26-papers-repeats.test.ts, the repeat, reload and call-off probe on a New Haven life, green"
   ]
  },
@@ -717,7 +681,6 @@
    "tests/evidence-g04-life.test.ts",
    "src/engine/systems/therapy.ts:128-157 the session: held next week where absent, ended with Yale Health’s cover, paid or billed, the course done at eight and the depression lifted or not, said once",
    "tests/therapy.test.ts",
-   "tests/b20-papers-defects.test.ts",
    "tests/papers-complete.test.ts the papers and benefits areas’ 70 test files, 507 tests, run on 388d9a1e: all green; tests/b26-papers-repeats.test.ts, the repeat, reload and call-off probe on a New Haven life, green"
   ]
  },
@@ -767,7 +730,6 @@
    "tests/evidence-g05-life.test.ts",
    "tests/need-paths.test.ts",
    "src/engine/systems/health.ts:2322-2341 the thirty days over: granted where a month meets it, else an application denied or a renewal ended ahead, said once; a notice answered passed by",
-   "tests/remaining-health-eligibility.test.ts",
    "tests/remaining-09-hardship.test.ts",
    "tests/papers-complete.test.ts the papers and benefits areas’ 70 test files, 507 tests, run on 388d9a1e: all green; tests/b26-papers-repeats.test.ts, the repeat, reload and call-off probe on a New Haven life, green"
   ]
@@ -784,7 +746,6 @@
    "tests/guide-examples-start-day-body.test.ts",
    "tests/looks.test.ts",
    "src/ui/looks/place.tsx:438-505 a country: its parts, capital and money",
-   "tests/looks.test.ts",
    "tests/guide.test.ts",
    "tests/papers-complete.test.ts the papers and benefits areas’ 70 test files, 507 tests, run on 388d9a1e: all green; tests/b26-papers-repeats.test.ts, the repeat, reload and call-off probe on a New Haven life, green"
   ]
@@ -803,8 +764,6 @@
    "tests/remaining-papers.test.ts",
    "tests/looks.test.ts",
    "src/ui/looks/papers.tsx:149-238 a document: its standing, what it does (src/engine/systems/documents.ts words), its visit, its dates; gone where not held",
-   "tests/b20-papers-ids.test.ts",
-   "tests/looks.test.ts",
    "tests/papers-complete.test.ts the papers and benefits areas’ 70 test files, 507 tests, run on 388d9a1e: all green; tests/b26-papers-repeats.test.ts, the repeat, reload and call-off probe on a New Haven life, green"
   ]
  },
@@ -819,7 +778,6 @@
    "tests/guide-examples-start-day-body.test.ts",
    "tests/looks.test.ts",
    "src/ui/looks/place.tsx:155-299 a town: its profile, clock, light and money, the ways on",
-   "tests/looks.test.ts",
    "tests/guide.test.ts",
    "tests/papers-complete.test.ts the papers and benefits areas’ 70 test files, 507 tests, run on 388d9a1e: all green; tests/b26-papers-repeats.test.ts, the repeat, reload and call-off probe on a New Haven life, green"
   ]
@@ -835,7 +793,6 @@
    "tests/guide-examples-start-day-body.test.ts",
    "tests/looks.test.ts",
    "src/ui/looks/place.tsx:355-424 a region: its towns and its country",
-   "tests/looks.test.ts",
    "tests/guide.test.ts",
    "tests/papers-complete.test.ts the papers and benefits areas’ 70 test files, 507 tests, run on 388d9a1e: all green; tests/b26-papers-repeats.test.ts, the repeat, reload and call-off probe on a New Haven life, green"
   ]
@@ -868,8 +825,6 @@
    "tests/b20-papers-ids.test.ts",
    "tests/editorial-papers.test.ts",
    "src/engine/systems/documents.ts:580-612 Issued, once, with its date and what the old passport took with it",
-   "tests/b20-papers-ids.test.ts",
-   "tests/editorial-papers.test.ts",
    "tests/papers-complete.test.ts the papers and benefits areas’ 70 test files, 507 tests, run on 388d9a1e: all green; tests/b26-papers-repeats.test.ts, the repeat, reload and call-off probe on a New Haven life, green"
   ]
  },
@@ -885,7 +840,6 @@
    "tests/need-paths.test.ts",
    "tests/remaining-09-hardship.test.ts",
    "src/engine/systems/health.ts:1062-1085 renewed or changed at renewal, once, with the month that met the work",
-   "tests/remaining-09-hardship.test.ts",
    "tests/remaining-health-eligibility.test.ts",
    "tests/papers-complete.test.ts the papers and benefits areas’ 70 test files, 507 tests, run on 388d9a1e: all green; tests/b26-papers-repeats.test.ts, the repeat, reload and call-off probe on a New Haven life, green"
   ]
@@ -903,7 +857,6 @@
    "tests/language-care17.test.ts",
    "tests/claims.test.ts",
    "src/engine/systems/health.ts:1835-1942 the care’s notice, who was seen and what’s owed, a denial’s own; the bill on the calendar once",
-   "tests/b20-papers-health.test.ts",
    "tests/remaining-health-billing.test.ts",
    "tests/papers-complete.test.ts the papers and benefits areas’ 70 test files, 507 tests, run on 388d9a1e: all green; tests/b26-papers-repeats.test.ts, the repeat, reload and call-off probe on a New Haven life, green"
   ]
@@ -935,8 +888,6 @@
    "tests/remaining-health-eligibility.test.ts",
    "tests/remaining-09-hardship.test.ts",
    "src/engine/systems/health.ts:1136-1160 Public Cover Approved or the renewal applied, the care since priced again, the marketplace plan ended as it begins",
-   "tests/remaining-09-hardship.test.ts",
-   "tests/remaining-health-eligibility.test.ts",
    "tests/papers-complete.test.ts the papers and benefits areas’ 70 test files, 507 tests, run on 388d9a1e: all green; tests/b26-papers-repeats.test.ts, the repeat, reload and call-off probe on a New Haven life, green"
   ]
  },
@@ -957,8 +908,6 @@
    "tests/defects-g8-6.test.ts",
    "tests/coverage-gaps-life.test.ts",
    "src/engine/systems/health.ts:843-1017 the month’s notices: a plan ended or never begun, cover lost with the way back, the debt on the record, each once",
-   "tests/b20-papers-defects.test.ts",
-   "tests/evidence3-lifepapers.test.ts",
    "tests/papers-complete.test.ts the papers and benefits areas’ 70 test files, 507 tests, run on 388d9a1e: all green; tests/b26-papers-repeats.test.ts, the repeat, reload and call-off probe on a New Haven life, green"
   ]
  },
@@ -974,7 +923,6 @@
    "tests/remaining-health-eligibility.test.ts",
    "tests/evidence-g05-life.test.ts",
    "src/engine/systems/health.ts:1112-1134 the notice, its months, the day to answer by, what follows; its decision on the calendar",
-   "tests/remaining-health-eligibility.test.ts",
    "tests/remaining-09-hardship.test.ts",
    "tests/papers-complete.test.ts the papers and benefits areas’ 70 test files, 507 tests, run on 388d9a1e: all green; tests/b26-papers-repeats.test.ts, the repeat, reload and call-off probe on a New Haven life, green"
   ]
@@ -1006,8 +954,6 @@
    "tests/scope-health.test.ts",
    "tests/evidence-g03-life.test.ts",
    "src/engine/systems/health.ts:1367-1375 A Prescription Ran Out, the visit booked or how to; only where a prescription has a term (British Columbia), never in New Haven, held on a Vancouver life",
-   "tests/scope-health.test.ts",
-   "tests/evidence-g03-life.test.ts",
    "tests/papers-complete.test.ts the papers and benefits areas’ 70 test files, 507 tests, run on 388d9a1e: all green; tests/b26-papers-repeats.test.ts, the repeat, reload and call-off probe on a New Haven life, green"
   ]
  },
@@ -1023,8 +969,6 @@
    "tests/leave.test.ts",
    "tests/remaining-09-journeys.test.ts",
    "src/engine/systems/health.ts:1974-2067 Care Billed Again or Care Credited, the difference only, credits off bills, the debt, then the bank",
-   "tests/remaining-health-billing.test.ts",
-   "tests/remaining-09-journeys.test.ts",
    "tests/papers-complete.test.ts the papers and benefits areas’ 70 test files, 507 tests, run on 388d9a1e: all green; tests/b26-papers-repeats.test.ts, the repeat, reload and call-off probe on a New Haven life, green"
   ]
  },
@@ -1039,8 +983,6 @@
    "tests/b22-authorization.test.ts",
    "tests/b20-papers-work.test.ts",
    "src/engine/systems/permission.ts:335-341 OPT Ended, once, the status with it, the work released (src/engine/systems/permission.ts:245, src/engine/systems/projobs.ts:1561)",
-   "tests/b22-authorization.test.ts",
-   "tests/b20-papers-work.test.ts",
    "tests/papers-complete.test.ts the papers and benefits areas’ 70 test files, 507 tests, run on 388d9a1e: all green; tests/b26-papers-repeats.test.ts, the repeat, reload and call-off probe on a New Haven life, green"
   ]
  },
@@ -1055,7 +997,6 @@
    "tests/b20-papers-ids.test.ts",
    "tests/evidence-g15-papers.test.ts",
    "src/engine/content/guide/documents.ts:143-241 the entry; src/engine/systems/documents.ts:333-350 the passport; src/engine/systems/identity.ts:315-347 the card; src/engine/systems/taxid.ts:46-59 what the number asks; src/engine/systems/identity.ts:148-193 what the DMV asks; the banks read a photo ID (src/engine/systems/documents.ts:276-279)",
-   "tests/b20-papers-ids.test.ts",
    "tests/guide-examples-papers.test.ts",
    "tests/papers-complete.test.ts the papers and benefits areas’ 70 test files, 507 tests, run on 388d9a1e: all green; tests/b26-papers-repeats.test.ts, the repeat, reload and call-off probe on a New Haven life, green"
   ]
@@ -1072,7 +1013,6 @@
    "tests/remaining-papers.test.ts",
    "tests/evidence-g16-papers.test.ts",
    "src/engine/content/guide/documents.ts:143-241 the entry; src/engine/systems/documents.ts:333-350 the passport; src/engine/systems/identity.ts:315-347 the card; src/engine/systems/taxid.ts:46-59 what the number asks; src/engine/systems/identity.ts:148-193 what the DMV asks; the banks read a photo ID (src/engine/systems/documents.ts:276-279)",
-   "tests/b20-papers-ids.test.ts",
    "tests/guide-examples-papers.test.ts",
    "tests/papers-complete.test.ts the papers and benefits areas’ 70 test files, 507 tests, run on 388d9a1e: all green; tests/b26-papers-repeats.test.ts, the repeat, reload and call-off probe on a New Haven life, green"
   ]
@@ -1087,7 +1027,6 @@
   "evidence": [
    "tests/b20-papers-ids.test.ts",
    "src/engine/content/guide/documents.ts:143-241 the entry; src/engine/systems/documents.ts:333-350 the passport; src/engine/systems/identity.ts:315-347 the card; src/engine/systems/taxid.ts:46-59 what the number asks; src/engine/systems/identity.ts:148-193 what the DMV asks; the banks read a photo ID (src/engine/systems/documents.ts:276-279)",
-   "tests/b20-papers-ids.test.ts",
    "tests/guide-examples-papers.test.ts",
    "tests/papers-complete.test.ts the papers and benefits areas’ 70 test files, 507 tests, run on 388d9a1e: all green; tests/b26-papers-repeats.test.ts, the repeat, reload and call-off probe on a New Haven life, green"
   ]
@@ -1120,7 +1059,6 @@
    "tests/remaining-papers.test.ts",
    "tests/defects-g24-1.test.ts",
    "src/engine/content/guide/documents.ts:143-241 the entry; src/engine/systems/documents.ts:333-350 the passport; src/engine/systems/identity.ts:315-347 the card; src/engine/systems/taxid.ts:46-59 what the number asks; src/engine/systems/identity.ts:148-193 what the DMV asks; the banks read a photo ID (src/engine/systems/documents.ts:276-279)",
-   "tests/b20-papers-ids.test.ts",
    "tests/guide-examples-papers.test.ts",
    "tests/papers-complete.test.ts the papers and benefits areas’ 70 test files, 507 tests, run on 388d9a1e: all green; tests/b26-papers-repeats.test.ts, the repeat, reload and call-off probe on a New Haven life, green"
   ]
@@ -1166,7 +1104,6 @@
    "tests/b20-papers-work.test.ts",
    "tests/residence.test.ts",
    "src/engine/content/guide/documents.ts:329-390 the entry says the routes are refused and why; src/engine/systems/residence.ts:114-149 routeRefusal; src/engine/systems/residence.ts:189-210 the commands",
-   "tests/residence.test.ts",
    "tests/guide-examples-papers.test.ts",
    "tests/papers-complete.test.ts the papers and benefits areas’ 70 test files, 507 tests, run on 388d9a1e: all green; tests/b26-papers-repeats.test.ts, the repeat, reload and call-off probe on a New Haven life, green"
   ]
@@ -1234,7 +1171,6 @@
    "tests/evidence3-lifepapers.test.ts",
    "tests/evidence2-b06.test.ts",
    "src/engine/content/guide/documents.ts:242-328 the entry; src/engine/systems/permission.ts:131-144 optRefusal; src/engine/systems/permission.ts:393-429 OPT decided; src/engine/systems/permission.ts:312-341 its days and its end; src/engine/systems/permission.ts:431-465 the status",
-   "tests/b20-papers-work.test.ts",
    "tests/b22-authorization.test.ts",
    "tests/guide-examples-papers.test.ts",
    "tests/papers-complete.test.ts the papers and benefits areas’ 70 test files, 507 tests, run on 388d9a1e: all green; tests/b26-papers-repeats.test.ts, the repeat, reload and call-off probe on a New Haven life, green"
@@ -1301,7 +1237,6 @@
    "tests/assistance.test.ts",
    "src/engine/content/guide/papers.ts:599-689 the entry; src/engine/systems/assistance.ts:166-180 and src/engine/systems/assistance.ts:244-321 SNAP; src/engine/systems/unemployment.ts:244-322 the claim and its weeks, work-study and the Cabaret read in them",
    "tests/b20-benefits-unemployment.test.ts",
-   "tests/assistance.test.ts",
    "tests/guide-examples-papers.test.ts",
    "tests/papers-complete.test.ts the papers and benefits areas’ 70 test files, 507 tests, run on 388d9a1e: all green; tests/b26-papers-repeats.test.ts, the repeat, reload and call-off probe on a New Haven life, green"
   ]
@@ -1544,7 +1479,6 @@
    "tests/b20-papers-health.test.ts",
    "tests/evidence-g05-life.test.ts",
    "src/engine/content/guide/papers.ts:238-404 the entry; src/engine/systems/health.ts:657-723 mayEnroll; src/engine/systems/health.ts:2262-2363 the commands; src/engine/systems/health.ts:843-1017 the month; src/engine/systems/taxreturn.ts:950-1136 the credit and the mandate on the return",
-   "tests/b20-papers-health.test.ts",
    "tests/guide-examples-papers.test.ts",
    "tests/papers-complete.test.ts the papers and benefits areas’ 70 test files, 507 tests, run on 388d9a1e: all green; tests/b26-papers-repeats.test.ts, the repeat, reload and call-off probe on a New Haven life, green"
   ]
@@ -1561,7 +1495,6 @@
    "tests/evidence3-lifepapers.test.ts",
    "tests/scope-cover.test.ts",
    "src/engine/content/guide/papers.ts:238-404 the entry; src/engine/systems/health.ts:657-723 mayEnroll; src/engine/systems/health.ts:2262-2363 the commands; src/engine/systems/health.ts:843-1017 the month; src/engine/systems/taxreturn.ts:950-1136 the credit and the mandate on the return",
-   "tests/b20-papers-health.test.ts",
    "tests/guide-examples-papers.test.ts",
    "tests/papers-complete.test.ts the papers and benefits areas’ 70 test files, 507 tests, run on 388d9a1e: all green; tests/b26-papers-repeats.test.ts, the repeat, reload and call-off probe on a New Haven life, green"
   ]
@@ -1702,7 +1635,6 @@
   "evidence": [
    "tests/b20-papers-pension.test.ts",
    "src/engine/content/guide/papers.ts:690-759 the entry says who can claim and that no current life reaches one; src/engine/systems/socialsecurity.ts:119-156, src/engine/systems/statepension.ts:68-100, src/engine/systems/homepensions.ts:163-231, src/engine/systems/imss.ts:127-166 the claims and their payments on the return",
-   "tests/b20-papers-pension.test.ts",
    "tests/guide-examples-papers.test.ts",
    "tests/papers-complete.test.ts the papers and benefits areas’ 70 test files, 507 tests, run on 388d9a1e: all green; tests/b26-papers-repeats.test.ts, the repeat, reload and call-off probe on a New Haven life, green"
   ]
@@ -1718,7 +1650,6 @@
    "tests/b20-papers-pension.test.ts",
    "tests/coverage-gaps-papers.test.ts",
    "src/engine/content/guide/papers.ts:690-759 the entry says who can claim and that no current life reaches one; src/engine/systems/socialsecurity.ts:119-156, src/engine/systems/statepension.ts:68-100, src/engine/systems/homepensions.ts:163-231, src/engine/systems/imss.ts:127-166 the claims and their payments on the return",
-   "tests/b20-papers-pension.test.ts",
    "tests/guide-examples-papers.test.ts",
    "tests/papers-complete.test.ts the papers and benefits areas’ 70 test files, 507 tests, run on 388d9a1e: all green; tests/b26-papers-repeats.test.ts, the repeat, reload and call-off probe on a New Haven life, green"
   ]

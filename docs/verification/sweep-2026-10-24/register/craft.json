@@ -2559,7 +2559,6 @@
    "tests/evidence-g18-school.test.ts",
    "tests/evidence-g22-school.test.ts",
    "src/engine/systems/coursework.ts:416-535 setWork; src/engine/systems/coursework.ts:598-834 prepareRefusal and prepare; src/engine/systems/coursework.ts:1470 meetingWeight; src/engine/systems/coursework.ts:1702-1903 the partner’s ask and answer; src/engine/systems/coursework.ts:1916-2060 the commands and kinds",
-   "tests/evidence-g18-school.test.ts",
    "tests/evidence-g24-school.test.ts",
    "tests/school-paths.test.ts the School’s 86 test files, 1,304 tests, run on this commit: all green"
   ]
@@ -2576,7 +2575,6 @@
    "tests/evidence-g18-school.test.ts",
    "tests/coursework-objective.test.ts",
    "src/engine/systems/coursework.ts:416-535 setWork; src/engine/systems/coursework.ts:598-834 prepareRefusal and prepare; src/engine/systems/coursework.ts:1470 meetingWeight; src/engine/systems/coursework.ts:1702-1903 the partner’s ask and answer; src/engine/systems/coursework.ts:1916-2060 the commands and kinds",
-   "tests/evidence-g18-school.test.ts",
    "tests/evidence-g24-school.test.ts",
    "tests/school-paths.test.ts the School’s 86 test files, 1,304 tests, run on this commit: all green"
   ]
@@ -2608,7 +2606,6 @@
    "tests/evidence-g24-school.test.ts",
    "src/engine/systems/coursework.ts:416-535 setWork; src/engine/systems/coursework.ts:598-834 prepareRefusal and prepare; src/engine/systems/coursework.ts:1470 meetingWeight; src/engine/systems/coursework.ts:1702-1903 the partner’s ask and answer; src/engine/systems/coursework.ts:1916-2060 the commands and kinds",
    "tests/evidence-g18-school.test.ts",
-   "tests/evidence-g24-school.test.ts",
    "tests/school-paths.test.ts the School’s 86 test files, 1,304 tests, run on this commit: all green"
   ]
  },
@@ -2624,7 +2621,6 @@
    "tests/guide-examples-coursework.test.ts",
    "src/engine/systems/coursework.ts:416-535 setWork; src/engine/systems/coursework.ts:598-834 prepareRefusal and prepare; src/engine/systems/coursework.ts:1470 meetingWeight; src/engine/systems/coursework.ts:1702-1903 the partner’s ask and answer; src/engine/systems/coursework.ts:1916-2060 the commands and kinds",
    "tests/evidence-g18-school.test.ts",
-   "tests/evidence-g24-school.test.ts",
    "tests/school-paths.test.ts the School’s 86 test files, 1,304 tests, run on this commit: all green"
   ]
  },
@@ -2653,7 +2649,6 @@
   "evidence": [
    "tests/evidence-g18-school.test.ts",
    "src/engine/systems/coursework.ts:416-535 setWork; src/engine/systems/coursework.ts:598-834 prepareRefusal and prepare; src/engine/systems/coursework.ts:1470 meetingWeight; src/engine/systems/coursework.ts:1702-1903 the partner’s ask and answer; src/engine/systems/coursework.ts:1916-2060 the commands and kinds",
-   "tests/evidence-g18-school.test.ts",
    "tests/evidence-g24-school.test.ts",
    "tests/school-paths.test.ts the School’s 86 test files, 1,304 tests, run on this commit: all green"
   ]
@@ -2670,7 +2665,6 @@
    "tests/evidence-g18-school.test.ts",
    "tests/classmate-moments.test.ts",
    "src/engine/systems/coursework.ts:416-535 setWork; src/engine/systems/coursework.ts:598-834 prepareRefusal and prepare; src/engine/systems/coursework.ts:1470 meetingWeight; src/engine/systems/coursework.ts:1702-1903 the partner’s ask and answer; src/engine/systems/coursework.ts:1916-2060 the commands and kinds",
-   "tests/evidence-g18-school.test.ts",
    "tests/evidence-g24-school.test.ts",
    "tests/school-paths.test.ts the School’s 86 test files, 1,304 tests, run on this commit: all green"
   ]
@@ -2686,7 +2680,6 @@
    "tests/approaches.test.ts",
    "tests/evidence-g18-school.test.ts",
    "src/engine/systems/coursework.ts:416-535 setWork; src/engine/systems/coursework.ts:598-834 prepareRefusal and prepare; src/engine/systems/coursework.ts:1470 meetingWeight; src/engine/systems/coursework.ts:1702-1903 the partner’s ask and answer; src/engine/systems/coursework.ts:1916-2060 the commands and kinds",
-   "tests/evidence-g18-school.test.ts",
    "tests/evidence-g24-school.test.ts",
    "tests/school-paths.test.ts the School’s 86 test files, 1,304 tests, run on this commit: all green"
   ]
@@ -2703,7 +2696,6 @@
    "tests/guide-examples-coursework.test.ts",
    "tests/evidence-g18-school.test.ts",
    "src/engine/systems/coursework.ts:416-535 setWork; src/engine/systems/coursework.ts:598-834 prepareRefusal and prepare; src/engine/systems/coursework.ts:1470 meetingWeight; src/engine/systems/coursework.ts:1702-1903 the partner’s ask and answer; src/engine/systems/coursework.ts:1916-2060 the commands and kinds",
-   "tests/evidence-g18-school.test.ts",
    "tests/evidence-g24-school.test.ts",
    "tests/school-paths.test.ts the School’s 86 test files, 1,304 tests, run on this commit: all green"
   ]
@@ -2751,7 +2743,6 @@
    "tests/evidence-g24-school.test.ts",
    "src/engine/systems/coursework.ts:416-535 setWork; src/engine/systems/coursework.ts:598-834 prepareRefusal and prepare; src/engine/systems/coursework.ts:1470 meetingWeight; src/engine/systems/coursework.ts:1702-1903 the partner’s ask and answer; src/engine/systems/coursework.ts:1916-2060 the commands and kinds",
    "tests/evidence-g18-school.test.ts",
-   "tests/evidence-g24-school.test.ts",
    "tests/school-paths.test.ts the School’s 86 test files, 1,304 tests, run on this commit: all green"
   ]
  },
@@ -2767,7 +2758,6 @@
    "tests/evidence-g24-school.test.ts",
    "src/engine/systems/coursework.ts:416-535 setWork; src/engine/systems/coursework.ts:598-834 prepareRefusal and prepare; src/engine/systems/coursework.ts:1470 meetingWeight; src/engine/systems/coursework.ts:1702-1903 the partner’s ask and answer; src/engine/systems/coursework.ts:1916-2060 the commands and kinds",
    "tests/evidence-g18-school.test.ts",
-   "tests/evidence-g24-school.test.ts",
    "tests/school-paths.test.ts the School’s 86 test files, 1,304 tests, run on this commit: all green"
   ]
  },
@@ -2782,7 +2772,6 @@
    "tests/guide-examples-coursework.test.ts",
    "tests/evidence-g18-school.test.ts",
    "src/engine/systems/coursework.ts:416-535 setWork; src/engine/systems/coursework.ts:598-834 prepareRefusal and prepare; src/engine/systems/coursework.ts:1470 meetingWeight; src/engine/systems/coursework.ts:1702-1903 the partner’s ask and answer; src/engine/systems/coursework.ts:1916-2060 the commands and kinds",
-   "tests/evidence-g18-school.test.ts",
    "tests/evidence-g24-school.test.ts",
    "tests/school-paths.test.ts the School’s 86 test files, 1,304 tests, run on this commit: all green"
   ]
@@ -3006,7 +2995,6 @@
    "tests/b20-craft-clock.test.ts",
    "tests/evidence-g18-school.test.ts",
    "src/engine/systems/coursework.ts:416-535 setWork; src/engine/systems/coursework.ts:598-834 prepareRefusal and prepare; src/engine/systems/coursework.ts:1470 meetingWeight; src/engine/systems/coursework.ts:1702-1903 the partner’s ask and answer; src/engine/systems/coursework.ts:1916-2060 the commands and kinds",
-   "tests/evidence-g18-school.test.ts",
    "tests/evidence-g24-school.test.ts",
    "tests/school-paths.test.ts the School’s 86 test files, 1,304 tests, run on this commit: all green"
   ]
@@ -3039,7 +3027,6 @@
    "tests/evidence-g23-school.test.ts",
    "tests/evidence-g18-school.test.ts",
    "src/engine/systems/coursework.ts:416-535 setWork; src/engine/systems/coursework.ts:598-834 prepareRefusal and prepare; src/engine/systems/coursework.ts:1470 meetingWeight; src/engine/systems/coursework.ts:1702-1903 the partner’s ask and answer; src/engine/systems/coursework.ts:1916-2060 the commands and kinds",
-   "tests/evidence-g18-school.test.ts",
    "tests/evidence-g24-school.test.ts",
    "tests/school-paths.test.ts the School’s 86 test files, 1,304 tests, run on this commit: all green"
   ]
@@ -3056,7 +3043,6 @@
    "tests/evidence-g18-school.test.ts",
    "tests/evidence-g23-school.test.ts",
    "src/engine/systems/coursework.ts:416-535 setWork; src/engine/systems/coursework.ts:598-834 prepareRefusal and prepare; src/engine/systems/coursework.ts:1470 meetingWeight; src/engine/systems/coursework.ts:1702-1903 the partner’s ask and answer; src/engine/systems/coursework.ts:1916-2060 the commands and kinds",
-   "tests/evidence-g18-school.test.ts",
    "tests/evidence-g24-school.test.ts",
    "tests/school-paths.test.ts the School’s 86 test files, 1,304 tests, run on this commit: all green"
   ]
@@ -3090,7 +3076,6 @@
    "tests/remaining-school-term.test.ts",
    "src/engine/systems/coursework.ts:416-535 setWork; src/engine/systems/coursework.ts:598-834 prepareRefusal and prepare; src/engine/systems/coursework.ts:1470 meetingWeight; src/engine/systems/coursework.ts:1702-1903 the partner’s ask and answer; src/engine/systems/coursework.ts:1916-2060 the commands and kinds",
    "tests/evidence-g18-school.test.ts",
-   "tests/evidence-g24-school.test.ts",
    "tests/school-paths.test.ts the School’s 86 test files, 1,304 tests, run on this commit: all green"
   ]
  },
@@ -3105,7 +3090,6 @@
    "tests/evidence-g18-school.test.ts",
    "tests/journey-school-year.test.ts",
    "src/engine/systems/coursework.ts:416-535 setWork; src/engine/systems/coursework.ts:598-834 prepareRefusal and prepare; src/engine/systems/coursework.ts:1470 meetingWeight; src/engine/systems/coursework.ts:1702-1903 the partner’s ask and answer; src/engine/systems/coursework.ts:1916-2060 the commands and kinds",
-   "tests/evidence-g18-school.test.ts",
    "tests/evidence-g24-school.test.ts",
    "tests/school-paths.test.ts the School’s 86 test files, 1,304 tests, run on this commit: all green"
   ]
@@ -3122,7 +3106,6 @@
    "tests/guide-examples-coursework.test.ts",
    "tests/coursework-defects.test.ts",
    "src/engine/systems/coursework.ts:416-535 setWork; src/engine/systems/coursework.ts:598-834 prepareRefusal and prepare; src/engine/systems/coursework.ts:1470 meetingWeight; src/engine/systems/coursework.ts:1702-1903 the partner’s ask and answer; src/engine/systems/coursework.ts:1916-2060 the commands and kinds",
-   "tests/evidence-g18-school.test.ts",
    "tests/evidence-g24-school.test.ts",
    "tests/school-paths.test.ts the School’s 86 test files, 1,304 tests, run on this commit: all green"
   ]
@@ -3138,7 +3121,6 @@
    "tests/evidence-g18-school.test.ts",
    "tests/ensemble.test.ts",
    "src/engine/systems/coursework.ts:416-535 setWork; src/engine/systems/coursework.ts:598-834 prepareRefusal and prepare; src/engine/systems/coursework.ts:1470 meetingWeight; src/engine/systems/coursework.ts:1702-1903 the partner’s ask and answer; src/engine/systems/coursework.ts:1916-2060 the commands and kinds",
-   "tests/evidence-g18-school.test.ts",
    "tests/evidence-g24-school.test.ts",
    "tests/school-paths.test.ts the School’s 86 test files, 1,304 tests, run on this commit: all green"
   ]
@@ -3154,7 +3136,6 @@
    "tests/table-work-unread.test.ts",
    "tests/evidence-g18-school.test.ts",
    "src/engine/systems/coursework.ts:416-535 setWork; src/engine/systems/coursework.ts:598-834 prepareRefusal and prepare; src/engine/systems/coursework.ts:1470 meetingWeight; src/engine/systems/coursework.ts:1702-1903 the partner’s ask and answer; src/engine/systems/coursework.ts:1916-2060 the commands and kinds",
-   "tests/evidence-g18-school.test.ts",
    "tests/evidence-g24-school.test.ts",
    "tests/school-paths.test.ts the School’s 86 test files, 1,304 tests, run on this commit: all green"
   ]
@@ -3593,7 +3574,6 @@
    "tests/b22-comparisons.test.ts",
    "src/engine/systems/engagement.ts:144-307 knownOf, relatedness, relevantGenre; src/engine/systems/engagement.ts:375 the command",
    "tests/engagement.test.ts",
-   "tests/b22-genre-weights.test.ts",
    "tests/school-paths.test.ts the School’s 86 test files, 1,304 tests, run on this commit: all green"
   ]
  },
@@ -3611,7 +3591,6 @@
    "tests/b22-genre-weights.test.ts",
    "src/engine/systems/engagement.ts:144-307 knownOf, relatedness, relevantGenre; src/engine/systems/engagement.ts:375 the command",
    "tests/engagement.test.ts",
-   "tests/b22-genre-weights.test.ts",
    "tests/school-paths.test.ts the School’s 86 test files, 1,304 tests, run on this commit: all green"
   ]
  },
@@ -4054,7 +4033,6 @@
   "evidence": [
    "tests/evidence-g19-school.test.ts",
    "src/engine/systems/production.ts:184-240 partPlayingRefusal; src/engine/systems/production.ts:284 nightFactor; src/engine/systems/production.ts:566-706 ownWorkRefusal and the commands; src/engine/systems/production.ts:707-753 reflect; src/engine/systems/school.ts:3856-3984 a call; src/engine/systems/school.ts:2948-3266 cast",
-   "tests/evidence-g19-school.test.ts",
    "tests/production-staging.test.ts",
    "tests/school-paths.test.ts the School’s 86 test files, 1,304 tests, run on this commit: all green"
   ]
@@ -4086,7 +4064,6 @@
    "tests/evidence-g19-school.test.ts",
    "tests/evidence-g22-school.test.ts",
    "src/engine/systems/production.ts:184-240 partPlayingRefusal; src/engine/systems/production.ts:284 nightFactor; src/engine/systems/production.ts:566-706 ownWorkRefusal and the commands; src/engine/systems/production.ts:707-753 reflect; src/engine/systems/school.ts:3856-3984 a call; src/engine/systems/school.ts:2948-3266 cast",
-   "tests/evidence-g19-school.test.ts",
    "tests/production-staging.test.ts",
    "tests/school-paths.test.ts the School’s 86 test files, 1,304 tests, run on this commit: all green"
   ]
@@ -4102,7 +4079,6 @@
    "tests/evidence-g19-school.test.ts",
    "tests/evidence-g22-school.test.ts",
    "src/engine/systems/production.ts:184-240 partPlayingRefusal; src/engine/systems/production.ts:284 nightFactor; src/engine/systems/production.ts:566-706 ownWorkRefusal and the commands; src/engine/systems/production.ts:707-753 reflect; src/engine/systems/school.ts:3856-3984 a call; src/engine/systems/school.ts:2948-3266 cast",
-   "tests/evidence-g19-school.test.ts",
    "tests/production-staging.test.ts",
    "tests/school-paths.test.ts the School’s 86 test files, 1,304 tests, run on this commit: all green"
   ]
@@ -4118,7 +4094,6 @@
    "tests/evidence-g23-school.test.ts",
    "tests/evidence-g19-school.test.ts",
    "src/engine/systems/production.ts:184-240 partPlayingRefusal; src/engine/systems/production.ts:284 nightFactor; src/engine/systems/production.ts:566-706 ownWorkRefusal and the commands; src/engine/systems/production.ts:707-753 reflect; src/engine/systems/school.ts:3856-3984 a call; src/engine/systems/school.ts:2948-3266 cast",
-   "tests/evidence-g19-school.test.ts",
    "tests/production-staging.test.ts",
    "tests/school-paths.test.ts the School’s 86 test files, 1,304 tests, run on this commit: all green"
   ]
@@ -4263,7 +4238,6 @@
    "tests/production-staging.test.ts",
    "src/engine/systems/production.ts:184-240 partPlayingRefusal; src/engine/systems/production.ts:284 nightFactor; src/engine/systems/production.ts:566-706 ownWorkRefusal and the commands; src/engine/systems/production.ts:707-753 reflect; src/engine/systems/school.ts:3856-3984 a call; src/engine/systems/school.ts:2948-3266 cast",
    "tests/evidence-g19-school.test.ts",
-   "tests/production-staging.test.ts",
    "tests/school-paths.test.ts the School’s 86 test files, 1,304 tests, run on this commit: all green"
   ]
  },
@@ -4310,7 +4284,6 @@
   "evidence": [
    "tests/evidence-g19-school.test.ts",
    "src/engine/systems/production.ts:184-240 partPlayingRefusal; src/engine/systems/production.ts:284 nightFactor; src/engine/systems/production.ts:566-706 ownWorkRefusal and the commands; src/engine/systems/production.ts:707-753 reflect; src/engine/systems/school.ts:3856-3984 a call; src/engine/systems/school.ts:2948-3266 cast",
-   "tests/evidence-g19-school.test.ts",
    "tests/production-staging.test.ts",
    "tests/school-paths.test.ts the School’s 86 test files, 1,304 tests, run on this commit: all green"
   ]
@@ -4389,7 +4362,6 @@
   "evidence": [
    "tests/evidence-g19-school.test.ts",
    "src/engine/systems/production.ts:184-240 partPlayingRefusal; src/engine/systems/production.ts:284 nightFactor; src/engine/systems/production.ts:566-706 ownWorkRefusal and the commands; src/engine/systems/production.ts:707-753 reflect; src/engine/systems/school.ts:3856-3984 a call; src/engine/systems/school.ts:2948-3266 cast",
-   "tests/evidence-g19-school.test.ts",
    "tests/production-staging.test.ts",
    "tests/school-paths.test.ts the School’s 86 test files, 1,304 tests, run on this commit: all green"
   ]
@@ -4420,7 +4392,6 @@
   "evidence": [
    "tests/evidence-g19-school.test.ts",
    "src/engine/systems/production.ts:184-240 partPlayingRefusal; src/engine/systems/production.ts:284 nightFactor; src/engine/systems/production.ts:566-706 ownWorkRefusal and the commands; src/engine/systems/production.ts:707-753 reflect; src/engine/systems/school.ts:3856-3984 a call; src/engine/systems/school.ts:2948-3266 cast",
-   "tests/evidence-g19-school.test.ts",
    "tests/production-staging.test.ts",
    "tests/school-paths.test.ts the School’s 86 test files, 1,304 tests, run on this commit: all green"
   ]
@@ -4467,7 +4438,6 @@
    "tests/b20-craft-productions.test.ts",
    "tests/evidence-g19-school.test.ts",
    "src/engine/systems/production.ts:184-240 partPlayingRefusal; src/engine/systems/production.ts:284 nightFactor; src/engine/systems/production.ts:566-706 ownWorkRefusal and the commands; src/engine/systems/production.ts:707-753 reflect; src/engine/systems/school.ts:3856-3984 a call; src/engine/systems/school.ts:2948-3266 cast",
-   "tests/evidence-g19-school.test.ts",
    "tests/production-staging.test.ts",
    "tests/school-paths.test.ts the School’s 86 test files, 1,304 tests, run on this commit: all green"
   ]
@@ -4483,7 +4453,6 @@
    "tests/b20-craft-productions.test.ts",
    "tests/evidence-g19-school.test.ts",
    "src/engine/systems/production.ts:184-240 partPlayingRefusal; src/engine/systems/production.ts:284 nightFactor; src/engine/systems/production.ts:566-706 ownWorkRefusal and the commands; src/engine/systems/production.ts:707-753 reflect; src/engine/systems/school.ts:3856-3984 a call; src/engine/systems/school.ts:2948-3266 cast",
-   "tests/evidence-g19-school.test.ts",
    "tests/production-staging.test.ts",
    "tests/school-paths.test.ts the School’s 86 test files, 1,304 tests, run on this commit: all green"
   ]
@@ -4499,7 +4468,6 @@
    "tests/journey-school-production.test.ts",
    "tests/evidence-g19-school.test.ts",
    "src/engine/systems/production.ts:184-240 partPlayingRefusal; src/engine/systems/production.ts:284 nightFactor; src/engine/systems/production.ts:566-706 ownWorkRefusal and the commands; src/engine/systems/production.ts:707-753 reflect; src/engine/systems/school.ts:3856-3984 a call; src/engine/systems/school.ts:2948-3266 cast",
-   "tests/evidence-g19-school.test.ts",
    "tests/production-staging.test.ts",
    "tests/school-paths.test.ts the School’s 86 test files, 1,304 tests, run on this commit: all green"
   ]
@@ -4545,7 +4513,6 @@
   "evidence": [
    "tests/evidence-g19-school.test.ts",
    "src/engine/systems/production.ts:184-240 partPlayingRefusal; src/engine/systems/production.ts:284 nightFactor; src/engine/systems/production.ts:566-706 ownWorkRefusal and the commands; src/engine/systems/production.ts:707-753 reflect; src/engine/systems/school.ts:3856-3984 a call; src/engine/systems/school.ts:2948-3266 cast",
-   "tests/evidence-g19-school.test.ts",
    "tests/production-staging.test.ts",
    "tests/school-paths.test.ts the School’s 86 test files, 1,304 tests, run on this commit: all green"
   ]
@@ -4560,7 +4527,6 @@
   "evidence": [
    "tests/evidence-g19-school.test.ts",
    "src/engine/systems/production.ts:184-240 partPlayingRefusal; src/engine/systems/production.ts:284 nightFactor; src/engine/systems/production.ts:566-706 ownWorkRefusal and the commands; src/engine/systems/production.ts:707-753 reflect; src/engine/systems/school.ts:3856-3984 a call; src/engine/systems/school.ts:2948-3266 cast",
-   "tests/evidence-g19-school.test.ts",
    "tests/production-staging.test.ts",
    "tests/school-paths.test.ts the School’s 86 test files, 1,304 tests, run on this commit: all green"
   ]
@@ -4575,7 +4541,6 @@
   "evidence": [
    "tests/evidence-g19-school.test.ts",
    "src/engine/systems/production.ts:184-240 partPlayingRefusal; src/engine/systems/production.ts:284 nightFactor; src/engine/systems/production.ts:566-706 ownWorkRefusal and the commands; src/engine/systems/production.ts:707-753 reflect; src/engine/systems/school.ts:3856-3984 a call; src/engine/systems/school.ts:2948-3266 cast",
-   "tests/evidence-g19-school.test.ts",
    "tests/production-staging.test.ts",
    "tests/school-paths.test.ts the School’s 86 test files, 1,304 tests, run on this commit: all green"
   ]
@@ -4591,7 +4556,6 @@
    "tests/evidence-g19-school.test.ts",
    "tests/journey-school-production.test.ts",
    "src/engine/systems/production.ts:184-240 partPlayingRefusal; src/engine/systems/production.ts:284 nightFactor; src/engine/systems/production.ts:566-706 ownWorkRefusal and the commands; src/engine/systems/production.ts:707-753 reflect; src/engine/systems/school.ts:3856-3984 a call; src/engine/systems/school.ts:2948-3266 cast",
-   "tests/evidence-g19-school.test.ts",
    "tests/production-staging.test.ts",
    "tests/school-paths.test.ts the School’s 86 test files, 1,304 tests, run on this commit: all green"
   ]
@@ -4748,7 +4712,6 @@
    "tests/evidence-g19-school.test.ts",
    "tests/evidence-g22-school.test.ts",
    "src/engine/systems/production.ts:184-240 partPlayingRefusal; src/engine/systems/production.ts:284 nightFactor; src/engine/systems/production.ts:566-706 ownWorkRefusal and the commands; src/engine/systems/production.ts:707-753 reflect; src/engine/systems/school.ts:3856-3984 a call; src/engine/systems/school.ts:2948-3266 cast",
-   "tests/evidence-g19-school.test.ts",
    "tests/production-staging.test.ts",
    "tests/school-paths.test.ts the School’s 86 test files, 1,304 tests, run on this commit: all green"
   ]

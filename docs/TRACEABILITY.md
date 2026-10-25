@@ -17,9 +17,9 @@ Implemented**: no screen offers it, or no test runs it. No status here says a sc
 SLATE has no tests of its screens, and nothing is deployed.
 
 - Verified (journey): 61
-- Implemented But Unverified: 127
+- Implemented But Unverified: 131
 - Partially Implemented: 0
-- Commands in all: 188
+- Commands in all: 192
 
 ## Commands
 
@@ -129,15 +129,19 @@ SLATE has no tests of its screens, and nothing is deployed.
 | `practice.self_tape` | Verified (journey) | You As An Actor | BriefPane.tsx | `systems/briefs.ts` | — (also tapeRefusal) | — | — | — | 46 | journey-agent.test.ts |
 | `pro.accept_agreement` | Verified (journey) | Representation | RepresentationPane.tsx | `systems/proagent.ts` | — (also signRefusal) | — | — | pro.agent_term_end | 6 | journey-agent.test.ts |
 | `pro.accept_offer` | Implemented But Unverified | Finding Work | OpportunitiesPane.tsx | `systems/projobs.ts` | — (also acceptRefusal) | engagements (added to) | — | booked | 30 | — |
+| `pro.actor_submit` | Implemented But Unverified | — | IndustryPane.tsx | `systems/actorawards.ts` | — | — | — | — | 1 | — |
 | `pro.agent_check` | Verified (journey) | Representation | RepresentationPane.tsx | `systems/proagent.ts` | — (also checkRefusal) | — | — | — | 10 | journey-agent.test.ts |
 | `pro.agent_notice` | Verified (journey) | Representation | RepresentationPane.tsx | `systems/proagent.ts` | — (also noticeRefusal) | — | — | — | 8 | journey-agent.test.ts |
 | `pro.apply_work_visa` | Implemented But Unverified | Finding Work | WorkPane.tsx | `systems/worktrip.ts` | — (also visaRefusal) | — | — | — | 2 | — |
 | `pro.ask_hold` | Implemented But Unverified | Finding Work | OpportunitiesPane.tsx | `systems/projobs.ts` | — (also holdAskRefusal) | — | — | pro.hold_answer; callback | 1 | — |
-| `pro.ask_more` | Implemented But Unverified | Finding Work | OpportunitiesPane.tsx | `systems/projobs.ts` | — (also askMoreRefusal) | — | — | pro.negotiate_answer; offer | 1 | — |
+| `pro.ask_more` | Implemented But Unverified | Finding Work | OpportunitiesPane.tsx | `systems/projobs.ts` | — (also askMoreRefusal) | — | — | pro.negotiate_answer; offer | 2 | — |
 | `pro.ask_pay` | Implemented But Unverified | Finding Work | WorkPane.tsx | `systems/contracts.ts` | — (also askRefusal) | — | — | pro.pay.payday; problem | 1 | — |
 | `pro.ask_referral` | Verified (journey) | Representation | RepresentationPane.tsx | `systems/proagent.ts` | — (also referralRefusal) | — | — | — | 7 | journey-agent.test.ts |
 | `pro.ask_to_move` | Verified (journey) | Representation | RepresentationPane.tsx TimeControls.tsx | `systems/proagent.ts` | — (also moveRefusal) | — | — | — | 3 | journey-agent.test.ts |
 | `pro.award_enter` | Implemented But Unverified | Finding Work | IndustryPane.tsx | `systems/awards.ts` | — | — | — | — | 2 | — |
+| `pro.ceremony_accept` | Implemented But Unverified | — | IndustryPane.tsx TimeControls.tsx | `systems/ceremony.ts` | — | — | — | — | 1 | — |
+| `pro.ceremony_prepare` | Implemented But Unverified | — | IndustryPane.tsx | `systems/ceremony.ts` | — | — | — | — | 1 | — |
+| `pro.ceremony_rsvp` | Implemented But Unverified | — | IndustryPane.tsx | `systems/ceremony.ts` | — | — | — | — | 1 | — |
 | `pro.cut_reel` | Verified (journey) | Your Career | CareerWorkspace.tsx | `systems/pro.ts` | Your bank can’t cover …, so nothing was charged. (also reelRefusal) | — | Yes | reel | 5 | journey-agent.test.ts |
 | `pro.decline_agreement` | Verified (journey) | Representation | RepresentationPane.tsx | `systems/proagent.ts` | — (also answerRefusal) | — | — | — | 4 | journey-agent.test.ts |
 | `pro.decline_offer` | Implemented But Unverified | Finding Work | OpportunitiesPane.tsx | `systems/projobs.ts` | There’s no offer to decline. | — | — | declined | 4 | — |
@@ -154,7 +158,7 @@ SLATE has no tests of its screens, and nothing is deployed.
 | `pro.supply_material` | Verified (journey) | Representation | RepresentationPane.tsx | `systems/proagent.ts` | — (also supplyRefusal) | — | — | pro.reply | 2 | journey-agent.test.ts |
 | `pro.tape_audition` | Implemented But Unverified | Finding Work | OpportunitiesPane.tsx | `systems/projobs.ts` | — (also tapeRefusal) | — | — | — | 2 | — |
 | `pro.update_resume` | Verified (journey) | Your Career | CareerWorkspace.tsx | `systems/pro.ts` | — (also resumeRefusal) | — | — | resume | 17 | journey-agent.test.ts |
-| `pro.watch_ceremony` | Implemented But Unverified | Finding Work | IndustryPane.tsx | `systems/awards.ts` | — (also watchRefusal) | — | — | — | 2 | — |
+| `pro.watch_ceremony` | Implemented But Unverified | Finding Work | IndustryPane.tsx | `systems/ceremony.ts` | — (also watchRefusal) | — | — | — | 3 | — |
 | `pro.work_choice` | Implemented But Unverified | Finding Work | WorkPane.tsx | `systems/workflow.ts` | — (also choiceRefusal) | — | — | — | 2 | — |
 | `school.answer_partner` | Verified (journey) | Drama School | CourseworkPane.tsx | `systems/coursework.ts` | — (also answerRefusal) | — | — | — | 8 | journey-school-year.test.ts; journey-three-students.test.ts |
 | `school.appeal_leave` | Implemented But Unverified | Drama School | StudyPlanPanels.tsx | `systems/leave.ts` | Only a leave the dean imposed can be appealed.; You appealed on ….; The appeal had to be in by …. | — | — | school.leave_appeal | 4 | — |
@@ -277,11 +281,13 @@ money, what it sets going next, and how many test files name it or its constant.
 | `pro.agent_term_end` | `systems/proagent.ts` | systems/proagent.ts | — | — | — | 0 |
 | `pro.audition` | `systems/projobs.ts` | systems/projobs.ts | — | — | — | 12 |
 | `pro.casting_decision` | `systems/projobs.ts` | systems/projobs.ts | — | — | — | 7 |
+| `pro.ceremony` | `systems/ceremony.ts` | systems/ceremony.ts | — | — | pro.ceremony_speech | 2 |
+| `pro.ceremony_speech` | `systems/ceremony.ts` | systems/ceremony.ts | — | — | — | 4 |
 | `pro.hold_answer` | `systems/projobs.ts` | systems/projobs.ts | — | — | offer | 0 |
 | `pro.invite` | `systems/workflow.ts` | systems/workflow.ts | — | — | — | 2 |
 | `pro.loop` | `systems/workflow.ts` | systems/workflow.ts | — | — | — | 2 |
 | `pro.negotiate_answer` | `systems/projobs.ts` | systems/projobs.ts | — | — | offer | 0 |
-| `pro.offer_lapse` | `systems/projobs.ts` | systems/projobs.ts | — | — | lapsed | 14 |
+| `pro.offer_lapse` | `systems/projobs.ts` | systems/projobs.ts | — | — | lapsed | 16 |
 | `pro.pay.dues` | `systems/propay.ts` | systems/propay.ts | — | — | — | 4 |
 | `pro.pay.payday` | `systems/propay.ts` | systems/contracts.ts; systems/propay.ts | — | — | — | 8 |
 | `pro.pay.release` | `systems/propay.ts` | systems/projobs.ts; systems/propay.ts | — | — | — | 8 |

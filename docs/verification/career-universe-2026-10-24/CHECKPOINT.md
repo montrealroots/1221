@@ -47,7 +47,7 @@ commit, what's done, what remains and the exact next step. `README.md` is the re
 | K4 | Discovery, submission, auditions, direct offers, negotiation, holds and options | Built: the chemistry read, the screen test, direct offers, asking for more through the agent, and holds; options were brief 25's (a series part's) |
 | K5 | Preparation, production, travel, changes, wrap, compensation, expenses, residuals | Built: what briefs 19 to 25 built read against Parts 10 and 11; the weather day, reshoots and pickups, a day laid up shot around; fittings, a call sheet document, flight delays and expense claims not built, each said why |
 | K6 | Release, publicity, weekly charts, renewal and returning work | Built: what brief 25 built read against Parts 12 and 13; a finished production's way out, a season's audience read by renewal, a promotional film for a release, and a revival's character plans |
-| K7 | Festivals, awards, the ceremony | Waiting |
+| K7 | Festivals, awards, the ceremony | Built: the Actor Awards by its 33rd rules, the ceremony for every nomination (invitation, trip, remarks, the moment to go up and the speech), an agent's and a negotiation's read of recognition; a festival's attendance and other institutions not built, each said why |
 | K8 | The industry reference | Waiting |
 | F | The lifecycle and career matrices, long careers, final runs, the gate, the receipt | Waiting |
 
@@ -67,6 +67,7 @@ commit, what's done, what remains and the exact next step. `README.md` is the re
 
 ## Next Step
 
-K7: festivals and awards across the supported markets, the ceremony, and what an award does after it (Part 15 and loops 42 to 45). Read `systems/awards.ts`, `content/awards.ts` and the Charts And Awards tab first. K3 to K6
-are built (README). Then K8 and F, as the table says. Before F: the 85 measured criteria are measured again on the finished commit, and the four decisions above stay
-with the owner.
+K8: the industry reference (Part 16): projects, people, companies, seasons and episodes, each connected to what the player
+can do about it. Read `content/industry.ts`, `systems/slate.ts` and the Charts And Awards tab first. K3 to K7 are built
+(README). Then F, as the table says. Before F: the 85 measured criteria are measured again on the finished commit, and the
+four decisions above stay with the owner.

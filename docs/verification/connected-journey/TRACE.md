@@ -1384,7 +1384,7 @@ The Career screen, your professional profile and name, headshots, your résumé 
   - A stage part goes on your credits at its first night; a screen part when it’s shot, and as released once it comes out, when its footage can go on a reel.
   - A finished production isn’t always out on time. Its distributor may hold the release back months, send a film to streaming instead of cinemas, where it has no weekly chart, or shelve it, so it’s never out: the part stays on your credits as shot, its footage can’t go on a reel, and it has no premiere to enter for an award. The notice says which when the release comes due.
   - Sleep through a shoot day, or miss a second day of a run, and the production replaces you. Laid up or in hospital on a lead or a supporting part, the production shoots around you once, slipping your days a working day each, and the day isn’t paid; a smaller part is recast.
-- **Tested by:** `pro.accept_offer`: `tests/b20-benefits-safetynet.test.ts`, `tests/b20-benefits-tax.test.ts`, `tests/b20-benefits-unemployment.test.ts`, `tests/b20-career-defects.test.ts`, `tests/b20-career-effects.test.ts`, `tests/b20-career-history.test.ts`, `tests/b20-career-skill.test.ts`, `tests/b20-guide-screens.test.ts`, `tests/b20-life-fatigue.test.ts`, `tests/b20-papers-work.test.ts`, `tests/b21-genre-proof.test.ts`, `tests/b22-authorization.test.ts`, `tests/b27-audience.test.ts`, `tests/b27-holds.test.ts`, `tests/b27-ill.test.ts`, `tests/b27-offers.test.ts`, `tests/b27-promo.test.ts`, `tests/b27-release.test.ts`, `tests/b27-reshoot.test.ts`, `tests/b27-revival.test.ts`, `tests/b27-slate-screens.test.ts`, `tests/b27-slate.test.ts`, `tests/b27-weather.test.ts`, `tests/career-awards-screen.test.ts`, `tests/career-awards.test.ts`, `tests/career-contracts.test.ts`, `tests/career-drawn.test.ts`, `tests/career-workflows-screen.test.ts`, `tests/career-workflows.test.ts`, `tests/career-world-sydney.test.ts`, `tests/pro-opportunities-screen.test.ts`, `tests/pro-work.test.ts`; `pro.decline_offer`: `tests/b20-career-effects.test.ts`, `tests/b20-career-history.test.ts`, `tests/b20-guide-screens.test.ts`, `tests/pro-work.test.ts`; `pro.ask_more`: `tests/b27-offers.test.ts`; `pro.ask_hold`: `tests/b27-holds.test.ts`
+- **Tested by:** `pro.accept_offer`: `tests/b20-benefits-safetynet.test.ts`, `tests/b20-benefits-tax.test.ts`, `tests/b20-benefits-unemployment.test.ts`, `tests/b20-career-defects.test.ts`, `tests/b20-career-effects.test.ts`, `tests/b20-career-history.test.ts`, `tests/b20-career-skill.test.ts`, `tests/b20-guide-screens.test.ts`, `tests/b20-life-fatigue.test.ts`, `tests/b20-papers-work.test.ts`, `tests/b21-genre-proof.test.ts`, `tests/b22-authorization.test.ts`, `tests/b27-audience.test.ts`, `tests/b27-holds.test.ts`, `tests/b27-ill.test.ts`, `tests/b27-offers.test.ts`, `tests/b27-promo.test.ts`, `tests/b27-release.test.ts`, `tests/b27-reshoot.test.ts`, `tests/b27-revival.test.ts`, `tests/b27-slate-screens.test.ts`, `tests/b27-slate.test.ts`, `tests/b27-weather.test.ts`, `tests/career-awards-screen.test.ts`, `tests/career-awards.test.ts`, `tests/career-contracts.test.ts`, `tests/career-drawn.test.ts`, `tests/career-workflows-screen.test.ts`, `tests/career-workflows.test.ts`, `tests/career-world-sydney.test.ts`, `tests/pro-opportunities-screen.test.ts`, `tests/pro-work.test.ts`; `pro.decline_offer`: `tests/b20-career-effects.test.ts`, `tests/b20-career-history.test.ts`, `tests/b20-guide-screens.test.ts`, `tests/pro-work.test.ts`; `pro.ask_more`: `tests/b27-award-effects.test.ts`, `tests/b27-offers.test.ts`; `pro.ask_hold`: `tests/b27-holds.test.ts`
 
 ### Work While You’re At The School (`career.outside-work`)
 
@@ -1470,18 +1470,24 @@ The Career screen, your professional profile and name, headshots, your résumé 
 
 ### Charts, Festivals And Awards (`career.awards`)
 
-- **Action:** `pro.award_enter`, `pro.watch_ceremony`, at Career, Charts And Awards (`/workspace/career?tab=industry`). Opens: From the guide’s chapter “Finding Work”, once you’ve accepted work.
+- **Action:** `pro.award_enter`, `pro.watch_ceremony`, `pro.actor_submit`, `pro.ceremony_rsvp`, `pro.ceremony_prepare`, `pro.ceremony_accept`, at Career, Charts And Awards (`/workspace/career?tab=industry`). Opens: From the guide’s chapter “Finding Work”, once you’ve accepted work.
 - **Preconditions:**
   - A part on television that’s on the air, or due on it, in the Emmy year: June 1 to May 31.
+  - For the Actor Awards, a part in a film or a television program made under a SAG-AFTRA agreement, first shown in the calendar year.
 - **Costs:**
   - An Emmy Entry: $125.00 for processing and $100.00 for the entry, the Television Academy’s fees for a performer who isn’t a member
+  - An Actor Awards Submission: $200.00 a performance, the guild’s fee
+  - Going To The Show: The days of the trip, out ahead and home the morning after; the trip isn’t charged to you
+  - Preparing Remarks: 60 minutes each time, each going further the less is left (an estimate)
 - **State (what changes at once):**
   - Entering puts the part under Your Recognition as entered, and the fee is taken from your bank.
 - **Consumer (what reads it):**
   - How Each Kind Of Work Is Done, evaluation: How a part’s days were judged, and its scenes kept in the edit, are what its entry reads.
 - **Feedback (how to read what comes back):**
   - The eligibility year, the fees, the guest rule, the share of the running time and the nomination table are the 78th Emmy Awards’ rules. Sundance’s categories, deadlines and premiere rule are its 2027 festival’s. A later year carries them forward, and says so.
-  - How many enter a category, how the votes go, whether a production enters you or submits its film, and whether the festival selects it are the game’s, and no other nominee is ever named.
+  - The Actor Awards’ eligibility, categories, fee, window, committees, nominee count and final vote are its 33rd Rules & Regulations’. Its show is held in Los Angeles in the game, as its last was, and so are the Emmys’; neither’s rules name a place.
+  - How many enter a category, how the votes go, whether a production enters you or submits its film, and whether the festival selects it are the game’s, and no other nominee is ever named. So are a speech’s weights and the week to say whether you’ll go.
+  - An agent’s office reads your recognition as a step up in your work, once, however much of it there is. A production you ask for more is likelier to agree by half your visibility, which fades as recognition does.
   - A film’s box office is the production’s, not your pay, and how well your part went doesn’t move it. The published charts are the providers’ own figures, each in its own unit and week.
   - A series’ season audience is the game’s estimate, in viewers an episode for a broadcast series and hours viewed a week for a streaming one, never one as the other. The network reads it, with the season’s reviews and how long the series has run, when it says whether there’s another season: a big audience makes another likelier, never certain.
   - Recognition makes casting a little likelier to choose you, fading over three years, and at most 30% better; so, a little, does a promotional film you appeared in for a release. Neither changes a contract or how your work is judged.
@@ -1491,7 +1497,9 @@ The Career screen, your professional profile and name, headshots, your résumé 
   - At the nominations, each category has its own field of entries, and the Academy’s table sets how many are nominated: 5 from 20 entries, 6 from 81 entries, 7 from 161 entries, 8 from 241 entries.
   - The winner is settled when the final round of voting ends, and you learn it when the award is presented: guest and voice-over awards at the Creative Arts Emmys, the others at the telecast.
   - A festival’s answer comes about December 1 for its 2027 festival, in Boulder, Colorado.
-- **Tested by:** `pro.award_enter`: `tests/career-awards-screen.test.ts`, `tests/career-awards.test.ts`; `pro.watch_ceremony`: `tests/career-awards-screen.test.ts`, `tests/career-awards.test.ts`
+  - The Actor Awards’ committees, members drawn at random, nominate five in each category, more only for a tie, and of two performances of yours in one category only the one with more votes. Every paid-up member in the US and Canada votes the winner, and a tie gives the award to each tied. The 33rd show is on February 28.
+  - At the show, losing changes nothing but the record. Winning in the room, you go up; not going up within half an hour, you say thank you and sit down. Watched from home, a win is accepted without you.
+- **Tested by:** `pro.award_enter`: `tests/career-awards-screen.test.ts`, `tests/career-awards.test.ts`; `pro.watch_ceremony`: `tests/b27-ceremony.test.ts`, `tests/career-awards-screen.test.ts`, `tests/career-awards.test.ts`; `pro.actor_submit`: `tests/b27-actor-awards.test.ts`; `pro.ceremony_rsvp`: `tests/b27-ceremony.test.ts`; `pro.ceremony_prepare`: `tests/b27-ceremony.test.ts`; `pro.ceremony_accept`: `tests/b27-ceremony.test.ts`
 
 ### Work Abroad (`career.work-abroad`)
 

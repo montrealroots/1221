@@ -569,8 +569,63 @@
    "kind": "pro.award_enter",
    "payload": "{ creditId: c.id }",
    "verdict": "Right",
-   "handler": "src/engine/systems/awards.ts:619",
+   "handler": "src/engine/systems/awards.ts:612",
    "note": "Enter Yourself under an eligible television part enters that credit for its Emmy year and pays the fee, by the credit's id; its refusal (entryRefusal) is its title and grays it, and the part then says where its entry stands. Read on 2026-10-24 by its builder (brief 25's Module 6), pressed through the command in tests/career-awards-screen.test.ts."
+  },
+  {
+   "file": "src/ui/career/IndustryPane.tsx",
+   "control": "<Gated onClick>",
+   "feature": "pro.ceremony_rsvp",
+   "label": "Go To The Ceremony",
+   "kind": "pro.ceremony_rsvp",
+   "payload": "{ entryId: n.id, attend: true }",
+   "verdict": "Right",
+   "handler": "src/engine/systems/ceremony.ts:314",
+   "note": "Go To The Ceremony on a nomination answers the invitation, by the entry's id: going books the trip and the show's call; its refusal (rsvpRefusal, a clash or the day passed) is its title and grays it. Read on 2026-10-25 by its builder (brief 27's K7), pressed through the command in tests/b27-ceremony.test.ts."
+  },
+  {
+   "file": "src/ui/career/IndustryPane.tsx",
+   "control": "<Gated onClick>",
+   "feature": "pro.ceremony_accept",
+   "label": "Go Up And Accept",
+   "kind": "pro.ceremony_accept",
+   "payload": "{ entryId: n.id }",
+   "verdict": "Right",
+   "handler": "src/engine/systems/ceremony.ts:316",
+   "note": "Go Up And Accept, shown only to a winner in the room within half an hour of the show's start, gives the speech, by the entry's id. Read on 2026-10-25 by its builder (brief 27's K7); the stop's own choice is the way the clock offers it (tests/b27-ceremony.test.ts)."
+  },
+  {
+   "file": "src/ui/career/IndustryPane.tsx",
+   "control": "<Gated onClick>",
+   "feature": "pro.ceremony_prepare",
+   "label": "Prepare Your Remarks (${CEREMONY.prepare.minutes} Minutes)",
+   "kind": "pro.ceremony_prepare",
+   "payload": "{ entryId: n.id }",
+   "verdict": "Right",
+   "handler": "src/engine/systems/ceremony.ts:315",
+   "note": "Prepare Your Remarks on a show the player is going to spends the hour on the remarks, by the entry's id; its refusal (prepareRemarksRefusal) is its title. Read on 2026-10-25 by its builder (brief 27's K7), pressed through the command in tests/b27-ceremony.test.ts."
+  },
+  {
+   "file": "src/ui/career/IndustryPane.tsx",
+   "control": "<Gated onClick>",
+   "feature": "pro.actor_submit",
+   "label": "Submit Yourself (${formatMoney(actorFee(sim), cur)})",
+   "kind": "pro.actor_submit",
+   "payload": "{ creditId: c.id }",
+   "verdict": "Right",
+   "handler": "src/engine/systems/actorawards.ts:335",
+   "note": "Submit Yourself under an eligible credit submits that performance for its Actor Awards year and pays the $200, by the credit's id; its refusal (actorSubmitRefusal) is its title and grays it. Read on 2026-10-25 by its builder (brief 27's K7), pressed through the command in tests/b27-actor-awards.test.ts."
+  },
+  {
+   "file": "src/ui/career/IndustryPane.tsx",
+   "control": "<Gated onClick>",
+   "feature": "pro.ceremony_rsvp",
+   "label": "Watch From Home",
+   "kind": "pro.ceremony_rsvp",
+   "payload": "{ entryId: n.id, attend: false }",
+   "verdict": "Right",
+   "handler": "src/engine/systems/ceremony.ts:314",
+   "note": "Watch From Home answers the invitation the other way, by the entry's id, calling off a trip going had booked. Read on 2026-10-25 by its builder (brief 27's K7), pressed through the command in tests/b27-ceremony.test.ts."
   },
   {
    "file": "src/ui/career/IndustryPane.tsx",
@@ -580,8 +635,19 @@
    "kind": "pro.watch_ceremony",
    "payload": "{ entryId: a.id }",
    "verdict": "Right",
-   "handler": "src/engine/systems/awards.ts:624",
+   "handler": "src/engine/systems/ceremony.ts:328",
    "note": "Watch The Ceremony under a nomination shows its ceremony from the result settled at the final round, by the entry's id; its refusal (watchRefusal) is its title and grays it until the award is presented, and the lines stay once watched. Read on 2026-10-24 by its builder (brief 25's Module 6), pressed through the command in tests/career-awards-screen.test.ts."
+  },
+  {
+   "file": "src/ui/career/IndustryPane.tsx",
+   "control": "<Gated onClick>",
+   "feature": "pro.watch_ceremony",
+   "label": "Watch The Show",
+   "kind": "pro.watch_ceremony",
+   "payload": "{ entryId: g.id }",
+   "verdict": "Right",
+   "handler": "src/engine/systems/ceremony.ts:328",
+   "note": "Watch The Show under an Actor Awards nomination shows the settled result once the show is given, by the entry's id; its refusal (watchRefusal) is its title. Read on 2026-10-25 by its builder (brief 27's K7), pressed through the command in tests/b27-ceremony.test.ts."
   },
   {
    "file": "src/ui/career/OpportunitiesPane.tsx",
@@ -591,7 +657,7 @@
    "kind": "pro.ask_more",
    "payload": "{ opportunityId: o.id }",
    "verdict": "Right",
-   "handler": "src/engine/systems/projobs.ts:2847",
+   "handler": "src/engine/systems/projobs.ts:2857",
    "note": "Ask For More (its label the figure asked: a fifth over the offer, a day or a week) has the agent ask once on a standing offer; its refusal (askMoreRefusal) is its title: no agent, no figure, or asked already. Read on 2026-10-24 by its builder (brief 27, K4), pressed through the command in tests/b27-offers.test.ts."
   },
   {
@@ -602,7 +668,7 @@
    "kind": "pro.prepare",
    "payload": "{ ...target, step: 'special' }",
    "verdict": "Right",
-   "handler": "src/engine/systems/projobs.ts:2804",
+   "handler": "src/engine/systems/projobs.ts:2814",
    "note": "The work's own preparation (Find The Voice, Watch The Original, Work On The Movement and the rest) prepares that step on the booked work; its refusal (prepareRefusal, 'special') is the button's title, and Fight Rehearsal is refused here, done only on the work's rehearsal days with the coordinator. Read on 2026-10-24 by its builder (brief 25's Module 5), pressed through the command in tests/career-workflows-screen.test.ts."
   },
   {
@@ -613,7 +679,7 @@
    "kind": "pro.prepare",
    "payload": "{ ...target, step }",
    "verdict": "Right",
-   "handler": "src/engine/systems/projobs.ts:2804"
+   "handler": "src/engine/systems/projobs.ts:2814"
   },
   {
    "file": "src/ui/career/OpportunitiesPane.tsx",
@@ -623,7 +689,7 @@
    "kind": "pro.accept_offer",
    "payload": "{ opportunityId: o.id }",
    "verdict": "Right",
-   "handler": "src/engine/systems/projobs.ts:2887"
+   "handler": "src/engine/systems/projobs.ts:2897"
   },
   {
    "file": "src/ui/career/OpportunitiesPane.tsx",
@@ -633,7 +699,7 @@
    "kind": "pro.move_audition",
    "payload": "{ opportunityId: o.id }",
    "verdict": "Right",
-   "handler": "src/engine/systems/projobs.ts:2829"
+   "handler": "src/engine/systems/projobs.ts:2839"
   },
   {
    "file": "src/ui/career/OpportunitiesPane.tsx",
@@ -643,7 +709,7 @@
    "kind": "pro.request_outside_work",
    "payload": "{ opportunityId: o.id }",
    "verdict": "Right",
-   "handler": "src/engine/systems/projobs.ts:2950"
+   "handler": "src/engine/systems/projobs.ts:2960"
   },
   {
    "file": "src/ui/career/OpportunitiesPane.tsx",
@@ -653,7 +719,7 @@
    "kind": "pro.ask_hold",
    "payload": "{ opportunityId: o.id }",
    "verdict": "Right",
-   "handler": "src/engine/systems/projobs.ts:2871",
+   "handler": "src/engine/systems/projobs.ts:2881",
    "note": "Ask Them To Decide, on a part whose production holds the actor's dates, asks it to book them or let the hold go before another offer on the same days lapses; its refusal (holdAskRefusal) is its title: no hold, already offered, asked already, no other offer, or one lapsing before the answer. Read on 2026-10-25 by its builder (brief 27, K4), pressed through the command in tests/b27-holds.test.ts."
   },
   {
@@ -664,7 +730,7 @@
    "kind": "pro.decline_offer",
    "payload": "{ opportunityId: o.id }",
    "verdict": "Right",
-   "handler": "src/engine/systems/projobs.ts:2938"
+   "handler": "src/engine/systems/projobs.ts:2948"
   },
   {
    "file": "src/ui/career/OpportunitiesPane.tsx",
@@ -674,7 +740,7 @@
    "kind": "pro.submit",
    "payload": "{ opportunityId: o.id }",
    "verdict": "Right",
-   "handler": "src/engine/systems/projobs.ts:2795"
+   "handler": "src/engine/systems/projobs.ts:2805"
   },
   {
    "file": "src/ui/career/OpportunitiesPane.tsx",
@@ -684,7 +750,7 @@
    "kind": "pro.tape_audition",
    "payload": "{ opportunityId: o.id }",
    "verdict": "Right",
-   "handler": "src/engine/systems/projobs.ts:2814"
+   "handler": "src/engine/systems/projobs.ts:2824"
   },
   {
    "file": "src/ui/career/RepresentationPane.tsx",
@@ -694,7 +760,7 @@
    "kind": "pro.supply_material",
    "payload": "{ agentId: agent.id }",
    "verdict": "Right",
-   "handler": "src/engine/systems/proagent.ts:1129",
+   "handler": "src/engine/systems/proagent.ts:1133",
    "note": "The label names the office as the agent’s panel does: His Office for the game’s own agent, The Office for a real one (from 2026-10-24). It sends what that office asked for, and nothing else."
   },
   {
@@ -705,7 +771,7 @@
    "kind": "pro.end_agreement",
    "payload": "{ agentId: agent.id, how }",
    "verdict": "Right",
-   "handler": "src/engine/systems/proagent.ts:1198",
+   "handler": "src/engine/systems/proagent.ts:1202",
    "note": "One button for each way an agreement ends (`ends`: by agreement, no offer in its days, under ten days' work), each sending its own `how`."
   },
   {
@@ -716,7 +782,7 @@
    "kind": "pro.accept_agreement",
    "payload": "{ agentId: agent.id }",
    "verdict": "Right",
-   "handler": "src/engine/systems/proagent.ts:1165"
+   "handler": "src/engine/systems/proagent.ts:1169"
   },
   {
    "file": "src/ui/career/RepresentationPane.tsx",
@@ -726,7 +792,7 @@
    "kind": "pro.ask_referral",
    "payload": "{ agentId: agent.id, engagementId: j.engagementId }",
    "verdict": "Right",
-   "handler": "src/engine/systems/proagent.ts:1087"
+   "handler": "src/engine/systems/proagent.ts:1091"
   },
   {
    "file": "src/ui/career/RepresentationPane.tsx",
@@ -736,7 +802,7 @@
    "kind": "pro.ask_to_move",
    "payload": "{ meetingId: m.id }",
    "verdict": "Right",
-   "handler": "src/engine/systems/proagent.ts:1149"
+   "handler": "src/engine/systems/proagent.ts:1153"
   },
   {
    "file": "src/ui/career/RepresentationPane.tsx",
@@ -746,7 +812,7 @@
    "kind": "pro.agent_check",
    "payload": "{ agentId: agent.id }",
    "verdict": "Right",
-   "handler": "src/engine/systems/proagent.ts:1071"
+   "handler": "src/engine/systems/proagent.ts:1075"
   },
   {
    "file": "src/ui/career/RepresentationPane.tsx",
@@ -756,7 +822,7 @@
    "kind": "pro.decline_agreement",
    "payload": "{ agentId: agent.id }",
    "verdict": "Right",
-   "handler": "src/engine/systems/proagent.ts:1184"
+   "handler": "src/engine/systems/proagent.ts:1188"
   },
   {
    "file": "src/ui/career/RepresentationPane.tsx",
@@ -766,7 +832,7 @@
    "kind": "pro.agent_notice",
    "payload": "{ agentId: agent.id }",
    "verdict": "Right",
-   "handler": "src/engine/systems/proagent.ts:1060"
+   "handler": "src/engine/systems/proagent.ts:1064"
   },
   {
    "file": "src/ui/career/RepresentationPane.tsx",
@@ -776,7 +842,7 @@
    "kind": "pro.send_materials",
    "payload": "{ agentId: agent.id }",
    "verdict": "Right",
-   "handler": "src/engine/systems/proagent.ts:1106"
+   "handler": "src/engine/systems/proagent.ts:1110"
   },
   {
    "file": "src/ui/career/SchoolShowcase.tsx",
@@ -796,7 +862,7 @@
    "kind": "pro.apply_work_visa",
    "payload": "{ engagementId: e.id }",
    "verdict": "Right",
-   "handler": "src/engine/systems/worktrip.ts:617",
+   "handler": "src/engine/systems/worktrip.ts:697",
    "note": "Apply For The Visa on a booking abroad applies for the visa that booking needs, tied to it; its refusal (visaRefusal) is said under it before it is pressed. Read 2026-10-23, brief 25. From 2026-10-24 (brief 27) it reads Apply For The ETA where the route is the UK’s concession, and the same command applies for the ETA the route needs, its £20 paid from the bank."
   },
   {
@@ -1583,7 +1649,7 @@
    "kind": "pro.update_resume",
    "payload": "",
    "verdict": "Right",
-   "handler": "src/engine/systems/pro.ts:1380"
+   "handler": "src/engine/systems/pro.ts:1397"
   },
   {
    "file": "src/ui/workspaces/CareerWorkspace.tsx",
@@ -1593,7 +1659,7 @@
    "kind": "pro.headshots",
    "payload": "",
    "verdict": "Right",
-   "handler": "src/engine/systems/pro.ts:1363"
+   "handler": "src/engine/systems/pro.ts:1380"
   },
   {
    "file": "src/ui/workspaces/CareerWorkspace.tsx",
@@ -1603,7 +1669,7 @@
    "kind": "pro.cut_reel",
    "payload": "{ pieces: chosen }",
    "verdict": "Right",
-   "handler": "src/engine/systems/pro.ts:1392"
+   "handler": "src/engine/systems/pro.ts:1409"
   },
   {
    "file": "src/ui/workspaces/CareerWorkspace.tsx",
@@ -1613,7 +1679,7 @@
    "kind": "pro.mix_demo",
    "payload": "{ pieces: chosen }",
    "verdict": "Right",
-   "handler": "src/engine/systems/pro.ts:1413",
+   "handler": "src/engine/systems/pro.ts:1430",
    "note": "Mix A Voice Demo mixes the ticked voice recordings into a new version of the demo, its cost from the bank and two hours on the clock; its refusal (demoRefusal) is its title. Read on 2026-10-24 by its builder (brief 27, K3), pressed through the Portfolio tab in tests/b27-voice-demo.test.ts."
   },
   {
@@ -1624,7 +1690,7 @@
    "kind": "pro.set_name",
    "payload": "{ name }",
    "verdict": "Right",
-   "handler": "src/engine/systems/pro.ts:1351"
+   "handler": "src/engine/systems/pro.ts:1368"
   },
   {
    "file": "src/ui/workspaces/PapersWorkspace.tsx",
@@ -2091,6 +2157,22 @@
    "handler": "src/engine/systems/accountlife.ts:613"
   },
   {
+   "file": "src/engine/systems/ceremony.ts",
+   "label": "Go To The Ceremony",
+   "kind": "pro.ceremony_rsvp",
+   "payload": "{ entryId: n.id, attend: true }",
+   "verdict": "Right",
+   "handler": "src/engine/systems/ceremony.ts:314"
+  },
+  {
+   "file": "src/engine/systems/ceremony.ts",
+   "label": "Watch From Home",
+   "kind": "pro.ceremony_rsvp",
+   "payload": "{ entryId: n.id, attend: false }",
+   "verdict": "Right",
+   "handler": "src/engine/systems/ceremony.ts:314"
+  },
+  {
    "file": "src/engine/systems/permission.ts",
    "label": "Apply For OPT",
    "kind": "documents.apply_opt",
@@ -2112,7 +2194,7 @@
    "kind": "pro.accept_offer",
    "payload": "{ opportunityId: o.id }",
    "verdict": "Right",
-   "handler": "src/engine/systems/projobs.ts:2887"
+   "handler": "src/engine/systems/projobs.ts:2897"
   },
   {
    "file": "src/engine/systems/projobs.ts",
@@ -2120,7 +2202,7 @@
    "kind": "pro.decline_offer",
    "payload": "{ opportunityId: o.id }",
    "verdict": "Right",
-   "handler": "src/engine/systems/projobs.ts:2938"
+   "handler": "src/engine/systems/projobs.ts:2948"
   },
   {
    "file": "src/engine/systems/taxreturn.ts",
@@ -2133,13 +2215,22 @@
  ],
  "stopChoices": [
   {
+   "file": "src/engine/systems/ceremony.ts",
+   "stop": "SPEECH_KIND",
+   "label": "Go Up And Accept",
+   "kind": "pro.ceremony_accept",
+   "payload": "(item) => ({ entryId: item.payload.entryId })",
+   "verdict": "Right",
+   "handler": "src/engine/systems/ceremony.ts:316"
+  },
+  {
    "file": "src/engine/systems/proagent.ts",
    "stop": "MEETING_KIND",
    "label": "Ask To Move",
    "kind": "pro.ask_to_move",
    "payload": "(item) => ({ meetingId: item.payload.meetingId })",
    "verdict": "Right",
-   "handler": "src/engine/systems/proagent.ts:1149"
+   "handler": "src/engine/systems/proagent.ts:1153"
   },
   {
    "file": "src/engine/world/clock.ts",

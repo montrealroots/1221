@@ -562,7 +562,90 @@ With that, **K6 is closed**: Parts 12 and 13 and loops 33 to 41 read against the
 finished production's way out, a season's audience read by renewal, publicity, and a revival's character plans.
 
 **The clean-clone gates since K3:** `2afeda79` exit 0, 514 test files and 5,863 tests; `830677a2` exit 0, 515 and 5,871;
-`5b1ff6ac` (K5's reshoots and the day laid up) exit 0, 517 and 5,883 (`k5-gate/gate.txt`, `k5-gate/gate-exit.txt`).
+`5b1ff6ac` (K5's reshoots and the day laid up) exit 0, 517 and 5,883 (`k5-gate/gate.txt`, `k5-gate/gate-exit.txt`);
+`7e12b026` (K6 closed) exit 0, 521 and 5,916.
+
+## K7: Festivals, Awards And The Ceremony
+
+Part 11's loops 42 to 47 and Parts 14 and 15, read against what brief 25 built. **Already in the game, and kept:** the
+Television Academy's Emmys by its 78th rules (the eligibility year, entering yourself and its fees, the guest rule, the
+share of the running time, the nomination table and its ties, the final round, the Creative Arts Emmys and the
+telecast); Sundance 2027 by its submissions page (the production alone submitting, the premiere rule, the festival's
+word and the screening); every other institution the brief names, listed with what was read of it and not deciding;
+recognition as visibility, casting reading it and nothing paying it; and, from K3, the résumé listing a nomination, a
+win and a selection once each is public.
+
+**Built, the Actor Awards presented by SAG-AFTRA** (loops 44 and 45). The brief asks for the major awards across the
+supported markets, each by its own process. The Academy's and BAFTA's rules pages still refuse this build (HTTP 403,
+not retried as a policy denial), and the Actor Awards' 33rd Rules & Regulations, fetched in brief 25 and never applied,
+were read in full today and put in the register (`b25-S48`, nineteen facts, each quoted and checked against the page),
+with its home page for the show's hour and the 32nd's results release for its city (`b27-AA-home`, `b27-AA-32nd`). It is
+the award a SAG-AFTRA actor can enter for themselves across film and television, so it's the one built
+(`systems/actorawards.ts`): eligibility by Section Three (work first shown in the calendar year; a production signatory
+to a SAG-AFTRA agreement; a film over 60 minutes, not a documentary, with a week's paid run in cinemas in a major market,
+so a film sent to streaming instead has none; a comedy or drama series of six episodes or more, a limited or anthology
+series, or a television movie; any performer who appeared, on camera or in voice, with no least screen time), each
+refusal said; placement by Section One (a film's lead in the leading role, anyone else in the supporting, and
+television's categories not split by billing); submission by Section Four, through the command (`pro.actor_submit`,
+$200 a performance, from August 24 to November 2 at 5 PM Pacific, a second submission for the same performance
+returned) or by the production at the close by its draw (decider `actor.entry`); nominations by Section Five, A (the
+committees' five in each category, every tie at the line, and of one actor's performances in a category only the one
+with more votes; decider `actor.field`, the field the game's); the final round by Five, B (decider `actor.final`, a tie
+giving the award to each tied); the show on its day and hour. A later year is the 33rd carried forward, said so. A
+nomination and a win count toward visibility as an Emmy's do, and go on the résumé. **Assumptions, said:** the field's
+counts, the production's chances (the Emmys'), the nominations' hour (6 AM Pacific), and Los Angeles as the show's city,
+as the 32nd's was dated from there. **Not built, said:** the player's own ballot as a member. A paid-up member in the US
+votes the final round, and is drawn for a nominating committee only at random; one vote among the membership's is a vote
+the simulated field can't weigh, and giving the player more than that would be the control of votes the brief forbids.
+
+**Built, the ceremony** (loop 46, `systems/ceremony.ts`), for every nomination, an Emmy's as an Actor Award's. The nominee
+is invited, asked as a question due a week before the show (the Actor Awards' rules: attendance "is by invitation only").
+Going (`pro.ceremony_rsvp`) books the trip the way a work trip's legs are booked (`bookCeremonyTrip`, `systems/worktrip.ts`),
+out to land a day and a half ahead and home the morning after, held against other bookings, refused where it would clash;
+nobody pays it, since the game prices no trip a production doesn't book. Remarks are prepared an hour at a time
+(`pro.ceremony_prepare`). The show is a stop on the clock in Los Angeles; the result was settled at the final round, so
+being there changes nothing about it. Losing in the room adds nothing a loss at home doesn't, as the loop asks ("justified
+professional consequences", and no boost merely for appearing). Winning in the room, the clock stops a minute on for the
+moment to go up (its choice Go Up And Accept, `pro.ceremony_accept`): the speech is judged from the remarks' preparation
+and the actor's composure and presence with its own draw (decider `ceremony.speech`), and a Strong speech or better is
+quoted from the night and makes the actor a little more visible for a while (`VISIBILITY.speech`). Going on past the
+moment, a thank you and a seat. A flight missed, the show goes on without the actor, the win accepted without them.
+Watching from home (`pro.watch_ceremony`) reads the settled result, as it did. **Found on the way:** the show's one stop
+first ran its four hours on Go, so the half hour to go up had passed before anything could be pressed; the moment is a
+stop of its own.
+
+**Built, after the award** (loop 47: "appropriate representatives and casting processes can consider it → relevant
+opportunities or negotiation circumstances may change → effects persist without making future work automatic. Avoid
+endlessly stacking"). An agent's office reads recognition as a step up in the work it has to go on, once however much
+there is, and says so (`interestOf`, `systems/proagent.ts`); a production asked for more agrees likelier by half the
+actor's visibility, at most fifteen points, fading as recognition does (`NEGOTIATE.visibility`). Casting already read
+visibility, and the résumé the honors.
+
+**Not built, said so.** A festival's attendance (loop 43). A selected film screens, and its selection counts as recognition,
+whether or not the actor goes, and the loop forbids "arbitrary career boosts merely for appearing"; the only justified
+difference going could make is the people met there, which the game has no record of beyond an agent's meetings. A
+choice to go that nothing read would be the declared word the house standard forbids, so it isn't offered. Festivals
+other than Sundance: Cannes', Venice's, the Berlinale's and IDFA's pages were read for dates and premiere rules only, and
+TIFF's and Annecy's turned this build away behind a check it doesn't get around, so none of them decides; nor do the
+Oscars, BAFTA, AACTA or the Golden Globes, whose rules were refused or read without being applied, each said on the tab's
+Awards And Festivals panel as it was.
+
+Held by `tests/b27-actor-awards.test.ts` (the calendar as read and carried forward; every fixed part placed or refused by
+the rules; the nominees' rules; a Desk Clerk submitted through the command, its fee paid and a second refused, nominated
+and losing at the 34th, its résumé line and visibility; the falsifiability twin not submitted, its production's draw
+saying no, never in the field; a production submitting by its draw), `tests/b27-ceremony.test.ts` (the invitation and
+going, with the trip and the show's call, a clash refused, remarks an hour at a time; a win in the room played by the
+clock, the speech lending visibility, and the falsifiability twin with the remarks unprepared lending none; the moment let
+pass; a loss in the room and one watched from home the same, and an Emmy nomination invited too; a flight missed) and
+`tests/b27-award-effects.test.ts` (the agent's read, once; the ask, raised with a nomination and kept without). All
+twenty-one mutations failed a test: any union eligible, a film sent to streaming eligible, two of an actor's performances
+nominated, ties left out, the production always submitting, a second submission taken, submissions before the window,
+visibility and the résumé blind to the guild; a clash not read, no trip booked, remarks never prepared, a speech lending
+nothing, the speech not reading the remarks, the moment to go up no stop, the trip not read, an Emmy nominee not invited,
+the moment let pass still speaking; an agent blind to recognition, recognition stacking, and the ask blind to visibility.
+The first of them survived until a case was added for a film made outside SAG-AFTRA's agreements, in the US and abroad:
+every fixed part outside them was refused by another rule first. **Found on the way:** the institutions test held each
+institution's sources to brief 25's source file alone, and now reads brief 27's register too.
 
 ## Defects Found And Fixed
 

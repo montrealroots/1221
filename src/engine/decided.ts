@@ -50,6 +50,8 @@ import { productionsOf, seriesOfYear, slatePartsAt } from './systems/slate';
 import { PROJECTS } from './content/careerwork';
 import { SERIES, seriesById } from './content/series';
 import { decisionsTo, episodeDrawn, optionDrawn, revivalReturns, seasonAudience } from './systems/series';
+import { actorFieldDrawn, actorProductionSubmits, actorWinners } from './systems/actorawards';
+import { speechOf } from './systems/ceremony';
 import { lateDays, rerunDrawn } from './systems/contracts';
 import { cutDrawn, furtherDrawn, loopDrawn, pagesDrawn, planWork, promoDrawn, stressDrawn } from './systems/workflow';
 import { simulateRun } from './systems/charts';
@@ -947,6 +949,42 @@ defineDecider<{ sim: Simulation; year: number; recurring: boolean }, string>({
     const s = seriesById(base.series!)!;
     return Array.from({ length: 40 }, (_, n) => (revivalReturns(sim, { ...s, id: `${s.id}-${n}` }, year, base) ? '1' : '0')).join('');
   },
+});
+
+defineDecider<{ sim: Simulation; year: number }, string>({
+  id: 'actor.entry',
+  decides: 'Whether a production submits for the Actor Awards a performance the player didn’t: half the time for Strong work or better, a tenth otherwise.',
+  drawnIn: 'src/engine/systems/actorawards.ts',
+  reads: { year: (o, t) => ({ ...o, year: 2026 + Math.round(t * 6) }), world: (o, t) => ({ ...o, sim: atYale(Math.round(t * 20)) }) },
+  sample: (seed) => ({ sim: atYale(seed), year: 2026 + (seed % 6) }),
+  decide: ({ sim, year }) => Array.from({ length: 40 }, (_, n) => `${actorProductionSubmits(sim, year, `p${n}`, 'r', n % 2 === 0) ? 1 : 0}`).join(''),
+});
+
+defineDecider<{ sim: Simulation; year: number }, string>({
+  id: 'actor.field',
+  decides: 'An Actor Awards category’s anonymous field in a year: how many performances are submitted, and the votes each draws from the nominating committee.',
+  drawnIn: 'src/engine/systems/actorawards.ts',
+  reads: { year: (o, t) => ({ ...o, year: 2026 + Math.round(t * 6) }), world: (o, t) => ({ ...o, sim: atYale(Math.round(t * 20)) }) },
+  sample: (seed) => ({ sim: atYale(seed), year: 2026 + (seed % 6) }),
+  decide: ({ sim, year }) => { const f = actorFieldDrawn(sim, year, 'tv-drama'); return `${f.submissions}:${f.others.slice(0, 8).map((o) => o.votes).join(',')}`; },
+});
+
+defineDecider<{ sim: Simulation; year: number }, string>({
+  id: 'actor.final',
+  decides: 'The Actor Awards’ final round in a category: each nominee’s votes from the nominations with the round’s own draw, the most winning and a tie giving the award to each tied.',
+  drawnIn: 'src/engine/systems/actorawards.ts',
+  reads: { year: (o, t) => ({ ...o, year: 2026 + Math.round(t * 6) }), world: (o, t) => ({ ...o, sim: atYale(Math.round(t * 20)) }) },
+  sample: (seed) => ({ sim: atYale(seed), year: 2026 + (seed % 6) }),
+  decide: ({ sim, year }) => actorWinners(sim, year, 'film-lead', ['a', 'b', 'c', 'd', 'e'], { a: 700, b: 690, c: 650, d: 600, e: 560 }).join(','),
+});
+
+defineDecider<{ sim: Simulation; year: number }, string>({
+  id: 'ceremony.speech',
+  decides: 'An acceptance speech’s judgment: the remarks’ preparation, the actor’s composure and presence, and its own draw.',
+  drawnIn: 'src/engine/systems/ceremony.ts',
+  reads: { year: (o, t) => ({ ...o, year: 2026 + Math.round(t * 6) }), world: (o, t) => ({ ...o, sim: atYale(Math.round(t * 20)) }) },
+  sample: (seed) => ({ sim: atYale(seed), year: 2026 + (seed % 6) }),
+  decide: ({ sim, year }) => Array.from({ length: 20 }, (_, n) => speechOf(sim, sim.player, { institution: 'actor-awards', year, creditId: `c${n}`, attend: { rsvp: 'attending', at: 0, prepared: n / 20 } } as never).band[0]).join(''),
 });
 
 defineDecider<{ sim: Simulation; first: number }, string>({

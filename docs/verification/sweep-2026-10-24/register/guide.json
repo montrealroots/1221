@@ -13,10 +13,7 @@
    "tests/time-controls.test.ts",
    "tests/whynot-time.test.ts",
    "src/engine/content/tutorial.ts:185-201 chapter 4, Moving Time On: Advance’s lines and Choose An Event; src/engine/world/tutorial.ts:51-56 isOpen: a feature with no chapter, or the guide finished, is open, else open once its chapter is read; src/engine/world/tutorial.ts:67-75 lockedBecause names the chapter and its place in the order; src/engine/world/tutorial.ts:99-104 the command bus asks it before every command while guided; src/ui/shell/TimeControls.tsx:593-594 the menu locked until it; docs/verification/sweep-2026-10-24/walk/creation/1440x900/creation.json and docs/verification/sweep-2026-10-24/walk/creation/844x390m/creation.json steps 13-14 and 20-24: read fourth, the menu’s eight lines, Tomorrow Morning through On The Way to the stop at Registration And Your Account with Go and Stand Here; docs/verification/sweep-2026-10-24/walk/README.md the three browser walks of 2026-10-24",
-   "tests/b20-guide-chapters.test.ts",
    "tests/guide-chapter-facts.test.ts",
-   "tests/whynot-time.test.ts",
-   "tests/time-controls.test.ts",
    "tests/b20-guide-chapters.test.ts the guide area’s 32 test files (tutorial, guide, the six b20-guide files, navigation, portrait, b23-pages, b23-turn, help-mechanics, guide-chapter-facts, time-controls, whynot-time, the seven guide-examples files, pro-screen, pro-representation-screen, language-frame, look-after, looking-after, evidence2-b01, journey-agent, evidence-g33-ui, looks), run on 691556f0: all green, 413 tests"
   ]
  },
@@ -32,9 +29,6 @@
    "tests/guide-examples-money.test.ts",
    "tests/guide-chapter-facts.test.ts",
    "src/engine/content/tutorial.ts:677-726 chapter 19, Your Bank: Money’s 56 commands and looks; src/engine/world/tutorial.ts:51-56 isOpen: a feature with no chapter, or the guide finished, is open, else open once its chapter is read; src/engine/world/tutorial.ts:67-75 lockedBecause names the chapter and its place in the order; src/engine/world/tutorial.ts:99-104 the command bus asks it before every command while guided; src/ui/shell/destinations.ts:83 Money on the menu gated by it; docs/verification/sweep-2026-10-24/walk/capture/audit.json Money’s five looks on two played lives",
-   "tests/b20-guide-chapters.test.ts",
-   "tests/guide-chapter-facts.test.ts",
-   "tests/guide-examples-money.test.ts",
    "tests/b20-guide-chapters.test.ts the guide area’s 32 test files (tutorial, guide, the six b20-guide files, navigation, portrait, b23-pages, b23-turn, help-mechanics, guide-chapter-facts, time-controls, whynot-time, the seven guide-examples files, pro-screen, pro-representation-screen, language-frame, look-after, looking-after, evidence2-b01, journey-agent, evidence-g33-ui, looks), run on 691556f0: all green, 413 tests"
   ]
  },
@@ -50,9 +44,6 @@
    "tests/guide-chapter-facts.test.ts",
    "tests/guide-examples-start-day-body.test.ts",
    "src/engine/content/tutorial.ts:226-244 chapter 6, How You Are: the dials, readiness, the traits and conditions; src/engine/world/tutorial.ts:51-56 isOpen: a feature with no chapter, or the guide finished, is open, else open once its chapter is read; src/engine/world/tutorial.ts:67-75 lockedBecause names the chapter and its place in the order; src/engine/world/tutorial.ts:99-104 the command bus asks it before every command while guided; src/ui/screens/Home.tsx:276 the panel locked until it, which docs/verification/sweep-2026-10-24/walk/creation/1440x900/creation.json step 16 shows after five chapters; the strip names it next",
-   "tests/b20-guide-chapters.test.ts",
-   "tests/guide-chapter-facts.test.ts",
-   "tests/guide-examples-start-day-body.test.ts",
    "tests/b20-guide-chapters.test.ts the guide area’s 32 test files (tutorial, guide, the six b20-guide files, navigation, portrait, b23-pages, b23-turn, help-mechanics, guide-chapter-facts, time-controls, whynot-time, the seven guide-examples files, pro-screen, pro-representation-screen, language-frame, look-after, looking-after, evidence2-b01, journey-agent, evidence-g33-ui, looks), run on 691556f0: all green, 413 tests"
   ]
  },
@@ -70,8 +61,6 @@
    "tests/guide-examples-start-day-body.test.ts",
    "tests/guide-chapter-facts.test.ts",
    "src/engine/content/tutorial.ts:148-165 chapter 2, What’s Coming: Up Next, Open Calendar, Go at a stop, Skip, the entry look; src/engine/world/tutorial.ts:51-56 isOpen: a feature with no chapter, or the guide finished, is open, else open once its chapter is read; src/engine/world/tutorial.ts:67-75 lockedBecause names the chapter and its place in the order; src/engine/world/tutorial.ts:99-104 the command bus asks it before every command while guided; src/ui/screens/Home.tsx:274 Up Next locked until it; docs/verification/sweep-2026-10-24/walk/creation/1440x900/creation.json and docs/verification/sweep-2026-10-24/walk/creation/844x390m/creation.json steps 9-10: read second, Up Next open after, Next: The Clock; docs/verification/sweep-2026-10-24/walk/README.md the three browser walks of 2026-10-24",
-   "tests/b20-guide-chapters.test.ts",
-   "tests/guide-chapter-facts.test.ts",
    "tests/b20-guide-screens.test.ts",
    "tests/b20-guide-chapters.test.ts the guide area’s 32 test files (tutorial, guide, the six b20-guide files, navigation, portrait, b23-pages, b23-turn, help-mechanics, guide-chapter-facts, time-controls, whynot-time, the seven guide-examples files, pro-screen, pro-representation-screen, language-frame, look-after, looking-after, evidence2-b01, journey-agent, evidence-g33-ui, looks), run on 691556f0: all green, 413 tests"
   ]
@@ -87,9 +76,7 @@
    "tests/b20-guide-chapters.test.ts",
    "tests/pro-screen.test.ts",
    "src/engine/content/tutorial.ts:451-484 chapter 13, Your Career: the Career and its five commands; src/engine/world/tutorial.ts:51-56 isOpen: a feature with no chapter, or the guide finished, is open, else open once its chapter is read; src/engine/world/tutorial.ts:67-75 lockedBecause names the chapter and its place in the order; src/engine/world/tutorial.ts:99-104 the command bus asks it before every command while guided; src/ui/shell/destinations.ts:77 Career on the menu gated by it; docs/verification/sweep-2026-10-24/walk/capture/audit.json Career Overview and Portfolio on two played lives",
-   "tests/b20-guide-chapters.test.ts",
    "tests/guide-chapter-facts.test.ts",
-   "tests/pro-screen.test.ts",
    "tests/b20-guide-chapters.test.ts the guide area’s 32 test files (tutorial, guide, the six b20-guide files, navigation, portrait, b23-pages, b23-turn, help-mechanics, guide-chapter-facts, time-controls, whynot-time, the seven guide-examples files, pro-screen, pro-representation-screen, language-frame, look-after, looking-after, evidence2-b01, journey-agent, evidence-g33-ui, looks), run on 691556f0: all green, 413 tests"
   ]
  },
@@ -107,9 +94,7 @@
    "tests/time-controls.test.ts",
    "tests/evidence2-b01.test.ts",
    "src/engine/content/tutorial.ts:166-184 chapter 3, The Clock: Play and the speed; src/engine/world/tutorial.ts:51-56 isOpen: a feature with no chapter, or the guide finished, is open, else open once its chapter is read; src/engine/world/tutorial.ts:67-75 lockedBecause names the chapter and its place in the order; src/engine/world/tutorial.ts:99-104 the command bus asks it before every command while guided; src/ui/shell/TimeControls.tsx:147-154 Play locked until it; docs/verification/sweep-2026-10-24/walk/creation/1440x900/creation.json and docs/verification/sweep-2026-10-24/walk/creation/844x390m/creation.json steps 11-12 and 17-19: read third, Play then runs the clock (Running) and Pause stops it (Paused); docs/verification/sweep-2026-10-24/walk/README.md the three browser walks of 2026-10-24",
-   "tests/b20-guide-chapters.test.ts",
    "tests/guide-chapter-facts.test.ts",
-   "tests/time-controls.test.ts",
    "tests/b20-guide-chapters.test.ts the guide area’s 32 test files (tutorial, guide, the six b20-guide files, navigation, portrait, b23-pages, b23-turn, help-mechanics, guide-chapter-facts, time-controls, whynot-time, the seven guide-examples files, pro-screen, pro-representation-screen, language-frame, look-after, looking-after, evidence2-b01, journey-agent, evidence-g33-ui, looks), run on 691556f0: all green, 413 tests"
   ]
  },
@@ -124,7 +109,6 @@
    "tests/b20-guide-chapters.test.ts",
    "tests/guide-examples-papers.test.ts",
    "src/engine/content/tutorial.ts:607-637 chapter 17, Passports And ID: the eleven document commands and the look; src/engine/world/tutorial.ts:51-56 isOpen: a feature with no chapter, or the guide finished, is open, else open once its chapter is read; src/engine/world/tutorial.ts:67-75 lockedBecause names the chapter and its place in the order; src/engine/world/tutorial.ts:99-104 the command bus asks it before every command while guided; docs/verification/sweep-2026-10-24/walk/capture/audit.json Papers Passport And ID on two played lives",
-   "tests/b20-guide-chapters.test.ts",
    "tests/guide-chapter-facts.test.ts",
    "tests/b26-papers-repeats.test.ts",
    "tests/b20-guide-chapters.test.ts the guide area’s 32 test files (tutorial, guide, the six b20-guide files, navigation, portrait, b23-pages, b23-turn, help-mechanics, guide-chapter-facts, time-controls, whynot-time, the seven guide-examples files, pro-screen, pro-representation-screen, language-frame, look-after, looking-after, evidence2-b01, journey-agent, evidence-g33-ui, looks), run on 691556f0: all green, 413 tests"
@@ -142,7 +126,6 @@
    "tests/pro-opportunities-screen.test.ts",
    "tests/pro-work.test.ts",
    "src/engine/content/tutorial.ts:512-560 chapter 15, Finding Work: submissions, auditions, offers and outside work; src/engine/world/tutorial.ts:51-56 isOpen: a feature with no chapter, or the guide finished, is open, else open once its chapter is read; src/engine/world/tutorial.ts:67-75 lockedBecause names the chapter and its place in the order; src/engine/world/tutorial.ts:99-104 the command bus asks it before every command while guided; docs/verification/sweep-2026-10-24/walk/capture/audit.json Career Opportunities and Work on two played lives",
-   "tests/b20-guide-chapters.test.ts",
    "tests/guide-chapter-facts.test.ts",
    "tests/pro-screen.test.ts",
    "tests/b20-guide-chapters.test.ts the guide area’s 32 test files (tutorial, guide, the six b20-guide files, navigation, portrait, b23-pages, b23-turn, help-mechanics, guide-chapter-facts, time-controls, whynot-time, the seven guide-examples files, pro-screen, pro-representation-screen, language-frame, look-after, looking-after, evidence2-b01, journey-agent, evidence-g33-ui, looks), run on 691556f0: all green, 413 tests"
@@ -159,9 +142,7 @@
    "tests/b20-guide-chapters.test.ts",
    "tests/mortality.test.ts",
    "src/engine/content/tutorial.ts:727-749 chapter 20, A Whole Life: your own page and the person look; src/engine/world/tutorial.ts:51-56 isOpen: a feature with no chapter, or the guide finished, is open, else open once its chapter is read; src/engine/world/tutorial.ts:67-75 lockedBecause names the chapter and its place in the order; src/engine/world/tutorial.ts:99-104 the command bus asks it before every command while guided; src/engine/world/tutorial.ts:39-47 the guide finished when it’s read, after which every gate is open",
-   "tests/b20-guide-chapters.test.ts",
    "tests/guide-chapter-facts.test.ts",
-   "tests/mortality.test.ts",
    "tests/b20-guide-chapters.test.ts the guide area’s 32 test files (tutorial, guide, the six b20-guide files, navigation, portrait, b23-pages, b23-turn, help-mechanics, guide-chapter-facts, time-controls, whynot-time, the seven guide-examples files, pro-screen, pro-representation-screen, language-frame, look-after, looking-after, evidence2-b01, journey-agent, evidence-g33-ui, looks), run on 691556f0: all green, 413 tests"
   ]
  },
@@ -178,10 +159,7 @@
    "tests/look-after.test.ts",
    "tests/looking-after.test.ts",
    "src/engine/content/tutorial.ts:261-286 chapter 8, Looking After Yourself: the menu and life.look_after; src/engine/world/tutorial.ts:51-56 isOpen: a feature with no chapter, or the guide finished, is open, else open once its chapter is read; src/engine/world/tutorial.ts:67-75 lockedBecause names the chapter and its place in the order; src/engine/world/tutorial.ts:99-104 the command bus asks it before every command while guided; src/ui/shell/TimeControls.tsx:719 the menu locked until it; docs/verification/sweep-2026-10-24/walk/capture/audit.json Look After Yourself Menu on two played lives at three sizes",
-   "tests/b20-guide-chapters.test.ts",
    "tests/guide-chapter-facts.test.ts",
-   "tests/look-after.test.ts",
-   "tests/looking-after.test.ts",
    "tests/b20-guide-chapters.test.ts the guide area’s 32 test files (tutorial, guide, the six b20-guide files, navigation, portrait, b23-pages, b23-turn, help-mechanics, guide-chapter-facts, time-controls, whynot-time, the seven guide-examples files, pro-screen, pro-representation-screen, language-frame, look-after, looking-after, evidence2-b01, journey-agent, evidence-g33-ui, looks), run on 691556f0: all green, 413 tests"
   ]
  },
@@ -196,9 +174,7 @@
    "tests/b20-guide-chapters.test.ts",
    "tests/guide-examples-money.test.ts",
    "src/engine/content/tutorial.ts:638-676 chapter 18, Money: Worth and the account, net worth and debt looks; src/engine/world/tutorial.ts:51-56 isOpen: a feature with no chapter, or the guide finished, is open, else open once its chapter is read; src/engine/world/tutorial.ts:67-75 lockedBecause names the chapter and its place in the order; src/engine/world/tutorial.ts:99-104 the command bus asks it before every command while guided; src/ui/components/Glance.tsx:33-50 Worth’s words; docs/verification/sweep-2026-10-24/walk/capture/audit.json Money Accounts on two played lives",
-   "tests/b20-guide-chapters.test.ts",
    "tests/guide-chapter-facts.test.ts",
-   "tests/guide-examples-money.test.ts",
    "tests/b20-guide-chapters.test.ts the guide area’s 32 test files (tutorial, guide, the six b20-guide files, navigation, portrait, b23-pages, b23-turn, help-mechanics, guide-chapter-facts, time-controls, whynot-time, the seven guide-examples files, pro-screen, pro-representation-screen, language-frame, look-after, looking-after, evidence2-b01, journey-agent, evidence-g33-ui, looks), run on 691556f0: all green, 413 tests"
   ]
  },
@@ -216,9 +192,7 @@
    "tests/evidence2-b01.test.ts",
    "tests/guide-examples-start-day-body.test.ts",
    "src/engine/content/tutorial.ts:202-225 chapter 5, What Needs You: the questions, Mark Read, the answers, the notice and question looks; src/engine/world/tutorial.ts:51-56 isOpen: a feature with no chapter, or the guide finished, is open, else open once its chapter is read; src/engine/world/tutorial.ts:67-75 lockedBecause names the chapter and its place in the order; src/engine/world/tutorial.ts:99-104 the command bus asks it before every command while guided; src/ui/screens/Home.tsx:218 the panel locked until it; docs/verification/sweep-2026-10-24/walk/creation/1440x900/creation.json and docs/verification/sweep-2026-10-24/walk/creation/844x390m/creation.json steps 15-16: read fifth, What Needs You open after, How You Are still locked with Read About It; docs/verification/sweep-2026-10-24/walk/README.md the three browser walks of 2026-10-24",
-   "tests/b20-guide-chapters.test.ts",
    "tests/guide-chapter-facts.test.ts",
-   "tests/b20-guide-screens.test.ts",
    "tests/b26-needs-repeats.test.ts",
    "tests/b20-guide-chapters.test.ts the guide area’s 32 test files (tutorial, guide, the six b20-guide files, navigation, portrait, b23-pages, b23-turn, help-mechanics, guide-chapter-facts, time-controls, whynot-time, the seven guide-examples files, pro-screen, pro-representation-screen, language-frame, look-after, looking-after, evidence2-b01, journey-agent, evidence-g33-ui, looks), run on 691556f0: all green, 413 tests"
   ]
@@ -235,9 +209,6 @@
    "tests/guide-examples-papers.test.ts",
    "tests/guide-chapter-facts.test.ts",
    "src/engine/content/tutorial.ts:561-606 chapter 16, Cover, Benefits And Returns: Papers and its 39 commands; src/engine/world/tutorial.ts:51-56 isOpen: a feature with no chapter, or the guide finished, is open, else open once its chapter is read; src/engine/world/tutorial.ts:67-75 lockedBecause names the chapter and its place in the order; src/engine/world/tutorial.ts:99-104 the command bus asks it before every command while guided; src/ui/shell/destinations.ts:85 Papers on the menu gated by it; docs/verification/sweep-2026-10-24/walk/capture/audit.json the five Papers looks on two played lives",
-   "tests/b20-guide-chapters.test.ts",
-   "tests/guide-chapter-facts.test.ts",
-   "tests/guide-examples-papers.test.ts",
    "tests/b20-guide-chapters.test.ts the guide area’s 32 test files (tutorial, guide, the six b20-guide files, navigation, portrait, b23-pages, b23-turn, help-mechanics, guide-chapter-facts, time-controls, whynot-time, the seven guide-examples files, pro-screen, pro-representation-screen, language-frame, look-after, looking-after, evidence2-b01, journey-agent, evidence-g33-ui, looks), run on 691556f0: all green, 413 tests"
   ]
  },
@@ -253,7 +224,6 @@
    "tests/guide-examples-start-day-body.test.ts",
    "tests/time-stops.test.ts",
    "src/engine/content/tutorial.ts:287-304 chapter 9, Your Own Plans: schedule, cancel, the plans and stretch looks; src/engine/world/tutorial.ts:51-56 isOpen: a feature with no chapter, or the guide finished, is open, else open once its chapter is read; src/engine/world/tutorial.ts:67-75 lockedBecause names the chapter and its place in the order; src/engine/world/tutorial.ts:99-104 the command bus asks it before every command while guided; src/ui/workspaces/CalendarWorkspace.tsx:300-392 the plan form behind it",
-   "tests/b20-guide-chapters.test.ts",
    "tests/guide-chapter-facts.test.ts",
    "tests/calendar.test.ts",
    "tests/b26-life-repeats.test.ts",
@@ -272,9 +242,6 @@
    "tests/guide-examples-craft.test.ts",
    "tests/guide-chapter-facts.test.ts",
    "src/engine/content/tutorial.ts:413-450 chapter 12, You As An Actor: the Profile, practice, study, briefs, self-tapes and their looks; src/engine/world/tutorial.ts:51-56 isOpen: a feature with no chapter, or the guide finished, is open, else open once its chapter is read; src/engine/world/tutorial.ts:67-75 lockedBecause names the chapter and its place in the order; src/engine/world/tutorial.ts:99-104 the command bus asks it before every command while guided; src/ui/shell/GameShell.tsx:176-190 your name at the rail’s foot locked until it; docs/verification/sweep-2026-10-24/walk/capture/audit.json Player Profile on two played lives",
-   "tests/b20-guide-chapters.test.ts",
-   "tests/guide-chapter-facts.test.ts",
-   "tests/guide-examples-craft.test.ts",
    "tests/b20-guide-chapters.test.ts the guide area’s 32 test files (tutorial, guide, the six b20-guide files, navigation, portrait, b23-pages, b23-turn, help-mechanics, guide-chapter-facts, time-controls, whynot-time, the seven guide-examples files, pro-screen, pro-representation-screen, language-frame, look-after, looking-after, evidence2-b01, journey-agent, evidence-g33-ui, looks), run on 691556f0: all green, 413 tests"
   ]
  },
@@ -290,9 +257,7 @@
    "tests/pro-representation-screen.test.ts",
    "tests/journey-agent.test.ts",
    "src/engine/content/tutorial.ts:485-511 chapter 14, Representation: the agent’s ten commands and Show The Reasons; src/engine/world/tutorial.ts:51-56 isOpen: a feature with no chapter, or the guide finished, is open, else open once its chapter is read; src/engine/world/tutorial.ts:67-75 lockedBecause names the chapter and its place in the order; src/engine/world/tutorial.ts:99-104 the command bus asks it before every command while guided; docs/verification/sweep-2026-10-24/walk/capture/audit.json Career Representation on two played lives",
-   "tests/b20-guide-chapters.test.ts",
    "tests/guide-chapter-facts.test.ts",
-   "tests/pro-representation-screen.test.ts",
    "tests/b20-guide-chapters.test.ts the guide area’s 32 test files (tutorial, guide, the six b20-guide files, navigation, portrait, b23-pages, b23-turn, help-mechanics, guide-chapter-facts, time-controls, whynot-time, the seven guide-examples files, pro-screen, pro-representation-screen, language-frame, look-after, looking-after, evidence2-b01, journey-agent, evidence-g33-ui, looks), run on 691556f0: all green, 413 tests"
   ]
  },
@@ -310,10 +275,6 @@
    "tests/guide-examples-productions.test.ts",
    "tests/guide-chapter-facts.test.ts",
    "src/engine/content/tutorial.ts:342-412 chapter 11, Drama School: the School and its 46 commands and looks; src/engine/world/tutorial.ts:51-56 isOpen: a feature with no chapter, or the guide finished, is open, else open once its chapter is read; src/engine/world/tutorial.ts:67-75 lockedBecause names the chapter and its place in the order; src/engine/world/tutorial.ts:99-104 the command bus asks it before every command while guided; src/ui/workspaces/WorkspaceRouter.tsx:31-39 the School locked as a screen until it; docs/verification/sweep-2026-10-24/walk/capture/audit.json the School’s six looks on two played lives",
-   "tests/b20-guide-chapters.test.ts",
-   "tests/guide-chapter-facts.test.ts",
-   "tests/guide-examples-school.test.ts",
-   "tests/guide-examples-coursework.test.ts",
    "tests/b20-guide-chapters.test.ts the guide area’s 32 test files (tutorial, guide, the six b20-guide files, navigation, portrait, b23-pages, b23-turn, help-mechanics, guide-chapter-facts, time-controls, whynot-time, the seven guide-examples files, pro-screen, pro-representation-screen, language-frame, look-after, looking-after, evidence2-b01, journey-agent, evidence-g33-ui, looks), run on 691556f0: all green, 413 tests"
   ]
  },
@@ -330,7 +291,6 @@
    "tests/time-stops.test.ts",
    "tests/whynot-time.test.ts",
    "src/engine/content/tutorial.ts:245-260 chapter 7, Sleep: the dialog and life.sleep; src/engine/world/tutorial.ts:51-56 isOpen: a feature with no chapter, or the guide finished, is open, else open once its chapter is read; src/engine/world/tutorial.ts:67-75 lockedBecause names the chapter and its place in the order; src/engine/world/tutorial.ts:99-104 the command bus asks it before every command while guided; src/ui/shell/TimeControls.tsx:109 and src/ui/shell/TimeControls.tsx:155 Sleep locked until it, and docs/verification/sweep-2026-10-24/walk/creation/1440x900/creation.json step 26: pressed unread it opens the guide at Sleep, not the dialog",
-   "tests/b20-guide-chapters.test.ts",
    "tests/guide-chapter-facts.test.ts",
    "tests/b26-life-repeats.test.ts",
    "tests/b20-guide-chapters.test.ts the guide area’s 32 test files (tutorial, guide, the six b20-guide files, navigation, portrait, b23-pages, b23-turn, help-mechanics, guide-chapter-facts, time-controls, whynot-time, the seven guide-examples files, pro-screen, pro-representation-screen, language-frame, look-after, looking-after, evidence2-b01, journey-agent, evidence-g33-ui, looks), run on 691556f0: all green, 413 tests"
@@ -348,7 +308,6 @@
    "tests/b20-guide-promises.test.ts",
    "tests/guide-examples-start-day-body.test.ts",
    "src/engine/content/tutorial.ts:305-341 chapter 10, Weather: the panel and its looks; src/engine/world/tutorial.ts:51-56 isOpen: a feature with no chapter, or the guide finished, is open, else open once its chapter is read; src/engine/world/tutorial.ts:67-75 lockedBecause names the chapter and its place in the order; src/engine/world/tutorial.ts:99-104 the command bus asks it before every command while guided; src/ui/screens/Home.tsx:211 Weather locked until it, which docs/verification/sweep-2026-10-24/walk/creation/1440x900/creation.json step 7 shows at a new life",
-   "tests/b20-guide-chapters.test.ts",
    "tests/guide-chapter-facts.test.ts",
    "tests/weather.test.ts",
    "tests/b20-guide-chapters.test.ts the guide area’s 32 test files (tutorial, guide, the six b20-guide files, navigation, portrait, b23-pages, b23-turn, help-mechanics, guide-chapter-facts, time-controls, whynot-time, the seven guide-examples files, pro-screen, pro-representation-screen, language-frame, look-after, looking-after, evidence2-b01, journey-agent, evidence-g33-ui, looks), run on 691556f0: all green, 413 tests"
@@ -370,10 +329,7 @@
    "tests/guide-examples-start-day-body.test.ts",
    "tests/help-mechanics.test.ts",
    "src/engine/content/tutorial.ts:118-147 chapter 1, Your Life, Hour By Hour: Where You Are and the day’s looks; src/engine/world/tutorial.ts:51-56 isOpen: a feature with no chapter, or the guide finished, is open, else open once its chapter is read; src/engine/world/tutorial.ts:67-75 lockedBecause names the chapter and its place in the order; src/engine/world/tutorial.ts:99-104 the command bus asks it before every command while guided; docs/verification/sweep-2026-10-24/walk/creation/1440x900/creation.json and docs/verification/sweep-2026-10-24/walk/creation/844x390m/creation.json steps 7-8: the guide opens on it at a new life with Play, Sleep, Advance, Where You Are and Weather locked; I’ve Read It opens Where You Are and offers What’s Coming; docs/verification/sweep-2026-10-24/walk/README.md the three browser walks of 2026-10-24",
-   "tests/b20-guide-chapters.test.ts",
    "tests/guide-chapter-facts.test.ts",
-   "tests/b20-guide-startup.test.ts",
-   "tests/tutorial.test.ts",
    "tests/b20-guide-chapters.test.ts the guide area’s 32 test files (tutorial, guide, the six b20-guide files, navigation, portrait, b23-pages, b23-turn, help-mechanics, guide-chapter-facts, time-controls, whynot-time, the seven guide-examples files, pro-screen, pro-representation-screen, language-frame, look-after, looking-after, evidence2-b01, journey-agent, evidence-g33-ui, looks), run on 691556f0: all green, 413 tests"
   ]
  },
@@ -390,7 +346,6 @@
    "tests/language-dynamic.test.ts",
    "src/ui/looks/attention.tsx:204-302 a question: its stage, its place on Home, its answers, when it closes and what it’s about; src/engine/world/world.ts:162-173 openDecisions’ order",
    "tests/decisions-2026-10-14.test.ts",
-   "tests/looks.test.ts",
    "tests/time-controls.test.ts the shell’s, the guide’s and the decisions’ 55 test files, run on 86890e43: all green; tests/b26-needs-repeats.test.ts, a question raised twice, answered and dismissed twice, marked read twice, left to its date and reloaded, green"
   ]
  },
@@ -406,7 +361,6 @@
    "tests/language-dynamic.test.ts",
    "tests/looks.test.ts",
    "src/ui/looks/attention.tsx:308-389 a notice: read or unread, its place, what Mark Read does, what it’s about and the question beside it; src/engine/world/world.ts:175-179 the unread’s order",
-   "tests/looks.test.ts",
    "tests/evidence-g33-ui.test.ts",
    "tests/time-controls.test.ts the shell’s, the guide’s and the decisions’ 55 test files, run on 86890e43: all green; tests/b26-needs-repeats.test.ts, a question raised twice, answered and dismissed twice, marked read twice, left to its date and reloaded, green"
   ]
@@ -443,8 +397,6 @@
    "tests/b20-guide-promises.test.ts",
    "tests/b20-guide-screens.test.ts",
    "src/engine/content/guide/start.ts:109-150 Finding Your Way: Go There on a notice takes you to its screen, and to its tab where the notice names one; src/ui/screens/Home.tsx:253-255 and src/ui/screens/Updates.tsx:78-150; src/ui/guide/Help.tsx:168-231 the reference: an entry’s links to the entries it names, each open once its chapter is read (src/ui/guide/Help.tsx:232-246 EntryLink); src/ui/guide/Help.tsx:91-167 ? opens it on this screen’s entries and / finds; src/ui/guide/HowItWorks.tsx:12-27 How This Works beside a feature",
-   "tests/b20-guide-promises.test.ts",
-   "tests/b20-guide-screens.test.ts",
    "tests/notices-rollback.test.ts",
    "tests/b20-guide-chapters.test.ts the guide area’s 32 test files (tutorial, guide, the six b20-guide files, navigation, portrait, b23-pages, b23-turn, help-mechanics, guide-chapter-facts, time-controls, whynot-time, the seven guide-examples files, pro-screen, pro-representation-screen, language-frame, look-after, looking-after, evidence2-b01, journey-agent, evidence-g33-ui, looks), run on 691556f0: all green, 413 tests"
   ]
@@ -459,7 +411,6 @@
   "evidence": [
    "tests/b20-guide-promises.test.ts",
    "src/engine/content/guide/start.ts:109-150 Finding Your Way: a place joins the menu once its chapter is read; src/ui/shell/destinations.ts:40-101 the menu’s groups and each entry’s feature; src/ui/shell/GameShell.tsx:137-200 the rail lists the open ones; src/ui/guide/Help.tsx:168-231 the reference: an entry’s links to the entries it names, each open once its chapter is read (src/ui/guide/Help.tsx:232-246 EntryLink); src/ui/guide/Help.tsx:91-167 ? opens it on this screen’s entries and / finds; src/ui/guide/HowItWorks.tsx:12-27 How This Works beside a feature",
-   "tests/b20-guide-promises.test.ts",
    "tests/navigation.test.ts",
    "tests/b20-guide-chapters.test.ts the guide area’s 32 test files (tutorial, guide, the six b20-guide files, navigation, portrait, b23-pages, b23-turn, help-mechanics, guide-chapter-facts, time-controls, whynot-time, the seven guide-examples files, pro-screen, pro-representation-screen, language-frame, look-after, looking-after, evidence2-b01, journey-agent, evidence-g33-ui, looks), run on 691556f0: all green, 413 tests"
   ]
@@ -475,7 +426,6 @@
    "tests/b20-guide-promises.test.ts",
    "tests/b20-guide-chapters.test.ts",
    "src/engine/content/guide/start.ts:61-108 The Guide: What’s Coming opens the calendar and the dialog that asks what to do at a commitment; src/ui/screens/Home.tsx:274 and src/ui/shell/TimeControls.tsx:358-457; src/ui/guide/Help.tsx:168-231 the reference: an entry’s links to the entries it names, each open once its chapter is read (src/ui/guide/Help.tsx:232-246 EntryLink); src/ui/guide/Help.tsx:91-167 ? opens it on this screen’s entries and / finds; src/ui/guide/HowItWorks.tsx:12-27 How This Works beside a feature",
-   "tests/b20-guide-promises.test.ts",
    "tests/time-stops.test.ts",
    "tests/b20-guide-chapters.test.ts the guide area’s 32 test files (tutorial, guide, the six b20-guide files, navigation, portrait, b23-pages, b23-turn, help-mechanics, guide-chapter-facts, time-controls, whynot-time, the seven guide-examples files, pro-screen, pro-representation-screen, language-frame, look-after, looking-after, evidence2-b01, journey-agent, evidence-g33-ui, looks), run on 691556f0: all green, 413 tests"
   ]
@@ -491,7 +441,6 @@
    "tests/b20-guide-promises.test.ts",
    "tests/tutorial.test.ts",
    "src/engine/content/guide/start.ts:61-108 The Guide: the clock starts paused with the guide and The Clock opens Play; src/ui/shell/TimeControls.tsx:147-154; src/engine/world/world.ts:85-98; src/ui/guide/Help.tsx:168-231 the reference: an entry’s links to the entries it names, each open once its chapter is read (src/ui/guide/Help.tsx:232-246 EntryLink); src/ui/guide/Help.tsx:91-167 ? opens it on this screen’s entries and / finds; src/ui/guide/HowItWorks.tsx:12-27 How This Works beside a feature",
-   "tests/b20-guide-promises.test.ts",
    "tests/b20-guide-startup.test.ts",
    "tests/b20-guide-chapters.test.ts the guide area’s 32 test files (tutorial, guide, the six b20-guide files, navigation, portrait, b23-pages, b23-turn, help-mechanics, guide-chapter-facts, time-controls, whynot-time, the seven guide-examples files, pro-screen, pro-representation-screen, language-frame, look-after, looking-after, evidence2-b01, journey-agent, evidence-g33-ui, looks), run on 691556f0: all green, 413 tests"
   ]
@@ -507,7 +456,6 @@
    "tests/b20-guide-promises.test.ts",
    "tests/b20-guide-chapters.test.ts",
    "src/engine/content/guide/start.ts:61-108 The Guide: reading a chapter opens Home’s panels and the underlined words it names; src/ui/screens/Home.tsx:73-84 shows; src/ui/guide/Guide.tsx:82-139 Gated and LockedPanel; src/ui/guide/Help.tsx:168-231 the reference: an entry’s links to the entries it names, each open once its chapter is read (src/ui/guide/Help.tsx:232-246 EntryLink); src/ui/guide/Help.tsx:91-167 ? opens it on this screen’s entries and / finds; src/ui/guide/HowItWorks.tsx:12-27 How This Works beside a feature",
-   "tests/b20-guide-promises.test.ts",
    "tests/b20-guide-screens.test.ts",
    "tests/b20-guide-chapters.test.ts the guide area’s 32 test files (tutorial, guide, the six b20-guide files, navigation, portrait, b23-pages, b23-turn, help-mechanics, guide-chapter-facts, time-controls, whynot-time, the seven guide-examples files, pro-screen, pro-representation-screen, language-frame, look-after, looking-after, evidence2-b01, journey-agent, evidence-g33-ui, looks), run on 691556f0: all green, 413 tests"
   ]
@@ -523,7 +471,6 @@
    "tests/b20-guide-promises.test.ts",
    "tests/b20-guide-screens.test.ts",
    "src/engine/content/guide/start.ts:13-60 Where You Are: the local time is the game’s clock and moves when it does; src/ui/shell/GameShell.tsx:118-120 the bar’s clock and its state; src/ui/guide/Help.tsx:168-231 the reference: an entry’s links to the entries it names, each open once its chapter is read (src/ui/guide/Help.tsx:232-246 EntryLink); src/ui/guide/Help.tsx:91-167 ? opens it on this screen’s entries and / finds; src/ui/guide/HowItWorks.tsx:12-27 How This Works beside a feature",
-   "tests/b20-guide-promises.test.ts",
    "tests/time-controls.test.ts",
    "tests/b20-guide-chapters.test.ts the guide area’s 32 test files (tutorial, guide, the six b20-guide files, navigation, portrait, b23-pages, b23-turn, help-mechanics, guide-chapter-facts, time-controls, whynot-time, the seven guide-examples files, pro-screen, pro-representation-screen, language-frame, look-after, looking-after, evidence2-b01, journey-agent, evidence-g33-ui, looks), run on 691556f0: all green, 413 tests"
   ]
@@ -539,7 +486,6 @@
    "tests/b20-guide-promises.test.ts",
    "tests/b20-guide-chapters.test.ts",
    "src/engine/content/guide/start.ts:13-60 Where You Are: the weather beside it is the same town’s, hour by hour; src/ui/screens/Home.tsx:211 the hour’s weather on Today; src/ui/guide/Help.tsx:168-231 the reference: an entry’s links to the entries it names, each open once its chapter is read (src/ui/guide/Help.tsx:232-246 EntryLink); src/ui/guide/Help.tsx:91-167 ? opens it on this screen’s entries and / finds; src/ui/guide/HowItWorks.tsx:12-27 How This Works beside a feature",
-   "tests/b20-guide-promises.test.ts",
    "tests/weather.test.ts",
    "tests/b20-guide-chapters.test.ts the guide area’s 32 test files (tutorial, guide, the six b20-guide files, navigation, portrait, b23-pages, b23-turn, help-mechanics, guide-chapter-facts, time-controls, whynot-time, the seven guide-examples files, pro-screen, pro-representation-screen, language-frame, look-after, looking-after, evidence2-b01, journey-agent, evidence-g33-ui, looks), run on 691556f0: all green, 413 tests"
   ]
@@ -554,7 +500,6 @@
   "evidence": [
    "tests/b20-guide-promises.test.ts",
    "src/engine/content/guide/start.ts:13-60 Where You Are: a word becomes a link once the chapter that covers it is read; src/ui/guide/Help.tsx:168-231 the reference: an entry’s links to the entries it names, each open once its chapter is read (src/ui/guide/Help.tsx:232-246 EntryLink); src/ui/guide/Help.tsx:91-167 ? opens it on this screen’s entries and / finds; src/ui/guide/HowItWorks.tsx:12-27 How This Works beside a feature; docs/verification/sweep-2026-10-24/walk/capture/audit.json How This Works on two played lives at three sizes",
-   "tests/b20-guide-promises.test.ts",
    "tests/guide.test.ts",
    "tests/help-mechanics.test.ts",
    "tests/b20-guide-chapters.test.ts the guide area’s 32 test files (tutorial, guide, the six b20-guide files, navigation, portrait, b23-pages, b23-turn, help-mechanics, guide-chapter-facts, time-controls, whynot-time, the seven guide-examples files, pro-screen, pro-representation-screen, language-frame, look-after, looking-after, evidence2-b01, journey-agent, evidence-g33-ui, looks), run on 691556f0: all green, 413 tests"
@@ -703,9 +648,6 @@
    "tests/tutorial.test.ts",
    "tests/guide.test.ts",
    "src/engine/world/tutorial.ts:86-104 tutorial.read: a chapter read once, said again a second press, the next chapter named, the guide finished when none is left; src/ui/guide/Guide.tsx:173-297 the guide dialog: the next chapter shown first, I’ve Read It at its foot, Next: the one after, Try It back to the screen, a chapter read again from its list; src/ui/guide/Guide.tsx:140-170 the strip under the bar (n Of 20, Read) and Guide in the bar; docs/verification/sweep-2026-10-24/walk/creation/1440x900/creation.json and docs/verification/sweep-2026-10-24/walk/creation/844x390m/creation.json steps 7-16: a new life opens on chapter 1 paused, five chapters read in order, each Next the one after, the strip reading 6 Of 20 after, and the same after Save & Exit and Continue; docs/verification/sweep-2026-10-24/walk/README.md the three browser walks of 2026-10-24",
-   "tests/b20-guide-screens.test.ts",
-   "tests/b20-guide-promises.test.ts",
-   "tests/tutorial.test.ts",
    "tests/b20-guide-startup.test.ts",
    "tests/b20-guide-chapters.test.ts the guide area’s 32 test files (tutorial, guide, the six b20-guide files, navigation, portrait, b23-pages, b23-turn, help-mechanics, guide-chapter-facts, time-controls, whynot-time, the seven guide-examples files, pro-screen, pro-representation-screen, language-frame, look-after, looking-after, evidence2-b01, journey-agent, evidence-g33-ui, looks), run on 691556f0: all green, 413 tests"
   ]
@@ -723,8 +665,6 @@
    "tests/time-stops.test.ts",
    "tests/guide-examples-start-day-body.test.ts",
    "src/ui/shell/TimeControls.tsx:555-640 the Advance menu’s lines, each saying where it lands (src/engine/world/clock.ts:151-174); src/ui/shell/TimeControls.tsx:147-160 On The Way before a jump that passes a commitment (src/ui/shell/TimeControls.tsx:197-240); src/app/game-context.tsx:226-253 every jump stops at what wants the player",
-   "tests/time-controls.test.ts",
-   "tests/time-stops.test.ts",
    "tests/whynot-time.test.ts",
    "tests/time-controls.test.ts the shell’s, the guide’s and the decisions’ 55 test files, run on 86890e43: all green; tests/b26-needs-repeats.test.ts, a question raised twice, answered and dismissed twice, marked read twice, left to its date and reloaded, green"
   ]
@@ -741,8 +681,6 @@
    "tests/b20-guide-screens.test.ts",
    "tests/b20-guide-promises.test.ts",
    "src/ui/shell/destinations.ts:83 Money under Your Affairs, locked until chapter 19; src/ui/screens/Home.tsx:253-255 Open Money under What Needs You, gated by it (src/ui/screens/Home.tsx:64); src/ui/workspaces/WorkspaceRouter.tsx:31-54 the screen or Locked; docs/verification/sweep-2026-10-24/walk/capture/audit.json Money’s five looks; docs/verification/sweep-2026-10-24/walk/README.md the three browser walks of 2026-10-24",
-   "tests/b20-guide-screens.test.ts",
-   "tests/b20-guide-promises.test.ts",
    "tests/b23-pages.test.ts",
    "tests/b20-guide-chapters.test.ts the guide area’s 32 test files (tutorial, guide, the six b20-guide files, navigation, portrait, b23-pages, b23-turn, help-mechanics, guide-chapter-facts, time-controls, whynot-time, the seven guide-examples files, pro-screen, pro-representation-screen, language-frame, look-after, looking-after, evidence2-b01, journey-agent, evidence-g33-ui, looks), run on 691556f0: all green, 413 tests"
   ]
@@ -760,7 +698,6 @@
    "tests/b20-guide-screens.test.ts",
    "src/ui/workspaces/CalendarWorkspace.tsx:300-392 the plan form sends calendar.schedule and shows a refusal beside the field; src/ui/workspaces/CalendarWorkspace.tsx:403-456 an entry opened, Call It Off on a plan of your own; src/engine/world/calendar.ts:113-198 the month and its clashes",
    "tests/calendar.test.ts",
-   "tests/b20-guide-screens.test.ts",
    "tests/time-controls.test.ts the shell’s, the guide’s and the decisions’ 55 test files, run on 86890e43: all green; tests/b26-needs-repeats.test.ts, a question raised twice, answered and dismissed twice, marked read twice, left to its date and reloaded, green"
   ]
  },
@@ -776,8 +713,6 @@
    "tests/b20-guide-promises.test.ts",
    "tests/pro-screen.test.ts",
    "src/ui/shell/destinations.ts:77 Career under Your Work, locked until chapter 13; src/ui/workspaces/WorkspaceRouter.tsx:31-54 the screen or Locked; docs/verification/sweep-2026-10-24/walk/capture/audit.json Career’s five looks on two played lives at three sizes; docs/verification/sweep-2026-10-24/walk/README.md the three browser walks of 2026-10-24",
-   "tests/b20-guide-promises.test.ts",
-   "tests/pro-screen.test.ts",
    "tests/b23-pages.test.ts",
    "tests/b20-guide-chapters.test.ts the guide area’s 32 test files (tutorial, guide, the six b20-guide files, navigation, portrait, b23-pages, b23-turn, help-mechanics, guide-chapter-facts, time-controls, whynot-time, the seven guide-examples files, pro-screen, pro-representation-screen, language-frame, look-after, looking-after, evidence2-b01, journey-agent, evidence-g33-ui, looks), run on 691556f0: all green, 413 tests"
   ]
@@ -793,8 +728,6 @@
    "tests/pro-representation-screen.test.ts",
    "tests/journey-agent.test.ts",
    "src/ui/career/RepresentationPane.tsx:190-235 Why It Went This Way: the last decision’s factors as they were and as they stand; src/ui/career/RepresentationPane.tsx:218 Show The Reasons, gated by chapter 14; docs/verification/sweep-2026-10-24/walk/capture/audit.json Career Representation on two played lives",
-   "tests/pro-representation-screen.test.ts",
-   "tests/journey-agent.test.ts",
    "tests/b20-guide-chapters.test.ts the guide area’s 32 test files (tutorial, guide, the six b20-guide files, navigation, portrait, b23-pages, b23-turn, help-mechanics, guide-chapter-facts, time-controls, whynot-time, the seven guide-examples files, pro-screen, pro-representation-screen, language-frame, look-after, looking-after, evidence2-b01, journey-agent, evidence-g33-ui, looks), run on 691556f0: all green, 413 tests"
   ]
  },
@@ -810,7 +743,6 @@
    "tests/time-stops.test.ts",
    "tests/guide-examples-start-day-body.test.ts",
    "src/ui/shell/TimeControls.tsx:316-420 the stop: Go through the commitment’s hours as the same jump (src/engine/world/clock.ts:92-97), Stand Here with the clock paused, a kind’s own choice run and the jump carried on or the refusal said; src/app/game-context.tsx:220-224 halt",
-   "tests/time-stops.test.ts",
    "tests/time-controls.test.ts",
    "tests/time-controls.test.ts the shell’s, the guide’s and the decisions’ 55 test files, run on 86890e43: all green; tests/b26-needs-repeats.test.ts, a question raised twice, answered and dismissed twice, marked read twice, left to its date and reloaded, green"
   ]
@@ -828,9 +760,6 @@
    "tests/b20-guide-promises.test.ts",
    "tests/b20-guide-chapters.test.ts",
    "src/ui/screens/Home.tsx:276 How You Are, a locked panel until chapter 6, then HowYouAre (src/ui/screens/Home.tsx:514-566); src/ui/guide/Guide.tsx:111-139 LockedPanel: the title, what it will show, Read About It; docs/verification/sweep-2026-10-24/walk/creation/1440x900/creation.json and docs/verification/sweep-2026-10-24/walk/creation/844x390m/creation.json step 16: still locked after five chapters, named next on the strip; docs/verification/sweep-2026-10-24/walk/README.md the three browser walks of 2026-10-24",
-   "tests/b20-guide-screens.test.ts",
-   "tests/b20-guide-promises.test.ts",
-   "tests/b20-guide-chapters.test.ts",
    "tests/b20-guide-chapters.test.ts the guide area’s 32 test files (tutorial, guide, the six b20-guide files, navigation, portrait, b23-pages, b23-turn, help-mechanics, guide-chapter-facts, time-controls, whynot-time, the seven guide-examples files, pro-screen, pro-representation-screen, language-frame, look-after, looking-after, evidence2-b01, journey-agent, evidence-g33-ui, looks), run on 691556f0: all green, 413 tests"
   ]
  },
@@ -848,10 +777,6 @@
    "tests/look-after.test.ts",
    "tests/looking-after.test.ts",
    "src/ui/shell/TimeControls.tsx:716-785 Look After Yourself: the menu locked until chapter 8, each line a life.look_after kind with its hours and what it needs; docs/verification/sweep-2026-10-24/walk/capture/audit.json Look After Yourself Menu on two played lives at three sizes; docs/verification/sweep-2026-10-24/walk/README.md the three browser walks of 2026-10-24",
-   "tests/b20-guide-chapters.test.ts",
-   "tests/evidence2-b01.test.ts",
-   "tests/look-after.test.ts",
-   "tests/looking-after.test.ts",
    "tests/b20-guide-chapters.test.ts the guide area’s 32 test files (tutorial, guide, the six b20-guide files, navigation, portrait, b23-pages, b23-turn, help-mechanics, guide-chapter-facts, time-controls, whynot-time, the seven guide-examples files, pro-screen, pro-representation-screen, language-frame, look-after, looking-after, evidence2-b01, journey-agent, evidence-g33-ui, looks), run on 691556f0: all green, 413 tests"
   ]
  },
@@ -866,7 +791,6 @@
   "evidence": [
    "tests/b20-guide-chapters.test.ts",
    "src/ui/components/Glance.tsx:33-50 Worth at Money’s head: net worth, debt and the day’s change in words; src/ui/screens/Home.tsx:253-255 Open Money beside a money line under What Needs You; docs/verification/sweep-2026-10-24/walk/capture/audit.json Money Accounts on two played lives at three sizes; docs/verification/sweep-2026-10-24/walk/README.md the three browser walks of 2026-10-24",
-   "tests/b20-guide-chapters.test.ts",
    "tests/guide-examples-money.test.ts",
    "tests/b23-pages.test.ts",
    "tests/b20-guide-chapters.test.ts the guide area’s 32 test files (tutorial, guide, the six b20-guide files, navigation, portrait, b23-pages, b23-turn, help-mechanics, guide-chapter-facts, time-controls, whynot-time, the seven guide-examples files, pro-screen, pro-representation-screen, language-frame, look-after, looking-after, evidence2-b01, journey-agent, evidence-g33-ui, looks), run on 691556f0: all green, 413 tests"
@@ -885,7 +809,6 @@
    "tests/evidence2-b01.test.ts",
    "tests/guide-examples-start-day-body.test.ts",
    "src/ui/screens/Home.tsx:218-269 What Needs You: the questions by openDecisions’ order, what needs doing, Show All; src/ui/screens/Home.tsx:272-326 Recent Updates and View All Updates; src/ui/screens/Updates.tsx:60-178 Updates: every notice, unread or all, by what it’s about, runs of one notice as one row, Mark Read once",
-   "tests/b20-guide-screens.test.ts",
    "tests/evidence-g33-ui.test.ts",
    "tests/b23-pages.test.ts",
    "tests/time-controls.test.ts the shell’s, the guide’s and the decisions’ 55 test files, run on 86890e43: all green; tests/b26-needs-repeats.test.ts, a question raised twice, answered and dismissed twice, marked read twice, left to its date and reloaded, green"
@@ -902,7 +825,6 @@
    "tests/b20-guide-screens.test.ts",
    "tests/b20-guide-chapters.test.ts",
    "src/ui/screens/Home.tsx:436-441 Up Next’s Open Calendar, gated by the chapter, the one way into the month from Home since brief 24",
-   "tests/b20-guide-screens.test.ts",
    "tests/navigation.test.ts",
    "tests/time-controls.test.ts the shell’s, the guide’s and the decisions’ 55 test files, run on 86890e43: all green; tests/b26-needs-repeats.test.ts, a question raised twice, answered and dismissed twice, marked read twice, left to its date and reloaded, green"
   ]
@@ -920,9 +842,6 @@
    "tests/b20-guide-chapters.test.ts",
    "tests/b20-guide-promises.test.ts",
    "src/ui/components/Glance.tsx:79-129 Papers’ head: the alerts and their words; src/ui/shell/destinations.ts:85 Papers under Your Affairs, locked until chapter 16; src/ui/screens/Home.tsx:253-255 Open Papers under What Needs You; docs/verification/sweep-2026-10-24/walk/capture/audit.json Papers’ five looks; docs/verification/sweep-2026-10-24/walk/README.md the three browser walks of 2026-10-24",
-   "tests/b20-guide-screens.test.ts",
-   "tests/b20-guide-chapters.test.ts",
-   "tests/b20-guide-promises.test.ts",
    "tests/b20-guide-chapters.test.ts the guide area’s 32 test files (tutorial, guide, the six b20-guide files, navigation, portrait, b23-pages, b23-turn, help-mechanics, guide-chapter-facts, time-controls, whynot-time, the seven guide-examples files, pro-screen, pro-representation-screen, language-frame, look-after, looking-after, evidence2-b01, journey-agent, evidence-g33-ui, looks), run on 691556f0: all green, 413 tests"
   ]
  },
@@ -956,8 +875,6 @@
    "tests/b20-guide-promises.test.ts",
    "tests/language-frame.test.ts",
    "src/ui/shell/destinations.ts:54 Player Profile under You and src/ui/shell/GameShell.tsx:176-190 your name at the rail’s foot, locked until chapter 12; src/app/game-context.tsx:448 P; src/ui/workspaces/WorkspaceRouter.tsx:31-54 the screen or Locked; docs/verification/sweep-2026-10-24/walk/capture/audit.json Player Profile on two played lives at three sizes; docs/verification/sweep-2026-10-24/walk/README.md the three browser walks of 2026-10-24",
-   "tests/b20-guide-promises.test.ts",
-   "tests/language-frame.test.ts",
    "tests/b23-pages.test.ts",
    "tests/b20-guide-chapters.test.ts the guide area’s 32 test files (tutorial, guide, the six b20-guide files, navigation, portrait, b23-pages, b23-turn, help-mechanics, guide-chapter-facts, time-controls, whynot-time, the seven guide-examples files, pro-screen, pro-representation-screen, language-frame, look-after, looking-after, evidence2-b01, journey-agent, evidence-g33-ui, looks), run on 691556f0: all green, 413 tests"
   ]
@@ -975,9 +892,6 @@
    "tests/b20-guide-chapters.test.ts",
    "tests/b20-guide-promises.test.ts",
    "src/ui/components/Glance.tsx:51-78 the School’s head; src/ui/screens/Home.tsx:253-255 Open School beside a standing line under What Needs You, gated by the screen’s feature (src/ui/screens/Home.tsx:64); src/ui/shell/destinations.ts:69 the menu’s School; docs/verification/sweep-2026-10-24/walk/capture/audit.json the School’s six looks; docs/verification/sweep-2026-10-24/walk/README.md the three browser walks of 2026-10-24",
-   "tests/b20-guide-screens.test.ts",
-   "tests/b20-guide-chapters.test.ts",
-   "tests/b20-guide-promises.test.ts",
    "tests/b20-guide-chapters.test.ts the guide area’s 32 test files (tutorial, guide, the six b20-guide files, navigation, portrait, b23-pages, b23-turn, help-mechanics, guide-chapter-facts, time-controls, whynot-time, the seven guide-examples files, pro-screen, pro-representation-screen, language-frame, look-after, looking-after, evidence2-b01, journey-agent, evidence-g33-ui, looks), run on 691556f0: all green, 413 tests"
   ]
  },
@@ -994,8 +908,6 @@
    "tests/whynot-time.test.ts",
    "tests/time-controls.test.ts",
    "src/ui/shell/TimeControls.tsx:422-553 Skip To Event: the events ahead, the stops on the way, those not on the calendar yet foreseen, the jump through the one clock",
-   "tests/whynot-time.test.ts",
-   "tests/time-controls.test.ts",
    "tests/time-controls.test.ts the shell’s, the guide’s and the decisions’ 55 test files, run on 86890e43: all green; tests/b26-needs-repeats.test.ts, a question raised twice, answered and dismissed twice, marked read twice, left to its date and reloaded, green"
   ]
  },
@@ -1013,10 +925,6 @@
    "tests/whynot-time.test.ts",
    "tests/time-controls.test.ts",
    "src/ui/shell/TimeControls.tsx:109 and src/ui/shell/TimeControls.tsx:155 Sleep in the bar, locked until chapter 7, busy while a night is planned; src/ui/shell/TimeControls.tsx:243-357 the dialog and life.sleep; docs/verification/sweep-2026-10-24/walk/creation/1440x900/creation.json and docs/verification/sweep-2026-10-24/walk/creation/844x390m/creation.json steps 25-26: pressed unread it opens the guide at Sleep; docs/verification/sweep-2026-10-24/walk/capture/audit.json Sleep Dialog on two played lives at three sizes; docs/verification/sweep-2026-10-24/walk/README.md the three browser walks of 2026-10-24",
-   "tests/b20-guide-chapters.test.ts",
-   "tests/b20-guide-screens.test.ts",
-   "tests/whynot-time.test.ts",
-   "tests/time-controls.test.ts",
    "tests/b20-guide-chapters.test.ts the guide area’s 32 test files (tutorial, guide, the six b20-guide files, navigation, portrait, b23-pages, b23-turn, help-mechanics, guide-chapter-facts, time-controls, whynot-time, the seven guide-examples files, pro-screen, pro-representation-screen, language-frame, look-after, looking-after, evidence2-b01, journey-agent, evidence-g33-ui, looks), run on 691556f0: all green, 413 tests"
   ]
  },
@@ -1032,8 +940,6 @@
    "tests/b20-guide-promises.test.ts",
    "tests/b20-guide-chapters.test.ts",
    "src/ui/screens/Home.tsx:211 Weather, a locked button on Today until chapter 10, then the hour’s weather beside the line; src/ui/guide/Guide.tsx:82-110 Gated; docs/verification/sweep-2026-10-24/walk/creation/1440x900/creation.json step 7: locked at a new life; docs/verification/sweep-2026-10-24/walk/capture/audit.json Home on two played lives with the weather shown; docs/verification/sweep-2026-10-24/walk/README.md the three browser walks of 2026-10-24",
-   "tests/b20-guide-promises.test.ts",
-   "tests/b20-guide-chapters.test.ts",
    "tests/weather.test.ts",
    "tests/b20-guide-chapters.test.ts the guide area’s 32 test files (tutorial, guide, the six b20-guide files, navigation, portrait, b23-pages, b23-turn, help-mechanics, guide-chapter-facts, time-controls, whynot-time, the seven guide-examples files, pro-screen, pro-representation-screen, language-frame, look-after, looking-after, evidence2-b01, journey-agent, evidence-g33-ui, looks), run on 691556f0: all green, 413 tests"
   ]
@@ -1051,9 +957,6 @@
    "tests/b20-guide-screens.test.ts",
    "tests/b20-guide-chapters.test.ts",
    "src/ui/screens/Home.tsx:166 Where You Are, a locked button under the greeting until chapter 1, then the line itself (src/ui/screens/Home.tsx:73-77 shows); src/ui/guide/Guide.tsx:82-110 Gated: a locked press opens the chapter; docs/verification/sweep-2026-10-24/walk/creation/1440x900/creation.json and docs/verification/sweep-2026-10-24/walk/creation/844x390m/creation.json steps 7-8: locked at a new life, open after I’ve Read It; docs/verification/sweep-2026-10-24/walk/README.md the three browser walks of 2026-10-24",
-   "tests/b20-guide-promises.test.ts",
-   "tests/b20-guide-screens.test.ts",
-   "tests/b20-guide-chapters.test.ts",
    "tests/b20-guide-chapters.test.ts the guide area’s 32 test files (tutorial, guide, the six b20-guide files, navigation, portrait, b23-pages, b23-turn, help-mechanics, guide-chapter-facts, time-controls, whynot-time, the seven guide-examples files, pro-screen, pro-representation-screen, language-frame, look-after, looking-after, evidence2-b01, journey-agent, evidence-g33-ui, looks), run on 691556f0: all green, 413 tests"
   ]
  },

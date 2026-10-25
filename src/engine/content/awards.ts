@@ -40,7 +40,7 @@ export const INSTITUTIONS: readonly Institution[] = [
   { id: 'natas', name: 'NATAS Emmy Awards', kind: 'award', organizer: 'National Academy of Television Arts and Sciences', coverage: 'read-in-part', sources: ['N27'], known: 'Four competitions of its own, Daytime, Children’s And Family, News And Documentary and Sports, each with rules this build didn’t read; the game doesn’t decide them.' },
   { id: 'iemmys', name: 'International Emmy Awards', kind: 'award', organizer: 'International Academy of Television Arts and Sciences', coverage: 'enforced', sources: ['N24'], known: 'Read for 2026: a program produced and entered by an organization outside the U.S., first broadcast outside the U.S. in 2025.' },
   { id: 'bafta', name: 'BAFTA Film Awards', kind: 'award', organizer: 'British Academy of Film and Television Arts', coverage: 'refused', sources: ['N28'], known: 'Refused this build (HTTP 403) on its film rules page, so the game doesn’t say whether a film is eligible.' },
-  { id: 'actor-awards', name: 'Actor Awards', kind: 'award', organizer: 'SAG-AFTRA', coverage: 'unreached', sources: ['N28'], known: 'The rules page this build tried wasn’t there (HTTP 404), so the game doesn’t decide.' },
+  { id: 'actor-awards', name: 'Actor Awards', kind: 'award', organizer: 'SAG-AFTRA', coverage: 'enforced', sources: ['b25-S48', 'b27-AA-home', 'b27-AA-32nd'], known: 'The 33rd Actor Awards’ Rules & Regulations, read in full on October 25, 2026: work first shown in 2026, from a production signatory to a SAG-AFTRA agreement; a film over 60 minutes with a week’s paid run in cinemas in a major market; a comedy or drama series of six episodes or more, a limited series or a television movie; submitted by the actor or for them, $200 a performance, from August 24 to November 2, 2026; five nominees a category, voted by committees of members drawn at random; final voting by paid-up members in the US and Canada; the show on February 28, 2027. A later year carries them forward.' },
   { id: 'golden-globes', name: 'Golden Globe Awards', kind: 'award', organizer: 'Golden Globes', coverage: 'unreached', sources: ['N28'], known: 'The rules page this build tried wasn’t there (HTTP 404), so the game doesn’t decide.' },
   { id: 'spirit', name: 'Film Independent Spirit Awards', kind: 'award', organizer: 'Film Independent', coverage: 'read-in-part', sources: ['N29'], known: 'Next presented on March 6, 2027, by its page; its rules weren’t read, so the game doesn’t decide.' },
   { id: 'critics-choice', name: 'Critics Choice Awards', kind: 'award', organizer: 'Critics Choice Association', coverage: 'read-in-part', sources: ['N29'], known: 'Only its home page was read, not its rules, so the game doesn’t decide.' },
@@ -196,3 +196,64 @@ export const SUNDANCE_CATEGORY_NAME: Readonly<Record<SundanceCategory, string>> 
 
 /** The festival's line between a short and a feature: under 50 minutes, credits included, is short. */
 export const SHORT_UNDER_MINUTES = 50;
+
+// ---------------------------------------------------------------------------------------------------------------------
+// The Actor Awards presented by SAG-AFTRA (from 2026-10-25, the owner's brief 27, K7)
+// ---------------------------------------------------------------------------------------------------------------------
+
+/**
+ * The Actor Awards' calendar for one awards year, by the 33rd's Rules & Regulations (`b25-S48` in brief 27's research
+ * register, read on 2026-10-25), or projected from it: work first exhibited or broadcast in `year` competes; submissions
+ * open and close (5 p.m. PT); the nominations are announced; final voting closes (noon PT); the show (5 p.m. PT).
+ */
+export interface ActorEdition {
+  number: number;
+  year: number;
+  projected: boolean;
+  submissions: { opens: string; closes: string };
+  nominationsAnnounced: string;
+  finalCloses: string;
+  ceremony: string;
+}
+
+/** The 33rd, as its rules give it: Section Two's calendar. */
+export const ACTOR_AWARDS_33: ActorEdition = {
+  number: 33, year: 2026, projected: false, submissions: { opens: '2026-08-24', closes: '2026-11-02' },
+  nominationsAnnounced: '2027-01-06', finalCloses: '2027-02-26', ceremony: '2027-02-28',
+};
+
+/**
+ * The 33rd's rules a projected year keeps, each its own section's: an individual performance's fee ($200, Four, 5); five
+ * nominees in each category, more only for a tie at the line (Five, A.11 and 12); a motion picture over 60 minutes, not a
+ * documentary, with a seven-day paid run beginning in the year in one of six major markets (Three, A); a comedy or drama
+ * series of six episodes or more of 20 minutes or more (Three, B.2); a television movie of about 90 minutes (Three, B.3.b).
+ */
+export const ACTOR_RULES = { fee: 200_00, nominees: 5, featureOver: 60, seriesEpisodes: 6, episodeMinutes: 20, movieMinutes: 90 } as const;
+
+/** An awards year's edition: 2026's, the 33rd, as read; any other projected from it, the same days a year on. */
+export function actorEdition(year: number): ActorEdition {
+  if (year === ACTOR_AWARDS_33.year) return ACTOR_AWARDS_33;
+  const move = (iso: string) => `${Number(iso.slice(0, 4)) + (year - ACTOR_AWARDS_33.year)}${iso.slice(4)}`;
+  return {
+    number: ACTOR_AWARDS_33.number + (year - ACTOR_AWARDS_33.year), year, projected: true,
+    submissions: { opens: move(ACTOR_AWARDS_33.submissions.opens), closes: move(ACTOR_AWARDS_33.submissions.closes) },
+    nominationsAnnounced: move(ACTOR_AWARDS_33.nominationsAnnounced), finalCloses: move(ACTOR_AWARDS_33.finalCloses), ceremony: move(ACTOR_AWARDS_33.ceremony),
+  };
+}
+
+/** The individual categories the player's work can be submitted in (Section One), and which nominating committee votes on each. */
+export type ActorCategory = 'film-lead' | 'film-supporting' | 'tv-limited' | 'tv-drama' | 'tv-comedy';
+
+export const ACTOR_CATEGORIES: Readonly<Record<ActorCategory, { actorName: string; actressName: string; committee: 'motion picture' | 'television' }>> = {
+  'film-lead': { actorName: 'Outstanding Performance by a Male Actor in a Leading Role', actressName: 'Outstanding Performance by a Female Actor in a Leading Role', committee: 'motion picture' },
+  'film-supporting': { actorName: 'Outstanding Performance by a Male Actor in a Supporting Role', actressName: 'Outstanding Performance by a Female Actor in a Supporting Role', committee: 'motion picture' },
+  'tv-limited': { actorName: 'Outstanding Performance by a Male Actor in a Television Movie or Limited Series', actressName: 'Outstanding Performance by a Female Actor in a Television Movie or Limited Series', committee: 'television' },
+  'tv-drama': { actorName: 'Outstanding Performance by a Male Actor in a Drama Series', actressName: 'Outstanding Performance by a Female Actor in a Drama Series', committee: 'television' },
+  'tv-comedy': { actorName: 'Outstanding Performance by a Male Actor in a Comedy Series', actressName: 'Outstanding Performance by a Female Actor in a Comedy Series', committee: 'television' },
+};
+
+/**
+ * Where the show is given: Los Angeles, ASSUMPTION for the 33rd and every year after, as the 32nd's results were dated from
+ * there (`b27-AA-32nd`); neither its rules nor its home page names a place.
+ */
+export const ACTOR_AWARDS_PLACE = { city: 'Los Angeles', cityId: 'us-ca-losangeles' } as const;

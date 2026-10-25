@@ -467,6 +467,83 @@ export function extendTrip(sim: Simulation, person: Person, trip: WorkTrip, days
   return back[0]!.departs;
 }
 
+/**
+ * Books the trip to an awards ceremony (from 2026-10-25, the owner's brief 27, K7, `systems/ceremony.ts`): planned as a work
+ * trip is, for the evening of the show, its stay at a hotel near it; nobody pays, since the game doesn't price a trip a
+ * production doesn't book. Undefined where the show is near enough to be an evening's travel.
+ */
+export function bookCeremonyTrip(sim: Simulation, person: Person, spec: { engagementId: ProId; entryId: ProId; title: string; cityId: string; span: { from: Instant; to: Instant } }): WorkTrip | undefined {
+  const plan = planTrip(person.currentLocationId, spec.cityId, [spec.span]);
+  if (!plan) return undefined;
+  const trip: WorkTrip = {
+    id: sim.nextId('pro'), engagementId: spec.engagementId, country: cityOf(spec.cityId)!.countryId, cityId: spec.cityId,
+    legs: plan.legs.map((l) => ({ ...l, id: sim.nextId('pro'), status: 'booked' as const })),
+    stay: { ...plan.stay, payer: 'nobody', place: 'a hotel near the show', status: 'booked' },
+    status: 'booked', history: [], counts: {}, purpose: { kind: 'ceremony', entryId: spec.entryId, title: spec.title },
+  };
+  (ensurePro(sim, person).trips ??= []).push(trip);
+  scheduleLegs(sim, person, trip);
+  return trip;
+}
+
+/**
+ * A ceremony trip's leg leaving (`bookCeremonyTrip`): no permission read, since going to a show isn't work. Missed going
+ * out, the trip's off and the show goes on without the player; missed coming home, the same way home a day later.
+ */
+function ceremonyDepart(sim: Simulation, person: Person, trip: WorkTrip, i: number, at: Instant, hooks: TripHooks): void {
+  const leg = trip.legs[i];
+  if (!leg || leg.status !== 'booked') return;
+  const before = priorOfWay(trip, i);
+  if (before) {
+    leg.status = before.status === 'done' ? 'en-route' : 'canceled';
+    return;
+  }
+  const title = trip.purpose!.title;
+  if (!hooks.there(person, at)) {
+    leg.status = 'missed';
+    for (const l of trip.legs) if (l.way === leg.way && l.status === 'booked' && l !== leg) l.status = 'canceled';
+    noteEvent(sim, trip, { kind: 'missed-flight', key: `missed:${leg.way}:${leg.departs}`, words: `The ${legPhrase(leg)} on ${formatDate(leg.departs, zoneOf(leg.from))} left without you.` });
+    if (leg.way === 'out') {
+      cancelTrip(sim, trip);
+      hooks.tell(sim, person, `You Missed Your Flight To ${nameOf(trip.cityId)}`, `Your car to the airport left without you, and so did the flights to ${nameOf(trip.cityId)}: you won’t be at ${title}.`, 80);
+      return;
+    }
+    const again = trip.legs.filter((l) => l.way === 'back').map((l) => ({ ...l, id: sim.nextId('pro'), departs: l.departs + MS_DAY, arrives: l.arrives + MS_DAY, status: 'booked' as const }));
+    trip.legs = [...trip.legs.filter((l) => l.way === 'out' || l.status === 'missed' || l.status === 'canceled'), ...again];
+    trip.stay.to += MS_DAY;
+    scheduleLegs(sim, person, trip, trip.legs.length - again.length);
+    hooks.tell(sim, person, 'You Missed Your Flight Home', `Your car to the airport left without you, so you’re on the same flights a day later. ${legWords(again[0]!)}`, 75);
+    return;
+  }
+  leg.status = 'en-route';
+  trip.status = leg.way === 'out' ? 'out' : 'back';
+  if (leg.way === 'back' && trip.stay.status === 'in') {
+    trip.stay.status = 'out';
+    noteEvent(sim, trip, { kind: 'checked-out', key: 'checked-out', words: `You checked out of ${trip.stay.place}.` });
+  }
+  noteEvent(sim, trip, { kind: 'departed', key: `departed:${leg.way}`, words: leg.way === 'out' ? `Left for ${nameOf(trip.cityId)}, for ${title}.` : `Left ${nameOf(trip.cityId)} for home.` });
+}
+
+/** A ceremony trip's leg arriving: there, at the hotel; home, back. */
+function ceremonyArrive(sim: Simulation, person: Person, trip: WorkTrip, i: number, hooks: TripHooks): void {
+  const leg = trip.legs[i];
+  if (!leg || leg.status !== 'en-route') return;
+  leg.status = 'done';
+  if (i !== trip.legs.length - 1 && trip.legs[i + 1]!.way === leg.way) return;
+  const title = trip.purpose!.title;
+  if (leg.way === 'out') {
+    trip.status = 'there';
+    trip.stay.status = 'in';
+    noteEvent(sim, trip, { kind: 'arrived', key: 'arrived', words: `Arrived in ${nameOf(trip.cityId)}, for ${title}.` });
+    noteEvent(sim, trip, { kind: 'checked-in', key: 'checked-in', words: `Checked in to ${trip.stay.place}.` });
+    hooks.tell(sim, person, `You’ve Arrived In ${nameOf(trip.cityId)}`, `You’ve arrived in ${nameOf(trip.cityId)} for ${title}, at ${trip.stay.place}.`, 70);
+    return;
+  }
+  trip.status = 'home';
+  noteEvent(sim, trip, { kind: 'home', key: 'home', words: `You were home in ${nameOf(person.currentLocationId)}.` });
+  hooks.tell(sim, person, `You’re Home From ${nameOf(trip.cityId)}`, `You’re back in ${nameOf(person.currentLocationId)} after ${title}.`, 55);
+}
+
 /** Calls a trip off: the legs not yet gone and the stay canceled, their times off the clock. */
 export function cancelTrip(sim: Simulation, trip: WorkTrip): void {
   for (const leg of trip.legs) if (leg.status === 'booked') leg.status = 'canceled';
@@ -538,6 +615,8 @@ export function registerWorkTrips(sim: Simulation, hooks: TripHooks): void {
     const at = locate(s, item);
     if (!at) return;
     const { person, trip, i } = at;
+    // A trip to a ceremony (from 2026-10-25, brief 27's K7) has no work behind it.
+    if (trip.purpose) { ceremonyDepart(s, person, trip, i, item.at, hooks); return; }
     const leg = trip.legs[i];
     const e = hooks.engagementOf(person, trip.engagementId);
     const t = e ? hooks.projectOf(e) : undefined;
@@ -592,6 +671,7 @@ export function registerWorkTrips(sim: Simulation, hooks: TripHooks): void {
     const at = locate(s, item);
     if (!at) return;
     const { person, trip, i } = at;
+    if (trip.purpose) { ceremonyArrive(s, person, trip, i, hooks); return; }
     const leg = trip.legs[i];
     if (!leg || leg.status !== 'en-route') return;
     leg.status = 'done';

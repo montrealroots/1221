@@ -31,6 +31,7 @@ import { CHAPTER_FOR } from '@/engine/content/tutorial';
 import { PLAN_KIND } from '@/engine/world/plans';
 import { PARTNER_KIND } from '@/engine/systems/coursework';
 import { MEETING_KIND } from '@/engine/systems/proagent';
+import { SPEECH_KIND } from '@/engine/systems/ceremony';
 import { stopChoices as engineStops, stopCommands } from '@/engine/world/clock';
 import { WIRING, controls, decisionAnswers, handlerReads, sentKeys, stopChoices } from '../tools/wiring.mjs';
 
@@ -65,7 +66,8 @@ describe('the wiring list', () => {
     // The one kind decided at run time is the stop dialog's choice: the stops' own, each registered.
     expect(now.controls.filter((x) => x.kind === DYNAMIC).map((x) => x.file)).toEqual(['src/ui/shell/TimeControls.tsx']);
     expect(stopCommands().every((k) => commands.includes(k))).toBe(true);
-    expect(now.stopChoices.map((s) => [s.label, s.kind])).toEqual([...engineStops(MEETING_KIND), ...engineStops(PLAN_KIND), ...engineStops(PARTNER_KIND)].map((c) => [c.label, c.command]));
+    // From 2026-10-25 (brief 27's K7) a winner's moment to go up at a ceremony has its own choice, Go Up And Accept.
+    expect(now.stopChoices.map((s) => [s.label, s.kind])).toEqual([...engineStops(SPEECH_KIND), ...engineStops(MEETING_KIND), ...engineStops(PLAN_KIND), ...engineStops(PARTNER_KIND)].map((c) => [c.label, c.command]));
     expect(new Set(now.stopChoices.map((s) => s.kind))).toEqual(new Set(stopCommands()));
   });
 

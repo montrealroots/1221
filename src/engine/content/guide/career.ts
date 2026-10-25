@@ -42,8 +42,9 @@ import { REVIVAL } from '../../systems/series';
 import { AFTER_WRAP, PROMO, STUNT, VOICE, WORKFLOWS } from '../workflows';
 import { JURISDICTIONS } from '../jurisdictions';
 import { BRIEF } from '../../systems/briefs';
-import { EMMY_RULES, SUNDANCE_2027 } from '../awards';
-import { VISIBILITY } from '../../systems/awards';
+import { ACTOR_AWARDS_33, ACTOR_RULES, EMMY_RULES, SUNDANCE_2027 } from '../awards';
+import { CEREMONY } from '../../systems/ceremony';
+import { VISIBILITY, ordinal } from '../../systems/awards';
 import type { GuideEntry } from './types';
 
 const CAREER = '/workspace/career';
@@ -1035,38 +1036,51 @@ export const CAREER_GUIDE: readonly GuideEntry[] = [
     id: 'career.awards',
     title: 'Charts, Festivals And Awards',
     goal: 'career',
-    covers: ['pro.award_enter', 'pro.watch_ceremony'],
-    synonyms: ['emmy', 'emmys', 'award', 'awards', 'nomination', 'nominated', 'ceremony', 'festival', 'sundance', 'box office', 'gross', 'chart', 'charts', 'top 10', 'netflix', 'nielsen', 'recognition'],
-    questions: ['Can I be nominated for an Emmy?', 'How do I enter for an award?', 'Why isn’t my part eligible?', 'Will my film go to Sundance?', 'Does a hit film pay me more?', 'What do the charts show?', 'Does skipping the ceremony change anything?'],
+    covers: ['pro.award_enter', 'pro.watch_ceremony', 'pro.actor_submit', 'pro.ceremony_rsvp', 'pro.ceremony_prepare', 'pro.ceremony_accept'],
+    synonyms: ['emmy', 'emmys', 'award', 'awards', 'nomination', 'nominated', 'ceremony', 'festival', 'sundance', 'box office', 'gross', 'chart', 'charts', 'top 10', 'netflix', 'nielsen', 'recognition', 'actor awards', 'sag awards', 'acceptance speech', 'red carpet'],
+    questions: ['Can I be nominated for an Emmy?', 'How do I enter for an award?', 'Why isn’t my part eligible?', 'Will my film go to Sundance?', 'Does a hit film pay me more?', 'What do the charts show?', 'Does skipping the ceremony change anything?', 'Can I be nominated for an Actor Award?', 'Should I go to the ceremony?'],
     where: on('industry', 'Career, Charts And Awards'),
     available: `From the guide’s chapter “${WORK_CHAPTER}”, once you’ve accepted work.`,
-    short: `A part on television can be entered for an Emmy, by you or by its production, if it meets the Television Academy’s rules: a guest part is in under half the season’s episodes, and every part needs ${Math.round(EMMY_RULES.leastShare * 100)}% of the running time. A film goes to the Sundance Film Festival only if its production submits it. A nomination, a win or a selection makes casting likelier to choose you for a while, and pays nothing.
+    short: `A part on television can be entered for an Emmy, by you or by its production, if it meets the Television Academy’s rules: a guest part is in under half the season’s episodes, and every part needs ${Math.round(EMMY_RULES.leastShare * 100)}% of the running time. A film goes to the Sundance Film Festival only if its production submits it. A part in a film or on television made under SAG-AFTRA can be submitted for the Actor Awards, by you or your production, for ${usd(ACTOR_RULES.fee)}: the guild's members vote. A nomination, a win or a selection makes casting likelier to choose you for a while, an agent's office reads it, and a production asked for more is a little likelier to agree; it pays nothing.
+
+Nominated, you're invited to the show: say whether you'll go. Going, you can prepare your remarks, and if you win you go up to accept: a speech that lands is quoted, and makes you a little more visible for a while. The result itself was settled before the night.
 
 The tab also shows the game’s own box office for your films, each season’s audience and reviews for a series you’ve worked on, and the weekly charts Box Office Mojo, Netflix and Nielsen publish, as they published them.`,
     steps: [
       'Open Career, then Charts And Awards, and read what each of your parts on television is eligible for, or why not.',
       `Press Enter Yourself before the entry deadline: ${usd(EMMY_RULES.fees.processing + EMMY_RULES.fees.perEntrant)}, paid from your bank.`,
-      'Read the nominations when they’re announced, and when your award is presented, press Watch The Ceremony, or just read the result.',
+      `For the Actor Awards, press Submit Yourself while submissions are open, ${usd(ACTOR_RULES.fee)} a performance.`,
+      'Read the nominations when they’re announced. Nominated, press Go To The Ceremony or Watch From Home by a week before the show.',
+      `Going, press Prepare Your Remarks, ${CEREMONY.prepare.minutes} minutes at a time, and when the clock stops for the show, press Go. If you win, press Go Up And Accept within half an hour.`,
+      'Not going, press Watch The Ceremony when your award is presented, or just read the result.',
       'For a film, read whether it’s eligible for Sundance and what its production did.',
     ],
-    needs: ['A part on television that’s on the air, or due on it, in the Emmy year: June 1 to May 31.'],
+    needs: ['A part on television that’s on the air, or due on it, in the Emmy year: June 1 to May 31.', 'For the Actor Awards, a part in a film or a television program made under a SAG-AFTRA agreement, first shown in the calendar year.'],
     costs: [
       { label: 'An Emmy Entry', value: `${usd(EMMY_RULES.fees.processing)} for processing and ${usd(EMMY_RULES.fees.perEntrant)} for the entry, the Television Academy’s fees for a performer who isn’t a member` },
+      { label: 'An Actor Awards Submission', value: `${usd(ACTOR_RULES.fee)} a performance, the guild’s fee` },
+      { label: 'Going To The Show', value: 'The days of the trip, out ahead and home the morning after; the trip isn’t charged to you' },
+      { label: 'Preparing Remarks', value: `${CEREMONY.prepare.minutes} minutes each time, each going further the less is left`, estimate: true },
     ],
     reads: [
       { label: 'Your Part', value: 'Its episodes against the season’s, and its scenes kept in the edit against an episode’s', estimate: true },
       { label: 'How It Went', value: 'The best your days on it were judged', estimate: true },
       { label: 'Your Recognition', value: 'Nominations, wins and festival selections before it', estimate: true },
+      { label: 'Your Speech', value: 'How far your remarks are prepared, your composure and your presence', estimate: true },
     ],
     now: ['Entering puts the part under Your Recognition as entered, and the fee is taken from your bank.'],
     later: [
       `At the nominations, each category has its own field of entries, and the Academy’s table sets how many are nominated: ${EMMY_RULES.nominationsBySubmissions.map(([n, k]) => `${k} from ${n} entries`).join(', ')}.`,
       'The winner is settled when the final round of voting ends, and you learn it when the award is presented: guest and voice-over awards at the Creative Arts Emmys, the others at the telecast.',
       `A festival’s answer comes about ${longDayOf(SUNDANCE_2027.notice)} for its ${SUNDANCE_2027.year} festival, in ${SUNDANCE_2027.place}.`,
+      `The Actor Awards’ committees, members drawn at random, nominate ${countWords(ACTOR_RULES.nominees)} in each category, more only for a tie, and of two performances of yours in one category only the one with more votes. Every paid-up member in the US and Canada votes the winner, and a tie gives the award to each tied. The ${ordinal(ACTOR_AWARDS_33.number)} show is on ${longDayOf(ACTOR_AWARDS_33.ceremony)}.`,
+      'At the show, losing changes nothing but the record. Winning in the room, you go up; not going up within half an hour, you say thank you and sit down. Watched from home, a win is accepted without you.',
     ],
     interpret: [
       'The eligibility year, the fees, the guest rule, the share of the running time and the nomination table are the 78th Emmy Awards’ rules. Sundance’s categories, deadlines and premiere rule are its 2027 festival’s. A later year carries them forward, and says so.',
-      'How many enter a category, how the votes go, whether a production enters you or submits its film, and whether the festival selects it are the game’s, and no other nominee is ever named.',
+      'The Actor Awards’ eligibility, categories, fee, window, committees, nominee count and final vote are its 33rd Rules & Regulations’. Its show is held in Los Angeles in the game, as its last was, and so are the Emmys’; neither’s rules name a place.',
+      'How many enter a category, how the votes go, whether a production enters you or submits its film, and whether the festival selects it are the game’s, and no other nominee is ever named. So are a speech’s weights and the week to say whether you’ll go.',
+      'An agent’s office reads your recognition as a step up in your work, once, however much of it there is. A production you ask for more is likelier to agree by half your visibility, which fades as recognition does.',
       'A film’s box office is the production’s, not your pay, and how well your part went doesn’t move it. The published charts are the providers’ own figures, each in its own unit and week.',
       'A series’ season audience is the game’s estimate, in viewers an episode for a broadcast series and hours viewed a week for a streaming one, never one as the other. The network reads it, with the season’s reviews and how long the series has run, when it says whether there’s another season: a big audience makes another likelier, never certain.',
       `Recognition makes casting a little likelier to choose you, fading over three years, and at most ${Math.round(VISIBILITY.most * 100)}% better; so, a little, does a promotional film you appeared in for a release. Neither changes a contract or how your work is judged.`,
@@ -1075,6 +1089,7 @@ The tab also shows the game’s own box office for your films, each season’s a
     mistakes: [
       'Waiting for the production to enter you: it may not, and after the deadline nobody can.',
       'Expecting a hit film to pay more: the pay is the contract’s.',
+      'Going to a show you might win at with your remarks unprepared.',
     ],
     next: ['Read How Each Kind Of Work Is Done: a scene cut in the edit can take a part below the share of the running time it needs.'],
     related: ['career.workflows', 'career.offers', 'career.contracts'],

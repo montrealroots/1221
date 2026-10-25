@@ -80,7 +80,10 @@ const NOMINATIONS = at(2027, 7, 8, 12);
 const FINAL_ENDS = at(2027, 8, 27, 1);
 const CREATIVE_ARTS = at(2027, 9, 5, 21);
 const sources = JSON.parse(readFileSync('docs/verification/career-world-2026-10-23/sources.json', 'utf8')) as { sources: { id: string; status: string }[] };
-const sourceStatus = (id: string) => sources.sources.find((s) => s.id === id)?.status;
+// From 2026-10-25 (brief 27's K7) an institution may name brief 27's research register's entries too, the Actor Awards' rules
+// among them, read and applied that day.
+const register = JSON.parse(readFileSync('docs/verification/career-universe-2026-10-24/research/register.json', 'utf8')) as { sources: { id: string; status: string }[] };
+const sourceStatus = (id: string) => sources.sources.find((s) => s.id === id)?.status ?? register.sources.find((s) => s.id === id)?.status;
 
 // ---------------------------------------------------------------------------------------------------------------------
 // The reference charts
@@ -246,7 +249,7 @@ describe('X6: the awards and festivals the brief names, each with what was read 
       if (i.coverage === 'enforced') expect(i.sources.some((s) => sourceStatus(s) === 'read'), i.id).toBe(true);
       else expect(i.known, i.id).toMatch(/doesn’t (decide|say)|isn’t simulated/);
     }
-    expect(INSTITUTIONS.filter((i) => i.coverage === 'enforced').map((i) => i.id)).toEqual(['emmys', 'iemmys', 'sundance']);
+    expect(INSTITUTIONS.filter((i) => i.coverage === 'enforced').map((i) => i.id)).toEqual(['emmys', 'iemmys', 'actor-awards', 'sundance']);
     // Three Emmy organizations, three competitions, each with its own source.
     const emmys = INSTITUTIONS.filter((i) => ['emmys', 'natas', 'iemmys'].includes(i.id));
     expect(new Set(emmys.map((i) => i.sources.join())).size).toBe(3);

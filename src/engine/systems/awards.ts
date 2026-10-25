@@ -28,7 +28,7 @@ import { formatMoney } from '../core/money';
 import { MS_DAY, addDays, formatDate, instantFromZoned, zonedParts, type Instant } from '../core/time';
 import { projectById, type ProjectTemplate } from '../content/careerwork';
 import {
-  EMMY_CATEGORIES, EMMY_RULES, LIMITED_EPISODES, SCENES_PER_EPISODE, SEASON_EPISODES, SHORT_UNDER_MINUTES, SUNDANCE_CATEGORY_NAME, emmyEdition, emmyYearOf,
+  EMMY_CATEGORIES, EMMY_RULES, LIMITED_EPISODES, actorEdition, SCENES_PER_EPISODE, SEASON_EPISODES, SHORT_UNDER_MINUTES, SUNDANCE_CATEGORY_NAME, emmyEdition, emmyYearOf,
   sundanceEdition, type EmmyCategory, type EmmyEdition, type SundanceCategory, type SundanceEdition,
 } from '../content/awards';
 import type { FormatId } from '../content/workflows';
@@ -42,6 +42,7 @@ import { plural } from '../core/text';
 import { countryOfPlace } from '../content/geography';
 import { requirementOfRole } from './engagement';
 import { peakOf } from './charts';
+import { invitation, type Attendance } from './ceremony';
 
 const NY = 'America/New_York';
 export const AWARDS_KIND = 'pro.awards';
@@ -69,6 +70,8 @@ export interface AwardEntry {
   /** When the result is the player's to see: the ceremony. */
   ceremonyAt: Instant;
   watchedAt?: Instant;
+  /** Whether the player went, and how it went (`systems/ceremony.ts`, from 2026-10-25, brief 27's K7). */
+  attend?: Attendance;
   why?: string;
 }
 
@@ -253,7 +256,7 @@ function daysWords(from: string, to: string): string {
   return `${a} to ${b}`;
 }
 
-const ordinal = (n: number) => `${n}${n % 100 >= 11 && n % 100 <= 13 ? 'th' : ({ 1: 'st', 2: 'nd', 3: 'rd' } as Record<number, string>)[n % 10] ?? 'th'}`;
+export const ordinal = (n: number) => `${n}${n % 100 >= 11 && n % 100 <= 13 ? 'th' : ({ 1: 'st', 2: 'nd', 3: 'rd' } as Record<number, string>)[n % 10] ?? 'th'}`;
 const longDay = (iso: string) => formatDate(dayAt(iso, 12), NY);
 
 // ---------------------------------------------------------------------------------------------------------------------
@@ -261,7 +264,7 @@ const longDay = (iso: string) => formatDate(dayAt(iso, 12), NY);
 // ---------------------------------------------------------------------------------------------------------------------
 
 /** How the work was judged, as the field's standing reads it (ASSUMPTION, the game's: the band's middle). */
-const STANDING: Readonly<Record<string, number>> = { unready: 35, working: 55, strong: 70, exceptional: 85 };
+export const STANDING: Readonly<Record<string, number>> = { unready: 35, working: 55, strong: 70, exceptional: 85 };
 
 /** The field's draw (ASSUMPTION): a category's submissions, and every entrant's standing, the game's, never a real ballot. */
 export const FIELD = { leastSubmissions: 60, mostSubmissions: 230, mean: 55, spread: 14, yours: 12, visibilityWeight: 60, production: { strong: 0.5, other: 0.1 } } as const;
@@ -300,10 +303,10 @@ export function nominate(votes: readonly { id: string; votes: number }[], target
  * the nomination line in about half of the categories its probe drew, where a tie is the rules' exception; in tenths it's
  * about one in twenty.
  */
-const tenths = (standing: number) => Math.round(standing * 10);
+export const tenths = (standing: number) => Math.round(standing * 10);
 
 /** A draw from a normal curve, from two uniform draws. */
-const normal = (a: number, b: number) => Math.sqrt(-2 * Math.log(Math.max(1e-9, a))) * Math.cos(2 * Math.PI * b);
+export const normal = (a: number, b: number) => Math.sqrt(-2 * Math.log(Math.max(1e-9, a))) * Math.cos(2 * Math.PI * b);
 
 /**
  * A category's anonymous field for a year (decider `awards.field`): its submissions, the player's among them, and each
@@ -474,7 +477,7 @@ function emmyStep(sim: Simulation, person: Person, c: ProCredit, now: Instant, t
     const name = categoryName(person, a.category);
     tell(a.state === 'nominated' ? 'You’re Nominated For An Emmy' : 'The Emmy Nominations Are Out',
       a.state === 'nominated'
-        ? `You’re one of ${nominees.length} nominees for ${name} at the ${ordinal(ed.number)} Emmy Awards, for ${c.role} in ${c.project}. The award is presented on ${formatDate(a.ceremonyAt, NY)}.`
+        ? `You’re one of ${nominees.length} nominees for ${name} at the ${ordinal(ed.number)} Emmy Awards, for ${c.role} in ${c.project}. ${invitation(sim, person, a)}`
         : `You weren’t nominated for ${name} at the ${ordinal(ed.number)} Emmy Awards, for ${c.role} in ${c.project}: ${nominees.length} of ${submissions} entries were.`);
   }
 }
@@ -487,7 +490,8 @@ function resultStep(sim: Simulation, person: Person, a: AwardEntry, now: Instant
   if (now >= dayAt(ed.finalEnds, 23) && a.field.winner === undefined) a.field.winner = finalDrawn(sim, a.year, a.category, a.field.nominees, a.field.standing);
   if (now >= a.ceremonyAt && a.field.winner !== undefined) {
     a.state = a.field.winner === 'you' ? 'won' : 'lost';
-    tell(`The ${EMMY_CATEGORIES[a.category].at === 'creative-arts' ? 'Creative Arts Emmys' : 'Emmy Awards'} Tonight`, `${categoryName(person, a.category)} was presented tonight, with you among its ${a.field.nominations} nominees for ${c.role} in ${c.project}. Watch the ceremony, or read the result, on the Career screen’s Charts And Awards tab.`);
+    // Going, the show itself tells it (from 2026-10-25, brief 27's K7, `systems/ceremony.ts`); otherwise it's read from home.
+    if (a.attend?.rsvp !== 'attending') tell(`The ${EMMY_CATEGORIES[a.category].at === 'creative-arts' ? 'Creative Arts Emmys' : 'Emmy Awards'} Tonight`, `${categoryName(person, a.category)} was presented tonight, with you among its ${a.field.nominations} nominees for ${c.role} in ${c.project}. Watch the ceremony, or read the result, on the Career screen’s Charts And Awards tab.`);
   }
 }
 
@@ -522,27 +526,8 @@ function festivalStep(sim: Simulation, person: Person, c: ProCredit, now: Instan
 // The ceremony
 // ---------------------------------------------------------------------------------------------------------------------
 
-/** Why the player can't watch an entry's ceremony now, or nothing. */
-export function watchRefusal(sim: Simulation, person: Person, entryId: string): string | undefined {
-  const a = awardsOf(person).find((x) => x.id === entryId);
-  if (!a) return 'There’s no such entry.';
-  if (!a.field || !['nominated', 'won', 'lost'].includes(a.state)) return 'You weren’t nominated, so there’s no ceremony of yours to watch.';
-  if (sim.now < a.ceremonyAt) return `The award is presented on ${formatDate(a.ceremonyAt, NY)}.`;
-  return undefined;
-}
-
-/** The ceremony as it went, a line at a time, read from the settled result: watching it changes nothing. */
-export function ceremonyLines(person: Person, a: AwardEntry): string[] {
-  const c = person.pro?.credits.find((x) => x.id === a.creditId);
-  const name = categoryName(person, a.category);
-  const others = (a.field?.nominations ?? 1) - 1;
-  const won = a.state === 'won';
-  return [
-    `First come the nominees for ${name}: you, for ${c?.role ?? 'your part'} in ${c?.project ?? 'your work'}, and ${others === 1 ? 'one other performer' : `${others} other performers`}.`,
-    'Then the envelope is opened.',
-    won ? `It’s you: you won ${name} at the ${ordinal(emmyEdition(a.year).number)} Emmy Awards.` : 'It goes to another nominee. You didn’t win, and your nomination stands.',
-  ];
-}
+// Watching a show and its lines are the ceremony's from 2026-10-25 (brief 27's K7), read for an Emmy and an Actor Award alike.
+export { ceremonyLines, watchRefusal } from './ceremony';
 
 /** The recap: the same result in a line. */
 export function recapWords(person: Person, a: AwardEntry): string {
@@ -583,13 +568,15 @@ export function recognitionOf(person: Person): { id: string; words: string }[] {
  * 2026-10-25 (brief 27's loop 34: "Publicity should influence exposure where appropriate, not directly manufacture
  * artistic merit or guarantee awards"), a promotional film the actor appeared in, the least of them.
  */
-export const VISIBILITY = { selected: 0.05, nominated: 0.08, won: 0.15, topThree: 0.04, promo: 0.03, fadeDays: 3 * 365, most: 0.3 } as const;
+export const VISIBILITY = { selected: 0.05, nominated: 0.08, won: 0.15, topThree: 0.04, promo: 0.03, speech: 0.03, fadeDays: 3 * 365, most: 0.3 } as const;
 
 /**
  * How visible the player's work has made them at a moment: each festival selection, nomination, win, film in the top
  * three of the game's own chart and, from 2026-10-25, promotional film appeared in, each fading to nothing over three
- * years from when it came. Casting reads it, and so does an Emmy field's standing (`fieldFor`), at its weight; nothing
- * pays it, and it never touches the work's judged quality.
+ * years from when it came. From 2026-10-25 (brief 27's K7) an Actor Awards nomination and win count as an Emmy's
+ * do, and so does a Strong acceptance speech or better (`systems/ceremony.ts`), at `speech`. Casting reads it, and so does
+ * an awards field's standing (`fieldFor`, `actorawards.ts`), at its weight; nothing pays it, and it never touches the
+ * work's judged quality.
  */
 export function visibilityOf(person: Person, at: Instant): number {
   const pro = person.pro;
@@ -607,6 +594,12 @@ export function visibilityOf(person: Person, at: Instant): number {
     if (peak !== undefined && peak <= 3) v += fade(c.run!.opening, VISIBILITY.topThree);
   }
   for (const e of pro.engagements) if (e.promo?.status === 'done') v += fade(e.promo.at, VISIBILITY.promo);
+  for (const g of pro.guild ?? []) {
+    // The nominations' morning, 6 a.m. in Los Angeles, which is 9 in New York.
+    if (['nominated', 'won', 'lost'].includes(g.state)) v += fade(dayAt(actorEdition(g.year).nominationsAnnounced, 9), VISIBILITY.nominated);
+    if (g.state === 'won') v += fade(g.ceremonyAt, VISIBILITY.won);
+  }
+  for (const n of [...(pro.awards ?? []), ...(pro.guild ?? [])]) if (n.attend?.speech && (n.attend.speech.band === 'strong' || n.attend.speech.band === 'exceptional')) v += fade(n.ceremonyAt, VISIBILITY.speech);
   return Math.min(VISIBILITY.most, Math.round(v * 1000) / 1000);
 }
 
@@ -621,14 +614,6 @@ export function registerAwards(sim: Simulation, tell: (s: Simulation, person: Pe
     ensurePro(s, s.player);
     return { entryId: a.id, fee: a.fee ?? 0 };
   });
-  sim.onCommand<{ entryId: string }, { lines: string[] }>('pro.watch_ceremony', (p, { sim: s }) => {
-    const person = s.player;
-    const no = watchRefusal(s, person, String(p?.entryId));
-    if (no) throw new CommandError(no);
-    const a = awardsOf(person).find((x) => x.id === String(p.entryId))!;
-    // The result was settled at the final round and given at the ceremony; watching only shows it.
-    if (a.state === 'nominated') resultStep(s, person, a, s.now, () => undefined);
-    a.watchedAt ??= s.now;
-    return { lines: ceremonyLines(person, a) };
-  });
+  // Watching a ceremony is the ceremony's from 2026-10-25 (brief 27's K7, `systems/ceremony.ts`'s `pro.watch_ceremony`),
+  // for the Actor Awards' shows as for the Emmys'.
 }

@@ -10,7 +10,10 @@
  * unit, territory and week, with its movement where the week before is held, and how old it is. Awards And Festivals:
  * every institution the brief names, with what this build read of it. From 2026-10-24 (the owner's brief 27, Part 5) a
  * fifth, Unions And Festivals Around The World: the performers' unions FIA lists and the festivals FIAPF accredits, where
- * the actor lives first and then by country (`content/industry.ts`).
+ * the actor lives first and then by country (`content/industry.ts`). From 2026-10-25 (brief 27's K7) Your Recognition also
+ * holds each film's and television credit's place at the Actor Awards, Submit Yourself where it's open (`pro.actor_submit`),
+ * and, for every nomination, the ceremony: going or watching from home (`pro.ceremony_rsvp`), preparing remarks
+ * (`pro.ceremony_prepare`), and going up to accept a win (`pro.ceremony_accept`).
  */
 
 import { useState } from 'react';
@@ -35,6 +38,9 @@ import {
   internationalWhy, projectOfCredit, recapWords, visibilityOf, watchRefusal,
 } from '@/engine/systems/awards';
 import type { ProCredit } from '@/engine/systems/pro';
+import { actorCheck, actorEligibleWords, actorFee, actorRecapWords, actorSubmitRefusal } from '@/engine/systems/actorawards';
+import { CEREMONY, acceptRefusal, prepareRemarksRefusal, rsvpBy, rsvpRefusal, showTitle, type Nomination } from '@/engine/systems/ceremony';
+import { bookedClash } from '@/engine/systems/projobs';
 import { projectById } from '@/engine/content/careerwork';
 import { seasonWindow, seriesById } from '@/engine/content/series';
 import { audienceWords, decisionsTo, decisionWords, ordinal, seasonAudience, seasonMade, seasonNumber } from '@/engine/systems/series';
@@ -78,13 +84,19 @@ function RecognitionPanel() {
             : <p className="small" style={{ margin: 0 }}>None of your work is on television yet. A part in a series or a television movie can be entered once it’s due on the air.</p>}
         </div>
         <div className="col gap-3">
+          <h3 className="eyebrow" style={{ margin: 0 }}>The Actor Awards</h3>
+          {tv.length + film.length
+            ? [...film, ...tv].map((c) => <ActorCredit key={c.id} sim={sim} person={person} c={c} />)
+            : <p className="small" style={{ margin: 0 }}>None of your work is on screen yet. A part in a film or a television program made under SAG-AFTRA can be submitted once it’s due out.</p>}
+        </div>
+        <div className="col gap-3">
           <h3 className="eyebrow" style={{ margin: 0 }}>The Sundance Film Festival</h3>
           {film.length
             ? film.map((c) => <FestivalCredit key={c.id} sim={sim} person={person} c={c} />)
             : <p className="small" style={{ margin: 0 }}>None of your work is a film yet. A short or an independent feature can go to Sundance once it’s finished, if its production submits it.</p>}
         </div>
         <Fine>
-          {`The Emmy Awards’ eligibility, entries, fees and nominations follow the 78th Emmy Awards’ rules, and Sundance’s follow its 2027 festival’s; a later year carries them forward. The other entrants, the votes and the festival’s choices are the game’s, and no other nominee is named. Recognition lasts on your Portfolio; what it does for casting fades, at most ${Math.round(VISIBILITY.most * 100)}% better.`}
+          {`The Emmy Awards’ eligibility, entries, fees and nominations follow the 78th Emmy Awards’ rules, the Actor Awards’ follow the 33rd’s, and Sundance’s follow its 2027 festival’s; a later year carries them forward. The other entrants, the votes and the festival’s choices are the game’s, and no other nominee is named. Recognition lasts on your Portfolio; what it does for casting fades, at most ${Math.round(VISIBILITY.most * 100)}% better.`}
         </Fine>
       </div>
     </Panel>
@@ -113,6 +125,7 @@ function EmmyCredit({ sim, person, c }: { sim: Simulation; person: Person; c: Pr
             {a.watchedAt !== undefined && (
               <ol className="small" style={{ margin: 0, paddingLeft: '1.1rem' }}>{ceremonyLines(person, a).map((line, i) => <li key={i}>{line}</li>)}</ol>
             )}
+            <CeremonyControls sim={sim} person={person} n={a} />
             {['nominated', 'won', 'lost'].includes(a.state) && a.watchedAt === undefined && (
               <>
                 <div className="row gap-2" style={{ flexWrap: 'wrap' }}>
@@ -135,6 +148,100 @@ function EmmyCredit({ sim, person, c }: { sim: Simulation; person: Person; c: Pr
       )}
       {t && <p className="xs dim" style={{ margin: 0 }}>{internationalWhy(t)}</p>}
     </div>
+  );
+}
+
+/** A credit's place at the Actor Awards: its eligibility, Submit Yourself where it's open, and what came of each submission. */
+function ActorCredit({ sim, person, c }: { sim: Simulation; person: Person; c: ProCredit }) {
+  const { run, toast } = useGame();
+  const check = actorCheck(sim, person, c);
+  const entries = (person.pro?.guild ?? []).filter((g) => g.creditId === c.id);
+  const open = check.eligible && !entries.some((g) => g.year === check.year && g.state !== 'not-submitted');
+  const cur = saveCurrency(sim.universe);
+  const no = open ? actorSubmitRefusal(sim, person, c.id) : undefined;
+  const label = `Submit Yourself (${formatMoney(actorFee(sim), cur)})`;
+  return (
+    <div className="col gap-2">
+      <p className="small strong" style={{ margin: 0 }}>{`${c.role}, ${c.project}`}</p>
+      <p className="small" style={{ margin: 0 }}>{check.eligible ? actorEligibleWords(person, check) : check.why}</p>
+      {entries.map((g) => {
+        const watchNo = ['nominated', 'won', 'lost'].includes(g.state) ? watchRefusal(sim, person, g.id) : 'not nominated';
+        return (
+          <div key={g.id} className="col gap-2">
+            <p className="small" style={{ margin: 0 }}>{actorRecapWords(person, g)}</p>
+            {g.watchedAt !== undefined && (
+              <ol className="small" style={{ margin: 0, paddingLeft: '1.1rem' }}>{ceremonyLines(person, g).map((line, i) => <li key={i}>{line}</li>)}</ol>
+            )}
+            <CeremonyControls sim={sim} person={person} n={g} />
+            {['nominated', 'won', 'lost'].includes(g.state) && g.watchedAt === undefined && (
+              <>
+                <div className="row gap-2" style={{ flexWrap: 'wrap' }}>
+                  <Gated feature="pro.watch_ceremony" className="btn btn-sm" disabled={!!watchNo} title={watchNo} onClick={() => { const r = run<{ lines: string[] }>('pro.watch_ceremony', { entryId: g.id }); if (r.ok) toast(r.value!.lines.at(-1)!, 'positive'); }}>Watch The Show</Gated>
+                </div>
+                <WhyNot reasons={[['Watch The Show', watchNo]]} />
+              </>
+            )}
+          </div>
+        );
+      })}
+      {open && (
+        <>
+          <div className="row gap-2" style={{ flexWrap: 'wrap' }}>
+            <Gated feature="pro.actor_submit" className="btn btn-sm" disabled={!!no} title={no} onClick={() => { const r = run<{ entryId: string; fee: number }>('pro.actor_submit', { creditId: c.id }); if (r.ok) toast(`You’re submitted, and ${formatMoney(r.value!.fee, cur)} is paid from your bank.`, 'positive'); }}>{label}</Gated>
+          </div>
+          <WhyNot reasons={[[label, no]]} />
+          <p className="xs dim" style={{ margin: 0 }}>Your production may submit you itself when the window closes if you don’t, and it may not.</p>
+        </>
+      )}
+    </div>
+  );
+}
+
+/**
+ * A nomination's ceremony (brief 27's K7, `systems/ceremony.ts`): going or watching from home before the answer's due,
+ * preparing remarks while going, and going up to accept a win in the room.
+ */
+function CeremonyControls({ sim, person, n }: { sim: Simulation; person: Person; n: Nomination }) {
+  const { run, toast } = useGame();
+  const hooks = { clash: (p: Person, days: readonly { from: number; to: number }[]) => bookedClash(p, days) };
+  const show = showTitle(n);
+  const answerable = n.state === 'nominated' && sim.now < rsvpBy(n);
+  const going = n.attend?.rsvp === 'attending';
+  const goNo = answerable ? rsvpRefusal(sim, person, n.id, true, hooks) : undefined;
+  const homeNo = answerable ? rsvpRefusal(sim, person, n.id, false, hooks) : undefined;
+  const prepNo = going && sim.now < n.ceremonyAt ? prepareRemarksRefusal(sim, person, n.id) : 'not going';
+  const acceptNo = n.state === 'won' && n.attend?.outcome === 'there' && !n.attend.accepted ? acceptRefusal(sim, person, n.id) : 'not in the room';
+  const prepLabel = `Prepare Your Remarks (${CEREMONY.prepare.minutes} Minutes)`;
+  const lines: string[] = [];
+  if (n.state === 'nominated' && !n.attend) lines.push(answerable ? `You’re invited to ${show}. Say by ${formatDate(rsvpBy(n), sim.zone)}, whether you’ll go; the trip isn’t charged to you.` : `You didn’t say you’d go to ${show}, so it’s yours to watch from home.`);
+  if (going && sim.now < n.ceremonyAt) lines.push(`You’re going to ${show} on ${formatDate(n.ceremonyAt, sim.zone)}. Your remarks are ${Math.round((n.attend!.prepared ?? 0) * 100)}% prepared.`);
+  if (n.attend?.rsvp === 'declined' && n.state === 'nominated') lines.push(`You’ll watch ${show} from home.`);
+  return (
+    <>
+      {lines.map((l, i) => <p key={i} className="small" style={{ margin: 0 }}>{l}</p>)}
+      {answerable && (
+        <>
+          <div className="row gap-2" style={{ flexWrap: 'wrap' }}>
+            {!going && <Gated feature="pro.ceremony_rsvp" className="btn btn-sm" disabled={!!goNo} title={goNo} onClick={() => { const r = run('pro.ceremony_rsvp', { entryId: n.id, attend: true }); if (r.ok) toast(`You’re going to ${show}.`, 'positive'); }}>Go To The Ceremony</Gated>}
+            {n.attend?.rsvp !== 'declined' && <Gated feature="pro.ceremony_rsvp" className="btn btn-sm" disabled={!!homeNo} title={homeNo} onClick={() => { const r = run('pro.ceremony_rsvp', { entryId: n.id, attend: false }); if (r.ok) toast(`You’ll watch ${show} from home.`, 'positive'); }}>Watch From Home</Gated>}
+          </div>
+          <WhyNot reasons={[['Go To The Ceremony', going ? undefined : goNo], ['Watch From Home', n.attend?.rsvp === 'declined' ? undefined : homeNo]]} />
+        </>
+      )}
+      {going && sim.now < n.ceremonyAt && (
+        <>
+          <div className="row gap-2" style={{ flexWrap: 'wrap' }}>
+            <Gated feature="pro.ceremony_prepare" className="btn btn-sm" disabled={!!prepNo} title={prepNo} onClick={() => { const r = run<{ prepared: number }>('pro.ceremony_prepare', { entryId: n.id }); if (r.ok) toast(`Your remarks are ${Math.round(r.value!.prepared * 100)}% prepared.`, 'positive'); }}>{prepLabel}</Gated>
+          </div>
+          <WhyNot reasons={[[prepLabel, prepNo]]} />
+        </>
+      )}
+      {!acceptNo && (
+        <div className="row gap-2" style={{ flexWrap: 'wrap' }}>
+          <Gated feature="pro.ceremony_accept" className="btn btn-sm" onClick={() => { const r = run<{ words: string }>('pro.ceremony_accept', { entryId: n.id }); if (r.ok) toast(r.value!.words, 'positive'); }}>Go Up And Accept</Gated>
+        </div>
+      )}
+    </>
   );
 }
 

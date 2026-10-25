@@ -63,11 +63,6 @@
    "tests/engagement.test.ts",
    "tests/defects-g3-1.test.ts",
    "src/engine/systems/engagement.ts:375-383 the command; src/engine/systems/engagement.ts:72-100 studyRefusal; src/engine/systems/engagement.ts:144-307 knownOf, relatedness one link only, relevantGenre: exact knowledge in full, the best related once, nothing passes 1",
-   "tests/evidence-g20-school.test.ts",
-   "tests/evidence-g23-school.test.ts",
-   "tests/guide-examples-craft.test.ts",
-   "tests/engagement.test.ts",
-   "tests/defects-g3-1.test.ts",
    "tests/b26-creation-genres.test.ts",
    "tests/school-paths.test.ts the School’s 86 test files, 1,304 tests, run on this commit: all green"
   ]
@@ -83,9 +78,7 @@
    "tests/b20-school-looks.test.ts",
    "tests/looks.test.ts",
    "tests/defects-g10-1.test.ts",
-   "src/ui/looks/school.tsx:342-392 a piece of coursework: status, due, shown band, each part prepared and its note priority",
-   "tests/b20-school-looks.test.ts",
-   "tests/looks.test.ts"
+   "src/ui/looks/school.tsx:342-392 a piece of coursework: status, due, shown band, each part prepared and its note priority"
   ]
  },
  "look.classmate": {
@@ -100,9 +93,7 @@
    "tests/looks.test.ts",
    "tests/evidence2-b03.test.ts",
    "tests/language-dynamic.test.ts",
-   "src/ui/looks/classmate.tsx:35-91 a classmate: rehearsals kept of asked, trust, reliability, the work shared, their priority and boundary",
-   "tests/b20-school-looks.test.ts",
-   "tests/looks.test.ts"
+   "src/ui/looks/classmate.tsx:35-91 a classmate: rehearsals kept of asked, trust, reliability, the work shared, their priority and boundary"
   ]
  },
  "look.course": {
@@ -116,9 +107,7 @@
    "tests/b20-school-looks.test.ts",
    "tests/looks.test.ts",
    "tests/defects-g10-1.test.ts",
-   "src/ui/looks/school.tsx:205-264 a course: taken this term or not, its skills at their level and reach, its next meeting, its open work",
-   "tests/b20-school-looks.test.ts",
-   "tests/looks.test.ts"
+   "src/ui/looks/school.tsx:205-264 a course: taken this term or not, its skills at their level and reach, its next meeting, its open work"
   ]
  },
  "look.school": {
@@ -133,9 +122,7 @@
    "tests/looks.test.ts",
    "tests/defects-r3-1.test.ts",
    "tests/defects-r3c-1.test.ts",
-   "src/ui/looks/school.tsx:125-197 the school: standing in words, terms begun past a leave, the place in the class; ways to each course, the next class day, the town and You",
-   "tests/b20-school-looks.test.ts",
-   "tests/looks.test.ts"
+   "src/ui/looks/school.tsx:125-197 the school: standing in words, terms begun past a leave, the place in the class; ways to each course, the next class day, the town and You"
   ]
  },
  "look.work": {
@@ -150,9 +137,7 @@
    "tests/looks.test.ts",
    "tests/attributes-phase-2b.test.ts",
    "tests/decisions-stamina.test.ts",
-   "src/ui/looks/actor.tsx:248-297 a piece of finished work: judged figure and band, each dimension, the limits, judged again from its record",
-   "tests/b20-school-looks.test.ts",
-   "tests/looks.test.ts"
+   "src/ui/looks/actor.tsx:248-297 a piece of finished work: judged figure and band, each dimension, the limits, judged again from its record"
   ]
  },
  "notice.systems/classmates#classMoment": {
@@ -291,7 +276,6 @@
    "tests/b20-school-degree.test.ts",
    "tests/leave.test.ts",
    "src/engine/systems/leave.ts:170-180 the leave’s notices",
-   "tests/leave.test.ts",
    "tests/school-paths.test.ts the School’s 86 test files, 1,304 tests, run on this commit: all green"
   ]
  },
@@ -306,7 +290,6 @@
    "tests/evidence-g19-school.test.ts",
    "tests/evidence-g22-school.test.ts",
    "src/engine/systems/production.ts:707-753 the closing’s Looking Back, once across a reload, the craft note not taken onto the class’s ledger",
-   "tests/evidence-g19-school.test.ts",
    "tests/school-paths.test.ts the School’s 86 test files, 1,304 tests, run on this commit: all green"
   ]
  },
@@ -488,7 +471,6 @@
    "tests/b20-school-account.test.ts",
    "tests/leave.test.ts",
    "src/engine/systems/leave.ts:281-325 leaveRefusal and requestLeave; src/engine/systems/leave.ts:326-359 closeLeave; src/engine/systems/leave.ts:360-446 startLeave cancels the pending school items, calls off shifts and a Cabaret show, bills the rebate; src/engine/systems/leave.ts:447-520 returnFromLeave",
-   "tests/leave.test.ts",
    "tests/school-paths.test.ts",
    "tests/school-paths.test.ts the School’s 86 test files, 1,304 tests, run on this commit: all green"
   ]
@@ -503,7 +485,6 @@
   "evidence": [
    "tests/leave.test.ts",
    "src/engine/systems/leave.ts:281-325 leaveRefusal and requestLeave; src/engine/systems/leave.ts:326-359 closeLeave; src/engine/systems/leave.ts:360-446 startLeave cancels the pending school items, calls off shifts and a Cabaret show, bills the rebate; src/engine/systems/leave.ts:447-520 returnFromLeave",
-   "tests/leave.test.ts",
    "tests/school-paths.test.ts",
    "tests/school-paths.test.ts the School’s 86 test files, 1,304 tests, run on this commit: all green"
   ]
@@ -519,7 +500,6 @@
    "tests/leave.test.ts",
    "tests/evidence-g25-school.test.ts",
    "src/engine/systems/leave.ts:281-325 leaveRefusal and requestLeave; src/engine/systems/leave.ts:326-359 closeLeave; src/engine/systems/leave.ts:360-446 startLeave cancels the pending school items, calls off shifts and a Cabaret show, bills the rebate; src/engine/systems/leave.ts:447-520 returnFromLeave",
-   "tests/leave.test.ts",
    "tests/school-paths.test.ts",
    "tests/school-paths.test.ts the School’s 86 test files, 1,304 tests, run on this commit: all green"
   ]
@@ -551,7 +531,6 @@
    "tests/b20-school-account.test.ts",
    "tests/leave.test.ts",
    "src/engine/systems/leave.ts:281-325 leaveRefusal and requestLeave; src/engine/systems/leave.ts:326-359 closeLeave; src/engine/systems/leave.ts:360-446 startLeave cancels the pending school items, calls off shifts and a Cabaret show, bills the rebate; src/engine/systems/leave.ts:447-520 returnFromLeave",
-   "tests/leave.test.ts",
    "tests/school-paths.test.ts",
    "tests/school-paths.test.ts the School’s 86 test files, 1,304 tests, run on this commit: all green"
   ]
@@ -567,7 +546,6 @@
    "tests/b20-school-account.test.ts",
    "tests/leave.test.ts",
    "src/engine/systems/leave.ts:281-325 leaveRefusal and requestLeave; src/engine/systems/leave.ts:326-359 closeLeave; src/engine/systems/leave.ts:360-446 startLeave cancels the pending school items, calls off shifts and a Cabaret show, bills the rebate; src/engine/systems/leave.ts:447-520 returnFromLeave",
-   "tests/leave.test.ts",
    "tests/school-paths.test.ts",
    "tests/school-paths.test.ts the School’s 86 test files, 1,304 tests, run on this commit: all green"
   ]
@@ -583,7 +561,6 @@
    "tests/b20-school-account.test.ts",
    "tests/leave.test.ts",
    "src/engine/systems/leave.ts:281-325 leaveRefusal and requestLeave; src/engine/systems/leave.ts:326-359 closeLeave; src/engine/systems/leave.ts:360-446 startLeave cancels the pending school items, calls off shifts and a Cabaret show, bills the rebate; src/engine/systems/leave.ts:447-520 returnFromLeave",
-   "tests/leave.test.ts",
    "tests/school-paths.test.ts",
    "tests/school-paths.test.ts the School’s 86 test files, 1,304 tests, run on this commit: all green"
   ]
@@ -599,7 +576,6 @@
    "tests/b20-school-account.test.ts",
    "tests/b20-school-workstudy.test.ts",
    "src/engine/systems/school.ts:3733-3837 payday; src/engine/systems/school.ts:4299-4354 the stipend; src/engine/systems/leave.ts:873-900 payBalance; src/engine/systems/leave.ts:1387 the account due",
-   "tests/b20-school-account.test.ts",
    "tests/school-paths.test.ts the School’s 86 test files, 1,304 tests, run on this commit: all green"
   ]
  },
@@ -687,7 +663,6 @@
    "tests/evidence-g18-school.test.ts",
    "tests/evidence-g19-school.test.ts",
    "src/engine/systems/coursework.ts:1683-1701 orientationRefusal; src/engine/systems/coursework.ts:1904-1926 the sessions and the catch-up",
-   "tests/evidence-g19-school.test.ts",
    "tests/school-paths.test.ts the School’s 86 test files, 1,304 tests, run on this commit: all green"
   ]
  },
@@ -703,7 +678,6 @@
    "tests/evidence-g19-school.test.ts",
    "tests/b20-school-firsts.test.ts",
    "src/engine/systems/coursework.ts:1683-1701 orientationRefusal; src/engine/systems/coursework.ts:1904-1926 the sessions and the catch-up",
-   "tests/evidence-g19-school.test.ts",
    "tests/school-paths.test.ts the School’s 86 test files, 1,304 tests, run on this commit: all green"
   ]
  },
@@ -760,7 +734,6 @@
   "evidence": [
    "tests/evidence-g26-school.test.ts",
    "src/engine/systems/leave.ts:958-1030 repeatRefusal and requestRepeat; src/engine/systems/leave.ts:1315-1381 the repeat’s commands and kinds",
-   "tests/evidence-g26-school.test.ts",
    "tests/school-paths.test.ts the School’s 86 test files, 1,304 tests, run on this commit: all green"
   ]
  },
@@ -775,7 +748,6 @@
    "tests/evidence-g26-school.test.ts",
    "tests/leave.test.ts",
    "src/engine/systems/leave.ts:958-1030 repeatRefusal and requestRepeat; src/engine/systems/leave.ts:1315-1381 the repeat’s commands and kinds",
-   "tests/evidence-g26-school.test.ts",
    "tests/school-paths.test.ts the School’s 86 test files, 1,304 tests, run on this commit: all green"
   ]
  },
@@ -791,7 +763,6 @@
    "tests/scope-school.test.ts",
    "tests/leave.test.ts",
    "src/engine/systems/leave.ts:958-1030 repeatRefusal and requestRepeat; src/engine/systems/leave.ts:1315-1381 the repeat’s commands and kinds",
-   "tests/evidence-g26-school.test.ts",
    "tests/school-paths.test.ts the School’s 86 test files, 1,304 tests, run on this commit: all green"
   ]
  },
@@ -838,7 +809,6 @@
    "tests/school-everyday.test.ts",
    "src/engine/systems/school.ts:3638-3698 a shift; src/engine/systems/school.ts:3733-3837 payday; src/engine/systems/school.ts:4403-4431 an elective evening; src/engine/systems/school.ts:1895 weekHours",
    "tests/evidence-g19-school.test.ts",
-   "tests/b20-school-workstudy.test.ts",
    "tests/school-paths.test.ts the School’s 86 test files, 1,304 tests, run on this commit: all green"
   ]
  },
@@ -869,7 +839,6 @@
    "tests/b20-school-workstudy.test.ts",
    "src/engine/systems/school.ts:3638-3698 a shift; src/engine/systems/school.ts:3733-3837 payday; src/engine/systems/school.ts:4403-4431 an elective evening; src/engine/systems/school.ts:1895 weekHours",
    "tests/evidence-g19-school.test.ts",
-   "tests/b20-school-workstudy.test.ts",
    "tests/school-paths.test.ts the School’s 86 test files, 1,304 tests, run on this commit: all green"
   ]
  },
@@ -901,7 +870,6 @@
    "tests/guide-examples-school.test.ts",
    "src/engine/systems/school.ts:3638-3698 a shift; src/engine/systems/school.ts:3733-3837 payday; src/engine/systems/school.ts:4403-4431 an elective evening; src/engine/systems/school.ts:1895 weekHours",
    "tests/evidence-g19-school.test.ts",
-   "tests/b20-school-workstudy.test.ts",
    "tests/school-paths.test.ts the School’s 86 test files, 1,304 tests, run on this commit: all green"
   ]
  },
@@ -917,7 +885,6 @@
    "tests/evidence-g26-school.test.ts",
    "src/engine/systems/school.ts:3638-3698 a shift; src/engine/systems/school.ts:3733-3837 payday; src/engine/systems/school.ts:4403-4431 an elective evening; src/engine/systems/school.ts:1895 weekHours",
    "tests/evidence-g19-school.test.ts",
-   "tests/b20-school-workstudy.test.ts",
    "tests/school-paths.test.ts the School’s 86 test files, 1,304 tests, run on this commit: all green"
   ]
  },
@@ -949,7 +916,6 @@
    "tests/evidence-g19-school.test.ts",
    "tests/evidence-g22-school.test.ts",
    "src/engine/systems/school.ts:169-190 sickRefusal; src/engine/systems/school.ts:3638-3650 the shift excused; src/engine/systems/school.ts:3856 the call excused",
-   "tests/evidence-g19-school.test.ts",
    "tests/school-paths.test.ts the School’s 86 test files, 1,304 tests, run on this commit: all green"
   ]
  },
@@ -964,7 +930,6 @@
    "tests/evidence-g19-school.test.ts",
    "tests/school.test.ts",
    "src/engine/systems/school.ts:169-190 sickRefusal; src/engine/systems/school.ts:3638-3650 the shift excused; src/engine/systems/school.ts:3856 the call excused",
-   "tests/evidence-g19-school.test.ts",
    "tests/school-paths.test.ts the School’s 86 test files, 1,304 tests, run on this commit: all green"
   ]
  },
@@ -1154,7 +1119,6 @@
    "tests/b20-school-account.test.ts",
    "tests/leave.test.ts",
    "src/engine/systems/leave.ts:1387-1393 the account’s due date and the hold",
-   "tests/b20-school-account.test.ts",
    "tests/school-paths.test.ts the School’s 86 test files, 1,304 tests, run on this commit: all green"
   ]
  },
@@ -1170,7 +1134,6 @@
    "tests/school-paths.test.ts",
    "tests/defects-g8-2.test.ts",
    "src/engine/systems/leave.ts:1203-1215 the decision",
-   "tests/remaining-school.test.ts",
    "tests/school-paths.test.ts the School’s 86 test files, 1,304 tests, run on this commit: all green"
   ]
  },
@@ -1202,8 +1165,6 @@
    "src/engine/systems/leave.ts:1057-1275 the leave’s commands and scheduled kinds, each refused in its words once it’s asked, on, or decided",
    "src/engine/systems/leave.ts:281-325 leaveRefusal and requestLeave; src/engine/systems/leave.ts:326-359 closeLeave; src/engine/systems/leave.ts:360-446 startLeave cancels the pending school items, calls off shifts and a Cabaret show, bills the rebate; src/engine/systems/leave.ts:447-520 returnFromLeave",
    "tests/leave.test.ts",
-   "tests/school-paths.test.ts",
-   "tests/evidence-g25-school.test.ts",
    "tests/school-paths.test.ts the School’s 86 test files, 1,304 tests, run on this commit: all green"
   ]
  },
@@ -1220,7 +1181,6 @@
    "tests/approaches.test.ts",
    "tests/coursework-objective.test.ts",
    "src/engine/systems/coursework.ts:1935-1947 the command; src/engine/systems/coursework.ts:536-597 approachRefusal",
-   "tests/approaches.test.ts",
    "tests/school-paths.test.ts the School’s 86 test files, 1,304 tests, run on this commit: all green"
   ]
  },
@@ -1241,7 +1201,6 @@
    "tests/coursework-defects.test.ts",
    "src/engine/systems/coursework.ts:1990-2001 the command; src/engine/systems/coursework.ts:1702-1740 askRefusal and the partner’s decline",
    "tests/evidence-g19-school.test.ts",
-   "tests/b20-school-trust.test.ts",
    "tests/school-paths.test.ts the School’s 86 test files, 1,304 tests, run on this commit: all green"
   ]
  },
@@ -1257,7 +1216,6 @@
    "tests/leave.test.ts",
    "tests/defects-g8-2.test.ts",
    "src/engine/systems/leave.ts:1277-1300 the command: quoted, refused while the bank can’t cover it, bought once",
-   "tests/evidence-g25-school.test.ts",
    "tests/guide-examples-school.test.ts",
    "tests/school-paths.test.ts the School’s 86 test files, 1,304 tests, run on this commit: all green"
   ]
@@ -1273,7 +1231,6 @@
    "tests/evidence3-school.test.ts",
    "tests/school-everyday.test.ts",
    "src/engine/systems/school.ts:3630-3636 the command; src/engine/systems/school.ts:1493-1506 ppeRefusal refuses a second buy in the first’s date, buyPpe charges through spend or charges nothing",
-   "tests/school-everyday.test.ts",
    "tests/school-paths.test.ts the School’s 86 test files, 1,304 tests, run on this commit: all green"
   ]
  },
@@ -1291,8 +1248,6 @@
    "tests/school.test.ts",
    "tests/defects-g8-1.test.ts",
    "src/engine/systems/school.ts:4049-4073 the command books each evening’s stage and the shows; src/engine/systems/school.ts:1616-1637 cabaretRefusal: on warning, on leave, already in a show this term, no week left, double-cast; src/engine/systems/school.ts:2095-2111 leaveCabaret calls a show off",
-   "tests/evidence-g19-school.test.ts",
-   "tests/school.test.ts",
    "tests/school-paths.test.ts the School’s 86 test files, 1,304 tests, run on this commit: all green"
   ]
  },
@@ -1333,7 +1288,6 @@
    "tests/work-limits.test.ts",
    "tests/evidence-g06-life.test.ts",
    "src/engine/systems/school.ts:4394-4401 the command sets the day; src/engine/systems/school.ts:169-190 sickRefusal: today already, nothing at school, classes over; src/engine/systems/school.ts:3638-3650 the shift, src/engine/systems/school.ts:3856 the call and src/engine/systems/school.ts:4074 the Cabaret evening read the day and excuse it",
-   "tests/evidence-g19-school.test.ts",
    "tests/whynot-school.test.ts",
    "tests/school-paths.test.ts the School’s 86 test files, 1,304 tests, run on this commit: all green"
   ]
@@ -1350,9 +1304,7 @@
    "tests/leave.test.ts",
    "src/engine/systems/leave.ts:1057-1275 the leave’s commands and scheduled kinds, each refused in its words once it’s asked, on, or decided",
    "src/engine/systems/leave.ts:281-325 leaveRefusal and requestLeave; src/engine/systems/leave.ts:326-359 closeLeave; src/engine/systems/leave.ts:360-446 startLeave cancels the pending school items, calls off shifts and a Cabaret show, bills the rebate; src/engine/systems/leave.ts:447-520 returnFromLeave",
-   "tests/leave.test.ts",
    "tests/school-paths.test.ts",
-   "tests/evidence-g25-school.test.ts",
    "tests/school-paths.test.ts the School’s 86 test files, 1,304 tests, run on this commit: all green"
   ]
  },
@@ -1369,7 +1321,6 @@
    "tests/time-stops.test.ts",
    "src/engine/systems/coursework.ts:2032-2045 the command: with notice no trust, late the trust charged, kept or called off already refused",
    "tests/evidence-g24-school.test.ts",
-   "tests/commands-kept.test.ts",
    "tests/school-paths.test.ts the School’s 86 test files, 1,304 tests, run on this commit: all green"
   ]
  },
@@ -1385,8 +1336,6 @@
    "tests/defects-g8-2.test.ts",
    "src/engine/systems/leave.ts:1317-1333 the command",
    "src/engine/systems/leave.ts:958 repeatRefusal",
-   "tests/evidence-g26-school.test.ts",
-   "tests/defects-g8-2.test.ts",
    "tests/school-paths.test.ts the School’s 86 test files, 1,304 tests, run on this commit: all green"
   ]
  },
@@ -1403,7 +1352,6 @@
    "tests/defects-g8-9.test.ts",
    "tests/coursework-defects.test.ts",
    "src/engine/systems/coursework.ts:1964-1981 the command: a side counted once as it’s chosen",
-   "tests/evidence-g18-school.test.ts",
    "tests/school-paths.test.ts the School’s 86 test files, 1,304 tests, run on this commit: all green"
   ]
  },
@@ -1454,7 +1402,6 @@
   "evidence": [
    "tests/pro-showcase.test.ts",
    "src/engine/systems/proshowcase.ts:664-675 the command; src/engine/systems/proshowcase.ts:378-394 choiceRefusal: not the last spring, ineligible, chosen already, two different scenes of the options; src/engine/systems/proshowcase.ts:395-430 setScenes",
-   "tests/pro-showcase.test.ts",
    "tests/journey-career.test.ts",
    "tests/school-paths.test.ts the School’s 86 test files, 1,304 tests, run on this commit: all green"
   ]
@@ -1488,7 +1435,6 @@
    "tests/b20-school-degree.test.ts",
    "tests/evidence-g21-school.test.ts",
    "src/engine/systems/school.ts:4017-4038 commencement",
-   "tests/b20-school-degree.test.ts",
    "tests/school-paths.test.ts the School’s 86 test files, 1,304 tests, run on this commit: all green"
   ]
  },
@@ -1532,7 +1478,6 @@
    "tests/b20-school-workstudy.test.ts",
    "tests/evidence-g26-school.test.ts",
    "src/engine/systems/school.ts:3710-3732 the processing: hours to grant aid once, withheld for a nonresident, recorded",
-   "tests/evidence-g26-school.test.ts",
    "tests/school-paths.test.ts the School’s 86 test files, 1,304 tests, run on this commit: all green"
   ]
  },
@@ -1570,7 +1515,6 @@
    "tests/student-experience.test.ts",
    "src/engine/systems/courserecord.ts:280-291 the command; src/engine/systems/courserecord.ts:206-244 extendRefusal",
    "tests/evidence-g25-school.test.ts",
-   "tests/evidence-g26-school.test.ts",
    "tests/school-paths.test.ts the School’s 86 test files, 1,304 tests, run on this commit: all green"
   ]
  },
@@ -1600,7 +1544,6 @@
    "src/engine/systems/leave.ts:1057-1275 the leave’s commands and scheduled kinds, each refused in its words once it’s asked, on, or decided",
    "src/engine/systems/leave.ts:281-325 leaveRefusal and requestLeave; src/engine/systems/leave.ts:326-359 closeLeave; src/engine/systems/leave.ts:360-446 startLeave cancels the pending school items, calls off shifts and a Cabaret show, bills the rebate; src/engine/systems/leave.ts:447-520 returnFromLeave",
    "tests/leave.test.ts",
-   "tests/school-paths.test.ts",
    "tests/evidence-g25-school.test.ts",
    "tests/school-paths.test.ts the School’s 86 test files, 1,304 tests, run on this commit: all green"
   ]
@@ -1650,7 +1593,6 @@
    "tests/journey-school-production.test.ts",
    "tests/piece.test.ts",
    "src/engine/systems/production.ts:596-612 the command: four hours on the part, memory on the first three only; src/engine/systems/production.ts:566-595 ownWorkRefusal",
-   "tests/evidence-g19-school.test.ts",
    "tests/school-paths.test.ts the School’s 86 test files, 1,304 tests, run on this commit: all green"
   ]
  },
@@ -1667,8 +1609,6 @@
    "src/engine/systems/leave.ts:1057-1275 the leave’s commands and scheduled kinds, each refused in its words once it’s asked, on, or decided",
    "src/engine/systems/leave.ts:281-325 leaveRefusal and requestLeave; src/engine/systems/leave.ts:326-359 closeLeave; src/engine/systems/leave.ts:360-446 startLeave cancels the pending school items, calls off shifts and a Cabaret show, bills the rebate; src/engine/systems/leave.ts:447-520 returnFromLeave",
    "tests/leave.test.ts",
-   "tests/school-paths.test.ts",
-   "tests/evidence-g25-school.test.ts",
    "tests/school-paths.test.ts the School’s 86 test files, 1,304 tests, run on this commit: all green"
   ]
  },
@@ -1684,7 +1624,6 @@
    "tests/leave.test.ts",
    "src/engine/systems/leave.ts:1057-1275 the leave’s commands and scheduled kinds, each refused in its words once it’s asked, on, or decided",
    "src/engine/systems/leave.ts:281-325 leaveRefusal and requestLeave; src/engine/systems/leave.ts:326-359 closeLeave; src/engine/systems/leave.ts:360-446 startLeave cancels the pending school items, calls off shifts and a Cabaret show, bills the rebate; src/engine/systems/leave.ts:447-520 returnFromLeave",
-   "tests/leave.test.ts",
    "tests/school-paths.test.ts",
    "tests/evidence-g25-school.test.ts",
    "tests/school-paths.test.ts the School’s 86 test files, 1,304 tests, run on this commit: all green"
@@ -1702,7 +1641,6 @@
    "tests/leave.test.ts",
    "src/engine/systems/leave.ts:1057-1275 the leave’s commands and scheduled kinds, each refused in its words once it’s asked, on, or decided",
    "src/engine/systems/leave.ts:281-325 leaveRefusal and requestLeave; src/engine/systems/leave.ts:326-359 closeLeave; src/engine/systems/leave.ts:360-446 startLeave cancels the pending school items, calls off shifts and a Cabaret show, bills the rebate; src/engine/systems/leave.ts:447-520 returnFromLeave",
-   "tests/leave.test.ts",
    "tests/school-paths.test.ts",
    "tests/evidence-g25-school.test.ts",
    "tests/school-paths.test.ts the School’s 86 test files, 1,304 tests, run on this commit: all green"
@@ -1722,8 +1660,6 @@
    "tests/commands-kept.test.ts",
    "tests/guide-examples-coursework.test.ts",
    "src/engine/systems/classmates.ts:671-684 the command; src/engine/systems/classmates.ts:578-589 amendsRefusal; src/engine/systems/classmates.ts:295 boundaryRefusal",
-   "tests/b20-school-trust.test.ts",
-   "tests/commands-kept.test.ts",
    "tests/school-paths.test.ts the School’s 86 test files, 1,304 tests, run on this commit: all green"
   ]
  },
@@ -1740,8 +1676,6 @@
    "tests/evidence-g25-school.test.ts",
    "tests/student-experience.test.ts",
    "src/engine/systems/courserecord.ts:262-279 the command; src/engine/systems/courserecord.ts:245-261 makeUpRefusal",
-   "tests/b20-school-degree.test.ts",
-   "tests/evidence-g25-school.test.ts",
    "tests/school-paths.test.ts the School’s 86 test files, 1,304 tests, run on this commit: all green"
   ]
  },
@@ -1774,7 +1708,6 @@
    "tests/papers-complete.test.ts",
    "tests/playreading.test.ts",
    "src/engine/systems/coursework.ts:1916-1926 the command; src/engine/systems/coursework.ts:1683-1701 orientationRefusal: done already, no time, a life begun after it; src/engine/systems/coursework.ts:1904-1915 the week’s sessions",
-   "tests/evidence-g19-school.test.ts",
    "tests/school-paths.test.ts the School’s 86 test files, 1,304 tests, run on this commit: all green"
   ]
  },
@@ -1790,7 +1723,6 @@
    "tests/partners.test.ts",
    "tests/evidence-g24-school.test.ts",
    "src/engine/systems/coursework.ts:2020-2031 the partner’s ask lapses or is answered",
-   "tests/evidence-g24-school.test.ts",
    "tests/school-paths.test.ts the School’s 86 test files, 1,304 tests, run on this commit: all green"
   ]
  },
@@ -1814,8 +1746,6 @@
    "tests/coverage-gaps-classmates.test.ts",
    "tests/partners.test.ts",
    "src/engine/systems/coursework.ts:2046-2059 the rehearsal; src/engine/systems/coursework.ts:1741-1854 rehearsalOutcome: kept, missed, excused sick",
-   "tests/evidence-g19-school.test.ts",
-   "tests/b20-school-trust.test.ts",
    "tests/school-paths.test.ts the School’s 86 test files, 1,304 tests, run on this commit: all green"
   ]
  },
@@ -1830,7 +1760,6 @@
    "tests/b20-school-account.test.ts",
    "tests/evidence-g26-school.test.ts",
    "src/engine/systems/leave.ts:1382-1386 the command; src/engine/systems/leave.ts:873-900 payBalanceRefusal and payBalance: the sum owed, the hold lifted at nothing owed",
-   "tests/b20-school-account.test.ts",
    "tests/defects-g8-3.test.ts",
    "tests/school-paths.test.ts the School’s 86 test files, 1,304 tests, run on this commit: all green"
   ]
@@ -1848,7 +1777,6 @@
    "tests/school.test.ts",
    "src/engine/systems/school.ts:3733-3837 Friday pays the hours worked into the bank and onto the year’s return, once across a save",
    "tests/evidence-g19-school.test.ts",
-   "tests/b20-school-workstudy.test.ts",
    "tests/school-paths.test.ts the School’s 86 test files, 1,304 tests, run on this commit: all green"
   ]
  },
@@ -1869,7 +1797,6 @@
    "tests/feedback.test.ts",
    "tests/coursework-objective.test.ts",
    "src/engine/systems/coursework.ts:1927-1934 the command; src/engine/systems/coursework.ts:598-663 prepareRefusal; src/engine/systems/coursework.ts:664-834 prepare moves one part by the activity’s minutes",
-   "tests/evidence-g18-school.test.ts",
    "tests/evidence-g23-school.test.ts",
    "tests/school-paths.test.ts the School’s 86 test files, 1,304 tests, run on this commit: all green"
   ]
@@ -1914,7 +1841,6 @@
    "tests/evidence-g26-school.test.ts",
    "tests/leave.test.ts",
    "src/engine/systems/leave.ts:1334-1368 the decision",
-   "tests/evidence-g26-school.test.ts",
    "tests/school-paths.test.ts the School’s 86 test files, 1,304 tests, run on this commit: all green"
   ]
  },
@@ -1929,7 +1855,6 @@
    "tests/b20-school-degree.test.ts",
    "tests/evidence-g26-school.test.ts",
    "src/engine/systems/leave.ts:1369-1381 the due date",
-   "tests/evidence-g26-school.test.ts",
    "tests/school-paths.test.ts the School’s 86 test files, 1,304 tests, run on this commit: all green"
   ]
  },
@@ -1945,7 +1870,6 @@
    "tests/defects-g8-2.test.ts",
    "src/engine/systems/leave.ts:1192-1215 the command and the office’s decision; src/engine/systems/leave.ts:842-872 aidReviewRefusal: asked twice refused while with the office and once decided",
    "tests/remaining-school.test.ts",
-   "tests/school-paths.test.ts",
    "tests/school-paths.test.ts the School’s 86 test files, 1,304 tests, run on this commit: all green"
   ]
  },
@@ -1964,8 +1888,6 @@
    "tests/evidence2-b09.test.ts",
    "tests/work-limits.test.ts",
    "src/engine/systems/school.ts:3699-3708 the command books the next processing; src/engine/systems/school.ts:1960-1975 conversionRefusal: a request already in, no hours; src/engine/systems/school.ts:3710-3732 the processing pays once and records convertedHours, so a second finds nothing",
-   "tests/evidence-g26-school.test.ts",
-   "tests/b20-school-workstudy.test.ts",
    "tests/school-paths.test.ts the School’s 86 test files, 1,304 tests, run on this commit: all green"
   ]
  },
@@ -2005,9 +1927,6 @@
    "tests/defects5.test.ts",
    "src/engine/systems/leave.ts:1057-1275 the leave’s commands and scheduled kinds, each refused in its words once it’s asked, on, or decided",
    "src/engine/systems/leave.ts:281-325 leaveRefusal and requestLeave; src/engine/systems/leave.ts:326-359 closeLeave; src/engine/systems/leave.ts:360-446 startLeave cancels the pending school items, calls off shifts and a Cabaret show, bills the rebate; src/engine/systems/leave.ts:447-520 returnFromLeave",
-   "tests/leave.test.ts",
-   "tests/school-paths.test.ts",
-   "tests/evidence-g25-school.test.ts",
    "tests/school-paths.test.ts the School’s 86 test files, 1,304 tests, run on this commit: all green"
   ]
  },
@@ -2026,7 +1945,6 @@
    "tests/leave.test.ts",
    "tests/papers-transitions.test.ts",
    "src/engine/systems/leave.ts:1315-1368 the command, the decision and the due date; src/engine/systems/leave.ts:958-1030 repeatRefusal and requestRepeat",
-   "tests/evidence-g26-school.test.ts",
    "tests/defects-g8-2.test.ts",
    "tests/school-paths.test.ts the School’s 86 test files, 1,304 tests, run on this commit: all green"
   ]
@@ -2045,7 +1963,6 @@
    "tests/journey-second-year-return.test.ts",
    "tests/remaining-09-journeys.test.ts",
    "src/engine/systems/leave.ts:1301-1314 the command under a hold",
-   "tests/b20-school-account.test.ts",
    "tests/defects-g10-1.test.ts",
    "tests/school-paths.test.ts the School’s 86 test files, 1,304 tests, run on this commit: all green"
   ]
@@ -2081,8 +1998,6 @@
    "tests/school-paths.test.ts",
    "src/engine/systems/leave.ts:1057-1275 the leave’s commands and scheduled kinds, each refused in its words once it’s asked, on, or decided",
    "src/engine/systems/leave.ts:281-325 leaveRefusal and requestLeave; src/engine/systems/leave.ts:326-359 closeLeave; src/engine/systems/leave.ts:360-446 startLeave cancels the pending school items, calls off shifts and a Cabaret show, bills the rebate; src/engine/systems/leave.ts:447-520 returnFromLeave",
-   "tests/leave.test.ts",
-   "tests/school-paths.test.ts",
    "tests/evidence-g25-school.test.ts",
    "tests/school-paths.test.ts the School’s 86 test files, 1,304 tests, run on this commit: all green"
   ]
@@ -2098,7 +2013,6 @@
    "tests/evidence-g19-school.test.ts",
    "tests/journey-school-production.test.ts",
    "src/engine/systems/production.ts:613-626 the command closes a missed blocking call’s gap by the book’s half; src/engine/systems/production.ts:566 ownWorkRefusal",
-   "tests/evidence-g19-school.test.ts",
    "tests/school-paths.test.ts the School’s 86 test files, 1,304 tests, run on this commit: all green"
   ]
  },
@@ -2119,7 +2033,6 @@
    "tests/work-limits.test.ts",
    "src/engine/systems/school.ts:3638-3698 a shift worked, missed sick, over the cap or unregistered; the hours onto the payday",
    "tests/evidence-g19-school.test.ts",
-   "tests/b20-school-workstudy.test.ts",
    "tests/school-paths.test.ts the School’s 86 test files, 1,304 tests, run on this commit: all green"
   ]
  },
@@ -2134,7 +2047,6 @@
    "tests/pro-showcase.test.ts",
    "tests/journey-career-older.test.ts",
    "src/engine/systems/proshowcase.ts:597-660 a rehearsal call or a city’s day: excused sick, missed counted, played and judged (perform src/engine/systems/proshowcase.ts:489), the last day ends it (endShowcase src/engine/systems/proshowcase.ts:532)",
-   "tests/pro-showcase.test.ts",
    "tests/journey-career.test.ts",
    "tests/school-paths.test.ts the School’s 86 test files, 1,304 tests, run on this commit: all green"
   ]
@@ -2149,7 +2061,6 @@
   "evidence": [
    "tests/pro-showcase.test.ts",
    "src/engine/systems/proshowcase.ts:590-596 the check; src/engine/systems/proshowcase.ts:431-488 decide; src/engine/systems/proshowcase.ts:346-377 beginShowcase",
-   "tests/pro-showcase.test.ts",
    "tests/scope-school.test.ts",
    "tests/school-paths.test.ts the School’s 86 test files, 1,304 tests, run on this commit: all green"
   ]
@@ -2183,7 +2094,6 @@
    "tests/student-experience.test.ts",
    "tests/classmate-moments.test.ts",
    "src/engine/systems/classmates.ts:693-737 the session",
-   "tests/evidence-g23-school.test.ts",
    "tests/school-paths.test.ts the School’s 86 test files, 1,304 tests, run on this commit: all green"
   ]
  },
@@ -2283,7 +2193,6 @@
    "src/engine/systems/leave.ts:1057-1275 the leave’s commands and scheduled kinds, each refused in its words once it’s asked, on, or decided",
    "src/engine/systems/leave.ts:281-325 leaveRefusal and requestLeave; src/engine/systems/leave.ts:326-359 closeLeave; src/engine/systems/leave.ts:360-446 startLeave cancels the pending school items, calls off shifts and a Cabaret show, bills the rebate; src/engine/systems/leave.ts:447-520 returnFromLeave",
    "tests/leave.test.ts",
-   "tests/school-paths.test.ts",
    "tests/evidence-g25-school.test.ts",
    "tests/school-paths.test.ts the School’s 86 test files, 1,304 tests, run on this commit: all green"
   ]
@@ -2301,7 +2210,6 @@
    "src/engine/systems/leave.ts:1057-1275 the leave’s commands and scheduled kinds, each refused in its words once it’s asked, on, or decided",
    "src/engine/systems/leave.ts:281-325 leaveRefusal and requestLeave; src/engine/systems/leave.ts:326-359 closeLeave; src/engine/systems/leave.ts:360-446 startLeave cancels the pending school items, calls off shifts and a Cabaret show, bills the rebate; src/engine/systems/leave.ts:447-520 returnFromLeave",
    "tests/leave.test.ts",
-   "tests/school-paths.test.ts",
    "tests/evidence-g25-school.test.ts",
    "tests/school-paths.test.ts the School’s 86 test files, 1,304 tests, run on this commit: all green"
   ]
@@ -2336,7 +2244,6 @@
    "tests/journey-school-production.test.ts",
    "tests/direction.test.ts",
    "src/engine/systems/production.ts:643-706 the command works a note once, refused a second time; src/engine/systems/production.ts:566 ownWorkRefusal",
-   "tests/evidence-g19-school.test.ts",
    "tests/school-paths.test.ts the School’s 86 test files, 1,304 tests, run on this commit: all green"
   ]
  },

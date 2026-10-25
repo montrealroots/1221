@@ -4,7 +4,7 @@ Built by `tools/devmap.mjs --write` from the code, and checked by the gate (`--c
 
 Each command the player can run: the engine file that handles it, the screens that run it, the tests that run it, and the guide’s chapter that opens it. A test counts where it names the command; a command a test reaches only through another isn’t counted.
 
-188 commands; 188 named by a test, 0 not.
+192 commands; 192 named by a test, 0 not.
 
 ## bank
 
@@ -183,16 +183,20 @@ Each command the player can run: the engine file that handles it, the screens th
 | Command | Handled In | Screens | Tests | Guide Chapter |
 |---|---|---|---|---|
 | `pro.accept_agreement` | `src/engine/systems/proagent.ts` | `RepresentationPane.tsx` | `b20-career-effects.test.ts` `b20-career-saveload.test.ts` `career-agents.test.ts` `journey-agent.test.ts` `journey-career.test.ts` `pro-representation-screen.test.ts` | Representation |
-| `pro.accept_offer` | `src/engine/systems/projobs.ts` | `OpportunitiesPane.tsx` | `b20-benefits-safetynet.test.ts` `b20-benefits-tax.test.ts` `b20-benefits-unemployment.test.ts` `b20-benefits.ts` `b20-career-defects.test.ts` `b20-career-effects.test.ts` `b20-career-history.test.ts` `b20-career-skill.test.ts` `b20-guide-screens.test.ts` `b20-life-fatigue.test.ts` `b20-papers-work.test.ts` `b21-genre-proof.test.ts` `b22-authorization.test.ts` `b27-audience.test.ts` `b27-holds.test.ts` `b27-ill.test.ts` `b27-offers.test.ts` `b27-promo.test.ts` `b27-release.test.ts` `b27-reshoot.test.ts` `b27-revival.test.ts` `b27-slate-screens.test.ts` `b27-slate.test.ts` `b27-weather.test.ts` `career-awards-screen.test.ts` `career-awards.test.ts` `career-contracts.test.ts` `career-drawn.test.ts` `career-workflows-screen.test.ts` `career-workflows.test.ts` `career-world-sydney.test.ts` `pro-opportunities-screen.test.ts` `pro-work.test.ts` `shoot-week.ts` | Finding Work |
+| `pro.accept_offer` | `src/engine/systems/projobs.ts` | `OpportunitiesPane.tsx` | `b20-benefits-safetynet.test.ts` `b20-benefits-tax.test.ts` `b20-benefits-unemployment.test.ts` `b20-benefits.ts` `b20-career-defects.test.ts` `b20-career-effects.test.ts` `b20-career-history.test.ts` `b20-career-skill.test.ts` `b20-guide-screens.test.ts` `b20-life-fatigue.test.ts` `b20-papers-work.test.ts` `b21-genre-proof.test.ts` `b22-authorization.test.ts` `b27-audience.test.ts` `b27-awards.ts` `b27-holds.test.ts` `b27-ill.test.ts` `b27-offers.test.ts` `b27-promo.test.ts` `b27-release.test.ts` `b27-reshoot.test.ts` `b27-revival.test.ts` `b27-slate-screens.test.ts` `b27-slate.test.ts` `b27-weather.test.ts` `career-awards-screen.test.ts` `career-awards.test.ts` `career-contracts.test.ts` `career-drawn.test.ts` `career-workflows-screen.test.ts` `career-workflows.test.ts` `career-world-sydney.test.ts` `pro-opportunities-screen.test.ts` `pro-work.test.ts` `shoot-week.ts` | Finding Work |
+| `pro.actor_submit` | `src/engine/systems/actorawards.ts` | `IndustryPane.tsx` | `b27-actor-awards.test.ts` `b27-awards.ts` | — |
 | `pro.agent_check` | `src/engine/systems/proagent.ts` | `RepresentationPane.tsx` | `b20-agent-ask-lapse.test.ts` `b20-career-effects.test.ts` `b20-career-skill.test.ts` `b20-career.ts` `b20-guide-chapters.test.ts` `career-agents.test.ts` `journey-agent.test.ts` `journey-career-older.test.ts` `journey-career.test.ts` `pro-agent.test.ts` `pro-representation-screen.test.ts` | Representation |
 | `pro.agent_notice` | `src/engine/systems/proagent.ts` | `RepresentationPane.tsx` | `b20-career-effects.test.ts` `b20-career-skill.test.ts` `b20-career.ts` `b20-guide-chapters.test.ts` `career-agents.test.ts` `journey-agent.test.ts` `journey-career-older.test.ts` `pro-agent.test.ts` `pro-representation-screen.test.ts` | Representation |
 | `pro.apply_work_visa` | `src/engine/systems/worktrip.ts` | `WorkPane.tsx` | `b27-slate-screens.test.ts` `career-world-sydney.test.ts` | Finding Work |
 | `pro.ask_hold` | `src/engine/systems/projobs.ts` | `OpportunitiesPane.tsx` | `b27-holds.test.ts` | Finding Work |
-| `pro.ask_more` | `src/engine/systems/projobs.ts` | `OpportunitiesPane.tsx` | `b27-offers.test.ts` | Finding Work |
+| `pro.ask_more` | `src/engine/systems/projobs.ts` | `OpportunitiesPane.tsx` | `b27-award-effects.test.ts` `b27-offers.test.ts` | Finding Work |
 | `pro.ask_pay` | `src/engine/systems/contracts.ts` | `WorkPane.tsx` | `career-contracts.test.ts` | Finding Work |
 | `pro.ask_referral` | `src/engine/systems/proagent.ts` | `RepresentationPane.tsx` | `b20-career-effects.test.ts` `b20-career-skill.test.ts` `b20-career.ts` `career-agents.test.ts` `journey-agent.test.ts` `journey-career-older.test.ts` `pro-agent.test.ts` `pro-representation-screen.test.ts` | Representation |
 | `pro.ask_to_move` | `src/engine/systems/proagent.ts` | `RepresentationPane.tsx` `TimeControls.tsx` | `journey-agent.test.ts` `journey-career.test.ts` `pro-representation-screen.test.ts` | Representation |
 | `pro.award_enter` | `src/engine/systems/awards.ts` | `IndustryPane.tsx` | `career-awards-screen.test.ts` `career-awards.test.ts` | Finding Work |
+| `pro.ceremony_accept` | `src/engine/systems/ceremony.ts` | `IndustryPane.tsx` `TimeControls.tsx` | `b27-ceremony.test.ts` | — |
+| `pro.ceremony_prepare` | `src/engine/systems/ceremony.ts` | `IndustryPane.tsx` | `b27-ceremony.test.ts` | — |
+| `pro.ceremony_rsvp` | `src/engine/systems/ceremony.ts` | `IndustryPane.tsx` | `b27-ceremony.test.ts` | — |
 | `pro.cut_reel` | `src/engine/systems/pro.ts` | `CareerWorkspace.tsx` | `b20-career-effects.test.ts` `b20-career.ts` `career-world.ts` `journey-agent.test.ts` `journey-career.test.ts` `pro-core.test.ts` `pro-representation-screen.test.ts` | Your Career |
 | `pro.decline_agreement` | `src/engine/systems/proagent.ts` | `RepresentationPane.tsx` | `b20-career-effects.test.ts` `b20-career-history.test.ts` `journey-agent.test.ts` `journey-career.test.ts` | Representation |
 | `pro.decline_offer` | `src/engine/systems/projobs.ts` | `OpportunitiesPane.tsx` | `b20-career-effects.test.ts` `b20-career-history.test.ts` `b20-guide-screens.test.ts` `pro-work.test.ts` | Finding Work |
@@ -209,7 +213,7 @@ Each command the player can run: the engine file that handles it, the screens th
 | `pro.supply_material` | `src/engine/systems/proagent.ts` | `RepresentationPane.tsx` | `journey-agent.test.ts` `journey-career.test.ts` | Representation |
 | `pro.tape_audition` | `src/engine/systems/projobs.ts` | `OpportunitiesPane.tsx` | `b20-career.ts` `career-world.ts` `journey-career.test.ts` `pro-work.test.ts` | Finding Work |
 | `pro.update_resume` | `src/engine/systems/pro.ts` | `CareerWorkspace.tsx` | `b20-agent-ask-lapse.test.ts` `b20-career-effects.test.ts` `b20-career-history.test.ts` `b20-career-skill.test.ts` `b20-career.ts` `b20-guide-chapters.test.ts` `b27-voice-demo.test.ts` `career-agents.test.ts` `career-awards.test.ts` `career-world.ts` `journey-agent.test.ts` `journey-career.test.ts` `pro-agent.test.ts` `pro-app.test.ts` `pro-core.test.ts` `pro-opportunities-screen.test.ts` `pro-representation-screen.test.ts` `pro-screen.test.ts` `pro-work.test.ts` | Your Career |
-| `pro.watch_ceremony` | `src/engine/systems/awards.ts` | `IndustryPane.tsx` | `career-awards-screen.test.ts` `career-awards.test.ts` | Finding Work |
+| `pro.watch_ceremony` | `src/engine/systems/ceremony.ts` | `IndustryPane.tsx` | `b27-ceremony.test.ts` `career-awards-screen.test.ts` `career-awards.test.ts` | Finding Work |
 | `pro.work_choice` | `src/engine/systems/workflow.ts` | `WorkPane.tsx` | `career-workflows-screen.test.ts` `career-workflows.test.ts` | Finding Work |
 
 ## school

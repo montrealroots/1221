@@ -44,6 +44,7 @@
 
 import type { SimRun } from './charts';
 import type { AwardEntry, FestivalEntry } from './awards';
+import type { GuildEntry } from './actorawards';
 import type { Simulation } from '../core/simulation';
 import { CommandError } from '../core/simulation';
 import type { Person } from '../domain/model';
@@ -57,7 +58,7 @@ import { BRIEF_BY_ID } from '../content/briefs';
 import type { AgentId, AgentRoute } from '../content/agents';
 import type { AgreementTerm, ProMedium, RateId } from '../content/careerwork';
 import { UNIONS } from '../content/careerwork';
-import { EMMY_CATEGORIES, SUNDANCE_CATEGORY_NAME } from '../content/awards';
+import { ACTOR_CATEGORIES, EMMY_CATEGORIES, SUNDANCE_CATEGORY_NAME, actorEdition } from '../content/awards';
 import type { Band } from './coursework';
 import { BAND_LABEL } from './coursework';
 import { bandOfQuality } from './evaluation';
@@ -612,7 +613,8 @@ export interface WorkStay {
   place: string;
   from: Instant;
   to: Instant;
-  payer: 'production';
+  /** Who pays: the production, for work; nobody, for a ceremony's (from 2026-10-25, brief 27's K7), which isn't charged. */
+  payer: 'production' | 'nobody';
   status: 'booked' | 'in' | 'out' | 'canceled';
 }
 
@@ -626,6 +628,11 @@ export interface WorkTrip extends HasHistory {
   legs: TripLeg[];
   stay: WorkStay;
   status: 'booked' | 'out' | 'there' | 'back' | 'home' | 'canceled';
+  /**
+   * What a trip is for where it isn't work (from 2026-10-25, the owner's brief 27, K7; `systems/ceremony.ts`): an awards
+   * ceremony the player is nominated at, by its entry and its name. Its `engagementId` is the nominated work's.
+   */
+  purpose?: { kind: 'ceremony'; entryId: ProId; title: string };
 }
 
 /**
@@ -700,6 +707,8 @@ export interface ProRecord {
   awards?: AwardEntry[];
   /** Each film's Sundance year: the production's submission and the festival's word (Module 6). */
   festivals?: FestivalEntry[];
+  /** The player's Actor Awards submissions, one for each performance and year (`systems/actorawards.ts`, from 2026-10-25, brief 27's K7). */
+  guild?: GuildEntry[];
   // `trimmed`, how many resolved opportunities and finished engagements the bounds had dropped, went on 2026-10-21
   // (brief 20's D1, a value written and read by nothing but a test). What a dropped posting said that matters later is
   // kept in `lastPosted`. A save that has it keeps it, unread.
@@ -1117,6 +1126,14 @@ export function honorsOf(person: Person): { key: string; line: string; what: str
     const name = person.performerTitle === 'actress' ? EMMY_CATEGORIES[a.category].actressName : EMMY_CATEGORIES[a.category].actorName;
     const won = a.state === 'won';
     out.push({ key: `award:${a.id}:${won ? 'won' : 'nominated'}`, line: `${won ? 'Emmy Award' : 'Emmy nomination'}: ${name}, for ${c.role} in ${c.project}, ${a.year}`, what: `your Emmy ${won ? 'win' : 'nomination'} for ${c.role}` });
+  }
+  // An Actor Awards nomination or win (from 2026-10-25, brief 27's K7), by its edition's year of the show.
+  for (const g of person.pro?.guild ?? []) {
+    const c = credit(g.creditId);
+    if (!c || !['nominated', 'won', 'lost'].includes(g.state)) continue;
+    const name = person.performerTitle === 'actress' ? ACTOR_CATEGORIES[g.category].actressName : ACTOR_CATEGORIES[g.category].actorName;
+    const won = g.state === 'won';
+    out.push({ key: `guild:${g.id}:${won ? 'won' : 'nominated'}`, line: `${won ? 'Actor Award' : 'Actor Awards nomination'}: ${name}, for ${c.role} in ${c.project}, ${Number(actorEdition(g.year).ceremony.slice(0, 4))}`, what: `your Actor Awards ${won ? 'win' : 'nomination'} for ${c.role}` });
   }
   for (const f of person.pro?.festivals ?? []) {
     const c = credit(f.creditId);

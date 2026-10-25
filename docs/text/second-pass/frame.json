@@ -1861,6 +1861,27 @@
   "reason": "Developer notes on each random draw, read only by tests/deciders.test.ts and tools/deciders.mjs; nothing the game ships imports decided.ts.",
   "first": "Reviewed And Retained"
  },
+ "src/engine/decided.ts#top [actor.entry]": {
+  "status": "Retained",
+  "hash": "56b4842ee352",
+  "on": "2026-10-25",
+  "reason": "A decider's description, read by tests/deciders.test.ts and tools/deciders.mjs and never shown to a player: it says what decides an Actor Awards' production submission, its field, its final round, or an acceptance speech's judgment.",
+  "first": "Pending"
+ },
+ "src/engine/decided.ts#top [actor.field]": {
+  "status": "Retained",
+  "hash": "5f18a26b70d6",
+  "on": "2026-10-25",
+  "reason": "A decider's description, read by tests/deciders.test.ts and tools/deciders.mjs and never shown to a player: it says what decides an Actor Awards' production submission, its field, its final round, or an acceptance speech's judgment.",
+  "first": "Pending"
+ },
+ "src/engine/decided.ts#top [actor.final]": {
+  "status": "Retained",
+  "hash": "360d7aad91da",
+  "on": "2026-10-25",
+  "reason": "A decider's description, read by tests/deciders.test.ts and tools/deciders.mjs and never shown to a player: it says what decides an Actor Awards' production submission, its field, its final round, or an acceptance speech's judgment.",
+  "first": "Pending"
+ },
  "src/engine/decided.ts#top [attributes.presence]": {
   "status": "Retained",
   "hash": "219444ef6bd2",
@@ -1916,6 +1937,13 @@
   "on": "2026-10-19",
   "reason": "Developer notes on each random draw, read only by tests/deciders.test.ts and tools/deciders.mjs; nothing the game ships imports decided.ts.",
   "first": "Reviewed And Retained"
+ },
+ "src/engine/decided.ts#top [ceremony.speech]": {
+  "status": "Retained",
+  "hash": "34c0596db38c",
+  "on": "2026-10-25",
+  "reason": "A decider's description, read by tests/deciders.test.ts and tools/deciders.mjs and never shown to a player: it says what decides an Actor Awards' production submission, its field, its final round, or an acceptance speech's judgment.",
+  "first": "Pending"
  },
  "src/engine/decided.ts#top [charts.gross]": {
   "status": "Rewritten",

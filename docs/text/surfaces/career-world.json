@@ -191,8 +191,6 @@
    "src/engine/systems/awards.ts#festivalCheck",
    "src/engine/systems/awards.ts#festivalWords",
    "src/engine/systems/awards.ts#festivalCheckWords",
-   "src/engine/systems/awards.ts#watchRefusal",
-   "src/engine/systems/awards.ts#ceremonyLines",
    "src/engine/systems/awards.ts#recapWords",
    "src/ui/career/IndustryPane.tsx#RecognitionPanel",
    "src/ui/career/IndustryPane.tsx#EmmyCredit",
@@ -211,7 +209,7 @@
   ],
   "outcome": "Revised",
   "why": "New with brief 25’s Module 6: a part’s eligibility is said as the 78th Emmy Awards’ rules say it (its category, its episodes against the season’s, its share of an episode’s scenes), each refusal as the rule it is, the entry fee before it’s pressed, a nomination with its presentation’s date, a loss as the player not winning with the nomination kept, and a film’s place at Sundance with who submits it.",
-  "changes": "Found on the way: a dub’s refusal gave a reason the rules don’t (“part of the program it dubs”); it says the rule, that a new English soundtrack doesn’t make a foreign program eligible. A short finished before the festival’s window was refused though the rule takes it if it wasn’t out before then.",
+  "changes": "Found on the way: a dub’s refusal gave a reason the rules don’t (“part of the program it dubs”); it says the rule, that a new English soundtrack doesn’t make a foreign program eligible. A short finished before the festival’s window was refused though the rule takes it if it wasn’t out before then. From 2026-10-25 (brief 27's K7) watching a show and its lines moved to the ceremony's own module, read for an Emmy and an Actor Award alike (the ceremony's row).",
   "evidence": [
    {
     "kind": "test",
@@ -462,6 +460,105 @@
    {
     "kind": "test",
     "ref": "tests/b27-slate-screens.test.ts: 'says what FIA and FIAPF list where the actor lives, then every country either list names, each in its own name'"
+   }
+  ]
+ },
+ {
+  "surface": "The Actor Awards: a credit's eligibility or its refusal, Submit Yourself and its refusals, a production's submission, the nominations' and the show's notices, each submission's line",
+  "where": "Career, Charts And Awards, Your Recognition, The Actor Awards; the notices; the Awards And Festivals panel's line for the Actor Awards",
+  "sources": [
+   "src/engine/content/awards.ts#ACTOR_CATEGORIES",
+   "src/engine/content/awards.ts#ACTOR_AWARDS_PLACE",
+   "src/engine/systems/actorawards.ts#NY",
+   "src/engine/systems/actorawards.ts#LA",
+   "src/engine/systems/actorawards.ts#actorAwardsName",
+   "src/engine/systems/actorawards.ts#actorCheck",
+   "src/engine/systems/actorawards.ts#actorEligibleWords",
+   "src/engine/systems/actorawards.ts#actorSubmitRefusal",
+   "src/engine/systems/actorawards.ts#submitActor",
+   "src/engine/systems/actorawards.ts#actorAwardsPassage",
+   "src/engine/systems/actorawards.ts#actorRecapWords",
+   "src/ui/career/IndustryPane.tsx#ActorCredit"
+  ],
+  "states": [
+   "ordinary",
+   "unavailable",
+   "notification",
+   "success",
+   "setback",
+   "history",
+   "explanation"
+  ],
+  "outcome": "Revised",
+  "why": "New with brief 27's K7: each rule the 33rd's own, said where it refuses; a later year said as the 33rd's rules carried forward; other nominees never named.",
+  "changes": "Written new: the eligibility and refusal lines, Submit Yourself and its refusals, the production's submission notice, the nomination and not-nominated notices, The Actor Awards Tonight, each submission's recap.",
+  "evidence": [
+   {
+    "kind": "test",
+    "ref": "tests/b27-actor-awards.test.ts: 'places a performance by the rules, and refuses what they refuse, each in its own words'"
+   },
+   {
+    "kind": "test",
+    "ref": "tests/b27-actor-awards.test.ts: 'PLAYER JOURNEY: submitted through the command, the fee paid and a second refused; nominated by the committees; the show’s result; the résumé’s line and visibility'"
+   },
+   {
+    "kind": "test",
+    "ref": "tests/b27-actor-awards.test.ts: 'PLAYER JOURNEY: a production submits a performance the player didn’t, where its draw says so'"
+   }
+  ]
+ },
+ {
+  "surface": "The ceremony: the invitation's question and notice, going or watching from home and their refusals, preparing remarks, the night's notices, the moment to go up and the speech, the trip there and home",
+  "where": "The question Will You Go To …?; Career, Charts And Awards, Your Recognition, under each nomination; the clock's stops (the show, the moment to go up); the notices; the trip's legs",
+  "sources": [
+   "src/engine/systems/ceremony.ts#NY",
+   "src/engine/systems/ceremony.ts#PLACE",
+   "src/engine/systems/ceremony.ts#awardTitle",
+   "src/engine/systems/ceremony.ts#showTitle",
+   "src/engine/systems/ceremony.ts#invitation",
+   "src/engine/systems/ceremony.ts#rsvpRefusal",
+   "src/engine/systems/ceremony.ts#prepareRemarksRefusal",
+   "src/engine/systems/ceremony.ts#SPEECH_WORDS",
+   "src/engine/systems/ceremony.ts#acceptRefusal",
+   "src/engine/systems/ceremony.ts#watchRefusal",
+   "src/engine/systems/ceremony.ts#ceremonyLines",
+   "src/engine/systems/ceremony.ts#registerCeremonies",
+   "src/engine/systems/ceremony.ts#registerCeremonies <pro.ceremony_accept>",
+   "src/engine/systems/worktrip.ts#bookCeremonyTrip",
+   "src/engine/systems/worktrip.ts#ceremonyDepart [missed-flight]",
+   "src/engine/systems/worktrip.ts#ceremonyDepart",
+   "src/engine/systems/worktrip.ts#ceremonyDepart [checked-out]",
+   "src/engine/systems/worktrip.ts#ceremonyDepart [departed]",
+   "src/engine/systems/worktrip.ts#ceremonyArrive [arrived]",
+   "src/engine/systems/worktrip.ts#ceremonyArrive [checked-in]",
+   "src/engine/systems/worktrip.ts#ceremonyArrive",
+   "src/engine/systems/worktrip.ts#ceremonyArrive [home]",
+   "src/ui/career/IndustryPane.tsx#CeremonyControls"
+  ],
+  "states": [
+   "ordinary",
+   "unavailable",
+   "notification",
+   "success",
+   "setback",
+   "failure",
+   "history"
+  ],
+  "outcome": "Revised",
+  "why": "New with brief 27's K7: the invitation says when, where and by when to answer, and that the trip isn't charged; each refusal says why; a loss in the room says only that the player didn't win; a speech says how it went; a missed flight says what it cost.",
+  "changes": "Written new: every line of the ceremony and of a ceremony's trip.",
+  "evidence": [
+   {
+    "kind": "test",
+    "ref": "tests/b27-ceremony.test.ts: 'invites a nominee with a question due a week before the show, and going books the trip and the show’s call; one that clashes is refused'"
+   },
+   {
+    "kind": "test",
+    "ref": "tests/b27-ceremony.test.ts: 'PLAYER JOURNEY: played to the show, a win in the room goes up to accept; prepared remarks give a speech that makes the actor more visible; the falsifiability twin unprepared doesn’t'"
+   },
+   {
+    "kind": "test",
+    "ref": "tests/b27-ceremony.test.ts: 'PLAYER JOURNEY: laid up across the flight out, the trip is off and the show goes on without the actor, the win accepted without them'"
    }
   ]
  }

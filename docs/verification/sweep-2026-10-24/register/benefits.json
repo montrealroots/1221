@@ -12,8 +12,6 @@
    "tests/evidence-g16-papers.test.ts",
    "tests/assistance.test.ts",
    "src/engine/systems/assistance.ts:244-254 the command: assistanceRefusal (src/engine/systems/assistance.ts:166-180), the first month on the calendar; a claim open refused",
-   "tests/assistance.test.ts",
-   "tests/b20-benefits-safetynet.test.ts",
    "tests/papers-complete.test.ts the papers and benefits areas’ 70 test files, 507 tests, run on 388d9a1e: all green; tests/b26-papers-repeats.test.ts, the repeat, reload and call-off probe on a New Haven life, green"
   ]
  },
@@ -31,7 +29,6 @@
    "tests/evidence2-b06.test.ts",
    "src/engine/systems/assistance.ts:256-321 the month: SNAP’s time limit and exemptions, a student’s case closed once, the EBT card credited, the provinces’ assets; said and booked again",
    "tests/assistance.test.ts",
-   "tests/b20-benefits-safetynet.test.ts",
    "tests/papers-complete.test.ts the papers and benefits areas’ 70 test files, 507 tests, run on 388d9a1e: all green; tests/b26-papers-repeats.test.ts, the repeat, reload and call-off probe on a New Haven life, green"
   ]
  },
@@ -49,8 +46,6 @@
    "tests/evidence-g16-papers.test.ts",
    "tests/evidence2-b05.test.ts",
    "src/engine/systems/unemployment.ts:244-274 the command: Britain’s, Ireland’s and Mexico City’s routed to their own, a state’s base period, a student unavailable, a noncitizen without permission; a claim open refused",
-   "tests/b20-benefits-unemployment.test.ts",
-   "tests/evidence-g15-papers.test.ts",
    "tests/papers-complete.test.ts the papers and benefits areas’ 70 test files, 507 tests, run on 388d9a1e: all green; tests/b26-papers-repeats.test.ts, the repeat, reload and call-off probe on a New Haven life, green"
   ]
  },
@@ -64,7 +59,6 @@
   "evidence": [
    "tests/homebenefits.test.ts",
    "src/engine/systems/homebenefits.ts:157-166 the month paid to its count where a save holds a claim; nothing files one since 2026-10-09 (src/engine/systems/homebenefits.ts:108-110)",
-   "tests/homebenefits.test.ts",
    "tests/papers-complete.test.ts the papers and benefits areas’ 70 test files, 507 tests, run on 388d9a1e: all green; tests/b26-papers-repeats.test.ts, the repeat, reload and call-off probe on a New Haven life, green"
   ]
  },
@@ -79,7 +73,6 @@
   "evidence": [
    "tests/cabenefits.test.ts",
    "src/engine/systems/eiself.ts:84-90 the command; src/engine/systems/eiself.ts:36-41 eiRefusal; src/engine/systems/eiself.ts:66-81 eiWeek",
-   "tests/cabenefits.test.ts",
    "tests/papers-complete.test.ts the papers and benefits areas’ 70 test files, 507 tests, run on 388d9a1e: all green; tests/b26-papers-repeats.test.ts, the repeat, reload and call-off probe on a New Haven life, green"
   ]
  },
@@ -94,7 +87,6 @@
   "evidence": [
    "tests/homebenefits.test.ts",
    "src/engine/systems/homebenefits.ts:137-155 the week; src/engine/systems/homebenefits.ts:120-129 claimAtHome",
-   "tests/homebenefits.test.ts",
    "tests/papers-complete.test.ts the papers and benefits areas’ 70 test files, 507 tests, run on 388d9a1e: all green; tests/b26-papers-repeats.test.ts, the repeat, reload and call-off probe on a New Haven life, green"
   ]
  },
@@ -126,8 +118,6 @@
    "tests/evidence-g16-papers.test.ts",
    "tests/evidence2-b05.test.ts",
    "src/engine/systems/unemployment.ts:276-322 the week certified: available or not, the work done in it, the waiting week once, paid and recorded, closed at the year or the most",
-   "tests/b20-benefits-unemployment.test.ts",
-   "tests/evidence-g16-papers.test.ts",
    "tests/papers-complete.test.ts the papers and benefits areas’ 70 test files, 507 tests, run on 388d9a1e: all green; tests/b26-papers-repeats.test.ts, the repeat, reload and call-off probe on a New Haven life, green"
   ]
  },
@@ -143,8 +133,6 @@
    "tests/remaining-tax.test.ts",
    "tests/scope-taxpapers.test.ts",
    "src/engine/systems/statetax.ts:606 every state notice, the player’s only, routed to Papers",
-   "tests/b20-benefits-reach.test.ts",
-   "tests/remaining-tax.test.ts",
    "tests/papers-complete.test.ts the papers and benefits areas’ 70 test files, 507 tests, run on 388d9a1e: all green; tests/b26-papers-repeats.test.ts, the repeat, reload and call-off probe on a New Haven life, green"
   ]
  },
@@ -158,7 +146,6 @@
   "evidence": [
    "tests/remaining-tax.test.ts",
    "src/engine/systems/taxreturn.ts:1813-1844 a state’s amended return processed: more from the due date, or less offset and refunded, said once; held on fixture tests",
-   "tests/remaining-tax.test.ts",
    "tests/papers-complete.test.ts the papers and benefits areas’ 70 test files, 507 tests, run on 388d9a1e: all green; tests/b26-papers-repeats.test.ts, the repeat, reload and call-off probe on a New Haven life, green"
   ]
  },
@@ -173,7 +160,6 @@
    "tests/remaining-tax.test.ts",
    "tests/evidence-g33-ui.test.ts",
    "src/engine/systems/taxreturn.ts:434-446 Notice CP14 at filing, before or after the due date, with what runs",
-   "tests/remaining-tax.test.ts",
    "tests/papers-complete.test.ts the papers and benefits areas’ 70 test files, 507 tests, run on 388d9a1e: all green; tests/b26-papers-repeats.test.ts, the repeat, reload and call-off probe on a New Haven life, green"
   ]
  },
@@ -188,8 +174,6 @@
    "tests/remaining-09-coverage.test.ts",
    "tests/liens-and-arrangements.test.ts",
    "src/engine/systems/taxreturn.ts:303-311 Letter 3172 once, with the amount, the hearing the game doesn’t offer and the release",
-   "tests/liens-and-arrangements.test.ts",
-   "tests/remaining-09-coverage.test.ts",
    "tests/papers-complete.test.ts the papers and benefits areas’ 70 test files, 507 tests, run on 388d9a1e: all green; tests/b26-papers-repeats.test.ts, the repeat, reload and call-off probe on a New Haven life, green"
   ]
  },
@@ -205,8 +189,6 @@
    "tests/remaining-tax.test.ts",
    "tests/evidence-g17-papers.test.ts",
    "src/engine/systems/taxreturn.ts:716-726 new tax joins the plan or puts it in default with CP523, once",
-   "tests/b20-benefits-tax.test.ts",
-   "tests/remaining-tax.test.ts",
    "tests/papers-complete.test.ts the papers and benefits areas’ 70 test files, 507 tests, run on 388d9a1e: all green; tests/b26-papers-repeats.test.ts, the repeat, reload and call-off probe on a New Haven life, green"
   ]
  },
@@ -221,7 +203,6 @@
    "tests/b20-benefits-tax.test.ts",
    "tests/defects-g8-8.test.ts",
    "src/engine/systems/taxreturn.ts:1775-1811 their own return in the IRS’s place: the parts in proportion, over paid back, the lien paid, said once",
-   "tests/b20-benefits-tax.test.ts",
    "tests/remaining-tax.test.ts",
    "tests/papers-complete.test.ts the papers and benefits areas’ 70 test files, 507 tests, run on 388d9a1e: all green; tests/b26-papers-repeats.test.ts, the repeat, reload and call-off probe on a New Haven life, green"
   ]
@@ -237,7 +218,6 @@
    "tests/remaining-tax.test.ts",
    "tests/defects-g8-7.test.ts",
    "src/engine/systems/taxreturn.ts:680-687 The IRS Declined Your Payment Plan, once, with why and whether its letters resume",
-   "tests/remaining-tax.test.ts",
    "tests/papers-complete.test.ts the papers and benefits areas’ 70 test files, 507 tests, run on 388d9a1e: all green; tests/b26-papers-repeats.test.ts, the repeat, reload and call-off probe on a New Haven life, green"
   ]
  },
@@ -251,7 +231,6 @@
   "evidence": [
    "tests/carried.test.ts",
    "src/engine/systems/taxreturn.ts:1299-1320 a UK year settled on 1 February, paid or refunded once through the account; no life works in the UK, held by tests/carried.test.ts with the year set",
-   "tests/carried.test.ts",
    "tests/papers-complete.test.ts the papers and benefits areas’ 70 test files, 507 tests, run on 388d9a1e: all green; tests/b26-papers-repeats.test.ts, the repeat, reload and call-off probe on a New Haven life, green"
   ]
  },
@@ -266,8 +245,6 @@
    "tests/b20-benefits-unemployment.test.ts",
    "tests/evidence-g15-papers.test.ts",
    "src/engine/systems/unemployment.ts:195-203 Your Unemployment Claim Ended, once, with why",
-   "tests/b20-benefits-unemployment.test.ts",
-   "tests/evidence-g15-papers.test.ts",
    "tests/papers-complete.test.ts the papers and benefits areas’ 70 test files, 507 tests, run on 388d9a1e: all green; tests/b26-papers-repeats.test.ts, the repeat, reload and call-off probe on a New Haven life, green"
   ]
  },
@@ -312,7 +289,6 @@
   "evidence": [
    "tests/homepensions.test.ts",
    "src/engine/systems/homepensions.ts:218-231 the payment",
-   "tests/homepensions.test.ts",
    "tests/papers-complete.test.ts the papers and benefits areas’ 70 test files, 507 tests, run on 388d9a1e: all green; tests/b26-papers-repeats.test.ts, the repeat, reload and call-off probe on a New Haven life, green"
   ]
  },
@@ -327,7 +303,6 @@
   "evidence": [
    "tests/homepensions.test.ts",
    "src/engine/systems/homepensions.ts:184-192 the command; src/engine/systems/homepensions.ts:163-173 irishPensionRefusal",
-   "tests/homepensions.test.ts",
    "tests/papers-complete.test.ts the papers and benefits areas’ 70 test files, 507 tests, run on 388d9a1e: all green; tests/b26-papers-repeats.test.ts, the repeat, reload and call-off probe on a New Haven life, green"
   ]
  },
@@ -342,7 +317,6 @@
   "evidence": [
    "tests/homepensions.test.ts",
    "src/engine/systems/homepensions.ts:194-207 the week",
-   "tests/homepensions.test.ts",
    "tests/papers-complete.test.ts the papers and benefits areas’ 70 test files, 507 tests, run on 388d9a1e: all green; tests/b26-papers-repeats.test.ts, the repeat, reload and call-off probe on a New Haven life, green"
   ]
  },
@@ -357,7 +331,6 @@
   "evidence": [
    "tests/imss.test.ts",
    "src/engine/systems/imss.ts:141-151 the command; src/engine/systems/imss.ts:127-137 imssRefusal",
-   "tests/imss.test.ts",
    "tests/papers-complete.test.ts the papers and benefits areas’ 70 test files, 507 tests, run on 388d9a1e: all green; tests/b26-papers-repeats.test.ts, the repeat, reload and call-off probe on a New Haven life, green"
   ]
  },
@@ -372,7 +345,6 @@
   "evidence": [
    "tests/imss.test.ts",
    "src/engine/systems/imss.ts:153-166 the month",
-   "tests/imss.test.ts",
    "tests/papers-complete.test.ts the papers and benefits areas’ 70 test files, 507 tests, run on 388d9a1e: all green; tests/b26-papers-repeats.test.ts, the repeat, reload and call-off probe on a New Haven life, green"
   ]
  },
@@ -418,7 +390,6 @@
   "evidence": [
    "tests/statepension.test.ts",
    "src/engine/systems/statepension.ts:77-84 the command; src/engine/systems/statepension.ts:68-74 statePensionRefusal",
-   "tests/statepension.test.ts",
    "tests/papers-complete.test.ts the papers and benefits areas’ 70 test files, 507 tests, run on 388d9a1e: all green; tests/b26-papers-repeats.test.ts, the repeat, reload and call-off probe on a New Haven life, green"
   ]
  },
@@ -433,7 +404,6 @@
   "evidence": [
    "tests/statepension.test.ts",
    "src/engine/systems/statepension.ts:86-100 the payment",
-   "tests/statepension.test.ts",
    "tests/papers-complete.test.ts the papers and benefits areas’ 70 test files, 507 tests, run on 388d9a1e: all green; tests/b26-papers-repeats.test.ts, the repeat, reload and call-off probe on a New Haven life, green"
   ]
  },
@@ -448,7 +418,6 @@
    "tests/liens-and-arrangements.test.ts",
    "tests/remaining-09-coverage.test.ts",
    "src/engine/content/guide/taxes.ts:447-535 the entry; src/engine/systems/taxreturn.ts:303-386 the federal lien; src/engine/systems/statetax.ts:662-789 and src/engine/systems/statetax.ts:1057-1147 a state’s",
-   "tests/liens-and-arrangements.test.ts",
    "tests/b20-benefits-reach.test.ts",
    "tests/guide-examples-papers.test.ts",
    "tests/papers-complete.test.ts the papers and benefits areas’ 70 test files, 507 tests, run on 388d9a1e: all green; tests/b26-papers-repeats.test.ts, the repeat, reload and call-off probe on a New Haven life, green"
@@ -465,7 +434,6 @@
    "tests/liens-and-arrangements.test.ts",
    "tests/remaining-tax.test.ts",
    "src/engine/content/guide/taxes.ts:447-535 the entry; src/engine/systems/taxreturn.ts:303-386 the federal lien; src/engine/systems/statetax.ts:662-789 and src/engine/systems/statetax.ts:1057-1147 a state’s",
-   "tests/liens-and-arrangements.test.ts",
    "tests/b20-benefits-reach.test.ts",
    "tests/guide-examples-papers.test.ts",
    "tests/papers-complete.test.ts the papers and benefits areas’ 70 test files, 507 tests, run on 388d9a1e: all green; tests/b26-papers-repeats.test.ts, the repeat, reload and call-off probe on a New Haven life, green"
@@ -482,8 +450,6 @@
    "tests/b20-benefits-reach.test.ts",
    "tests/liens-and-arrangements.test.ts",
    "src/engine/content/guide/taxes.ts:447-535 the entry; src/engine/systems/taxreturn.ts:303-386 the federal lien; src/engine/systems/statetax.ts:662-789 and src/engine/systems/statetax.ts:1057-1147 a state’s",
-   "tests/liens-and-arrangements.test.ts",
-   "tests/b20-benefits-reach.test.ts",
    "tests/guide-examples-papers.test.ts",
    "tests/papers-complete.test.ts the papers and benefits areas’ 70 test files, 507 tests, run on 388d9a1e: all green; tests/b26-papers-repeats.test.ts, the repeat, reload and call-off probe on a New Haven life, green"
   ]
@@ -499,7 +465,6 @@
    "tests/b20-benefits-reach.test.ts",
    "tests/remaining-tax.test.ts",
    "src/engine/content/guide/taxes.ts:258-345 the entry; src/engine/systems/taxreturn.ts:1668-1680 tax.pay; src/engine/systems/taxreturn.ts:1449-1477 the letters and the levy; src/engine/systems/taxreturn.ts:303-311 the lien at the final notice; src/engine/systems/statetax.ts:960-1016 a state’s",
-   "tests/remaining-tax.test.ts",
    "tests/tax.test.ts",
    "tests/guide-examples-papers.test.ts",
    "tests/papers-complete.test.ts the papers and benefits areas’ 70 test files, 507 tests, run on 388d9a1e: all green; tests/b26-papers-repeats.test.ts, the repeat, reload and call-off probe on a New Haven life, green"
@@ -517,7 +482,6 @@
    "tests/b20-benefits-reach.test.ts",
    "tests/remaining-tax.test.ts",
    "src/engine/content/guide/taxes.ts:258-345 the entry; src/engine/systems/taxreturn.ts:1668-1680 tax.pay; src/engine/systems/taxreturn.ts:1449-1477 the letters and the levy; src/engine/systems/taxreturn.ts:303-311 the lien at the final notice; src/engine/systems/statetax.ts:960-1016 a state’s",
-   "tests/remaining-tax.test.ts",
    "tests/tax.test.ts",
    "tests/guide-examples-papers.test.ts",
    "tests/papers-complete.test.ts the papers and benefits areas’ 70 test files, 507 tests, run on 388d9a1e: all green; tests/b26-papers-repeats.test.ts, the repeat, reload and call-off probe on a New Haven life, green"
@@ -583,7 +547,6 @@
   "evidence": [
    "tests/remaining-tax.test.ts",
    "src/engine/content/guide/taxes.ts:258-345 the entry; src/engine/systems/taxreturn.ts:1668-1680 tax.pay; src/engine/systems/taxreturn.ts:1449-1477 the letters and the levy; src/engine/systems/taxreturn.ts:303-311 the lien at the final notice; src/engine/systems/statetax.ts:960-1016 a state’s",
-   "tests/remaining-tax.test.ts",
    "tests/tax.test.ts",
    "tests/guide-examples-papers.test.ts",
    "tests/papers-complete.test.ts the papers and benefits areas’ 70 test files, 507 tests, run on 388d9a1e: all green; tests/b26-papers-repeats.test.ts, the repeat, reload and call-off probe on a New Haven life, green"
@@ -634,7 +597,6 @@
    "tests/liens-and-arrangements.test.ts",
    "src/engine/content/guide/taxes.ts:346-446 the entry; src/engine/systems/taxreturn.ts:596-726 the plan’s rules; src/engine/systems/taxreturn.ts:1506-1608 its commands and days; src/engine/systems/statetax.ts:455-507 and src/engine/systems/statetax.ts:1018-1055 a state’s",
    "tests/remaining-tax.test.ts",
-   "tests/liens-and-arrangements.test.ts",
    "tests/guide-examples-papers.test.ts",
    "tests/papers-complete.test.ts the papers and benefits areas’ 70 test files, 507 tests, run on 388d9a1e: all green; tests/b26-papers-repeats.test.ts, the repeat, reload and call-off probe on a New Haven life, green"
   ]
@@ -650,7 +612,6 @@
    "tests/b20-benefits-tax.test.ts",
    "tests/remaining-tax.test.ts",
    "src/engine/content/guide/taxes.ts:346-446 the entry; src/engine/systems/taxreturn.ts:596-726 the plan’s rules; src/engine/systems/taxreturn.ts:1506-1608 its commands and days; src/engine/systems/statetax.ts:455-507 and src/engine/systems/statetax.ts:1018-1055 a state’s",
-   "tests/remaining-tax.test.ts",
    "tests/liens-and-arrangements.test.ts",
    "tests/guide-examples-papers.test.ts",
    "tests/papers-complete.test.ts the papers and benefits areas’ 70 test files, 507 tests, run on 388d9a1e: all green; tests/b26-papers-repeats.test.ts, the repeat, reload and call-off probe on a New Haven life, green"
@@ -783,8 +744,6 @@
    "tests/remaining-tax.test.ts",
    "tests/tax-lifecycle.test.ts",
    "src/engine/systems/taxreturn.ts:1687-1706 the command: amendRefusal (src/engine/systems/taxreturn.ts:1753-1763), each authority’s change, processed in ten weeks; no current life reaches a change of record, held by fixture tests",
-   "tests/remaining-tax.test.ts",
-   "tests/tax-lifecycle.test.ts",
    "tests/papers-complete.test.ts the papers and benefits areas’ 70 test files, 507 tests, run on 388d9a1e: all green; tests/b26-papers-repeats.test.ts, the repeat, reload and call-off probe on a New Haven life, green"
   ]
  },
@@ -799,8 +758,6 @@
    "tests/remaining-tax.test.ts",
    "tests/tax-lifecycle.test.ts",
    "src/engine/systems/taxreturn.ts:1708-1748 processed: each state’s change, the IRS’s more with interest or less off what’s owed and refunded with interest, said once",
-   "tests/remaining-tax.test.ts",
-   "tests/tax-lifecycle.test.ts",
    "tests/papers-complete.test.ts the papers and benefits areas’ 70 test files, 507 tests, run on 388d9a1e: all green; tests/b26-papers-repeats.test.ts, the repeat, reload and call-off probe on a New Haven life, green"
   ]
  },
@@ -817,7 +774,6 @@
    "tests/remaining-tax.test.ts",
    "tests/scope-taxpapers.test.ts",
    "src/engine/systems/taxreturn.ts:1506-1528 the command: planRefusal (src/engine/systems/taxreturn.ts:596-608), the fee the bank must hold, decided online in a minute or by mail; a plan pending or in force refused",
-   "tests/remaining-tax.test.ts",
    "tests/liens-and-arrangements.test.ts",
    "tests/papers-complete.test.ts the papers and benefits areas’ 70 test files, 507 tests, run on 388d9a1e: all green; tests/b26-papers-repeats.test.ts, the repeat, reload and call-off probe on a New Haven life, green"
   ]
@@ -835,7 +791,6 @@
    "tests/state-tax.test.ts",
    "src/engine/systems/statetax.ts:1018-1055 the command: statePlanRefusal (src/engine/systems/statetax.ts:455-507), an old plan replaced, paid down first, decided in the state’s days",
    "tests/state-tax-states.test.ts",
-   "tests/b20-benefits-reach.test.ts",
    "tests/papers-complete.test.ts the papers and benefits areas’ 70 test files, 507 tests, run on 388d9a1e: all green; tests/b26-papers-repeats.test.ts, the repeat, reload and call-off probe on a New Haven life, green"
   ]
  },
@@ -897,8 +852,6 @@
    "tests/remaining-09-coverage.test.ts",
    "tests/liens-and-arrangements.test.ts",
    "src/engine/systems/taxreturn.ts:353-371 released after payment, withdrawn on the form or as erroneous, each once and said; src/engine/systems/taxreturn.ts:303-324 filed at the final notice over the threshold, paid",
-   "tests/liens-and-arrangements.test.ts",
-   "tests/remaining-09-coverage.test.ts",
    "tests/papers-complete.test.ts the papers and benefits areas’ 70 test files, 507 tests, run on 388d9a1e: all green; tests/b26-papers-repeats.test.ts, the repeat, reload and call-off probe on a New Haven life, green"
   ]
  },
@@ -914,8 +867,6 @@
    "tests/remaining-tax.test.ts",
    "tests/liens-and-arrangements.test.ts",
    "src/engine/systems/taxreturn.ts:373-386 the command: federalLienWithdrawRefusal (src/engine/systems/taxreturn.ts:337-350), disputed to its day; asked twice refused",
-   "tests/liens-and-arrangements.test.ts",
-   "tests/remaining-tax.test.ts",
    "tests/papers-complete.test.ts the papers and benefits areas’ 70 test files, 507 tests, run on 388d9a1e: all green; tests/b26-papers-repeats.test.ts, the repeat, reload and call-off probe on a New Haven life, green"
   ]
  },
@@ -951,8 +902,6 @@
    "tests/remaining-tax.test.ts",
    "tests/liens-and-arrangements.test.ts",
    "src/engine/systems/statetax.ts:1133-1147 the command: lienDisputeRefusal (src/engine/systems/statetax.ts:779-789) and lienInError (src/engine/systems/statetax.ts:761-777), decided in the state’s days; no current life reaches a lien in error, held by fixture tests",
-   "tests/liens-and-arrangements.test.ts",
-   "tests/remaining-tax.test.ts",
    "tests/papers-complete.test.ts the papers and benefits areas’ 70 test files, 507 tests, run on 388d9a1e: all green; tests/b26-papers-repeats.test.ts, the repeat, reload and call-off probe on a New Haven life, green"
   ]
  },
@@ -968,7 +917,6 @@
    "tests/liens-and-arrangements.test.ts",
    "tests/remaining-tax.test.ts",
    "src/engine/systems/statetax.ts:1114-1131 the command: lienReleaseRefusal (src/engine/systems/statetax.ts:735-759), the release fee once, released in the state’s days",
-   "tests/liens-and-arrangements.test.ts",
    "tests/papers-complete.test.ts the papers and benefits areas’ 70 test files, 507 tests, run on 388d9a1e: all green; tests/b26-papers-repeats.test.ts, the repeat, reload and call-off probe on a New Haven life, green"
   ]
  },
@@ -983,7 +931,6 @@
    "tests/b20-benefits-tax.test.ts",
    "tests/remaining-tax.test.ts",
    "src/engine/systems/taxreturn.ts:1449-1477 the IRS’s collection: held by a plan, the lien at its step, each notice once, then the levy from the bank accounts; src/engine/systems/taxreturn.ts:404-407 nextNotice from the due date",
-   "tests/remaining-tax.test.ts",
    "tests/liens-step-skip.test.ts",
    "tests/papers-complete.test.ts the papers and benefits areas’ 70 test files, 507 tests, run on 388d9a1e: all green; tests/b26-papers-repeats.test.ts, the repeat, reload and call-off probe on a New Haven life, green"
   ]
@@ -1001,7 +948,6 @@
    "tests/guide-examples-papers.test.ts",
    "src/engine/systems/taxreturn.ts:1668-1680 the command: a year owed, the whole or a part no more than it, applied tax then penalty then interest (src/engine/systems/taxreturn.ts:266-281); paid, refused as already paid",
    "tests/tax.test.ts",
-   "tests/remaining-tax.test.ts",
    "tests/papers-complete.test.ts the papers and benefits areas’ 70 test files, 507 tests, run on 388d9a1e: all green; tests/b26-papers-repeats.test.ts, the repeat, reload and call-off probe on a New Haven life, green"
   ]
  },
@@ -1018,7 +964,6 @@
    "tests/remaining-tax.test.ts",
    "src/engine/systems/statetax.ts:1002-1016 the command: a year owed the state, the whole or a part, applied by the state’s order (src/engine/systems/statetax.ts:364-395)",
    "tests/state-tax.test.ts",
-   "tests/remaining-tax.test.ts",
    "tests/papers-complete.test.ts the papers and benefits areas’ 70 test files, 507 tests, run on 388d9a1e: all green; tests/b26-papers-repeats.test.ts, the repeat, reload and call-off probe on a New Haven life, green"
   ]
  },
@@ -1033,7 +978,6 @@
    "tests/b20-benefits-tax.test.ts",
    "tests/remaining-tax.test.ts",
    "src/engine/systems/taxreturn.ts:1530-1543 decided: refused with why and collection resumed (src/engine/systems/taxreturn.ts:668-687), or the fee paid and the plan begun (src/engine/systems/taxreturn.ts:643-659), said once",
-   "tests/remaining-tax.test.ts",
    "tests/liens-and-arrangements.test.ts",
    "tests/papers-complete.test.ts the papers and benefits areas’ 70 test files, 507 tests, run on 388d9a1e: all green; tests/b26-papers-repeats.test.ts, the repeat, reload and call-off probe on a New Haven life, green"
   ]
@@ -1096,7 +1040,6 @@
    "tests/b20-benefits-reach.test.ts",
    "tests/remaining-tax.test.ts",
    "src/engine/systems/statetax.ts:1086-1112 the command: waiverRefusal (src/engine/systems/statetax.ts:829-839), the share by its schedule, off the penalty, credited, the rest refunded; Oregon’s alone, held on Portland quick-saves",
-   "tests/remaining-tax.test.ts",
    "tests/papers-complete.test.ts the papers and benefits areas’ 70 test files, 507 tests, run on 388d9a1e: all green; tests/b26-papers-repeats.test.ts, the repeat, reload and call-off probe on a New Haven life, green"
   ]
  },
@@ -1113,7 +1056,6 @@
    "tests/finance-paths.test.ts",
    "src/engine/systems/taxreturn.ts:1591-1608 the command: a monthly plan in force, the least payment, the revision fee, default cleared, a payment booked where none is",
    "tests/remaining-tax.test.ts",
-   "tests/b20-benefits-tax.test.ts",
    "tests/papers-complete.test.ts the papers and benefits areas’ 70 test files, 507 tests, run on 388d9a1e: all green; tests/b26-papers-repeats.test.ts, the repeat, reload and call-off probe on a New Haven life, green"
   ]
  },
@@ -1145,8 +1087,6 @@
    "tests/liens-and-arrangements.test.ts",
    "tests/guide-examples-papers.test.ts",
    "src/engine/systems/statetax.ts:1057-1084 filed after the intent unless paid or under a plan, released after payment, a dispute decided with the fee back, each once",
-   "tests/liens-and-arrangements.test.ts",
-   "tests/b20-benefits-reach.test.ts",
    "tests/papers-complete.test.ts the papers and benefits areas’ 70 test files, 507 tests, run on 388d9a1e: all green; tests/b26-papers-repeats.test.ts, the repeat, reload and call-off probe on a New Haven life, green"
   ]
  },
@@ -1162,7 +1102,6 @@
    "tests/b20-benefits-time.test.ts",
    "tests/state-tax.test.ts",
    "src/engine/systems/taxreturn.ts:1441-1447 the item; src/engine/systems/statetax.ts:860-914 a state’s letter on a return never filed, then its assessment; stopped by their own return",
-   "tests/state-tax.test.ts",
    "tests/integration-tax-reload.test.ts",
    "tests/papers-complete.test.ts the papers and benefits areas’ 70 test files, 507 tests, run on 388d9a1e: all green; tests/b26-papers-repeats.test.ts, the repeat, reload and call-off probe on a New Haven life, green"
   ]
@@ -1180,7 +1119,6 @@
    "tests/remaining-tax.test.ts",
    "src/engine/systems/statetax.ts:960-1000 a state’s collection: held by a plan, its charges and lien at their steps, each notice once, then the levy with its fees",
    "tests/state-tax.test.ts",
-   "tests/b20-benefits-reach.test.ts",
    "tests/papers-complete.test.ts the papers and benefits areas’ 70 test files, 507 tests, run on 388d9a1e: all green; tests/b26-papers-repeats.test.ts, the repeat, reload and call-off probe on a New Haven life, green"
   ]
  },
@@ -1211,7 +1149,6 @@
    "tests/scope-taxpapers.test.ts",
    "src/engine/systems/statetax.ts:1149-1183 decided on its statement or approved, then each payment to the oldest year, missed into its days (src/engine/systems/statetax.ts:576-596), paid off ended",
    "tests/state-tax-states.test.ts",
-   "tests/b20-benefits-reach.test.ts",
    "tests/papers-complete.test.ts the papers and benefits areas’ 70 test files, 507 tests, run on 388d9a1e: all green; tests/b26-papers-repeats.test.ts, the repeat, reload and call-off probe on a New Haven life, green"
   ]
  },
@@ -1242,8 +1179,6 @@
    "tests/liens-and-arrangements.test.ts",
    "tests/b20-benefits-reach.test.ts",
    "src/engine/systems/taxreturn.ts:1433-1439 the item; src/engine/systems/statetax.ts:799-827 Oregon’s three-year check and charge; Oregon’s alone, held on quick-saves",
-   "tests/liens-and-arrangements.test.ts",
-   "tests/b20-benefits-reach.test.ts",
    "tests/papers-complete.test.ts the papers and benefits areas’ 70 test files, 507 tests, run on 388d9a1e: all green; tests/b26-papers-repeats.test.ts, the repeat, reload and call-off probe on a New Haven life, green"
   ]
  }

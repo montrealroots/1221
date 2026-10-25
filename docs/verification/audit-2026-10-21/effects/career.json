@@ -2980,30 +2980,31 @@
    "seeded": false,
    "readBy": "career",
    "readAt": "brief 25",
-   "where": "Career, Charts And Awards: Your Recognition, Watch The Ceremony under a nominated entry, grayed with watchRefusal's words until the award is presented.",
+   "where": "Career, Charts And Awards: Your Recognition, Watch The Ceremony under a nominated Emmy entry and Watch The Show under an Actor Awards one, grayed with watchRefusal's words until the award is presented. From 2026-10-25 (brief 27's K7) its handler is the ceremony's (`systems/ceremony.ts`), read for either competition.",
    "prerequisites": "A nomination, and the clock at its ceremony (`watchRefusal`).",
-   "reads": "The entry's result, settled at the final round (`field.winner`).",
+   "reads": "The entry's result, settled at the final round (an Emmy's `field.winner`, an Actor Award's `field.winners`), and, where the player went, whether they went up and how the speech went.",
    "changes": "Nothing of the result: the day it was watched (`watchedAt`), and the ceremony's lines shown.",
    "consumers": [
     {
      "what": "the ceremony's lines, read from the settled result",
-     "at": "src/engine/systems/awards.ts:522"
+     "at": "src/engine/systems/ceremony.ts:262"
     },
     {
      "what": "the entry keeps the day it was watched",
-     "at": "src/engine/systems/awards.ts:611"
+     "at": "src/engine/systems/ceremony.ts:334"
     },
     {
      "what": "Your Recognition shows the lines once watched",
-     "at": "src/ui/career/IndustryPane.tsx:103"
+     "at": "src/ui/career/IndustryPane.tsx:126"
     }
    ],
    "experienced": "The nominees read, the envelope opened, and the result: you won, or you didn't and your nomination stands. A twin who skipped it has the same result.",
    "saveLoad": "The professional record (`person.pro`: `awards`, one entry for each performance and Emmy year with its field, nominees, winner and ceremony; `festivals`; each credit's `run`) is in the save; every step reads its record's own state before acting (an entry's field drawn, its winner settled, a festival's word given), so a load runs nothing twice; every draw is keyed by the year, the category or the work, never by an id, so a reload decides it the same. Held across a save and a load at each stage by tests/career-awards.test.ts and tests/career-awards-screen.test.ts.",
    "evidence": {
     "tests": [
-     "tests/career-awards.test.ts",
-     "tests/career-awards-screen.test.ts"
+     "tests/b27-ceremony.test.ts",
+     "tests/career-awards-screen.test.ts",
+     "tests/career-awards.test.ts"
     ],
     "comparisons": [],
     "mutations": [],
@@ -3072,6 +3073,307 @@
     ]
    },
    "missing": "No other award or festival is decided; their rules weren't read, and the inventory says so.",
+   "status": "Implemented And Verified",
+   "why": "",
+   "prior": null
+  },
+  {
+   "id": "pro.actor_submit",
+   "kind": "command",
+   "area": "career",
+   "mechanic": true,
+   "seeded": false,
+   "readBy": "career",
+   "readAt": "7e12b026",
+   "where": "Career, Charts And Awards, Your Recognition, The Actor Awards: Submit Yourself on an eligible credit while submissions are open.",
+   "prerequisites": "A credit the 33rd's Section Three makes eligible (`actorCheck`); the window open, August 24 to November 2 at 5 PM Pacific; no submission of the performance that year; the bank able to pay $200.",
+   "reads": "The credit's work and its release, the rules' placement, the window, the bank.",
+   "changes": "A submission on the record (`guild`), the fee paid from the bank and on the ledger; refused, the reason said.",
+   "consumers": [
+    {
+     "what": "the nominations read the submission",
+     "at": "src/engine/systems/actorawards.ts:266"
+    },
+    {
+     "what": "the fee paid",
+     "at": "src/engine/systems/actorawards.ts:181"
+    }
+   ],
+   "experienced": "Submit Yourself and its toast; the entry's line under the credit; the ledger's charge.",
+   "saveLoad": "The professional record (`person.pro`: `guild`, each nomination's `attend`, `trips`) and the calendar's pending `pro.*` items are in the save; each step reads its record's own state before acting, and every draw is keyed by the competition, the year and the performance, never by an id, so a reload decides it the same.",
+   "evidence": {
+    "tests": [
+     "tests/b27-actor-awards.test.ts"
+    ],
+    "comparisons": [
+     "b27-actor-awards: the same performance submitted and not, its production not submitting: nominated and never in the field"
+    ],
+    "mutations": [
+     "b27-actor-awards: a second submission taken and submissions before the window each failed a test"
+    ],
+    "journeys": [
+     "b27-actor-awards: a Desk Clerk submitted through the command to its nomination and the show"
+    ]
+   },
+   "missing": "No played life of the long runs reaches one yet: they're replayed in brief 27's F.",
+   "status": "Implemented And Verified",
+   "why": "",
+   "prior": null
+  },
+  {
+   "id": "pro.actor_awards",
+   "kind": "reactor",
+   "area": "career",
+   "mechanic": true,
+   "seeded": false,
+   "readBy": "career",
+   "readAt": "7e12b026",
+   "where": "The clock, at each stop (`onPassage`): the Actor Awards' production submissions at the window's close, the nominations, the final round and the show.",
+   "prerequisites": "A credit eligible by the 33rd's rules, or a submission on the record; the step's moment passed.",
+   "reads": "Each credit's eligibility and year, its band, the player's visibility, the field (decider `actor.field`), the production's draw (`actor.entry`) and the final round's (`actor.final`).",
+   "changes": "A production's submission or its absence; nominations, every performance of the player's in a category together; winners; the result at the show; a returned submission whose work no longer meets the rules.",
+   "consumers": [
+    {
+     "what": "a nomination counts toward visibility",
+     "at": "src/engine/systems/awards.ts:599"
+    },
+    {
+     "what": "on the résumé's lines",
+     "at": "src/engine/systems/pro.ts:1131"
+    },
+    {
+     "what": "the nominee invited to the show",
+     "at": "src/engine/systems/actorawards.ts:292"
+    }
+   ],
+   "experienced": "Submitted You For The Actor Awards; You're Nominated For An Actor Award or The Actor Awards Nominations Are Out; The Actor Awards Tonight; the entry's line.",
+   "saveLoad": "The professional record (`person.pro`: `guild`, each nomination's `attend`, `trips`) and the calendar's pending `pro.*` items are in the save; each step reads its record's own state before acting, and every draw is keyed by the competition, the year and the performance, never by an id, so a reload decides it the same.",
+   "evidence": {
+    "tests": [
+     "tests/b27-actor-awards.test.ts"
+    ],
+    "comparisons": [
+     "b27-actor-awards: a production submitting where its draw says so and not where it doesn't"
+    ],
+    "mutations": [
+     "b27-actor-awards: any union eligible, a film sent to streaming eligible, two of an actor's performances nominated, ties left out, the production always submitting, and visibility and the résumé blind to the guild each failed a test"
+    ],
+    "journeys": [
+     "b27-actor-awards: a Desk Clerk to its nomination and the show"
+    ]
+   },
+   "missing": "No played life of the long runs reaches one yet: they're replayed in brief 27's F.",
+   "status": "Implemented And Verified",
+   "why": "",
+   "prior": null
+  },
+  {
+   "id": "pro.ceremony_rsvp",
+   "kind": "command",
+   "area": "career",
+   "mechanic": true,
+   "seeded": false,
+   "readBy": "career",
+   "readAt": "7e12b026",
+   "where": "The invitation's question, or Your Recognition: Go To The Ceremony or Watch From Home, on a nomination, by a week before the show.",
+   "prerequisites": "A nomination not yet given; the answer's day not passed; going, no booking on the trip's days.",
+   "reads": "The nomination, the show's day and place, the trip's planned days, the player's bookings and trips.",
+   "changes": "Going: the trip booked as a work trip's legs are, the show's call on the clock, the answer kept. Not going: what going booked called off.",
+   "consumers": [
+    {
+     "what": "the trip booked",
+     "at": "src/engine/systems/ceremony.ts:176"
+    },
+    {
+     "what": "the show's call",
+     "at": "src/engine/systems/ceremony.ts:178"
+    },
+    {
+     "what": "the trip's days held against another offer",
+     "at": "src/engine/systems/projobs.ts:1099"
+    }
+   ],
+   "experienced": "The question Will You Go To …?, the buttons, the trip's legs on the calendar, the show's call.",
+   "saveLoad": "The professional record (`person.pro`: `guild`, each nomination's `attend`, `trips`) and the calendar's pending `pro.*` items are in the save; each step reads its record's own state before acting, and every draw is keyed by the competition, the year and the performance, never by an id, so a reload decides it the same.",
+   "evidence": {
+    "tests": [
+     "tests/b27-ceremony.test.ts"
+    ],
+    "comparisons": [
+     "b27-ceremony: going and watching from home, each played to the show"
+    ],
+    "mutations": [
+     "b27-ceremony: a clash not read and no trip booked each failed a test"
+    ],
+    "journeys": [
+     "b27-ceremony: a nominee to the show by the clock, and one watching from home"
+    ]
+   },
+   "missing": "No played life of the long runs reaches one yet: they're replayed in brief 27's F.",
+   "status": "Implemented And Verified",
+   "why": "",
+   "prior": null
+  },
+  {
+   "id": "pro.ceremony_prepare",
+   "kind": "command",
+   "area": "career",
+   "mechanic": true,
+   "seeded": false,
+   "readBy": "career",
+   "readAt": "7e12b026",
+   "where": "Your Recognition: Prepare Your Remarks, an hour at a time, on a show the player is going to.",
+   "prerequisites": "Going to the show; before it; the remarks not yet as ready as they get.",
+   "reads": "How far the remarks are prepared.",
+   "changes": "The remarks 35% further of the way left, and an hour on the clock.",
+   "consumers": [
+    {
+     "what": "the speech reads the remarks",
+     "at": "src/engine/systems/ceremony.ts:218"
+    }
+   ],
+   "experienced": "The button, its toast, and the remarks' share under the nomination.",
+   "saveLoad": "The professional record (`person.pro`: `guild`, each nomination's `attend`, `trips`) and the calendar's pending `pro.*` items are in the save; each step reads its record's own state before acting, and every draw is keyed by the competition, the year and the performance, never by an id, so a reload decides it the same.",
+   "evidence": {
+    "tests": [
+     "tests/b27-ceremony.test.ts"
+    ],
+    "comparisons": [
+     "b27-ceremony: a win with the remarks prepared and one with them not: a speech that lends visibility and one that doesn't"
+    ],
+    "mutations": [
+     "b27-ceremony: remarks never prepared, and the speech not reading them, each failed a test"
+    ],
+    "journeys": [
+     "b27-ceremony: remarks prepared three times, then the show"
+    ]
+   },
+   "missing": "No played life of the long runs reaches one yet: they're replayed in brief 27's F.",
+   "status": "Implemented And Verified",
+   "why": "",
+   "prior": null
+  },
+  {
+   "id": "pro.ceremony_accept",
+   "kind": "command",
+   "area": "career",
+   "mechanic": true,
+   "seeded": false,
+   "readBy": "career",
+   "readAt": "7e12b026",
+   "where": "The moment to go up, a stop a minute into the show for a winner in the room: its choice Go Up And Accept; or the button on Your Recognition then.",
+   "prerequisites": "Won, in the room, not yet accepted, within half an hour of the show's start.",
+   "reads": "The remarks' preparation, the actor's composure and presence, the speech's own draw (decider `ceremony.speech`).",
+   "changes": "The speech given and judged into a band; a Strong one or better counts toward visibility; a notice says how it went.",
+   "consumers": [
+    {
+     "what": "a strong speech counts toward visibility",
+     "at": "src/engine/systems/awards.ts:602"
+    },
+    {
+     "what": "the ceremony's lines say it",
+     "at": "src/engine/systems/ceremony.ts:273"
+    }
+   ],
+   "experienced": "The stop's choice, Your Speech's notice, the speech's line under the nomination.",
+   "saveLoad": "The professional record (`person.pro`: `guild`, each nomination's `attend`, `trips`) and the calendar's pending `pro.*` items are in the save; each step reads its record's own state before acting, and every draw is keyed by the competition, the year and the performance, never by an id, so a reload decides it the same.",
+   "evidence": {
+    "tests": [
+     "tests/b27-ceremony.test.ts"
+    ],
+    "comparisons": [
+     "b27-ceremony: the remarks prepared and not; the moment taken and let pass"
+    ],
+    "mutations": [
+     "b27-ceremony: a speech lending nothing, the moment no stop, and the moment let pass still speaking each failed a test"
+    ],
+    "journeys": [
+     "b27-ceremony: a win in the room, gone up to accept by the stop's choice"
+    ]
+   },
+   "missing": "No played life of the long runs reaches one yet: they're replayed in brief 27's F.",
+   "status": "Implemented And Verified",
+   "why": "",
+   "prior": null
+  },
+  {
+   "id": "pro.ceremony",
+   "kind": "scheduled",
+   "area": "career",
+   "mechanic": true,
+   "seeded": false,
+   "readBy": "career",
+   "readAt": "7e12b026",
+   "where": "The show's hour in Los Angeles, for a nominee going (`CEREMONY_KIND`).",
+   "prerequisites": "Going to the show, said through `pro.ceremony_rsvp`.",
+   "reads": "Whether the trip got the player there and they're awake and well; the settled result.",
+   "changes": "In the room or not; a loss told in the room, adding nothing; a win sets the moment to go up; absent, the win accepted without them.",
+   "consumers": [
+    {
+     "what": "the moment to go up set",
+     "at": "src/engine/systems/ceremony.ts:303"
+    },
+    {
+     "what": "absent, said",
+     "at": "src/engine/systems/ceremony.ts:294"
+    }
+   ],
+   "experienced": "The show's stop; You Won At …, the room's loss, or You Weren't At ….",
+   "saveLoad": "The professional record (`person.pro`: `guild`, each nomination's `attend`, `trips`) and the calendar's pending `pro.*` items are in the save; each step reads its record's own state before acting, and every draw is keyed by the competition, the year and the performance, never by an id, so a reload decides it the same.",
+   "evidence": {
+    "tests": [
+     "tests/b27-ceremony.test.ts"
+    ],
+    "comparisons": [
+     "b27-ceremony: in the room and absent by a missed flight"
+    ],
+    "mutations": [
+     "b27-ceremony: the trip not read failed a test"
+    ],
+    "journeys": [
+     "b27-ceremony: the night played by the clock, the trip there and home"
+    ]
+   },
+   "missing": "No played life of the long runs reaches one yet: they're replayed in brief 27's F.",
+   "status": "Implemented And Verified",
+   "why": "",
+   "prior": null
+  },
+  {
+   "id": "pro.ceremony_speech",
+   "kind": "scheduled",
+   "area": "career",
+   "mechanic": true,
+   "seeded": false,
+   "readBy": "career",
+   "readAt": "7e12b026",
+   "where": "The moment to go up, a minute into the show for a winner in the room (`SPEECH_KIND`), a stop with its choice Go Up And Accept.",
+   "prerequisites": "Won, in the room.",
+   "reads": "Whether the player went up.",
+   "changes": "Gone on past: a thank you and a seat, no speech judged.",
+   "consumers": [
+    {
+     "what": "the moment let pass",
+     "at": "src/engine/systems/ceremony.ts:311"
+    }
+   ],
+   "experienced": "The stop and its choice; the line You went up, said thank you, and sat down.",
+   "saveLoad": "The professional record (`person.pro`: `guild`, each nomination's `attend`, `trips`) and the calendar's pending `pro.*` items are in the save; each step reads its record's own state before acting, and every draw is keyed by the competition, the year and the performance, never by an id, so a reload decides it the same.",
+   "evidence": {
+    "tests": [
+     "tests/b27-ceremony.test.ts"
+    ],
+    "comparisons": [
+     "b27-ceremony: the moment taken and let pass"
+    ],
+    "mutations": [
+     "b27-ceremony: the moment no stop and the moment let pass still speaking each failed a test"
+    ],
+    "journeys": [
+     "b27-ceremony: a win, the moment let pass"
+    ]
+   },
+   "missing": "No played life of the long runs reaches one yet: they're replayed in brief 27's F.",
    "status": "Implemented And Verified",
    "why": "",
    "prior": null

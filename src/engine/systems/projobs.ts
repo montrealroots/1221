@@ -103,7 +103,9 @@ import {
   sessionDays, stepOf, voiceOnly, workHoursOf, workKey, workTheDay, workflowOf,
 } from './workflow';
 import { AFTER_WRAP, PROMO, RELEASED, type After } from '../content/workflows';
-import { registerAwards, visibilityOf } from './awards';
+import { awardsPassage, registerAwards, visibilityOf } from './awards';
+import { actorAwardsPassage, registerActorAwards } from './actorawards';
+import { registerCeremonies } from './ceremony';
 import { simulateRun } from './charts';
 import { keepProject, pushedPart, restoreSlate, slatePartsAt } from './slate';
 
@@ -212,9 +214,11 @@ export const DIRECT = { chance: 0.5, bands: ['strong', 'exceptional'] as readonl
  * improve, remain unchanged ... Negotiation is not unlimited rerolling"): an agent asks once, a fifth over the offer, and
  * the production answers the next afternoon at three, raising it to what was asked or keeping its offer, the offer then
  * standing a day past the answer. Its chance by the last round's band, and a little more where the casting office cast
- * the actor before. ASSUMPTION each figure; drawn on its own stream (decider `pro.negotiate`).
+ * the actor before; and, from 2026-10-25 (brief 27's K7, loop 47: "relevant opportunities or negotiation circumstances may
+ * change"), more by half the actor's visibility, which awards, festivals, a hit and publicity lend and which fades
+ * (`visibilityOf`, at most 15 points). ASSUMPTION each figure; drawn on its own stream (decider `pro.negotiate`).
  */
-export const NEGOTIATE = { ask: 0.2, yes: { unready: 0, working: 0.15, strong: 0.35, exceptional: 0.55 } as Readonly<Record<Band, number>>, worked: 0.15, answerHour: 15 } as const;
+export const NEGOTIATE = { ask: 0.2, yes: { unready: 0, working: 0.15, strong: 0.35, exceptional: 0.55 } as Readonly<Record<Band, number>>, worked: 0.15, visibility: 0.5, answerHour: 15 } as const;
 
 /**
  * A hold (from 2026-10-25, the owner's brief 27, loop 20: "A hold or option begins → record its scope, dates, and terms →
@@ -2466,8 +2470,14 @@ function applyFates(sim: Simulation, person: Person): void {
 export function registerProJobs(sim: Simulation): void {
   // The workflows' revised pages, looping sessions, invitations and choices (from 2026-10-24, brief 25's Module 5).
   registerWorkflows(sim, WORKFLOW_HOOKS);
-  // The awards and festivals (from 2026-10-24, brief 25's Module 6).
+  // The awards and festivals (from 2026-10-24, brief 25's Module 6); the Actor Awards, and every nominee's ceremony (from
+  // 2026-10-25, brief 27's K7).
   registerAwards(sim, (s, person, title, body) => tell(s, person, title, body, 65));
+  registerActorAwards(sim, (s, person, title, body) => tell(s, person, title, body, 65));
+  registerCeremonies(sim, {
+    tell: (s, person, title, body) => tell(s, person, title, body, 75), there, clash: (person, days) => bookedClash(person, days),
+    settle: (s, person) => { awardsPassage(s, person, () => undefined); actorAwardsPassage(s, person, () => undefined); },
+  });
   // Work abroad's trips and visas (from 2026-10-23, the owner's brief 25): their handlers, lent what they need from here.
   registerWorkTrips(sim, {
     engagementOf, projectOf: (e) => projectById(e.projectId), there,
@@ -2565,7 +2575,7 @@ export function registerProJobs(sim: Simulation): void {
     const t = projectOf(o);
     const last = o.rounds?.filter((r) => r.band).at(-1)?.band;
     const worked = o.direct !== undefined || person.pro!.engagements.some((e) => finished(e) && projectById(e.projectId)?.casting === t.casting);
-    const chance = Math.min(1, (last ? NEGOTIATE.yes[last] : NEGOTIATE.yes.working) + (worked ? NEGOTIATE.worked : 0));
+    const chance = Math.min(1, (last ? NEGOTIATE.yes[last] : NEGOTIATE.yes.working) + (worked ? NEGOTIATE.worked : 0) + NEGOTIATE.visibility * visibilityOf(person, s.now));
     const yes = s.rng('pro.negotiate', o.projectId, o.postedAt).next() < chance;
     const agent = agentFor(o)?.name ?? 'Your agent';
     if (yes) {

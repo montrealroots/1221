@@ -603,9 +603,9 @@
  },
  "src/engine/content/guide/career.ts#CAREER_GUIDE [career.awards]": {
   "status": "Rewritten",
-  "hash": "7a577f5eacda",
+  "hash": "aceb22e7fdab",
   "on": "2026-10-25",
-  "evidence": "Written for brief 27's K6 (loop 34: publicity) to docs/STYLE.md and docs/GLOSSARY.md, and read where the player meets it: tests/b27-promo.test.ts holds the call (Calls You For A Promotional Film, It pays a day performer’s minimum), the contract's term (Paid less than $25,000 for the work, you’re paid at least a day performer’s minimum for it, as the agreement sets; Paid $25,000 or more ... this contract has it unpaid; SAG-AFTRA’s Basic Agreement’s rule, which the game applies to this agreement too, its assumption; It’s part of the job, unpaid), the hours held against another booking (... Promotional Film), and the missed film (You Missed The Promotional Film, won’t come straight to you with a part on the strength of ...). Numbers under ten in words; the pay a day performer's minimum, N13 §18.B(5), named as the agreement names it; no engine words.",
+  "evidence": "Written for brief 27's K7 (Parts 11, 14 and 15; loops 44 to 47: the Actor Awards by its 33rd Rules & Regulations, the ceremony for every nomination, and what an award does after it) to docs/STYLE.md and docs/GLOSSARY.md, every rule the 33rd's own and every invention said as the game's: read where the player meets it in tests/b27-actor-awards.test.ts (eligibility and each refusal, Submit Yourself and its refusals, the production's submission, the nomination and the show's notices, the résumé's line), tests/b27-ceremony.test.ts (the invitation's question and notice, Go To The Ceremony and Watch From Home, a clash's refusal, Prepare Your Remarks, the trip's notices there and home, a missed flight, the room's loss, You Won At, the speech's words, the moment let pass, You Weren't At) and tests/b27-award-effects.test.ts (the agent's office seeing the recognition). Numbers under ten in words; dates with their comma; no engine words.",
   "first": "Pending"
  },
  "src/engine/content/guide/career.ts#CAREER_GUIDE [career.commission]": {
@@ -827,9 +827,9 @@
  },
  "src/engine/systems/pro.ts#honorsOf": {
   "status": "Rewritten",
-  "hash": "98d8b17d3ef3",
+  "hash": "b7be806184ea",
   "on": "2026-10-25",
-  "evidence": "Written for brief 27's K3 (Part 7: awards and festival history on the résumé) to docs/STYLE.md and docs/GLOSSARY.md, and read where the player meets it: tests/career-awards.test.ts holds a résumé made before the Emmy nominations behind once the nomination is announced (your Emmy nomination for Desk Clerk), the line a résumé made then says (Emmy nomination: Outstanding Guest Actress In A Drama Series, for Desk Clerk in The Calloway Files, 2027), the win replacing it at the ceremony (Emmy Award: ...; your Emmy win for Desk Clerk), a nomination lost staying a nomination, and a Sundance selection listed once the festival says so and not while it's only submitted (Sundance Film Festival, official selection: Last Bus To Eastview, U.S. Short Films, 2028). The guide's résumé chapter names them. tools/voice-check.mjs, tools/tics.mjs, tools/title-case.mjs, tools/plural-check.mjs and tools/spelling.mjs pass",
+  "evidence": "Written for brief 27's K7 (Parts 11, 14 and 15; loops 44 to 47: the Actor Awards by its 33rd Rules & Regulations, the ceremony for every nomination, and what an award does after it) to docs/STYLE.md and docs/GLOSSARY.md, every rule the 33rd's own and every invention said as the game's: read where the player meets it in tests/b27-actor-awards.test.ts (eligibility and each refusal, Submit Yourself and its refusals, the production's submission, the nomination and the show's notices, the résumé's line), tests/b27-ceremony.test.ts (the invitation's question and notice, Go To The Ceremony and Watch From Home, a clash's refusal, Prepare Your Remarks, the trip's notices there and home, a missed flight, the room's loss, You Won At, the speech's words, the moment let pass, You Weren't At) and tests/b27-award-effects.test.ts (the agent's office seeing the recognition). Numbers under ten in words; dates with their comma; no engine words.",
   "first": "Pending"
  },
  "src/engine/systems/pro.ts#materialsCheck [demo]": {

@@ -176,9 +176,9 @@
  },
  "src/engine/systems/proagent.ts#interestOf": {
   "status": "Rewritten",
-  "hash": "221525812391",
-  "on": "2026-10-24",
-  "evidence": "Written for brief 25's Module 3 (real agencies and agents) to docs/STYLE.md and docs/GLOSSARY.md, with no pronoun for a real agent and the game's own agent's words unchanged; read where the player meets it in tests/career-agents.test.ts (the Representation tab drawn with Dan Patack chosen, the notices and history of a played referral, meeting, offer and signing) and in tests/pro-representation-screen.test.ts, tests/journey-agent.test.ts and tests/pro-agent.test.ts for Thomas Ashgrove, with tools/voice-check.mjs, tools/tics.mjs, tools/title-case.mjs, tools/plural-check.mjs and tools/spelling.mjs passing",
+  "hash": "cef873d73e99",
+  "on": "2026-10-25",
+  "evidence": "Written for brief 27's K7 (Parts 11, 14 and 15; loops 44 to 47: the Actor Awards by its 33rd Rules & Regulations, the ceremony for every nomination, and what an award does after it) to docs/STYLE.md and docs/GLOSSARY.md, every rule the 33rd's own and every invention said as the game's: read where the player meets it in tests/b27-actor-awards.test.ts (eligibility and each refusal, Submit Yourself and its refusals, the production's submission, the nomination and the show's notices, the résumé's line), tests/b27-ceremony.test.ts (the invitation's question and notice, Go To The Ceremony and Watch From Home, a clash's refusal, Prepare Your Remarks, the trip's notices there and home, a missed flight, the room's loss, You Won At, the speech's words, the moment let pass, You Weren't At) and tests/b27-award-effects.test.ts (the agent's office seeing the recognition). Numbers under ten in words; dates with their comma; no engine words.",
   "first": "Pending"
  },
  "src/engine/systems/proagent.ts#KIND_WORDS": {

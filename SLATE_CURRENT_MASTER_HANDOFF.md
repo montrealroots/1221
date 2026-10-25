@@ -11,14 +11,18 @@ date at each milestone.)
   save's server path proven on a fake platform, emulation said as such), C classified (114 rows by what each lacks), K1
   (the geographic coverage matrix of 252 countries and territories and 170,911 places, and the research register, brief
   25's unread sources asked for again with the network full) and K2 (the slate: the work the world keeps making, its
-  London work under the UK's rules, read from GOV.UK).
-- **In progress:** K3, representation and materials: what briefs 19 to 25 built read against Parts 6 and 7, and the
-  voice demo built (voice casting's reel, `pro.mix_demo`). **Next:** K3's close, then K4 to K8 and F (the final runs,
-  the measured rows measured again, the gate in a clean clone).
+  London work under the UK's rules, read from GOV.UK), K3 (representation and materials: the voice demo, awards and
+  festivals on the résumé), K4 (the chemistry read and screen test, direct offers, asking for more, holds), K5 (the
+  weather day, reshoots and pickups, a day laid up shot around), K6 (a finished production's way out, a season's audience
+  read by renewal, publicity, a revival's character plans; its clean gate on `7e12b026` exit 0, 521 files, 5,916 tests)
+  and K7 (the Actor Awards by its 33rd rules, the ceremony for every nomination, an agent's and a negotiation's read of
+  recognition; the README says what wasn't built and why).
+- **Next:** K8, the industry reference (Part 16): projects, people, companies, seasons and episodes, each joined to what
+  the player can do. Then F (the final runs, the 85 measured rows measured again, the gate in a clean clone, the receipt).
 - **Blocked, and said so:** SAG-AFTRA's pages, USCIS, the Academy, BAFTA, France-Visas, Japan's foreign ministry and the
   ATO refuse this environment (HTTP 403); none is worked around, and the game names each as unread where it uses it.
 
-**Completion, by the matrix:** 549 of 666 rows in scope Implemented And Verified (82.4%); 113 Implemented, Verification Incomplete, 0 Partially Implemented, 0 Not Implemented, 0 Blocked Externally, 4 Decision Required, 41 Explicitly Deferred.
+**Completion, by the matrix:** 549 of 670 rows in scope Implemented And Verified (81.9%); 117 Implemented, Verification Incomplete, 0 Partially Implemented, 0 Not Implemented, 0 Blocked Externally, 4 Decision Required, 41 Explicitly Deferred.
 
 # Brief 26, The Complete Game Connectivity, Logic And Functionality Sweep, Complete And Merged (#64), 2026-10-24
 

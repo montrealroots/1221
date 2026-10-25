@@ -57,7 +57,7 @@ import { laidUp } from './injury';
 import { yearsSince } from './life';
 import { defineStop } from '../world/clock';
 import {
-  activeAgreement, availabilityOf, countOf, currentOf, eligibilityOf, ensurePro, finished, materialsCheck, noteEvent, trainingOf,
+  activeAgreement, availabilityOf, countOf, currentOf, eligibilityOf, ensurePro, finished, honorsOf, materialsCheck, noteEvent, trainingOf,
   type Agreement, type AgentMaterial, type AgentRelation, type EndedHow, type MaterialKind, type MaterialProblem, type ProEvent, type ProEventKind, type ProId, type RelationStage,
 } from './pro';
 import { yearOfStudy } from './school';
@@ -342,13 +342,17 @@ export function interestOf(sim: Simulation, person: Person, agent: Agent, at: In
   const factors: Factor[] = [];
   const add = (id: FactorId, level: Level, words: string) => factors.push({ id, label: factorLabel(agent, id), level, words });
 
-  // 1. The work his office has to go on, by its best band.
+  // 1. The work his office has to go on, by its best band; and, from 2026-10-25 (brief 27's K7, loop 47: "appropriate
+  // representatives and casting processes can consider it"), the work's recognition, which raises it a level once, however
+  // many nominations, wins and selections there are, so the same award never stacks.
   const seen = workSeen(person, rel, reelId);
   const band = bestBand(seen.map((s) => s.band));
   const said = seen.map((s) => `${s.what}${s.band ? `, at best ${BAND_LABEL[s.band]}` : ', not judged'}`);
-  add('work', ofBand(band), seen.length === 1 ? `${capital(agent.words.office)} has ${said[0]}.`
+  const honors = honorsOf(person);
+  const recognized = honors.length ? ` It can see your recognition too: ${honors[0]!.what}${honors.length > 1 ? `, and ${honors.length === 2 ? 'one other' : `${countWords(honors.length - 1)} others`}` : ''}.` : '';
+  add('work', honors.length ? raised(ofBand(band), 1) : ofBand(band), (seen.length === 1 ? `${capital(agent.words.office)} has ${said[0]}.`
     : seen.length ? `${capital(agent.words.office)} has ${countWords(seen.length)} things to go on: ${said.slice(0, -1).join('; ')}; and ${said.at(-1)}.`
-      : `${capital(agent.words.office)} has none of your work to go on yet. ${shows(agent) ? 'A reel, the School’s follow-up after the showcase or a referral would give it some.' : 'A reel or a referral would give it some.'}`);
+      : `${capital(agent.words.office)} has none of your work to go on yet. ${shows(agent) ? 'A reel, the School’s follow-up after the showcase or a referral would give it some.' : 'A reel or a referral would give it some.'}`) + recognized);
 
   // 2. Stage and screen: how much of his department's two sides the record shows.
   const credits = pro?.credits ?? [];

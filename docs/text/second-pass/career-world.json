@@ -1,4 +1,18 @@
 {
+ "src/engine/content/awards.ts#ACTOR_AWARDS_PLACE": {
+  "status": "Rewritten",
+  "hash": "96d0aa70fa02",
+  "on": "2026-10-25",
+  "evidence": "Written for brief 27's K7 (Parts 11, 14 and 15; loops 44 to 47: the Actor Awards by its 33rd Rules & Regulations, the ceremony for every nomination, and what an award does after it) to docs/STYLE.md and docs/GLOSSARY.md, every rule the 33rd's own and every invention said as the game's: read where the player meets it in tests/b27-actor-awards.test.ts (eligibility and each refusal, Submit Yourself and its refusals, the production's submission, the nomination and the show's notices, the résumé's line), tests/b27-ceremony.test.ts (the invitation's question and notice, Go To The Ceremony and Watch From Home, a clash's refusal, Prepare Your Remarks, the trip's notices there and home, a missed flight, the room's loss, You Won At, the speech's words, the moment let pass, You Weren't At) and tests/b27-award-effects.test.ts (the agent's office seeing the recognition). Numbers under ten in words; dates with their comma; no engine words.",
+  "first": "Pending"
+ },
+ "src/engine/content/awards.ts#ACTOR_CATEGORIES": {
+  "status": "Rewritten",
+  "hash": "f2c870697824",
+  "on": "2026-10-25",
+  "evidence": "Written for brief 27's K7 (Parts 11, 14 and 15; loops 44 to 47: the Actor Awards by its 33rd Rules & Regulations, the ceremony for every nomination, and what an award does after it) to docs/STYLE.md and docs/GLOSSARY.md, every rule the 33rd's own and every invention said as the game's: read where the player meets it in tests/b27-actor-awards.test.ts (eligibility and each refusal, Submit Yourself and its refusals, the production's submission, the nomination and the show's notices, the résumé's line), tests/b27-ceremony.test.ts (the invitation's question and notice, Go To The Ceremony and Watch From Home, a clash's refusal, Prepare Your Remarks, the trip's notices there and home, a missed flight, the room's loss, You Won At, the speech's words, the moment let pass, You Weren't At) and tests/b27-award-effects.test.ts (the agent's office seeing the recognition). Numbers under ten in words; dates with their comma; no engine words.",
+  "first": "Pending"
+ },
  "src/engine/content/awards.ts#EMMY_CATEGORIES": {
   "status": "Rewritten",
   "hash": "8215e4f065df",
@@ -15,9 +29,9 @@
  },
  "src/engine/content/awards.ts#INSTITUTIONS [actor-awards]": {
   "status": "Rewritten",
-  "hash": "24c36aa717b3",
-  "on": "2026-10-24",
-  "evidence": "Written for brief 25's Module 6 (the published charts as dated imports, the game's own box office, the awards and festivals inventory, the Emmy Awards by the 78th's rules and Sundance by its 2027 festival's) to docs/STYLE.md and docs/GLOSSARY.md, every rule the read sources' own and every invention said as the game's; read where the player meets it in tests/career-awards-screen.test.ts (the Charts And Awards tab and the Portfolio drawn before the work, after the wrap, after the entry, at the nominations and after the ceremony, through the clock and a reload at each stage) and tests/career-awards.test.ts (each refusal, notice, recap and festival word), with tools/voice-check.mjs, tools/tics.mjs and tools/title-case.mjs clean.",
+  "hash": "80b38e25e14d",
+  "on": "2026-10-25",
+  "evidence": "Written for brief 27's K7 (Parts 11, 14 and 15; loops 44 to 47: the Actor Awards by its 33rd Rules & Regulations, the ceremony for every nomination, and what an award does after it) to docs/STYLE.md and docs/GLOSSARY.md, every rule the 33rd's own and every invention said as the game's: read where the player meets it in tests/b27-actor-awards.test.ts (eligibility and each refusal, Submit Yourself and its refusals, the production's submission, the nomination and the show's notices, the résumé's line), tests/b27-ceremony.test.ts (the invitation's question and notice, Go To The Ceremony and Watch From Home, a clash's refusal, Prepare Your Remarks, the trip's notices there and home, a missed flight, the room's loss, You Won At, the speech's words, the moment let pass, You Weren't At) and tests/b27-award-effects.test.ts (the agent's office seeing the recognition). Numbers under ten in words; dates with their comma; no engine words.",
   "first": "Pending"
  },
  "src/engine/content/awards.ts#INSTITUTIONS [annecy]": {
@@ -741,11 +755,67 @@
   "evidence": "Written for brief 27's UK routes (the Common Travel Area, the Creative Worker concession with its ETA, and the Creative Worker visa) to docs/STYLE.md and docs/GLOSSARY.md, from the GOV.UK pages the research register keeps (b25-S02, b25-S104, b27-UK-print, b27-UK-CTA, b27-UK-eta-apply, b27-UK-ihs); each condition's quote is the page's own words, kept verbatim as its evidence and never shown. Read where the player meets it: tests/b27-slate-screens.test.ts draws the trip to London, the ETA asked for, applied for with its fee and granted, and every condition the concession asks on the Work tab; tests/b27-slate.test.ts holds the route each citizen comes under; tests/career-world-countries.test.ts holds each quote in its page. tools/voice-check.mjs, tools/tics.mjs, tools/title-case.mjs, tools/plural-check.mjs and tools/spelling.mjs pass",
   "first": "Pending"
  },
- "src/engine/systems/awards.ts#ceremonyLines": {
+ "src/engine/systems/actorawards.ts#actorAwardsName": {
   "status": "Rewritten",
-  "hash": "c5f5c65cf63b",
-  "on": "2026-10-24",
-  "evidence": "Written for brief 25's Module 6 (the published charts as dated imports, the game's own box office, the awards and festivals inventory, the Emmy Awards by the 78th's rules and Sundance by its 2027 festival's) to docs/STYLE.md and docs/GLOSSARY.md, every rule the read sources' own and every invention said as the game's; read where the player meets it in tests/career-awards-screen.test.ts (the Charts And Awards tab and the Portfolio drawn before the work, after the wrap, after the entry, at the nominations and after the ceremony, through the clock and a reload at each stage) and tests/career-awards.test.ts (each refusal, notice, recap and festival word), with tools/voice-check.mjs, tools/tics.mjs and tools/title-case.mjs clean.",
+  "hash": "c7842dcc3229",
+  "on": "2026-10-25",
+  "evidence": "Written for brief 27's K7 (Parts 11, 14 and 15; loops 44 to 47: the Actor Awards by its 33rd Rules & Regulations, the ceremony for every nomination, and what an award does after it) to docs/STYLE.md and docs/GLOSSARY.md, every rule the 33rd's own and every invention said as the game's: read where the player meets it in tests/b27-actor-awards.test.ts (eligibility and each refusal, Submit Yourself and its refusals, the production's submission, the nomination and the show's notices, the résumé's line), tests/b27-ceremony.test.ts (the invitation's question and notice, Go To The Ceremony and Watch From Home, a clash's refusal, Prepare Your Remarks, the trip's notices there and home, a missed flight, the room's loss, You Won At, the speech's words, the moment let pass, You Weren't At) and tests/b27-award-effects.test.ts (the agent's office seeing the recognition). Numbers under ten in words; dates with their comma; no engine words.",
+  "first": "Pending"
+ },
+ "src/engine/systems/actorawards.ts#actorAwardsPassage": {
+  "status": "Rewritten",
+  "hash": "a06e869fd159",
+  "on": "2026-10-25",
+  "evidence": "Written for brief 27's K7 (Parts 11, 14 and 15; loops 44 to 47: the Actor Awards by its 33rd Rules & Regulations, the ceremony for every nomination, and what an award does after it) to docs/STYLE.md and docs/GLOSSARY.md, every rule the 33rd's own and every invention said as the game's: read where the player meets it in tests/b27-actor-awards.test.ts (eligibility and each refusal, Submit Yourself and its refusals, the production's submission, the nomination and the show's notices, the résumé's line), tests/b27-ceremony.test.ts (the invitation's question and notice, Go To The Ceremony and Watch From Home, a clash's refusal, Prepare Your Remarks, the trip's notices there and home, a missed flight, the room's loss, You Won At, the speech's words, the moment let pass, You Weren't At) and tests/b27-award-effects.test.ts (the agent's office seeing the recognition). Numbers under ten in words; dates with their comma; no engine words.",
+  "first": "Pending"
+ },
+ "src/engine/systems/actorawards.ts#actorCheck": {
+  "status": "Rewritten",
+  "hash": "ab024b9148c6",
+  "on": "2026-10-25",
+  "evidence": "Written for brief 27's K7 (Parts 11, 14 and 15; loops 44 to 47: the Actor Awards by its 33rd Rules & Regulations, the ceremony for every nomination, and what an award does after it) to docs/STYLE.md and docs/GLOSSARY.md, every rule the 33rd's own and every invention said as the game's: read where the player meets it in tests/b27-actor-awards.test.ts (eligibility and each refusal, Submit Yourself and its refusals, the production's submission, the nomination and the show's notices, the résumé's line), tests/b27-ceremony.test.ts (the invitation's question and notice, Go To The Ceremony and Watch From Home, a clash's refusal, Prepare Your Remarks, the trip's notices there and home, a missed flight, the room's loss, You Won At, the speech's words, the moment let pass, You Weren't At) and tests/b27-award-effects.test.ts (the agent's office seeing the recognition). Numbers under ten in words; dates with their comma; no engine words.",
+  "first": "Pending"
+ },
+ "src/engine/systems/actorawards.ts#actorEligibleWords": {
+  "status": "Rewritten",
+  "hash": "32e74f4e862b",
+  "on": "2026-10-25",
+  "evidence": "Written for brief 27's K7 (Parts 11, 14 and 15; loops 44 to 47: the Actor Awards by its 33rd Rules & Regulations, the ceremony for every nomination, and what an award does after it) to docs/STYLE.md and docs/GLOSSARY.md, every rule the 33rd's own and every invention said as the game's: read where the player meets it in tests/b27-actor-awards.test.ts (eligibility and each refusal, Submit Yourself and its refusals, the production's submission, the nomination and the show's notices, the résumé's line), tests/b27-ceremony.test.ts (the invitation's question and notice, Go To The Ceremony and Watch From Home, a clash's refusal, Prepare Your Remarks, the trip's notices there and home, a missed flight, the room's loss, You Won At, the speech's words, the moment let pass, You Weren't At) and tests/b27-award-effects.test.ts (the agent's office seeing the recognition). Numbers under ten in words; dates with their comma; no engine words.",
+  "first": "Pending"
+ },
+ "src/engine/systems/actorawards.ts#actorRecapWords": {
+  "status": "Rewritten",
+  "hash": "e076220fe33b",
+  "on": "2026-10-25",
+  "evidence": "Written for brief 27's K7 (Parts 11, 14 and 15; loops 44 to 47: the Actor Awards by its 33rd Rules & Regulations, the ceremony for every nomination, and what an award does after it) to docs/STYLE.md and docs/GLOSSARY.md, every rule the 33rd's own and every invention said as the game's: read where the player meets it in tests/b27-actor-awards.test.ts (eligibility and each refusal, Submit Yourself and its refusals, the production's submission, the nomination and the show's notices, the résumé's line), tests/b27-ceremony.test.ts (the invitation's question and notice, Go To The Ceremony and Watch From Home, a clash's refusal, Prepare Your Remarks, the trip's notices there and home, a missed flight, the room's loss, You Won At, the speech's words, the moment let pass, You Weren't At) and tests/b27-award-effects.test.ts (the agent's office seeing the recognition). Numbers under ten in words; dates with their comma; no engine words.",
+  "first": "Pending"
+ },
+ "src/engine/systems/actorawards.ts#actorSubmitRefusal": {
+  "status": "Rewritten",
+  "hash": "8949d9bf0868",
+  "on": "2026-10-25",
+  "evidence": "Written for brief 27's K7 (Parts 11, 14 and 15; loops 44 to 47: the Actor Awards by its 33rd Rules & Regulations, the ceremony for every nomination, and what an award does after it) to docs/STYLE.md and docs/GLOSSARY.md, every rule the 33rd's own and every invention said as the game's: read where the player meets it in tests/b27-actor-awards.test.ts (eligibility and each refusal, Submit Yourself and its refusals, the production's submission, the nomination and the show's notices, the résumé's line), tests/b27-ceremony.test.ts (the invitation's question and notice, Go To The Ceremony and Watch From Home, a clash's refusal, Prepare Your Remarks, the trip's notices there and home, a missed flight, the room's loss, You Won At, the speech's words, the moment let pass, You Weren't At) and tests/b27-award-effects.test.ts (the agent's office seeing the recognition). Numbers under ten in words; dates with their comma; no engine words.",
+  "first": "Pending"
+ },
+ "src/engine/systems/actorawards.ts#LA": {
+  "status": "Retained",
+  "hash": "c5095924a41a",
+  "on": "2026-10-25",
+  "reason": "A time zone's id from the IANA database, which the clock reads to place a day on a city's calendar and never shows a player: America/New_York, America/Los_Angeles.",
+  "first": "Pending"
+ },
+ "src/engine/systems/actorawards.ts#NY": {
+  "status": "Retained",
+  "hash": "91a5e4a639ea",
+  "on": "2026-10-25",
+  "reason": "A time zone's id from the IANA database, which the clock reads to place a day on a city's calendar and never shows a player: America/New_York, America/Los_Angeles.",
+  "first": "Pending"
+ },
+ "src/engine/systems/actorawards.ts#submitActor": {
+  "status": "Rewritten",
+  "hash": "badbada9d0e7",
+  "on": "2026-10-25",
+  "evidence": "Written for brief 27's K7 (Parts 11, 14 and 15; loops 44 to 47: the Actor Awards by its 33rd Rules & Regulations, the ceremony for every nomination, and what an award does after it) to docs/STYLE.md and docs/GLOSSARY.md, every rule the 33rd's own and every invention said as the game's: read where the player meets it in tests/b27-actor-awards.test.ts (eligibility and each refusal, Submit Yourself and its refusals, the production's submission, the nomination and the show's notices, the résumé's line), tests/b27-ceremony.test.ts (the invitation's question and notice, Go To The Ceremony and Watch From Home, a clash's refusal, Prepare Your Remarks, the trip's notices there and home, a missed flight, the room's loss, You Won At, the speech's words, the moment let pass, You Weren't At) and tests/b27-award-effects.test.ts (the agent's office seeing the recognition). Numbers under ten in words; dates with their comma; no engine words.",
   "first": "Pending"
  },
  "src/engine/systems/awards.ts#deadlineOf": {
@@ -771,9 +841,9 @@
  },
  "src/engine/systems/awards.ts#emmyStep": {
   "status": "Rewritten",
-  "hash": "57d6886b0704",
-  "on": "2026-10-24",
-  "evidence": "Written for brief 25's Module 6 (the published charts as dated imports, the game's own box office, the awards and festivals inventory, the Emmy Awards by the 78th's rules and Sundance by its 2027 festival's) to docs/STYLE.md and docs/GLOSSARY.md, every rule the read sources' own and every invention said as the game's; read where the player meets it in tests/career-awards-screen.test.ts (the Charts And Awards tab and the Portfolio drawn before the work, after the wrap, after the entry, at the nominations and after the ceremony, through the clock and a reload at each stage) and tests/career-awards.test.ts (each refusal, notice, recap and festival word), with tools/voice-check.mjs, tools/tics.mjs and tools/title-case.mjs clean.",
+  "hash": "f721d9dd9de1",
+  "on": "2026-10-25",
+  "evidence": "Written for brief 27's K7 (Parts 11, 14 and 15; loops 44 to 47: the Actor Awards by its 33rd Rules & Regulations, the ceremony for every nomination, and what an award does after it) to docs/STYLE.md and docs/GLOSSARY.md, every rule the 33rd's own and every invention said as the game's: read where the player meets it in tests/b27-actor-awards.test.ts (eligibility and each refusal, Submit Yourself and its refusals, the production's submission, the nomination and the show's notices, the résumé's line), tests/b27-ceremony.test.ts (the invitation's question and notice, Go To The Ceremony and Watch From Home, a clash's refusal, Prepare Your Remarks, the trip's notices there and home, a missed flight, the room's loss, You Won At, the speech's words, the moment let pass, You Weren't At) and tests/b27-award-effects.test.ts (the agent's office seeing the recognition). Numbers under ten in words; dates with their comma; no engine words.",
   "first": "Pending"
  },
  "src/engine/systems/awards.ts#enterAward": {
@@ -846,11 +916,95 @@
   "evidence": "Written for brief 25's Module 6 (the published charts as dated imports, the game's own box office, the awards and festivals inventory, the Emmy Awards by the 78th's rules and Sundance by its 2027 festival's) to docs/STYLE.md and docs/GLOSSARY.md, every rule the read sources' own and every invention said as the game's; read where the player meets it in tests/career-awards-screen.test.ts (the Charts And Awards tab and the Portfolio drawn before the work, after the wrap, after the entry, at the nominations and after the ceremony, through the clock and a reload at each stage) and tests/career-awards.test.ts (each refusal, notice, recap and festival word), with tools/voice-check.mjs, tools/tics.mjs and tools/title-case.mjs clean.",
   "first": "Pending"
  },
- "src/engine/systems/awards.ts#watchRefusal": {
+ "src/engine/systems/ceremony.ts#acceptRefusal": {
+  "status": "Rewritten",
+  "hash": "51d6e0d2a598",
+  "on": "2026-10-25",
+  "evidence": "Written for brief 27's K7 (Parts 11, 14 and 15; loops 44 to 47: the Actor Awards by its 33rd Rules & Regulations, the ceremony for every nomination, and what an award does after it) to docs/STYLE.md and docs/GLOSSARY.md, every rule the 33rd's own and every invention said as the game's: read where the player meets it in tests/b27-actor-awards.test.ts (eligibility and each refusal, Submit Yourself and its refusals, the production's submission, the nomination and the show's notices, the résumé's line), tests/b27-ceremony.test.ts (the invitation's question and notice, Go To The Ceremony and Watch From Home, a clash's refusal, Prepare Your Remarks, the trip's notices there and home, a missed flight, the room's loss, You Won At, the speech's words, the moment let pass, You Weren't At) and tests/b27-award-effects.test.ts (the agent's office seeing the recognition). Numbers under ten in words; dates with their comma; no engine words.",
+  "first": "Pending"
+ },
+ "src/engine/systems/ceremony.ts#awardTitle": {
+  "status": "Rewritten",
+  "hash": "4eeb58718676",
+  "on": "2026-10-25",
+  "evidence": "Written for brief 27's K7 (Parts 11, 14 and 15; loops 44 to 47: the Actor Awards by its 33rd Rules & Regulations, the ceremony for every nomination, and what an award does after it) to docs/STYLE.md and docs/GLOSSARY.md, every rule the 33rd's own and every invention said as the game's: read where the player meets it in tests/b27-actor-awards.test.ts (eligibility and each refusal, Submit Yourself and its refusals, the production's submission, the nomination and the show's notices, the résumé's line), tests/b27-ceremony.test.ts (the invitation's question and notice, Go To The Ceremony and Watch From Home, a clash's refusal, Prepare Your Remarks, the trip's notices there and home, a missed flight, the room's loss, You Won At, the speech's words, the moment let pass, You Weren't At) and tests/b27-award-effects.test.ts (the agent's office seeing the recognition). Numbers under ten in words; dates with their comma; no engine words.",
+  "first": "Pending"
+ },
+ "src/engine/systems/ceremony.ts#ceremonyLines": {
+  "status": "Rewritten",
+  "hash": "06f972aef324",
+  "on": "2026-10-25",
+  "evidence": "Written for brief 27's K7 (Parts 11, 14 and 15; loops 44 to 47: the Actor Awards by its 33rd Rules & Regulations, the ceremony for every nomination, and what an award does after it) to docs/STYLE.md and docs/GLOSSARY.md, every rule the 33rd's own and every invention said as the game's: read where the player meets it in tests/b27-actor-awards.test.ts (eligibility and each refusal, Submit Yourself and its refusals, the production's submission, the nomination and the show's notices, the résumé's line), tests/b27-ceremony.test.ts (the invitation's question and notice, Go To The Ceremony and Watch From Home, a clash's refusal, Prepare Your Remarks, the trip's notices there and home, a missed flight, the room's loss, You Won At, the speech's words, the moment let pass, You Weren't At) and tests/b27-award-effects.test.ts (the agent's office seeing the recognition). Numbers under ten in words; dates with their comma; no engine words.",
+  "first": "Pending"
+ },
+ "src/engine/systems/ceremony.ts#invitation": {
+  "status": "Rewritten",
+  "hash": "53d2b3a80846",
+  "on": "2026-10-25",
+  "evidence": "Written for brief 27's K7 (Parts 11, 14 and 15; loops 44 to 47: the Actor Awards by its 33rd Rules & Regulations, the ceremony for every nomination, and what an award does after it) to docs/STYLE.md and docs/GLOSSARY.md, every rule the 33rd's own and every invention said as the game's: read where the player meets it in tests/b27-actor-awards.test.ts (eligibility and each refusal, Submit Yourself and its refusals, the production's submission, the nomination and the show's notices, the résumé's line), tests/b27-ceremony.test.ts (the invitation's question and notice, Go To The Ceremony and Watch From Home, a clash's refusal, Prepare Your Remarks, the trip's notices there and home, a missed flight, the room's loss, You Won At, the speech's words, the moment let pass, You Weren't At) and tests/b27-award-effects.test.ts (the agent's office seeing the recognition). Numbers under ten in words; dates with their comma; no engine words.",
+  "first": "Pending"
+ },
+ "src/engine/systems/ceremony.ts#NY": {
+  "status": "Retained",
+  "hash": "91a5e4a639ea",
+  "on": "2026-10-25",
+  "reason": "A time zone's id from the IANA database, which the clock reads to place a day on a city's calendar and never shows a player: America/New_York, America/Los_Angeles.",
+  "first": "Pending"
+ },
+ "src/engine/systems/ceremony.ts#PLACE": {
+  "status": "Rewritten",
+  "hash": "96d0aa70fa02",
+  "on": "2026-10-25",
+  "evidence": "Written for brief 27's K7 (Parts 11, 14 and 15; loops 44 to 47: the Actor Awards by its 33rd Rules & Regulations, the ceremony for every nomination, and what an award does after it) to docs/STYLE.md and docs/GLOSSARY.md, every rule the 33rd's own and every invention said as the game's: read where the player meets it in tests/b27-actor-awards.test.ts (eligibility and each refusal, Submit Yourself and its refusals, the production's submission, the nomination and the show's notices, the résumé's line), tests/b27-ceremony.test.ts (the invitation's question and notice, Go To The Ceremony and Watch From Home, a clash's refusal, Prepare Your Remarks, the trip's notices there and home, a missed flight, the room's loss, You Won At, the speech's words, the moment let pass, You Weren't At) and tests/b27-award-effects.test.ts (the agent's office seeing the recognition). Numbers under ten in words; dates with their comma; no engine words.",
+  "first": "Pending"
+ },
+ "src/engine/systems/ceremony.ts#prepareRemarksRefusal": {
+  "status": "Rewritten",
+  "hash": "d4d1964caa77",
+  "on": "2026-10-25",
+  "evidence": "Written for brief 27's K7 (Parts 11, 14 and 15; loops 44 to 47: the Actor Awards by its 33rd Rules & Regulations, the ceremony for every nomination, and what an award does after it) to docs/STYLE.md and docs/GLOSSARY.md, every rule the 33rd's own and every invention said as the game's: read where the player meets it in tests/b27-actor-awards.test.ts (eligibility and each refusal, Submit Yourself and its refusals, the production's submission, the nomination and the show's notices, the résumé's line), tests/b27-ceremony.test.ts (the invitation's question and notice, Go To The Ceremony and Watch From Home, a clash's refusal, Prepare Your Remarks, the trip's notices there and home, a missed flight, the room's loss, You Won At, the speech's words, the moment let pass, You Weren't At) and tests/b27-award-effects.test.ts (the agent's office seeing the recognition). Numbers under ten in words; dates with their comma; no engine words.",
+  "first": "Pending"
+ },
+ "src/engine/systems/ceremony.ts#registerCeremonies": {
+  "status": "Rewritten",
+  "hash": "281605465825",
+  "on": "2026-10-25",
+  "evidence": "Written for brief 27's K7 (Parts 11, 14 and 15; loops 44 to 47: the Actor Awards by its 33rd Rules & Regulations, the ceremony for every nomination, and what an award does after it) to docs/STYLE.md and docs/GLOSSARY.md, every rule the 33rd's own and every invention said as the game's: read where the player meets it in tests/b27-actor-awards.test.ts (eligibility and each refusal, Submit Yourself and its refusals, the production's submission, the nomination and the show's notices, the résumé's line), tests/b27-ceremony.test.ts (the invitation's question and notice, Go To The Ceremony and Watch From Home, a clash's refusal, Prepare Your Remarks, the trip's notices there and home, a missed flight, the room's loss, You Won At, the speech's words, the moment let pass, You Weren't At) and tests/b27-award-effects.test.ts (the agent's office seeing the recognition). Numbers under ten in words; dates with their comma; no engine words.",
+  "first": "Pending"
+ },
+ "src/engine/systems/ceremony.ts#registerCeremonies <pro.ceremony_accept>": {
+  "status": "Rewritten",
+  "hash": "3bf181c21312",
+  "on": "2026-10-25",
+  "evidence": "Written for brief 27's K7 (Parts 11, 14 and 15; loops 44 to 47: the Actor Awards by its 33rd Rules & Regulations, the ceremony for every nomination, and what an award does after it) to docs/STYLE.md and docs/GLOSSARY.md, every rule the 33rd's own and every invention said as the game's: read where the player meets it in tests/b27-actor-awards.test.ts (eligibility and each refusal, Submit Yourself and its refusals, the production's submission, the nomination and the show's notices, the résumé's line), tests/b27-ceremony.test.ts (the invitation's question and notice, Go To The Ceremony and Watch From Home, a clash's refusal, Prepare Your Remarks, the trip's notices there and home, a missed flight, the room's loss, You Won At, the speech's words, the moment let pass, You Weren't At) and tests/b27-award-effects.test.ts (the agent's office seeing the recognition). Numbers under ten in words; dates with their comma; no engine words.",
+  "first": "Pending"
+ },
+ "src/engine/systems/ceremony.ts#rsvpRefusal": {
+  "status": "Rewritten",
+  "hash": "308266d6332f",
+  "on": "2026-10-25",
+  "evidence": "Written for brief 27's K7 (Parts 11, 14 and 15; loops 44 to 47: the Actor Awards by its 33rd Rules & Regulations, the ceremony for every nomination, and what an award does after it) to docs/STYLE.md and docs/GLOSSARY.md, every rule the 33rd's own and every invention said as the game's: read where the player meets it in tests/b27-actor-awards.test.ts (eligibility and each refusal, Submit Yourself and its refusals, the production's submission, the nomination and the show's notices, the résumé's line), tests/b27-ceremony.test.ts (the invitation's question and notice, Go To The Ceremony and Watch From Home, a clash's refusal, Prepare Your Remarks, the trip's notices there and home, a missed flight, the room's loss, You Won At, the speech's words, the moment let pass, You Weren't At) and tests/b27-award-effects.test.ts (the agent's office seeing the recognition). Numbers under ten in words; dates with their comma; no engine words.",
+  "first": "Pending"
+ },
+ "src/engine/systems/ceremony.ts#showTitle": {
+  "status": "Rewritten",
+  "hash": "bb6727581715",
+  "on": "2026-10-25",
+  "evidence": "Written for brief 27's K7 (Parts 11, 14 and 15; loops 44 to 47: the Actor Awards by its 33rd Rules & Regulations, the ceremony for every nomination, and what an award does after it) to docs/STYLE.md and docs/GLOSSARY.md, every rule the 33rd's own and every invention said as the game's: read where the player meets it in tests/b27-actor-awards.test.ts (eligibility and each refusal, Submit Yourself and its refusals, the production's submission, the nomination and the show's notices, the résumé's line), tests/b27-ceremony.test.ts (the invitation's question and notice, Go To The Ceremony and Watch From Home, a clash's refusal, Prepare Your Remarks, the trip's notices there and home, a missed flight, the room's loss, You Won At, the speech's words, the moment let pass, You Weren't At) and tests/b27-award-effects.test.ts (the agent's office seeing the recognition). Numbers under ten in words; dates with their comma; no engine words.",
+  "first": "Pending"
+ },
+ "src/engine/systems/ceremony.ts#SPEECH_WORDS": {
+  "status": "Rewritten",
+  "hash": "05ad6563efdf",
+  "on": "2026-10-25",
+  "evidence": "Written for brief 27's K7 (Parts 11, 14 and 15; loops 44 to 47: the Actor Awards by its 33rd Rules & Regulations, the ceremony for every nomination, and what an award does after it) to docs/STYLE.md and docs/GLOSSARY.md, every rule the 33rd's own and every invention said as the game's: read where the player meets it in tests/b27-actor-awards.test.ts (eligibility and each refusal, Submit Yourself and its refusals, the production's submission, the nomination and the show's notices, the résumé's line), tests/b27-ceremony.test.ts (the invitation's question and notice, Go To The Ceremony and Watch From Home, a clash's refusal, Prepare Your Remarks, the trip's notices there and home, a missed flight, the room's loss, You Won At, the speech's words, the moment let pass, You Weren't At) and tests/b27-award-effects.test.ts (the agent's office seeing the recognition). Numbers under ten in words; dates with their comma; no engine words.",
+  "first": "Pending"
+ },
+ "src/engine/systems/ceremony.ts#watchRefusal": {
   "status": "Rewritten",
   "hash": "0c09a6102240",
-  "on": "2026-10-24",
-  "evidence": "Written for brief 25's Module 6 (the published charts as dated imports, the game's own box office, the awards and festivals inventory, the Emmy Awards by the 78th's rules and Sundance by its 2027 festival's) to docs/STYLE.md and docs/GLOSSARY.md, every rule the read sources' own and every invention said as the game's; read where the player meets it in tests/career-awards-screen.test.ts (the Charts And Awards tab and the Portfolio drawn before the work, after the wrap, after the entry, at the nominations and after the ceremony, through the clock and a reload at each stage) and tests/career-awards.test.ts (each refusal, notice, recap and festival word), with tools/voice-check.mjs, tools/tics.mjs and tools/title-case.mjs clean.",
+  "on": "2026-10-25",
+  "evidence": "Written for brief 27's K7 (Parts 11, 14 and 15; loops 44 to 47: the Actor Awards by its 33rd Rules & Regulations, the ceremony for every nomination, and what an award does after it) to docs/STYLE.md and docs/GLOSSARY.md, every rule the 33rd's own and every invention said as the game's: read where the player meets it in tests/b27-actor-awards.test.ts (eligibility and each refusal, Submit Yourself and its refusals, the production's submission, the nomination and the show's notices, the résumé's line), tests/b27-ceremony.test.ts (the invitation's question and notice, Go To The Ceremony and Watch From Home, a clash's refusal, Prepare Your Remarks, the trip's notices there and home, a missed flight, the room's loss, You Won At, the speech's words, the moment let pass, You Weren't At) and tests/b27-award-effects.test.ts (the agent's office seeing the recognition). Numbers under ten in words; dates with their comma; no engine words.",
   "first": "Pending"
  },
  "src/engine/systems/charts.ts#figureWords": {
@@ -937,11 +1091,74 @@
   "evidence": "Written for brief 27's UK routes (the Common Travel Area, the Creative Worker concession with its ETA, and the Creative Worker visa) to docs/STYLE.md and docs/GLOSSARY.md, from the GOV.UK pages the research register keeps (b25-S02, b25-S104, b27-UK-print, b27-UK-CTA, b27-UK-eta-apply, b27-UK-ihs); each condition's quote is the page's own words, kept verbatim as its evidence and never shown. Read where the player meets it: tests/b27-slate-screens.test.ts draws the trip to London, the ETA asked for, applied for with its fee and granted, and every condition the concession asks on the Work tab; tests/b27-slate.test.ts holds the route each citizen comes under; tests/career-world-countries.test.ts holds each quote in its page. tools/voice-check.mjs, tools/tics.mjs, tools/title-case.mjs, tools/plural-check.mjs and tools/spelling.mjs pass. On reading, the ETA's history line, which said An ETA for the project, applied for, was rewritten as You applied for an ETA, as the visa's lines say it",
   "first": "Pending"
  },
+ "src/engine/systems/worktrip.ts#bookCeremonyTrip": {
+  "status": "Rewritten",
+  "hash": "f620b1c93993",
+  "on": "2026-10-25",
+  "evidence": "Written for brief 27's K7 (Parts 11, 14 and 15; loops 44 to 47: the Actor Awards by its 33rd Rules & Regulations, the ceremony for every nomination, and what an award does after it) to docs/STYLE.md and docs/GLOSSARY.md, every rule the 33rd's own and every invention said as the game's: read where the player meets it in tests/b27-actor-awards.test.ts (eligibility and each refusal, Submit Yourself and its refusals, the production's submission, the nomination and the show's notices, the résumé's line), tests/b27-ceremony.test.ts (the invitation's question and notice, Go To The Ceremony and Watch From Home, a clash's refusal, Prepare Your Remarks, the trip's notices there and home, a missed flight, the room's loss, You Won At, the speech's words, the moment let pass, You Weren't At) and tests/b27-award-effects.test.ts (the agent's office seeing the recognition). Numbers under ten in words; dates with their comma; no engine words.",
+  "first": "Pending"
+ },
  "src/engine/systems/worktrip.ts#callWords": {
   "status": "Rewritten",
   "hash": "0b3107744b3b",
   "on": "2026-10-23",
   "evidence": "Written for brief 25's work abroad (Module 1) to docs/STYLE.md and docs/GLOSSARY.md; read where the player meets it in tests/career-world-sydney.test.ts (the journey, the release, the missed flight and the Work tab drawn at each stage) and tests/career-world-countries.test.ts, with tools/voice-check.mjs, tools/tics.mjs, tools/title-case.mjs and tools/plural-check.mjs passing",
+  "first": "Pending"
+ },
+ "src/engine/systems/worktrip.ts#ceremonyArrive": {
+  "status": "Rewritten",
+  "hash": "34eaba6782c6",
+  "on": "2026-10-25",
+  "evidence": "Written for brief 27's K7 (Parts 11, 14 and 15; loops 44 to 47: the Actor Awards by its 33rd Rules & Regulations, the ceremony for every nomination, and what an award does after it) to docs/STYLE.md and docs/GLOSSARY.md, every rule the 33rd's own and every invention said as the game's: read where the player meets it in tests/b27-actor-awards.test.ts (eligibility and each refusal, Submit Yourself and its refusals, the production's submission, the nomination and the show's notices, the résumé's line), tests/b27-ceremony.test.ts (the invitation's question and notice, Go To The Ceremony and Watch From Home, a clash's refusal, Prepare Your Remarks, the trip's notices there and home, a missed flight, the room's loss, You Won At, the speech's words, the moment let pass, You Weren't At) and tests/b27-award-effects.test.ts (the agent's office seeing the recognition). Numbers under ten in words; dates with their comma; no engine words.",
+  "first": "Pending"
+ },
+ "src/engine/systems/worktrip.ts#ceremonyArrive [arrived]": {
+  "status": "Rewritten",
+  "hash": "c90df5578d25",
+  "on": "2026-10-25",
+  "evidence": "Written for brief 27's K7 (Parts 11, 14 and 15; loops 44 to 47: the Actor Awards by its 33rd Rules & Regulations, the ceremony for every nomination, and what an award does after it) to docs/STYLE.md and docs/GLOSSARY.md, every rule the 33rd's own and every invention said as the game's: read where the player meets it in tests/b27-actor-awards.test.ts (eligibility and each refusal, Submit Yourself and its refusals, the production's submission, the nomination and the show's notices, the résumé's line), tests/b27-ceremony.test.ts (the invitation's question and notice, Go To The Ceremony and Watch From Home, a clash's refusal, Prepare Your Remarks, the trip's notices there and home, a missed flight, the room's loss, You Won At, the speech's words, the moment let pass, You Weren't At) and tests/b27-award-effects.test.ts (the agent's office seeing the recognition). Numbers under ten in words; dates with their comma; no engine words.",
+  "first": "Pending"
+ },
+ "src/engine/systems/worktrip.ts#ceremonyArrive [checked-in]": {
+  "status": "Rewritten",
+  "hash": "e981694c07c8",
+  "on": "2026-10-25",
+  "evidence": "Written for brief 27's K7 (Parts 11, 14 and 15; loops 44 to 47: the Actor Awards by its 33rd Rules & Regulations, the ceremony for every nomination, and what an award does after it) to docs/STYLE.md and docs/GLOSSARY.md, every rule the 33rd's own and every invention said as the game's: read where the player meets it in tests/b27-actor-awards.test.ts (eligibility and each refusal, Submit Yourself and its refusals, the production's submission, the nomination and the show's notices, the résumé's line), tests/b27-ceremony.test.ts (the invitation's question and notice, Go To The Ceremony and Watch From Home, a clash's refusal, Prepare Your Remarks, the trip's notices there and home, a missed flight, the room's loss, You Won At, the speech's words, the moment let pass, You Weren't At) and tests/b27-award-effects.test.ts (the agent's office seeing the recognition). Numbers under ten in words; dates with their comma; no engine words.",
+  "first": "Pending"
+ },
+ "src/engine/systems/worktrip.ts#ceremonyArrive [home]": {
+  "status": "Rewritten",
+  "hash": "94bb6ed347a8",
+  "on": "2026-10-25",
+  "evidence": "Written for brief 27's K7 (Parts 11, 14 and 15; loops 44 to 47: the Actor Awards by its 33rd Rules & Regulations, the ceremony for every nomination, and what an award does after it) to docs/STYLE.md and docs/GLOSSARY.md, every rule the 33rd's own and every invention said as the game's: read where the player meets it in tests/b27-actor-awards.test.ts (eligibility and each refusal, Submit Yourself and its refusals, the production's submission, the nomination and the show's notices, the résumé's line), tests/b27-ceremony.test.ts (the invitation's question and notice, Go To The Ceremony and Watch From Home, a clash's refusal, Prepare Your Remarks, the trip's notices there and home, a missed flight, the room's loss, You Won At, the speech's words, the moment let pass, You Weren't At) and tests/b27-award-effects.test.ts (the agent's office seeing the recognition). Numbers under ten in words; dates with their comma; no engine words.",
+  "first": "Pending"
+ },
+ "src/engine/systems/worktrip.ts#ceremonyDepart": {
+  "status": "Rewritten",
+  "hash": "d5b1e1da533e",
+  "on": "2026-10-25",
+  "evidence": "Written for brief 27's K7 (Parts 11, 14 and 15; loops 44 to 47: the Actor Awards by its 33rd Rules & Regulations, the ceremony for every nomination, and what an award does after it) to docs/STYLE.md and docs/GLOSSARY.md, every rule the 33rd's own and every invention said as the game's: read where the player meets it in tests/b27-actor-awards.test.ts (eligibility and each refusal, Submit Yourself and its refusals, the production's submission, the nomination and the show's notices, the résumé's line), tests/b27-ceremony.test.ts (the invitation's question and notice, Go To The Ceremony and Watch From Home, a clash's refusal, Prepare Your Remarks, the trip's notices there and home, a missed flight, the room's loss, You Won At, the speech's words, the moment let pass, You Weren't At) and tests/b27-award-effects.test.ts (the agent's office seeing the recognition). Numbers under ten in words; dates with their comma; no engine words.",
+  "first": "Pending"
+ },
+ "src/engine/systems/worktrip.ts#ceremonyDepart [checked-out]": {
+  "status": "Rewritten",
+  "hash": "b0d77781eab9",
+  "on": "2026-10-25",
+  "evidence": "Written for brief 27's K7 (Parts 11, 14 and 15; loops 44 to 47: the Actor Awards by its 33rd Rules & Regulations, the ceremony for every nomination, and what an award does after it) to docs/STYLE.md and docs/GLOSSARY.md, every rule the 33rd's own and every invention said as the game's: read where the player meets it in tests/b27-actor-awards.test.ts (eligibility and each refusal, Submit Yourself and its refusals, the production's submission, the nomination and the show's notices, the résumé's line), tests/b27-ceremony.test.ts (the invitation's question and notice, Go To The Ceremony and Watch From Home, a clash's refusal, Prepare Your Remarks, the trip's notices there and home, a missed flight, the room's loss, You Won At, the speech's words, the moment let pass, You Weren't At) and tests/b27-award-effects.test.ts (the agent's office seeing the recognition). Numbers under ten in words; dates with their comma; no engine words.",
+  "first": "Pending"
+ },
+ "src/engine/systems/worktrip.ts#ceremonyDepart [departed]": {
+  "status": "Rewritten",
+  "hash": "f0d4f63a08c4",
+  "on": "2026-10-25",
+  "evidence": "Written for brief 27's K7 (Parts 11, 14 and 15; loops 44 to 47: the Actor Awards by its 33rd Rules & Regulations, the ceremony for every nomination, and what an award does after it) to docs/STYLE.md and docs/GLOSSARY.md, every rule the 33rd's own and every invention said as the game's: read where the player meets it in tests/b27-actor-awards.test.ts (eligibility and each refusal, Submit Yourself and its refusals, the production's submission, the nomination and the show's notices, the résumé's line), tests/b27-ceremony.test.ts (the invitation's question and notice, Go To The Ceremony and Watch From Home, a clash's refusal, Prepare Your Remarks, the trip's notices there and home, a missed flight, the room's loss, You Won At, the speech's words, the moment let pass, You Weren't At) and tests/b27-award-effects.test.ts (the agent's office seeing the recognition). Numbers under ten in words; dates with their comma; no engine words.",
+  "first": "Pending"
+ },
+ "src/engine/systems/worktrip.ts#ceremonyDepart [missed-flight]": {
+  "status": "Rewritten",
+  "hash": "46af069382c2",
+  "on": "2026-10-25",
+  "evidence": "Written for brief 27's K7 (Parts 11, 14 and 15; loops 44 to 47: the Actor Awards by its 33rd Rules & Regulations, the ceremony for every nomination, and what an award does after it) to docs/STYLE.md and docs/GLOSSARY.md, every rule the 33rd's own and every invention said as the game's: read where the player meets it in tests/b27-actor-awards.test.ts (eligibility and each refusal, Submit Yourself and its refusals, the production's submission, the nomination and the show's notices, the résumé's line), tests/b27-ceremony.test.ts (the invitation's question and notice, Go To The Ceremony and Watch From Home, a clash's refusal, Prepare Your Remarks, the trip's notices there and home, a missed flight, the room's loss, You Won At, the speech's words, the moment let pass, You Weren't At) and tests/b27-award-effects.test.ts (the agent's office seeing the recognition). Numbers under ten in words; dates with their comma; no engine words.",
   "first": "Pending"
  },
  "src/engine/systems/worktrip.ts#departureWords": {
@@ -1063,11 +1280,25 @@
   "evidence": "Written for brief 25's work abroad (Module 1) to docs/STYLE.md and docs/GLOSSARY.md; read where the player meets it in tests/career-world-sydney.test.ts (the journey, the release, the missed flight and the Work tab drawn at each stage) and tests/career-world-countries.test.ts, with tools/voice-check.mjs, tools/tics.mjs, tools/title-case.mjs and tools/plural-check.mjs passing",
   "first": "Pending"
  },
+ "src/ui/career/IndustryPane.tsx#ActorCredit": {
+  "status": "Rewritten",
+  "hash": "089ca4da9aea",
+  "on": "2026-10-25",
+  "evidence": "Written for brief 27's K7 (Parts 11, 14 and 15; loops 44 to 47: the Actor Awards by its 33rd Rules & Regulations, the ceremony for every nomination, and what an award does after it) to docs/STYLE.md and docs/GLOSSARY.md, every rule the 33rd's own and every invention said as the game's: read where the player meets it in tests/b27-actor-awards.test.ts (eligibility and each refusal, Submit Yourself and its refusals, the production's submission, the nomination and the show's notices, the résumé's line), tests/b27-ceremony.test.ts (the invitation's question and notice, Go To The Ceremony and Watch From Home, a clash's refusal, Prepare Your Remarks, the trip's notices there and home, a missed flight, the room's loss, You Won At, the speech's words, the moment let pass, You Weren't At) and tests/b27-award-effects.test.ts (the agent's office seeing the recognition). Numbers under ten in words; dates with their comma; no engine words.",
+  "first": "Pending"
+ },
  "src/ui/career/IndustryPane.tsx#BoxOfficePanel": {
   "status": "Rewritten",
   "hash": "9d0f72381ebe",
   "on": "2026-10-24",
   "evidence": "Written for brief 25's Module 6 (the published charts as dated imports, the game's own box office, the awards and festivals inventory, the Emmy Awards by the 78th's rules and Sundance by its 2027 festival's) to docs/STYLE.md and docs/GLOSSARY.md, every rule the read sources' own and every invention said as the game's; read where the player meets it in tests/career-awards-screen.test.ts (the Charts And Awards tab and the Portfolio drawn before the work, after the wrap, after the entry, at the nominations and after the ceremony, through the clock and a reload at each stage) and tests/career-awards.test.ts (each refusal, notice, recap and festival word), with tools/voice-check.mjs, tools/tics.mjs and tools/title-case.mjs clean.",
+  "first": "Pending"
+ },
+ "src/ui/career/IndustryPane.tsx#CeremonyControls": {
+  "status": "Rewritten",
+  "hash": "0a17c1777fa3",
+  "on": "2026-10-25",
+  "evidence": "Written for brief 27's K7 (Parts 11, 14 and 15; loops 44 to 47: the Actor Awards by its 33rd Rules & Regulations, the ceremony for every nomination, and what an award does after it) to docs/STYLE.md and docs/GLOSSARY.md, every rule the 33rd's own and every invention said as the game's: read where the player meets it in tests/b27-actor-awards.test.ts (eligibility and each refusal, Submit Yourself and its refusals, the production's submission, the nomination and the show's notices, the résumé's line), tests/b27-ceremony.test.ts (the invitation's question and notice, Go To The Ceremony and Watch From Home, a clash's refusal, Prepare Your Remarks, the trip's notices there and home, a missed flight, the room's loss, You Won At, the speech's words, the moment let pass, You Weren't At) and tests/b27-award-effects.test.ts (the agent's office seeing the recognition). Numbers under ten in words; dates with their comma; no engine words.",
   "first": "Pending"
  },
  "src/ui/career/IndustryPane.tsx#ChartsPanel": {
@@ -1107,9 +1338,9 @@
  },
  "src/ui/career/IndustryPane.tsx#RecognitionPanel": {
   "status": "Rewritten",
-  "hash": "1bf50fd7f2d9",
-  "on": "2026-10-24",
-  "evidence": "Written for brief 25's Module 6 (the published charts as dated imports, the game's own box office, the awards and festivals inventory, the Emmy Awards by the 78th's rules and Sundance by its 2027 festival's) to docs/STYLE.md and docs/GLOSSARY.md, every rule the read sources' own and every invention said as the game's; read where the player meets it in tests/career-awards-screen.test.ts (the Charts And Awards tab and the Portfolio drawn before the work, after the wrap, after the entry, at the nominations and after the ceremony, through the clock and a reload at each stage) and tests/career-awards.test.ts (each refusal, notice, recap and festival word), with tools/voice-check.mjs, tools/tics.mjs and tools/title-case.mjs clean.",
+  "hash": "ed0cd05e5b04",
+  "on": "2026-10-25",
+  "evidence": "Written for brief 27's K7 (Parts 11, 14 and 15; loops 44 to 47: the Actor Awards by its 33rd Rules & Regulations, the ceremony for every nomination, and what an award does after it) to docs/STYLE.md and docs/GLOSSARY.md, every rule the 33rd's own and every invention said as the game's: read where the player meets it in tests/b27-actor-awards.test.ts (eligibility and each refusal, Submit Yourself and its refusals, the production's submission, the nomination and the show's notices, the résumé's line), tests/b27-ceremony.test.ts (the invitation's question and notice, Go To The Ceremony and Watch From Home, a clash's refusal, Prepare Your Remarks, the trip's notices there and home, a missed flight, the room's loss, You Won At, the speech's words, the moment let pass, You Weren't At) and tests/b27-award-effects.test.ts (the agent's office seeing the recognition). Numbers under ten in words; dates with their comma; no engine words.",
   "first": "Pending"
  },
  "src/ui/career/IndustryPane.tsx#SeriesPanel": {
