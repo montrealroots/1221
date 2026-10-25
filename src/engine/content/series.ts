@@ -31,8 +31,17 @@ export interface SeriesTemplate {
   season: { from: readonly [number, number]; to: readonly [number, number] };
   /** When the network says whether there's another season, each year after the order runs out. */
   decide: { month: number; day: number; hour: number };
-  /** The network's chance of another season; and, once canceled, of reviving it, from `reviveAfter` years on. */
+  /**
+   * The network's chance of another season, before the last season's audience and reviews move it (`renewChance`,
+   * `systems/series.ts`, from 2026-10-25, brief 27); and, once canceled, of reviving it, from `reviveAfter` years on.
+   */
   chance: { renew: number; revive: number; reviveAfter: number };
+  /**
+   * Where it's seen, which sets how its audience is measured (`seasonAudience`): broadcast, in viewers; streaming, in hours
+   * viewed. A series kept by a save from before 2026-10-25 has none, and reads streaming where its network decides in
+   * January, as a serialized series' does, and broadcast otherwise.
+   */
+  outlet?: 'broadcast' | 'streaming';
   /** In the player's words, said wherever its seasons are. */
   words: string;
 }
@@ -52,7 +61,7 @@ export const SERIES: readonly SeriesTemplate[] = [
     episodes: 13, everyDays: 21, daysEach: 2,
     season: { from: [7, 15], to: [5, 31] },
     decide: { month: 5, day: 15, hour: 12 },
-    chance: { renew: 0.65, revive: 0.25, reviveAfter: 2 },
+    chance: { renew: 0.65, revive: 0.25, reviveAfter: 2 }, outlet: 'broadcast',
     words: 'The Calloway Files and its network are the game’s inventions, and so is each season: the network ordered it through the season beginning in 2029, and from May 2030 it says each May whether there’s another.',
   },
 ];

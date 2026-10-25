@@ -1039,7 +1039,7 @@ export const CAREER_GUIDE: readonly GuideEntry[] = [
     available: `From the guide’s chapter “${WORK_CHAPTER}”, once you’ve accepted work.`,
     short: `A part on television can be entered for an Emmy, by you or by its production, if it meets the Television Academy’s rules: a guest part is in under half the season’s episodes, and every part needs ${Math.round(EMMY_RULES.leastShare * 100)}% of the running time. A film goes to the Sundance Film Festival only if its production submits it. A nomination, a win or a selection makes casting likelier to choose you for a while, and pays nothing.
 
-The tab also shows the game’s own box office for your films, and the weekly charts Box Office Mojo, Netflix and Nielsen publish, as they published them.`,
+The tab also shows the game’s own box office for your films, each season’s audience and reviews for a series you’ve worked on, and the weekly charts Box Office Mojo, Netflix and Nielsen publish, as they published them.`,
     steps: [
       'Open Career, then Charts And Awards, and read what each of your parts on television is eligible for, or why not.',
       `Press Enter Yourself before the entry deadline: ${usd(EMMY_RULES.fees.processing + EMMY_RULES.fees.perEntrant)}, paid from your bank.`,
@@ -1065,6 +1065,7 @@ The tab also shows the game’s own box office for your films, and the weekly ch
       'The eligibility year, the fees, the guest rule, the share of the running time and the nomination table are the 78th Emmy Awards’ rules. Sundance’s categories, deadlines and premiere rule are its 2027 festival’s. A later year carries them forward, and says so.',
       'How many enter a category, how the votes go, whether a production enters you or submits its film, and whether the festival selects it are the game’s, and no other nominee is ever named.',
       'A film’s box office is the production’s, not your pay, and how well your part went doesn’t move it. The published charts are the providers’ own figures, each in its own unit and week.',
+      'A series’ season audience is the game’s estimate, in viewers an episode for a broadcast series and hours viewed a week for a streaming one, never one as the other. The network reads it, with the season’s reviews and how long the series has run, when it says whether there’s another season: a big audience makes another likelier, never certain.',
       `Recognition makes casting a little likelier to choose you, fading over three years, and at most ${Math.round(VISIBILITY.most * 100)}% better. It never changes a contract.`,
     ],
     unavailable: ['“Performers in documentary and nonfiction programs aren’t eligible in any performer category.”', '“You weren’t nominated, so there’s no ceremony of yours to watch.”'],

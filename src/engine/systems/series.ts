@@ -29,6 +29,63 @@ import { episodeOfDay, episodeOn, episodeWorkDays, type WorkDay } from './projob
 export interface SeasonDecision { year: number; at: Instant; what: 'renewed' | 'canceled' | 'revived' }
 
 const NY = 'America/New_York';
+const clamp = (x: number, lo: number, hi: number) => Math.max(lo, Math.min(hi, x));
+
+/**
+ * A season's audience, the game's own simulation and said so (from 2026-10-25, the owner's brief 27, loop 36: "An episode
+ * or batch releases → identify the correct reporting window and metric → calculate or ingest supported performance → ...
+ * feed renewal or strategy decisions where justified"; Part 12: "Do not mix views, hours, viewers, reach, completion, and
+ * retention ... model estimated internal performance and label it as simulated"). A broadcast series is measured in
+ * viewers, an episode's average audience over the season in millions; a streaming series in hours viewed a week over the
+ * season, in millions; the two are never set side by side as one figure. The series' first season is drawn within its
+ * outlet's range, each season after moves from the last by up to `drift` either way, and from the sixth on each loses
+ * `fade` of it; critics give each season a score of 100. ASSUMPTION every figure, on its own stream (decider
+ * `pro.audience`): no published figure is used or claimed.
+ */
+export const AUDIENCE = {
+  broadcast: { unit: 'viewers', first: [3, 9], bar: 5.5 },
+  streaming: { unit: 'hours', first: [6, 40], bar: 18 },
+  drift: 0.18,
+  fade: { after: 5, share: 0.06 },
+  critics: { least: 40, most: 95, middle: 65 },
+} as const;
+
+/** How a series is seen: its own outlet, or, kept from before it had one, by when its network decides. */
+export const outletOf = (s: SeriesTemplate): 'broadcast' | 'streaming' => s.outlet ?? (s.decide.month === 1 ? 'streaming' : 'broadcast');
+
+/** A season's audience and its reviews, the game's simulation: what it averaged, in its outlet's unit, and critics' score. */
+export function seasonAudience(sim: Simulation, s: SeriesTemplate, year: number): { unit: 'viewers' | 'hours'; average: number; critics: number } | undefined {
+  if (year < s.firstSeason) return undefined;
+  const spec = AUDIENCE[outletOf(s)];
+  let v = spec.first[0] + sim.rng('pro.audience', s.id).next() * (spec.first[1] - spec.first[0]);
+  for (let y = s.firstSeason + 1; y <= year; y += 1) v *= 1 + (sim.rng('pro.audience', s.id, y).next() * 2 - 1) * AUDIENCE.drift;
+  const n = year - s.firstSeason + 1;
+  if (n > AUDIENCE.fade.after) v *= (1 - AUDIENCE.fade.share) ** (n - AUDIENCE.fade.after);
+  const critics = Math.round(AUDIENCE.critics.least + sim.rng('pro.audience', s.id, year, 'critics').next() * (AUDIENCE.critics.most - AUDIENCE.critics.least));
+  return { unit: spec.unit, average: Math.round(v * 10) / 10, critics };
+}
+
+/**
+ * The network's chance of another season, read from the circumstances of the one before it (loop 38: "evaluate the
+ * project's simulated commercial, creative, contractual, and strategic circumstances ... Do not reduce every renewal
+ * decision to one viewer threshold"): the series' own chance, moved by how far the last season's audience stood from its
+ * outlet's bar (a quarter either way at most), by its reviews, and down as a long-running series costs more (from its
+ * tenth season). Its order, the contract, is the seasons it needs no word on. ASSUMPTION each weight, the game's.
+ */
+export const RENEW_WEIGHTS = { audience: 0.25, critics: 0.15, age: { after: 9, each: 0.03 }, least: 0.05, most: 0.95 } as const;
+export function renewChance(sim: Simulation, s: SeriesTemplate, year: number): number {
+  const last = seasonAudience(sim, s, year - 1);
+  if (!last) return s.chance.renew;
+  const audience = clamp(last.average / AUDIENCE[outletOf(s)].bar - 1, -1, 1);
+  const critics = (last.critics - AUDIENCE.critics.middle) / (AUDIENCE.critics.most - AUDIENCE.critics.middle);
+  const age = Math.max(0, year - s.firstSeason - RENEW_WEIGHTS.age.after) * RENEW_WEIGHTS.age.each;
+  return clamp(s.chance.renew + RENEW_WEIGHTS.audience * audience + RENEW_WEIGHTS.critics * critics - age, RENEW_WEIGHTS.least, RENEW_WEIGHTS.most);
+}
+
+/** A season's audience in the player's words: "6.2 million viewers an episode", "18.4 million hours a week". */
+export function audienceWords(a: NonNullable<ReturnType<typeof seasonAudience>>): string {
+  return a.unit === 'viewers' ? `${a.average.toFixed(1)} million viewers an episode` : `${a.average.toFixed(1)} million hours viewed a week`;
+}
 
 /**
  * Every decision on a series up to the season beginning in `year`, in order, from the first after its order ran out.
@@ -41,7 +98,9 @@ export function decisionsTo(sim: Simulation, s: SeriesTemplate, year: number): S
   for (let y = s.orderedThrough + 1; y <= year; y += 1) {
     const draw = sim.rng('pro.series', s.id, y).next();
     if (on) {
-      if (draw < s.chance.renew) out.push({ year: y, at: decisionAt(s, y), what: 'renewed' });
+      // Read from the last season's audience and reviews (`renewChance`, from 2026-10-25, brief 27): until then the
+      // series' own chance alone, the same whatever its seasons did.
+      if (draw < renewChance(sim, s, y)) out.push({ year: y, at: decisionAt(s, y), what: 'renewed' });
       else { on = false; offSince = y; out.push({ year: y, at: decisionAt(s, y), what: 'canceled' }); }
     } else if (y - offSince >= s.chance.reviveAfter && draw < s.chance.revive) {
       on = true;
@@ -121,9 +180,14 @@ export function decisionsBetween(sim: Simulation, from: Instant, to: Instant): {
 /** A decision in the player's words: "On May 15, 2030, the network renewed The Calloway Files for a twelfth season." */
 export function decisionWords(sim: Simulation, s: SeriesTemplate, d: SeasonDecision): string {
   const when = formatDate(d.at, NY);
-  if (d.what === 'canceled') return `On ${when}, the network canceled ${s.title}, and its production stopped that day.`;
+  // What the network read (from 2026-10-25, brief 27, `renewChance`): the last season's audience and reviews, the game's.
+  const last = d.what === 'revived' ? undefined : seasonAudience(sim, s, d.year - 1);
+  const why = last ? ` Its last season averaged ${audienceWords(last)} and critics scored it ${last.critics} of 100, both the game’s estimates.` : '';
+  if (d.what === 'canceled') return `On ${when}, the network canceled ${s.title}, and its production stopped that day.${why}`;
   const n = seasonNumber(sim, s, d.year);
-  return d.what === 'renewed' ? `On ${when}, the network renewed ${s.title} for a season beginning in July, its ${ordinal(n)}.` : `On ${when}, the network brought ${s.title} back for a season beginning in July, its ${ordinal(n)}.`;
+  // The month its season begins, its own: a serialized series' February until 2026-10-25 read "July", every series' then.
+  const month = new Intl.DateTimeFormat('en-US', { month: 'long', timeZone: NY }).format(new Date(seasonWindow(s, d.year).from));
+  return d.what === 'renewed' ? `On ${when}, the network renewed ${s.title} for a season beginning in ${month}, its ${ordinal(n)}.${why}` : `On ${when}, the network brought ${s.title} back for a season beginning in ${month}, its ${ordinal(n)}.`;
 }
 
 const ORD = ['first', 'second', 'third', 'fourth', 'fifth', 'sixth', 'seventh', 'eighth', 'ninth', 'tenth', 'eleventh', 'twelfth', 'thirteenth', 'fourteenth', 'fifteenth', 'sixteenth', 'seventeenth', 'eighteenth', 'nineteenth', 'twentieth'];

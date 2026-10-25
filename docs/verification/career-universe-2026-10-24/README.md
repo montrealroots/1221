@@ -503,6 +503,22 @@ release; and the falsifiability twin, out on time in cinemas and charted. Releas
 charting a streamed one, and reading the premiere without the hold-back each failed a test.
 
 
+**Then a season's audience, and the network reading it** (loops 36 and 38; Part 12: "Do not mix views, hours, viewers
+... model estimated internal performance and label it as simulated"). The game's series had seasons and the network's word
+each year, by one draw at a fixed chance, whatever a season did. Each season now has an audience, the game's simulation
+and said so (`seasonAudience`, `AUDIENCE`, decider `pro.audience`, `systems/series.ts`): a broadcast series in viewers an
+episode, a streaming one in hours viewed a week, never set side by side as one figure; a first season within its outlet's
+range, each after moving from the last, the long-running fading from the sixth; and critics' score. The network's chance of
+another season reads them (`renewChance`): the series' own chance, moved by how far the last season's audience stood from
+its outlet's bar, by its reviews, and down as a series long running costs more; not one viewer threshold. The network's
+word says what it read, and the season begins in its own month (a serialized series' February, which the words had called
+July). The Charts And Awards tab's Your Series On Screen shows a series the player worked on, each finished season's
+audience and reviews and what the network did after it. Held by `tests/b27-audience.test.ts`: the units by outlet; the
+chance's reading, and the falsifiability test, twins of one series whose audiences alone differ, renewed at different
+chances; the word following that chance where the fixed chance would have said otherwise; and the tab. A fixed chance,
+every series in viewers and a word silent on what it read each failed a test. The contract tests' premise for The Calloway
+Files, canceled in May 2030 and back in 2032, holds under the new chance.
+
 ## Defects Found And Fixed
 
 | # | Where | What stood | What stands | Held by |

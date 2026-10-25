@@ -1112,6 +1112,13 @@
   "evidence": "Written for brief 25's Module 6 (the published charts as dated imports, the game's own box office, the awards and festivals inventory, the Emmy Awards by the 78th's rules and Sundance by its 2027 festival's) to docs/STYLE.md and docs/GLOSSARY.md, every rule the read sources' own and every invention said as the game's; read where the player meets it in tests/career-awards-screen.test.ts (the Charts And Awards tab and the Portfolio drawn before the work, after the wrap, after the entry, at the nominations and after the ceremony, through the clock and a reload at each stage) and tests/career-awards.test.ts (each refusal, notice, recap and festival word), with tools/voice-check.mjs, tools/tics.mjs and tools/title-case.mjs clean.",
   "first": "Pending"
  },
+ "src/ui/career/IndustryPane.tsx#SeriesPanel": {
+  "status": "Rewritten",
+  "hash": "77fa37a028eb",
+  "on": "2026-10-25",
+  "evidence": "Written for brief 27's K6 (loops 36 and 38: a season's audience, simulated and said so, read by the network's word on another season) to docs/STYLE.md and docs/GLOSSARY.md, and read where the player meets it: tests/b27-audience.test.ts holds the audience's words in its outlet's own unit (6.2 million viewers an episode; 18.4 million hours viewed a week), the network's word saying what it read (Its last season averaged ... and critics scored it ... of 100, both the game's estimates), the season beginning in its own month, and the Charts And Awards tab's Your Series On Screen (Its seventh season: ..., critics ... of 100; the game's simulation for series it invents, never a published figure); the guide's Awards, Festivals And The Charts says the same. tools/voice-check.mjs, tools/tics.mjs, tools/title-case.mjs, tools/plural-check.mjs and tools/spelling.mjs pass",
+  "first": "Pending"
+ },
  "src/ui/career/IndustryPane.tsx#WorldPanel": {
   "status": "Rewritten",
   "hash": "674dcd68076f",

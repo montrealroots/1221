@@ -267,7 +267,7 @@ export function seriesOfYear(sim: Simulation, year: number): SeriesTemplate[] {
           firstSeason: year, orderedThrough: year, episodes: sp.episodes, everyDays: sp.everyDays, daysEach: sp.daysEach,
           season: serialized ? { from: [2, 1], to: [8, 31] } : { from: [7, 15], to: [5, 31] },
           decide: serialized ? { month: 1, day: 10, hour: 12 } : { month: 5, day: 15, hour: 12 },
-          chance: { renew: sp.renew, revive: sp.revive, reviveAfter: 2 },
+          chance: { renew: sp.renew, revive: sp.revive, reviveAfter: 2 }, outlet: serialized ? 'streaming' : 'broadcast',
           words: `${title} and ${company} are the game’s inventions, and so is each season: one was ordered, and the network says each year whether there’s another.`,
         });
       }

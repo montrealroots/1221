@@ -279,11 +279,18 @@
   "evidence": "Read where the player meets each line in tests/propay.test.ts and tests/propay-screen.test.ts, and on the built app in docs/verification/career-2026-10-20/pay/screens/work-paid-1440.txt and played.txt",
   "first": "Rewritten And Verified"
  },
+ "src/engine/systems/series.ts#audienceWords": {
+  "status": "Rewritten",
+  "hash": "c39d2db47a98",
+  "on": "2026-10-25",
+  "evidence": "Written for brief 27's K6 (loops 36 and 38: a season's audience, simulated and said so, read by the network's word on another season) to docs/STYLE.md and docs/GLOSSARY.md, and read where the player meets it: tests/b27-audience.test.ts holds the audience's words in its outlet's own unit (6.2 million viewers an episode; 18.4 million hours viewed a week), the network's word saying what it read (Its last season averaged ... and critics scored it ... of 100, both the game's estimates), the season beginning in its own month, and the Charts And Awards tab's Your Series On Screen (Its seventh season: ..., critics ... of 100; the game's simulation for series it invents, never a published figure); the guide's Awards, Festivals And The Charts says the same. tools/voice-check.mjs, tools/tics.mjs, tools/title-case.mjs, tools/plural-check.mjs and tools/spelling.mjs pass",
+  "first": "Pending"
+ },
  "src/engine/systems/series.ts#decisionWords": {
   "status": "Rewritten",
-  "hash": "c2abd4e45a35",
-  "on": "2026-10-24",
-  "evidence": "Written for brief 25's Module 4 (contracts, pay states, overtime, the producer's contribution, residuals, the per diem, a recurring part's season and a series' seasons) to docs/STYLE.md and docs/GLOSSARY.md, every rule's figure the agreements' own and every invention said as the game's; read where the player meets it in tests/career-contracts.test.ts (the offer, the contract, each payment's state, the notices of each episode, option, decision, telecast, rerun, residual and per diem, through a played recurring part), with tools/voice-check.mjs, tools/tics.mjs and tools/title-case.mjs clean.",
+  "hash": "0711b9fe5c92",
+  "on": "2026-10-25",
+  "evidence": "Written for brief 27's K6 (loops 36 and 38: a season's audience, simulated and said so, read by the network's word on another season) to docs/STYLE.md and docs/GLOSSARY.md, and read where the player meets it: tests/b27-audience.test.ts holds the audience's words in its outlet's own unit (6.2 million viewers an episode; 18.4 million hours viewed a week), the network's word saying what it read (Its last season averaged ... and critics scored it ... of 100, both the game's estimates), the season beginning in its own month, and the Charts And Awards tab's Your Series On Screen (Its seventh season: ..., critics ... of 100; the game's simulation for series it invents, never a published figure); the guide's Awards, Festivals And The Charts says the same. tools/voice-check.mjs, tools/tics.mjs, tools/title-case.mjs, tools/plural-check.mjs and tools/spelling.mjs pass",
   "first": "Pending"
  },
  "src/engine/systems/series.ts#NY": {

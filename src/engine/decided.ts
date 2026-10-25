@@ -49,7 +49,7 @@ import { DIRECT, HOLD, NEGOTIATE, castingDraw, postingsAt, releaseFate, slateRea
 import { productionsOf, seriesOfYear, slatePartsAt } from './systems/slate';
 import { PROJECTS } from './content/careerwork';
 import { SERIES } from './content/series';
-import { decisionsTo, episodeDrawn, optionDrawn } from './systems/series';
+import { decisionsTo, episodeDrawn, optionDrawn, seasonAudience } from './systems/series';
 import { lateDays, rerunDrawn } from './systems/contracts';
 import { cutDrawn, furtherDrawn, loopDrawn, pagesDrawn, planWork, stressDrawn } from './systems/workflow';
 import { simulateRun } from './systems/charts';
@@ -767,7 +767,7 @@ const judged = (id: string, band: number): Engagement => ({
 
 defineDecider<{ sim: Simulation; year: number; renew: number }, string>({
   id: 'pro.series',
-  decides: 'The network’s word on a series each May after its order runs out: another season, no more, or a canceled one back, by the series and the year, at its chances.',
+  decides: 'The network’s word on a series each year after its order runs out: another season, no more, or a canceled one back, by the series and the year, at its chance moved by the last season’s audience and reviews (renewChance).',
   drawnIn: 'src/engine/systems/series.ts',
   reads: {
     // How far on: each May adds its own word.
@@ -778,6 +778,21 @@ defineDecider<{ sim: Simulation; year: number; renew: number }, string>({
   },
   sample: (seed) => ({ sim: atYale(seed), year: 2034 + (seed % 6), renew: SERIES[0]!.chance.renew }),
   decide: ({ sim, year, renew }) => decisionsTo(sim, { ...SERIES[0]!, chance: { ...SERIES[0]!.chance, renew } }, year).map((d) => `${d.year}:${d.what}`).join(' '),
+});
+
+defineDecider<{ sim: Simulation; year: number; outlet: number }, string>({
+  id: 'pro.audience',
+  decides: 'A season of a series’ audience and reviews, the game’s simulation (AUDIENCE): its first season within its outlet’s range, each after moving from the last, the long-running fading, and critics’ score.',
+  drawnIn: 'src/engine/systems/series.ts',
+  reads: {
+    // Which season: each moves from the last.
+    year: (o, t) => ({ ...o, year: SERIES[0]!.firstSeason + Math.round(t * 15) }),
+    // Broadcast in viewers or streaming in hours.
+    outlet: (o, t) => ({ ...o, outlet: Math.round(t) }),
+    world: (o, t) => ({ ...o, sim: atYale(Math.round(t * 20)) }),
+  },
+  sample: (seed) => ({ sim: atYale(seed), year: SERIES[0]!.firstSeason + (seed % 12), outlet: seed % 2 }),
+  decide: ({ sim, year, outlet }) => { const a = seasonAudience(sim, { ...SERIES[0]!, outlet: outlet ? 'streaming' : 'broadcast' }, year)!; return `${a.unit} ${a.average} ${a.critics}`; },
 });
 
 defineDecider<{ sim: Simulation; band: number }, string>({

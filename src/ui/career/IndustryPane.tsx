@@ -35,12 +35,16 @@ import {
   internationalWhy, projectOfCredit, recapWords, visibilityOf, watchRefusal,
 } from '@/engine/systems/awards';
 import type { ProCredit } from '@/engine/systems/pro';
+import { projectById } from '@/engine/content/careerwork';
+import { seasonWindow, seriesById } from '@/engine/content/series';
+import { audienceWords, decisionsTo, decisionWords, ordinal, seasonAudience, seasonMade, seasonNumber } from '@/engine/systems/series';
 
 export function IndustryPane() {
   return (
     <div className="col gap-5">
       <RecognitionPanel />
       <BoxOfficePanel />
+      <SeriesPanel />
       <ChartsPanel />
       <InventoryPanel />
       <WorldPanel />
@@ -182,6 +186,44 @@ function BoxOfficePanel() {
           );
         }) : <p className="small" style={{ margin: 0 }}>None of your films is in cinemas. When one opens, its weeks show here as the clock reaches them.</p>}
         <Fine>The game’s own box office: a simulation for films the game invents, never a published figure. A film’s gross is the production’s, not your pay, and a good week pays you nothing. How well your part went doesn’t move it.</Fine>
+      </div>
+    </Panel>
+  );
+}
+
+// ---------------------------------------------------------------------------------------------------------------------
+// Your Series On Screen: each season's audience, the game's simulation (from 2026-10-25, brief 27's K6, `seasonAudience`)
+// ---------------------------------------------------------------------------------------------------------------------
+
+function SeriesPanel() {
+  const { sim } = useGame();
+  const person = useWorld((s) => s.player);
+  const ids = [...new Set((person.pro?.engagements ?? []).map((e) => projectById(e.projectId)?.series).filter((x): x is string => !!x))];
+  const series = ids.map((id) => seriesById(id)).filter((x) => x !== undefined);
+  return (
+    <Panel title="Your Series On Screen" help="career.awards">
+      <div className="col gap-4">
+        {series.length ? series.map((s) => {
+          // The seasons that have finished airing, the last three, each with what it averaged and the network's word after it.
+          const done: number[] = [];
+          for (let y = s.firstSeason; seasonWindow(s, y).to <= sim.now; y += 1) if (seasonMade(sim, s, y)) done.push(y);
+          const said = decisionsTo(sim, s, new Date(sim.now).getUTCFullYear() + 1).filter((d) => d.at <= sim.now);
+          return (
+            <div key={s.id} className="col gap-2">
+              <p className="small strong" style={{ margin: 0 }}>{s.title}</p>
+              {done.length ? (
+                <ul className="small" style={{ margin: 0, paddingLeft: '1.1rem' }}>
+                  {done.slice(-3).map((y) => {
+                    const a = seasonAudience(sim, s, y)!;
+                    const word = said.find((d) => d.year === y + 1);
+                    return <li key={y}>{`Its ${ordinal(seasonNumber(sim, s, y))} season: ${audienceWords(a)}, critics ${a.critics} of 100.${word ? ` ${decisionWords(sim, s, word).replace(/ Its last season averaged .*$/, '')}` : ''}`}</li>;
+                  })}
+                </ul>
+              ) : <p className="small" style={{ margin: 0 }}>No season of it has finished airing yet.</p>}
+            </div>
+          );
+        }) : <p className="small" style={{ margin: 0 }}>You haven’t worked on a series yet. One you’ve worked on shows here, each season’s audience as it finishes.</p>}
+        <Fine>Each season’s audience and reviews are the game’s simulation for series it invents, never a published figure: a broadcast series counted in viewers an episode, a streaming one in hours viewed a week, never the one as the other. The network reads them, with the series’ age, when it says whether there’s another season.</Fine>
       </div>
     </Panel>
   );

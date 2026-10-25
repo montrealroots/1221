@@ -128,7 +128,7 @@ SLATE has no tests of its screens, and nothing is deployed.
 | `practice.exercise` | Implemented But Unverified | You As An Actor | ProfileWorkspace.tsx | `systems/practice.ts` | There’s no such tier. (also practiceRefusal, focusRefusal) | — | — | — | 32 | — |
 | `practice.self_tape` | Verified (journey) | You As An Actor | BriefPane.tsx | `systems/briefs.ts` | — (also tapeRefusal) | — | — | — | 46 | journey-agent.test.ts |
 | `pro.accept_agreement` | Verified (journey) | Representation | RepresentationPane.tsx | `systems/proagent.ts` | — (also signRefusal) | — | — | pro.agent_term_end | 6 | journey-agent.test.ts |
-| `pro.accept_offer` | Implemented But Unverified | Finding Work | OpportunitiesPane.tsx | `systems/projobs.ts` | — (also acceptRefusal) | engagements (added to) | — | booked | 27 | — |
+| `pro.accept_offer` | Implemented But Unverified | Finding Work | OpportunitiesPane.tsx | `systems/projobs.ts` | — (also acceptRefusal) | engagements (added to) | — | booked | 28 | — |
 | `pro.agent_check` | Verified (journey) | Representation | RepresentationPane.tsx | `systems/proagent.ts` | — (also checkRefusal) | — | — | — | 10 | journey-agent.test.ts |
 | `pro.agent_notice` | Verified (journey) | Representation | RepresentationPane.tsx | `systems/proagent.ts` | — (also noticeRefusal) | — | — | — | 8 | journey-agent.test.ts |
 | `pro.apply_work_visa` | Implemented But Unverified | Finding Work | WorkPane.tsx | `systems/worktrip.ts` | — (also visaRefusal) | — | — | — | 2 | — |

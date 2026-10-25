@@ -46,7 +46,7 @@ commit, what's done, what remains and the exact next step. `README.md` is the re
 | K3 | Representation depth and versioned materials | Built: what briefs 19 to 25 built read against Parts 6 and 7; the voice demo (`60a43de2`); awards and festivals on the résumé; managers, lawyers and publicists not in the game, the guide saying what each does; no languages, every market working in English |
 | K4 | Discovery, submission, auditions, direct offers, negotiation, holds and options | Built: the chemistry read, the screen test, direct offers, asking for more through the agent, and holds; options were brief 25's (a series part's) |
 | K5 | Preparation, production, travel, changes, wrap, compensation, expenses, residuals | Built: what briefs 19 to 25 built read against Parts 10 and 11; the weather day, reshoots and pickups, a day laid up shot around; fittings, a call sheet document, flight delays and expense claims not built, each said why |
-| K6 | Release, publicity, weekly charts, renewal and returning work | In progress: what brief 25 built read against Parts 12 and 13; a finished production's way out built |
+| K6 | Release, publicity, weekly charts, renewal and returning work | In progress: what brief 25 built read against Parts 12 and 13; a finished production's way out and a season's audience read by renewal built |
 | K7 | Festivals, awards, the ceremony | Waiting |
 | K8 | The industry reference | Waiting |
 | F | The lifecycle and career matrices, long careers, final runs, the gate, the receipt | Waiting |
@@ -67,7 +67,6 @@ commit, what's done, what remains and the exact next step. `README.md` is the re
 
 ## Next Step
 
-K6's rest: publicity (loop 34), the television and streaming side of the weekly charts (loop 36), and a series' new
-character and revival (loops 40 and 41). Read `systems/series.ts`, `systems/charts.ts` and `systems/awards.ts` first. K3,
+K6's rest: publicity (loop 34), and a series' new character and its revival as a new engagement (loops 40 and 41). Read `systems/series.ts`, `systems/charts.ts` and `systems/awards.ts` first. K3,
 K4 and K5 are built (README). Then K7, K8 and F, as the table says. Before F: the 85 measured criteria are measured again on the finished commit, and the four decisions above stay
 with the owner.

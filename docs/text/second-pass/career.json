@@ -603,9 +603,9 @@
  },
  "src/engine/content/guide/career.ts#CAREER_GUIDE [career.awards]": {
   "status": "Rewritten",
-  "hash": "4726b57d4d5d",
-  "on": "2026-10-24",
-  "evidence": "Written for brief 25's Module 6 to docs/STYLE.md and docs/GLOSSARY.md: the guide's chapter on charts, festivals and awards and its links to the ways of working and to offers, each link's promise read against the code by tools/effects.mjs and each quote by tools/guide-quotes.mjs, the chapter's commands issued by tests/career-awards-screen.test.ts, with tools/voice-check.mjs and tools/tics.mjs clean.",
+  "hash": "17d463e8077e",
+  "on": "2026-10-25",
+  "evidence": "Written for brief 27's K6 (loops 36 and 38: a season's audience, simulated and said so, read by the network's word on another season) to docs/STYLE.md and docs/GLOSSARY.md, and read where the player meets it: tests/b27-audience.test.ts holds the audience's words in its outlet's own unit (6.2 million viewers an episode; 18.4 million hours viewed a week), the network's word saying what it read (Its last season averaged ... and critics scored it ... of 100, both the game's estimates), the season beginning in its own month, and the Charts And Awards tab's Your Series On Screen (Its seventh season: ..., critics ... of 100; the game's simulation for series it invents, never a published figure); the guide's Awards, Festivals And The Charts says the same. tools/voice-check.mjs, tools/tics.mjs, tools/title-case.mjs, tools/plural-check.mjs and tools/spelling.mjs pass",
   "first": "Pending"
  },
  "src/engine/content/guide/career.ts#CAREER_GUIDE [career.commission]": {

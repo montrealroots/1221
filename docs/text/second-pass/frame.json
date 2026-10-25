@@ -2008,6 +2008,13 @@
   "evidence": "Written for brief 19: what the agent's two deciders decide, in a sentence each, read by tests/deciders.test.ts, which sweeps every input they declare, and by tools/deciders.mjs and tools/tics.mjs passing",
   "first": "Rewritten And Verified"
  },
+ "src/engine/decided.ts#top [pro.audience]": {
+  "status": "Retained",
+  "hash": "955d9bc690aa",
+  "on": "2026-10-25",
+  "reason": "A decider's description, read by tests/deciders.test.ts and tools/deciders.mjs and never shown to a player: it says what decides a series' season audience or the network's word on another season, and what moves it.",
+  "first": "Pending"
+ },
  "src/engine/decided.ts#top [pro.board]": {
   "status": "Rewritten",
   "hash": "e7daf8b703da",
@@ -2122,9 +2129,9 @@
  },
  "src/engine/decided.ts#top [pro.series]": {
   "status": "Retained",
-  "hash": "0f5ab221069a",
-  "on": "2026-10-24",
-  "reason": "Developer notes on each random draw, read only by tests/deciders.test.ts and tools/deciders.mjs; nothing the game ships imports decided.ts.",
+  "hash": "e0191cadb2d9",
+  "on": "2026-10-25",
+  "reason": "A decider's description, read by tests/deciders.test.ts and tools/deciders.mjs and never shown to a player: it says what decides a series' season audience or the network's word on another season, and what moves it.",
   "first": "Pending"
  },
  "src/engine/decided.ts#top [pro.slate_reach]": {

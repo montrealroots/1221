@@ -285,6 +285,38 @@
   ]
  },
  {
+  "surface": "Career, Charts And Awards: Your Series On Screen, each finished season's audience and reviews, and the network's word on another season",
+  "where": "Career, Charts And Awards, Your Series On Screen; the network's word in the notices and on the Work tab's seasons",
+  "sources": [
+   "src/ui/career/IndustryPane.tsx#SeriesPanel",
+   "src/engine/systems/series.ts#audienceWords"
+  ],
+  "states": [
+   "empty",
+   "explanation",
+   "history",
+   "success",
+   "setback"
+  ],
+  "outcome": "Revised",
+  "why": "New with brief 27's K6: a series the player worked on shows each finished season's audience in its outlet's own unit and its reviews, said to be the game's simulation, and what the network did after it.",
+  "changes": "Written new: the panel, its empty line and its fine print; the audience's words; the network's word saying what it read.",
+  "evidence": [
+   {
+    "kind": "test",
+    "ref": "tests/b27-audience.test.ts: 'PLAYER JOURNEY: the Charts And Awards tab shows a series the player worked on, its finished season’s audience and reviews said to be the game’s'"
+   },
+   {
+    "kind": "test",
+    "ref": "tests/b27-audience.test.ts: 'is counted in viewers for a broadcast series and in hours viewed for a streaming one, the same unit every season, and never a published figure'"
+   },
+   {
+    "kind": "test",
+    "ref": "tests/b27-audience.test.ts: 'is what the network’s word follows, where the series’ own chance alone would have said otherwise, and the word says what it read'"
+   }
+  ]
+ },
+ {
   "surface": "Career, Charts And Awards: Published Charts, each provider’s week as it was read, how old it is, its revisions, each title’s movement and its figures in other charts",
   "where": "Career, the Charts And Awards tab, Published Charts",
   "sources": [
