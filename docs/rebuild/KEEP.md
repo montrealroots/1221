@@ -243,3 +243,41 @@ opens at the same moment; every older fixture opens), `tests/persistence.test.ts
 `src/ui/saves/SaveSlots.tsx` (copied to `kept/01-startup-and-persistence/SaveSlots.tsx`), `src/styles/app.css`
 (`.slot-grid`, `.slot`, `.slot-empty`, `.slot-number`, `.slot-name`, `.slot-meta`; copied to `slots.css`), and the
 `openSlot`, `loadPlacesFor` and `validateUniverse` entry points of `src/engine/index.ts`.
+
+---
+
+## 3. Creation, step 1 of 5, Identity: the order of the page (PROPOSED, awaiting the owner's word)
+
+**Owner (2026-10-26):** "I want it to fall in a perfect order so whatever you feel that may be let me know." What
+follows is the order proposed in answer, with the reasoning, so the decision can be read back. The fields themselves
+are page 1's, written up in the capture page and in the feature rows; what's decided here is only where each sits.
+
+Captures: `captures/01-opening/02-identity.png` (as it opens), `02b-identity-filled.png` (with the three required
+things chosen).
+
+### The rule the order follows
+
+The page reads the way a person introduces themselves, and nothing is asked before the thing it depends on:
+**who you are, then when and where you were born, then what that makes you a citizen of, then the optional things
+last** so the required path runs unbroken from the top to Continue.
+
+### The order
+
+1. **Your face and your name.** The portrait on the left; on the right the legal name (first, middle, last), then
+   Preferred Name (defaults to first and last), then Pronouns, then Billed As directly under Pronouns, since pronouns
+   settle it and it only opens as a choice under they/them. One block, because that's what a document and an
+   introduction both start with.
+2. **When you were born.** Year, month, day, and the line "You'll be 24 when you start" *directly under them*, where
+   the figure comes from. (Today that line is printed at the foot of the page, under Citizenship, far from the
+   fields it reads.)
+3. **Where you were born.** The map, the country, the state or region, the town search. It follows the date because
+   "born June 14, 2002, in New York" is the order the sentence takes, and it sits low on the page because it's the
+   tallest thing on it.
+4. **Citizenship.** Directly after the birthplace, because the birthplace suggests it (Same As Your Place Of Birth),
+   and it's the last required thing.
+5. **Race or Ethnicity (optional)**, with In Your Own Words, last. It decides nothing and is optional, so it goes
+   after the required path, not in the middle of it where it stands today, between the names and the birth date.
+6. The amber "what this step still needs" box and Back / Continue at the foot, as now.
+
+What moves, in short: the age line goes up to the birth date, and Race or Ethnicity goes down to the end. Everything
+else keeps its place. Height and weight stay on Starting Point, where the owner moved them on 2026-10-10.
