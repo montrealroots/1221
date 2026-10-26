@@ -444,22 +444,28 @@ Capture: `captures/01-opening/04-genres-background.png` (the page as it stands, 
 
 ### What the page becomes
 
-**Background**: who you were before Yale, every part of it read by an engine (entries 4 to 6):
+**Background**: who you were before Yale, every part of it read by an engine (entries 4 to 6), **in the order a
+life happens** (owner, 2026-10-26: "put the things on my new background page in chronological order"):
 
-1. **Your Family.** Kept as it stands, the one card on the old page with a full engine: six families (Nothing,
-   Scraping By, Modest, Comfortable, Wealthy, Inherited), each setting the first morning's checking, savings, card
-   limit and balance and credit score, and whether Yale finds need, said in a box in the player's money. Research
-   to extend it: Yale's own need-assessment rules and the Yale Health plan's current term fee, from Yale's pages.
-2. **Where you grew up**, if not the birthplace (the place picker again, or "the same"): sets the starting accent
-   and the home market (local theaters, local commercials and regional casting know you there first).
-3. **What your family did**: a structured choice, read by the family's means above and by whether anyone in it was
-   in the business, which is a real route to a first meeting with an agent and a thing casting offices know.
-4. **What you did before Yale**: prior training (sets the starting techniques), prior work (sets starting credits
-   and union status, which the union's own joining rules then read), and the month and year you arrived (the old
-   Before Yale card on Starting Point, which also decides the bank kept at home and the license state).
-5. The sentence "In Your Own Words" stays only as a line the player writes for themselves on the Profile, read by
-   nothing; it is not asked for, and it is not a field of this page in the sense of entry 6. If the owner wants
-   nothing unread at all, it goes.
+1. **The family you were born into.** Its means first, since they're there from the first day: the six families
+   (Nothing, Scraping By, Modest, Comfortable, Wealthy, Inherited), each setting the first morning's checking,
+   savings, card limit and balance and credit score, and whether Yale finds need, said in a box in the player's
+   money. Kept as it stands, the one card on the old page with a full engine. Research to extend it: Yale's own
+   need-assessment rules and the Yale Health plan's current term fee, from Yale's pages.
+2. **What your family did.** A structured choice: read by the means above and by whether anyone in it was in the
+   business, which is a real route to a first meeting with an agent and a thing casting offices know.
+3. **Where you grew up**, if not the birthplace (the place picker again, or "the same"): the starting accent, and
+   the home market where local theaters, local commercials and regional casting know you first. It can refine the
+   languages Identity suggested.
+4. **Training before Yale.** Which sets the starting techniques, and where it was real (a named school or program)
+   is researched like any institution.
+5. **Work before Yale.** Prior credits and the union status they bring, which the union's own joining rules then
+   read; a life with none starts with none.
+6. **When you came to New Haven.** The month and year (today's Before Yale card on Starting Point), which decides
+   how long you've been resident, the bank kept at home and the license state.
+
+The sentence "In Your Own Words" is not a field of this page: under entry 6 it's not asked, since nothing reads it.
+If the owner wants a line the player writes for themselves, it lives on the Profile as the player's own note.
 
 ### Genres
 
