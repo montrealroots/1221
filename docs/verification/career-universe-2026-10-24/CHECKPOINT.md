@@ -72,42 +72,25 @@ commit, what's done, what remains and the exact next step. `README.md` is the re
 
 ## Next Step
 
-**Paused at the owner's word on 2026-10-25 at 23:05 UTC** ("Pause everything and we'll pick up later"), with every
-running job stopped. Where it stands, exactly:
+**Resumed on 2026-10-26** at the owner's word, at high effort on Fable 5.1. Where it stands (`15a5ae5f`):
 
-- The working branch is at the commit above this one's parent plus this: brief 22's final runs gathered clean, G1's
-  research in the register, two of wave 1's four clusters integrated (representation, 9 commits; offers and auditions,
-  3 commits), each read by the primary agent and applied with `git am -3`, three union conflicts resolved, and one
-  integration defect fixed (both clusters named a constant `TERMS`, `067dc1c5`). Typecheck and lint pass on it. Its
-  combined test run was stopped before it finished: run it again first
-  (`npx vitest run tests/b27-offer-terms.test.ts tests/b27-sides.test.ts tests/b27-casting-turns.test.ts
-  tests/b27-offers-screen.test.ts tests/b27-representation.test.ts tests/b27-representation-screen.test.ts
-  tests/tutorial.test.ts tests/career-contracts.test.ts tests/pro-core.test.ts tests/b20-career-skill.test.ts
-  tests/attributes-phase-2b.test.ts tests/deciders.test.ts tests/journey-career.test.ts tests/career-workflows.test.ts`);
-  `tests/b20-guide-wiring.test.ts` fails two tests until the wiring record is regenerated, which is step 3 below.
-- The other two clusters are on the remote as branches from `4cba6159`: `g27-lang` (3 commits; its fix stage was
-  stopped after it had committed) and `g27-series` (6 commits and a WIP commit of its fix agent's unfinished, unreviewed
-  edits, `92867bc6`). Their reviewers' findings, every cluster's reports and patches, the briefs for wave 1 and wave 2, and
-  G1's research output are on the branch `claude/b27-g2-scratch` (its README says what is where). Nothing of either is
-  applied here.
-- The session's scratch clones (`$S/g-<name>`) and workflows are gone with the session; the branches above are the
-  source.
+- Wave 1's representation, offers and auditions and languages clusters are integrated with every record: effects rows
+  (26), sweep entries, capabilities, wiring (221 controls read), devmap, traceability, the trace page (55 entries), the
+  completion matrix and the handoff's count, 528 older citations re-pointed, 153 text sources marked and 13 surfaces
+  claimed, the README's G section for the three. The gate's twenty-four checks pass on that tree; the clusters' tests and
+  the files importing their modules pass (397 and 186 in two batches).
+- The series cluster is being finished on a clone of the integrated tree (branch `g27-series2` from `d0cb4327`): twelve
+  commits so far, the reviewer's S1 (a pilot passed on never airs), S2 (a pickup never re-decides a season a save was
+  told), S3, S5 and S6 among them; its agent is verifying and exporting the patch.
 
 Then, in order:
-1. Languages: read `reports/lang-review.json` (findings lang-1 to lang-8) and the three commits on `g27-lang`; finish what
-   the fix stage left (lang-1, the Why It Went This Way line; lang-3, the guide's fit and eligibility words), then apply
-   onto the working branch (`git rebase` the branch onto it in a clone, or `git am -3` its patches), typecheck, lint, its
-   tests and the importing files.
-2. Series: read `reports/series-review.json` (S1 to S13, S1 and S2 blocking) and the branch; judge the WIP commit against
-   them; finish the fixes (S1 the pilot past May 15, S2 the pickup draw rewriting an older save's renewals, S5 the seeded
-   journey test, S3, S4, S6); apply as above.
-3. The records (the scratch branch's `integrate.md`, step 6): text-inventory marks for the sources each report lists in
-   its part 4, surfaces, effects rows for every new command, scheduled kind and reactor, the sweep, the wiring
-   (`node tools/wiring.mjs --write`), citations re-pointed, lifecycle and career-matrix, capabilities rows
-   (`pro.ask_terms`, the six offers commands), coverage; then the 24 checks.
-4. The README's K3, K4 and K6 words that the clusters falsified ("no agent covers voice work", "raised or kept",
-   the release's three fates), in the past tense, and a G section; the defects table.
-5. Wave 2 (awards, festivals, travel, the production day) from `cluster-*.md` and `implementer-common-w2.md` on the scratch
-   branch, with `nice -n 19 npm run typecheck` in place of the `tsc -p .` the first briefs named (it checks nothing here);
-   then G4's independent review of the whole and G5's validation.
+1. Series: read its report and patch, apply (`git am -3` from `$S/b27/patches/series2`), typecheck, lint, its tests and
+   the importing files; its records (effects, sweep, capabilities, wiring, text inventory and surfaces, citations), its
+   README paragraph in G; the 24 checks; the full suite once.
+2. Wave 2 from the integrated commit: `bash $S/b27/wave2.sh <commit>`, then the workflow `$S/b27/wave2-workflow.js`
+   with clusters awards, festivals, travel and day (briefs `cluster-*.md`, `implementer-common-w2.md`); integrate each
+   as wave 1's were, with its records.
+3. G4: an independent review of the whole integrated diff (`4cba6159..HEAD`) against the owner's seven criteria; fixes.
+4. G5: the full validation (the suite and the 24 checks; the long careers and walks again; brief 22's final runs in two
+   batches; the fold; the gate in a clean clone), then the receipt, this checkpoint and the handoff.
 The four decisions above stay with the owner. No merge to `main` and no deployment without the owner's word.
