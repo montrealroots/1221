@@ -21,7 +21,7 @@ import type { ProjectTemplate } from '@/engine/content/careerwork';
 import { seriesById } from '@/engine/content/series';
 import { PROMO } from '@/engine/content/workflows';
 import { keepProject, slatePartsAt } from '@/engine/systems/slate';
-import type { Engagement, Opportunity } from '@/engine/systems/pro';
+import { activeAgreement, type Engagement, type Opportunity } from '@/engine/systems/pro';
 import { NEGOTIATE, OFFER_KIND, askMoreRefusal, callPromo, datesOf, payTermsOf, travels, writtenFor } from '@/engine/systems/projobs';
 import { TERMS, askShare, offerEstimate, ownDay, promoMinimum, withdrawChance } from '@/engine/systems/offers';
 import { OPTION_RAISE, clauseOf } from '@/engine/systems/contracts';
@@ -135,45 +135,61 @@ describe('negotiating a term through the agent', () => {
 
   it('PLAYER JOURNEY: another episode traded for no raise on the option: three episodes booked, and the next season renewed at the same day rate where the twin who didn’t ask is renewed at the raise', () => {
     // A part whose ask is traded, and whose series makes its next season (`seasonMade`), so the option can be taken up: the
-    // first life of a few whose slate has one.
-    let fixture: { base: Sim; t: ProjectTemplate; week: number } | undefined;
-    for (let n = 0; n < 12 && !fixture; n += 1) {
+    // first life of a few whose slate has one and whose two twins both have the option taken up. The option's draw is keyed
+    // by the engagement's number in the save (`optionDrawn`), which the twins don't share, the ask taking numbers of its
+    // own; until 2026-10-26 the first life's twins both fell under the chance, and when brief 27's series cluster posted the
+    // winter's pilots ahead of the part, the twin who didn't ask fell over it and let the option go. The part's week falls
+    // in the agreement's year, so the ask can be made; and the old rate raised comes to more than the next season's scale
+    // plus ten, which `renewFromOption` never pays under, so the two twins' rates can differ; and neither twin's part is
+    // grown at the option (`GROW`, brief 27's series cluster, whose raise comes on top and has its own journey in
+    // tests/b27-returning.test.ts).
+    type Run = { sim: Sim; o: Opportunity; e: Engagement };
+    let found: { t: ProjectTemplate; traded: Run; kept: Run } | undefined;
+    for (let n = 0; n < 12 && !found; n += 1) {
       const base = graduate(`b27-terms-trade-option-${n}`);
       represent(base);
+      let fx: { t: ProjectTemplate; week: number } | undefined;
       try {
-        fixture = { base, ...recurring(base, (x, wk) => {
+        fx = recurring(base, (x, wk) => {
           const d = draws(base, x, wk, 'episodes');
-          return !d.yes && d.trade && d.withdraw >= TERMS.withdraw.most && seasonMade(base, seriesById(x.series!)!, seriesById(x.series!)!.firstSeason + 1);
-        }) };
-      } catch { /* none in this life's slate */ }
+          return !d.yes && d.trade && d.withdraw >= TERMS.withdraw.most && seasonMade(base, seriesById(x.series!)!, seriesById(x.series!)!.firstSeason + 1) && activeAgreement(base.player, wk) !== undefined;
+        });
+      } catch { continue; }
+      const { t, week } = fx;
+      played(base, week);
+      const run = (negotiate: boolean): Run => {
+        const sim = reload(base);
+        const o = offered(sim, t, week);
+        if (negotiate) played(sim, ask(sim, o, 'episodes').answerAt + MS_HOUR);
+        const e = accept(sim, o);
+        // TEST SETUP: a day of the work judged Strong, as the shoot would leave one, and the option's day brought to the clock.
+        e.log = [{ day: 0, at: e.days[0]!.from, status: 'worked', band: 'strong' }];
+        const item = sim.universe.scheduled.find((i) => i.kind === OPTION_KIND && i.payload.engagementId === e.id && i.status === 'pending')!;
+        sim.timeline.reschedule(item.id, sim.now + MS_HOUR);
+        played(sim, sim.now + 2 * MS_HOUR);
+        return { sim, o, e };
+      };
+      const traded = run(true);
+      const kept = run(false);
+      if (clauseOf(traded.e.contract, 'option')!.status !== 'exercised' || clauseOf(kept.e.contract, 'option')!.status !== 'exercised') continue;
+      const taken = (x: Run) => x.sim.player.pro!.engagements.find((y) => y.id === clauseOf(x.e.contract, 'option')!.settled?.engagementId);
+      if (taken(traded)?.contract?.grew || taken(kept)?.contract?.grew) continue;
+      const raised = kept.sim.player.pro!.opportunities.find((o) => o.engagementId === taken(kept)?.id)?.offer?.amount;
+      if (raised !== Math.round(kept.o.offer!.amount! * (1 + OPTION_RAISE))) continue;
+      found = { t, traded, kept };
     }
-    expect(fixture).toBeDefined();
-    const { base, t, week } = fixture!;
-    played(base, week);
-    const run = (negotiate: boolean) => {
-      const sim = reload(base);
-      const o = offered(sim, t, week);
-      if (negotiate) played(sim, ask(sim, o, 'episodes').answerAt + MS_HOUR);
-      const e = accept(sim, o);
-      // TEST SETUP: a day of the work judged Strong, as the shoot would leave one, and the option's day brought to the clock.
-      e.log = [{ day: 0, at: e.days[0]!.from, status: 'worked', band: 'strong' }];
-      const item = sim.universe.scheduled.find((i) => i.kind === OPTION_KIND && i.payload.engagementId === e.id && i.status === 'pending')!;
-      sim.timeline.reschedule(item.id, sim.now + MS_HOUR);
-      played(sim, sim.now + 2 * MS_HOUR);
-      return { sim, o, e };
-    };
-    const traded = run(true);
+    expect(found).toBeDefined();
+    const { t, traded, kept } = found!;
     expect([traded.o.offer!.asked!.answer, traded.o.offer!.episodes, traded.o.offer!.optionRaise]).toEqual(['traded', 3, 0]);
     expect(clauseOf(traded.e.contract, 'option')!.raise).toBe(0);
     expect(traded.e.days).toHaveLength(3 * seriesById(t.series!)!.daysEach);
-    const kept = run(false);
     expect(clauseOf(kept.e.contract, 'option')!.raise).toBe(OPTION_RAISE);
     const next = (x: typeof traded) => {
       const opt = clauseOf(x.e.contract, 'option')!;
       return opt.status === 'exercised' ? x.sim.player.pro!.opportunities.find((o) => o.engagementId === opt.settled?.engagementId)?.offer?.amount : undefined;
     };
-    // Taken up in both, the option's draw being the engagement's own and the same in each: the next season's day rate is the
-    // old one raised for the twin who didn't negotiate, and only the next season's scale plus ten for the one who traded it.
+    // Taken up in both: the next season's day rate is the old one raised for the twin who didn't negotiate, and only the
+    // next season's scale plus ten for the one who traded it.
     expect([clauseOf(traded.e.contract, 'option')!.status, clauseOf(kept.e.contract, 'option')!.status]).toEqual(['exercised', 'exercised']);
     const old = traded.o.offer!.amount!;
     expect(next(kept)).toBe(Math.round(old * (1 + OPTION_RAISE)));
