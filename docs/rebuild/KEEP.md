@@ -19,19 +19,19 @@ Captures, as sent: `/tmp/claude-0/-home-user-1221/93119f3d-c8d9-5356-8130-0e0fe3
 The first thing SLATE shows, for about a second on a fast device, longer on a slow one, and for as long as it takes
 when something's wrong:
 
-- A full-screen dark field, centred: a radial gradient from `#191c22` at 50% across and 42% down to `#0c0d10` at
+- A full-screen dark field, centered: a radial gradient from `#191c22` at 50% across and 42% down to `#0c0d10` at
   62%, laid over the app (`position: fixed; inset: 0; z-index: 100`).
 - The clapper mark 🎬 at 68 px (54 px on a phone), which arrives with a 900 ms animation: from 14 px low, rotated
   -9° and scaled .86 at zero opacity, through +3° and 1.04 at 60%, to rest (`clapper-in`, easing
   `cubic-bezier(.2,.8,.2,1)`).
-- The wordmark **SLATE**: 46 px, weight 300, letter-spacing .42em with a matching text-indent so it centres
-  (34 px and .34em on a phone), in the text colour `#eceef2`.
+- The wordmark **SLATE**: 46 px, weight 300, letter-spacing .42em with a matching text-indent so it centers
+  (34 px and .34em on a phone), in the text color `#eceef2`.
 - Under it, "A LIFE SIMULATOR": extra-small type (0.72rem), uppercase, letter-spacing .28em, dim text `#8a929e`.
   The words "life simulator" are bound with a non-breaking space so a phone breaks before them, never between them.
 - A 2 px progress bar on `#21252c`, its fill the clapper gold `#d8b25f`, animating its width over 280 ms.
 - A status line under the bar: the current stage's label on the left ("Reading Save Slots"), the percentage on the
   right in monospace tabular figures. "Ready" at 100%; "Startup Stopped" on a failure.
-- The four stages listed, left-aligned, each with a glyph and a colour by state: waiting `·` dim, active `▸` gold,
+- The four stages listed, left-aligned, each with a glyph and a color by state: waiting `·` dim, active `▸` gold,
   done `✓` muted `#a3aab6`, failed `✕` red `#d97a6c`. The list is an `aria-live="polite"` region; the bar is a
   `progressbar` with its value.
 - The foot: "Version 1.1.0 · Save Format 94" (the app version and the save schema version, both constants).
@@ -142,7 +142,7 @@ Captures: `captures/01-opening/00-opening-slots.png` (fresh), `01-slots-occupied
 
 - The clapper at 44 px, the wordmark at 32 px, and one line under it. Then three cards in a grid (`auto-fit`,
   280 px minimum, 24 px gaps, so three across on a laptop and one above another on a phone), each at least 300 px
-  tall, on the surface colour with a 1 px line and the 10 px radius. An empty card has a dashed border and centres
+  tall, on the surface color with a 1 px line and the 10 px radius. An empty card has a dashed border and centers
   its contents in dim text. The slot number is extra-small uppercase with .16em letter-spacing. A name is 1.6rem at
   weight 600. The four facts sit in a two-column grid. A foot line at the bottom.
 - **Empty slot:** "SLOT N", the sentence, New Save. With a leftover backup: a different sentence, New Save, Restore
@@ -303,9 +303,9 @@ researched before they're built, as this SLATE's research register did for every
 | Billed As | Casting reads it | As now (the strongest reader on the page). |
 | Portrait | "Only for show" | **The first headshot.** The photo the player brings is their starting headshot, version 1 of the material the career already versions (`pro.headshots`): it's what the first submissions send, it ages like any headshot (casting offices and agents read a headshot's age today), and a professional session replaces it. A life that brings no photo starts with none and can't submit until a session is had, which is true to life. |
 | Date of birth | Age, the birthday, mortality, fitness | As now, plus **playing age**, which casting already reads from the role's ages: the field is the source of the figure. |
-| Race or Ethnicity | Nothing | **Casting breakdowns, as the industry actually writes them.** Real breakdowns name an ethnicity for a part or say "any ethnicity" or "open ethnicity"; a role written for a specific one is cast from actors who identify with it, and that's the largest single thing after age and gender that decides which parts an actor is seen for. So in the new build: a share of the slate's parts carry an ethnicity line, drawn from how real breakdowns are written by kind and market (research needed: published breakdown practice, the casting guilds' and unions' own language, SAG-AFTRA's diversity-casting provisions); a part's line is read where Billed As and the playing ages are read, at the posting, the agent's submission and casting's fit; "any ethnicity" parts read nothing; the player's choice of several, or none, is honoured as the breakdown's language would honour it. Also the real institutions that are keyed to it and that this SLATE's awards and festivals build left out: the NAACP Image Awards, the Imagen Awards, the American Black Film Festival, the Asian World Film Festival and the like, each entered as a real institution with its real eligibility, read from the same field. **The line to hold:** the field moves which parts are written for the player and which institutions they're eligible for, exactly as the real industry does, and never any ability, judgement of work, pay rate or chance of being good; nothing in the engine may encode a stereotype, only a published practice. The player is told plainly what the field does. |
+| Race or Ethnicity | Nothing | **Casting breakdowns, as the industry actually writes them.** Real breakdowns name an ethnicity for a part or say "any ethnicity" or "open ethnicity"; a role written for a specific one is cast from actors who identify with it, and that's the largest single thing after age and gender that decides which parts an actor is seen for. So in the new build: a share of the slate's parts carry an ethnicity line, drawn from how real breakdowns are written by kind and market (research needed: published breakdown practice, the casting guilds' and unions' own language, SAG-AFTRA's diversity-casting provisions); a part's line is read where Billed As and the playing ages are read, at the posting, the agent's submission and casting's fit; "any ethnicity" parts read nothing; the player's choice of several, or none, is honored as the breakdown's language would honour it. Also the real institutions that are keyed to it and that this SLATE's awards and festivals build left out: the NAACP Image Awards, the Imagen Awards, the American Black Film Festival, the Asian World Film Festival and the like, each entered as a real institution with its real eligibility, read from the same field. **The line to hold:** the field moves which parts are written for the player and which institutions they're eligible for, exactly as the real industry does, and never any ability, judgment of work, pay rate or chance of being good; nothing in the engine may encode a stereotype, only a published practice. The player is told plainly what the field does. |
 | In Your Own Words (race) | Profile | Folded into the above: the free text stays as the player's own words, read nowhere, since free text can't be an engine's input. |
-| Place of Birth | Suggests citizenship, a license state, a body's draw | As now, plus the **home market**: the first place the player's hometown press, local theatre and regional casting know them from (regional theatres and local commercials cast locally), and the accent the Accents And Dialects technique starts from. |
+| Place of Birth | Suggests citizenship, a license state, a body's draw | As now, plus the **home market**: the first place the player's hometown press, local theater and regional casting know them from (regional theaters and local commercials cast locally), and the accent the Accents And Dialects technique starts from. |
 | Citizenship | Papers, work permission, banks | As now. |
 | Background sentence (Genres & Background) | Profile | **Replaced by structured choices** the engine can read: where you grew up (town or country, which sets the starting accent and the home market above), what your family did (which reads into the family's means and into whether anyone in it was in the business, a real route to a first agent meeting), and what you did before Yale (prior training, which sets the starting techniques; prior work, which sets the starting credits and union status). The sentence itself can stay as a line the player writes for themselves, but nothing is asked that only a sentence answers. |
 
