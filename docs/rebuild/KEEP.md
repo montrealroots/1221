@@ -281,3 +281,34 @@ last** so the required path runs unbroken from the top to Continue.
 
 What moves, in short: the age line goes up to the birth date, and Race or Ethnicity goes down to the end. Everything
 else keeps its place. Height and weight stay on Starting Point, where the owner moved them on 2026-10-10.
+
+---
+
+## 4. The rule for creation in the new build: every field means something and has an engine (DECIDED), with the
+## engines proposed for the fields that have none today (PROPOSED)
+
+**Owner (2026-10-26):** "I need each to mean something and have an engine behind it including race or ethnicity."
+
+This is a standing rule for the rebuild, and it reverses a choice this SLATE made on purpose: here, names, race or
+ethnicity, the portrait and the background sentence decide nothing and say so to the player. In the new build a
+field with no reader is not asked. For each field of the Identity page as it stands, what reads it today and what
+would read it in the new build. The engines are proposals; the ones that rest on a real rule say what has to be
+researched before they're built, as this SLATE's research register did for every real rule it used.
+
+| Field | Today | In the new build (proposed) |
+|---|---|---|
+| Legal name | Profile, Home, the slot only | **Papers and the union.** The legal name is what the passport, the visa, the bank account, the W-2 and the tax return carry, and it must match across them (a bank opening or a visa reads it). SAG-AFTRA requires a professional name no other member uses: joining with a name already taken means working under a different billing, which the join step asks for. (Research: SAG-AFTRA's professional-name rule as published.) |
+| Preferred Name | Home's greeting, the slot | **The billing name.** What goes on the credit, the call sheet, the poster, the award nomination and the union card; the name casting knows. Diverging from the legal name is the stage-name case the union rule above reads. |
+| Pronouns | Settle the title | As now, and they're what every notice, agent, director and reviewer uses for the player, so a wrong one never appears. |
+| Billed As | Casting reads it | As now (the strongest reader on the page). |
+| Portrait | "Only for show" | **The first headshot.** The photo the player brings is their starting headshot, version 1 of the material the career already versions (`pro.headshots`): it's what the first submissions send, it ages like any headshot (casting offices and agents read a headshot's age today), and a professional session replaces it. A life that brings no photo starts with none and can't submit until a session is had, which is true to life. |
+| Date of birth | Age, the birthday, mortality, fitness | As now, plus **playing age**, which casting already reads from the role's ages: the field is the source of the figure. |
+| Race or Ethnicity | Nothing | **Casting breakdowns, as the industry actually writes them.** Real breakdowns name an ethnicity for a part or say "any ethnicity" or "open ethnicity"; a role written for a specific one is cast from actors who identify with it, and that's the largest single thing after age and gender that decides which parts an actor is seen for. So in the new build: a share of the slate's parts carry an ethnicity line, drawn from how real breakdowns are written by kind and market (research needed: published breakdown practice, the casting guilds' and unions' own language, SAG-AFTRA's diversity-casting provisions); a part's line is read where Billed As and the playing ages are read, at the posting, the agent's submission and casting's fit; "any ethnicity" parts read nothing; the player's choice of several, or none, is honoured as the breakdown's language would honour it. Also the real institutions that are keyed to it and that this SLATE's awards and festivals build left out: the NAACP Image Awards, the Imagen Awards, the American Black Film Festival, the Asian World Film Festival and the like, each entered as a real institution with its real eligibility, read from the same field. **The line to hold:** the field moves which parts are written for the player and which institutions they're eligible for, exactly as the real industry does, and never any ability, judgement of work, pay rate or chance of being good; nothing in the engine may encode a stereotype, only a published practice. The player is told plainly what the field does. |
+| In Your Own Words (race) | Profile | Folded into the above: the free text stays as the player's own words, read nowhere, since free text can't be an engine's input. |
+| Place of Birth | Suggests citizenship, a license state, a body's draw | As now, plus the **home market**: the first place the player's hometown press, local theatre and regional casting know them from (regional theatres and local commercials cast locally), and the accent the Accents And Dialects technique starts from. |
+| Citizenship | Papers, work permission, banks | As now. |
+| Background sentence (Genres & Background) | Profile | **Replaced by structured choices** the engine can read: where you grew up (town or country, which sets the starting accent and the home market above), what your family did (which reads into the family's means and into whether anyone in it was in the business, a real route to a first agent meeting), and what you did before Yale (prior training, which sets the starting techniques; prior work, which sets the starting credits and union status). The sentence itself can stay as a line the player writes for themselves, but nothing is asked that only a sentence answers. |
+
+What this rule means for the capture pages still to come: every field, control and figure on every page gets the
+same two columns, what reads it today and what would in the new build, and a field with no honest second column is
+proposed for cutting rather than kept as decoration.
