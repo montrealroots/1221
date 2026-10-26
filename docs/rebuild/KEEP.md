@@ -280,7 +280,10 @@ last** so the required path runs unbroken from the top to Continue.
 4. **Citizenship.** Directly after the birthplace, because the birthplace suggests it (Same As Your Place Of Birth),
    and it's the last required thing.
 5. **Languages** (moved here from Genres & Background; the owner, 2026-10-26: "adding languages to the page to
-   wherever it perfectly lands"). English always, with how well it's spoken, and up to five more. It lands directly
+   wherever it perfectly lands"; and "with language I should be able to pick multiple"). Several, each with how well
+   it's spoken: today English always and up to five more, a cap of six that was this SLATE's own figure (ASSUMPTION,
+   never a researched one); in the new build there is no cap but the list of real languages itself, since nothing
+   real limits how many a person speaks. It lands directly
    after Citizenship because that's where the sentence goes ("born in Seoul, a Korean citizen, speaks Korean and
    English") and because the birthplace and the citizenship are what a language follows from; in the new build the
    birthplace's country can suggest its languages the way it suggests the citizenship, and the player confirms or
