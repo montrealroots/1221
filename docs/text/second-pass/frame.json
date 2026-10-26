@@ -2029,6 +2029,13 @@
   "reason": "Developer notes on each random draw, read only by tests/deciders.test.ts and tools/deciders.mjs; nothing the game ships imports decided.ts.",
   "first": "Reviewed And Retained"
  },
+ "src/engine/decided.ts#top [pro.agent_terms]": {
+  "status": "Retained",
+  "hash": "679cabfcc72f",
+  "on": "2026-10-26",
+  "reason": "Developer notes on the draw behind the office’s answer to an ask for different terms, read only by tests/deciders.test.ts and tools/deciders.mjs; nothing the game ships imports decided.ts, so its constants’ names are for the developer reading the deciders",
+  "first": "Pending"
+ },
  "src/engine/decided.ts#top [pro.agent]": {
   "status": "Rewritten",
   "hash": "3dd50ab6d1fd",
@@ -2057,6 +2064,13 @@
   "reason": "A decider's description, read by tests/deciders.test.ts and tools/deciders.mjs and never shown to a player: it says what the draw decides and what moves it.",
   "first": "Reviewed And Retained"
  },
+ "src/engine/decided.ts#top [pro.conditional]": {
+  "status": "Retained",
+  "hash": "d35f0adf8001",
+  "on": "2026-10-26",
+  "reason": "Developer notes on the draw behind a conditional lead and whether its round goes well, read only by tests/deciders.test.ts and tools/deciders.mjs; nothing the game ships imports decided.ts, so its constants’ names are for the developer reading the deciders",
+  "first": "Pending"
+ },
  "src/engine/decided.ts#top [pro.cut]": {
   "status": "Rewritten",
   "hash": "f285f379daea",
@@ -2083,6 +2097,13 @@
   "hash": "c732dcae7c8c",
   "on": "2026-10-25",
   "reason": "A decider's description, read by tests/deciders.test.ts and tools/deciders.mjs and never shown to a player: it says what decides a production's answer when asked to decide on a part it holds, and what moves its chance.",
+  "first": "Pending"
+ },
+ "src/engine/decided.ts#top [pro.language]": {
+  "status": "Retained",
+  "hash": "db31cbccdceb",
+  "on": "2026-10-26",
+  "reason": "Developer notes on the draw behind which parts are written for a character who speaks another language, read only by tests/deciders.test.ts and tools/deciders.mjs; nothing the game ships imports decided.ts, so its constants’ names are for the developer reading the deciders",
   "first": "Pending"
  },
  "src/engine/decided.ts#top [pro.late_pay]": {
@@ -2134,6 +2155,13 @@
   "reason": "A decider's description, read by tests/deciders.test.ts and tools/deciders.mjs and never shown to a player: it says what decides a promotional film for a lead's or a supporting part's release, and how often.",
   "first": "Pending"
  },
+ "src/engine/decided.ts#top [pro.recast]": {
+  "status": "Retained",
+  "hash": "4faaeb31c5b2",
+  "on": "2026-10-26",
+  "reason": "Developer notes on the draw behind a part recast and posted again, read only by tests/deciders.test.ts and tools/deciders.mjs; nothing the game ships imports decided.ts, so its constants’ names are for the developer reading the deciders",
+  "first": "Pending"
+ },
  "src/engine/decided.ts#top [pro.release]": {
   "status": "Retained",
   "hash": "d0d419e931d8",
@@ -2148,6 +2176,13 @@
   "reason": "Developer notes on each random draw, read only by tests/deciders.test.ts and tools/deciders.mjs; nothing the game ships imports decided.ts.",
   "first": "Pending"
  },
+ "src/engine/decided.ts#top [pro.reschedule]": {
+  "status": "Retained",
+  "hash": "e334b41723f5",
+  "on": "2026-10-26",
+  "reason": "Developer notes on the draw behind the production’s answer on moving a read or a test, read only by tests/deciders.test.ts and tools/deciders.mjs; nothing the game ships imports decided.ts, so its constants’ names are for the developer reading the deciders",
+  "first": "Pending"
+ },
  "src/engine/decided.ts#top [pro.reshoot]": {
   "status": "Retained",
   "hash": "9b9a65b56e8b",
@@ -2160,6 +2195,13 @@
   "hash": "3621d16ca284",
   "on": "2026-10-25",
   "reason": "A decider's description, read by tests/deciders.test.ts and tools/deciders.mjs and never shown to a player: it says what decides whether a revived series' producers bring back a character the player played, and how often.",
+  "first": "Pending"
+ },
+ "src/engine/decided.ts#top [pro.rewrite]": {
+  "status": "Retained",
+  "hash": "85e8f553cef8",
+  "on": "2026-10-26",
+  "reason": "Developer notes on the draw behind a part’s requirement changed at a cut, read only by tests/deciders.test.ts and tools/deciders.mjs; nothing the game ships imports decided.ts, so its constants’ names are for the developer reading the deciders",
   "first": "Pending"
  },
  "src/engine/decided.ts#top [pro.roster]": {
@@ -2195,6 +2237,20 @@
   "hash": "663dc483d812",
   "on": "2026-10-24",
   "evidence": "Written for brief 25's Module 5 to docs/STYLE.md: each of the five draws the ways of working make, said in the player's terms, registered and checked by tools/deciders.mjs and each drawn in tests/career-workflows.test.ts (the board, the screamed lines, the revised pages, the recall to loop and the scene cut), with tools/voice-check.mjs clean.",
+  "first": "Pending"
+ },
+ "src/engine/decided.ts#top [pro.trade]": {
+  "status": "Retained",
+  "hash": "d821440b4e51",
+  "on": "2026-10-26",
+  "reason": "Developer notes on the draw behind a trade-off from a production that won’t give what was asked, read only by tests/deciders.test.ts and tools/deciders.mjs; nothing the game ships imports decided.ts, so its constants’ names are for the developer reading the deciders",
+  "first": "Pending"
+ },
+ "src/engine/decided.ts#top [pro.withdraw]": {
+  "status": "Retained",
+  "hash": "ca31d51c4f3e",
+  "on": "2026-10-26",
+  "reason": "Developer notes on the draw behind an offer withdrawn under an agent’s ask, read only by tests/deciders.test.ts and tools/deciders.mjs; nothing the game ships imports decided.ts, so its constants’ names are for the developer reading the deciders",
   "first": "Pending"
  },
  "src/engine/decided.ts#top [production.direction]": {

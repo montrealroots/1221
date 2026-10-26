@@ -13,6 +13,13 @@
   "evidence": "Written for brief 25's Module 3 (real agencies and agents) to docs/STYLE.md and docs/GLOSSARY.md, with no pronoun for a real agent and the game's own agent's words unchanged; read where the player meets it in tests/career-agents.test.ts (the Representation tab drawn with Dan Patack chosen, the notices and history of a played referral, meeting, offer and signing) and in tests/pro-representation-screen.test.ts, tests/journey-agent.test.ts and tests/pro-agent.test.ts for Thomas Ashgrove, with tools/voice-check.mjs, tools/tics.mjs, tools/title-case.mjs, tools/plural-check.mjs and tools/spelling.mjs passing",
   "first": "Pending"
  },
+ "src/engine/content/agents.ts#AGENCIES [voice]": {
+  "status": "Retained",
+  "hash": "7ce268d61ea4",
+  "on": "2026-10-26",
+  "reason": "The voice-over department’s name and the trade’s shorter one, and its rule on submissions in its own words, Her office takes no submissions it hasn’t asked for, the sentence her panel quotes",
+  "first": "Pending"
+ },
  "src/engine/content/agents.ts#AGENTS": {
   "status": "Rewritten",
   "hash": "e75e7069a4fe",
@@ -20,18 +27,32 @@
   "evidence": "Written for brief 25's Module 3 (real agencies and agents) to docs/STYLE.md and docs/GLOSSARY.md, with no pronoun for a real agent and the game's own agent's words unchanged; read where the player meets it in tests/career-agents.test.ts (the Representation tab drawn with Dan Patack chosen, the notices and history of a played referral, meeting, offer and signing) and in tests/pro-representation-screen.test.ts, tests/journey-agent.test.ts and tests/pro-agent.test.ts for Thomas Ashgrove, with tools/voice-check.mjs, tools/tics.mjs, tools/title-case.mjs, tools/plural-check.mjs and tools/spelling.mjs passing",
   "first": "Pending"
  },
+ "src/engine/content/agents.ts#AGENTS [celia-brannock]": {
+  "status": "Retained",
+  "hash": "01e508fdd6ad",
+  "on": "2026-10-26",
+  "reason": "Her notice says she and the agency are invented, names her department and its work in the industry’s words, animation, dubbing and narration, and the one way her office hears a voice demo, a referral: what a player needs before approaching her",
+  "first": "Pending"
+ },
  "src/engine/content/agents.ts#AGENTS [thomas-ashgrove]": {
-  "status": "Rewritten",
-  "hash": "4f1339a70f4d",
-  "on": "2026-10-24",
-  "evidence": "Written for brief 25's Module 3 (real agencies and agents) to docs/STYLE.md and docs/GLOSSARY.md, with no pronoun for a real agent and the game's own agent's words unchanged; read where the player meets it in tests/career-agents.test.ts (the Representation tab drawn with Dan Patack chosen, the notices and history of a played referral, meeting, offer and signing) and in tests/pro-representation-screen.test.ts, tests/journey-agent.test.ts and tests/pro-agent.test.ts for Thomas Ashgrove, with tools/voice-check.mjs, tools/tics.mjs, tools/title-case.mjs, tools/plural-check.mjs and tools/spelling.mjs passing",
+  "status": "Retained",
+  "hash": "1eed61d8e9a3",
+  "on": "2026-10-26",
+  "reason": "His notice says first that he and his agency are invented, then the three ways his office sees your materials, the festival introduction now among them, and that he never writes first: plain, specific and true to the routes the code allows",
   "first": "Pending"
  },
  "src/engine/content/agents.ts#FIELD_LABEL": {
-  "status": "Rewritten",
-  "hash": "d32eede28438",
-  "on": "2026-10-21",
-  "evidence": "Written for brief 19 to docs/STYLE.md and docs/GLOSSARY.md; read where the player meets it in tests/pro-screen.test.ts and tests/pro-core.test.ts, with tools/voice-check.mjs, tools/tics.mjs and tools/title-case.mjs passing",
+  "status": "Retained",
+  "hash": "949294b8e999",
+  "on": "2026-10-26",
+  "reason": "The fields an agent’s department covers, as the trade names them: Television, Film, Broadway, Off-Broadway, National Tours, Regional Theater and, from brief 27, Voice-Over, each a Title Case label a department’s panel lists",
+  "first": "Pending"
+ },
+ "src/engine/content/agents.ts#HERS": {
+  "status": "Retained",
+  "hash": "2176a9df640b",
+  "on": "2026-10-26",
+  "reason": "Her office, her department and her list: the voice-over agent’s own words for the three things a panel names, matching HIS for the legit agent, so a sentence built around either reads as spoken",
   "first": "Pending"
  },
  "src/engine/content/agents.ts#HIS": {
@@ -582,23 +603,30 @@
  },
  "src/engine/content/guide/career.ts#CAREER_GUIDE [career.agent]": {
   "status": "Rewritten",
-  "hash": "f17b56600adb",
-  "on": "2026-10-25",
-  "evidence": "Written for brief 27's K3 (Part 6: \"Differentiate agents, managers, lawyers, publicists, and casting professionals\") to docs/STYLE.md and docs/GLOSSARY.md: the agent chapter now says what an agent does in the game and what managers, entertainment lawyers and publicists do in the industry, that none of them is in the game, and that a casting director works for the production. The rest of the chapter's words are as they were, held by brief 19's and brief 20's tests. tools/voice-check.mjs, tools/tics.mjs, tools/title-case.mjs, tools/plural-check.mjs and tools/spelling.mjs pass",
+  "hash": "7b5738219cbe",
+  "on": "2026-10-26",
+  "evidence": "Read again on 2026-10-26: its How It Connects line said the Agencies panel covered each agency brief 25 names, a brief’s number shown to the player; it now says each agency on it. The rest, her voice-over department beside his legit one and the festival introduction as a way in, is read where the player meets it in tests/b27-representation-screen.test.ts and tests/b27-representation.test.ts, and tools/guide-quotes.mjs --check holds its quotes",
+  "first": "Pending"
+ },
+ "src/engine/content/guide/career.ts#CAREER_GUIDE [career.agreement-terms]": {
+  "status": "Retained",
+  "hash": "9418aceec192",
+  "on": "2026-10-26",
+  "reason": "New with brief 27: the three asks by their button names, the two-day answer, the chance said as the game’s and higher the more factors are at the bar, the commission that no ask changes, and a worked example whose result is a chance, not a certainty, each step in the panel’s labels",
   "first": "Pending"
  },
  "src/engine/content/guide/career.ts#CAREER_GUIDE [career.agreement]": {
-  "status": "Rewritten",
-  "hash": "88269d7f2e5d",
-  "on": "2026-10-24",
-  "evidence": "Written for brief 25's Module 3 (real agencies and agents) to docs/STYLE.md and docs/GLOSSARY.md, with no pronoun for a real agent and the game's own agent's words unchanged; read where the player meets it in tests/career-agents.test.ts (the Representation tab drawn with Dan Patack chosen, the notices and history of a played referral, meeting, offer and signing) and in tests/pro-representation-screen.test.ts, tests/journey-agent.test.ts and tests/pro-agent.test.ts for Thomas Ashgrove, with tools/voice-check.mjs, tools/tics.mjs, tools/title-case.mjs, tools/plural-check.mjs and tools/spelling.mjs passing",
+  "status": "Retained",
+  "hash": "afe474b6b76f",
+  "on": "2026-10-26",
+  "reason": "The agreement entry says a year or the shorter term you asked for and the office agreed, as the terms now allow, and keeps its steps, the three ways to end it and its refusals in the panel’s labels, Accept The Agreement, End It By Agreement, each term marked a published rule or the game’s own",
   "first": "Pending"
  },
  "src/engine/content/guide/career.ts#CAREER_GUIDE [career.auditions]": {
-  "status": "Rewritten",
-  "hash": "be64298f57dd",
-  "on": "2026-10-25",
-  "evidence": "Written for brief 27's K4 (loop 20: holds, options and conflicts) to docs/STYLE.md and docs/GLOSSARY.md, and read where the player meets it: tests/b27-holds.test.ts holds the chemistry read's notice saying a hold is on the player's dates and that it isn't a booking and pays nothing, the history's line in the past (put a hold on your dates for ..., until the part was cast), the warning on another offer on the same days (Accepting this lets that hold go and withdraws you from the part), the withdrawal it brings (You took ... on some of the same days, so you withdrew from ... and its hold was let go; You Withdrew From ...), the refusals of Ask Them To Decide (no other offer, asked already, an offer lapsing before the answer), and the answer's words (Asked to decide, ... chose you for ...; The Hold On ... Is Let Go, You're free to take ...); the hold's end in the history (The hold on your dates became the booking). The rest of these sources' words are as they were, held by brief 19's, brief 25's and brief 27's tests. tools/voice-check.mjs, tools/tics.mjs, tools/title-case.mjs, tools/plural-check.mjs and tools/spelling.mjs pass",
+  "status": "Retained",
+  "hash": "79fced919312",
+  "on": "2026-10-26",
+  "reason": "Adds Ask To Reschedule for a chemistry read or a screen test, the conversational speaker’s preparation under Your Audition, the language under The Role’s Fit, and what not turning up costs, each sending the player to the entry that explains it",
   "first": "Pending"
  },
  "src/engine/content/guide/career.ts#CAREER_GUIDE [career.awards]": {
@@ -609,11 +637,11 @@
   "first": "Pending"
  },
  "src/engine/content/guide/career.ts#CAREER_GUIDE [career.commission]": {
-  "status": "Rewritten",
-  "hash": "636bfa774038",
-  "on": "2026-10-21",
-  "evidence": "tests/guide.test.ts and tools/guide-quotes.mjs read the entries; the figures they quote are held by tests/propay.test.ts (the $256.60 commission, Equity's bills, the 30 days)",
-  "first": "Rewritten And Verified"
+  "status": "Retained",
+  "hash": "4a2390bb7ca7",
+  "on": "2026-10-26",
+  "reason": "The commission entry now says covered work is what your agreement says it covers, as first offered or with voice-over added, and keeps every rate as the unions’ and New York’s, with its worked example’s figures from the code",
+  "first": "Pending"
  },
  "src/engine/content/guide/career.ts#CAREER_GUIDE [career.contracts]": {
   "status": "Rewritten",
@@ -636,18 +664,32 @@
   "evidence": "Written for brief 19 to docs/STYLE.md and docs/GLOSSARY.md; read where the player meets it in tests/pro-screen.test.ts and tests/pro-core.test.ts, with tools/voice-check.mjs, tools/tics.mjs and tools/title-case.mjs passing",
   "first": "Pending"
  },
- "src/engine/content/guide/career.ts#CAREER_GUIDE [career.offers]": {
+ "src/engine/content/guide/career.ts#CAREER_GUIDE [career.languages]": {
   "status": "Rewritten",
-  "hash": "b4713ed869d9",
-  "on": "2026-10-25",
-  "evidence": "Written for brief 27's K6 (loop 33: a finished production's way out, held back, sent to streaming or shelved) to docs/STYLE.md and docs/GLOSSARY.md, and read where the player meets it: tests/b27-release.test.ts holds the notices (... Is Shelved, it won't be released, the part staying on the credits as shot, off the reel, with no premiere; ...'s Release Is Held Back, out on the later date; ... is streaming, its distributor having sent it to streaming instead of cinemas) and the guide's Offers And Booked Work says the same. The rest of these sources' words are as they were, held by brief 19's and brief 25's tests. tools/voice-check.mjs, tools/tics.mjs, tools/title-case.mjs, tools/plural-check.mjs and tools/spelling.mjs pass",
+  "hash": "3779f079a8a1",
+  "on": "2026-10-26",
+  "evidence": "New with brief 27 and read again on 2026-10-26: its What Decides It line said the language’s preparation was read on how believable you seem, the engine’s word; it now says counting toward. The entry names the three levels in plain words, the card’s label The Language and the step Work On Your Spanish, and says the fit in words, not figures, as tests/b27-languages.test.ts holds on the role’s card",
+  "first": "Pending"
+ },
+ "src/engine/content/guide/career.ts#CAREER_GUIDE [career.negotiation]": {
+  "status": "Retained",
+  "hash": "f8d8ba1f5dc1",
+  "on": "2026-10-26",
+  "reason": "New with brief 27: the three asks by their buttons, the four answers a production can give, the trade-offs by what each gives and takes, the withdrawal said as a chance, and the conditional offer’s Accept On Its Condition, each in the offer card’s words",
+  "first": "Pending"
+ },
+ "src/engine/content/guide/career.ts#CAREER_GUIDE [career.offers]": {
+  "status": "Retained",
+  "hash": "ddbc9ec1a334",
+  "on": "2026-10-26",
+  "reason": "Adds the agent’s one ask on one term, the conditional offer from an office that cast you before, and the hold a chemistry read or screen test puts on your dates, each said with what it does and doesn’t do: a hold isn’t a booking and pays nothing",
   "first": "Pending"
  },
  "src/engine/content/guide/career.ts#CAREER_GUIDE [career.opportunities]": {
-  "status": "Rewritten",
-  "hash": "06afe50b92da",
-  "on": "2026-10-23",
-  "evidence": "Corrected on 2026-10-24 where it said every project, company and casting office was invented for the game, untrue once parts were drawn from real productions (brief 25's Module 2); read to docs/STYLE.md where the player meets it in tests/pro-opportunities-screen.test.ts, tests/propay-screen.test.ts, tests/pro-agent.test.ts, tests/b20-guide-chapters.test.ts and tests/career-drawn.test.ts, with tools/voice-check.mjs, tools/tics.mjs, tools/title-case.mjs, tools/plural-check.mjs and tools/spelling.mjs passing",
+  "status": "Retained",
+  "hash": "5ee2d3df6dab",
+  "on": "2026-10-26",
+  "reason": "The entry adds the character’s other language to what a role asks and to Eligibility, with a refusal in the card’s words, The character speaks another language as well as English, and you don’t speak it; the rest is the tab’s labels and the window the code sets",
   "first": "Pending"
  },
  "src/engine/content/guide/career.ts#CAREER_GUIDE [career.outside-work]": {
@@ -672,10 +714,10 @@
   "first": "Pending"
  },
  "src/engine/content/guide/career.ts#CAREER_GUIDE [career.profile]": {
-  "status": "Rewritten",
-  "hash": "423e4236f048",
-  "on": "2026-10-21",
-  "evidence": "Written for brief 19 to docs/STYLE.md and docs/GLOSSARY.md; read where the player meets it in tests/pro-screen.test.ts and tests/pro-core.test.ts, with tools/voice-check.mjs, tools/tics.mjs and tools/title-case.mjs passing",
+  "status": "Retained",
+  "hash": "f733e662b3f9",
+  "on": "2026-10-26",
+  "reason": "The profile entry now lists the languages you speak among what a submission says about you, in the order the panel shows them, and its steps, refusals and example stay the panel’s own labels and words: Professional Name, Use This Name",
   "first": "Pending"
  },
  "src/engine/content/guide/career.ts#CAREER_GUIDE [career.reasons]": {
@@ -700,10 +742,17 @@
   "first": "Pending"
  },
  "src/engine/content/guide/career.ts#CAREER_GUIDE [career.resume]": {
+  "status": "Retained",
+  "hash": "ddfe322369eb",
+  "on": "2026-10-26",
+  "reason": "The résumé entry now names the languages you speak besides native English among what the résumé lists, matching the panel’s own line, and keeps its steps, costs and example in the panel’s labels: Make Your Résumé, Update Your Résumé, What It Says",
+  "first": "Pending"
+ },
+ "src/engine/content/guide/career.ts#CAREER_GUIDE [career.sides]": {
   "status": "Rewritten",
-  "hash": "ca16b2ac53bd",
-  "on": "2026-10-25",
-  "evidence": "Written for brief 27's K3 (Part 7: awards and festival history on the résumé) to docs/STYLE.md and docs/GLOSSARY.md, and read where the player meets it: tests/career-awards.test.ts holds a résumé made before the Emmy nominations behind once the nomination is announced (your Emmy nomination for Desk Clerk), the line a résumé made then says (Emmy nomination: Outstanding Guest Actress In A Drama Series, for Desk Clerk in The Calloway Files, 2027), the win replacing it at the ceremony (Emmy Award: ...; your Emmy win for Desk Clerk), a nomination lost staying a nomination, and a Sundance selection listed once the festival says so and not while it's only submitted (Sundance Film Festival, official selection: Last Bus To Eastview, U.S. Short Films, 2028). The guide's résumé chapter names them. tools/voice-check.mjs, tools/tics.mjs, tools/title-case.mjs, tools/plural-check.mjs and tools/spelling.mjs pass",
+  "hash": "f2cbd1b4aa5f",
+  "on": "2026-10-26",
+  "evidence": "New with brief 27 and read again on 2026-10-26: eleven of its lines said a take, the take or each take, where the glossary keeps take for a self-tape’s recording but the engine-speak ratchet counts each; they now say takes, the one you send, recording one, and the overview leaves the buttons to the steps. The steps keep Record A Take and Send This Take as the Takes panel labels them, read in tests/b27-offers-screen.test.ts and tests/b27-sides.test.ts, and tools/guide-quotes.mjs --check holds",
   "first": "Pending"
  },
  "src/engine/content/guide/career.ts#CAREER_GUIDE [career.unions]": {
@@ -712,6 +761,13 @@
   "on": "2026-10-21",
   "evidence": "Written for brief 20 to docs/STYLE.md and docs/GLOSSARY.md: Equity joined by a first day under an Equity contract as by the degree, read against tests/b20-career-defects.test.ts, which plays it",
   "first": "Rewritten And Verified"
+ },
+ "src/engine/content/guide/career.ts#CAREER_GUIDE [career.withdrawing]": {
+  "status": "Retained",
+  "hash": "1832fe2739c1",
+  "on": "2026-10-26",
+  "reason": "New with brief 27: what withdrawing costs by the notice given, said before the button, what a casting office remembers and for how long, the reschedule as the production’s decision with its chance, and the recast and the rewrite at a cut, each as the notices say them",
+  "first": "Pending"
  },
  "src/engine/content/guide/career.ts#CAREER_GUIDE [career.work-abroad]": {
   "status": "Rewritten",
@@ -729,44 +785,44 @@
  },
  "src/engine/content/guide/career.ts#CAREER_GUIDE [evaluation]": {
   "status": "Rewritten",
-  "hash": "a5315052e5a0",
-  "on": "2026-10-24",
-  "evidence": "Written for brief 25's Module 6 to docs/STYLE.md and docs/GLOSSARY.md: the guide's chapter on charts, festivals and awards and its links to the ways of working and to offers, each link's promise read against the code by tools/effects.mjs and each quote by tools/guide-quotes.mjs, the chapter's commands issued by tests/career-awards-screen.test.ts, with tools/voice-check.mjs and tools/tics.mjs clean.",
+  "hash": "61bb0be2c4a5",
+  "on": "2026-10-26",
+  "evidence": "Read again on 2026-10-26: the sides’ line said casting’s decision reads the round and the take you sent, the engine’s reads and a take the ratchet counts; it now says casting decides from the round as played and directed, and the tape you sent, the glossary’s word for what’s judged. tools/text-inventory.mjs --speak counts that take gone, and the entry’s other new lines, commission on voice-over or work abroad added and a conversational speaker’s preparation, say what the code reads",
   "first": "Pending"
  },
  "src/engine/content/guide/career.ts#CAREER_GUIDE [history]": {
-  "status": "Rewritten",
-  "hash": "af8430d75361",
-  "on": "2026-10-24",
-  "evidence": "Written for brief 25's Module 3 (real agencies and agents) to docs/STYLE.md and docs/GLOSSARY.md, with no pronoun for a real agent and the game's own agent's words unchanged; read where the player meets it in tests/career-agents.test.ts (the Representation tab drawn with Dan Patack chosen, the notices and history of a played referral, meeting, offer and signing) and in tests/pro-representation-screen.test.ts, tests/journey-agent.test.ts and tests/pro-agent.test.ts for Thomas Ashgrove, with tools/voice-check.mjs, tools/tics.mjs, tools/title-case.mjs, tools/plural-check.mjs and tools/spelling.mjs passing",
+  "status": "Retained",
+  "hash": "0ef30a4742f8",
+  "on": "2026-10-26",
+  "reason": "Each is a Kept In Your Record line; the new ones say the résumé lists the languages you speak and how well, and that the contract made when you accept carries the terms as negotiated, both what the screens show afterwards",
   "first": "Pending"
  },
  "src/engine/content/guide/career.ts#CAREER_GUIDE [immediate]": {
-  "status": "Rewritten",
-  "hash": "fa5648cca220",
-  "on": "2026-10-23",
-  "evidence": "Written for brief 25's work abroad (Module 1) to docs/STYLE.md and docs/GLOSSARY.md; read where the player meets it in tests/career-world-sydney.test.ts (the journey, the release, the missed flight and the Work tab drawn at each stage) and tests/career-world-countries.test.ts, with tools/voice-check.mjs, tools/tics.mjs, tools/title-case.mjs and tools/plural-check.mjs passing",
+  "status": "Retained",
+  "hash": "06e0fa863203",
+  "on": "2026-10-26",
+  "reason": "Each is a Changes Straight Away line, one plain consequence; the new ones say the answer changes the offer you then accept or decline, and that an office that remembers a no-show offers you nothing without an audition, as the code has it",
   "first": "Pending"
  },
  "src/engine/content/guide/career.ts#CAREER_GUIDE [optional]": {
-  "status": "Rewritten",
-  "hash": "240eca78c59a",
-  "on": "2026-10-25",
-  "evidence": "Written for brief 27's K8 (Part 16 and loop 48: the industry reference, Productions And People) to docs/STYLE.md and docs/GLOSSARY.md, every real record's field said as its official pages gave it and tagged Verified, what they didn't give said as Not Given with why, the game's own tagged Simulated and the player's Yours, the glossary's How This Works kept for the help and no page called the reference on screen: read where the player meets it in tests/b27-reference.test.ts (a real production's page and its companies' and people's, a published chart's week, a part drawn from a real production once it's posted, the Desk Clerk's project with its series, season and episode, a season's audience, the network's word, a shelved release, the agents, Find, and the Career screen's Productions And People tab with its trail, its Back and its actions). Numbers under ten in words; dates with their comma; no engine words.",
+  "status": "Retained",
+  "hash": "d6599edf6b0b",
+  "on": "2026-10-26",
+  "reason": "Each is a Worth Doing With It line between two entries, one sentence saying what the other feature adds; the new one, for the sides, says the ways of playing and their rehearsal are a practice brief’s, in the words both entries use",
   "first": "Pending"
  },
  "src/engine/content/guide/career.ts#CAREER_GUIDE [prerequisite]": {
-  "status": "Rewritten",
-  "hash": "08c9087b1697",
-  "on": "2026-10-24",
-  "evidence": "Written for brief 27's K3 (the voice demo's chapter, its prerequisite) to docs/STYLE.md and docs/GLOSSARY.md: a take, which the house keeps for a tape, became a voice brief you've taped on reading (the inventory's engine-speak). Read in the guide's chapter by tests/b20-guide-promises.test.ts and tests/b27-voice-demo.test.ts; tools/voice-check.mjs and tools/tics.mjs pass",
+  "status": "Retained",
+  "hash": "7d853a62b9aa",
+  "on": "2026-10-26",
+  "reason": "Each is a Comes First line, one sentence saying what has to be true before the feature works; the new ones say a part in a language you don’t speak can’t be submitted for and only an agent under an agreement in force negotiates, both as the refusals say it",
   "first": "Pending"
  },
  "src/engine/content/guide/career.ts#CAREER_GUIDE [scheduled]": {
-  "status": "Rewritten",
-  "hash": "d1016ca3c9a7",
-  "on": "2026-10-24",
-  "evidence": "Written for brief 25's Module 5 to docs/STYLE.md and docs/GLOSSARY.md: the guide's chapter on how each kind of work is done and its links to Contracts and Pay, each link's promise read against the code by tools/effects.mjs and each quote by tools/guide-quotes.mjs, the chapter's command opened by tests/career-workflows-screen.test.ts, with tools/voice-check.mjs and tools/tics.mjs clean.",
+  "status": "Retained",
+  "hash": "943601e3fb1d",
+  "on": "2026-10-26",
+  "reason": "Each is a Changes Later line naming when a thing happens; the new one says the office answers the ask two days on and an agreed ask changes the terms The Agreement shows, which is what the clock does",
   "first": "Pending"
  },
  "src/engine/content/guide/career.ts#hours": {
@@ -973,11 +1029,11 @@
   "first": "Pending"
  },
  "src/engine/systems/pro.ts#resumeNow": {
-  "status": "Rewritten",
-  "hash": "69dc30de759a",
-  "on": "2026-10-21",
-  "evidence": "Read on the built app's Career Overview, Portfolio and Representation at 1440 and 390 (docs/verification/career-2026-10-20/app/walk/): a résumé behind a new special skill named it bare (and Singing), now as a special skill; What's Next said Each with nothing for it to stand for, now each button there, and what it takes, since the résumé's has no cost. Held by tests/pro-app.test.ts",
-  "first": "Rewritten And Verified"
+  "status": "Retained",
+  "hash": "ab530b403037",
+  "on": "2026-10-26",
+  "reason": "The résumé’s lines now include each language with its level among your languages, beside your name, unions, training and special skills, each as the résumé prints it",
+  "first": "Pending"
  },
  "src/engine/systems/pro.ts#resumeRefusal": {
   "status": "Rewritten",
@@ -1050,10 +1106,10 @@
   "first": "Rewritten And Verified"
  },
  "src/ui/workspaces/CareerWorkspace.tsx#ProfilePanel": {
-  "status": "Rewritten",
-  "hash": "e58db547c159",
-  "on": "2026-10-24",
-  "evidence": "Written for brief 25's Module 6 (the published charts as dated imports, the game's own box office, the awards and festivals inventory, the Emmy Awards by the 78th's rules and Sundance by its 2027 festival's) to docs/STYLE.md and docs/GLOSSARY.md, every rule the read sources' own and every invention said as the game's; read where the player meets it in tests/career-awards-screen.test.ts (the Charts And Awards tab and the Portfolio drawn before the work, after the wrap, after the entry, at the nominations and after the ceremony, through the clock and a reload at each stage) and tests/career-awards.test.ts (each refusal, notice, recap and festival word), with tools/voice-check.mjs, tools/tics.mjs and tools/title-case.mjs clean.",
+  "status": "Retained",
+  "hash": "4d7aebc04b6c",
+  "on": "2026-10-26",
+  "reason": "Your Profile now shows Languages beside Special Skills, each heading a plain label with an empty state that says what goes there and when it does",
   "first": "Pending"
  },
  "src/ui/workspaces/CareerWorkspace.tsx#ReelPanel": {
@@ -1064,10 +1120,10 @@
   "first": "Pending"
  },
  "src/ui/workspaces/CareerWorkspace.tsx#ResumePanel": {
-  "status": "Rewritten",
-  "hash": "1cf77c0cab8b",
-  "on": "2026-10-21",
-  "evidence": "Written for brief 19 to docs/STYLE.md and docs/GLOSSARY.md; read where the player meets it in tests/pro-screen.test.ts and tests/pro-core.test.ts, with tools/voice-check.mjs, tools/tics.mjs and tools/title-case.mjs passing",
+  "status": "Retained",
+  "hash": "966b399ba349",
+  "on": "2026-10-26",
+  "reason": "The résumé panel’s empty state now says what it’s made from, your name, training, credits, special skills and languages, matching what the résumé prints",
   "first": "Pending"
  }
 }

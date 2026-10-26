@@ -413,7 +413,7 @@ export const CAREER_GUIDE: readonly GuideEntry[] = [
       'Where You Stand names the step you’re at, and What’s Next says what to do about it.',
       'A referral comes from the casting office of a job you’ve finished, never from the agent, and no agent writes to you first.',
       'An agent submits you for work and handles its offers, for a commission. Actors also work with managers, who advise on a career, entertainment lawyers, who read contracts, and publicists, who handle the press; none of them is in the game. A casting director works for the production, not for you.',
-      `The Agencies panel says what each agency brief 25 names says of itself on its own pages: how an actor reaches it, the agents it names, and what the game does with it.`,
+      `The Agencies panel says what each agency on it says of itself on its own pages: how an actor reaches it, the agents it names, and what the game does with it.`,
     ],
     unavailable: [
       `${AGENCY.policy.words} It sees your materials only through ${routesWords(AGENT)}.`,
@@ -903,7 +903,7 @@ export const CAREER_GUIDE: readonly GuideEntry[] = [
       // In words, not the figures (from 2026-10-25's review, docs/STYLE.md "No internal concepts"): until then "a fluent one
       // 80% as well and a conversational one 50%".
       { label: 'Casting’s Fit', value: `How well you speak the part’s language and English, the weaker of the two counting. A native speaker of both suits it best, a fluent one ${suitsWords(LANGUAGE_FIT.fluent)} and a conversational one ${suitsWords(LANGUAGE_FIT.conversational)}`, estimate: true },
-      { label: 'Your Audition And Your Work', value: 'For a conversational speaker, how far the language has been prepared, beside the rest of the preparation, read on how believable you seem and how cleanly you deliver the lines' },
+      { label: 'Your Audition And Your Work', value: 'For a conversational speaker, how far the language has been prepared, beside the rest of the preparation, counting toward how believable you seem and how cleanly you deliver the lines' },
       { label: 'Your Résumé', value: 'Every language you speak and how well, except native English' },
     ],
     now: ['A session moves your preparation of the language on, and the clock with it. It grows your Accents And Dialects a little, and that technique makes each session go further.'],
@@ -998,11 +998,11 @@ export const CAREER_GUIDE: readonly GuideEntry[] = [
     title: 'How You Play The Sides And Your Takes',
     goal: 'career',
     covers: ['pro.choose_approach', 'pro.answer_note', 'pro.record_take', 'pro.send_take'],
-    synonyms: ['play it this way', 'casting’s direction', 'follow the direction', 'keep your choice', 'record a take', 'send this take', 'takes'],
+    synonyms: ['play it this way', 'casting’s direction', 'follow the direction', 'keep your choice', 'recording takes', 'sending takes', 'takes'],
     questions: ['How do I choose how to play an audition?', 'What happens when casting gives me a direction?', 'Can I record more than one take of a self-tape?'],
     where: on('opportunities', 'Career, Opportunities, In Progress'),
     available: `From the guide’s chapter “${WORK_CHAPTER}”, once casting has sent the sides with an audition.`,
-    short: `Choose how to play the sides as with a brief: measured or driven, restrained or expansive, set or open. Rehearse It On Your Feet rehearses the choice, and every round is judged with it, against what the part’s genre favors.\n\nPlayed some way at an audition or a callback in person, casting may ask for it another way partway through. Follow The Direction plays the rest that way; Keep Your Choice plays it as you prepared it. For a self-tape, Record A Take keeps each take to choose from, and Send This Take sends the one you pick.`,
+    short: `Choose how to play the sides as with a brief: measured or driven, restrained or expansive, set or open. Rehearse It On Your Feet rehearses the choice, and every round is judged with it, against what the part’s genre favors.\n\nPlayed some way at an audition or a callback in person, casting may ask for it another way partway through. Follow The Direction plays the rest that way; Keep Your Choice plays it as you prepared it. For a self-tape, you can record several takes and send the one you pick.`,
     steps: [
       'Open Career, then Opportunities, and find the role under In Progress.',
       'Under How You’ll Play It, choose a side of each aspect you want, or leave one open, and press Play It This Way.',
@@ -1012,25 +1012,25 @@ export const CAREER_GUIDE: readonly GuideEntry[] = [
     ],
     needs: [
       'Sides to play: casting sends them with an audition.',
-      `For a take, the hour a self-tape takes before it’s due, awake, and fewer than ${countWords(TAKES.perDay)} takes today and ${word(BRIEF.takesKept)} in all.`,
+      `To record, the hour a self-tape takes before it’s due, awake, and fewer than ${countWords(TAKES.perDay)} takes today and ${word(BRIEF.takesKept)} in all.`,
     ],
     costs: [
-      { label: 'Time', value: 'None to choose; an hour for each take', estimate: true },
-      { label: 'Energy', value: 'A take takes what an hour at a desk does' },
+      { label: 'Time', value: 'None to choose; takes cost an hour each', estimate: true },
+      { label: 'Energy', value: 'Recording one takes what an hour at a desk does' },
       { label: 'Money', value: 'None' },
     ],
     reads: [
       { label: 'How You Play It', value: 'What counts most in the round shifts toward what each side is, it uses the abilities each side names, and it needs rehearsal before it pays off. A side that suits the part’s genre is easier to make work' },
       { label: 'Casting’s Direction', value: 'Followed, the side casting asked for, with as much of your rehearsal as you can adapt, and how well you take the note; kept, your own choice, with what casting asked for and how you answer a note held back' },
-      { label: 'A Take', value: 'Each take is judged on its own, as the moment and your condition stand when you record it' },
+      { label: 'Your Takes', value: 'Takes are judged one by one, as the moment and your condition stand when you record each' },
     ],
     now: [
       'Choosing a way to play it rehearses nothing yet: once you choose, work on your feet rehearses it. A different choice keeps half of the rehearsal.',
-      'A take is shown with its result once it’s recorded. Casting sees none of it until you press Send This Take.',
+      'Takes are shown with their result as soon as they’re recorded. Casting sees none of them until you send one.',
     ],
     later: [
       `Casting gives a direction only where you’ve chosen a way to play it and the part’s genre leans another way on some aspect: the clock stops ${countWords(NOTE.afterMinutes)} minutes in for your answer, and the rest of the round is judged with it. Casting’s decision reads that round, so the answer can win or lose the part.`,
-      'The take you send is the one casting judges. Only it goes on your work record, so recording more doesn’t train you, and each costs its hour.',
+      'The one you send is the one casting judges. Only it goes on your work record, so recording more doesn’t train you, and each costs its hour.',
       'If the self-tape is due and you’ve sent nothing, casting moves on without it, takes recorded or not.',
     ],
     interpret: [
@@ -1042,13 +1042,13 @@ export const CAREER_GUIDE: readonly GuideEntry[] = [
       'You’re in the room: answer casting’s direction first.',
       'Casting has no direction waiting for you.',
       `You’ve recorded ${countWords(TAKES.perDay)} takes today, as many as a day allows. Record more tomorrow, or send one.`,
-      'You haven’t recorded a take yet: press Record A Take first.',
+      'Nothing’s recorded yet, so there’s nothing to send. Record one first.',
     ],
     mistakes: ['Recording takes and sending none. Casting moves on without the tape when it’s due.'],
     next: ['Wait for casting’s word, then answer an offer under Offers.'],
     related: ['career.auditions', 'craft.brief-tape', 'career.offers'],
     connections: [
-      { to: 'career.auditions', kind: 'evaluation', why: 'Casting’s decision reads the round as it was played and directed, and the take you sent.' },
+      { to: 'career.auditions', kind: 'evaluation', why: 'Casting decides from the round as it was played and directed, and the tape you sent.' },
       { to: 'craft.brief-tape', kind: 'optional', why: 'The ways of playing are the same as a practice brief’s, and so is how they’re rehearsed.' },
     ],
     example: {

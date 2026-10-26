@@ -1945,11 +1945,25 @@
   "reason": "What each kind of work is and the parts of preparing it, named in a teacher's words, the same names the card, the profile and the guide use.",
   "first": "Rewritten And Verified"
  },
+ "src/engine/content/tasks.ts#LANGUAGE_PART": {
+  "status": "Retained",
+  "hash": "35aa2082c173",
+  "on": "2026-10-26",
+  "reason": "Working on the part’s language, the preparation step’s name beside Learning the lines and Rehearsal, in the same shape as those steps’ words",
+  "first": "Pending"
+ },
  "src/engine/content/tasks.ts#TASK_PROFILES [audition]": {
   "status": "Rewritten",
   "hash": "b16d73a793a6",
   "on": "2026-10-22",
   "evidence": "'Knowing the genre', the brief's own label for the part, now on an audition's preparation; read where a record names what held it back (evaluation.ts chiefLimit)",
+  "first": "Pending"
+ },
+ "src/engine/content/tasks.ts#TASK_PROFILES [auditionDirected]": {
+  "status": "Retained",
+  "hash": "699a9af7fa51",
+  "on": "2026-10-26",
+  "reason": "An Audition With A Direction, named and described as the room has it: the sides played for casting and casting’s direction taken partway through, with Knowing the genre as its preparation’s own part",
   "first": "Pending"
  },
  "src/engine/content/tasks.ts#TASK_PROFILES [booth]": {

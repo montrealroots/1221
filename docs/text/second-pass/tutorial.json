@@ -106,9 +106,9 @@
  },
  "src/engine/content/tutorial.ts#CHAPTERS [career]": {
   "status": "Rewritten",
-  "hash": "2d75b1d802e1",
-  "on": "2026-10-25",
-  "evidence": "Written for brief 27's K8 and K7 to docs/STYLE.md: the Your Career chapter's paragraph on Productions And People and its name, and the Finding Work chapter's paragraph on the Actor Awards and the ceremony with its four buttons' names, each as its tab says it; read on the chapter's page by tests/help-mechanics.test.ts (every paragraph and name of each chapter on its page) and held to the screens by tests/tutorial.test.ts (every command and control a chapter opens).",
+  "hash": "d252cfe0611c",
+  "on": "2026-10-26",
+  "evidence": "Read again on 2026-10-26: its last line sent the player to the agent’s panel and how to reach him, when the tab now holds his, hers and the real agents’; it now says the agents’ panels and how to reach one. The chapter’s résumé line adds the languages you speak, matching the panel; tools/guide-quotes.mjs --check holds the chapter’s quotes and tools/tutorial-routes.mjs reads its labels against the screens",
   "first": "Pending"
  },
  "src/engine/content/tutorial.ts#CHAPTERS [clock]": {
@@ -126,10 +126,10 @@
   "first": "Pending"
  },
  "src/engine/content/tutorial.ts#CHAPTERS [finding-work]": {
-  "status": "Rewritten",
-  "hash": "d06401d964da",
-  "on": "2026-10-25",
-  "evidence": "Written for brief 27's K8 and K7 to docs/STYLE.md: the Your Career chapter's paragraph on Productions And People and its name, and the Finding Work chapter's paragraph on the Actor Awards and the ceremony with its four buttons' names, each as its tab says it; read on the chapter's page by tests/help-mechanics.test.ts (every paragraph and name of each chapter on its page) and held to the screens by tests/tutorial.test.ts (every command and control a chapter opens).",
+  "status": "Retained",
+  "hash": "b99a98e1a3f5",
+  "on": "2026-10-26",
+  "reason": "The chapter teaches brief 27’s additions in the screen’s labels: Play It This Way, Follow The Direction and Keep Your Choice, Record A Take and Send This Take, Withdraw From The Part and Ask To Reschedule, each with what it does and what it costs, and take only for a self-tape’s recording, the glossary’s use",
   "first": "Pending"
  },
  "src/engine/content/tutorial.ts#CHAPTERS [life]": {
@@ -183,9 +183,9 @@
  },
  "src/engine/content/tutorial.ts#CHAPTERS [representation]": {
   "status": "Rewritten",
-  "hash": "2e013c4cecb2",
-  "on": "2026-10-24",
-  "evidence": "Written for brief 25's Module 3 (real agencies and agents) to docs/STYLE.md and docs/GLOSSARY.md, with no pronoun for a real agent and the game's own agent's words unchanged; read where the player meets it in tests/career-agents.test.ts (the Representation tab drawn with Dan Patack chosen, the notices and history of a played referral, meeting, offer and signing) and in tests/pro-representation-screen.test.ts, tests/journey-agent.test.ts and tests/pro-agent.test.ts for Thomas Ashgrove, with tools/voice-check.mjs, tools/tics.mjs, tools/title-case.mjs, tools/plural-check.mjs and tools/spelling.mjs passing",
+  "hash": "4eaeca48cd8e",
+  "on": "2026-10-26",
+  "evidence": "Read again on 2026-10-26: the chapter named Send What His Office Asked For and the real agent’s button but not her office’s, and said the room on his list was assumed for him alone when her panel assumes hers too; it now names all three buttons as the agent’s panel does and both lists. Her department, the festival introduction and Asking For Different Terms were new with brief 27, read on the screen in tests/b27-representation-screen.test.ts",
   "first": "Pending"
  },
  "src/engine/content/tutorial.ts#CHAPTERS [school]": {

@@ -121,7 +121,7 @@ describe('Asking For Different Terms, on the Representation tab', () => {
     const shown = drawn(sim, CELIA.id).shown;
     expect(shown).toContain('Celia Brannock Agent, Voice-Over Department, Halberd Talent, New York. Invented for the game. Notice Read.');
     expect(shown).toContain('Department Voice-Over, also called Voice: Voice-Over Submissions Her office takes no submissions it hasn’t asked for.');
-    expect(shown).toContain('How To Reach Her How This Works Her office takes your materials one way in the game: a referral from someone you’ve worked with on a finished job. The game reads a referral as not unsolicited.');
+    expect(shown).toContain('How To Reach Her How This Works Her office takes your materials one way in the game: a referral from someone you’ve worked with on a finished job. In the game a referral makes a submission one it asked for.');
     expect(shown).toContain('Your Materials For Her How This Works You have no voice demo, and nothing of your voice recorded to mix one from yet. Tape a voice brief on the Player Profile first.');
     // Thomas Ashgrove's panel, on the same record, asks about a reel.
     expect(drawn(sim).shown).toContain('You have no reel, and nothing recorded to cut one from yet.');

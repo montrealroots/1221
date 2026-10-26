@@ -9,41 +9,41 @@ Two passes. The first, brief 14’s, is kept as its history: Rewritten And Verif
 | Subsystem | Sources | Strings | Words | Engine-Speak Hits | Rewritten | Retained | Pending | Blocked |
 |---|---|---|---|---|---|---|---|---|
 | Startup, Save Selection, Character Creation And Onboarding | 370 | 1390 | 17195 | 7 | 69 | 288 | 13 | 0 |
-| Tutorials, Guides, Help Panels And Connected-System Explanations | 51 | 572 | 15987 | 2 | 28 | 20 | 3 | 0 |
+| Tutorials, Guides, Help Panels And Connected-System Explanations | 51 | 572 | 15997 | 2 | 28 | 20 | 3 | 0 |
 | Home And Its Retained Actions | 29 | 262 | 1048 | 0 | 19 | 10 | 0 | 0 |
-| Player Profile, Attributes, Genres, Mastery And Progression | 634 | 3875 | 57661 | 177 | 189 | 444 | 1 | 0 |
+| Player Profile, Attributes, Genres, Mastery And Progression | 634 | 3874 | 57645 | 174 | 189 | 444 | 1 | 0 |
 | School, Classes, Coursework, Rehearsals, Productions, Assessments And Completion | 678 | 6770 | 70764 | 7 | 202 | 474 | 2 | 0 |
 | Money, Banking, Payments, Fees, Holds, Statements And Transactions | 767 | 6668 | 152599 | 13 | 282 | 485 | 0 | 0 |
 | Papers, Documents, Applications, Taxes And Status Notices | 477 | 4622 | 57232 | 3 | 114 | 363 | 0 | 0 |
-| The Professional Career: Profile, Portfolio, Representation And Work | 797 | 5528 | 47856 | 17 | 665 | 64 | 68 | 0 |
+| The Professional Career: Profile, Portfolio, Representation And Work | 797 | 5528 | 47849 | 4 | 665 | 64 | 68 | 0 |
 | Health, Treatment, Coverage, Stamina, Energy And Recovery | 106 | 805 | 8302 | 0 | 34 | 72 | 0 | 0 |
 | Calendar, Schedules, Time Advancement And Reminders | 83 | 2575 | 15553 | 0 | 21 | 62 | 0 | 0 |
 | Notifications, Invitations, Feedback And Generated Messages | 31 | 199 | 1185 | 0 | 5 | 26 | 0 | 0 |
 | Buttons, Menus, Tabs, Filters, Placeholders, Empty And Loading States, Confirmations | 62 | 232 | 935 | 0 | 27 | 35 | 0 | 0 |
 | In-World Material: Scenes, Plays And Audition Sides, In Their Characters’ Voices | 993 | 9168 | 153700 | 109 | 216 | 777 | 0 | 0 |
-| The World: Places, Countries, Weather And Reference Data | 138 | 431 | 32591 | 2 | 4 | 68 | 66 | 0 |
-| **All** | 5216 | 43097 | 632608 | 337 | 1875 | 3188 | 153 | 0 |
+| The World: Places, Countries, Weather And Reference Data | 138 | 432 | 32591 | 1 | 4 | 68 | 66 | 0 |
+| **All** | 5216 | 43097 | 632595 | 320 | 1875 | 3188 | 153 | 0 |
 
 ## The Second Pass, By Area
 
 | Area | Sources | Words | Rewritten | Retained | Pending | Blocked |
 |---|---|---|---|---|---|---|
-| career | 161 | 21138 | 101 | 33 | 27 | 0 |
-| career-agent | 76 | 3658 | 53 | 1 | 22 | 0 |
+| career | 161 | 21126 | 101 | 33 | 27 | 0 |
+| career-agent | 94 | 4208 | 53 | 1 | 40 | 0 |
 | career-pay | 66 | 3345 | 62 | 0 | 4 | 0 |
 | career-showcase | 23 | 1781 | 23 | 0 | 0 | 0 |
-| career-work | 243 | 8234 | 226 | 2 | 15 | 0 |
+| career-work | 448 | 9998 | 226 | 156 | 66 | 0 |
 | career-world | 228 | 9700 | 200 | 28 | 0 | 0 |
-| frame | 575 | 35916 | 141 | 421 | 13 | 0 |
-| health | 244 | 40893 | 38 | 140 | 66 | 0 |
+| frame | 418 | 35701 | 141 | 267 | 10 | 0 |
+| health | 178 | 38799 | 38 | 140 | 0 | 0 |
 | material-a | 507 | 80107 | 95 | 412 | 0 | 0 |
 | material-b | 492 | 74135 | 121 | 371 | 0 | 0 |
 | money | 267 | 55471 | 114 | 153 | 0 | 0 |
 | money-data | 522 | 99604 | 172 | 350 | 0 | 0 |
 | papers | 477 | 57232 | 114 | 363 | 0 | 0 |
-| profile | 634 | 57661 | 189 | 444 | 1 | 0 |
+| profile | 634 | 57645 | 189 | 444 | 1 | 0 |
 | school | 650 | 67746 | 198 | 450 | 2 | 0 |
-| tutorial | 51 | 15987 | 28 | 20 | 3 | 0 |
+| tutorial | 51 | 15997 | 28 | 20 | 3 | 0 |
 
 ## The First Pass, By Subsystem
 
@@ -109,163 +109,163 @@ Two passes. The first, brief 14’s, is kept as its history: Rewritten And Verif
 | `src/engine/content/guide/start.ts#START [start.guide]` | 36 | 0 | Rewritten | frame | docs/verification/editorial-2026-10-19/frame/help-b2.txt, each entry drawn through the Help dialog by render-help.mjs; its example held by tests/guide-examples-start-day-body.test.ts, 'start.guide: two chapters read…' | Pending |
 | `src/engine/content/guide/start.ts#START [start.find]` | 27 | 0 | Rewritten | frame | Read again against docs/STYLE.md on 2026-10-23 for brief 24: the menu's Updates and its count went, and Recent Updates says how many notices are unread; tests/b20-guide-promises.test.ts holds the menu it names | Pending |
 | `src/engine/content/identity.ts#ID_CARDS` | 6 | 0 | Retained | frame | Each state or country’s own name for its photo ID card, as the issuer spells it, which Papers shows beside the card. | Reviewed And Retained |
-| `src/engine/content/languages.ts#NAMES .aa` | 1 | 0 | Retained | frame | The English name of each language by its ISO code, shown in a place’s facts, spelled as English speakers spell them, Māori with its macron. | Reviewed And Retained |
-| `src/engine/content/languages.ts#NAMES .ab` | 1 | 0 | Retained | frame | The English name of each language by its ISO code, shown in a place’s facts, spelled as English speakers spell them, Māori with its macron. | Reviewed And Retained |
-| `src/engine/content/languages.ts#NAMES .af` | 1 | 0 | Retained | frame | The English name of each language by its ISO code, shown in a place’s facts, spelled as English speakers spell them, Māori with its macron. | Reviewed And Retained |
-| `src/engine/content/languages.ts#NAMES .ak` | 1 | 0 | Retained | frame | The English name of each language by its ISO code, shown in a place’s facts, spelled as English speakers spell them, Māori with its macron. | Reviewed And Retained |
-| `src/engine/content/languages.ts#NAMES .am` | 1 | 0 | Retained | frame | The English name of each language by its ISO code, shown in a place’s facts, spelled as English speakers spell them, Māori with its macron. | Reviewed And Retained |
-| `src/engine/content/languages.ts#NAMES .ar` | 1 | 0 | Retained | frame | The English name of each language by its ISO code, shown in a place’s facts, spelled as English speakers spell them, Māori with its macron. | Reviewed And Retained |
-| `src/engine/content/languages.ts#NAMES .as` | 1 | 0 | Retained | frame | The English name of each language by its ISO code, shown in a place’s facts, spelled as English speakers spell them, Māori with its macron. | Reviewed And Retained |
-| `src/engine/content/languages.ts#NAMES .ay` | 1 | 0 | Retained | frame | The English name of each language by its ISO code, shown in a place’s facts, spelled as English speakers spell them, Māori with its macron. | Reviewed And Retained |
-| `src/engine/content/languages.ts#NAMES .az` | 1 | 0 | Retained | frame | The English name of each language by its ISO code, shown in a place’s facts, spelled as English speakers spell them, Māori with its macron. | Reviewed And Retained |
-| `src/engine/content/languages.ts#NAMES .ba` | 1 | 0 | Retained | frame | The English name of each language by its ISO code, shown in a place’s facts, spelled as English speakers spell them, Māori with its macron. | Reviewed And Retained |
-| `src/engine/content/languages.ts#NAMES .be` | 1 | 0 | Retained | frame | The English name of each language by its ISO code, shown in a place’s facts, spelled as English speakers spell them, Māori with its macron. | Reviewed And Retained |
-| `src/engine/content/languages.ts#NAMES .bg` | 1 | 0 | Retained | frame | The English name of each language by its ISO code, shown in a place’s facts, spelled as English speakers spell them, Māori with its macron. | Reviewed And Retained |
-| `src/engine/content/languages.ts#NAMES .bi` | 1 | 0 | Retained | frame | The English name of each language by its ISO code, shown in a place’s facts, spelled as English speakers spell them, Māori with its macron. | Reviewed And Retained |
-| `src/engine/content/languages.ts#NAMES .bm` | 1 | 0 | Retained | frame | The English name of each language by its ISO code, shown in a place’s facts, spelled as English speakers spell them, Māori with its macron. | Reviewed And Retained |
-| `src/engine/content/languages.ts#NAMES .bn` | 1 | 0 | Retained | frame | The English name of each language by its ISO code, shown in a place’s facts, spelled as English speakers spell them, Māori with its macron. | Reviewed And Retained |
-| `src/engine/content/languages.ts#NAMES .bo` | 1 | 0 | Retained | frame | The English name of each language by its ISO code, shown in a place’s facts, spelled as English speakers spell them, Māori with its macron. | Reviewed And Retained |
-| `src/engine/content/languages.ts#NAMES .bs` | 1 | 0 | Retained | frame | The English name of each language by its ISO code, shown in a place’s facts, spelled as English speakers spell them, Māori with its macron. | Reviewed And Retained |
-| `src/engine/content/languages.ts#NAMES .ca` | 1 | 0 | Retained | frame | The English name of each language by its ISO code, shown in a place’s facts, spelled as English speakers spell them, Māori with its macron. | Reviewed And Retained |
-| `src/engine/content/languages.ts#NAMES .ch` | 1 | 0 | Retained | frame | The English name of each language by its ISO code, shown in a place’s facts, spelled as English speakers spell them, Māori with its macron. | Reviewed And Retained |
-| `src/engine/content/languages.ts#NAMES .cs` | 1 | 0 | Retained | frame | The English name of each language by its ISO code, shown in a place’s facts, spelled as English speakers spell them, Māori with its macron. | Reviewed And Retained |
-| `src/engine/content/languages.ts#NAMES .cy` | 1 | 0 | Retained | frame | The English name of each language by its ISO code, shown in a place’s facts, spelled as English speakers spell them, Māori with its macron. | Reviewed And Retained |
-| `src/engine/content/languages.ts#NAMES .da` | 1 | 0 | Retained | frame | The English name of each language by its ISO code, shown in a place’s facts, spelled as English speakers spell them, Māori with its macron. | Reviewed And Retained |
-| `src/engine/content/languages.ts#NAMES .de` | 1 | 0 | Retained | frame | The English name of each language by its ISO code, shown in a place’s facts, spelled as English speakers spell them, Māori with its macron. | Reviewed And Retained |
-| `src/engine/content/languages.ts#NAMES .dv` | 1 | 0 | Retained | frame | The English name of each language by its ISO code, shown in a place’s facts, spelled as English speakers spell them, Māori with its macron. | Reviewed And Retained |
-| `src/engine/content/languages.ts#NAMES .dz` | 1 | 0 | Retained | frame | The English name of each language by its ISO code, shown in a place’s facts, spelled as English speakers spell them, Māori with its macron. | Reviewed And Retained |
-| `src/engine/content/languages.ts#NAMES .el` | 1 | 0 | Retained | frame | The English name of each language by its ISO code, shown in a place’s facts, spelled as English speakers spell them, Māori with its macron. | Reviewed And Retained |
-| `src/engine/content/languages.ts#NAMES .en` | 1 | 0 | Retained | frame | The English name of each language by its ISO code, shown in a place’s facts, spelled as English speakers spell them, Māori with its macron. | Reviewed And Retained |
-| `src/engine/content/languages.ts#NAMES .es` | 1 | 0 | Retained | frame | The English name of each language by its ISO code, shown in a place’s facts, spelled as English speakers spell them, Māori with its macron. | Reviewed And Retained |
-| `src/engine/content/languages.ts#NAMES .et` | 1 | 0 | Retained | frame | The English name of each language by its ISO code, shown in a place’s facts, spelled as English speakers spell them, Māori with its macron. | Reviewed And Retained |
-| `src/engine/content/languages.ts#NAMES .eu` | 1 | 0 | Retained | frame | The English name of each language by its ISO code, shown in a place’s facts, spelled as English speakers spell them, Māori with its macron. | Reviewed And Retained |
-| `src/engine/content/languages.ts#NAMES .fa` | 1 | 0 | Retained | frame | The English name of each language by its ISO code, shown in a place’s facts, spelled as English speakers spell them, Māori with its macron. | Reviewed And Retained |
-| `src/engine/content/languages.ts#NAMES .ff` | 1 | 0 | Retained | frame | The English name of each language by its ISO code, shown in a place’s facts, spelled as English speakers spell them, Māori with its macron. | Reviewed And Retained |
-| `src/engine/content/languages.ts#NAMES .fi` | 1 | 0 | Retained | frame | The English name of each language by its ISO code, shown in a place’s facts, spelled as English speakers spell them, Māori with its macron. | Reviewed And Retained |
-| `src/engine/content/languages.ts#NAMES .fj` | 1 | 0 | Retained | frame | The English name of each language by its ISO code, shown in a place’s facts, spelled as English speakers spell them, Māori with its macron. | Reviewed And Retained |
-| `src/engine/content/languages.ts#NAMES .fo` | 1 | 0 | Retained | frame | The English name of each language by its ISO code, shown in a place’s facts, spelled as English speakers spell them, Māori with its macron. | Reviewed And Retained |
-| `src/engine/content/languages.ts#NAMES .fr` | 1 | 0 | Retained | frame | The English name of each language by its ISO code, shown in a place’s facts, spelled as English speakers spell them, Māori with its macron. | Reviewed And Retained |
-| `src/engine/content/languages.ts#NAMES .ga` | 1 | 0 | Retained | frame | The English name of each language by its ISO code, shown in a place’s facts, spelled as English speakers spell them, Māori with its macron. | Reviewed And Retained |
-| `src/engine/content/languages.ts#NAMES .gd` | 1 | 0 | Retained | frame | The English name of each language by its ISO code, shown in a place’s facts, spelled as English speakers spell them, Māori with its macron. | Reviewed And Retained |
-| `src/engine/content/languages.ts#NAMES .gl` | 1 | 0 | Retained | frame | The English name of each language by its ISO code, shown in a place’s facts, spelled as English speakers spell them, Māori with its macron. | Reviewed And Retained |
-| `src/engine/content/languages.ts#NAMES .gn` | 1 | 0 | Retained | frame | The English name of each language by its ISO code, shown in a place’s facts, spelled as English speakers spell them, Māori with its macron. | Reviewed And Retained |
-| `src/engine/content/languages.ts#NAMES .gu` | 1 | 0 | Retained | frame | The English name of each language by its ISO code, shown in a place’s facts, spelled as English speakers spell them, Māori with its macron. | Reviewed And Retained |
-| `src/engine/content/languages.ts#NAMES .gv` | 1 | 0 | Retained | frame | The English name of each language by its ISO code, shown in a place’s facts, spelled as English speakers spell them, Māori with its macron. | Reviewed And Retained |
-| `src/engine/content/languages.ts#NAMES .ha` | 1 | 0 | Retained | frame | The English name of each language by its ISO code, shown in a place’s facts, spelled as English speakers spell them, Māori with its macron. | Reviewed And Retained |
-| `src/engine/content/languages.ts#NAMES .he` | 1 | 0 | Retained | frame | The English name of each language by its ISO code, shown in a place’s facts, spelled as English speakers spell them, Māori with its macron. | Reviewed And Retained |
-| `src/engine/content/languages.ts#NAMES .hi` | 1 | 0 | Retained | frame | The English name of each language by its ISO code, shown in a place’s facts, spelled as English speakers spell them, Māori with its macron. | Reviewed And Retained |
-| `src/engine/content/languages.ts#NAMES .hr` | 1 | 0 | Retained | frame | The English name of each language by its ISO code, shown in a place’s facts, spelled as English speakers spell them, Māori with its macron. | Reviewed And Retained |
-| `src/engine/content/languages.ts#NAMES .ht` | 1 | 0 | Retained | frame | The English name of each language by its ISO code, shown in a place’s facts, spelled as English speakers spell them, Māori with its macron. | Reviewed And Retained |
-| `src/engine/content/languages.ts#NAMES .hu` | 1 | 0 | Retained | frame | The English name of each language by its ISO code, shown in a place’s facts, spelled as English speakers spell them, Māori with its macron. | Reviewed And Retained |
-| `src/engine/content/languages.ts#NAMES .hy` | 1 | 0 | Retained | frame | The English name of each language by its ISO code, shown in a place’s facts, spelled as English speakers spell them, Māori with its macron. | Reviewed And Retained |
-| `src/engine/content/languages.ts#NAMES .id` | 1 | 0 | Retained | frame | The English name of each language by its ISO code, shown in a place’s facts, spelled as English speakers spell them, Māori with its macron. | Reviewed And Retained |
-| `src/engine/content/languages.ts#NAMES .ig` | 1 | 0 | Retained | frame | The English name of each language by its ISO code, shown in a place’s facts, spelled as English speakers spell them, Māori with its macron. | Reviewed And Retained |
-| `src/engine/content/languages.ts#NAMES .is` | 1 | 0 | Retained | frame | The English name of each language by its ISO code, shown in a place’s facts, spelled as English speakers spell them, Māori with its macron. | Reviewed And Retained |
-| `src/engine/content/languages.ts#NAMES .it` | 1 | 0 | Retained | frame | The English name of each language by its ISO code, shown in a place’s facts, spelled as English speakers spell them, Māori with its macron. | Reviewed And Retained |
-| `src/engine/content/languages.ts#NAMES .ja` | 1 | 0 | Retained | frame | The English name of each language by its ISO code, shown in a place’s facts, spelled as English speakers spell them, Māori with its macron. | Reviewed And Retained |
-| `src/engine/content/languages.ts#NAMES .jv` | 1 | 0 | Retained | frame | The English name of each language by its ISO code, shown in a place’s facts, spelled as English speakers spell them, Māori with its macron. | Reviewed And Retained |
-| `src/engine/content/languages.ts#NAMES .ka` | 1 | 0 | Retained | frame | The English name of each language by its ISO code, shown in a place’s facts, spelled as English speakers spell them, Māori with its macron. | Reviewed And Retained |
-| `src/engine/content/languages.ts#NAMES .kg` | 1 | 0 | Retained | frame | The English name of each language by its ISO code, shown in a place’s facts, spelled as English speakers spell them, Māori with its macron. | Reviewed And Retained |
-| `src/engine/content/languages.ts#NAMES .kk` | 1 | 0 | Retained | frame | The English name of each language by its ISO code, shown in a place’s facts, spelled as English speakers spell them, Māori with its macron. | Reviewed And Retained |
-| `src/engine/content/languages.ts#NAMES .kl` | 1 | 0 | Retained | frame | The English name of each language by its ISO code, shown in a place’s facts, spelled as English speakers spell them, Māori with its macron. | Reviewed And Retained |
-| `src/engine/content/languages.ts#NAMES .km` | 1 | 0 | Retained | frame | The English name of each language by its ISO code, shown in a place’s facts, spelled as English speakers spell them, Māori with its macron. | Reviewed And Retained |
-| `src/engine/content/languages.ts#NAMES .kn` | 1 | 0 | Retained | frame | The English name of each language by its ISO code, shown in a place’s facts, spelled as English speakers spell them, Māori with its macron. | Reviewed And Retained |
-| `src/engine/content/languages.ts#NAMES .ko` | 1 | 0 | Retained | frame | The English name of each language by its ISO code, shown in a place’s facts, spelled as English speakers spell them, Māori with its macron. | Reviewed And Retained |
-| `src/engine/content/languages.ts#NAMES .ku` | 1 | 0 | Retained | frame | The English name of each language by its ISO code, shown in a place’s facts, spelled as English speakers spell them, Māori with its macron. | Reviewed And Retained |
-| `src/engine/content/languages.ts#NAMES .ky` | 1 | 0 | Retained | frame | The English name of each language by its ISO code, shown in a place’s facts, spelled as English speakers spell them, Māori with its macron. | Reviewed And Retained |
-| `src/engine/content/languages.ts#NAMES .la` | 1 | 0 | Retained | frame | The English name of each language by its ISO code, shown in a place’s facts, spelled as English speakers spell them, Māori with its macron. | Reviewed And Retained |
-| `src/engine/content/languages.ts#NAMES .lb` | 1 | 0 | Retained | frame | The English name of each language by its ISO code, shown in a place’s facts, spelled as English speakers spell them, Māori with its macron. | Reviewed And Retained |
-| `src/engine/content/languages.ts#NAMES .ln` | 1 | 0 | Retained | frame | The English name of each language by its ISO code, shown in a place’s facts, spelled as English speakers spell them, Māori with its macron. | Reviewed And Retained |
-| `src/engine/content/languages.ts#NAMES .lo` | 1 | 0 | Retained | frame | The English name of each language by its ISO code, shown in a place’s facts, spelled as English speakers spell them, Māori with its macron. | Reviewed And Retained |
-| `src/engine/content/languages.ts#NAMES .lt` | 1 | 0 | Retained | frame | The English name of each language by its ISO code, shown in a place’s facts, spelled as English speakers spell them, Māori with its macron. | Reviewed And Retained |
-| `src/engine/content/languages.ts#NAMES .lv` | 1 | 0 | Retained | frame | The English name of each language by its ISO code, shown in a place’s facts, spelled as English speakers spell them, Māori with its macron. | Reviewed And Retained |
-| `src/engine/content/languages.ts#NAMES .mg` | 1 | 0 | Retained | frame | The English name of each language by its ISO code, shown in a place’s facts, spelled as English speakers spell them, Māori with its macron. | Reviewed And Retained |
-| `src/engine/content/languages.ts#NAMES .mh` | 1 | 0 | Retained | frame | The English name of each language by its ISO code, shown in a place’s facts, spelled as English speakers spell them, Māori with its macron. | Reviewed And Retained |
-| `src/engine/content/languages.ts#NAMES .mi` | 1 | 0 | Retained | frame | The English name of each language by its ISO code, shown in a place’s facts, spelled as English speakers spell them, Māori with its macron. | Reviewed And Retained |
-| `src/engine/content/languages.ts#NAMES .mk` | 1 | 0 | Retained | frame | The English name of each language by its ISO code, shown in a place’s facts, spelled as English speakers spell them, Māori with its macron. | Reviewed And Retained |
-| `src/engine/content/languages.ts#NAMES .ml` | 1 | 0 | Retained | frame | The English name of each language by its ISO code, shown in a place’s facts, spelled as English speakers spell them, Māori with its macron. | Reviewed And Retained |
-| `src/engine/content/languages.ts#NAMES .mn` | 1 | 0 | Retained | frame | The English name of each language by its ISO code, shown in a place’s facts, spelled as English speakers spell them, Māori with its macron. | Reviewed And Retained |
-| `src/engine/content/languages.ts#NAMES .mr` | 1 | 0 | Retained | frame | The English name of each language by its ISO code, shown in a place’s facts, spelled as English speakers spell them, Māori with its macron. | Reviewed And Retained |
-| `src/engine/content/languages.ts#NAMES .ms` | 1 | 0 | Retained | frame | The English name of each language by its ISO code, shown in a place’s facts, spelled as English speakers spell them, Māori with its macron. | Reviewed And Retained |
-| `src/engine/content/languages.ts#NAMES .mt` | 1 | 0 | Retained | frame | The English name of each language by its ISO code, shown in a place’s facts, spelled as English speakers spell them, Māori with its macron. | Reviewed And Retained |
-| `src/engine/content/languages.ts#NAMES .my` | 1 | 0 | Retained | frame | The English name of each language by its ISO code, shown in a place’s facts, spelled as English speakers spell them, Māori with its macron. | Reviewed And Retained |
-| `src/engine/content/languages.ts#NAMES .na` | 1 | 0 | Retained | frame | The English name of each language by its ISO code, shown in a place’s facts, spelled as English speakers spell them, Māori with its macron. | Reviewed And Retained |
-| `src/engine/content/languages.ts#NAMES .nb` | 1 | 0 | Retained | frame | The English name of each language by its ISO code, shown in a place’s facts, spelled as English speakers spell them, Māori with its macron. | Reviewed And Retained |
-| `src/engine/content/languages.ts#NAMES .nd` | 1 | 0 | Retained | frame | The English name of each language by its ISO code, shown in a place’s facts, spelled as English speakers spell them, Māori with its macron. | Reviewed And Retained |
-| `src/engine/content/languages.ts#NAMES .ne` | 1 | 0 | Retained | frame | The English name of each language by its ISO code, shown in a place’s facts, spelled as English speakers spell them, Māori with its macron. | Reviewed And Retained |
-| `src/engine/content/languages.ts#NAMES .nl` | 1 | 0 | Retained | frame | The English name of each language by its ISO code, shown in a place’s facts, spelled as English speakers spell them, Māori with its macron. | Reviewed And Retained |
-| `src/engine/content/languages.ts#NAMES .nn` | 1 | 0 | Retained | frame | The English name of each language by its ISO code, shown in a place’s facts, spelled as English speakers spell them, Māori with its macron. | Reviewed And Retained |
-| `src/engine/content/languages.ts#NAMES .no` | 1 | 0 | Retained | frame | The English name of each language by its ISO code, shown in a place’s facts, spelled as English speakers spell them, Māori with its macron. | Reviewed And Retained |
-| `src/engine/content/languages.ts#NAMES .ny` | 1 | 0 | Retained | frame | The English name of each language by its ISO code, shown in a place’s facts, spelled as English speakers spell them, Māori with its macron. | Reviewed And Retained |
-| `src/engine/content/languages.ts#NAMES .om` | 1 | 0 | Retained | frame | The English name of each language by its ISO code, shown in a place’s facts, spelled as English speakers spell them, Māori with its macron. | Reviewed And Retained |
-| `src/engine/content/languages.ts#NAMES .or` | 1 | 0 | Retained | frame | The English name of each language by its ISO code, shown in a place’s facts, spelled as English speakers spell them, Māori with its macron. | Reviewed And Retained |
-| `src/engine/content/languages.ts#NAMES .pa` | 1 | 0 | Retained | frame | The English name of each language by its ISO code, shown in a place’s facts, spelled as English speakers spell them, Māori with its macron. | Reviewed And Retained |
-| `src/engine/content/languages.ts#NAMES .pl` | 1 | 0 | Retained | frame | The English name of each language by its ISO code, shown in a place’s facts, spelled as English speakers spell them, Māori with its macron. | Reviewed And Retained |
-| `src/engine/content/languages.ts#NAMES .ps` | 1 | 0 | Retained | frame | The English name of each language by its ISO code, shown in a place’s facts, spelled as English speakers spell them, Māori with its macron. | Reviewed And Retained |
-| `src/engine/content/languages.ts#NAMES .pt` | 1 | 0 | Retained | frame | The English name of each language by its ISO code, shown in a place’s facts, spelled as English speakers spell them, Māori with its macron. | Reviewed And Retained |
-| `src/engine/content/languages.ts#NAMES .qu` | 1 | 0 | Retained | frame | The English name of each language by its ISO code, shown in a place’s facts, spelled as English speakers spell them, Māori with its macron. | Reviewed And Retained |
-| `src/engine/content/languages.ts#NAMES .rm` | 1 | 0 | Retained | frame | The English name of each language by its ISO code, shown in a place’s facts, spelled as English speakers spell them, Māori with its macron. | Reviewed And Retained |
-| `src/engine/content/languages.ts#NAMES .rn` | 1 | 0 | Retained | frame | The English name of each language by its ISO code, shown in a place’s facts, spelled as English speakers spell them, Māori with its macron. | Reviewed And Retained |
-| `src/engine/content/languages.ts#NAMES .ro` | 1 | 0 | Retained | frame | The English name of each language by its ISO code, shown in a place’s facts, spelled as English speakers spell them, Māori with its macron. | Reviewed And Retained |
-| `src/engine/content/languages.ts#NAMES .ru` | 1 | 0 | Retained | frame | The English name of each language by its ISO code, shown in a place’s facts, spelled as English speakers spell them, Māori with its macron. | Reviewed And Retained |
-| `src/engine/content/languages.ts#NAMES .rw` | 1 | 0 | Retained | frame | The English name of each language by its ISO code, shown in a place’s facts, spelled as English speakers spell them, Māori with its macron. | Reviewed And Retained |
-| `src/engine/content/languages.ts#NAMES .sd` | 1 | 0 | Retained | frame | The English name of each language by its ISO code, shown in a place’s facts, spelled as English speakers spell them, Māori with its macron. | Reviewed And Retained |
-| `src/engine/content/languages.ts#NAMES .sg` | 1 | 0 | Retained | frame | The English name of each language by its ISO code, shown in a place’s facts, spelled as English speakers spell them, Māori with its macron. | Reviewed And Retained |
-| `src/engine/content/languages.ts#NAMES .si` | 1 | 0 | Retained | frame | The English name of each language by its ISO code, shown in a place’s facts, spelled as English speakers spell them, Māori with its macron. | Reviewed And Retained |
-| `src/engine/content/languages.ts#NAMES .sk` | 1 | 0 | Retained | frame | The English name of each language by its ISO code, shown in a place’s facts, spelled as English speakers spell them, Māori with its macron. | Reviewed And Retained |
-| `src/engine/content/languages.ts#NAMES .sl` | 1 | 0 | Retained | frame | The English name of each language by its ISO code, shown in a place’s facts, spelled as English speakers spell them, Māori with its macron. | Reviewed And Retained |
-| `src/engine/content/languages.ts#NAMES .sm` | 1 | 0 | Retained | frame | The English name of each language by its ISO code, shown in a place’s facts, spelled as English speakers spell them, Māori with its macron. | Reviewed And Retained |
-| `src/engine/content/languages.ts#NAMES .sn` | 1 | 0 | Retained | frame | The English name of each language by its ISO code, shown in a place’s facts, spelled as English speakers spell them, Māori with its macron. | Reviewed And Retained |
-| `src/engine/content/languages.ts#NAMES .so` | 1 | 0 | Retained | frame | The English name of each language by its ISO code, shown in a place’s facts, spelled as English speakers spell them, Māori with its macron. | Reviewed And Retained |
-| `src/engine/content/languages.ts#NAMES .sq` | 1 | 0 | Retained | frame | The English name of each language by its ISO code, shown in a place’s facts, spelled as English speakers spell them, Māori with its macron. | Reviewed And Retained |
-| `src/engine/content/languages.ts#NAMES .sr` | 1 | 0 | Retained | frame | The English name of each language by its ISO code, shown in a place’s facts, spelled as English speakers spell them, Māori with its macron. | Reviewed And Retained |
-| `src/engine/content/languages.ts#NAMES .ss` | 1 | 0 | Retained | frame | The English name of each language by its ISO code, shown in a place’s facts, spelled as English speakers spell them, Māori with its macron. | Reviewed And Retained |
-| `src/engine/content/languages.ts#NAMES .st` | 1 | 0 | Retained | frame | The English name of each language by its ISO code, shown in a place’s facts, spelled as English speakers spell them, Māori with its macron. | Reviewed And Retained |
-| `src/engine/content/languages.ts#NAMES .su` | 1 | 0 | Retained | frame | The English name of each language by its ISO code, shown in a place’s facts, spelled as English speakers spell them, Māori with its macron. | Reviewed And Retained |
-| `src/engine/content/languages.ts#NAMES .sv` | 1 | 0 | Retained | frame | The English name of each language by its ISO code, shown in a place’s facts, spelled as English speakers spell them, Māori with its macron. | Reviewed And Retained |
-| `src/engine/content/languages.ts#NAMES .sw` | 1 | 0 | Retained | frame | The English name of each language by its ISO code, shown in a place’s facts, spelled as English speakers spell them, Māori with its macron. | Reviewed And Retained |
-| `src/engine/content/languages.ts#NAMES .ta` | 1 | 0 | Retained | frame | The English name of each language by its ISO code, shown in a place’s facts, spelled as English speakers spell them, Māori with its macron. | Reviewed And Retained |
-| `src/engine/content/languages.ts#NAMES .te` | 1 | 0 | Retained | frame | The English name of each language by its ISO code, shown in a place’s facts, spelled as English speakers spell them, Māori with its macron. | Reviewed And Retained |
-| `src/engine/content/languages.ts#NAMES .tg` | 1 | 0 | Retained | frame | The English name of each language by its ISO code, shown in a place’s facts, spelled as English speakers spell them, Māori with its macron. | Reviewed And Retained |
-| `src/engine/content/languages.ts#NAMES .th` | 1 | 0 | Retained | frame | The English name of each language by its ISO code, shown in a place’s facts, spelled as English speakers spell them, Māori with its macron. | Reviewed And Retained |
-| `src/engine/content/languages.ts#NAMES .ti` | 1 | 0 | Retained | frame | The English name of each language by its ISO code, shown in a place’s facts, spelled as English speakers spell them, Māori with its macron. | Reviewed And Retained |
-| `src/engine/content/languages.ts#NAMES .tk` | 1 | 0 | Retained | frame | The English name of each language by its ISO code, shown in a place’s facts, spelled as English speakers spell them, Māori with its macron. | Reviewed And Retained |
-| `src/engine/content/languages.ts#NAMES .tl` | 1 | 0 | Retained | frame | The English name of each language by its ISO code, shown in a place’s facts, spelled as English speakers spell them, Māori with its macron. | Reviewed And Retained |
-| `src/engine/content/languages.ts#NAMES .tn` | 1 | 0 | Retained | frame | The English name of each language by its ISO code, shown in a place’s facts, spelled as English speakers spell them, Māori with its macron. | Reviewed And Retained |
-| `src/engine/content/languages.ts#NAMES .to` | 1 | 0 | Retained | frame | The English name of each language by its ISO code, shown in a place’s facts, spelled as English speakers spell them, Māori with its macron. | Reviewed And Retained |
-| `src/engine/content/languages.ts#NAMES .tr` | 1 | 0 | Retained | frame | The English name of each language by its ISO code, shown in a place’s facts, spelled as English speakers spell them, Māori with its macron. | Reviewed And Retained |
-| `src/engine/content/languages.ts#NAMES .ts` | 1 | 0 | Retained | frame | The English name of each language by its ISO code, shown in a place’s facts, spelled as English speakers spell them, Māori with its macron. | Reviewed And Retained |
-| `src/engine/content/languages.ts#NAMES .tt` | 1 | 0 | Retained | frame | The English name of each language by its ISO code, shown in a place’s facts, spelled as English speakers spell them, Māori with its macron. | Reviewed And Retained |
-| `src/engine/content/languages.ts#NAMES .ty` | 1 | 0 | Retained | frame | The English name of each language by its ISO code, shown in a place’s facts, spelled as English speakers spell them, Māori with its macron. | Reviewed And Retained |
-| `src/engine/content/languages.ts#NAMES .uk` | 1 | 0 | Retained | frame | The English name of each language by its ISO code, shown in a place’s facts, spelled as English speakers spell them, Māori with its macron. | Reviewed And Retained |
-| `src/engine/content/languages.ts#NAMES .ur` | 1 | 0 | Retained | frame | The English name of each language by its ISO code, shown in a place’s facts, spelled as English speakers spell them, Māori with its macron. | Reviewed And Retained |
-| `src/engine/content/languages.ts#NAMES .uz` | 1 | 0 | Retained | frame | The English name of each language by its ISO code, shown in a place’s facts, spelled as English speakers spell them, Māori with its macron. | Reviewed And Retained |
-| `src/engine/content/languages.ts#NAMES .ve` | 1 | 0 | Retained | frame | The English name of each language by its ISO code, shown in a place’s facts, spelled as English speakers spell them, Māori with its macron. | Reviewed And Retained |
-| `src/engine/content/languages.ts#NAMES .vi` | 1 | 0 | Retained | frame | The English name of each language by its ISO code, shown in a place’s facts, spelled as English speakers spell them, Māori with its macron. | Reviewed And Retained |
-| `src/engine/content/languages.ts#NAMES .wo` | 1 | 0 | Retained | frame | The English name of each language by its ISO code, shown in a place’s facts, spelled as English speakers spell them, Māori with its macron. | Reviewed And Retained |
-| `src/engine/content/languages.ts#NAMES .xh` | 1 | 0 | Retained | frame | The English name of each language by its ISO code, shown in a place’s facts, spelled as English speakers spell them, Māori with its macron. | Reviewed And Retained |
-| `src/engine/content/languages.ts#NAMES .yo` | 1 | 0 | Retained | frame | The English name of each language by its ISO code, shown in a place’s facts, spelled as English speakers spell them, Māori with its macron. | Reviewed And Retained |
-| `src/engine/content/languages.ts#NAMES .zh` | 1 | 0 | Retained | frame | The English name of each language by its ISO code, shown in a place’s facts, spelled as English speakers spell them, Māori with its macron. | Reviewed And Retained |
-| `src/engine/content/languages.ts#NAMES .zu` | 1 | 0 | Retained | frame | The English name of each language by its ISO code, shown in a place’s facts, spelled as English speakers spell them, Māori with its macron. | Reviewed And Retained |
-| `src/engine/content/languages.ts#NAMES .fil` | 1 | 0 | Retained | frame | The English name of each language by its ISO code, shown in a place’s facts, spelled as English speakers spell them, Māori with its macron. | Reviewed And Retained |
-| `src/engine/content/languages.ts#NAMES .haw` | 1 | 0 | Retained | frame | The English name of each language by its ISO code, shown in a place’s facts, spelled as English speakers spell them, Māori with its macron. | Reviewed And Retained |
-| `src/engine/content/languages.ts#NAMES .nso` | 1 | 0 | Retained | frame | The English name of each language by its ISO code, shown in a place’s facts, spelled as English speakers spell them, Māori with its macron. | Reviewed And Retained |
-| `src/engine/content/languages.ts#NAMES .tet` | 1 | 0 | Retained | frame | The English name of each language by its ISO code, shown in a place’s facts, spelled as English speakers spell them, Māori with its macron. | Reviewed And Retained |
-| `src/engine/content/languages.ts#NAMES .gil` | 1 | 0 | Retained | frame | The English name of each language by its ISO code, shown in a place’s facts, spelled as English speakers spell them, Māori with its macron. | Reviewed And Retained |
-| `src/engine/content/languages.ts#NAMES .tvl` | 1 | 0 | Retained | frame | The English name of each language by its ISO code, shown in a place’s facts, spelled as English speakers spell them, Māori with its macron. | Reviewed And Retained |
-| `src/engine/content/languages.ts#NAMES .pap` | 1 | 0 | Retained | frame | The English name of each language by its ISO code, shown in a place’s facts, spelled as English speakers spell them, Māori with its macron. | Reviewed And Retained |
-| `src/engine/content/languages.ts#NAMES .crs` | 1 | 0 | Retained | frame | The English name of each language by its ISO code, shown in a place’s facts, spelled as English speakers spell them, Māori with its macron. | Reviewed And Retained |
-| `src/engine/content/languages.ts#NAMES .niu` | 1 | 0 | Retained | frame | The English name of each language by its ISO code, shown in a place’s facts, spelled as English speakers spell them, Māori with its macron. | Reviewed And Retained |
-| `src/engine/content/languages.ts#NAMES .tkl` | 1 | 0 | Retained | frame | The English name of each language by its ISO code, shown in a place’s facts, spelled as English speakers spell them, Māori with its macron. | Reviewed And Retained |
-| `src/engine/content/languages.ts#NAMES .gsw` | 1 | 0 | Retained | frame | The English name of each language by its ISO code, shown in a place’s facts, spelled as English speakers spell them, Māori with its macron. | Reviewed And Retained |
-| `src/engine/content/languages.ts#NAMES .prs` | 1 | 0 | Retained | frame | The English name of each language by its ISO code, shown in a place’s facts, spelled as English speakers spell them, Māori with its macron. | Reviewed And Retained |
-| `src/engine/content/languages.ts#NAMES .ckb` | 1 | 0 | Retained | frame | The English name of each language by its ISO code, shown in a place’s facts, spelled as English speakers spell them, Māori with its macron. | Reviewed And Retained |
-| `src/engine/content/languages.ts#NAMES .yue` | 1 | 0 | Retained | frame | The English name of each language by its ISO code, shown in a place’s facts, spelled as English speakers spell them, Māori with its macron. | Reviewed And Retained |
-| `src/engine/content/languages.ts#NAMES .nan` | 1 | 0 | Retained | frame | The English name of each language by its ISO code, shown in a place’s facts, spelled as English speakers spell them, Māori with its macron. | Reviewed And Retained |
-| `src/engine/content/languages.ts#NAMES .hak` | 1 | 0 | Retained | frame | The English name of each language by its ISO code, shown in a place’s facts, spelled as English speakers spell them, Māori with its macron. | Reviewed And Retained |
-| `src/engine/content/languages.ts#LEVEL_LABEL` | 3 | 0 | Pending | frame | not yet read in the second pass | Pending |
-| `src/engine/content/languages.ts#SPOKEN_NAMES` | 1 | 0 | Pending | frame | not yet read in the second pass | Pending |
-| `src/engine/content/languages.ts#languagesProblems` | 5 | 0 | Pending | frame | not yet read in the second pass | Pending |
+| `src/engine/content/languages.ts#NAMES .aa` | 1 | 0 | Retained | career-work | The English name of each language by its ISO code, shown in a place’s facts, spelled as English speakers spell them, Māori with its macron. | Reviewed And Retained |
+| `src/engine/content/languages.ts#NAMES .ab` | 1 | 0 | Retained | career-work | The English name of each language by its ISO code, shown in a place’s facts, spelled as English speakers spell them, Māori with its macron. | Reviewed And Retained |
+| `src/engine/content/languages.ts#NAMES .af` | 1 | 0 | Retained | career-work | The English name of each language by its ISO code, shown in a place’s facts, spelled as English speakers spell them, Māori with its macron. | Reviewed And Retained |
+| `src/engine/content/languages.ts#NAMES .ak` | 1 | 0 | Retained | career-work | The English name of each language by its ISO code, shown in a place’s facts, spelled as English speakers spell them, Māori with its macron. | Reviewed And Retained |
+| `src/engine/content/languages.ts#NAMES .am` | 1 | 0 | Retained | career-work | The English name of each language by its ISO code, shown in a place’s facts, spelled as English speakers spell them, Māori with its macron. | Reviewed And Retained |
+| `src/engine/content/languages.ts#NAMES .ar` | 1 | 0 | Retained | career-work | The English name of each language by its ISO code, shown in a place’s facts, spelled as English speakers spell them, Māori with its macron. | Reviewed And Retained |
+| `src/engine/content/languages.ts#NAMES .as` | 1 | 0 | Retained | career-work | The English name of each language by its ISO code, shown in a place’s facts, spelled as English speakers spell them, Māori with its macron. | Reviewed And Retained |
+| `src/engine/content/languages.ts#NAMES .ay` | 1 | 0 | Retained | career-work | The English name of each language by its ISO code, shown in a place’s facts, spelled as English speakers spell them, Māori with its macron. | Reviewed And Retained |
+| `src/engine/content/languages.ts#NAMES .az` | 1 | 0 | Retained | career-work | The English name of each language by its ISO code, shown in a place’s facts, spelled as English speakers spell them, Māori with its macron. | Reviewed And Retained |
+| `src/engine/content/languages.ts#NAMES .ba` | 1 | 0 | Retained | career-work | The English name of each language by its ISO code, shown in a place’s facts, spelled as English speakers spell them, Māori with its macron. | Reviewed And Retained |
+| `src/engine/content/languages.ts#NAMES .be` | 1 | 0 | Retained | career-work | The English name of each language by its ISO code, shown in a place’s facts, spelled as English speakers spell them, Māori with its macron. | Reviewed And Retained |
+| `src/engine/content/languages.ts#NAMES .bg` | 1 | 0 | Retained | career-work | The English name of each language by its ISO code, shown in a place’s facts, spelled as English speakers spell them, Māori with its macron. | Reviewed And Retained |
+| `src/engine/content/languages.ts#NAMES .bi` | 1 | 0 | Retained | career-work | The English name of each language by its ISO code, shown in a place’s facts, spelled as English speakers spell them, Māori with its macron. | Reviewed And Retained |
+| `src/engine/content/languages.ts#NAMES .bm` | 1 | 0 | Retained | career-work | The English name of each language by its ISO code, shown in a place’s facts, spelled as English speakers spell them, Māori with its macron. | Reviewed And Retained |
+| `src/engine/content/languages.ts#NAMES .bn` | 1 | 0 | Retained | career-work | The English name of each language by its ISO code, shown in a place’s facts, spelled as English speakers spell them, Māori with its macron. | Reviewed And Retained |
+| `src/engine/content/languages.ts#NAMES .bo` | 1 | 0 | Retained | career-work | The English name of each language by its ISO code, shown in a place’s facts, spelled as English speakers spell them, Māori with its macron. | Reviewed And Retained |
+| `src/engine/content/languages.ts#NAMES .bs` | 1 | 0 | Retained | career-work | The English name of each language by its ISO code, shown in a place’s facts, spelled as English speakers spell them, Māori with its macron. | Reviewed And Retained |
+| `src/engine/content/languages.ts#NAMES .ca` | 1 | 0 | Retained | career-work | The English name of each language by its ISO code, shown in a place’s facts, spelled as English speakers spell them, Māori with its macron. | Reviewed And Retained |
+| `src/engine/content/languages.ts#NAMES .ch` | 1 | 0 | Retained | career-work | The English name of each language by its ISO code, shown in a place’s facts, spelled as English speakers spell them, Māori with its macron. | Reviewed And Retained |
+| `src/engine/content/languages.ts#NAMES .cs` | 1 | 0 | Retained | career-work | The English name of each language by its ISO code, shown in a place’s facts, spelled as English speakers spell them, Māori with its macron. | Reviewed And Retained |
+| `src/engine/content/languages.ts#NAMES .cy` | 1 | 0 | Retained | career-work | The English name of each language by its ISO code, shown in a place’s facts, spelled as English speakers spell them, Māori with its macron. | Reviewed And Retained |
+| `src/engine/content/languages.ts#NAMES .da` | 1 | 0 | Retained | career-work | The English name of each language by its ISO code, shown in a place’s facts, spelled as English speakers spell them, Māori with its macron. | Reviewed And Retained |
+| `src/engine/content/languages.ts#NAMES .de` | 1 | 0 | Retained | career-work | The English name of each language by its ISO code, shown in a place’s facts, spelled as English speakers spell them, Māori with its macron. | Reviewed And Retained |
+| `src/engine/content/languages.ts#NAMES .dv` | 1 | 0 | Retained | career-work | The English name of each language by its ISO code, shown in a place’s facts, spelled as English speakers spell them, Māori with its macron. | Reviewed And Retained |
+| `src/engine/content/languages.ts#NAMES .dz` | 1 | 0 | Retained | career-work | The English name of each language by its ISO code, shown in a place’s facts, spelled as English speakers spell them, Māori with its macron. | Reviewed And Retained |
+| `src/engine/content/languages.ts#NAMES .el` | 1 | 0 | Retained | career-work | The English name of each language by its ISO code, shown in a place’s facts, spelled as English speakers spell them, Māori with its macron. | Reviewed And Retained |
+| `src/engine/content/languages.ts#NAMES .en` | 1 | 0 | Retained | career-work | The English name of each language by its ISO code, shown in a place’s facts, spelled as English speakers spell them, Māori with its macron. | Reviewed And Retained |
+| `src/engine/content/languages.ts#NAMES .es` | 1 | 0 | Retained | career-work | The English name of each language by its ISO code, shown in a place’s facts, spelled as English speakers spell them, Māori with its macron. | Reviewed And Retained |
+| `src/engine/content/languages.ts#NAMES .et` | 1 | 0 | Retained | career-work | The English name of each language by its ISO code, shown in a place’s facts, spelled as English speakers spell them, Māori with its macron. | Reviewed And Retained |
+| `src/engine/content/languages.ts#NAMES .eu` | 1 | 0 | Retained | career-work | The English name of each language by its ISO code, shown in a place’s facts, spelled as English speakers spell them, Māori with its macron. | Reviewed And Retained |
+| `src/engine/content/languages.ts#NAMES .fa` | 1 | 0 | Retained | career-work | The English name of each language by its ISO code, shown in a place’s facts, spelled as English speakers spell them, Māori with its macron. | Reviewed And Retained |
+| `src/engine/content/languages.ts#NAMES .ff` | 1 | 0 | Retained | career-work | The English name of each language by its ISO code, shown in a place’s facts, spelled as English speakers spell them, Māori with its macron. | Reviewed And Retained |
+| `src/engine/content/languages.ts#NAMES .fi` | 1 | 0 | Retained | career-work | The English name of each language by its ISO code, shown in a place’s facts, spelled as English speakers spell them, Māori with its macron. | Reviewed And Retained |
+| `src/engine/content/languages.ts#NAMES .fj` | 1 | 0 | Retained | career-work | The English name of each language by its ISO code, shown in a place’s facts, spelled as English speakers spell them, Māori with its macron. | Reviewed And Retained |
+| `src/engine/content/languages.ts#NAMES .fo` | 1 | 0 | Retained | career-work | The English name of each language by its ISO code, shown in a place’s facts, spelled as English speakers spell them, Māori with its macron. | Reviewed And Retained |
+| `src/engine/content/languages.ts#NAMES .fr` | 1 | 0 | Retained | career-work | The English name of each language by its ISO code, shown in a place’s facts, spelled as English speakers spell them, Māori with its macron. | Reviewed And Retained |
+| `src/engine/content/languages.ts#NAMES .ga` | 1 | 0 | Retained | career-work | The English name of each language by its ISO code, shown in a place’s facts, spelled as English speakers spell them, Māori with its macron. | Reviewed And Retained |
+| `src/engine/content/languages.ts#NAMES .gd` | 1 | 0 | Retained | career-work | The English name of each language by its ISO code, shown in a place’s facts, spelled as English speakers spell them, Māori with its macron. | Reviewed And Retained |
+| `src/engine/content/languages.ts#NAMES .gl` | 1 | 0 | Retained | career-work | The English name of each language by its ISO code, shown in a place’s facts, spelled as English speakers spell them, Māori with its macron. | Reviewed And Retained |
+| `src/engine/content/languages.ts#NAMES .gn` | 1 | 0 | Retained | career-work | The English name of each language by its ISO code, shown in a place’s facts, spelled as English speakers spell them, Māori with its macron. | Reviewed And Retained |
+| `src/engine/content/languages.ts#NAMES .gu` | 1 | 0 | Retained | career-work | The English name of each language by its ISO code, shown in a place’s facts, spelled as English speakers spell them, Māori with its macron. | Reviewed And Retained |
+| `src/engine/content/languages.ts#NAMES .gv` | 1 | 0 | Retained | career-work | The English name of each language by its ISO code, shown in a place’s facts, spelled as English speakers spell them, Māori with its macron. | Reviewed And Retained |
+| `src/engine/content/languages.ts#NAMES .ha` | 1 | 0 | Retained | career-work | The English name of each language by its ISO code, shown in a place’s facts, spelled as English speakers spell them, Māori with its macron. | Reviewed And Retained |
+| `src/engine/content/languages.ts#NAMES .he` | 1 | 0 | Retained | career-work | The English name of each language by its ISO code, shown in a place’s facts, spelled as English speakers spell them, Māori with its macron. | Reviewed And Retained |
+| `src/engine/content/languages.ts#NAMES .hi` | 1 | 0 | Retained | career-work | The English name of each language by its ISO code, shown in a place’s facts, spelled as English speakers spell them, Māori with its macron. | Reviewed And Retained |
+| `src/engine/content/languages.ts#NAMES .hr` | 1 | 0 | Retained | career-work | The English name of each language by its ISO code, shown in a place’s facts, spelled as English speakers spell them, Māori with its macron. | Reviewed And Retained |
+| `src/engine/content/languages.ts#NAMES .ht` | 1 | 0 | Retained | career-work | The English name of each language by its ISO code, shown in a place’s facts, spelled as English speakers spell them, Māori with its macron. | Reviewed And Retained |
+| `src/engine/content/languages.ts#NAMES .hu` | 1 | 0 | Retained | career-work | The English name of each language by its ISO code, shown in a place’s facts, spelled as English speakers spell them, Māori with its macron. | Reviewed And Retained |
+| `src/engine/content/languages.ts#NAMES .hy` | 1 | 0 | Retained | career-work | The English name of each language by its ISO code, shown in a place’s facts, spelled as English speakers spell them, Māori with its macron. | Reviewed And Retained |
+| `src/engine/content/languages.ts#NAMES .id` | 1 | 0 | Retained | career-work | The English name of each language by its ISO code, shown in a place’s facts, spelled as English speakers spell them, Māori with its macron. | Reviewed And Retained |
+| `src/engine/content/languages.ts#NAMES .ig` | 1 | 0 | Retained | career-work | The English name of each language by its ISO code, shown in a place’s facts, spelled as English speakers spell them, Māori with its macron. | Reviewed And Retained |
+| `src/engine/content/languages.ts#NAMES .is` | 1 | 0 | Retained | career-work | The English name of each language by its ISO code, shown in a place’s facts, spelled as English speakers spell them, Māori with its macron. | Reviewed And Retained |
+| `src/engine/content/languages.ts#NAMES .it` | 1 | 0 | Retained | career-work | The English name of each language by its ISO code, shown in a place’s facts, spelled as English speakers spell them, Māori with its macron. | Reviewed And Retained |
+| `src/engine/content/languages.ts#NAMES .ja` | 1 | 0 | Retained | career-work | The English name of each language by its ISO code, shown in a place’s facts, spelled as English speakers spell them, Māori with its macron. | Reviewed And Retained |
+| `src/engine/content/languages.ts#NAMES .jv` | 1 | 0 | Retained | career-work | The English name of each language by its ISO code, shown in a place’s facts, spelled as English speakers spell them, Māori with its macron. | Reviewed And Retained |
+| `src/engine/content/languages.ts#NAMES .ka` | 1 | 0 | Retained | career-work | The English name of each language by its ISO code, shown in a place’s facts, spelled as English speakers spell them, Māori with its macron. | Reviewed And Retained |
+| `src/engine/content/languages.ts#NAMES .kg` | 1 | 0 | Retained | career-work | The English name of each language by its ISO code, shown in a place’s facts, spelled as English speakers spell them, Māori with its macron. | Reviewed And Retained |
+| `src/engine/content/languages.ts#NAMES .kk` | 1 | 0 | Retained | career-work | The English name of each language by its ISO code, shown in a place’s facts, spelled as English speakers spell them, Māori with its macron. | Reviewed And Retained |
+| `src/engine/content/languages.ts#NAMES .kl` | 1 | 0 | Retained | career-work | The English name of each language by its ISO code, shown in a place’s facts, spelled as English speakers spell them, Māori with its macron. | Reviewed And Retained |
+| `src/engine/content/languages.ts#NAMES .km` | 1 | 0 | Retained | career-work | The English name of each language by its ISO code, shown in a place’s facts, spelled as English speakers spell them, Māori with its macron. | Reviewed And Retained |
+| `src/engine/content/languages.ts#NAMES .kn` | 1 | 0 | Retained | career-work | The English name of each language by its ISO code, shown in a place’s facts, spelled as English speakers spell them, Māori with its macron. | Reviewed And Retained |
+| `src/engine/content/languages.ts#NAMES .ko` | 1 | 0 | Retained | career-work | The English name of each language by its ISO code, shown in a place’s facts, spelled as English speakers spell them, Māori with its macron. | Reviewed And Retained |
+| `src/engine/content/languages.ts#NAMES .ku` | 1 | 0 | Retained | career-work | The English name of each language by its ISO code, shown in a place’s facts, spelled as English speakers spell them, Māori with its macron. | Reviewed And Retained |
+| `src/engine/content/languages.ts#NAMES .ky` | 1 | 0 | Retained | career-work | The English name of each language by its ISO code, shown in a place’s facts, spelled as English speakers spell them, Māori with its macron. | Reviewed And Retained |
+| `src/engine/content/languages.ts#NAMES .la` | 1 | 0 | Retained | career-work | The English name of each language by its ISO code, shown in a place’s facts, spelled as English speakers spell them, Māori with its macron. | Reviewed And Retained |
+| `src/engine/content/languages.ts#NAMES .lb` | 1 | 0 | Retained | career-work | The English name of each language by its ISO code, shown in a place’s facts, spelled as English speakers spell them, Māori with its macron. | Reviewed And Retained |
+| `src/engine/content/languages.ts#NAMES .ln` | 1 | 0 | Retained | career-work | The English name of each language by its ISO code, shown in a place’s facts, spelled as English speakers spell them, Māori with its macron. | Reviewed And Retained |
+| `src/engine/content/languages.ts#NAMES .lo` | 1 | 0 | Retained | career-work | The English name of each language by its ISO code, shown in a place’s facts, spelled as English speakers spell them, Māori with its macron. | Reviewed And Retained |
+| `src/engine/content/languages.ts#NAMES .lt` | 1 | 0 | Retained | career-work | The English name of each language by its ISO code, shown in a place’s facts, spelled as English speakers spell them, Māori with its macron. | Reviewed And Retained |
+| `src/engine/content/languages.ts#NAMES .lv` | 1 | 0 | Retained | career-work | The English name of each language by its ISO code, shown in a place’s facts, spelled as English speakers spell them, Māori with its macron. | Reviewed And Retained |
+| `src/engine/content/languages.ts#NAMES .mg` | 1 | 0 | Retained | career-work | The English name of each language by its ISO code, shown in a place’s facts, spelled as English speakers spell them, Māori with its macron. | Reviewed And Retained |
+| `src/engine/content/languages.ts#NAMES .mh` | 1 | 0 | Retained | career-work | The English name of each language by its ISO code, shown in a place’s facts, spelled as English speakers spell them, Māori with its macron. | Reviewed And Retained |
+| `src/engine/content/languages.ts#NAMES .mi` | 1 | 0 | Retained | career-work | The English name of each language by its ISO code, shown in a place’s facts, spelled as English speakers spell them, Māori with its macron. | Reviewed And Retained |
+| `src/engine/content/languages.ts#NAMES .mk` | 1 | 0 | Retained | career-work | The English name of each language by its ISO code, shown in a place’s facts, spelled as English speakers spell them, Māori with its macron. | Reviewed And Retained |
+| `src/engine/content/languages.ts#NAMES .ml` | 1 | 0 | Retained | career-work | The English name of each language by its ISO code, shown in a place’s facts, spelled as English speakers spell them, Māori with its macron. | Reviewed And Retained |
+| `src/engine/content/languages.ts#NAMES .mn` | 1 | 0 | Retained | career-work | The English name of each language by its ISO code, shown in a place’s facts, spelled as English speakers spell them, Māori with its macron. | Reviewed And Retained |
+| `src/engine/content/languages.ts#NAMES .mr` | 1 | 0 | Retained | career-work | The English name of each language by its ISO code, shown in a place’s facts, spelled as English speakers spell them, Māori with its macron. | Reviewed And Retained |
+| `src/engine/content/languages.ts#NAMES .ms` | 1 | 0 | Retained | career-work | The English name of each language by its ISO code, shown in a place’s facts, spelled as English speakers spell them, Māori with its macron. | Reviewed And Retained |
+| `src/engine/content/languages.ts#NAMES .mt` | 1 | 0 | Retained | career-work | The English name of each language by its ISO code, shown in a place’s facts, spelled as English speakers spell them, Māori with its macron. | Reviewed And Retained |
+| `src/engine/content/languages.ts#NAMES .my` | 1 | 0 | Retained | career-work | The English name of each language by its ISO code, shown in a place’s facts, spelled as English speakers spell them, Māori with its macron. | Reviewed And Retained |
+| `src/engine/content/languages.ts#NAMES .na` | 1 | 0 | Retained | career-work | The English name of each language by its ISO code, shown in a place’s facts, spelled as English speakers spell them, Māori with its macron. | Reviewed And Retained |
+| `src/engine/content/languages.ts#NAMES .nb` | 1 | 0 | Retained | career-work | The English name of each language by its ISO code, shown in a place’s facts, spelled as English speakers spell them, Māori with its macron. | Reviewed And Retained |
+| `src/engine/content/languages.ts#NAMES .nd` | 1 | 0 | Retained | career-work | The English name of each language by its ISO code, shown in a place’s facts, spelled as English speakers spell them, Māori with its macron. | Reviewed And Retained |
+| `src/engine/content/languages.ts#NAMES .ne` | 1 | 0 | Retained | career-work | The English name of each language by its ISO code, shown in a place’s facts, spelled as English speakers spell them, Māori with its macron. | Reviewed And Retained |
+| `src/engine/content/languages.ts#NAMES .nl` | 1 | 0 | Retained | career-work | The English name of each language by its ISO code, shown in a place’s facts, spelled as English speakers spell them, Māori with its macron. | Reviewed And Retained |
+| `src/engine/content/languages.ts#NAMES .nn` | 1 | 0 | Retained | career-work | The English name of each language by its ISO code, shown in a place’s facts, spelled as English speakers spell them, Māori with its macron. | Reviewed And Retained |
+| `src/engine/content/languages.ts#NAMES .no` | 1 | 0 | Retained | career-work | The English name of each language by its ISO code, shown in a place’s facts, spelled as English speakers spell them, Māori with its macron. | Reviewed And Retained |
+| `src/engine/content/languages.ts#NAMES .ny` | 1 | 0 | Retained | career-work | The English name of each language by its ISO code, shown in a place’s facts, spelled as English speakers spell them, Māori with its macron. | Reviewed And Retained |
+| `src/engine/content/languages.ts#NAMES .om` | 1 | 0 | Retained | career-work | The English name of each language by its ISO code, shown in a place’s facts, spelled as English speakers spell them, Māori with its macron. | Reviewed And Retained |
+| `src/engine/content/languages.ts#NAMES .or` | 1 | 0 | Retained | career-work | The English name of each language by its ISO code, shown in a place’s facts, spelled as English speakers spell them, Māori with its macron. | Reviewed And Retained |
+| `src/engine/content/languages.ts#NAMES .pa` | 1 | 0 | Retained | career-work | The English name of each language by its ISO code, shown in a place’s facts, spelled as English speakers spell them, Māori with its macron. | Reviewed And Retained |
+| `src/engine/content/languages.ts#NAMES .pl` | 1 | 0 | Retained | career-work | The English name of each language by its ISO code, shown in a place’s facts, spelled as English speakers spell them, Māori with its macron. | Reviewed And Retained |
+| `src/engine/content/languages.ts#NAMES .ps` | 1 | 0 | Retained | career-work | The English name of each language by its ISO code, shown in a place’s facts, spelled as English speakers spell them, Māori with its macron. | Reviewed And Retained |
+| `src/engine/content/languages.ts#NAMES .pt` | 1 | 0 | Retained | career-work | The English name of each language by its ISO code, shown in a place’s facts, spelled as English speakers spell them, Māori with its macron. | Reviewed And Retained |
+| `src/engine/content/languages.ts#NAMES .qu` | 1 | 0 | Retained | career-work | The English name of each language by its ISO code, shown in a place’s facts, spelled as English speakers spell them, Māori with its macron. | Reviewed And Retained |
+| `src/engine/content/languages.ts#NAMES .rm` | 1 | 0 | Retained | career-work | The English name of each language by its ISO code, shown in a place’s facts, spelled as English speakers spell them, Māori with its macron. | Reviewed And Retained |
+| `src/engine/content/languages.ts#NAMES .rn` | 1 | 0 | Retained | career-work | The English name of each language by its ISO code, shown in a place’s facts, spelled as English speakers spell them, Māori with its macron. | Reviewed And Retained |
+| `src/engine/content/languages.ts#NAMES .ro` | 1 | 0 | Retained | career-work | The English name of each language by its ISO code, shown in a place’s facts, spelled as English speakers spell them, Māori with its macron. | Reviewed And Retained |
+| `src/engine/content/languages.ts#NAMES .ru` | 1 | 0 | Retained | career-work | The English name of each language by its ISO code, shown in a place’s facts, spelled as English speakers spell them, Māori with its macron. | Reviewed And Retained |
+| `src/engine/content/languages.ts#NAMES .rw` | 1 | 0 | Retained | career-work | The English name of each language by its ISO code, shown in a place’s facts, spelled as English speakers spell them, Māori with its macron. | Reviewed And Retained |
+| `src/engine/content/languages.ts#NAMES .sd` | 1 | 0 | Retained | career-work | The English name of each language by its ISO code, shown in a place’s facts, spelled as English speakers spell them, Māori with its macron. | Reviewed And Retained |
+| `src/engine/content/languages.ts#NAMES .sg` | 1 | 0 | Retained | career-work | The English name of each language by its ISO code, shown in a place’s facts, spelled as English speakers spell them, Māori with its macron. | Reviewed And Retained |
+| `src/engine/content/languages.ts#NAMES .si` | 1 | 0 | Retained | career-work | The English name of each language by its ISO code, shown in a place’s facts, spelled as English speakers spell them, Māori with its macron. | Reviewed And Retained |
+| `src/engine/content/languages.ts#NAMES .sk` | 1 | 0 | Retained | career-work | The English name of each language by its ISO code, shown in a place’s facts, spelled as English speakers spell them, Māori with its macron. | Reviewed And Retained |
+| `src/engine/content/languages.ts#NAMES .sl` | 1 | 0 | Retained | career-work | The English name of each language by its ISO code, shown in a place’s facts, spelled as English speakers spell them, Māori with its macron. | Reviewed And Retained |
+| `src/engine/content/languages.ts#NAMES .sm` | 1 | 0 | Retained | career-work | The English name of each language by its ISO code, shown in a place’s facts, spelled as English speakers spell them, Māori with its macron. | Reviewed And Retained |
+| `src/engine/content/languages.ts#NAMES .sn` | 1 | 0 | Retained | career-work | The English name of each language by its ISO code, shown in a place’s facts, spelled as English speakers spell them, Māori with its macron. | Reviewed And Retained |
+| `src/engine/content/languages.ts#NAMES .so` | 1 | 0 | Retained | career-work | The English name of each language by its ISO code, shown in a place’s facts, spelled as English speakers spell them, Māori with its macron. | Reviewed And Retained |
+| `src/engine/content/languages.ts#NAMES .sq` | 1 | 0 | Retained | career-work | The English name of each language by its ISO code, shown in a place’s facts, spelled as English speakers spell them, Māori with its macron. | Reviewed And Retained |
+| `src/engine/content/languages.ts#NAMES .sr` | 1 | 0 | Retained | career-work | The English name of each language by its ISO code, shown in a place’s facts, spelled as English speakers spell them, Māori with its macron. | Reviewed And Retained |
+| `src/engine/content/languages.ts#NAMES .ss` | 1 | 0 | Retained | career-work | The English name of each language by its ISO code, shown in a place’s facts, spelled as English speakers spell them, Māori with its macron. | Reviewed And Retained |
+| `src/engine/content/languages.ts#NAMES .st` | 1 | 0 | Retained | career-work | The English name of each language by its ISO code, shown in a place’s facts, spelled as English speakers spell them, Māori with its macron. | Reviewed And Retained |
+| `src/engine/content/languages.ts#NAMES .su` | 1 | 0 | Retained | career-work | The English name of each language by its ISO code, shown in a place’s facts, spelled as English speakers spell them, Māori with its macron. | Reviewed And Retained |
+| `src/engine/content/languages.ts#NAMES .sv` | 1 | 0 | Retained | career-work | The English name of each language by its ISO code, shown in a place’s facts, spelled as English speakers spell them, Māori with its macron. | Reviewed And Retained |
+| `src/engine/content/languages.ts#NAMES .sw` | 1 | 0 | Retained | career-work | The English name of each language by its ISO code, shown in a place’s facts, spelled as English speakers spell them, Māori with its macron. | Reviewed And Retained |
+| `src/engine/content/languages.ts#NAMES .ta` | 1 | 0 | Retained | career-work | The English name of each language by its ISO code, shown in a place’s facts, spelled as English speakers spell them, Māori with its macron. | Reviewed And Retained |
+| `src/engine/content/languages.ts#NAMES .te` | 1 | 0 | Retained | career-work | The English name of each language by its ISO code, shown in a place’s facts, spelled as English speakers spell them, Māori with its macron. | Reviewed And Retained |
+| `src/engine/content/languages.ts#NAMES .tg` | 1 | 0 | Retained | career-work | The English name of each language by its ISO code, shown in a place’s facts, spelled as English speakers spell them, Māori with its macron. | Reviewed And Retained |
+| `src/engine/content/languages.ts#NAMES .th` | 1 | 0 | Retained | career-work | The English name of each language by its ISO code, shown in a place’s facts, spelled as English speakers spell them, Māori with its macron. | Reviewed And Retained |
+| `src/engine/content/languages.ts#NAMES .ti` | 1 | 0 | Retained | career-work | The English name of each language by its ISO code, shown in a place’s facts, spelled as English speakers spell them, Māori with its macron. | Reviewed And Retained |
+| `src/engine/content/languages.ts#NAMES .tk` | 1 | 0 | Retained | career-work | The English name of each language by its ISO code, shown in a place’s facts, spelled as English speakers spell them, Māori with its macron. | Reviewed And Retained |
+| `src/engine/content/languages.ts#NAMES .tl` | 1 | 0 | Retained | career-work | The English name of each language by its ISO code, shown in a place’s facts, spelled as English speakers spell them, Māori with its macron. | Reviewed And Retained |
+| `src/engine/content/languages.ts#NAMES .tn` | 1 | 0 | Retained | career-work | The English name of each language by its ISO code, shown in a place’s facts, spelled as English speakers spell them, Māori with its macron. | Reviewed And Retained |
+| `src/engine/content/languages.ts#NAMES .to` | 1 | 0 | Retained | career-work | The English name of each language by its ISO code, shown in a place’s facts, spelled as English speakers spell them, Māori with its macron. | Reviewed And Retained |
+| `src/engine/content/languages.ts#NAMES .tr` | 1 | 0 | Retained | career-work | The English name of each language by its ISO code, shown in a place’s facts, spelled as English speakers spell them, Māori with its macron. | Reviewed And Retained |
+| `src/engine/content/languages.ts#NAMES .ts` | 1 | 0 | Retained | career-work | The English name of each language by its ISO code, shown in a place’s facts, spelled as English speakers spell them, Māori with its macron. | Reviewed And Retained |
+| `src/engine/content/languages.ts#NAMES .tt` | 1 | 0 | Retained | career-work | The English name of each language by its ISO code, shown in a place’s facts, spelled as English speakers spell them, Māori with its macron. | Reviewed And Retained |
+| `src/engine/content/languages.ts#NAMES .ty` | 1 | 0 | Retained | career-work | The English name of each language by its ISO code, shown in a place’s facts, spelled as English speakers spell them, Māori with its macron. | Reviewed And Retained |
+| `src/engine/content/languages.ts#NAMES .uk` | 1 | 0 | Retained | career-work | The English name of each language by its ISO code, shown in a place’s facts, spelled as English speakers spell them, Māori with its macron. | Reviewed And Retained |
+| `src/engine/content/languages.ts#NAMES .ur` | 1 | 0 | Retained | career-work | The English name of each language by its ISO code, shown in a place’s facts, spelled as English speakers spell them, Māori with its macron. | Reviewed And Retained |
+| `src/engine/content/languages.ts#NAMES .uz` | 1 | 0 | Retained | career-work | The English name of each language by its ISO code, shown in a place’s facts, spelled as English speakers spell them, Māori with its macron. | Reviewed And Retained |
+| `src/engine/content/languages.ts#NAMES .ve` | 1 | 0 | Retained | career-work | The English name of each language by its ISO code, shown in a place’s facts, spelled as English speakers spell them, Māori with its macron. | Reviewed And Retained |
+| `src/engine/content/languages.ts#NAMES .vi` | 1 | 0 | Retained | career-work | The English name of each language by its ISO code, shown in a place’s facts, spelled as English speakers spell them, Māori with its macron. | Reviewed And Retained |
+| `src/engine/content/languages.ts#NAMES .wo` | 1 | 0 | Retained | career-work | The English name of each language by its ISO code, shown in a place’s facts, spelled as English speakers spell them, Māori with its macron. | Reviewed And Retained |
+| `src/engine/content/languages.ts#NAMES .xh` | 1 | 0 | Retained | career-work | The English name of each language by its ISO code, shown in a place’s facts, spelled as English speakers spell them, Māori with its macron. | Reviewed And Retained |
+| `src/engine/content/languages.ts#NAMES .yo` | 1 | 0 | Retained | career-work | The English name of each language by its ISO code, shown in a place’s facts, spelled as English speakers spell them, Māori with its macron. | Reviewed And Retained |
+| `src/engine/content/languages.ts#NAMES .zh` | 1 | 0 | Retained | career-work | The English name of each language by its ISO code, shown in a place’s facts, spelled as English speakers spell them, Māori with its macron. | Reviewed And Retained |
+| `src/engine/content/languages.ts#NAMES .zu` | 1 | 0 | Retained | career-work | The English name of each language by its ISO code, shown in a place’s facts, spelled as English speakers spell them, Māori with its macron. | Reviewed And Retained |
+| `src/engine/content/languages.ts#NAMES .fil` | 1 | 0 | Retained | career-work | The English name of each language by its ISO code, shown in a place’s facts, spelled as English speakers spell them, Māori with its macron. | Reviewed And Retained |
+| `src/engine/content/languages.ts#NAMES .haw` | 1 | 0 | Retained | career-work | The English name of each language by its ISO code, shown in a place’s facts, spelled as English speakers spell them, Māori with its macron. | Reviewed And Retained |
+| `src/engine/content/languages.ts#NAMES .nso` | 1 | 0 | Retained | career-work | The English name of each language by its ISO code, shown in a place’s facts, spelled as English speakers spell them, Māori with its macron. | Reviewed And Retained |
+| `src/engine/content/languages.ts#NAMES .tet` | 1 | 0 | Retained | career-work | The English name of each language by its ISO code, shown in a place’s facts, spelled as English speakers spell them, Māori with its macron. | Reviewed And Retained |
+| `src/engine/content/languages.ts#NAMES .gil` | 1 | 0 | Retained | career-work | The English name of each language by its ISO code, shown in a place’s facts, spelled as English speakers spell them, Māori with its macron. | Reviewed And Retained |
+| `src/engine/content/languages.ts#NAMES .tvl` | 1 | 0 | Retained | career-work | The English name of each language by its ISO code, shown in a place’s facts, spelled as English speakers spell them, Māori with its macron. | Reviewed And Retained |
+| `src/engine/content/languages.ts#NAMES .pap` | 1 | 0 | Retained | career-work | The English name of each language by its ISO code, shown in a place’s facts, spelled as English speakers spell them, Māori with its macron. | Reviewed And Retained |
+| `src/engine/content/languages.ts#NAMES .crs` | 1 | 0 | Retained | career-work | The English name of each language by its ISO code, shown in a place’s facts, spelled as English speakers spell them, Māori with its macron. | Reviewed And Retained |
+| `src/engine/content/languages.ts#NAMES .niu` | 1 | 0 | Retained | career-work | The English name of each language by its ISO code, shown in a place’s facts, spelled as English speakers spell them, Māori with its macron. | Reviewed And Retained |
+| `src/engine/content/languages.ts#NAMES .tkl` | 1 | 0 | Retained | career-work | The English name of each language by its ISO code, shown in a place’s facts, spelled as English speakers spell them, Māori with its macron. | Reviewed And Retained |
+| `src/engine/content/languages.ts#NAMES .gsw` | 1 | 0 | Retained | career-work | The English name of each language by its ISO code, shown in a place’s facts, spelled as English speakers spell them, Māori with its macron. | Reviewed And Retained |
+| `src/engine/content/languages.ts#NAMES .prs` | 1 | 0 | Retained | career-work | The English name of each language by its ISO code, shown in a place’s facts, spelled as English speakers spell them, Māori with its macron. | Reviewed And Retained |
+| `src/engine/content/languages.ts#NAMES .ckb` | 1 | 0 | Retained | career-work | The English name of each language by its ISO code, shown in a place’s facts, spelled as English speakers spell them, Māori with its macron. | Reviewed And Retained |
+| `src/engine/content/languages.ts#NAMES .yue` | 1 | 0 | Retained | career-work | The English name of each language by its ISO code, shown in a place’s facts, spelled as English speakers spell them, Māori with its macron. | Reviewed And Retained |
+| `src/engine/content/languages.ts#NAMES .nan` | 1 | 0 | Retained | career-work | The English name of each language by its ISO code, shown in a place’s facts, spelled as English speakers spell them, Māori with its macron. | Reviewed And Retained |
+| `src/engine/content/languages.ts#NAMES .hak` | 1 | 0 | Retained | career-work | The English name of each language by its ISO code, shown in a place’s facts, spelled as English speakers spell them, Māori with its macron. | Reviewed And Retained |
+| `src/engine/content/languages.ts#LEVEL_LABEL` | 3 | 0 | Pending | career-work | not yet read in the second pass | Pending |
+| `src/engine/content/languages.ts#SPOKEN_NAMES` | 1 | 0 | Pending | career-work | not yet read in the second pass | Pending |
+| `src/engine/content/languages.ts#languagesProblems` | 5 | 0 | Pending | career-work | not yet read in the second pass | Pending |
 | `src/engine/content/personality-traits.ts#PERSONALITY_GROUPS` | 6 | 0 | Retained | frame | The six group headings over the trait pairs, each one plain word for what its traits touch: Temperament, Habits, Body, Money, People, Mind. | Reviewed And Retained |
 | `src/engine/content/personality-traits.ts#KNOB_READS` | 19 | 0 | Rewritten | frame | tests/language-frame-ui.test.ts, 'a trait’s look names what a session of preparation gets done, and how soon you need a shower, for each trait that moves one', and tests/evidence3-person.test.ts, Chaotic's rows | Pending |
 | `src/engine/content/personality-traits.ts#PERSONALITY_TRAITS [even_tempered]` | 4 | 0 | Retained | frame | Says in two plain lines that bad news barely lands and that people take the calm for not caring: the trait and its price. | Reviewed And Retained |
@@ -551,7 +551,7 @@ Two passes. The first, brief 14’s, is kept as its history: Rewritten And Verif
 | `src/engine/content/attributes-matrix.ts#SAVED` | 5 | 5 | Retained | profile | Table cells of docs/ATTRIBUTES-MATRIX.md, a maintainers' document written by tools/attributes-matrix.ts and held by tests/attributes-matrix.test.ts; nothing in the game imports it, so its code names are for the developer reading the matrix | Reviewed And Retained |
 | `src/engine/content/attributes-matrix.ts#ORDINARY` | 12 | 0 | Retained | profile | Table cells of docs/ATTRIBUTES-MATRIX.md, a maintainers' document written by tools/attributes-matrix.ts and held by tests/attributes-matrix.test.ts; nothing in the game imports it, so its code names are for the developer reading the matrix | Reviewed And Retained |
 | `src/engine/content/attributes-matrix.ts#HEAD` | 7 | 0 | Retained | profile | Table cells of docs/ATTRIBUTES-MATRIX.md, a maintainers' document written by tools/attributes-matrix.ts and held by tests/attributes-matrix.test.ts; nothing in the game imports it, so its code names are for the developer reading the matrix | Reviewed And Retained |
-| `src/engine/content/attributes-matrix.ts#attributesMatrix` | 211 | 91 | Pending | profile | changed since the second pass marked it Rewritten (2026-10-23) | Pending |
+| `src/engine/content/attributes-matrix.ts#attributesMatrix` | 210 | 88 | Pending | profile | changed since the second pass marked it Rewritten (2026-10-23) | Pending |
 | `src/engine/content/attributes-matrix.ts#attributesMatrix carry()` | 1 | 0 | Retained | profile | Table cells of docs/ATTRIBUTES-MATRIX.md, a maintainers' document written by tools/attributes-matrix.ts and held by tests/attributes-matrix.test.ts; nothing in the game imports it, so its code names are for the developer reading the matrix | Reviewed And Retained |
 | `src/engine/content/attributes-matrix.ts#attributesMatrix effect()` | 1 | 0 | Retained | profile | Table cells of docs/ATTRIBUTES-MATRIX.md, a maintainers' document written by tools/attributes-matrix.ts and held by tests/attributes-matrix.test.ts; nothing in the game imports it, so its code names are for the developer reading the matrix | Reviewed And Retained |
 | `src/engine/content/contemporary.ts#CONTEMPORARY_PLAYS [proof]` | 6 | 0 | Retained | profile | Proof, by David Auburn, with its premiere, cast, setting and publishers as its catalog lists them: facts School's play list shows, spelled as their sources spell them | Reviewed And Retained |
@@ -3287,7 +3287,7 @@ Two passes. The first, brief 14’s, is kept as its history: Rewritten And Verif
 | `src/engine/content/guide/career.ts#CAREER_GUIDE [career.agent]` | 48 | 0 | Pending | career | changed since the second pass marked it Rewritten (2026-10-25) | Pending |
 | `src/engine/content/guide/career.ts#CAREER_GUIDE [scheduled]` | 10 | 0 | Pending | career | changed since the second pass marked it Rewritten (2026-10-24) | Pending |
 | `src/engine/content/guide/career.ts#CAREER_GUIDE [career.agent-answers]` | 39 | 0 | Rewritten | career | Written for brief 25's Module 3 (real agencies and agents) to docs/STYLE.md and docs/GLOSSARY.md, with no pronoun for a real agent and the game's own agent's words unchanged; read where the player meets it in tests/career-agents.test.ts (the Representation tab drawn with Dan Patack chosen, the notices and history of a played referral, meeting, offer and signing) and in tests/pro-representation-screen.test.ts, tests/journey-agent.test.ts and tests/pro-agent.test.ts for Thomas Ashgrove, with tools/voice-check.mjs, tools/tics.mjs, tools/title-case.mjs, tools/plural-check.mjs and tools/spelling.mjs passing | Pending |
-| `src/engine/content/guide/career.ts#CAREER_GUIDE [evaluation]` | 11 | 1 | Pending | career | changed since the second pass marked it Rewritten (2026-10-24) | Pending |
+| `src/engine/content/guide/career.ts#CAREER_GUIDE [evaluation]` | 11 | 0 | Pending | career | changed since the second pass marked it Rewritten (2026-10-24) | Pending |
 | `src/engine/content/guide/career.ts#CAREER_GUIDE [career.reasons]` | 33 | 0 | Rewritten | career | Written for brief 25's Module 3 (real agencies and agents) to docs/STYLE.md and docs/GLOSSARY.md, with no pronoun for a real agent and the game's own agent's words unchanged; read where the player meets it in tests/career-agents.test.ts (the Representation tab drawn with Dan Patack chosen, the notices and history of a played referral, meeting, offer and signing) and in tests/pro-representation-screen.test.ts, tests/journey-agent.test.ts and tests/pro-agent.test.ts for Thomas Ashgrove, with tools/voice-check.mjs, tools/tics.mjs, tools/title-case.mjs, tools/plural-check.mjs and tools/spelling.mjs passing | Pending |
 | `src/engine/content/guide/career.ts#CAREER_GUIDE [career.agreement]` | 39 | 0 | Pending | career | changed since the second pass marked it Rewritten (2026-10-24) | Pending |
 | `src/engine/content/guide/career.ts#CAREER_GUIDE [career.agreement-terms]` | 44 | 0 | Pending | career | not yet read in the second pass | Pending |
@@ -3298,7 +3298,7 @@ Two passes. The first, brief 14’s, is kept as its history: Rewritten And Verif
 | `src/engine/content/guide/career.ts#CAREER_GUIDE [career.auditions]` | 45 | 0 | Pending | career | changed since the second pass marked it Rewritten (2026-10-25) | Pending |
 | `src/engine/content/guide/career.ts#CAREER_GUIDE [career.languages]` | 39 | 0 | Pending | career | not yet read in the second pass | Pending |
 | `src/engine/content/guide/career.ts#CAREER_GUIDE [career.offers]` | 56 | 0 | Pending | career | changed since the second pass marked it Rewritten (2026-10-25) | Pending |
-| `src/engine/content/guide/career.ts#CAREER_GUIDE [career.sides]` | 50 | 12 | Pending | career | not yet read in the second pass | Pending |
+| `src/engine/content/guide/career.ts#CAREER_GUIDE [career.sides]` | 50 | 1 | Pending | career | not yet read in the second pass | Pending |
 | `src/engine/content/guide/career.ts#CAREER_GUIDE [career.negotiation]` | 38 | 0 | Pending | career | not yet read in the second pass | Pending |
 | `src/engine/content/guide/career.ts#CAREER_GUIDE [career.withdrawing]` | 39 | 0 | Pending | career | not yet read in the second pass | Pending |
 | `src/engine/content/guide/career.ts#CAREER_GUIDE [career.outside-work]` | 40 | 0 | Rewritten | career | Written for brief 19's work loop to docs/STYLE.md and docs/GLOSSARY.md, its figures the work loop's own; read in tests/guide.test.ts, tests/tutorial.test.ts and tests/pro-opportunities-screen.test.ts, with tools/voice-check.mjs, tools/tics.mjs and tools/title-case.mjs passing | Rewritten And Verified |
@@ -3855,7 +3855,7 @@ Two passes. The first, brief 14’s, is kept as its history: Rewritten And Verif
 | `src/ui/career/OpportunitiesPane.tsx#Hold` | 5 | 0 | Rewritten | career-work | Written for brief 27's K4 (loop 20: holds, options and conflicts) to docs/STYLE.md and docs/GLOSSARY.md, and read where the player meets it: tests/b27-holds.test.ts holds the chemistry read's notice saying a hold is on the player's dates and that it isn't a booking and pays nothing, the history's line in the past (put a hold on your dates for ..., until the part was cast), the warning on another offer on the same days (Accepting this lets that hold go and withdraws you from the part), the withdrawal it brings (You took ... on some of the same days, so you withdrew from ... and its hold was let go; You Withdrew From ...), the refusals of Ask Them To Decide (no other offer, asked already, an offer lapsing before the answer), and the answer's words (Asked to decide, ... chose you for ...; The Hold On ... Is Let Go, You're free to take ...); the hold's end in the history (The hold on your dates became the booking). The rest of these sources' words are as they were, held by brief 19's, brief 25's and brief 27's tests. tools/voice-check.mjs, tools/tics.mjs, tools/title-case.mjs, tools/plural-check.mjs and tools/spelling.mjs pass | Pending |
 | `src/ui/career/OpportunitiesPane.tsx#HowToPlay` | 2 | 0 | Pending | career-work | not yet read in the second pass | Pending |
 | `src/ui/career/OpportunitiesPane.tsx#Direction` | 6 | 0 | Pending | career-work | not yet read in the second pass | Pending |
-| `src/ui/career/OpportunitiesPane.tsx#Takes` | 7 | 4 | Pending | career-work | not yet read in the second pass | Pending |
+| `src/ui/career/OpportunitiesPane.tsx#Takes` | 7 | 3 | Pending | career-work | not yet read in the second pass | Pending |
 | `src/ui/career/OpportunitiesPane.tsx#Withdraw` | 5 | 0 | Pending | career-work | not yet read in the second pass | Pending |
 | `src/ui/career/OpportunitiesPane.tsx#Prepare` | 10 | 0 | Pending | career-work | changed since the second pass marked it Rewritten (2026-10-24) | Pending |
 | `src/ui/career/OpportunitiesPane.tsx#History` | 1 | 0 | Rewritten | career-work | Written for brief 19's work loop to docs/STYLE.md and docs/GLOSSARY.md; read where the player meets it in tests/pro-work.test.ts and tests/pro-opportunities-screen.test.ts, with tools/voice-check.mjs, tools/tics.mjs and tools/title-case.mjs passing | Rewritten And Verified |
@@ -5284,69 +5284,69 @@ Two passes. The first, brief 14’s, is kept as its history: Rewritten And Verif
 | `src/engine/core/invariants.ts#breaches` | 15 | 0 | Retained | health | Ledger and schedule faults named for a developer's test failure, posting not whole cents and the rest, which no screen shows a player. | Reviewed And Retained |
 | `src/engine/core/performer.ts#PERFORMER_NOUN` | 2 | 0 | Retained | health | The two words a player chooses at creation to be called, Actor or Actress, shown on the top bar and the last page of a life. | Reviewed And Retained |
 | `src/engine/core/rng.ts#makeRng` | 2 | 1 | Retained | health | Two programming errors for a random pick from an empty list, thrown to a developer's console and never shown to a player. | Reviewed And Retained |
-| `src/engine/systems/offers.ts#NY` | 1 | 0 | Pending | health | not yet read in the second pass | Pending |
-| `src/engine/systems/offers.ts#approachRead` | 2 | 0 | Pending | health | not yet read in the second pass | Pending |
-| `src/engine/systems/offers.ts#chooseRefusal` | 3 | 0 | Pending | health | not yet read in the second pass | Pending |
-| `src/engine/systems/offers.ts#giveNote` | 7 | 0 | Pending | health | not yet read in the second pass | Pending |
-| `src/engine/systems/offers.ts#noteRefusal` | 3 | 0 | Pending | health | not yet read in the second pass | Pending |
-| `src/engine/systems/offers.ts#answerNote` | 3 | 0 | Pending | health | not yet read in the second pass | Pending |
-| `src/engine/systems/offers.ts#recordRefusal` | 2 | 0 | Pending | health | not yet read in the second pass | Pending |
-| `src/engine/systems/offers.ts#sendRefusal` | 4 | 1 | Pending | health | not yet read in the second pass | Pending |
-| `src/engine/systems/offers.ts#sendTake` | 1 | 0 | Pending | health | not yet read in the second pass | Pending |
-| `src/engine/systems/offers.ts#takeWords` | 1 | 0 | Pending | health | not yet read in the second pass | Pending |
-| `src/engine/systems/offers.ts#roundWords` | 4 | 0 | Pending | health | not yet read in the second pass | Pending |
-| `src/engine/systems/offers.ts#termsAskRefusal` | 9 | 0 | Pending | health | not yet read in the second pass | Pending |
-| `src/engine/systems/offers.ts#askTerms` | 8 | 0 | Pending | health | not yet read in the second pass | Pending |
-| `src/engine/systems/offers.ts#reviseDecision` | 1 | 0 | Pending | health | not yet read in the second pass | Pending |
-| `src/engine/systems/offers.ts#answerAsk` | 19 | 0 | Pending | health | not yet read in the second pass | Pending |
-| `src/engine/systems/offers.ts#bargainedPromoWords` | 3 | 0 | Pending | health | not yet read in the second pass | Pending |
-| `src/engine/systems/offers.ts#conditionalOfferFor` | 1 | 0 | Pending | health | not yet read in the second pass | Pending |
-| `src/engine/systems/offers.ts#conditionWords` | 1 | 0 | Pending | health | not yet read in the second pass | Pending |
-| `src/engine/systems/offers.ts#acceptOnCondition [accepted]` | 1 | 0 | Pending | health | not yet read in the second pass | Pending |
-| `src/engine/systems/offers.ts#decideCondition` | 3 | 0 | Pending | health | not yet read in the second pass | Pending |
-| `src/engine/systems/offers.ts#firm` | 4 | 0 | Pending | health | not yet read in the second pass | Pending |
-| `src/engine/systems/offers.ts#firmOnHold` | 1 | 0 | Pending | health | not yet read in the second pass | Pending |
-| `src/engine/systems/offers.ts#rewriteAt` | 6 | 0 | Pending | health | not yet read in the second pass | Pending |
-| `src/engine/systems/offers.ts#recastsAt` | 5 | 0 | Pending | health | not yet read in the second pass | Pending |
-| `src/engine/systems/offers.ts#recastWords` | 1 | 0 | Pending | health | not yet read in the second pass | Pending |
-| `src/engine/systems/offers.ts#rememberMiss [problem]` | 3 | 0 | Pending | health | not yet read in the second pass | Pending |
-| `src/engine/systems/offers.ts#withdrawRefusal` | 4 | 0 | Pending | health | not yet read in the second pass | Pending |
-| `src/engine/systems/offers.ts#withdrawWarning` | 5 | 0 | Pending | health | not yet read in the second pass | Pending |
-| `src/engine/systems/offers.ts#withdraw` | 8 | 0 | Pending | health | not yet read in the second pass | Pending |
-| `src/engine/systems/offers.ts#rescheduleRefusal` | 7 | 0 | Pending | health | not yet read in the second pass | Pending |
-| `src/engine/systems/offers.ts#rescheduleWords` | 2 | 0 | Pending | health | not yet read in the second pass | Pending |
-| `src/engine/systems/offers.ts#rescheduleAskWords` | 1 | 0 | Pending | health | not yet read in the second pass | Pending |
-| `src/engine/systems/offers.ts#askReschedule` | 1 | 0 | Pending | health | not yet read in the second pass | Pending |
-| `src/engine/systems/offers.ts#askReschedule [callback]` | 1 | 0 | Pending | health | not yet read in the second pass | Pending |
-| `src/engine/systems/offers.ts#answerReschedule` | 4 | 0 | Pending | health | not yet read in the second pass | Pending |
-| `src/engine/systems/offers.ts#answerReschedule [callback]` | 1 | 0 | Pending | health | not yet read in the second pass | Pending |
-| `src/engine/systems/offers.ts#registerOffers` | 8 | 0 | Pending | health | not yet read in the second pass | Pending |
-| `src/engine/systems/offers.ts#askLabel` | 6 | 0 | Pending | health | not yet read in the second pass | Pending |
-| `src/engine/systems/offers.ts#termsChangedWords` | 5 | 0 | Pending | health | not yet read in the second pass | Pending |
-| `src/engine/systems/offers.ts#conditionStanding` | 1 | 0 | Pending | health | not yet read in the second pass | Pending |
-| `src/engine/systems/offers.ts#rememberedWords` | 6 | 0 | Pending | health | not yet read in the second pass | Pending |
-| `src/engine/systems/representation.ts#COUNTRY_WORDS` | 3 | 0 | Pending | health | not yet read in the second pass | Pending |
-| `src/engine/systems/representation.ts#termWords` | 2 | 0 | Pending | health | not yet read in the second pass | Pending |
-| `src/engine/systems/representation.ts#sampleName` | 1 | 0 | Pending | health | not yet read in the second pass | Pending |
-| `src/engine/systems/representation.ts#scopeWords` | 2 | 0 | Pending | health | not yet read in the second pass | Pending |
-| `src/engine/systems/representation.ts#territoryWords` | 2 | 0 | Pending | health | not yet read in the second pass | Pending |
-| `src/engine/systems/representation.ts#termsFor` | 8 | 0 | Pending | health | not yet read in the second pass | Pending |
-| `src/engine/systems/representation.ts#outsideWords` | 2 | 0 | Pending | health | not yet read in the second pass | Pending |
-| `src/engine/systems/representation.ts#uncoveredWords` | 1 | 0 | Pending | health | not yet read in the second pass | Pending |
-| `src/engine/systems/representation.ts#ASK_LABEL` | 3 | 0 | Pending | health | not yet read in the second pass | Pending |
-| `src/engine/systems/representation.ts#askWords` | 2 | 0 | Pending | health | not yet read in the second pass | Pending |
-| `src/engine/systems/representation.ts#chanceTenths` | 1 | 0 | Pending | health | not yet read in the second pass | Pending |
-| `src/engine/systems/representation.ts#realTermsWords` | 1 | 0 | Pending | health | not yet read in the second pass | Pending |
-| `src/engine/systems/representation.ts#answerWords` | 1 | 0 | Pending | health | not yet read in the second pass | Pending |
-| `src/engine/systems/representation.ts#askRefusal` | 8 | 0 | Pending | health | not yet read in the second pass | Pending |
-| `src/engine/systems/representation.ts#askWaiting` | 1 | 0 | Pending | health | not yet read in the second pass | Pending |
-| `src/engine/systems/representation.ts#answerAsk` | 9 | 0 | Pending | health | not yet read in the second pass | Pending |
-| `src/engine/systems/representation.ts#introduceAtFestival` | 8 | 0 | Pending | health | not yet read in the second pass | Pending |
-| `src/engine/systems/representation.ts#registerRepresentation <pro.ask_terms>` | 5 | 0 | Pending | health | not yet read in the second pass | Pending |
-| `src/engine/systems/speaking.ts#languageRefusal` | 1 | 0 | Pending | health | not yet read in the second pass | Pending |
-| `src/engine/systems/speaking.ts#suitsWords` | 4 | 0 | Pending | health | not yet read in the second pass | Pending |
-| `src/engine/systems/speaking.ts#languageFitWords` | 8 | 0 | Pending | health | not yet read in the second pass | Pending |
-| `src/engine/systems/speaking.ts#languageStepLabel` | 1 | 0 | Pending | health | not yet read in the second pass | Pending |
-| `src/engine/systems/speaking.ts#languageStepRefusal` | 5 | 0 | Pending | health | not yet read in the second pass | Pending |
-| `src/engine/systems/speaking.ts#workOnLanguage` | 1 | 0 | Pending | health | not yet read in the second pass | Pending |
-| `src/engine/systems/speaking.ts#languageWords` | 5 | 0 | Pending | health | not yet read in the second pass | Pending |
+| `src/engine/systems/offers.ts#NY` | 1 | 0 | Pending | career-work | not yet read in the second pass | Pending |
+| `src/engine/systems/offers.ts#approachRead` | 3 | 0 | Pending | career-work | not yet read in the second pass | Pending |
+| `src/engine/systems/offers.ts#chooseRefusal` | 3 | 0 | Pending | career-work | not yet read in the second pass | Pending |
+| `src/engine/systems/offers.ts#giveNote` | 7 | 0 | Pending | career-work | not yet read in the second pass | Pending |
+| `src/engine/systems/offers.ts#noteRefusal` | 3 | 0 | Pending | career-work | not yet read in the second pass | Pending |
+| `src/engine/systems/offers.ts#answerNote` | 3 | 0 | Pending | career-work | not yet read in the second pass | Pending |
+| `src/engine/systems/offers.ts#recordRefusal` | 2 | 0 | Pending | career-work | not yet read in the second pass | Pending |
+| `src/engine/systems/offers.ts#sendRefusal` | 4 | 0 | Pending | career-work | not yet read in the second pass | Pending |
+| `src/engine/systems/offers.ts#sendTake` | 1 | 0 | Pending | career-work | not yet read in the second pass | Pending |
+| `src/engine/systems/offers.ts#takeWords` | 1 | 0 | Pending | career-work | not yet read in the second pass | Pending |
+| `src/engine/systems/offers.ts#roundWords` | 4 | 0 | Pending | career-work | not yet read in the second pass | Pending |
+| `src/engine/systems/offers.ts#termsAskRefusal` | 9 | 0 | Pending | career-work | not yet read in the second pass | Pending |
+| `src/engine/systems/offers.ts#askTerms` | 8 | 0 | Pending | career-work | not yet read in the second pass | Pending |
+| `src/engine/systems/offers.ts#reviseDecision` | 1 | 0 | Pending | career-work | not yet read in the second pass | Pending |
+| `src/engine/systems/offers.ts#answerAsk` | 19 | 0 | Pending | career-work | not yet read in the second pass | Pending |
+| `src/engine/systems/offers.ts#bargainedPromoWords` | 3 | 0 | Pending | career-work | not yet read in the second pass | Pending |
+| `src/engine/systems/offers.ts#conditionalOfferFor` | 1 | 0 | Pending | career-work | not yet read in the second pass | Pending |
+| `src/engine/systems/offers.ts#conditionWords` | 1 | 0 | Pending | career-work | not yet read in the second pass | Pending |
+| `src/engine/systems/offers.ts#acceptOnCondition [accepted]` | 1 | 0 | Pending | career-work | not yet read in the second pass | Pending |
+| `src/engine/systems/offers.ts#decideCondition` | 3 | 0 | Pending | career-work | not yet read in the second pass | Pending |
+| `src/engine/systems/offers.ts#firm` | 4 | 0 | Pending | career-work | not yet read in the second pass | Pending |
+| `src/engine/systems/offers.ts#firmOnHold` | 1 | 0 | Pending | career-work | not yet read in the second pass | Pending |
+| `src/engine/systems/offers.ts#rewriteAt` | 6 | 0 | Pending | career-work | not yet read in the second pass | Pending |
+| `src/engine/systems/offers.ts#recastsAt` | 5 | 0 | Pending | career-work | not yet read in the second pass | Pending |
+| `src/engine/systems/offers.ts#recastWords` | 1 | 0 | Pending | career-work | not yet read in the second pass | Pending |
+| `src/engine/systems/offers.ts#rememberMiss [problem]` | 3 | 0 | Pending | career-work | not yet read in the second pass | Pending |
+| `src/engine/systems/offers.ts#withdrawRefusal` | 4 | 0 | Pending | career-work | not yet read in the second pass | Pending |
+| `src/engine/systems/offers.ts#withdrawWarning` | 5 | 0 | Pending | career-work | not yet read in the second pass | Pending |
+| `src/engine/systems/offers.ts#withdraw` | 8 | 0 | Pending | career-work | not yet read in the second pass | Pending |
+| `src/engine/systems/offers.ts#rescheduleRefusal` | 7 | 0 | Pending | career-work | not yet read in the second pass | Pending |
+| `src/engine/systems/offers.ts#rescheduleWords` | 2 | 0 | Pending | career-work | not yet read in the second pass | Pending |
+| `src/engine/systems/offers.ts#rescheduleAskWords` | 1 | 0 | Pending | career-work | not yet read in the second pass | Pending |
+| `src/engine/systems/offers.ts#askReschedule` | 1 | 0 | Pending | career-work | not yet read in the second pass | Pending |
+| `src/engine/systems/offers.ts#askReschedule [callback]` | 1 | 0 | Pending | career-work | not yet read in the second pass | Pending |
+| `src/engine/systems/offers.ts#answerReschedule` | 4 | 0 | Pending | career-work | not yet read in the second pass | Pending |
+| `src/engine/systems/offers.ts#answerReschedule [callback]` | 1 | 0 | Pending | career-work | not yet read in the second pass | Pending |
+| `src/engine/systems/offers.ts#registerOffers` | 8 | 0 | Pending | career-work | not yet read in the second pass | Pending |
+| `src/engine/systems/offers.ts#askLabel` | 6 | 0 | Pending | career-work | not yet read in the second pass | Pending |
+| `src/engine/systems/offers.ts#termsChangedWords` | 5 | 0 | Pending | career-work | not yet read in the second pass | Pending |
+| `src/engine/systems/offers.ts#conditionStanding` | 1 | 0 | Pending | career-work | not yet read in the second pass | Pending |
+| `src/engine/systems/offers.ts#rememberedWords` | 6 | 0 | Pending | career-work | not yet read in the second pass | Pending |
+| `src/engine/systems/representation.ts#COUNTRY_WORDS` | 3 | 0 | Pending | career-agent | not yet read in the second pass | Pending |
+| `src/engine/systems/representation.ts#termWords` | 2 | 0 | Pending | career-agent | not yet read in the second pass | Pending |
+| `src/engine/systems/representation.ts#sampleName` | 1 | 0 | Pending | career-agent | not yet read in the second pass | Pending |
+| `src/engine/systems/representation.ts#scopeWords` | 2 | 0 | Pending | career-agent | not yet read in the second pass | Pending |
+| `src/engine/systems/representation.ts#territoryWords` | 2 | 0 | Pending | career-agent | not yet read in the second pass | Pending |
+| `src/engine/systems/representation.ts#termsFor` | 8 | 0 | Pending | career-agent | not yet read in the second pass | Pending |
+| `src/engine/systems/representation.ts#outsideWords` | 2 | 0 | Pending | career-agent | not yet read in the second pass | Pending |
+| `src/engine/systems/representation.ts#uncoveredWords` | 1 | 0 | Pending | career-agent | not yet read in the second pass | Pending |
+| `src/engine/systems/representation.ts#ASK_LABEL` | 3 | 0 | Pending | career-agent | not yet read in the second pass | Pending |
+| `src/engine/systems/representation.ts#askWords` | 2 | 0 | Pending | career-agent | not yet read in the second pass | Pending |
+| `src/engine/systems/representation.ts#chanceTenths` | 1 | 0 | Pending | career-agent | not yet read in the second pass | Pending |
+| `src/engine/systems/representation.ts#realTermsWords` | 1 | 0 | Pending | career-agent | not yet read in the second pass | Pending |
+| `src/engine/systems/representation.ts#answerWords` | 1 | 0 | Pending | career-agent | not yet read in the second pass | Pending |
+| `src/engine/systems/representation.ts#askRefusal` | 8 | 0 | Pending | career-agent | not yet read in the second pass | Pending |
+| `src/engine/systems/representation.ts#askWaiting` | 1 | 0 | Pending | career-agent | not yet read in the second pass | Pending |
+| `src/engine/systems/representation.ts#answerAsk` | 9 | 0 | Pending | career-agent | not yet read in the second pass | Pending |
+| `src/engine/systems/representation.ts#introduceAtFestival` | 8 | 0 | Pending | career-agent | not yet read in the second pass | Pending |
+| `src/engine/systems/representation.ts#registerRepresentation <pro.ask_terms>` | 5 | 0 | Pending | career-agent | not yet read in the second pass | Pending |
+| `src/engine/systems/speaking.ts#languageRefusal` | 1 | 0 | Pending | career-work | not yet read in the second pass | Pending |
+| `src/engine/systems/speaking.ts#suitsWords` | 4 | 0 | Pending | career-work | not yet read in the second pass | Pending |
+| `src/engine/systems/speaking.ts#languageFitWords` | 8 | 0 | Pending | career-work | not yet read in the second pass | Pending |
+| `src/engine/systems/speaking.ts#languageStepLabel` | 1 | 0 | Pending | career-work | not yet read in the second pass | Pending |
+| `src/engine/systems/speaking.ts#languageStepRefusal` | 5 | 0 | Pending | career-work | not yet read in the second pass | Pending |
+| `src/engine/systems/speaking.ts#workOnLanguage` | 1 | 0 | Pending | career-work | not yet read in the second pass | Pending |
+| `src/engine/systems/speaking.ts#languageWords` | 5 | 0 | Pending | career-work | not yet read in the second pass | Pending |

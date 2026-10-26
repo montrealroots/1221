@@ -118,18 +118,25 @@
   "evidence": "Written for brief 25's Module 4 (contracts, pay states, overtime, the producer's contribution, residuals, the per diem, a recurring part's season and a series' seasons) to docs/STYLE.md and docs/GLOSSARY.md, every rule's figure the agreements' own and every invention said as the game's; read where the player meets it in tests/career-contracts.test.ts (the offer, the contract, each payment's state, the notices of each episode, option, decision, telecast, rerun, residual and per diem, through a played recurring part), with tools/voice-check.mjs, tools/tics.mjs and tools/title-case.mjs clean.",
   "first": "Pending"
  },
+ "src/engine/systems/contracts.ts#voiceCommission": {
+  "status": "Retained",
+  "hash": "19f1917c28b3",
+  "on": "2026-10-26",
+  "reason": "The contract’s commission clause for voice work says whether your agreement covers voice-over and so whether commission is owed, naming the agency, with the reason when none is owed, the same words as the pay’s own line",
+  "first": "Pending"
+ },
  "src/engine/systems/contracts.ts#workflowRules [rule]": {
   "status": "Rewritten",
-  "hash": "581bf05b495b",
-  "on": "2026-10-24",
-  "evidence": "Written for brief 25's Module 5 (the ways of working: the booth, the dub, narration, multicamera, performance capture, reenactment, the musical and action; a shoot's order and takes, revised pages, a recall to loop and a scene cut) to docs/STYLE.md and docs/GLOSSARY.md, every rule the agreements' own and every invention said as the game's; read where the player meets it in tests/career-workflows-screen.test.ts (the Work and Opportunities tabs drawn for a voice session, a multicamera week and an action shoot, through the clock and a reload at each stage) and tests/career-workflows.test.ts (each workflow's days, choices, reports and notices), with tools/voice-check.mjs, tools/tics.mjs and tools/title-case.mjs clean.",
+  "hash": "7c8975ebcff6",
+  "on": "2026-10-26",
+  "evidence": "Read again on 2026-10-26 for brief 27: the rule that said voice-over work is outside an agent’s agreement went, since each agreement now says whether it covers voice-over on the contract’s own commission clause (voiceCommission); the rules left are each agreement’s own, said as the agreement sets, and read on the contract in tests/career-workflows-screen.test.ts and tests/career-workflows.test.ts",
   "first": "Pending"
  },
  "src/engine/systems/propay.ts#commissionOn": {
-  "status": "Rewritten",
-  "hash": "712517d69157",
-  "on": "2026-10-24",
-  "evidence": "Written for brief 25's Module 5 (the ways of working: the booth, the dub, narration, multicamera, performance capture, reenactment, the musical and action; a shoot's order and takes, revised pages, a recall to loop and a scene cut) to docs/STYLE.md and docs/GLOSSARY.md, every rule the agreements' own and every invention said as the game's; read where the player meets it in tests/career-workflows-screen.test.ts (the Work and Opportunities tabs drawn for a voice session, a multicamera week and an action shoot, through the clock and a reload at each stage) and tests/career-workflows.test.ts (each workflow's days, choices, reports and notices), with tools/voice-check.mjs, tools/tics.mjs and tools/title-case.mjs clean.",
+  "status": "Retained",
+  "hash": "b81ecf078da3",
+  "on": "2026-10-26",
+  "reason": "Each payment’s Commission line says what’s taken and why in the agreement’s own terms: none unrepresented, none where the agreement leaves the work out, naming what it covers instead, the rate as Equity’s, SAG-AFTRA’s or New York’s rule, and what stays owed after an agreement ended",
   "first": "Pending"
  },
  "src/engine/systems/propay.ts#duesBill": {
@@ -357,10 +364,10 @@
   "first": "Rewritten And Verified"
  },
  "src/ui/career/WorkPane.tsx#clauseWords": {
-  "status": "Rewritten",
-  "hash": "de89227382db",
-  "on": "2026-10-24",
-  "evidence": "Written for brief 25's Module 5 (the ways of working: the booth, the dub, narration, multicamera, performance capture, reenactment, the musical and action; a shoot's order and takes, revised pages, a recall to loop and a scene cut) to docs/STYLE.md and docs/GLOSSARY.md, every rule the agreements' own and every invention said as the game's; read where the player meets it in tests/career-workflows-screen.test.ts (the Work and Opportunities tabs drawn for a voice session, a multicamera week and an action shoot, through the clock and a reload at each stage) and tests/career-workflows.test.ts (each workflow's days, choices, reports and notices), with tools/voice-check.mjs, tools/tics.mjs and tools/title-case.mjs clean.",
+  "status": "Retained",
+  "hash": "d16187f74496",
+  "on": "2026-10-26",
+  "reason": "Each clause says its term in a sentence a contract’s reader can check; the option clause now says the same day rate unless next season’s rate for the part comes to more, where the agent traded the raise, as the negotiated contract has it",
   "first": "Pending"
  },
  "src/ui/career/WorkPane.tsx#ContractFacts": {

@@ -1,0 +1,434 @@
+[
+ {
+  "surface": "Career, Representation: Asking For Different Terms, the agreement’s terms as they stand and as first offered, the three asks with their chances, and the office’s answer",
+  "where": "Career, the Representation tab, Asking For Different Terms under The Agreement while an agreement is offered; the notice and the question when the office answers; the Agreement’s What It Covers afterwards",
+  "sources": [
+   "src/ui/career/RepresentationPane.tsx#TermsPanel",
+   "src/engine/systems/representation.ts#termsFor",
+   "src/engine/systems/representation.ts#scopeWords",
+   "src/engine/systems/representation.ts#territoryWords",
+   "src/engine/systems/representation.ts#termWords",
+   "src/engine/systems/representation.ts#COUNTRY_WORDS",
+   "src/engine/systems/representation.ts#ASK_LABEL",
+   "src/engine/systems/representation.ts#askWords",
+   "src/engine/systems/representation.ts#chanceTenths",
+   "src/engine/systems/representation.ts#realTermsWords",
+   "src/engine/systems/representation.ts#answerWords",
+   "src/engine/systems/representation.ts#askRefusal",
+   "src/engine/systems/representation.ts#askWaiting",
+   "src/engine/systems/representation.ts#answerAsk",
+   "src/engine/systems/representation.ts#registerRepresentation <pro.ask_terms>",
+   "src/engine/systems/representation.ts#sampleName"
+  ],
+  "states": [
+   "ordinary",
+   "unavailable",
+   "forecast",
+   "confirmation",
+   "notification",
+   "success",
+   "partial",
+   "details",
+   "explanation"
+  ],
+  "outcome": "Revised",
+  "why": "New with brief 27’s wave 1 (2026-10-25): nothing on this surface said anything before.",
+  "changes": "Written new to docs/STYLE.md: each term in a sentence, what it covers and leaves out and why; the three asks by their buttons, each with its chance said as about so many in ten and marked the game’s; the refusals with their reasons and dates; the wait said with the day the answer comes; the answer as a notice in the office’s name; and, on a real agent’s panel, the line that the game invents whether the office agrees, since the agency’s pages give no terms. Read in this pass on 2026-10-26 and kept.",
+  "evidence": [
+   {
+    "kind": "test",
+    "ref": "tests/b27-representation-screen.test.ts: 'PLAYER JOURNEY: three asks with their chances while the agreement is offered; asked, Accept grayed with why until the answer; agreed, the terms as they stand and as first offered'"
+   },
+   {
+    "kind": "test",
+    "ref": "tests/b27-representation-screen.test.ts: 'PLAYER JOURNEY: a real agent’s offer: the panel says the game invents whether the office agrees, since the agency’s pages give no terms; the game’s own agent’s says nothing of it'"
+   },
+   {
+    "kind": "test",
+    "ref": "tests/b27-representation.test.ts: 'refuses an ask with no offer, one too late for its answer, voice-over where it’s covered already or the agency has no department for it, and work abroad for voice work, each in words'"
+   }
+  ]
+ },
+ {
+  "surface": "Career, Representation: How To Reach Her or Him, the ways in said from each agent’s own routes",
+  "where": "Career, the Representation tab, the line under How To Reach, and the agent’s What’s Next and Why It Went This Way where they name a way in",
+  "sources": [
+   "src/ui/career/RepresentationPane.tsx#WAY",
+   "src/ui/career/RepresentationPane.tsx#waysIn",
+   "src/engine/systems/proagent.ts#ROUTE_WORDS"
+  ],
+  "states": [
+   "first use",
+   "ordinary",
+   "explanation"
+  ],
+  "outcome": "Revised",
+  "why": "New with brief 27’s wave 1 (2026-10-25): nothing on this surface said anything before.",
+  "changes": "Written new with the festival introduction as a third way in, each way said in full and in short from the agent’s routes, so her office’s one way and his office’s three read from the same words. In this pass (2026-10-26) the one-way line’s second sentence, “The game reads a referral as not unsolicited”, the engine’s reads and a negative to turn round, became “In the game a referral makes a submission one it asked for”.",
+  "evidence": [
+   {
+    "kind": "test",
+    "ref": "tests/b27-representation-screen.test.ts: 'PLAYER JOURNEY: Celia Brannock’s panel gives her voice-over department, her office’s own rule, its one way in, and the voice demo her approach sends'"
+   },
+   {
+    "kind": "test",
+    "ref": "tests/b27-representation.test.ts: 'PLAYER JOURNEY: Celia Brannock’s office, reached by a referral from a voice job, asks for the voice demo no legit office asks for, hears it, and offers an agreement for voice-over that puts the actor up for voice parts and not on-camera ones'"
+   }
+  ]
+ },
+ {
+  "surface": "Notice: an agent’s office met you at the festival where your film was in the official selection",
+  "where": "What Needs You and the notices, when a festival the film was selected for screens it; the agent’s History panel afterwards",
+  "sources": [
+   "src/engine/systems/representation.ts#introduceAtFestival"
+  ],
+  "states": [
+   "notification",
+   "history",
+   "explanation"
+  ],
+  "outcome": "Revised",
+  "why": "New with brief 27’s wave 1 (2026-10-25): nothing on this surface said anything before.",
+  "changes": "Written new: who you met where, the film named as in the official selection whether it has screened yet or not, the meeting said as the game’s since the festival publishes films and not who comes, and what it opens, sending your materials from the Representation tab. Read in this pass and kept.",
+  "evidence": [
+   {
+    "kind": "test",
+    "ref": "tests/b27-representation.test.ts: 'PLAYER JOURNEY: met at Sundance where the film screened: the office’s introduction opens the send its policy refused, the film is work it has to go on and something new; once an entry; the twin not introduced is still refused'"
+   },
+   {
+    "kind": "test",
+    "ref": "tests/b27-representation.test.ts: 'names the festival the entry is for, and says the film was in the official selection where it hasn’t screened yet'"
+   }
+  ]
+ },
+ {
+  "surface": "Career, Work: a voice contract’s commission clause, and a payment’s Commission line on work the agreement leaves out",
+  "where": "Career, the Work tab, The Contract on voice work and Commission under each payment",
+  "sources": [
+   "src/engine/systems/contracts.ts#voiceCommission",
+   "src/engine/systems/representation.ts#outsideWords",
+   "src/engine/systems/representation.ts#uncoveredWords"
+  ],
+  "states": [
+   "details",
+   "explanation"
+  ],
+  "outcome": "Revised",
+  "why": "New with brief 27’s wave 1 (2026-10-25): nothing on this surface said anything before.",
+  "changes": "Written new in place of the one rule every voice contract carried until 2026-10-25, that voice-over work is outside an agent’s agreement: the clause and the pay’s line now say whether your own agreement covers voice-over, naming the agency, and why no commission is owed where it isn’t. Read in this pass and kept.",
+  "evidence": [
+   {
+    "kind": "test",
+    "ref": "tests/b27-representation.test.ts: 'PLAYER JOURNEY: a voice part offered without an audition while the agreement leaves voice-over out: the actor’s own, at scale, with no ask for more, and its contract says no commission is owed, as the pay takes none; with voice-over covered, a voice part from the same office comes through the agent at scale plus ten, and its contract says commission is owed, as the pay takes it'"
+   }
+  ]
+ },
+ {
+  "surface": "Career, Opportunities, In Progress: How You’ll Play It, and Casting’s Direction in the room",
+  "where": "Career, the Opportunities tab, a role under In Progress once casting has sent the sides: Play It This Way; the clock’s stop at an audition in person with Follow The Direction and Keep Your Choice; Why It Went This Way afterwards",
+  "sources": [
+   "src/ui/career/OpportunitiesPane.tsx#HowToPlay",
+   "src/ui/career/OpportunitiesPane.tsx#Direction",
+   "src/engine/systems/offers.ts#approachRead",
+   "src/engine/systems/offers.ts#chooseRefusal",
+   "src/engine/systems/offers.ts#giveNote",
+   "src/engine/systems/offers.ts#noteRefusal",
+   "src/engine/systems/offers.ts#answerNote",
+   "src/engine/systems/offers.ts#registerOffers",
+   "src/engine/content/tasks.ts#TASK_PROFILES [auditionDirected]"
+  ],
+  "states": [
+   "ordinary",
+   "unavailable",
+   "confirmation",
+   "explanation",
+   "history"
+  ],
+  "outcome": "Revised",
+  "why": "New with brief 27’s wave 1 (2026-10-25): nothing on this surface said anything before.",
+  "changes": "Written new: the School’s chooser with the part’s own register, the stop in the room that says what casting asked and what each answer does before the player answers, the toasts and history lines that say what was played and against what, and the refusals in the room’s words. Read in this pass and kept.",
+  "evidence": [
+   {
+    "kind": "test",
+    "ref": "tests/b27-sides.test.ts: 'PLAYER JOURNEY: played against what the part asks, casting gives a direction ten minutes in; the clock stops with Follow The Direction and Keep Your Choice; each answer judges the rest, and can win or lose the callback'"
+   },
+   {
+    "kind": "test",
+    "ref": "tests/b27-sides.test.ts: 'refuses each control where it can’t be used, in its own words'"
+   }
+  ]
+ },
+ {
+  "surface": "Career, Opportunities, In Progress: Your Takes, Record A Take, each take’s line and Send This Take",
+  "where": "Career, the Opportunities tab, a role under In Progress with a self-tape asked for; the history and Why It Went This Way afterwards",
+  "sources": [
+   "src/ui/career/OpportunitiesPane.tsx#Takes",
+   "src/engine/systems/offers.ts#recordRefusal",
+   "src/engine/systems/offers.ts#sendRefusal",
+   "src/engine/systems/offers.ts#sendTake",
+   "src/engine/systems/offers.ts#takeWords",
+   "src/engine/systems/offers.ts#roundWords",
+   "src/engine/systems/offers.ts#rememberMiss [problem]"
+  ],
+  "states": [
+   "empty",
+   "ordinary",
+   "unavailable",
+   "confirmation",
+   "history",
+   "setback"
+  ],
+  "outcome": "Revised",
+  "why": "New with brief 27’s wave 1 (2026-10-25): nothing on this surface said anything before.",
+  "changes": "Written new: each take listed with when it was recorded, its band and how it was played, the limits said as refusals with the next step, and the history saying which take went and what casting did when none did. In this pass (2026-10-26) the empty state stopped repeating the button’s name beside the button, and the no-take refusal became “Nothing’s recorded yet, so there’s nothing to send. Record one first.”, since the engine-speak ratchet counts every “a take” and the glossary keeps the word for the buttons and the lines.",
+  "evidence": [
+   {
+    "kind": "test",
+    "ref": "tests/b27-offers-screen.test.ts: 'PLAYER JOURNEY: three takes recorded today, Tape It and Record A Take are grayed with the day’s limit as the reason, as the command refuses them; each take is listed with Send This Take'"
+   },
+   {
+    "kind": "test",
+    "ref": "tests/b27-sides.test.ts: 'PLAYER JOURNEY: takes recorded on one day and the next, and none sent by the due time: casting moves on, and the history says why'"
+   }
+  ]
+ },
+ {
+  "surface": "Career, Opportunities, Offers: your agent’s one ask on one term, and the production’s answer",
+  "where": "Career, the Opportunities tab, an offer under Offers while an agent represents you: Ask For More, Ask For Another Guaranteed Episode and Ask For The Promotional Film Paid; the notice and the question the next afternoon; the contract’s clauses afterwards",
+  "sources": [
+   "src/engine/systems/offers.ts#termsAskRefusal",
+   "src/engine/systems/offers.ts#askTerms",
+   "src/engine/systems/offers.ts#reviseDecision",
+   "src/engine/systems/offers.ts#answerAsk",
+   "src/engine/systems/offers.ts#bargainedPromoWords",
+   "src/engine/systems/offers.ts#askLabel",
+   "src/engine/systems/offers.ts#termsChangedWords",
+   "src/engine/systems/offers.ts#NY"
+  ],
+  "states": [
+   "ordinary",
+   "unavailable",
+   "notification",
+   "success",
+   "partial",
+   "setback",
+   "details"
+  ],
+  "outcome": "Revised",
+  "why": "New with brief 27’s wave 1 (2026-10-25): nothing on this surface said anything before.",
+  "changes": "Written new: each ask by its button, each refusal with the contract’s reason, the answer as the production’s own act, a raise, the episodes guaranteed, a trade-off named in full, the offer kept or withdrawn, and the contract’s clauses saying the terms as negotiated. Read in this pass and kept.",
+  "evidence": [
+   {
+    "kind": "test",
+    "ref": "tests/b27-offer-terms.test.ts: 'PLAYER JOURNEY: the pay refused by its draw comes back as a trade-off, more a day for one guaranteed episode fewer, and the booking and contract are that version'"
+   },
+   {
+    "kind": "test",
+    "ref": "tests/b27-offer-terms.test.ts: 'PLAYER JOURNEY: an ask the production answers by withdrawing its offer, by its draw: said, the part gone, and nothing to accept'"
+   },
+   {
+    "kind": "test",
+    "ref": "tests/b27-offer-terms.test.ts: 'refuses each term where it doesn’t apply, with nobody to ask, and a second ask; the asks are kept through a save and answered the same'"
+   }
+  ]
+ },
+ {
+  "surface": "Career, Opportunities, Offers: an offer on one condition, Accept On Its Condition, and the round that decides it",
+  "where": "Career, the Opportunities tab, an offer from a casting office that cast you before; the card while the condition stands; the notice when the round decides it, or when a production asked to decide chooses you",
+  "sources": [
+   "src/engine/systems/offers.ts#conditionalOfferFor",
+   "src/engine/systems/offers.ts#conditionWords",
+   "src/engine/systems/offers.ts#acceptOnCondition [accepted]",
+   "src/engine/systems/offers.ts#decideCondition",
+   "src/engine/systems/offers.ts#firm",
+   "src/engine/systems/offers.ts#firmOnHold",
+   "src/engine/systems/offers.ts#conditionStanding"
+  ],
+  "states": [
+   "ordinary",
+   "confirmation",
+   "notification",
+   "success",
+   "failure",
+   "history"
+  ],
+  "outcome": "Revised",
+  "why": "New with brief 27’s wave 1 (2026-10-25): nothing on this surface said anything before.",
+  "changes": "Written new: the offer’s reason, the condition said in full before accepting, that nothing is booked or paid until the round goes your way, the card’s line while it stands, and the notice that makes it firm or lets it fall away. Read in this pass and kept.",
+  "evidence": [
+   {
+    "kind": "test",
+    "ref": "tests/b27-casting-turns.test.ts: 'PLAYER JOURNEY: a lead from an office that cast the actor before comes on condition of its last round; accepted, the dates are held and nothing is booked; the round decides, booked for the actor whose round goes well and fallen away for the twin whose doesn’t'"
+   },
+   {
+    "kind": "test",
+    "ref": "tests/b27-casting-turns.test.ts: 'PLAYER JOURNEY: accepted on its condition, another offer on the same days, and the production asked to decide: its yes books the part on the terms accepted, the negotiated pay with them, and says so rather than offering it afresh'"
+   }
+  ]
+ },
+ {
+  "surface": "Notice: a part rewritten at casting’s cut, or recast and posted again",
+  "where": "What Needs You and the notices at a cut, the role’s card under In Progress and Open Calls afterwards",
+  "sources": [
+   "src/engine/systems/offers.ts#rewriteAt",
+   "src/engine/systems/offers.ts#recastsAt",
+   "src/engine/systems/offers.ts#recastWords"
+  ],
+  "states": [
+   "notification",
+   "setback",
+   "ordinary",
+   "history"
+  ],
+  "outcome": "Revised",
+  "why": "New with brief 27’s wave 1 (2026-10-25): nothing on this surface said anything before.",
+  "changes": "Written new: the rewrite in casting’s words with where you stand against the new ask, the release with its reason, and the recast with what happened and what to do, submit yourself again by a date. Read in this pass and kept.",
+  "evidence": [
+   {
+    "kind": "test",
+    "ref": "tests/b27-casting-turns.test.ts: 'PLAYER JOURNEY: the part now needs a technique at a level, said at the cut; the actor below it is released, the twin above it goes on, and the change is what the part asks from then'"
+   },
+   {
+    "kind": "test",
+    "ref": "tests/b27-casting-turns.test.ts: 'PLAYER JOURNEY: a part lost at casting’s word is recast the next Monday, posted again for the actor to submit to and decided afresh; the twin whose part settled too near its first day sees none'"
+   },
+   {
+    "kind": "test",
+    "ref": "tests/b27-offers-screen.test.ts: 'PLAYER JOURNEY: an offer for a part whose playing ages casting changed shows the new ages, said as changed, and the change in casting’s words while it’s in the running'"
+   }
+  ]
+ },
+ {
+  "surface": "Career, Opportunities, In Progress: Withdrawing, what it would do said first, and what a casting office remembers",
+  "where": "Career, the Opportunities tab, a role under In Progress: the line above Withdraw From The Part, the notice afterwards, and the office’s memory said on a later role",
+  "sources": [
+   "src/ui/career/OpportunitiesPane.tsx#Withdraw",
+   "src/engine/systems/offers.ts#withdrawRefusal",
+   "src/engine/systems/offers.ts#withdrawWarning",
+   "src/engine/systems/offers.ts#withdraw",
+   "src/engine/systems/offers.ts#rememberedWords"
+  ],
+  "states": [
+   "warning",
+   "confirmation",
+   "unavailable",
+   "notification",
+   "setback",
+   "history"
+  ],
+  "outcome": "Revised",
+  "why": "New with brief 27’s wave 1 (2026-10-25): nothing on this surface said anything before.",
+  "changes": "Written new: the cost by the notice given, said before the button, the refusals with their reasons, the notice that says what follows, and the office’s memory with its date and its cost, estimated. Read in this pass and kept.",
+  "evidence": [
+   {
+    "kind": "test",
+    "ref": "tests/b27-casting-turns.test.ts: 'PLAYER JOURNEY: withdrawn with notice, nothing is held against the actor; the twin who sleeps through is remembered, and the office’s cuts halve and its direct offers stop; one in hospital isn’t; one withdrawing late is'"
+   },
+   {
+    "kind": "test",
+    "ref": "tests/b27-sides.test.ts: 'refuses each control where it can’t be used, in its own words'"
+   }
+  ]
+ },
+ {
+  "surface": "Career, Opportunities, In Progress: Ask To Reschedule a chemistry read or a screen test, and the production’s answer",
+  "where": "Career, the Opportunities tab, a role under In Progress with a read or test set: the clash notice, the warning with its chance, and the notice the next afternoon",
+  "sources": [
+   "src/engine/systems/offers.ts#rescheduleRefusal",
+   "src/engine/systems/offers.ts#rescheduleWords",
+   "src/engine/systems/offers.ts#rescheduleAskWords",
+   "src/engine/systems/offers.ts#askReschedule",
+   "src/engine/systems/offers.ts#askReschedule [callback]",
+   "src/engine/systems/offers.ts#answerReschedule",
+   "src/engine/systems/offers.ts#answerReschedule [callback]"
+  ],
+  "states": [
+   "ordinary",
+   "unavailable",
+   "forecast",
+   "notification",
+   "success",
+   "setback"
+  ],
+  "outcome": "Revised",
+  "why": "New with brief 27’s wave 1 (2026-10-25): nothing on this surface said anything before.",
+  "changes": "Written new: the read or test said as set around other people’s days so the production decides, the chance as so many in ten, estimated, the refusals with their reasons, and the answer, moved with the new time or kept with the reminder that you can still withdraw with notice. Read in this pass and kept.",
+  "evidence": [
+   {
+    "kind": "test",
+    "ref": "tests/b27-casting-turns.test.ts: 'PLAYER JOURNEY: a chemistry read set on a day that clashes with the calendar says so, and points at Ask To Reschedule and its chance, not at Ask For Another Time, which refuses it'"
+   },
+   {
+    "kind": "test",
+    "ref": "tests/b27-casting-turns.test.ts: 'PLAYER JOURNEY: asked, the production answers the next afternoon by its draw: moved for the actor with a clash to give as the reason, kept for the twin without one'"
+   }
+  ]
+ },
+ {
+  "surface": "Creation, Genres & Background: the Languages card, and Languages on Ready To Begin",
+  "where": "Character creation, the Genres & Background step, the Languages card with Add A Language and Choose A Language; the Review step’s Languages line",
+  "sources": [
+   "src/ui/creation/CharacterCreation.tsx#LanguagesCard",
+   "src/engine/content/languages.ts#LEVEL_LABEL",
+   "src/engine/content/languages.ts#SPOKEN_NAMES",
+   "src/engine/content/languages.ts#languagesProblems"
+  ],
+  "states": [
+   "first use",
+   "ordinary",
+   "error",
+   "explanation"
+  ],
+  "outcome": "Revised",
+  "why": "New with brief 27’s wave 1 (2026-10-25): nothing on this surface said anything before.",
+  "changes": "Written new: what the languages do in the game in six plain sentences, the three levels each defined in one, and each refusal naming the slip and what to do before the player can leave the step. Read in this pass and kept.",
+  "evidence": [
+   {
+    "kind": "test",
+    "ref": "tests/b27-languages.test.ts: 'lists English to begin with, adds a language from the list at fluent, sets its level, and removes it; English can’t go under fluent or be removed'"
+   },
+   {
+    "kind": "test",
+    "ref": "tests/b27-creation-origins.test.ts: 'starts with English, natively, and won’t leave Genres & Background with English under fluent, a language twice, none native, or more than six'"
+   }
+  ]
+ },
+ {
+  "surface": "Career, Opportunities: The Language on a role’s card, the submission refused for it, and Work On Your Spanish among the steps",
+  "where": "Career, the Opportunities tab, The Language on a role’s card under Open Calls and In Progress, the reason under a grayed Submit Yourself, the language step beside the breakdown, the lines and rehearsal, and Why It Went This Way afterwards",
+  "sources": [
+   "src/engine/systems/speaking.ts#languageRefusal",
+   "src/engine/systems/speaking.ts#suitsWords",
+   "src/engine/systems/speaking.ts#languageFitWords",
+   "src/engine/systems/speaking.ts#languageStepLabel",
+   "src/engine/systems/speaking.ts#languageStepRefusal",
+   "src/engine/systems/speaking.ts#workOnLanguage",
+   "src/engine/systems/speaking.ts#languageWords",
+   "src/engine/content/tasks.ts#LANGUAGE_PART"
+  ],
+  "states": [
+   "ordinary",
+   "unavailable",
+   "explanation",
+   "details",
+   "forecast"
+  ],
+  "outcome": "Revised",
+  "why": "New with brief 27’s wave 1 (2026-10-25): nothing on this surface said anything before.",
+  "changes": "Written new: who speaks what and how it bears on your fit, said in words, as well, nearly as well, about half as well, where the review of 2026-10-25 found figures; whether you can be put up for it; what a conversational speaker has to do, with the step named; and each refusal with its reason. Read in this pass and kept.",
+  "evidence": [
+   {
+    "kind": "test",
+    "ref": "tests/b27-languages.test.ts: 'names the character’s other language beside the genres, the techniques, the ages and the union, and says the fit in words, not figures'"
+   },
+   {
+    "kind": "test",
+    "ref": "tests/b27-languages.test.ts: 'PLAYER JOURNEY: a conversational speaker can be submitted, but the part takes more preparation: Work On Your … is read by the tape, and casting reads the fit lower'"
+   },
+   {
+    "kind": "test",
+    "ref": "tests/b27-languages.test.ts: 'PLAYER JOURNEY: a fluent speaker is posted the part, auditions and is booked; a twin who speaks English alone is posted it and refused, with the reason; both kept through a load'"
+   }
+  ]
+ }
+]

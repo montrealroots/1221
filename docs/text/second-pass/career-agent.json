@@ -77,10 +77,10 @@
   "first": "Pending"
  },
  "src/engine/systems/proagent.ts#answer": {
-  "status": "Rewritten",
-  "hash": "686454e40c2e",
-  "on": "2026-10-24",
-  "evidence": "Written for brief 25's Module 3 (real agencies and agents) to docs/STYLE.md and docs/GLOSSARY.md, with no pronoun for a real agent and the game's own agent's words unchanged; read where the player meets it in tests/career-agents.test.ts (the Representation tab drawn with Dan Patack chosen, the notices and history of a played referral, meeting, offer and signing) and in tests/pro-representation-screen.test.ts, tests/journey-agent.test.ts and tests/pro-agent.test.ts for Thomas Ashgrove, with tools/voice-check.mjs, tools/tics.mjs, tools/title-case.mjs, tools/plural-check.mjs and tools/spelling.mjs passing",
+  "status": "Retained",
+  "hash": "ad2686f4b769",
+  "on": "2026-10-26",
+  "reason": "Each answer from the office as a notice: what it asked for and by when with where to make it, the meeting’s time and place and the trip the game assumes, or a pass with when it looks again and where its reasons are",
   "first": "Pending"
  },
  "src/engine/systems/proagent.ts#answerRefusal": {
@@ -119,10 +119,10 @@
   "first": "Rewritten And Verified"
  },
  "src/engine/systems/proagent.ts#endedWords": {
-  "status": "Rewritten",
-  "hash": "1e068bf7b3b4",
-  "on": "2026-10-24",
-  "evidence": "Written for brief 25's Module 3 (real agencies and agents) to docs/STYLE.md and docs/GLOSSARY.md, with no pronoun for a real agent and the game's own agent's words unchanged; read where the player meets it in tests/career-agents.test.ts (the Representation tab drawn with Dan Patack chosen, the notices and history of a played referral, meeting, offer and signing) and in tests/pro-representation-screen.test.ts, tests/journey-agent.test.ts and tests/pro-agent.test.ts for Thomas Ashgrove, with tools/voice-check.mjs, tools/tics.mjs, tools/title-case.mjs, tools/plural-check.mjs and tools/spelling.mjs passing",
+  "status": "Retained",
+  "hash": "49c137a75c2b",
+  "on": "2026-10-26",
+  "reason": "How an agreement ended: at the end of its year or its shorter term, by agreement, or under Equity’s or SAG-AFTRA’s rule with the days each names, as the history says it",
   "first": "Pending"
  },
  "src/engine/systems/proagent.ts#endRefusal": {
@@ -140,10 +140,10 @@
   "first": "Rewritten And Verified"
  },
  "src/engine/systems/proagent.ts#factorLabel": {
-  "status": "Rewritten",
-  "hash": "c796a52eeeb8",
-  "on": "2026-10-24",
-  "evidence": "Written for brief 25's Module 3 (real agencies and agents) to docs/STYLE.md and docs/GLOSSARY.md, with no pronoun for a real agent and the game's own agent's words unchanged; read where the player meets it in tests/career-agents.test.ts (the Representation tab drawn with Dan Patack chosen, the notices and history of a played referral, meeting, offer and signing) and in tests/pro-representation-screen.test.ts, tests/journey-agent.test.ts and tests/pro-agent.test.ts for Thomas Ashgrove, with tools/voice-check.mjs, tools/tics.mjs, tools/title-case.mjs, tools/plural-check.mjs and tools/spelling.mjs passing",
+  "status": "Retained",
+  "hash": "d29e04cec18b",
+  "on": "2026-10-26",
+  "reason": "Each factor’s label as the agent’s panel shows it: Voice Work for a voice-over department where a legit one has Stage And Screen, Fit With Her Department, Room On Her List (Assumed), the last saying it’s assumed",
   "first": "Pending"
  },
  "src/engine/systems/proagent.ts#followUp": {
@@ -154,39 +154,25 @@
   "first": "Pending"
  },
  "src/engine/systems/proagent.ts#FOUND": {
-  "status": "Rewritten",
-  "hash": "5c19b0494be4",
-  "on": "2026-10-21",
-  "evidence": "Read where the player meets them in one played life: his notices in the order they came (docs/verification/career-2026-10-20/app/make-saves.log) and History With His Office on the built app at 1440 and 390 (app/walk/, the Representation surfaces). Titles now name whose office, since What Needs You sets them among the School's notices and a classmate can be called Jordan; the check's history says what it found, not the instructions it gave; a refusal after its button's name takes one colon; a date the history line gives isn't said twice. Held by tests/journey-agent.test.ts and tests/pro-agent.test.ts",
-  "first": "Rewritten And Verified"
- },
- "src/engine/systems/proagent.ts#hasDone": {
-  "status": "Rewritten",
-  "hash": "60051b0c2967",
-  "on": "2026-10-24",
-  "evidence": "Written for brief 25's Module 3 (real agencies and agents) to docs/STYLE.md and docs/GLOSSARY.md, with no pronoun for a real agent and the game's own agent's words unchanged; read where the player meets it in tests/career-agents.test.ts (the Representation tab drawn with Dan Patack chosen, the notices and history of a played referral, meeting, offer and signing) and in tests/pro-representation-screen.test.ts, tests/journey-agent.test.ts and tests/pro-agent.test.ts for Thomas Ashgrove, with tools/voice-check.mjs, tools/tics.mjs, tools/title-case.mjs, tools/plural-check.mjs and tools/spelling.mjs passing",
-  "first": "Pending"
- },
- "src/engine/systems/proagent.ts#himTitle": {
-  "status": "Rewritten",
-  "hash": "ce48848ba20b",
-  "on": "2026-10-24",
-  "evidence": "Written for brief 25's Module 3 (real agencies and agents) to docs/STYLE.md and docs/GLOSSARY.md, with no pronoun for a real agent and the game's own agent's words unchanged; read where the player meets it in tests/career-agents.test.ts (the Representation tab drawn with Dan Patack chosen, the notices and history of a played referral, meeting, offer and signing) and in tests/pro-representation-screen.test.ts, tests/journey-agent.test.ts and tests/pro-agent.test.ts for Thomas Ashgrove, with tools/voice-check.mjs, tools/tics.mjs, tools/title-case.mjs, tools/plural-check.mjs and tools/spelling.mjs passing",
+  "status": "Retained",
+  "hash": "57d7de0c0fc4",
+  "on": "2026-10-26",
+  "reason": "What a check found, in the past tense: you had no reel or no voice demo, your headshots were more than two years old, you’d recorded more since you mixed your demo, each a reason the panel repeats",
   "first": "Pending"
  },
  "src/engine/systems/proagent.ts#interestOf": {
-  "status": "Rewritten",
-  "hash": "cef873d73e99",
-  "on": "2026-10-25",
-  "evidence": "Written for brief 27's K7 (Parts 11, 14 and 15; loops 44 to 47: the Actor Awards by its 33rd Rules & Regulations, the ceremony for every nomination, and what an award does after it) to docs/STYLE.md and docs/GLOSSARY.md, every rule the 33rd's own and every invention said as the game's: read where the player meets it in tests/b27-actor-awards.test.ts (eligibility and each refusal, Submit Yourself and its refusals, the production's submission, the nomination and the show's notices, the résumé's line), tests/b27-ceremony.test.ts (the invitation's question and notice, Go To The Ceremony and Watch From Home, a clash's refusal, Prepare Your Remarks, the trip's notices there and home, a missed flight, the room's loss, You Won At, the speech's words, the moment let pass, You Weren't At) and tests/b27-award-effects.test.ts (the agent's office seeing the recognition). Numbers under ten in words; dates with their comma; no engine words.",
+  "status": "Retained",
+  "hash": "1d96dc71f89a",
+  "on": "2026-10-26",
+  "reason": "Each factor’s reading says what the office has to go on and what would give it more, voice work for a voice-over department and stage and screen for a legit one, and marks the room on the list as assumed; every sentence names a thing on your record or a next step",
   "first": "Pending"
  },
  "src/engine/systems/proagent.ts#KIND_WORDS": {
-  "status": "Rewritten",
-  "hash": "8f9b878e66ff",
-  "on": "2026-10-21",
-  "evidence": "Written for brief 19 to docs/STYLE.md and docs/GLOSSARY.md; read where the player meets it in tests/journey-agent.test.ts, tests/pro-agent.test.ts and tests/pro-representation-screen.test.ts, with tools/voice-check.mjs, tools/tics.mjs and tools/title-case.mjs passing",
-  "first": "Rewritten And Verified"
+  "status": "Retained",
+  "hash": "0cd28465dcf0",
+  "on": "2026-10-26",
+  "reason": "New headshots, an up-to-date résumé, a reel, a voice demo: the four things an office can ask for, each as the Portfolio tab names it",
+  "first": "Pending"
  },
  "src/engine/systems/proagent.ts#LEVEL_LABEL": {
   "status": "Rewritten",
@@ -210,17 +196,17 @@
   "first": "Pending"
  },
  "src/engine/systems/proagent.ts#nextStep": {
-  "status": "Rewritten",
-  "hash": "e986fb6a6649",
-  "on": "2026-10-24",
-  "evidence": "Written for brief 25's Module 3 (real agencies and agents) to docs/STYLE.md and docs/GLOSSARY.md, with no pronoun for a real agent and the game's own agent's words unchanged; read where the player meets it in tests/career-agents.test.ts (the Representation tab drawn with Dan Patack chosen, the notices and history of a played referral, meeting, offer and signing) and in tests/pro-representation-screen.test.ts, tests/journey-agent.test.ts and tests/pro-agent.test.ts for Thomas Ashgrove, with tools/voice-check.mjs, tools/tics.mjs, tools/title-case.mjs, tools/plural-check.mjs and tools/spelling.mjs passing",
+  "status": "Retained",
+  "hash": "8c5c4efa9170",
+  "on": "2026-10-26",
+  "reason": "What’s Next for every stage, each a sentence naming the button to press or the date to wait for, Check Your Materials, Send Your Materials, Ask To Move, with the assumed times said as assumed",
   "first": "Pending"
  },
  "src/engine/systems/proagent.ts#nothingNew": {
-  "status": "Rewritten",
-  "hash": "64a8a8c89613",
-  "on": "2026-10-24",
-  "evidence": "Written for brief 25's Module 3 (real agencies and agents) to docs/STYLE.md and docs/GLOSSARY.md, with no pronoun for a real agent and the game's own agent's words unchanged; read where the player meets it in tests/career-agents.test.ts (the Representation tab drawn with Dan Patack chosen, the notices and history of a played referral, meeting, offer and signing) and in tests/pro-representation-screen.test.ts, tests/journey-agent.test.ts and tests/pro-agent.test.ts for Thomas Ashgrove, with tools/voice-check.mjs, tools/tics.mjs, tools/title-case.mjs, tools/plural-check.mjs and tools/spelling.mjs passing",
+  "status": "Retained",
+  "hash": "0e34cca03ad6",
+  "on": "2026-10-26",
+  "reason": "The refusal says the office looked at everything on your record on a date and what would count as new, a credit, a better reel or voice demo, or a referral, said as the game’s rule",
   "first": "Pending"
  },
  "src/engine/systems/proagent.ts#noticeRefusal": {
@@ -231,10 +217,10 @@
   "first": "Rewritten And Verified"
  },
  "src/engine/systems/proagent.ts#offerAgreement": {
-  "status": "Rewritten",
-  "hash": "15acb8a916fd",
-  "on": "2026-10-24",
-  "evidence": "Written for brief 25's Module 3 (real agencies and agents) to docs/STYLE.md and docs/GLOSSARY.md, with no pronoun for a real agent and the game's own agent's words unchanged; read where the player meets it in tests/career-agents.test.ts (the Representation tab drawn with Dan Patack chosen, the notices and history of a played referral, meeting, offer and signing) and in tests/pro-representation-screen.test.ts, tests/journey-agent.test.ts and tests/pro-agent.test.ts for Thomas Ashgrove, with tools/voice-check.mjs, tools/tics.mjs, tools/title-case.mjs, tools/plural-check.mjs and tools/spelling.mjs passing",
+  "status": "Retained",
+  "hash": "c0fc29842166",
+  "on": "2026-10-26",
+  "reason": "The offer notice says what’s offered, an agreement for the work it covers standing until a date, and sends the player to The Agreement, where every term is marked a published rule or the game’s own",
   "first": "Pending"
  },
  "src/engine/systems/proagent.ts#officeOf": {
@@ -245,10 +231,10 @@
   "first": "Rewritten And Verified"
  },
  "src/engine/systems/proagent.ts#officeTitle": {
-  "status": "Rewritten",
-  "hash": "ff26ae643a4e",
-  "on": "2026-10-24",
-  "evidence": "Written for brief 25's Module 3 (real agencies and agents) to docs/STYLE.md and docs/GLOSSARY.md, with no pronoun for a real agent and the game's own agent's words unchanged; read where the player meets it in tests/career-agents.test.ts (the Representation tab drawn with Dan Patack chosen, the notices and history of a played referral, meeting, offer and signing) and in tests/pro-representation-screen.test.ts, tests/journey-agent.test.ts and tests/pro-agent.test.ts for Thomas Ashgrove, with tools/voice-check.mjs, tools/tics.mjs, tools/title-case.mjs, tools/plural-check.mjs and tools/spelling.mjs passing",
+  "status": "Retained",
+  "hash": "874148e20ac8",
+  "on": "2026-10-26",
+  "reason": "The Office for a real agent’s and His or Her Office for the game’s own, the words every panel title on the tab is built around",
   "first": "Pending"
  },
  "src/engine/systems/proagent.ts#officeZone": {
@@ -301,11 +287,11 @@
   "first": "Pending"
  },
  "src/engine/systems/proagent.ts#registerProAgent <pro.agent_check>": {
-  "status": "Rewritten",
-  "hash": "906fb10d3f0a",
-  "on": "2026-10-21",
-  "evidence": "Read where the player meets them in one played life: his notices in the order they came (docs/verification/career-2026-10-20/app/make-saves.log) and History With His Office on the built app at 1440 and 390 (app/walk/, the Representation surfaces). Titles now name whose office, since What Needs You sets them among the School's notices and a classmate can be called Jordan; the check's history says what it found, not the instructions it gave; a refusal after its button's name takes one colon; a date the history line gives isn't said twice. Held by tests/journey-agent.test.ts and tests/pro-agent.test.ts",
-  "first": "Rewritten And Verified"
+  "status": "Retained",
+  "hash": "148e796a8128",
+  "on": "2026-10-26",
+  "reason": "The check’s history line says what it found in the past tense: headshots and a résumé there and what else, or all current, so a line read later doesn’t read as still to do",
+  "first": "Pending"
  },
  "src/engine/systems/proagent.ts#registerProAgent <pro.agent_notice>": {
   "status": "Rewritten",
@@ -336,10 +322,10 @@
   "first": "Pending"
  },
  "src/engine/systems/proagent.ts#registerProAgent <pro.send_materials>": {
-  "status": "Rewritten",
-  "hash": "91afa08236d1",
-  "on": "2026-10-24",
-  "evidence": "Written for brief 25's Module 3 (real agencies and agents) to docs/STYLE.md and docs/GLOSSARY.md, with no pronoun for a real agent and the game's own agent's words unchanged; read where the player meets it in tests/career-agents.test.ts (the Representation tab drawn with Dan Patack chosen, the notices and history of a played referral, meeting, offer and signing) and in tests/pro-representation-screen.test.ts, tests/journey-agent.test.ts and tests/pro-agent.test.ts for Thomas Ashgrove, with tools/voice-check.mjs, tools/tics.mjs, tools/title-case.mjs, tools/plural-check.mjs and tools/spelling.mjs passing",
+  "status": "Retained",
+  "hash": "5af629c1592c",
+  "on": "2026-10-26",
+  "reason": "The send’s history line says what went to whom and by which way in, after the School’s follow-up, after a festival meeting or on a referral, answering a request to meet where it did",
   "first": "Pending"
  },
  "src/engine/systems/proagent.ts#registerProAgent <pro.supply_material>": {
@@ -349,11 +335,11 @@
   "evidence": "Written for brief 25's Module 3 (real agencies and agents) to docs/STYLE.md and docs/GLOSSARY.md, with no pronoun for a real agent and the game's own agent's words unchanged; read where the player meets it in tests/career-agents.test.ts (the Representation tab drawn with Dan Patack chosen, the notices and history of a played referral, meeting, offer and signing) and in tests/pro-representation-screen.test.ts, tests/journey-agent.test.ts and tests/pro-agent.test.ts for Thomas Ashgrove, with tools/voice-check.mjs, tools/tics.mjs, tools/title-case.mjs, tools/plural-check.mjs and tools/spelling.mjs passing",
   "first": "Pending"
  },
- "src/engine/systems/proagent.ts#routesWords": {
-  "status": "Rewritten",
-  "hash": "81a2480f6853",
-  "on": "2026-10-24",
-  "evidence": "Written for brief 25's Module 3 (real agencies and agents) to docs/STYLE.md and docs/GLOSSARY.md, with no pronoun for a real agent and the game's own agent's words unchanged; read where the player meets it in tests/career-agents.test.ts (the Representation tab drawn with Dan Patack chosen, the notices and history of a played referral, meeting, offer and signing) and in tests/pro-representation-screen.test.ts, tests/journey-agent.test.ts and tests/pro-agent.test.ts for Thomas Ashgrove, with tools/voice-check.mjs, tools/tics.mjs, tools/title-case.mjs, tools/plural-check.mjs and tools/spelling.mjs passing",
+ "src/engine/systems/proagent.ts#ROUTE_WORDS": {
+  "status": "Retained",
+  "hash": "e02a9f45bd64",
+  "on": "2026-10-26",
+  "reason": "Each way in said in full and in short: the School’s follow-up after the showcase, a referral from someone you’ve worked with, an introduction at a festival where your film screens, built into sentences from the agent’s own routes",
   "first": "Pending"
  },
  "src/engine/systems/proagent.ts#scheduleMeeting": {
@@ -378,10 +364,10 @@
   "first": "Pending"
  },
  "src/engine/systems/proagent.ts#signRefusal": {
-  "status": "Rewritten",
-  "hash": "7d5a4b9fa932",
-  "on": "2026-10-24",
-  "evidence": "Written for brief 25's Module 3 (real agencies and agents) to docs/STYLE.md and docs/GLOSSARY.md, with no pronoun for a real agent and the game's own agent's words unchanged; read where the player meets it in tests/career-agents.test.ts (the Representation tab drawn with Dan Patack chosen, the notices and history of a played referral, meeting, offer and signing) and in tests/pro-representation-screen.test.ts, tests/journey-agent.test.ts and tests/pro-agent.test.ts for Thomas Ashgrove, with tools/voice-check.mjs, tools/tics.mjs, tools/title-case.mjs, tools/plural-check.mjs and tools/spelling.mjs passing",
+  "status": "Retained",
+  "hash": "66da63a3cb4b",
+  "on": "2026-10-26",
+  "reason": "Another agent represents you until a date for the same kinds of work, so this agreement can’t start: the one-agent rule said as the game’s, with the two ways out, decline it or end the other first",
   "first": "Pending"
  },
  "src/engine/systems/proagent.ts#STAGE_LABEL": {
@@ -399,10 +385,10 @@
   "first": "Pending"
  },
  "src/engine/systems/proagent.ts#supplyRefusal": {
-  "status": "Rewritten",
-  "hash": "970adaf4d8d2",
-  "on": "2026-10-24",
-  "evidence": "Written for brief 25's Module 3 (real agencies and agents) to docs/STYLE.md and docs/GLOSSARY.md, with no pronoun for a real agent and the game's own agent's words unchanged; read where the player meets it in tests/career-agents.test.ts (the Representation tab drawn with Dan Patack chosen, the notices and history of a played referral, meeting, offer and signing) and in tests/pro-representation-screen.test.ts, tests/journey-agent.test.ts and tests/pro-agent.test.ts for Thomas Ashgrove, with tools/voice-check.mjs, tools/tics.mjs, tools/title-case.mjs, tools/plural-check.mjs and tools/spelling.mjs passing",
+  "status": "Retained",
+  "hash": "e508248c56fb",
+  "on": "2026-10-26",
+  "reason": "Each refusal names what you haven’t made and the Portfolio tab’s button for it, Cut A Reel, Mix A Voice Demo, Book A Headshot Session, Update Your Résumé: the next real step",
   "first": "Pending"
  },
  "src/engine/systems/proagent.ts#tooSoon": {
@@ -448,11 +434,11 @@
   "first": "Rewritten And Verified"
  },
  "src/engine/systems/proagent.ts#workSeen": {
-  "status": "Rewritten",
-  "hash": "51b016933708",
-  "on": "2026-10-21",
-  "evidence": "Written for brief 19 to docs/STYLE.md and docs/GLOSSARY.md; read where the player meets it in tests/journey-agent.test.ts, tests/pro-agent.test.ts and tests/pro-representation-screen.test.ts, with tools/voice-check.mjs, tools/tics.mjs and tools/title-case.mjs passing",
-  "first": "Rewritten And Verified"
+  "status": "Retained",
+  "hash": "d281bb74dd6b",
+  "on": "2026-10-26",
+  "reason": "What the office has to go on, each piece named as the player knows it: showcase scenes as the School recorded them, work a referrer referred you from, your film in a festival’s official selection",
+  "first": "Pending"
  },
  "src/ui/career/RepresentationPane.tsx#AgenciesPanel": {
   "status": "Rewritten",

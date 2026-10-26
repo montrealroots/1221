@@ -421,7 +421,7 @@ const WAY: Readonly<Record<AgentRoute, string>> = {
 function waysIn(agent: Agent): string {
   const ways = agent.routes.map((r) => WAY[r]);
   const office = capital(agent.words.office);
-  if (ways.length === 1) return `${office} takes your materials one way in the game: ${ways[0]}. The game reads a referral as not unsolicited.`;
+  if (ways.length === 1) return `${office} takes your materials one way in the game: ${ways[0]}. In the game a referral makes a submission one it asked for.`;
   const said = ways.length === 2 ? `${ways[0]}, or ${ways[1]}` : `${ways.slice(0, -1).join(', ')} or ${ways.at(-1)}`;
   return `${office} takes your materials ${countWords(ways.length)} ways in the game: ${said}.`;
 }

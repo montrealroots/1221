@@ -291,7 +291,7 @@ function Takes({ o }: { o: Opportunity }) {
             );
           })}
         </ul>
-      ) : <p className="small" style={{ margin: 0 }}>No takes yet. Record A Take keeps each one to choose from; Tape It records one and sends it straight away.</p>}
+      ) : <p className="small" style={{ margin: 0 }}>No takes yet. Each one you record is kept here to choose from; Tape It records one and sends it straight away.</p>}
       <div className="row gap-2" style={{ flexWrap: 'wrap' }}>
         <Gated feature="pro.record_take" className="btn btn-sm" disabled={!!recordNo} title={recordNo} onClick={() => { const y = run<{ take: number; band: keyof typeof BAND_LABEL }>('pro.record_take', { opportunityId: o.id }); if (y.ok) toast(`Take ${y.value!.take + 1}: ${BAND_LABEL[y.value!.band]}.`, 'positive'); }}>Record A Take</Gated>
       </div>

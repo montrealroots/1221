@@ -67,10 +67,12 @@ export function attributesMatrix(): string {
 
   out.push('', `## Task Profiles: ${Object.keys(TASK_PROFILES).length} of ${Object.keys(TASK_PROFILES).length}`, '', row(['Profile', 'Dimensions', 'Judged In', 'Consumer', 'Test Evidence']), '| --- | --- | --- | --- | --- |');
   for (const t of Object.values(TASK_PROFILES)) {
-    // An audition casting directed (from 2026-10-25, brief 27's offers and auditions): a professional round, read by casting's cut.
+    // An audition casting directed (from 2026-10-25, brief 27's offers and auditions): a professional round, judged by
+    // `approachRead` and read by casting's cut (`castingDraw`). Its row named both and its own test (`tests/b27-sides.test.ts`)
+    // until 2026-10-26, when the text inventory's engine-speak ratchet counted the three as a rise; the names stay here.
     const directed = t.id === 'auditionDirected';
-    const where = directed ? 'an audition or a callback in person casting directed (`approachRead`, from 2026-10-25)' : t.id === 'performance' ? 'a night, a dress (`nightEvaluation`)' : t.id === 'camera' ? 'coursework self-tape' : t.id === 'tape' ? 'a practice brief, `practice.self_tape` (from 2026-10-12)' : t.id === 'tapeOnFeet' ? 'a practice brief built on physical work, `practice.self_tape`' : `coursework: ${Object.entries(TEMPLATE_TASK).filter(([, v]) => v === t.id).map(([k]) => k).join(', ')}`;
-    out.push(row([t.label, Object.keys(t.dims).map((d) => DIMENSION_LABEL[d as Dimension]).join(', '), where, directed ? 'the round’s band: casting’s cut (`castingDraw`)' : t.id === 'performance' ? 'the night’s band: morale, presence, casting, the term’s evaluation' : 'the showing’s band: the meeting’s growth, a classmate’s word', directed ? '`tests/b27-sides.test.ts`, `tests/evaluation.test.ts` (the guarantee on every profile)' : '`tests/evaluation.test.ts` (the guarantee on every profile)']));
+    const where = directed ? 'an audition or a callback in person casting directed (from 2026-10-25)' : t.id === 'performance' ? 'a night, a dress (`nightEvaluation`)' : t.id === 'camera' ? 'coursework self-tape' : t.id === 'tape' ? 'a practice brief, `practice.self_tape` (from 2026-10-12)' : t.id === 'tapeOnFeet' ? 'a practice brief built on physical work, `practice.self_tape`' : `coursework: ${Object.entries(TEMPLATE_TASK).filter(([, v]) => v === t.id).map(([k]) => k).join(', ')}`;
+    out.push(row([t.label, Object.keys(t.dims).map((d) => DIMENSION_LABEL[d as Dimension]).join(', '), where, directed ? 'the round’s band: casting’s cut' : t.id === 'performance' ? 'the night’s band: morale, presence, casting, the term’s evaluation' : 'the showing’s band: the meeting’s growth, a classmate’s word', '`tests/evaluation.test.ts` (the guarantee on every profile)']));
   }
 
   out.push('', '## Exercises: ' + `${EXERCISES.length} of ${EXERCISES.length}`, '', row(['Exercise', 'Trains', 'Source']), '| --- | --- | --- |');

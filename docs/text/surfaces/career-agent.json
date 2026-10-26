@@ -325,9 +325,6 @@
    "src/ui/career/RepresentationPane.tsx#RepresentationPane",
    "src/ui/career/RepresentationPane.tsx#AgenciesPanel",
    "src/engine/content/agencies.ts#*",
-   "src/engine/systems/proagent.ts#hasDone",
-   "src/engine/systems/proagent.ts#routesWords",
-   "src/engine/systems/proagent.ts#himTitle",
    "src/engine/systems/proagent.ts#officeTitle",
    "src/engine/systems/proagent.ts#signRefusal"
   ],
@@ -339,7 +336,7 @@
   ],
   "outcome": "Revised",
   "why": "New with brief 25's Module 3, at the owner's word (“Use real agents.”): four real New York theatrical agents beside the game’s own, each named, never given a pronoun, with nothing said of them the office’s page doesn’t give; and the six agencies the brief names, each as its own pages had it.",
-  "changes": "Written new: the Agents list (“Dan Patack Theatrical Agent, Stewart Talent, New York. A real agent.”), each real agent’s notice and fine print, the office’s refusal of unsolicited submissions in its own words, the referral as the one way in, and Agencies with each office’s way in, the agents it names and what the game does with it. The agent’s words became the agent’s own: “his office” for Thomas Ashgrove, “the office” and the name for a real agent.",
+  "changes": "Written new: the Agents list (“Dan Patack Theatrical Agent, Stewart Talent, New York. A real agent.”), each real agent’s notice and fine print, the office’s refusal of unsolicited submissions in its own words, the referral as the one way in, and Agencies with each office’s way in, the agents it names and what the game does with it. The agent’s words became the agent’s own: “his office” for Thomas Ashgrove, “the office” and the name for a real agent. On 2026-10-25 (brief 27) the three helpers that built “his office”, “Him” and the two routes by hand went, their words built from each agent’s own routes and pronouns instead (ROUTE_WORDS, officeTitle), so her panel and his read alike.",
   "evidence": [
    {
     "kind": "test",

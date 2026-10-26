@@ -101,7 +101,9 @@ const AREAS2 = [
   // From 2026-10-21 (brief 19's second wave): each career builder reads its own sources, so the agent's system and its
   // tab are the career area's part `career-agent`, marked and claimed apart from the core's `career`.
   // From 2026-10-24 (brief 25, Module 3) the agencies' own records too, read by the module that wrote them.
-  ['career-agent', [/^src\/engine\/systems\/proagent\.ts$/, /^src\/ui\/career\/RepresentationPane\.tsx$/, /^src\/engine\/content\/agencies\.ts$/]],
+  // From 2026-10-25 (brief 27, wave 1) the agreement's own terms too, `systems/representation.ts`: until this entry the
+  // fallback filed it under health, as the reports said.
+  ['career-agent', [/^src\/engine\/systems\/(proagent|representation)\.ts$/, /^src\/ui\/career\/RepresentationPane\.tsx$/, /^src\/engine\/content\/agencies\.ts$/]],
   // From 2026-10-21 (brief 19's pay): its files, the pay system and the Career screen's Work tab, are its own builder's to
   // mark, apart from the core's career files, so the wave's builders working apart write their own second-pass files.
   // From 2026-10-24 (brief 25, Module 4) a contract's own sources too, and a series' seasons, read by the module that wrote them.
@@ -110,7 +112,10 @@ const AREAS2 = [
   // career core's, so the builders working at once each keep their own status files.
   // From 2026-10-24 (brief 25, Module 5) the ways of working too, the work loop's own, read by the module that wrote them.
   // From 2026-10-24 (brief 27, Area B) the slate too, the work loop's supply, read by the area that built it.
-  ['career-work', [/^src\/engine\/systems\/(projobs|workflow|slate)\.ts$/, /^src\/engine\/content\/(workflows|slate)\.ts$/, /^src\/ui\/career\/OpportunitiesPane\.tsx$/]],
+  // From 2026-10-25 (brief 27, wave 1) the actor's side of casting (`systems/offers.ts`) and the languages a part is
+  // written in (`systems/speaking.ts`, `content/languages.ts`): until this entry the fallback filed the systems under health
+  // and the languages' list under frame.
+  ['career-work', [/^src\/engine\/systems\/(projobs|workflow|slate|offers|speaking)\.ts$/, /^src\/engine\/content\/(workflows|slate|languages)\.ts$/, /^src\/ui\/career\/OpportunitiesPane\.tsx$/]],
   // From 2026-10-23 (brief 25, Module 1): work abroad's own sources, the trip and the countries' rules, read by the module
   // that wrote them.
   // From 2026-10-24 (brief 25, Module 6) the charts, the awards and festivals and their tab too: the industry's world,

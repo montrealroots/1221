@@ -1,4 +1,25 @@
 {
+ "src/engine/content/languages.ts#languagesProblems": {
+  "status": "Retained",
+  "hash": "fbd29b94bb98",
+  "on": "2026-10-26",
+  "reason": "Each refusal names the slip and what to do: a language listed twice, English under fluent when training and every part are in English, no native language, too many; said before the player can leave the card",
+  "first": "Pending"
+ },
+ "src/engine/content/languages.ts#LEVEL_LABEL": {
+  "status": "Retained",
+  "hash": "869350c2ea91",
+  "on": "2026-10-26",
+  "reason": "Native, Fluent and Conversational, the three levels a player picks from, each defined on the card in one plain sentence and the words the résumé and The Language repeat",
+  "first": "Pending"
+ },
+ "src/engine/content/languages.ts#SPOKEN_NAMES": {
+  "status": "Retained",
+  "hash": "a612471053af",
+  "on": "2026-10-26",
+  "reason": "Mandarin, the one language whose everyday name differs from the list’s own, shown as a player would say it",
+  "first": "Pending"
+ },
  "src/engine/content/slate.ts#AWAY_TRIP": {
   "status": "Rewritten",
   "hash": "fb1297cbf837",
@@ -699,6 +720,293 @@
   "evidence": "Written for brief 25's Module 5 (the ways of working: the booth, the dub, narration, multicamera, performance capture, reenactment, the musical and action; a shoot's order and takes, revised pages, a recall to loop and a scene cut) to docs/STYLE.md and docs/GLOSSARY.md, every rule the agreements' own and every invention said as the game's; read where the player meets it in tests/career-workflows-screen.test.ts (the Work and Opportunities tabs drawn for a voice session, a multicamera week and an action shoot, through the clock and a reload at each stage) and tests/career-workflows.test.ts (each workflow's days, choices, reports and notices), with tools/voice-check.mjs, tools/tics.mjs and tools/title-case.mjs clean.",
   "first": "Pending"
  },
+ "src/engine/systems/offers.ts#acceptOnCondition [accepted]": {
+  "status": "Retained",
+  "hash": "a3c8d7e4d389",
+  "on": "2026-10-26",
+  "reason": "The history line says you accepted the part on its condition and names the round, the fact a player looks back for",
+  "first": "Pending"
+ },
+ "src/engine/systems/offers.ts#answerAsk": {
+  "status": "Retained",
+  "hash": "c89cb7361a12",
+  "on": "2026-10-26",
+  "reason": "Each answer is the production’s, said as what it does: raises the pay, guarantees the episodes, trades one thing for another named in full, keeps its offer, or withdraws it and the part goes to another actor, with how long the offer stands",
+  "first": "Pending"
+ },
+ "src/engine/systems/offers.ts#answerNote": {
+  "status": "Retained",
+  "hash": "45d536c98838",
+  "on": "2026-10-26",
+  "reason": "The history line says how the rest was played, as casting asked or against it, naming who asked; the key beside it is the history’s own, never shown",
+  "first": "Pending"
+ },
+ "src/engine/systems/offers.ts#answerReschedule": {
+  "status": "Retained",
+  "hash": "c7c5f695c6cf",
+  "on": "2026-10-26",
+  "reason": "The production moved the round to a new day and time, or couldn’t and it stays, with the reminder that you can still withdraw with notice a day or more before it, under titles that say which",
+  "first": "Pending"
+ },
+ "src/engine/systems/offers.ts#answerReschedule [callback]": {
+  "status": "Retained",
+  "hash": "2ab63be8b4ee",
+  "on": "2026-10-26",
+  "reason": "The history key for the answer on a reschedule, the record’s own, never shown to a player",
+  "first": "Pending"
+ },
+ "src/engine/systems/offers.ts#approachRead": {
+  "status": "Retained",
+  "hash": "4965682a819f",
+  "on": "2026-10-26",
+  "reason": "Why It Went This Way’s line on casting’s direction: asked to play it one way, you kept your choice and didn’t take the note, said as the room saw it, with no figure",
+  "first": "Pending"
+ },
+ "src/engine/systems/offers.ts#askLabel": {
+  "status": "Retained",
+  "hash": "85123a8422ce",
+  "on": "2026-10-26",
+  "reason": "Ask For a figure A Day or A Week, Ask For Another Guaranteed Episode, Ask For The Promotional Film Paid: each button names its ask and its unit, in Title Case",
+  "first": "Pending"
+ },
+ "src/engine/systems/offers.ts#askReschedule": {
+  "status": "Retained",
+  "hash": "09915a88b103",
+  "on": "2026-10-26",
+  "reason": "The question’s title names the answer to come on moving the read or test, in the words the notice will use",
+  "first": "Pending"
+ },
+ "src/engine/systems/offers.ts#askReschedule [callback]": {
+  "status": "Retained",
+  "hash": "a228e69c7c20",
+  "on": "2026-10-26",
+  "reason": "The history line says who you asked to move which round for which part, and from when, the ask as a fact",
+  "first": "Pending"
+ },
+ "src/engine/systems/offers.ts#askTerms": {
+  "status": "Retained",
+  "hash": "0bcca5a5b65e",
+  "on": "2026-10-26",
+  "reason": "The ask’s notice names who asked whom for what, one more episode than the offer or the promotional film paid at your own day, against what the contract would do, in the agent’s voice",
+  "first": "Pending"
+ },
+ "src/engine/systems/offers.ts#bargainedPromoWords": {
+  "status": "Retained",
+  "hash": "047d6f9bb08b",
+  "on": "2026-10-26",
+  "reason": "The contract’s promotional film clause says when the production may call you, what the rule pays by the work’s pay, and what your agent bargained, each a figure the clause can be checked against",
+  "first": "Pending"
+ },
+ "src/engine/systems/offers.ts#chooseRefusal": {
+  "status": "Retained",
+  "hash": "70c03d1152ae",
+  "on": "2026-10-26",
+  "reason": "Each refusal of Play It This Way names the obstacle in the room’s words: no casting notice, no sides yet because casting sends them with an audition, or casting’s direction to answer first",
+  "first": "Pending"
+ },
+ "src/engine/systems/offers.ts#conditionalOfferFor": {
+  "status": "Retained",
+  "hash": "403915382b7a",
+  "on": "2026-10-26",
+  "reason": "The offer’s reason: who cast you as what, and where your work was judged, the fact the condition rests on",
+  "first": "Pending"
+ },
+ "src/engine/systems/offers.ts#conditionStanding": {
+  "status": "Retained",
+  "hash": "cc185388f5f3",
+  "on": "2026-10-26",
+  "reason": "The card’s line while a condition stands: the round it rests on, booked if it goes your way, fallen away if not, and your dates held meanwhile",
+  "first": "Pending"
+ },
+ "src/engine/systems/offers.ts#conditionWords": {
+  "status": "Retained",
+  "hash": "500a70d61af6",
+  "on": "2026-10-26",
+  "reason": "The condition said in full before accepting: which round has to go your way, that accepting holds your dates and sets the round, and that nothing is booked or paid until then and the offer falls away if it doesn’t",
+  "first": "Pending"
+ },
+ "src/engine/systems/offers.ts#decideCondition": {
+  "status": "Retained",
+  "hash": "1e246fdbf290",
+  "on": "2026-10-26",
+  "reason": "The condition’s outcome: the round didn’t go your way, so the offer fell away and casting cast another actor, or it went your way, as a notice title and a history line",
+  "first": "Pending"
+ },
+ "src/engine/systems/offers.ts#firm": {
+  "status": "Retained",
+  "hash": "a24652c12f26",
+  "on": "2026-10-26",
+  "reason": "The offer made firm or fallen away: the booking couldn’t be made and why, or you’re booked on the terms you accepted and Booked Work has the days",
+  "first": "Pending"
+ },
+ "src/engine/systems/offers.ts#firmOnHold": {
+  "status": "Retained",
+  "hash": "ecb98b2ce88c",
+  "on": "2026-10-26",
+  "reason": "Asked to decide, the production chose you rather than let you go to the other part: one clause saying what happened and against what",
+  "first": "Pending"
+ },
+ "src/engine/systems/offers.ts#giveNote": {
+  "status": "Retained",
+  "hash": "e1fc16000f75",
+  "on": "2026-10-26",
+  "reason": "Casting’s direction stops the clock and says what casting asked, what you had chosen, and what each button does, Follow The Direction and Keep Your Choice, with what adapting and keeping each cost, before the player answers",
+  "first": "Pending"
+ },
+ "src/engine/systems/offers.ts#noteRefusal": {
+  "status": "Retained",
+  "hash": "75806ba03934",
+  "on": "2026-10-26",
+  "reason": "Casting has no direction waiting, or you’ve answered, following or keeping: each says where the player stands in the room’s own words",
+  "first": "Pending"
+ },
+ "src/engine/systems/offers.ts#NY": {
+  "status": "Retained",
+  "hash": "91a5e4a639ea",
+  "on": "2026-10-26",
+  "reason": "America/New_York, the time zone id the offers’ dates are written in; an id the inventory takes for words, never shown to a player on its own",
+  "first": "Pending"
+ },
+ "src/engine/systems/offers.ts#recastsAt": {
+  "status": "Retained",
+  "hash": "f273b1963618",
+  "on": "2026-10-26",
+  "reason": "The recast notice says what happened, the actor cast left the part and it’s posted again before its first day, and what to do: submit yourself again by a date, or your agent can",
+  "first": "Pending"
+ },
+ "src/engine/systems/offers.ts#recastWords": {
+  "status": "Retained",
+  "hash": "77171a1bc685",
+  "on": "2026-10-26",
+  "reason": "The card’s line on a recast part: the actor cast left it, and casting decides it afresh, in the words the notice used",
+  "first": "Pending"
+ },
+ "src/engine/systems/offers.ts#recordRefusal": {
+  "status": "Retained",
+  "hash": "57caaf842e05",
+  "on": "2026-10-26",
+  "reason": "Each refusal of Record A Take says the limit reached, the takes kept for one self-tape or a day’s, and the next step: send one, or record more tomorrow",
+  "first": "Pending"
+ },
+ "src/engine/systems/offers.ts#registerOffers": {
+  "status": "Retained",
+  "hash": "4feef17ab7a3",
+  "on": "2026-10-26",
+  "reason": "The commands’ own words, each saying what Follow The Direction and Keep Your Choice do in one clause, and the history line for a choice kept, as the room says it",
+  "first": "Pending"
+ },
+ "src/engine/systems/offers.ts#rememberedWords": {
+  "status": "Retained",
+  "hash": "ee1d2ef0ceba",
+  "on": "2026-10-26",
+  "reason": "The office remembers that you withdrew or didn’t turn up, with the date and the notice given, and its cuts half as likely to go your way, estimated: the memory’s cost in one sentence",
+  "first": "Pending"
+ },
+ "src/engine/systems/offers.ts#rememberMiss [problem]": {
+  "status": "Retained",
+  "hash": "bed24e6a0e68",
+  "on": "2026-10-26",
+  "reason": "What a casting office remembers: takes recorded and none sent, or not turning up without letting them know, said as a fact about the office’s memory, not a verdict; its key is the history’s own",
+  "first": "Pending"
+ },
+ "src/engine/systems/offers.ts#rescheduleAskWords": {
+  "status": "Retained",
+  "hash": "d80224db2748",
+  "on": "2026-10-26",
+  "reason": "The clash notice points at Ask To Reschedule on the Opportunities tab, says to ask a day ahead, and gives the chance as estimated: the three things the player needs",
+  "first": "Pending"
+ },
+ "src/engine/systems/offers.ts#rescheduleRefusal": {
+  "status": "Retained",
+  "hash": "69758c30db56",
+  "on": "2026-10-26",
+  "reason": "Each refusal of Ask To Reschedule gives the reason: no read or test to move and where an audition moves instead, asked already with the answer, less than a day’s notice, or no other day clear of your calendar",
+  "first": "Pending"
+ },
+ "src/engine/systems/offers.ts#rescheduleWords": {
+  "status": "Retained",
+  "hash": "5b025af8d5a7",
+  "on": "2026-10-26",
+  "reason": "The warning says the read or test is set around other people’s days, so the production decides, and gives the chance as a figure in ten, estimated, higher with a clash to give as the reason",
+  "first": "Pending"
+ },
+ "src/engine/systems/offers.ts#reviseDecision": {
+  "status": "Retained",
+  "hash": "ed4e72cd6f48",
+  "on": "2026-10-26",
+  "reason": "Since then: the two words that join the offer’s first terms to what changed after the answer, on the question under What Needs You",
+  "first": "Pending"
+ },
+ "src/engine/systems/offers.ts#rewriteAt": {
+  "status": "Retained",
+  "hash": "8820a3e6009d",
+  "on": "2026-10-26",
+  "reason": "The rewrite at a cut said in casting’s words: the ages or the technique the part now asks, whether you still fit it, and where you stand against the new ask, so a release has its reason",
+  "first": "Pending"
+ },
+ "src/engine/systems/offers.ts#roundWords": {
+  "status": "Retained",
+  "hash": "903622989017",
+  "on": "2026-10-26",
+  "reason": "Why It Went This Way’s lines on the round: which take you sent of those recorded, and whether you followed casting’s direction or kept your choice, the facts casting judged from",
+  "first": "Pending"
+ },
+ "src/engine/systems/offers.ts#sendRefusal": {
+  "status": "Rewritten",
+  "hash": "9a5abbf3f988",
+  "on": "2026-10-26",
+  "evidence": "Read again on 2026-10-26: the no-take refusal said a take, which the engine-speak ratchet counted; it now says nothing’s recorded yet, so there’s nothing to send, record one first, with the Record A Take button beside it on the Takes panel. tests/b27-sides.test.ts holds the new words, and the due-time refusal gives the date and time",
+  "first": "Pending"
+ },
+ "src/engine/systems/offers.ts#sendTake": {
+  "status": "Retained",
+  "hash": "5baf350a7e6c",
+  "on": "2026-10-26",
+  "reason": "You sent take N of the M you recorded for the part: what happened, with the count a player can check against the panel",
+  "first": "Pending"
+ },
+ "src/engine/systems/offers.ts#takeWords": {
+  "status": "Retained",
+  "hash": "e41422bdac50",
+  "on": "2026-10-26",
+  "reason": "Each take’s line: its number, when it was recorded, its band and how it was played, built from the record so the panel and the history say the same",
+  "first": "Pending"
+ },
+ "src/engine/systems/offers.ts#termsAskRefusal": {
+  "status": "Retained",
+  "hash": "c796400508c8",
+  "on": "2026-10-26",
+  "reason": "Each refusal of an ask says why it can’t be made in the contract’s terms: only a recurring part has guaranteed episodes, deferred pay has no day rate, every expected episode is guaranteed already, a clash with booked days, no promotional film or one already paid",
+  "first": "Pending"
+ },
+ "src/engine/systems/offers.ts#termsChangedWords": {
+  "status": "Retained",
+  "hash": "b30c84397c46",
+  "on": "2026-10-26",
+  "reason": "As negotiated: the term that changed, said in the contract’s words, the guaranteed episode, the option at the same day rate, or the promotional film paid, so the card and the contract agree",
+  "first": "Pending"
+ },
+ "src/engine/systems/offers.ts#withdraw": {
+  "status": "Retained",
+  "hash": "2bacc933e0aa",
+  "on": "2026-10-26",
+  "reason": "The notice and history say you withdrew, with notice or with less than a day’s, and what follows: nothing held against you, or two years of cuts less likely to go your way and no offer without an audition",
+  "first": "Pending"
+ },
+ "src/engine/systems/offers.ts#withdrawRefusal": {
+  "status": "Retained",
+  "hash": "2d342f74f045",
+  "on": "2026-10-26",
+  "reason": "Each refusal of Withdraw From The Part gives the reason: no casting notice, an offer to decline instead, not in the running now, or casting’s direction to answer first",
+  "first": "Pending"
+ },
+ "src/engine/systems/offers.ts#withdrawWarning": {
+  "status": "Retained",
+  "hash": "ebeb80b0dd47",
+  "on": "2026-10-26",
+  "reason": "Said above the button before it’s pressed: withdrawing now gives notice and the office won’t hold it against you, or it’s late notice and the office will remember it as a no-show, with the round named",
+  "first": "Pending"
+ },
  "src/engine/systems/projobs.ts#abroadWarning": {
   "status": "Rewritten",
   "hash": "bf838bb40899",
@@ -742,10 +1050,10 @@
   "first": "Pending"
  },
  "src/engine/systems/projobs.ts#askMoreRefusal": {
-  "status": "Rewritten",
-  "hash": "13788be9af6b",
-  "on": "2026-10-25",
-  "evidence": "Written for brief 27's K4 (loops 16 and 18: a direct offer and asking for more through the agent) to docs/STYLE.md and docs/GLOSSARY.md, and read where the player meets it: tests/b27-offers.test.ts holds the direct offer's reason in the offer's decision and history (offered you ... without an audition, cast you as ... where your work was Strong), the ask's history line, its refusals (no agent, asked once already, the answer to come), and the answer's notices (The Offer For ... Is Raised, The Offer For ... Stands) with their words; the release notice of a voice credit now names the voice demo, which brief 27's K3 made. The rest of these sources' words are as they were, held by brief 19's and brief 25's tests. tools/voice-check.mjs, tools/tics.mjs, tools/title-case.mjs, tools/plural-check.mjs and tools/spelling.mjs pass",
+  "status": "Retained",
+  "hash": "4d7e38a80a2f",
+  "on": "2026-10-26",
+  "reason": "Each refusal of Ask For More gives the reason: no offer standing, asked already with when the answer comes, no agent to ask, work the agreement doesn’t cover in the agreement’s own words, or deferred pay with no figure to ask more of",
   "first": "Pending"
  },
  "src/engine/systems/projobs.ts#attendedAcross": {
@@ -777,10 +1085,10 @@
   "first": "Pending"
  },
  "src/engine/systems/projobs.ts#callPromo": {
-  "status": "Rewritten",
-  "hash": "5adafffa47a4",
-  "on": "2026-10-25",
-  "evidence": "Written for brief 27's K6 (loop 34: publicity) to docs/STYLE.md and docs/GLOSSARY.md, and read where the player meets it: tests/b27-promo.test.ts holds the call (Calls You For A Promotional Film, It pays a day performer’s minimum), the contract's term (Paid less than $25,000 for the work, you’re paid at least a day performer’s minimum for it, as the agreement sets; Paid $25,000 or more ... this contract has it unpaid; SAG-AFTRA’s Basic Agreement’s rule, which the game applies to this agreement too, its assumption; It’s part of the job, unpaid), the hours held against another booking (... Promotional Film), and the missed film (You Missed The Promotional Film, won’t come straight to you with a part on the strength of ...). Numbers under ten in words; the pay a day performer's minimum, N13 §18.B(5), named as the agreement names it; no engine words.",
+  "status": "Retained",
+  "hash": "7127f5afed86",
+  "on": "2026-10-26",
+  "reason": "The promotional film call says when and where, what you’ll do there, what it pays, as your agent bargained, at a day performer’s minimum or nothing as the contract has it, and what being there does for you",
   "first": "Pending"
  },
  "src/engine/systems/projobs.ts#chanceWords": {
@@ -1008,10 +1316,10 @@
   "first": "Rewritten And Verified"
  },
  "src/engine/systems/projobs.ts#makeOffer": {
-  "status": "Rewritten",
-  "hash": "af8b26866d2a",
-  "on": "2026-10-25",
-  "evidence": "Written for brief 27's K4 (loops 16 and 18: a direct offer and asking for more through the agent) to docs/STYLE.md and docs/GLOSSARY.md, and read where the player meets it: tests/b27-offers.test.ts holds the direct offer's reason in the offer's decision and history (offered you ... without an audition, cast you as ... where your work was Strong), the ask's history line, its refusals (no agent, asked once already, the answer to come), and the answer's notices (The Offer For ... Is Raised, The Offer For ... Stands) with their words; the release notice of a voice credit now names the voice demo, which brief 27's K3 made. The rest of these sources' words are as they were, held by brief 19's and brief 25's tests. tools/voice-check.mjs, tools/tics.mjs, tools/title-case.mjs, tools/plural-check.mjs and tools/spelling.mjs pass",
+  "status": "Retained",
+  "hash": "805e5d53862d",
+  "on": "2026-10-26",
+  "reason": "The offer notice says who offers you what, the pay, without an audition where it was, how long the offer stands, and its buttons Accept The Offer, Accept On Its Condition and Decline The Offer, as the card has them",
   "first": "Pending"
  },
  "src/engine/systems/projobs.ts#makeOffer [offer]": {
@@ -1057,11 +1365,11 @@
   "first": "Pending"
  },
  "src/engine/systems/projobs.ts#moveRefusal": {
-  "status": "Rewritten",
-  "hash": "c80c7a48837b",
-  "on": "2026-10-21",
-  "evidence": "Written for brief 19's work loop to docs/STYLE.md and docs/GLOSSARY.md; read where the player meets it in tests/pro-work.test.ts and tests/pro-opportunities-screen.test.ts, with tools/voice-check.mjs, tools/tics.mjs and tools/title-case.mjs passing",
-  "first": "Rewritten And Verified"
+  "status": "Retained",
+  "hash": "ad6981ed91b7",
+  "on": "2026-10-26",
+  "reason": "Each refusal of Ask For Another Time gives the reason: nothing in person to move, a read or test the production decides with Ask To Reschedule named instead, asked once already, less than a day’s notice, or no time clear of your calendar",
+  "first": "Pending"
  },
  "src/engine/systems/projobs.ts#NY": {
   "status": "Rewritten",
@@ -1309,10 +1617,10 @@
   "first": "Pending"
  },
  "src/engine/systems/projobs.ts#setRound": {
-  "status": "Rewritten",
-  "hash": "0c8e527bf216",
-  "on": "2026-10-24",
-  "evidence": "Written for brief 27's K4 (Part 9: chemistry reads and screen tests) to docs/STYLE.md and docs/GLOSSARY.md, and read where the player meets it: tests/b27-rounds.test.ts plays a feature's lead through the callback, the chemistry read and the screen test by the clock, holding each notice (A Chemistry Read For, A Screen Test For), each history line in the past (asked you to read with the actors already cast, Your chemistry read for ... was), the work record's task, the offer at the end, and a chemistry read slept through (You missed the chemistry read for, You Missed The Chemistry Read For). The audition's and the callback's words are as they were, held by brief 19's tests. tools/voice-check.mjs, tools/tics.mjs, tools/title-case.mjs, tools/plural-check.mjs and tools/spelling.mjs pass",
+  "status": "Retained",
+  "hash": "1421b0410cda",
+  "on": "2026-10-26",
+  "reason": "Each audition notice says who wants to see you for what, where, when and for how long, with the trip, the chemistry read’s and the screen test’s own shape, what to do first, and Ask For Another Time where it clashes",
   "first": "Pending"
  },
  "src/engine/systems/projobs.ts#settle [ended]": {
@@ -1441,6 +1749,55 @@
   "evidence": "Written for brief 27's Area B (the slate) to docs/STYLE.md and docs/GLOSSARY.md, and read where the player meets it: tests/b27-slate-screens.test.ts draws a London part's role card on the Career screen, its offer's warning, its trip, its ETA applied for and granted on the Work tab, a Los Angeles part read as a trip and a New York one as a journey, and a slate series' words on a recurring part's Work tab; tests/b27-slate.test.ts holds the parts' genres and names and the fates' notices. On reading, a London place that said London twice, a breakdown that ran two who-clauses together and a trip that said the contract the game writes were rewritten. tools/voice-check.mjs, tools/tics.mjs, tools/title-case.mjs, tools/plural-check.mjs and tools/spelling.mjs pass",
   "first": "Pending"
  },
+ "src/engine/systems/speaking.ts#languageFitWords": {
+  "status": "Retained",
+  "hash": "588bd3f26956",
+  "on": "2026-10-26",
+  "reason": "The Language’s lines say who speaks what and how it bears on your fit: both natively suits it best, a missing language lowers it, and a weaker one suits it about half as well as a native speaker of both would",
+  "first": "Pending"
+ },
+ "src/engine/systems/speaking.ts#languageRefusal": {
+  "status": "Retained",
+  "hash": "825a91c4481d",
+  "on": "2026-10-26",
+  "reason": "The submission’s refusal says the character speaks another language as well as English and you don’t speak it: the obstacle, named in the card’s words",
+  "first": "Pending"
+ },
+ "src/engine/systems/speaking.ts#languageStepLabel": {
+  "status": "Retained",
+  "hash": "2efd68f86581",
+  "on": "2026-10-26",
+  "reason": "Work On Your Spanish, the step’s button named for the part’s language as the player knows it",
+  "first": "Pending"
+ },
+ "src/engine/systems/speaking.ts#languageStepRefusal": {
+  "status": "Retained",
+  "hash": "347a623ca306",
+  "on": "2026-10-26",
+  "reason": "Each refusal of the language step gives the reason: the part is in English alone, you don’t speak the language, your level needs no work of its own, the step is done, or you’re asleep",
+  "first": "Pending"
+ },
+ "src/engine/systems/speaking.ts#languageWords": {
+  "status": "Retained",
+  "hash": "d03bf35faba0",
+  "on": "2026-10-26",
+  "reason": "The card’s lines on the part’s language: who speaks it, whether you can be put up for it, that a native speaker of both would be a closer fit, and what a conversational speaker has to do, with the step’s button named",
+  "first": "Pending"
+ },
+ "src/engine/systems/speaking.ts#suitsWords": {
+  "status": "Retained",
+  "hash": "c085386bda1e",
+  "on": "2026-10-26",
+  "reason": "As well, nearly as well, about half as well, far less well: the fit said in words a player weighs, where a figure would show the engine’s",
+  "first": "Pending"
+ },
+ "src/engine/systems/speaking.ts#workOnLanguage": {
+  "status": "Retained",
+  "hash": "d43ad632e2b5",
+  "on": "2026-10-26",
+  "reason": "The history key for a session on the part’s language, the record’s own, never shown to a player",
+  "first": "Pending"
+ },
  "src/engine/systems/workflow.ts#afterWrap": {
   "status": "Rewritten",
   "hash": "06474cbcf80e",
@@ -1519,10 +1876,10 @@
   "first": "Pending"
  },
  "src/engine/systems/workflow.ts#promoSession [worked]": {
-  "status": "Rewritten",
-  "hash": "ed4eb86e4fea",
-  "on": "2026-10-25",
-  "evidence": "Written for brief 27's K6 (loop 34: publicity) to docs/STYLE.md and docs/GLOSSARY.md, and read where the player meets it: tests/b27-promo.test.ts holds the call (Calls You For A Promotional Film, It pays a day performer’s minimum), the contract's term (Paid less than $25,000 for the work, you’re paid at least a day performer’s minimum for it, as the agreement sets; Paid $25,000 or more ... this contract has it unpaid; SAG-AFTRA’s Basic Agreement’s rule, which the game applies to this agreement too, its assumption; It’s part of the job, unpaid), the hours held against another booking (... Promotional Film), and the missed film (You Missed The Promotional Film, won’t come straight to you with a part on the strength of ...). Numbers under ten in words; the pay a day performer's minimum, N13 §18.B(5), named as the agreement names it; no engine words.",
+  "status": "Retained",
+  "hash": "f8a8e866bc6b",
+  "on": "2026-10-26",
+  "reason": "The promotional film’s history line says the day, whether it was paid as your agent bargained, at a day performer’s minimum or unpaid as the contract has it, and what it does for you: more visible to casting for a while",
   "first": "Pending"
  },
  "src/engine/systems/workflow.ts#promoTerm": {
@@ -1588,6 +1945,13 @@
   "evidence": "Written for brief 25's Module 5 (the ways of working: the booth, the dub, narration, multicamera, performance capture, reenactment, the musical and action; a shoot's order and takes, revised pages, a recall to loop and a scene cut) to docs/STYLE.md and docs/GLOSSARY.md, every rule the agreements' own and every invention said as the game's; read where the player meets it in tests/career-workflows-screen.test.ts (the Work and Opportunities tabs drawn for a voice session, a multicamera week and an action shoot, through the clock and a reload at each stage) and tests/career-workflows.test.ts (each workflow's days, choices, reports and notices), with tools/voice-check.mjs, tools/tics.mjs and tools/title-case.mjs clean.",
   "first": "Pending"
  },
+ "src/ui/career/OpportunitiesPane.tsx#Direction": {
+  "status": "Retained",
+  "hash": "8400670d060c",
+  "on": "2026-10-26",
+  "reason": "Casting’s Direction as a heading, the two buttons as the room names them, and toasts that say what you’ll do next: the rest of it the way casting asked, or your choice kept",
+  "first": "Pending"
+ },
  "src/ui/career/OpportunitiesPane.tsx#History": {
   "status": "Rewritten",
   "hash": "78d153d4d49b",
@@ -1602,12 +1966,19 @@
   "evidence": "Written for brief 27's K4 (loop 20: holds, options and conflicts) to docs/STYLE.md and docs/GLOSSARY.md, and read where the player meets it: tests/b27-holds.test.ts holds the chemistry read's notice saying a hold is on the player's dates and that it isn't a booking and pays nothing, the history's line in the past (put a hold on your dates for ..., until the part was cast), the warning on another offer on the same days (Accepting this lets that hold go and withdraws you from the part), the withdrawal it brings (You took ... on some of the same days, so you withdrew from ... and its hold was let go; You Withdrew From ...), the refusals of Ask Them To Decide (no other offer, asked already, an offer lapsing before the answer), and the answer's words (Asked to decide, ... chose you for ...; The Hold On ... Is Let Go, You're free to take ...); the hold's end in the history (The hold on your dates became the booking). The rest of these sources' words are as they were, held by brief 19's, brief 25's and brief 27's tests. tools/voice-check.mjs, tools/tics.mjs, tools/title-case.mjs, tools/plural-check.mjs and tools/spelling.mjs pass",
   "first": "Pending"
  },
+ "src/ui/career/OpportunitiesPane.tsx#HowToPlay": {
+  "status": "Retained",
+  "hash": "8700baa56636",
+  "on": "2026-10-26",
+  "reason": "Play It This Way, and its toast saying the choice was made and how far you’ve rehearsed this way of playing it so far",
+  "first": "Pending"
+ },
  "src/ui/career/OpportunitiesPane.tsx#InProgress": {
-  "status": "Rewritten",
-  "hash": "6d2ea6d7f0eb",
-  "on": "2026-10-22",
-  "evidence": "Read again on 2026-10-22, its first line's verb now agreeing with who answers (\"The producers answer soon.\", \"Pennick Casting answers soon.\"), where until then it read \"The producers answers soon.\"; read where the player meets it in tests/pro-opportunities-screen.test.ts and on the built app's Opportunities tab, with tools/voice-check.mjs, tools/tics.mjs and tools/title-case.mjs passing",
-  "first": "Rewritten And Verified"
+  "status": "Retained",
+  "hash": "cc4e13d15134",
+  "on": "2026-10-26",
+  "reason": "The round’s state in one line: submitted, due or set with its place and time, taped, asked, moved, and the button for each, Tape It, Ask To Reschedule or Ask For Another Time",
+  "first": "Pending"
  },
  "src/ui/career/OpportunitiesPane.tsx#NY": {
   "status": "Rewritten",
@@ -1617,10 +1988,10 @@
   "first": "Rewritten And Verified"
  },
  "src/ui/career/OpportunitiesPane.tsx#OfferCard": {
-  "status": "Rewritten",
-  "hash": "57b15c803faa",
-  "on": "2026-10-25",
-  "evidence": "Written for brief 27's K5 (loop 28: illness and absence by their contractual rule, not one universal number) to docs/STYLE.md and docs/GLOSSARY.md, and read where the player meets it: tests/b27-ill.test.ts holds the notice ... Shoots Around You (You were laid up on ..., so ... shot around you and slipped the rest of your days a working day each; A day lost to your own illness or injury isn't paid, SAG-AFTRA's agreement's exception ...; Another day lost the same way and the production recasts the part), a smaller part recast as before and a second day recast; the offer card, the Day look's cost of a missed call, the guide's Offers And Booked Work and Your Day, and the tutorial's Finding Work now say the same, where each had said a shoot replaces you for any day missed. The weather day's slip, shared with it, says what tests/b27-weather.test.ts holds. tools/voice-check.mjs, tools/tics.mjs, tools/title-case.mjs, tools/plural-check.mjs and tools/spelling.mjs pass",
+  "status": "Retained",
+  "hash": "c3fc43692a7b",
+  "on": "2026-10-26",
+  "reason": "The offer’s facts under Offer, Dates, Pay and Deadline, the agent’s ask said as asked, Accept The Offer or Accept On Its Condition, what missing a day costs for this kind of work, and the state: booked, accepted on its condition or declined",
   "first": "Pending"
  },
  "src/ui/career/OpportunitiesPane.tsx#OpenRole": {
@@ -1638,17 +2009,17 @@
   "first": "Pending"
  },
  "src/ui/career/OpportunitiesPane.tsx#Prepare": {
-  "status": "Rewritten",
-  "hash": "82efdd926e8d",
-  "on": "2026-10-24",
-  "evidence": "Written for brief 25's Module 5 (the ways of working: the booth, the dub, narration, multicamera, performance capture, reenactment, the musical and action; a shoot's order and takes, revised pages, a recall to loop and a scene cut) to docs/STYLE.md and docs/GLOSSARY.md, every rule the agreements' own and every invention said as the game's; read where the player meets it in tests/career-workflows-screen.test.ts (the Work and Opportunities tabs drawn for a voice session, a multicamera week and an action shoot, through the clock and a reload at each stage) and tests/career-workflows.test.ts (each workflow's days, choices, reports and notices), with tools/voice-check.mjs, tools/tics.mjs and tools/title-case.mjs clean.",
+  "status": "Retained",
+  "hash": "f301f3413f3e",
+  "on": "2026-10-26",
+  "reason": "Each step’s time in minutes and its name, the breakdown, the lines, rehearsal on your feet and the part’s language where it has one, with a toast saying what moved and when a step is done",
   "first": "Pending"
  },
  "src/ui/career/OpportunitiesPane.tsx#RoleFacts": {
-  "status": "Rewritten",
-  "hash": "649d1fa6e432",
-  "on": "2026-10-25",
-  "evidence": "Written for brief 27's K8 (Part 16 and loop 48: the industry reference, Productions And People) to docs/STYLE.md and docs/GLOSSARY.md, every real record's field said as its official pages gave it and tagged Verified, what they didn't give said as Not Given with why, the game's own tagged Simulated and the player's Yours, the glossary's How This Works kept for the help and no page called the reference on screen: read where the player meets it in tests/b27-reference.test.ts (a real production's page and its companies' and people's, a published chart's week, a part drawn from a real production once it's posted, the Desk Clerk's project with its series, season and episode, a season's audience, the network's word, a shelved release, the agents, Find, and the Career screen's Productions And People tab with its trail, its Back and its actions). Numbers under ten in words; dates with their comma; no engine words.",
+  "status": "Retained",
+  "hash": "d4af178cfdf7",
+  "on": "2026-10-26",
+  "reason": "The role’s facts under the headings the card shows, The Project, The Part, What It Asks, The Language, When And Where, Pay, The Audition, each a plain fact of the posting, with changed playing ages said as casting changed them",
   "first": "Pending"
  },
  "src/ui/career/OpportunitiesPane.tsx#SchoolRule": {
@@ -1659,10 +2030,10 @@
   "first": "Rewritten And Verified"
  },
  "src/ui/career/OpportunitiesPane.tsx#Settled": {
-  "status": "Rewritten",
-  "hash": "1e6fbf2c2c25",
-  "on": "2026-10-24",
-  "evidence": "Written for brief 27's K4 (Part 9: chemistry reads and screen tests) to docs/STYLE.md and docs/GLOSSARY.md, and read where the player meets it: tests/b27-rounds.test.ts plays a feature's lead through the callback, the chemistry read and the screen test by the clock, holding each notice (A Chemistry Read For, A Screen Test For), each history line in the past (asked you to read with the actors already cast, Your chemistry read for ... was), the work record's task, the offer at the end, and a chemistry read slept through (You missed the chemistry read for, You Missed The Chemistry Read For). The audition's and the callback's words are as they were, held by brief 19's tests. tools/voice-check.mjs, tools/tics.mjs, tools/title-case.mjs, tools/plural-check.mjs and tools/spelling.mjs pass",
+  "status": "Retained",
+  "hash": "5c18d6d4ec42",
+  "on": "2026-10-26",
+  "reason": "Why It Went This Way for a settled role: the round and its band, the role’s fit, the field and casting’s chance from them, estimated, then how you’d fit it now, each in words a player can act on",
   "first": "Pending"
  },
  "src/ui/career/OpportunitiesPane.tsx#spanWords": {
@@ -1671,5 +2042,19 @@
   "on": "2026-10-21",
   "evidence": "Written for brief 19's work loop to docs/STYLE.md and docs/GLOSSARY.md; read where the player meets it in tests/pro-work.test.ts and tests/pro-opportunities-screen.test.ts, with tools/voice-check.mjs, tools/tics.mjs and tools/title-case.mjs passing",
   "first": "Rewritten And Verified"
+ },
+ "src/ui/career/OpportunitiesPane.tsx#Takes": {
+  "status": "Rewritten",
+  "hash": "25e5fc6aee6f",
+  "on": "2026-10-26",
+  "evidence": "Read again on 2026-10-26: the empty state said Record A Take keeps each one to choose from, a counted take beside the button of the same name; it now says each one you record is kept here to choose from, with Record A Take the button under it. The panel’s lines, Take N with its band and Send This Take beside each, are read on the screen in tests/b27-offers-screen.test.ts",
+  "first": "Pending"
+ },
+ "src/ui/career/OpportunitiesPane.tsx#Withdraw": {
+  "status": "Retained",
+  "hash": "152d22b94ef0",
+  "on": "2026-10-26",
+  "reason": "Withdrawing, with what it would do said above the button, Withdraw From The Part, and toasts that say withdrawn with notice or at short notice",
+  "first": "Pending"
  }
 }
