@@ -234,6 +234,10 @@ export interface RunTerms {
 /**
  * A film's international gross as a share of its domestic, by kind, the low and high of a range drawn by the film (on its
  * own key of `charts.gross`, so the domestic draws come as they did). ASSUMPTION, the game's: no studio's split was read.
+ * Each week abroad is that share of the week at home, so a limited release takes a limited share abroad too; a release
+ * abroad first runs abroad the weeks its distributor set ahead of its run at home. Until the review of 2026-10-25 a week
+ * abroad was the share of the wide run's week whatever the run at home, so a limited release that never widened took
+ * twice its US gross abroad (an ultra-low-budget film, $20,122 in the US and $41,212 abroad).
  */
 export const INTERNATIONAL: Readonly<Partial<Record<ProjectKind, readonly [number, number]>>> = {
   'ultra-low-budget': [0.05, 0.4], 'low-budget': [0.2, 0.8], 'overseas-feature': [1, 2.5], 'action-feature': [0.8, 2], 'capture-feature': [0.8, 2], 'animated-feature': [0.7, 1.8],
@@ -287,7 +291,9 @@ export function simulateRun(sim: Simulation, projectId: string, kind: ProjectKin
   } else domestic.push(...curve.slice(0, RUN.weeksMost));
   const weeks: SimWeek[] = domestic.map((gross, k) => {
     const from = addDays(opening, 7 * k, NY);
-    const abroadWeek = curve[k + lead];
+    // The run abroad: the week at home's share, or, released abroad first, the wide run's week as far ahead as its
+    // distributor set.
+    const abroadWeek = lead ? curve[k + lead] : gross;
     return { from, to: addDays(from, 7, NY) - 60_000, gross, rank: rankAmong(sim, from, gross), ...(abroadWeek !== undefined ? { international: Math.round(abroadWeek * share) } : {}) };
   });
   const before = Array.from({ length: lead }, (_, j) => { const from = addDays(first0, 7 * j, NY); return { from, to: addDays(from, 7, NY) - 60_000, international: Math.round((curve[j] ?? 0) * share) }; });
@@ -308,7 +314,7 @@ export function totalsOf(run: SimRun, at: Instant): { domestic: number; internat
   const weeks = weeksSoFar(run, at);
   const domestic = weeks.reduce((n, w) => n + w.gross, 0);
   if (!run.currency) return { domestic, currency: 'USD' };
-  const international = weeks.reduce((n, w) => n + (w.international ?? 0), 0) + (run.before ?? []).filter((w) => w.to <= at).reduce((n, w) => n + w.international, 0);
+  const international = weeks.reduce((n, w) => n + (w.international ?? 0), 0) + abroadSoFar(run, at).reduce((n, w) => n + w.international, 0);
   return { domestic, international, worldwide: domestic + international, currency: run.currency };
 }
 
@@ -325,6 +331,12 @@ export function rankAmong(sim: Simulation, from: Instant, gross: number): number
 
 /** A run's weeks the clock has reached: the rest haven't happened yet. */
 export const weeksSoFar = (run: SimRun, at: Instant): SimWeek[] => run.weeks.filter((w) => w.to <= at);
+
+/**
+ * A run's weeks abroad before its opening at home that the clock has reached (from the review of 2026-10-25): until then
+ * a film released abroad first showed nowhere until its first week in the US, though its weeks abroad had passed.
+ */
+export const abroadSoFar = (run: SimRun, at: Instant): { from: Instant; to: Instant; international: number }[] => (run.before ?? []).filter((w) => w.to <= at);
 
 /** The best rank a run reached by a moment, or nothing. */
 export function peakOf(run: SimRun | undefined, at: Instant): number | undefined {

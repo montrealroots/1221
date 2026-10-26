@@ -31,7 +31,7 @@ import { CITIES, COUNTRIES } from '@/engine/content/geography';
 import { spokenList } from '@/engine/core/text';
 import { countryWords } from '@/engine/systems/worktrip';
 import {
-  REFERENCE, currentOf, figureWords, latestOf, longDate, movementOf, movementWords, peakOf, titleAcross, totalsOf, weekEnd, weekWords, weeksBy, weeksSoFar,
+  REFERENCE, abroadSoFar, currentOf, figureWords, latestOf, longDate, movementOf, movementWords, peakOf, titleAcross, totalsOf, weekEnd, weekWords, weeksBy, weeksSoFar,
 } from '@/engine/systems/charts';
 import { routeWords } from '@/engine/systems/market';
 import {
@@ -265,12 +265,14 @@ function FestivalCredit({ sim, person, c }: { sim: Simulation; person: Person; c
 function BoxOfficePanel() {
   const { sim } = useGame();
   const person = useWorld((s) => s.player);
-  const films = (person.pro?.credits ?? []).filter((c) => c.run && weeksSoFar(c.run, sim.now).length);
+  // A film released abroad first shows from its first week abroad (from the review of 2026-10-25), not its first at home.
+  const films = (person.pro?.credits ?? []).filter((c) => c.run && (weeksSoFar(c.run, sim.now).length || abroadSoFar(c.run, sim.now).length));
   return (
     <Panel title="Your Films In Cinemas" help="career.awards">
       <div className="col gap-4">
         {films.length ? films.map((c) => {
           const weeks = weeksSoFar(c.run!, sim.now);
+          const abroad = abroadSoFar(c.run!, sim.now);
           const peak = peakOf(c.run, sim.now);
           // Its totals in their currency, its reception and its way out (from 2026-10-25, the owner's brief 27, Part 12).
           const totals = totalsOf(c.run!, sim.now);
@@ -281,13 +283,21 @@ function BoxOfficePanel() {
             <div key={c.id} className="col gap-2">
               <p className="small strong" style={{ margin: 0 }}>{c.project}</p>
               <p className="small" style={{ margin: 0 }}>
-                {`Opened in the US on ${formatDate(c.run!.opening, sim.zone)}. ${peak !== undefined ? `Its best week was No. ${peak} in the game’s own chart.` : 'It hasn’t made the game’s own Top 10.'}${route ? ` ${route}` : ''}`}
+                {`${c.run!.opening > sim.now ? 'Opens' : 'Opened'} in the US on ${formatDate(c.run!.opening, sim.zone)}. ${peak !== undefined ? `Its best week was No. ${peak} in the game’s own chart.` : 'It hasn’t made the game’s own Top 10.'}${route ? ` ${route}` : ''}`}
               </p>
               {totals.worldwide !== undefined && <p className="small" style={{ margin: 0 }}>{`So far ${usd(totals.domestic)} in the US and ${usd(totals.international!)} abroad: ${usd(totals.worldwide)} worldwide, every figure in US dollars.`}</p>}
               {c.run!.response && <p className="small" style={{ margin: 0 }}>{`Critics scored it ${c.run!.response.critics} of 100 and audiences ${c.run!.response.audience} of 100, both simulated.`}</p>}
               <table className="pay-table">
                 <thead><tr><th>Week Of</th><th className="num">In The US</th>{intl && <th className="num">Abroad</th>}<th>Place</th></tr></thead>
                 <tbody>
+                  {abroad.map((w) => (
+                    <tr key={w.from}>
+                      <td>{formatDate(w.from, sim.zone)}</td>
+                      <td className="num">Not Yet Open</td>
+                      {intl && <td className="num">{usd(w.international)}</td>}
+                      <td>Not Yet Charted</td>
+                    </tr>
+                  ))}
                   {weeks.map((w) => (
                     <tr key={w.from}>
                       <td>{formatDate(w.from, sim.zone)}</td>

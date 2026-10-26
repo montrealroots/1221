@@ -39,7 +39,7 @@ import { projectById, type ProjectTemplate } from '../content/careerwork';
 import { FORMATS } from '../content/workflows';
 import { CHARTS } from '../content/charts';
 import { REAL_SERIES, episodeDays, seasonWindow, seriesById, type SeriesTemplate } from '../content/series';
-import { REFERENCE, figureWords, peakOf, titleAcross, totalsOf, weekEnd, weekWords, weeksSoFar } from './charts';
+import { REFERENCE, abroadSoFar, figureWords, peakOf, titleAcross, totalsOf, weekEnd, weekWords, weeksSoFar } from './charts';
 import { routeWords } from './market';
 import { pilotSeries } from './continuity';
 import { kindPhrase, projectGenresOf } from './projobs';
@@ -189,11 +189,14 @@ function runFacts(sim: Simulation, person: Person, parts: readonly ProjectTempla
   const out: RefFact[] = [];
   for (const t of parts) for (const e of engsOf(person, t)) {
     const c = creditOf(person, e);
-    if (!c?.run || !weeksSoFar(c.run, sim.now).length) continue;
+    // A film released abroad first shows from its first week abroad (from the review of 2026-10-25), not its first at home.
+    const abroad = c?.run ? abroadSoFar(c.run, sim.now) : [];
+    if (!c?.run || (!weeksSoFar(c.run, sim.now).length && !abroad.length)) continue;
     const weeks = weeksSoFar(c.run, sim.now);
     const peak = peakOf(c.run, sim.now);
     const gross = weeks.reduce((s, w) => s + w.gross, 0);
-    out.push(fact('In Cinemas', `Opened ${dated(sim, c.run.opening)}. ${weeks.length === 1 ? 'One week' : `${weeks.length} weeks`} so far, about $${Math.round(gross).toLocaleString('en-US')} in all; ${peak !== undefined ? `its best week No. ${peak} in the game’s own chart` : 'never in the game’s own Top 10'}.`, 'simulated'));
+    if (!weeks.length) out.push(fact('In Cinemas', `Opened in ${c.release?.first ?? 'other countries'} on ${dated(sim, abroad[0]!.from)}, and opens in the US on ${dated(sim, c.run.opening)}: ${abroad.length === 1 ? 'one week' : `${abroad.length} weeks`} abroad so far.`, 'simulated'));
+    else out.push(fact('In Cinemas', `Opened ${dated(sim, c.run.opening)}. ${weeks.length === 1 ? 'One week' : `${weeks.length} weeks`} so far, about $${Math.round(gross).toLocaleString('en-US')} in all; ${peak !== undefined ? `its best week No. ${peak} in the game’s own chart` : 'never in the game’s own Top 10'}.`, 'simulated'));
     // Its totals, each in the run's currency, and its reception (from 2026-10-25, brief 27, Part 12), each the game's.
     const totals = totalsOf(c.run, sim.now);
     const usd = (n: number) => `$${Math.round(n).toLocaleString('en-US')}`;
