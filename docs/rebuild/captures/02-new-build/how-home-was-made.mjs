@@ -38,7 +38,7 @@ await page.evaluate(() => {
   if (ru) { for (const el of [...ru.querySelectorAll('*')]) if (el.children.length === 0 && /Welcome To The Class|School · now|16 actors|Mark 1 Read|Go There|Mark Read/.test(el.textContent)) { const row = el.closest('li, article, .row-between, div'); if (row && row !== ru) row.remove(); } const p = ru.querySelector('p'); if (p) p.textContent = 'Nothing yet.'; }
   // How You Are: readiness went with the attributes.
   const hya = byTitle('How You Are');
-  if (hya) { const lab = [...hya.querySelectorAll('*')].find((el) => el.children.length === 0 && /^Readiness$/.test(el.textContent.trim())); if (lab) { const row = lab.closest('.meter') || lab.parentElement; const next = row.nextElementSibling; row.remove(); if (next && !next.textContent.trim()) next.remove(); } for (const el of [...hya.querySelectorAll('*')]) if (el.children.length === 0 && /costing readiness/.test(el.textContent)) el.textContent = 'Nourishment at 75.'; }
+  if (hya) { const bar = hya.querySelector('[role=meter][aria-label="Readiness"]'); if (bar) bar.parentElement.remove(); for (const el of [...hya.querySelectorAll('*')]) if (el.children.length === 0 && /costing readiness/.test(el.textContent)) el.textContent = 'Nourishment at 75.'; }
 });
 await wait(300); await shot('07-home-new');
 // Close the guide if it's open, to see Home itself.
