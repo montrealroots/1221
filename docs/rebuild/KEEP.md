@@ -433,3 +433,45 @@ this SLATE (stress, sleep, morale, the card's autopay, grime, food cost, a sligh
 `captures/01-opening/03-dispositions-traits.png` for the record. What read them downstream (stress, the night, the
 starting Composure and Discipline, how a day is taken) will need other inputs in the new build or will go with
 them; that is settled when those systems are reached.
+
+---
+
+## 9. Creation, step 3 of 5, becomes Background only (DECIDED 2026-10-26); Genres move elsewhere (destination open)
+
+**Owner:** "This page should just be backgrounds, we're going to move genres some place else."
+
+Capture: `captures/01-opening/04-genres-background.png` (the page as it stands, with its four cards).
+
+### What the page becomes
+
+**Background**: who you were before Yale, every part of it read by an engine (entries 4 to 6):
+
+1. **Your Family.** Kept as it stands, the one card on the old page with a full engine: six families (Nothing,
+   Scraping By, Modest, Comfortable, Wealthy, Inherited), each setting the first morning's checking, savings, card
+   limit and balance and credit score, and whether Yale finds need, said in a box in the player's money. Research
+   to extend it: Yale's own need-assessment rules and the Yale Health plan's current term fee, from Yale's pages.
+2. **Where you grew up**, if not the birthplace (the place picker again, or "the same"): sets the starting accent
+   and the home market (local theaters, local commercials and regional casting know you there first).
+3. **What your family did**: a structured choice, read by the family's means above and by whether anyone in it was
+   in the business, which is a real route to a first meeting with an agent and a thing casting offices know.
+4. **What you did before Yale**: prior training (sets the starting techniques), prior work (sets starting credits
+   and union status, which the union's own joining rules then read), and the month and year you arrived (the old
+   Before Yale card on Starting Point, which also decides the bank kept at home and the license state).
+5. The sentence "In Your Own Words" stays only as a line the player writes for themselves on the Profile, read by
+   nothing; it is not asked for, and it is not a field of this page in the sense of entry 6. If the owner wants
+   nothing unread at all, it goes.
+
+### Genres
+
+Moved off this page. Where they land is open; the owner will say. For the new build they earn a place only where
+every genre is read against real work (the slate's parts, the plays, the kinds of production), as a casting and
+preference engine, not as the mood knob they are today; and the dot that marks a genre with no work in the game goes,
+because under entry 6 such a genre is not offered.
+
+### Languages
+
+Decided onto Identity (entry 3, after Citizenship), not onto Background. The owner asked whether a language counts
+as background: it is both, a fact of where you grew up and a fact casting reads directly, like Billed As. It sits on
+Identity because it belongs to the required path with birthplace and citizenship, which suggest it; in the new build
+"where you grew up" on this page can refine the suggestion. If the owner would rather it live here, the move is one
+line in entry 3.
