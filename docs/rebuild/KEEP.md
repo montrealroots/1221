@@ -312,3 +312,42 @@ researched before they're built, as this SLATE's research register did for every
 What this rule means for the capture pages still to come: every field, control and figure on every page gets the
 same two columns, what reads it today and what would in the new build, and a field with no honest second column is
 proposed for cutting rather than kept as decoration.
+
+---
+
+## 5. The standard for every engine in the new build (DECIDED), and what the world map covers today (RECORDED)
+
+**Owner (2026-10-26):** "We're putting real engines that read bits and have downstream effects behind each of these.
+That means doing extensive research through and through to get 100% accuracy and realism."
+
+**The standard, as a rule for the rebuild:** every field and feature has an engine that reads real inputs and
+changes real outcomes downstream; every figure, rule, name, date and process in it is researched from the primary
+source (the government's, the union's, the guild's, the institution's own published page) and cited in a research
+register as this SLATE kept one; where a source is unpublished, confidential or can't be reached, the engine does
+not invent it: it says so, the gap is recorded as a blocker, and the game's own figure, where one must stand in, is
+labeled the game's wherever the player meets it. "100% accuracy" is held to that bar: nothing is stated as real that
+wasn't read from the real source, and nothing real is left out that the research could reach.
+
+### What the world map and the geography cover today, honestly
+
+- **Every country and territory as a place: yes.** The gazetteer holds 252 countries and territories (51 of them
+  territories), every first-level subdivision, and 170,911 populated places of a thousand people or more, from
+  GeoNames; the map draws the countries' outlines from Natural Earth at 110m, and the countries too small to draw at
+  that scale are still in the list. Each place has its time zone, its country's currency and its distance to the
+  nearest market. A life can be born in, be a citizen of, and have lived in any of them.
+- **The rules of those countries: no, far from all.** The work rules that let a life *work* somewhere are the US
+  package, verified routes for 2 more countries (the UK and Australia, the game's markets abroad), 5 partly
+  researched, and 244 unsupported, where the game refuses to assume a rule. Banking covers thirteen countries with
+  real banks and fee sheets (US, Canada, Mexico, UK, Ireland, France, Spain, Germany, Iceland, Japan, South Korea,
+  Australia, New Zealand). Passports and visas are researched for the routes the game plays. Markets where work is
+  cast: twelve, ten of them in the US, plus London and Sydney. Official lists cover 87 performers' unions (FIA) and
+  50 accredited festivals (FIAPF) by name.
+- **So the coverage matrix reads:** 3 countries researched, 66 partly, 183 simulated (only the shared rules: time
+  zone, currency, distance). The matrix (`docs/verification/career-universe-2026-10-24/geography/COVERAGE.md`) says
+  this country by country, and it's the starting list for the new build's research: for the standard above to hold
+  worldwide, each of the 249 countries not yet researched needs its work rules, tax, banking, union and market read
+  from its own sources, or an explicit, player-visible statement that work there isn't modeled.
+
+**For the new build:** the gazetteer and the map are kept (entry to come when the Place of Birth control is
+reached in the captures). The coverage matrix becomes the research plan, worked country by country, and a country's
+row moves to "researched" only when its sources are cited.
