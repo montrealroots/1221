@@ -112,8 +112,34 @@ await fixSteps('Starting Point');
 await page.evaluate(() => { const col = document.querySelector('.creation .col.gap-5'); for (const c of [...col.querySelectorAll(':scope > .card')]) if (!/Your Money/.test(c.querySelector('h2')?.textContent || '')) c.remove(); const money = col.querySelector('.card'); money.querySelector('.callout')?.remove(); });
 await wait(300); await shot('05-starting-point-new');
 
-// ---- The slots screen with a life in it, the title line redefined.
+// ---- Review, re-formed around the kept steps.
 await page.getByRole('button', { name: /^Continue$/ }).first().click(); await wait(900);
+await fixSteps('Review');
+await page.evaluate(() => {
+  const cards = [...document.querySelectorAll('.creation .card')];
+  const byEyebrow = (t) => cards.find((c) => c.querySelector('.eyebrow')?.textContent.trim().toUpperCase() === t.toUpperCase());
+  const lines = (card) => [...card.querySelectorAll('.review-line, .row-between, .line')].filter((l) => l.children.length >= 2);
+  const lineOf = (card, label) => lines(card).find((l) => l.firstElementChild.textContent.trim() === label);
+  // The top line: home is open; the mock shows the birthplace.
+  for (const el of document.querySelectorAll('.creation .card *')) if (el.children.length === 0 && /New Haven/.test(el.textContent)) el.textContent = el.textContent.replace('New Haven', 'New York');
+  const identity = byEyebrow('Identity'), start = byEyebrow('Starting Point'), disp = byEyebrow('Dispositions & Traits'), gb = byEyebrow('Genres & Background'), guide = byEyebrow('The Guide');
+  disp?.remove();
+  // Starting Point keeps the money only.
+  for (const label of ['School', 'Where You Live', 'Food Each Month']) lineOf(start, label)?.remove();
+  start.querySelector('.eyebrow').textContent = 'Money';
+  // Identity: languages after citizenship, race last.
+  const race = lineOf(identity, 'Race Or Ethnicity'); const langs = lineOf(gb, 'Languages'); const cit = lineOf(identity, 'Citizenship');
+  if (cit && langs) cit.after(langs); if (race) identity.append(race);
+  // Background and Genres as their own cards, from the old joint card.
+  const bg = gb; bg.querySelector('.eyebrow').textContent = 'Background';
+  const genres = lineOf(bg, 'Genres'); lineOf(bg, 'In Your Own Words')?.remove();
+  const fam = lineOf(bg, 'Family'); if (fam) fam.lastElementChild.textContent = 'Wealthy';
+  const did = fam.cloneNode(true); did.firstElementChild.textContent = 'What Your Family Did'; did.lastElementChild.textContent = '—';
+  const grew = fam.cloneNode(true); grew.firstElementChild.textContent = 'Where You Grew Up'; grew.lastElementChild.textContent = 'New York, United States';
+  fam.after(did, grew);
+  const gcard = bg.cloneNode(false); const eb = bg.querySelector('.eyebrow').cloneNode(true); eb.textContent = 'Genres'; gcard.append(eb, genres); bg.after(gcard);
+});
+await wait(300); await shot('06-review-new');
 await page.getByRole('button', { name: /^Begin$/ }).click();
 await page.getByRole('group', { name: 'Time Controls' }).first().waitFor({ timeout: 30000 }); await wait(3000);
 await page.reload({ waitUntil: 'domcontentloaded' });

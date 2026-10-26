@@ -638,3 +638,26 @@ choice and which only reads it back.
 
 The step strip stays **Identity, Background, Genres, Starting Point, Review**; whether a one-card step keeps the
 name Starting Point or becomes Money is wording, deferred.
+
+---
+
+## 15. Creation, step 5 of 5, Review: re-formed around the kept steps (DECIDED 2026-10-26)
+
+**Owner:** "You already know what to get rid of on this." Applied from entries 3 to 14.
+
+Captures: as it stood, `captures/01-opening/06-review.png`; as decided, `captures/02-new-build/06-review-new.png`.
+
+**What stays:** Ready To Begin with the name large and a line under it (age, Billed As, and home, which is open
+until the premise; the mock shows the birthplace); the sections, each saying back what its step took, in the steps'
+order: **Identity** (legal name, pronouns, billed as, born, place of birth, citizenship, languages, race or ethnicity,
+in the page's own order), **Background** (family, what your family did, where you grew up), **Genres**, **Money**
+(bank, checking, savings, credit record, card); **The Guide** choice (Guide Me Through It / I Know SLATE); the
+amber line that the life starts paused and the clock's rule; Back and **Begin**.
+
+**Gone:** the School line; the Dispositions & Traits section; In Your Own Words; Where You Live and Food Each Month
+(their cards and the household reader of the town went with Starting Point's cuts; if a household comes back with
+the premise, its line comes back here).
+
+**Open with the premise:** what the Guide teaches (its chapters were this SLATE's, School and career among them) and
+whether the clock's rule stays as written ("a minute passes in the game for every real minute, and the clock pauses
+itself at each commitment"), both features of the first morning, which the next capture page is.

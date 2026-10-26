@@ -88,8 +88,10 @@ Where the life begins on the first morning is open until the premise.
 
 ## Screen 6. Creation, Review
 
-**Not yet reviewed.** Everything said back in sections, and the guide choice (Guide Me Through It / I Know SLATE),
-then Begin. The School line goes; the rest waits on Starting Point.
+Ready To Begin with the name and a line under it (age, billed as, home, the last open until the premise). Four
+sections in the steps' order: Identity, Background, Genres, Money, each saying back what its step took. The Guide
+choice. The paused-clock line. Back and Begin. The School line, the dispositions, the free-text sentence, Where You
+Live and Food Each Month are gone (entry 15).
 
 ## After Begin
 
