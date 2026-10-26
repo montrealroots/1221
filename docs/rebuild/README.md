@@ -1,15 +1,18 @@
-# The Rebuild Folder
+# The New SLATE: The Package
 
-Everything the owner has decided to carry from this SLATE into the new one, kept together so the whole folder can be
-lifted into a clean repository when that repository exists. Nothing in here is read by this SLATE's build, tests or
-gate: it is a record and a parts bin.
+Everything decided for the rebuild of SLATE, kept together so the whole folder goes into the clean repository as its
+first commit. Nothing in here is read by this SLATE's build, tests or gate.
 
-- `KEEP.md`: the register. One numbered entry per kept thing, with every detail the new build needs and the owner's
-  words on the decision.
-- `captures/`: the full-page screen captures the decisions were made from, numbered by page.
-- `kept/`: verbatim copies of the source files behind each kept entry, taken from this tree at the commit the
-  register names, in a folder per entry. They import paths that exist here (`@/engine/...`, `../domain/model`), so
-  in the new repository they are the reference to rebuild from, not files to drop in unchanged.
+Read in this order:
 
-When the clean GitHub repository is made, this folder goes in as its first commit's `docs/` or `reference/`, and the
-register's entries become the new build's specification, one at a time.
+1. `MANDATE.md`: the owner's standing instruction, in their words and as the rules the build is held to.
+2. `BUILD-ORDER.md`: the code's order, foundations first, each layer proven before the next.
+3. `SCREENS.md`: the first build's screens in the player's order, each as a full page.
+4. `KEEP.md`: the register, one numbered entry per decision, with every detail and the owner's words.
+5. `captures/01-opening/`: this SLATE's pages as they stood, which the decisions were made from.
+6. `captures/02-new-build/`: the first build's pages as decided, rendered from the real app with the cuts and moves
+   applied, and the scripts that made them.
+7. `kept/`: verbatim copies of this SLATE's source behind each kept thing, the reference to rebuild from.
+
+The same folder is also published on its own as the branch `slate-rebuild` of this repository, with these files at
+its root, so that pushing it to a new repository is one command.
