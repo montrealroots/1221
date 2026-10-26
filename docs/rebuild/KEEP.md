@@ -762,3 +762,27 @@ world map, the coverage matrix covers it all."
 
 These four are the first systems of the new build to be built, since every page so far reads them, and entry 6's
 three absolutes apply to each without exception.
+
+---
+
+## 19. Whatever reads the geography covers the whole map; the manual goes (DECIDED 2026-10-26)
+
+**Owner:** "Everything that needs the geography is required to cover that whole map that's built into the game. Also
+you can get rid of the 'How It Works'."
+
+**The rule, general now:** any engine that reads a place (the clock and its zones, the weather and its climates, the
+banks and the currency, the papers and the permissions, the holidays and the calendar, the prices, and anything
+built later that asks where the player is) is required to cover every one of the gazetteer's 252 countries and
+territories and 170,911 places that the map built into the game already offers. No engine may offer a place on the
+map and then not know it. Each such engine has a coverage matrix by country and territory, researched to the
+source (entries 5 to 7), and the game's own fallback stands only where the matrix records a blocker, marked where
+the player meets it.
+
+**Gone:** the "How This Works", "How Home Works", "How The Weather Works", "How Your Own Plans Work" links on every
+panel and the Guide button in the top bar, which were the guide's entries served as a manual after the tutorial
+went (entry 16). With them the guide system entire: the entries, the chapters, the help links, the "looks" opened
+from underlined words stay only where they are the detail of a fact (a town's facts, a date's), not an explanation
+of a feature. Nothing explains the game to the player from inside the game; the game says what it does where it
+does it.
+
+Capture: `captures/02-new-build/07-home-new.png` (Home with the manual's links gone).

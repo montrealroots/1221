@@ -45,6 +45,7 @@ await page.evaluate(() => {
   const hya = panels.find((p) => (p.querySelector('h2, h3')?.textContent || '').trim() === 'How You Are'); if (hya) hya.remove();
   for (const b of document.querySelectorAll('header button, .topbar button, [role=group] button, nav button, button')) if (/^Look After Yourself/.test(b.textContent.trim())) { const wrap = b.closest('[role=group], .row, div'); (wrap && wrap.children.length <= 2 ? wrap : b).remove(); }
 });
+await page.evaluate(() => { for (const el of [...document.querySelectorAll('button, a')]) if (/^How .* Works?$|^How This Works$|^Guide$/.test(el.textContent.trim())) el.remove(); });
 await wait(300); await shot('07-home-new');
 // Close the guide if it's open, to see Home itself.
 const dialog = page.locator('[role=dialog]');
