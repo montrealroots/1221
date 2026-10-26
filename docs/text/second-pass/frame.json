@@ -1967,10 +1967,10 @@
   "first": "Pending"
  },
  "src/engine/decided.ts#top [charts.gross]": {
-  "status": "Rewritten",
-  "hash": "83d35488ed7c",
-  "on": "2026-10-24",
-  "evidence": "Written for brief 25's Module 6 to docs/STYLE.md: each of the six draws the charts and awards make, said in the player's terms, registered and checked by tools/deciders.mjs and each drawn in tests/career-awards.test.ts (a film's gross, a production's entry, a category's field, the final round, a production's submission and the festival's word), with tools/voice-check.mjs clean.",
+  "status": "Retained",
+  "hash": "4777a420e974",
+  "on": "2026-10-26",
+  "reason": "A decider’s description, read by tests/deciders.test.ts and tools/deciders.mjs and never shown to a player: it says what decides a film’s run in the game’s chart, its takings abroad and the part lifting its opening.",
   "first": "Pending"
  },
  "src/engine/decided.ts#top [documents.start]": {
@@ -2066,9 +2066,9 @@
  },
  "src/engine/decided.ts#top [pro.audience]": {
   "status": "Retained",
-  "hash": "955d9bc690aa",
-  "on": "2026-10-25",
-  "reason": "A decider's description, read by tests/deciders.test.ts and tools/deciders.mjs and never shown to a player: it says what decides a series' season audience or the network's word on another season, and what moves it.",
+  "hash": "790f2507fe05",
+  "on": "2026-10-26",
+  "reason": "A decider’s description, read by tests/deciders.test.ts and tools/deciders.mjs and never shown to a player: it says what decides a season’s audience and reviews, and from brief 27 the player’s judged part in them.",
   "first": "Pending"
  },
  "src/engine/decided.ts#top [pro.board]": {
@@ -2113,6 +2113,13 @@
   "reason": "Developer notes on each random draw, read only by tests/deciders.test.ts and tools/deciders.mjs; nothing the game ships imports decided.ts.",
   "first": "Pending"
  },
+ "src/engine/decided.ts#top [pro.grow]": {
+  "status": "Retained",
+  "hash": "0fa251c425a9",
+  "on": "2026-10-26",
+  "reason": "A decider’s description, read by tests/deciders.test.ts and tools/deciders.mjs and never shown to a player: it says what decides whether a recurring part grows at its option, and what moves it.",
+  "first": "Pending"
+ },
  "src/engine/decided.ts#top [pro.hold]": {
   "status": "Retained",
   "hash": "c732dcae7c8c",
@@ -2148,6 +2155,13 @@
   "reason": "A decider's description, read by tests/deciders.test.ts and tools/deciders.mjs and never shown to a player: it says what decides a production's answer to an agent's ask for more, and what moves its chance.",
   "first": "Pending"
  },
+ "src/engine/decided.ts#top [pro.option_release]": {
+  "status": "Retained",
+  "hash": "c894b29cc8af",
+  "on": "2026-10-26",
+  "reason": "A decider’s description, read by tests/deciders.test.ts and tools/deciders.mjs and never shown to a player: it says what decides a production’s answer when asked to release the actor from its option, and what moves it.",
+  "first": "Pending"
+ },
  "src/engine/decided.ts#top [pro.option]": {
   "status": "Retained",
   "hash": "6178793ecb7a",
@@ -2160,6 +2174,20 @@
   "hash": "1fe9c9074229",
   "on": "2026-10-24",
   "evidence": "Written for brief 25's Module 5 to docs/STYLE.md: each of the five draws the ways of working make, said in the player's terms, registered and checked by tools/deciders.mjs and each drawn in tests/career-workflows.test.ts (the board, the screamed lines, the revised pages, the recall to loop and the scene cut), with tools/voice-check.mjs clean.",
+  "first": "Pending"
+ },
+ "src/engine/decided.ts#top [pro.pickup]": {
+  "status": "Retained",
+  "hash": "e856455d4413",
+  "on": "2026-10-26",
+  "reason": "A decider’s description, read by tests/deciders.test.ts and tools/deciders.mjs and never shown to a player: it says what decides whether a canceled series comes back elsewhere and the invented network’s name; its test-pickup-… label is the sweep’s placeholder id, never shown.",
+  "first": "Pending"
+ },
+ "src/engine/decided.ts#top [pro.pilot]": {
+  "status": "Retained",
+  "hash": "bbf032094d63",
+  "on": "2026-10-26",
+  "reason": "A decider’s description, read by tests/deciders.test.ts and tools/deciders.mjs and never shown to a player: it says what decides a pilot’s network word, picked up or passed on, and what moves its chance.",
   "first": "Pending"
  },
  "src/engine/decided.ts#top [pro.posting]": {
@@ -2176,6 +2204,13 @@
   "reason": "A decider's description, read by tests/deciders.test.ts and tools/deciders.mjs and never shown to a player: it says what decides a promotional film for a lead's or a supporting part's release, and how often.",
   "first": "Pending"
  },
+ "src/engine/decided.ts#top [pro.quality]": {
+  "status": "Retained",
+  "hash": "9bf24b24a704",
+  "on": "2026-10-26",
+  "reason": "A decider’s description, read by tests/deciders.test.ts and tools/deciders.mjs and never shown to a player: it says what decides a production’s own quality and the critics’ and audience’s response read with the player’s part.",
+  "first": "Pending"
+ },
  "src/engine/decided.ts#top [pro.recast]": {
   "status": "Retained",
   "hash": "4faaeb31c5b2",
@@ -2183,11 +2218,18 @@
   "reason": "Developer notes on the draw behind a part recast and posted again, read only by tests/deciders.test.ts and tools/deciders.mjs; nothing the game ships imports decided.ts, so its constants’ names are for the developer reading the deciders",
   "first": "Pending"
  },
+ "src/engine/decided.ts#top [pro.recurring]": {
+  "status": "Retained",
+  "hash": "2e5e8e6c3709",
+  "on": "2026-10-26",
+  "reason": "A decider’s description, read by tests/deciders.test.ts and tools/deciders.mjs and never shown to a player: it says what decides whether a guest part is brought back as a recurring character, and when it’s weighed.",
+  "first": "Pending"
+ },
  "src/engine/decided.ts#top [pro.release]": {
   "status": "Retained",
-  "hash": "d0d419e931d8",
-  "on": "2026-10-25",
-  "reason": "A decider's description, read by tests/deciders.test.ts and tools/deciders.mjs and never shown to a player: it says what decides a slate production's way out after the wrap.",
+  "hash": "18da82621103",
+  "on": "2026-10-26",
+  "reason": "A decider’s description, read by tests/deciders.test.ts and tools/deciders.mjs and never shown to a player: it says what decides a slate production’s way out after the wrap, from brief 27 a limited release, another distributor’s date or a film abroad first too.",
   "first": "Pending"
  },
  "src/engine/decided.ts#top [pro.rerun]": {

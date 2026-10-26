@@ -6,11 +6,144 @@
   "evidence": "Written for brief 25's Module 4 (contracts, pay states, overtime, the producer's contribution, residuals, the per diem, a recurring part's season and a series' seasons) to docs/STYLE.md and docs/GLOSSARY.md, every rule's figure the agreements' own and every invention said as the game's; read where the player meets it in tests/career-contracts.test.ts (the offer, the contract, each payment's state, the notices of each episode, option, decision, telecast, rerun, residual and per diem, through a played recurring part), with tools/voice-check.mjs, tools/tics.mjs and tools/title-case.mjs clean.",
   "first": "Pending"
  },
+ "src/engine/content/series.ts#REAL_SERIES [real-abbott-elementary]": {
+  "status": "Retained",
+  "hash": "c08e276ae6f0",
+  "on": "2026-10-26",
+  "reason": "A real series’ own word in Productions And People: real, on the air on ABC when read, its season’s number no page gives, and every season after the game’s own continuation, simulated and never an announcement; held by tests/b27-real-series.test.ts ‘starts from the catalog’s baseline’ and ‘simulates nothing of the baseline season’",
+  "first": "Pending"
+ },
+ "src/engine/content/series.ts#REAL_SERIES [real-nine-one-one]": {
+  "status": "Retained",
+  "hash": "009b188a5a69",
+  "on": "2026-10-26",
+  "reason": "A real series’ own word in Productions And People: real, its tenth season premiered October 15, 2026 as its official pages said when read, and every season after the game’s own continuation, simulated and never an announcement; held by tests/b27-real-series.test.ts ‘starts from the catalog’s baseline’ and ‘simulates nothing of the baseline season’",
+  "first": "Pending"
+ },
  "src/engine/content/series.ts#SERIES [calloway-files]": {
   "status": "Rewritten",
   "hash": "c600124fc6bf",
   "on": "2026-10-24",
   "evidence": "Written for brief 25's Module 4 (contracts, pay states, overtime, the producer's contribution, residuals, the per diem, a recurring part's season and a series' seasons) to docs/STYLE.md and docs/GLOSSARY.md, every rule's figure the agreements' own and every invention said as the game's; read where the player meets it in tests/career-contracts.test.ts (the offer, the contract, each payment's state, the notices of each episode, option, decision, telecast, rerun, residual and per diem, through a played recurring part), with tools/voice-check.mjs, tools/tics.mjs and tools/title-case.mjs clean.",
+  "first": "Pending"
+ },
+ "src/engine/systems/continuity.ts#daysWords": {
+  "status": "Retained",
+  "hash": "720da5a83d6e",
+  "on": "2026-10-26",
+  "reason": "The held days’ span, from one date to another, as the warning names them; tests/b27-option-hold.test.ts ‘PLAYER JOURNEY: holds the next season’s guaranteed episodes, says so on an offer on those days’",
+  "first": "Pending"
+ },
+ "src/engine/systems/continuity.ts#giveUpOptions": {
+  "status": "Retained",
+  "hash": "931f34ba2369",
+  "on": "2026-10-26",
+  "reason": "The notice when an offer is accepted on held days, You Gave Up The Option On …: what you took and when, that the option is gone, the part goes to another actor and the office won’t offer a part without an audition again; tests/b27-option-hold.test.ts, the journey’s given-up twin",
+  "first": "Pending"
+ },
+ "src/engine/systems/continuity.ts#giveUpOptions [problem]": {
+  "status": "Retained",
+  "hash": "463180ac1377",
+  "on": "2026-10-26",
+  "reason": "The history line of an option given up: the part in that season goes to another actor; tests/b27-option-hold.test.ts",
+  "first": "Pending"
+ },
+ "src/engine/systems/continuity.ts#NY": {
+  "status": "Retained",
+  "hash": "91a5e4a639ea",
+  "on": "2026-10-26",
+  "reason": "A time zone’s name, passed to the date formatters and never shown",
+  "first": "Pending"
+ },
+ "src/engine/systems/continuity.ts#optionReleaseRefusal": {
+  "status": "Retained",
+  "hash": "3e228c7cb364",
+  "on": "2026-10-26",
+  "reason": "Ask To Be Released’s five refusals, each the obstacle and the next step: no offer standing, no option on these days, asked and when the answer comes, refused with the choice left (decline, or accept and give it up), and an offer lapsing before the answer could come; tests/b27-option-hold.test.ts ‘refuses an ask the production couldn’t answer before the offer lapses’ and its journey; the first two are the guide’s quoted refusals, held by the guide-quotes check",
+  "first": "Pending"
+ },
+ "src/engine/systems/continuity.ts#optionWarning": {
+  "status": "Retained",
+  "hash": "4667ce3081fa",
+  "on": "2026-10-26",
+  "reason": "The offer’s warning in a notice’s shape: who holds an option on you as whom for which season, that its guaranteed episodes fall on some of these days with their span, what accepting gives up (the part to another actor, no part without an audition from that office again), and how the ask stands (asked and when the answer comes, refused, or Ask To Be Released on this offer); held by tests/b27-option-hold.test.ts ‘PLAYER JOURNEY: holds the next season’s guaranteed episodes, says so on an offer on those days, and asks the player to choose’",
+  "first": "Pending"
+ },
+ "src/engine/systems/continuity.ts#pilotOfferWords": {
+  "status": "Retained",
+  "hash": "6f3cd5bde270",
+  "on": "2026-10-26",
+  "reason": "The offer’s words for a pilot: a network invented for the game, the day it picks it up or passes, and the option the contract gives the production on you for the first season, at the raise, from July; tests/b27-pilots.test.ts ‘are made each winter for a network the game invents, shot as an episode of their kind, with the network’s word on May 15’",
+  "first": "Pending"
+ },
+ "src/engine/systems/continuity.ts#pilotSeries": {
+  "status": "Retained",
+  "hash": "66022188075a",
+  "on": "2026-10-26",
+  "reason": "A series made from a pilot says, on its page, that it and its network are the game’s inventions, when the pilot was picked up and that the network says each May whether there’s another, in the words The Calloway Files’ own note uses; tests/b27-pilots.test.ts ‘PLAYER JOURNEY: a pilot accepted carries the option on the series’ first season; picked up, it’s a series of the game’s’",
+  "first": "Pending"
+ },
+ "src/engine/systems/continuity.ts#pilotTerms": {
+  "status": "Retained",
+  "hash": "ec4ab9ab8205",
+  "on": "2026-10-26",
+  "reason": "A calendar entry’s title, Project: The Network’s Word, for the day the network decides; tests/b27-pilots.test.ts",
+  "first": "Pending"
+ },
+ "src/engine/systems/continuity.ts#registerContinuity": {
+  "status": "Retained",
+  "hash": "801306c5eef7",
+  "on": "2026-10-26",
+  "reason": "The cluster’s notices, each what happened, what it means and what’s open: released from the option, with what you can now accept and that a new casting can still bring a part; the option standing, with the choice left; a guest part offered back as a recurring character with its guaranteed episodes, or the series unable to bring it back with the credits kept; the pilot passed on (no series, no airing, no reel, the credit as shot and the pay yours) or picked up, with or without you, the option taken up into a first season on the Work tab; and the network’s word said as the game’s simulation; held by tests/b27-option-hold.test.ts, tests/b27-returning.test.ts and tests/b27-pilots.test.ts, each journey reading its notice",
+  "first": "Pending"
+ },
+ "src/engine/systems/continuity.ts#registerContinuity [problem]": {
+  "status": "Retained",
+  "hash": "cd7c16d3014a",
+  "on": "2026-10-26",
+  "reason": "Two history lines: the production wouldn’t release you from its option, and the invite that found the new season had no work for the part; their keys are the history’s own, never shown; tests/b27-option-hold.test.ts and tests/b27-returning.test.ts",
+  "first": "Pending"
+ },
+ "src/engine/systems/continuity.ts#registerContinuity [requested]": {
+  "status": "Retained",
+  "hash": "734d4b938fbe",
+  "on": "2026-10-26",
+  "reason": "The ask’s history line: you asked whom to release you from its option as whom, with the offer for what on some of the days it holds; its key option:release:… is the history’s own, never shown; tests/b27-option-hold.test.ts",
+  "first": "Pending"
+ },
+ "src/engine/systems/continuity.ts#registerContinuity [success]": {
+  "status": "Retained",
+  "hash": "a7cc3be431ba",
+  "on": "2026-10-26",
+  "reason": "The history line of a guest part offered back as a recurring character for the new season; its key is the history’s own, never shown; tests/b27-returning.test.ts ‘PLAYER JOURNEY: played Exceptional, weighed before the next season and offered back without an audition’",
+  "first": "Pending"
+ },
+ "src/engine/systems/continuity.ts#registerContinuity <pro.ask_option_release>": {
+  "status": "Retained",
+  "hash": "fa35765e9dbd",
+  "on": "2026-10-26",
+  "reason": "The scheduled answer’s title, The Answer On The Option For …, for the production’s word the next afternoon; tests/b27-option-hold.test.ts",
+  "first": "Pending"
+ },
+ "src/engine/systems/continuity.ts#scheduleInvite": {
+  "status": "Retained",
+  "hash": "4e8871dc27a5",
+  "on": "2026-10-26",
+  "reason": "A calendar entry’s title, Series: Its New Season’s Characters, for the day the producers say whether a guest part comes back; tests/b27-returning.test.ts ‘PLAYER JOURNEY: played Exceptional, weighed before the next season and offered back without an audition’",
+  "first": "Pending"
+ },
+ "src/engine/systems/continuity.ts#seasonDays": {
+  "status": "Retained",
+  "hash": "81f720132eb8",
+  "on": "2026-10-26",
+  "reason": "A held day’s label, Project: Episode N, Shoot Day K, the shape a recurring part’s booked days already carry on the calendar; tests/b27-option-hold.test.ts reads the held days’ span",
+  "first": "Pending"
+ },
+ "src/engine/systems/continuity.ts#seasonFor": {
+  "status": "Retained",
+  "hash": "d6d2dbe5f26a",
+  "on": "2026-10-26",
+  "reason": "A season named for the warning: a pilot’s first season if its network picks it up, or the season beginning in a year; tests/b27-option-hold.test.ts and tests/b27-pilots.test.ts ‘PLAYER JOURNEY: a pilot accepted carries the option on the series’ first season’",
   "first": "Pending"
  },
  "src/engine/systems/contracts.ts#air": {
@@ -293,11 +426,18 @@
   "evidence": "Written for brief 27's K6 (loops 36 and 38: a season's audience, simulated and said so, read by the network's word on another season) to docs/STYLE.md and docs/GLOSSARY.md, and read where the player meets it: tests/b27-audience.test.ts holds the audience's words in its outlet's own unit (6.2 million viewers an episode; 18.4 million hours viewed a week), the network's word saying what it read (Its last season averaged ... and critics scored it ... of 100, both the game's estimates), the season beginning in its own month, and the Charts And Awards tab's Your Series On Screen (Its seventh season: ..., critics ... of 100; the game's simulation for series it invents, never a published figure); the guide's Awards, Festivals And The Charts says the same. tools/voice-check.mjs, tools/tics.mjs, tools/title-case.mjs, tools/plural-check.mjs and tools/spelling.mjs pass",
   "first": "Pending"
  },
+ "src/engine/systems/series.ts#continuationWords": {
+  "status": "Retained",
+  "hash": "52f26c0bc426",
+  "on": "2026-10-26",
+  "reason": "One sentence after a real series’ word, that it’s the game’s own continuation of the real series and not an announcement, the words the catalog and the pages use for what’s simulated; tests/b27-real-series.test.ts ‘PLAYER JOURNEY: a part worked in a simulated season of 9-1-1’ and ‘PLAYER JOURNEYS: a revival leaving out the player’s character, and a guest part invited back, are said as the game’s own continuation’",
+  "first": "Pending"
+ },
  "src/engine/systems/series.ts#decisionWords": {
-  "status": "Rewritten",
-  "hash": "0711b9fe5c92",
-  "on": "2026-10-25",
-  "evidence": "Written for brief 27's K6 (loops 36 and 38: a season's audience, simulated and said so, read by the network's word on another season) to docs/STYLE.md and docs/GLOSSARY.md, and read where the player meets it: tests/b27-audience.test.ts holds the audience's words in its outlet's own unit (6.2 million viewers an episode; 18.4 million hours viewed a week), the network's word saying what it read (Its last season averaged ... and critics scored it ... of 100, both the game's estimates), the season beginning in its own month, and the Charts And Awards tab's Your Series On Screen (Its seventh season: ..., critics ... of 100; the game's simulation for series it invents, never a published figure); the guide's Awards, Festivals And The Charts says the same. tools/voice-check.mjs, tools/tics.mjs, tools/title-case.mjs, tools/plural-check.mjs and tools/spelling.mjs pass",
+  "status": "Retained",
+  "hash": "51594c276d8f",
+  "on": "2026-10-26",
+  "reason": "The network’s word in one sentence: its date, the network and the season, its last audience and critics’ score called the game’s estimates, a pickup’s service said invented for the game, and a real series’ word followed by continuationWords; tests/b27-returning.test.ts and tests/b27-real-series.test.ts ‘PLAYER JOURNEY: a part worked in a simulated season of 9-1-1 hears the network’s next word as the game’s’",
   "first": "Pending"
  },
  "src/engine/systems/series.ts#NY": {
@@ -307,11 +447,18 @@
   "evidence": "Written for brief 25's Module 4 (contracts, pay states, overtime, the producer's contribution, residuals, the per diem, a recurring part's season and a series' seasons) to docs/STYLE.md and docs/GLOSSARY.md, every rule's figure the agreements' own and every invention said as the game's; read where the player meets it in tests/career-contracts.test.ts (the offer, the contract, each payment's state, the notices of each episode, option, decision, telecast, rerun, residual and per diem, through a played recurring part), with tools/voice-check.mjs, tools/tics.mjs and tools/title-case.mjs clean.",
   "first": "Pending"
  },
+ "src/engine/systems/series.ts#pickupOf": {
+  "status": "Retained",
+  "hash": "f3d66cd17d55",
+  "on": "2026-10-26",
+  "reason": "The four words a network invented for a pickup is named with (Streaming, Plus, Television, Network), said invented for the game on each page and credit that names it; tests/b27-returning.test.ts ‘comes back on another of its kind about half the time, said so and named on its page and its credits’",
+  "first": "Pending"
+ },
  "src/engine/systems/series.ts#registerSeries": {
-  "status": "Rewritten",
-  "hash": "a19cf18d967f",
-  "on": "2026-10-25",
-  "evidence": "Written for brief 27's K6 (loop 41: cancellation and possible revival) to docs/STYLE.md and docs/GLOSSARY.md, and read where the player meets it: tests/b27-revival.test.ts holds the network's word bringing a series back (Its producers will say by June 17, 2032, whether Desk Clerk comes back, and its other parts will be cast again), the offer's reason (The Calloway Files is back after two years off, and its producers want Desk Clerk back, with a new contract for its new season), and the word against (The Calloway Files Comes Back Without Desk Clerk | ... is back after two years off without Desk Clerk). Numbers under ten in words; no engine words.",
+  "status": "Retained",
+  "hash": "9573cb496bd3",
+  "on": "2026-10-26",
+  "reason": "The series’ notices: called or not for an episode, the option taken up or lapsed, and from brief 27 a revived series bringing the part back with a new contract or coming back without the character, each saying what stays on your credits and that a new casting can still bring a part; tests/b27-real-series.test.ts ‘PLAYER JOURNEYS: a revival leaving out the player’s character’, tests/b27-revival.test.ts and tests/career-contracts.test.ts D8",
   "first": "Pending"
  },
  "src/engine/systems/series.ts#registerSeries [booked]": {
@@ -349,6 +496,13 @@
   "evidence": "Written for brief 25's Module 4 (contracts, pay states, overtime, the producer's contribution, residuals, the per diem, a recurring part's season and a series' seasons) to docs/STYLE.md and docs/GLOSSARY.md, every rule's figure the agreements' own and every invention said as the game's; read where the player meets it in tests/career-contracts.test.ts (the offer, the contract, each payment's state, the notices of each episode, option, decision, telecast, rerun, residual and per diem, through a played recurring part), with tools/voice-check.mjs, tools/tics.mjs and tools/title-case.mjs clean.",
   "first": "Pending"
  },
+ "src/engine/systems/series.ts#seasonName": {
+  "status": "Retained",
+  "hash": "77887465863d",
+  "on": "2026-10-26",
+  "reason": "A season named three ways, by its number, as the one on the air in a year, or as beginning in a year, so a real series whose pages give no number is never given one; tests/b27-real-series.test.ts ‘simulates nothing of the baseline season … 9-1-1’s counted on from its tenth, Abbott Elementary’s by their years’",
+  "first": "Pending"
+ },
  "src/ui/career/WorkPane.tsx#BASIS": {
   "status": "Rewritten",
   "hash": "003815862aec",
@@ -365,16 +519,16 @@
  },
  "src/ui/career/WorkPane.tsx#clauseWords": {
   "status": "Retained",
-  "hash": "d16187f74496",
+  "hash": "43d0e250acb7",
   "on": "2026-10-26",
-  "reason": "Each clause says its term in a sentence a contract’s reader can check; the option clause now says the same day rate unless next season’s rate for the part comes to more, where the agent traded the raise, as the negotiated contract has it",
+  "reason": "The clauses in words; the option’s now names a real series’ season by its year and, while open, the days it holds you for and that an offer on any of them asks you to choose, the same span optionWarning names; read in the source, the span held by tests/b27-option-hold.test.ts",
   "first": "Pending"
  },
  "src/ui/career/WorkPane.tsx#ContractFacts": {
-  "status": "Rewritten",
-  "hash": "93d7d8e816f9",
-  "on": "2026-10-24",
-  "evidence": "Written for brief 25's Module 4 (contracts, pay states, overtime, the producer's contribution, residuals, the per diem, a recurring part's season and a series' seasons) to docs/STYLE.md and docs/GLOSSARY.md, every rule's figure the agreements' own and every invention said as the game's; read where the player meets it in tests/career-contracts.test.ts (the offer, the contract, each payment's state, the notices of each episode, option, decision, telecast, rerun, residual and per diem, through a played recurring part), with tools/voice-check.mjs, tools/tics.mjs and tools/title-case.mjs clean.",
+  "status": "Retained",
+  "hash": "273a1f8c7e9b",
+  "on": "2026-10-26",
+  "reason": "The Contract’s facts; the new words say a version is an option taken up and, where the production wrote more, the part grown by so many episodes and so much more a day, and name a real series’ season by the year it begins; read in the source against the grown clause tests/b27-returning.test.ts ‘PLAYER JOURNEY: taken up with more episodes guaranteed and more pay’ holds",
   "first": "Pending"
  },
  "src/ui/career/WorkPane.tsx#datesWords": {

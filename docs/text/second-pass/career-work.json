@@ -1421,10 +1421,10 @@
   "first": "Pending"
  },
  "src/engine/systems/projobs.ts#registerProJobs": {
-  "status": "Rewritten",
-  "hash": "3dbbd86d7282",
-  "on": "2026-10-25",
-  "evidence": "Written for brief 27's K6 (loop 33: a finished production's way out, held back, sent to streaming or shelved) to docs/STYLE.md and docs/GLOSSARY.md, and read where the player meets it: tests/b27-release.test.ts holds the notices (... Is Shelved, it won't be released, the part staying on the credits as shot, off the reel, with no premiere; ...'s Release Is Held Back, out on the later date; ... is streaming, its distributor having sent it to streaming instead of cinemas) and the guide's Offers And Booked Work says the same. The rest of these sources' words are as they were, held by brief 19's and brief 25's tests. tools/voice-check.mjs, tools/tics.mjs, tools/title-case.mjs, tools/plural-check.mjs and tools/spelling.mjs pass",
+  "status": "Retained",
+  "hash": "cd261895282f",
+  "on": "2026-10-26",
+  "reason": "Its own words stand as read on 2026-10-26, the raised or standing offer, the hold let go and the lapsed offer (tests/b27-offers.test.ts); what moved is the release line it assembles, now releasedWords’ for a limited release, a film abroad first or a new distributor’s, held by tests/b27-release-routes.test.ts",
   "first": "Pending"
  },
  "src/engine/systems/projobs.ts#registerProJobs [callback]": {
@@ -1533,10 +1533,10 @@
   "first": "Rewritten And Verified"
  },
  "src/engine/systems/projobs.ts#renewFromOption": {
-  "status": "Rewritten",
-  "hash": "dc8cae3a1e7c",
-  "on": "2026-10-24",
-  "evidence": "Written for brief 25's Module 4 (contracts, pay states, overtime, the producer's contribution, residuals, the per diem, a recurring part's season and a series' seasons) to docs/STYLE.md and docs/GLOSSARY.md, every rule's figure the agreements' own and every invention said as the game's; read where the player meets it in tests/career-contracts.test.ts (the offer, the contract, each payment's state, the notices of each episode, option, decision, telecast, rerun, residual and per diem, through a played recurring part), with tools/voice-check.mjs, tools/tics.mjs and tools/title-case.mjs clean.",
+  "status": "Retained",
+  "hash": "3f4bf486619e",
+  "on": "2026-10-26",
+  "reason": "The option taken up, in a notice: the days and the rate, that it’s your contract for a series’ first season or the next version of it for the season beginning in a named month, what it guarantees, and where the production wrote more for the part, how many more episodes and how much more a day on top of the option’s raise; tests/b27-returning.test.ts ‘PLAYER JOURNEY: taken up with more episodes guaranteed and more pay’ and tests/b27-pilots.test.ts",
   "first": "Pending"
  },
  "src/engine/systems/projobs.ts#replace": {

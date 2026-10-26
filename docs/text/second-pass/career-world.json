@@ -1063,6 +1063,55 @@
   "evidence": "Written for brief 25's Module 6 (the published charts as dated imports, the game's own box office, the awards and festivals inventory, the Emmy Awards by the 78th's rules and Sundance by its 2027 festival's) to docs/STYLE.md and docs/GLOSSARY.md, every rule the read sources' own and every invention said as the game's; read where the player meets it in tests/career-awards-screen.test.ts (the Charts And Awards tab and the Portfolio drawn before the work, after the wrap, after the entry, at the nominations and after the ceremony, through the clock and a reload at each stage) and tests/career-awards.test.ts (each refusal, notice, recap and festival word), with tools/voice-check.mjs, tools/tics.mjs and tools/title-case.mjs clean.",
   "first": "Pending"
  },
+ "src/engine/systems/market.ts#firstTerritories": {
+  "status": "Retained",
+  "hash": "27a618a9b990",
+  "on": "2026-10-26",
+  "reason": "Where a film abroad first opens, the United Kingdom, Australia or other countries, named in the route’s sentence; tests/b27-release-routes.test.ts ‘PLAYER JOURNEY: a film abroad first is out at its date there, comes home its weeks later’",
+  "first": "Pending"
+ },
+ "src/engine/systems/market.ts#NY": {
+  "status": "Retained",
+  "hash": "91a5e4a639ea",
+  "on": "2026-10-26",
+  "reason": "A time zone’s name, passed to the date formatter and never shown",
+  "first": "Pending"
+ },
+ "src/engine/systems/market.ts#releasedWords": {
+  "status": "Retained",
+  "hash": "37bc21730d66",
+  "on": "2026-10-26",
+  "reason": "The release notice’s clause: opened in a limited release in a few cinemas in Los Angeles and New York, opened abroad first and opens in the US on a date, or released by the distributor that took it over; tests/b27-release-routes.test.ts, its three journeys",
+  "first": "Pending"
+ },
+ "src/engine/systems/market.ts#routeOf": {
+  "status": "Retained",
+  "hash": "14c41cab10bf",
+  "on": "2026-10-26",
+  "reason": "The name parts of a distributor invented for a takeover (Releasing, Pictures, Films, Streaming, Television), said invented for the game wherever it’s named; tests/b27-release-routes.test.ts ‘PLAYER JOURNEY: another distributor takes a film over’",
+  "first": "Pending"
+ },
+ "src/engine/systems/market.ts#routeWords": {
+  "status": "Retained",
+  "hash": "c2c9406a4969",
+  "on": "2026-10-26",
+  "reason": "A credit’s, a page’s and the chart’s route in one sentence: a limited release then wide, never widened, or still in a few cinemas; released abroad first and at home so many weeks later; or released by a distributor invented for the game that took it over and moved its date; tests/b27-release-routes.test.ts and tests/b27-reference.test.ts",
+  "first": "Pending"
+ },
+ "src/engine/systems/market.ts#splitYearsWhy": {
+  "status": "Retained",
+  "hash": "3b8f8d53a8c1",
+  "on": "2026-10-26",
+  "reason": "Why the Actor Awards place a film in neither year: it opened abroad in one year and in the US in another, and the rules ask for the first showing and the qualifying run in the same year; tests/b27-release-routes.test.ts ‘places a film released abroad first by its run at home, and not at all where the two fall in different years’",
+  "first": "Pending"
+ },
+ "src/engine/systems/market.ts#takenOverWords": {
+  "status": "Retained",
+  "hash": "dc61c94e5989",
+  "on": "2026-10-26",
+  "reason": "The notice: the first distributor gave the film up, a named distributor invented for the game took it over and moved its release to a date, the part stays on your credits as shot until then and its footage can go on a reel once it’s out; tests/b27-release-routes.test.ts ‘PLAYER JOURNEY: another distributor takes a film over: said at its first date with the company and the new date, out at the later one’",
+  "first": "Pending"
+ },
  "src/engine/systems/reference.ts#ACTION": {
   "status": "Rewritten",
   "hash": "7392555fc066",
@@ -1106,10 +1155,10 @@
   "first": "Pending"
  },
  "src/engine/systems/reference.ts#creditWords": {
-  "status": "Rewritten",
-  "hash": "ef6ccfe32518",
-  "on": "2026-10-25",
-  "evidence": "Written for brief 27's K8 (Part 16 and loop 48: the industry reference, Productions And People) to docs/STYLE.md and docs/GLOSSARY.md, every real record's field said as its official pages gave it and tagged Verified, what they didn't give said as Not Given with why, the game's own tagged Simulated and the player's Yours, the glossary's How This Works kept for the help and no page called the reference on screen: read where the player meets it in tests/b27-reference.test.ts (a real production's page and its companies' and people's, a published chart's week, a part drawn from a real production once it's posted, the Desk Clerk's project with its series, season and episode, a season's audience, the network's word, a shelved release, the agents, Find, and the Career screen's Productions And People tab with its trail, its Back and its actions). Numbers under ten in words; dates with their comma; no engine words.",
+  "status": "Retained",
+  "hash": "133ba9ecb455",
+  "on": "2026-10-26",
+  "reason": "A credit’s line: released on a date, with its route (limited, abroad first, taken over) and the network that picked the series up where there is one; shot and its network passed on the pilot, so it won’t air; shot and shelved, held back, or taken over by a named distributor; tests/b27-release-routes.test.ts and tests/b27-pilots.test.ts ‘PLAYER JOURNEY: a pilot whose network’s word comes inside its shoot and passes on it never airs’",
   "first": "Pending"
  },
  "src/engine/systems/reference.ts#ENGAGEMENT_WORDS": {
@@ -1120,10 +1169,10 @@
   "first": "Pending"
  },
  "src/engine/systems/reference.ts#episodePage": {
-  "status": "Rewritten",
-  "hash": "52e77a921458",
-  "on": "2026-10-25",
-  "evidence": "Written for brief 27's K8 (Part 16 and loop 48: the industry reference, Productions And People) to docs/STYLE.md and docs/GLOSSARY.md, every real record's field said as its official pages gave it and tagged Verified, what they didn't give said as Not Given with why, the game's own tagged Simulated and the player's Yours, the glossary's How This Works kept for the help and no page called the reference on screen: read where the player meets it in tests/b27-reference.test.ts (a real production's page and its companies' and people's, a published chart's week, a part drawn from a real production once it's posted, the Desk Clerk's project with its series, season and episode, a season's audience, the network's word, a shelved release, the agents, Find, and the Career screen's Productions And People tab with its trail, its Back and its actions). Numbers under ten in words; dates with their comma; no engine words.",
+  "status": "Retained",
+  "hash": "d62981251f5a",
+  "on": "2026-10-26",
+  "reason": "An episode’s page names its season by seasonName, so a real series’ unnumbered season reads as the season beginning in a year; the rest stands as read on 2026-10-25, drawn by tests/b27-reference.test.ts",
   "first": "Pending"
  },
  "src/engine/systems/reference.ts#episodesWords": {
@@ -1176,10 +1225,10 @@
   "first": "Pending"
  },
  "src/engine/systems/reference.ts#productionPage": {
-  "status": "Rewritten",
-  "hash": "3d696107fa85",
-  "on": "2026-10-25",
-  "evidence": "Written for brief 27's K8 (Part 16 and loop 48: the industry reference, Productions And People) to docs/STYLE.md and docs/GLOSSARY.md, every real record's field said as its official pages gave it and tagged Verified, what they didn't give said as Not Given with why, the game's own tagged Simulated and the player's Yours, the glossary's How This Works kept for the help and no page called the reference on screen: read where the player meets it in tests/b27-reference.test.ts (a real production's page and its companies' and people's, a published chart's week, a part drawn from a real production once it's posted, the Desk Clerk's project with its series, season and episode, a season's audience, the network's word, a shelved release, the agents, Find, and the Career screen's Productions And People tab with its trail, its Back and its actions). Numbers under ten in words; dates with their comma; no engine words.",
+  "status": "Retained",
+  "hash": "284141de8beb",
+  "on": "2026-10-26",
+  "reason": "A real production’s page gains Its Seasons In The Game under The Game’s Continuation: the last word, or that every season after the one its pages had on the air is the game’s own continuation with the first word’s date, and that each simulated season opens from it; tests/b27-real-series.test.ts ‘is tagged in Productions And People: the baseline Verified, each season after it Simulated, its page linked from the production’s’",
   "first": "Pending"
  },
  "src/engine/systems/reference.ts#projectPage": {
@@ -1203,6 +1252,13 @@
   "evidence": "Written for brief 27's K8 (Part 16 and loop 48: the industry reference, Productions And People) to docs/STYLE.md and docs/GLOSSARY.md, every real record's field said as its official pages gave it and tagged Verified, what they didn't give said as Not Given with why, the game's own tagged Simulated and the player's Yours, the glossary's How This Works kept for the help and no page called the reference on screen: read where the player meets it in tests/b27-reference.test.ts (a real production's page and its companies' and people's, a published chart's week, a part drawn from a real production once it's posted, the Desk Clerk's project with its series, season and episode, a season's audience, the network's word, a shelved release, the agents, Find, and the Career screen's Productions And People tab with its trail, its Back and its actions). Numbers under ten in words; dates with their comma; no engine words.",
   "first": "Pending"
  },
+ "src/engine/systems/reference.ts#releaseFacts": {
+  "status": "Retained",
+  "hash": "bf57057f72dd",
+  "on": "2026-10-26",
+  "reason": "The Pilot fact before the word (a network invented for the game, which picks it up or passes on a date) and after it (picked up to series, or passed on so it won’t air), and Release with the route in words; tests/b27-pilots.test.ts and tests/b27-release-routes.test.ts",
+  "first": "Pending"
+ },
  "src/engine/systems/reference.ts#ROLE_LABEL": {
   "status": "Rewritten",
   "hash": "eed0439f01e8",
@@ -1211,10 +1267,10 @@
   "first": "Pending"
  },
  "src/engine/systems/reference.ts#runFacts": {
-  "status": "Rewritten",
-  "hash": "c3a5f260ef83",
-  "on": "2026-10-25",
-  "evidence": "Written for brief 27's K8 (Part 16 and loop 48: the industry reference, Productions And People) to docs/STYLE.md and docs/GLOSSARY.md, every real record's field said as its official pages gave it and tagged Verified, what they didn't give said as Not Given with why, the game's own tagged Simulated and the player's Yours, the glossary's How This Works kept for the help and no page called the reference on screen: read where the player meets it in tests/b27-reference.test.ts (a real production's page and its companies' and people's, a published chart's week, a part drawn from a real production once it's posted, the Desk Clerk's project with its series, season and episode, a season's audience, the network's word, a shelved release, the agents, Find, and the Career screen's Productions And People tab with its trail, its Back and its actions). Numbers under ten in words; dates with their comma; no engine words.",
+  "status": "Retained",
+  "hash": "f756ef752eff",
+  "on": "2026-10-26",
+  "reason": "In Cinemas, a film abroad first said as opened there and opening in the US on a date with its weeks abroad so far; Box Office at home, abroad and worldwide in US dollars; and Reception, each called the game’s estimates; en-US is the number formatter’s locale, never shown; tests/b27-release-routes.test.ts ‘PLAYER JOURNEY: a film abroad first is out at its date there’ and tests/b27-fortunes.test.ts",
   "first": "Pending"
  },
  "src/engine/systems/reference.ts#scopeWords": {
@@ -1225,17 +1281,17 @@
   "first": "Pending"
  },
  "src/engine/systems/reference.ts#seasonPage": {
-  "status": "Rewritten",
-  "hash": "2bc9e75db624",
-  "on": "2026-10-25",
-  "evidence": "Written for brief 27's K8 (Part 16 and loop 48: the industry reference, Productions And People) to docs/STYLE.md and docs/GLOSSARY.md, every real record's field said as its official pages gave it and tagged Verified, what they didn't give said as Not Given with why, the game's own tagged Simulated and the player's Yours, the glossary's How This Works kept for the help and no page called the reference on screen: read where the player meets it in tests/b27-reference.test.ts (a real production's page and its companies' and people's, a published chart's week, a part drawn from a real production once it's posted, the Desk Clerk's project with its series, season and episode, a season's audience, the network's word, a shelved release, the agents, Find, and the Career screen's Productions And People tab with its trail, its Back and its actions). Numbers under ten in words; dates with their comma; no engine words.",
+  "status": "Retained",
+  "hash": "2e8ddeb1bb66",
+  "on": "2026-10-26",
+  "reason": "A season’s page titled by seasonName, Seen On for a pickup’s network said invented, and a real series’ season said to be the game’s own continuation of it, not an announcement; tests/b27-real-series.test.ts ‘is tagged in Productions And People’",
   "first": "Pending"
  },
  "src/engine/systems/reference.ts#seriesPage": {
-  "status": "Rewritten",
-  "hash": "5438dff1cc49",
-  "on": "2026-10-25",
-  "evidence": "Written for brief 27's K8 (Part 16 and loop 48: the industry reference, Productions And People) to docs/STYLE.md and docs/GLOSSARY.md, every real record's field said as its official pages gave it and tagged Verified, what they didn't give said as Not Given with why, the game's own tagged Simulated and the player's Yours, the glossary's How This Works kept for the help and no page called the reference on screen: read where the player meets it in tests/b27-reference.test.ts (a real production's page and its companies' and people's, a published chart's week, a part drawn from a real production once it's posted, the Desk Clerk's project with its series, season and episode, a season's audience, the network's word, a shelved release, the agents, Find, and the Career screen's Productions And People tab with its trail, its Back and its actions). Numbers under ten in words; dates with their comma; no engine words.",
+  "status": "Retained",
+  "hash": "98a898aa640a",
+  "on": "2026-10-26",
+  "reason": "A real series’ page: the season on the air is the pages’ and every season after the game’s simulation, never an announcement; the baseline season On the air when the game read its pages, only the seasons after it simulated; Its Official Pages linking to the production read; Seen On naming a pickup’s network as invented for the game; and the episode count called the game’s own; tests/b27-real-series.test.ts ‘is tagged in Productions And People’ and tests/b27-returning.test.ts ‘comes back on another of its kind’",
   "first": "Pending"
  },
  "src/engine/systems/reference.ts#shootWords": {
@@ -1498,10 +1554,10 @@
   "first": "Pending"
  },
  "src/ui/career/IndustryPane.tsx#BoxOfficePanel": {
-  "status": "Rewritten",
-  "hash": "9d0f72381ebe",
-  "on": "2026-10-24",
-  "evidence": "Written for brief 25's Module 6 (the published charts as dated imports, the game's own box office, the awards and festivals inventory, the Emmy Awards by the 78th's rules and Sundance by its 2027 festival's) to docs/STYLE.md and docs/GLOSSARY.md, every rule the read sources' own and every invention said as the game's; read where the player meets it in tests/career-awards-screen.test.ts (the Charts And Awards tab and the Portfolio drawn before the work, after the wrap, after the entry, at the nominations and after the ceremony, through the clock and a reload at each stage) and tests/career-awards.test.ts (each refusal, notice, recap and festival word), with tools/voice-check.mjs, tools/tics.mjs and tools/title-case.mjs clean.",
+  "status": "Retained",
+  "hash": "33843dc775d8",
+  "on": "2026-10-26",
+  "reason": "Your Films In Cinemas: Opens or Opened in the US on a date with the route’s words after it; so far at home and abroad and the worldwide sum, every figure in US dollars; critics and audiences of 100, both simulated; the weeks abroad before a US opening as Not Yet Open and Not Yet Charted; and the fine print saying what moves a film and that neither decides it alone, in the guide’s words; tests/b27-fortunes.test.ts ‘PLAYER JOURNEY: keeps its weeks at home and abroad in US dollars, its worldwide sum and its reception, said as the game’s’ and tests/b27-release-routes.test.ts ‘PLAYER JOURNEY: a film abroad first’",
   "first": "Pending"
  },
  "src/ui/career/IndustryPane.tsx#CeremonyControls": {
@@ -1554,10 +1610,10 @@
   "first": "Pending"
  },
  "src/ui/career/IndustryPane.tsx#SeriesPanel": {
-  "status": "Rewritten",
-  "hash": "77fa37a028eb",
-  "on": "2026-10-25",
-  "evidence": "Written for brief 27's K6 (loops 36 and 38: a season's audience, simulated and said so, read by the network's word on another season) to docs/STYLE.md and docs/GLOSSARY.md, and read where the player meets it: tests/b27-audience.test.ts holds the audience's words in its outlet's own unit (6.2 million viewers an episode; 18.4 million hours viewed a week), the network's word saying what it read (Its last season averaged ... and critics scored it ... of 100, both the game's estimates), the season beginning in its own month, and the Charts And Awards tab's Your Series On Screen (Its seventh season: ..., critics ... of 100; the game's simulation for series it invents, never a published figure); the guide's Awards, Festivals And The Charts says the same. tools/voice-check.mjs, tools/tics.mjs, tools/title-case.mjs, tools/plural-check.mjs and tools/spelling.mjs pass",
+  "status": "Retained",
+  "hash": "f4b2ecce7cd2",
+  "on": "2026-10-26",
+  "reason": "Your Series On Screen: each finished season named by seasonName, and the fine print now says a real series’ seasons after the one on the air are the game’s simulation too and that your part moves a season a little; tests/b27-fortunes.test.ts ‘PLAYER JOURNEY: posts each judged day of series work, moves the season’s audience and the network’s chance’",
   "first": "Pending"
  },
  "src/ui/career/IndustryPane.tsx#WorldPanel": {

@@ -631,9 +631,9 @@
  },
  "src/engine/content/guide/career.ts#CAREER_GUIDE [career.awards]": {
   "status": "Rewritten",
-  "hash": "6fcfd01f7371",
-  "on": "2026-10-25",
-  "evidence": "Brief 27, F (2026-10-25): a second part of the player's in the same program is refused an entry in the same category and year, and not entered by its production, as the 78th's rules allow several entries in a performing category only for different programs (N23); found in the degree career's 85th Creative Arts Emmys, where two parts in The Errand Of Penwick were both nominated. tests/career-awards.test.ts 'one program': the Emmy paragraph says two parts in the same show can't both be entered in one category.",
+  "hash": "07c85ce05a8b",
+  "on": "2026-10-26",
+  "evidence": "The entry's line on what's the game's own said 'a speech's weights', the engine's word shown to the player (docs/STYLE.md); it says how a speech is judged now. tests/guide.test.ts and tools/guide-quotes.mjs read the entry; the trace page and the completion matrix were regenerated with the new words.",
   "first": "Pending"
  },
  "src/engine/content/guide/career.ts#CAREER_GUIDE [career.commission]": {
@@ -644,10 +644,10 @@
   "first": "Pending"
  },
  "src/engine/content/guide/career.ts#CAREER_GUIDE [career.contracts]": {
-  "status": "Rewritten",
-  "hash": "bf74d911b9a7",
-  "on": "2026-10-25",
-  "evidence": "Written for brief 27's K6 (loop 41: cancellation and possible revival) to docs/STYLE.md and docs/GLOSSARY.md, and read where the player meets it: tests/b27-revival.test.ts holds the network's word bringing a series back (Its producers will say by June 17, 2032, whether Desk Clerk comes back, and its other parts will be cast again), the offer's reason (The Calloway Files is back after two years off, and its producers want Desk Clerk back, with a new contract for its new season), and the word against (The Calloway Files Comes Back Without Desk Clerk | ... is back after two years off without Desk Clerk). Numbers under ten in words; no engine words.",
+  "status": "Retained",
+  "hash": "3cfcbc72a43c",
+  "on": "2026-10-26",
+  "reason": "Read again on 2026-10-26: its one changed line adds the third way a part comes back to a renewed series, its producers asking a guest part back, the way brief 27’s INVITE made and tests/b27-returning.test.ts plays; the rest stands as read on 2026-10-25, each figure imported from the rules",
   "first": "Pending"
  },
  "src/engine/content/guide/career.ts#CAREER_GUIDE [career.demo]": {
@@ -748,6 +748,13 @@
   "reason": "The résumé entry now names the languages you speak besides native English among what the résumé lists, matching the panel’s own line, and keeps its steps, costs and example in the panel’s labels: Make Your Résumé, Update Your Résumé, What It Says",
   "first": "Pending"
  },
+ "src/engine/content/guide/career.ts#CAREER_GUIDE [career.series]": {
+  "status": "Retained",
+  "hash": "842e866627c3",
+  "on": "2026-10-26",
+  "reason": "New with brief 27’s series cluster: the pilot’s word on May 15, the option’s hold on a season’s guaranteed episodes and the three answers to an offer on its days by their buttons (Decline The Offer, Accept The Offer, Ask To Be Released), a guest part asked back, a part grown at its option, a pickup elsewhere, the real series said as the game’s continuation and a release’s three other ways out, every figure imported from the rules; the part’s weights by size came out at the review of 2026-10-25; its two quoted refusals are optionReleaseRefusal’s own words, held by tests/b27-option-hold.test.ts and the guide-quotes check, and tests/guide.test.ts reads every entry",
+  "first": "Pending"
+ },
  "src/engine/content/guide/career.ts#CAREER_GUIDE [career.sides]": {
   "status": "Rewritten",
   "hash": "a44f457a8f2a",
@@ -799,9 +806,9 @@
  },
  "src/engine/content/guide/career.ts#CAREER_GUIDE [immediate]": {
   "status": "Retained",
-  "hash": "06e0fa863203",
+  "hash": "faa6566b6183",
   "on": "2026-10-26",
-  "reason": "Each is a Changes Straight Away line, one plain consequence; the new ones say the answer changes the offer you then accept or decline, and that an office that remembers a no-show offers you nothing without an audition, as the code has it",
+  "reason": "Each is a Changes Straight Away line, one plain consequence; the new one says accepting an offer on an option’s days gives the option up, which giveUpOptions does at acceptance, held by tests/b27-option-hold.test.ts",
   "first": "Pending"
  },
  "src/engine/content/guide/career.ts#CAREER_GUIDE [optional]": {
@@ -813,16 +820,16 @@
  },
  "src/engine/content/guide/career.ts#CAREER_GUIDE [prerequisite]": {
   "status": "Retained",
-  "hash": "7d853a62b9aa",
+  "hash": "061283bf1707",
   "on": "2026-10-26",
-  "reason": "Each is a Comes First line, one sentence saying what has to be true before the feature works; the new ones say a part in a language you don’t speak can’t be submitted for and only an agent under an agreement in force negotiates, both as the refusals say it",
+  "reason": "Each is a Comes First line, one sentence saying what has to be true before the feature works; the new one says an option is a term of a recurring part’s or a pilot’s contract, which is where the series’ option clause and pilotTerms put it, read by tests/career-contracts.test.ts D7 and tests/b27-pilots.test.ts",
   "first": "Pending"
  },
  "src/engine/content/guide/career.ts#CAREER_GUIDE [scheduled]": {
   "status": "Retained",
-  "hash": "943601e3fb1d",
+  "hash": "96c729d1102e",
   "on": "2026-10-26",
-  "reason": "Each is a Changes Later line naming when a thing happens; the new one says the office answers the ask two days on and an agreed ask changes the terms The Agreement shows, which is what the clock does",
+  "reason": "Each is a Changes Later line naming when a thing happens; the new one says a release’s way out sets the date and the run its awards read, as tests/b27-release-routes.test.ts holds for a film abroad first, placed by its run at home",
   "first": "Pending"
  },
  "src/engine/content/guide/career.ts#hours": {
@@ -1075,6 +1082,20 @@
   "hash": "8f06b2903e3f",
   "on": "2026-10-21",
   "evidence": "Written for brief 19 to docs/STYLE.md and docs/GLOSSARY.md; read where the player meets it in tests/pro-screen.test.ts and tests/pro-core.test.ts, with tools/voice-check.mjs, tools/tics.mjs and tools/title-case.mjs passing",
+  "first": "Pending"
+ },
+ "src/ui/career/OptionRelease.tsx#NY": {
+  "status": "Retained",
+  "hash": "91a5e4a639ea",
+  "on": "2026-10-26",
+  "reason": "A time zone’s name, passed to the date formatter and never shown",
+  "first": "Pending"
+ },
+ "src/ui/career/OptionRelease.tsx#OptionRelease": {
+  "status": "Retained",
+  "hash": "6b0c7d59f8bb",
+  "on": "2026-10-26",
+  "reason": "The offer’s option panel: its heading An Option Holds Some Of These Days, for a reader; the one button Ask To Be Released; and once pressed, Asked. The answer comes on … with the day. The warning it sits under is optionWarning’s, held by tests/b27-option-hold.test.ts; the panel itself was read in the source, since no test draws the Opportunities tab with an offer on held days",
   "first": "Pending"
  },
  "src/ui/workspaces/CareerWorkspace.tsx#CareerWorkspace": {

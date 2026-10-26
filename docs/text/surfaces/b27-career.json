@@ -430,5 +430,193 @@
     "ref": "tests/b27-languages.test.ts: 'PLAYER JOURNEY: a fluent speaker is posted the part, auditions and is booked; a twin who speaks English alone is posted it and refused, with the reason; both kept through a load'"
    }
   ]
+ },
+ {
+  "surface": "Career, Opportunities, Offers: An Option Holds Some Of These Days, the offer’s warning, Ask To Be Released with its answer’s standing and its refusals, and the option given up",
+  "where": "Career, the Opportunities tab, under an offer whose days fall on a season an open option holds: the warning naming the production, the part, the season and the held days’ span, what accepting gives up and how the ask stands; the Ask To Be Released button, the reason under it when it can’t be pressed, and the Asked line once it is; and the notice You Gave Up The Option On … when the offer is accepted anyway, with its history line",
+  "sources": [
+   "src/ui/career/OptionRelease.tsx#NY",
+   "src/ui/career/OptionRelease.tsx#OptionRelease",
+   "src/engine/systems/continuity.ts#NY",
+   "src/engine/systems/continuity.ts#seasonDays",
+   "src/engine/systems/continuity.ts#daysWords",
+   "src/engine/systems/continuity.ts#optionWarning",
+   "src/engine/systems/continuity.ts#seasonFor",
+   "src/engine/systems/continuity.ts#giveUpOptions",
+   "src/engine/systems/continuity.ts#giveUpOptions [problem]",
+   "src/engine/systems/continuity.ts#optionReleaseRefusal"
+  ],
+  "states": [
+   "warning",
+   "ordinary",
+   "unavailable",
+   "confirmation",
+   "notification",
+   "setback",
+   "history"
+  ],
+  "outcome": "Revised",
+  "why": "New with brief 27’s series cluster (2026-10-25, loop 20): until then an offer on an option’s days said nothing of the option, and accepting it left the option standing.",
+  "changes": "Written new: the warning in a notice’s shape, what holds you, with the span of the days, what accepting gives up and what to do; five refusals, each the obstacle and the next step, the first two quoted by the guide; and the given-up notice saying what’s gone and what the office will do. Read in this pass against docs/STYLE.md and docs/GLOSSARY.md and kept. The panel’s heading is for a reader and no test draws the tab with an offer on held days, so the panel was read in the source; the warning and the refusals are held by the tests.",
+  "evidence": [
+   {
+    "kind": "test",
+    "ref": "tests/b27-option-hold.test.ts: 'PLAYER JOURNEY: holds the next season’s guaranteed episodes, says so on an offer on those days, and asks the player to choose: released, refused, given up or declined'"
+   },
+   {
+    "kind": "test",
+    "ref": "tests/b27-option-hold.test.ts: 'refuses an ask the production couldn’t answer before the offer lapses'"
+   },
+   {
+    "kind": "source",
+    "ref": "src/ui/career/OptionRelease.tsx"
+   }
+  ]
+ },
+ {
+  "surface": "Notices: the production’s answer on the option, released or standing, and a guest part asked back as a recurring character or not",
+  "where": "Home, Recent Updates, and the engagement’s history on the Work tab: the calendar’s The Answer On The Option For … the next afternoon, then Released From The Option On … or The Option On … Stands; before a new season of a series a guest part was played in, Its New Season’s Characters on the calendar, then the offer back as a recurring character or … Can’t Bring Back …",
+  "sources": [
+   "src/engine/systems/continuity.ts#registerContinuity <pro.ask_option_release>",
+   "src/engine/systems/continuity.ts#registerContinuity [requested]",
+   "src/engine/systems/continuity.ts#registerContinuity",
+   "src/engine/systems/continuity.ts#registerContinuity [problem]",
+   "src/engine/systems/continuity.ts#registerContinuity [success]",
+   "src/engine/systems/continuity.ts#scheduleInvite"
+  ],
+  "states": [
+   "notification",
+   "success",
+   "setback",
+   "history",
+   "explanation"
+  ],
+  "outcome": "Revised",
+  "why": "New with brief 27’s series cluster (2026-10-25, loops 20 and 33): until then no production answered an ask on its option, and a guest part came back only through a new casting.",
+  "changes": "Written new: the release says what you can now accept and that a part in the next season can still come through a new casting; the refusal leaves the choice, decline or accept and give it up; the producers’ word before a new season offers the character back with its guaranteed episodes, or says the series can’t bring it back and the credits stay. The same handler carries the pilot’s word notices, Goes To Series with or without you and Isn’t Picked Up, read with the pilots’ row below. Read in this pass and kept.",
+  "evidence": [
+   {
+    "kind": "test",
+    "ref": "tests/b27-option-hold.test.ts: 'PLAYER JOURNEY: holds the next season’s guaranteed episodes, says so on an offer on those days, and asks the player to choose: released, refused, given up or declined'"
+   },
+   {
+    "kind": "test",
+    "ref": "tests/b27-returning.test.ts: 'PLAYER JOURNEY: played Exceptional, weighed before the next season and offered back without an audition on a new contract; the twin played as judged is never weighed, and its part comes round again'"
+   },
+   {
+    "kind": "test",
+    "ref": "tests/b27-returning.test.ts: 'PLAYER JOURNEY: played Exceptional in a series whose network cancels the next season, never weighed and nothing offered; the twin in a series its network renews is weighed'"
+   },
+   {
+    "kind": "test",
+    "ref": "tests/b27-pilots.test.ts: 'PLAYER JOURNEY: a pilot whose network’s word comes inside its shoot and passes on it never airs: the word says so, and at the wrap the credit is shelved with nothing on the clock'"
+   }
+  ]
+ },
+ {
+  "surface": "Career, Opportunities, Offers, the calendar and Productions And People: a pilot’s offer words, The Network’s Word on its day, and the series a pilot becomes",
+  "where": "An offer for a pilot, under Offers, saying what it is and the option it carries; the calendar entry Project: The Network’s Word on the May day; and, once picked up, the series’ page in Productions And People saying it and its network are the game’s inventions",
+  "sources": [
+   "src/engine/systems/continuity.ts#pilotSeries",
+   "src/engine/systems/continuity.ts#pilotOfferWords",
+   "src/engine/systems/continuity.ts#pilotTerms"
+  ],
+  "states": [
+   "ordinary",
+   "forecast",
+   "notification",
+   "explanation"
+  ],
+  "outcome": "Revised",
+  "why": "New with brief 27’s series cluster (2026-10-25, Part 8): the slate had no pilots until then.",
+  "changes": "Written new: the offer says it’s a pilot for a network invented for the game, the day of the word and the option the contract gives the production on you, at the raise, from July; the calendar day is The Network’s Word; the series says when its pilot was picked up and that the network says each May whether there’s another, in The Calloway Files’ own words. The word’s notices are registerContinuity’s, in the row above; the shelved credit, Shot, and its network passed on the pilot, is creditWords’, with Productions And People’s row. Read in this pass and kept.",
+  "evidence": [
+   {
+    "kind": "test",
+    "ref": "tests/b27-pilots.test.ts: 'are made each winter for a network the game invents, shot as an episode of their kind, with the network’s word on May 15'"
+   },
+   {
+    "kind": "test",
+    "ref": "tests/b27-pilots.test.ts: 'PLAYER JOURNEY: a pilot whose network’s word comes inside its shoot and passes on it never airs: the word says so, and at the wrap the credit is shelved with nothing on the clock'"
+   },
+   {
+    "kind": "test",
+    "ref": "tests/b27-pilots.test.ts: 'PLAYER JOURNEY: a pilot accepted carries the option on the series’ first season; picked up, it’s a series of the game’s with the player’s character, its option taken up into a first season or let go, kept through a save; the twin with the par'"
+   }
+  ]
+ },
+ {
+  "surface": "Productions And People, Your Series On Screen and your credits: a real series’ continuation words, a season named without a number, and the network a canceled series came back on",
+  "where": "After the network’s word on a real series, on its page, its season’s page and in the notice; a season’s name on the series’ and season’s pages, The Contract, Your Series On Screen and an episode’s page; and the pickup’s network on the series’ page, Seen On, and the credit’s line",
+  "sources": [
+   "src/engine/systems/series.ts#continuationWords",
+   "src/engine/systems/series.ts#seasonName",
+   "src/engine/systems/series.ts#pickupOf"
+  ],
+  "states": [
+   "ordinary",
+   "details",
+   "explanation",
+   "notification"
+  ],
+  "outcome": "Revised",
+  "why": "New with brief 27’s series cluster (2026-10-25, Part 13 and loop 41): until then every series was the game’s invention with numbered seasons, and a canceled series came back only on its own network.",
+  "changes": "Written new: one sentence after a real series’ word says it’s the game’s own continuation and not an announcement; a season whose number no page gives is named as the one on the air in a year or beginning in a year, never numbered; a pickup’s network is named from four words and said invented for the game wherever it shows. Read in this pass and kept.",
+  "evidence": [
+   {
+    "kind": "test",
+    "ref": "tests/b27-real-series.test.ts: 'simulates nothing of the baseline season, and every season after it, its word saying it’s the game’s own; 9-1-1’s counted on from its tenth, Abbott Elementary’s by their years'"
+   },
+   {
+    "kind": "test",
+    "ref": "tests/b27-real-series.test.ts: 'PLAYER JOURNEY: a part worked in a simulated season of 9-1-1 hears the network’s next word as the game’s'"
+   },
+   {
+    "kind": "test",
+    "ref": "tests/b27-returning.test.ts: 'comes back on another of its kind about half the time, said so and named on its page and its credits; each word after it is that network’s, drawn at the series’ own chance, and a revival by its own network takes it home'"
+   }
+  ]
+ },
+ {
+  "surface": "Notices, your credits, Productions And People and Your Films In Cinemas: a release’s route, limited, taken over or abroad first, and the charts’ words for it",
+  "where": "The notice … Has A New Distributor at the first date, and the release notice’s clause when the film is out; the route in one sentence on the credit’s line, the project’s page under Release and beside Opened in the US on Your Films In Cinemas; and, under Charts And Awards, why the Actor Awards place a film opened abroad in one year and at home in another in neither",
+  "sources": [
+   "src/engine/systems/market.ts#NY",
+   "src/engine/systems/market.ts#firstTerritories",
+   "src/engine/systems/market.ts#routeOf",
+   "src/engine/systems/market.ts#takenOverWords",
+   "src/engine/systems/market.ts#releasedWords",
+   "src/engine/systems/market.ts#routeWords",
+   "src/engine/systems/market.ts#splitYearsWhy"
+  ],
+  "states": [
+   "notification",
+   "setback",
+   "ordinary",
+   "details",
+   "explanation",
+   "unavailable"
+  ],
+  "outcome": "Revised",
+  "why": "New with brief 27’s series cluster (2026-10-25, Part 12): until then a release was on time, late, streamed or shelved, and nothing said where a film opened.",
+  "changes": "Written new: the takeover’s notice names who gave the film up and who took it over, said invented for the game, the new date and the credit as shot until then; the release clause says a limited opening in a few cinemas in Los Angeles and New York, an opening abroad first with the US date, or the distributor that took it over; the route in one sentence, then wide, never widened or still in a few cinemas, abroad first and at home so many weeks later, or taken over; and why the awards place it in neither year. Read in this pass and kept.",
+  "evidence": [
+   {
+    "kind": "test",
+    "ref": "tests/b27-release-routes.test.ts: 'PLAYER JOURNEY: a limited release is said, and opens in a few cinemas at a share of what its wide opening would be'"
+   },
+   {
+    "kind": "test",
+    "ref": "tests/b27-release-routes.test.ts: 'PLAYER JOURNEY: another distributor takes a film over: said at its first date with the company and the new date, out at the later one, its premiere the later from the start'"
+   },
+   {
+    "kind": "test",
+    "ref": "tests/b27-release-routes.test.ts: 'PLAYER JOURNEY: a film abroad first is out at its date there, comes home its weeks later, and the Actor Awards place it by the run at home; the on-time twin opens at home at once'"
+   },
+   {
+    "kind": "test",
+    "ref": "tests/b27-release-routes.test.ts: 'places a film released abroad first by its run at home, and not at all where the two fall in different years'"
+   }
+  ]
  }
 ]
