@@ -419,3 +419,17 @@ the place picker and the world map with its data loader, the portrait picker and
 ethnicity option lists, the gazetteer's registry (`geography.ts`; the per-country place files are the app's
 `public/geo/` data, generated from GeoNames and not copied here), the new-save config and its defaults
 (`bootstrap.ts`), the title rule (`performer.ts`), and the creation styles.
+
+---
+
+## 8. Creation, step 2 of 5, Dispositions & Traits: NOT CARRIED OVER (DECIDED 2026-10-26)
+
+**Owner:** "This page will not be carrying over so pass."
+
+Recorded so the decision is on file and nothing of it is rebuilt by habit: the seven dispositions (Openness,
+Conscientiousness, Extraversion, Agreeableness, Emotional Stability, Ambition, Risk Tolerance, 5 to 95) and the 35
+traits in opposing pairs (Temperament, Habits, Body, Money, People, Mind; up to four), with the knobs they moved in
+this SLATE (stress, sleep, morale, the card's autopay, grime, food cost, a slight, a line learned). The capture is
+`captures/01-opening/03-dispositions-traits.png` for the record. What read them downstream (stress, the night, the
+starting Composure and Discipline, how a day is taken) will need other inputs in the new build or will go with
+them; that is settled when those systems are reached.
