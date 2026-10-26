@@ -1,13 +1,13 @@
 # Every Touched Feature, Traced
 
-Written by `tools/trace.ts` from the guide's registry and the tests; don't edit it by hand. 50 entries in the four
+Written by `tools/trace.ts` from the guide's registry and the tests; don't edit it by hand. 55 entries in the four
 areas the connected-journey pass of 2026-10-12 rebuilt, and from 2026-10-20 the career's (brief 19), each traced Action →
 Preconditions → Costs → State → Consumer → Feedback → History → Later consequence. The words are the guide's own, which
 carry the rules' figures; the four areas' entries' claims were checked against the engine by a second reader when they
 were written, and the career's by the tests that drive each of its commands.
 
 **Unconsumed** (a row nothing reads): none.
-**Read Only** (screens and looks, changing nothing): `start.home`, `start.find`, `productions.casting`, `productions.nights`, `craft.profile`, `craft.work`, `craft.identity`, `career.overview`, `career.reasons`, `career.pay`, `career.commission`, `career.reference`.
+**Read Only** (screens and looks, changing nothing): `start.home`, `start.find`, `productions.casting`, `productions.nights`, `craft.profile`, `craft.work`, `craft.identity`, `career.overview`, `career.reasons`, `career.pay`, `career.commission`, `career.languages`, `career.negotiation`, `career.reference`.
 **Untested** (a command no test drives): none.
 
 ## Getting Started
@@ -839,7 +839,7 @@ Your Player Profile, practice, genres, practice briefs from preparing to taping,
 - **Later consequence:**
   - The next take uses the reading, and the way as far as you’ve rehearsed it by then.
   - Work It Through can play one beat its own way, on an axis the whole leaves open.
-- **Tested by:** `brief.choose`: `tests/attributes-complete.test.ts`, `tests/attributes-phase-2b.test.ts`, `tests/b20-craft-advice.test.ts`, `tests/b20-craft-bite.test.ts`, `tests/b20-craft-noleak.test.ts`, `tests/b20-craft-promises.test.ts`, `tests/b20-craft-screens.test.ts`, `tests/b20-creation-abilities.test.ts`, `tests/b20-creation-noleak.test.ts`, `tests/b20-creation-twins.test.ts`, `tests/b20-guide-chapters.test.ts`, `tests/b20-life-bite.test.ts`, `tests/b27-voice-demo.test.ts`, `tests/briefs.test.ts`, `tests/decisions-advice.test.ts`, `tests/decisions-judge.test.ts`, `tests/defects-g29-1.test.ts`, `tests/defects-g3-1.test.ts`, `tests/defects-g30-1.test.ts`, `tests/defects-g31-1.test.ts`, `tests/defects-g6-1.test.ts`, `tests/defects-g8-11.test.ts`, `tests/defects-g8-15.test.ts`, `tests/defects-r8-1.test.ts`, `tests/determinism-played.test.ts`, `tests/editorial17-school.test.ts`, `tests/engagement.test.ts`, `tests/ensemble.test.ts`, `tests/evidence-g20-school.test.ts`, `tests/evidence-g23-school.test.ts`, `tests/evidence-g31-ui.test.ts`, `tests/evidence2-b11.test.ts`, `tests/genre-coverage.test.ts`, `tests/genre-identity-screens.test.ts`, `tests/genre-identity.test.ts`, `tests/genre-mastered.test.ts`, `tests/genre-reader.test.ts`, `tests/guide-examples-craft.test.ts`, `tests/history-continuity.test.ts`, `tests/integration-mastery.test.ts`, `tests/interpretation-journey.test.ts`, `tests/journey-agent.test.ts`, `tests/pro-core.test.ts`, `tests/pro-representation-screen.test.ts`, `tests/remaining-09-coverage.test.ts`, `tests/remaining-genres.test.ts`, `tests/workbook.test.ts`
+- **Tested by:** `brief.choose`: `tests/attributes-complete.test.ts`, `tests/attributes-phase-2b.test.ts`, `tests/b20-craft-advice.test.ts`, `tests/b20-craft-bite.test.ts`, `tests/b20-craft-noleak.test.ts`, `tests/b20-craft-promises.test.ts`, `tests/b20-craft-screens.test.ts`, `tests/b20-creation-abilities.test.ts`, `tests/b20-creation-noleak.test.ts`, `tests/b20-creation-twins.test.ts`, `tests/b20-guide-chapters.test.ts`, `tests/b20-life-bite.test.ts`, `tests/b27-representation.test.ts`, `tests/b27-voice-demo.test.ts`, `tests/briefs.test.ts`, `tests/decisions-advice.test.ts`, `tests/decisions-judge.test.ts`, `tests/defects-g29-1.test.ts`, `tests/defects-g3-1.test.ts`, `tests/defects-g30-1.test.ts`, `tests/defects-g31-1.test.ts`, `tests/defects-g6-1.test.ts`, `tests/defects-g8-11.test.ts`, `tests/defects-g8-15.test.ts`, `tests/defects-r8-1.test.ts`, `tests/determinism-played.test.ts`, `tests/editorial17-school.test.ts`, `tests/engagement.test.ts`, `tests/ensemble.test.ts`, `tests/evidence-g20-school.test.ts`, `tests/evidence-g23-school.test.ts`, `tests/evidence-g31-ui.test.ts`, `tests/evidence2-b11.test.ts`, `tests/genre-coverage.test.ts`, `tests/genre-identity-screens.test.ts`, `tests/genre-identity.test.ts`, `tests/genre-mastered.test.ts`, `tests/genre-reader.test.ts`, `tests/guide-examples-craft.test.ts`, `tests/history-continuity.test.ts`, `tests/integration-mastery.test.ts`, `tests/interpretation-journey.test.ts`, `tests/journey-agent.test.ts`, `tests/pro-core.test.ts`, `tests/pro-representation-screen.test.ts`, `tests/remaining-09-coverage.test.ts`, `tests/remaining-genres.test.ts`, `tests/workbook.test.ts`
 
 ### Who Reads With You (`craft.brief-reader`)
 
@@ -909,7 +909,7 @@ Your Player Profile, practice, genres, practice briefs from preparing to taping,
 - **Later consequence:**
   - A callback stays until a take plays it the way its note asks; that take ends the round, and only a take that isn’t a callback earns the next.
   - What held the take back is counted by Your Work So Far; What To Work On Next forecasts every ability and technique the take called on, so what held it back most and what pays most to train can be two things, and the pane says which. The next suggestions in Where It Would Show Next follow from what it names.
-- **Tested by:** `practice.self_tape`: `tests/attributes-complete.test.ts`, `tests/attributes-phase-2b.test.ts`, `tests/b20-craft-advice.test.ts`, `tests/b20-craft-bite.test.ts`, `tests/b20-craft-noleak.test.ts`, `tests/b20-craft-promises.test.ts`, `tests/b20-craft-screens.test.ts`, `tests/b20-creation-abilities.test.ts`, `tests/b20-creation-noleak.test.ts`, `tests/b20-creation-twins.test.ts`, `tests/b20-guide-chapters.test.ts`, `tests/b20-life-bite.test.ts`, `tests/b27-voice-demo.test.ts`, `tests/briefs.test.ts`, `tests/decisions-advice.test.ts`, `tests/decisions-judge.test.ts`, `tests/defects-g29-1.test.ts`, `tests/defects-g3-1.test.ts`, `tests/defects-g30-1.test.ts`, `tests/defects-g31-1.test.ts`, `tests/defects-g6-1.test.ts`, `tests/defects-g8-15.test.ts`, `tests/defects-r8-1.test.ts`, `tests/determinism-played.test.ts`, `tests/editorial17-school.test.ts`, `tests/engagement.test.ts`, `tests/ensemble.test.ts`, `tests/evidence-g20-school.test.ts`, `tests/evidence-g23-school.test.ts`, `tests/evidence-g31-ui.test.ts`, `tests/evidence2-b11.test.ts`, `tests/genre-coverage.test.ts`, `tests/genre-identity-screens.test.ts`, `tests/genre-identity.test.ts`, `tests/genre-mastered.test.ts`, `tests/genre-reader.test.ts`, `tests/guide-examples-craft.test.ts`, `tests/history-continuity.test.ts`, `tests/integration-mastery.test.ts`, `tests/interpretation-journey.test.ts`, `tests/journey-agent.test.ts`, `tests/pro-core.test.ts`, `tests/pro-representation-screen.test.ts`, `tests/remaining-09-coverage.test.ts`, `tests/remaining-genres.test.ts`, `tests/workbook.test.ts`
+- **Tested by:** `practice.self_tape`: `tests/attributes-complete.test.ts`, `tests/attributes-phase-2b.test.ts`, `tests/b20-craft-advice.test.ts`, `tests/b20-craft-bite.test.ts`, `tests/b20-craft-noleak.test.ts`, `tests/b20-craft-promises.test.ts`, `tests/b20-craft-screens.test.ts`, `tests/b20-creation-abilities.test.ts`, `tests/b20-creation-noleak.test.ts`, `tests/b20-creation-twins.test.ts`, `tests/b20-guide-chapters.test.ts`, `tests/b20-life-bite.test.ts`, `tests/b27-representation.test.ts`, `tests/b27-voice-demo.test.ts`, `tests/briefs.test.ts`, `tests/decisions-advice.test.ts`, `tests/decisions-judge.test.ts`, `tests/defects-g29-1.test.ts`, `tests/defects-g3-1.test.ts`, `tests/defects-g30-1.test.ts`, `tests/defects-g31-1.test.ts`, `tests/defects-g6-1.test.ts`, `tests/defects-g8-15.test.ts`, `tests/defects-r8-1.test.ts`, `tests/determinism-played.test.ts`, `tests/editorial17-school.test.ts`, `tests/engagement.test.ts`, `tests/ensemble.test.ts`, `tests/evidence-g20-school.test.ts`, `tests/evidence-g23-school.test.ts`, `tests/evidence-g31-ui.test.ts`, `tests/evidence2-b11.test.ts`, `tests/genre-coverage.test.ts`, `tests/genre-identity-screens.test.ts`, `tests/genre-identity.test.ts`, `tests/genre-mastered.test.ts`, `tests/genre-reader.test.ts`, `tests/guide-examples-craft.test.ts`, `tests/history-continuity.test.ts`, `tests/integration-mastery.test.ts`, `tests/interpretation-journey.test.ts`, `tests/journey-agent.test.ts`, `tests/pro-core.test.ts`, `tests/pro-representation-screen.test.ts`, `tests/remaining-09-coverage.test.ts`, `tests/remaining-genres.test.ts`, `tests/workbook.test.ts`
 
 ### A Piece Of Work, Explained (`craft.work`)
 
@@ -1068,6 +1068,7 @@ The Career screen, your professional profile and name, headshots, your résumé 
   - The Career Screen, immediate: Once you have a résumé, What’s Missing stops asking for one, until your record moves on past it.
   - The Nights, history: A School production’s part goes on your résumé once its run has closed.
   - Your Unions reads it, history: Your résumé lists your unions once you’re a member.
+  - Languages reads it, history: Your résumé lists the languages you speak and how well.
   - Offers And Booked Work reads it, history: The part goes on your professional credits, and your résumé reads as behind until it has it.
 - **Feedback (how to read what comes back):**
   - Up To Date means it has everything on your record. Behind names what it’s missing.
@@ -1075,7 +1076,7 @@ The Career screen, your professional profile and name, headshots, your résumé 
   - The Nights: A School production’s part goes on your résumé once its run has closed.
 - **Later consequence:**
   - A part played, a skill grown, a new name, the degree, a union, an Emmy nomination once it’s announced, a win once it’s presented, or a Sundance selection once the festival says so makes it behind, and What’s Missing names what’s new.
-- **Tested by:** `pro.update_resume`: `tests/b20-agent-ask-lapse.test.ts`, `tests/b20-career-effects.test.ts`, `tests/b20-career-history.test.ts`, `tests/b20-career-skill.test.ts`, `tests/b20-guide-chapters.test.ts`, `tests/b27-voice-demo.test.ts`, `tests/career-agents.test.ts`, `tests/career-awards.test.ts`, `tests/journey-agent.test.ts`, `tests/journey-career.test.ts`, `tests/pro-agent.test.ts`, `tests/pro-app.test.ts`, `tests/pro-core.test.ts`, `tests/pro-opportunities-screen.test.ts`, `tests/pro-representation-screen.test.ts`, `tests/pro-screen.test.ts`, `tests/pro-work.test.ts`
+- **Tested by:** `pro.update_resume`: `tests/b20-agent-ask-lapse.test.ts`, `tests/b20-career-effects.test.ts`, `tests/b20-career-history.test.ts`, `tests/b20-career-skill.test.ts`, `tests/b20-guide-chapters.test.ts`, `tests/b27-representation-screen.test.ts`, `tests/b27-representation.test.ts`, `tests/b27-voice-demo.test.ts`, `tests/career-agents.test.ts`, `tests/career-awards.test.ts`, `tests/journey-agent.test.ts`, `tests/journey-career.test.ts`, `tests/pro-agent.test.ts`, `tests/pro-app.test.ts`, `tests/pro-core.test.ts`, `tests/pro-opportunities-screen.test.ts`, `tests/pro-representation-screen.test.ts`, `tests/pro-screen.test.ts`, `tests/pro-work.test.ts`
 
 ### Your Reel (`career.reel`)
 
@@ -1125,7 +1126,7 @@ The Career screen, your professional profile and name, headshots, your résumé 
 - **Later consequence:**
   - A submission for voice work sends the demo you have then, and keeps saying which one after you mix another.
   - A newer recording of your voice shows on the Voice Demo panel as worth adding.
-- **Tested by:** `pro.mix_demo`: `tests/b27-voice-demo.test.ts`
+- **Tested by:** `pro.mix_demo`: `tests/b27-representation.test.ts`, `tests/b27-voice-demo.test.ts`
 
 ### Agents And How To Reach One (`career.agent`)
 
@@ -1150,13 +1151,13 @@ The Career screen, your professional profile and name, headshots, your résumé 
   - Where You Stand names the step you’re at, and What’s Next says what to do about it.
   - A referral comes from the casting office of a job you’ve finished, never from the agent, and no agent writes to you first.
   - An agent submits you for work and handles its offers, for a commission. Actors also work with managers, who advise on a career, entertainment lawyers, who read contracts, and publicists, who handle the press; none of them is in the game. A casting director works for the production, not for you.
-  - The Agencies panel says what each agency brief 25 names says of itself on its own pages: how an actor reaches it, the agents it names, and what the game does with it.
+  - The Agencies panel says what each agency on it says of itself on its own pages: how an actor reaches it, the agents it names, and what the game does with it.
 - **History (kept in the record):**
   - (none)
 - **Later consequence:**
   - The office answers in about two weeks: a request for more, a meeting or a pass, each as a notice. Or no answer comes, and after six weeks that counts as no.
   - After a pass, the office looks again only after a year; after no answer or a declined offer, six months. Then it looks only at something new: a new credit, a better reel or a referral.
-- **Tested by:** `pro.agent_notice`: `tests/b20-career-effects.test.ts`, `tests/b20-career-skill.test.ts`, `tests/b20-guide-chapters.test.ts`, `tests/career-agents.test.ts`, `tests/journey-agent.test.ts`, `tests/journey-career-older.test.ts`, `tests/pro-agent.test.ts`, `tests/pro-representation-screen.test.ts`; `pro.agent_check`: `tests/b20-agent-ask-lapse.test.ts`, `tests/b20-career-effects.test.ts`, `tests/b20-career-skill.test.ts`, `tests/b20-guide-chapters.test.ts`, `tests/career-agents.test.ts`, `tests/journey-agent.test.ts`, `tests/journey-career-older.test.ts`, `tests/journey-career.test.ts`, `tests/pro-agent.test.ts`, `tests/pro-representation-screen.test.ts`; `pro.ask_referral`: `tests/b20-career-effects.test.ts`, `tests/b20-career-skill.test.ts`, `tests/career-agents.test.ts`, `tests/journey-agent.test.ts`, `tests/journey-career-older.test.ts`, `tests/pro-agent.test.ts`, `tests/pro-representation-screen.test.ts`; `pro.send_materials`: `tests/b20-agent-ask-lapse.test.ts`, `tests/b20-career-effects.test.ts`, `tests/b20-career-history.test.ts`, `tests/b20-career-saveload.test.ts`, `tests/b20-career-skill.test.ts`, `tests/b20-guide-chapters.test.ts`, `tests/career-agents.test.ts`, `tests/journey-agent.test.ts`, `tests/journey-career-older.test.ts`, `tests/journey-career.test.ts`, `tests/pro-agent.test.ts`, `tests/pro-representation-screen.test.ts`
+- **Tested by:** `pro.agent_notice`: `tests/b20-career-effects.test.ts`, `tests/b20-career-skill.test.ts`, `tests/b20-guide-chapters.test.ts`, `tests/b27-representation-screen.test.ts`, `tests/b27-representation.test.ts`, `tests/career-agents.test.ts`, `tests/journey-agent.test.ts`, `tests/journey-career-older.test.ts`, `tests/pro-agent.test.ts`, `tests/pro-representation-screen.test.ts`; `pro.agent_check`: `tests/b20-agent-ask-lapse.test.ts`, `tests/b20-career-effects.test.ts`, `tests/b20-career-skill.test.ts`, `tests/b20-guide-chapters.test.ts`, `tests/b27-representation-screen.test.ts`, `tests/b27-representation.test.ts`, `tests/career-agents.test.ts`, `tests/journey-agent.test.ts`, `tests/journey-career-older.test.ts`, `tests/journey-career.test.ts`, `tests/pro-agent.test.ts`, `tests/pro-representation-screen.test.ts`; `pro.ask_referral`: `tests/b20-career-effects.test.ts`, `tests/b20-career-skill.test.ts`, `tests/b27-representation-screen.test.ts`, `tests/b27-representation.test.ts`, `tests/career-agents.test.ts`, `tests/journey-agent.test.ts`, `tests/journey-career-older.test.ts`, `tests/pro-agent.test.ts`, `tests/pro-representation-screen.test.ts`; `pro.send_materials`: `tests/b20-agent-ask-lapse.test.ts`, `tests/b20-career-effects.test.ts`, `tests/b20-career-history.test.ts`, `tests/b20-career-saveload.test.ts`, `tests/b20-career-skill.test.ts`, `tests/b20-guide-chapters.test.ts`, `tests/b27-representation-screen.test.ts`, `tests/b27-representation.test.ts`, `tests/career-agents.test.ts`, `tests/journey-agent.test.ts`, `tests/journey-career-older.test.ts`, `tests/journey-career.test.ts`, `tests/pro-agent.test.ts`, `tests/pro-representation-screen.test.ts`
 
 ### An Office’s Answers And The Meeting (`career.agent-answers`)
 
@@ -1180,7 +1181,7 @@ The Career screen, your professional profile and name, headshots, your résumé 
 - **Later consequence:**
   - After a meeting you keep, the office tells you its decision five days later: an offer or a pass.
   - A meeting you miss closes the approach, since a meeting comes before an offer in the game.
-- **Tested by:** `pro.supply_material`: `tests/journey-agent.test.ts`, `tests/journey-career.test.ts`; `pro.ask_to_move`: `tests/journey-agent.test.ts`, `tests/journey-career.test.ts`, `tests/pro-representation-screen.test.ts`
+- **Tested by:** `pro.supply_material`: `tests/b27-representation.test.ts`, `tests/journey-agent.test.ts`, `tests/journey-career.test.ts`; `pro.ask_to_move`: `tests/journey-agent.test.ts`, `tests/journey-career.test.ts`, `tests/pro-representation-screen.test.ts`
 
 ### Why It Went This Way (`career.reasons`)
 
@@ -1226,7 +1227,34 @@ The Career screen, your professional profile and name, headshots, your résumé 
 - **Later consequence:**
   - An offer you don’t answer lapses after its two weeks.
   - When it ends, commission stays owed on contracts you made while it ran, and The Agreement says which.
-- **Tested by:** `pro.accept_agreement`: `tests/b20-career-effects.test.ts`, `tests/b20-career-saveload.test.ts`, `tests/career-agents.test.ts`, `tests/journey-agent.test.ts`, `tests/journey-career.test.ts`, `tests/pro-representation-screen.test.ts`; `pro.decline_agreement`: `tests/b20-career-effects.test.ts`, `tests/b20-career-history.test.ts`, `tests/journey-agent.test.ts`, `tests/journey-career.test.ts`; `pro.end_agreement`: `tests/journey-agent.test.ts`, `tests/journey-career.test.ts`, `tests/pro-representation-screen.test.ts`
+- **Tested by:** `pro.accept_agreement`: `tests/b20-career-effects.test.ts`, `tests/b20-career-saveload.test.ts`, `tests/b27-representation.test.ts`, `tests/career-agents.test.ts`, `tests/journey-agent.test.ts`, `tests/journey-career.test.ts`, `tests/pro-representation-screen.test.ts`; `pro.decline_agreement`: `tests/b20-career-effects.test.ts`, `tests/b20-career-history.test.ts`, `tests/journey-agent.test.ts`, `tests/journey-career.test.ts`; `pro.end_agreement`: `tests/journey-agent.test.ts`, `tests/journey-career.test.ts`, `tests/pro-representation-screen.test.ts`
+
+### Asking For Different Terms (`career.agreement-terms`)
+
+- **Action:** `pro.ask_terms`, at Career, Representation, Asking For Different Terms (`/workspace/career?tab=representation`). Opens: From the guide’s chapter “Representation”, while an agreement is offered.
+- **Preconditions:**
+  - An agreement offered and unanswered.
+  - No ask made on it before.
+  - Two days left before the offer lapses, for the answer.
+- **Costs:**
+  - Time: None
+  - Money: None
+- **State (what changes at once):**
+  - The ask goes to the office, and the agreement can’t be accepted until it answers.
+- **Consumer (what reads it):**
+  - The Agreement, scheduled: The office answers the ask two days on, and an agreed ask changes the terms The Agreement shows.
+  - Commission, evaluation: Commission is taken only on what the agreement covers, so voice-over or work abroad added carries it.
+- **Feedback (how to read what comes back):**
+  - What the agreement covers decides which parts your agent puts you up for and which offers it handles, and which pay carries commission. Work it doesn’t cover is yours to submit for yourself, with no commission.
+  - A shorter term lets you go sooner, and leaves you to approach an agent again sooner.
+- **History (kept in the record):**
+  - (none)
+- **Later consequence:**
+  - Agreed, The Agreement’s terms change, and Asking For Different Terms keeps the terms as first offered.
+  - A shorter term ends the agreement six months after you sign it.
+  - Voice-over added, your agent submits you for voice parts with the agency’s voice-over department, and the commission is taken on them.
+  - Work abroad added, your agent submits you for work in the UK and Australia, and the commission is taken on it.
+- **Tested by:** `pro.ask_terms`: `tests/b27-representation-screen.test.ts`, `tests/b27-representation.test.ts`
 
 ### Your Work And Its Pay (`career.pay`)
 
@@ -1269,6 +1297,7 @@ The Career screen, your professional profile and name, headshots, your résumé 
 - **Consumer (what reads it):**
   - Your Work And Its Pay, immediate: Commission comes off your pay as it passes through your agency’s trust account.
   - Your Tax Return, evaluation: The year’s commission counts toward the performing artist’s deduction the return works out.
+  - Asking For Different Terms reads it, evaluation: Commission is taken only on what the agreement covers, so voice-over or work abroad added carries it.
 - **Feedback (how to read what comes back):**
   - No commission: you weren’t represented when you made the contract, or the work isn’t covered, or it pays SAG-AFTRA scale and nothing over it.
   - Commission is part of what your tax return counts as the cost of your work.
@@ -1312,6 +1341,7 @@ The Career screen, your professional profile and name, headshots, your résumé 
   - Headshots and a résumé, made on the Portfolio tab, and a reel where the casting office asks for one.
   - A role that takes your own submission, before its window closes.
   - The role’s playing ages, and Equity membership for an Equity open call.
+  - Where the role’s character speaks another language as well as English, that language. Languages says how well you need it.
   - Headshots first: A submission starts with your headshots: without them it can’t be sent.
 - **Costs:**
   - Time: None: a submission is sent at once
@@ -1328,7 +1358,7 @@ The Career screen, your professional profile and name, headshots, your résumé 
   - (none)
 - **Later consequence:**
   - Two days on, the casting office answers with an audition in person or a self-tape, and a notice says when and where.
-- **Tested by:** `pro.submit`: `tests/b20-guide-chapters.test.ts`, `tests/b27-voice-demo.test.ts`, `tests/career-world-sydney.test.ts`, `tests/pro-app.test.ts`, `tests/pro-opportunities-screen.test.ts`, `tests/pro-work.test.ts`
+- **Tested by:** `pro.submit`: `tests/b20-guide-chapters.test.ts`, `tests/b27-casting-turns.test.ts`, `tests/b27-languages.test.ts`, `tests/b27-voice-demo.test.ts`, `tests/career-world-sydney.test.ts`, `tests/pro-app.test.ts`, `tests/pro-opportunities-screen.test.ts`, `tests/pro-work.test.ts`
 
 ### Auditions And Callbacks (`career.auditions`)
 
@@ -1346,6 +1376,9 @@ The Career screen, your professional profile and name, headshots, your résumé 
   - Offers And Booked Work, evaluation: Casting reads your audition’s band, with the role’s fit and the field, when it decides whether to offer you the role.
   - The Calendar, scheduled: An audition in person goes on your calendar with its trip, and stops the clock when it comes.
   - Genres reads it, evaluation: Knowing the project’s genres is part of an audition’s and a self-tape’s preparation, complete at 90%, and half of how well casting thinks you suit the role.
+  - Languages reads it, evaluation: For a conversational speaker, the language’s preparation is read when an audition is judged, beside the rest of the sides.
+  - How You Play The Sides And Your Takes reads it, evaluation: Casting decides from the round as it was played and directed, and the tape you sent.
+  - Withdrawing And Rescheduling reads it, evaluation: A remembered no-show halves that office’s decisions on your later auditions.
 - **Feedback (how to read what comes back):**
   - The band says how good the audition was. Casting’s chance reads the band, the fit and the field together, and even the best audition doesn’t make it certain.
   - Why It Went This Way, under a settled role, shows each part of it.
@@ -1354,7 +1387,32 @@ The Career screen, your professional profile and name, headshots, your résumé 
 - **Later consequence:**
   - A day after a first audition casting decides whether to call you back, and three days after the last whether to offer you the role. A notice says which.
   - A lead in screen work, and a supporting part in a romance, has a chemistry read after the callback: the sides played in person with the actors already cast, judged above all on how you listen and answer them. A feature’s lead has a screen test after that: the part filmed on set in costume and makeup, take after take. Casting decides after each whether you go on. Either brings a hold on the part’s dates until it’s cast: Offers And Booked Work says what a hold asks of you.
-- **Tested by:** `pro.prepare`: `tests/career-awards-screen.test.ts`, `tests/career-awards.test.ts`, `tests/career-workflows-screen.test.ts`, `tests/career-workflows.test.ts`, `tests/journey-career.test.ts`, `tests/pro-work.test.ts`; `pro.tape_audition`: `tests/journey-career.test.ts`, `tests/pro-work.test.ts`; `pro.move_audition`: `tests/pro-work.test.ts`
+- **Tested by:** `pro.prepare`: `tests/b27-languages.test.ts`, `tests/b27-sides.test.ts`, `tests/career-awards-screen.test.ts`, `tests/career-awards.test.ts`, `tests/career-workflows-screen.test.ts`, `tests/career-workflows.test.ts`, `tests/journey-career.test.ts`, `tests/pro-work.test.ts`; `pro.tape_audition`: `tests/b27-languages.test.ts`, `tests/b27-offers-screen.test.ts`, `tests/journey-career.test.ts`, `tests/pro-work.test.ts`; `pro.move_audition`: `tests/pro-work.test.ts`
+
+### Languages (`career.languages`)
+
+- **Action:** , at Career, Opportunities, The Language (`/workspace/career?tab=opportunities`). Opens: From the guide’s chapter “Finding Work”. You choose your languages when you create your character, on Genres & Background, and they stay as you chose them.
+- **Preconditions:**
+  - The language, chosen when you created your character.
+  - Free for an hour on the sides, or two hours on the part, and awake.
+  - Finding Work And Submitting first: A part written in a language you don’t speak can’t be submitted for.
+- **Costs:**
+  - Time: an hour a session on the sides, two hours on the part (an estimate)
+  - Money: None
+- **State (what changes at once):**
+  - A session moves your preparation of the language on, and the clock with it. It grows your Accents And Dialects a little, and that technique makes each session go further.
+- **Consumer (what reads it):**
+  - Auditions And Callbacks, evaluation: For a conversational speaker, the language’s preparation is read when an audition is judged, beside the rest of the sides.
+  - Your Résumé, history: Your résumé lists the languages you speak and how well.
+- **Feedback (how to read what comes back):**
+  - Native is a language you grew up speaking, fluent one you’re at ease in, and conversational one you can hold a conversation in.
+  - Until a conversational speaker’s language is prepared, Why It Went This Way can say that working on the part’s language held the audition back.
+  - Why It Went This Way, under a settled role, names the part’s language and the weaker of your two languages, the one casting’s fit counts.
+- **History (kept in the record):**
+  - Your Résumé: Your résumé lists the languages you speak and how well.
+- **Later consequence:**
+  - Once you’re booked, the part starts from half of what you did on the sides, as the rest of its preparation does.
+- **Tested by:** a screen or a look; the UI journeys (`tools/acceptance-ui.mjs`)
 
 ### Offers And Booked Work (`career.offers`)
 
@@ -1378,13 +1436,89 @@ The Career screen, your professional profile and name, headshots, your résumé 
 - **History (kept in the record):**
   - Your Résumé: The part goes on your professional credits, and your résumé reads as behind until it has it.
 - **Later consequence:**
-  - Asked for more, the production answers the next afternoon: it raises the offer to what your agent asked, or keeps its offer, and the offer then stands a day past the answer. How your last round went makes a raise likelier, and so does having worked for its casting office.
-  - A casting office that cast you before, where your work was Strong or better, may offer you a later part without an audition, never a lead. The offer says why.
+  - Asked, the production answers the next afternoon: it gives what your agent asked, keeps its offer, offers a trade-off, or now and then withdraws the offer, and the offer then stands a day past the answer. How your last round went makes a yes likelier, and so does having worked for its casting office. Negotiating Through Your Agent says each answer.
+  - A casting office that cast you before, where your work was Strong or better, may offer you a later part without an audition, and a lead on one condition, the chemistry read or screen test still to come. The offer says why.
   - A production that asks you to a chemistry read or a screen test holds the part’s dates until it’s cast. A hold isn’t a booking and pays nothing; it asks you to keep those days free. Accepting other work on them lets the hold go and withdraws you from the part. Asked to decide first, the production answers the next afternoon: it offers you the part, likelier the better your last round went, or lets the hold go and casts someone else. Once the part is cast or let go, the hold ends.
   - A stage part goes on your credits at its first night; a screen part when it’s shot, and as released once it comes out, when its footage can go on a reel.
   - A finished production isn’t always out on time. Its distributor may hold the release back months, send a film to streaming instead of cinemas, where it has no weekly chart, or shelve it, so it’s never out: the part stays on your credits as shot, its footage can’t go on a reel, and it has no premiere to enter for an award. The notice says which when the release comes due.
   - Sleep through a shoot day, or miss a second day of a run, and the production replaces you. Laid up or in hospital on a lead or a supporting part, the production shoots around you once, slipping your days a working day each, and the day isn’t paid; a smaller part is recast.
-- **Tested by:** `pro.accept_offer`: `tests/b20-benefits-safetynet.test.ts`, `tests/b20-benefits-tax.test.ts`, `tests/b20-benefits-unemployment.test.ts`, `tests/b20-career-defects.test.ts`, `tests/b20-career-effects.test.ts`, `tests/b20-career-history.test.ts`, `tests/b20-career-skill.test.ts`, `tests/b20-guide-screens.test.ts`, `tests/b20-life-fatigue.test.ts`, `tests/b20-papers-work.test.ts`, `tests/b21-genre-proof.test.ts`, `tests/b22-authorization.test.ts`, `tests/b27-audience.test.ts`, `tests/b27-holds.test.ts`, `tests/b27-ill.test.ts`, `tests/b27-offers.test.ts`, `tests/b27-promo.test.ts`, `tests/b27-release.test.ts`, `tests/b27-reshoot.test.ts`, `tests/b27-revival.test.ts`, `tests/b27-slate-screens.test.ts`, `tests/b27-slate.test.ts`, `tests/b27-weather.test.ts`, `tests/career-awards-screen.test.ts`, `tests/career-awards.test.ts`, `tests/career-contracts.test.ts`, `tests/career-drawn.test.ts`, `tests/career-workflows-screen.test.ts`, `tests/career-workflows.test.ts`, `tests/career-world-sydney.test.ts`, `tests/pro-opportunities-screen.test.ts`, `tests/pro-work.test.ts`; `pro.decline_offer`: `tests/b20-career-effects.test.ts`, `tests/b20-career-history.test.ts`, `tests/b20-guide-screens.test.ts`, `tests/pro-work.test.ts`; `pro.ask_more`: `tests/b27-award-effects.test.ts`, `tests/b27-offers.test.ts`; `pro.ask_hold`: `tests/b27-holds.test.ts`
+- **Tested by:** `pro.accept_offer`: `tests/b20-benefits-safetynet.test.ts`, `tests/b20-benefits-tax.test.ts`, `tests/b20-benefits-unemployment.test.ts`, `tests/b20-career-defects.test.ts`, `tests/b20-career-effects.test.ts`, `tests/b20-career-history.test.ts`, `tests/b20-career-skill.test.ts`, `tests/b20-guide-screens.test.ts`, `tests/b20-life-fatigue.test.ts`, `tests/b20-papers-work.test.ts`, `tests/b21-genre-proof.test.ts`, `tests/b22-authorization.test.ts`, `tests/b27-audience.test.ts`, `tests/b27-casting-turns.test.ts`, `tests/b27-holds.test.ts`, `tests/b27-ill.test.ts`, `tests/b27-languages.test.ts`, `tests/b27-offer-terms.test.ts`, `tests/b27-offers.test.ts`, `tests/b27-promo.test.ts`, `tests/b27-release.test.ts`, `tests/b27-representation.test.ts`, `tests/b27-reshoot.test.ts`, `tests/b27-revival.test.ts`, `tests/b27-slate-screens.test.ts`, `tests/b27-slate.test.ts`, `tests/b27-weather.test.ts`, `tests/career-awards-screen.test.ts`, `tests/career-awards.test.ts`, `tests/career-contracts.test.ts`, `tests/career-drawn.test.ts`, `tests/career-workflows-screen.test.ts`, `tests/career-workflows.test.ts`, `tests/career-world-sydney.test.ts`, `tests/pro-opportunities-screen.test.ts`, `tests/pro-work.test.ts`; `pro.decline_offer`: `tests/b20-career-effects.test.ts`, `tests/b20-career-history.test.ts`, `tests/b20-guide-screens.test.ts`, `tests/pro-work.test.ts`; `pro.ask_more`: `tests/b27-award-effects.test.ts`, `tests/b27-offer-terms.test.ts`, `tests/b27-offers.test.ts`; `pro.ask_hold`: `tests/b27-casting-turns.test.ts`, `tests/b27-holds.test.ts`
+
+### How You Play The Sides And Your Takes (`career.sides`)
+
+- **Action:** `pro.choose_approach`, `pro.answer_note`, `pro.record_take`, `pro.send_take`, at Career, Opportunities, In Progress (`/workspace/career?tab=opportunities`). Opens: From the guide’s chapter “Finding Work”, once casting has sent the sides with an audition.
+- **Preconditions:**
+  - Sides to play: casting sends them with an audition.
+  - To record, the hour a self-tape takes before it’s due, awake, and fewer than three takes today and eight in all.
+- **Costs:**
+  - Time: None to choose; takes cost an hour each (an estimate)
+  - Energy: Recording one takes what an hour at a desk does
+  - Money: None
+- **State (what changes at once):**
+  - Choosing a way to play it rehearses nothing yet: once you choose, work on your feet rehearses it. A different choice keeps half of the rehearsal.
+  - Takes are shown with their result as soon as they’re recorded. Casting sees none of them until you send one.
+- **Consumer (what reads it):**
+  - Auditions And Callbacks, evaluation: Casting decides from the round as it was played and directed, and the tape you sent.
+- **Feedback (how to read what comes back):**
+  - The table under How You’ll Play It shows what each side would come to fully prepared, and whether it suits the part, goes against it, or could go either way.
+  - Following a direction asks you to adapt: an actor who adapts well usually does better following it, and one who doesn’t may do better keeping their choice, though keeping it holds back how you answer a note and the qualities casting asked for.
+- **History (kept in the record):**
+  - (none)
+- **Later consequence:**
+  - Casting gives a direction only where you’ve chosen a way to play it and the part’s genre leans another way on some aspect: the clock stops 10 minutes in for your answer, and the rest of the round is judged with it. Casting’s decision reads that round, so the answer can win or lose the part.
+  - The one you send is the one casting judges. Only it goes on your work record, so recording more doesn’t train you, and each costs its hour.
+  - If the self-tape is due and you’ve sent nothing, casting moves on without it, takes recorded or not.
+- **Tested by:** `pro.choose_approach`: `tests/b27-sides.test.ts`; `pro.answer_note`: `tests/b27-sides.test.ts`; `pro.record_take`: `tests/b27-offers-screen.test.ts`, `tests/b27-sides.test.ts`; `pro.send_take`: `tests/b27-sides.test.ts`
+
+### Negotiating Through Your Agent (`career.negotiation`)
+
+- **Action:** , at Career, Opportunities, Offers (`/workspace/career?tab=opportunities`). Opens: From the guide’s chapter “Finding Work”, with an agent representing you and an offer standing.
+- **Preconditions:**
+  - An agent representing you.
+  - An offer standing that hasn’t been asked about.
+  - The Agreement first: Only an agent under an agreement in force negotiates for you.
+- **Costs:**
+  - Time: None; the answer comes the next afternoon
+  - Money: None
+- **State (what changes at once):**
+  - The offer stands a day past the answer, so there’s time to take what comes.
+- **Consumer (what reads it):**
+  - Offers And Booked Work, immediate: The answer changes the offer you then accept or decline.
+  - Contracts, Residuals And A Series’ Seasons, history: The contract made when you accept carries the terms as negotiated.
+- **Feedback (how to read what comes back):**
+  - The offer’s card says the answer in the production’s words, and the terms as negotiated. What Needs You says the latest version too.
+- **History (kept in the record):**
+  - Contracts, Residuals And A Series’ Seasons: The contract made when you accept carries the terms as negotiated.
+- **Later consequence:**
+  - A yes changes the offer: the pay raised, another episode guaranteed and booked, or the promotional film paid at your own day. The contract, the days booked and the pay promised follow it.
+  - A trade-off gives something for something: on a recurring part, more pay for one guaranteed episode fewer; another episode, if the option on next season carries no raise; or, on work paid $25,000 or more, where the contract leaves the promotional film unpaid, a day performer’s minimum for it in place of your own day. Offered about 4 times in 10 where the production won’t give what was asked and there’s something to trade, estimated.
+  - Now and then the production withdraws the offer instead of negotiating: at most 10% of the time, more for a bigger ask, estimated. The part goes to another actor.
+  - A casting office that cast you before, where your work was Strong, may offer you a lead on one condition: the screen test or chemistry read still to come, about 5 times in 10 that such a lead reaches you, estimated. Accept On Its Condition holds your dates and sets that round; nothing is booked or paid until it goes your way, and the offer falls away if it doesn’t.
+- **Tested by:** a screen or a look; the UI journeys (`tools/acceptance-ui.mjs`)
+
+### Withdrawing And Rescheduling (`career.withdrawing`)
+
+- **Action:** `pro.withdraw`, `pro.ask_reschedule`, at Career, Opportunities, In Progress (`/workspace/career?tab=opportunities`). Opens: From the guide’s chapter “Finding Work”, once you’re in the running for a part.
+- **Preconditions:**
+  - A part you’re in the running for.
+  - To reschedule, a day’s notice and another day the production could see you.
+- **Costs:**
+  - Time: None
+  - Money: None
+- **State (what changes at once):**
+  - Withdrawing takes the part’s rounds off your calendar and lets any hold on your dates go.
+- **Consumer (what reads it):**
+  - Auditions And Callbacks, evaluation: A remembered no-show halves that office’s decisions on your later auditions.
+  - Offers And Booked Work, immediate: An office that remembers a no-show offers you nothing without an audition.
+- **Feedback (how to read what comes back):**
+  - What withdrawing would do is said above the button before you press it.
+- **History (kept in the record):**
+  - (none)
+- **Later consequence:**
+  - A casting office remembers a round in person you didn’t turn up to, unless you were ill or in hospital, and a withdrawal at less than a day’s notice, for two years: your chance at each of its casting decisions after a round is 50% of what it would be, and it offers you nothing without an audition, estimated. A withdrawal with notice costs you nothing with it.
+  - A part you lost or let go may be recast if the actor cast in it leaves, about 12 times in 100 with its first day three weeks off or more, estimated. It’s posted again, and casting decides it afresh.
+  - At a cut, a production now and then changes what a part asks, about one part in 10, estimated: its playing ages, or a technique it now needs at 50. If you no longer fit it, it releases you; if you still do, you go on.
+- **Tested by:** `pro.withdraw`: `tests/b27-casting-turns.test.ts`, `tests/b27-offer-terms.test.ts`; `pro.ask_reschedule`: `tests/b27-casting-turns.test.ts`
 
 ### Work While You’re At The School (`career.outside-work`)
 
@@ -1425,6 +1559,7 @@ The Career screen, your professional profile and name, headshots, your résumé 
   - Accepting puts the contract under The Contract and each payment under Pay as Estimated. Your accounts don’t change.
 - **Consumer (what reads it):**
   - Your Work And Its Pay, scheduled: Each payment the contract promised is paid on its payday, and its state says where it stands.
+  - Negotiating Through Your Agent reads it, history: The contract made when you accept carries the terms as negotiated.
 - **Feedback (how to read what comes back):**
   - The overtime, the contribution’s rates, the per diem and the rerun’s share and ceiling are SAG-AFTRA’s agreements’ own, as AMPTP publishes them. The eleven-hour shoot day’s hour for lunch is estimated.
   - When an episode is on the air, whether it’s rerun, the series’ seasons and how late a non-union producer pays, 3 times in ten, by one to four weeks, are the game’s own.
@@ -1495,6 +1630,7 @@ The Career screen, your professional profile and name, headshots, your résumé 
   - (none)
 - **Later consequence:**
   - At the nominations, each category has its own field of entries, and the Academy’s table sets how many are nominated: 5 from 20 entries, 6 from 81 entries, 7 from 161 entries, 8 from 241 entries.
+  - Two parts of yours in one Emmy category, for different shows, are two entries in the same field: both can be nominated, and only one can win. Two parts in the same show can’t both be entered in one category.
   - The winner is settled when the final round of voting ends, and you learn it when the award is presented: guest and voice-over awards at the Creative Arts Emmys, the others at the telecast.
   - A festival’s answer comes about December 1 for its 2027 festival, in Boulder, Colorado.
   - The Actor Awards’ committees, members drawn at random, nominate five in each category, more only for a tie, and of two performances of yours in one category only the one with more votes. Every paid-up member in the US and Canada votes the winner, and a tie gives the award to each tied. The 33rd show is on February 28.
