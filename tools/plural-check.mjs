@@ -46,6 +46,9 @@ const ALLOWED = {
   // A possessive, not a count: "his offer", or "Dan Patack’s offer" for a real agent (from 2026-10-24, brief 25's
   // Module 3, the agent's words in `content/agents.ts`).
   'src/engine/systems/proagent.ts': ['${agent.words.his} offer', '${capital(agent.words.his)} offer'],
+  // A rate's unit, not a count ("$1,283 a day"), and a count `counted` already agrees (from 2026-10-25, brief 27's offers
+  // and auditions): "Asked for $1,540 a day", "kept its offer at two guaranteed episodes".
+  'src/engine/systems/offers.ts': ["'USD')} a ${offer.per}", "'guaranteed episode')}, where", "'episode')} of the season"],
   // "the 2nd time they’ve asked", from the count kept on the classmate (brief 17, `asked`); until then the moments'.
   'src/engine/systems/classmates.ts': ['${nth(n + 1)} time'],
   // Figures printed to a decimal place read correctly at one: "1.0 hours".

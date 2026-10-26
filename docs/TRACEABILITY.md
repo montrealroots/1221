@@ -17,9 +17,9 @@ Implemented**: no screen offers it, or no test runs it. No status here says a sc
 SLATE has no tests of its screens, and nothing is deployed.
 
 - Verified (journey): 61
-- Implemented But Unverified: 131
+- Implemented But Unverified: 138
 - Partially Implemented: 0
-- Commands in all: 192
+- Commands in all: 199
 
 ## Commands
 
@@ -61,11 +61,11 @@ SLATE has no tests of its screens, and nothing is deployed.
 | `benefits.assistance` | Implemented But Unverified | Cover, Benefits And Returns | PapersWorkspace.tsx | `systems/assistance.ts` | — (also assistanceRefusal, snapStudentRefusal) | assistance | Yes | escrow | 9 | — |
 | `benefits.claim` | Implemented But Unverified | Cover, Benefits And Returns | PapersWorkspace.tsx | `systems/unemployment.ts` | Unemployment is paid in the game only in New York, California and Connecticut, and you’d n; You already have a claim open.; Unemployment pays a noncitizen only with permission to work in the US, such as OPT (FUTA 3; … Your base period’s quarters paid …. | — | Yes | benefits.week | 15 | — |
 | `benefits.ei_register` | Implemented But Unverified | Cover, Benefits And Returns | PapersWorkspace.tsx | `systems/eiself.ts` | — (also eiRefusal) | ei | — | — | 2 | — |
-| `brief.choose` | Verified (journey) | You As An Actor | BriefPane.tsx | `systems/briefs.ts` | — (also chooseRefusal) | — | — | — | 47 | journey-agent.test.ts |
+| `brief.choose` | Verified (journey) | You As An Actor | BriefPane.tsx | `systems/briefs.ts` | — (also chooseRefusal) | — | — | — | 48 | journey-agent.test.ts |
 | `brief.prepare` | Verified (journey) | You As An Actor | BriefPane.tsx | `systems/briefs.ts` | — (also prepareRefusal) | — | — | — | 34 | journey-agent.test.ts |
 | `brief.reader` | Implemented But Unverified | You As An Actor | BriefPane.tsx | `systems/briefs.ts` | — (also readerRefusal) | — | — | — | 7 | — |
 | `calendar.cancel` | Verified (journey) | Your Own Plans | CalendarWorkspace.tsx | `world/plans.ts` | — | — | — | — | 11 | journey-life.test.ts |
-| `calendar.schedule` | Verified (journey) | Your Own Plans | CalendarWorkspace.tsx | `world/plans.ts` | — | — | — | life.commitment | 35 | journey-life.test.ts |
+| `calendar.schedule` | Verified (journey) | Your Own Plans | CalendarWorkspace.tsx | `world/plans.ts` | — | — | — | life.commitment | 36 | journey-life.test.ts |
 | `calendar.skip` | Implemented But Unverified | What’s Coming | TimeControls.tsx | `world/plans.ts` | — | status; resolvedAt | — | — | 5 | — |
 | `card.apply` | Implemented But Unverified | Your Bank | BankCard.tsx | `systems/cardlife.ts` | You have no credit record to apply with.; A card is already on its way.; You need a bank to apply to.; That bank isn’t in the game.; and 3 more (also abroadRefusal, transferRefusal) | — | — | card.arrives | 19 | — |
 | `card.close` | Implemented But Unverified | Your Bank | BankCard.tsx | `systems/cardlife.ts` | You don’t have a card.; It’s already being closed. | — | — | — | 9 | — |
@@ -126,39 +126,46 @@ SLATE has no tests of its screens, and nothing is deployed.
 | `plays.read` | Verified (journey) | Drama School | SchoolWorkspace.tsx | `systems/playreading.ts` | — (also readRefusal) | — | — | — | 14 | journey-life.test.ts |
 | `plays.research` | Implemented But Unverified | Drama School | SchoolWorkspace.tsx | `systems/playreading.ts` | — (also researchRefusal) | — | — | — | 4 | — |
 | `practice.exercise` | Implemented But Unverified | You As An Actor | ProfileWorkspace.tsx | `systems/practice.ts` | There’s no such tier. (also practiceRefusal, focusRefusal) | — | — | — | 32 | — |
-| `practice.self_tape` | Verified (journey) | You As An Actor | BriefPane.tsx | `systems/briefs.ts` | — (also tapeRefusal) | — | — | — | 46 | journey-agent.test.ts |
-| `pro.accept_agreement` | Verified (journey) | Representation | RepresentationPane.tsx | `systems/proagent.ts` | — (also signRefusal) | — | — | pro.agent_term_end | 6 | journey-agent.test.ts |
-| `pro.accept_offer` | Implemented But Unverified | Finding Work | OpportunitiesPane.tsx | `systems/projobs.ts` | — (also acceptRefusal) | engagements (added to) | — | booked | 30 | — |
+| `practice.self_tape` | Verified (journey) | You As An Actor | BriefPane.tsx | `systems/briefs.ts` | — (also tapeRefusal) | — | — | — | 47 | journey-agent.test.ts |
+| `pro.accept_agreement` | Verified (journey) | Representation | RepresentationPane.tsx | `systems/proagent.ts` | — (also signRefusal) | — | — | pro.agent_term_end | 7 | journey-agent.test.ts |
+| `pro.accept_offer` | Implemented But Unverified | Finding Work | OpportunitiesPane.tsx | `systems/projobs.ts` | — (also acceptRefusal) | engagements (added to) | — | booked | 34 | — |
 | `pro.actor_submit` | Implemented But Unverified | Finding Work | IndustryPane.tsx | `systems/actorawards.ts` | — | — | — | — | 1 | — |
-| `pro.agent_check` | Verified (journey) | Representation | RepresentationPane.tsx | `systems/proagent.ts` | — (also checkRefusal) | — | — | — | 10 | journey-agent.test.ts |
-| `pro.agent_notice` | Verified (journey) | Representation | RepresentationPane.tsx | `systems/proagent.ts` | — (also noticeRefusal) | — | — | — | 8 | journey-agent.test.ts |
+| `pro.agent_check` | Verified (journey) | Representation | RepresentationPane.tsx | `systems/proagent.ts` | — (also checkRefusal) | — | — | — | 12 | journey-agent.test.ts |
+| `pro.agent_notice` | Verified (journey) | Representation | RepresentationPane.tsx | `systems/proagent.ts` | — (also noticeRefusal) | — | — | — | 10 | journey-agent.test.ts |
+| `pro.answer_note` | Implemented But Unverified | Finding Work | OpportunitiesPane.tsx TimeControls.tsx | `systems/offers.ts` | — (also noteRefusal) | — | — | — | 1 | — |
 | `pro.apply_work_visa` | Implemented But Unverified | Finding Work | WorkPane.tsx | `systems/worktrip.ts` | — (also visaRefusal) | — | — | — | 2 | — |
-| `pro.ask_hold` | Implemented But Unverified | Finding Work | OpportunitiesPane.tsx | `systems/projobs.ts` | — (also holdAskRefusal) | — | — | pro.hold_answer; callback | 1 | — |
-| `pro.ask_more` | Implemented But Unverified | Finding Work | OpportunitiesPane.tsx | `systems/projobs.ts` | — (also askMoreRefusal) | — | — | pro.negotiate_answer; offer | 2 | — |
+| `pro.ask_hold` | Implemented But Unverified | Finding Work | OpportunitiesPane.tsx | `systems/projobs.ts` | — (also holdAskRefusal) | — | — | pro.hold_answer; callback | 2 | — |
+| `pro.ask_more` | Implemented But Unverified | Finding Work | OpportunitiesPane.tsx | `systems/projobs.ts` | — (also askMoreRefusal) | — | — | pro.negotiate_answer; offer | 3 | — |
 | `pro.ask_pay` | Implemented But Unverified | Finding Work | WorkPane.tsx | `systems/contracts.ts` | — (also askRefusal) | — | — | pro.pay.payday; problem | 1 | — |
-| `pro.ask_referral` | Verified (journey) | Representation | RepresentationPane.tsx | `systems/proagent.ts` | — (also referralRefusal) | — | — | — | 7 | journey-agent.test.ts |
+| `pro.ask_referral` | Verified (journey) | Representation | RepresentationPane.tsx | `systems/proagent.ts` | — (also referralRefusal) | — | — | — | 9 | journey-agent.test.ts |
+| `pro.ask_reschedule` | Implemented But Unverified | Finding Work | OpportunitiesPane.tsx | `systems/offers.ts` | — (also rescheduleRefusal) | — | — | — | 1 | — |
+| `pro.ask_terms` | Implemented But Unverified | Representation | RepresentationPane.tsx | `systems/representation.ts` | There’s no such agent in the game.; Ask for a shorter term, for voice-over or for work abroad. (also askRefusal) | — | — | pro.agent_terms_answer | 2 | — |
 | `pro.ask_to_move` | Verified (journey) | Representation | RepresentationPane.tsx TimeControls.tsx | `systems/proagent.ts` | — (also moveRefusal) | — | — | — | 3 | journey-agent.test.ts |
 | `pro.award_enter` | Implemented But Unverified | Finding Work | IndustryPane.tsx | `systems/awards.ts` | — | — | — | — | 2 | — |
 | `pro.ceremony_accept` | Implemented But Unverified | Finding Work | IndustryPane.tsx TimeControls.tsx | `systems/ceremony.ts` | — | — | — | — | 1 | — |
 | `pro.ceremony_prepare` | Implemented But Unverified | Finding Work | IndustryPane.tsx | `systems/ceremony.ts` | — | — | — | — | 1 | — |
 | `pro.ceremony_rsvp` | Implemented But Unverified | Finding Work | IndustryPane.tsx | `systems/ceremony.ts` | — | — | — | — | 1 | — |
+| `pro.choose_approach` | Implemented But Unverified | Finding Work | OpportunitiesPane.tsx | `systems/offers.ts` | — (also chooseRefusal) | — | — | — | 1 | — |
 | `pro.cut_reel` | Verified (journey) | Your Career | CareerWorkspace.tsx | `systems/pro.ts` | Your bank can’t cover …, so nothing was charged. (also reelRefusal) | — | Yes | reel | 5 | journey-agent.test.ts |
 | `pro.decline_agreement` | Verified (journey) | Representation | RepresentationPane.tsx | `systems/proagent.ts` | — (also answerRefusal) | — | — | — | 4 | journey-agent.test.ts |
 | `pro.decline_offer` | Implemented But Unverified | Finding Work | OpportunitiesPane.tsx | `systems/projobs.ts` | There’s no offer to decline. | — | — | declined | 4 | — |
 | `pro.end_agreement` | Verified (journey) | Representation | RepresentationPane.tsx | `systems/proagent.ts` | — (also endRefusal) | — | — | pro.agent_decision | 3 | journey-agent.test.ts |
 | `pro.headshots` | Verified (journey) | Your Career | CareerWorkspace.tsx | `systems/pro.ts` | Your bank can’t cover …, so nothing was charged. (also headshotRefusal) | — | Yes | headshot | 13 | journey-agent.test.ts |
 | `pro.join_sag` | Implemented But Unverified | Your Career | WorkPane.tsx | `systems/propay.ts` | Your bank can’t cover …, so nothing was charged. (also joinSagRefusal) | — | Yes | — | 4 | — |
-| `pro.mix_demo` | Implemented But Unverified | Your Career | CareerWorkspace.tsx | `systems/pro.ts` | Your bank can’t cover …, so nothing was charged. (also demoRefusal) | — | Yes | demo | 1 | — |
+| `pro.mix_demo` | Implemented But Unverified | Your Career | CareerWorkspace.tsx | `systems/pro.ts` | Your bank can’t cover …, so nothing was charged. (also demoRefusal) | — | Yes | demo | 2 | — |
 | `pro.move_audition` | Implemented But Unverified | Finding Work | OpportunitiesPane.tsx | `systems/projobs.ts` | — (also moveRefusal) | — | — | — | 1 | — |
-| `pro.prepare` | Implemented But Unverified | Finding Work | OpportunitiesPane.tsx | `systems/projobs.ts` | — (also prepareRefusal) | — | — | — | 6 | — |
+| `pro.prepare` | Implemented But Unverified | Finding Work | OpportunitiesPane.tsx | `systems/projobs.ts` | — (also prepareRefusal) | — | — | — | 8 | — |
+| `pro.record_take` | Implemented But Unverified | Finding Work | OpportunitiesPane.tsx | `systems/offers.ts` | — (also recordRefusal) | — | — | — | 2 | — |
 | `pro.request_outside_work` | Implemented But Unverified | Finding Work | OpportunitiesPane.tsx | `systems/projobs.ts` | — (also requestRefusal) | — | — | pro.school_answer; requested | 1 | — |
-| `pro.send_materials` | Verified (journey) | Representation | RepresentationPane.tsx | `systems/proagent.ts` | — (also sendRefusal) | — | — | pro.reply | 12 | journey-agent.test.ts |
+| `pro.send_materials` | Verified (journey) | Representation | RepresentationPane.tsx | `systems/proagent.ts` | — (also sendRefusal) | — | — | pro.reply | 14 | journey-agent.test.ts |
+| `pro.send_take` | Implemented But Unverified | Finding Work | OpportunitiesPane.tsx | `systems/offers.ts` | — (also sendRefusal) | — | — | — | 1 | — |
 | `pro.set_name` | Implemented But Unverified | Your Career | CareerWorkspace.tsx | `systems/pro.ts` | — (also nameRefusal) | — | — | — | 2 | — |
-| `pro.submit` | Implemented But Unverified | Finding Work | OpportunitiesPane.tsx | `systems/projobs.ts` | — (also submitRefusal) | — | — | — | 6 | — |
-| `pro.supply_material` | Verified (journey) | Representation | RepresentationPane.tsx | `systems/proagent.ts` | — (also supplyRefusal) | — | — | pro.reply | 2 | journey-agent.test.ts |
-| `pro.tape_audition` | Implemented But Unverified | Finding Work | OpportunitiesPane.tsx | `systems/projobs.ts` | — (also tapeRefusal) | — | — | — | 2 | — |
-| `pro.update_resume` | Verified (journey) | Your Career | CareerWorkspace.tsx | `systems/pro.ts` | — (also resumeRefusal) | — | — | resume | 17 | journey-agent.test.ts |
+| `pro.submit` | Implemented But Unverified | Finding Work | OpportunitiesPane.tsx | `systems/projobs.ts` | — (also submitRefusal) | — | — | — | 8 | — |
+| `pro.supply_material` | Verified (journey) | Representation | RepresentationPane.tsx | `systems/proagent.ts` | — (also supplyRefusal) | — | — | pro.reply | 3 | journey-agent.test.ts |
+| `pro.tape_audition` | Implemented But Unverified | Finding Work | OpportunitiesPane.tsx | `systems/projobs.ts` | — (also recordRefusal) | — | — | — | 4 | — |
+| `pro.update_resume` | Verified (journey) | Your Career | CareerWorkspace.tsx | `systems/pro.ts` | — (also resumeRefusal) | — | — | resume | 19 | journey-agent.test.ts |
 | `pro.watch_ceremony` | Implemented But Unverified | Finding Work | IndustryPane.tsx | `systems/ceremony.ts` | — (also watchRefusal) | — | — | — | 3 | — |
+| `pro.withdraw` | Implemented But Unverified | Finding Work | OpportunitiesPane.tsx | `systems/offers.ts` | — (also withdrawRefusal) | — | — | — | 2 | — |
 | `pro.work_choice` | Implemented But Unverified | Finding Work | WorkPane.tsx | `systems/workflow.ts` | — (also choiceRefusal) | — | — | — | 2 | — |
 | `school.answer_partner` | Verified (journey) | Drama School | CourseworkPane.tsx | `systems/coursework.ts` | — (also answerRefusal) | — | — | — | 8 | journey-school-year.test.ts; journey-three-students.test.ts |
 | `school.appeal_leave` | Implemented But Unverified | Drama School | StudyPlanPanels.tsx | `systems/leave.ts` | Only a leave the dean imposed can be appealed.; You appealed on ….; The appeal had to be in by …. | — | — | school.leave_appeal | 4 | — |
@@ -244,7 +251,7 @@ money, what it sets going next, and how many test files name it or its constant.
 | `benefits.uc_period` | `systems/universalcredit.ts` | systems/universalcredit.ts | — | Yes | — | 0 |
 | `benefits.week` | `systems/unemployment.ts` | systems/unemployment.ts | — | Yes | benefits.week | 4 |
 | `card.arrives` | `systems/cardlife.ts` | systems/abroad.ts; systems/bankmoves.ts; systems/cardlife.ts | — | — | credit_card; card.arrives | 1 |
-| `card.due` | `systems/credit.ts` | systems/credit.ts | — | Yes | — | 46 |
+| `card.due` | `systems/credit.ts` | systems/credit.ts | — | Yes | — | 48 |
 | `card.replaced` | `systems/security.ts` | systems/bankmoves.ts; systems/security.ts | last4; issued; expiresAt | — | — | 8 |
 | `card.statement` | `systems/credit.ts` | systems/credit.ts | — | Yes | — | 31 |
 | `citizenship.decided` | `systems/citizenship.ts` | systems/citizenship.ts | naturalized | — | — | 4 |
@@ -279,29 +286,32 @@ money, what it sets going next, and how many test files name it or its constant.
 | `pro.agent_request_due` | `systems/proagent.ts` | systems/proagent.ts | — | — | — | 0 |
 | `pro.agent_silence` | `systems/proagent.ts` | systems/proagent.ts | — | — | — | 0 |
 | `pro.agent_term_end` | `systems/proagent.ts` | systems/proagent.ts | — | — | — | 0 |
-| `pro.audition` | `systems/projobs.ts` | systems/projobs.ts | — | — | — | 12 |
-| `pro.casting_decision` | `systems/projobs.ts` | systems/projobs.ts | — | — | — | 7 |
+| `pro.agent_terms_answer` | `systems/representation.ts` | systems/representation.ts | — | — | — | 0 |
+| `pro.audition` | `systems/projobs.ts` | systems/projobs.ts | — | — | — | 16 |
+| `pro.casting_decision` | `systems/projobs.ts` | systems/projobs.ts | — | — | — | 9 |
 | `pro.ceremony` | `systems/ceremony.ts` | systems/ceremony.ts | — | — | pro.ceremony_speech | 2 |
 | `pro.ceremony_speech` | `systems/ceremony.ts` | systems/ceremony.ts | — | — | — | 4 |
 | `pro.hold_answer` | `systems/projobs.ts` | systems/projobs.ts | — | — | offer | 0 |
 | `pro.invite` | `systems/workflow.ts` | systems/workflow.ts | — | — | — | 2 |
 | `pro.loop` | `systems/workflow.ts` | systems/workflow.ts | — | — | — | 2 |
-| `pro.negotiate_answer` | `systems/projobs.ts` | systems/projobs.ts | — | — | offer | 0 |
-| `pro.offer_lapse` | `systems/projobs.ts` | systems/projobs.ts | — | — | lapsed | 16 |
+| `pro.negotiate_answer` | `systems/projobs.ts` | systems/offers.ts; systems/projobs.ts | — | — | offer | 0 |
+| `pro.note` | `systems/offers.ts` | systems/offers.ts | — | — | — | 4 |
+| `pro.offer_lapse` | `systems/projobs.ts` | systems/projobs.ts | — | — | lapsed | 20 |
 | `pro.pay.dues` | `systems/propay.ts` | systems/propay.ts | — | — | — | 4 |
 | `pro.pay.payday` | `systems/propay.ts` | systems/contracts.ts; systems/propay.ts | — | — | — | 8 |
 | `pro.pay.release` | `systems/propay.ts` | systems/projobs.ts; systems/propay.ts | — | — | — | 8 |
 | `pro.pay.sag_eligible` | `systems/propay.ts` | systems/propay.ts | — | Yes | pro.pay.sag_eligible; success | 4 |
 | `pro.promo` | `systems/workflow.ts` | systems/projobs.ts | — | — | — | 2 |
 | `pro.reply` | `systems/projobs.ts` | systems/proagent.ts; systems/projobs.ts | — | — | — | 6 |
+| `pro.reschedule_answer` | `systems/offers.ts` | systems/offers.ts | — | — | — | 0 |
 | `pro.reshoot` | `systems/workflow.ts` | systems/workflow.ts | — | — | — | 2 |
 | `pro.residual.air` | `systems/contracts.ts` | systems/contracts.ts | — | — | — | 0 |
 | `pro.residual.pay` | `systems/contracts.ts` | systems/contracts.ts | — | — | pro.pay.payday; problem | 2 |
 | `pro.revival` | `systems/series.ts` | systems/series.ts | — | — | success; problem | 2 |
 | `pro.school_answer` | `systems/projobs.ts` | systems/projobs.ts | engagements (added to) | — | pro.negotiate_answer; offer; pro.hold_answer; and 5 more | 0 |
 | `pro.series.episode` | `systems/series.ts` | systems/series.ts | — | — | booked; problem | 2 |
-| `pro.series.option` | `systems/series.ts` | systems/series.ts | — | — | problem; booked | 2 |
-| `pro.tape_due` | `systems/projobs.ts` | systems/projobs.ts | — | — | — | 2 |
+| `pro.series.option` | `systems/series.ts` | systems/series.ts | — | — | problem; booked | 4 |
+| `pro.tape_due` | `systems/projobs.ts` | systems/projobs.ts | — | — | — | 6 |
 | `pro.trip_arrive` | `systems/worktrip.ts` | systems/worktrip.ts | — | — | arrived; home | 0 |
 | `pro.trip_depart` | `systems/worktrip.ts` | systems/worktrip.ts | — | — | departed | 0 |
 | `pro.visa_decision` | `systems/worktrip.ts` | systems/worktrip.ts | — | — | — | 0 |

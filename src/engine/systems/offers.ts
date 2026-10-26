@@ -215,9 +215,12 @@ export function approachRead(o: Opportunity, r: AuditionRound, ctx: EvalContext)
   const fit = { ...read.fit };
   if (note?.answer === 'hold') {
     const asked = APPROACH_EFFECT[note.side as AxisValue];
-    if (task.dims.responsiveness) fit.responsiveness = { f: Math.min(fit.responsiveness?.f ?? 1, MISFIT), label: `Casting’s direction: asked to play it ${asked.label.toLowerCase()}, you kept your choice and didn’t take the note` };
+    // The why apart from the label's head, as `materialContext` builds its own (`${e.label}: ${why}`).
+    const notTaken = `asked to play it ${asked.label.toLowerCase()}, you kept your choice and didn’t take the note`;
+    if (task.dims.responsiveness) fit.responsiveness = { f: Math.min(fit.responsiveness?.f ?? 1, MISFIT), label: `Casting’s Direction: ${notTaken}` };
     for (const [d, x] of Object.entries(asked.lean) as [Dimension, number][]) {
-      if (x >= 1.1 && task.dims[d] && d !== 'responsiveness') fit[d] = { f: Math.min(fit[d]?.f ?? 1, MISFIT), label: `${asked.label}: casting asked for it ${asked.label.toLowerCase()}, and you kept your choice` };
+      const against = `casting asked for it ${asked.label.toLowerCase()}, and you kept your choice`;
+      if (x >= 1.1 && task.dims[d] && d !== 'responsiveness') fit[d] = { f: Math.min(fit[d]?.f ?? 1, MISFIT), label: `${asked.label}: ${against}` };
     }
   }
   return { ...ctx, task, prep, required, lean, inputs: mergeInputs(read.inputs, note?.answer === 'follow' ? NOTE_INPUTS : {}), extraPrep: read.prep, fit, grain: read.grain };
