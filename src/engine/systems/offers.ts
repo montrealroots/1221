@@ -392,7 +392,7 @@ export function sendRefusal(sim: Simulation, o: Opportunity | undefined, take: u
   const r = o && roundToCome(o);
   if (!o || !r || r.form !== 'self-tape' || (o.status !== 'audition' && o.status !== 'callback')) return 'There’s no self-tape asked for.';
   if (sim.now >= r.at) return `It was due on ${formatDate(r.at, NY)} at ${formatTime(r.at, NY)}.`;
-  if (!r.takes?.length) return 'Nothing’s recorded yet, so there’s nothing to send. Record one first.';
+  if (!r.takes?.length) return 'There’s nothing to send yet: record one first.';
   if (typeof take !== 'number' || !r.takes[take]) return 'There’s no such take.';
   return undefined;
 }

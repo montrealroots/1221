@@ -419,6 +419,20 @@
   "reason": "Each state or country’s own name for its photo ID card, as the issuer spells it, which Papers shows beside the card.",
   "first": "Reviewed And Retained"
  },
+ "src/engine/content/languages.ts#languagesProblems": {
+  "status": "Retained",
+  "hash": "fbd29b94bb98",
+  "on": "2026-10-26",
+  "reason": "Each refusal names the slip and what to do: a language listed twice, English under fluent when training and every part are in English, no native language, too many; said before the player can leave the card",
+  "first": "Pending"
+ },
+ "src/engine/content/languages.ts#LEVEL_LABEL": {
+  "status": "Retained",
+  "hash": "869350c2ea91",
+  "on": "2026-10-26",
+  "reason": "Native, Fluent and Conversational, the three levels a player picks from, each defined on the card in one plain sentence and the words the résumé and The Language repeat",
+  "first": "Pending"
+ },
  "src/engine/content/languages.ts#NAMES .aa": {
   "status": "Retained",
   "hash": "5a209a74a1b6",
@@ -1496,6 +1510,13 @@
   "on": "2026-10-19",
   "reason": "The English name of each language by its ISO code, shown in a place’s facts, spelled as English speakers spell them, Māori with its macron.",
   "first": "Reviewed And Retained"
+ },
+ "src/engine/content/languages.ts#SPOKEN_NAMES": {
+  "status": "Retained",
+  "hash": "a612471053af",
+  "on": "2026-10-26",
+  "reason": "Mandarin, the one language whose everyday name differs from the list’s own, shown as a player would say it",
+  "first": "Pending"
  },
  "src/engine/content/personality-traits.ts#KNOB_READS": {
   "status": "Rewritten",
@@ -2961,6 +2982,13 @@
   "evidence": "Read 2026-10-24 (brief 27) against docs/STYLE.md and docs/GLOSSARY.md: Place Of Birth says it doesn't decide the citizenship; Citizenship is asked with Choose A Country, Same As Your Place Of Birth: <country>, what it decides, and the Fourteenth Amendment's note for the US-born; Title Case labels. tests/citizenship.test.ts, tests/b27-creation-origins.test.ts",
   "first": "Pending"
  },
+ "src/ui/creation/CharacterCreation.tsx#LanguagesCard": {
+  "status": "Retained",
+  "hash": "a9226f1dc976",
+  "on": "2026-10-26",
+  "reason": "The Languages card says what the languages do in the game in six plain sentences, what each level means, Add A Language and Choose A Language, and that at least one is native: what a player needs to choose well",
+  "first": "Pending"
+ },
  "src/ui/creation/CharacterCreation.tsx#MONTHS": {
   "status": "Retained",
   "hash": "27c857d61c2b",
@@ -3032,10 +3060,10 @@
   "first": "Pending"
  },
  "src/ui/creation/CharacterCreation.tsx#ReviewStep": {
-  "status": "Rewritten",
-  "hash": "d52b84bdec31",
-  "on": "2026-10-20",
-  "evidence": "Read on the built app in docs/verification/continuity-2026-10-20/frame/walk-after-1440.txt and walk-after-390.txt (Creation, Review); held by tests/language-frame-ui.test.ts (the guide's choice and the clock), tests/home-account-creation.test.ts (Before Yale), tests/evidence-g29-ui.test.ts and tests/need-paths.test.ts (Card)",
+  "status": "Retained",
+  "hash": "c70dd0d49f37",
+  "on": "2026-10-26",
+  "reason": "Ready To Begin now lists Languages under Genres & Background with the other facts of the life, each a label and the value chosen, so the review says everything creation took",
   "first": "Pending"
  },
  "src/ui/creation/CharacterCreation.tsx#StartingPointStep": {

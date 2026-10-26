@@ -1042,7 +1042,7 @@ export const CAREER_GUIDE: readonly GuideEntry[] = [
       'You’re in the room: answer casting’s direction first.',
       'Casting has no direction waiting for you.',
       `You’ve recorded ${countWords(TAKES.perDay)} takes today, as many as a day allows. Record more tomorrow, or send one.`,
-      'Nothing’s recorded yet, so there’s nothing to send. Record one first.',
+      'There’s nothing to send yet: record one first.',
     ],
     mistakes: ['Recording takes and sending none. Casting moves on without the tape when it’s due.'],
     next: ['Wait for casting’s word, then answer an offer under Offers.'],

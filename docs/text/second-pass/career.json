@@ -750,9 +750,9 @@
  },
  "src/engine/content/guide/career.ts#CAREER_GUIDE [career.sides]": {
   "status": "Rewritten",
-  "hash": "f2cbd1b4aa5f",
+  "hash": "a44f457a8f2a",
   "on": "2026-10-26",
-  "evidence": "New with brief 27 and read again on 2026-10-26: eleven of its lines said a take, the take or each take, where the glossary keeps take for a self-tape’s recording but the engine-speak ratchet counts each; they now say takes, the one you send, recording one, and the overview leaves the buttons to the steps. The steps keep Record A Take and Send This Take as the Takes panel labels them, read in tests/b27-offers-screen.test.ts and tests/b27-sides.test.ts, and tools/guide-quotes.mjs --check holds",
+  "evidence": "tests/guide.test.ts and tests/guide-quotes (node tools/guide-quotes.mjs --check, 587 of 587) hold the entry's words; its unavailable line reworded with the refusal it quotes, 2026-10-26",
   "first": "Pending"
  },
  "src/engine/content/guide/career.ts#CAREER_GUIDE [career.unions]": {

@@ -440,11 +440,88 @@
   "reason": "What the office has to go on, each piece named as the player knows it: showcase scenes as the School recorded them, work a referrer referred you from, your film in a festival’s official selection",
   "first": "Pending"
  },
+ "src/engine/systems/representation.ts#answerAsk": {
+  "status": "Retained",
+  "hash": "390544843dc5",
+  "on": "2026-10-26",
+  "reason": "The office agreed or kept its terms, as a notice title in the office’s name, a history line and a sentence saying what The Agreement now shows and until when the offer stands",
+  "first": "Pending"
+ },
+ "src/engine/systems/representation.ts#answerWords": {
+  "status": "Retained",
+  "hash": "5bc1504b2bf0",
+  "on": "2026-10-26",
+  "reason": "The office kept the terms as offered, the one phrase both the panel and the history use for a no",
+  "first": "Pending"
+ },
+ "src/engine/systems/representation.ts#ASK_LABEL": {
+  "status": "Retained",
+  "hash": "b1974cf5c94d",
+  "on": "2026-10-26",
+  "reason": "Ask For A Shorter Term, Ask To Add Voice-Over, Ask To Add Work Abroad: each button names its ask, in Title Case, as the guide repeats them",
+  "first": "Pending"
+ },
+ "src/engine/systems/representation.ts#askRefusal": {
+  "status": "Retained",
+  "hash": "156245d78b9d",
+  "on": "2026-10-26",
+  "reason": "Each refusal of an ask gives its reason: no agreement offered, asked once already with what came of it, waiting on the answer with its date, voice-over covered already or no department for it, no voice work abroad, or no time before the offer lapses",
+  "first": "Pending"
+ },
+ "src/engine/systems/representation.ts#askWaiting": {
+  "status": "Retained",
+  "hash": "25f62be0ea5b",
+  "on": "2026-10-26",
+  "reason": "While the answer is awaited: what you asked for, when, and when the office answers, with the step after, accepting once it has",
+  "first": "Pending"
+ },
+ "src/engine/systems/representation.ts#askWords": {
+  "status": "Retained",
+  "hash": "240d4fd66039",
+  "on": "2026-10-26",
+  "reason": "Each ask said as a phrase a sentence can take: a term of six months instead of a year, work in the UK and Australia to be covered too",
+  "first": "Pending"
+ },
+ "src/engine/systems/representation.ts#chanceTenths": {
+  "status": "Retained",
+  "hash": "20bc3e835824",
+  "on": "2026-10-26",
+  "reason": "About N in 10, the chance said as a count a player can weigh, never a percentage with decimals",
+  "first": "Pending"
+ },
  "src/engine/systems/representation.ts#COUNTRY_WORDS": {
   "status": "Retained",
   "hash": "0b5b61fb7c27",
   "on": "2026-10-26",
   "reason": "The United States, the UK and Australia, each said with its article as a sentence on the agreement’s territory needs it",
+  "first": "Pending"
+ },
+ "src/engine/systems/representation.ts#introduceAtFestival": {
+  "status": "Retained",
+  "hash": "56760ad8cf7e",
+  "on": "2026-10-26",
+  "reason": "The festival introduction says where you met the office and which film was in the official selection, that the meeting is the game’s since the festival publishes films and not who comes, and what it opens: sending your materials",
+  "first": "Pending"
+ },
+ "src/engine/systems/representation.ts#outsideWords": {
+  "status": "Retained",
+  "hash": "90eee8ed96fa",
+  "on": "2026-10-26",
+  "reason": "Why no commission is owed on this work: your agreement leaves out voice-over and this is that, or covers certain work and this isn’t, naming the agency, so the pay’s line says the reason",
+  "first": "Pending"
+ },
+ "src/engine/systems/representation.ts#realTermsWords": {
+  "status": "Retained",
+  "hash": "5ce29a97ac05",
+  "on": "2026-10-26",
+  "reason": "The panel’s line for a real agent says the pages the game read give no terms its agents agree to, so whether the office agrees is the game’s invention and no fact about it: the provenance the house asks for",
+  "first": "Pending"
+ },
+ "src/engine/systems/representation.ts#registerRepresentation <pro.ask_terms>": {
+  "status": "Retained",
+  "hash": "ce6b67d213eb",
+  "on": "2026-10-26",
+  "reason": "The command’s refusals name the obstacle, no such agent or no ask chosen, and its history line and question title say what you asked for and who answers",
   "first": "Pending"
  },
  "src/engine/systems/representation.ts#sampleName": {
@@ -461,6 +538,13 @@
   "reason": "What an agreement covers in one phrase: stage, film and television work, with voice-over work where it’s covered, as the terms panel and the refusals say it",
   "first": "Pending"
  },
+ "src/engine/systems/representation.ts#termsFor": {
+  "status": "Retained",
+  "hash": "7cc250de9a57",
+  "on": "2026-10-26",
+  "reason": "Each term of the agreement in a sentence the panel shows: what it covers, what it leaves out and why, where, and for how long, with the shorter term you asked for named as yours",
+  "first": "Pending"
+ },
  "src/engine/systems/representation.ts#termWords": {
   "status": "Retained",
   "hash": "a87e499ce041",
@@ -473,6 +557,13 @@
   "hash": "4299cb278a72",
   "on": "2026-10-26",
   "reason": "The US, and in the US, the agreement’s territory as first offered, said as a player says it",
+  "first": "Pending"
+ },
+ "src/engine/systems/representation.ts#uncoveredWords": {
+  "status": "Retained",
+  "hash": "1a2442310f1c",
+  "on": "2026-10-26",
+  "reason": "No commission, with the reason the agreement gives: the pay’s one line for work the agreement doesn’t cover",
   "first": "Pending"
  },
  "src/ui/career/RepresentationPane.tsx#AgenciesPanel": {
@@ -504,10 +595,10 @@
   "first": "Pending"
  },
  "src/ui/career/RepresentationPane.tsx#MaterialsPanel": {
-  "status": "Rewritten",
-  "hash": "cd87e184299a",
-  "on": "2026-10-24",
-  "evidence": "Written for brief 25's Module 3 (real agencies and agents) to docs/STYLE.md and docs/GLOSSARY.md, with no pronoun for a real agent and the game's own agent's words unchanged; read where the player meets it in tests/career-agents.test.ts (the Representation tab drawn with Dan Patack chosen, the notices and history of a played referral, meeting, offer and signing) and in tests/pro-representation-screen.test.ts, tests/journey-agent.test.ts and tests/pro-agent.test.ts for Thomas Ashgrove, with tools/voice-check.mjs, tools/tics.mjs, tools/title-case.mjs, tools/plural-check.mjs and tools/spelling.mjs passing",
+  "status": "Retained",
+  "hash": "aff5f210ef5d",
+  "on": "2026-10-26",
+  "reason": "Your Materials For Her or Him: whether your headshots, résumé and reel or voice demo are current, Check Your Materials and Send Your Materials, what the office asked for, and the assumed times said as assumed",
   "first": "Pending"
  },
  "src/ui/career/RepresentationPane.tsx#MeetingPanel": {
@@ -525,10 +616,10 @@
   "first": "Pending"
  },
  "src/ui/career/RepresentationPane.tsx#ReachPanel": {
-  "status": "Rewritten",
-  "hash": "7242cbbc9d0d",
-  "on": "2026-10-24",
-  "evidence": "Written for brief 25's Module 3 (real agencies and agents) to docs/STYLE.md and docs/GLOSSARY.md, with no pronoun for a real agent and the game's own agent's words unchanged; read where the player meets it in tests/career-agents.test.ts (the Representation tab drawn with Dan Patack chosen, the notices and history of a played referral, meeting, offer and signing) and in tests/pro-representation-screen.test.ts, tests/journey-agent.test.ts and tests/pro-agent.test.ts for Thomas Ashgrove, with tools/voice-check.mjs, tools/tics.mjs, tools/title-case.mjs, tools/plural-check.mjs and tools/spelling.mjs passing",
+  "status": "Retained",
+  "hash": "92eddd780e8c",
+  "on": "2026-10-26",
+  "reason": "How To Reach Her or Him: how you were introduced and when, the people you’ve worked with and Ask For A Referral beside each, with the bar for a referral said as assumed",
   "first": "Pending"
  },
  "src/ui/career/RepresentationPane.tsx#RepresentationPane": {
@@ -538,11 +629,32 @@
   "evidence": "Written for brief 25's Module 3 (real agencies and agents) to docs/STYLE.md and docs/GLOSSARY.md, with no pronoun for a real agent and the game's own agent's words unchanged; read where the player meets it in tests/career-agents.test.ts (the Representation tab drawn with Dan Patack chosen, the notices and history of a played referral, meeting, offer and signing) and in tests/pro-representation-screen.test.ts, tests/journey-agent.test.ts and tests/pro-agent.test.ts for Thomas Ashgrove, with tools/voice-check.mjs, tools/tics.mjs, tools/title-case.mjs, tools/plural-check.mjs and tools/spelling.mjs passing",
   "first": "Pending"
  },
- "src/ui/career/RepresentationPane.tsx#WhyPanel": {
+ "src/ui/career/RepresentationPane.tsx#TermsPanel": {
+  "status": "Retained",
+  "hash": "48bc6f08253c",
+  "on": "2026-10-26",
+  "reason": "Asking For Different Terms: what the agreement covers as it stands and as first offered, your ask and the answer, each ask with the chance the game puts on it, and the line saying every figure here is the game’s own but the commission",
+  "first": "Pending"
+ },
+ "src/ui/career/RepresentationPane.tsx#WAY": {
+  "status": "Retained",
+  "hash": "2f3974307603",
+  "on": "2026-10-26",
+  "reason": "Each way in as How To Reach says it: through the School’s follow-up after the showcase, a referral from someone you’ve worked with on a finished job, an introduction at a festival where your film screens and you do its press",
+  "first": "Pending"
+ },
+ "src/ui/career/RepresentationPane.tsx#waysIn": {
   "status": "Rewritten",
-  "hash": "c1e0d1745413",
-  "on": "2026-10-24",
-  "evidence": "Written for brief 25's Module 3 (real agencies and agents) to docs/STYLE.md and docs/GLOSSARY.md, with no pronoun for a real agent and the game's own agent's words unchanged; read where the player meets it in tests/career-agents.test.ts (the Representation tab drawn with Dan Patack chosen, the notices and history of a played referral, meeting, offer and signing) and in tests/pro-representation-screen.test.ts, tests/journey-agent.test.ts and tests/pro-agent.test.ts for Thomas Ashgrove, with tools/voice-check.mjs, tools/tics.mjs, tools/title-case.mjs, tools/plural-check.mjs and tools/spelling.mjs passing",
+  "hash": "fd6d9fb5c2cc",
+  "on": "2026-10-26",
+  "evidence": "Read again on 2026-10-26: the one-way line said the game reads a referral as not unsolicited, the engine’s reads and a negative a player has to turn round; it now says in the game a referral makes a submission one it asked for. tests/b27-representation-screen.test.ts holds the new words on her panel",
+  "first": "Pending"
+ },
+ "src/ui/career/RepresentationPane.tsx#WhyPanel": {
+  "status": "Retained",
+  "hash": "661cdd26e8c6",
+  "on": "2026-10-26",
+  "reason": "Why It Went This Way: the last decision’s date, the factors each against a bar the game sets, how many an approach needs, the chance against the year’s other actors, and that better work raises it and nothing makes it certain",
   "first": "Pending"
  }
 }

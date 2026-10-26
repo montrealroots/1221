@@ -367,7 +367,7 @@ describe('casting’s direction in the room', () => {
     expect(sim.execute({ kind: 'pro.record_take', payload: { opportunityId: o.id } }).error).toBe('There’s no self-tape asked for.');
     expect(sim.execute({ kind: 'pro.send_take', payload: { opportunityId: o.id, take: 0 } }).error).toBe('There’s no self-tape asked for.');
     const a = atRound(sim, t, week);
-    expect(sim.execute({ kind: 'pro.send_take', payload: { opportunityId: a.id, take: 0 } }).error).toBe('Nothing’s recorded yet, so there’s nothing to send. Record one first.');
+    expect(sim.execute({ kind: 'pro.send_take', payload: { opportunityId: a.id, take: 0 } }).error).toBe('There’s nothing to send yet: record one first.');
     // Chosen, the way of playing is kept through a save.
     sim.must({ kind: 'pro.choose_approach', payload: { opportunityId: a.id, pace: 'driven' } });
     expect(opp(reload(sim), a.id).playing).toMatchObject({ pace: 'driven', prep: 0 });

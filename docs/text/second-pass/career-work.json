@@ -1,25 +1,4 @@
 {
- "src/engine/content/languages.ts#languagesProblems": {
-  "status": "Retained",
-  "hash": "fbd29b94bb98",
-  "on": "2026-10-26",
-  "reason": "Each refusal names the slip and what to do: a language listed twice, English under fluent when training and every part are in English, no native language, too many; said before the player can leave the card",
-  "first": "Pending"
- },
- "src/engine/content/languages.ts#LEVEL_LABEL": {
-  "status": "Retained",
-  "hash": "869350c2ea91",
-  "on": "2026-10-26",
-  "reason": "Native, Fluent and Conversational, the three levels a player picks from, each defined on the card in one plain sentence and the words the résumé and The Language repeat",
-  "first": "Pending"
- },
- "src/engine/content/languages.ts#SPOKEN_NAMES": {
-  "status": "Retained",
-  "hash": "a612471053af",
-  "on": "2026-10-26",
-  "reason": "Mandarin, the one language whose everyday name differs from the list’s own, shown as a player would say it",
-  "first": "Pending"
- },
  "src/engine/content/slate.ts#AWAY_TRIP": {
   "status": "Rewritten",
   "hash": "fb1297cbf837",
@@ -953,9 +932,9 @@
  },
  "src/engine/systems/offers.ts#sendRefusal": {
   "status": "Rewritten",
-  "hash": "9a5abbf3f988",
+  "hash": "5cfdf8410ced",
   "on": "2026-10-26",
-  "evidence": "Read again on 2026-10-26: the no-take refusal said a take, which the engine-speak ratchet counted; it now says nothing’s recorded yet, so there’s nothing to send, record one first, with the Record A Take button beside it on the Takes panel. tests/b27-sides.test.ts holds the new words, and the due-time refusal gives the date and time",
+  "evidence": "tests/b27-sides.test.ts asserts the refusal's new words (an unsent tape); reworded 2026-10-26 to open on what there is to do, for the tics check",
   "first": "Pending"
  },
  "src/engine/systems/offers.ts#sendTake": {

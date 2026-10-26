@@ -112,10 +112,10 @@ const AREAS2 = [
   // career core's, so the builders working at once each keep their own status files.
   // From 2026-10-24 (brief 25, Module 5) the ways of working too, the work loop's own, read by the module that wrote them.
   // From 2026-10-24 (brief 27, Area B) the slate too, the work loop's supply, read by the area that built it.
-  // From 2026-10-25 (brief 27, wave 1) the actor's side of casting (`systems/offers.ts`) and the languages a part is
-  // written in (`systems/speaking.ts`, `content/languages.ts`): until this entry the fallback filed the systems under health
-  // and the languages' list under frame.
-  ['career-work', [/^src\/engine\/systems\/(projobs|workflow|slate|offers|speaking)\.ts$/, /^src\/engine\/content\/(workflows|slate|languages)\.ts$/, /^src\/ui\/career\/OpportunitiesPane\.tsx$/]],
+  // From 2026-10-25 (brief 27, wave 1) the actor's side of casting (`systems/offers.ts`) and a part's other language
+  // (`systems/speaking.ts`): until this entry the fallback filed both under health. The languages' own list
+  // (`content/languages.ts`) stays with creation's area, frame, which had read its 154 names before brief 27.
+  ['career-work', [/^src\/engine\/systems\/(projobs|workflow|slate|offers|speaking)\.ts$/, /^src\/engine\/content\/(workflows|slate)\.ts$/, /^src\/ui\/career\/OpportunitiesPane\.tsx$/]],
   // From 2026-10-23 (brief 25, Module 1): work abroad's own sources, the trip and the countries' rules, read by the module
   // that wrote them.
   // From 2026-10-24 (brief 25, Module 6) the charts, the awards and festivals and their tab too: the industry's world,
