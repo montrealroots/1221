@@ -786,3 +786,29 @@ of a feature. Nothing explains the game to the player from inside the game; the 
 does it.
 
 Capture: `captures/02-new-build/07-home-new.png` (Home with the manual's links gone).
+
+---
+
+## 20. The first build's scope is closed (2026-10-26)
+
+**Owner:** "I think that's it as far as what I want for the first build of this new SLATE."
+
+The first build is the nine screens in `captures/02-new-build/`, in the player's order, as `SCREENS.md` describes
+them: the startup screen (entry 1); the slots screen (entry 2); creation in five steps, Identity (entries 3, 13),
+Background (entries 9, 11), Genres (entry 12), Starting Point as Your Money (entry 14), Review (entry 15); and Home
+on the first morning (entries 16 to 19), with the clock, the date and town line, the weather, What Needs You, Up Next
+and the calendar, Recent Updates, and Sleep held.
+
+Behind them, the engines the first build carries, each under entries 4 to 7 and 19 (a real engine, researched to the
+source, covering the whole map, with zero decoration): persistence and the save slots; the gazetteer and the map;
+the clock and its zones; the weather and its climates; the banks, the currency, the card and the credit record; the
+papers (passports, ID, visas, permissions); the calendar and the notices; the family's means; citizenship; languages;
+and the readers still to be written for Billed As, race or ethnicity, what your family did, where you grew up, the
+portrait and the genres, each required to exist before its field ships.
+
+Not in the first build, by the owner's rulings: Yale, the School, the career, the attributes, dispositions and
+traits, the tutorial and the manual, the body, the household's food and meals, energy and stress, readiness, the
+earlier residence, and the free-text background.
+
+Open, in the owner's hands: the premise (what the life is a life of), home on the first morning, the start date,
+Sleep, the wording of every screen in the owner's voice, and the clean repository the folder goes to.
