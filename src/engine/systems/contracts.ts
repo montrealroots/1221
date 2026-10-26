@@ -368,10 +368,17 @@ export function entitle(sim: Simulation, person: Person, e: Engagement, t: Proje
   const all = residualsOf(sim, person);
   const had = all.find((r) => r.engagementId === e.id);
   if (had) return had;
+  // A pilot (from the review of 2026-10-25, brief 27's S1; `systems/continuity.ts`): its network passed on it, no telecast
+  // and so no residual; picked up or not yet decided, its first telecast no earlier than its release on the clock, which
+  // the wrap has already held past the network's word. Until then a pilot's first telecast came seventy days after its
+  // wrap as any episode's does, before the word for a pilot shot in winter, and after a pass all the same.
+  if (t.pilot && e.pilot && !e.pilot.picked) return undefined;
+  const release = t.pilot ? sim.universe.scheduled.find((i) => i.status === 'pending' && i.kind === 'pro.release' && i.refId === e.creditId)?.at : undefined;
+  const first = Math.max(evening(sim.now, RESIDUALS.firstAfterDays), release !== undefined ? evening(release, 0) : 0);
   const r: Residual = {
     id: sim.nextId('pro'), engagementId: e.id, projectId: t.id, role: t.role.part, at: sim.now,
     program: clause.program, ceiling: clause.ceiling, base: totalActualCompensation(e),
-    exploitations: [{ key: `${e.id}:first`, kind: 'first-telecast', at: evening(sim.now, RESIDUALS.firstAfterDays), status: 'planned' }],
+    exploitations: [{ key: `${e.id}:first`, kind: 'first-telecast', at: first, status: 'planned' }],
     calculations: [], settlements: [],
   };
   all.push(r);

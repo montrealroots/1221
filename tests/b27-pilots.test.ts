@@ -24,7 +24,7 @@ import { PILOTS, keepProject, pilotsOf, slatePartsAt } from '@/engine/systems/sl
 import { PILOT, PILOT_KIND, pilotChance, pilotPart, pilotSeries } from '@/engine/systems/continuity';
 import { productionKey, qualityOf, termOf } from '@/engine/systems/market';
 import { optionDrawn } from '@/engine/systems/series';
-import { clauseOf } from '@/engine/systems/contracts';
+import { RESIDUAL_AIR_KIND, clauseOf } from '@/engine/systems/contracts';
 import { premiereOf } from '@/engine/systems/awards';
 import { creditWords, pageOf, projectKey } from '@/engine/systems/reference';
 import { ensurePro, reelSources, type Engagement } from '@/engine/systems/pro';
@@ -131,6 +131,9 @@ describe('pilots on the slate', () => {
     expect(e.promo).toBeUndefined();
     expect(premiereOf(sim, sim.player, c)).toBeUndefined();
     expect(creditWords(sim, sim.player, c)).toBe('Shot, and its network passed on the pilot: it won’t air');
+    // No telecast planned at the wrap, so no residual.
+    expect(sim.player.pro!.residuals?.some((r) => r.engagementId === e.id)).toBeFalsy();
+    expect(sim.universe.scheduled.some((i) => i.status === 'pending' && i.kind === RESIDUAL_AIR_KIND && String(i.payload.key).startsWith(e.id))).toBe(false);
     // Past the day it would have aired: still shot, never released, never on a reel.
     played(sim, addDays(t.pilot!.decideAt, PILOT.airsDays + 30, NY));
     expect(c.status).toBe('shot');
@@ -153,6 +156,8 @@ describe('pilots on the slate', () => {
       expect(option).toMatchObject({ season: 1, year: zonedParts(t.pilot!.decideAt, NY).year, status: 'open' });
       expect(sim.universe.scheduled.some((i) => i.kind === PILOT_KIND && i.refId === e.id && i.at === t.pilot!.decideAt && i.status === 'pending')).toBe(true);
       expect(due).toBeGreaterThanOrEqual(addDays(t.pilot!.decideAt, PILOT.airsDays, NY));
+      // Its first telecast, for the residual, no earlier than that release: nothing of a pilot airs before the word.
+      expect(sim.player.pro!.residuals!.find((r) => r.engagementId === e.id)!.exploitations[0]!.at).toBeGreaterThanOrEqual(due!);
       expect(pageOf(sim, sim.player, projectKey(t))!.sections.flatMap((x) => x.facts).find((f) => f.label === 'The Pilot')!.words).toContain(`A pilot for ${t.pilot!.network}, a network invented for the game`);
       // TEST SETUP: the days judged Exceptional.
       judgedAll(e, 'exceptional');
@@ -198,10 +203,14 @@ describe('pilots on the slate', () => {
     expect(w.c!.release).toEqual({ kind: 'shelved' });
     expect(twin.universe.scheduled.some((i) => i.kind === RELEASE_KIND && i.refId === w.c!.id && i.status === 'pending')).toBe(false);
     expect(premiereOf(twin, twin.player, w.c!)).toBeUndefined();
+    // The residual planned at the wrap went with its telecast: nothing aired, nothing owed.
+    expect(twin.player.pro!.residuals?.some((r) => r.engagementId === w.e.id)).toBeFalsy();
+    expect(twin.universe.scheduled.some((i) => i.status === 'pending' && i.kind === RESIDUAL_AIR_KIND && String(i.payload.key).startsWith(w.e.id))).toBe(false);
     expect(notices(twin).some((n) => n.startsWith(`${again.t.project} Isn’t Picked Up | ${again.t.pilot!.network} passed on ${again.t.project}: it won’t go to series, and the pilot won’t air.`))).toBe(true);
     expect(creditWords(twin, twin.player, w.c!)).toBe('Shot, and its network passed on the pilot: it won’t air');
     twin.advanceTo(w.due! + 30 * MS_DAY);
     expect(w.c!.status).toBe('shot');
+    expect(notices(twin).some((n) => n.startsWith(`${again.t.project} Is On Tonight`) || n.startsWith(`${again.t.project} Is Released`))).toBe(false);
     expect(reelSources(twin.player, twin.now).some((x) => x.ref === `footage:${w.c!.id}`)).toBe(false);
   }, 1_200_000);
 });

@@ -46,7 +46,7 @@ import { REAL_SERIES, SERIES, addSeries, decisionAt, episodeDays, episodesFrom, 
 import { KIND_PROFILES } from '../content/slate';
 import { BAND_LABEL, type Band } from './coursework';
 import { noteEvent, type ContractClause, type Engagement, type Opportunity } from './pro';
-import { clauseOf, OPTION_RAISE } from './contracts';
+import { clauseOf, OPTION_RAISE, RESIDUAL_AIR_KIND } from './contracts';
 import { termOf, qualityOf, productionKey } from './market';
 import {
   AUDIENCE, OPTION_CHANCE, bestBandOf, continuationWords, networkOf, optionDrawn, outletOf, seasonAudience, seasonMade, seasonName,
@@ -466,6 +466,13 @@ export function registerContinuity(sim: Simulation, hooks: SeriesHooks): void {
         for (const i of s.universe.scheduled.filter((x) => x.status === 'pending' && ((x.kind === 'pro.release' && x.refId === c.id) || (x.kind === 'pro.promo' && x.refId === e.id)))) s.timeline.cancel(i.id, s.now);
         delete e.promo;
       }
+      // No telecast, so no residual (from the review of 2026-10-25): the one planned at the wrap goes, nothing of it aired
+      // or owed; a wrap after the word plans none (`entitle`). Until then its first telecast came seventy days after the
+      // wrap, and the player read "Is On Tonight" of a pilot they'd been told would never air.
+      for (const r of (person.pro.residuals ?? []).filter((x) => x.engagementId === e.id)) {
+        for (const i of s.universe.scheduled.filter((x) => x.status === 'pending' && x.kind === RESIDUAL_AIR_KIND && x.refId === r.id)) s.timeline.cancel(i.id, s.now);
+      }
+      if (person.pro.residuals) person.pro.residuals = person.pro.residuals.filter((x) => x.engagementId !== e.id);
       if (option?.status === 'open') { option.status = 'expired'; option.settled = { at: s.now, why: `${t.pilot.network} passed on ${t.project}, so there’s no series to take up the option for.` }; }
       // Said of a credit made at the wrap; before the wrap, of the credit the wrap makes (`atWrap` shelves it then).
       const credits = c ? `${t.role.part} stays on your credits as shot, and the pay was yours.` : `${t.role.part} goes on your credits as shot when the shoot wraps, and the pay is yours.`;
