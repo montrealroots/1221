@@ -43,6 +43,8 @@ await fixSteps('Identity');
 await page.evaluate((languagesHtml) => {
   const card = document.querySelector('.creation > .card');
   const kids = () => [...card.children];
+  // The School's and the career's sentences go from Billed As and from Race Or Ethnicity.
+  for (const el of [...card.querySelectorAll('p, span, div')]) { if (el.children.length) continue; const t = el.textContent; if (/at school you’re cast/.test(t)) el.textContent = 'With They/Them, you choose. Actor and Actress are two words for the same craft, and neither counts for more.'; if (/nothing in the game uses it/.test(t)) el.textContent = 'Choose as many as are true. Leave it blank if you’d rather not say.'; }
   // The age line moves under the birth date.
   const birth = kids().find((k) => k.querySelector && k.querySelector('#birth-year'));
   const age = kids().find((k) => k.classList.contains('callout') && /when you start/.test(k.textContent));
