@@ -270,7 +270,10 @@ last** so the required path runs unbroken from the top to Continue.
 1. **Your face and your name.** The portrait on the left; on the right the legal name (first, middle, last), then
    Preferred Name (defaults to first and last), then Pronouns, then Billed As directly under Pronouns, since pronouns
    settle it and it only opens as a choice under they/them. One block, because that's what a document and an
-   introduction both start with.
+   introduction both start with. **Billed As stays** (owner, 2026-10-26: the difference between actor and actress is
+   wanted, with downstream effects behind it, "same as race and ethnicity"); entry 11's cut of it is withdrawn, and
+   like race or ethnicity it carries the rule of entries 4 to 6: a researched engine that reads it and changes
+   outcomes, written when the premise says what those outcomes are.
 2. **When you were born.** Year, month, day, and the line "You'll be 24 when you start" *directly under them*, where
    the figure comes from. (Today that line is printed at the foot of the page, under Citizenship, far from the
    fields it reads.)
@@ -521,8 +524,8 @@ What this removes, named so none of it comes back by habit:
 - **Everything career:** the `pro.*` engine entire (entry 10), and with it the readers that made Billed As, the
   portrait-as-headshot, playing age, the union name rule, casting breakdowns and the home market mean anything.
   Those engines (entry 4's career rows) are **withdrawn**, not held: they were readers of a system that's gone. The
-  fields they would have served stand or fall on the premise the owner names: Billed As has no reader without
-  casting and is cut unless one appears; the portrait, the legal name and the preferred name keep the readers that
+  fields they would have served stand or fall on the premise the owner names: Billed As was cut here and
+  restored the same day by the owner (entry 3), to carry a reader like race or ethnicity's; the portrait, the legal name and the preferred name keep the readers that
   aren't career (papers, the bank account, the slot, Home); race or ethnicity's reader is open again; the birthplace
   keeps citizenship, the license, the body's draw and the languages.
 - **All the attributes:** the twelve abilities (Emotional Depth, Presence, Listening, Imagination, Focus, Memory,
@@ -586,3 +589,17 @@ columns hold, is decided when the owner says what the life is a life of; the rul
 decided now.
 
 Capture: `captures/02-new-build/04-genres-new.png`.
+
+---
+
+## 13. Billed As, gender, race and ethnicity: kept, each with a researched engine and downstream effects (DECIDED 2026-10-26)
+
+**Owner** (by voice, as understood): the difference between actor and actress is wanted in the new build; "actor" is
+used across genders today, but the choice should stand and have real downstream effects behind it, the same as
+race and ethnicity and everything else on the page.
+
+So on Identity: Pronouns, Billed As (Actor or Actress, settled by she/her and he/him, chosen under they/them) and
+Race Or Ethnicity each stay, each with the rule of entries 4 to 6: an engine that reads the choice and changes
+outcomes downstream, researched to the source, with nothing decorative. What those outcomes are waits on the
+premise (entry 11), as race or ethnicity's does; the decision that each must have them is made now, and a field
+that ends up with none is cut, not kept.

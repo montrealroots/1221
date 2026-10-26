@@ -43,8 +43,6 @@ await fixSteps('Identity');
 await page.evaluate((languagesHtml) => {
   const card = document.querySelector('.creation > .card');
   const kids = () => [...card.children];
-  // Billed As goes.
-  [...card.querySelectorAll('.identity-fields .field-row')].find((r) => /Billed As/.test(r.textContent)).remove();
   // The age line moves under the birth date.
   const birth = kids().find((k) => k.querySelector && k.querySelector('#birth-year'));
   const age = kids().find((k) => k.classList.contains('callout') && /when you start/.test(k.textContent));
@@ -61,8 +59,6 @@ await page.evaluate((languagesHtml) => {
   const hr2 = document.createElement('hr'); hr2.className = 'divider';
   cit.after(hr1, lang, hr2, race);
   // The step's needs list loses the Billed As line.
-  for (const li of document.querySelectorAll('.callout-warning li')) if (/billed/.test(li.textContent)) li.remove();
-  const warn = document.querySelector('.callout-warning'); if (warn && !warn.querySelector('li')) warn.remove();
 }, languagesHtml);
 await page.evaluate(() => { for (const p of document.querySelectorAll('.creation .panel-head p')) if (/before Yale/.test(p.textContent)) p.textContent = 'Where you were born, which isn’t always where you live now. It’s what you tell people when they ask. It doesn’t decide your citizenship: you say that yourself.'; });
 console.log('strip', await page.evaluate(() => [...document.querySelectorAll('.creation-step')].map((s) => s.textContent.trim() + ':' + (s.getAttribute('data-state') || '-')).join(' | ')));

@@ -42,13 +42,13 @@ another on a phone).
 
 The first of the creation steps. Header "Who Are You Going To Be?" with its one-line premise (to be rewritten with
 the premise), Cancel at the right, and the step strip across the top. The steps are now **Identity, Background,
-Starting Point, Review** (Dispositions & Traits is gone; Genres & Background became Background). One tall card, in
+Genres, Starting Point, Review** (Dispositions & Traits is gone; Genres & Background split into two steps). One tall card, in
 this order, top to bottom (entry 3):
 
 1. **Your face and your name.** The portrait frame on the left (drop a photo, any size, cropped to a headshot;
    its reader in the new build is open, since the headshot's career reader is gone; it keeps the Profile and the
-   slot card). On the right: First Name, Middle Name (optional), Last Name; Preferred Name; Pronouns.
-   *Billed As is gone*: its only reader was casting.
+   slot card). On the right: First Name, Middle Name (optional), Last Name; Preferred Name; Pronouns; Billed As (Actor or
+   Actress), kept with an engine to come, like race or ethnicity.
 2. **When you were born.** Year, Month, Day, and directly under them the line that says how old you'll be when you
    start.
 3. **Where you were born.** The world map (hover a country, Zoom In, Hide Map), then Country, State Or Region, and
