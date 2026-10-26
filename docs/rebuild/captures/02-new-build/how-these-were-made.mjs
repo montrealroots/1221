@@ -56,6 +56,7 @@ await page.evaluate((languagesHtml) => {
   const hr1 = document.createElement('hr'); hr1.className = 'divider';
   const lang = document.createElement('div'); lang.innerHTML = languagesHtml;
   const h2 = lang.querySelector('h2'); if (h2) { const h3 = document.createElement('h3'); h3.textContent = 'Languages'; h2.replaceWith(h3); }
+  const lp = lang.querySelector('.panel-head p'); if (lp) lp.textContent = 'The languages you speak, and how well.';
   const hr2 = document.createElement('hr'); hr2.className = 'divider';
   cit.after(hr1, lang, hr2, race);
   // The step's needs list loses the Billed As line.
@@ -137,6 +138,7 @@ await page.evaluate(() => {
   const did = fam.cloneNode(true); did.firstElementChild.textContent = 'What Your Family Did'; did.lastElementChild.textContent = '—';
   const grew = fam.cloneNode(true); grew.firstElementChild.textContent = 'Where You Grew Up'; grew.lastElementChild.textContent = 'New York, United States';
   fam.after(did, grew);
+  guide?.remove();
   const gcard = bg.cloneNode(false); const eb = bg.querySelector('.eyebrow').cloneNode(true); eb.textContent = 'Genres'; gcard.append(eb, genres); bg.after(gcard);
 });
 await wait(300); await shot('06-review-new');

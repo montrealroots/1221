@@ -795,7 +795,8 @@ Capture: `captures/02-new-build/07-home-new.png` (Home with the manual's links g
 
 The first build is the nine screens in `captures/02-new-build/`, in the player's order, as `SCREENS.md` describes
 them: the startup screen (entry 1); the slots screen (entry 2); creation in five steps, Identity (entries 3, 13),
-Background (entries 9, 11), Genres (entry 12), Starting Point as Your Money (entry 14), Review (entry 15); and Home
+Background (entries 9, 11), Genres (entry 12), Starting Point as Your Money (entry 14), Review (entry 15, less The Guide card, gone with the tutorial on 2026-10-26: "anything that has been removed, it and
+its engine needs to be gone from the pages too"); and Home
 on the first morning (entries 16 to 19), with the clock, the date and town line, the weather, What Needs You, Up Next
 and the calendar, Recent Updates, and Sleep held.
 
@@ -812,3 +813,9 @@ earlier residence, and the free-text background.
 
 Open, in the owner's hands: the premise (what the life is a life of), home on the first morning, the start date,
 Sleep, the wording of every screen in the owner's voice, and the clean repository the folder goes to.
+
+**Sweep of 2026-10-26, at the owner's word that nothing removed may remain on a page:** The Guide card is off Review;
+the Languages card on Identity loses its sentences about training, parts and the résumé (career readers that are
+gone) and says only "The languages you speak, and how well."; the earlier Home capture with the tutorial gone but the
+School still on it is dropped from the folder. Every other page was read again against entries 8, 10, 11, 16, 17, 18
+and 19 and holds nothing of what they removed.

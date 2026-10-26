@@ -89,7 +89,7 @@ Where the life begins on the first morning is open until the premise.
 ## Screen 6. Creation, Review
 
 Ready To Begin with the name and a line under it (age, billed as, home, the last open until the premise). Four
-sections in the steps' order: Identity, Background, Genres, Money, each saying back what its step took. The paused-clock line (the Guide choice is gone with the tutorial, entry 16). Back and Begin. The School line, the dispositions, the free-text sentence, Where You
+sections in the steps' order: Identity, Background, Genres, Money, each saying back what its step took. The paused-clock line. Back and Begin. (The Guide card is gone with the tutorial, entry 16.) The School line, the dispositions, the free-text sentence, Where You
 Live and Food Each Month are gone (entry 15).
 
 ## Screen 7. Home, the first morning
