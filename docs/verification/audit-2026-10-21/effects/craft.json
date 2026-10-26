@@ -775,7 +775,7 @@
    "kind": "prerequisite",
    "claim": "The profile opens with the guide’s chapter “${CHAPTER}”.",
    "entryFile": "src/engine/content/guide/craft.ts",
-   "holds": "The profile chapter opens `ui.profile` (src/engine/content/tutorial.ts:441), which the shell reads (src/ui/shell/GameShell.tsx:51).",
+   "holds": "The profile chapter opens `ui.profile` (src/engine/content/tutorial.ts:444), which the shell reads (src/ui/shell/GameShell.tsx:51).",
    "tests": [
     "tests/b20-craft-promises.test.ts",
     "tests/guide-examples-craft.test.ts"
@@ -1426,7 +1426,7 @@
    "kind": "optional",
    "claim": "Rested, at readiness ${EVALUATION.sufficientReadiness} or more, tiredness costs a take nothing.",
    "entryFile": "src/engine/content/guide/craft.ts",
-   "holds": "The condition is 1 at readiness `EVALUATION.sufficientReadiness` or more (src/engine/content/tasks.ts:314; the take's condition, src/engine/systems/briefs.ts:628).",
+   "holds": "The condition is 1 at readiness `EVALUATION.sufficientReadiness` or more (src/engine/content/tasks.ts:338; the take's condition, src/engine/systems/briefs.ts:628).",
    "tests": [
     "tests/b20-craft-promises.test.ts",
     "tests/b20-craft-bite.test.ts"
@@ -2360,7 +2360,7 @@
    "kind": "evaluation",
    "claim": "Knowing the project’s genres is part of an audition’s and a self-tape’s preparation, complete at ${pct(BRIEF.complete.genre)}, and half of how well casting thinks you suit the role.",
    "entryFile": "src/engine/content/guide/craft.ts",
-   "holds": "From brief 21: the project's genres, weighed (`relevantGenre`), are half of the role's fit (`fitOf`, src/engine/systems/projobs.ts:359), which sets casting's chance; and a part of every round's preparation, in the room as on tape, complete at `BRIEF.complete.genre` (`auditionContext`, src/engine/systems/projobs.ts:1069), read by interpretation (src/engine/content/tasks.ts `audition`, `tape`). From brief 22 (2026-10-22) the genres are the role's as stated (`projectGenresOf`, `requirementOfRole`: its own, else its project's), and a related genre counts across one direct link only, at 0.65 or 0.40 (`ENGAGEMENT.related`, measured in docs/verification/career-genre-2026-10-22/comparisons.md).",
+   "holds": "From brief 21: the project's genres, weighed (`relevantGenre`), are half of the role's fit (`fitOf`, src/engine/systems/projobs.ts:370), which sets casting's chance; and a part of every round's preparation, in the room as on tape, complete at `BRIEF.complete.genre` (`auditionContext`, src/engine/systems/projobs.ts:1105), read by interpretation (src/engine/content/tasks.ts `audition`, `tape`). From brief 22 (2026-10-22) the genres are the role's as stated (`projectGenresOf`, `requirementOfRole`: its own, else its project's), and a related genre counts across one direct link only, at 0.65 or 0.40 (`ENGAGEMENT.related`, measured in docs/verification/career-genre-2026-10-22/comparisons.md).",
    "tests": [
     "tests/b20-career-effects.test.ts",
     "tests/b22-genre-weights.test.ts",

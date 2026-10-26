@@ -385,7 +385,7 @@
    "tests/looks.test.ts",
    "tests/evidence-g31-ui.test.ts",
    "tests/creation.test.ts",
-   "src/engine/world/bootstrap.ts:322-440 createUniverse reads each field once and puts it where the effects row says",
+   "src/engine/world/bootstrap.ts:329-440 createUniverse reads each field once and puts it where the effects row says",
    "src/engine/index.ts:197-259 populateWorld: the family’s money, its card and the score, the bank chosen"
   ]
  },
@@ -401,7 +401,7 @@
    "tests/banking.test.ts",
    "tests/evidence-g29-ui.test.ts",
    "tests/b20-creation-twins.test.ts",
-   "src/engine/world/bootstrap.ts:322-440 createUniverse reads each field once and puts it where the effects row says",
+   "src/engine/world/bootstrap.ts:329-440 createUniverse reads each field once and puts it where the effects row says",
    "src/engine/index.ts:197-259 populateWorld: the family’s money, its card and the score, the bank chosen"
   ]
  },
@@ -417,7 +417,7 @@
    "tests/b20-creation-twins.test.ts",
    "tests/evidence-g27-ui.test.ts",
    "tests/creation.test.ts",
-   "src/engine/world/bootstrap.ts:322-440 createUniverse reads each field once and puts it where the effects row says",
+   "src/engine/world/bootstrap.ts:329-440 createUniverse reads each field once and puts it where the effects row says",
    "src/engine/index.ts:197-259 populateWorld: the family’s money, its card and the score, the bank chosen"
   ]
  },
@@ -433,7 +433,7 @@
    "tests/b20-creation-twins.test.ts",
    "tests/evidence-g27-ui.test.ts",
    "tests/creation.test.ts",
-   "src/engine/world/bootstrap.ts:322-440 createUniverse reads each field once and puts it where the effects row says",
+   "src/engine/world/bootstrap.ts:329-440 createUniverse reads each field once and puts it where the effects row says",
    "src/engine/index.ts:197-259 populateWorld: the family’s money, its card and the score, the bank chosen"
   ]
  },
@@ -449,7 +449,7 @@
    "tests/b20-creation-twins.test.ts",
    "tests/evidence-g27-ui.test.ts",
    "tests/creation.test.ts",
-   "src/engine/world/bootstrap.ts:322-440 createUniverse reads each field once and puts it where the effects row says",
+   "src/engine/world/bootstrap.ts:329-440 createUniverse reads each field once and puts it where the effects row says",
    "src/engine/index.ts:197-259 populateWorld: the family’s money, its card and the score, the bank chosen"
   ]
  },
@@ -464,7 +464,7 @@
    "tests/b27-creation-origins.test.ts",
    "tests/citizenship.test.ts",
    "tests/creation.test.ts",
-   "src/engine/world/bootstrap.ts:322-330 createUniverse takes the citizenship chosen (citizenshipOf), the birthplace's only for a life made without one, and refuses one nobody holds; src/engine/index.ts:955-970 an opening keeps a valid citizenship and fills only a missing one; src/ui/creation/CharacterCreation.tsx:566-596 Identity asks for it, with Same As Your Place Of Birth and the Fourteenth Amendment's note",
+   "src/engine/world/bootstrap.ts:329-330 createUniverse takes the citizenship chosen (citizenshipOf), the birthplace's only for a life made without one, and refuses one nobody holds; src/engine/index.ts:955-970 an opening keeps a valid citizenship and fills only a missing one; src/ui/creation/CharacterCreation.tsx:570-596 Identity asks for it, with Same As Your Place Of Birth and the Fourteenth Amendment's note",
    "tests/b27-creation-origins.test.ts born in New York as a citizen of Japan against born in Tokyo as an American: passport, F-1, permission, license and bank follow the citizenship and the previous residence; three mutations caught (creation ignoring the choice, an opening re-deriving it, the license back to the birth state)"
   ]
  },
@@ -480,7 +480,7 @@
    "tests/b20-creation-noleak.test.ts",
    "tests/creation.test.ts",
    "tests/evidence-g31-ui.test.ts",
-   "src/engine/world/bootstrap.ts:322-440 createUniverse reads each field once and puts it where the effects row says",
+   "src/engine/world/bootstrap.ts:329-440 createUniverse reads each field once and puts it where the effects row says",
    "src/engine/index.ts:197-259 populateWorld: the family’s money, its card and the score, the bank chosen"
   ]
  },
@@ -496,7 +496,7 @@
    "tests/b20-creation-twins.test.ts",
    "tests/need-paths.test.ts",
    "tests/evidence3-person.test.ts",
-   "src/engine/world/bootstrap.ts:322-440 createUniverse reads each field once and puts it where the effects row says",
+   "src/engine/world/bootstrap.ts:329-440 createUniverse reads each field once and puts it where the effects row says",
    "src/engine/index.ts:197-259 populateWorld: the family’s money, its card and the score, the bank chosen"
   ]
  },
@@ -512,7 +512,7 @@
    "tests/b20-creation-noleak.test.ts",
    "tests/creation.test.ts",
    "tests/evidence-g31-ui.test.ts",
-   "src/engine/world/bootstrap.ts:322-440 createUniverse reads each field once and puts it where the effects row says",
+   "src/engine/world/bootstrap.ts:329-440 createUniverse reads each field once and puts it where the effects row says",
    "src/engine/index.ts:197-259 populateWorld: the family’s money, its card and the score, the bank chosen"
   ]
  },
@@ -548,7 +548,7 @@
    "tests/evidence-g28-ui.test.ts",
    "tests/body.test.ts",
    "tests/b20-creation-looks.test.ts",
-   "src/engine/world/bootstrap.ts:322-440 createUniverse reads each field once and puts it where the effects row says",
+   "src/engine/world/bootstrap.ts:329-440 createUniverse reads each field once and puts it where the effects row says",
    "src/engine/index.ts:197-259 populateWorld: the family’s money, its card and the score, the bank chosen"
   ]
  },
@@ -564,7 +564,7 @@
    "tests/home-account-creation.test.ts",
    "tests/home-account-abroad.test.ts",
    "tests/home-account-tax.test.ts",
-   "src/engine/world/bootstrap.ts:322-440 createUniverse reads each field once and puts it where the effects row says",
+   "src/engine/world/bootstrap.ts:329-440 createUniverse reads each field once and puts it where the effects row says",
    "src/engine/index.ts:197-259 populateWorld: the family’s money, its card and the score, the bank chosen"
   ]
  },
@@ -581,7 +581,7 @@
    "tests/citizenship.test.ts",
    "tests/documents.test.ts",
    "tests/evidence-g27-ui.test.ts",
-   "src/engine/world/bootstrap.ts:322-440 createUniverse reads each field once and puts it where the effects row says",
+   "src/engine/world/bootstrap.ts:329-440 createUniverse reads each field once and puts it where the effects row says",
    "src/engine/index.ts:197-259 populateWorld: the family’s money, its card and the score, the bank chosen"
   ]
  },
@@ -610,7 +610,7 @@
    "tests/b20-creation-noleak.test.ts",
    "tests/creation.test.ts",
    "tests/evidence-g31-ui.test.ts",
-   "src/engine/world/bootstrap.ts:322-440 createUniverse reads each field once and puts it where the effects row says",
+   "src/engine/world/bootstrap.ts:329-440 createUniverse reads each field once and puts it where the effects row says",
    "src/engine/index.ts:197-259 populateWorld: the family’s money, its card and the score, the bank chosen"
   ]
  },
@@ -626,7 +626,7 @@
    "tests/b20-creation-noleak.test.ts",
    "tests/creation.test.ts",
    "tests/evidence-g31-ui.test.ts",
-   "src/engine/world/bootstrap.ts:322-440 createUniverse reads each field once and puts it where the effects row says",
+   "src/engine/world/bootstrap.ts:329-440 createUniverse reads each field once and puts it where the effects row says",
    "src/engine/index.ts:197-259 populateWorld: the family’s money, its card and the score, the bank chosen"
   ]
  },
@@ -641,7 +641,7 @@
   "evidence": [
    "tests/b20-creation-twins.test.ts",
    "tests/evidence2-b10.test.ts",
-   "src/engine/world/bootstrap.ts:322-440 createUniverse reads each field once and puts it where the effects row says",
+   "src/engine/world/bootstrap.ts:329-440 createUniverse reads each field once and puts it where the effects row says",
    "src/engine/index.ts:197-259 populateWorld: the family’s money, its card and the score, the bank chosen"
   ]
  },
@@ -658,7 +658,7 @@
    "tests/evidence-g27-ui.test.ts",
    "tests/attributes-complete.test.ts",
    "tests/creation.test.ts",
-   "src/engine/world/bootstrap.ts:322-440 createUniverse reads each field once and puts it where the effects row says",
+   "src/engine/world/bootstrap.ts:329-440 createUniverse reads each field once and puts it where the effects row says",
    "src/engine/index.ts:197-259 populateWorld: the family’s money, its card and the score, the bank chosen"
   ]
  },
@@ -676,7 +676,7 @@
    "tests/evidence2-b10.test.ts",
    "tests/evidence-g27-ui.test.ts",
    "tests/evidence-g28-ui.test.ts",
-   "src/engine/world/bootstrap.ts:322-440 createUniverse reads each field once and puts it where the effects row says",
+   "src/engine/world/bootstrap.ts:329-440 createUniverse reads each field once and puts it where the effects row says",
    "src/engine/index.ts:197-259 populateWorld: the family’s money, its card and the score, the bank chosen"
   ]
  },
@@ -695,7 +695,7 @@
    "tests/evidence2-b10.test.ts",
    "tests/traits-connected.test.ts",
    "tests/creation.test.ts",
-   "src/engine/world/bootstrap.ts:322-440 createUniverse reads each field once and puts it where the effects row says",
+   "src/engine/world/bootstrap.ts:329-440 createUniverse reads each field once and puts it where the effects row says",
    "src/engine/index.ts:197-259 populateWorld: the family’s money, its card and the score, the bank chosen"
   ]
  },
@@ -711,7 +711,7 @@
    "tests/b20-creation-noleak.test.ts",
    "tests/portrait.test.ts",
    "tests/evidence-g31-ui.test.ts",
-   "src/engine/world/bootstrap.ts:322-440 createUniverse reads each field once and puts it where the effects row says",
+   "src/engine/world/bootstrap.ts:329-440 createUniverse reads each field once and puts it where the effects row says",
    "src/engine/index.ts:197-259 populateWorld: the family’s money, its card and the score, the bank chosen"
   ]
  },
@@ -727,7 +727,7 @@
    "tests/home-account-creation.test.ts",
    "tests/home-account-abroad.test.ts",
    "tests/home-account-tax.test.ts",
-   "src/engine/world/bootstrap.ts:322-440 createUniverse reads each field once and puts it where the effects row says",
+   "src/engine/world/bootstrap.ts:329-440 createUniverse reads each field once and puts it where the effects row says",
    "src/engine/index.ts:197-259 populateWorld: the family’s money, its card and the score, the bank chosen"
   ]
  },
@@ -743,7 +743,7 @@
    "tests/b20-creation-twins.test.ts",
    "tests/evidence-g27-ui.test.ts",
    "tests/creation.test.ts",
-   "src/engine/world/bootstrap.ts:322-440 createUniverse reads each field once and puts it where the effects row says",
+   "src/engine/world/bootstrap.ts:329-440 createUniverse reads each field once and puts it where the effects row says",
    "src/engine/index.ts:197-259 populateWorld: the family’s money, its card and the score, the bank chosen"
   ]
  },
@@ -759,7 +759,7 @@
    "tests/b20-creation-noleak.test.ts",
    "tests/evidence-g31-ui.test.ts",
    "tests/cohesion.test.ts",
-   "src/engine/world/bootstrap.ts:322-440 createUniverse reads each field once and puts it where the effects row says",
+   "src/engine/world/bootstrap.ts:329-440 createUniverse reads each field once and puts it where the effects row says",
    "src/engine/index.ts:197-259 populateWorld: the family’s money, its card and the score, the bank chosen"
   ]
  },
@@ -775,7 +775,7 @@
    "tests/b20-creation-noleak.test.ts",
    "tests/evidence-g31-ui.test.ts",
    "tests/cohesion.test.ts",
-   "src/engine/world/bootstrap.ts:322-440 createUniverse reads each field once and puts it where the effects row says",
+   "src/engine/world/bootstrap.ts:329-440 createUniverse reads each field once and puts it where the effects row says",
    "src/engine/index.ts:197-259 populateWorld: the family’s money, its card and the score, the bank chosen"
   ]
  },
@@ -791,7 +791,7 @@
    "tests/home-account-creation.test.ts",
    "tests/home-account-abroad.test.ts",
    "tests/home-account-tax.test.ts",
-   "src/engine/world/bootstrap.ts:322-440 createUniverse reads each field once and puts it where the effects row says",
+   "src/engine/world/bootstrap.ts:329-440 createUniverse reads each field once and puts it where the effects row says",
    "src/engine/index.ts:197-259 populateWorld: the family’s money, its card and the score, the bank chosen"
   ]
  },
@@ -807,7 +807,7 @@
    "tests/b20-creation-twins.test.ts",
    "tests/school.test.ts",
    "tests/creation.test.ts",
-   "src/engine/world/bootstrap.ts:322-440 createUniverse reads each field once and puts it where the effects row says",
+   "src/engine/world/bootstrap.ts:329-440 createUniverse reads each field once and puts it where the effects row says",
    "src/engine/index.ts:197-259 populateWorld: the family’s money, its card and the score, the bank chosen"
   ]
  },
@@ -823,7 +823,7 @@
    "tests/b20-creation-twins.test.ts",
    "tests/school.test.ts",
    "tests/creation.test.ts",
-   "src/engine/world/bootstrap.ts:322-440 createUniverse reads each field once and puts it where the effects row says",
+   "src/engine/world/bootstrap.ts:329-440 createUniverse reads each field once and puts it where the effects row says",
    "src/engine/index.ts:197-259 populateWorld: the family’s money, its card and the score, the bank chosen"
   ]
  },
@@ -839,7 +839,7 @@
    "tests/b20-creation-twins.test.ts",
    "tests/creation.test.ts",
    "tests/school.test.ts",
-   "src/engine/world/bootstrap.ts:325-337 the town, its zone and the first instant"
+   "src/engine/world/bootstrap.ts:332-337 the town, its zone and the first instant"
   ]
  },
  "create.startMonth": {
@@ -854,7 +854,7 @@
    "tests/b20-creation-twins.test.ts",
    "tests/school.test.ts",
    "tests/creation.test.ts",
-   "src/engine/world/bootstrap.ts:322-440 createUniverse reads each field once and puts it where the effects row says",
+   "src/engine/world/bootstrap.ts:329-440 createUniverse reads each field once and puts it where the effects row says",
    "src/engine/index.ts:197-259 populateWorld: the family’s money, its card and the score, the bank chosen"
   ]
  },
@@ -870,7 +870,7 @@
    "tests/b20-creation-twins.test.ts",
    "tests/school.test.ts",
    "tests/creation.test.ts",
-   "src/engine/world/bootstrap.ts:322-440 createUniverse reads each field once and puts it where the effects row says",
+   "src/engine/world/bootstrap.ts:329-440 createUniverse reads each field once and puts it where the effects row says",
    "src/engine/index.ts:197-259 populateWorld: the family’s money, its card and the score, the bank chosen"
   ]
  },
@@ -887,7 +887,7 @@
    "tests/tutorial.test.ts",
    "tests/evidence2-b10.test.ts",
    "tests/evidence-g29-ui.test.ts",
-   "src/engine/world/bootstrap.ts:322-440 createUniverse reads each field once and puts it where the effects row says",
+   "src/engine/world/bootstrap.ts:329-440 createUniverse reads each field once and puts it where the effects row says",
    "src/engine/index.ts:197-259 populateWorld: the family’s money, its card and the score, the bank chosen"
   ]
  },
@@ -905,7 +905,7 @@
    "tests/evidence2-b10.test.ts",
    "tests/evidence-g29-ui.test.ts",
    "tests/creation.test.ts",
-   "src/engine/world/bootstrap.ts:322-440 createUniverse reads each field once and puts it where the effects row says",
+   "src/engine/world/bootstrap.ts:329-440 createUniverse reads each field once and puts it where the effects row says",
    "src/engine/index.ts:197-259 populateWorld: the family’s money, its card and the score, the bank chosen"
   ]
  },
@@ -922,7 +922,7 @@
    "tests/evidence-g28-ui.test.ts",
    "tests/body.test.ts",
    "tests/b20-creation-looks.test.ts",
-   "src/engine/world/bootstrap.ts:322-440 createUniverse reads each field once and puts it where the effects row says",
+   "src/engine/world/bootstrap.ts:329-440 createUniverse reads each field once and puts it where the effects row says",
    "src/engine/index.ts:197-259 populateWorld: the family’s money, its card and the score, the bank chosen"
   ]
  },

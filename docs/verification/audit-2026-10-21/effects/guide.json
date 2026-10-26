@@ -1835,7 +1835,7 @@
    "kind": "immediate",
    "claim": "“What’s Coming” opens the calendar, and the dialog that asks what to do when a commitment comes up.",
    "entryFile": "src/engine/content/guide/start.ts",
-   "holds": "“What’s Coming” opens ui.calendar and ui.go (src/engine/content/tutorial.ts:162): Up Next on Home (src/ui/screens/Home.tsx:362) and Go in the stop’s dialog (src/ui/shell/TimeControls.tsx:408), Locked before it.",
+   "holds": "“What’s Coming” opens ui.calendar and ui.go (src/engine/content/tutorial.ts:165): Up Next on Home (src/ui/screens/Home.tsx:362) and Go in the stop’s dialog (src/ui/shell/TimeControls.tsx:408), Locked before it.",
    "tests": [
     "tests/b20-guide-promises.test.ts",
     "tests/b20-guide-chapters.test.ts"
@@ -1851,7 +1851,7 @@
    "kind": "prerequisite",
    "claim": "With the guide, the clock starts paused, and reading “The Clock” opens Play.",
    "entryFile": "src/engine/content/guide/start.ts",
-   "holds": "A life made with the guide starts paused (src/engine/world/bootstrap.ts:359); Play is Locked and world.set_preferences refused until “The Clock”, which opens both (src/engine/content/tutorial.ts:175).",
+   "holds": "A life made with the guide starts paused (src/engine/world/bootstrap.ts:366); Play is Locked and world.set_preferences refused until “The Clock”, which opens both (src/engine/content/tutorial.ts:178).",
    "tests": [
     "tests/b20-guide-promises.test.ts",
     "tests/tutorial.test.ts"
@@ -1898,7 +1898,7 @@
    "kind": "scheduled",
    "claim": "Each payment the contract promised is paid on its payday, and its state says where it stands.",
    "entryFile": "src/engine/content/guide/career.ts",
-   "holds": "Each promised payment is on the clock for its payday (`schedulePay`, src/engine/systems/propay.ts) and its state is read from the record and the clock (`payState`, src/engine/systems/contracts.ts:267).",
+   "holds": "Each promised payment is on the clock for its payday (`schedulePay`, src/engine/systems/propay.ts) and its state is read from the record and the clock (`payState`, src/engine/systems/contracts.ts:306).",
    "tests": [
     "tests/career-contracts.test.ts"
    ],
@@ -1943,7 +1943,7 @@
    "kind": "prerequisite",
    "claim": "The agreements’ rules for a dub, a stunt, an intimate scene and a recall to loop are in the contract.",
    "entryFile": "src/engine/content/guide/career.ts",
-   "holds": "The contract's clauses end on the workflow's rules (`workflowRules`, src/engine/systems/contracts.ts:229), read from the part's format, its dub, its stunts, its intimate scene and whether it can be recalled to loop.",
+   "holds": "The contract's clauses end on the workflow's rules (`workflowRules`, src/engine/systems/contracts.ts:239), read from the part's format, its dub, its stunts, its intimate scene and whether it can be recalled to loop.",
    "tests": [
     "tests/career-contracts.test.ts",
     "tests/career-workflows.test.ts"
@@ -1959,7 +1959,7 @@
    "kind": "scheduled",
    "claim": "A looping session is paid half a day, on the work’s pay.",
    "entryFile": "src/engine/content/guide/career.ts",
-   "holds": "The session worked puts half the contract's day rate (`loopPay`, src/engine/systems/workflow.ts:635) among the engagement's payments, due the Thursday after, and puts it on the clock (`schedulePay`, src/engine/systems/workflow.ts:677).",
+   "holds": "The session worked puts half the contract's day rate (`loopPay`, src/engine/systems/workflow.ts:637) among the engagement's payments, due the Thursday after, and puts it on the clock (`schedulePay`, src/engine/systems/workflow.ts:679).",
    "tests": [
     "tests/career-workflows.test.ts"
    ],
@@ -1989,7 +1989,7 @@
    "kind": "optional",
    "claim": "Recognition makes casting likelier to choose you for a while.",
    "entryFile": "src/engine/content/guide/career.ts",
-   "holds": "Casting's decision passes the player's visibility to its draw (src/engine/systems/projobs.ts:2563), which lifts the chance within casting's ceiling (`castingDraw`), fading over three years (`visibilityOf`).",
+   "holds": "Casting's decision passes the player's visibility to its draw (src/engine/systems/projobs.ts:2660), which lifts the chance within casting's ceiling (`castingDraw`), fading over three years (`visibilityOf`).",
    "tests": [
     "tests/career-awards.test.ts"
    ],

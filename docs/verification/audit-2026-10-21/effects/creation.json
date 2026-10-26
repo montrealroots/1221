@@ -22,7 +22,7 @@
     },
     {
      "what": "the save slot’s name, first and last until refreshMeta writes the name the game calls them",
-     "at": "src/engine/world/bootstrap.ts:353"
+     "at": "src/engine/world/bootstrap.ts:360"
     }
    ],
    "experienced": "Said back on Review (Legal Name), the Player Profile and Home. Nothing decides on it: two lives alike but for their legal and called names are the same save to the byte three months on, where the names are taken out (the seed is the save’s, and SlateApp makes it from the names and the moment only as entropy).",
@@ -70,7 +70,7 @@
     },
     {
      "what": "the save slot’s name, first and last until refreshMeta writes the name the game calls them",
-     "at": "src/engine/world/bootstrap.ts:353"
+     "at": "src/engine/world/bootstrap.ts:360"
     }
    ],
    "experienced": "Said back on Review (Legal Name), the Player Profile and Home. Nothing decides on it: two lives alike but for their legal and called names are the same save to the byte three months on, where the names are taken out (the seed is the save’s, and SlateApp makes it from the names and the moment only as entropy).",
@@ -118,7 +118,7 @@
     },
     {
      "what": "the save slot’s name, first and last until refreshMeta writes the name the game calls them",
-     "at": "src/engine/world/bootstrap.ts:353"
+     "at": "src/engine/world/bootstrap.ts:360"
     }
    ],
    "experienced": "Said back on Review (Legal Name), the Player Profile and Home. Nothing decides on it: two lives alike but for their legal and called names are the same save to the byte three months on, where the names are taken out (the seed is the save’s, and SlateApp makes it from the names and the moment only as entropy).",
@@ -206,7 +206,7 @@
    "consumers": [
     {
      "what": "the title a life given none is billed as",
-     "at": "src/engine/world/bootstrap.ts:344"
+     "at": "src/engine/world/bootstrap.ts:351"
     },
     {
      "what": "the person look’s papers line",
@@ -250,11 +250,11 @@
    "consumers": [
     {
      "what": "the career’s postings: a part is posted only where written for the title or for either",
-     "at": "src/engine/systems/projobs.ts:428"
+     "at": "src/engine/systems/projobs.ts:439"
     },
     {
      "what": "writtenFor",
-     "at": "src/engine/systems/projobs.ts:411"
+     "at": "src/engine/systems/projobs.ts:422"
     },
     {
      "what": "the School’s casting pool, by title",
@@ -311,7 +311,7 @@
    "consumers": [
     {
      "what": "the body as given, held by its habit (settle)",
-     "at": "src/engine/world/bootstrap.ts:435"
+     "at": "src/engine/world/bootstrap.ts:445"
     },
     {
      "what": "what a workout, a run, a night or a day on set spends, by the weight",
@@ -372,7 +372,7 @@
    "consumers": [
     {
      "what": "the body as given, held by its habit (settle)",
-     "at": "src/engine/world/bootstrap.ts:435"
+     "at": "src/engine/world/bootstrap.ts:445"
     },
     {
      "what": "what a workout, a run, a night or a day on set spends, by the weight",
@@ -434,7 +434,7 @@
    "consumers": [
     {
      "what": "the birth instant",
-     "at": "src/engine/world/bootstrap.ts:368"
+     "at": "src/engine/world/bootstrap.ts:375"
     },
     {
      "what": "the birthday on the calendar, at nine on the day",
@@ -446,7 +446,7 @@
     },
     {
      "what": "the first morning’s fitness, no more than the age allows",
-     "at": "src/engine/world/bootstrap.ts:417"
+     "at": "src/engine/world/bootstrap.ts:427"
     }
    ],
    "experienced": "The birthday is on the calendar on its own day each year, at 9 AM, and the day says the age turned (born 3 November 1999: “Happy Birthday: 27”, the next on 3 November 2027). Age sets what a body can reach and the year’s chance of the end.",
@@ -485,7 +485,7 @@
    "consumers": [
     {
      "what": "the birth instant",
-     "at": "src/engine/world/bootstrap.ts:368"
+     "at": "src/engine/world/bootstrap.ts:375"
     },
     {
      "what": "the birthday on the calendar, at nine on the day",
@@ -497,7 +497,7 @@
     },
     {
      "what": "the first morning’s fitness, no more than the age allows",
-     "at": "src/engine/world/bootstrap.ts:417"
+     "at": "src/engine/world/bootstrap.ts:427"
     }
    ],
    "experienced": "The birthday is on the calendar on its own day each year, at 9 AM, and the day says the age turned (born 3 November 1999: “Happy Birthday: 27”, the next on 3 November 2027). Age sets what a body can reach and the year’s chance of the end.",
@@ -536,7 +536,7 @@
    "consumers": [
     {
      "what": "the birth instant",
-     "at": "src/engine/world/bootstrap.ts:368"
+     "at": "src/engine/world/bootstrap.ts:375"
     },
     {
      "what": "the birthday on the calendar, at nine on the day",
@@ -548,7 +548,7 @@
     },
     {
      "what": "the first morning’s fitness, no more than the age allows",
-     "at": "src/engine/world/bootstrap.ts:417"
+     "at": "src/engine/world/bootstrap.ts:427"
     }
    ],
    "experienced": "The birthday is on the calendar on its own day each year, at 9 AM, and the day says the age turned (born 3 November 1999: “Happy Birthday: 27”, the next on 3 November 2027). Age sets what a body can reach and the year’s chance of the end.",
@@ -1124,11 +1124,11 @@
    "consumers": [
     {
      "what": "the save’s currency",
-     "at": "src/engine/world/bootstrap.ts:360"
+     "at": "src/engine/world/bootstrap.ts:367"
     },
     {
      "what": "the home zone",
-     "at": "src/engine/world/bootstrap.ts:333"
+     "at": "src/engine/world/bootstrap.ts:340"
     },
     {
      "what": "the bank opened",
@@ -1404,7 +1404,7 @@
    "consumers": [
     {
      "what": "the world’s first instant, at 7:30 where the life begins",
-     "at": "src/engine/world/bootstrap.ts:335"
+     "at": "src/engine/world/bootstrap.ts:342"
     }
    ],
    "experienced": "Every life a player makes begins at 7:30 AM on Monday 24 August 2026, whatever a draft said; a tool’s life begins on the day it gives (15 February 2027 kept). Kept across a save and a load.",
@@ -1441,7 +1441,7 @@
    "consumers": [
     {
      "what": "the world’s first instant, at 7:30 where the life begins",
-     "at": "src/engine/world/bootstrap.ts:335"
+     "at": "src/engine/world/bootstrap.ts:342"
     }
    ],
    "experienced": "Every life a player makes begins at 7:30 AM on Monday 24 August 2026, whatever a draft said; a tool’s life begins on the day it gives (15 February 2027 kept). Kept across a save and a load.",
@@ -1478,7 +1478,7 @@
    "consumers": [
     {
      "what": "the world’s first instant, at 7:30 where the life begins",
-     "at": "src/engine/world/bootstrap.ts:335"
+     "at": "src/engine/world/bootstrap.ts:342"
     }
    ],
    "experienced": "Every life a player makes begins at 7:30 AM on Monday 24 August 2026, whatever a draft said; a tool’s life begins on the day it gives (15 February 2027 kept). Kept across a save and a load.",

@@ -118,7 +118,7 @@
   ],
   "on": "3e359d4b",
   "evidence": [
-   "src/engine/domain/model.ts:494 SAVE_SCHEMA_VERSION 94 and base44/shared/guard.js:25 SUPPORTED_SCHEMA_VERSION 94, moved by hand together (CLAUDE.md’s rule 14); pinned at 94 since ff837dfa (2026-10-10), every change since read from the save’s shape; src/ui/startup/StartupSequence.tsx:219 and src/ui/saves/SaveSlots.tsx:199 the format said on the start and the card",
+   "src/engine/domain/model.ts:502 SAVE_SCHEMA_VERSION 94 and base44/shared/guard.js:25 SUPPORTED_SCHEMA_VERSION 94, moved by hand together (CLAUDE.md’s rule 14); pinned at 94 since ff837dfa (2026-10-10), every change since read from the save’s shape; src/ui/startup/StartupSequence.tsx:219 and src/ui/saves/SaveSlots.tsx:199 the format said on the start and the card",
    "tests/migration-94.test.ts",
    "tests/server-guards.test.ts",
    "tests/base44-contract.test.ts",

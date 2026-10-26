@@ -435,7 +435,7 @@
    "tests/looks.test.ts",
    "tests/day-bounds.test.ts",
    "tests/weather.test.ts",
-   "src/ui/looks/weather.tsx:483-539 the rest of today and a day’s hours, each at its own reading on the clock (src/engine/systems/weather.ts:299-357)",
+   "src/ui/looks/weather.tsx:483-539 the rest of today and a day’s hours, each at its own reading on the clock (src/engine/systems/weather.ts:303-357)",
    "tests/b20-life-time.test.ts the life area’s 55 test files, run on 27369727: all green; tests/b26-life-repeats.test.ts, the plans called off and skipped, the retried hour and the night’s refusals on a New Haven life, green"
   ]
  },
@@ -547,7 +547,7 @@
   "on": "3a759d49",
   "evidence": [
    "tests/career-contracts.test.ts",
-   "src/engine/systems/contracts.ts:365 air: a rerun's notice and its residual promised; contracts.ts:461 on the clock"
+   "src/engine/systems/contracts.ts:404 air: a rerun's notice and its residual promised; contracts.ts:461 on the clock"
   ]
  },
  "notice.systems/contracts#payPerDiem": {
@@ -559,7 +559,7 @@
   "on": "3a759d49",
   "evidence": [
    "tests/career-contracts.test.ts",
-   "src/engine/systems/contracts.ts:429 payPerDiem: the per diem paid once home, said; called from worktrip.ts:693"
+   "src/engine/systems/contracts.ts:468 payPerDiem: the per diem paid once home, said; called from worktrip.ts:693"
   ]
  },
  "notice.systems/contracts#settleResidual": {
@@ -571,7 +571,7 @@
   "on": "3a759d49",
   "evidence": [
    "tests/career-contracts.test.ts",
-   "src/engine/systems/contracts.ts:396 settleResidual: the residual paid and said; contracts.ts:465 on the clock"
+   "src/engine/systems/contracts.ts:435 settleResidual: the residual paid and said; contracts.ts:465 on the clock"
   ]
  },
  "notice.systems/injury#mayHurt": {
@@ -1303,7 +1303,7 @@
   "evidence": [
    "tests/b20-life-bite.test.ts",
    "tests/evidence-g07-life.test.ts",
-   "src/engine/content/guide/day.ts:479-537 the entry; src/engine/systems/weather.ts:193-262 a day from the seed, the city and the date; src/engine/systems/weather.ts:299-357 its hours; src/engine/systems/life.ts:53-58 a run in fine weather; src/engine/systems/seasons.ts:40-60 the flu’s weeks",
+   "src/engine/content/guide/day.ts:479-537 the entry; src/engine/systems/weather.ts:197-262 a day from the seed, the city and the date; src/engine/systems/weather.ts:303-357 its hours; src/engine/systems/life.ts:53-58 a run in fine weather; src/engine/systems/seasons.ts:40-60 the flu’s weeks",
    "tests/weather.test.ts",
    "tests/heatindex.test.ts",
    "tests/seasons.test.ts",
@@ -1321,7 +1321,7 @@
    "tests/evidence-g06-life.test.ts",
    "tests/evidence-g07-life.test.ts",
    "tests/b20-life-bite.test.ts",
-   "src/engine/content/guide/day.ts:479-537 the entry; src/engine/systems/weather.ts:193-262 a day from the seed, the city and the date; src/engine/systems/weather.ts:299-357 its hours; src/engine/systems/life.ts:53-58 a run in fine weather; src/engine/systems/seasons.ts:40-60 the flu’s weeks",
+   "src/engine/content/guide/day.ts:479-537 the entry; src/engine/systems/weather.ts:197-262 a day from the seed, the city and the date; src/engine/systems/weather.ts:303-357 its hours; src/engine/systems/life.ts:53-58 a run in fine weather; src/engine/systems/seasons.ts:40-60 the flu’s weeks",
    "tests/weather.test.ts",
    "tests/heatindex.test.ts",
    "tests/seasons.test.ts",
@@ -1338,7 +1338,7 @@
   "evidence": [
    "tests/b20-life-looks.test.ts",
    "tests/evidence3-home.test.ts",
-   "src/engine/content/guide/day.ts:479-537 the entry; src/engine/systems/weather.ts:193-262 a day from the seed, the city and the date; src/engine/systems/weather.ts:299-357 its hours; src/engine/systems/life.ts:53-58 a run in fine weather; src/engine/systems/seasons.ts:40-60 the flu’s weeks",
+   "src/engine/content/guide/day.ts:479-537 the entry; src/engine/systems/weather.ts:197-262 a day from the seed, the city and the date; src/engine/systems/weather.ts:303-357 its hours; src/engine/systems/life.ts:53-58 a run in fine weather; src/engine/systems/seasons.ts:40-60 the flu’s weeks",
    "tests/weather.test.ts",
    "tests/heatindex.test.ts",
    "tests/seasons.test.ts",

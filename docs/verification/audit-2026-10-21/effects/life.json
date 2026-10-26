@@ -252,7 +252,7 @@
     },
     {
      "what": "a work day finds the actor asleep (there)",
-     "at": "src/engine/systems/projobs.ts:1040"
+     "at": "src/engine/systems/projobs.ts:1076"
     },
     {
      "what": "a plan finds them asleep",
@@ -717,7 +717,7 @@
     },
     {
      "what": "a work day takes a School rehearsal call’s energy",
-     "at": "src/engine/systems/projobs.ts:1416"
+     "at": "src/engine/systems/projobs.ts:1469"
     }
    ],
    "experienced": "How You Are and readiness; the refusals; the judged work and the classes through readiness.",
@@ -1914,7 +1914,7 @@
    "kind": "immediate",
    "claim": "A commitment during the night goes ahead without you, and it counts as missed.",
    "entryFile": "src/engine/content/guide/body.ts",
-   "holds": "Each handler finds the sleeper absent: a plan (src/engine/world/plans.ts:138), classes (src/engine/systems/school.ts:1573), a work day (src/engine/systems/projobs.ts:1035).",
+   "holds": "Each handler finds the sleeper absent: a plan (src/engine/world/plans.ts:138), classes (src/engine/systems/school.ts:1573), a work day (src/engine/systems/projobs.ts:1071).",
    "tests": [
     "tests/evidence-g01-life.test.ts",
     "tests/sleep-commitments.test.ts",
@@ -2114,7 +2114,7 @@
    "kind": "prerequisite",
    "claim": "A commitment only arrives as the clock moves, and Play opens with the chapter after this one.",
    "entryFile": "src/engine/content/guide/day.ts",
-   "holds": "Items run only as the clock reaches them (src/engine/core/simulation.ts:438); Play opens with The Clock (src/engine/content/tutorial.ts:175).",
+   "holds": "Items run only as the clock reaches them (src/engine/core/simulation.ts:438); Play opens with The Clock (src/engine/content/tutorial.ts:178).",
    "tests": [
     "tests/plans.test.ts",
     "tests/tutorial.test.ts"

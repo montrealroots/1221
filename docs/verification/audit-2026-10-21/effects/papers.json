@@ -90,11 +90,11 @@
     },
     {
      "what": "Acceptance of an offer reads permission for each work day",
-     "at": "src/engine/systems/projobs.ts:814"
+     "at": "src/engine/systems/projobs.ts:849"
     },
     {
      "what": "An engagement's dates read permission when it's booked",
-     "at": "src/engine/systems/propay.ts:220"
+     "at": "src/engine/systems/propay.ts:227"
     },
     {
      "what": "Unemployment pays a noncitizen only with permission to work",
@@ -1429,7 +1429,7 @@
     },
     {
      "what": "the work booked past the end released",
-     "at": "src/engine/systems/projobs.ts:1555"
+     "at": "src/engine/systems/projobs.ts:1608"
     }
    ],
    "experienced": "The OPT panel counts days without work and days with work; past 90 'OPT Ended', 'Released As …' for each part booked past it, and 'Out Of Status'. b20-4's save of 1 September 2029 ends at the end of 1 September, the run due on the 4th released, none of it worked (tests/b22-authorization.test.ts); a run begun on the 90th day carries OPT through its ten weeks, dark days included.",
@@ -1476,7 +1476,7 @@
     },
     {
      "what": "Acceptance reads it for each work day",
-     "at": "src/engine/systems/projobs.ts:814"
+     "at": "src/engine/systems/projobs.ts:849"
     },
     {
      "what": "The status runs to its end and sixty days",
@@ -2468,11 +2468,11 @@
    "consumers": [
     {
      "what": "the engagements booked past the end released",
-     "at": "src/engine/systems/projobs.ts:1555"
+     "at": "src/engine/systems/projobs.ts:1608"
     },
     {
      "what": "a released engagement's pay for its days worked, paid on its payday",
-     "at": "src/engine/systems/propay.ts:473"
+     "at": "src/engine/systems/propay.ts:477"
     }
    ],
    "experienced": "'Released As Hester Vane' at the midnight b20-4's OPT ends, before the run's first day, nothing owed and no credit; Booked Work shows it Called Off with the release in its history (tests/b22-authorization.test.ts).",
