@@ -249,7 +249,7 @@ describe('casting’s direction in the room', () => {
         expect([f.o.playing![lean.axis], f.o.playing!.prep, h.o.playing![lean.axis], h.o.playing!.prep]).toEqual([lean.side, followedPrep(1, level), lean.other, 1]);
         const judged = (x: { sim: Sim }) => (x.sim.player.work ?? []).find((w) => w.what === `${t.role.part}, ${t.project}: Audition`)!;
         expect([judged(f).task, judged(h).task]).toEqual(['auditionDirected', 'auditionDirected']);
-        expect(judged(h).inputs.fit?.responsiveness?.label).toMatch(/you kept your choice rather than take the note$/);
+        expect(judged(h).inputs.fit?.responsiveness?.label).toMatch(/you kept your choice and didn’t take the note$/);
         expect(judged(f).inputs.fit?.responsiveness).toBeUndefined();
         if (rf.band === rh.band) continue;
         const [win, lose] = rf.overall! > rh.overall! ? [f, h] : [h, f];
@@ -324,7 +324,7 @@ describe('casting’s direction in the room', () => {
     // Kept against a direction to play it open, the read is held back on answering the note, as on any other direction:
     // judged again from the same record without that hold, it comes out higher.
     const k = run(opened!, 60, false);
-    expect(k.w.inputs.fit?.responsiveness?.label).toBe('Casting’s direction: asked to play it open, you kept your choice rather than take the note');
+    expect(k.w.inputs.fit?.responsiveness?.label).toBe('Casting’s direction: asked to play it open, you kept your choice and didn’t take the note');
     const freed = replay({ ...k.w, inputs: { ...k.w.inputs, fit: Object.fromEntries(Object.entries(k.w.inputs.fit!).filter(([d]) => d !== 'responsiveness')) } }, TASK_PROFILES[k.w.task]!)!;
     expect(replay(k.w, TASK_PROFILES[k.w.task]!)!.overall).toBe(k.w.overall);
     expect(freed.overall).toBeGreaterThan(k.w.overall);

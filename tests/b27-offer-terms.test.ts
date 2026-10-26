@@ -248,7 +248,7 @@ describe('negotiating a term through the agent', () => {
     const r = ask(sim, o, 'episodes');
     played(sim, r.answerAt + MS_HOUR);
     expect([o.status, o.offer!.asked!.answer]).toEqual(['withdrawn', 'withdrawn']);
-    expect(o.outcome).toMatch(/withdrew its offer for .* rather than negotiate\. The part goes to another actor\.$/);
+    expect(o.outcome).toMatch(/withdrew its offer for .* instead of negotiating\. The part goes to another actor\.$/);
     expect(notices(sim).some((n) => n.startsWith(`The Offer For ${t.role.part} Is Withdrawn | `))).toBe(true);
     expect(sim.execute({ kind: 'pro.accept_offer', payload: { opportunityId: o.id } }).error).toBe('There’s no offer to accept.');
     expect(sim.player.pro!.engagements).toEqual([]);

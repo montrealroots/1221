@@ -567,7 +567,7 @@ export const CAREER_GUIDE: readonly GuideEntry[] = [
       `Press ${ASK_LABEL.shorter}, ${ASK_LABEL.voice} or ${ASK_LABEL.abroad}.`,
       'When the answer comes, read the terms again, then accept or decline the agreement.',
     ],
-    needs: ['An agreement offered and not yet answered.', 'No ask made on it before.', `${word(TERMS.answerDays).charAt(0).toUpperCase()}${word(TERMS.answerDays).slice(1)} days left before the offer lapses, for the answer.`],
+    needs: ['An agreement offered and unanswered.', 'No ask made on it before.', `${word(TERMS.answerDays).charAt(0).toUpperCase()}${word(TERMS.answerDays).slice(1)} days left before the offer lapses, for the answer.`],
     costs: [{ label: 'Time', value: 'None' }, { label: 'Money', value: 'None' }],
     reads: [
       { label: 'The Chance', value: 'How many of the factors the office weighs are at the bar or beyond', estimate: true },
@@ -918,7 +918,7 @@ export const CAREER_GUIDE: readonly GuideEntry[] = [
       'You speak the part’s language fluently or natively, so it needs no work of its own.',
       'You’ve done all this step can do.',
     ],
-    mistakes: ['Taping a self-tape before the language is prepared. A conversational speaker’s tape is held back until it is.'],
+    mistakes: ['Taping a self-tape before the language is prepared: a conversational speaker’s tape is held back until then.'],
     next: ['Prepare the rest of the sides, then tape it or go to the audition.'],
     related: ['career.auditions', 'career.opportunities', 'career.resume'],
     connections: [
@@ -1002,7 +1002,7 @@ export const CAREER_GUIDE: readonly GuideEntry[] = [
     questions: ['How do I choose how to play an audition?', 'What happens when casting gives me a direction?', 'Can I record more than one take of a self-tape?'],
     where: on('opportunities', 'Career, Opportunities, In Progress'),
     available: `From the guide’s chapter “${WORK_CHAPTER}”, once casting has sent the sides with an audition.`,
-    short: `Choose how to play the sides as you would a brief: measured or driven, restrained or expansive, set or open. Rehearse It On Your Feet rehearses the choice, and every round is judged with it, against what the part’s genre favors.\n\nPlayed some way at an audition or a callback in person, casting may ask for it another way partway through. Follow The Direction plays the rest that way; Keep Your Choice plays it as you prepared it. For a self-tape, Record A Take keeps each take to choose from, and Send This Take sends the one you pick.`,
+    short: `Choose how to play the sides as with a brief: measured or driven, restrained or expansive, set or open. Rehearse It On Your Feet rehearses the choice, and every round is judged with it, against what the part’s genre favors.\n\nPlayed some way at an audition or a callback in person, casting may ask for it another way partway through. Follow The Direction plays the rest that way; Keep Your Choice plays it as you prepared it. For a self-tape, Record A Take keeps each take to choose from, and Send This Take sends the one you pick.`,
     steps: [
       'Open Career, then Opportunities, and find the role under In Progress.',
       'Under How You’ll Play It, choose a side of each aspect you want, or leave one open, and press Play It This Way.',
@@ -1026,7 +1026,7 @@ export const CAREER_GUIDE: readonly GuideEntry[] = [
     ],
     now: [
       'Choosing a way to play it rehearses nothing yet: once you choose, work on your feet rehearses it. A different choice keeps half of the rehearsal.',
-      'A take is shown with its result once it’s recorded. Nothing goes to casting until you press Send This Take.',
+      'A take is shown with its result once it’s recorded. Casting sees none of it until you press Send This Take.',
     ],
     later: [
       `Casting gives a direction only where you’ve chosen a way to play it and the part’s genre leans another way on some aspect: the clock stops ${countWords(NOTE.afterMinutes)} minutes in for your answer, and the rest of the round is judged with it. Casting’s decision reads that round, so the answer can win or lose the part.`,
@@ -1080,8 +1080,8 @@ export const CAREER_GUIDE: readonly GuideEntry[] = [
     now: ['The offer stands a day past the answer, so there’s time to take what comes.'],
     later: [
       'A yes changes the offer: the pay raised, another episode guaranteed and booked, or the promotional film paid at your own day. The contract, the days booked and the pay promised follow it.',
-      `A trade-off gives something for something: on a recurring part, more pay for one guaranteed episode fewer; another episode, if the option on next season carries no raise; or, on work paid $25,000 or more, where the contract leaves the promotional film unpaid, a day performer’s minimum for it rather than your own day. Offered about ${Math.round(NEGOTIATION.trade * 10)} times in 10 where the production won’t give what was asked and there’s something to trade, estimated.`,
-      `Now and then the production withdraws the offer rather than negotiate: at most ${Math.round(NEGOTIATION.withdraw.most * 100)}% of the time, more for a bigger ask, estimated. The part goes to another actor.`,
+      `A trade-off gives something for something: on a recurring part, more pay for one guaranteed episode fewer; another episode, if the option on next season carries no raise; or, on work paid $25,000 or more, where the contract leaves the promotional film unpaid, a day performer’s minimum for it in place of your own day. Offered about ${Math.round(NEGOTIATION.trade * 10)} times in 10 where the production won’t give what was asked and there’s something to trade, estimated.`,
+      `Now and then the production withdraws the offer instead of negotiating: at most ${Math.round(NEGOTIATION.withdraw.most * 100)}% of the time, more for a bigger ask, estimated. The part goes to another actor.`,
       `A casting office that cast you before, where your work was Strong, may offer you a lead on one condition: the screen test or chemistry read still to come, about ${Math.round(CONDITIONAL.chance * 10)} times in 10 that such a lead reaches you, estimated. Accept On Its Condition holds your dates and sets that round; nothing is booked or paid until it goes your way, and the offer falls away if it doesn’t.`,
     ],
     interpret: ['The offer’s card says the answer in the production’s words, and the terms as negotiated. What Needs You says the latest version too.'],

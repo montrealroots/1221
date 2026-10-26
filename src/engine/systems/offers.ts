@@ -215,7 +215,7 @@ export function approachRead(o: Opportunity, r: AuditionRound, ctx: EvalContext)
   const fit = { ...read.fit };
   if (note?.answer === 'hold') {
     const asked = APPROACH_EFFECT[note.side as AxisValue];
-    if (task.dims.responsiveness) fit.responsiveness = { f: Math.min(fit.responsiveness?.f ?? 1, MISFIT), label: `Casting’s direction: asked to play it ${asked.label.toLowerCase()}, you kept your choice rather than take the note` };
+    if (task.dims.responsiveness) fit.responsiveness = { f: Math.min(fit.responsiveness?.f ?? 1, MISFIT), label: `Casting’s direction: asked to play it ${asked.label.toLowerCase()}, you kept your choice and didn’t take the note` };
     for (const [d, x] of Object.entries(asked.lean) as [Dimension, number][]) {
       if (x >= 1.1 && task.dims[d] && d !== 'responsiveness') fit[d] = { f: Math.min(fit[d]?.f ?? 1, MISFIT), label: `${asked.label}: casting asked for it ${asked.label.toLowerCase()}, and you kept your choice` };
     }
@@ -586,7 +586,7 @@ export function answerAsk(sim: Simulation, person: Person, o: Opportunity, hooks
   if (withdrawDrawn(sim, o.projectId, o.postedAt, item, withdrawChance(askShare(o, item)))) {
     asked.answer = 'withdrawn';
     sim.timeline.cancelFor('pro.offer', o.id, sim.now);
-    const words = `Asked ${item === 'pay' ? `for ${formatMoney(asked.amount, 'USD')} a ${offer.per}` : item === 'episodes' ? 'for another guaranteed episode' : 'to pay the promotional film'}, ${t.casting} withdrew ${agrees(t, 'its', 'their')} offer for ${t.role.part} rather than negotiate. The part goes to another actor.`;
+    const words = `Asked ${item === 'pay' ? `for ${formatMoney(asked.amount, 'USD')} a ${offer.per}` : item === 'episodes' ? 'for another guaranteed episode' : 'to pay the promotional film'}, ${t.casting} withdrew ${agrees(t, 'its', 'their')} offer for ${t.role.part} instead of negotiating. The part goes to another actor.`;
     const gone = hooks.holdGone(o);
     hooks.note(sim, person, o, { kind: 'offer', key: 'answered', words });
     hooks.settle(sim, person, o, 'withdrawn', words);

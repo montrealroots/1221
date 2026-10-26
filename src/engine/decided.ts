@@ -1136,7 +1136,7 @@ defineDecider<{ sim: Simulation; first: number }, string>({
 
 defineDecider<{ sim: Simulation; share: number }, string>({
   id: 'pro.withdraw',
-  decides: 'Whether a production withdraws its offer rather than answer an agent’s ask (TERMS.withdraw): a quarter of the ask’s share of the offer, at most one in ten, by its own draw.',
+  decides: 'The production’s offer withdrawn rather than answered when an agent asks (TERMS.withdraw): a quarter of the ask’s share of the offer, at most one in ten, by its own draw.',
   drawnIn: 'src/engine/systems/offers.ts',
   reads: {
     // The ask's share of the offer: a bigger ask, a likelier withdrawal.
@@ -1149,7 +1149,7 @@ defineDecider<{ sim: Simulation; share: number }, string>({
 
 defineDecider<{ sim: Simulation; possible: number }, string>({
   id: 'pro.trade',
-  decides: 'Whether a production that won’t give what an agent asked offers a trade-off instead (TERMS.trade), only where the ask has one to offer, by its own draw.',
+  decides: 'A trade-off from a production that won’t give what an agent asked (TERMS.trade), only where the ask has one to offer, by its own draw.',
   drawnIn: 'src/engine/systems/offers.ts',
   reads: {
     // Whether there's a trade to offer: none, and none is offered.
@@ -1162,7 +1162,7 @@ defineDecider<{ sim: Simulation; possible: number }, string>({
 
 defineDecider<{ sim: Simulation; band: number }, string>({
   id: 'pro.conditional',
-  decides: 'Whether a lead from a casting office that cast the actor before comes as an offer on condition of its last round (CONDITIONAL.chance), and whether that round goes their way, at its band’s chance (CONDITIONAL.met).',
+  decides: 'A lead from a casting office that cast the actor before, coming as an offer on condition of its last round (CONDITIONAL.chance), and whether that round goes their way, at its band’s chance (CONDITIONAL.met).',
   drawnIn: 'src/engine/systems/offers.ts',
   reads: {
     // The round's band: a stronger one, a likelier condition met.
@@ -1180,7 +1180,7 @@ defineDecider<{ sim: Simulation; band: number }, string>({
 
 defineDecider<{ sim: Simulation; kind: number }, string>({
   id: 'pro.rewrite',
-  decides: 'Whether a part’s requirement changes at casting’s cut (REWRITE), and how: its playing ages moved from its own, or the technique it asks most now needed at a level.',
+  decides: 'A part’s requirement changed at casting’s cut (REWRITE), and how: its playing ages moved from its own, or the technique it asks most now needed at a level.',
   drawnIn: 'src/engine/systems/offers.ts',
   reads: {
     // Which part: its ages and its techniques are what a change moves from.
@@ -1196,7 +1196,7 @@ defineDecider<{ sim: Simulation; kind: number }, string>({
 
 defineDecider<{ sim: Simulation; lead: number }, string>({
   id: 'pro.recast',
-  decides: 'Whether a part the actor lost or let go is recast and posted again (RECAST), only with its first day three weeks off or more, by its posting’s own draw.',
+  decides: 'A part the actor lost or let go, recast and posted again (RECAST), only with its first day three weeks off or more, by its posting’s own draw.',
   drawnIn: 'src/engine/systems/offers.ts',
   reads: {
     // The days to its first day: too close, and there's no recasting it.
@@ -1209,7 +1209,7 @@ defineDecider<{ sim: Simulation; lead: number }, string>({
 
 defineDecider<{ sim: Simulation; round: number; clash: number }, string>({
   id: 'pro.reschedule',
-  decides: 'Whether a production moves a chemistry read or a screen test when the actor asks (RESCHEDULE): a test less often than a read, more with a clash on the actor’s calendar to give as the reason.',
+  decides: 'The production’s answer when the actor asks to move a chemistry read or a screen test (RESCHEDULE): a test less often than a read, more with a clash on the actor’s calendar to give as the reason.',
   drawnIn: 'src/engine/systems/offers.ts',
   reads: {
     round: (o, t) => ({ ...o, round: Math.round(t) }),

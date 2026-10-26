@@ -348,10 +348,11 @@ what an agent does, and what managers, entertainment lawyers and publicists do i
 game; a casting director works for the production.
 
 **Not built, said so:** managers, lawyers and publicists aren't in the game; the guide says what each does and that it
-isn't. The agreement's terms aren't negotiated, since they're the unions' regulations as read (a commission over ten
-percent is barred). No agent in the game covers voice work, so an office never asks for a demo (`AgentMaterial`). The
-game records no languages: every market the slate makes work in works in English, so a language on the résumé would be a
-word nothing reads; accents are a technique already, listed as a special skill from its level.
+isn't. Until 2026-10-25 this paragraph also said the agreement's terms weren't negotiated ("the unions' regulations as
+read"), that no agent covered voice work and that the game recorded no languages. The owner's audit that day found each a
+requirement set aside for want of a reader, and each was built in G below: only the commission's cap was ever a regulation,
+and the term, scope and territory are the game's and can be asked about once; the game's own agency has a voice-over
+department; and a life speaks the languages creation took, which a share of the slate's parts asks for.
 
 ## K4: Auditions, Offers And Agreements
 
@@ -380,7 +381,8 @@ for a fifth more (`pro.ask_more`, Ask For More on the offer): the lapse moves to
 next afternoon at three (`pro.negotiate_answer`), raising the offer to what was asked or keeping it, each said in a
 notice, the offer versioned (1, then 2 when raised), its chance by the last round's band and a little more where the
 office cast the actor before (`NEGOTIATE`, decider `pro.negotiate`). Without an agent nobody asks, and a second ask is
-refused, so it isn't rerolling for pay. Held by `tests/b27-offers.test.ts`: the rule for a direct offer, read across 200
+refused, so it isn't rerolling for pay. (From 2026-10-25 the actor chooses what the agent asks about, and the answer can be
+a trade-off or the offer withdrawn: G below.) Held by `tests/b27-offers.test.ts`: the rule for a direct offer, read across 200
 weeks of the slate with some of each draw, and none for work judged Working; a direct offer played by the clock to its
 decision; an ask raised and the booking paying the raised rate; an ask kept, and the refusal with no agent.
 
@@ -731,6 +733,115 @@ All eighteen mutations failed a test:
 The canceled season survived until the network's word had a test: the Desk Clerk's series had no word yet.
 
 **Found on the way:** K7's four commands (`pro.actor_submit`, `pro.ceremony_rsvp`, `pro.ceremony_prepare`, `pro.ceremony_accept`) were in no chapter of the guide. K7's clean-clone gate on `52d65a60` exited 1 in 3,096 seconds: 523 of 524 test files and 5,938 of 5,941 tests passed, and the three failures were all `tests/tutorial.test.ts`'s coverage matrix (`k7-gate/gate.txt`, `k7-gate/gate-exit.txt`). The Finding Work chapter opens the four now, with a paragraph and their buttons' names (defect 12).
+
+## G: What The Career Build Left Out, Built (2026-10-25 To 2026-10-26)
+
+On 2026-10-25 the owner withdrew the one-agent restriction, restored delegation with one primary agent for the
+architecture, the integration and the final verification, and asked for the features the career build had left out to
+be revisited: "Do not justify excluding an authorized feature solely because the current engine has no consumer for it;
+determine whether the requested connection must be implemented." The primary agent's audit of K2 to K8 against Parts 6
+to 13 and the supplement found fifteen authorized features left out with that reason or none (languages, fittings, flight
+delays, fares and claims, festival attendance, the agreement's terms, voice representation, the depth of an offer's
+negotiation, a reshoot away, the Emmy category choice, real series continued, Equity's per diem, the Golden Globes and
+AACTA, the other festivals, the other US awards) and seventeen requirements built narrower than the brief's words
+(pilots, a one-take self-tape, no approach or direction in a professional audition, options that held nothing, no guest
+part leading to a recurring one, a release with three fates, the market deaf to the player's part, and the rest below).
+A research agent read the sources the build had located and not applied (the register, G1), and the work was divided into
+bounded clusters, each built by its own agent in its own clone, reviewed by another agent against the owner's seven
+criteria (missing or reduced requirements, real-world assumptions, decorative features, broken downstream effects,
+contradictory state, save compatibility, weak tests), fixed, then read and applied by the primary agent, whose own checks
+are this section's. Wave 1 was four clusters; wave 2 four more. Every figure introduced is the game's, named ASSUMPTION
+where it's defined; no real organization or person is given a word the pages the game read don't give.
+
+**Representation** (`systems/representation.ts`; Part 6, Part 7's "Voice samples", loops 6 to 9). An agreement's terms
+are its own now, kept as versions (`Agreement.deal`): the first as offered, the department's work in the US for a year, and
+a second where the office agreed to the actor's one ask (`pro.ask_terms`, while the offer stands): a term of six months
+instead of a year, voice-over added where the agency has a voice-over department, or work abroad added, the UK and
+Australia, where the game has work abroad. The office answers two days on, agreeing or keeping the terms, a draw (decider
+`pro.agent_terms`) against a chance that rises with how keen the office is (`interestOf`'s factors at the bar: 0.5, 0.6
+and 0.45 at the gate, a tenth a factor, between 0.1 and 0.9, ASSUMPTION each), said before the ask. The terms in force are
+read by when the agreement ends, by the commission (`coveredUnder`, which replaced the pay's own copy of one scope for every
+agreement), by the clause a voice part's contract carries, by which offers the agent handles and negotiates (`makeOffer`,
+`askMoreRefusal`) and by which parts he submits the actor for (`submitsFor`, read by `reachOf`); the commission's cap is
+untouched. The game's own agency has a voice-over department and an agent in it, Celia Brannock, invented as the agency is
+(a web search on 2026-10-25 found no one of that name as an agent), reached by referral: her office asks for a voice demo
+where a legit office sees a reel, weighs its band as a reel's, offers a voice-over agreement, takes commission on voice
+work and submits for the slate's four voice kinds, which took the actor's own submission only until then. A real agency's
+voice-over department would be in the game only where a page the register read names one, and none does. An introduction
+at a festival is a route (`AgentRoute 'festival'`, the game's own agent only) with an exported `introduceAtFestival` the
+festivals cluster calls: nothing calls it yet, and the words that promise the route stand until it does. Held by
+`tests/b27-representation.test.ts` (19) and `tests/b27-representation-screen.test.ts` (4): a shorter term asked and agreed
+by the clock, saved and loaded while it waits, ending at 182 days against the twin that didn't ask and runs a year; the
+answer reading keenness, twins on either side of the draw; abroad added, a London part coming through the agent with
+commission against the twin getting it openly with none; voice-over added, all four kinds; Celia's journey; the older
+save's agreement, no `deal`, read as its first terms and played to its end. Mutations: the implementer's 40, the
+reviewer's 7 and the fix round's 22, each killed in the end (two after a test was strengthened). The reviewer's blocking
+findings: every voice contract still said voice-over was outside an agent's agreement while the pay took ten percent
+under one that covered it (the clause reads the agreement now), and no test proved the answer read keenness (it does).
+**Said, and left:** one agent at a time stays, so an actor Stewart Talent represents has no way to voice representation.
+**For the owner:** a real Stewart Talent agent's office can now agree to a shorter term or to work abroad, a simulated
+behaviour of a real person's office, said on its notice and panel as the game's invention ("The pages the game read from
+Stewart Talent say nothing of the terms its agents agree to"); whether real agents should be allowed it at all is the
+owner's rule.
+
+**Offers and auditions** (`systems/offers.ts`; Part 9, Part 10's negotiation, Area B, loops 10, 13, 14 and 18). Six new
+commands, and three widened. Negotiation through the agent: the actor chooses what is asked about (`pro.ask_more` takes an
+item): the pay, as before; one more guaranteed episode on a recurring part; the promotional film paid at the actor's own
+day where the contract pays it less (N13 §18.B(3) and (5), the subsections corrected by the review). The answer is raised,
+kept, a trade-off (more pay for one guaranteed episode fewer; the episode for no raise on the option; the film at the
+agreement's minimum), or the offer withdrawn, at a quarter of the ask's share of the offer's worth and at most one in ten
+(`TERMS`, ASSUMPTION), and each answer changes what `datesOf`, `promisedPay`, `contractFor`, `renewFromOption`,
+`promoSession` and `callPromo` read. Without an agent nobody negotiates. A professional self-tape records a take at a time
+(`pro.record_take`: its own draw, the hour, the energy; three a day and the School's eight kept) and sends the one the actor
+picks (`pro.send_take`), judged again from what it was recorded with, which is what casting reads. The actor chooses how
+the sides are played (`pro.choose_approach`, the School's ways of playing against the part's own register), and at an
+audition or callback in person casting gives a direction from what the part asks, never drawn, ten minutes in: followed
+(`pro.answer_note`), the side is played with as much rehearsal as adaptability carries and the read reaches for
+adaptability; kept, the note goes unanswered. The reviewer found the first cut decorative here: a directed round was
+judged on the audition's profile, which has no responsiveness, so following read nowhere and keeping a choice cost
+nothing. A directed round is judged as `TASK_PROFILES.auditionDirected` now, measured on six directed parts with every
+other level at 60: keeping ahead below an adaptability of about 40, following ahead above it, by up to seven points at 95.
+A conditional offer (a lead from an office that cast the actor before, the work Strong, on the condition of its last round:
+accepted, the dates held and nothing booked or paid; met, booked on the terms accepted, through the loop's own acceptance;
+not met, fallen away), a requirement changed at casting's cut (the ages moved or a technique asked, one part in ten, the
+actor checked again and released where they no longer fit), and a part recast weeks before its first day and posted again
+(one in eight of those lost or let go, decided afresh). Withdrawing from a part in progress (`pro.withdraw`): with a day's
+notice or more nothing is held against it; with less, or by not turning up at all (not ill), the casting office remembers
+for two years (`noShows`): its cuts halve and it offers nothing without an audition (`directOfferFor`, `castingLift`,
+`conditionalOfferFor` read it). A chemistry read or a screen test is set around other people's days, so moving it asks the
+production (`pro.ask_reschedule`), granted at a chance, more with a clash on the calendar to give; an audition or a
+callback still moves once with certainty by Ask For Another Time, as casting's own times move, which is the design and
+said so. Held by `tests/b27-offer-terms.test.ts` (7), `tests/b27-sides.test.ts` (7), `tests/b27-casting-turns.test.ts`
+(8) and `tests/b27-offers-screen.test.ts` (2), each claim against a twin that didn't: two saves differing only in
+adaptability, the strong adapter better following and the weak one keeping; a conditional offer booked for one and fallen
+away for the other; an age rewrite and a skill rewrite each releasing one twin; a withdrawal with notice against a no-show,
+the card naming what the office remembers. Mutations: the implementer's 36 and the fix round's 19, all killed; of the
+reviewer's 9, the five that survived its run are killed now. **Said, and left:** reader or partner work isn't modelled;
+casting gives a direction only to an actor who chose a way of playing.
+
+**Languages** (`systems/speaking.ts`, `content/languages.ts`; Part 7 "Languages and accents", Part 9, loop 1). A life
+speaks what creation took on Genres & Background (`Person.languages`, optional: English always, at native or fluent, since
+the School and every part are in English; up to six, one native; real names only, Mandarin and Cantonese for the one code
+that says "Chinese"). An older save has none and reads as English, natively (`ENGLISH_ONLY`), and plays on as it did. A
+share of the slate's parts, about one in eight (ASSUMPTION; Spanish most often; never a dub or a narration), are written
+for a character who speaks a named language as well as English, each decided on its own stream keyed by the part's id
+(decider `pro.language`), so no other draw of the slate moved and a part a save was posted before that day keeps no
+language. The language is read at each step: a non-speaker is refused at Submit Yourself in words, an agent doesn't put
+them up and an office that cast them before makes no direct offer; casting's fit weighs the weaker of the part's language
+and the actor's English (native over fluent over conversational), so its chance and the agent's reach move; a
+conversational speaker comes to the part short of complete on a "language" part of the preparation, read on
+believability and execution by the tape, the room, the night and the day's take, brought on by Work On Your <Language>
+(a step of `pro.prepare`, faster with Accents And Dialects), half of it carried into the booking. The résumé lists every
+language but native English; the Opportunities card says what the part asks; the guide's Languages entry says what they
+do. Measured on a played career (`tests/b27-languages.test.ts`, 10): the same seed's fluent speaker posted a Mandarin
+short, taped Exceptional (95.9) and booked; the English-only twin posted it and refused with the reason; the
+conversational twin who didn't work on the language taped 77.2, 31 points held on believability, against 95.9 once worked
+on, casting's chance 0.644 to 0.422. Saved and loaded, a Seoul life keeps its languages (`tests/b27-creation-origins.test.ts`).
+Mutations: the implementer's 31 and the reviewer's 15, all killed. The reviewer's blocking finding: Why It Went This Way
+said "your techniques are N% of the way" of a number the language had joined, so mastered techniques read 93%; the line
+gives the techniques apart now and names the language in a sentence of its own. **Said, and left:** languages are fixed
+for life, nothing in the brief asking for a language learned later; the thirty-one fixed parts and the parts drawn from
+real productions carry none.
 
 ## Defects Found And Fixed
 
