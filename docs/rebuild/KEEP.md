@@ -246,7 +246,7 @@ opens at the same moment; every older fixture opens), `tests/persistence.test.ts
 
 ---
 
-## 3. Creation, step 1 of 5, Identity: the page is kept, in the order below (DECIDED 2026-10-26)
+## 3. Creation, step 1 of 5, Identity: the page is kept, in the order below (DECIDED 2026-10-26; confirmed again with Billed As restored and Languages added)
 
 **Owner (2026-10-26):** "I want it to fall in a perfect order so whatever you feel that may be let me know." Then,
 on the order proposed in answer: "let's keep that page and the information I just gave you including having it in the
