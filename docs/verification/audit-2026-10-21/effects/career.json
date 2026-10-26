@@ -3392,6 +3392,478 @@
    "status": "Implemented And Verified",
    "why": "",
    "prior": null
+  },
+  {
+   "id": "pro.ask_terms",
+   "kind": "command",
+   "area": "career",
+   "mechanic": true,
+   "seeded": false,
+   "readBy": "career",
+   "readAt": "2e6fd238",
+   "where": "Career, Representation, The Agreement: Ask For A Shorter Term, Ask To Add Voice-Over, Ask To Add Work Abroad on an offered agreement; grayed with askRefusal's words.",
+   "prerequisites": "An agreement offered and unanswered; no ask made on it before; the ask would change something (voice-over only where the agency has a voice-over department and the agreement leaves it out; abroad only on a legit agreement); time for the answer before the offer lapses.",
+   "reads": "The offered agreement's terms in force (`dealOf`), the office's interest in the actor now (`interestOf`), the clock.",
+   "changes": "The ask on the agreement (what, when, the chance said, when the office answers), its answer on the clock (`pro.agent_terms_answer`), a history line; accepting the agreement is refused until the answer (`askWaiting`).",
+   "consumers": [
+    {
+     "what": "the office answers two days on, agreeing by its draw against the chance or keeping the terms, and an agreed ask adds a version the agreement's words are rebuilt from",
+     "at": "src/engine/systems/representation.ts:325"
+    },
+    {
+     "what": "accepting is refused while the ask waits",
+     "at": "src/engine/systems/proagent.ts:772"
+    },
+    {
+     "what": "the term in force decides when the accepted agreement ends",
+     "at": "src/engine/systems/proagent.ts:888"
+    },
+    {
+     "what": "the terms in force decide what work owes commission",
+     "at": "src/engine/systems/propay.ts:363"
+    },
+    {
+     "what": "the terms in force decide which parts the agent submits the actor for",
+     "at": "src/engine/systems/projobs.ts:702"
+    },
+    {
+     "what": "the terms in force decide which offers the agent handles and negotiates",
+     "at": "src/engine/systems/projobs.ts:1830"
+    },
+    {
+     "what": "a voice part's contract says whether the agreement covers it",
+     "at": "src/engine/systems/contracts.ts:276"
+    }
+   ],
+   "experienced": "At once the panel says what was asked, the chance and when the answer comes; two days on a notice says the office agreed or kept its terms, and The Agreement's words say the terms as they stand.",
+   "saveLoad": "The professional record (`person.pro`) and the calendar's pending `pro.*` items are in the save; every handler reads the record's own state (a status, a key, a guard) before acting, so a load runs nothing twice and drops nothing.",
+   "evidence": {
+    "tests": [
+     "tests/b27-representation.test.ts",
+     "tests/b27-representation-screen.test.ts"
+    ],
+    "comparisons": [
+     "b27-representation: a shorter term asked and agreed ends the agreement at 182 days; the twin that didn’t ask runs a year",
+     "b27-representation: abroad added, a London part comes through the agent with commission; the twin gets it openly with none"
+    ],
+    "mutations": [],
+    "journeys": [
+     "b27-representation: asked, saved and loaded while it waits, answered, accepted, ended at its term"
+    ]
+   },
+   "missing": "Brief 27's final runs and long careers were played before the ask existed; the next replay of the long careers says how many lives ask.",
+   "status": "Implemented And Verified",
+   "why": ""
+  },
+  {
+   "id": "pro.agent_terms_answer",
+   "kind": "scheduled",
+   "area": "career",
+   "mechanic": true,
+   "seeded": false,
+   "readBy": "career",
+   "readAt": "2e6fd238",
+   "where": "The clock, two days after an ask on an offered agreement, at the office's usual hour: a notice, the office agreed or kept its terms.",
+   "prerequisites": "An ask made with pro.ask_terms; the offer still standing (declining it calls the item off).",
+   "reads": "The ask's chance, the draw on the agreement's own stream (decider pro.agent_terms), the terms in force.",
+   "changes": "The ask's answer; agreed, a second version of the terms and the agreement's words rebuilt from it; a history line and a notice (a real agent's saying the answer is the game's).",
+   "consumers": [
+    {
+     "what": "the version in force is what the end of the term, the commission, the submissions and the offers read",
+     "at": "src/engine/systems/representation.ts:155"
+    },
+    {
+     "what": "the clause a voice part's contract carries reads the version in force",
+     "at": "src/engine/systems/contracts.ts:276"
+    }
+   ],
+   "experienced": "A notice: “<Agent>’s Office Agreed To Your Ask” or “Kept Its Terms”, and The Agreement showing the terms as they stand.",
+   "saveLoad": "The professional record (`person.pro`) and the calendar's pending `pro.*` items are in the save; every handler reads the record's own state (a status, a key, a guard) before acting, so a load runs nothing twice and drops nothing.",
+   "evidence": {
+    "tests": [
+     "tests/b27-representation.test.ts"
+    ],
+    "comparisons": [
+     "b27-representation: twins on either side of the draw, one agreed and one kept, each at the chance its panel showed"
+    ],
+    "mutations": [],
+    "journeys": [
+     "b27-representation: the answer by the clock"
+    ]
+   },
+   "missing": "As pro.ask_terms.",
+   "status": "Implemented And Verified",
+   "why": ""
+  },
+  {
+   "id": "pro.choose_approach",
+   "kind": "command",
+   "area": "career",
+   "mechanic": true,
+   "seeded": false,
+   "readBy": "career",
+   "readAt": "2e6fd238",
+   "where": "Career, Opportunities, a part with sides: How You’ll Play It (measured or driven, restrained or expansive, set or open), each side shown with what it would come to; grayed with chooseRefusal's words.",
+   "prerequisites": "An audition or a callback set, its sides sent; casting's direction, where one waits, answered first.",
+   "reads": "The part's own register (`sceneOfPart`, from the genre it asks for most), the current choice and its rehearsal.",
+   "changes": "The way the sides are played (`Opportunity.playing`), the same choice keeping its rehearsal and another keeping half, none clearing it.",
+   "consumers": [
+    {
+     "what": "every round of the part is judged with the choice, against the part's register",
+     "at": "src/engine/systems/projobs.ts:1720"
+    },
+    {
+     "what": "Rehearse It On Your Feet rehearses the choice as a brief's is",
+     "at": "src/engine/systems/projobs.ts:2218"
+    },
+    {
+     "what": "at an audition or a callback in person, casting's direction is given from what the part asks against the choice",
+     "at": "src/engine/systems/projobs.ts:2630"
+    }
+   ],
+   "experienced": "The chooser shows each side's suitability and what the round would come to; the round's result and Why It Went This Way say how it was played.",
+   "saveLoad": "The professional record (`person.pro`) and the calendar's pending `pro.*` items are in the save; every handler reads the record's own state (a status, a key, a guard) before acting, so a load runs nothing twice and drops nothing.",
+   "evidence": {
+    "tests": [
+     "tests/b27-sides.test.ts",
+     "tests/b27-offers-screen.test.ts"
+    ],
+    "comparisons": [
+     "b27-sides: playing with the genre wins a callback that playing against it loses, the same seed"
+    ],
+    "mutations": [],
+    "journeys": [
+     "b27-sides: chosen, rehearsed, taped, decided"
+    ]
+   },
+   "missing": "Not reached by brief 27's final runs or long careers, played before it existed.",
+   "status": "Implemented And Verified",
+   "why": ""
+  },
+  {
+   "id": "pro.answer_note",
+   "kind": "command",
+   "area": "career",
+   "mechanic": true,
+   "seeded": false,
+   "readBy": "career",
+   "readAt": "2e6fd238",
+   "where": "What Needs You and the stop ten minutes into an audition or callback in person: Follow The Direction or Keep Your Choice; grayed with noteRefusal's words.",
+   "prerequisites": "Casting's direction given (`giveNote`: a part played some way whose register asks for another side) and not yet answered.",
+   "reads": "The direction's axis and side, the actor's adaptability, the choice's rehearsal.",
+   "changes": "The direction's answer on the round; followed, the side taken into the choice with the rehearsal adaptability carries (`followedPrep`); the round judged at the stop as a directed audition.",
+   "consumers": [
+    {
+     "what": "kept, responsiveness and the asked side's dimensions are held to MISFIT; followed, the read reaches for adaptability on responsiveness",
+     "at": "src/engine/systems/offers.ts:216"
+    },
+    {
+     "what": "followed, the rehearsal carried over is half plus the rest by adaptability",
+     "at": "src/engine/systems/offers.ts:342"
+    },
+    {
+     "what": "the round is judged at the stop with the answer, and casting's cut reads that round",
+     "at": "src/engine/systems/offers.ts:1058"
+    }
+   ],
+   "experienced": "The stop's two choices; then the round's result, and Why It Went This Way naming the direction and the answer.",
+   "saveLoad": "The professional record (`person.pro`) and the calendar's pending `pro.*` items are in the save; every handler reads the record's own state (a status, a key, a guard) before acting, so a load runs nothing twice and drops nothing.",
+   "evidence": {
+    "tests": [
+     "tests/b27-sides.test.ts"
+    ],
+    "comparisons": [
+     "b27-sides: two saves differing only in adaptability, the strong adapter better following and the weak one keeping; keeping against an open direction costs the read"
+    ],
+    "mutations": [],
+    "journeys": [
+     "b27-sides: directed, answered, decided"
+    ]
+   },
+   "missing": "As pro.choose_approach.",
+   "status": "Implemented And Verified",
+   "why": ""
+  },
+  {
+   "id": "pro.record_take",
+   "kind": "command",
+   "area": "career",
+   "mechanic": true,
+   "seeded": false,
+   "readBy": "career",
+   "readAt": "2e6fd238",
+   "where": "Career, Opportunities, a self-tape due: Record A Take; grayed with recordRefusal's words (three a day, eight kept).",
+   "prerequisites": "A self-tape asked for and not due yet; fewer than three takes today and eight in all.",
+   "reads": "The sides' preparation, the way they're played, the actor's condition at the moment; its own draw.",
+   "changes": "A take on the round with its figure, band and what it was judged from; an hour on the clock and a desk hour's energy.",
+   "consumers": [
+    {
+     "what": "a fourth take in a day, or a ninth in all, is refused",
+     "at": "src/engine/systems/offers.ts:363"
+    },
+    {
+     "what": "the take sent is judged again from what it was recorded with",
+     "at": "src/engine/systems/offers.ts:407"
+    }
+   ],
+   "experienced": "Each take listed with its day, how it was played, its band and figure, and what held it back.",
+   "saveLoad": "The professional record (`person.pro`) and the calendar's pending `pro.*` items are in the save; every handler reads the record's own state (a status, a key, a guard) before acting, so a load runs nothing twice and drops nothing.",
+   "evidence": {
+    "tests": [
+     "tests/b27-sides.test.ts",
+     "tests/b27-offers-screen.test.ts"
+    ],
+    "comparisons": [
+     "b27-sides: a fourth take in a day refused with the reason, Tape It grayed"
+    ],
+    "mutations": [],
+    "journeys": [
+     "b27-sides: three takes recorded, one sent"
+    ]
+   },
+   "missing": "As pro.choose_approach.",
+   "status": "Implemented And Verified",
+   "why": ""
+  },
+  {
+   "id": "pro.send_take",
+   "kind": "command",
+   "area": "career",
+   "mechanic": true,
+   "seeded": false,
+   "readBy": "career",
+   "readAt": "2e6fd238",
+   "where": "Career, Opportunities, a self-tape with takes: Send This Take on the take picked; grayed with sendRefusal's words.",
+   "prerequisites": "A take recorded and the tape not yet due.",
+   "reads": "The take's kept figure and what it was judged from.",
+   "changes": "The round finished with that take's figure (`finishRound`), the other takes' kept judgments dropped, a history line naming which was sent; casting's cut reads the round.",
+   "consumers": [
+    {
+     "what": "the round is finished with the take as it was recorded",
+     "at": "src/engine/systems/offers.ts:411"
+    },
+    {
+     "what": "casting's cut reads the round's band",
+     "at": "src/engine/systems/projobs.ts:2660"
+    }
+   ],
+   "experienced": "The round's result as the take's, and Why It Went This Way saying which take went.",
+   "saveLoad": "The professional record (`person.pro`) and the calendar's pending `pro.*` items are in the save; every handler reads the record's own state (a status, a key, a guard) before acting, so a load runs nothing twice and drops nothing.",
+   "evidence": {
+    "tests": [
+     "tests/b27-sides.test.ts"
+    ],
+    "comparisons": [
+     "b27-sides: the take picked is the figure casting reads, not the first or the best"
+    ],
+    "mutations": [],
+    "journeys": [
+     "b27-sides: recorded, sent, decided"
+    ]
+   },
+   "missing": "As pro.choose_approach.",
+   "status": "Implemented And Verified",
+   "why": ""
+  },
+  {
+   "id": "pro.withdraw",
+   "kind": "command",
+   "area": "career",
+   "mechanic": true,
+   "seeded": false,
+   "readBy": "career",
+   "readAt": "2e6fd238",
+   "where": "Career, Opportunities, a part in the running: Withdraw From The Part, what it does said above it (withdrawWarning); grayed with withdrawRefusal's words.",
+   "prerequisites": "A part submitted for, at audition or at callback; an offered one is declined instead; casting's direction, where one waits, answered first.",
+   "reads": "The next round in person and how far off it is (a day's notice or more, or less).",
+   "changes": "The part settled as withdrawn, its rounds and hold off the calendar; with less than a day's notice the casting office remembers it (`noShows`) for two years.",
+   "consumers": [
+    {
+     "what": "a late withdrawal is remembered by the office",
+     "at": "src/engine/systems/offers.ts:947"
+    },
+    {
+     "what": "an office that remembers offers nothing without an audition",
+     "at": "src/engine/systems/projobs.ts:1793"
+    },
+    {
+     "what": "an office that remembers makes no conditional offer",
+     "at": "src/engine/systems/offers.ts:676"
+    },
+    {
+     "what": "an office that remembers halves its cuts' lift",
+     "at": "src/engine/systems/projobs.ts:2660"
+    }
+   ],
+   "experienced": "A notice saying the part is left, with notice or without; a card on that office's later parts saying what it remembers and what that costs.",
+   "saveLoad": "The professional record (`person.pro`) and the calendar's pending `pro.*` items are in the save; every handler reads the record's own state (a status, a key, a guard) before acting, so a load runs nothing twice and drops nothing.",
+   "evidence": {
+    "tests": [
+     "tests/b27-casting-turns.test.ts"
+    ],
+    "comparisons": [
+     "b27-casting-turns: a withdrawal with notice against a no-show, a late one and one ill: only the no-show and the late one are remembered"
+    ],
+    "mutations": [],
+    "journeys": [
+     "b27-casting-turns: withdrawn, the office’s later direct offer withheld"
+    ]
+   },
+   "missing": "As pro.choose_approach.",
+   "status": "Implemented And Verified",
+   "why": ""
+  },
+  {
+   "id": "pro.ask_reschedule",
+   "kind": "command",
+   "area": "career",
+   "mechanic": true,
+   "seeded": false,
+   "readBy": "career",
+   "readAt": "2e6fd238",
+   "where": "Career, Opportunities, a chemistry read or a screen test set: Ask To Reschedule, its chance said above it; grayed with rescheduleRefusal's words.",
+   "prerequisites": "A chemistry read or a screen test a day or more off, not asked before, with another day clear of the calendar in the days the production is seeing actors.",
+   "reads": "The round's time, the calendar (a clash justifies it), the production's days.",
+   "changes": "The ask on the round and its answer on the clock (`pro.reschedule_answer`), a history line.",
+   "consumers": [
+    {
+     "what": "the production answers the next afternoon, moving the round by its draw to another day clear of the calendar or keeping it",
+     "at": "src/engine/systems/offers.ts:1021"
+    }
+   ],
+   "experienced": "At once the card says the ask is made and when the answer comes; then a notice, the round moved or kept.",
+   "saveLoad": "The professional record (`person.pro`) and the calendar's pending `pro.*` items are in the save; every handler reads the record's own state (a status, a key, a guard) before acting, so a load runs nothing twice and drops nothing.",
+   "evidence": {
+    "tests": [
+     "tests/b27-casting-turns.test.ts"
+    ],
+    "comparisons": [
+     "b27-casting-turns: granted only with a clash to give, the same seed"
+    ],
+    "mutations": [],
+    "journeys": [
+     "b27-casting-turns: asked, answered, the read moved"
+    ]
+   },
+   "missing": "As pro.choose_approach.",
+   "status": "Implemented And Verified",
+   "why": ""
+  },
+  {
+   "id": "pro.note",
+   "kind": "scheduled",
+   "area": "career",
+   "mechanic": true,
+   "seeded": false,
+   "readBy": "career",
+   "readAt": "2e6fd238",
+   "where": "The clock, ten minutes into an audition or callback in person played some way: a stop with Follow The Direction and Keep Your Choice; unanswered when its time runs out, the choice is kept.",
+   "prerequisites": "Casting's direction given at the round's start (`giveNote`).",
+   "reads": "The direction, its answer or none, the round's context.",
+   "changes": "An unanswered direction answered as kept; the round judged with the answer (`finishRound`) and casting's next step on the clock.",
+   "consumers": [
+    {
+     "what": "the stop's choices are the direction's two answers",
+     "at": "src/engine/systems/offers.ts:1127"
+    },
+    {
+     "what": "the round is judged at the stop as a directed audition",
+     "at": "src/engine/systems/offers.ts:1058"
+    }
+   ],
+   "experienced": "The clock stops in the room; afterwards the round's result and its line in Why It Went This Way.",
+   "saveLoad": "The professional record (`person.pro`) and the calendar's pending `pro.*` items are in the save; every handler reads the record's own state (a status, a key, a guard) before acting, so a load runs nothing twice and drops nothing.",
+   "evidence": {
+    "tests": [
+     "tests/b27-sides.test.ts"
+    ],
+    "comparisons": [
+     "b27-sides: left unanswered, the choice is kept and the read judged against the direction"
+    ],
+    "mutations": [],
+    "journeys": [
+     "b27-sides: the stop by the clock"
+    ]
+   },
+   "missing": "As pro.choose_approach.",
+   "status": "Implemented And Verified",
+   "why": ""
+  },
+  {
+   "id": "pro.reschedule_answer",
+   "kind": "scheduled",
+   "area": "career",
+   "mechanic": true,
+   "seeded": false,
+   "readBy": "career",
+   "readAt": "2e6fd238",
+   "where": "The clock, the afternoon after an ask to reschedule a chemistry read or a screen test: a notice, moved or kept.",
+   "prerequisites": "An ask made with pro.ask_reschedule; the round still set.",
+   "reads": "The round, the calendar, the draw on the posting's own stream (decider pro.reschedule).",
+   "changes": "Granted, the round's time and its calendar item moved to the other day; the ask's answer; a history line and a notice.",
+   "consumers": [
+    {
+     "what": "the round's time and its item move to the day granted",
+     "at": "src/engine/systems/offers.ts:1032"
+    }
+   ],
+   "experienced": "A notice: the read moved to its new day, or kept with the time it had.",
+   "saveLoad": "The professional record (`person.pro`) and the calendar's pending `pro.*` items are in the save; every handler reads the record's own state (a status, a key, a guard) before acting, so a load runs nothing twice and drops nothing.",
+   "evidence": {
+    "tests": [
+     "tests/b27-casting-turns.test.ts"
+    ],
+    "comparisons": [
+     "b27-casting-turns: the moved round’s calendar item is on the new day"
+    ],
+    "mutations": [],
+    "journeys": [
+     "b27-casting-turns: by the clock"
+    ]
+   },
+   "missing": "As pro.choose_approach.",
+   "status": "Implemented And Verified",
+   "why": ""
+  },
+  {
+   "id": "pro.recasts",
+   "kind": "reactor",
+   "area": "career",
+   "mechanic": true,
+   "seeded": false,
+   "readBy": "career",
+   "readAt": "2e6fd238",
+   "where": "The Mondays, after the week's postings: a part the actor lost or let go, recast by the production and posted again, said in a notice.",
+   "prerequisites": "A slate part settled against the actor in the week before, its first day three weeks off or more, recast by its draw (decider pro.recast).",
+   "reads": "The settled opportunities, the posting's first day, the agreement in force (an agent's breakdown or an open posting, as it came).",
+   "changes": "A new opportunity for the part, open five days, marked recast; its casting decided afresh (`recastKey`).",
+   "consumers": [
+    {
+     "what": "the part is posted again, the way it came the first time",
+     "at": "src/engine/systems/offers.ts:866"
+    },
+    {
+     "what": "casting's draw is keyed for the recast, so it isn't the first casting's",
+     "at": "src/engine/systems/projobs.ts:859"
+    }
+   ],
+   "experienced": "A notice naming the recast part and until when it can be gone for; the card saying casting decides it afresh.",
+   "saveLoad": "The professional record (`person.pro`) and the calendar's pending `pro.*` items are in the save; every handler reads the record's own state (a status, a key, a guard) before acting, so a load runs nothing twice and drops nothing.",
+   "evidence": {
+    "tests": [
+     "tests/b27-casting-turns.test.ts"
+    ],
+    "comparisons": [
+     "b27-casting-turns: a part lost is recast and posted again, and its cut is its own draw"
+    ],
+    "mutations": [],
+    "journeys": [
+     "b27-casting-turns: recast, submitted, decided"
+    ]
+   },
+   "missing": "As pro.choose_approach.",
+   "status": "Implemented And Verified",
+   "why": ""
   }
  ],
  "promises": [

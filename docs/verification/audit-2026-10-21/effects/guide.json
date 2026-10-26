@@ -2028,6 +2028,186 @@
    "seeded": false,
    "readBy": "guide",
    "readAt": "brief 27"
+  },
+  {
+   "id": "promise.career.agreement-terms>career.agreement",
+   "kind": "scheduled",
+   "claim": "The office answers the ask two days on, and an agreed ask changes the terms The Agreement shows.",
+   "entryFile": "src/engine/content/guide/career.ts",
+   "holds": "The answer is on the clock two days on (`answerTime`, src/engine/systems/representation.ts:272) and an agreed ask adds a version the agreement's words are rebuilt from (`termsFor`, src/engine/systems/representation.ts:336).",
+   "tests": [
+    "tests/b27-representation.test.ts"
+   ],
+   "status": "Implemented And Verified",
+   "why": "",
+   "seeded": false,
+   "readBy": "guide",
+   "readAt": "2e6fd238"
+  },
+  {
+   "id": "promise.career.agreement-terms>career.commission",
+   "kind": "evaluation",
+   "claim": "Commission is taken only on what the agreement covers, so voice-over or work abroad added carries it.",
+   "entryFile": "src/engine/content/guide/career.ts",
+   "holds": "`commissionOn` reads `coveredUnder` on the agreement's version in force (src/engine/systems/propay.ts:363).",
+   "tests": [
+    "tests/b27-representation.test.ts"
+   ],
+   "status": "Implemented And Verified",
+   "why": "",
+   "seeded": false,
+   "readBy": "guide",
+   "readAt": "2e6fd238"
+  },
+  {
+   "id": "promise.career.languages>career.auditions",
+   "kind": "evaluation",
+   "claim": "For a conversational speaker, the language’s preparation is read when an audition is judged, beside the rest of the sides.",
+   "entryFile": "src/engine/content/guide/career.ts",
+   "holds": "`withLanguage` adds the language's preparation to the round's context (src/engine/systems/projobs.ts:1720), read on believability and execution.",
+   "tests": [
+    "tests/b27-languages.test.ts"
+   ],
+   "status": "Implemented And Verified",
+   "why": "",
+   "seeded": false,
+   "readBy": "guide",
+   "readAt": "2e6fd238"
+  },
+  {
+   "id": "promise.career.languages>career.opportunities",
+   "kind": "prerequisite",
+   "claim": "A part written in a language you don’t speak can’t be submitted for.",
+   "entryFile": "src/engine/content/guide/career.ts",
+   "holds": "`languageRefusal` is among `eligibilityProblems` (src/engine/systems/projobs.ts:829).",
+   "tests": [
+    "tests/b27-languages.test.ts"
+   ],
+   "status": "Implemented And Verified",
+   "why": "",
+   "seeded": false,
+   "readBy": "guide",
+   "readAt": "2e6fd238"
+  },
+  {
+   "id": "promise.career.languages>career.resume",
+   "kind": "history",
+   "claim": "Your résumé lists the languages you speak and how well.",
+   "entryFile": "src/engine/content/guide/career.ts",
+   "holds": "`resumeNow` lists every language but native English (src/engine/systems/pro.ts:1230).",
+   "tests": [
+    "tests/b27-languages.test.ts"
+   ],
+   "status": "Implemented And Verified",
+   "why": "",
+   "seeded": false,
+   "readBy": "guide",
+   "readAt": "2e6fd238"
+  },
+  {
+   "id": "promise.career.sides>career.auditions",
+   "kind": "evaluation",
+   "claim": "Casting’s decision reads the round as it was played and directed, and the take you sent.",
+   "entryFile": "src/engine/content/guide/career.ts",
+   "holds": "The round is judged with the choice and the direction's answer (`approachRead`, src/engine/systems/projobs.ts:1720) and with the take sent (src/engine/systems/offers.ts:411), and the cut reads the round's band (src/engine/systems/projobs.ts:2660).",
+   "tests": [
+    "tests/b27-sides.test.ts"
+   ],
+   "status": "Implemented And Verified",
+   "why": "",
+   "seeded": false,
+   "readBy": "guide",
+   "readAt": "2e6fd238"
+  },
+  {
+   "id": "promise.career.sides>craft.brief-tape",
+   "kind": "optional",
+   "claim": "The ways of playing are the same as a practice brief’s, and so is how they’re rehearsed.",
+   "entryFile": "src/engine/content/guide/career.ts",
+   "holds": "The choice is a brief's `Playing` (`choose`, `rehearseChoice` from systems/material.ts), rehearsed by the same step (src/engine/systems/projobs.ts:2218).",
+   "tests": [
+    "tests/b27-sides.test.ts"
+   ],
+   "status": "Implemented And Verified",
+   "why": "",
+   "seeded": false,
+   "readBy": "guide",
+   "readAt": "2e6fd238"
+  },
+  {
+   "id": "promise.career.negotiation>career.offers",
+   "kind": "immediate",
+   "claim": "The answer changes the offer you then accept or decline.",
+   "entryFile": "src/engine/content/guide/career.ts",
+   "holds": "Each answer changes the offer's terms (`answerAsk`, src/engine/systems/offers.ts:579) and the decision is brought up to its version (`reviseDecision`, src/engine/systems/offers.ts:566).",
+   "tests": [
+    "tests/b27-offer-terms.test.ts"
+   ],
+   "status": "Implemented And Verified",
+   "why": "",
+   "seeded": false,
+   "readBy": "guide",
+   "readAt": "2e6fd238"
+  },
+  {
+   "id": "promise.career.negotiation>career.contracts",
+   "kind": "history",
+   "claim": "The contract made when you accept carries the terms as negotiated.",
+   "entryFile": "src/engine/content/guide/career.ts",
+   "holds": "`contractFor` reads the offer's episodes, option raise and promotional-film pay (src/engine/systems/contracts.ts:205).",
+   "tests": [
+    "tests/b27-offer-terms.test.ts"
+   ],
+   "status": "Implemented And Verified",
+   "why": "",
+   "seeded": false,
+   "readBy": "guide",
+   "readAt": "2e6fd238"
+  },
+  {
+   "id": "promise.career.negotiation>career.agreement",
+   "kind": "prerequisite",
+   "claim": "Only an agent under an agreement in force negotiates for you.",
+   "entryFile": "src/engine/content/guide/career.ts",
+   "holds": "`askMoreRefusal` refuses with no agreement in force, and on work the agreement doesn't cover (src/engine/systems/projobs.ts:1806).",
+   "tests": [
+    "tests/b27-offer-terms.test.ts"
+   ],
+   "status": "Implemented And Verified",
+   "why": "",
+   "seeded": false,
+   "readBy": "guide",
+   "readAt": "2e6fd238"
+  },
+  {
+   "id": "promise.career.withdrawing>career.auditions",
+   "kind": "evaluation",
+   "claim": "A remembered no-show halves that office’s decisions on your later auditions.",
+   "entryFile": "src/engine/content/guide/career.ts",
+   "holds": "`castingLift` halves the lift where the office remembers (src/engine/systems/offers.ts:899), read at every cut (src/engine/systems/projobs.ts:2660).",
+   "tests": [
+    "tests/b27-casting-turns.test.ts"
+   ],
+   "status": "Implemented And Verified",
+   "why": "",
+   "seeded": false,
+   "readBy": "guide",
+   "readAt": "2e6fd238"
+  },
+  {
+   "id": "promise.career.withdrawing>career.offers",
+   "kind": "immediate",
+   "claim": "An office that remembers a no-show offers you nothing without an audition.",
+   "entryFile": "src/engine/content/guide/career.ts",
+   "holds": "`directOfferFor` returns nothing where the office remembers (src/engine/systems/projobs.ts:1793).",
+   "tests": [
+    "tests/b27-casting-turns.test.ts"
+   ],
+   "status": "Implemented And Verified",
+   "why": "",
+   "seeded": false,
+   "readBy": "guide",
+   "readAt": "2e6fd238"
   }
  ]
 }

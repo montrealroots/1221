@@ -1682,6 +1682,78 @@
    "purpose": "Tells the player their per diem came, apart from their wages.",
    "readBy": "career",
    "readAt": "brief 25"
+  },
+  {
+   "id": "notice.systems/representation#answerAsk",
+   "kind": "notice",
+   "area": "life",
+   "mechanic": true,
+   "seeded": false,
+   "readBy": "life",
+   "readAt": "2e6fd238",
+   "where": "What Needs You and Home’s notices: “<Agent>’s Office Agreed To Your Ask” or “Kept Its Terms”, sent from representation.ts as the office answers (`pro.agent_terms_answer`).",
+   "prerequisites": "An ask on an offered agreement, answered.",
+   "reads": "The ask and its answer, the terms in force, whether the agent is real.",
+   "changes": "A notice; the terms a version agreed to added (the scheduled kind's own).",
+   "consumers": [
+    {
+     "what": "the version in force is what the term's end, the commission and the submissions read",
+     "at": "src/engine/systems/representation.ts:155"
+    }
+   ],
+   "experienced": "The notice, and The Agreement's words as they stand.",
+   "saveLoad": "The professional record (`person.pro`) and the calendar's pending `pro.*` items are in the save; every handler reads the record's own state (a status, a key, a guard) before acting, so a load runs nothing twice and drops nothing.",
+   "evidence": {
+    "tests": [
+     "tests/b27-representation.test.ts"
+    ],
+    "comparisons": [],
+    "mutations": [],
+    "journeys": []
+   },
+   "missing": "As pro.ask_terms.",
+   "status": "Implemented And Verified",
+   "why": "",
+   "purpose": "Tells the player the office's answer and that a real agent's answer is the game's invention."
+  },
+  {
+   "id": "notice.systems/representation#introduceAtFestival",
+   "kind": "notice",
+   "area": "life",
+   "mechanic": true,
+   "seeded": false,
+   "readBy": "life",
+   "readAt": "2e6fd238",
+   "where": "What Needs You and Home’s notices: “<Agent>’s Office Met You At The Festival”, sent from representation.ts when the festival's system calls `introduceAtFestival`.",
+   "prerequisites": "A festival entry selected or screened, the player attending its screening (the festivals cluster's call; nothing calls it in play yet).",
+   "reads": "The entry, the film's credit, the agent's routes (festival among them), an approach under way or held.",
+   "changes": "The relation's way in (`via`, the introduction the approach needs), the film among the work the office has to go on (`festivals`), a history line and a notice.",
+   "consumers": [
+    {
+     "what": "the introduction is the way in the send refusal reads",
+     "at": "src/engine/systems/proagent.ts:704"
+    },
+    {
+     "what": "the film is among the work the office weighs",
+     "at": "src/engine/systems/proagent.ts:309"
+    }
+   ],
+   "experienced": "The notice, and How To Reach Him naming the festival as the way in.",
+   "saveLoad": "The professional record (`person.pro`) and the calendar's pending `pro.*` items are in the save; every handler reads the record's own state (a status, a key, a guard) before acting, so a load runs nothing twice and drops nothing.",
+   "evidence": {
+    "tests": [
+     "tests/b27-representation.test.ts"
+    ],
+    "comparisons": [
+     "b27-representation: a Sundance entry introduces the actor; an entry not selected introduces nobody"
+    ],
+    "mutations": [],
+    "journeys": []
+   },
+   "missing": "Nothing in play calls it until the festivals cluster lands: the route is promised in words and reached only by its test.",
+   "status": "Implemented, Verification Incomplete",
+   "why": "The function is tested directly, as the festivals cluster’s call will reach it; no life the gate plays reaches it yet.",
+   "purpose": "Tells the player an agent's office met them at a festival where their film showed, and that the meeting is the game's."
   }
  ],
  "promises": [

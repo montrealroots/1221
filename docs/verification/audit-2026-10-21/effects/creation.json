@@ -4766,6 +4766,55 @@
    "purpose": "To say the player’s own trait figures truly, and open onto what they’re about.",
    "readBy": "creation",
    "readAt": "12c04ee1"
+  },
+  {
+   "id": "create.languages",
+   "kind": "creation",
+   "area": "creation",
+   "mechanic": true,
+   "seeded": false,
+   "readBy": "creation",
+   "readAt": "2e6fd238",
+   "where": "Genres & Background: Languages, each with how well it's spoken (CharacterCreation.tsx, LanguagesCard); Review's Languages line.",
+   "prerequisites": "Genres & Background; Continue is refused with English under fluent, no native language, a language twice, more than six or a name off the list (`languagesProblems`).",
+   "reads": "config.languages",
+   "changes": "Person.languages (bootstrap.ts:416, cleaned by `cleanLanguages`); absent on a life a tool makes, which reads as English, native.",
+   "consumers": [
+    {
+     "what": "a part written for a character who speaks another language refuses a non-speaker at Submit Yourself, and an agent doesn't put one up",
+     "at": "src/engine/systems/projobs.ts:829"
+    },
+    {
+     "what": "casting's fit weighs the weaker of the part's language and the actor's English",
+     "at": "src/engine/systems/projobs.ts:647"
+    },
+    {
+     "what": "a conversational speaker's language preparation is read when the round is judged",
+     "at": "src/engine/systems/projobs.ts:1720"
+    },
+    {
+     "what": "the résumé lists every language but native English",
+     "at": "src/engine/systems/pro.ts:1230"
+    }
+   ],
+   "experienced": "The card and Review say what the life speaks; a part's card says what it asks and where the actor stands; the résumé lists them.",
+   "saveLoad": "The professional record (`person.pro`) and the calendar's pending `pro.*` items are in the save; every handler reads the record's own state (a status, a key, a guard) before acting, so a load runs nothing twice and drops nothing.",
+   "evidence": {
+    "tests": [
+     "tests/b27-languages.test.ts",
+     "tests/b27-creation-origins.test.ts"
+    ],
+    "comparisons": [
+     "b27-languages: the same seed’s fluent speaker booked a Mandarin short the English-only twin is refused; the conversational twin’s tape held back until the language is worked on"
+    ],
+    "mutations": [],
+    "journeys": [
+     "b27-creation-origins: a Seoul life’s languages kept across a save and a load"
+    ]
+   },
+   "missing": "Brief 27's long careers were played before languages existed; the next replay says how many parts asked one.",
+   "status": "Implemented And Verified",
+   "why": ""
   }
  ],
  "promises": []
