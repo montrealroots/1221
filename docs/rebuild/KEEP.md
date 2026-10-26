@@ -177,7 +177,11 @@ Captures: `captures/01-opening/00-opening-slots.png` (fresh), `01-slots-occupied
 | Foot | "SLATE 1.1.0 · Saved To This Device" (local) / "Saved To Base44 · The Server Checks Each Save" (deployed) |
 | Delete modal | "Delete Slot N?"; "This deletes <Name>'s life from the slot, with everything that happened in it." (or "This deletes the save in this slot." when no name can be read); "SLATE keeps a backup, so if you change your mind, press Restore Backup on this slot to bring it back." or "This slot has no backup, so you can't bring it back afterwards."; "Keep It", "Delete Slot N" |
 
-### The rewrite (2026-10-26, the owner's "complete and natural rewrite")
+### The rewrite (2026-10-26, the owner's "complete and natural rewrite"; a draft, not yet decided)
+
+**Owner, later the same day:** "I'll worry about the wording later but keep this feature and the engine behind it."
+So the feature and the engine are decided; the lines below are a first draft in the voice standard, to be settled
+when the owner turns to wording, and none of them is final.
 
 The owner asked for a complete overhaul of the language, not a touch-up. This is the whole screen's text again, in the
 voice standard above, one line for each line in the inventory. The first column is where the line goes; the second is
