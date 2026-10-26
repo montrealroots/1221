@@ -81,11 +81,10 @@ languages (on Identity), no training, no prior work, no arrival date.
 
 ## Screen 5. Creation, Starting Point
 
-**Not yet reviewed.** What's known from the cuts: "Where It Begins: New Haven" becomes **Where You Live**, the
-player's own choice from the world picker; the start date is no longer a school term's first day (what it is instead
-is open); the body (height and weight), the bank, Before Yale (renamed, since there's no Yale: where you lived before
-and since when, the account kept there and the savings split) are the candidates to stay, each to be read against
-the premise.
+One card, **Your Money** (entry 14): the line that the money is kept in the currency where the life starts and that
+exchange rates are estimates; Your Bank, a real bank with its real fee line; and the figures the family set, checking,
+savings, credit record, the card's limit. Nothing else: the body, the town facts and the earlier residence are cut.
+Where the life begins on the first morning is open until the premise.
 
 ## Screen 6. Creation, Review
 

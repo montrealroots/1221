@@ -106,9 +106,13 @@ await wait(300); await shot('03b-background-somewhere-else');
 await fixSteps('Genres');
 await page.evaluate((genresHtml) => { const col = document.querySelector('.creation .col.gap-5'); col.innerHTML = genresHtml; for (const chip of col.querySelectorAll('.chip')) chip.textContent = chip.textContent.replace(/\s*·\s*$/, ''); const p = col.querySelector('.panel-head p'); if (p) p.textContent = 'The genres you love. Pick as many as are true.'; }, genresHtml);
 await wait(300); await shot('04-genres-new');
+// ---- Starting Point: Your Money alone.
+await page.getByRole('button', { name: /^Continue$/ }).first().click(); await wait(900);
+await fixSteps('Starting Point');
+await page.evaluate(() => { const col = document.querySelector('.creation .col.gap-5'); for (const c of [...col.querySelectorAll(':scope > .card')]) if (!/Your Money/.test(c.querySelector('h2')?.textContent || '')) c.remove(); const money = col.querySelector('.card'); money.querySelector('.callout')?.remove(); });
+await wait(300); await shot('05-starting-point-new');
 
 // ---- The slots screen with a life in it, the title line redefined.
-await page.getByRole('button', { name: /^Continue$/ }).first().click(); await wait(900);
 await page.getByRole('button', { name: /^Continue$/ }).first().click(); await wait(900);
 await page.getByRole('button', { name: /^Begin$/ }).click();
 await page.getByRole('group', { name: 'Time Controls' }).first().waitFor({ timeout: 30000 }); await wait(3000);

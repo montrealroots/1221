@@ -603,3 +603,38 @@ Race Or Ethnicity each stay, each with the rule of entries 4 to 6: an engine tha
 outcomes downstream, researched to the source, with nothing decorative. What those outcomes are waits on the
 premise (entry 11), as race or ethnicity's does; the decision that each must have them is made now, and a field
 that ends up with none is cut, not kept.
+
+---
+
+## 14. Creation, step 4 of 5, Starting Point: Your Money alone (DECIDED 2026-10-26)
+
+**Owner:** "Get rid of everything but 'Your Money'."
+
+Capture of the page as it stood: `captures/01-opening/05-starting-point.png`; as decided:
+`captures/02-new-build/05-starting-point-new.png`.
+
+**Kept: Your Money.** "The money in your own name on the first morning": the currency line (the money is kept in
+the currency of the place the life starts, and exchange rates are estimates, not live rates), **Your Bank** (a real
+bank of the country, with its real fee line, from the thirteen countries' sheets today and from every country's under
+entry 6), and the figures the family set: checking, savings, credit record, the card's limit. The Yale Health box
+under them is gone with the School. The engine behind it is this SLATE's banking (real banks, fee sheets, account
+formats, the card, the credit score, the currency), which stands on its own without the career and is kept. Note
+for the build: the family's figures are shown on Background and again here; the owner decides which page owns the
+choice and which only reads it back.
+
+**Cut from this page:**
+
+- **Your Body** (height and weight, drawn around the birth country's averages where left blank). With it goes what
+  read it: the daily weight, what a workout or a night spends, the chronic-condition rates by body mass index and
+  the long-life chance, unless the premise brings a body back with its own reader.
+- **Where It Begins** (the Yale paragraph and the town's population, time zone and cost of living). With the
+  School gone this would have become Where You Live; the owner cut the card, so **where the life begins is open**:
+  the places the player has already given are the birthplace (Identity) and where they grew up (Background), and the
+  premise says which of those, or what else, is home on the first morning.
+- **Before Yale** (the place lived just before, the account kept there, the savings split; "I Lived Where I Was
+  Born"). With it goes the residence-history engine: the home bank abroad and its holidays, the account number's
+  format by country, a US citizen's starting license state. If the premise needs a residence history, it comes back
+  as its own card under its own name.
+
+The step strip stays **Identity, Background, Genres, Starting Point, Review**; whether a one-card step keeps the
+name Starting Point or becomes Money is wording, deferred.
