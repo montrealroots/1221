@@ -125,9 +125,15 @@ Type: the system sans stack; monospace for figures. Sizes 0.72 / 0.8 / 0.875 / 1
 ## 2. The slots screen (KEEP, with its words to be rewritten)
 
 **Owner's decision (2026-10-26):** keep the screen and what it does; "text here is too robotic so that will need to
-change." So: the layout, the states, the behaviour and the engine are kept as they are; every string below is to be
-rewritten in the new build, in a warmer voice, and this list is the inventory the rewrite works from so nothing is
-dropped by accident.
+change." The voice the owner wants, in their words: **"natural and coherent and realistic."** So: the layout, the
+states, the behaviour and the engine are kept as they are; every string below is to be rewritten in the new build in
+that voice, and this list is the inventory the rewrite works from so nothing is dropped by accident.
+
+**The voice standard, for every rewrite in this register:** natural (the way a person would say it to someone in the
+room, not a system reporting its state), coherent (the screen's lines read as one voice, each following from the
+last, with the same words for the same things), and realistic (it says what is actually true and actually happens,
+no cheer, no padding, no telling the player what they already see). The engine's vocabulary stays out of it: no
+"slot", "save format", "schema", "adapter", "validation" where a plainer word does the job.
 
 Captures: `captures/01-opening/00-opening-slots.png` (fresh), `01-slots-occupied.png` (a life in Slot 1),
 `01-slots-delete-confirm.png` (the confirmation).
