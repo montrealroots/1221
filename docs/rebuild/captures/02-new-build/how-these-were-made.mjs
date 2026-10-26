@@ -3,6 +3,7 @@ import { launchOptions } from '/home/user/1221/tools/browser.mjs';
 const OUT = process.argv[2];
 const browser = await chromium.launch(launchOptions());
 const page = await (await browser.newContext({ viewport: { width: 1280, height: 800 } })).newPage();
+page.on('console', (m) => { if (/^STEPS/.test(m.text())) console.log(m.text()); });
 const wait = (ms) => page.waitForTimeout(ms);
 const shot = (n) => page.screenshot({ path: `${OUT}/${n}.png`, fullPage: true });
 await page.goto('http://localhost:5199', { waitUntil: 'domcontentloaded' });
@@ -24,10 +25,16 @@ await page.getByRole('button', { name: /^Back$/ }).first().click(); await wait(6
 await page.getByRole('button', { name: /^Back$/ }).first().click(); await wait(900);
 
 const fixSteps = (active) => page.evaluate((active) => {
-  const steps = [...document.querySelectorAll('.creation-step')];
-  steps.find((s) => /Dispositions/.test(s.textContent))?.remove();
-  const g = steps.find((s) => /Genres & Background/.test(s.textContent)); if (g) { g.textContent = 'Background'; const gg = g.cloneNode(true); gg.textContent = 'Genres'; g.after(gg); }
-  let seen = false; for (const s of document.querySelectorAll('.creation-step')) { const on = s.textContent.trim() === active; if (on) { s.setAttribute('data-state', 'active'); seen = true; } else if (!seen) s.setAttribute('data-state', 'done'); else s.removeAttribute('data-state'); }
+  const strip = document.querySelector('.creation-steps');
+  const template = strip.querySelector('.creation-step');
+  const names = ['Identity', 'Background', 'Genres', 'Starting Point', 'Review'];
+  strip.innerHTML = '';
+  let seen = false;
+  for (const name of names) {
+    const el = template.cloneNode(false); el.textContent = name;
+    if (name === active) { el.setAttribute('data-state', 'active'); seen = true; } else if (!seen) el.setAttribute('data-state', 'done'); else el.removeAttribute('data-state');
+    strip.appendChild(el);
+  }
   const p = document.querySelector('.creation .row-between p.muted.small'); if (p) p.textContent = 'SLATE is a life simulator. Here you create the person you’ll play.';
 }, active);
 
