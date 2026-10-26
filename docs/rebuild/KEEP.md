@@ -177,6 +177,46 @@ Captures: `captures/01-opening/00-opening-slots.png` (fresh), `01-slots-occupied
 | Foot | "SLATE 1.1.0 · Saved To This Device" (local) / "Saved To Base44 · The Server Checks Each Save" (deployed) |
 | Delete modal | "Delete Slot N?"; "This deletes <Name>'s life from the slot, with everything that happened in it." (or "This deletes the save in this slot." when no name can be read); "SLATE keeps a backup, so if you change your mind, press Restore Backup on this slot to bring it back." or "This slot has no backup, so you can't bring it back afterwards."; "Keep It", "Delete Slot N" |
 
+### The rewrite (2026-10-26, the owner's "complete and natural rewrite")
+
+The owner asked for a complete overhaul of the language, not a touch-up. This is the whole screen's text again, in the
+voice standard above, one line for each line in the inventory. The first column is where the line goes; the second is
+what it says in the new build. The old text above is kept only so nothing is lost; it is not the model.
+
+| Where | The new line |
+|---|---|
+| Under the wordmark | "You can have three lives going at once. They don't know about each other." |
+| Empty card | "Nobody here yet." |
+| Empty card with a backup | "Nobody here now. There's still a copy of the life that was, if you want it back." |
+| New Save | "Start A Life" |
+| Continue | "Pick Up Where You Left Off" |
+| See How It Ended | "See How It Ended" (this one already says it) |
+| Opening… | "One moment." |
+| Restore Backup | "Bring Back The Copy" |
+| Delete | "Let This Life Go" |
+| Backup note | "The copy is from <date>." / "The copy's date isn't known." |
+| Title line under the name | As the save says it: "Actress, first year at Yale" (the life's own words for where it is, not a label with commas) |
+| Facts | "The day", "Where", "Worth", "Time played" |
+| Version line | "Made with SLATE 1.1.0" + ", from an earlier version: it'll be brought up to date when you open it" + " · 8 KB" |
+| Unreadable | "This one can't be read." then the reason, in these words: "The file's damaged." / "This isn't a SLATE life." / "Your browser couldn't read its storage just now. Reload and try again." / "This life was saved compressed, and this browser can't open it. Try a newer one." |
+| Failed validation | "Something's wrong inside this life, so it can't be opened." + " There's a copy from before; you can bring that back instead." when one exists; fold-out "What's wrong, exactly" |
+| Foot, on a device | "SLATE 1.1.0. Your lives are kept on this device." |
+| Foot, deployed | "SLATE 1.1.0. Your lives are kept on the server, and it checks each one." |
+| Delete modal, title | "Let <Name> go?" (or "Let this life go?" when no name can be read) |
+| Delete modal, body | "Everything that happened to <Name> goes with them." |
+| Delete modal, the copy | "There'll still be a copy for a while. If you change your mind, bring it back from this card." / "There's no copy of this one. Once it's gone, it's gone." |
+| Delete modal, buttons | "Keep Them" / "Let Them Go" |
+
+Rules the rewrite follows, so the next screens follow them too:
+
+- A life is "a life" or the character's name; never "a save", "a slot", "a universe".
+- A backup is "a copy". The schema is never mentioned; "an earlier version" is as technical as it gets.
+- Buttons say what will happen, in the player's terms ("Bring Back The Copy"), not the system's ("Restore Backup").
+- Where the engine would have printed a label with commas ("Actress, Yale Drama Year 1"), the new build writes a
+  sentence fragment a person would say ("Actress, first year at Yale"), which means the meta the save keeps changes
+  shape with it (entry 1's `careerLabel` becomes words, not a label).
+- The error lines are kept short and say the one thing the player can do.
+
 ### What the engine does (kept as is)
 
 - Reads the slots the startup sequence handed it, and re-reads them after a delete.
