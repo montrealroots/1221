@@ -38,6 +38,19 @@
  *   an offer, which that player declines. v1-3's send went unanswered, v1-0, v1-2 and v1-4 to v1-6's were passed on at
  *   the reply, and v1-1 was dismissed before its last term.
  *
+ * A seed's life moves with the game's postings: each opportunity takes the next number in the save (`sim.nextId('pro')`),
+ * and the audition judge's draw is keyed by that number (`auditionContext`, projobs.ts), so a posting added or taken
+ * away ahead of a tape moves how the tape comes out. Casting's own draws were keyed by the posting for this on 2026-10-23
+ * (`castingDraw`); the judge's weren't. On 2026-10-25, brief 27's series cluster first cut ran 9-1-1 through the
+ * simulation, which in v1-21's canceled it in May 2029 and took its July posting away, and the August tape came out
+ * Working (64.8) and was passed; the same cluster's finished form (2026-10-26) posts only the winter pilots that wrap two
+ * weeks before their network's word, which moved the numbering again, and the tape is Strong (65.2) and booked as here.
+ * The search over v1-0 to v1-21 played again on that tree, with this file's player (fixed parts only): v1-14 comes to a
+ * SAG-AFTRA role booked and paid first now (Desk Clerk through him, shot on 6 and 7 August 2029, paid on the 14th), and
+ * v1-21 as written below; the rest end as the record had them. v1-21 stays the life these assertions were written on.
+ * Keying the judge by the posting, as casting's draws are, would hold a seed's life still against postings elsewhere;
+ * it would also move every seeded audition in the suite, so it wasn't done here.
+ *
  * Until 2026-10-21 the seeds were v1-12 and v1-5, found the same way with the real agent: his draws are keyed by his
  * id, so the fictional one's fell otherwise (59da1351), and an actress is no longer posted the parts written for an
  * actor (9c3b7ee8); the trips that meet (a43b4f8f) changed neither search. v1-12's life met Desk Clerk once, in June,
