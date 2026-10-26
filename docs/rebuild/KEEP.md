@@ -119,3 +119,77 @@ clapper gold `#d8b25f`, strong `#efc978`, dim and line tints at .14 and .32 alph
 for what matters". Positive `#6db98a`, negative `#d97a6c`, warning `#dda863`, info `#7aa5c9`, each with a .14 tint.
 Type: the system sans stack; monospace for figures. Sizes 0.72 / 0.8 / 0.875 / 1 / 1.25 / 1.6 / 2.1 / 3 rem. Space 4,
 8, 12, 16, 24, 32, 48, 64 px. Radii 6 / 10 / 16 px. Two shadows. Nav 56 px, rail 232 px.
+
+---
+
+## 2. The slots screen (KEEP, with its words to be rewritten)
+
+**Owner's decision (2026-10-26):** keep the screen and what it does; "text here is too robotic so that will need to
+change." So: the layout, the states, the behaviour and the engine are kept as they are; every string below is to be
+rewritten in the new build, in a warmer voice, and this list is the inventory the rewrite works from so nothing is
+dropped by accident.
+
+Captures: `captures/01-opening/00-opening-slots.png` (fresh), `01-slots-occupied.png` (a life in Slot 1),
+`01-slots-delete-confirm.png` (the confirmation).
+
+### What the player sees
+
+- The clapper at 44 px, the wordmark at 32 px, and one line under it. Then three cards in a grid (`auto-fit`,
+  280 px minimum, 24 px gaps, so three across on a laptop and one above another on a phone), each at least 300 px
+  tall, on the surface colour with a 1 px line and the 10 px radius. An empty card has a dashed border and centres
+  its contents in dim text. The slot number is extra-small uppercase with .16em letter-spacing. A name is 1.6rem at
+  weight 600. The four facts sit in a two-column grid. A foot line at the bottom.
+- **Empty slot:** "SLOT N", the sentence, New Save. With a leftover backup: a different sentence, New Save, Restore
+  Backup, and the backup's date.
+- **Occupied slot:** headshot (when one was uploaded) beside the name and the title line (the save's `careerLabel`,
+  "Actress, Yale Drama Year 1" here); Date, Location, Net Worth (monospace), Played (monospace: `0s`, `12m`,
+  `3h 7m`); the version line; the backup note when there is one; Continue (full width, gold), then Restore Backup
+  (when there is one) and Delete side by side.
+- **A finished life:** Continue reads "See How It Ended" and the life opens on its ending with the clock stopped
+  (a save with `endedAt`, or whose title line ends ", Died At N").
+- **A damaged save:** "Unreadable Save" in place of the name, the reason in red, Restore Backup if there's a backup,
+  Delete.
+- **Opening:** the pressed button reads "Opening…" and every button on the screen is disabled until it's done.
+- **An error opening** shows in a red callout above the grid; a save that fails validation also has a fold-out
+  "What's Wrong With It" listing the checker's lines (developer's words, kept behind the fold on purpose).
+- **Delete** opens a modal ("Confirm Deletion" to a screen reader) over a dimmed screen; clicking outside it or Keep
+  It closes it.
+
+### Every string on the screen as it stands (all to be rewritten)
+
+| Where | Text now |
+|---|---|
+| Under the wordmark | "Three slots, three separate lives. What happens in one never touches the others." |
+| Empty slot | "An empty slot. Press New Save to start a life here." |
+| Empty slot with a backup | "Empty, but there's a backup of the save that was here." |
+| Buttons | "New Save", "Continue", "See How It Ended", "Opening…", "Restore Backup", "Delete" |
+| Backup note | "Backup from <date>" / "Backup from an unknown date" |
+| Damaged save | "Unreadable Save", then the adapter's reason: "That save file is damaged and can't be read." / "That file isn't a SLATE save." / "This device's storage couldn't be read just now. Reload SLATE to try again." / "This save is compressed, and this browser can't open it. Open SLATE in an up-to-date browser." |
+| Failed validation | "The save in Slot N is damaged, so it can't be opened." + " Press Restore Backup to open its backup instead." when one exists; fold-out "What's Wrong With It" |
+| Version line | "Version 1.1.0 · Save Format 94" + " · Updated When Opened" for an older save + " · 8 KB" |
+| Facts | "Date", "Location", "Net Worth", "Played" |
+| Foot | "SLATE 1.1.0 · Saved To This Device" (local) / "Saved To Base44 · The Server Checks Each Save" (deployed) |
+| Delete modal | "Delete Slot N?"; "This deletes <Name>'s life from the slot, with everything that happened in it." (or "This deletes the save in this slot." when no name can be read); "SLATE keeps a backup, so if you change your mind, press Restore Backup on this slot to bring it back." or "This slot has no backup, so you can't bring it back afterwards."; "Keep It", "Delete Slot N" |
+
+### What the engine does (kept as is)
+
+- Reads the slots the startup sequence handed it, and re-reads them after a delete.
+- **Continue:** `openSlot(adapter, slot, { fromBackup })`, which keeps a backup of an older save before bringing it
+  forward to the current schema; then loads the save's towns' countries (`loadPlacesFor`), validates the universe,
+  and only then hands it to the app. A failure at any step is said in the callout and nothing opens.
+- **Restore Backup** is Continue with `fromBackup: true`: the backup is written over the slot and opened.
+- **Delete** keeps a readable save as its own backup (see entry 1), so the modal can promise Restore Backup; an
+  unreadable save can only promise it where a backup already exists (`restorableAfterDelete`).
+- **Net worth, date, location, title** are read from the save's meta, which the engine refreshes on every save
+  (`refreshMeta`), so the card never deserialises the universe to draw itself.
+
+### What holds it
+
+`tests/b20-guide-startup.test.ts` (the card says what the save holds, each fact read again from the life; Continue
+opens at the same moment; every older fixture opens), `tests/persistence.test.ts`.
+
+### Where it lives on this tree
+
+`src/ui/saves/SaveSlots.tsx` (copied to `kept/01-startup-and-persistence/SaveSlots.tsx`), `src/styles/app.css`
+(`.slot-grid`, `.slot`, `.slot-empty`, `.slot-number`, `.slot-name`, `.slot-meta`; copied to `slots.css`), and the
+`openSlot`, `loadPlacesFor` and `validateUniverse` entry points of `src/engine/index.ts`.
