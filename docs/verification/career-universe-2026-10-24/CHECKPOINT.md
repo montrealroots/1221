@@ -72,25 +72,27 @@ commit, what's done, what remains and the exact next step. `README.md` is the re
 
 ## Next Step
 
-**Resumed on 2026-10-26** at the owner's word, at high effort on Fable 5.1. Where it stands (`15a5ae5f`):
+**Resumed on 2026-10-26** at the owner's word, at high effort on Fable 5.1. Where it stands (`40b537f3`):
 
-- Wave 1's representation, offers and auditions and languages clusters are integrated with every record: effects rows
-  (26), sweep entries, capabilities, wiring (221 controls read), devmap, traceability, the trace page (55 entries), the
-  completion matrix and the handoff's count, 528 older citations re-pointed, 153 text sources marked and 13 surfaces
-  claimed, the README's G section for the three. The gate's twenty-four checks pass on that tree; the clusters' tests and
-  the files importing their modules pass (397 and 186 in two batches).
-- The series cluster is being finished on a clone of the integrated tree (branch `g27-series2` from `d0cb4327`): twelve
-  commits so far, the reviewer's S1 (a pilot passed on never airs), S2 (a pickup never re-decides a season a save was
-  told), S3, S5 and S6 among them; its agent is verifying and exporting the patch.
+- Wave 1's four clusters (representation, offers and auditions, languages, series/options/pilots/market) are integrated.
+  The series cluster's thirteen commits were applied on `d66a8ccb` (typecheck and eslint clean; its seven test files and
+  twelve importing files pass, 197 tests, the wiring record regenerated); its records are in (`3e28af9e`): eight
+  effects rows and sweep entries, the option ask in its capability, the wiring read (222 controls), 314 citations
+  re-pointed, the trace page, the completion matrix (549 of 678) and the handoff's line, the README's G paragraph and
+  K6's falsified words in the past tense, the reviewer's three surviving mutations run again and killed. The lifecycle
+  matrix's nineteen loops carry the clusters' features (`40b537f3`); the career matrix counts 96. The gate's 21 non-text
+  checks pass on that tree.
+- Still to land for the series cluster: the text inventory's 62 sources and the surfaces rows (a records agent, in the
+  tree now), then the three text checks and a commit.
+- Wave 2 (awards, festivals, travel, the work day) is being built on `1b757966` in four clones (`$S/g-<name>`,
+  branches `g27-<name>`), each implemented, reviewed against the owner's seven criteria and fixed by the workflow
+  `$S/b27/wave2-workflow.js`; patches land in `$S/b27/patches/<name>`.
 
 Then, in order:
-1. Series: read its report and patch, apply (`git am -3` from `$S/b27/patches/series2`), typecheck, lint, its tests and
-   the importing files; its records (effects, sweep, capabilities, wiring, text inventory and surfaces, citations), its
-   README paragraph in G; the 24 checks; the full suite once.
-2. Wave 2 from the integrated commit: `bash $S/b27/wave2.sh <commit>`, then the workflow `$S/b27/wave2-workflow.js`
-   with clusters awards, festivals, travel and day (briefs `cluster-*.md`, `implementer-common-w2.md`); integrate each
-   as wave 1's were, with its records.
-3. G4: an independent review of the whole integrated diff (`4cba6159..HEAD`) against the owner's seven criteria; fixes.
-4. G5: the full validation (the suite and the 24 checks; the long careers and walks again; brief 22's final runs in two
+1. Integrate each wave 2 cluster as wave 1's were (`git am -3`, typecheck, lint, its tests and the importing files, its
+   records, its README paragraph in G; loop 43 of the lifecycle matrix once festivals is in); the 24 checks.
+2. G4: an independent review of the whole integrated diff (`4cba6159..HEAD`) against the owner's seven criteria, several
+   lenses (`$S/b27/g4-review-common.md`); confirmed defects fixed and their checks repeated.
+3. G5: the full validation (the suite and the 24 checks; the long careers and walks again; brief 22's final runs in two
    batches; the fold; the gate in a clean clone), then the receipt, this checkpoint and the handoff.
 The four decisions above stay with the owner. No merge to `main` and no deployment without the owner's word.
