@@ -26,7 +26,7 @@ await page.getByRole('button', { name: /^Back$/ }).first().click(); await wait(9
 const fixSteps = (active) => page.evaluate((active) => {
   const steps = [...document.querySelectorAll('.creation-step')];
   steps.find((s) => /Dispositions/.test(s.textContent))?.remove();
-  const g = steps.find((s) => /Genres/.test(s.textContent)); if (g) g.textContent = 'Background';
+  const g = steps.find((s) => /Genres & Background/.test(s.textContent)); if (g) { g.textContent = 'Background'; const gg = g.cloneNode(true); gg.textContent = 'Genres'; g.after(gg); }
   let seen = false; for (const s of document.querySelectorAll('.creation-step')) { const on = s.textContent.trim() === active; if (on) { s.setAttribute('data-state', 'active'); seen = true; } else if (!seen) s.setAttribute('data-state', 'done'); else s.removeAttribute('data-state'); }
   const p = document.querySelector('.creation .row-between p.muted.small'); if (p) p.textContent = 'SLATE is a life simulator. Here you create the person you’ll play.';
 }, active);
@@ -66,6 +66,7 @@ const pickerHtml = await page.evaluate(() => { const card = document.querySelect
 await page.getByRole('button', { name: /^Continue$/ }).first().click(); await wait(900);
 await page.getByRole('button', { name: /^Continue$/ }).first().click(); await wait(900);
 await fixSteps('Background');
+const genresHtml = await page.evaluate(() => [...document.querySelectorAll('.creation .col.gap-5 > .card')].find((c) => c.querySelector('h2')?.textContent === 'Genres').outerHTML);
 await page.evaluate(() => {
   const col = document.querySelector('.creation .col.gap-5');
   const cards = [...col.querySelectorAll(':scope > .card')];
@@ -98,6 +99,10 @@ console.log('strip', await page.evaluate(() => [...document.querySelectorAll('.c
 await wait(300); await shot('03-background-new');
 await page.evaluate((pickerHtml) => { const cards = [...document.querySelectorAll('.creation .col.gap-5 > .card')]; const grew = cards.find((c) => /Where You Grew Up/.test(c.querySelector('h2')?.textContent || '')); const [b1, b2] = grew.querySelectorAll('.row.gap-2 button'); b1.className = 'btn'; b2.className = 'btn btn-primary'; const wrap = document.createElement('div'); wrap.className = 'col gap-3'; wrap.style.marginTop = 'var(--s4)'; wrap.innerHTML = pickerHtml; const bar = wrap.querySelector('.worldmap-readout'); if (bar) bar.textContent = 'United States · 17,342 places'; const search = wrap.querySelector('input'); if (search) { search.placeholder = 'Start typing a town name'; search.value = ''; } const results = wrap.querySelector('.picker-results'); if (results) results.remove(); for (const sel of wrap.querySelectorAll('select')) { const o = [...sel.options].find((x) => /United States|Anywhere In The United States/.test(x.textContent)); if (o) o.selected = true; } grew.append(wrap); }, pickerHtml);
 await wait(300); await shot('03b-background-somewhere-else');
+// ---- Genres, step 3: every genre, no dot (a genre with nothing to read it isn't offered in the new build).
+await fixSteps('Genres');
+await page.evaluate((genresHtml) => { const col = document.querySelector('.creation .col.gap-5'); col.innerHTML = genresHtml; for (const chip of col.querySelectorAll('.chip')) chip.textContent = chip.textContent.replace(/\s*·\s*$/, ''); const p = col.querySelector('.panel-head p'); if (p) p.textContent = 'The genres you love. Pick as many as are true.'; }, genresHtml);
+await wait(300); await shot('04-genres-new');
 
 // ---- The slots screen with a life in it, the title line redefined.
 await page.getByRole('button', { name: /^Continue$/ }).first().click(); await wait(900);

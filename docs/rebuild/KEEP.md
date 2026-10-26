@@ -537,3 +537,42 @@ standard. Everything else on the five creation pages is cut or waits.
 **Open, and only the owner's to answer before the next entries can be honest:** what the new SLATE is a life of.
 Every engine still proposed above reads either papers and money (which stand on their own) or a vocation (which is
 gone). The next capture (Starting Point) is read against that answer.
+
+---
+
+## 12. Creation, step 3 of 5, Genres: every genre on its own page (DECIDED 2026-10-26)
+
+**Owner:** "Let's title this next page Genres and we're putting all the genres on them." And of the Background page
+before it: "Perfect, keep it and all the information."
+
+The step strip is now **Identity, Background, Genres, Starting Point, Review**. The Genres page is one card: the
+heading, one line, the chosen count and Select All / Clear These at the right, and all 149 genres as chips, pick as
+many as are true. Changes from the old card: the dot that marked a genre with no play or project in the game is
+gone, because under entry 6 nothing is offered that nothing reads, so in the new build every genre on this page has
+a reader or the page doesn't ship it; and the card stands alone as its own step.
+
+The 149, as the game lists them today (kept with the source in `kept/02-creation-identity/`; the list and each
+genre's definition and cited source are in `src/engine/content/genres.ts`, generated from the research of
+2026-10-09): Absurdist, Action, Action Comedy, Adventure, Alternate History, Animated, Anime, Anthology, Apocalyptic,
+Art House, Avant-Garde, Backstage Musical, Biker, Biographical, Black Comedy, Blaxploitation, Body Horror, Buddy
+Comedy, Buddy Cop, Caper, Chanbara, Chase, Children's, Christmas, Comedy, Coming Of Age, Concert Film, Conspiracy
+Thriller, Cosmic Horror, Costume Drama, Courtroom Drama, Creature Feature, Crime, Cyberpunk, Dance, Dark Fantasy,
+Detective, Disaster, Docudrama, Docufiction, Documentary, Domestic Drama, Drama, Dystopian, Eco-Horror, Epic, Erotic
+Thriller, Espionage, Experimental, Exploitation, Fairy Tale, Family, Fantasy, Farce, Film Noir, Folk Horror, Found
+Footage, Gangster, Giallo, Gothic Horror, Grindhouse, Hangout, Heist, Historical Drama, Historical Fiction, Holiday,
+Hood Film, Horror, Horror Comedy, Isekai, Jidaigeki, Jukebox Musical, Kaiju, Kitchen Sink Drama, Legal Drama,
+Magical Realism, Martial Arts, Medical Drama, Melodrama, Military, Mockumentary, Monster Movie, Mumblecore, Musical,
+Mystery, Nature Documentary, Neo-Noir, Neorealism, New Wave, Nordic Noir, Occult, Parody, Period Drama, Picaresque,
+Police Procedural, Political Drama, Political Thriller, Post-Apocalyptic, Prison Film, Psychological Horror,
+Psychological Thriller, Queer Cinema, Revenge, Road Movie, Rockumentary, Romance, Romantic Comedy, Romantic Drama,
+Samurai, Satire, Science Fantasy, Science Fiction, Screwball Comedy, Sea Adventure, Silent Film, Slapstick, Slasher,
+Slice Of Life, Social Realism, Space Opera, Spaghetti Western, Splatter, Sports, Spy, Steampunk, Stoner Comedy,
+Superhero, Supernatural, Surrealist, Survival, Swashbuckler, Sword And Sandal, Sword And Sorcery, Techno-Thriller,
+Teen, Thriller, Time Travel, Tokusatsu, Tragedy, Tragicomedy, True Crime, Vampire, War, Werewolf, Western, Whodunit,
+Wuxia, Yakuza, Zombie.
+
+**Reader:** open, with the premise (entry 11). In this SLATE a loved genre moved the mood of work in that genre;
+that reader went with the career. What reads a loved genre in the new build is decided when the owner says what the
+life is a life of.
+
+Capture: `captures/02-new-build/04-genres-new.png`.
