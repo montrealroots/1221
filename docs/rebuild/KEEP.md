@@ -681,3 +681,33 @@ Capture: `captures/02-new-build/07-home-no-tutorial.png`, Home on the first morn
 it that the School and career cuts (entries 10 and 11) still remove: School and Career on the menu, the term's
 events in Up Next (Registration And Your Account, The Fall Term Begins, Meeting Your Class and the rest), the
 "Welcome To The Class Of 2029" notice, and New Haven as the town; "Actress" in the date line stays with Billed As.
+
+---
+
+## 17. Home, the first morning: the School, the career and the attributes taken off it, with their engines (DECIDED 2026-10-26)
+
+**Owner:** "Get rid of what needs to get rid of and their engines." Applied from entries 10, 11 and 16.
+
+Capture: `captures/02-new-build/07-home-new.png`.
+
+**Gone, with the engine behind each:**
+
+- **School** and **Career** on the menu, and their groups Your Training and Your Work: the School engine and the
+  `pro.*` career engine (entries 10 and 11).
+- **The term's events in Up Next** (Registration And Your Account, The Fall Term Begins, Meeting Your Class, Meeting
+  The Acting Faculty, The Building, The Studios And The Library, The Courses And What They Ask): the School's
+  orientation calendar. Up Next itself stays, reading the calendar, which starts empty.
+- **The School's welcome notice** in Recent Updates ("Welcome To The Class Of 2029"): Recent Updates stays, reading
+  the notices, which start empty.
+- **Readiness** in How You Are, its meter and the "costing readiness" line under Look After Yourself: readiness was
+  the attributes' reading of the body and the mind for work, cut with them (entry 11). Energy and Stress stay, with
+  the line on how you are, which is wording.
+- **New Haven** as the town: home is open (entry 14); the mock shows the birthplace.
+
+**Standing on Home, each with its engine, until the owner rules on it:** the top bar (the clock in real local time,
+Paused and Play, Sleep, Look After Yourself, Advance, Save & Exit); the menu with Player Profile, Money and Papers;
+the greeting and the town line (time zone, season, daylight from the town's latitude and the date, each word a link
+to its detail); the weather and its five-day forecast (the climate model by place); What Needs You (the questions
+waiting, what's past due, the bank and the card, the calendar's clashes); How You Are (energy and stress, and Look
+After Yourself with Eat A Meal and Order In, each with its time and its cost in the town's prices); Up Next with
+Open Calendar; Recent Updates with View All Updates; the Guide button and the How This Works links as a manual.

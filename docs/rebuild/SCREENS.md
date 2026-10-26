@@ -97,5 +97,5 @@ Live and Food Each Month are gone (entry 15).
 No tutorial (entry 16): nothing locked, no guide line, no chapter count. The top bar (the clock, Paused, Play, Sleep,
 Look After Yourself, Advance, Guide as a manual, Saved, Save & Exit), the menu down the left, the greeting with the
 date and the town's line, the weather and its five-day forecast, and the panels What Needs You, How You Are (energy,
-stress, readiness, Look After Yourself), Up Next with the calendar, and Recent Updates. What of it stays beyond the
-tutorial's removal is the next decision; the School and career items on it are already gone by entries 10 and 11.
+stress, readiness, Look After Yourself), Up Next with the calendar, and Recent Updates. The School and Career menu entries, the term's events, the School's welcome notice and the readiness meter are gone
+with their engines (entry 17); the rest stands with its engine until the owner rules on it, panel by panel.

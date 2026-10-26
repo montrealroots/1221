@@ -20,6 +20,27 @@ await page.getByText(/I Know SLATE/).first().click(); await wait(300);
 await page.getByRole('button', { name: /^Begin$/ }).click();
 await page.getByRole('group', { name: 'Time Controls' }).first().waitFor({ timeout: 30000 }); await wait(2500);
 await shot('07-home-no-tutorial');
+await page.evaluate(() => {
+  const gone = (el) => el && el.remove();
+  // The menu: School and Career go with their groups.
+  for (const el of document.querySelectorAll('#rail *, nav *, aside *')) {
+    if (el.children.length === 0 && /^(Your Training|Your Work|School|Career)$/.test(el.textContent.trim())) { const row = el.closest('li, a, button, div'); gone(row); }
+  }
+  // Home: the town is open; the mock shows the birthplace.
+  for (const el of document.querySelectorAll('main *, .main *')) if (el.children.length === 0 && /^(New Haven|Connecticut)$/.test(el.textContent.trim())) el.textContent = 'New York';
+  // Up Next: the term's events go; nothing is on the calendar yet.
+  const panels = [...document.querySelectorAll('main .panel, .main .panel, main section, .main section, main .card, .main .card')];
+  const byTitle = (t) => panels.find((p) => (p.querySelector('h2, h3')?.textContent || '').trim() === t);
+  const up = byTitle('Up Next');
+  if (up) { for (const el of [...up.querySelectorAll('*')]) { if (el.children.length === 0 && /Registration|Fall Term|Meeting|Building|Courses|in \d+[hd]|August 24, 2026 at/.test(el.textContent)) { const row = el.closest('li, a, .row-between, div'); if (row && row !== up) row.remove(); } } const what = up.querySelector('p'); if (what) what.textContent = 'Nothing on the calendar yet.'; }
+  // Recent Updates: the School's welcome goes.
+  const ru = byTitle('Recent Updates');
+  if (ru) { for (const el of [...ru.querySelectorAll('*')]) if (el.children.length === 0 && /Welcome To The Class|School · now|16 actors|Mark 1 Read|Go There|Mark Read/.test(el.textContent)) { const row = el.closest('li, article, .row-between, div'); if (row && row !== ru) row.remove(); } const p = ru.querySelector('p'); if (p) p.textContent = 'Nothing yet.'; }
+  // How You Are: readiness went with the attributes.
+  const hya = byTitle('How You Are');
+  if (hya) { const lab = [...hya.querySelectorAll('*')].find((el) => el.children.length === 0 && /^Readiness$/.test(el.textContent.trim())); if (lab) { const row = lab.closest('.meter') || lab.parentElement; const next = row.nextElementSibling; row.remove(); if (next && !next.textContent.trim()) next.remove(); } for (const el of [...hya.querySelectorAll('*')]) if (el.children.length === 0 && /costing readiness/.test(el.textContent)) el.textContent = 'Nourishment at 75.'; }
+});
+await wait(300); await shot('07-home-new');
 // Close the guide if it's open, to see Home itself.
 const dialog = page.locator('[role=dialog]');
 if (await dialog.count()) { await page.keyboard.press('Escape'); await wait(500); }
