@@ -279,12 +279,22 @@ last** so the required path runs unbroken from the top to Continue.
    tallest thing on it.
 4. **Citizenship.** Directly after the birthplace, because the birthplace suggests it (Same As Your Place Of Birth),
    and it's the last required thing.
-5. **Race or Ethnicity (optional)**, with In Your Own Words, last. It decides nothing and is optional, so it goes
-   after the required path, not in the middle of it where it stands today, between the names and the birth date.
-6. The amber "what this step still needs" box and Back / Continue at the foot, as now.
+5. **Languages** (moved here from Genres & Background; the owner, 2026-10-26: "adding languages to the page to
+   wherever it perfectly lands"). English always, with how well it's spoken, and up to five more. It lands directly
+   after Citizenship because that's where the sentence goes ("born in Seoul, a Korean citizen, speaks Korean and
+   English") and because the birthplace and the citizenship are what a language follows from; in the new build the
+   birthplace's country can suggest its languages the way it suggests the citizenship, and the player confirms or
+   changes them. It stays above Race or Ethnicity because it's read by casting (a part written for a speaker) and so
+   belongs on the required path.
+6. **Race or Ethnicity**, with In Your Own Words, last. Today it's optional and decides nothing; in the new build it
+   has the engine in entry 4 and may stay optional (a breakdown that names an ethnicity simply isn't written for a
+   player who gave none, as "any ethnicity" parts are for everyone). Last because it's the one field a player may
+   leave, so the required path above it runs unbroken.
+7. The amber "what this step still needs" box and Back / Continue at the foot, as now.
 
-What moves, in short: the age line goes up to the birth date, and Race or Ethnicity goes down to the end. Everything
-else keeps its place. Height and weight stay on Starting Point, where the owner moved them on 2026-10-10.
+What moves, in short: the age line goes up to the birth date, Languages comes over from step 3 to sit after
+Citizenship, and Race or Ethnicity goes down to the end. Everything else keeps its place. Height and weight stay on
+Starting Point, where the owner moved them on 2026-10-10. Step 3 (Genres & Background) loses its Languages card.
 
 ---
 
