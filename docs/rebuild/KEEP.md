@@ -444,28 +444,22 @@ Capture: `captures/01-opening/04-genres-background.png` (the page as it stands, 
 
 ### What the page becomes
 
-**Background**: who you were before Yale, every part of it read by an engine (entries 4 to 6), **in the order a
-life happens** (owner, 2026-10-26: "put the things on my new background page in chronological order"):
+**Background**: who you were before now, every part of it read by an engine (entries 4 to 6), **in the order a
+life happens** (owner, 2026-10-26: "put the things on my new background page in chronological order"), and with
+nothing of the School or of this SLATE's career engine in it (owner, the same day, entry 10):
 
 1. **The family you were born into.** Its means first, since they're there from the first day: the six families
    (Nothing, Scraping By, Modest, Comfortable, Wealthy, Inherited), each setting the first morning's checking,
-   savings, card limit and balance and credit score, and whether Yale finds need, said in a box in the player's
-   money. Kept as it stands, the one card on the old page with a full engine. Research to extend it: Yale's own
-   need-assessment rules and the Yale Health plan's current term fee, from Yale's pages.
-2. **What your family did.** A structured choice: read by the means above and by whether anyone in it was in the
-   business, which is a real route to a first meeting with an agent and a thing casting offices know.
+   savings, card limit and balance and credit score, said in a box in the player's money. Kept as it stands, less
+   the School's half of it: what Yale found and the Yale Health fee go with the School.
+2. **What your family did.** A structured choice, read by the means above and by what a family's trade leaves a
+   person with; what else reads it is settled when the systems that would are decided.
 3. **Where you grew up**, if not the birthplace (the place picker again, or "the same"): the starting accent, and
-   the home market where local theaters, local commercials and regional casting know you first. It can refine the
-   languages Identity suggested.
-4. **Training before Yale.** Which sets the starting techniques, and where it was real (a named school or program)
-   is researched like any institution.
-5. **Work before Yale.** Prior credits and the union status they bring, which the union's own joining rules then
-   read; a life with none starts with none.
-6. **When you came to New Haven.** The month and year (today's Before Yale card on Starting Point), which decides
-   how long you've been resident, the bank kept at home and the license state.
+   it can refine the languages Identity suggested.
 
+Gone from this page with the School and the career engine (entry 10): "Training before Yale", "Work before Yale",
+and "When you came to New Haven". Where the player lives now, and since when, stays a question for Starting Point.
 The sentence "In Your Own Words" is not a field of this page: under entry 6 it's not asked, since nothing reads it.
-If the owner wants a line the player writes for themselves, it lives on the Profile as the player's own note.
 
 ### Genres
 
@@ -481,3 +475,24 @@ as background: it is both, a fact of where you grew up and a fact casting reads 
 Identity because it belongs to the required path with birthplace and citizenship, which suggest it; in the new build
 "where you grew up" on this page can refine the suggestion. If the owner would rather it live here, the move is one
 line in entry 3.
+
+---
+
+## 10. The School and this SLATE's career engine are not carried over (DECIDED 2026-10-26)
+
+**Owner:** "We're getting rid of the school and career engine, so get rid of those from this right now."
+
+Recorded as said: the School (Yale's MFA, its terms, classes, coursework, productions, standing, the dean, the
+need assessment and the Yale Health plan, the start at New Haven on the first day of term) and this SLATE's career
+engine (the `pro.*` systems: postings, submissions, auditions, offers, agents, contracts, pay, work days, releases,
+awards, as built through brief 27) do not carry over. Every entry above that leaned on either is corrected in place:
+the Background page (entry 9) drops its School and career items; entry 4's engines for the Identity fields that
+named casting breakdowns, the union's name rule, headshots, playing age and the home market are **held, not
+decided**, until the owner says what the new SLATE's life is made of, since each of them is a career reader.
+Identity's Billed As, whose only reader was casting, is in the same position.
+
+What this leaves standing from the pages so far: the startup screen and its engine (entry 1), the slots screen
+and its engine (entry 2), the Identity page's order and its non-career engines (papers, citizenship, banks, age,
+mortality, the body's draw, the place and the languages), and the Background page's family means and where you grew
+up. What the new SLATE is a life *of*, now that it isn't an actor's training and career as built here, is the
+owner's to say, and the next entries wait on it where they'd otherwise guess.
