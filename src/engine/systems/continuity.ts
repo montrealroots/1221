@@ -30,8 +30,9 @@
  * **A pilot** (Part 8: "Pilots"). The slate makes pilots each winter (`pilotsOf`, `systems/slate.ts`), shot as an episode
  * of their kind. Accepting one carries an option on the actor for the series' first season (`pilotTerms`). In May its
  * network picks it up or passes (`PILOT`, decider `pro.pilot`), a draw that reads the pilot's own quality and the
- * player's part in it (`systems/market.ts`). Passed on, it never airs: shot on the credits, never on a reel. Picked up,
- * it's a series of the game's, run by `systems/series.ts`, and the option on the player is taken up or let go as any is.
+ * player's part in it (`systems/market.ts`). Passed on, it never airs: shot on the credits, never on a reel, no telecast
+ * and so no residual (`entitle`, `systems/contracts.ts`), whether the word came before the wrap or after. Picked up, it's
+ * a series of the game's, run by `systems/series.ts`, and the option on the player is taken up or let go as any is.
  *
  * Every figure is the game's ASSUMPTION, said where it's set, and every network, series and season here is the game's
  * invention but the real series' baselines (`REAL_SERIES`), said so wherever it's read.
@@ -129,7 +130,9 @@ const offerSpans = (person: Person, o: Opportunity) => spansOf(person, projectOf
 
 /**
  * What accepting an offer does to the options holding its days, said before it's pressed: the option, what it holds, and
- * what giving it up costs; and where the actor asked to be released, where that stands.
+ * what giving it up costs; and where the actor asked to be released, on this offer or another, where that stands, as the
+ * ask's refusal says it (`optionReleaseRefusal`). Until the review of 2026-10-25 an ask pending on another offer read
+ * "Ask To Be Released, on this offer, asks …", which the command then refused with "You've asked".
  */
 export function optionWarning(person: Person, o: Opportunity): string | undefined {
   const held = heldOptions(person, offerSpans(person, o));
@@ -137,9 +140,10 @@ export function optionWarning(person: Person, o: Opportunity): string | undefine
   return held.map(({ e, t, option, days }) => {
     const s = seriesOfOption(t);
     const season = s ? seasonFor(s, option.year) : `the next season of ${t.project}`;
-    const ask = option.release?.against === o.id && !option.release.answer
-      ? ` You’ve asked ${t.company} to release you; the answer comes on ${formatWeekdayDate(option.release.answerAt, NY)} at ${formatTime(option.release.answerAt, NY)}.`
-      : option.release?.answer === 'refused' ? ` ${t.company} refused to release you from it.` : ` Ask To Be Released, on this offer, asks ${t.company} to let you go first.`;
+    const r = option.release;
+    const ask = r && !r.answer
+      ? ` You’ve asked ${t.company} to release you${r.against === o.id ? '' : ', over another offer'}; the answer comes on ${formatWeekdayDate(r.answerAt, NY)} at ${formatTime(r.answerAt, NY)}.`
+      : r?.answer === 'refused' ? ` ${t.company} refused to release you from it.` : ` Ask To Be Released, on this offer, asks ${t.company} to let you go first.`;
     return `${t.company} holds an option on you as ${e.role} for ${season}, and its guaranteed episodes fall on some of the same days, ${daysWords(days)}. Accepting this gives the option up: the part in that season goes to another actor, and ${t.casting} won’t offer you a part without an audition again.${ask}`;
   }).join(' ');
 }
@@ -409,17 +413,23 @@ export function registerContinuity(sim: Simulation, hooks: SeriesHooks): void {
     if (!person || !e || !t || option?.status !== 'open' || option.release?.against !== against || option.release.answer) return;
     const offer = person.pro?.opportunities.find((x) => x.id === against);
     const what = offer ? `the offer for ${projectOf(offer).role.part}` : 'the other offer';
+    // What's left to choose, by where the offer stands now: declined before the answer, there's nothing to accept. Until
+    // the review of 2026-10-25 a release granted after the offer was declined still said "You can accept the offer".
+    const standing = offer?.status === 'offered' && (offer.offer?.until ?? 0) > s.now;
+    const gone = `${what.charAt(0).toUpperCase()}${what.slice(1)} isn’t standing any more`;
     if (releaseGranted(s, e, against)) {
       option.release.answer = 'granted';
       option.status = 'expired';
       option.settled = { at: s.now, why: `${t.company} released you from its option as ${e.role}, at your asking.` };
       noteEvent(s, e, { kind: 'success', key: `option:${option.year}`, words: option.settled.why });
-      tellOf(s, person, `Released From The Option On ${e.role}`, `${t.company} released you from its option as ${e.role}. You can accept ${what} without giving anything up, and a part in ${t.project}’s next season can still come through a new casting.`, 70);
+      const then = standing ? `You can accept ${what} without giving anything up` : `${gone}, and nothing holds those days now`;
+      tellOf(s, person, `Released From The Option On ${e.role}`, `${t.company} released you from its option as ${e.role}. ${then}, and a part in ${t.project}’s next season can still come through a new casting.`, 70);
       return;
     }
     option.release.answer = 'refused';
     noteEvent(s, e, { kind: 'problem', key: `option:release:${against}:refused`, words: `${t.company} wouldn’t release you from its option as ${e.role}.` });
-    tellOf(s, person, `The Option On ${e.role} Stands`, `${t.company} won’t release you from its option as ${e.role}. You can decline ${what}, or accept it and give the option up.`, 70);
+    const then = standing ? `You can decline ${what}, or accept it and give the option up.` : `${gone}, so the option stands as it was.`;
+    tellOf(s, person, `The Option On ${e.role} Stands`, `${t.company} won’t release you from its option as ${e.role}. ${then}`, 70);
   });
 
   // A guest part brought back (`INVITE`): offered without an audition for days in the new season, or said why not.

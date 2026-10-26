@@ -34,7 +34,10 @@ export interface SeriesTemplate {
   real?: { production: string; baseline: { year: number; season?: number }; source: string };
   /** How long an episode runs, which sets the rerun's ceiling (N14 §18(b)(1)b). */
   program: 'hour' | 'half-hour';
-  /** The year its first season began. */
+  /**
+   * The year its first season began; for a real series (`real`), the year its baseline season began, the first the game
+   * reads, not the real series' first (9-1-1's began in 2018). Until the review of 2026-10-25 this said only the first.
+   */
   firstSeason: number;
   /** The seasons ordered ahead, through the one beginning that year: no word on renewal is needed until the next. */
   orderedThrough: number;

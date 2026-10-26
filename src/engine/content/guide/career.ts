@@ -47,7 +47,6 @@ import { CONTRIBUTION, LATE, OPTION_RAISE, PER_DIEM, RERUN_CEILING, RESIDUALS, c
 import { SERIES } from '../series';
 import { REVIVAL } from '../../systems/series';
 import { GROW, INVITE, OPTION_RELEASE, PILOT } from '../../systems/continuity';
-import { FORTUNE } from '../../systems/market';
 import { PILOTS } from '../../systems/slate';
 import { AFTER_WRAP, PROMO, STUNT, VOICE, WORKFLOWS } from '../workflows';
 import { JURISDICTIONS } from '../jurisdictions';
@@ -1419,16 +1418,21 @@ The tab also shows the game’s own box office for your films, each season’s a
     reads: [
       { label: 'How The Work Went', value: `Whether a production releases you from its option: the less it wanted you back, the likelier, between ${Math.round(OPTION_RELEASE.least * 100)}% and ${Math.round(OPTION_RELEASE.most * 100)}%`, estimate: true },
       { label: 'Your Part In A Pilot', value: `With the pilot’s own quality, whether its network picks it up: about ${Math.round(PILOT.chance.base * 100)}% for an ordinary pilot, a lead’s exceptional work adding up to ${Math.round(PILOT.chance.part * 100)} points`, estimate: true },
-      { label: 'Your Part In A Film', value: `With the production’s own quality, how it opens and holds and how critics and audiences take it: a lead counts in full, a supporting part ${Math.round(FORTUNE.size.supporting * 10)} tenths, a co-star a quarter`, estimate: true },
+      // Until the review of 2026-10-25 this listed the part's weights by size, the engine's figures (docs/STYLE.md).
+      { label: 'Your Part In A Film', value: 'With the production’s own quality, how it opens and holds and how critics and audiences take it: the bigger your part, the more it counts', estimate: true },
       { label: 'Your Part In A Season', value: 'A little of its audience and its reviews, which the network reads when it decides on another', estimate: true },
     ],
     now: ['Asking puts the production’s answer on the clock. Accepting work against an option gives the option up at once.'],
     later: [
-      `A guest part you played Strong or better can come back. When the network renews the series, its producers weigh it, about ${countWords(Math.round(INVITE.chance.exceptional * 10))} times in ten for Exceptional work and ${countWords(Math.round(INVITE.chance.strong * 10))} for Strong, and bring the character back as a recurring part in the new season, offered without an audition, ${countWords(INVITE.guaranteed)} episodes guaranteed.`,
+      // Until the review of 2026-10-25 this said the producers weighed it when the network renewed the series; they weigh it
+      // before any season the series makes, ordered or renewed (`inviteAt`).
+      `A guest part you played Strong or better can come back. Before each new season the series makes, its producers weigh it, about ${countWords(Math.round(INVITE.chance.exceptional * 10))} times in ten for Exceptional work and ${countWords(Math.round(INVITE.chance.strong * 10))} for Strong, and bring the character back as a recurring part in the new season, offered without an audition, ${countWords(INVITE.guaranteed)} episodes guaranteed.`,
       `When a production takes up its option, it may write more for the part: ${countWords(GROW.episodes)} more episodes guaranteed and ${Math.round(GROW.raise * 100)}% more a day on top of the option’s raise, likelier the better your work and the bigger the season’s audience.`,
       'A canceled series that comes back may come back on another network or streaming service. The series’ page in Productions And People names it, and so does your credit for work in it.',
       '9-1-1 and Abbott Elementary are real series. The season their pages had on the air is real; every season after it is the game’s own continuation, said so wherever it shows, and a guest part in either is cast only in those seasons.',
       'A finished film may open in a limited release, a few weeks in a few cinemas that widens only if audiences take to it; be taken over by another distributor, which moves its date; or open abroad first and at home some weeks later. Its notice says which, and the awards read the date and the run that follow.',
+      // From the review of 2026-10-25: why a limited release changes no awards year or eligibility (b25-S48).
+      'A limited release opens in Los Angeles and New York, so it still has the run in a major market the Actor Awards ask for.',
     ],
     interpret: [
       'Every network, distributor, pilot and season here is the game’s, but the real series’ seasons their pages had on the air.',

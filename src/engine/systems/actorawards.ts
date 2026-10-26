@@ -41,7 +41,7 @@ import { formatOf, voiceOnly } from './workflow';
 import { spend, spendRefusal } from './spending';
 import { inSaveMoney } from './banking';
 import { FIELD, RUNNING_MINUTES, STANDING, normal, ordinal, premiereOf, tenths, visibilityOf } from './awards';
-import { homeOpening, splitYearsWhy } from './market';
+import { splitYearsWhy } from './market';
 import { invitation, type Attendance } from './ceremony';
 
 const NY = 'America/New_York';
@@ -128,10 +128,11 @@ export function actorCheck(sim: Simulation, person: Person, c: ProCredit): Actor
   const e = c.engagementId ? person.pro?.engagements.find((x) => x.id === c.engagementId) : undefined;
   const t = e ? projectById(e.projectId) : undefined;
   if (!t || !e) return { eligible: false, why: pastWhy(sim, c) };
-  // A film released abroad first is placed by its run at home, in the US, where the major markets are (from 2026-10-25,
-  // brief 27, `homeOpening`, `systems/market.ts`): until then every film by its premiere.
-  const first = premiereOf(sim, person, c);
-  const premiere = homeOpening(first, c);
+  // A film released abroad first is placed only where its first showing and its run at home, in the US, where the major
+  // markets are, fall in one year (from 2026-10-25, brief 27, `splitYearsWhy`, `systems/market.ts`), so its premiere's year
+  // is its run's. Until the review of 2026-10-25 the year was read from the run at home as well, which, with the split
+  // refused, never differed from the premiere's for a film placed.
+  const premiere = premiereOf(sim, person, c);
   const year = premiere !== undefined ? zonedParts(premiere, NY).year : undefined;
   const y = year !== undefined ? { year } : {};
   if (t.medium === 'stage') return { eligible: false, why: 'The Actor Awards are for motion pictures and television programs.' };
@@ -150,7 +151,7 @@ export function actorCheck(sim: Simulation, person: Person, c: ProCredit): Actor
     const minutes = RUNNING_MINUTES[t.format] ?? 0;
     if (minutes <= ACTOR_RULES.featureOver) return { eligible: false, why: `Short films, ${ACTOR_RULES.featureOver} minutes or less, aren’t eligible.`, year };
     if (c.release?.kind === 'streaming') return { eligible: false, why: 'A motion picture needs a seven-day paid run in cinemas in one of six major markets, and this one was sent to streaming instead.', year };
-    const split = splitYearsWhy(first, c);
+    const split = splitYearsWhy(premiere, c);
     if (split) return { eligible: false, why: split, year };
     if (formatOf(t).after !== 'theatrical') return { eligible: false, why: 'A motion picture needs a seven-day paid run in cinemas in one of six major markets, and this one had none.', year };
     return { eligible: true, year, category: t.role.size === 'lead' ? 'film-lead' : 'film-supporting' };

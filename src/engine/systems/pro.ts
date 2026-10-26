@@ -154,8 +154,10 @@ export interface ProCredit {
   run?: SimRun;
   /**
    * The way out its distributor chose (from 2026-10-25, the owner's brief 27, loop 33; `systems/projobs.ts`'s
-   * `RELEASE_FATE`): on time, held back so many days, sent to streaming instead of cinemas, or shelved. Drawn at the wrap
-   * for a slate production, said when its release comes due; `told` once the hold-back has been said.
+   * `RELEASE_FATE`): on time, held back so many days, sent to streaming instead of cinemas, or shelved; and from 2026-10-25
+   * a limited release, one taken over by another distributor, its date moved `days`, or one abroad first. Drawn at the wrap
+   * for a slate production, said when its release comes due; `told` once the hold-back or the distributor's change has
+   * been said. Until the review of 2026-10-25 this listed the first four and said `told` of the hold-back alone.
    */
   release?: {
     kind: 'on-time' | 'late' | 'streaming' | 'shelved' | 'limited' | 'distributor' | 'territory'; days?: number; told?: true;
