@@ -496,3 +496,44 @@ and its engine (entry 2), the Identity page's order and its non-career engines (
 mortality, the body's draw, the place and the languages), and the Background page's family means and where you grew
 up. What the new SLATE is a life *of*, now that it isn't an actor's training and career as built here, is the
 owner's to say, and the next entries wait on it where they'd otherwise guess.
+
+---
+
+## 11. Yale, everything School and career, and all the attributes with them: gone from the new build (DECIDED 2026-10-26)
+
+**Owner:** "Get rid of Yale too, everything school and career, get rid of that and all the attributes with it for
+this."
+
+What this removes, named so none of it comes back by habit:
+
+- **Yale and the start it fixed.** The life no longer begins at Yale's drama school in New Haven on the first day of
+  the 2026 fall term. So Starting Point's "Where It Begins: New Haven, fixed" becomes **Where You Live**, the
+  player's own choice from the same world picker (the control already exists for a life made away from school), and
+  the start date is no longer the term's first day: what it is instead is the owner's to set (a fixed date for
+  everyone, or a choice). The slot card's title line ("Actress, Yale Drama Year 1") and Review's School line go.
+- **Everything School:** terms, classes, coursework, productions, the Rep, the Cabaret, standing, leave, the dean,
+  the casting pool, the need assessment, the Yale Health plan, the F-1 student status as the non-American's starting
+  paper (a non-American's papers in the new build are whatever their reason for being where they live is, which the
+  owner decides with the premise).
+- **Everything career:** the `pro.*` engine entire (entry 10), and with it the readers that made Billed As, the
+  portrait-as-headshot, playing age, the union name rule, casting breakdowns and the home market mean anything.
+  Those engines (entry 4's career rows) are **withdrawn**, not held: they were readers of a system that's gone. The
+  fields they would have served stand or fall on the premise the owner names: Billed As has no reader without
+  casting and is cut unless one appears; the portrait, the legal name and the preferred name keep the readers that
+  aren't career (papers, the bank account, the slot, Home); race or ethnicity's reader is open again; the birthplace
+  keeps citizenship, the license, the body's draw and the languages.
+- **All the attributes:** the twelve abilities (Emotional Depth, Presence, Listening, Imagination, Focus, Memory,
+  Adaptability, Composure, Vocal, Physical, Discipline, Stamina), the seventeen techniques and the craft, the
+  evaluation of judged work, readiness, mastery, the approaches, the genres' demands and families, and the
+  dispositions' two starting lifts (Composure, Discipline) that fed them. Genres (entry 9) lose the only reader they
+  were going to have, work in a genre; where they land, if anywhere, waits on the premise.
+
+What stands from the pages so far, after this: the startup screen and its engine; the slots screen and its engine
+(its title line to be redefined); the Identity page's order with the engines that aren't School or career (papers,
+citizenship, banks, age, the birthday, mortality, the body's draw, the place, the languages); the Background page's
+family means, family trade and where you grew up; the world map and the gazetteer; the design tokens and the voice
+standard. Everything else on the five creation pages is cut or waits.
+
+**Open, and only the owner's to answer before the next entries can be honest:** what the new SLATE is a life of.
+Every engine still proposed above reads either papers and money (which stand on their own) or a vocation (which is
+gone). The next capture (Starting Point) is read against that answer.
