@@ -60,6 +60,7 @@ await page.evaluate((languagesHtml) => {
 await page.evaluate(() => { for (const p of document.querySelectorAll('.creation .panel-head p')) if (/before Yale/.test(p.textContent)) p.textContent = 'Where you were born, which isn’t always where you live now. It’s what you tell people when they ask. It doesn’t decide your citizenship: you say that yourself.'; });
 console.log('strip', await page.evaluate(() => [...document.querySelectorAll('.creation-step')].map((s) => s.textContent.trim() + ':' + (s.getAttribute('data-state') || '-')).join(' | ')));
 await wait(300); await shot('02-identity-new');
+const pickerHtml = await page.evaluate(() => { const card = document.querySelector('.creation > .card'); const kids = [...card.children]; const start = kids.findIndex((k) => /Place Of Birth/.test(k.textContent) && k.classList.contains('panel-head')); const end = kids.findIndex((k) => k.querySelector && k.querySelector('#citizenship')); return kids.slice(start + 1, end).map((k) => k.outerHTML).join(''); });
 
 // ---- Background, three cards.
 await page.getByRole('button', { name: /^Continue$/ }).first().click(); await wait(900);
@@ -95,6 +96,8 @@ await page.evaluate(() => {
 });
 console.log('strip', await page.evaluate(() => [...document.querySelectorAll('.creation-step')].map((s) => s.textContent.trim() + ':' + (s.getAttribute('data-state') || '-')).join(' | ')));
 await wait(300); await shot('03-background-new');
+await page.evaluate((pickerHtml) => { const cards = [...document.querySelectorAll('.creation .col.gap-5 > .card')]; const grew = cards.find((c) => /Where You Grew Up/.test(c.querySelector('h2')?.textContent || '')); const [b1, b2] = grew.querySelectorAll('.row.gap-2 button'); b1.className = 'btn'; b2.className = 'btn btn-primary'; const wrap = document.createElement('div'); wrap.className = 'col gap-3'; wrap.style.marginTop = 'var(--s4)'; wrap.innerHTML = pickerHtml; const bar = wrap.querySelector('.worldmap-readout'); if (bar) bar.textContent = 'United States · 17,342 places'; const search = wrap.querySelector('input'); if (search) { search.placeholder = 'Start typing a town name'; search.value = ''; } const results = wrap.querySelector('.picker-results'); if (results) results.remove(); for (const sel of wrap.querySelectorAll('select')) { const o = [...sel.options].find((x) => /United States|Anywhere In The United States/.test(x.textContent)); if (o) o.selected = true; } grew.append(wrap); }, pickerHtml);
+await wait(300); await shot('03b-background-somewhere-else');
 
 // ---- The slots screen with a life in it, the title line redefined.
 await page.getByRole('button', { name: /^Continue$/ }).first().click(); await wait(900);
