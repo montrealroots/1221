@@ -365,6 +365,30 @@
    "tests/time-controls.test.ts the shell’s, the guide’s and the decisions’ 55 test files, run on 86890e43: all green; tests/b26-needs-repeats.test.ts, a question raised twice, answered and dismissed twice, marked read twice, left to its date and reloaded, green"
   ]
  },
+ "promise.career.agreement-terms>career.agreement": {
+  "status": "Verified",
+  "by": [
+   "inspection",
+   "automated"
+  ],
+  "on": "2e6fd238",
+  "evidence": [
+   "tests/b27-representation.test.ts",
+   "src/engine/systems/representation.ts:272 the answer's time; src/engine/systems/representation.ts:336 the words rebuilt"
+  ]
+ },
+ "promise.career.agreement-terms>career.commission": {
+  "status": "Verified",
+  "by": [
+   "inspection",
+   "automated"
+  ],
+  "on": "2e6fd238",
+  "evidence": [
+   "tests/b27-representation.test.ts",
+   "src/engine/systems/propay.ts:363 coveredUnder in commissionOn"
+  ]
+ },
  "promise.career.awards>career.offers": {
   "status": "Verified",
   "by": [
@@ -425,6 +449,78 @@
    "src/engine/systems/projobs.ts:2202 SEASON_HOOKS, whose refusal reads sagWorkRefusal for a further episode's days and an option's"
   ]
  },
+ "promise.career.languages>career.auditions": {
+  "status": "Verified",
+  "by": [
+   "inspection",
+   "automated"
+  ],
+  "on": "2e6fd238",
+  "evidence": [
+   "tests/b27-languages.test.ts",
+   "src/engine/systems/projobs.ts:1720 withLanguage in auditionContext"
+  ]
+ },
+ "promise.career.languages>career.opportunities": {
+  "status": "Verified",
+  "by": [
+   "inspection",
+   "automated"
+  ],
+  "on": "2e6fd238",
+  "evidence": [
+   "tests/b27-languages.test.ts",
+   "src/engine/systems/projobs.ts:829 languageRefusal among eligibilityProblems"
+  ]
+ },
+ "promise.career.languages>career.resume": {
+  "status": "Verified",
+  "by": [
+   "inspection",
+   "automated"
+  ],
+  "on": "2e6fd238",
+  "evidence": [
+   "tests/b27-languages.test.ts",
+   "src/engine/systems/pro.ts:1230 resumeNow"
+  ]
+ },
+ "promise.career.negotiation>career.agreement": {
+  "status": "Verified",
+  "by": [
+   "inspection",
+   "automated"
+  ],
+  "on": "2e6fd238",
+  "evidence": [
+   "tests/b27-offer-terms.test.ts",
+   "src/engine/systems/projobs.ts:1806 refused with no agreement in force"
+  ]
+ },
+ "promise.career.negotiation>career.contracts": {
+  "status": "Verified",
+  "by": [
+   "inspection",
+   "automated"
+  ],
+  "on": "2e6fd238",
+  "evidence": [
+   "tests/b27-offer-terms.test.ts",
+   "src/engine/systems/contracts.ts:205 the negotiated episodes; src/engine/systems/contracts.ts:208 the option's raise"
+  ]
+ },
+ "promise.career.negotiation>career.offers": {
+  "status": "Verified",
+  "by": [
+   "inspection",
+   "automated"
+  ],
+  "on": "2e6fd238",
+  "evidence": [
+   "tests/b27-offer-terms.test.ts",
+   "src/engine/systems/offers.ts:579 answerAsk changes the offer; src/engine/systems/offers.ts:566 the decision revised"
+  ]
+ },
  "promise.career.reference>career.awards": {
   "status": "Verified",
   "by": [
@@ -447,6 +543,54 @@
   "evidence": [
    "tests/b27-reference.test.ts",
    "src/ui/career/OpportunitiesPane.tsx:69 Open Its Page; src/engine/systems/reference.ts:202 actionsFor, Open Opportunities while the posting is in play"
+  ]
+ },
+ "promise.career.sides>career.auditions": {
+  "status": "Verified",
+  "by": [
+   "inspection",
+   "automated"
+  ],
+  "on": "2e6fd238",
+  "evidence": [
+   "tests/b27-sides.test.ts",
+   "src/engine/systems/projobs.ts:1720 approachRead; src/engine/systems/offers.ts:411 the take sent; src/engine/systems/projobs.ts:2660 the cut reads the round"
+  ]
+ },
+ "promise.career.sides>craft.brief-tape": {
+  "status": "Verified",
+  "by": [
+   "inspection",
+   "automated"
+  ],
+  "on": "2e6fd238",
+  "evidence": [
+   "tests/b27-sides.test.ts",
+   "src/engine/systems/offers.ts:248 choose from systems/material.ts; src/engine/systems/projobs.ts:2218 rehearsed by the same step"
+  ]
+ },
+ "promise.career.withdrawing>career.auditions": {
+  "status": "Verified",
+  "by": [
+   "inspection",
+   "automated"
+  ],
+  "on": "2e6fd238",
+  "evidence": [
+   "tests/b27-casting-turns.test.ts",
+   "src/engine/systems/offers.ts:899 castingLift; src/engine/systems/projobs.ts:2660 read at the cut"
+  ]
+ },
+ "promise.career.withdrawing>career.offers": {
+  "status": "Verified",
+  "by": [
+   "inspection",
+   "automated"
+  ],
+  "on": "2e6fd238",
+  "evidence": [
+   "tests/b27-casting-turns.test.ts",
+   "src/engine/systems/projobs.ts:1793 directOfferFor"
   ]
  },
  "promise.career.workflows>career.contracts": {

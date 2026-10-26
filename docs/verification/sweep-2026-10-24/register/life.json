@@ -591,6 +591,31 @@
    "tests/b20-life-time.test.ts the life area’s 55 test files, run on 27369727: all green; tests/b26-life-repeats.test.ts, the plans called off and skipped, the retried hour and the night’s refusals on a New Haven life, green"
   ]
  },
+ "notice.systems/representation#answerAsk": {
+  "status": "Verified",
+  "by": [
+   "inspection",
+   "automated"
+  ],
+  "on": "2e6fd238",
+  "evidence": [
+   "tests/b27-representation.test.ts",
+   "src/engine/systems/representation.ts:342 the notice; src/engine/systems/representation.ts:155 the version in force read by the term's end, the commission and the submissions"
+  ]
+ },
+ "notice.systems/representation#introduceAtFestival": {
+  "status": "Blocked",
+  "by": [
+   "inspection",
+   "automated"
+  ],
+  "on": "2e6fd238",
+  "note": "Reached only by its test until the festivals cluster's attendance calls it; the route's words stand meanwhile.",
+  "evidence": [
+   "tests/b27-representation.test.ts",
+   "src/engine/systems/representation.ts:367 the function and its notices; src/engine/systems/proagent.ts:704 the way in it sets; tests/b27-representation.test.ts the direct call"
+  ]
+ },
  "promise.body.how>body.look-after": {
   "status": "Verified",
   "by": [

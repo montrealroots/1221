@@ -585,6 +585,19 @@
    "src/engine/index.ts:197-259 populateWorld: the family’s money, its card and the score, the bank chosen"
   ]
  },
+ "create.languages": {
+  "status": "Verified",
+  "by": [
+   "inspection",
+   "automated"
+  ],
+  "on": "2e6fd238",
+  "evidence": [
+   "tests/b27-languages.test.ts",
+   "tests/b27-creation-origins.test.ts",
+   "src/engine/world/bootstrap.ts:416 stored cleaned; src/engine/systems/projobs.ts:829 a non-speaker refused; src/engine/systems/projobs.ts:647 the fit; src/engine/systems/projobs.ts:1720 the preparation read; src/engine/systems/pro.ts:1230 the résumé"
+  ]
+ },
  "create.lastName": {
   "status": "Verified",
   "by": [

@@ -353,6 +353,30 @@
    "tests/pro-core.test.ts the career’s 32 test files, 423 tests, run on this commit: all green"
   ]
  },
+ "pro.agent_terms_answer": {
+  "status": "Verified",
+  "by": [
+   "inspection",
+   "automated"
+  ],
+  "on": "2e6fd238",
+  "evidence": [
+   "tests/b27-representation.test.ts",
+   "src/engine/systems/representation.ts:426 the kind; src/engine/systems/representation.ts:325 answerAsk: the draw against the chance, a version added, the words rebuilt"
+  ]
+ },
+ "pro.answer_note": {
+  "status": "Verified",
+  "by": [
+   "inspection",
+   "automated"
+  ],
+  "on": "2e6fd238",
+  "evidence": [
+   "tests/b27-sides.test.ts",
+   "src/engine/systems/offers.ts:454 the command; src/engine/systems/offers.ts:216 kept held to MISFIT, followed reaching for adaptability; src/engine/systems/offers.ts:342 followedPrep"
+  ]
+ },
  "pro.apply_work_visa": {
   "status": "Verified",
   "by": [
@@ -416,6 +440,31 @@
    "src/engine/systems/proagent.ts:1037-1052 the command; src/engine/systems/proagent.ts:573-586 referralRefusal; src/engine/systems/proagent.ts:554-568 referrersOf: a job refers once, strong or better",
    "tests/referrals.test.ts",
    "tests/pro-core.test.ts the career’s 32 test files, 423 tests, run on this commit: all green"
+  ]
+ },
+ "pro.ask_reschedule": {
+  "status": "Verified",
+  "by": [
+   "inspection",
+   "automated"
+  ],
+  "on": "2e6fd238",
+  "evidence": [
+   "tests/b27-casting-turns.test.ts",
+   "src/engine/systems/offers.ts:479 the command; src/engine/systems/offers.ts:989 rescheduleRefusal; src/engine/systems/offers.ts:1021 answerReschedule by its draw"
+  ]
+ },
+ "pro.ask_terms": {
+  "status": "Verified",
+  "by": [
+   "inspection",
+   "automated"
+  ],
+  "on": "2e6fd238",
+  "evidence": [
+   "tests/b27-representation.test.ts",
+   "tests/b27-representation-screen.test.ts",
+   "src/engine/systems/representation.ts:408 the command; src/engine/systems/representation.ts:289 askRefusal: no offer, asked once, nothing to add, no time; src/engine/systems/proagent.ts:888 the term in force ends the agreement; src/engine/systems/propay.ts:363 commission by the version in force"
   ]
  },
  "pro.ask_to_move": {
@@ -546,6 +595,19 @@
   "evidence": [
    "tests/b27-ceremony.test.ts",
    "src/engine/systems/ceremony.ts:347 the moment let pass"
+  ]
+ },
+ "pro.choose_approach": {
+  "status": "Verified",
+  "by": [
+   "inspection",
+   "automated"
+  ],
+  "on": "2e6fd238",
+  "evidence": [
+   "tests/b27-sides.test.ts",
+   "tests/b27-offers-screen.test.ts",
+   "src/engine/systems/offers.ts:444 the command; src/engine/systems/projobs.ts:1720 the round judged with the choice; src/engine/systems/projobs.ts:2218 rehearsed by the rehearsal step"
   ]
  },
  "pro.cut_reel": {
@@ -736,6 +798,18 @@
    "src/engine/systems/projobs.ts:2140 the answer: raised to what was asked or kept, by the band, the casting office and the draw"
   ]
  },
+ "pro.note": {
+  "status": "Verified",
+  "by": [
+   "inspection",
+   "automated"
+  ],
+  "on": "2e6fd238",
+  "evidence": [
+   "tests/b27-sides.test.ts",
+   "src/engine/systems/offers.ts:1058 the kind: unanswered kept, the round judged at the stop; src/engine/systems/offers.ts:1127 the stop's choices"
+  ]
+ },
  "pro.offer_lapse": {
   "status": "Verified",
   "by": [
@@ -807,6 +881,31 @@
    "src/engine/systems/workflow.ts:741 the film: made or missed, the pay; src/engine/systems/workflow.ts:859 its handler; src/engine/systems/projobs.ts:1956 the call"
   ]
  },
+ "pro.recasts": {
+  "status": "Verified",
+  "by": [
+   "inspection",
+   "automated"
+  ],
+  "on": "2e6fd238",
+  "evidence": [
+   "tests/b27-casting-turns.test.ts",
+   "src/engine/systems/offers.ts:1071 the reactor; src/engine/systems/offers.ts:866 the part posted again; src/engine/systems/projobs.ts:859 casting keyed for the recast"
+  ]
+ },
+ "pro.record_take": {
+  "status": "Verified",
+  "by": [
+   "inspection",
+   "automated"
+  ],
+  "on": "2e6fd238",
+  "evidence": [
+   "tests/b27-sides.test.ts",
+   "tests/b27-offers-screen.test.ts",
+   "src/engine/systems/offers.ts:460 the command; src/engine/systems/offers.ts:363 three a day and eight kept; src/engine/systems/offers.ts:371 recordTake's own draw and hour"
+  ]
+ },
  "pro.release": {
   "status": "Verified",
   "by": [
@@ -849,6 +948,18 @@
    "tests/pro-work.test.ts",
    "src/engine/systems/projobs.ts:1691-1707 the command; src/engine/systems/projobs.ts:907-920 requestRefusal: asked already, decided, not in term, standing, an F-1; src/engine/systems/projobs.ts:691-707 conditionsFor",
    "tests/pro-core.test.ts the career’s 32 test files, 423 tests, run on this commit: all green"
+  ]
+ },
+ "pro.reschedule_answer": {
+  "status": "Verified",
+  "by": [
+   "inspection",
+   "automated"
+  ],
+  "on": "2e6fd238",
+  "evidence": [
+   "tests/b27-casting-turns.test.ts",
+   "src/engine/systems/offers.ts:1064 the kind; src/engine/systems/offers.ts:1032 the round and its item moved"
   ]
  },
  "pro.reshoot": {
@@ -903,6 +1014,18 @@
    "src/engine/systems/proagent.ts:1054-1075 the command: the approach numbered, the cooldown cleared, the record considered, the answer booked; src/engine/systems/proagent.ts:599-612 sendRefusal: unread, under way, unsolicited, unchecked, too soon, nothing new",
    "tests/pro-agent.test.ts",
    "tests/pro-core.test.ts the career’s 32 test files, 423 tests, run on this commit: all green"
+  ]
+ },
+ "pro.send_take": {
+  "status": "Verified",
+  "by": [
+   "inspection",
+   "automated"
+  ],
+  "on": "2e6fd238",
+  "evidence": [
+   "tests/b27-sides.test.ts",
+   "src/engine/systems/offers.ts:467 the command; src/engine/systems/offers.ts:407 the take replayed from what it was recorded with; src/engine/systems/offers.ts:411 the round finished with it"
   ]
  },
  "pro.series": {
@@ -1067,6 +1190,18 @@
   "evidence": [
    "tests/b27-weather.test.ts",
    "src/engine/systems/projobs.ts:2232 the passage: each day on location read the evening before; src/engine/systems/projobs.ts:2193 the weather day: slipped or lost, the calendar, the flight home and the pay"
+  ]
+ },
+ "pro.withdraw": {
+  "status": "Verified",
+  "by": [
+   "inspection",
+   "automated"
+  ],
+  "on": "2e6fd238",
+  "evidence": [
+   "tests/b27-casting-turns.test.ts",
+   "src/engine/systems/offers.ts:473 the command; src/engine/systems/offers.ts:947 a late withdrawal remembered; src/engine/systems/projobs.ts:1793 no direct offer from an office that remembers; src/engine/systems/projobs.ts:2660 its cuts halved"
   ]
  },
  "pro.work_choice": {
