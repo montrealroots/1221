@@ -571,8 +571,15 @@ Superhero, Supernatural, Surrealist, Survival, Swashbuckler, Sword And Sandal, S
 Teen, Thriller, Time Travel, Tokusatsu, Tragedy, Tragicomedy, True Crime, Vampire, War, Werewolf, Western, Whodunit,
 Wuxia, Yakuza, Zombie.
 
-**Reader:** open, with the premise (entry 11). In this SLATE a loved genre moved the mood of work in that genre;
-that reader went with the career. What reads a loved genre in the new build is decided when the owner says what the
-life is a life of.
+**Owner (2026-10-26):** "These should all have full coverage matrix and an engine that reads bits and has downstream
+effects too." So entries 5 and 6 apply to the genres one by one: **every one of the 149 has a row in a coverage
+matrix** (what the genre is, from its cited source; what in the game is of that genre; what reads the player's love
+of it; what that changes downstream; its tests), and a genre whose row can't be filled isn't on the page. Research
+to the source for each: the definition this SLATE already cites (`genres.ts`, from the 2026-10-09 research, 38 of
+whose citations were corrected to followable pages on 2026-10-19) is the start, and the rest of the row is written
+when the premise names what a loved genre does. In this SLATE a loved genre moved the mood of work in that genre;
+that reader went with the career. What reads a loved genre in the new build, and so what the rows' downstream
+columns hold, is decided when the owner says what the life is a life of; the rule that each must have one is
+decided now.
 
 Capture: `captures/02-new-build/04-genres-new.png`.
