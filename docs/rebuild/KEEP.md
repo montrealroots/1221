@@ -351,3 +351,34 @@ wasn't read from the real source, and nothing real is left out that the research
 **For the new build:** the gazetteer and the map are kept (entry to come when the Place of Birth control is
 reached in the captures). The coverage matrix becomes the research plan, worked country by country, and a country's
 row moves to "researched" only when its sources are cited.
+
+---
+
+## 6. Full worldwide coverage, research behind every country, and zero decoration (DECIDED)
+
+**Owner (2026-10-26):** "I want full coverage matrix and research behind each, and all should read bits and have
+downstream effects, with absolutely zero decorations, like none at all."
+
+Three rules for the rebuild, each absolute:
+
+1. **Full coverage.** The geography matrix reaches "researched" for every one of the 252 countries and territories,
+   not 3. For each: its work rules for a performer (permits, visas, who may employ whom), its tax on earnings and
+   on a non-resident's earnings, its banking (real banks, real fee sheets, account formats), its performers' union
+   or guild and its agreements, its casting markets and what's cast there, its public holidays and its calendar, its
+   currency and how pay arrives, its passports and the visas its citizens need elsewhere. A country whose own
+   sources can't be reached is still in the matrix, with the blocker named and dated, and the game says to the
+   player what isn't modeled there; it never pretends.
+2. **Research behind each.** Every row cites the primary source it was read from, with the date it was read, in a
+   research register; no figure comes from memory or from a summary. The register is a deliverable of the build,
+   gated like this SLATE gated its matrices: a row without its source fails.
+3. **Zero decoration.** Every field, control, figure, word, screen and system reads real inputs and changes real
+   outcomes downstream. Nothing is shown that nothing reads; nothing is asked that nothing uses; no number is
+   typed where a sum belongs; no choice ends the same whichever way it's made. This SLATE's own ONE RULE ("a
+   declared word with nothing that reads it is worse than no word at all") becomes the rebuild's only rule for what
+   goes in, applied without exception, and the gate that proves it (a feature-to-effect matrix with a consumer at a
+   file and line for every feature, and the falsifiability test: change the input, does the outcome change?) is kept
+   and run on every commit.
+
+What this changes in the capture work from here: each page's entry lists every element with its reader in the new
+build; an element with no reader is cut, not kept. And the scale of the research is the real cost of the rebuild:
+this SLATE researched three countries in depth over its briefs, and the standard above asks for 252.
