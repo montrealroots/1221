@@ -14,15 +14,17 @@
     "create.school",
     "create.wealth",
     "create.bankId",
-    "create.homeBankId"
+    "create.homeBankId",
+    "create.languages"
    ],
    "decisions": "Who the actor is: name, birth, a citizenship asked apart from the birthplace, a home region and a previous residence, background, genres, wealth and banks.",
-   "states": "A new save: the history set once at creation, then read by the systems it feeds.",
+   "states": "A new save: the history set once at creation, then read by the systems it feeds. From 2026-10-25 the languages spoken, English always and up to five more, fixed for life; an older save reads as English natively.",
    "timed": "None until the clock starts, paused.",
    "exits": "Back between the steps; nothing is written until the life begins.",
    "status": "Implemented And Verified",
    "tests": [
-    "tests/b27-creation-origins.test.ts"
+    "tests/b27-creation-origins.test.ts",
+    "tests/b27-languages.test.ts"
    ],
    "docs": []
   },
@@ -158,16 +160,18 @@
     "pro.agent_meeting",
     "pro.agent_silence",
     "pro.agent_decision",
-    "pro.agent_follow_up"
+    "pro.agent_follow_up",
+    "notice.systems/representation#introduceAtFestival"
    ],
    "decisions": "Which agent, by which way in, what to send, and when to move a meeting.",
-   "states": "From the notice read to materials sent, waiting, asked for more, a meeting, deciding, and an offer, a pass or no answer.",
+   "states": "From the notice read to materials sent, waiting, asked for more, a meeting, deciding, and an offer, a pass or no answer. From 2026-10-25 an introduction at a festival is a route to the game’s own agent, waiting on the festivals cluster to call it.",
    "timed": "The office’s answer, a request’s due date, the meeting, the silence after six weeks, a cooldown.",
    "exits": "After a pass or no answer, a cooldown and only something new reopens it.",
    "status": "Implemented And Verified",
    "tests": [
     "tests/journey-agent.test.ts",
-    "tests/pro-agent.test.ts"
+    "tests/pro-agent.test.ts",
+    "tests/b27-representation.test.ts"
    ],
    "docs": []
   },
@@ -180,15 +184,20 @@
     "pro.end_agreement",
     "pro.agent_offer_lapse",
     "pro.agent_term_end",
-    "pro.agent_ask_lapse"
+    "pro.agent_ask_lapse",
+    "pro.ask_terms",
+    "pro.agent_terms_answer",
+    "notice.systems/representation#answerAsk"
    ],
    "decisions": "Accept or decline the agreement; end it by agreement or by its unions’ rules.",
-   "states": "Offered, accepted, declined, lapsed, ended by term, agreement, no offer or too little work.",
-   "timed": "The offer’s lapse; the term’s end; Equity’s ninety days, SAG-AFTRA’s 151 and 91.",
+   "states": "Offered, accepted, declined, lapsed, ended by term, agreement, no offer or too little work. From 2026-10-25 the agreement’s terms are versions: a shorter term, voice-over or work abroad asked once while it’s offered, agreed or kept two days on, and read by its end, the commission, the submissions and the offers.",
+   "timed": "The offer’s lapse; the term’s end; Equity’s ninety days, SAG-AFTRA’s 151 and 91. The office’s answer to an ask on the terms, two days on.",
    "exits": "Commission still owed on work contracted while represented; one agent at a time.",
    "status": "Implemented And Verified",
    "tests": [
-    "tests/career-agents.test.ts"
+    "tests/career-agents.test.ts",
+    "tests/b27-representation.test.ts",
+    "tests/b27-representation-screen.test.ts"
    ],
    "docs": []
   },
@@ -197,16 +206,18 @@
    "title": "Project Development And Opportunity Supply",
    "features": [
     "pro.postings",
-    "pro.series"
+    "pro.series",
+    "pro.pilot_word"
    ],
    "decisions": "None: the world makes the work.",
-   "states": "Each week’s slate by market and kind; a production made, pushed back or dropped; series seasons ordered or decided.",
-   "timed": "Monday’s postings; a production’s fate known weeks before its first day.",
+   "states": "Each week’s slate by market and kind; a production made, pushed back or dropped; series seasons ordered or decided. From 2026-10-25 the slate makes pilots each winter, shot as an episode; the network’s word on May 15 picks one up into a series of the game’s or passes on it, and a pilot passed on never airs.",
+   "timed": "Monday’s postings; a production’s fate known weeks before its first day. The network’s word on a pilot, May 15.",
    "exits": "A pushed part posted again for its new dates.",
    "status": "Implemented And Verified",
    "tests": [
     "tests/b27-slate.test.ts",
-    "tests/b27-slate-screens.test.ts"
+    "tests/b27-slate-screens.test.ts",
+    "tests/b27-pilots.test.ts"
    ],
    "docs": []
   },
@@ -236,12 +247,13 @@
     "pro.reply"
    ],
    "decisions": "Submit yourself, with what the casting asks for.",
-   "states": "Open, submitted, then an audition or a pass.",
+   "states": "Open, submitted, then an audition or a pass. From 2026-10-25 a part written for a speaker of another language refuses a non-speaker in words, and casting’s fit weighs how well it’s spoken.",
    "timed": "Casting’s answer some days on.",
    "exits": "A submission refused names what’s missing and where to make it.",
    "status": "Implemented And Verified",
    "tests": [
-    "tests/journey-career.test.ts"
+    "tests/journey-career.test.ts",
+    "tests/b27-languages.test.ts"
    ],
    "docs": []
   },
@@ -251,15 +263,18 @@
    "features": [
     "pro.tape_audition",
     "pro.tape_due",
-    "pro.prepare"
+    "pro.prepare",
+    "pro.record_take",
+    "pro.send_take"
    ],
    "decisions": "Prepare the sides by the steps, and tape it before it’s due.",
-   "states": "An audition set, prepared, taped or missed.",
+   "states": "An audition set, prepared, taped or missed. From 2026-10-25 a professional self-tape is recorded a take at a time, three a day, and the take the actor picks is sent and judged as recorded.",
    "timed": "The tape’s due evening.",
    "exits": "A tape missed closes the round, said.",
    "status": "Implemented And Verified",
    "tests": [
-    "tests/journey-career.test.ts"
+    "tests/journey-career.test.ts",
+    "tests/b27-sides.test.ts"
    ],
    "docs": []
   },
@@ -268,15 +283,21 @@
    "title": "In-Person Audition",
    "features": [
     "pro.audition",
-    "pro.move_audition"
+    "pro.move_audition",
+    "pro.choose_approach",
+    "pro.answer_note",
+    "pro.note",
+    "pro.withdraw"
    ],
    "decisions": "Go when the clock stops; ask once for another time a day ahead.",
-   "states": "Set, moved once, done or missed.",
-   "timed": "The audition’s hour, with the trip there.",
+   "states": "Set, moved once, done or missed. From 2026-10-25 the actor chooses how the sides are played, casting gives a direction ten minutes in that is followed or kept, and withdrawing with less than a day’s notice is remembered by the office for two years.",
+   "timed": "The audition’s hour, with the trip there. Casting’s direction ten minutes into an audition or callback in person.",
    "exits": "A clash moved once to a clear time.",
    "status": "Implemented And Verified",
    "tests": [
-    "tests/journey-career.test.ts"
+    "tests/journey-career.test.ts",
+    "tests/b27-sides.test.ts",
+    "tests/b27-casting-turns.test.ts"
    ],
    "docs": []
   },
@@ -285,15 +306,18 @@
    "title": "Callback, Chemistry Read, Or Screen Test",
    "features": [
     "pro.audition",
-    "pro.casting_decision"
+    "pro.casting_decision",
+    "pro.ask_reschedule",
+    "pro.reschedule_answer"
    ],
    "decisions": "Go to each round.",
-   "states": "Audition, callback, chemistry read and screen test, each judged; a hold on the dates from the cut.",
-   "timed": "Each round’s hour; casting’s decision after the last.",
+   "states": "Audition, callback, chemistry read and screen test, each judged; a hold on the dates from the cut. From 2026-10-25 a chemistry read or a screen test moves only at the production’s asking, answered the next afternoon.",
+   "timed": "Each round’s hour; casting’s decision after the last. The production’s answer to a reschedule, the next afternoon.",
    "exits": "A round slept through ends it.",
    "status": "Implemented And Verified",
    "tests": [
-    "tests/b27-rounds.test.ts"
+    "tests/b27-rounds.test.ts",
+    "tests/b27-casting-turns.test.ts"
    ],
    "docs": []
   },
@@ -304,15 +328,18 @@
     "pro.accept_offer",
     "pro.decline_offer",
     "pro.offer_lapse",
-    "pro.invite"
+    "pro.invite",
+    "pro.recasts"
    ],
    "decisions": "Accept or decline an offer made without an audition.",
-   "states": "Offered, booked, declined or lapsed.",
+   "states": "Offered, booked, declined or lapsed. From 2026-10-25 a lead from an office that cast the actor before, the work Strong, may come on the condition of its last round; a part recast weeks before its first day is posted again.",
    "timed": "The offer’s lapse.",
    "exits": "Declining closes it with no penalty beyond the part.",
    "status": "Implemented And Verified",
    "tests": [
-    "tests/b27-offers.test.ts"
+    "tests/b27-offers.test.ts",
+    "tests/b27-casting-turns.test.ts",
+    "tests/b27-offer-terms.test.ts"
    ],
    "docs": []
   },
@@ -341,13 +368,14 @@
     "pro.negotiate_answer"
    ],
    "decisions": "Have the agent ask once for more.",
-   "states": "The offer versioned, raised or kept.",
+   "states": "The offer versioned, raised or kept. From 2026-10-25 the ask names its item, the pay, a guaranteed episode or the promotional day, and the answer may be a trade-off or the offer withdrawn.",
    "timed": "The answer the next afternoon; the lapse moved past it.",
    "exits": "Without an agent nobody asks; a second ask refused.",
    "status": "Implemented And Verified",
    "tests": [
     "tests/b27-offers.test.ts",
-    "tests/b27-award-effects.test.ts"
+    "tests/b27-award-effects.test.ts",
+    "tests/b27-offer-terms.test.ts"
    ],
    "docs": []
   },
@@ -372,16 +400,20 @@
    "title": "Holds, Options, And Conflicts",
    "features": [
     "pro.ask_hold",
-    "pro.hold_answer"
+    "pro.hold_answer",
+    "pro.ask_option_release",
+    "pro.option_release_answer",
+    "notice.systems/continuity#tellOf"
    ],
    "decisions": "Ask the production to decide first, or let the hold go for other work.",
-   "states": "A hold from the cut, booked, let go or withdrawn; a series part’s option taken up or not.",
-   "timed": "The answer the next afternoon; the option’s last day.",
-   "exits": "Accepting other work lets the hold go, said before it’s pressed.",
+   "states": "A hold from the cut, booked, let go or withdrawn; a series part’s option taken up or not. From 2026-10-25 an open option holds the next season’s guaranteed episodes: an offer on those days says so, and the actor declines, gives the option up with the offer, or asks to be released, answered the next afternoon.",
+   "timed": "The answer the next afternoon; the option’s last day. The production’s answer on an option, the next afternoon at three.",
+   "exits": "Accepting other work lets the hold go, said before it’s pressed. An option given up leaves the part to another actor and that casting office offering nothing without an audition.",
    "status": "Implemented And Verified",
    "tests": [
     "tests/b27-holds.test.ts",
-    "tests/career-contracts.test.ts"
+    "tests/career-contracts.test.ts",
+    "tests/b27-option-hold.test.ts"
    ],
    "docs": []
   },
@@ -393,12 +425,13 @@
     "pro.pages"
    ],
    "decisions": "Prepare by each format’s own steps.",
-   "states": "Preparation levels, revised pages the night before.",
+   "states": "Preparation levels, revised pages the night before. From 2026-10-25 a conversational speaker’s part has a language step, worked on and read by the tape, the room and the day.",
    "timed": "The revision the evening before a work day.",
    "exits": "Unprepared work is judged lower, said.",
    "status": "Implemented And Verified",
    "tests": [
-    "tests/career-workflows.test.ts"
+    "tests/career-workflows.test.ts",
+    "tests/b27-languages.test.ts"
    ],
    "docs": []
   },
@@ -517,13 +550,14 @@
     "pro.pages"
    ],
    "decisions": "Whether to go while unwell.",
-   "states": "A day missed, covered by an understudy, shot around once, or the actor replaced.",
+   "states": "A day missed, covered by an understudy, shot around once, or the actor replaced. From 2026-10-25 a requirement changed at casting’s cut releases an actor who no longer fits, and a part lost is recast and posted again.",
    "timed": "Each call; the weather day.",
    "exits": "Replacement ends the engagement with the pay earned kept.",
    "status": "Implemented And Verified",
    "tests": [
     "tests/b27-ill.test.ts",
-    "tests/b27-weather.test.ts"
+    "tests/b27-weather.test.ts",
+    "tests/b27-casting-turns.test.ts"
    ],
    "docs": []
   },
@@ -602,12 +636,13 @@
     "pro.release"
    ],
    "decisions": "None: the distributor decides.",
-   "states": "Released on time, held back, sent to streaming or shelved, told when due.",
+   "states": "Released on time, held back, sent to streaming or shelved, told when due. From 2026-10-25 a film may open in a limited release that widens only where audiences take to it, be taken over by another distributor, or open abroad first, the awards placing it by its run at home.",
    "timed": "The release date; a held-back release put on the clock again.",
    "exits": "A shelved credit stays shot, its footage never on a reel.",
    "status": "Implemented And Verified",
    "tests": [
-    "tests/b27-release.test.ts"
+    "tests/b27-release.test.ts",
+    "tests/b27-release-routes.test.ts"
    ],
    "docs": []
   },
@@ -634,13 +669,15 @@
     "pro.release"
    ],
    "decisions": "None.",
-   "states": "A film in cinemas has a run in the game’s own chart; published charts read as dated imports.",
+   "states": "A film in cinemas has a run in the game’s own chart; published charts read as dated imports. From 2026-10-25 the run reads the size and band of the player’s part, bounded, with its weeks abroad in US dollars beside it.",
    "timed": "Each week as the clock reaches it.",
    "exits": "None.",
    "status": "Implemented And Verified",
    "tests": [
     "tests/career-awards.test.ts",
-    "tests/career-awards-screen.test.ts"
+    "tests/career-awards-screen.test.ts",
+    "tests/b27-fortunes.test.ts",
+    "tests/b27-release-routes.test.ts"
    ],
    "docs": []
   },
@@ -651,12 +688,13 @@
     "pro.series"
    ],
    "decisions": "None.",
-   "states": "Each season’s audience in its own unit, the game’s estimate.",
+   "states": "Each season’s audience in its own unit, the game’s estimate. From 2026-10-25 each judged day of series work posts a mark the season’s audience and reviews read.",
    "timed": "Measured when the season finishes.",
    "exits": "None.",
    "status": "Implemented And Verified",
    "tests": [
-    "tests/b27-audience.test.ts"
+    "tests/b27-audience.test.ts",
+    "tests/b27-fortunes.test.ts"
    ],
    "docs": []
   },
@@ -688,12 +726,14 @@
     "pro.series"
    ],
    "decisions": "None: the network decides.",
-   "states": "Renewed or canceled, reading the last season’s audience, reviews and age.",
+   "states": "Renewed or canceled, reading the last season’s audience, reviews and age. From 2026-10-25 a canceled series back on another network is seen there, named on its page and the credit, each later word that network’s, with a save told a season’s word reading the same word after.",
    "timed": "Each May’s word.",
    "exits": "A canceled series may be revived.",
    "status": "Implemented And Verified",
    "tests": [
-    "tests/b27-audience.test.ts"
+    "tests/b27-audience.test.ts",
+    "tests/b27-returning.test.ts",
+    "tests/b27-older-save.test.ts"
    ],
    "docs": []
   },
@@ -702,16 +742,19 @@
    "title": "Returning Player",
    "features": [
     "pro.invite",
-    "pro.series"
+    "pro.series",
+    "pro.recurring_invite"
    ],
    "decisions": "Accept the invitation back.",
-   "states": "A recurring part optioned, invited, returning.",
-   "timed": "The option’s day; the next season’s casting.",
+   "states": "A recurring part optioned, invited, returning. From 2026-10-25 a guest part played Strong or better is weighed six weeks before each season the series makes and may come back as a recurring part on a new contract; a part taken up at its option may be grown, more episodes and more a day.",
+   "timed": "The option’s day; the next season’s casting. The producers’ weighing, six weeks before the season.",
    "exits": "Renewal never rebooks automatically.",
    "status": "Implemented And Verified",
    "tests": [
     "tests/b27-revival.test.ts",
-    "tests/career-contracts.test.ts"
+    "tests/career-contracts.test.ts",
+    "tests/b27-returning.test.ts",
+    "tests/b27-real-series.test.ts"
    ],
    "docs": []
   },
@@ -740,12 +783,13 @@
     "pro.revival"
    ],
    "decisions": "None.",
-   "states": "Canceled, future work called off with pay settled; revived years on.",
+   "states": "Canceled, future work called off with pay settled; revived years on. From 2026-10-25 a revival may come back on another network, half the time.",
    "timed": "Each May’s word.",
    "exits": "A revival brings the character back by its draw.",
    "status": "Implemented And Verified",
    "tests": [
-    "tests/b27-revival.test.ts"
+    "tests/b27-revival.test.ts",
+    "tests/b27-returning.test.ts"
    ],
    "docs": []
   },
