@@ -89,11 +89,13 @@ Where the life begins on the first morning is open until the premise.
 ## Screen 6. Creation, Review
 
 Ready To Begin with the name and a line under it (age, billed as, home, the last open until the premise). Four
-sections in the steps' order: Identity, Background, Genres, Money, each saying back what its step took. The Guide
-choice. The paused-clock line. Back and Begin. The School line, the dispositions, the free-text sentence, Where You
+sections in the steps' order: Identity, Background, Genres, Money, each saying back what its step took. The paused-clock line (the Guide choice is gone with the tutorial, entry 16). Back and Begin. The School line, the dispositions, the free-text sentence, Where You
 Live and Food Each Month are gone (entry 15).
 
-## After Begin
+## Screen 7. Home, the first morning
 
-Not yet captured. What the first morning is, and what the life is a life of, waits on the premise the owner will
-give.
+No tutorial (entry 16): nothing locked, no guide line, no chapter count. The top bar (the clock, Paused, Play, Sleep,
+Look After Yourself, Advance, Guide as a manual, Saved, Save & Exit), the menu down the left, the greeting with the
+date and the town's line, the weather and its five-day forecast, and the panels What Needs You, How You Are (energy,
+stress, readiness, Look After Yourself), Up Next with the calendar, and Recent Updates. What of it stays beyond the
+tutorial's removal is the next decision; the School and career items on it are already gone by entries 10 and 11.

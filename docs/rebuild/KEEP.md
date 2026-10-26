@@ -661,3 +661,23 @@ the premise, its line comes back here).
 **Open with the premise:** what the Guide teaches (its chapters were this SLATE's, School and career among them) and
 whether the clock's rule stays as written ("a minute passes in the game for every real minute, and the clock pauses
 itself at each commitment"), both features of the first morning, which the next capture page is.
+
+---
+
+## 16. No tutorial (DECIDED 2026-10-26)
+
+**Owner:** "Let's go with no tutorial right now, so get rid of it."
+
+Gone from the new build: the guide's twenty chapters as a tutorial, the locks they held on panels and controls
+("Locked", "Read About It", the command guard that refused a command whose chapter wasn't read), the Guide (N Left)
+count, the guide line with its Read button at the top of Home, and the choice on Review (Guide Me Through It / I
+Know SLATE), since there's nothing to choose. The life opens with everything live, as "I Know SLATE" opened it.
+
+Left standing for now, as reference rather than tutorial, until the owner rules on it: the Guide button in the top
+bar and the "How This Works" / "How Home Works" / "How The Weather Works" links on each panel, which open the guide's
+entries as a manual; and the amber line on Review about the paused clock, which is a fact, not a lesson.
+
+Capture: `captures/02-new-build/07-home-no-tutorial.png`, Home on the first morning with nothing locked. What's on
+it that the School and career cuts (entries 10 and 11) still remove: School and Career on the menu, the term's
+events in Up Next (Registration And Your Account, The Fall Term Begins, Meeting Your Class and the rest), the
+"Welcome To The Class Of 2029" notice, and New Haven as the town; "Actress" in the date line stays with Billed As.
