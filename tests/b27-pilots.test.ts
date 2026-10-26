@@ -5,7 +5,11 @@
  * in its contract and the word on the clock, its airing held past the word; the word a draw that reads the pilot's own
  * quality and the player's part; picked up, a series of the game's with the player's character, the option taken up or
  * let go as any is, kept through a save; and the falsifiability twin, the same pilot with the part judged Unready, passed
- * on, never airing.
+ * on, never airing. From the review of 2026-10-25: every pilot the slate makes in ten winters wrapped two weeks before its
+ * network's word, so the word reads a part judged whole and a pilot passed on is never still shooting; until then one
+ * posted late in March could be, and aired anyway; and a pilot whose word does come inside its shoot (a copy of a slate
+ * pilot with its word moved there, TEST SETUP: no pilot the slate posts has it), passed on, is shelved at its wrap and never
+ * airs, as the word said.
  *
  * PLAYER JOURNEYS: a graduate played by the clock through a pilot's shoot (tests/fakes/career-world.ts), the offer accepted
  * through the command, then the clock to the network's word. The pilot is one whose own draw sits between the chance
@@ -16,7 +20,7 @@
 import { describe, expect, it } from 'vitest';
 import { MS_DAY, MS_HOUR, addDays, zonedParts } from '@/engine/core/time';
 import { seriesById } from '@/engine/content/series';
-import { PILOTS, pilotsOf, slatePartsAt } from '@/engine/systems/slate';
+import { PILOTS, keepProject, pilotsOf, slatePartsAt } from '@/engine/systems/slate';
 import { PILOT, PILOT_KIND, pilotChance, pilotPart, pilotSeries } from '@/engine/systems/continuity';
 import { productionKey, qualityOf, termOf } from '@/engine/systems/market';
 import { optionDrawn } from '@/engine/systems/series';
@@ -24,11 +28,12 @@ import { clauseOf } from '@/engine/systems/contracts';
 import { premiereOf } from '@/engine/systems/awards';
 import { creditWords, pageOf, projectKey } from '@/engine/systems/reference';
 import { ensurePro, reelSources, type Engagement } from '@/engine/systems/pro';
-import { RELEASE_KIND, releaseFate, termsWords } from '@/engine/systems/projobs';
-import type { ProjectTemplate } from '@/engine/content/careerwork';
+import { RELEASE_KIND, datesOf, postingTimes, releaseFate, termsWords } from '@/engine/systems/projobs';
+import { PROMO_KIND } from '@/engine/systems/workflow';
+import { addProjects, type ProjectTemplate } from '@/engine/content/careerwork';
 import type { Simulation } from '@/engine/core/simulation';
-import { graduate, notices, reload } from './fakes/career-world';
-import { WEEK, slatePilot, wrapped } from './fakes/b27-series';
+import { graduate, notices, played, reload } from './fakes/career-world';
+import { WEEK, offered, slatePilot, wrapped } from './fakes/b27-series';
 
 const NY = 'America/New_York';
 
@@ -75,6 +80,63 @@ describe('pilots on the slate', () => {
     expect(pilotChance(1, 0)).toBeGreaterThan(pilotChance(0, 0));
     expect(pilotChance(-5, -5)).toBe(PILOT.chance.least);
   });
+
+  it('are shot and wrapped two weeks before their network’s word, every one in ten winters, so the word reads a finished pilot', () => {
+    const sim = graduate('b27-pilots-wrap');
+    let made = 0;
+    let closest = Infinity;
+    for (const monday of postingTimes(sim.now, sim.now + 10 * 365 * MS_DAY)) for (const p of pilotsOf(sim, monday)) for (const t of p.parts) {
+      addProjects([t]);
+      made += 1;
+      // Posted on its week's Monday, as the game posts: its last day's end, and the word.
+      const last = datesOf({ projectId: t.id, postedAt: monday }).at(-1)!;
+      expect(last.to + PILOTS.wrapBy * MS_DAY, t.id).toBeLessThanOrEqual(t.pilot!.decideAt);
+      closest = Math.min(closest, t.pilot!.decideAt - last.to);
+    }
+    expect(made).toBeGreaterThan(100);
+    // Some wrap close to the bound: late-March pilots are made, those that couldn't wrap in time aren't.
+    expect(closest).toBeLessThan((PILOTS.wrapBy + 7) * MS_DAY);
+  });
+
+  it('PLAYER JOURNEY: a pilot whose network’s word comes inside its shoot and passes on it never airs: the word says so, and at the wrap the credit is shelved with nothing on the clock', () => {
+    const sim = graduate('b27-pilots-span');
+    ensurePro(sim, sim.player).sag = { eligibleSince: sim.now - 60 * MS_DAY, memberSince: sim.now - 30 * MS_DAY };
+    // TEST SETUP: a slate pilot's lead whose network's draw passes on it with the part judged Unready, copied with the
+    // word moved to the morning of its third shoot day: no pilot the slate posts spans its word (`PILOTS.wrapBy`), so the
+    // copy stands for a shoot moved after its posting, and is kept as the save keeps a slate part.
+    const { t: base, week } = slatePilot(sim, (x) => x.role.size === 'lead' && x.schedule.kind === 'shoot' && sim.rng('pro.pilot', productionKey(x)).next() >= pilotChance(qualityOf(sim, x), termOf('lead', 'unready')));
+    const days = datesOf({ projectId: base.id, postedAt: week });
+    const t: ProjectTemplate = { ...base, id: `${base.id}.span`, pilot: { ...base.pilot!, decideAt: days[2]!.from - MS_HOUR } };
+    addProjects([t]);
+    played(sim, week);
+    keepProject(sim.player, t);
+    const o = offered(sim, t, week);
+    const id = sim.must<{ engagementId: string }>({ kind: 'pro.accept_offer', payload: { opportunityId: o.id } }).engagementId;
+    const e = sim.player.pro!.engagements.find((x) => x.id === id)!;
+    played(sim, t.pilot!.decideAt - MS_HOUR);
+    expect(e.log!.filter((l) => l.status === 'worked').length).toBe(2);
+    expect(e.creditId).toBeUndefined();
+    judgedAll(e, 'unready');
+    // The word, two days into the shoot: passed on, and said of the credit the wrap will make.
+    played(sim, t.pilot!.decideAt + MS_HOUR);
+    expect(e.pilot).toMatchObject({ picked: false });
+    expect(clauseOf(e.contract, 'option')!.status).toBe('expired');
+    expect(notices(sim).some((n) => n.startsWith(`${t.project} Isn’t Picked Up | ${t.pilot!.network} passed on ${t.project}: it won’t go to series, and the pilot won’t air. ${t.role.part} goes on your credits as shot when the shoot wraps, and the pay is yours. With no airing, its footage can’t go on a reel.`))).toBe(true);
+    // The wrap: the credit shelved, no release and no promotional film on the clock, no premiere.
+    for (let n = 0; n < 4 && e.status !== 'finished' && e.status !== 'canceled'; n += 1) played(sim, e.days.at(-1)!.to + 2 * MS_HOUR);
+    expect(e.status).toBe('finished');
+    const c = sim.player.pro!.credits.find((x) => x.engagementId === e.id)!;
+    expect(c.release).toEqual({ kind: 'shelved' });
+    expect(sim.universe.scheduled.some((i) => i.status === 'pending' && ((i.kind === RELEASE_KIND && i.refId === c.id) || (i.kind === PROMO_KIND && i.refId === e.id)))).toBe(false);
+    expect(e.promo).toBeUndefined();
+    expect(premiereOf(sim, sim.player, c)).toBeUndefined();
+    expect(creditWords(sim, sim.player, c)).toBe('Shot, and its network passed on the pilot: it won’t air');
+    // Past the day it would have aired: still shot, never released, never on a reel.
+    played(sim, addDays(t.pilot!.decideAt, PILOT.airsDays + 30, NY));
+    expect(c.status).toBe('shot');
+    expect(notices(sim).some((n) => n.startsWith(`${t.project} Is Released`) || n.startsWith(`${t.project} Is On Tonight`))).toBe(false);
+    expect(reelSources(sim.player, sim.now).some((x) => x.ref === `footage:${c.id}`)).toBe(false);
+  }, 900_000);
 
   it('PLAYER JOURNEY: a pilot accepted carries the option on the series’ first season; picked up, it’s a series of the game’s with the player’s character, its option taken up into a first season or let go, kept through a save; the twin with the part judged Unready is passed on and never airs', () => {
     // The first of these saves whose engagement's own draw takes the option up, and on the way any that lets it go.
@@ -133,7 +195,7 @@ describe('pilots on the slate', () => {
     twin.advanceTo(again.t.pilot!.decideAt + MS_HOUR);
     expect(w.e.pilot).toMatchObject({ picked: false });
     expect(clauseOf(w.e.contract, 'option')!.status).toBe('expired');
-    expect(w.c!.release).toEqual({ kind: 'shelved', told: true });
+    expect(w.c!.release).toEqual({ kind: 'shelved' });
     expect(twin.universe.scheduled.some((i) => i.kind === RELEASE_KIND && i.refId === w.c!.id && i.status === 'pending')).toBe(false);
     expect(premiereOf(twin, twin.player, w.c!)).toBeUndefined();
     expect(notices(twin).some((n) => n.startsWith(`${again.t.project} Isn’t Picked Up | ${again.t.pilot!.network} passed on ${again.t.project}: it won’t go to series, and the pilot won’t air.`))).toBe(true);

@@ -358,6 +358,16 @@ export function atWrap(sim: Simulation, person: Person, e: Engagement, t: Projec
   }
   if (!t.pilot) return false;
   const item = sim.universe.scheduled.find((i) => i.status === 'pending' && i.kind === 'pro.release' && i.refId === c.id);
+  // Passed on before the wrap, its network's word having come first: never aired, as the word said, so the credit is
+  // shelved and no release goes on the clock. The slate keeps a pilot's shoot two weeks clear of the word (`PILOTS.wrapBy`,
+  // `systems/slate.ts`), so only a shoot moved after its posting comes here. Until the review of 2026-10-25 the release
+  // went on the clock whatever the word had been, and a pilot passed on mid-shoot aired four months on, its footage offered
+  // for a reel.
+  if (e.pilot && !e.pilot.picked) {
+    c.release = { kind: 'shelved' };
+    if (item) sim.timeline.cancel(item.id, sim.now);
+    return true;
+  }
   const earliest = addDays(t.pilot.decideAt, PILOT.airsDays, NY);
   if (item && item.at < earliest) {
     sim.timeline.cancel(item.id, sim.now);
@@ -451,12 +461,14 @@ export function registerContinuity(sim: Simulation, hooks: SeriesHooks): void {
     if (!picked) {
       const c = e.creditId ? person.pro.credits.find((x) => x.id === e.creditId) : undefined;
       if (c && c.status === 'shot') {
-        c.release = { kind: 'shelved', told: true };
+        c.release = { kind: 'shelved' };
         for (const i of s.universe.scheduled.filter((x) => x.status === 'pending' && ((x.kind === 'pro.release' && x.refId === c.id) || (x.kind === 'pro.promo' && x.refId === e.id)))) s.timeline.cancel(i.id, s.now);
         delete e.promo;
       }
       if (option?.status === 'open') { option.status = 'expired'; option.settled = { at: s.now, why: `${t.pilot.network} passed on ${t.project}, so there’s no series to take up the option for.` }; }
-      const words = `${t.pilot.network} passed on ${t.project}: it won’t go to series, and the pilot won’t air. ${t.role.part} stays on your credits as shot, and the pay was yours. With no airing, its footage can’t go on a reel. ${label}`;
+      // Said of a credit made at the wrap; before the wrap, of the credit the wrap makes (`atWrap` shelves it then).
+      const credits = c ? `${t.role.part} stays on your credits as shot, and the pay was yours.` : `${t.role.part} goes on your credits as shot when the shoot wraps, and the pay is yours.`;
+      const words = `${t.pilot.network} passed on ${t.project}: it won’t go to series, and the pilot won’t air. ${credits} With no airing, its footage can’t go on a reel. ${label}`;
       noteEvent(s, e, { kind: 'problem', key: 'release:shelved', words });
       tellOf(s, person, `${t.project} Isn’t Picked Up`, words, 70);
       return;

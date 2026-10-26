@@ -256,6 +256,15 @@ export function productionsOf(sim: Simulation, week: Instant): Production[] {
  * network's word on a series. ASSUMPTION every figure: postings from January to March, a market's pilots of a kind a week
  * at `rate` of its weekly rate for that kind, the parts' sizes, the shoot's days, and the word on May 15 at noon, when the
  * game's networks decide on their series. Until then the slate made no pilots, and no series began from one.
+ *
+ * A pilot is shot and wrapped `wrapBy` days before its network's word (ASSUMPTION, the game's: two weeks for the network
+ * to see a cut), or isn't made: posted on its week's Monday, its first day its lead's days on and the end of its last
+ * within `span` days of that (seven weekdays from a Saturday, or a multicamera week from the Monday after, end ten days
+ * on, by the evening), so a network always judges a pilot that's finished. Until the review of 2026-10-25 a pilot posted
+ * late in March could still be shooting on May 15: passed on mid-shoot, its release was put on the clock at the wrap after
+ * the word, and it aired anyway, its network's word read from a part judged only in part. Measured on one save's ten
+ * winters: 2 of 156 pilot parts posted on their Mondays were still shooting at the word and 20 wrapped within two weeks
+ * of it; after, 136 parts were made and none did.
  */
 export const PILOTS = {
   months: [1, 2, 3] as readonly number[],
@@ -265,6 +274,8 @@ export const PILOTS = {
   sizes: { lead: 2, supporting: 3, 'co-star': 2 } as Readonly<Partial<Record<RoleSize, number>>>,
   schedules: { 'network-drama': { kind: 'shoot', days: 7 }, 'network-comedy': { kind: 'shoot', days: 5 }, 'multicam-comedy': { kind: 'week', weeks: 1 } } as Readonly<Partial<Record<ProjectKind, ProjectTemplate['schedule']>>>,
   word: { month: 5, day: 15, hour: 12 },
+  wrapBy: 14,
+  span: 11,
 } as const;
 
 /** The pilots the slate made for a week: none outside the pilot season. */
@@ -286,7 +297,12 @@ export function pilotsOf(sim: Simulation, week: Instant): Production[] {
         if (!rate || !profile) continue;
         const draw = sim.rng('pro.slate', key, market.id, kind, 'pilot-count');
         const count = countOf(() => draw.next(), rate * PILOTS.rate);
-        for (let n = 0; n < count; n += 1) out.push(makeProduction(sim, tag, monday, market, kind, n, profile, undefined, true));
+        for (let n = 0; n < count; n += 1) {
+          const p = makeProduction(sim, tag, monday, market, kind, n, profile, undefined, true);
+          // Wrapped `wrapBy` days before the word, or not made (`PILOTS`): its parts share its lead and its word.
+          const t = p.parts[0];
+          if (t?.pilot && addDays(monday, (t.leadDays ?? 0) + PILOTS.span + PILOTS.wrapBy, NY) <= t.pilot.decideAt) out.push(p);
+        }
       }
     }
   }
