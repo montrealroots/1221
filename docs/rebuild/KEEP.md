@@ -819,3 +819,15 @@ the Languages card on Identity loses its sentences about training, parts and the
 gone) and says only "The languages you speak, and how well."; the earlier Home capture with the tutorial gone but the
 School still on it is dropped from the folder. Every other page was read again against entries 8, 10, 11, 16, 17, 18
 and 19 and holds nothing of what they removed.
+
+---
+
+## 21. One agent does the work (DECIDED 2026-10-26, permanent)
+
+**Owner:** "It doesn't need a workflow or a bunch of subagents. One agent doing the work is just as good, and this
+applies for everything until said otherwise, so make it permanent."
+
+Recorded in the new repository's `MANDATE.md` (rule 9) and `CLAUDE.md`, and here: one agent, in one session, does all
+of the reading, deciding, building, testing and verifying, end to end, with no workflows, no fan-out of subagents and
+no independent-reviewer panels, until the owner says otherwise. This supersedes the delegation the first SLATE's
+brief 27 allowed on 2026-10-25.
