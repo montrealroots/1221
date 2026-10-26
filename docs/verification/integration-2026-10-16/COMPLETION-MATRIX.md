@@ -16,7 +16,7 @@ repository stops it. *Decision Required*: the question, the evidence and the rec
 an area's disposition, a criterion's Met or Not Met). Until brief 09 the page carried those words alone and said "none
 open"; documenting, classifying or giving a row to the owner never made it done.
 
-**Completion, by the matrix:** 549 of 677 rows in scope Implemented And Verified (81.0%); 124 Implemented, Verification Incomplete, 0 Partially Implemented, 0 Not Implemented, 0 Blocked Externally, 4 Decision Required, 41 Explicitly Deferred.
+**Completion, by the matrix:** 549 of 678 rows in scope Implemented And Verified (80.9%); 125 Implemented, Verification Incomplete, 0 Partially Implemented, 0 Not Implemented, 0 Blocked Externally, 4 Decision Required, 41 Explicitly Deferred.
 
 ## Totals
 
@@ -29,7 +29,7 @@ Only Implemented And Verified counts as done, out of every row not Explicitly De
 | Papers | 51 | 33 | 4 |  |  |  |  | 14 |
 | School | 101 | 101 |  |  |  |  |  |  |
 | Creation, Profile, Home And The Looks | 71 | 70 |  |  |  |  |  | 1 |
-| Commands Traced Outside The Audit | 19 |  | 19 |  |  |  |  |  |
+| Commands Traced Outside The Audit | 20 |  | 20 |  |  |  |  |  |
 | Remaining Area: banking | 16 | 16 |  |  |  |  |  |  |
 | Remaining Area: coverage | 11 | 11 |  |  |  |  |  |  |
 | Remaining Area: health-billing | 3 | 3 |  |  |  |  |  |  |
@@ -57,7 +57,7 @@ Only Implemented And Verified counts as done, out of every row not Explicitly De
 | Brief 13 Area: interface | 4 |  | 4 |  |  |  |  |  |
 | Brief 13 Area: journeys | 33 | 1 | 32 |  |  |  |  |  |
 | Brief 22: Replacement Criteria | 1 |  | 1 |  |  |  |  |  |
-| **All** | **718** | **549** | **124** | **0** | **0** | **0** | **4** | **41** |
+| **All** | **719** | **549** | **125** | **0** | **0** | **0** | **4** | **41** |
 
 ## Life, Health And Time
 
@@ -454,6 +454,7 @@ Only Implemented And Verified counts as done, out of every row not Explicitly De
 | `pro.apply_work_visa` | Work abroad: a role in Sydney found, auditioned for on tape and accepted as a contract; the 408 visa it needs applied for and granted; the … | Implemented, Verification Incomplete | capability Implemented | `pro.apply_work_visa`: `tests/b27-slate-screens.test.ts`, `tests/career-world-sydney.test.ts` / 2 test files |
 | `pro.ask_hold` | Find professional work and do it: fictional roles posted each Monday, a submission that sends the portfolio, an audition in person or on ta… | Implemented, Verification Incomplete | capability Implemented | `pro.accept_offer`: `tests/b20-benefits-safetynet.test.ts`, `tests/b20-benefits-tax.test.ts`, `tests/b20-benefits-unemployment.test.ts`, `tests/b20-career-defe… |
 | `pro.ask_more` | Find professional work and do it: fictional roles posted each Monday, a submission that sends the portfolio, an audition in person or on ta… | Implemented, Verification Incomplete | capability Implemented | `pro.accept_offer`: `tests/b20-benefits-safetynet.test.ts`, `tests/b20-benefits-tax.test.ts`, `tests/b20-benefits-unemployment.test.ts`, `tests/b20-career-defe… |
+| `pro.ask_option_release` | Find professional work and do it: fictional roles posted each Monday, a submission that sends the portfolio, an audition in person or on ta… | Implemented, Verification Incomplete | capability Implemented | `pro.ask_option_release`: `tests/b27-option-hold.test.ts` / 1 test files |
 | `pro.ask_pay` | Contracts and the money they bring: each engagement's contract made at acceptance with only the clauses that apply, each payment's state fr… | Implemented, Verification Incomplete | capability Implemented | `pro.ask_pay`: `tests/career-contracts.test.ts` / 1 test files |
 | `pro.ask_reschedule` | Find professional work and do it: fictional roles posted each Monday, a submission that sends the portfolio, an audition in person or on ta… | Implemented, Verification Incomplete | capability Implemented | `pro.withdraw`: `tests/b27-casting-turns.test.ts`, `tests/b27-offer-terms.test.ts`; `pro.ask_reschedule`: `tests/b27-casting-turns.test.ts` / 1 test files |
 | `pro.ask_terms` | Approach the one agent by the routes his agency's published policy allows, read why his office decided as it did, and accept, decline or en… | Implemented, Verification Incomplete | capability Implemented | `pro.ask_terms`: `tests/b27-representation-screen.test.ts`, `tests/b27-representation.test.ts` / 2 test files |
@@ -946,7 +947,7 @@ Only Implemented And Verified counts as done, out of every row not Explicitly De
 
 Every row in scope not Implemented And Verified, with what its status says it needs.
 
-### Implemented, Verification Incomplete (124)
+### Implemented, Verification Incomplete (125)
 
 - **`bank.arrange_overdraft`** (Money): Unreachable as an arrangement. No New Haven bank arranges an overdraft (Chase, Bank of America and Wells Fargo charge by the item; Citi and Capital One have no overdraft terms), so a student’s request is refused in her bank’s words with nothing set or posted, across a reload, and Chase’s panel draws no Arrange It (tests/scope-money.test.ts ‘PLAYER JOURNEY: at each New Haven bank the request is refused in the bank’s words…’). From 2026-10-16 a student may keep an account at a bank in the country she lived in before Yale (systems/homeaccount.ts), and it doesn’t reach this either: a bank abroad …
 - **`bank.cancel_new`** (Money): Unreachable. Canceling needs an account in its cooling-off, and the US gives none (content/accountlife.ts), so a New Haven account draws no Cancel It and the command is refused with the account kept (tests/scope-money.test.ts ‘PLAYER JOURNEY: a New Haven savings account opened that morning can’t be canceled new…’). From 2026-10-16 a student may keep an account at a bank in the country she lived in before Yale (systems/homeaccount.ts), and it doesn’t reach this either: it was opened before Yale (openingDayOf; homeAccountRefusal refuses one opened on or after the first day of the term), on 1 Au…
@@ -965,6 +966,7 @@ Every row in scope not Implemented And Verified, with what its status says it ne
 - **`pro.apply_work_visa`** (Commands Traced Outside The Audit): No audit row has read it against the standard on docs/GAMEPLAY-COVERAGE.md; its capability’s limits say what no test checks
 - **`pro.ask_hold`** (Commands Traced Outside The Audit): No audit row has read it against the standard on docs/GAMEPLAY-COVERAGE.md; its capability’s limits say what no test checks
 - **`pro.ask_more`** (Commands Traced Outside The Audit): No audit row has read it against the standard on docs/GAMEPLAY-COVERAGE.md; its capability’s limits say what no test checks
+- **`pro.ask_option_release`** (Commands Traced Outside The Audit): No audit row has read it against the standard on docs/GAMEPLAY-COVERAGE.md; its capability’s limits say what no test checks
 - **`pro.ask_pay`** (Commands Traced Outside The Audit): No audit row has read it against the standard on docs/GAMEPLAY-COVERAGE.md; its capability’s limits say what no test checks
 - **`pro.ask_reschedule`** (Commands Traced Outside The Audit): No audit row has read it against the standard on docs/GAMEPLAY-COVERAGE.md; its capability’s limits say what no test checks
 - **`pro.ask_terms`** (Commands Traced Outside The Audit): No audit row has read it against the standard on docs/GAMEPLAY-COVERAGE.md; its capability’s limits say what no test checks

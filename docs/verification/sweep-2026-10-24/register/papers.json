@@ -346,7 +346,7 @@
   "on": "388d9a1e",
   "evidence": [
    "tests/b22-authorization.test.ts",
-   "src/engine/systems/permission.ts:245 the event; src/engine/systems/permission.ts:340 emitted as OPT ends; src/engine/systems/projobs.ts:1614 pro.release_unauthorized releases the work booked past it",
+   "src/engine/systems/permission.ts:245 the event; src/engine/systems/permission.ts:340 emitted as OPT ends; src/engine/systems/projobs.ts:1624 pro.release_unauthorized releases the work booked past it",
    "tests/papers-complete.test.ts the papers and benefits areas’ 70 test files, 507 tests, run on 388d9a1e: all green; tests/b26-papers-repeats.test.ts, the repeat, reload and call-off probe on a New Haven life, green"
   ]
  },
@@ -982,7 +982,7 @@
   "evidence": [
    "tests/b22-authorization.test.ts",
    "tests/b20-papers-work.test.ts",
-   "src/engine/systems/permission.ts:335-341 OPT Ended, once, the status with it, the work released (src/engine/systems/permission.ts:245, src/engine/systems/projobs.ts:1614)",
+   "src/engine/systems/permission.ts:335-341 OPT Ended, once, the status with it, the work released (src/engine/systems/permission.ts:245, src/engine/systems/projobs.ts:1624)",
    "tests/papers-complete.test.ts the papers and benefits areas’ 70 test files, 507 tests, run on 388d9a1e: all green; tests/b26-papers-repeats.test.ts, the repeat, reload and call-off probe on a New Haven life, green"
   ]
  },

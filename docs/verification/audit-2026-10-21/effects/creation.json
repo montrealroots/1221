@@ -250,11 +250,11 @@
    "consumers": [
     {
      "what": "the career’s postings: a part is posted only where written for the title or for either",
-     "at": "src/engine/systems/projobs.ts:439"
+     "at": "src/engine/systems/projobs.ts:444"
     },
     {
      "what": "writtenFor",
-     "at": "src/engine/systems/projobs.ts:422"
+     "at": "src/engine/systems/projobs.ts:427"
     },
     {
      "what": "the School’s casting pool, by title",
@@ -4782,19 +4782,19 @@
    "consumers": [
     {
      "what": "a part written for a character who speaks another language refuses a non-speaker at Submit Yourself, and an agent doesn't put one up",
-     "at": "src/engine/systems/projobs.ts:829"
+     "at": "src/engine/systems/projobs.ts:837"
     },
     {
      "what": "casting's fit weighs the weaker of the part's language and the actor's English",
-     "at": "src/engine/systems/projobs.ts:647"
+     "at": "src/engine/systems/projobs.ts:652"
     },
     {
      "what": "a conversational speaker's language preparation is read when the round is judged",
-     "at": "src/engine/systems/projobs.ts:1720"
+     "at": "src/engine/systems/projobs.ts:1730"
     },
     {
      "what": "the résumé lists every language but native English",
-     "at": "src/engine/systems/pro.ts:1230"
+     "at": "src/engine/systems/pro.ts:1282"
     }
    ],
    "experienced": "The card and Review say what the life speaks; a part's card says what it asks and where the actor stands; the résumé lists them.",

@@ -538,6 +538,20 @@
    "tests/b20-life-time.test.ts the life area’s 55 test files, run on 27369727: all green; tests/b26-life-repeats.test.ts, the plans called off and skipped, the retried hour and the night’s refusals on a New Haven life, green"
   ]
  },
+ "notice.systems/continuity#tellOf": {
+  "status": "Verified",
+  "by": [
+   "inspection",
+   "automated"
+  ],
+  "on": "1b757966",
+  "evidence": [
+   "tests/b27-option-hold.test.ts",
+   "tests/b27-pilots.test.ts",
+   "tests/b27-returning.test.ts",
+   "src/engine/systems/continuity.ts:388 to the player alone with the career route, sent at continuity.ts:426, 432, 458, 491, 497, 507 and 514; tests/b27-option-hold.test.ts and tests/b27-pilots.test.ts read the notices' titles"
+  ]
+ },
  "notice.systems/contracts#air": {
   "status": "Verified",
   "by": [
@@ -547,7 +561,7 @@
   "on": "3a759d49",
   "evidence": [
    "tests/career-contracts.test.ts",
-   "src/engine/systems/contracts.ts:404 air: a rerun's notice and its residual promised; contracts.ts:461 on the clock"
+   "src/engine/systems/contracts.ts:411 air: a rerun's notice and its residual promised; contracts.ts:461 on the clock"
   ]
  },
  "notice.systems/contracts#payPerDiem": {
@@ -559,7 +573,7 @@
   "on": "3a759d49",
   "evidence": [
    "tests/career-contracts.test.ts",
-   "src/engine/systems/contracts.ts:468 payPerDiem: the per diem paid once home, said; called from worktrip.ts:693"
+   "src/engine/systems/contracts.ts:475 payPerDiem: the per diem paid once home, said; called from worktrip.ts:693"
   ]
  },
  "notice.systems/contracts#settleResidual": {
@@ -571,7 +585,7 @@
   "on": "3a759d49",
   "evidence": [
    "tests/career-contracts.test.ts",
-   "src/engine/systems/contracts.ts:435 settleResidual: the residual paid and said; contracts.ts:465 on the clock"
+   "src/engine/systems/contracts.ts:442 settleResidual: the residual paid and said; contracts.ts:465 on the clock"
   ]
  },
  "notice.systems/injury#mayHurt": {

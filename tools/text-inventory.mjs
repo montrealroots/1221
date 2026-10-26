@@ -107,7 +107,7 @@ const AREAS2 = [
   // From 2026-10-21 (brief 19's pay): its files, the pay system and the Career screen's Work tab, are its own builder's to
   // mark, apart from the core's career files, so the wave's builders working apart write their own second-pass files.
   // From 2026-10-24 (brief 25, Module 4) a contract's own sources too, and a series' seasons, read by the module that wrote them.
-  ['career-pay', [/^src\/engine\/systems\/(propay|contracts|series)\.ts$/, /^src\/engine\/content\/series\.ts$/, /^src\/ui\/career\/WorkPane\.tsx$/]],
+  ['career-pay', [/^src\/engine\/systems\/(propay|contracts|series|continuity)\.ts$/, /^src\/engine\/content\/series\.ts$/, /^src\/ui\/career\/WorkPane\.tsx$/]],
   // From 2026-10-21 (brief 19's work loop): the work loop's own sources, read by the area that built them, apart from the
   // career core's, so the builders working at once each keep their own status files.
   // From 2026-10-24 (brief 25, Module 5) the ways of working too, the work loop's own, read by the module that wrote them.
@@ -122,7 +122,7 @@ const AREAS2 = [
   // read by the module that wrote them. Until they were named here they fell to the health area, the fallback's.
   // From 2026-10-24 (brief 27) the industry's organizations, FIA's unions and FIAPF's festivals, the industry's world.
   // From 2026-10-25 (brief 27's K8) Productions And People too, the reference over the industry's world, and its tab.
-  ['career-world', [/^src\/engine\/systems\/(worktrip|awards|actorawards|ceremony|charts|reference)\.ts$/, /^src\/engine\/content\/(jurisdictions|catalog|awards|charts|industry)\.ts$/, /^src\/ui\/career\/(IndustryPane|ReferencePane)\.tsx$/]],
+  ['career-world', [/^src\/engine\/systems\/(worktrip|awards|actorawards|ceremony|charts|reference|market)\.ts$/, /^src\/engine\/content\/(jurisdictions|catalog|awards|charts|industry)\.ts$/, /^src\/ui\/career\/(IndustryPane|ReferencePane)\.tsx$/]],
 ];
 const BY_SUBSYSTEM = { start: 'frame', home: 'frame', calendar: 'frame', notifications: 'frame', controls: 'frame', tutorial: 'tutorial', profile: 'profile', school: 'school', money: 'money', papers: 'papers', career: 'career', health: 'health', world: 'health', material: 'material-a' };
 const areaOf2 = (file) => AREAS2.find(([, rules]) => rules.some((r) => r.test(file)))?.[0] ?? BY_SUBSYSTEM[subsystemOf(file)] ?? 'frame';

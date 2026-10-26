@@ -16,15 +16,15 @@
    "consumers": [
     {
      "what": "the agreement in force on a date, the one rule the rest read",
-     "at": "src/engine/systems/pro.ts:613"
+     "at": "src/engine/systems/pro.ts:636"
     },
     {
      "what": "the week's postings: parts released to agents reach the actor through him",
-     "at": "src/engine/systems/projobs.ts:478"
+     "at": "src/engine/systems/projobs.ts:483"
     },
     {
      "what": "an offer he handles is priced at scale plus ten on SAG-AFTRA work",
-     "at": "src/engine/systems/projobs.ts:1174"
+     "at": "src/engine/systems/projobs.ts:1182"
     },
     {
      "what": "the pay's commission and the trust account read the agreement owed on a contract",
@@ -73,7 +73,7 @@
    "consumers": [
     {
      "what": "each work day judged on the clock",
-     "at": "src/engine/systems/projobs.ts:1483"
+     "at": "src/engine/systems/projobs.ts:1493"
     },
     {
      "what": "each promised payment paid on its payday",
@@ -81,15 +81,15 @@
     },
     {
      "what": "the School counts the actor away at work",
-     "at": "src/engine/systems/projobs.ts:562"
+     "at": "src/engine/systems/projobs.ts:567"
     },
     {
      "what": "another booking on the same days refused",
-     "at": "src/engine/systems/projobs.ts:745"
+     "at": "src/engine/systems/projobs.ts:750"
     },
     {
      "what": "a part booked never posted again",
-     "at": "src/engine/systems/projobs.ts:490"
+     "at": "src/engine/systems/projobs.ts:495"
     }
    ],
    "experienced": "The part moves to Booked Work with its days and the pay promised; each day stops the clock; the pay comes on its Thursdays; the credit is on the record from the first night or the wrap.",
@@ -133,19 +133,19 @@
    "consumers": [
     {
      "what": "the answer next afternoon raises the offer to what was asked or keeps it, by its draw",
-     "at": "src/engine/systems/projobs.ts:2223"
+     "at": "src/engine/systems/projobs.ts:2241"
     },
     {
      "what": "raised, the offer's amount is what the contract and the pay read",
-     "at": "src/engine/systems/projobs.ts:2235"
+     "at": "src/engine/systems/projobs.ts:2253"
     },
     {
      "what": "the offer's lapse moves to a day past the answer",
-     "at": "src/engine/systems/projobs.ts:2474"
+     "at": "src/engine/systems/projobs.ts:2511"
     },
     {
      "what": "asked once, a second ask is refused",
-     "at": "src/engine/systems/projobs.ts:1582"
+     "at": "src/engine/systems/projobs.ts:1592"
     }
    ],
    "experienced": "At once the offer card says what was asked and when the answer comes; the next afternoon a notice says the offer was raised or stands, and the card says which.",
@@ -182,7 +182,7 @@
    "consumers": [
     {
      "what": "the offer card and the contract read the amount",
-     "at": "src/engine/systems/projobs.ts:2235"
+     "at": "src/engine/systems/projobs.ts:2253"
     }
    ],
    "experienced": "A notice that the offer was raised or stands, and until when; the card says which.",
@@ -219,19 +219,19 @@
    "consumers": [
     {
      "what": "the answer next afternoon books the actor or lets the hold go, by its draw",
-     "at": "src/engine/systems/projobs.ts:2358"
+     "at": "src/engine/systems/projobs.ts:2395"
     },
     {
      "what": "booked, the offer is made now and the rounds still to come are dropped",
-     "at": "src/engine/systems/projobs.ts:2366"
+     "at": "src/engine/systems/projobs.ts:2403"
     },
     {
      "what": "let go, the part is settled and the other offer is free",
-     "at": "src/engine/systems/projobs.ts:2370"
+     "at": "src/engine/systems/projobs.ts:2407"
     },
     {
      "what": "asked once, a second ask is refused, and an offer lapsing before the answer refuses it",
-     "at": "src/engine/systems/projobs.ts:1296"
+     "at": "src/engine/systems/projobs.ts:1304"
     }
    ],
    "experienced": "At once the part's card says the answer comes the next afternoon; then a notice of the offer, or one that the hold is let go and the other offer free to take.",
@@ -270,11 +270,11 @@
    "consumers": [
     {
      "what": "booked, the offer and its decision",
-     "at": "src/engine/systems/projobs.ts:2366"
+     "at": "src/engine/systems/projobs.ts:2403"
     },
     {
      "what": "let go, the hold released with the part",
-     "at": "src/engine/systems/projobs.ts:1523"
+     "at": "src/engine/systems/projobs.ts:1533"
     }
    ],
    "experienced": "An offer for the part in What Needs You, or a notice that the hold is let go.",
@@ -485,7 +485,7 @@
    "consumers": [
     {
      "what": "What's Missing and his office's check read the reel",
-     "at": "src/engine/systems/pro.ts:989"
+     "at": "src/engine/systems/pro.ts:1041"
     },
     {
      "what": "his office's Your Work reads the reel's best band",
@@ -497,7 +497,7 @@
     },
     {
      "what": "a screen submission sends it",
-     "at": "src/engine/systems/projobs.ts:999"
+     "at": "src/engine/systems/projobs.ts:1007"
     }
    ],
    "experienced": "At once the Portfolio lists the reel with its pieces; his office's reading and screen casting take it from then.",
@@ -538,19 +538,19 @@
    "consumers": [
     {
      "what": "a voice part's submission sends it, where screen work sends the reel",
-     "at": "src/engine/systems/projobs.ts:1344"
+     "at": "src/engine/systems/projobs.ts:1352"
     },
     {
      "what": "a voice part whose casting asks for a demo refuses a submission without one",
-     "at": "src/engine/systems/projobs.ts:999"
+     "at": "src/engine/systems/projobs.ts:1007"
     },
     {
      "what": "the voice purpose of the materials check says when newer recordings came after it",
-     "at": "src/engine/systems/pro.ts:1269"
+     "at": "src/engine/systems/pro.ts:1321"
     },
     {
      "what": "the same recordings again are refused",
-     "at": "src/engine/systems/pro.ts:1353"
+     "at": "src/engine/systems/pro.ts:1405"
     }
    ],
    "experienced": "At once the Portfolio lists the demo with its recordings; a submission for voice work sends it from then, and names that version after another is mixed.",
@@ -640,7 +640,7 @@
    "consumers": [
     {
      "what": "a part declined comes round again only as a new casting, saying so (from brief 20)",
-     "at": "src/engine/systems/projobs.ts:438"
+     "at": "src/engine/systems/projobs.ts:443"
     },
     {
      "what": "an offer through him, declined, counts for Equity's 90 days",
@@ -683,7 +683,7 @@
    "consumers": [
     {
      "what": "the agreement no longer in force for later dates",
-     "at": "src/engine/systems/pro.ts:613"
+     "at": "src/engine/systems/pro.ts:636"
     },
     {
      "what": "commission still owed on contracts made in the term",
@@ -724,11 +724,11 @@
    "consumers": [
     {
      "what": "every submission and approach needs headshots",
-     "at": "src/engine/systems/pro.ts:980"
+     "at": "src/engine/systems/pro.ts:1032"
     },
     {
      "what": "headshots over two years old read as out of date, which his office can ask for",
-     "at": "src/engine/systems/pro.ts:981"
+     "at": "src/engine/systems/pro.ts:1033"
     }
    ],
    "experienced": "What's Missing stops asking for headshots until they're two years old; Submit Yourself and Check Your Materials open.",
@@ -773,7 +773,7 @@
     },
     {
      "what": "the résumé lists SAG-AFTRA",
-     "at": "src/engine/systems/pro.ts:888"
+     "at": "src/engine/systems/pro.ts:940"
     },
     {
      "what": "the fee counted in the year's dues the return reads",
@@ -815,7 +815,7 @@
    "consumers": [
     {
      "what": "the audition judged or missed at its new time",
-     "at": "src/engine/systems/projobs.ts:1431"
+     "at": "src/engine/systems/projobs.ts:1441"
     }
    ],
    "experienced": "The audition is on the calendar at the new time and stops the clock there.",
@@ -848,15 +848,15 @@
    "consumers": [
     {
      "what": "the audition judged with the sides' preparation",
-     "at": "src/engine/systems/projobs.ts:1093"
+     "at": "src/engine/systems/projobs.ts:1101"
     },
     {
      "what": "each work day judged with the part's",
-     "at": "src/engine/systems/projobs.ts:1247"
+     "at": "src/engine/systems/projobs.ts:1255"
     },
     {
      "what": "the part starts from half the sides'",
-     "at": "src/engine/systems/projobs.ts:1628"
+     "at": "src/engine/systems/projobs.ts:1638"
     }
    ],
    "experienced": "The card says how far each part stands; the tape, the audition and each day come out higher for it.",
@@ -898,11 +898,11 @@
    "consumers": [
     {
      "what": "the dean decides on the clock",
-     "at": "src/engine/systems/projobs.ts:1543"
+     "at": "src/engine/systems/projobs.ts:1553"
     },
     {
      "what": "approved work's class days are excused",
-     "at": "src/engine/systems/projobs.ts:1554"
+     "at": "src/engine/systems/projobs.ts:1564"
     }
    ],
    "experienced": "The card says the dean decides on its date; a week on a notice says approved or refused, with the conditions.",
@@ -981,11 +981,11 @@
    "consumers": [
     {
      "what": "the profile and a résumé made now carry it",
-     "at": "src/engine/systems/pro.ts:863"
+     "at": "src/engine/systems/pro.ts:915"
     },
     {
      "what": "a résumé made under another name reads as behind",
-     "at": "src/engine/systems/pro.ts:884"
+     "at": "src/engine/systems/pro.ts:936"
     }
    ],
    "experienced": "The profile says the name at once; the résumé reads as behind until it's made again.",
@@ -1019,7 +1019,7 @@
    "consumers": [
     {
      "what": "casting answers with a round",
-     "at": "src/engine/systems/projobs.ts:1425"
+     "at": "src/engine/systems/projobs.ts:1435"
     }
    ],
    "experienced": "The role moves to In Progress; two days on a notice sets the audition or the self-tape.",
@@ -1097,7 +1097,7 @@
    "consumers": [
     {
      "what": "casting reads the round's band",
-     "at": "src/engine/systems/projobs.ts:1466"
+     "at": "src/engine/systems/projobs.ts:1476"
     }
    ],
    "experienced": "At once the tape's band; casting's word comes as a notice, and Settled says what went into it.",
@@ -1139,11 +1139,11 @@
    "consumers": [
     {
      "what": "every submission and approach needs a résumé",
-     "at": "src/engine/systems/pro.ts:983"
+     "at": "src/engine/systems/pro.ts:1035"
     },
     {
      "what": "a résumé behind the record is something his office can ask for",
-     "at": "src/engine/systems/pro.ts:900"
+     "at": "src/engine/systems/pro.ts:952"
     }
    ],
    "experienced": "What's Missing stops asking until the record moves on; a submission sends it.",
@@ -1458,7 +1458,7 @@
    "consumers": [
     {
      "what": "no longer in force after its end",
-     "at": "src/engine/systems/pro.ts:613"
+     "at": "src/engine/systems/pro.ts:636"
     }
    ],
    "experienced": "A notice that it ended at the end of its year; his breakdowns stop.",
@@ -1491,11 +1491,11 @@
    "consumers": [
     {
      "what": "casting reads the band",
-     "at": "src/engine/systems/projobs.ts:1466"
+     "at": "src/engine/systems/projobs.ts:1476"
     },
     {
      "what": "the School counts the actor away for its hours",
-     "at": "src/engine/systems/projobs.ts:562"
+     "at": "src/engine/systems/projobs.ts:567"
     }
    ],
    "experienced": "The band shows on the card; casting's word follows as a notice.",
@@ -1531,7 +1531,7 @@
    "consumers": [
     {
      "what": "the offer read by Accept, Decline and What Needs You",
-     "at": "src/engine/systems/projobs.ts:1162"
+     "at": "src/engine/systems/projobs.ts:1170"
     }
    ],
    "experienced": "A notice: a callback, an offer, or not cast; Settled's Why It Went This Way gives the chance.",
@@ -1571,7 +1571,7 @@
    "consumers": [
     {
      "what": "the part comes round again saying the offer lapsed (from brief 20)",
-     "at": "src/engine/systems/projobs.ts:438"
+     "at": "src/engine/systems/projobs.ts:443"
     }
    ],
    "experienced": "A notice that it lapsed; the part, posted again later, says so.",
@@ -1607,19 +1607,19 @@
    "consumers": [
     {
      "what": "a released credit's footage is recorded work for a reel",
-     "at": "src/engine/systems/pro.ts:945"
+     "at": "src/engine/systems/pro.ts:997"
     },
     {
      "what": "a slate production held back: said, and its release put on the clock again (`RELEASE_FATE`, from 2026-10-25, brief 27's K6)",
-     "at": "src/engine/systems/projobs.ts:2790"
+     "at": "src/engine/systems/projobs.ts:2827"
     },
     {
      "what": "shelved: said, and never out, off the reel, with no premiere",
-     "at": "src/engine/systems/projobs.ts:2799"
+     "at": "src/engine/systems/projobs.ts:2836"
     },
     {
      "what": "sent to streaming instead of cinemas: out, with no weekly chart of its own",
-     "at": "src/engine/systems/projobs.ts:2818"
+     "at": "src/engine/systems/projobs.ts:2855"
     }
    ],
    "experienced": "A notice that the project is out; Cut A Reel lists its footage, and the reel's band reaches his office.",
@@ -1658,11 +1658,11 @@
    "consumers": [
     {
      "what": "the audition in person on the clock",
-     "at": "src/engine/systems/projobs.ts:1431"
+     "at": "src/engine/systems/projobs.ts:1441"
     },
     {
      "what": "the self-tape's deadline on the clock",
-     "at": "src/engine/systems/projobs.ts:1445"
+     "at": "src/engine/systems/projobs.ts:1455"
     }
    ],
    "experienced": "A notice of the audition or the self-tape, with the trip and any clash.",
@@ -1700,7 +1700,7 @@
    "consumers": [
     {
      "what": "the School excuses approved work's class days",
-     "at": "src/engine/systems/projobs.ts:574"
+     "at": "src/engine/systems/projobs.ts:579"
     }
    ],
    "experienced": "A notice from the dean with the conditions that held or failed.",
@@ -1733,7 +1733,7 @@
    "consumers": [
     {
      "what": "the part comes round again saying the tape wasn't in (from brief 20)",
-     "at": "src/engine/systems/projobs.ts:438"
+     "at": "src/engine/systems/projobs.ts:443"
     }
    ],
    "experienced": "A notice that the tape wasn't in; Settled says so.",
@@ -1774,11 +1774,11 @@
     },
     {
      "what": "practice in the project's genres, read by the next fit",
-     "at": "src/engine/systems/projobs.ts:363"
+     "at": "src/engine/systems/projobs.ts:368"
     },
     {
      "what": "the School counts the actor away",
-     "at": "src/engine/systems/projobs.ts:562"
+     "at": "src/engine/systems/projobs.ts:567"
     },
     {
      "what": "the nerves' stress, read by readiness, which the condition of the next piece of work reads (`conditionAt`)",
@@ -1794,7 +1794,7 @@
     },
     {
      "what": "laid up or in hospital on a lead's or a supporting part's day, shot around once, the rest slipped (`illDay`, from 2026-10-25, brief 27's K5)",
-     "at": "src/engine/systems/projobs.ts:2667"
+     "at": "src/engine/systems/projobs.ts:2704"
     }
    ],
    "experienced": "Each day's band on Booked Work; the credit on the profile; the wrap's notice; a later referral, résumé and reel read them; the mood and the stress the day leaves.",
@@ -1847,15 +1847,15 @@
    "consumers": [
     {
      "what": "Submit Yourself reads the posting",
-     "at": "src/engine/systems/projobs.ts:783"
+     "at": "src/engine/systems/projobs.ts:791"
     },
     {
      "what": "the agent submits where it suits",
-     "at": "src/engine/systems/projobs.ts:1014"
+     "at": "src/engine/systems/projobs.ts:1022"
     },
     {
      "what": "the card says what came of the last time (from brief 20)",
-     "at": "src/ui/career/OpportunitiesPane.tsx:81"
+     "at": "src/ui/career/OpportunitiesPane.tsx:82"
     }
    ],
    "experienced": "New roles each Monday on the tab; a part posted again says so; his submissions come as notices.",
@@ -2314,7 +2314,7 @@
     },
     {
      "what": "a work day without it releases the actor",
-     "at": "src/engine/systems/projobs.ts:1636"
+     "at": "src/engine/systems/projobs.ts:1646"
     }
    ],
    "experienced": "A notice that the visa was granted and to when; Papers shows it valid.",
@@ -2349,15 +2349,15 @@
    "consumers": [
     {
      "what": "where the player is, for the School and the casting offices",
-     "at": "src/engine/systems/projobs.ts:594"
+     "at": "src/engine/systems/projobs.ts:599"
     },
     {
      "what": "an audition at home while away is missed",
-     "at": "src/engine/systems/projobs.ts:1574"
+     "at": "src/engine/systems/projobs.ts:1584"
     },
     {
      "what": "a booking in the trip's days is refused",
-     "at": "src/engine/systems/projobs.ts:789"
+     "at": "src/engine/systems/projobs.ts:797"
     }
    ],
    "experienced": "The stop at the car to the airport; Home, the School and the calendar read the player as away; a missed flight or a release is a notice.",
@@ -2396,7 +2396,7 @@
     },
     {
      "what": "a work day reads the player there",
-     "at": "src/engine/systems/projobs.ts:1636"
+     "at": "src/engine/systems/projobs.ts:1646"
     },
     {
      "what": "the trip over frees its days",
@@ -2439,7 +2439,7 @@
     },
     {
      "what": "the Work tab says who was asked and when it'll pay",
-     "at": "src/ui/career/WorkPane.tsx:100"
+     "at": "src/ui/career/WorkPane.tsx:101"
     },
     {
      "what": "the payroll pays it at the moved payday, once",
@@ -2478,27 +2478,27 @@
    "consumers": [
     {
      "what": "the week's postings cast a series part only while a season is made",
-     "at": "src/engine/systems/projobs.ts:534"
+     "at": "src/engine/systems/projobs.ts:539"
     },
     {
      "what": "a casting closed",
-     "at": "src/engine/systems/series.ts:217"
+     "at": "src/engine/systems/series.ts:334"
     },
     {
      "what": "work called off, its days worked still paid",
-     "at": "src/engine/systems/series.ts:221"
+     "at": "src/engine/systems/series.ts:338"
     },
     {
      "what": "the option lapses with the series",
-     "at": "src/engine/systems/series.ts:226"
+     "at": "src/engine/systems/series.ts:343"
     },
     {
      "what": "the contract's fold says the series' word so far",
-     "at": "src/ui/career/WorkPane.tsx:280"
+     "at": "src/ui/career/WorkPane.tsx:281"
     },
     {
      "what": "revived, the producers' word on the player's characters set",
-     "at": "src/engine/systems/series.ts:358"
+     "at": "src/engine/systems/series.ts:481"
     }
    ],
    "experienced": "A notice the day the network speaks (“The Calloway Files Is Canceled”, “Is Renewed”, “Is Back”); a casting closed and booked work called off with the reason; the series' seasons under The Contract.",
@@ -2533,23 +2533,23 @@
    "consumers": [
     {
      "what": "the network's word schedules it and says when it comes",
-     "at": "src/engine/systems/series.ts:358"
+     "at": "src/engine/systems/series.ts:481"
     },
     {
      "what": "the word kept on the old engagement",
-     "at": "src/engine/systems/series.ts:382"
+     "at": "src/engine/systems/series.ts:505"
     },
     {
      "what": "wanted back, offered without an audition",
-     "at": "src/engine/systems/projobs.ts:2316"
+     "at": "src/engine/systems/projobs.ts:2353"
     },
     {
      "what": "a returning character's playing ages not read",
-     "at": "src/engine/systems/projobs.ts:1146"
+     "at": "src/engine/systems/projobs.ts:1154"
     },
     {
      "what": "the part not posted again in that season",
-     "at": "src/engine/systems/projobs.ts:777"
+     "at": "src/engine/systems/projobs.ts:782"
     }
    ],
    "experienced": "Is Back says when its producers will say; then an offer without an audition, its reason on the card, or Comes Back Without; accepted, the new work on the calendar and the Work tab.",
@@ -2604,7 +2604,7 @@
     },
     {
      "what": "the Work tab shows the option in force",
-     "at": "src/ui/career/WorkPane.tsx:286"
+     "at": "src/ui/career/WorkPane.tsx:287"
     }
    ],
    "experienced": "The pressed option says now beside it; the next day's report reads its effect (more takes, a strain spared, the stunt by the double or by you).",
@@ -2688,23 +2688,23 @@
    "consumers": [
     {
      "what": "the days slip, and their calendar items with them",
-     "at": "src/engine/systems/projobs.ts:2288"
+     "at": "src/engine/systems/projobs.ts:2325"
     },
     {
      "what": "a day that can't slip has its scenes cut",
-     "at": "src/engine/systems/projobs.ts:2290"
+     "at": "src/engine/systems/projobs.ts:2327"
     },
     {
      "what": "the flight home moves",
-     "at": "src/engine/systems/projobs.ts:2293"
+     "at": "src/engine/systems/projobs.ts:2330"
     },
     {
      "what": "the pay is promised again: the day off paid on SAG-AFTRA's day rate, a lost day's overtime gone",
-     "at": "src/engine/systems/projobs.ts:1847"
+     "at": "src/engine/systems/projobs.ts:1859"
     },
     {
      "what": "a lost day is never worked, and the last one still ends the work",
-     "at": "src/engine/systems/projobs.ts:2568"
+     "at": "src/engine/systems/projobs.ts:2605"
     }
    ],
    "experienced": "A Weather Day On (the project), the evening before, with the sky, the days as they stand, the flight home and the pay; the Work tab's Weather Day line, its calendar and pay.",
@@ -2803,7 +2803,7 @@
     },
     {
      "what": "the day held against another offer",
-     "at": "src/engine/systems/projobs.ts:1078"
+     "at": "src/engine/systems/projobs.ts:1086"
     }
    ],
    "experienced": "Calls You Back To Reshoot (or For Pickups) at the wrap, the day on the calendar, the Work tab's line, the pay; a missed one's notice.",
@@ -2846,15 +2846,15 @@
     },
     {
      "what": "the actor more visible to casting",
-     "at": "src/engine/systems/awards.ts:667"
+     "at": "src/engine/systems/awards.ts:668"
     },
     {
      "what": "missed, the direct offer on its strength gone",
-     "at": "src/engine/systems/projobs.ts:1778"
+     "at": "src/engine/systems/projobs.ts:1788"
     },
     {
      "what": "the day held against another offer",
-     "at": "src/engine/systems/projobs.ts:1122"
+     "at": "src/engine/systems/projobs.ts:1130"
     },
     {
      "what": "a loop or a reshoot kept off its hours",
@@ -2901,11 +2901,11 @@
    "consumers": [
     {
      "what": "the part posted and offered",
-     "at": "src/engine/systems/projobs.ts:1925"
+     "at": "src/engine/systems/projobs.ts:1940"
     },
     {
      "what": "the offer's line says why",
-     "at": "src/engine/systems/projobs.ts:1928"
+     "at": "src/engine/systems/projobs.ts:1943"
     }
    ],
    "experienced": "An offer on the Opportunities tab: the company invited you back into its next story for your work, without an audition.",
@@ -2941,19 +2941,19 @@
    "consumers": [
     {
      "what": "the fee paid from the bank",
-     "at": "src/engine/systems/awards.ts:274"
+     "at": "src/engine/systems/awards.ts:275"
     },
     {
      "what": "the nominations read only an entered performance",
-     "at": "src/engine/systems/awards.ts:523"
+     "at": "src/engine/systems/awards.ts:524"
     },
     {
      "what": "the field is drawn and the nominations made for it",
-     "at": "src/engine/systems/awards.ts:533"
+     "at": "src/engine/systems/awards.ts:534"
     },
     {
      "what": "Your Recognition says where it stands",
-     "at": "src/ui/career/IndustryPane.tsx:101"
+     "at": "src/ui/career/IndustryPane.tsx:102"
     }
    ],
    "experienced": "Entered for Outstanding Guest Actress In A Drama Series at the 79th Emmy Awards; the nominations are announced on July 8, 2027. The fee is in the bank's history.",
@@ -3000,7 +3000,7 @@
     },
     {
      "what": "Your Recognition shows the lines once watched",
-     "at": "src/ui/career/IndustryPane.tsx:126"
+     "at": "src/ui/career/IndustryPane.tsx:127"
     }
    ],
    "experienced": "The nominees read, the envelope opened, and the result: you won, or you didn't and your nomination stands. A twin who skipped it has the same result.",
@@ -3037,27 +3037,27 @@
    "consumers": [
     {
      "what": "an entry whose work no longer meets the rules is disqualified",
-     "at": "src/engine/systems/awards.ts:505"
+     "at": "src/engine/systems/awards.ts:506"
     },
     {
      "what": "the winner settled at the final round's end",
-     "at": "src/engine/systems/awards.ts:557"
+     "at": "src/engine/systems/awards.ts:558"
     },
     {
      "what": "the result given at the ceremony",
-     "at": "src/engine/systems/awards.ts:559"
+     "at": "src/engine/systems/awards.ts:560"
     },
     {
      "what": "the production submits its film",
-     "at": "src/engine/systems/awards.ts:573"
+     "at": "src/engine/systems/awards.ts:574"
     },
     {
      "what": "the festival selects it or doesn't",
-     "at": "src/engine/systems/awards.ts:580"
+     "at": "src/engine/systems/awards.ts:581"
     },
     {
      "what": "casting reads the recognition it leaves",
-     "at": "src/engine/systems/projobs.ts:2563"
+     "at": "src/engine/systems/projobs.ts:2600"
     },
     {
      "what": "the Portfolio keeps what was recognized",
@@ -3103,11 +3103,11 @@
    "consumers": [
     {
      "what": "the nominations read the submission",
-     "at": "src/engine/systems/actorawards.ts:285"
+     "at": "src/engine/systems/actorawards.ts:292"
     },
     {
      "what": "the fee paid",
-     "at": "src/engine/systems/actorawards.ts:200"
+     "at": "src/engine/systems/actorawards.ts:207"
     }
    ],
    "experienced": "Submit Yourself and its toast; the entry's line under the credit; the ledger's charge.",
@@ -3147,15 +3147,15 @@
    "consumers": [
     {
      "what": "a nomination counts toward visibility",
-     "at": "src/engine/systems/awards.ts:670"
+     "at": "src/engine/systems/awards.ts:671"
     },
     {
      "what": "on the résumé's lines",
-     "at": "src/engine/systems/pro.ts:1236"
+     "at": "src/engine/systems/pro.ts:1288"
     },
     {
      "what": "the nominee invited to the show",
-     "at": "src/engine/systems/actorawards.ts:311"
+     "at": "src/engine/systems/actorawards.ts:318"
     }
    ],
    "experienced": "Submitted You For The Actor Awards; You're Nominated For An Actor Award or The Actor Awards Nominations Are Out; The Actor Awards Tonight; the entry's line.",
@@ -3202,7 +3202,7 @@
     },
     {
      "what": "the trip's days held against another offer",
-     "at": "src/engine/systems/projobs.ts:1135"
+     "at": "src/engine/systems/projobs.ts:1143"
     }
    ],
    "experienced": "The question Will You Go To …?, the buttons, the trip's legs on the calendar, the show's call.",
@@ -3281,7 +3281,7 @@
    "consumers": [
     {
      "what": "a strong speech counts toward visibility",
-     "at": "src/engine/systems/awards.ts:673"
+     "at": "src/engine/systems/awards.ts:674"
     },
     {
      "what": "the ceremony's lines say it",
@@ -3424,11 +3424,11 @@
     },
     {
      "what": "the terms in force decide which parts the agent submits the actor for",
-     "at": "src/engine/systems/projobs.ts:702"
+     "at": "src/engine/systems/projobs.ts:707"
     },
     {
      "what": "the terms in force decide which offers the agent handles and negotiates",
-     "at": "src/engine/systems/projobs.ts:1830"
+     "at": "src/engine/systems/projobs.ts:1842"
     },
     {
      "what": "a voice part's contract says whether the agreement covers it",
@@ -3510,15 +3510,15 @@
    "consumers": [
     {
      "what": "every round of the part is judged with the choice, against the part's register",
-     "at": "src/engine/systems/projobs.ts:1720"
+     "at": "src/engine/systems/projobs.ts:1730"
     },
     {
      "what": "Rehearse It On Your Feet rehearses the choice as a brief's is",
-     "at": "src/engine/systems/projobs.ts:2218"
+     "at": "src/engine/systems/projobs.ts:2236"
     },
     {
      "what": "at an audition or a callback in person, casting's direction is given from what the part asks against the choice",
-     "at": "src/engine/systems/projobs.ts:2630"
+     "at": "src/engine/systems/projobs.ts:2667"
     }
    ],
    "experienced": "The chooser shows each side's suitability and what the round would come to; the round's result and Why It Went This Way say how it was played.",
@@ -3644,7 +3644,7 @@
     },
     {
      "what": "casting's cut reads the round's band",
-     "at": "src/engine/systems/projobs.ts:2660"
+     "at": "src/engine/systems/projobs.ts:2697"
     }
    ],
    "experienced": "The round's result as the take's, and Why It Went This Way saying which take went.",
@@ -3684,7 +3684,7 @@
     },
     {
      "what": "an office that remembers offers nothing without an audition",
-     "at": "src/engine/systems/projobs.ts:1793"
+     "at": "src/engine/systems/projobs.ts:1805"
     },
     {
      "what": "an office that remembers makes no conditional offer",
@@ -3692,7 +3692,7 @@
     },
     {
      "what": "an office that remembers halves its cuts' lift",
-     "at": "src/engine/systems/projobs.ts:2660"
+     "at": "src/engine/systems/projobs.ts:2697"
     }
    ],
    "experienced": "A notice saying the part is left, with notice or without; a card on that office's later parts saying what it remembers and what that costs.",
@@ -3844,7 +3844,7 @@
     },
     {
      "what": "casting's draw is keyed for the recast, so it isn't the first casting's",
-     "at": "src/engine/systems/projobs.ts:859"
+     "at": "src/engine/systems/projobs.ts:867"
     }
    ],
    "experienced": "A notice naming the recast part and until when it can be gone for; the card saying casting decides it afresh.",
@@ -3864,6 +3864,203 @@
    "missing": "As pro.choose_approach.",
    "status": "Implemented And Verified",
    "why": ""
+  },
+  {
+   "id": "pro.ask_option_release",
+   "kind": "command",
+   "area": "career",
+   "mechanic": true,
+   "seeded": false,
+   "readBy": "career",
+   "readAt": "1b757966",
+   "where": "Career, Opportunities, Offers: Ask To Be Released on an offer standing on days an open option holds; grayed with optionReleaseRefusal's words.",
+   "prerequisites": "An offer standing on some of the days an open option on a series' next season holds (`heldOptions`); no ask made on that option against this offer before; the answer, the next afternoon at three, comes before the offer lapses.",
+   "reads": "The open options' days (`optionDays`: the guaranteed episodes of the season the option is for), the offer's days, the clock.",
+   "changes": "The ask on the option clause (when, when answered, against which offer), the production's answer on the clock (`pro.option_release_answer`), a history line on the engagement.",
+   "consumers": [
+    {
+     "what": "the offer's warning names the option holding its days and what giving it up costs",
+     "at": "src/engine/systems/projobs.ts:1366"
+    },
+    {
+     "what": "the production answers the next afternoon by its draw against the release chance, which reads how the work was judged",
+     "at": "src/engine/systems/continuity.ts:407"
+    },
+    {
+     "what": "accepting the offer without waiting gives the option up, and the part in that season goes to another actor",
+     "at": "src/engine/systems/projobs.ts:3091"
+    },
+    {
+     "what": "the casting office the option was given up with offers nothing without an audition again",
+     "at": "src/engine/systems/projobs.ts:1797"
+    },
+    {
+     "what": "a part given up isn't cast to the actor in that season",
+     "at": "src/engine/systems/projobs.ts:797"
+    },
+    {
+     "what": "the button and its refusal",
+     "at": "src/ui/career/OptionRelease.tsx:30"
+    }
+   ],
+   "experienced": "A toast says when the answer comes; the next afternoon a notice says released or refused, and the offer's warning and The Contract's option say where it stands.",
+   "saveLoad": "The professional record (`person.pro`) and the calendar's pending `pro.*` items are in the save; every handler reads the record's own state (a status, a key, a guard) before acting, so a load runs nothing twice and drops nothing. A save from before the cluster is opened by tests/b27-older-save.test.ts on its fixture.",
+   "evidence": {
+    "tests": [
+     "tests/b27-option-hold.test.ts"
+    ],
+    "comparisons": [
+     "b27-option-hold: twins on either side of the release draw, one released and accepting with nothing given up, one refused and choosing again; a third accepts without asking and the option goes with the part"
+    ],
+    "mutations": [],
+    "journeys": [
+     "b27-option-hold: the warning read, the ask made, saved and loaded while it waits, answered, the offer taken or declined"
+    ]
+   },
+   "missing": "The long careers and brief 22's final runs were played before the hold existed; their replay in G5 says how many lives meet one.",
+   "status": "Implemented And Verified",
+   "why": "",
+   "purpose": "Gives the player the third answer to a clash a real option makes: ask, instead of only keeping or giving up."
+  },
+  {
+   "id": "pro.option_release_answer",
+   "kind": "scheduled",
+   "area": "career",
+   "mechanic": true,
+   "seeded": false,
+   "readBy": "career",
+   "readAt": "1b757966",
+   "where": "The clock, the afternoon after an ask on an option: a notice, released or refused, from continuity.ts.",
+   "prerequisites": "An ask made (`pro.ask_option_release`) on an option still open, its answer not given.",
+   "reads": "The release chance (`releaseChance`: the less the production wanted the actor back, the likelier, within OPTION_RELEASE's bounds), the decider `pro.option_release`, where the offer stands now.",
+   "changes": "Granted: the option expired and settled at the actor's asking, a history line, a notice saying what can be accepted. Refused: the answer kept on the clause, a history line, a notice saying what's left to choose.",
+   "consumers": [
+    {
+     "what": "an expired option holds no days, so the offer's warning goes and accepting it gives nothing up",
+     "at": "src/engine/systems/continuity.ts:113"
+    },
+    {
+     "what": "the option's status is what the season's renewal reads when it would take the option up",
+     "at": "src/engine/systems/series.ts:567"
+    },
+    {
+     "what": "the notice says what the offer's standing leaves to choose",
+     "at": "src/engine/systems/continuity.ts:426"
+    }
+   ],
+   "experienced": "The notice, and The Contract's option line saying released at your asking, or the option standing.",
+   "saveLoad": "The professional record (`person.pro`) and the calendar's pending `pro.*` items are in the save; every handler reads the record's own state (a status, a key, a guard) before acting, so a load runs nothing twice and drops nothing. A save from before the cluster is opened by tests/b27-older-save.test.ts on its fixture.",
+   "evidence": {
+    "tests": [
+     "tests/b27-option-hold.test.ts"
+    ],
+    "comparisons": [
+     "b27-option-hold: released, the offer accepted with the option settled and nothing given up; refused, the option open and the offer still warning"
+    ],
+    "mutations": [],
+    "journeys": [
+     "b27-option-hold: the answer by the clock, after a save and load while it waited"
+    ]
+   },
+   "missing": "As pro.ask_option_release.",
+   "status": "Implemented And Verified",
+   "why": "",
+   "purpose": "Settles the ask the production was asked, by a draw the player was told the bounds of."
+  },
+  {
+   "id": "pro.recurring_invite",
+   "kind": "scheduled",
+   "area": "career",
+   "mechanic": true,
+   "seeded": false,
+   "readBy": "career",
+   "readAt": "1b757966",
+   "where": "The clock, six weeks before a series' next season, for a guest part played to its end Strong or Exceptional: an offer without an audition, or a notice saying why none, from continuity.ts.",
+   "prerequisites": "A guest part in a series worked to its wrap and judged Strong or Exceptional (`scheduleInvite` at the wrap); the next season ordered or renewed (`seasonMade`); no invitation weighed on the engagement before.",
+   "reads": "The best band the work was judged (`bestBandOf`), INVITE's chance by band, the decider `pro.recurring`, whether the season has days clear for the part (`hooks.bringBack`).",
+   "changes": "The invitation kept on the engagement (year, invited or not); invited, a recurring part added to the content with its own episodes and option and offered directly on a new contract; or a notice that the season had no work for the part.",
+   "consumers": [
+    {
+     "what": "the invitation standing keeps the part from being cast to the actor again through an audition",
+     "at": "src/engine/systems/projobs.ts:797"
+    },
+    {
+     "what": "a real series' new season says it's the game's continuation",
+     "at": "src/engine/systems/series.ts:156"
+    },
+    {
+     "what": "the offer is a recurring part's, with guaranteed episodes and an option, on the terms a recurring contract carries",
+     "at": "src/engine/systems/continuity.ts:220"
+    }
+   ],
+   "experienced": "An offer in Opportunities naming the character and the season, or a notice that the series can't bring the part back; the credit stays either way.",
+   "saveLoad": "The professional record (`person.pro`) and the calendar's pending `pro.*` items are in the save; every handler reads the record's own state (a status, a key, a guard) before acting, so a load runs nothing twice and drops nothing. A save from before the cluster is opened by tests/b27-older-save.test.ts on its fixture.",
+   "evidence": {
+    "tests": [
+     "tests/b27-returning.test.ts",
+     "tests/b27-real-series.test.ts"
+    ],
+    "comparisons": [
+     "b27-returning: played Exceptional and offered back; the twin played as judged (Working) never weighed; a second pair, one series canceled and nothing offered, one renewed and offered"
+    ],
+    "mutations": [],
+    "journeys": [
+     "b27-returning: the weighing before the season, the offer, its acceptance on a new contract; b27-real-series: the invitation into a simulated season of 9-1-1 said as the game's"
+    ]
+   },
+   "missing": "Which long careers' guest parts come back is read on their replay in G5.",
+   "status": "Implemented And Verified",
+   "why": "",
+   "purpose": "Makes guest work lead somewhere real: a character the producers liked comes back, as the brief's Part 13 asked."
+  },
+  {
+   "id": "pro.pilot_word",
+   "kind": "scheduled",
+   "area": "career",
+   "mechanic": true,
+   "seeded": false,
+   "readBy": "career",
+   "readAt": "1b757966",
+   "where": "The clock, May 15 at the network's hour, for every pilot accepted: a notice, picked up to series or passed on, from continuity.ts.",
+   "prerequisites": "A pilot on the slate accepted (`pilotTerms` put the word on the clock and the option on the series' first season in the contract); no word given on the engagement before.",
+   "reads": "The pilot's own quality (`qualityOf`) and the player's part in it (`termOf`: size and band), PILOT's chance and bounds, the decider `pro.pilot`; whether the option is still open and the series' first season's days are clear.",
+   "changes": "Passed on: the word kept on the engagement, the credit shelved, its release, promotion and residuals canceled, the option expired. Picked up: a series of the game's made from the pilot with the player's character, the option taken up into a first-season contract or let lapse, said why.",
+   "consumers": [
+    {
+     "what": "a shelved pilot never airs: no telecast, so no residual is made for it",
+     "at": "src/engine/systems/contracts.ts:375"
+    },
+    {
+     "what": "at the wrap a pilot passed on is shelved, and a pilot's release waits for its word",
+     "at": "src/engine/systems/continuity.ts:352"
+    },
+    {
+     "what": "the series made from a picked-up pilot is run as any series is, its seasons renewed or canceled by the network",
+     "at": "src/engine/systems/series.ts:193"
+    },
+    {
+     "what": "the offer for a pilot says the option and the word before it's accepted",
+     "at": "src/engine/systems/projobs.ts:1886"
+    }
+   ],
+   "experienced": "The notice on May 15, the credit's standing (shot and shelved, or on the air), and on a pickup the Work tab's first season.",
+   "saveLoad": "The professional record (`person.pro`) and the calendar's pending `pro.*` items are in the save; every handler reads the record's own state (a status, a key, a guard) before acting, so a load runs nothing twice and drops nothing. A save from before the cluster is opened by tests/b27-older-save.test.ts on its fixture.",
+   "evidence": {
+    "tests": [
+     "tests/b27-pilots.test.ts"
+    ],
+    "comparisons": [
+     "b27-pilots: twins on either side of the pickup draw, one a series with a first-season contract and one shelved with no residual; a pilot passed on inside its shoot shelved at the wrap"
+    ],
+    "mutations": [],
+    "journeys": [
+     "b27-pilots: the pilot accepted, shot, its word, its first season, saved and loaded through"
+    ]
+   },
+   "missing": "No long career has yet accepted a pilot; G5's replay says whether one does.",
+   "status": "Implemented And Verified",
+   "why": "",
+   "purpose": "Gives a pilot the two ends a real one has, instead of airing as an episode whatever its network said."
   }
  ],
  "promises": [
@@ -3872,7 +4069,7 @@
    "kind": "optional",
    "claim": "What’s Missing names headshots first when you have none, since every submission starts with one.",
    "entryFile": "src/engine/content/guide/career.ts",
-   "holds": "`materialsCheck` lists the missing headshots first (src/engine/systems/pro.ts:980), and the Overview draws its list in that order.",
+   "holds": "`materialsCheck` lists the missing headshots first (src/engine/systems/pro.ts:1032), and the Overview draws its list in that order.",
    "tests": [
     "tests/pro-screen.test.ts"
    ],
@@ -3892,7 +4089,7 @@
    "kind": "prerequisite",
    "claim": "Permission To Work on the Overview is the same permission Papers shows under Permission To Work.",
    "entryFile": "src/engine/content/guide/career.ts",
-   "holds": "The Overview's line is `eligibilityOf` (src/engine/systems/pro.ts:796), which reads `usWorkAuthorized`, as Papers does.",
+   "holds": "The Overview's line is `eligibilityOf` (src/engine/systems/pro.ts:833), which reads `usWorkAuthorized`, as Papers does.",
    "tests": [
     "tests/pro-core.test.ts",
     "tests/pro-screen.test.ts"
@@ -3914,7 +4111,7 @@
    "kind": "immediate",
    "claim": "Your résumé uses your professional name, and one made under another name reads as behind.",
    "entryFile": "src/engine/content/guide/career.ts",
-   "holds": "A résumé is made under the professional name and keyed by it (src/engine/systems/pro.ts:884), so one under another name is behind.",
+   "holds": "A résumé is made under the professional name and keyed by it (src/engine/systems/pro.ts:936), so one under another name is behind.",
    "tests": [
     "tests/pro-core.test.ts"
    ],
@@ -3934,7 +4131,7 @@
    "kind": "history",
    "claim": "Your special skills are your techniques on the Player Profile, at the level it shows.",
    "entryFile": "src/engine/content/guide/career.ts",
-   "holds": "`skillsOf` reads the craft's techniques at their levels (src/engine/systems/pro.ts:774).",
+   "holds": "`skillsOf` reads the craft's techniques at their levels (src/engine/systems/pro.ts:811).",
    "tests": [
     "tests/pro-app.test.ts",
     "tests/pro-core.test.ts"
@@ -3956,7 +4153,7 @@
    "kind": "immediate",
    "claim": "Once you have headshots, What’s Missing stops asking for them, until they’re more than two years old.",
    "entryFile": "src/engine/content/guide/career.ts",
-   "holds": "`materialsCheck`: missing, then out of date past two years (src/engine/systems/pro.ts:981).",
+   "holds": "`materialsCheck`: missing, then out of date past two years (src/engine/systems/pro.ts:1033).",
    "tests": [
     "tests/pro-core.test.ts",
     "tests/journey-agent.test.ts"
@@ -3978,7 +4175,7 @@
    "kind": "immediate",
    "claim": "The session’s price comes out of your bank as a work cost.",
    "entryFile": "src/engine/content/guide/career.ts",
-   "holds": "`pro.headshots` spends through `spend` as a career cost (src/engine/systems/pro.ts:1087).",
+   "holds": "`pro.headshots` spends through `spend` as a career cost (src/engine/systems/pro.ts:1139).",
    "tests": [
     "tests/pro-core.test.ts"
    ],
@@ -3998,7 +4195,7 @@
    "kind": "immediate",
    "claim": "Once you have a résumé, What’s Missing stops asking for one, until your record moves on past it.",
    "entryFile": "src/engine/content/guide/career.ts",
-   "holds": "`resumeBehind` (src/engine/systems/pro.ts:900), read by `materialsCheck`.",
+   "holds": "`resumeBehind` (src/engine/systems/pro.ts:952), read by `materialsCheck`.",
    "tests": [
     "tests/pro-core.test.ts",
     "tests/b20-career-effects.test.ts"
@@ -4020,7 +4217,7 @@
    "kind": "history",
    "claim": "A School production’s part goes on your résumé once its run has closed.",
    "entryFile": "src/engine/content/guide/career.ts",
-   "holds": "`schoolCreditsOf` lists a run closed (src/engine/systems/pro.ts:750), which `resumeNow` adds.",
+   "holds": "`schoolCreditsOf` lists a run closed (src/engine/systems/pro.ts:787), which `resumeNow` adds.",
    "tests": [
     "tests/pro-core.test.ts"
    ],
@@ -4040,7 +4237,7 @@
    "kind": "prerequisite",
    "claim": "A self-tape of a practice brief is the first recorded work a reel can be cut from.",
    "entryFile": "src/engine/content/guide/career.ts",
-   "holds": "`reelSources` offers a camera brief's takes (src/engine/systems/pro.ts:925).",
+   "holds": "`reelSources` offers a camera brief's takes (src/engine/systems/pro.ts:977).",
    "tests": [
     "tests/pro-core.test.ts",
     "tests/journey-agent.test.ts"
@@ -4062,7 +4259,7 @@
    "kind": "immediate",
    "claim": "Once you have a reel, What’s Missing stops asking for one, and says when newer work came after it.",
    "entryFile": "src/engine/content/guide/career.ts",
-   "holds": "`materialsCheck`: a missing reel, then newer work since it was cut (src/engine/systems/pro.ts:997).",
+   "holds": "`materialsCheck`: a missing reel, then newer work since it was cut (src/engine/systems/pro.ts:1049).",
    "tests": [
     "tests/pro-core.test.ts"
    ],
@@ -4408,7 +4605,7 @@
    "kind": "history",
    "claim": "Your résumé lists your unions once you’re a member.",
    "entryFile": "src/engine/content/guide/career.ts",
-   "holds": "`resumeNow` lists each union a member of (src/engine/systems/pro.ts:887).",
+   "holds": "`resumeNow` lists each union a member of (src/engine/systems/pro.ts:939).",
    "tests": [
     "tests/journey-career.test.ts",
     "tests/pro-core.test.ts"
@@ -4454,7 +4651,7 @@
    "kind": "prerequisite",
    "claim": "A submission starts with your headshots: without them it can’t be sent.",
    "entryFile": "src/engine/content/guide/career.ts",
-   "holds": "`materialsCheck`'s missing headshots block a submission (src/engine/systems/projobs.ts:787).",
+   "holds": "`materialsCheck`'s missing headshots block a submission (src/engine/systems/projobs.ts:795).",
    "tests": [
     "tests/pro-work.test.ts"
    ],
@@ -4474,7 +4671,7 @@
    "kind": "scheduled",
    "claim": "A submission puts the casting office’s answer on the clock, and the answer sets an audition.",
    "entryFile": "src/engine/content/guide/career.ts",
-   "holds": "A submission puts casting's answer on the clock (src/engine/systems/projobs.ts:1003), which sets the round.",
+   "holds": "A submission puts casting's answer on the clock (src/engine/systems/projobs.ts:1011), which sets the round.",
    "tests": [
     "tests/pro-work.test.ts",
     "tests/b20-career-skill.test.ts",
@@ -4498,7 +4695,7 @@
    "kind": "evaluation",
    "claim": "Casting reads your audition’s band, with the role’s fit and the field, when it decides whether to offer you the role.",
    "entryFile": "src/engine/content/guide/career.ts",
-   "holds": "`castingDraw` reads the band, the fit and the field (src/engine/systems/projobs.ts:383).",
+   "holds": "`castingDraw` reads the band, the fit and the field (src/engine/systems/projobs.ts:388).",
    "tests": [
     "tests/pro-work.test.ts",
     "tests/b20-career-skill.test.ts"
@@ -4520,7 +4717,7 @@
    "kind": "scheduled",
    "claim": "An audition in person goes on your calendar with its trip, and stops the clock when it comes.",
    "entryFile": "src/engine/content/guide/career.ts",
-   "holds": "The audition in person wants the player with its trip (src/engine/systems/projobs.ts:1057).",
+   "holds": "The audition in person wants the player with its trip (src/engine/systems/projobs.ts:1065).",
    "tests": [
     "tests/pro-work.test.ts",
     "tests/pro-app.test.ts"
@@ -4542,7 +4739,7 @@
    "kind": "prerequisite",
    "claim": "An offer can be accepted only where your permission to work covers every one of its days.",
    "entryFile": "src/engine/content/guide/career.ts",
-   "holds": "`acceptRefusal` reads `usWorkAuthorized` for every day (src/engine/systems/projobs.ts:887).",
+   "holds": "`acceptRefusal` reads `usWorkAuthorized` for every day (src/engine/systems/projobs.ts:895).",
    "tests": [
     "tests/pro-work.test.ts",
     "tests/b20-career-effects.test.ts"
@@ -4564,7 +4761,7 @@
    "kind": "history",
    "claim": "The part goes on your professional credits, and your résumé reads as behind until it has it.",
    "entryFile": "src/engine/content/guide/career.ts",
-   "holds": "The work day adds the credit (src/engine/systems/projobs.ts:1505) and `finish` the screen one; `resumeBehind` reads it.",
+   "holds": "The work day adds the credit (src/engine/systems/projobs.ts:1515) and `finish` the screen one; `resumeBehind` reads it.",
    "tests": [
     "tests/b20-career-effects.test.ts",
     "tests/pro-work.test.ts"
@@ -4586,7 +4783,7 @@
    "kind": "scheduled",
    "claim": "Accepting puts each work day on your calendar, and each stops the clock for you.",
    "entryFile": "src/engine/content/guide/career.ts",
-   "holds": "`bookDays` puts each day on the calendar wanting the player (src/engine/systems/projobs.ts:1225).",
+   "holds": "`bookDays` puts each day on the calendar wanting the player (src/engine/systems/projobs.ts:1233).",
    "tests": [
     "tests/pro-work.test.ts",
     "tests/pro-opportunities-screen.test.ts"
@@ -4608,7 +4805,7 @@
    "kind": "immediate",
    "claim": "Work in term without approval moves your standing to academic warning, and a second time to dismissal.",
    "entryFile": "src/engine/content/guide/career.ts",
-   "holds": "`reportUnapproved` steps the standing (src/engine/systems/projobs.ts:1331).",
+   "holds": "`reportUnapproved` steps the standing (src/engine/systems/projobs.ts:1339).",
    "tests": [
     "tests/pro-work.test.ts"
    ],
@@ -4628,7 +4825,7 @@
    "kind": "prerequisite",
    "claim": "An offer in term is accepted on the School’s approval, or against it with the warning said first.",
    "entryFile": "src/engine/content/guide/career.ts",
-   "holds": "The offer's question carries `acceptWarning` (src/engine/systems/projobs.ts:1175).",
+   "holds": "The offer's question carries `acceptWarning` (src/engine/systems/projobs.ts:1183).",
    "tests": [
     "tests/pro-work.test.ts",
     "tests/pro-opportunities-screen.test.ts"
@@ -4770,7 +4967,7 @@
    "kind": "prerequisite",
    "claim": "A voice brief you’ve taped is the first recording a demo can be mixed from.",
    "entryFile": "src/engine/content/guide/career.ts",
-   "holds": "`demoSources` offers a voice brief's takes (src/engine/systems/pro.ts:1211).",
+   "holds": "`demoSources` offers a voice brief's takes (src/engine/systems/pro.ts:1263).",
    "tests": [
     "tests/b27-voice-demo.test.ts"
    ],
@@ -4790,7 +4987,7 @@
    "kind": "optional",
    "claim": "The reel is the demo’s counterpart for work on camera.",
    "entryFile": "src/engine/content/guide/career.ts",
-   "holds": "A voice part's submission sends the demo and a screen part's the reel (src/engine/systems/projobs.ts:1344); a voice recording a reel refuses goes on a demo (src/engine/systems/pro.ts:1206).",
+   "holds": "A voice part's submission sends the demo and a screen part's the reel (src/engine/systems/projobs.ts:1352); a voice recording a reel refuses goes on a demo (src/engine/systems/pro.ts:1258).",
    "tests": [
     "tests/b27-voice-demo.test.ts"
    ],

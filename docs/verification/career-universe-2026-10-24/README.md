@@ -514,7 +514,8 @@ range, each after moving from the last, the long-running fading from the sixth; 
 another season reads them (`renewChance`): the series' own chance, moved by how far the last season's audience stood from
 its outlet's bar, by its reviews, and down as a series long running costs more; not one viewer threshold. The network's
 word says what it read, and the season begins in its own month (a serialized series' February, which the words had called
-July). The Charts And Awards tab's Your Series On Screen shows a series the player worked on, each finished season's
+July). From the series cluster of 2026-10-25 (G, below) the season's audience and its critics' score also read the
+player's judged days in it (`seasonMarks`), which K6's first cut had left out: the market was deaf to the player's part. The Charts And Awards tab's Your Series On Screen shows a series the player worked on, each finished season's
 audience and reviews and what the network did after it. Held by `tests/b27-audience.test.ts`: the units by outlet; the
 chance's reading, and the falsifiability test, twins of one series whose audiences alone differ, renewed at different
 chances; the word following that chance where the fixed chance would have said otherwise; and the tab. A fixed chance,
@@ -555,7 +556,8 @@ contract's option had lapsed with the cancellation, so nothing but the character
 the part isn't posted to the actor in that season. The rest of loop 41, cancellation closing future work, settling pay,
 lapsing the option and keeping the credits, was brief 25's, and loops 39 and 40 were already in the game: a recurring
 part's option taken up or let go, a renewal bringing no part by itself, and a slate series casting new characters each
-season (K2). Held by `tests/b27-revival.test.ts`: the chance and the draw it's read by; a Desk Clerk played in 2026,
+season (K2). Until the series cluster (G) an option held none of the actor's dates and a guest part led nowhere; a revival could
+also come back only on its own network. Held by `tests/b27-revival.test.ts`: the chance and the draw it's read by; a Desk Clerk played in 2026,
 wanted back in the 2032 revival in one save, its offer accepted into a new engagement; the falsifiability twin, the same
 part in a save whose draw says no, said so and never posted that season, though the same record without the producers'
 word is; and the ages unread for a returning character. All ten mutations failed a test.
@@ -842,6 +844,60 @@ said "your techniques are N% of the way" of a number the language had joined, so
 gives the techniques apart now and names the language in a sentence of its own. **Said, and left:** languages are fixed
 for life, nothing in the brief asking for a language learned later; the thirty-one fixed parts and the parts drawn from
 real productions carry none.
+
+**Series, options, pilots and a release's fortunes** (`systems/continuity.ts`, `systems/market.ts`, `content/series.ts`;
+Parts 8, 12 and 13, loops 20 and 38 to 41). The pieces the first build had narrowed or left out, each with a reader. **A
+pilot** (Part 8) is made each winter by the slate for a network the game invents, shot as an episode of its kind and
+wrapped two weeks before its network's word on May 15 (`PILOTS`); accepting one carries an option on the series' first
+season (`pilotTerms`); the word (decider `pro.pilot`, `PILOT`: 0.35 plus 0.2 for the pilot's quality and 0.3 for the
+player's part, between 0.05 and 0.9, ASSUMPTION) picks it up into a series of the game's with the player's character and
+the option taken up or let lapse, or passes on it, and a pilot passed on never airs: shot on the credits, nothing on a reel,
+no telecast and so no residual (`entitle`), whether the word came before the wrap or after. The reviewer found the first
+cut airing a pilot its network had passed on and planning its residual; both are fixed and measured. **An option holds the
+actor** (loop 20): an open option on the next season holds that season's guaranteed episodes (`optionDays`), an offer on
+any of them says so before it's accepted (`optionWarning`), and the actor declines, accepts and gives the option up (the
+part in that season goes to another actor and that casting office offers nothing without an audition again,
+`optionsGivenUp`), or asks to be released (`pro.ask_option_release`), answered the next afternoon at three by a draw
+(decider `pro.option_release`) between 0.15 and 0.85 that falls as the production wanted them back (`OPTION_RELEASE`,
+ASSUMPTION). Until this cluster an option held nothing: work on its days was booked without a word and the option lapsed
+for the clash at its last day. **A guest part brought back** (Part 13): played to its end Strong or Exceptional, it's
+weighed once by the producers six weeks before each season the series makes, ordered or renewed and never on a
+cancellation (`INVITE`: 0.6 and 0.4, ASSUMPTION; decider `pro.recurring`), and offered back without an audition as a
+recurring part on a new contract, two episodes guaranteed. **A part grown** at its option (`GROW`: two more episodes and
+ten percent more a day on top of the option's raise, likelier with the work's band and the season's audience, only where
+the further days are clear, ASSUMPTION), kept on the contract (`Contract.grew`). **A canceled series back on another
+network** (`PICKUP`, half the time, ASSUMPTION): the network a season is seen on is named on the series' page and the
+credit (`networkOf`), and each later word is that network's, worked out from the seed on every asking so that a save told
+a season's word before the cluster reads the same word after it (`tests/b27-older-save.test.ts`, on a fixture saved at
+`d0cb4327`, where the first cut would have read a renewal as a cancellation). **Real series continued** (`REAL_SERIES`):
+9-1-1 from its tenth season (S80, S81) and Abbott Elementary from the season its page had on the air, whose number no
+page gives (S109); the baseline is simulated nowhere, every season after it is the game's own and says so on its page, its
+credit, its offer and its word (`continuationWords`), and a part drawn from either is cast only in a season the game
+simulates and the network made. **The market reads the player's part** (Part 12, loop 38): a film's opening, its weekly
+hold and its reviews, and a season's audience and critics' score, read the size of the part and the band it was played at
+(`FORTUNE`, ASSUMPTION: a lead in full, a supporting part 0.6, a featured 0.4, a co-star a quarter; Exceptional 1, Strong
+0.5, Working 0, Unready against), bounded so that no part makes a hit by itself; each judged day of series work posts a
+mark the season reads (`seasonMarks`), which the network's chance of another season then reads. **A release's other ways
+out** (`ROUTES`, `LIMITED`, `INTERNATIONAL`, ASSUMPTION each): a limited release in Los Angeles and New York that widens
+only where audiences score it at the bar (which keeps the run in a major market the Actor Awards ask for, b25-S48), a
+distributor's takeover that moves the date, and an opening abroad first with the home run weeks later and the awards
+placing the film by its run at home, or in no year where the two fall apart; a run's takings abroad are its kind's share of
+its takings at home, however it opened, in US dollars throughout. Held by `tests/b27-pilots.test.ts` (4),
+`tests/b27-option-hold.test.ts` (2), `tests/b27-returning.test.ts` (4), `tests/b27-real-series.test.ts` (6),
+`tests/b27-release-routes.test.ts` (6), `tests/b27-fortunes.test.ts` (5) and `tests/b27-older-save.test.ts` (1), each
+claim against a twin: a pilot on either side of its word; an option released, refused and given up, saved and loaded while
+the ask waits; a guest part played Exceptional and offered back against the twin played as judged, and the series canceled
+against renewed; a part grown against the twin judged Working; a film with a weak lead against a strong one in the same
+chart. Mutations: the implementer's 43, all killed; of the reviewer's 6, three survived its run (a limited release widening
+whatever its audience, a guest part brought back on a cancellation, a part grown onto booked days) and were run again on
+2026-10-26 after the fix round: each fails a test now. The reviewer's blocking findings: a pilot passed on mid-shoot still
+aired (fixed, measured on seven of 156 pilots whose shoot spanned the word); a pickup's renewal chance rewrote decisions a
+save had been told (fixed: the pickup decides who has the series, never whether it came back or what the next word is;
+22 of 300 seeds had flipped); `tests/journey-career.test.ts` failed on the branch because its seed's life now books later
+with the market reading its part (the journey picks a life where its claim shows, and says why). **Said, and left:** the
+audition's judge is still keyed by the opportunity's sequential number, not the posting, so a slate that posts differently
+changes which life a seed plays (reported with the offers cluster, not fixed here); every network, distributor, pilot and
+season is the game's but the two real series' baselines.
 
 ## Defects Found And Fixed
 

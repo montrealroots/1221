@@ -28,7 +28,7 @@
    "tests/b20-guide-chapters.test.ts",
    "tests/guide-examples-money.test.ts",
    "tests/guide-chapter-facts.test.ts",
-   "src/engine/content/tutorial.ts:685-726 chapter 19, Your Bank: Money’s 56 commands and looks; src/engine/world/tutorial.ts:51-56 isOpen: a feature with no chapter, or the guide finished, is open, else open once its chapter is read; src/engine/world/tutorial.ts:67-75 lockedBecause names the chapter and its place in the order; src/engine/world/tutorial.ts:99-104 the command bus asks it before every command while guided; src/ui/shell/destinations.ts:83 Money on the menu gated by it; docs/verification/sweep-2026-10-24/walk/capture/audit.json Money’s five looks on two played lives",
+   "src/engine/content/tutorial.ts:687-726 chapter 19, Your Bank: Money’s 56 commands and looks; src/engine/world/tutorial.ts:51-56 isOpen: a feature with no chapter, or the guide finished, is open, else open once its chapter is read; src/engine/world/tutorial.ts:67-75 lockedBecause names the chapter and its place in the order; src/engine/world/tutorial.ts:99-104 the command bus asks it before every command while guided; src/ui/shell/destinations.ts:83 Money on the menu gated by it; docs/verification/sweep-2026-10-24/walk/capture/audit.json Money’s five looks on two played lives",
    "tests/b20-guide-chapters.test.ts the guide area’s 32 test files (tutorial, guide, the six b20-guide files, navigation, portrait, b23-pages, b23-turn, help-mechanics, guide-chapter-facts, time-controls, whynot-time, the seven guide-examples files, pro-screen, pro-representation-screen, language-frame, look-after, looking-after, evidence2-b01, journey-agent, evidence-g33-ui, looks), run on 691556f0: all green, 413 tests"
   ]
  },
@@ -108,7 +108,7 @@
   "evidence": [
    "tests/b20-guide-chapters.test.ts",
    "tests/guide-examples-papers.test.ts",
-   "src/engine/content/tutorial.ts:615-637 chapter 17, Passports And ID: the eleven document commands and the look; src/engine/world/tutorial.ts:51-56 isOpen: a feature with no chapter, or the guide finished, is open, else open once its chapter is read; src/engine/world/tutorial.ts:67-75 lockedBecause names the chapter and its place in the order; src/engine/world/tutorial.ts:99-104 the command bus asks it before every command while guided; docs/verification/sweep-2026-10-24/walk/capture/audit.json Papers Passport And ID on two played lives",
+   "src/engine/content/tutorial.ts:617-637 chapter 17, Passports And ID: the eleven document commands and the look; src/engine/world/tutorial.ts:51-56 isOpen: a feature with no chapter, or the guide finished, is open, else open once its chapter is read; src/engine/world/tutorial.ts:67-75 lockedBecause names the chapter and its place in the order; src/engine/world/tutorial.ts:99-104 the command bus asks it before every command while guided; docs/verification/sweep-2026-10-24/walk/capture/audit.json Papers Passport And ID on two played lives",
    "tests/guide-chapter-facts.test.ts",
    "tests/b26-papers-repeats.test.ts",
    "tests/b20-guide-chapters.test.ts the guide area’s 32 test files (tutorial, guide, the six b20-guide files, navigation, portrait, b23-pages, b23-turn, help-mechanics, guide-chapter-facts, time-controls, whynot-time, the seven guide-examples files, pro-screen, pro-representation-screen, language-frame, look-after, looking-after, evidence2-b01, journey-agent, evidence-g33-ui, looks), run on 691556f0: all green, 413 tests"
@@ -141,7 +141,7 @@
   "evidence": [
    "tests/b20-guide-chapters.test.ts",
    "tests/mortality.test.ts",
-   "src/engine/content/tutorial.ts:735-749 chapter 20, A Whole Life: your own page and the person look; src/engine/world/tutorial.ts:51-56 isOpen: a feature with no chapter, or the guide finished, is open, else open once its chapter is read; src/engine/world/tutorial.ts:67-75 lockedBecause names the chapter and its place in the order; src/engine/world/tutorial.ts:99-104 the command bus asks it before every command while guided; src/engine/world/tutorial.ts:39-47 the guide finished when it’s read, after which every gate is open",
+   "src/engine/content/tutorial.ts:737-749 chapter 20, A Whole Life: your own page and the person look; src/engine/world/tutorial.ts:51-56 isOpen: a feature with no chapter, or the guide finished, is open, else open once its chapter is read; src/engine/world/tutorial.ts:67-75 lockedBecause names the chapter and its place in the order; src/engine/world/tutorial.ts:99-104 the command bus asks it before every command while guided; src/engine/world/tutorial.ts:39-47 the guide finished when it’s read, after which every gate is open",
    "tests/guide-chapter-facts.test.ts",
    "tests/b20-guide-chapters.test.ts the guide area’s 32 test files (tutorial, guide, the six b20-guide files, navigation, portrait, b23-pages, b23-turn, help-mechanics, guide-chapter-facts, time-controls, whynot-time, the seven guide-examples files, pro-screen, pro-representation-screen, language-frame, look-after, looking-after, evidence2-b01, journey-agent, evidence-g33-ui, looks), run on 691556f0: all green, 413 tests"
   ]
@@ -173,7 +173,7 @@
   "evidence": [
    "tests/b20-guide-chapters.test.ts",
    "tests/guide-examples-money.test.ts",
-   "src/engine/content/tutorial.ts:646-676 chapter 18, Money: Worth and the account, net worth and debt looks; src/engine/world/tutorial.ts:51-56 isOpen: a feature with no chapter, or the guide finished, is open, else open once its chapter is read; src/engine/world/tutorial.ts:67-75 lockedBecause names the chapter and its place in the order; src/engine/world/tutorial.ts:99-104 the command bus asks it before every command while guided; src/ui/components/Glance.tsx:33-50 Worth’s words; docs/verification/sweep-2026-10-24/walk/capture/audit.json Money Accounts on two played lives",
+   "src/engine/content/tutorial.ts:648-676 chapter 18, Money: Worth and the account, net worth and debt looks; src/engine/world/tutorial.ts:51-56 isOpen: a feature with no chapter, or the guide finished, is open, else open once its chapter is read; src/engine/world/tutorial.ts:67-75 lockedBecause names the chapter and its place in the order; src/engine/world/tutorial.ts:99-104 the command bus asks it before every command while guided; src/ui/components/Glance.tsx:33-50 Worth’s words; docs/verification/sweep-2026-10-24/walk/capture/audit.json Money Accounts on two played lives",
    "tests/guide-chapter-facts.test.ts",
    "tests/b20-guide-chapters.test.ts the guide area’s 32 test files (tutorial, guide, the six b20-guide files, navigation, portrait, b23-pages, b23-turn, help-mechanics, guide-chapter-facts, time-controls, whynot-time, the seven guide-examples files, pro-screen, pro-representation-screen, language-frame, look-after, looking-after, evidence2-b01, journey-agent, evidence-g33-ui, looks), run on 691556f0: all green, 413 tests"
   ]
@@ -208,7 +208,7 @@
    "tests/b20-guide-chapters.test.ts",
    "tests/guide-examples-papers.test.ts",
    "tests/guide-chapter-facts.test.ts",
-   "src/engine/content/tutorial.ts:569-606 chapter 16, Cover, Benefits And Returns: Papers and its 39 commands; src/engine/world/tutorial.ts:51-56 isOpen: a feature with no chapter, or the guide finished, is open, else open once its chapter is read; src/engine/world/tutorial.ts:67-75 lockedBecause names the chapter and its place in the order; src/engine/world/tutorial.ts:99-104 the command bus asks it before every command while guided; src/ui/shell/destinations.ts:85 Papers on the menu gated by it; docs/verification/sweep-2026-10-24/walk/capture/audit.json the five Papers looks on two played lives",
+   "src/engine/content/tutorial.ts:571-606 chapter 16, Cover, Benefits And Returns: Papers and its 39 commands; src/engine/world/tutorial.ts:51-56 isOpen: a feature with no chapter, or the guide finished, is open, else open once its chapter is read; src/engine/world/tutorial.ts:67-75 lockedBecause names the chapter and its place in the order; src/engine/world/tutorial.ts:99-104 the command bus asks it before every command while guided; src/ui/shell/destinations.ts:85 Papers on the menu gated by it; docs/verification/sweep-2026-10-24/walk/capture/audit.json the five Papers looks on two played lives",
    "tests/b20-guide-chapters.test.ts the guide area’s 32 test files (tutorial, guide, the six b20-guide files, navigation, portrait, b23-pages, b23-turn, help-mechanics, guide-chapter-facts, time-controls, whynot-time, the seven guide-examples files, pro-screen, pro-representation-screen, language-frame, look-after, looking-after, evidence2-b01, journey-agent, evidence-g33-ui, looks), run on 691556f0: all green, 413 tests"
   ]
  },
@@ -398,7 +398,7 @@
   "on": "3a759d49",
   "evidence": [
    "tests/career-awards.test.ts",
-   "src/engine/systems/projobs.ts:2660 casting's decision passes the player's visibility to castingDraw"
+   "src/engine/systems/projobs.ts:2697 casting's decision passes the player's visibility to castingDraw"
   ]
  },
  "promise.career.awards>career.workflows": {
@@ -410,7 +410,7 @@
   "on": "3a759d49",
   "evidence": [
    "tests/career-awards.test.ts",
-   "src/engine/systems/awards.ts:152 emmyCheck counts the scenes kept; awards.ts:343 fieldFor reads the credit's band"
+   "src/engine/systems/awards.ts:153 emmyCheck counts the scenes kept; awards.ts:343 fieldFor reads the credit's band"
   ]
  },
  "promise.career.contracts>career.offers": {
@@ -446,7 +446,7 @@
   "on": "3a759d49",
   "evidence": [
    "tests/career-contracts.test.ts",
-   "src/engine/systems/projobs.ts:2286 SEASON_HOOKS, whose refusal reads sagWorkRefusal for a further episode's days and an option's"
+   "src/engine/systems/projobs.ts:2323 SEASON_HOOKS, whose refusal reads sagWorkRefusal for a further episode's days and an option's"
   ]
  },
  "promise.career.languages>career.auditions": {
@@ -458,7 +458,7 @@
   "on": "2e6fd238",
   "evidence": [
    "tests/b27-languages.test.ts",
-   "src/engine/systems/projobs.ts:1720 withLanguage in auditionContext"
+   "src/engine/systems/projobs.ts:1730 withLanguage in auditionContext"
   ]
  },
  "promise.career.languages>career.opportunities": {
@@ -470,7 +470,7 @@
   "on": "2e6fd238",
   "evidence": [
    "tests/b27-languages.test.ts",
-   "src/engine/systems/projobs.ts:829 languageRefusal among eligibilityProblems"
+   "src/engine/systems/projobs.ts:837 languageRefusal among eligibilityProblems"
   ]
  },
  "promise.career.languages>career.resume": {
@@ -482,7 +482,7 @@
   "on": "2e6fd238",
   "evidence": [
    "tests/b27-languages.test.ts",
-   "src/engine/systems/pro.ts:1230 resumeNow"
+   "src/engine/systems/pro.ts:1282 resumeNow"
   ]
  },
  "promise.career.negotiation>career.agreement": {
@@ -494,7 +494,7 @@
   "on": "2e6fd238",
   "evidence": [
    "tests/b27-offer-terms.test.ts",
-   "src/engine/systems/projobs.ts:1806 refused with no agreement in force"
+   "src/engine/systems/projobs.ts:1818 refused with no agreement in force"
   ]
  },
  "promise.career.negotiation>career.contracts": {
@@ -530,7 +530,7 @@
   "on": "52d65a60",
   "evidence": [
    "tests/b27-reference.test.ts",
-   "src/engine/systems/reference.ts:192 honorFacts, each entry in the tab's own words; src/engine/systems/reference.ts:202 actionsFor, Open Charts And Awards for a credit on screen"
+   "src/engine/systems/reference.ts:233 honorFacts, each entry in the tab's own words; src/engine/systems/reference.ts:243 actionsFor, Open Charts And Awards for a credit on screen"
   ]
  },
  "promise.career.reference>career.opportunities": {
@@ -542,7 +542,44 @@
   "on": "52d65a60",
   "evidence": [
    "tests/b27-reference.test.ts",
-   "src/ui/career/OpportunitiesPane.tsx:79 Open Its Page; src/engine/systems/reference.ts:202 actionsFor, Open Opportunities while the posting is in play"
+   "src/ui/career/OpportunitiesPane.tsx:80 Open Its Page; src/engine/systems/reference.ts:243 actionsFor, Open Opportunities while the posting is in play"
+  ]
+ },
+ "promise.career.series>career.awards": {
+  "status": "Verified",
+  "by": [
+   "inspection",
+   "automated"
+  ],
+  "on": "1b757966",
+  "evidence": [
+   "tests/b27-release-routes.test.ts",
+   "src/engine/systems/charts.ts the release's route moves the credit's date and run; tests/b27-release-routes.test.ts: the Actor Awards place a film abroad first by its run at home, and not at all across two years"
+  ]
+ },
+ "promise.career.series>career.contracts": {
+  "status": "Verified",
+  "by": [
+   "inspection",
+   "automated"
+  ],
+  "on": "1b757966",
+  "evidence": [
+   "tests/b27-pilots.test.ts",
+   "tests/b27-option-hold.test.ts",
+   "src/engine/systems/continuity.ts:335 pilotTerms writes the option into a pilot's contract; continuity.ts:113 heldOptions reads open option clauses only; tests/b27-pilots.test.ts, tests/b27-option-hold.test.ts"
+  ]
+ },
+ "promise.career.series>career.offers": {
+  "status": "Verified",
+  "by": [
+   "inspection",
+   "automated"
+  ],
+  "on": "1b757966",
+  "evidence": [
+   "tests/b27-option-hold.test.ts",
+   "src/engine/systems/projobs.ts:3091 giveUpOptions in the accept handler settles each option the offer's days held; tests/b27-option-hold.test.ts: accepted without asking, the option goes and the casting office offers nothing without an audition"
   ]
  },
  "promise.career.sides>career.auditions": {
@@ -554,7 +591,7 @@
   "on": "2e6fd238",
   "evidence": [
    "tests/b27-sides.test.ts",
-   "src/engine/systems/projobs.ts:1720 approachRead; src/engine/systems/offers.ts:411 the take sent; src/engine/systems/projobs.ts:2660 the cut reads the round"
+   "src/engine/systems/projobs.ts:1730 approachRead; src/engine/systems/offers.ts:411 the take sent; src/engine/systems/projobs.ts:2697 the cut reads the round"
   ]
  },
  "promise.career.sides>craft.brief-tape": {
@@ -566,7 +603,7 @@
   "on": "2e6fd238",
   "evidence": [
    "tests/b27-sides.test.ts",
-   "src/engine/systems/offers.ts:248 choose from systems/material.ts; src/engine/systems/projobs.ts:2218 rehearsed by the same step"
+   "src/engine/systems/offers.ts:248 choose from systems/material.ts; src/engine/systems/projobs.ts:2236 rehearsed by the same step"
   ]
  },
  "promise.career.withdrawing>career.auditions": {
@@ -578,7 +615,7 @@
   "on": "2e6fd238",
   "evidence": [
    "tests/b27-casting-turns.test.ts",
-   "src/engine/systems/offers.ts:899 castingLift; src/engine/systems/projobs.ts:2660 read at the cut"
+   "src/engine/systems/offers.ts:899 castingLift; src/engine/systems/projobs.ts:2697 read at the cut"
   ]
  },
  "promise.career.withdrawing>career.offers": {
@@ -590,7 +627,7 @@
   "on": "2e6fd238",
   "evidence": [
    "tests/b27-casting-turns.test.ts",
-   "src/engine/systems/projobs.ts:1793 directOfferFor"
+   "src/engine/systems/projobs.ts:1805 directOfferFor"
   ]
  },
  "promise.career.workflows>career.contracts": {
@@ -972,7 +1009,7 @@
   "on": "52d65a60",
   "evidence": [
    "tests/b27-reference.test.ts",
-   "src/ui/career/ReferencePane.tsx:36 the tab, behind chapter 13 (useFeature); src/ui/career/ReferencePane.tsx:96 a page with its trail and Back; src/engine/systems/reference.ts:555 pageOf, every page read from the save to the clock"
+   "src/ui/career/ReferencePane.tsx:36 the tab, behind chapter 13 (useFeature); src/ui/career/ReferencePane.tsx:96 a page with its trail and Back; src/engine/systems/reference.ts:609 pageOf, every page read from the save to the clock"
   ]
  },
  "ui.go": {

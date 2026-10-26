@@ -1,6 +1,6 @@
 # Every Touched Feature, Traced
 
-Written by `tools/trace.ts` from the guide's registry and the tests; don't edit it by hand. 55 entries in the four
+Written by `tools/trace.ts` from the guide's registry and the tests; don't edit it by hand. 56 entries in the four
 areas the connected-journey pass of 2026-10-12 rebuilt, and from 2026-10-20 the career's (brief 19), each traced Action →
 Preconditions → Costs → State → Consumer → Feedback → History → Later consequence. The words are the guide's own, which
 carry the rules' figures; the four areas' entries' claims were checked against the engine by a second reader when they
@@ -1442,7 +1442,7 @@ The Career screen, your professional profile and name, headshots, your résumé 
   - A stage part goes on your credits at its first night; a screen part when it’s shot, and as released once it comes out, when its footage can go on a reel.
   - A finished production isn’t always out on time. Its distributor may hold the release back months, send a film to streaming instead of cinemas, where it has no weekly chart, or shelve it, so it’s never out: the part stays on your credits as shot, its footage can’t go on a reel, and it has no premiere to enter for an award. The notice says which when the release comes due.
   - Sleep through a shoot day, or miss a second day of a run, and the production replaces you. Laid up or in hospital on a lead or a supporting part, the production shoots around you once, slipping your days a working day each, and the day isn’t paid; a smaller part is recast.
-- **Tested by:** `pro.accept_offer`: `tests/b20-benefits-safetynet.test.ts`, `tests/b20-benefits-tax.test.ts`, `tests/b20-benefits-unemployment.test.ts`, `tests/b20-career-defects.test.ts`, `tests/b20-career-effects.test.ts`, `tests/b20-career-history.test.ts`, `tests/b20-career-skill.test.ts`, `tests/b20-guide-screens.test.ts`, `tests/b20-life-fatigue.test.ts`, `tests/b20-papers-work.test.ts`, `tests/b21-genre-proof.test.ts`, `tests/b22-authorization.test.ts`, `tests/b27-audience.test.ts`, `tests/b27-casting-turns.test.ts`, `tests/b27-holds.test.ts`, `tests/b27-ill.test.ts`, `tests/b27-languages.test.ts`, `tests/b27-offer-terms.test.ts`, `tests/b27-offers.test.ts`, `tests/b27-promo.test.ts`, `tests/b27-release.test.ts`, `tests/b27-representation.test.ts`, `tests/b27-reshoot.test.ts`, `tests/b27-revival.test.ts`, `tests/b27-slate-screens.test.ts`, `tests/b27-slate.test.ts`, `tests/b27-weather.test.ts`, `tests/career-awards-screen.test.ts`, `tests/career-awards.test.ts`, `tests/career-contracts.test.ts`, `tests/career-drawn.test.ts`, `tests/career-workflows-screen.test.ts`, `tests/career-workflows.test.ts`, `tests/career-world-sydney.test.ts`, `tests/pro-opportunities-screen.test.ts`, `tests/pro-work.test.ts`; `pro.decline_offer`: `tests/b20-career-effects.test.ts`, `tests/b20-career-history.test.ts`, `tests/b20-guide-screens.test.ts`, `tests/pro-work.test.ts`; `pro.ask_more`: `tests/b27-award-effects.test.ts`, `tests/b27-offer-terms.test.ts`, `tests/b27-offers.test.ts`; `pro.ask_hold`: `tests/b27-casting-turns.test.ts`, `tests/b27-holds.test.ts`
+- **Tested by:** `pro.accept_offer`: `tests/b20-benefits-safetynet.test.ts`, `tests/b20-benefits-tax.test.ts`, `tests/b20-benefits-unemployment.test.ts`, `tests/b20-career-defects.test.ts`, `tests/b20-career-effects.test.ts`, `tests/b20-career-history.test.ts`, `tests/b20-career-skill.test.ts`, `tests/b20-guide-screens.test.ts`, `tests/b20-life-fatigue.test.ts`, `tests/b20-papers-work.test.ts`, `tests/b21-genre-proof.test.ts`, `tests/b22-authorization.test.ts`, `tests/b27-audience.test.ts`, `tests/b27-casting-turns.test.ts`, `tests/b27-holds.test.ts`, `tests/b27-ill.test.ts`, `tests/b27-languages.test.ts`, `tests/b27-offer-terms.test.ts`, `tests/b27-offers.test.ts`, `tests/b27-option-hold.test.ts`, `tests/b27-pilots.test.ts`, `tests/b27-promo.test.ts`, `tests/b27-real-series.test.ts`, `tests/b27-release.test.ts`, `tests/b27-representation.test.ts`, `tests/b27-reshoot.test.ts`, `tests/b27-returning.test.ts`, `tests/b27-revival.test.ts`, `tests/b27-slate-screens.test.ts`, `tests/b27-slate.test.ts`, `tests/b27-weather.test.ts`, `tests/career-awards-screen.test.ts`, `tests/career-awards.test.ts`, `tests/career-contracts.test.ts`, `tests/career-drawn.test.ts`, `tests/career-workflows-screen.test.ts`, `tests/career-workflows.test.ts`, `tests/career-world-sydney.test.ts`, `tests/pro-opportunities-screen.test.ts`, `tests/pro-work.test.ts`; `pro.decline_offer`: `tests/b20-career-effects.test.ts`, `tests/b20-career-history.test.ts`, `tests/b20-guide-screens.test.ts`, `tests/b27-option-hold.test.ts`, `tests/pro-work.test.ts`; `pro.ask_more`: `tests/b27-award-effects.test.ts`, `tests/b27-offer-terms.test.ts`, `tests/b27-offers.test.ts`; `pro.ask_hold`: `tests/b27-casting-turns.test.ts`, `tests/b27-holds.test.ts`
 
 ### How You Play The Sides And Your Takes (`career.sides`)
 
@@ -1563,7 +1563,7 @@ The Career screen, your professional profile and name, headshots, your résumé 
 - **Feedback (how to read what comes back):**
   - The overtime, the contribution’s rates, the per diem and the rerun’s share and ceiling are SAG-AFTRA’s agreements’ own, as AMPTP publishes them. The eleven-hour shoot day’s hour for lunch is estimated.
   - When an episode is on the air, whether it’s rerun, the series’ seasons and how late a non-union producer pays, 3 times in ten, by one to four weeks, are the game’s own.
-  - A renewal brings no contract by itself: a part in a renewed series comes only through its option or a new casting.
+  - A renewal brings no contract by itself: a part in a renewed series comes only through its option, a new casting, or its producers asking a guest part back.
 - **History (kept in the record):**
   - (none)
 - **Later consequence:**
@@ -1623,7 +1623,7 @@ The Career screen, your professional profile and name, headshots, your résumé 
   - The Actor Awards’ eligibility, categories, fee, window, committees, nominee count and final vote are its 33rd Rules & Regulations’. Its show is held in Los Angeles in the game, as its last was, and so are the Emmys’; neither’s rules name a place.
   - How many enter a category, how the votes go, whether a production enters you or submits its film, and whether the festival selects it are the game’s, and no other nominee is ever named. So are a speech’s weights and the week to say whether you’ll go.
   - An agent’s office reads your recognition as a step up in your work, once, however much of it there is. A production you ask for more is likelier to agree by half your visibility, which fades as recognition does.
-  - A film’s box office is the production’s, not your pay, and how well your part went doesn’t move it. The published charts are the providers’ own figures, each in its own unit and week.
+  - A film’s box office is the production’s, not your pay. The production’s own quality and how well your part went move how it opens and holds, a lead’s part more than a small one, and neither decides it alone. The published charts are the providers’ own figures, each in its own unit and week.
   - A series’ season audience is the game’s estimate, in viewers an episode for a broadcast series and hours viewed a week for a streaming one, never one as the other. The network reads it, with the season’s reviews and how long the series has run, when it says whether there’s another season: a big audience makes another likelier, never certain.
   - Recognition makes casting a little likelier to choose you, fading over three years, and at most 30% better; so, a little, does a promotional film you appeared in for a release. Neither changes a contract or how your work is judged.
 - **History (kept in the record):**
@@ -1636,6 +1636,35 @@ The Career screen, your professional profile and name, headshots, your résumé 
   - The Actor Awards’ committees, members drawn at random, nominate five in each category, more only for a tie, and of two performances of yours in one category only the one with more votes. Every paid-up member in the US and Canada votes the winner, and a tie gives the award to each tied. The 33rd show is on February 28.
   - At the show, losing changes nothing but the record. Winning in the room, you go up; not going up within half an hour, you say thank you and sit down. Watched from home, a win is accepted without you.
 - **Tested by:** `pro.award_enter`: `tests/career-awards-screen.test.ts`, `tests/career-awards.test.ts`; `pro.watch_ceremony`: `tests/b27-ceremony.test.ts`, `tests/career-awards-screen.test.ts`, `tests/career-awards.test.ts`; `pro.actor_submit`: `tests/b27-actor-awards.test.ts`; `pro.ceremony_rsvp`: `tests/b27-ceremony.test.ts`; `pro.ceremony_prepare`: `tests/b27-ceremony.test.ts`; `pro.ceremony_accept`: `tests/b27-ceremony.test.ts`
+
+### Pilots, Options And A Release’s Fortunes (`career.series`)
+
+- **Action:** `pro.ask_option_release`, at Career, Opportunities, Offers (`/workspace/career?tab=opportunities`). Opens: From the guide’s chapter “Finding Work”, once you’ve accepted work.
+- **Preconditions:**
+  - An offer standing on days an open option holds. The answer has to come before the offer lapses.
+  - Contracts, Residuals And A Series’ Seasons first: An option is a term of a recurring part’s or a pilot’s contract.
+- **Costs:**
+  - Asking To Be Released: Nothing but the wait: the answer comes the next afternoon
+  - Giving Up An Option: The part in that season goes to another actor, and its casting office won’t offer you a part without an audition again
+- **State (what changes at once):**
+  - Asking puts the production’s answer on the clock. Accepting work against an option gives the option up at once.
+- **Consumer (what reads it):**
+  - Offers And Booked Work, immediate: Accepting an offer on an option’s days gives the option up.
+  - Charts, Festivals And Awards, scheduled: A release’s way out sets the date and the run its awards read.
+- **Feedback (how to read what comes back):**
+  - Every network, distributor, pilot and season here is the game’s, but the real series’ seasons their pages had on the air.
+  - A film’s US weeks are ranked in the game’s own chart, and its takings abroad sit beside them. Every figure is in US dollars, so the worldwide total adds like to like. Reviews and audience scores are the game’s estimates.
+  - For the Actor Awards, a film that opened abroad first counts its run in the US. Where its first showing and that run fall in different years, the game doesn’t place it in either.
+- **History (kept in the record):**
+  - (none)
+- **Later consequence:**
+  - A guest part you played Strong or better can come back. Before each new season the series makes, its producers weigh it, about six times in ten for Exceptional work and four for Strong, and bring the character back as a recurring part in the new season, offered without an audition, two episodes guaranteed.
+  - When a production takes up its option, it may write more for the part: two more episodes guaranteed and 10% more a day on top of the option’s raise, likelier the better your work and the bigger the season’s audience.
+  - A canceled series that comes back may come back on another network or streaming service. The series’ page in Productions And People names it, and so does your credit for work in it.
+  - 9-1-1 and Abbott Elementary are real series. The season their pages had on the air is real; every season after it is the game’s own continuation, said so wherever it shows, and a guest part in either is cast only in those seasons.
+  - A finished film may open in a limited release, a few weeks in a few cinemas that widens only if audiences take to it; be taken over by another distributor, which moves its date; or open abroad first and at home some weeks later. Its notice says which, and the awards read the date and the run that follow.
+  - A limited release opens in Los Angeles and New York, so it still has the run in a major market the Actor Awards ask for.
+- **Tested by:** `pro.ask_option_release`: `tests/b27-option-hold.test.ts`
 
 ### Productions And People (`career.reference`)
 

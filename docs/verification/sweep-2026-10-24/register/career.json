@@ -25,7 +25,7 @@
    "tests/pro-work.test.ts",
    "tests/b20-career-history.test.ts",
    "tests/b20-career-effects.test.ts",
-   "src/engine/systems/projobs.ts:973-940 the work’s notices, the player’s only",
+   "src/engine/systems/projobs.ts:981-940 the work’s notices, the player’s only",
    "tests/pro-core.test.ts the career’s 32 test files, 423 tests, run on this commit: all green"
   ]
  },
@@ -156,7 +156,7 @@
    "tests/b22-authorization.test.ts",
    "tests/pro-opportunities-screen.test.ts",
    "tests/pro-work.test.ts",
-   "src/engine/systems/projobs.ts:1702-1677 the command: the engagement, its promised pay, the paydays on the clock, the days booked, the lapse called off, the opportunity settled; src/engine/systems/projobs.ts:894-883 acceptRefusal: lapsed, permission for every day, SAG-AFTRA membership, another booking, the School’s hold; src/engine/systems/projobs.ts:922-904 acceptWarning",
+   "src/engine/systems/projobs.ts:1712-1677 the command: the engagement, its promised pay, the paydays on the clock, the days booked, the lapse called off, the opportunity settled; src/engine/systems/projobs.ts:902-883 acceptRefusal: lapsed, permission for every day, SAG-AFTRA membership, another booking, the School’s hold; src/engine/systems/projobs.ts:930-904 acceptWarning",
    "tests/permission.test.ts",
    "tests/pro-core.test.ts the career’s 32 test files, 423 tests, run on this commit: all green"
   ]
@@ -170,7 +170,7 @@
   "on": "7e12b026",
   "evidence": [
    "tests/b27-actor-awards.test.ts",
-   "src/engine/systems/actorawards.ts:267 the production's submission, the nominations, the final round and the show; src/engine/systems/actorawards.ts:353 its passage"
+   "src/engine/systems/actorawards.ts:274 the production's submission, the nominations, the final round and the show; src/engine/systems/actorawards.ts:360 its passage"
   ]
  },
  "pro.actor_submit": {
@@ -182,7 +182,7 @@
   "on": "7e12b026",
   "evidence": [
    "tests/b27-actor-awards.test.ts",
-   "src/engine/systems/actorawards.ts:194 the submission and its fee; src/engine/systems/actorawards.ts:354 its handler"
+   "src/engine/systems/actorawards.ts:201 the submission and its fee; src/engine/systems/actorawards.ts:361 its handler"
   ]
  },
  "pro.agent_ask_lapse": {
@@ -398,7 +398,7 @@
   "on": "68c2c004",
   "evidence": [
    "tests/b27-holds.test.ts",
-   "src/engine/systems/projobs.ts:2619 the command; src/engine/systems/projobs.ts:1296 holdAskRefusal: no hold, already offered, asked already, no other offer, one lapsing before the answer"
+   "src/engine/systems/projobs.ts:2656 the command; src/engine/systems/projobs.ts:1304 holdAskRefusal: no hold, already offered, asked already, no other offer, one lapsing before the answer"
   ]
  },
  "pro.ask_more": {
@@ -410,7 +410,19 @@
   "on": "68cb2816",
   "evidence": [
    "tests/b27-offers.test.ts",
-   "src/engine/systems/projobs.ts:2459 the command; src/engine/systems/projobs.ts:1582 askMoreRefusal: no offer, asked already, no agent, no figure"
+   "src/engine/systems/projobs.ts:2496 the command; src/engine/systems/projobs.ts:1592 askMoreRefusal: no offer, asked already, no agent, no figure"
+  ]
+ },
+ "pro.ask_option_release": {
+  "status": "Verified",
+  "by": [
+   "inspection",
+   "automated"
+  ],
+  "on": "1b757966",
+  "evidence": [
+   "tests/b27-option-hold.test.ts",
+   "src/engine/systems/continuity.ts:394 the ask, refused in optionReleaseRefusal's words (continuity.ts:192), the answer put on the clock; src/engine/systems/projobs.ts:1366 the offer's warning names the option; src/ui/career/OptionRelease.tsx:30 Ask To Be Released; tests/b27-option-hold.test.ts: released, refused and given up, each by its draw, saved and loaded while waiting"
   ]
  },
  "pro.ask_pay": {
@@ -422,7 +434,7 @@
   "on": "3a759d49",
   "evidence": [
    "tests/career-contracts.test.ts",
-   "src/engine/systems/contracts.ts:509 Ask About It on a late payment; its answer on the clock"
+   "src/engine/systems/contracts.ts:516 Ask About It on a late payment; its answer on the clock"
   ]
  },
  "pro.ask_referral": {
@@ -493,7 +505,7 @@
   "evidence": [
    "tests/pro-work.test.ts",
    "tests/b20-career-skill.test.ts",
-   "src/engine/systems/projobs.ts:1490-1449 the round: missed asleep, ill, at a booked day (src/engine/systems/projobs.ts:693-674) or elsewhere (src/engine/systems/projobs.ts:2627-626), else judged; src/engine/systems/projobs.ts:1150-1120 missRound settles it",
+   "src/engine/systems/projobs.ts:1500-1449 the round: missed asleep, ill, at a booked day (src/engine/systems/projobs.ts:698-674) or elsewhere (src/engine/systems/projobs.ts:2664-626), else judged; src/engine/systems/projobs.ts:1158-1120 missRound settles it",
    "tests/pro-core.test.ts the career’s 32 test files, 423 tests, run on this commit: all green"
   ]
  },
@@ -507,7 +519,7 @@
   "evidence": [
    "tests/career-awards.test.ts",
    "tests/career-awards-screen.test.ts",
-   "src/engine/systems/awards.ts:683 Enter Yourself, eligibility by emmyCheck (awards.ts:138), the fees taken once"
+   "src/engine/systems/awards.ts:684 Enter Yourself, eligibility by emmyCheck (awards.ts:138), the fees taken once"
   ]
  },
  "pro.awards": {
@@ -520,7 +532,7 @@
   "evidence": [
    "tests/career-awards.test.ts",
    "tests/career-awards-screen.test.ts",
-   "src/engine/systems/awards.ts:682 the awards' passage: the deadline's production entries, the nominations, the final round and the ceremony's word; the field by fieldFor (awards.ts:337)"
+   "src/engine/systems/awards.ts:683 the awards' passage: the deadline's production entries, the nominations, the final round and the ceremony's word; the field by fieldFor (awards.ts:337)"
   ]
  },
  "pro.casting_decision": {
@@ -533,7 +545,7 @@
   "evidence": [
    "tests/pro-work.test.ts",
    "tests/b20-career-skill.test.ts",
-   "src/engine/systems/projobs.ts:1510-1477 casting: a booking since passes, else the draw keyed by the opportunity and the round (src/engine/systems/projobs.ts:508-499) at the chance of the band, the fit and the field (src/engine/systems/projobs.ts:395-387, src/engine/systems/projobs.ts:370-367), a callback or the offer; src/engine/systems/projobs.ts:1176-1162 makeOffer: scale plus ten represented, the decision required",
+   "src/engine/systems/projobs.ts:1520-1477 casting: a booking since passes, else the draw keyed by the opportunity and the round (src/engine/systems/projobs.ts:513-499) at the chance of the band, the fit and the field (src/engine/systems/projobs.ts:400-387, src/engine/systems/projobs.ts:375-367), a callback or the offer; src/engine/systems/projobs.ts:1184-1162 makeOffer: scale plus ten represented, the decision required",
    "tests/pro-core.test.ts the career’s 32 test files, 423 tests, run on this commit: all green"
   ]
  },
@@ -607,7 +619,7 @@
   "evidence": [
    "tests/b27-sides.test.ts",
    "tests/b27-offers-screen.test.ts",
-   "src/engine/systems/offers.ts:444 the command; src/engine/systems/projobs.ts:1720 the round judged with the choice; src/engine/systems/projobs.ts:2218 rehearsed by the rehearsal step"
+   "src/engine/systems/offers.ts:444 the command; src/engine/systems/projobs.ts:1730 the round judged with the choice; src/engine/systems/projobs.ts:2236 rehearsed by the rehearsal step"
   ]
  },
  "pro.cut_reel": {
@@ -621,7 +633,7 @@
    "tests/pro-core.test.ts",
    "tests/journey-agent.test.ts",
    "tests/b20-career-effects.test.ts",
-   "src/engine/systems/pro.ts:1112-1032 the command; src/engine/systems/pro.ts:1038-956 reelRefusal: nothing recorded, a piece twice, more than four, a voice tape, the same pieces again, the bank; src/engine/systems/pro.ts:928-854 reelSources",
+   "src/engine/systems/pro.ts:1164-1032 the command; src/engine/systems/pro.ts:1090-956 reelRefusal: nothing recorded, a piece twice, more than four, a voice tape, the same pieces again, the bank; src/engine/systems/pro.ts:980-854 reelSources",
    "tests/pro-core.test.ts the career’s 32 test files, 423 tests, run on this commit: all green"
   ]
  },
@@ -653,7 +665,7 @@
    "tests/pro-work.test.ts",
    "tests/b20-career-history.test.ts",
    "tests/b20-career-effects.test.ts",
-   "src/engine/systems/projobs.ts:1736-1689 the command: refused with no offer, the lapse called off, settled",
+   "src/engine/systems/projobs.ts:1746-1689 the command: refused with no offer, the lapse called off, settled",
    "tests/pro-core.test.ts the career’s 32 test files, 423 tests, run on this commit: all green"
   ]
  },
@@ -685,7 +697,7 @@
    "tests/propay.test.ts",
    "tests/b20-career-defects.test.ts",
    "tests/journey-career-older.test.ts",
-   "src/engine/systems/propay.ts:781-780 the event’s handler; src/engine/systems/propay.ts:682-691 equityJoined bills the fee’s three parts and the dues once; src/engine/systems/projobs.ts:1422-1374 emitted at an Equity contract’s first day; src/engine/systems/propay.ts:127 said by the School at the degree",
+   "src/engine/systems/propay.ts:781-780 the event’s handler; src/engine/systems/propay.ts:682-691 equityJoined bills the fee’s three parts and the dues once; src/engine/systems/projobs.ts:1432-1374 emitted at an Equity contract’s first day; src/engine/systems/propay.ts:127 said by the School at the degree",
    "tests/b20-career-effects.test.ts",
    "tests/pro-core.test.ts the career’s 32 test files, 423 tests, run on this commit: all green"
   ]
@@ -701,7 +713,7 @@
    "tests/pro-core.test.ts",
    "tests/pro-work.test.ts",
    "tests/journey-agent.test.ts",
-   "src/engine/systems/pro.ts:1083-1000 the command: charged through spend, four hours on the clock, a material added and the record kept to its bounds (src/engine/systems/pro.ts:630-572); src/engine/systems/pro.ts:1022-930 headshotRefusal: busy, by day only, the bank; a second session is allowed and charged, as the header says",
+   "src/engine/systems/pro.ts:1135-1000 the command: charged through spend, four hours on the clock, a material added and the record kept to its bounds (src/engine/systems/pro.ts:661-572); src/engine/systems/pro.ts:1074-930 headshotRefusal: busy, by day only, the bank; a second session is allowed and charged, as the header says",
    "tests/pro-screen.test.ts",
    "tests/pro-core.test.ts the career’s 32 test files, 423 tests, run on this commit: all green"
   ]
@@ -715,7 +727,7 @@
   "on": "68c2c004",
   "evidence": [
    "tests/b27-holds.test.ts",
-   "src/engine/systems/projobs.ts:2350 the answer: booked with an offer or the hold let go, by the last round's band and the draw"
+   "src/engine/systems/projobs.ts:2387 the answer: booked with an offer or the hold let go, by the last round's band and the draw"
   ]
  },
  "pro.invite": {
@@ -769,8 +781,8 @@
    "tests/b27-voice-demo.test.ts",
    "tests/career-workflows.test.ts",
    "tests/pro-core.test.ts",
-   "src/engine/systems/pro.ts:1437 the command; src/engine/systems/pro.ts:1346 demoRefusal: nothing of the voice recorded, none chosen, one twice, more than four, not a voice recording, the same recordings again, the clock and the bank",
-   "src/engine/systems/projobs.ts:1344 a voice part's submission sends the demo where screen work sends the reel"
+   "src/engine/systems/pro.ts:1489 the command; src/engine/systems/pro.ts:1398 demoRefusal: nothing of the voice recorded, none chosen, one twice, more than four, not a voice recording, the same recordings again, the clock and the bank",
+   "src/engine/systems/projobs.ts:1352 a voice part's submission sends the demo where screen work sends the reel"
   ]
  },
  "pro.move_audition": {
@@ -782,7 +794,7 @@
   "on": "9018cc4e",
   "evidence": [
    "tests/pro-work.test.ts",
-   "src/engine/systems/projobs.ts:1682-1645 the command moves it once, the item rescheduled; src/engine/systems/projobs.ts:884-855 moveRefusal; src/engine/systems/projobs.ts:849-830 otherTime",
+   "src/engine/systems/projobs.ts:1692-1645 the command moves it once, the item rescheduled; src/engine/systems/projobs.ts:892-855 moveRefusal; src/engine/systems/projobs.ts:857-830 otherTime",
    "tests/pro-core.test.ts the career’s 32 test files, 423 tests, run on this commit: all green"
   ]
  },
@@ -795,7 +807,7 @@
   "on": "68cb2816",
   "evidence": [
    "tests/b27-offers.test.ts",
-   "src/engine/systems/projobs.ts:2223 the answer: raised to what was asked or kept, by the band, the casting office and the draw"
+   "src/engine/systems/projobs.ts:2241 the answer: raised to what was asked or kept, by the band, the casting office and the draw"
   ]
  },
  "pro.note": {
@@ -820,8 +832,20 @@
   "evidence": [
    "tests/pro-work.test.ts",
    "tests/b20-career-history.test.ts",
-   "src/engine/systems/projobs.ts:1532-1487 an offer unanswered lapses once",
+   "src/engine/systems/projobs.ts:1542-1487 an offer unanswered lapses once",
    "tests/pro-core.test.ts the career’s 32 test files, 423 tests, run on this commit: all green"
+  ]
+ },
+ "pro.option_release_answer": {
+  "status": "Verified",
+  "by": [
+   "inspection",
+   "automated"
+  ],
+  "on": "1b757966",
+  "evidence": [
+   "tests/b27-option-hold.test.ts",
+   "src/engine/systems/continuity.ts:407 granted or refused the next afternoon by releaseChance (continuity.ts:180) against the decider pro.option_release; the notice says what the offer's standing leaves to choose; tests/b27-option-hold.test.ts"
   ]
  },
  "pro.pages": {
@@ -837,6 +861,18 @@
    "src/engine/systems/workflow.ts:841 revised pages the night before a work day, by the format's chance"
   ]
  },
+ "pro.pilot_word": {
+  "status": "Verified",
+  "by": [
+   "inspection",
+   "automated"
+  ],
+  "on": "1b757966",
+  "evidence": [
+   "tests/b27-pilots.test.ts",
+   "src/engine/systems/continuity.ts:462 the network's word on May 15 by pilotChance (continuity.ts:300) against the decider pro.pilot: shelved with its release, promotion and residuals gone, or a series made and the option taken up or let lapse; contracts.ts:375 no residual for a shelved pilot; tests/b27-pilots.test.ts: both ends, a pass inside the shoot, saved and loaded"
+  ]
+ },
  "pro.postings": {
   "status": "Verified",
   "by": [
@@ -849,7 +885,7 @@
    "tests/b20-career-history.test.ts",
    "tests/b20-career-skill.test.ts",
    "tests/b20-career-effects.test.ts",
-   "src/engine/systems/projobs.ts:1469-1429 the passage: each Monday’s postings, windows closed, the agent’s try; src/engine/systems/projobs.ts:484-490 postingsAt: who the part is written for, the route, not posted again before postedAgainBy (src/engine/systems/projobs.ts:461-455), never a part booked or credited before, each project’s own draw; src/engine/systems/projobs.ts:990-972 post; src/engine/systems/projobs.ts:1028-1007 agentTries",
+   "src/engine/systems/projobs.ts:1479-1429 the passage: each Monday’s postings, windows closed, the agent’s try; src/engine/systems/projobs.ts:489-490 postingsAt: who the part is written for, the route, not posted again before postedAgainBy (src/engine/systems/projobs.ts:466-455), never a part booked or credited before, each project’s own draw; src/engine/systems/projobs.ts:998-972 post; src/engine/systems/projobs.ts:1036-1007 agentTries",
    "tests/pro-core.test.ts the career’s 32 test files, 423 tests, run on this commit: all green"
   ]
  },
@@ -865,7 +901,7 @@
    "tests/b20-career-effects.test.ts",
    "tests/b20-career-skill.test.ts",
    "tests/pro-work.test.ts",
-   "src/engine/systems/projobs.ts:1657-1612 the command; src/engine/systems/projobs.ts:817-800 prepareRefusal; src/engine/systems/projobs.ts:1440-1401 prepareOn: a step halved for each time today, capped at 0.97",
+   "src/engine/systems/projobs.ts:1667-1612 the command; src/engine/systems/projobs.ts:825-800 prepareRefusal; src/engine/systems/projobs.ts:1450-1401 prepareOn: a step halved for each time today, capped at 0.97",
    "tests/pro-core.test.ts the career’s 32 test files, 423 tests, run on this commit: all green"
   ]
  },
@@ -878,7 +914,7 @@
   "on": "0bab5068",
   "evidence": [
    "tests/b27-promo.test.ts",
-   "src/engine/systems/workflow.ts:743 the film: made or missed, the pay; src/engine/systems/workflow.ts:862 its handler; src/engine/systems/projobs.ts:2031 the call"
+   "src/engine/systems/workflow.ts:743 the film: made or missed, the pay; src/engine/systems/workflow.ts:862 its handler; src/engine/systems/projobs.ts:2049 the call"
   ]
  },
  "pro.recasts": {
@@ -890,7 +926,7 @@
   "on": "2e6fd238",
   "evidence": [
    "tests/b27-casting-turns.test.ts",
-   "src/engine/systems/offers.ts:1071 the reactor; src/engine/systems/offers.ts:866 the part posted again; src/engine/systems/projobs.ts:859 casting keyed for the recast"
+   "src/engine/systems/offers.ts:1071 the reactor; src/engine/systems/offers.ts:866 the part posted again; src/engine/systems/projobs.ts:867 casting keyed for the recast"
   ]
  },
  "pro.record_take": {
@@ -906,6 +942,19 @@
    "src/engine/systems/offers.ts:460 the command; src/engine/systems/offers.ts:363 three a day and eight kept; src/engine/systems/offers.ts:371 recordTake's own draw and hour"
   ]
  },
+ "pro.recurring_invite": {
+  "status": "Verified",
+  "by": [
+   "inspection",
+   "automated"
+  ],
+  "on": "1b757966",
+  "evidence": [
+   "tests/b27-returning.test.ts",
+   "tests/b27-real-series.test.ts",
+   "src/engine/systems/continuity.ts:436 a guest part played Strong or Exceptional weighed six weeks before a season the series makes (INVITE, continuity.ts:213), offered back without an audition or said why not; projobs.ts:789 the invitation standing keeps the part out of the castings; tests/b27-returning.test.ts and tests/b27-real-series.test.ts: offered, never weighed, canceled, renewed, and in a simulated season of 9-1-1"
+  ]
+ },
  "pro.release": {
   "status": "Verified",
   "by": [
@@ -916,7 +965,7 @@
   "evidence": [
    "tests/b20-career-effects.test.ts",
    "tests/pro-core.test.ts",
-   "src/engine/systems/projobs.ts:1623-1574 a screen project released; src/engine/systems/pro.ts:680-594 releaseScreenCredit",
+   "src/engine/systems/projobs.ts:1633-1574 a screen project released; src/engine/systems/pro.ts:717-594 releaseScreenCredit",
    "tests/pro-work.test.ts",
    "tests/pro-core.test.ts the career’s 32 test files, 423 tests, run on this commit: all green"
   ]
@@ -933,7 +982,7 @@
    "tests/b20-career-skill.test.ts",
    "tests/b20-career-effects.test.ts",
    "tests/b20-career-saveload.test.ts",
-   "src/engine/systems/projobs.ts:1484-1435 the answer; src/engine/systems/projobs.ts:1060-1063 setRound: in person with the trip, or a tape due, the clash said",
+   "src/engine/systems/projobs.ts:1494-1435 the answer; src/engine/systems/projobs.ts:1068-1063 setRound: in person with the trip, or a tape due, the clash said",
    "tests/pro-core.test.ts the career’s 32 test files, 423 tests, run on this commit: all green"
   ]
  },
@@ -946,7 +995,7 @@
   "on": "9018cc4e",
   "evidence": [
    "tests/pro-work.test.ts",
-   "src/engine/systems/projobs.ts:1748-1707 the command; src/engine/systems/projobs.ts:943-920 requestRefusal: asked already, decided, not in term, standing, an F-1; src/engine/systems/projobs.ts:722-707 conditionsFor",
+   "src/engine/systems/projobs.ts:1758-1707 the command; src/engine/systems/projobs.ts:951-920 requestRefusal: asked already, decided, not in term, standing, an F-1; src/engine/systems/projobs.ts:727-707 conditionsFor",
    "tests/pro-core.test.ts the career’s 32 test files, 423 tests, run on this commit: all green"
   ]
  },
@@ -983,7 +1032,7 @@
   "on": "0bab5068",
   "evidence": [
    "tests/b27-revival.test.ts",
-   "src/engine/systems/series.ts:367 the producers' word: back by an offer or not; src/engine/systems/projobs.ts:2316 the offer without an audition; src/engine/systems/projobs.ts:777 the part not posted again"
+   "src/engine/systems/series.ts:490 the producers' word: back by an offer or not; src/engine/systems/projobs.ts:2353 the offer without an audition; src/engine/systems/projobs.ts:782 the part not posted again"
   ]
  },
  "pro.school_answer": {
@@ -995,7 +1044,7 @@
   "on": "9018cc4e",
   "evidence": [
    "tests/pro-work.test.ts",
-   "src/engine/systems/projobs.ts:1629-1593 the dean decides once, the engagement approved where one is booked",
+   "src/engine/systems/projobs.ts:1639-1593 the dean decides once, the engagement approved where one is booked",
    "tests/pro-core.test.ts the career’s 32 test files, 423 tests, run on this commit: all green"
   ]
  },
@@ -1037,7 +1086,7 @@
   "on": "3a759d49",
   "evidence": [
    "tests/career-contracts.test.ts",
-   "src/engine/systems/series.ts:323 the network's word each May, read from the last season's audience; series.ts:396 a further episode's call and series.ts:421 the option"
+   "src/engine/systems/series.ts:446 the network's word each May, read from the last season's audience; series.ts:396 a further episode's call and series.ts:421 the option"
   ]
  },
  "pro.set_name": {
@@ -1050,7 +1099,7 @@
   "evidence": [
    "tests/pro-core.test.ts",
    "tests/pro-app.test.ts",
-   "src/engine/systems/pro.ts:1071-983 the command; src/engine/systems/pro.ts:1060-970 nameRefusal: the same name, the display name, too long",
+   "src/engine/systems/pro.ts:1123-983 the command; src/engine/systems/pro.ts:1112-970 nameRefusal: the same name, the display name, too long",
    "tests/pro-core.test.ts the career’s 32 test files, 423 tests, run on this commit: all green"
   ]
  },
@@ -1066,7 +1115,7 @@
    "tests/b20-career-skill.test.ts",
    "tests/b20-career-effects.test.ts",
    "tests/b20-career-saveload.test.ts",
-   "src/engine/systems/projobs.ts:1648-1602 the command; src/engine/systems/projobs.ts:790-770 submitRefusal: submitted already, agents only, closed, ineligible, materials; src/engine/systems/projobs.ts:1011-989 submit sends what stands and books the answer",
+   "src/engine/systems/projobs.ts:1658-1602 the command; src/engine/systems/projobs.ts:798-770 submitRefusal: submitted already, agents only, closed, ineligible, materials; src/engine/systems/projobs.ts:1019-989 submit sends what stands and books the answer",
    "tests/pro-opportunities-screen.test.ts",
    "tests/pro-core.test.ts the career’s 32 test files, 423 tests, run on this commit: all green"
   ]
@@ -1097,7 +1146,7 @@
    "tests/pro-work.test.ts",
    "tests/b20-career-skill.test.ts",
    "tests/b20-career-effects.test.ts",
-   "src/engine/systems/projobs.ts:1667-1627 the command judges at the start and takes the hour; src/engine/systems/projobs.ts:838-811 tapeRefusal; src/engine/systems/projobs.ts:1105-1103 auditionContext and finishRound, the round done once",
+   "src/engine/systems/projobs.ts:1677-1627 the command judges at the start and takes the hour; src/engine/systems/projobs.ts:846-811 tapeRefusal; src/engine/systems/projobs.ts:1113-1103 auditionContext and finishRound, the round done once",
    "tests/pro-core.test.ts the career’s 32 test files, 423 tests, run on this commit: all green"
   ]
  },
@@ -1110,7 +1159,7 @@
   "on": "9018cc4e",
   "evidence": [
    "tests/pro-work.test.ts",
-   "src/engine/systems/projobs.ts:1504-1455 a tape not in lapses the part",
+   "src/engine/systems/projobs.ts:1514-1455 a tape not in lapses the part",
    "tests/pro-core.test.ts the career’s 32 test files, 423 tests, run on this commit: all green"
   ]
  },
@@ -1149,7 +1198,7 @@
    "tests/pro-core.test.ts",
    "tests/b20-career-effects.test.ts",
    "tests/journey-agent.test.ts",
-   "src/engine/systems/pro.ts:1100-1012 the command; src/engine/systems/pro.ts:1031-937 resumeRefusal: refused while the current résumé has everything on the record; src/engine/systems/pro.ts:884-811 resumeNow and resumeBehind, keyed line by line",
+   "src/engine/systems/pro.ts:1152-1012 the command; src/engine/systems/pro.ts:1083-937 resumeRefusal: refused while the current résumé has everything on the record; src/engine/systems/pro.ts:936-811 resumeNow and resumeBehind, keyed line by line",
    "tests/resume-town.test.ts",
    "tests/pro-core.test.ts the career’s 32 test files, 423 tests, run on this commit: all green"
   ]
@@ -1189,7 +1238,7 @@
   "on": "a5b0bd05",
   "evidence": [
    "tests/b27-weather.test.ts",
-   "src/engine/systems/projobs.ts:2316 the passage: each day on location read the evening before; src/engine/systems/projobs.ts:2277 the weather day: slipped or lost, the calendar, the flight home and the pay"
+   "src/engine/systems/projobs.ts:2353 the passage: each day on location read the evening before; src/engine/systems/projobs.ts:2297 the weather day: slipped or lost, the calendar, the flight home and the pay"
   ]
  },
  "pro.withdraw": {
@@ -1201,7 +1250,7 @@
   "on": "2e6fd238",
   "evidence": [
    "tests/b27-casting-turns.test.ts",
-   "src/engine/systems/offers.ts:473 the command; src/engine/systems/offers.ts:947 a late withdrawal remembered; src/engine/systems/projobs.ts:1793 no direct offer from an office that remembers; src/engine/systems/projobs.ts:2660 its cuts halved"
+   "src/engine/systems/offers.ts:473 the command; src/engine/systems/offers.ts:947 a late withdrawal remembered; src/engine/systems/projobs.ts:1805 no direct offer from an office that remembers; src/engine/systems/projobs.ts:2697 its cuts halved"
   ]
  },
  "pro.work_choice": {
@@ -1231,7 +1280,7 @@
    "tests/b20-career-skill.test.ts",
    "tests/b22-authorization.test.ts",
    "tests/pro-work.test.ts",
-   "src/engine/systems/projobs.ts:1542-1556 a work day: logged once, permission read whole (src/engine/systems/projobs.ts:1392-1346 release), missed (src/engine/systems/projobs.ts:1317-1278, the stage’s one, replaced after), unapproved work reported (src/engine/systems/projobs.ts:1406-1361), the unions (src/engine/systems/projobs.ts:1422-1376), a rehearsal’s growth (src/engine/systems/projobs.ts:1278-1233) or a judged day (src/engine/systems/projobs.ts:1260-1219), the genres practised, the mood, the energy, the credit at the first night, finished at the last (src/engine/systems/projobs.ts:1289-1261)",
+   "src/engine/systems/projobs.ts:1552-1556 a work day: logged once, permission read whole (src/engine/systems/projobs.ts:1402-1346 release), missed (src/engine/systems/projobs.ts:1325-1278, the stage’s one, replaced after), unapproved work reported (src/engine/systems/projobs.ts:1416-1361), the unions (src/engine/systems/projobs.ts:1432-1376), a rehearsal’s growth (src/engine/systems/projobs.ts:1286-1233) or a judged day (src/engine/systems/projobs.ts:1268-1219), the genres practised, the mood, the energy, the credit at the first night, finished at the last (src/engine/systems/projobs.ts:1297-1261)",
    "tests/journey-career.test.ts",
    "tests/b22-genre-weights.test.ts",
    "tests/pro-core.test.ts the career’s 32 test files, 423 tests, run on this commit: all green"
@@ -1317,7 +1366,7 @@
   "on": "9018cc4e",
   "evidence": [
    "tests/journey-agent.test.ts",
-   "src/engine/content/careerwork.ts:412-436 AGREEMENT and its terms; src/engine/systems/proagent.ts:975-924 offerAgreement; src/engine/systems/proagent.ts:800-755 endRefusal; src/engine/systems/proagent.ts:1184-1155 the commands",
+   "src/engine/content/careerwork.ts:417-436 AGREEMENT and its terms; src/engine/systems/proagent.ts:975-924 offerAgreement; src/engine/systems/proagent.ts:800-755 endRefusal; src/engine/systems/proagent.ts:1184-1155 the commands",
    "tests/pro-agent.test.ts",
    "tests/pro-core.test.ts the career’s 32 test files, 423 tests, run on this commit: all green"
   ]
@@ -1332,7 +1381,7 @@
   "evidence": [
    "tests/journey-agent.test.ts",
    "tests/b20-career-effects.test.ts",
-   "src/engine/content/careerwork.ts:412-436 AGREEMENT and its terms; src/engine/systems/proagent.ts:975-924 offerAgreement; src/engine/systems/proagent.ts:800-755 endRefusal; src/engine/systems/proagent.ts:1184-1155 the commands",
+   "src/engine/content/careerwork.ts:417-436 AGREEMENT and its terms; src/engine/systems/proagent.ts:975-924 offerAgreement; src/engine/systems/proagent.ts:800-755 endRefusal; src/engine/systems/proagent.ts:1184-1155 the commands",
    "tests/pro-agent.test.ts",
    "tests/pro-core.test.ts the career’s 32 test files, 423 tests, run on this commit: all green"
   ]
@@ -1347,7 +1396,7 @@
   "evidence": [
    "tests/pro-work.test.ts",
    "tests/b20-career-skill.test.ts",
-   "src/engine/systems/projobs.ts:1060-1063 setRound; src/engine/systems/projobs.ts:1490-1477 the round and casting; src/engine/systems/projobs.ts:817-855 the preparing, taping and moving refusals",
+   "src/engine/systems/projobs.ts:1068-1063 setRound; src/engine/systems/projobs.ts:1500-1477 the round and casting; src/engine/systems/projobs.ts:825-855 the preparing, taping and moving refusals",
    "tests/pro-core.test.ts the career’s 32 test files, 423 tests, run on this commit: all green"
   ]
  },
@@ -1361,7 +1410,7 @@
   "evidence": [
    "tests/pro-work.test.ts",
    "tests/pro-app.test.ts",
-   "src/engine/systems/projobs.ts:1060-1063 setRound; src/engine/systems/projobs.ts:1490-1477 the round and casting; src/engine/systems/projobs.ts:817-855 the preparing, taping and moving refusals",
+   "src/engine/systems/projobs.ts:1068-1063 setRound; src/engine/systems/projobs.ts:1500-1477 the round and casting; src/engine/systems/projobs.ts:825-855 the preparing, taping and moving refusals",
    "tests/pro-core.test.ts the career’s 32 test files, 423 tests, run on this commit: all green"
   ]
  },
@@ -1402,7 +1451,7 @@
   "on": "f36f49a5",
   "evidence": [
    "tests/b27-voice-demo.test.ts",
-   "src/engine/systems/pro.ts:1206 demoSources: a voice brief's takes and a released voice credit, what a reel refuses"
+   "src/engine/systems/pro.ts:1258 demoSources: a voice brief's takes and a released voice credit, what a reel refuses"
   ]
  },
  "promise.career.demo>craft.brief-tape": {
@@ -1414,7 +1463,7 @@
   "on": "f36f49a5",
   "evidence": [
    "tests/b27-voice-demo.test.ts",
-   "src/engine/systems/pro.ts:1206 demoSources: a voice brief's takes and a released voice credit, what a reel refuses"
+   "src/engine/systems/pro.ts:1258 demoSources: a voice brief's takes and a released voice credit, what a reel refuses"
   ]
  },
  "promise.career.headshots>bank.accounts": {
@@ -1426,7 +1475,7 @@
   "on": "9018cc4e",
   "evidence": [
    "tests/pro-core.test.ts",
-   "src/engine/systems/pro.ts:1022-930 headshotRefusal; src/engine/systems/pro.ts:1083-1000 the command through spend",
+   "src/engine/systems/pro.ts:1074-930 headshotRefusal; src/engine/systems/pro.ts:1135-1000 the command through spend",
    "tests/pro-core.test.ts the career’s 32 test files, 423 tests, run on this commit: all green"
   ]
  },
@@ -1440,7 +1489,7 @@
   "evidence": [
    "tests/pro-core.test.ts",
    "tests/journey-agent.test.ts",
-   "src/engine/systems/pro.ts:1022-930 headshotRefusal; src/engine/systems/pro.ts:1083-1000 the command through spend",
+   "src/engine/systems/pro.ts:1074-930 headshotRefusal; src/engine/systems/pro.ts:1135-1000 the command through spend",
    "tests/pro-core.test.ts the career’s 32 test files, 423 tests, run on this commit: all green"
   ]
  },
@@ -1454,7 +1503,7 @@
   "evidence": [
    "tests/b20-career-effects.test.ts",
    "tests/pro-work.test.ts",
-   "src/engine/systems/projobs.ts:1176-1162 makeOffer; src/engine/systems/projobs.ts:894-904 acceptRefusal and acceptWarning; src/engine/systems/projobs.ts:1702-1689 accept and decline",
+   "src/engine/systems/projobs.ts:1184-1162 makeOffer; src/engine/systems/projobs.ts:902-904 acceptRefusal and acceptWarning; src/engine/systems/projobs.ts:1712-1689 accept and decline",
    "tests/pro-core.test.ts the career’s 32 test files, 423 tests, run on this commit: all green"
   ]
  },
@@ -1468,7 +1517,7 @@
   "evidence": [
    "tests/pro-work.test.ts",
    "tests/pro-opportunities-screen.test.ts",
-   "src/engine/systems/projobs.ts:1176-1162 makeOffer; src/engine/systems/projobs.ts:894-904 acceptRefusal and acceptWarning; src/engine/systems/projobs.ts:1702-1689 accept and decline",
+   "src/engine/systems/projobs.ts:1184-1162 makeOffer; src/engine/systems/projobs.ts:902-904 acceptRefusal and acceptWarning; src/engine/systems/projobs.ts:1712-1689 accept and decline",
    "tests/pro-core.test.ts the career’s 32 test files, 423 tests, run on this commit: all green"
   ]
  },
@@ -1482,7 +1531,7 @@
   "evidence": [
    "tests/pro-work.test.ts",
    "tests/b20-career-effects.test.ts",
-   "src/engine/systems/projobs.ts:1176-1162 makeOffer; src/engine/systems/projobs.ts:894-904 acceptRefusal and acceptWarning; src/engine/systems/projobs.ts:1702-1689 accept and decline",
+   "src/engine/systems/projobs.ts:1184-1162 makeOffer; src/engine/systems/projobs.ts:902-904 acceptRefusal and acceptWarning; src/engine/systems/projobs.ts:1712-1689 accept and decline",
    "tests/pro-core.test.ts the career’s 32 test files, 423 tests, run on this commit: all green"
   ]
  },
@@ -1497,7 +1546,7 @@
    "tests/pro-work.test.ts",
    "tests/b20-career-skill.test.ts",
    "tests/b20-career-effects.test.ts",
-   "src/engine/systems/projobs.ts:484-490 postingsAt; src/engine/systems/projobs.ts:426-418 reachOf; src/engine/systems/projobs.ts:761-770 eligibilityProblems, materialProblems, submitRefusal",
+   "src/engine/systems/projobs.ts:489-490 postingsAt; src/engine/systems/projobs.ts:431-418 reachOf; src/engine/systems/projobs.ts:766-770 eligibilityProblems, materialProblems, submitRefusal",
    "tests/pro-opportunities-screen.test.ts",
    "tests/pro-core.test.ts the career’s 32 test files, 423 tests, run on this commit: all green"
   ]
@@ -1511,7 +1560,7 @@
   "on": "9018cc4e",
   "evidence": [
    "tests/pro-work.test.ts",
-   "src/engine/systems/projobs.ts:484-490 postingsAt; src/engine/systems/projobs.ts:426-418 reachOf; src/engine/systems/projobs.ts:761-770 eligibilityProblems, materialProblems, submitRefusal",
+   "src/engine/systems/projobs.ts:489-490 postingsAt; src/engine/systems/projobs.ts:431-418 reachOf; src/engine/systems/projobs.ts:766-770 eligibilityProblems, materialProblems, submitRefusal",
    "tests/pro-opportunities-screen.test.ts",
    "tests/pro-core.test.ts the career’s 32 test files, 423 tests, run on this commit: all green"
   ]
@@ -1526,7 +1575,7 @@
   "evidence": [
    "tests/pro-work.test.ts",
    "tests/pro-opportunities-screen.test.ts",
-   "src/engine/systems/projobs.ts:722-707 conditionsFor; src/engine/systems/projobs.ts:943-920 requestRefusal; src/engine/systems/projobs.ts:1629-1593 the dean’s answer; src/engine/systems/projobs.ts:1406-1361 reportUnapproved through setStanding",
+   "src/engine/systems/projobs.ts:727-707 conditionsFor; src/engine/systems/projobs.ts:951-920 requestRefusal; src/engine/systems/projobs.ts:1639-1593 the dean’s answer; src/engine/systems/projobs.ts:1416-1361 reportUnapproved through setStanding",
    "tests/pro-core.test.ts the career’s 32 test files, 423 tests, run on this commit: all green"
   ]
  },
@@ -1539,7 +1588,7 @@
   "on": "9018cc4e",
   "evidence": [
    "tests/pro-work.test.ts",
-   "src/engine/systems/projobs.ts:722-707 conditionsFor; src/engine/systems/projobs.ts:943-920 requestRefusal; src/engine/systems/projobs.ts:1629-1593 the dean’s answer; src/engine/systems/projobs.ts:1406-1361 reportUnapproved through setStanding",
+   "src/engine/systems/projobs.ts:727-707 conditionsFor; src/engine/systems/projobs.ts:951-920 requestRefusal; src/engine/systems/projobs.ts:1639-1593 the dean’s answer; src/engine/systems/projobs.ts:1416-1361 reportUnapproved through setStanding",
    "tests/pro-core.test.ts the career’s 32 test files, 423 tests, run on this commit: all green"
   ]
  },
@@ -1552,7 +1601,7 @@
   "on": "9018cc4e",
   "evidence": [
    "tests/pro-screen.test.ts",
-   "src/engine/systems/pro.ts:840-779 pathwayOf and profileOf, worked out from the record and never stored",
+   "src/engine/systems/pro.ts:892-779 pathwayOf and profileOf, worked out from the record and never stored",
    "tests/pro-core.test.ts the career’s 32 test files, 423 tests, run on this commit: all green"
   ]
  },
@@ -1566,7 +1615,7 @@
   "evidence": [
    "tests/pro-core.test.ts",
    "tests/pro-screen.test.ts",
-   "src/engine/systems/pro.ts:840-779 pathwayOf and profileOf, worked out from the record and never stored",
+   "src/engine/systems/pro.ts:892-779 pathwayOf and profileOf, worked out from the record and never stored",
    "tests/pro-core.test.ts the career’s 32 test files, 423 tests, run on this commit: all green"
   ]
  },
@@ -1581,7 +1630,7 @@
    "tests/propay.test.ts",
    "tests/b20-career-effects.test.ts",
    "tests/b20-career-saveload.test.ts",
-   "src/engine/systems/propay.ts:477-521 payDue; src/engine/systems/propay.ts:407-434 withholdingOn; src/engine/systems/propay.ts:175-173 paydayAfter; src/engine/systems/projobs.ts:1221-1184 promisedPay",
+   "src/engine/systems/propay.ts:477-521 payDue; src/engine/systems/propay.ts:407-434 withholdingOn; src/engine/systems/propay.ts:175-173 paydayAfter; src/engine/systems/projobs.ts:1229-1184 promisedPay",
    "tests/pro-core.test.ts the career’s 32 test files, 423 tests, run on this commit: all green"
   ]
  },
@@ -1596,7 +1645,7 @@
    "tests/pro-work.test.ts",
    "tests/b20-career-effects.test.ts",
    "tests/propay-screen.test.ts",
-   "src/engine/systems/propay.ts:477-521 payDue; src/engine/systems/propay.ts:407-434 withholdingOn; src/engine/systems/propay.ts:175-173 paydayAfter; src/engine/systems/projobs.ts:1221-1184 promisedPay",
+   "src/engine/systems/propay.ts:477-521 payDue; src/engine/systems/propay.ts:407-434 withholdingOn; src/engine/systems/propay.ts:175-173 paydayAfter; src/engine/systems/projobs.ts:1229-1184 promisedPay",
    "tests/propay.test.ts",
    "tests/pro-core.test.ts the career’s 32 test files, 423 tests, run on this commit: all green"
   ]
@@ -1610,7 +1659,7 @@
   "on": "9018cc4e",
   "evidence": [
    "tests/propay.test.ts",
-   "src/engine/systems/propay.ts:477-521 payDue; src/engine/systems/propay.ts:407-434 withholdingOn; src/engine/systems/propay.ts:175-173 paydayAfter; src/engine/systems/projobs.ts:1221-1184 promisedPay",
+   "src/engine/systems/propay.ts:477-521 payDue; src/engine/systems/propay.ts:407-434 withholdingOn; src/engine/systems/propay.ts:175-173 paydayAfter; src/engine/systems/projobs.ts:1229-1184 promisedPay",
    "tests/pro-core.test.ts the career’s 32 test files, 423 tests, run on this commit: all green"
   ]
  },
@@ -1623,7 +1672,7 @@
   "on": "9018cc4e",
   "evidence": [
    "tests/pro-core.test.ts",
-   "src/engine/systems/pro.ts:713-779 trainingOf, schoolCreditsOf, skillsOf, unionsOf, eligibilityOf, availabilityOf, profileOf",
+   "src/engine/systems/pro.ts:750-779 trainingOf, schoolCreditsOf, skillsOf, unionsOf, eligibilityOf, availabilityOf, profileOf",
    "tests/pro-screen.test.ts",
    "tests/pro-core.test.ts the career’s 32 test files, 423 tests, run on this commit: all green"
   ]
@@ -1638,7 +1687,7 @@
   "evidence": [
    "tests/pro-app.test.ts",
    "tests/pro-core.test.ts",
-   "src/engine/systems/pro.ts:713-779 trainingOf, schoolCreditsOf, skillsOf, unionsOf, eligibilityOf, availabilityOf, profileOf",
+   "src/engine/systems/pro.ts:750-779 trainingOf, schoolCreditsOf, skillsOf, unionsOf, eligibilityOf, availabilityOf, profileOf",
    "tests/pro-screen.test.ts",
    "tests/pro-core.test.ts the career’s 32 test files, 423 tests, run on this commit: all green"
   ]
@@ -1683,7 +1732,7 @@
   "on": "9018cc4e",
   "evidence": [
    "tests/pro-core.test.ts",
-   "src/engine/systems/pro.ts:928-854 reelSources; src/engine/systems/pro.ts:1038-956 reelRefusal; src/engine/systems/pro.ts:1112-1032 the command",
+   "src/engine/systems/pro.ts:980-854 reelSources; src/engine/systems/pro.ts:1090-956 reelRefusal; src/engine/systems/pro.ts:1164-1032 the command",
    "tests/pro-core.test.ts the career’s 32 test files, 423 tests, run on this commit: all green"
   ]
  },
@@ -1697,7 +1746,7 @@
   "evidence": [
    "tests/pro-core.test.ts",
    "tests/journey-agent.test.ts",
-   "src/engine/systems/pro.ts:928-854 reelSources; src/engine/systems/pro.ts:1038-956 reelRefusal; src/engine/systems/pro.ts:1112-1032 the command",
+   "src/engine/systems/pro.ts:980-854 reelSources; src/engine/systems/pro.ts:1090-956 reelRefusal; src/engine/systems/pro.ts:1164-1032 the command",
    "tests/pro-core.test.ts the career’s 32 test files, 423 tests, run on this commit: all green"
   ]
  },
@@ -1711,7 +1760,7 @@
   "evidence": [
    "tests/pro-core.test.ts",
    "tests/b20-career-effects.test.ts",
-   "src/engine/systems/pro.ts:884-811 resumeNow and resumeBehind; src/engine/systems/pro.ts:1100-1012 the command",
+   "src/engine/systems/pro.ts:936-811 resumeNow and resumeBehind; src/engine/systems/pro.ts:1152-1012 the command",
    "tests/resume-town.test.ts",
    "tests/pro-core.test.ts the career’s 32 test files, 423 tests, run on this commit: all green"
   ]
@@ -1725,7 +1774,7 @@
   "on": "9018cc4e",
   "evidence": [
    "tests/pro-core.test.ts",
-   "src/engine/systems/pro.ts:884-811 resumeNow and resumeBehind; src/engine/systems/pro.ts:1100-1012 the command",
+   "src/engine/systems/pro.ts:936-811 resumeNow and resumeBehind; src/engine/systems/pro.ts:1152-1012 the command",
    "tests/resume-town.test.ts",
    "tests/pro-core.test.ts the career’s 32 test files, 423 tests, run on this commit: all green"
   ]

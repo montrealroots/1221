@@ -252,7 +252,7 @@
     },
     {
      "what": "a work day finds the actor asleep (there)",
-     "at": "src/engine/systems/projobs.ts:1076"
+     "at": "src/engine/systems/projobs.ts:1084"
     },
     {
      "what": "a plan finds them asleep",
@@ -717,7 +717,7 @@
     },
     {
      "what": "a work day takes a School rehearsal call’s energy",
-     "at": "src/engine/systems/projobs.ts:1469"
+     "at": "src/engine/systems/projobs.ts:1479"
     }
    ],
    "experienced": "How You Are and readiness; the refusals; the judged work and the classes through readiness.",
@@ -1754,6 +1754,47 @@
    "status": "Implemented, Verification Incomplete",
    "why": "The function is tested directly, as the festivals cluster’s call will reach it; no life the gate plays reaches it yet.",
    "purpose": "Tells the player an agent's office met them at a festival where their film showed, and that the meeting is the game's."
+  },
+  {
+   "id": "notice.systems/continuity#tellOf",
+   "kind": "notice",
+   "area": "life",
+   "mechanic": true,
+   "seeded": false,
+   "readBy": "life",
+   "readAt": "1b757966",
+   "where": "What Needs You and Home's notices: “Released From The Option On <role>”, “The Option On <role> Stands”, “<Series> Can’t Bring Back <part>”, “<Pilot> Isn’t Picked Up”, “<Pilot> Goes To Series” and “… Without You”, sent from continuity.ts to the player alone.",
+   "prerequisites": "An option asked about and answered; a guest part weighed and its season having no work; a pilot's network word.",
+   "reads": "The answer, the offer's standing, the season, the word and the option's fate.",
+   "changes": "A notice; the state it reports is the scheduled kind's own.",
+   "consumers": [
+    {
+     "what": "the notice is sent to the player alone, with the career route",
+     "at": "src/engine/systems/continuity.ts:388"
+    },
+    {
+     "what": "what the notice says is what the scheduled kinds changed",
+     "at": "src/engine/systems/continuity.ts:407"
+    }
+   ],
+   "experienced": "The notice, and the engagement's history and contract saying the same.",
+   "saveLoad": "The professional record (`person.pro`) and the calendar's pending `pro.*` items are in the save; every handler reads the record's own state (a status, a key, a guard) before acting, so a load runs nothing twice and drops nothing. A save from before the cluster is opened by tests/b27-older-save.test.ts on its fixture.",
+   "evidence": {
+    "tests": [
+     "tests/b27-option-hold.test.ts",
+     "tests/b27-pilots.test.ts",
+     "tests/b27-returning.test.ts"
+    ],
+    "comparisons": [],
+    "mutations": [],
+    "journeys": [
+     "b27-pilots: the word's notice read on both ends; b27-option-hold: both answers' notices read"
+    ]
+   },
+   "missing": "As the scheduled kinds it reports.",
+   "status": "Implemented And Verified",
+   "why": "",
+   "purpose": "Tells the player what the production, the producers or the network decided, in the player's words, and that it's the game's draw."
   }
  ],
  "promises": [
@@ -1914,7 +1955,7 @@
    "kind": "immediate",
    "claim": "A commitment during the night goes ahead without you, and it counts as missed.",
    "entryFile": "src/engine/content/guide/body.ts",
-   "holds": "Each handler finds the sleeper absent: a plan (src/engine/world/plans.ts:138), classes (src/engine/systems/school.ts:1573), a work day (src/engine/systems/projobs.ts:1071).",
+   "holds": "Each handler finds the sleeper absent: a plan (src/engine/world/plans.ts:138), classes (src/engine/systems/school.ts:1573), a work day (src/engine/systems/projobs.ts:1079).",
    "tests": [
     "tests/evidence-g01-life.test.ts",
     "tests/sleep-commitments.test.ts",

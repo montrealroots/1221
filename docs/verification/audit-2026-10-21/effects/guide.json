@@ -1989,7 +1989,7 @@
    "kind": "optional",
    "claim": "Recognition makes casting likelier to choose you for a while.",
    "entryFile": "src/engine/content/guide/career.ts",
-   "holds": "Casting's decision passes the player's visibility to its draw (src/engine/systems/projobs.ts:2660), which lifts the chance within casting's ceiling (`castingDraw`), fading over three years (`visibilityOf`).",
+   "holds": "Casting's decision passes the player's visibility to its draw (src/engine/systems/projobs.ts:2697), which lifts the chance within casting's ceiling (`castingDraw`), fading over three years (`visibilityOf`).",
    "tests": [
     "tests/career-awards.test.ts"
    ],
@@ -2064,7 +2064,7 @@
    "kind": "evaluation",
    "claim": "For a conversational speaker, the language’s preparation is read when an audition is judged, beside the rest of the sides.",
    "entryFile": "src/engine/content/guide/career.ts",
-   "holds": "`withLanguage` adds the language's preparation to the round's context (src/engine/systems/projobs.ts:1720), read on believability and execution.",
+   "holds": "`withLanguage` adds the language's preparation to the round's context (src/engine/systems/projobs.ts:1730), read on believability and execution.",
    "tests": [
     "tests/b27-languages.test.ts"
    ],
@@ -2079,7 +2079,7 @@
    "kind": "prerequisite",
    "claim": "A part written in a language you don’t speak can’t be submitted for.",
    "entryFile": "src/engine/content/guide/career.ts",
-   "holds": "`languageRefusal` is among `eligibilityProblems` (src/engine/systems/projobs.ts:829).",
+   "holds": "`languageRefusal` is among `eligibilityProblems` (src/engine/systems/projobs.ts:837).",
    "tests": [
     "tests/b27-languages.test.ts"
    ],
@@ -2094,7 +2094,7 @@
    "kind": "history",
    "claim": "Your résumé lists the languages you speak and how well.",
    "entryFile": "src/engine/content/guide/career.ts",
-   "holds": "`resumeNow` lists every language but native English (src/engine/systems/pro.ts:1230).",
+   "holds": "`resumeNow` lists every language but native English (src/engine/systems/pro.ts:1282).",
    "tests": [
     "tests/b27-languages.test.ts"
    ],
@@ -2109,7 +2109,7 @@
    "kind": "evaluation",
    "claim": "Casting’s decision reads the round as it was played and directed, and the take you sent.",
    "entryFile": "src/engine/content/guide/career.ts",
-   "holds": "The round is judged with the choice and the direction's answer (`approachRead`, src/engine/systems/projobs.ts:1720) and with the take sent (src/engine/systems/offers.ts:411), and the cut reads the round's band (src/engine/systems/projobs.ts:2660).",
+   "holds": "The round is judged with the choice and the direction's answer (`approachRead`, src/engine/systems/projobs.ts:1730) and with the take sent (src/engine/systems/offers.ts:411), and the cut reads the round's band (src/engine/systems/projobs.ts:2697).",
    "tests": [
     "tests/b27-sides.test.ts"
    ],
@@ -2124,7 +2124,7 @@
    "kind": "optional",
    "claim": "The ways of playing are the same as a practice brief’s, and so is how they’re rehearsed.",
    "entryFile": "src/engine/content/guide/career.ts",
-   "holds": "The choice is a brief's `Playing` (`choose`, `rehearseChoice` from systems/material.ts), rehearsed by the same step (src/engine/systems/projobs.ts:2218).",
+   "holds": "The choice is a brief's `Playing` (`choose`, `rehearseChoice` from systems/material.ts), rehearsed by the same step (src/engine/systems/projobs.ts:2236).",
    "tests": [
     "tests/b27-sides.test.ts"
    ],
@@ -2169,7 +2169,7 @@
    "kind": "prerequisite",
    "claim": "Only an agent under an agreement in force negotiates for you.",
    "entryFile": "src/engine/content/guide/career.ts",
-   "holds": "`askMoreRefusal` refuses with no agreement in force, and on work the agreement doesn't cover (src/engine/systems/projobs.ts:1806).",
+   "holds": "`askMoreRefusal` refuses with no agreement in force, and on work the agreement doesn't cover (src/engine/systems/projobs.ts:1818).",
    "tests": [
     "tests/b27-offer-terms.test.ts"
    ],
@@ -2184,7 +2184,7 @@
    "kind": "evaluation",
    "claim": "A remembered no-show halves that office’s decisions on your later auditions.",
    "entryFile": "src/engine/content/guide/career.ts",
-   "holds": "`castingLift` halves the lift where the office remembers (src/engine/systems/offers.ts:899), read at every cut (src/engine/systems/projobs.ts:2660).",
+   "holds": "`castingLift` halves the lift where the office remembers (src/engine/systems/offers.ts:899), read at every cut (src/engine/systems/projobs.ts:2697).",
    "tests": [
     "tests/b27-casting-turns.test.ts"
    ],
@@ -2199,7 +2199,7 @@
    "kind": "immediate",
    "claim": "An office that remembers a no-show offers you nothing without an audition.",
    "entryFile": "src/engine/content/guide/career.ts",
-   "holds": "`directOfferFor` returns nothing where the office remembers (src/engine/systems/projobs.ts:1793).",
+   "holds": "`directOfferFor` returns nothing where the office remembers (src/engine/systems/projobs.ts:1805).",
    "tests": [
     "tests/b27-casting-turns.test.ts"
    ],
@@ -2208,6 +2208,52 @@
    "seeded": false,
    "readBy": "guide",
    "readAt": "2e6fd238"
+  },
+  {
+   "id": "promise.career.series>career.contracts",
+   "kind": "prerequisite",
+   "claim": "An option is a term of a recurring part’s or a pilot’s contract.",
+   "entryFile": "src/engine/content/guide/career.ts",
+   "holds": "`pilotTerms` writes the option clause into a pilot's contract (src/engine/systems/continuity.ts:335), and a recurring part's carries one from `systems/contracts.ts`; `heldOptions` reads only open option clauses (src/engine/systems/continuity.ts:113).",
+   "tests": [
+    "tests/b27-pilots.test.ts",
+    "tests/b27-option-hold.test.ts"
+   ],
+   "status": "Implemented And Verified",
+   "why": "",
+   "seeded": false,
+   "readBy": "guide",
+   "readAt": "1b757966"
+  },
+  {
+   "id": "promise.career.series>career.offers",
+   "kind": "immediate",
+   "claim": "Accepting an offer on an option’s days gives the option up.",
+   "entryFile": "src/engine/content/guide/career.ts",
+   "holds": "`giveUpOptions` runs in the accept handler on the offer's spans (src/engine/systems/projobs.ts:3091) and settles each held option given up.",
+   "tests": [
+    "tests/b27-option-hold.test.ts"
+   ],
+   "status": "Implemented And Verified",
+   "why": "",
+   "seeded": false,
+   "readBy": "guide",
+   "readAt": "1b757966"
+  },
+  {
+   "id": "promise.career.series>career.awards",
+   "kind": "scheduled",
+   "claim": "A release’s way out sets the date and the run its awards read.",
+   "entryFile": "src/engine/content/guide/career.ts",
+   "holds": "A limited, taken-over or abroad-first release moves the credit's date and run (src/engine/systems/charts.ts), and the Actor Awards place a film by its run at home (tests/b27-release-routes.test.ts).",
+   "tests": [
+    "tests/b27-release-routes.test.ts"
+   ],
+   "status": "Implemented And Verified",
+   "why": "",
+   "seeded": false,
+   "readBy": "guide",
+   "readAt": "1b757966"
   }
  ]
 }

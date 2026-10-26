@@ -569,7 +569,7 @@
    "kind": "pro.award_enter",
    "payload": "{ creditId: c.id }",
    "verdict": "Right",
-   "handler": "src/engine/systems/awards.ts:683",
+   "handler": "src/engine/systems/awards.ts:684",
    "note": "Enter Yourself under an eligible television part enters that credit for its Emmy year and pays the fee, by the credit's id; its refusal (entryRefusal) is its title and grays it, and the part then says where its entry stands. Read on 2026-10-24 by its builder (brief 25's Module 6), pressed through the command in tests/career-awards-screen.test.ts."
   },
   {
@@ -613,7 +613,7 @@
    "kind": "pro.actor_submit",
    "payload": "{ creditId: c.id }",
    "verdict": "Right",
-   "handler": "src/engine/systems/actorawards.ts:354",
+   "handler": "src/engine/systems/actorawards.ts:361",
    "note": "Submit Yourself under an eligible credit submits that performance for its Actor Awards year and pays the $200, by the credit's id; its refusal (actorSubmitRefusal) is its title and grays it. Read on 2026-10-25 by its builder (brief 27's K7), pressed through the command in tests/b27-actor-awards.test.ts."
   },
   {
@@ -668,7 +668,7 @@
    "kind": "pro.accept_offer",
    "payload": "{ opportunityId: o.id }",
    "verdict": "Right",
-   "handler": "src/engine/systems/projobs.ts:2999",
+   "handler": "src/engine/systems/projobs.ts:3042",
    "note": "Accept On Its Condition: a conditional offer's acceptance holds the dates and books nothing until its round goes the actor's way (acceptOnCondition)."
   },
   {
@@ -679,7 +679,7 @@
    "kind": "pro.ask_more",
    "payload": "{ opportunityId: o.id, item }",
    "verdict": "Right",
-   "handler": "src/engine/systems/projobs.ts:2956",
+   "handler": "src/engine/systems/projobs.ts:2999",
    "note": "The item asked about (the pay, a guaranteed episode, the promotional film) rides the payload; askMoreRefusal, then termsAskRefusal, gray it."
   },
   {
@@ -690,7 +690,7 @@
    "kind": "pro.prepare",
    "payload": "{ ...target, step: 'special' }",
    "verdict": "Right",
-   "handler": "src/engine/systems/projobs.ts:2917",
+   "handler": "src/engine/systems/projobs.ts:2960",
    "note": "The work's own preparation (Find The Voice, Watch The Original, Work On The Movement and the rest) prepares that step on the booked work; its refusal (prepareRefusal, 'special') is the button's title, and Fight Rehearsal is refused here, done only on the work's rehearsal days with the coordinator. Read on 2026-10-24 by its builder (brief 25's Module 5), pressed through the command in tests/career-workflows-screen.test.ts."
   },
   {
@@ -701,7 +701,7 @@
    "kind": "pro.prepare",
    "payload": "{ ...target, step }",
    "verdict": "Right",
-   "handler": "src/engine/systems/projobs.ts:2917"
+   "handler": "src/engine/systems/projobs.ts:2960"
   },
   {
    "file": "src/ui/career/OpportunitiesPane.tsx",
@@ -711,7 +711,7 @@
    "kind": "pro.prepare",
    "payload": "{ ...target, step: 'language' }",
    "verdict": "Right",
-   "handler": "src/engine/systems/projobs.ts:2917"
+   "handler": "src/engine/systems/projobs.ts:2960"
   },
   {
    "file": "src/ui/career/OpportunitiesPane.tsx",
@@ -721,7 +721,7 @@
    "kind": "pro.move_audition",
    "payload": "{ opportunityId: o.id }",
    "verdict": "Right",
-   "handler": "src/engine/systems/projobs.ts:2938"
+   "handler": "src/engine/systems/projobs.ts:2981"
   },
   {
    "file": "src/ui/career/OpportunitiesPane.tsx",
@@ -731,7 +731,7 @@
    "kind": "pro.request_outside_work",
    "payload": "{ opportunityId: o.id }",
    "verdict": "Right",
-   "handler": "src/engine/systems/projobs.ts:3065"
+   "handler": "src/engine/systems/projobs.ts:3112"
   },
   {
    "file": "src/ui/career/OpportunitiesPane.tsx",
@@ -741,7 +741,7 @@
    "kind": "pro.ask_hold",
    "payload": "{ opportunityId: o.id }",
    "verdict": "Right",
-   "handler": "src/engine/systems/projobs.ts:2983",
+   "handler": "src/engine/systems/projobs.ts:3026",
    "note": "Ask Them To Decide, on a part whose production holds the actor's dates, asks it to book them or let the hold go before another offer on the same days lapses; its refusal (holdAskRefusal) is its title: no hold, already offered, asked already, no other offer, or one lapsing before the answer. Read on 2026-10-25 by its builder (brief 27, K4), pressed through the command in tests/b27-holds.test.ts."
   },
   {
@@ -762,7 +762,7 @@
    "kind": "pro.decline_offer",
    "payload": "{ opportunityId: o.id }",
    "verdict": "Right",
-   "handler": "src/engine/systems/projobs.ts:3053"
+   "handler": "src/engine/systems/projobs.ts:3100"
   },
   {
    "file": "src/ui/career/OpportunitiesPane.tsx",
@@ -814,7 +814,7 @@
    "kind": "pro.submit",
    "payload": "{ opportunityId: o.id }",
    "verdict": "Right",
-   "handler": "src/engine/systems/projobs.ts:2908"
+   "handler": "src/engine/systems/projobs.ts:2951"
   },
   {
    "file": "src/ui/career/OpportunitiesPane.tsx",
@@ -824,7 +824,7 @@
    "kind": "pro.tape_audition",
    "payload": "{ opportunityId: o.id }",
    "verdict": "Right",
-   "handler": "src/engine/systems/projobs.ts:2927"
+   "handler": "src/engine/systems/projobs.ts:2970"
   },
   {
    "file": "src/ui/career/OpportunitiesPane.tsx",
@@ -835,6 +835,16 @@
    "payload": "{ opportunityId: o.id }",
    "verdict": "Right",
    "handler": "src/engine/systems/offers.ts:1115"
+  },
+  {
+   "file": "src/ui/career/OptionRelease.tsx",
+   "control": "<Gated onClick>",
+   "feature": "pro.ask_option_release",
+   "label": "Ask To Be Released",
+   "kind": "pro.ask_option_release",
+   "payload": "{ opportunityId: o.id }",
+   "handler": "src/engine/systems/continuity.ts:394",
+   "verdict": "Right"
   },
   {
    "file": "src/ui/career/RepresentationPane.tsx",
@@ -978,7 +988,7 @@
    "kind": "pro.ask_pay",
    "payload": "{ engagementId: e.id, key: r.key }",
    "verdict": "Right",
-   "handler": "src/engine/systems/contracts.ts:509",
+   "handler": "src/engine/systems/contracts.ts:516",
    "note": "Ask About It under an overdue payment asks the producer about that payment, by its engagement and key; its refusal (askRefusal) is its title before it is pressed, and the row then reads Disputed with the answer. Read 2026-10-24, brief 25."
   },
   {
@@ -1743,7 +1753,7 @@
    "kind": "pro.update_resume",
    "payload": "",
    "verdict": "Right",
-   "handler": "src/engine/systems/pro.ts:1522"
+   "handler": "src/engine/systems/pro.ts:1574"
   },
   {
    "file": "src/ui/workspaces/CareerWorkspace.tsx",
@@ -1753,7 +1763,7 @@
    "kind": "pro.headshots",
    "payload": "",
    "verdict": "Right",
-   "handler": "src/engine/systems/pro.ts:1505"
+   "handler": "src/engine/systems/pro.ts:1557"
   },
   {
    "file": "src/ui/workspaces/CareerWorkspace.tsx",
@@ -1763,7 +1773,7 @@
    "kind": "pro.cut_reel",
    "payload": "{ pieces: chosen }",
    "verdict": "Right",
-   "handler": "src/engine/systems/pro.ts:1534"
+   "handler": "src/engine/systems/pro.ts:1586"
   },
   {
    "file": "src/ui/workspaces/CareerWorkspace.tsx",
@@ -1773,7 +1783,7 @@
    "kind": "pro.mix_demo",
    "payload": "{ pieces: chosen }",
    "verdict": "Right",
-   "handler": "src/engine/systems/pro.ts:1555",
+   "handler": "src/engine/systems/pro.ts:1607",
    "note": "Mix A Voice Demo mixes the ticked voice recordings into a new version of the demo, its cost from the bank and two hours on the clock; its refusal (demoRefusal) is its title. Read on 2026-10-24 by its builder (brief 27, K3), pressed through the Portfolio tab in tests/b27-voice-demo.test.ts."
   },
   {
@@ -1784,7 +1794,7 @@
    "kind": "pro.set_name",
    "payload": "{ name }",
    "verdict": "Right",
-   "handler": "src/engine/systems/pro.ts:1493"
+   "handler": "src/engine/systems/pro.ts:1545"
   },
   {
    "file": "src/ui/workspaces/PapersWorkspace.tsx",
@@ -2306,7 +2316,7 @@
    "kind": "pro.accept_offer",
    "payload": "{ opportunityId: o.id }",
    "verdict": "Right",
-   "handler": "src/engine/systems/projobs.ts:2999",
+   "handler": "src/engine/systems/projobs.ts:3042",
    "note": "Accept On Its Condition: a conditional offer's acceptance holds the dates and books nothing until its round goes the actor's way (acceptOnCondition)."
   },
   {
@@ -2315,7 +2325,7 @@
    "kind": "pro.accept_offer",
    "payload": "{ opportunityId: o.id }",
    "verdict": "Right",
-   "handler": "src/engine/systems/projobs.ts:2999"
+   "handler": "src/engine/systems/projobs.ts:3042"
   },
   {
    "file": "src/engine/systems/projobs.ts",
@@ -2323,7 +2333,7 @@
    "kind": "pro.decline_offer",
    "payload": "{ opportunityId: o.id }",
    "verdict": "Right",
-   "handler": "src/engine/systems/projobs.ts:3053"
+   "handler": "src/engine/systems/projobs.ts:3100"
   },
   {
    "file": "src/engine/systems/taxreturn.ts",
