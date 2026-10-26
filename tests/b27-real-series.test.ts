@@ -13,15 +13,23 @@
  * offer accepted through the command and played by the clock, flown to Los Angeles and home; then the clock to the
  * network's next word. TEST SETUP, said where it's done: SAG-AFTRA membership; the clock on unplayed to the season; and the
  * offer on the record as casting's draws would leave one.
+ *
+ * From the review of 2026-10-25: a real series' revival leaving out a character the player played, and its producers'
+ * invitation of a guest part back, are said as the game's own continuation, as the network's words are; until then they
+ * named its producers' plans with no word that they were the simulation's. PLAYER JOURNEYS: a guest part played in New York
+ * in a season the game simulates, then the clock to the producers' word. TEST SETUP: a copy of 9-1-1's series whose
+ * baseline the game read a year earlier, so its 2026 season is the simulation's, under an id of its own whose network's
+ * draws give the case, found by reading them; and the Desk Clerk's part in it, kept as the save keeps a slate part.
  */
 import { describe, expect, it } from 'vitest';
 import { MS_HOUR, zonedParts } from '@/engine/core/time';
-import { projectById } from '@/engine/content/careerwork';
+import { addProjects, projectById, type ProjectTemplate } from '@/engine/content/careerwork';
 import { productionById } from '@/engine/content/catalog';
-import { REAL_SERIES, decisionAt, seasonWindow, seriesById } from '@/engine/content/series';
-import { decisionWords, decisionsTo, inProduction, seasonAudience, seasonMade, seasonName, seasonNumber, simulatedSeason } from '@/engine/systems/series';
+import { REAL_SERIES, addSeries, decisionAt, seasonWindow, seriesById, type SeriesTemplate } from '@/engine/content/series';
+import { REVIVAL, REVIVAL_KIND, decisionWords, decisionsTo, inProduction, revivalCastAt, seasonAudience, seasonMade, seasonName, seasonNumber, simulatedSeason } from '@/engine/systems/series';
+import { INVITE, inviteAt, recurringPart } from '@/engine/systems/continuity';
 import { datesOf, seriesPosts } from '@/engine/systems/projobs';
-import { ensurePro } from '@/engine/systems/pro';
+import { ensurePro, type Engagement } from '@/engine/systems/pro';
 import { pageOf, refIndex } from '@/engine/systems/reference';
 import type { Simulation } from '@/engine/core/simulation';
 import { at, graduate, notices, played, student, tended } from './fakes/career-world';
@@ -130,4 +138,49 @@ describe('a real series continued by the simulation', () => {
     expect(said).toContain('in the game’s simulation');
     expect(said).toContain('It’s the game’s own continuation of the real series, not an announcement.');
   }, 900_000);
+
+  it('PLAYER JOURNEYS: a revival leaving out the player’s character, and a guest part invited back, are said as the game’s own continuation of the real series', () => {
+    const CONTINUED = 'It’s the game’s own continuation of the real series, not an announcement.';
+    const CLERK = projectById('calloway-files')!;
+    /** TEST SETUP: the copy of 9-1-1's series, and its guest part played Exceptional in its 2026 season. */
+    const played2026 = (seed: string, want: (sim: Simulation, id: string) => boolean): { sim: Simulation; s: SeriesTemplate; t: ProjectTemplate; e: Engagement } => {
+      const sim = graduate(seed);
+      ensurePro(sim, sim.player).sag = { eligibleSince: sim.now - 60 * 86_400_000, memberSince: sim.now - 30 * 86_400_000 };
+      const id = [...Array(4000).keys()].map((n) => `g1.test.real.${n}`).find((x) => want(sim, x))!;
+      const s: SeriesTemplate = { ...NINE, id, firstSeason: 2025, orderedThrough: 2026, real: { ...NINE.real!, baseline: { year: 2025, season: 9 } } };
+      addSeries([s]);
+      (sim.player.pro!.series ??= {})[s.id] = s;
+      const t: ProjectTemplate = { ...CLERK, id: `${s.id}.guest`, series: s.id, project: s.title, company: s.company };
+      addProjects([t]);
+      (sim.player.pro!.projects ??= {})[t.id] = t;
+      const o = offered(sim, t, at(2026, 9, 7));
+      const eid = sim.must<{ engagementId: string }>({ kind: 'pro.accept_offer', payload: { opportunityId: o.id } }).engagementId;
+      const e = sim.player.pro!.engagements.find((x) => x.id === eid)!;
+      played(sim, e.days[0]!.to + 2 * MS_HOUR);
+      for (const l of e.log ?? []) if (l.status === 'worked') l.band = 'exceptional';
+      played(sim, e.days.at(-1)!.to + 2 * MS_HOUR);
+      expect(e.status).toBe('finished');
+      return { sim, s, t, e };
+    };
+
+    // Canceled in May 2027 and back in May 2029, its producers' plans leaving the Desk Clerk out.
+    const back = played2026('b27-real-revival', (sim, id) => sim.rng('pro.series', id, 2027).next() >= 0.95 && sim.rng('pro.series', id, 2029).next() < NINE.chance.revive && sim.rng('pro.revival', id, 2029, `${id}.guest`).next() >= REVIVAL.guest);
+    expect(decisionsTo(back.sim, back.s, 2029).map((d) => [d.year, d.what])).toEqual([[2027, 'canceled'], [2029, 'revived']]);
+    back.sim.advanceTo(revivalCastAt(back.s, 2029) + MS_HOUR);
+    expect(back.sim.universe.scheduled.some((i) => i.kind === REVIVAL_KIND && i.status === 'done')).toBe(true);
+    expect(back.e.revival).toEqual({ year: 2029, returns: false });
+    expect(notices(back.sim).find((n) => n.startsWith(`${back.s.title} Comes Back Without ${back.t.role.part} | `))).toContain(CONTINUED);
+
+    // Renewed for 2027, a save whose producers' draw brings the Desk Clerk back as a recurring character.
+    let invited: ReturnType<typeof played2026> | undefined;
+    for (let k = 0; k < 8 && !invited; k += 1) {
+      const run = played2026(`b27-real-invite-${k}`, (sim, id) => sim.rng('pro.series', id, 2027).next() < 0.05);
+      if (run.sim.rng('pro.recurring', run.e.id, 2027).next() < INVITE.chance.exceptional) invited = run;
+    }
+    expect(invited).toBeDefined();
+    const { sim, s, t, e } = invited!;
+    sim.advanceTo(inviteAt(s, 2027) + MS_HOUR);
+    expect(e.invite).toEqual({ year: 2027, invited: true });
+    expect(sim.player.pro!.opportunities.find((x) => x.projectId === recurringPart(t, 2027).id)!.direct!.words).toContain(CONTINUED);
+  }, 1_200_000);
 });

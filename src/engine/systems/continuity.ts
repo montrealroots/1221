@@ -49,7 +49,7 @@ import { noteEvent, type ContractClause, type Engagement, type Opportunity } fro
 import { clauseOf, OPTION_RAISE } from './contracts';
 import { termOf, qualityOf, productionKey } from './market';
 import {
-  AUDIENCE, OPTION_CHANCE, bestBandOf, networkOf, optionDrawn, outletOf, seasonAudience, seasonMade, seasonName,
+  AUDIENCE, OPTION_CHANCE, bestBandOf, continuationWords, networkOf, optionDrawn, outletOf, seasonAudience, seasonMade, seasonName,
   type SeriesHooks,
 } from './series';
 import { WORK, datesOf, spansOf, projectOf, type WorkDay } from './projobs';
@@ -437,12 +437,13 @@ export function registerContinuity(sim: Simulation, hooks: SeriesHooks): void {
     const rt = recurringPart(t, year);
     keepPart(person, rt, series);
     const band = bestBandOf(e);
-    const words = `Your work as ${t.role.part} in ${seasonName(s, series, year - 1)} of ${series.title} was ${band ? BAND_LABEL[band] : 'strong'}, and its producers want ${t.role.part} back as a recurring character in its new season, with a new contract: ${countWords(INVITE.guaranteed)} episodes guaranteed.`;
+    // A real series' new season is the simulation's, and says so (`continuationWords`).
+    const words = `Your work as ${t.role.part} in ${seasonName(s, series, year - 1)} of ${series.title} was ${band ? BAND_LABEL[band] : 'strong'}, and its producers want ${t.role.part} back as a recurring character in its new season, with a new contract: ${countWords(INVITE.guaranteed)} episodes guaranteed.${continuationWords(series)}`;
     if (hooks.bringBack(s, person, rt, e, words)) {
       noteEvent(s, e, { kind: 'success', key: `invite:${year}:offered`, words: `The producers of ${series.title} offered ${t.role.part} back as a recurring character for its new season.` });
       return;
     }
-    const why = `${series.title}’s producers wanted ${t.role.part} back as a recurring character, but its new season had no work for the part to offer you.`;
+    const why = `${series.title}’s producers wanted ${t.role.part} back as a recurring character, but its new season had no work for the part to offer you.${continuationWords(series)}`;
     noteEvent(s, e, { kind: 'problem', key: `invite:${year}:none`, words: why });
     tellOf(s, person, `${series.title} Can’t Bring Back ${t.role.part}`, `${why} Your work in it stays on your credits.`, 60);
   });
