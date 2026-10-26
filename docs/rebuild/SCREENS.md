@@ -94,8 +94,8 @@ Live and Food Each Month are gone (entry 15).
 
 ## Screen 7. Home, the first morning
 
-No tutorial (entry 16): nothing locked, no guide line, no chapter count. The top bar (the clock, Paused, Play, Sleep,
-Look After Yourself, Advance, Guide as a manual, Saved, Save & Exit), the menu down the left, the greeting with the
-date and the town's line, the weather and its five-day forecast, and the panels What Needs You, How You Are (energy,
-stress, readiness, Look After Yourself), Up Next with the calendar, and Recent Updates. The School and Career menu entries, the term's events, the School's welcome notice and the readiness meter are gone
+No tutorial (entry 16): nothing locked, no guide line, no chapter count. The top bar (the clock, Paused, Play, Sleep (held), Advance,
+Guide as a manual, Saved, Save & Exit), the menu down the left (Player Profile, Money, Papers), the greeting with the
+date and the town's line, the weather and its five-day forecast, and the panels What Needs You, Up Next with the
+calendar, and Recent Updates. How You Are and Look After Yourself are gone with their engines (entry 18). The School and Career menu entries, the term's events, the School's welcome notice and the readiness meter are gone
 with their engines (entry 17); the rest stands with its engine until the owner rules on it, panel by panel.

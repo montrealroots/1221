@@ -711,3 +711,54 @@ to its detail); the weather and its five-day forecast (the climate model by plac
 waiting, what's past due, the bank and the card, the calendar's clashes); How You Are (energy and stress, and Look
 After Yourself with Eat A Meal and Order In, each with its time and its cost in the town's prices); Up Next with
 Open Calendar; Recent Updates with View All Updates; the Guide button and the How This Works links as a manual.
+
+---
+
+## 18. Home: How You Are and Look After Yourself gone with their engines; the clock, the weather, the money and the papers held to full worldwide coverage (DECIDED 2026-10-26)
+
+**Owner:** "Remove all those on How You Are, and remove Look After Yourself and the engine of those. Make sure the
+clock is still ticking accurately as a real-time clock, and the weather matches back with the geography and map
+covering every single country and territory. Same with the banking system in Your Money and Your Papers: the full
+world map, the coverage matrix covers it all."
+
+### Gone, with their engines
+
+- **How You Are**: the panel, the line on how you are, Energy and Stress (Readiness went in entry 17). With it the
+  life engine's energy and stress: what a night puts back, what a day spends, stress's gain and recovery, nerves,
+  running on empty, overwrought, the dispositions' readers of them (already gone with entry 8).
+- **Look After Yourself**: the panel's Eat A Meal and Order In with their times and costs, the nourishment line, and
+  the Look After Yourself menu in the top bar. With it the nourishment engine, meals and their prices by town, the
+  household's food cost, the Frugal/Spender readers (already gone).
+- **Held, not decided:** the **Sleep** button in the top bar. It belonged to the energy engine (the night restores
+  energy), but it is also the way the clock is moved to the next morning; if the owner wants it as a clock action
+  alone, it stays as that, else it goes with energy.
+
+### Held to full coverage, with what is true today
+
+- **The clock.** Real time, in the town's own local time: one game minute per real minute while playing, paused
+  when paused, every place on its IANA time zone with daylight saving as that zone keeps it, the season and the
+  daylight from the town's latitude and the date, and every jump (Advance, Sleep) stopping at a commitment that
+  wants the player. This is the engine as it stands and it already covers every place in the gazetteer, since a
+  time zone is part of each place's record. **Kept, and held to accuracy**: the new build proves the clock against
+  real zone rules (a test per zone family, DST transitions included) rather than assuming the browser's tables.
+- **The weather.** Today: a climate model, physics by latitude, longitude and coast, with a hand-kept table of
+  Köppen-type classifications for the countries, regions and cities people most look at, and a fallback by latitude
+  everywhere else; the weather itself a pure function of the seed, the place and the day, so it covers every one of
+  the 170,911 places, but is *calibrated* for a few dozen, and the screen says so. **Required**: the climate behind
+  every country and territory researched to its own published normals (a national meteorological service's or a
+  recognized climatology's figures for its places), each cited in the register, so the weather at any town matches
+  that town's real climate, not a latitude guess; the fallback by latitude stays only for a place whose country's
+  figures can't be reached, and is marked so.
+- **Your Money.** Today: real banks with fee sheets, account formats and returned-payment rules for thirteen
+  countries; a currency for every country; exchange rates estimated. **Required**: the full matrix, every country
+  and territory's banks, fees, account formats, cards and credit systems as they really are, from the banks' own
+  sheets and the regulators' pages, with the currency and how pay and prices move in it; a country whose banks'
+  pages can't be reached is in the matrix with the blocker, and the game says what isn't modeled there.
+- **Your Papers.** Today: passports researched for fifteen countries from their offices' own pages (fees, times,
+  expedited services, validity, from abroad), the US package of papers (passport, license, Social Security, the
+  I-9, taxes and returns) in depth, visa and work routes for the US, the UK and Australia. **Required**: every
+  country and territory's passport office, ID, visas, residence and work permissions, from the government's own
+  pages, in the register, with the same rule for the unreachable.
+
+These four are the first systems of the new build to be built, since every page so far reads them, and entry 6's
+three absolutes apply to each without exception.

@@ -40,6 +40,11 @@ await page.evaluate(() => {
   const hya = byTitle('How You Are');
   if (hya) { const bar = hya.querySelector('[role=meter][aria-label="Readiness"]'); if (bar) bar.parentElement.remove(); for (const el of [...hya.querySelectorAll('*')]) if (el.children.length === 0 && /costing readiness/.test(el.textContent)) el.textContent = 'Nourishment at 75.'; }
 });
+await page.evaluate(() => {
+  const panels = [...document.querySelectorAll('main .panel, .main .panel, main section, .main section, main .card, .main .card')];
+  const hya = panels.find((p) => (p.querySelector('h2, h3')?.textContent || '').trim() === 'How You Are'); if (hya) hya.remove();
+  for (const b of document.querySelectorAll('header button, .topbar button, [role=group] button, nav button, button')) if (/^Look After Yourself/.test(b.textContent.trim())) { const wrap = b.closest('[role=group], .row, div'); (wrap && wrap.children.length <= 2 ? wrap : b).remove(); }
+});
 await wait(300); await shot('07-home-new');
 // Close the guide if it's open, to see Home itself.
 const dialog = page.locator('[role=dialog]');
