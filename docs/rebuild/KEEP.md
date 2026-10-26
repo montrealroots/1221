@@ -246,10 +246,14 @@ opens at the same moment; every older fixture opens), `tests/persistence.test.ts
 
 ---
 
-## 3. Creation, step 1 of 5, Identity: the order of the page (PROPOSED, awaiting the owner's word)
+## 3. Creation, step 1 of 5, Identity: the page is kept, in the order below (DECIDED 2026-10-26)
 
-**Owner (2026-10-26):** "I want it to fall in a perfect order so whatever you feel that may be let me know." What
-follows is the order proposed in answer, with the reasoning, so the decision can be read back. The fields themselves
+**Owner (2026-10-26):** "I want it to fall in a perfect order so whatever you feel that may be let me know." Then,
+on the order proposed in answer: "let's keep that page and the information I just gave you including having it in the
+perfect order." So the Identity page is kept, in this order, and entries 4, 5 and 6 (an engine behind every field,
+researched to the source worldwide, with zero decoration) apply to every feature on it: the engines proposed in
+entry 4 are the plan for each field, each to be researched before it's built. The reasoning stays so the decision
+can be read back. The fields themselves
 are page 1's, written up in the capture page and in the feature rows; what's decided here is only where each sits.
 
 Captures: `captures/01-opening/02-identity.png` (as it opens), `02b-identity-filled.png` (with the three required
@@ -285,7 +289,7 @@ else keeps its place. Height and weight stay on Starting Point, where the owner 
 ---
 
 ## 4. The rule for creation in the new build: every field means something and has an engine (DECIDED), with the
-## engines proposed for the fields that have none today (PROPOSED)
+## engines for the fields that have none today (DECIDED AS THE PLAN on 2026-10-26, each to be researched first)
 
 **Owner (2026-10-26):** "I need each to mean something and have an engine behind it including race or ethnicity."
 
@@ -382,3 +386,26 @@ Three rules for the rebuild, each absolute:
 What this changes in the capture work from here: each page's entry lists every element with its reader in the new
 build; an element with no reader is cut, not kept. And the scale of the research is the real cost of the rebuild:
 this SLATE researched three countries in depth over its briefs, and the standard above asks for 252.
+
+---
+
+## 7. How the research is done (DECIDED)
+
+**Owner (2026-10-26):** "Do everything possible to find information, like everything: Google searches and all."
+
+For every engine and every row of the coverage matrix, the research goes as far as it can go, not as far as is
+convenient: web searches in every phrasing, the institution's own site and its published documents (rules, rate
+cards, agreements, forms, fee sheets, statutes), official registers and lists, trade press where it quotes a
+primary source, and the archived copy where the live page has gone. Each fact is recorded with the page it was read
+from and the date, in the register. A fact found only in a secondary source is marked so; a fact not found after
+that is a blocker, named, not a guess. This is the method this SLATE's research register already used (its
+`docs/verification/career-universe-2026-10-24/research/register.json` holds the form: id, what was sought, the
+pages tried, what each said, the date, and the status), carried over whole and applied to everything.
+
+### Kept source for the Identity page
+
+`kept/02-creation-identity/`: the creation component (all five steps live in one file, `CharacterCreation.tsx`),
+the place picker and the world map with its data loader, the portrait picker and its arithmetic, the identity and
+ethnicity option lists, the gazetteer's registry (`geography.ts`; the per-country place files are the app's
+`public/geo/` data, generated from GeoNames and not copied here), the new-save config and its defaults
+(`bootstrap.ts`), the title rule (`performer.ts`), and the creation styles.
